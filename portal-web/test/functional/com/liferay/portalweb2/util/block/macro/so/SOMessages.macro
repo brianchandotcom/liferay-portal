@@ -47,6 +47,24 @@
 		<execute action="SOMessagesMessage#assertElementPresent" locator-key1="PRIVATE_MESSAGE_REPLY_BODY" />
 	</command>
 
+	<command name="tearDownPG">
+		<execute macro="SOUser#firstLoginPG" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+
+		<if>
+			<condition action="SOMessages#isElementNotPresent" locator-key1="INFO_MESSAGE" />
+			<then>
+				<execute action="SOMessages#check" locator-key1="SELECT_ALL_CHECKBOX" />
+				<execute action="SOMessages#click" locator-key1="DELETE_BUTTON" />
+				<execute action="SOMessages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
+				<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
+			</then>
+		</if>
+	</command>
+
 	<command name="viewMessage">
 		<execute macro="SOMessages#viewMessageList" />
 
@@ -74,6 +92,17 @@
 		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SENDER" value1="${connectionName}" />
 		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SUBJECT" value1="${messageSubject}" />
 		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_BODY" value1="${messageBody}" />
+	</command>
+
+	<command name="viewMessageNotification">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${senderName} sent you a message." />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${messageBody}" />
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${senderName} sent you a message." />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 	</command>
 
 	<command name="viewReplyMessage">
@@ -108,35 +137,6 @@
 			<then>
 				<execute action="SOMessagesMessage#assertElementPresent" locator-key1="PRIVATE_MESSAGE_REPLY_ATTACHMENT" />
 				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_REPLY_ATTACHMENT_LINK" value1="${messageReplyAttachmentFile}" />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewMessageNotification">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
-		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${senderName} sent you a message." />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${messageBody}" />
-		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${senderName} sent you a message." />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
-	</command>
-
-	<command name="tearDownPG">
-		<execute macro="SOUser#firstLoginPG" />
-
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
-
-		<if>
-			<condition action="SOMessages#isElementNotPresent" locator-key1="INFO_MESSAGE" />
-			<then>
-				<execute action="SOMessages#check" locator-key1="SELECT_ALL_CHECKBOX" />
-				<execute action="SOMessages#click" locator-key1="DELETE_BUTTON" />
-				<execute action="SOMessages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
-				<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
 			</then>
 		</if>
 	</command>

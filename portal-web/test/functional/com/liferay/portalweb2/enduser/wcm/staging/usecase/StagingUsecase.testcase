@@ -25,8 +25,8 @@
 
 	<tear-down>
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="Test Test" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Role#tearDownCP" />
@@ -60,6 +60,95 @@
 
 	<command name="LayoutScope" priority="5">
 		<echo message="override" />
+	</command>
+
+	<command name="PublishCustomPortletTitle" priority="5">
+		<execute test-case="super#AddSitePagesVariation" />
+
+		<var name="portletName" value="Sites Directory" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SitesDirectory#viewPortletTitlePG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Look and Feel" />
+		</execute>
+
+		<execute macro="SitesDirectory#configureCustomTitleViaLookandfeelPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SitesDirectory#viewPortletTitlePG">
+			<var name="portletName" value="${portletName} Custom" />
+		</execute>
+
+		<execute macro="Staging#publishToLiveNowPG">
+			<var name="applicationName" value="Sites Directory" />
+			<var name="markAsReadyForPublication" value="true" />
+			<var name="uncheckApplication" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SitesDirectory#viewPortletTitlePG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#publishToLiveNowPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SitesDirectory#viewPortletTitlePG">
+			<var name="portletName" value="${portletName} Custom" />
+		</execute>
 	</command>
 
 	<command name="StagingDemoLocalLive1" priority="5">
@@ -112,8 +201,8 @@
 
 		<execute macro="User#editPasswordCP">
 			<var name="password" value="password" />
-			<var name="userScreenName" value="usersn" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -142,8 +231,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="userfn userln" />
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -255,8 +344,8 @@
 
 		<execute macro="User#editPasswordCP">
 			<var name="password" value="password" />
-			<var name="userScreenName" value="usersn" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -285,8 +374,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="userfn userln" />
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -383,8 +472,8 @@
 
 		<execute macro="User#editPasswordCP">
 			<var name="password" value="password" />
-			<var name="userScreenName" value="usersn" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -413,8 +502,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="userfn userln" />
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -492,8 +581,8 @@
 		</execute>
 
 		<execute macro="Staging#changeSitePageVariationPG">
-			<var name="sitePagesVariationName" value="Christmas Variation" />
 			<var name="sitePagesVariationMenulistName" value="Main Variation Edit" />
+			<var name="sitePagesVariationName" value="Christmas Variation" />
 		</execute>
 
 		<execute action="Home#refresh" />
@@ -523,8 +612,8 @@
 		</execute>
 
 		<execute macro="Staging#changeSitePageVariationPG">
-			<var name="sitePagesVariationName" value="Main Variation Edit" />
 			<var name="sitePagesVariationMenulistName" value="Christmas Variation" />
+			<var name="sitePagesVariationName" value="Main Variation Edit" />
 		</execute>
 
 		<execute macro="Staging#viewSitePagesVariationPG">
@@ -613,8 +702,8 @@
 		</execute>
 
 		<execute macro="Staging#mergeSitePagesVariation">
-			<var name="sitePagesVariationName" value="Empty Variation" />
 			<var name="sitePagesVariationMergeName" value="Christmas Variation" />
+			<var name="sitePagesVariationName" value="Empty Variation" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -711,8 +800,8 @@
 
 		<execute macro="User#editPasswordCP">
 			<var name="password" value="password" />
-			<var name="userScreenName" value="usersn" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -741,8 +830,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="userfn userln" />
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -816,13 +905,106 @@
 		<execute action="Home#assertTextEquals" locator-key1="PAGE_2_GUEST_VIEW" value1="New Page Name" />
 	</command>
 
+	<command name="StagingLocalLiveLock" priority="5">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryContent2" value="Blogs Entry Content 2" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="entryTitle2" value="Blogs Entry Title 2" />
+		<var name="pageName" value="Staging Test Page" />
+		<var name="portletName" value="Blogs" />
+		<var name="siteName" value="${siteName}" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#publishToLiveNowPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewNoEditLinkPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="editActivateStaging" value="true" />
+			<var name="uncheckContent" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEditLinkPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+		</execute>
+	</command>
+
 	<command name="StagingLocalLiveWorkflow" priority="5">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<var name="pageName" value="Home" />
 		<var name="siteName" value="Community Site Name" />
-		<var name="webContentTitle" value="Web Content Title" />
 		<var name="webContentContent" value="Web Content Content" />
+		<var name="webContentTitle" value="Web Content Title" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -851,13 +1033,13 @@
 		</execute>
 
 		<execute macro="Workflow#configureSiteWorkflow">
-			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
 		</execute>
 
 		<execute macro="Workflow#configureSiteWorkflow">
-			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1051,8 +1233,8 @@
 
 		<execute macro="User#editPasswordCP">
 			<var name="password" value="password" />
-			<var name="userScreenName" value="contentcreator" />
 			<var name="userEmailAddress" value="contentcreator@liferay.com" />
+			<var name="userScreenName" value="contentcreator" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -1140,8 +1322,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="userfncreator creator" />
 			<var name="userLoginEmailAddress" value="contentcreator@liferay.com" />
+			<var name="userLoginFullName" value="userfncreator creator" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1156,13 +1338,13 @@
 		</execute>
 
 		<execute macro="WebContent#addWithWorkflowPGViaWCD">
-			<var name="webContentTitle" value="${webContentTitle}" />
 			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="userfnapprover approver" />
 			<var name="userLoginEmailAddress" value="contentapprover@liferay.com" />
+			<var name="userLoginFullName" value="userfnapprover approver" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -1190,8 +1372,8 @@
 		<execute action="BasePortlet#assertTextNotEquals" locator-key1="TITLE" value1="Web Content Display" />
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="userfncreator creator" />
 			<var name="userLoginEmailAddress" value="contentcreator@liferay.com" />
+			<var name="userLoginFullName" value="userfncreator creator" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1204,8 +1386,8 @@
 		<execute macro="Staging#submitForPublicationPageRevision" />
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="userfnapprover approver" />
 			<var name="userLoginEmailAddress" value="contentapprover@liferay.com" />
+			<var name="userLoginFullName" value="userfnapprover approver" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -1225,8 +1407,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="userfncreator creator" />
 			<var name="userLoginEmailAddress" value="contentcreator@liferay.com" />
+			<var name="userLoginFullName" value="userfncreator creator" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1253,8 +1435,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="userfnapprover approver" />
 			<var name="userLoginEmailAddress" value="contentapprover@liferay.com" />
+			<var name="userLoginFullName" value="userfnapprover approver" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -1276,187 +1458,5 @@
 
 	<command name="StagingPublishPortlet" priority="5">
 		<echo message="override" />
-	</command>
-
-	<command name="PublishCustomPortletTitle" priority="5">
-		<execute test-case="super#AddSitePagesVariation" />
-
-		<var name="portletName" value="Sites Directory" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="SitesDirectory#viewPortletTitlePG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Look and Feel" />
-		</execute>
-
-		<execute macro="SitesDirectory#configureCustomTitleViaLookandfeelPG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="SitesDirectory#viewPortletTitlePG">
-			<var name="portletName" value="${portletName} Custom" />
-		</execute>
-
-		<execute macro="Staging#publishToLiveNowPG">
-			<var name="applicationName" value="Sites Directory" />
-			<var name="markAsReadyForPublication" value="true" />
-			<var name="uncheckApplication" value="true" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="SitesDirectory#viewPortletTitlePG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Staging#publishToLiveNowPG" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="SitesDirectory#viewPortletTitlePG">
-			<var name="portletName" value="${portletName} Custom" />
-		</execute>
-	</command>
-
-	<command name="StagingLocalLiveLock" priority="5">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryContent2" value="Blogs Entry Content 2" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="entryTitle2" value="Blogs Entry Title 2" />
-		<var name="pageName" value="Staging Test Page" />
-		<var name="portletName" value="Blogs" />
-		<var name="siteName" value="${siteName}" />
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Staging#publishToLiveNowPG" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoEditLinkPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-			<var name="portletName" value="Site Settings" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="editActivateStaging" value="true" />
-			<var name="uncheckContent" value="Blogs" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewEditLinkPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent2}" />
-			<var name="entryTitle" value="${entryTitle2}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryTitle" value="${entryTitle2}" />
-			<var name="entryContent" value="${entryContent2}" />
-		</execute>
 	</command>
 </definition>

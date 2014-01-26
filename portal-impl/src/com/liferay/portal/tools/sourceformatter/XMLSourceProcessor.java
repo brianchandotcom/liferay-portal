@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -133,10 +134,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixPoshiXMLElementWithNoChild(String content) {
-		Pattern pattern = Pattern.compile(
-			"\\\"[\\s]*\\>[\\n\\s\\t]*\\</[a-z\\-]+>");
-
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher = _poshiElementWithNoChildPattern.matcher(content);
 
 		while (matcher.find()) {
 			content = StringUtil.replace(content, matcher.group(), "\" />");
@@ -146,9 +144,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixPoshiXMLEndLines(String content) {
-		Pattern pattern = Pattern.compile("\\>\\n\\n\\n+(\\t*\\<)");
-
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher = _poshiEndLinesPattern.matcher(content);
 
 		while (matcher.find()) {
 			String statement = matcher.group();
@@ -163,10 +159,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixPoshiXMLEndLinesAfterClosingElement(String content) {
-		Pattern pattern = Pattern.compile(
-			"(\\</[a-z\\-]+>)(\\n+)\\t*\\<[a-z]+");
-
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher = _poshiEndLinesAfterClosingElementPattern.matcher(
+			content);
 
 		while (matcher.find()) {
 			String statement = matcher.group();
@@ -198,9 +192,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixPoshiXMLEndLinesBeforeClosingElement(String content) {
-		Pattern pattern = Pattern.compile("(\\n+)(\\t*</[a-z\\-]+>)");
-
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher = _poshiEndLinesBeforeClosingElementPattern.matcher(
+			content);
 
 		while (matcher.find()) {
 			String statement = matcher.group();
@@ -215,11 +208,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixPoshiXMLNumberOfTabs(String content) {
+		Matcher matcher = _poshiTabsPattern.matcher(content);
+
 		int tabCount = 0;
-
-		Pattern pattern = Pattern.compile("\\n*([ \\t]*<).*");
-
-		Matcher matcher = pattern.matcher(content);
 
 		boolean ignoredCdataBlock = false;
 		boolean ignoredCommentBlock = false;
@@ -227,10 +218,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		while (matcher.find()) {
 			String statement = matcher.group();
 
-			Pattern quoteWithSlashPattern = Pattern.compile(
-				"\"[^\"]*\\>[^\"]*\"");
-
-			Matcher quoteWithSlashMatcher = quoteWithSlashPattern.matcher(
+			Matcher quoteWithSlashMatcher = _poshiQuoteWithSlashPattern.matcher(
 				statement);
 
 			String fixedQuoteStatement = statement;
@@ -240,19 +228,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					statement, quoteWithSlashMatcher.group(), "\"\"");
 			}
 
-			Pattern closingTagPattern = Pattern.compile("</[^>/]*>");
-
-			Matcher closingTagMatcher = closingTagPattern.matcher(
+			Matcher closingTagMatcher = _poshiClosingTagPattern.matcher(
 				fixedQuoteStatement);
-
-			Pattern openingTagPattern = Pattern.compile("<[^/][^>]*[^/]>");
-
-			Matcher openingTagMatcher = openingTagPattern.matcher(
+			Matcher openingTagMatcher = _poshiOpeningTagPattern.matcher(
 				fixedQuoteStatement);
-
-			Pattern wholeTagPattern = Pattern.compile("<[^\\>^/]*\\/>");
-
-			Matcher wholeTagMatcher = wholeTagPattern.matcher(
+			Matcher wholeTagMatcher = _poshiWholeTagPattern.matcher(
 				fixedQuoteStatement);
 
 			if (closingTagMatcher.find() && !openingTagMatcher.find() &&
@@ -360,10 +340,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 				newContent = formatPortletXML(newContent);
 			}
-			else if (portalSource && fileName.endsWith(".action") ||
-					 portalSource && fileName.endsWith(".function") ||
-					 portalSource && fileName.endsWith(".macro") ||
-					 portalSource && fileName.endsWith(".testcase")) {
+			else if (portalSource &&
+					 (fileName.endsWith(".action") ||
+					  fileName.endsWith(".function") ||
+					  fileName.endsWith(".macro") ||
+					  fileName.endsWith(".testcase"))) {
 
 				newContent = formatPoshiXML(newContent);
 			}
@@ -632,6 +613,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatPoshiXML(String content) {
+		content = sortPoshiCommands(content);
+
+		content = sortPoshiVariables(content);
+
 		content = fixPoshiXMLElementWithNoChild(content);
 
 		content = fixPoshiXMLEndLinesAfterClosingElement(content);
@@ -862,9 +847,173 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent.substring(y);
 	}
 
+	protected String sortPoshiCommands(String content) {
+		Matcher matcher = _poshiCommandsPattern.matcher(content);
+
+		Map<String, String> commandBlocksMap = new TreeMap<String, String>(
+			String.CASE_INSENSITIVE_ORDER);
+
+		String previousName = StringPool.BLANK;
+
+		boolean hasUnsortedCommands = false;
+
+		while (matcher.find()) {
+			String commandBlock = matcher.group();
+			String commandName = matcher.group(1);
+
+			commandBlocksMap.put(commandName, commandBlock);
+
+			if (!hasUnsortedCommands &&
+				(commandName.compareToIgnoreCase(previousName) < 0)) {
+
+				hasUnsortedCommands = true;
+			}
+
+			previousName = commandName;
+		}
+
+		if (!hasUnsortedCommands) {
+			return content;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		matcher = _poshiSetUpPattern.matcher(content);
+
+		if (matcher.find()) {
+			String setUpBlock = matcher.group();
+
+			content = content.replace(setUpBlock, "");
+
+			sb.append(setUpBlock);
+		}
+
+		matcher = _poshiTearDownPattern.matcher(content);
+
+		if (matcher.find()) {
+			String tearDownBlock = matcher.group();
+
+			content = content.replace(tearDownBlock, "");
+
+			sb.append(tearDownBlock);
+		}
+
+		for (Map.Entry<String, String> entry : commandBlocksMap.entrySet()) {
+			sb.append("\n\t");
+			sb.append(entry.getValue());
+			sb.append("\n");
+		}
+
+		int x = content.indexOf("<command");
+		int y = content.lastIndexOf("</command>");
+
+		String commandBlock = content.substring(x, y);
+
+		commandBlock = "\n\t" + commandBlock + "</command>\n";
+
+		String newCommandBlock = sb.toString();
+
+		return StringUtil.replaceFirst(content, commandBlock, newCommandBlock);
+	}
+
+	protected String sortPoshiVariables(String content) {
+		Matcher matcher = _poshiVariablesBlockPattern.matcher(content);
+
+		while (matcher.find()) {
+			String previousName = StringPool.BLANK;
+			String tabs = StringPool.BLANK;
+
+			Map<String, String> variableLinesMap = new TreeMap<String, String>(
+				String.CASE_INSENSITIVE_ORDER);
+
+			String variableBlock = matcher.group(1);
+
+			variableBlock = variableBlock.trim();
+
+			Matcher variableLineMatcher = _poshiVariableLinePattern.matcher(
+				variableBlock);
+
+			boolean hasUnsortedVariables = false;
+
+			while (variableLineMatcher.find()) {
+				if (tabs.equals(StringPool.BLANK)) {
+					tabs = variableLineMatcher.group(1);
+				}
+
+				String variableLine = variableLineMatcher.group(2);
+				String variableName = variableLineMatcher.group(3);
+
+				variableLinesMap.put(variableName, variableLine);
+
+				if (!hasUnsortedVariables &&
+					(variableName.compareToIgnoreCase(previousName) < 0)) {
+
+					hasUnsortedVariables = true;
+				}
+
+				previousName = variableName;
+			}
+
+			if (!hasUnsortedVariables) {
+				continue;
+			}
+
+			StringBundler sb = new StringBundler();
+
+			for (Map.Entry<String, String> entry :
+					variableLinesMap.entrySet()) {
+
+				sb.append(tabs);
+				sb.append(entry.getValue());
+				sb.append("\n");
+			}
+
+			String newVariableBlock = sb.toString();
+
+			newVariableBlock = newVariableBlock.trim();
+
+			content = StringUtil.replaceFirst(
+				content, variableBlock, newVariableBlock);
+		}
+
+		return content;
+	}
+
 	private static Pattern _commentPattern1 = Pattern.compile(
 		">\n\t+<!--[\n ]");
 	private static Pattern _commentPattern2 = Pattern.compile(
 		"[\t ]-->\n[\t<]");
+	private static Pattern _poshiClosingTagPattern = Pattern.compile(
+		"</[^>/]*>");
+	private static Pattern _poshiCommandsPattern = Pattern.compile(
+		"\\<command name=\\\"([^\\\"]*)\\\".*\\>[\\s\\S]*?\\</command\\>" +
+			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+");
+	private static Pattern _poshiElementWithNoChildPattern = Pattern.compile(
+		"\\\"[\\s]*\\>[\\n\\s\\t]*\\</[a-z\\-]+>");
+	private static Pattern _poshiEndLinesAfterClosingElementPattern =
+		Pattern.compile("(\\</[a-z\\-]+>)(\\n+)\\t*\\<[a-z]+");
+	private static Pattern _poshiEndLinesBeforeClosingElementPattern =
+		Pattern.compile("(\\n+)(\\t*</[a-z\\-]+>)");
+	private static Pattern _poshiEndLinesPattern = Pattern.compile(
+		"\\>\\n\\n\\n+(\\t*\\<)");
+	private static Pattern _poshiOpeningTagPattern = Pattern.compile(
+		"<[^/][^>]*[^/]>");
+	private static Pattern _poshiQuoteWithSlashPattern = Pattern.compile(
+		"\"[^\"]*\\>[^\"]*\"");
+	private static Pattern _poshiSetUpPattern = Pattern.compile(
+		"\\n[\\t]++\\<set-up\\>([\\s\\S]*?)\\</set-up\\>" +
+			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+\\n");
+	private static Pattern _poshiTabsPattern = Pattern.compile(
+		"\\n*([ \\t]*<).*");
+	private static Pattern _poshiTearDownPattern = Pattern.compile(
+		"\\n[\\t]++\\<tear-down\\>([\\s\\S]*?)\\</tear-down\\>" +
+			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+\\n");
+	private static Pattern _poshiVariableLinePattern = Pattern.compile(
+		"([\\t]*+)(\\<var name=\\\"([^\\\"]*)\\\".*?/\\>.*+(?:\\</var\\>)??)");
+	private static Pattern _poshiVariablesBlockPattern = Pattern.compile(
+		"((?:[\\t]*+\\<var.*?\\>\\n[\\t]*+){2,}?)" +
+			"(?:(?:\\n){1,}+|\\</execute\\>)");
+	private static Pattern _poshiWholeTagPattern = Pattern.compile(
+		"<[^\\>^/]*\\/>");
 
 }

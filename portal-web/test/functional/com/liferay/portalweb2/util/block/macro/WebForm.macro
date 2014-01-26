@@ -1,8 +1,8 @@
 <definition>
 	<command name="sendPG">
-		<var name="key_formTextTitle" value="${formTextTitle}" />
 		<var name="key_formDropdownTitle" value="${formDropdownTitle}" />
 		<var name="key_formTextboxTitle" value="${formTextboxTitle}" />
+		<var name="key_formTextTitle" value="${formTextTitle}" />
 
 		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_TITLE" value1="${formInformationTitle}" />
 		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_DESCRIPTION" value1="${formInformationDescription}" />
@@ -17,9 +17,9 @@
 	</command>
 
 	<command name="viewPG">
-		<var name="key_formTextTitle" value="${formTextTitle}" />
 		<var name="key_formDropdownTitle" value="${formDropdownTitle}" />
 		<var name="key_formTextboxTitle" value="${formTextboxTitle}" />
+		<var name="key_formTextTitle" value="${formTextTitle}" />
 
 		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_TITLE" value1="${formInformationTitle}" />
 		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_DESCRIPTION" value1="${formInformationDescription}" />

@@ -62,9 +62,9 @@
 		<execute macro="MessageboardsThread#splitThreadPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadReplyBody" value="${threadReplyBody}" />
+			<var name="threadReplySubject" value="${threadReplySubject}" />
 			<var name="threadSplitReplyBody" value="${threadSplitReplyBody}" />
 			<var name="threadSplitSubject" value="${threadSplitSubject}" />
-			<var name="threadReplySubject" value="${threadReplySubject}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
@@ -75,9 +75,9 @@
 		<execute macro="MessageboardsThread#viewSplitThreadPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadReplyBody" value="${threadReplyBody}" />
+			<var name="threadReplySubject" value="${threadReplySubject}" />
 			<var name="threadSplitReplyBody" value="${threadSplitReplyBody}" />
 			<var name="threadSplitSubject" value="${threadSplitSubject}" />
-			<var name="threadReplySubject" value="${threadReplySubject}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 	</command>

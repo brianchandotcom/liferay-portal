@@ -4,28 +4,28 @@
 	<property name="theme.plugins.includes" value="so-theme" />
 	<property name="web.plugins.includes" value="resources-importer-web" />
 
-	<var name="adminName" value="Test Test" />
 	<var name="adminEmailAddress" value="test@liferay.com" />
+	<var name="adminName" value="Test Test" />
 	<var name="attachmentFile" value="Document_1.jpg" />
 	<var name="messageBody" value="Message Body" />
 	<var name="messageReplyBody" value="Message Reply Body" />
 	<var name="messageSubject" value="Message Subject" />
 	<var name="pageName" value="Private Messaging Page" />
-	<var name="portletName" value="Private Messaging" />
 	<var name="password" value="test" />
+	<var name="portletName" value="Private Messaging" />
 	<var name="userEmailAddress" value="socialoffice01@liferay.com" />
-	<var name="userFirstName" value="Social01" />
-	<var name="userMiddleName" value="Office01" />
-	<var name="userName" value="Social01 Office01 User01" />
-	<var name="userLastName" value="User01" />
-	<var name="userListName" value="User01, Social01" />
-	<var name="userScreenName" value="socialoffice01" />
 	<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
+	<var name="userFirstName" value="Social01" />
 	<var name="userFirstName2" value="Social02" />
-	<var name="userMiddleName2" value="Office02" />
-	<var name="userName2" value="Social02 Office02 User02" />
+	<var name="userLastName" value="User01" />
 	<var name="userLastName2" value="User02" />
+	<var name="userListName" value="User01, Social01" />
 	<var name="userListName2" value="User02, Social02" />
+	<var name="userMiddleName" value="Office01" />
+	<var name="userMiddleName2" value="Office02" />
+	<var name="userName" value="Social01 Office01 User01" />
+	<var name="userName2" value="Social02 Office02 User02" />
+	<var name="userScreenName" value="socialoffice01" />
 	<var name="userScreenName2" value="socialoffice02" />
 
 	<set-up>
@@ -36,8 +36,8 @@
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 	</set-up>
@@ -89,8 +89,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -119,14 +119,14 @@
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress2}" />
 			<var name="userFirstName" value="${userFirstName2}" />
-			<var name="userMiddleName" value="${userMiddleName2}" />
 			<var name="userLastName" value="${userLastName2}" />
+			<var name="userMiddleName" value="${userMiddleName2}" />
 			<var name="userScreenName" value="${userScreenName2}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -143,8 +143,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName2}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -192,8 +192,8 @@
 		<execute action="SOMessages#assertTextNotPresent" value1="${senderName} sent you a message." />
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -326,8 +326,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -363,8 +363,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -508,8 +508,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -554,8 +554,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -608,8 +608,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -640,8 +640,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOMessages#viewMessageNotification">
@@ -679,8 +679,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${adminName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
 		<execute macro="SOMessages#viewMessageNotification">
@@ -717,8 +717,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOMessages#viewMessageNotification">
@@ -758,8 +758,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${adminName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
 		<execute macro="SOMessages#viewMessageNotification">
@@ -806,8 +806,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOMessages#viewMessageNotification">
@@ -847,8 +847,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${adminName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
 		<execute macro="SOMessages#viewMessageNotification">

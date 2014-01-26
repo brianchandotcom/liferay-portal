@@ -65,6 +65,15 @@
 		<execute action="PGCalendarResource#assertElementNotPresent" locator-key1="RESOURCE_TABLE_ACTIONS_GENERIC" />
 	</command>
 
+	<command name="viewDefaultPG">
+		<execute action="PGCalendar#assertClick" locator-key1="NAVIGATION_RESOURCES" value1="Resources" />
+
+		<var name="key_calendarResourceName" value="${calendarResourceName}" />
+
+		<execute action="PGCalendarResource#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No resources were found." />
+		<execute action="PGCalendarResource#assertElementNotPresent" locator-key1="RESOURCE_TABLE_NAME" value1="${calendarResourceName}" />
+	</command>
+
 	<command name="viewPG">
 		<execute action="PGCalendar#assertClick" locator-key1="NAVIGATION_RESOURCES" value1="Resources" />
 
@@ -74,14 +83,5 @@
 		<execute action="PGCalendarResource#assertTextEquals" locator-key1="RESOURCE_TABLE_DESCRIPTION" value1="" />
 		<execute action="PGCalendarResource#assertTextEquals" locator-key1="RESOURCE_TABLE_ACTIVE" value1="Yes" />
 		<execute action="PGCalendarResource#assertTextEquals" locator-key1="RESOURCE_TABLE_ACTIONS" value1="Actions" />
-	</command>
-
-	<command name="viewDefaultPG">
-		<execute action="PGCalendar#assertClick" locator-key1="NAVIGATION_RESOURCES" value1="Resources" />
-
-		<var name="key_calendarResourceName" value="${calendarResourceName}" />
-
-		<execute action="PGCalendarResource#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No resources were found." />
-		<execute action="PGCalendarResource#assertElementNotPresent" locator-key1="RESOURCE_TABLE_NAME" value1="${calendarResourceName}" />
 	</command>
 </definition>

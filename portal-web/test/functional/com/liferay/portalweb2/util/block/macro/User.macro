@@ -1,6 +1,6 @@
 <definition>
-	<var name="userEmailAddress" value="test@liferay.com" />
 	<var name="password" value="test" />
+	<var name="userEmailAddress" value="test@liferay.com" />
 
 	<command name="activateCP">
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
@@ -315,15 +315,15 @@
 				<execute macro="User#logoutPG" />
 
 				<execute macro="User#loginUserPG">
-					<var name="userEmailAddress" value="${userEmailAddress}" />
 					<var name="password" value="test" />
+					<var name="userEmailAddress" value="${userEmailAddress}" />
 				</execute>
 
 				<execute macro="User#logoutUserPG" />
 
 				<execute macro="User#loginPG">
-					<var name="userEmailAddress" value="test@liferay.com" />
 					<var name="password" value="test" />
+					<var name="userEmailAddress" value="test@liferay.com" />
 				</execute>
 			</then>
 			<else>
@@ -339,15 +339,15 @@
 				<execute macro="User#logoutPG" />
 
 				<execute macro="User#loginUserPG">
-					<var name="userEmailAddress" value="${userEmailAddress}" />
 					<var name="password" value="test1" />
+					<var name="userEmailAddress" value="${userEmailAddress}" />
 				</execute>
 
 				<execute macro="User#logoutUserPG" />
 
 				<execute macro="User#loginPG">
-					<var name="userEmailAddress" value="test@liferay.com" />
 					<var name="password" value="test" />
+					<var name="userEmailAddress" value="test@liferay.com" />
 				</execute>
 			</else>
 		</if>
@@ -453,15 +453,15 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="password" value="password" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
-			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
 
@@ -483,6 +483,21 @@
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPUsersandorganizationsUser#assertSelectedLabel" locator-key1="DISPLAY_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -08:00) Pacific Standard Time" />
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DISPLAY_SETTINGS_GREETING_FIELD" value1="${displaySettingsGreeting}" />
+	</command>
+
+	<command name="editUserMiddleNameCP">
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
+		<execute action="CPUsersandorganizationsUser#type" locator-key1="DETAILS_MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editUserSiteCP">
@@ -509,21 +524,6 @@
 		<execute action="CPUsersandorganizationsUser#selectFrame" value1="relative=top" />
 
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${siteName}" />
-		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="editUserMiddleNameCP">
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
-
-		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-
-		<execute action="CPUsersandorganizationsUser#type" locator-key1="DETAILS_MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
 		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -599,6 +599,25 @@
 		</if>
 	</command>
 
+	<command name="loginUserInvalidPG">
+		<execute macro="Page#openURL" />
+
+		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
+		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" />
+
+		<execute action="PGLogin#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute action="PGLogin#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Authentication failed. Please try again." />
+	</command>
+
+	<command name="loginUserPG">
+		<execute macro="Page#openURL" />
+
+		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
+		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" />
+	</command>
+
 	<command name="logoutAndLoginPG">
 		<execute macro="Page#openURL" />
 
@@ -623,25 +642,6 @@
 				<execute action="Dockbar#click" locator-key1="USER_SIGN_OUT" />
 			</then>
 		</if>
-	</command>
-
-	<command name="loginUserPG">
-		<execute macro="Page#openURL" />
-
-		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
-		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" />
-	</command>
-
-	<command name="loginUserInvalidPG">
-		<execute macro="Page#openURL" />
-
-		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
-		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" />
-
-		<execute action="PGLogin#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute action="PGLogin#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Authentication failed. Please try again." />
 	</command>
 
 	<command name="logoutUserPG">

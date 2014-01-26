@@ -1,7 +1,7 @@
 <definition component-name="portal-tools">
 	<var name="commitMessage" value="LPS-40675" />
-	<var name="ticketSummary" value="LIFERAYQA-5720: Implement storeAttribute" />
 	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-5720" />
+	<var name="ticketSummary" value="LIFERAYQA-5720: Implement storeAttribute" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

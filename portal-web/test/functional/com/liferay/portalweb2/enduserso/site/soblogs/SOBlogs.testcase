@@ -8,34 +8,33 @@
 	<var name="pageName" value="Blogs" />
 	<var name="roleName" value="Blogs Site Role Name" />
 	<var name="roleType" value="Site" />
-	<var name="siteName" value="Open Site Name" />
 	<var name="siteDescription" value="Open Site Description" />
+	<var name="siteName" value="Open Site Name" />
 	<var name="siteType" value="Open" />
 
 	<set-up>
 		<execute macro="SOUser#firstLoginPG" />
 
 		<execute macro="SOUserBar#addSOSite">
-			<var name="siteName" value="${siteName}" />
 			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteType" value="${siteType}" />
 		</execute>
 	</set-up>
 
 	<var name="adminEmailAddress" value="test@liferay.com" />
 	<var name="assetType" value="Blogs Entry" />
-	<var name="entryTitle" value="Blogs Entry Title" />
-	<var name="entryContent" value="Blogs Entry Content" />
 	<var name="entryAuthorFirstName" value="Test" />
 	<var name="entryAuthorLastName" value="Test" />
+	<var name="entryContent" value="Blogs Entry Content" />
 	<var name="entryContentEdit" value="Blogs Entry Content Edit" />
+	<var name="entryTitle" value="Blogs Entry Title" />
 	<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
-	<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 	<var name="password" value="test" />
 	<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 	<var name="userFirstName" value="Social01" />
-	<var name="userMiddleName" value="Office01" />
 	<var name="userLastName" value="User01" />
+	<var name="userMiddleName" value="Office01" />
 	<var name="userScreenName" value="socialoffice01" />
 
 	<command name="AddSOBlogsEntry" priority="5">
@@ -92,8 +91,8 @@
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
@@ -177,8 +176,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />
@@ -188,23 +187,23 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="Test Test" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="${siteName}" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Site#assignRoleCP">
-			<var name="userScreenName" value="${userScreenName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />
@@ -234,8 +233,8 @@
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="AVERAGE" value1="Average (0 Votes)" />
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="Test Test" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />
@@ -273,8 +272,8 @@
 		<execute macro="SOSite#gotoPG" />
 
 		<execute macro="BlogsEntry#viewPG">
-			<var name="entryTitle" value="${entryTitleEdit}" />
 			<var name="entryContent" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitleEdit}" />
 		</execute>
 	</command>
 
@@ -289,8 +288,8 @@
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
@@ -374,8 +373,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />
@@ -385,23 +384,23 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="Test Test" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="${siteName}" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Site#assignRoleCP">
-			<var name="userScreenName" value="${userScreenName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />
@@ -411,8 +410,8 @@
 		<execute macro="BlogsEntry#editPG" />
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="Test Test" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />
@@ -421,8 +420,8 @@
 			<var name="entryAuthorFirstName" value="${userFirstName}" />
 			<var name="entryAuthorLastName" value="${userLastName}" />
 			<var name="entryAuthorMiddleName" value="${userMiddleName}" />
-			<var name="entryTitle" value="${entryTitleEdit}" />
 			<var name="entryContent" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitleEdit}" />
 		</execute>
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_COMMENTS" value1="0 Comments" />
@@ -448,8 +447,8 @@
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
@@ -533,8 +532,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />
@@ -544,23 +543,23 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="Test Test" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="${siteName}" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Site#assignRoleCP">
-			<var name="userScreenName" value="${userScreenName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />
@@ -572,8 +571,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="Test Test" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />

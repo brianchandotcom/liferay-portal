@@ -24,8 +24,8 @@
 	</tear-down>
 
 	<command name="addCP" priority="5">
-		<var name="adtType" value="Blogs" />
 		<var name="adtFile" value="portlet_display_template_basic.ftl" />
+		<var name="adtType" value="Blogs" />
 		<var name="key_adtTitle" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 
@@ -58,8 +58,8 @@
 	<command name="addCPviaBlogs" priority="5">
 		<var name="adtFile" value="portlet_display_template_basic.ftl" />
 		<var name="adtType" value="Blogs" />
-		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="key_adtTitle" value="Blogs" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -80,8 +80,8 @@
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
-			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

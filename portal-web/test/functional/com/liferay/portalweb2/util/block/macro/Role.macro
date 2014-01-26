@@ -134,21 +134,6 @@
 		<execute action="CPRolesAssignmembersUsers#assertChecked" locator-key1="USER_TABLE_CHECKBOX" />
 	</command>
 
-	<command name="definePermissionCP">
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
-			<var name="roleName" value="${roleName}" />
-		</execute>
-
-		<execute macro="Role#viewPermissionCP">
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
-		</execute>
-	</command>
-
 	<command name="definePermissionCmdCP">
 		<var name="key_roleName" value="${roleName}" />
 
@@ -192,6 +177,21 @@
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The role permissions were updated." />
 	</command>
 
+	<command name="definePermissionCP">
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+		</execute>
+	</command>
+
 	<command name="definePermissionPG">
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
@@ -216,8 +216,8 @@
 		<execute action="CPRolesDefinepermissionsAllpermissions#uncheck" locator-key1="${permissionDefinitionKey}" />
 		<execute action="CPRolesDefinepermissionsAllpermissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<var name="key_permissionNavigationValue" value="${permissionNavigationValue}" />
 		<var name="key_permissionDefinitionValue" value="${permissionDefinitionValue}" />
+		<var name="key_permissionNavigationValue" value="${permissionNavigationValue}" />
 
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The role permissions were updated." />
 		<execute action="CPRolesDefinepermissions#assertElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />

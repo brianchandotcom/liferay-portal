@@ -37,8 +37,8 @@
 		</execute>
 
 		<execute macro="Organization#addSiteCP">
-			<var name="orgName" value="${org1Name}" />
 			<var name="organizationSite" value="Community Site" />
+			<var name="orgName" value="${org1Name}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -57,8 +57,8 @@
 		</execute>
 
 		<execute macro="Site#viewCP">
-			<var name="siteName" value="${org1Name}" />
 			<var name="siteMember" value="Organization" />
+			<var name="siteName" value="${org1Name}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -75,8 +75,8 @@
 		</execute>
 
 		<execute macro="Organization#addSiteCP">
-			<var name="orgName" value="${org2Name}" />
 			<var name="organizationSite" value="Intranet Site" />
+			<var name="orgName" value="${org2Name}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -95,8 +95,8 @@
 		</execute>
 
 		<execute macro="Site#viewCP">
-			<var name="siteName" value="${org2Name}" />
 			<var name="siteMember" value="Organization" />
+			<var name="siteName" value="${org2Name}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -171,8 +171,8 @@
 		</execute>
 
 		<execute macro="User#firstLoginPG">
-			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -185,13 +185,13 @@
 		</execute>
 
 		<execute macro="User#firstLoginPG">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="Site#viewMySitesViaMySitesPG">
-			<var name="siteName" value="${org2Name}" />
 			<var name="organizationSite" value="true" />
+			<var name="siteName" value="${org2Name}" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -202,8 +202,8 @@
 		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_INFO" value1="This site is inactive. Please contact the administrator." />
 
 		<execute macro="User#firstLoginPG">
-			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
 

@@ -52,13 +52,13 @@
 	</command>
 
 	<command name="AddStructures" priority="4">
-		<var name="structureDescription" value="WC Structure Description" />
 		<var name="structure1FieldNames" value="Boolean,Date,Decimal,Documents and Media" />
 		<var name="structure1Name" value="WC Structure Name 1" />
 		<var name="structure2FieldNames" value="HTML,Image,Integer,Link to Page" />
 		<var name="structure2Name" value="WC Structure Name 2" />
 		<var name="structure3FieldNames" value="Number,Radio,Select,Text,Text Box" />
 		<var name="structure3Name" value="WC Structure Name 3" />
+		<var name="structureDescription" value="WC Structure Description" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -144,35 +144,6 @@
 		</execute>
 	</command>
 
-	<command name="AddTemplateXSL" priority="5">
-		<var name="templateDescription" value="WC Template Description" />
-		<var name="templateFile" value="xsl_template.xsl" />
-		<var name="templateLanguage" value="xsl" />
-		<var name="templateName" value="WC Template Name" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="templateDescription" value="${templateDescription}" />
-			<var name="templateFile" value="${templateFile}" />
-			<var name="templateLanguage" value="${templateLanguage}" />
-			<var name="templateName" value="${templateName}" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentTemplates#viewCP">
-			<var name="templateDescription" value="${templateDescription}" />
-			<var name="templateLanguage" value="${templateLanguage}" />
-			<var name="templateName" value="${templateName}" />
-			<var name="templateScript"><![CDATA["/root/dynamic-element[@name='text']"]]></var>
-		</execute>
-	</command>
-
 	<command name="AddTemplateWithStructure" priority="5">
 		<var name="structureDescription" value="WC Structure Description" />
 		<var name="structureFieldNames" value="Text" />
@@ -208,6 +179,35 @@
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="${templateDescription}" />
 			<var name="templateName" value="${templateName}" />
+		</execute>
+	</command>
+
+	<command name="AddTemplateXSL" priority="5">
+		<var name="templateDescription" value="WC Template Description" />
+		<var name="templateFile" value="xsl_template.xsl" />
+		<var name="templateLanguage" value="xsl" />
+		<var name="templateName" value="WC Template Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateFile" value="${templateFile}" />
+			<var name="templateLanguage" value="${templateLanguage}" />
+			<var name="templateName" value="${templateName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#viewCP">
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateLanguage" value="${templateLanguage}" />
+			<var name="templateName" value="${templateName}" />
+			<var name="templateScript"><![CDATA["/root/dynamic-element[@name='text']"]]></var>
 		</execute>
 	</command>
 

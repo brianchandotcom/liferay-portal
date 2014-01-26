@@ -56,8 +56,8 @@
 						<equals arg1="${tagNumber}" arg2="${numberOfTags}" />
 					</not>
 					<then>
-						<var name="tagNumber" value="${tagNumber?increment()}" />
 						<var name="key_tagNumber" value="${tagNumber}" />
+						<var name="tagNumber" value="${tagNumber?increment()}" />
 
 						<execute action="SOTasksAdd#type" locator-key1="TASK_TAG_FIELD" value1="tag${tagNumber}" />
 						<execute action="SOTasksAdd#click" locator-key1="TASK_ADD_TAG_BUTTON" />
@@ -377,6 +377,16 @@
 		</while>
 	</command>
 
+	<command name="viewResolveTaskNotification">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${taskAssignee} resolved the task." />
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${taskDescription}" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+	</command>
+
 	<command name="viewTask">
 		<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
 
@@ -553,8 +563,8 @@
 						<equals arg1="${tagNumber}" arg2="${numberOfTags}" />
 					</not>
 					<then>
-						<var name="tagNumber" value="${tagNumber?increment()}" />
 						<var name="key_tagNumber" value="${tagNumber}" />
+						<var name="tagNumber" value="${tagNumber?increment()}" />
 
 						<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_TAG" value1="tag${tagNumber}" />
 					</then>
@@ -570,16 +580,6 @@
 				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_TAG" value1="tag${tagNumber}" />
 			</then>
 		</if>
-	</command>
-
-	<command name="viewResolveTaskNotification">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
-		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${taskAssignee} resolved the task." />
-		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${taskDescription}" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 	</command>
 
 	<command name="viewTaskNotification">

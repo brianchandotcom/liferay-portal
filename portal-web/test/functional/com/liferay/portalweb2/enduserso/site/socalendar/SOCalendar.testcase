@@ -9,8 +9,8 @@
 	<var name="eventType" value="Regular" />
 	<var name="key_siteName" value="${siteName}" />
 	<var name="pageName" value="Calendar" />
-	<var name="siteName" value="Open Site Name" />
 	<var name="siteDescription" value="Open Site Description" />
+	<var name="siteName" value="Open Site Name" />
 	<var name="siteType" value="Open" />
 	<var name="userName" value="Test Test" />
 
@@ -18,8 +18,8 @@
 		<execute macro="SOUser#firstLoginPG" />
 
 		<execute macro="SOUserBar#addSOSite">
-			<var name="siteName" value="${siteName}" />
 			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteType" value="${siteType}" />
 		</execute>
 	</set-up>

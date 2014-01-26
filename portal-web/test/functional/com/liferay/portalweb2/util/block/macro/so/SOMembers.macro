@@ -1,23 +1,4 @@
 <definition>
-	<command name="inviteMember">
-		<execute action="SOMembers#assertClick" locator-key1="INVITE_BUTTON" value1="Invite members to this site." />
-
-		<execute action="SOMembersInvite#type" locator-key1="FIND_MEMBERS_SEARCH_FIELD" value1="${userName}" />
-		<execute action="SOMembersInvite#assertTextEquals" locator-key1="FIND_MEMBERS_USER" value1="${userName}" />
-		<execute action="SOMembersInvite#click" locator-key1="FIND_MEMBERS_USER" />
-		<execute action="SOMembersInvite#assertTextEquals" locator-key1="MEMBERS_INVITE_LIST" value1="${userName}${userEmailAddress}" />
-
-		<if>
-			<isset var="siteRoleInvite" />
-			<then>
-				<execute action="SOMembersInvite#select" locator-key1="INVITE_TO_ROLE_SELECT" value1="${siteRoleInvite}" />
-			</then>
-		</if>
-
-		<execute action="SOMembersInvite#assertClick" locator-key1="SEND_INVITATIONS_BUTTON" value1="Send Invitations"  />
-		<execute action="SOMembersInvite#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully."  />
-	</command>
-
 	<command name="confirmMemberInvite">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
@@ -38,6 +19,25 @@
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_IGNORE" value1="Ignore" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_IGNORE" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+	</command>
+
+	<command name="inviteMember">
+		<execute action="SOMembers#assertClick" locator-key1="INVITE_BUTTON" value1="Invite members to this site." />
+
+		<execute action="SOMembersInvite#type" locator-key1="FIND_MEMBERS_SEARCH_FIELD" value1="${userName}" />
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="FIND_MEMBERS_USER" value1="${userName}" />
+		<execute action="SOMembersInvite#click" locator-key1="FIND_MEMBERS_USER" />
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="MEMBERS_INVITE_LIST" value1="${userName}${userEmailAddress}" />
+
+		<if>
+			<isset var="siteRoleInvite" />
+			<then>
+				<execute action="SOMembersInvite#select" locator-key1="INVITE_TO_ROLE_SELECT" value1="${siteRoleInvite}" />
+			</then>
+		</if>
+
+		<execute action="SOMembersInvite#assertClick" locator-key1="SEND_INVITATIONS_BUTTON" value1="Send Invitations"  />
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully."  />
 	</command>
 
 	<command name="viewConfirmMemberInvite">

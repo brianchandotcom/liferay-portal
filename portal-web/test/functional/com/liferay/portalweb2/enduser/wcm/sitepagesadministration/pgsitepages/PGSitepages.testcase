@@ -30,8 +30,8 @@
 		<var name="fieldName" value="Embedded Portlets" />
 		<var name="webContentContent"><![CDATA[<runtime-portlet name='11' />]]></var>
 		<var name="webContentContentEdit"><![CDATA[<runtime-portlet name='16' />]]></var>
-		<var name="webContentTitle" value="Embedded Portlets" />
 		<var name="webContentJavascript" value="true" />
+		<var name="webContentTitle" value="Embedded Portlets" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

@@ -30,9 +30,9 @@
 		<var name="permissionNavigation2Key" value="CONTROL_PANEL_USERS_USER_GROUPS" />
 		<var name="permissionNavigation2Value" value="User Groups" />
 		<var name="roleName" value="Regrole Name" />
-		<var name="userGroupName" value="UG UserGroup Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
+		<var name="userGroupName" value="UG UserGroup Name" />
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 

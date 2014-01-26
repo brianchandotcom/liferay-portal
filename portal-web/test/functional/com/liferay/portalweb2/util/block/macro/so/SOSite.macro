@@ -5,8 +5,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="${siteName}" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<var name="key_userScreenName" value="${userScreenName}" />
@@ -39,8 +39,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="${siteName}" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<var name="key_userScreenName" value="${userScreenName}" />
@@ -141,8 +141,8 @@
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
 
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="siteScopeName" value="${siteName}" />
 			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<if>

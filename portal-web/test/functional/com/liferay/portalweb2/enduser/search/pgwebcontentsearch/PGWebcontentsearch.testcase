@@ -422,9 +422,9 @@
 	<command name="SearchWebContentTag" priority="5">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
+		<var name="tagName" value="tag name" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
-		<var name="tagName" value="tag name" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -491,9 +491,9 @@
 	<command name="SearchWebContentTagQuotes" priority="5">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
+		<var name="tagName" value="tag name" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
-		<var name="tagName" value="tag name" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />

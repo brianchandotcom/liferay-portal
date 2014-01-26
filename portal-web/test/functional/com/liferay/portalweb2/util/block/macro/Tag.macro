@@ -215,6 +215,17 @@
 		<execute action="CPTags#assertTextNotPresent" value1="${tagName}" />
 	</command>
 
+	<command name="editCancelCP">
+		<var name="key_tagName" value="${tagName}" />
+
+		<execute action="CPTags#assertClick" locator-key1="TAG_ENTRY_NAME" value1="${tagName}" />
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_DETAILS_HEADER" value1="${tagName}" />
+		<execute action="CPTags#assertClick" locator-key1="TAG_DETAILS_EDIT_BUTTON" value1="Edit" />
+
+		<execute action="CPTagsEdit#assertClick" locator-key1="CLOSE_BUTTON" value1="Close" />
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName}" />
+	</command>
+
 	<command name="editCP">
 		<var name="key_tagName" value="${tagName}" />
 
@@ -225,17 +236,6 @@
 		<execute action="CPTagsEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPTags#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName} edit" />
-	</command>
-
-	<command name="editCancelCP">
-		<var name="key_tagName" value="${tagName}" />
-
-		<execute action="CPTags#assertClick" locator-key1="TAG_ENTRY_NAME" value1="${tagName}" />
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_DETAILS_HEADER" value1="${tagName}" />
-		<execute action="CPTags#assertClick" locator-key1="TAG_DETAILS_EDIT_BUTTON" value1="Edit" />
-
-		<execute action="CPTagsEdit#assertClick" locator-key1="CLOSE_BUTTON" value1="Close" />
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName}" />
 	</command>
 
 	<command name="removeSelectTagViaBlogsPG">
@@ -291,28 +291,6 @@
 		<execute action="PGBlogs#assertTextNotPresent" locator-key1="TAG" value1="${tagName1}" />
 	</command>
 
-	<command name="searchTagCP">
-		<execute action="CPTags#type" locator-key1="SEARCH_FIELD" value1="3" />
-
-		<var name="key_tagName" value="${tagName3}" />
-
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName3}" />
-
-		<execute action="CPTags#type" locator-key1="SEARCH_FIELD" value1="tag" />
-
-		<var name="key_tagName" value="${tagName1}" />
-
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName1}" />
-
-		<var name="key_tagName" value="${tagName2}" />
-
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName2}" />
-
-		<var name="key_tagName" value="${tagName3}" />
-
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName3}" />
-	</command>
-
 	<command name="searchMultipleTagsViaBlogsPG">
 		<execute action="PGBlogs#type" locator-key1="SEARCH_FIELD" value1="${tagName1}" />
 		<execute action="PGBlogs#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
@@ -343,6 +321,28 @@
 		<var name="key_blogsEntryContent" value="${entryContent3}" />
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SEARCH_RESULT_BLOG_ENTRY_CONTENT" value1="${entryContent3}" />
+	</command>
+
+	<command name="searchTagCP">
+		<execute action="CPTags#type" locator-key1="SEARCH_FIELD" value1="3" />
+
+		<var name="key_tagName" value="${tagName3}" />
+
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName3}" />
+
+		<execute action="CPTags#type" locator-key1="SEARCH_FIELD" value1="tag" />
+
+		<var name="key_tagName" value="${tagName1}" />
+
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName1}" />
+
+		<var name="key_tagName" value="${tagName2}" />
+
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName2}" />
+
+		<var name="key_tagName" value="${tagName3}" />
+
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName3}" />
 	</command>
 
 	<command name="tearDownCP">

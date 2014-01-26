@@ -313,9 +313,9 @@
 	</command>
 
 	<command name="RemoveMember" priority="4">
-		<var name="userGroupName" value="UG UserGroup Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
+		<var name="userGroupName" value="UG UserGroup Name" />
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
@@ -352,8 +352,8 @@
 		</execute>
 
 		<execute macro="UserGroup#removeMemberCP">
-			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
@@ -362,8 +362,8 @@
 		</execute>
 
 		<execute macro="UserGroup#viewRemoveMemberCP">
-			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userGroupName" value="${userGroupName}" />
 		</execute>
 	</command>
 

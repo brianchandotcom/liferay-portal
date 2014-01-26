@@ -9,6 +9,12 @@
 		</case>
 	</command>
 
+	<command name="assertElementNotPresent">
+		<case comparator="contains" locator1="//div[@id='workflowMyRolesTasksPanelContent']//tr[3]/td">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE">
 			<execute function="AssertTextEquals#assertPartialText" />
@@ -16,12 +22,6 @@
 
 		<case locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE">
 			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-	</command>
-
-	<command name="assertElementNotPresent">
-		<case comparator="contains" locator1="//div[@id='workflowMyRolesTasksPanelContent']//tr[3]/td">
-			<execute function="AssertElementNotPresent#assertNotVisible" />
 		</case>
 	</command>
 </definition>

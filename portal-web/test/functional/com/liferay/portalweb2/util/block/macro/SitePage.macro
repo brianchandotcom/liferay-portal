@@ -97,6 +97,18 @@
 		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
 	</command>
 
+	<command name="expandRootCP">
+		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
+		<execute action="CPSitepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+
+		<if>
+			<condition action="CPSitepages#isElementNotPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+			<then>
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
+			</then>
+		</if>
+	</command>
+
 	<command name="expandTreeCP">
 		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_ARROW_1" />
 		<execute action="CPSitepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_2" />
@@ -109,16 +121,18 @@
 		</if>
 	</command>
 
-	<command name="expandRootCP">
-		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
-		<execute action="CPSitepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+	<command name="viewChildPG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePageName}" />
+		</execute>
 
-		<if>
-			<condition action="CPSitepages#isElementNotPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
-			<then>
-				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
-			</then>
-		</if>
+		<execute action="Home#mouseOver" locator-key1="PAGE_1" value1="${sitePageName}" />
+		<execute action="Home#assertClick" locator-key1="PAGE_1_CHILD_PAGE_1" value1="${siteChildPageName}" />
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${siteChildPageName}" />
+		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="Home#assertLocation" value1="${sitePageURL}" />
 	</command>
 
 	<command name="viewDefaultSiteTemplatePagesPG">
@@ -144,20 +158,6 @@
 				</then>
 			</elseif>
 		</if>
-	</command>
-
-	<command name="viewChildPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-		</execute>
-
-		<execute action="Home#mouseOver" locator-key1="PAGE_1" value1="${sitePageName}" />
-		<execute action="Home#assertClick" locator-key1="PAGE_1_CHILD_PAGE_1" value1="${siteChildPageName}" />
-		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
-		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
-		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${siteChildPageName}" />
-		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
-		<execute action="Home#assertLocation" value1="${sitePageURL}" />
 	</command>
 
 	<command name="viewFriendlyURLCP">

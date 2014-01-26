@@ -12,10 +12,10 @@
 	<command name="JoinSiteOpen" priority="5">
 		<var name="password" value="test" />
 		<var name="siteName" value="Site Name" />
-		<var name="userScreenName" value="usersn" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -30,10 +30,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userScreenName" value="${userScreenName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -41,15 +41,15 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userScreenName" value="${userScreenName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG" >
-			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="Page#gotoMyDashboard" />
@@ -61,8 +61,8 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
-			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -74,18 +74,18 @@
 		<var name="membershipType" value="Private" />
 		<var name="password" value="test" />
 		<var name="siteName" value="Site Name" />
-		<var name="userScreenName" value="usersn" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
 			<var name="membershipType" value="Private" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -93,10 +93,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userScreenName" value="${userScreenName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -104,15 +104,15 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userScreenName" value="${userScreenName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG" >
-			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="Page#gotoMyDashboard" />
@@ -125,8 +125,8 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
-			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -138,18 +138,18 @@
 		<var name="membershipType" value="Restricted" />
 		<var name="password" value="test" />
 		<var name="siteName" value="Site Name" />
-		<var name="userScreenName" value="usersn" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
 			<var name="membershipType" value="${membershipType}" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -157,10 +157,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userScreenName" value="${userScreenName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -168,15 +168,15 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userScreenName" value="${userScreenName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG" >
-			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="Page#gotoMyDashboard" />
@@ -189,8 +189,8 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
-			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -198,8 +198,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="${siteName}" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Site#approveJoinSiteRestrictedViaMySitesPG">
@@ -209,8 +209,8 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG" >
-			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="Page#gotoMyDashboard" />
@@ -222,8 +222,8 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
-			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -234,10 +234,10 @@
 	<command name="LeaveSite" priority="5">
 		<var name="password" value="test" />
 		<var name="siteName" value="Site Name" />
-		<var name="userScreenName" value="usersn" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -252,10 +252,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userScreenName" value="${userScreenName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -263,15 +263,15 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userScreenName" value="${userScreenName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG" >
-			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="Page#gotoMyDashboard" />
@@ -289,8 +289,8 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
-			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

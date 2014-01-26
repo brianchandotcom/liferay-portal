@@ -37,9 +37,9 @@
 		<var name="siteName" value="Site Name" />
 
 		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Site Settings" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -47,9 +47,9 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -60,21 +60,21 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#editPasswordCP">
 			<var name="password" value="password" />
-			<var name="userScreenName" value="usersn" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#addCP">
@@ -82,9 +82,9 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
@@ -96,9 +96,9 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
@@ -145,9 +145,9 @@
 		<var name="pageName" value="Blogs Test Page" />
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -158,21 +158,21 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#editPasswordCP">
 			<var name="password" value="password" />
-			<var name="userScreenName" value="usersnpu" />
 			<var name="userEmailAddress" value="usereapu@liferay.com" />
+			<var name="userScreenName" value="usersnpu" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#addCP">
@@ -181,9 +181,9 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
@@ -195,9 +195,9 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
@@ -220,9 +220,9 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Site Memberships" />
 		</execute>
 
 		<execute macro="Site#assignRoleCP">
@@ -233,9 +233,9 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -246,21 +246,21 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#editPasswordCP">
 			<var name="password" value="password" />
-			<var name="userScreenName" value="usersncr" />
 			<var name="userEmailAddress" value="usereacr@liferay.com" />
+			<var name="userScreenName" value="usersncr" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
@@ -280,9 +280,9 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -293,21 +293,21 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#editPasswordCP">
 			<var name="password" value="password" />
-			<var name="userScreenName" value="usersna" />
 			<var name="userEmailAddress" value="usereaa@liferay.com" />
+			<var name="userScreenName" value="usersna" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
@@ -327,9 +327,9 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="portletName" value="Site Settings" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -342,8 +342,8 @@
 		</execute>
 
 		<execute macro="Workflow#configureSiteWorkflow">
-			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -353,11 +353,10 @@
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="siteName" value="${siteName}" />
 			<var name="PageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-			<var name="pageStaging" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -382,8 +381,8 @@
 		<execute action="Home#assertElementNotPresent" locator-key1="PAGE_2_GUEST_VIEW" />
 
 		<execute macro="User#loginUserPG">
-			<var name="userEmailAddress" value="usereaa@liferay.com" />
 			<var name="password" value="test" />
+			<var name="userEmailAddress" value="usereaa@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -418,8 +417,8 @@
 		</execute>
 
 		<execute macro="BlogsEntry#addWithWorkflowPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="User#logoutUserPG" />
@@ -445,15 +444,15 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowTask" value="Review" />
 			<var name="workflowAssetTitle" value="Blogs Entry Title" />
 			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowTask" value="Review" />
 			<var name="workflowAssetTitle" value="Blogs Entry Title" />
 			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="User#logoutUserPG" />

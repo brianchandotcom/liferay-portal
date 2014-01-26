@@ -63,8 +63,8 @@
 		</execute>
 
 		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentTitle" value="${webContentTitle}" />
 			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
 
@@ -109,8 +109,8 @@
 		</execute>
 
 		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentTitle" value="${webContentTitle}" />
 			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
 
@@ -143,8 +143,8 @@
 		</execute>
 
 		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentTitle" value="${webContentTitle}" />
 			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
 
@@ -178,8 +178,8 @@
 		</execute>
 
 		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentTitle" value="${webContentTitle}" />
 			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
 

@@ -1,14 +1,17 @@
 <definition>
-	<command name="loopOnEmptyList" priority="5">
-		<echo message="Test loops: loop on empty list" />
+	<command name="loopContainingContainsIfConditional" priority="5">
+		<echo message="Test loops: loop containing contains if conditional" />
 
-		<var name="list" value="" />
+		<var name="letter" value="a" />
 
-		<for list="${list}" param="param">
-			<execute macro="TestUtils#fail" />
+		<for list="abc,def,ghi,jkl" param="letters">
+			<if>
+				<contains string="${letters}" substring="${letter}" />
+				<then>
+					<execute macro="TestUtils#pass" />
+				</then>
+			</if>
 		</for>
-
-		<execute macro="TestUtils#pass" />
 	</command>
 
 	<command name="loopContainingEchoStatement" priority="5">
@@ -44,19 +47,16 @@
 		</execute>
 	</command>
 
-	<command name="loopContainingContainsIfConditional" priority="5">
-		<echo message="Test loops: loop containing contains if conditional" />
+	<command name="loopOnEmptyList" priority="5">
+		<echo message="Test loops: loop on empty list" />
 
-		<var name="letter" value="a" />
+		<var name="list" value="" />
 
-		<for list="abc,def,ghi,jkl" param="letters">
-			<if>
-				<contains string="${letters}" substring="${letter}" />
-				<then>
-					<execute macro="TestUtils#pass" />
-				</then>
-			</if>
+		<for list="${list}" param="param">
+			<execute macro="TestUtils#fail" />
 		</for>
+
+		<execute macro="TestUtils#pass" />
 	</command>
 
 	<command name="nestedForLoops" priority="5">

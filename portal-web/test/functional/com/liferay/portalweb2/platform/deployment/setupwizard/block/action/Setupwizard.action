@@ -1,4 +1,14 @@
 <definition>
+	<command name="assertClick">
+		<case locator-key1="DATABASE_CHANGE_LINK">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="FINISH_CONFIGURATION_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="ADMINISTRATOR_USER_EMAIL_FIELD">
 			<execute function="AssertTextEquals#assertValue" />
@@ -54,16 +64,6 @@
 
 		<case locator-key1="PORTAL_PORTAL_NAME_FIELD">
 			<execute function="AssertTextEquals#assertValue" />
-		</case>
-	</command>
-
-	<command name="assertClick">
-		<case locator-key1="DATABASE_CHANGE_LINK">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="FINISH_CONFIGURATION_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 </definition>

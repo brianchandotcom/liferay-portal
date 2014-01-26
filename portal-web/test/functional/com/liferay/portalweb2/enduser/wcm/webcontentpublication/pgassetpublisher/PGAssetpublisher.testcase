@@ -46,8 +46,8 @@
 		</execute>
 
 		<execute macro="Portlet#viewDuplicatePG">
-			<var name="totalPortletCount" value="${totalPortletCount}" />
 			<var name="portletName" value="${portletName}" />
+			<var name="totalPortletCount" value="${totalPortletCount}" />
 		</execute>
 	</command>
 
@@ -55,8 +55,8 @@
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
-		<var name="folderName" value="Test Folder Name" />
 		<var name="folderDescription" value="Test Folder Description" />
+		<var name="folderName" value="Test Folder Name" />
 		<var name="pageName" value="${pageName}" />
 		<var name="pageName2" value="Bookmarks Page" />
 		<var name="portletName2" value="Bookmarks" />
@@ -110,8 +110,8 @@
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
-		<var name="folderName" value="Test Folder Name" />
 		<var name="folderDescription" value="Test Folder Description" />
+		<var name="folderName" value="Test Folder Name" />
 		<var name="pageName" value="${pageName}" />
 		<var name="pageName2" value="Bookmarks Page" />
 		<var name="portletName2" value="Bookmarks" />
@@ -167,8 +167,8 @@
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
-		<var name="folderName" value="Test Folder Name" />
 		<var name="folderDescription" value="Test Folder Description" />
+		<var name="folderName" value="Test Folder Name" />
 		<var name="pageName" value="${pageName}" />
 		<var name="pageName2" value="Bookmarks Page" />
 		<var name="portletName2" value="Bookmarks" />
@@ -225,8 +225,8 @@
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
-		<var name="folderName" value="Test Folder Name" />
 		<var name="folderDescription" value="Test Folder Description" />
+		<var name="folderName" value="Test Folder Name" />
 		<var name="pageName" value="${pageName}" />
 		<var name="pageName2" value="Bookmarks Page" />
 		<var name="portletName2" value="Bookmarks" />
@@ -359,12 +359,60 @@
 		</execute>
 	</command>
 
+	<command name="ConfigureAPPortletSelectedDocument" priority="4">
+		<var name="selectedAsset" value="Document" />
+
+		<execute macro="AssetPublisherPortlet#configureSelectedPG">
+			<var name="selectedAsset" value="${selectedAsset}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewSelectedPG">
+			<var name="selectedAsset" value="${selectedAsset}" />
+		</execute>
+	</command>
+
+	<command name="ConfigureAPPortletSelectedWebContent" priority="5">
+		<var name="selectedAsset" value="Web Content Article" />
+
+		<execute macro="AssetPublisherPortlet#configureSelectedPG">
+			<var name="selectedAsset" value="${selectedAsset}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewSelectedPG">
+			<var name="selectedAsset" value="${selectedAsset}" />
+		</execute>
+	</command>
+
+	<command name="ConfigureAPPortletSetAsDefault" priority="4">
+		<var name="setAsDefaultPage" value="True" />
+
+		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
+			<var name="setAsDefaultPage" value="${setAsDefaultPage}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewConfigureFlaggableDisplaySettingsPG">
+			<var name="setAsDefaultPage" value="${setAsDefaultPage}" />
+		</execute>
+	</command>
+
 	<command name="ConfigureAPPortletWithSelectedBookmarksEntry" priority="4">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
-		<var name="folderName" value="Test Folder Name" />
 		<var name="folderDescription" value="Test Folder Description" />
+		<var name="folderName" value="Test Folder Name" />
 		<var name="pageName" value="${pageName}" />
 		<var name="pageName2" value="Bookmarks Page" />
 		<var name="portletName2" value="Bookmarks" />
@@ -432,54 +480,6 @@
 
 		<execute macro="AssetPublisherPortlet#viewConfigureAPMoveToSelectedPG">
 			<var name="assetTitle" value="${bookmarkName}" />
-		</execute>
-	</command>
-
-	<command name="ConfigureAPPortletSelectedDocument" priority="4">
-		<var name="selectedAsset" value="Document" />
-
-		<execute macro="AssetPublisherPortlet#configureSelectedPG">
-			<var name="selectedAsset" value="${selectedAsset}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewSelectedPG">
-			<var name="selectedAsset" value="${selectedAsset}" />
-		</execute>
-	</command>
-
-	<command name="ConfigureAPPortletSelectedWebContent" priority="5">
-		<var name="selectedAsset" value="Web Content Article" />
-
-		<execute macro="AssetPublisherPortlet#configureSelectedPG">
-			<var name="selectedAsset" value="${selectedAsset}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewSelectedPG">
-			<var name="selectedAsset" value="${selectedAsset}" />
-		</execute>
-	</command>
-
-	<command name="ConfigureAPPortletSetAsDefault" priority="4">
-		<var name="setAsDefaultPage" value="True" />
-
-		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
-			<var name="setAsDefaultPage" value="${setAsDefaultPage}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewConfigureFlaggableDisplaySettingsPG">
-			<var name="setAsDefaultPage" value="${setAsDefaultPage}" />
 		</execute>
 	</command>
 

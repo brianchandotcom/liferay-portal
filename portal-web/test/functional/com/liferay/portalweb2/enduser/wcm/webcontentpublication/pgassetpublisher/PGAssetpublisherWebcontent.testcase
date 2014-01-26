@@ -34,8 +34,8 @@
 
 		<execute macro="WebContent#addPGViaAP">
 			<var name="pageName" value="${pageName}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
 			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
 </definition>

@@ -4,9 +4,9 @@
 	<property name="theme.plugins.includes" value="so-theme" />
 	<property name="web.plugins.includes" value="resources-importer-web" />
 
-	<var name="adminName" value="Test Test" />
 	<var name="adminEmailAddress" value="test@liferay.com" />
 	<var name="adminListName" value="Test, Test" />
+	<var name="adminName" value="Test Test" />
 	<var name="adminScreenName" value="test" />
 	<var name="password" value="test" />
 	<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -25,16 +25,22 @@
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 	</set-up>
+
+	<tear-down>
+		<execute macro="SOUserBar#tearDownNotifications" />
+
+		<execute macro="SOUser#tearDownCP" />
+	</tear-down>
 
 	<command name="AddAdditionalEmailAddress" priority="5">
 		<var name="userAdditionalEmailAddress" value="socialoffice02@liferay.com" />
@@ -137,8 +143,8 @@
 		<var name="userScreenName" value="${userScreenName}" />
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${adminName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
 		<execute macro="SOProfile#addConnection">
@@ -146,8 +152,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -158,13 +164,13 @@
 			<var name="filterType" value="Connections" />
 			<var name="filterTypeCount" value="${filterTypeCount}" />
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
-			<var name="userName" value="${adminName}" />
 			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${adminName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -175,8 +181,8 @@
 			<var name="filterType" value="Connections" />
 			<var name="filterTypeCount" value="${filterTypeCount}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userName" value="${userName}" />
 			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -187,13 +193,13 @@
 			<var name="filterType" value="Connections" />
 			<var name="filterTypeCount" value="0" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userName" value="${userName}" />
 			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -203,13 +209,13 @@
 		<execute macro="SOProfile#viewNoConnection">
 			<var name="filterTypeCount" value="0" />
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
-			<var name="userName" value="${adminName}" />
 			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${adminName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -219,51 +225,9 @@
 		<execute macro="SOProfile#viewNoConnection">
 			<var name="filterTypeCount" value="0" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userName" value="${userName}" />
 			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
 		</execute>
-	</command>
-
-	<command name="AddIntroduction" priority="5">
-		<var name="userAdditionalEmailAddress" value="socialoffice02@liferay.com" />
-		<var name="userIntroduction" value="Introduction Content" />
-		<var name="userIntroductionEdit" value="Introduction Content Edit" />
-
-		<execute macro="SOProfile#addAdditionalEmailAddress">
-			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
-		</execute>
-
-		<execute macro="Page#gotoMyProfile" />
-
-		<execute macro="SOProfile#addIntroduction">
-			<var name="userIntroduction" value="${userIntroduction}" />
-		</execute>
-
-		<execute macro="Page#gotoMyProfile" />
-
-		<execute macro="SOProfile#viewIntroduction">
-			<var name="userIntroduction" value="${userIntroduction}" />
-		</execute>
-
-		<execute macro="Page#gotoMyProfile" />
-
-		<execute macro="SOProfile#editIntroduction">
-			<var name="userIntroduction" value="${userIntroductionEdit}" />
-		</execute>
-
-		<execute macro="Page#gotoMyProfile" />
-
-		<execute macro="SOProfile#viewIntroduction">
-			<var name="userIntroduction" value="${userIntroductionEdit}" />
-		</execute>
-
-		<execute macro="SOProfile#viewAdditionalEmailAddress">
-			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
-		</execute>
-
-		<execute macro="Page#gotoMyProfile" />
-
-		<execute macro="SOProfile#editIntroductionNull" />
 	</command>
 
 	<command name="AddInstantMessenger" priority="5">
@@ -327,41 +291,83 @@
 		<execute macro="SOProfile#editInstantMessengerNull" />
 	</command>
 
+	<command name="AddIntroduction" priority="5">
+		<var name="userAdditionalEmailAddress" value="socialoffice02@liferay.com" />
+		<var name="userIntroduction" value="Introduction Content" />
+		<var name="userIntroductionEdit" value="Introduction Content Edit" />
+
+		<execute macro="SOProfile#addAdditionalEmailAddress">
+			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOProfile#addIntroduction">
+			<var name="userIntroduction" value="${userIntroduction}" />
+		</execute>
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOProfile#viewIntroduction">
+			<var name="userIntroduction" value="${userIntroduction}" />
+		</execute>
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOProfile#editIntroduction">
+			<var name="userIntroduction" value="${userIntroductionEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOProfile#viewIntroduction">
+			<var name="userIntroduction" value="${userIntroductionEdit}" />
+		</execute>
+
+		<execute macro="SOProfile#viewAdditionalEmailAddress">
+			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOProfile#editIntroductionNull" />
+	</command>
+
 	<command name="AddPhoneNumbers" priority="5">
-		<var name="userPhoneNumberNumber" value="123-123-1234" />
-		<var name="userPhoneNumberNumberEdit" value="456-456-4567" />
 		<var name="userPhoneNumberExtension" value="123" />
 		<var name="userPhoneNumberExtensionEdit" value="456" />
+		<var name="userPhoneNumberNumber" value="123-123-1234" />
+		<var name="userPhoneNumberNumberEdit" value="456-456-4567" />
 		<var name="userPhoneNumberType" value="Business" />
 		<var name="userPhoneNumberTypeEdit" value="Personal" />
 
 		<execute macro="SOProfile#addPhoneNumbers">
-			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumber}" />
 			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtension}" />
+			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumber}" />
 			<var name="userPhoneNumberType" value="${userPhoneNumberType}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewPhoneNumbers">
-			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumber}" />
 			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtension}" />
+			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumber}" />
 			<var name="userPhoneNumberType" value="${userPhoneNumberType}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#editPhoneNumbers">
-			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumberEdit}" />
 			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtensionEdit}" />
+			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumberEdit}" />
 			<var name="userPhoneNumberType" value="${userPhoneNumberTypeEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewPhoneNumbers">
-			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumberEdit}" />
 			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtensionEdit}" />
+			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumberEdit}" />
 			<var name="userPhoneNumberType" value="${userPhoneNumberTypeEdit}" />
 		</execute>
 
@@ -395,35 +401,35 @@
 	</command>
 
 	<command name="AddProjects" priority="5">
-		<var name="userProjectTitle" value="Expertise Title" />
-		<var name="userProjectTitleEdit" value="Expertise Title Edit" />
 		<var name="userProjectDescription" value="Expertise Description" />
 		<var name="userProjectDescriptionEdit" value="Expertise Description Edit" />
+		<var name="userProjectTitle" value="Expertise Title" />
+		<var name="userProjectTitleEdit" value="Expertise Title Edit" />
 
 		<execute macro="SOProfile#addProjects">
-			<var name="userProjectTitle" value="${userProjectTitle}" />
 			<var name="userProjectDescription" value="${userProjectDescription}" />
+			<var name="userProjectTitle" value="${userProjectTitle}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewProjects">
-			<var name="userProjectTitle" value="${userProjectTitle}" />
 			<var name="userProjectDescription" value="${userProjectDescription}" />
+			<var name="userProjectTitle" value="${userProjectTitle}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#editProjects">
-			<var name="userProjectTitle" value="${userProjectTitleEdit}" />
 			<var name="userProjectDescription" value="${userProjectDescriptionEdit}" />
+			<var name="userProjectTitle" value="${userProjectTitleEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewProjectsEdit">
-			<var name="userProjectTitle" value="${userProjectTitleEdit}" />
 			<var name="userProjectDescription" value="${userProjectDescriptionEdit}" />
+			<var name="userProjectTitle" value="${userProjectTitleEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
@@ -540,35 +546,35 @@
 	</command>
 
 	<command name="AddWebsite" priority="5">
-		<var name="userWebsiteURL" value="http://www.socialoffice01.com" />
-		<var name="userWebsiteURLEdit" value="http://www.socialoffice01edit.com" />
 		<var name="userWebsiteType" value="Personal" />
 		<var name="userWebsiteTypeEdit" value="Business" />
+		<var name="userWebsiteURL" value="http://www.socialoffice01.com" />
+		<var name="userWebsiteURLEdit" value="http://www.socialoffice01edit.com" />
 
 		<execute macro="SOProfile#addWebsite">
-			<var name="userWebsiteURL" value="${userWebsiteURL}" />
 			<var name="userWebsiteType" value="${userWebsiteType}" />
+			<var name="userWebsiteURL" value="${userWebsiteURL}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewWebsite">
-			<var name="userWebsiteURL" value="${userWebsiteURL}" />
 			<var name="userWebsiteType" value="${userWebsiteType}" />
+			<var name="userWebsiteURL" value="${userWebsiteURL}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#editWebsite">
-			<var name="userWebsiteURL" value="${userWebsiteURLEdit}" />
 			<var name="userWebsiteType" value="${userWebsiteTypeEdit}" />
+			<var name="userWebsiteURL" value="${userWebsiteURLEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewWebsite">
-			<var name="userWebsiteURL" value="${userWebsiteURLEdit}" />
 			<var name="userWebsiteType" value="${userWebsiteTypeEdit}" />
+			<var name="userWebsiteURL" value="${userWebsiteURLEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
@@ -585,15 +591,15 @@
 		<var name="userScreenName" value="${userScreenName}" />
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${adminName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
 		<execute macro="SOProfile#followCCUser" />
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -604,13 +610,13 @@
 			<var name="filterType" value="Connections" />
 			<var name="filterTypeCount" value="${filterTypeCount}" />
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
-			<var name="userName" value="${adminName}" />
 			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${adminName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -621,15 +627,15 @@
 			<var name="filterType" value="Connections" />
 			<var name="filterTypeCount" value="${filterTypeCount}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userName" value="${userName}" />
 			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOProfile#unfollowCCUser" />
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -640,13 +646,13 @@
 			<var name="filterType" value="Connections" />
 			<var name="filterTypeCount" value="${filterTypeCount}" />
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
-			<var name="userName" value="${adminName}" />
 			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${adminName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -657,15 +663,15 @@
 			<var name="filterType" value="Connections" />
 			<var name="filterTypeCount" value="${filterTypeCount}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userName" value="${userName}" />
 			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 	</command>
 
 	<command name="SearchConnectionProfile" priority="5">
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${adminName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
@@ -690,8 +696,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOContactsCenter#ignoreRequestToConnect">
@@ -700,8 +706,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${adminName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
@@ -742,8 +748,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOContactsCenter#confirmRequestToConnect">
@@ -752,8 +758,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${adminName}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
@@ -784,10 +790,4 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="DISCONNECT_BUTTON" value1="Disconnect" />
 		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="CONNECT_BUTTON" />
 	</command>
-
-	<tear-down>
-		<execute macro="SOUserBar#tearDownNotifications" />
-
-		<execute macro="SOUser#tearDownCP" />
-	</tear-down>
 </definition>

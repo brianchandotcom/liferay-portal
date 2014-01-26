@@ -1,14 +1,4 @@
 <definition>
-	<command name="emptyCP">
-		<if>
-			<condition action="CPRecyclebin#isElementPresent" locator-key1="EMPTY_RECYCLE_BIN" />
-			<then>
-				<execute action="CPRecyclebin#assertClick" locator-key1="EMPTY_RECYCLE_BIN" value1="Empty the Recycle Bin" />
-				<execute action="CPRecyclebin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to empty the Recycle Bin?" />
-			</then>
-		</if>
-	</command>
-
 	<command name="deleteCP">
 		<var name="key_assetName" value="${assetName}" />
 
@@ -20,6 +10,16 @@
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
 		<execute action="CPRecyclebin#assertTextNotPresent" value1="${assetName}" />
+	</command>
+
+	<command name="emptyCP">
+		<if>
+			<condition action="CPRecyclebin#isElementPresent" locator-key1="EMPTY_RECYCLE_BIN" />
+			<then>
+				<execute action="CPRecyclebin#assertClick" locator-key1="EMPTY_RECYCLE_BIN" value1="Empty the Recycle Bin" />
+				<execute action="CPRecyclebin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to empty the Recycle Bin?" />
+			</then>
+		</if>
 	</command>
 
 	<command name="restoreCP">

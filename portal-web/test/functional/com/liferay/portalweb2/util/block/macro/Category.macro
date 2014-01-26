@@ -1,18 +1,4 @@
 <definition>
-	<command name="addCP">
-		<var name="key_categoryName" value="${categoryName}" />
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
-		<execute action="CPCategories#assertClick" locator-key1="ADD_CATEGORY_BUTTON" value1="Add Category" />
-
-		<execute action="CPCategoriesAdd#type" locator-key1="NAME_FIELD" value1="${categoryName}" />
-		<execute action="CPCategoriesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
-		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
-	</command>
-
 	<command name="addCategoryLocalizationCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
@@ -108,6 +94,20 @@
 
 		<execute action="CPCategoriesAdd#type" locator-key1="NAME_FIELD" value1="${categoryName}" />
 		<execute action="CPCategoriesAdd#select" locator-key1="VIEWABLE_BY_SELECT" value1="${viewableBy}" />
+		<execute action="CPCategoriesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
+	</command>
+
+	<command name="addCP">
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator-key1="ADD_CATEGORY_BUTTON" value1="Add Category" />
+
+		<execute action="CPCategoriesAdd#type" locator-key1="NAME_FIELD" value1="${categoryName}" />
 		<execute action="CPCategoriesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />

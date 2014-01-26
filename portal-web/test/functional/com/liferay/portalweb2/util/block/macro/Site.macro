@@ -171,6 +171,30 @@
 		</execute>
 	</command>
 
+	<command name="addVirtualHostsURLCP">
+		<execute action="CPSitesettings#assertClick" locator-key1="MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
+
+		<if>
+			<isset var="publicVirtualHosts" />
+			<then>
+				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_LABEL" value1="Public Pages" />
+				<execute action="CPSitesettingsSiteURL#type" locator-key1="SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_FIELD" value1="${publicPageVirtualHostURL}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="privateVirtualHosts" />
+			<then>
+				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_LABEL" value1="Private Pages" />
+				<execute action="CPSitesettingsSiteURL#type" locator-key1="SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_FIELD" value1="${privatePageVirtualHostURL}" />
+			</then>
+		</if>
+
+		<execute action="CPSitesettingsSiteURL#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="approveJoinSiteRestrictedViaMySitesPG">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -233,6 +257,23 @@
 		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
+	<command name="assignSiteRolesSiteOwnerUserGroupsCP">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPSitememberships#assertClick" locator-key1="NAVIGATION_USER_GROUPS" value1="User Groups" />
+		<execute action="CPSitemembershipsUsergroups#type" locator-key1="SEARCH_FIELD" value1="${userGroupName}" />
+		<execute action="CPSitemembershipsUsergroups#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+
+		<execute action="CPSitemembershipsUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute action="CPSitemembershipsUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSitemembershipsUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
+
+		<execute action="CPSitemembershipsUsergroups#check" locator-key1="SITE_OWNER_CHECKBOX" />
+		<execute action="CPSitemembershipsUsergroups#click" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" />
+		<execute action="CPSitemembershipsUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPSitemembershipsUsergroups#assertChecked" locator-key1="SITE_OWNER_CHECKBOX" />
+	</command>
+
 	<command name="assignUserSitesCP">
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
 
@@ -255,47 +296,6 @@
 		<execute action="CPUsersandorganizationsUser#selectFrame" value1="relative=top" />
 		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="addVirtualHostsURLCP">
-		<execute action="CPSitesettings#assertClick" locator-key1="MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
-
-		<if>
-			<isset var="publicVirtualHosts" />
-			<then>
-				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_LABEL" value1="Public Pages" />
-				<execute action="CPSitesettingsSiteURL#type" locator-key1="SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_FIELD" value1="${publicPageVirtualHostURL}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="privateVirtualHosts" />
-			<then>
-				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_LABEL" value1="Private Pages" />
-				<execute action="CPSitesettingsSiteURL#type" locator-key1="SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_FIELD" value1="${privatePageVirtualHostURL}" />
-			</then>
-		</if>
-
-		<execute action="CPSitesettingsSiteURL#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="assignSiteRolesSiteOwnerUserGroupsCP">
-		<var name="key_userGroupName" value="${userGroupName}" />
-
-		<execute action="CPSitememberships#assertClick" locator-key1="NAVIGATION_USER_GROUPS" value1="User Groups" />
-		<execute action="CPSitemembershipsUsergroups#type" locator-key1="SEARCH_FIELD" value1="${userGroupName}" />
-		<execute action="CPSitemembershipsUsergroups#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-
-		<execute action="CPSitemembershipsUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
-		<execute action="CPSitemembershipsUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPSitemembershipsUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
-
-		<execute action="CPSitemembershipsUsergroups#check" locator-key1="SITE_OWNER_CHECKBOX" />
-		<execute action="CPSitemembershipsUsergroups#click" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" />
-		<execute action="CPSitemembershipsUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPSitemembershipsUsergroups#assertChecked" locator-key1="SITE_OWNER_CHECKBOX" />
 	</command>
 
 	<command name="deactivateOrganizationSiteCP">

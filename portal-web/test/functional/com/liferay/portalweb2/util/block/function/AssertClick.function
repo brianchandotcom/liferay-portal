@@ -7,18 +7,18 @@
 		<execute selenium="clickAt" />
 	</command>
 
-	<command name="assertPartialTextClickAtCPNavigation">
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/message.js')]" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" />
-	</command>
-
 	<command name="assertPartialTextClickAtAndWait">
 		<execute function="AssertTextEquals#assertPartialText" />
 
 		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAtAndWait" />
+	</command>
+
+	<command name="assertPartialTextClickAtCPNavigation">
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/message.js')]" />
+
+		<execute function="AssertClick#assertPartialTextClickAt" />
 	</command>
 
 	<command name="assertTextClick">
@@ -37,18 +37,18 @@
 		<execute selenium="clickAndWait" />
 	</command>
 
-	<command name="assertTextClickAtAddApplication">
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_page.js')]" />
-
-		<execute function="AssertClick#assertTextClickAt" />
-	</command>
-
 	<command name="assertTextClickAt">
 		<execute function="AssertTextEquals#assertText" />
 
 		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAt" />
+	</command>
+
+	<command name="assertTextClickAtAddApplication">
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_page.js')]" />
+
+		<execute function="AssertClick#assertTextClickAt" />
 	</command>
 
 	<command name="assertTextClickAtAndWait">

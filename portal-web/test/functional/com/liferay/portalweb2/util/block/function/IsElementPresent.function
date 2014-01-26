@@ -3,18 +3,18 @@
 		<execute selenium="isElementPresent" />
 	</command>
 
-	<command name="isElementPresentCPNavigation">
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/message.js')]" />
-
-		<execute function="IsElementPresent#isElementPresent" />
-	</command>
-
 	<command name="isElementPresentClickNavigation">
 		<execute selenium="clickAt" argument1="//nav[@id='navigation']" />
 
 		<execute selenium="waitForVisible" argument1="xPath=(//li[contains(@class,'lfr-nav-deletable')])[1]/a/span" />
 
 		<execute selenium="isElementPresent" />
+	</command>
+
+	<command name="isElementPresentCPNavigation">
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/message.js')]" />
+
+		<execute function="IsElementPresent#isElementPresent" />
 	</command>
 
 	<command name="isVisible">

@@ -13,12 +13,6 @@
 		</case>
 	</command>
 
-	<command name="type">
-		<case locator-key1="BASIC_SEARCH_FIELD">
-			<execute function="Type#type" />
-		</case>
-	</command>
-
 	<command name="assertTextEquals">
 		<case locator-key1="USER_TABLE_SCREEN_NAME">
 			<execute function="AssertTextEquals#assertText" />
@@ -26,6 +20,12 @@
 
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertText" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="BASIC_SEARCH_FIELD">
+			<execute function="Type#type" />
 		</case>
 	</command>
 </definition>

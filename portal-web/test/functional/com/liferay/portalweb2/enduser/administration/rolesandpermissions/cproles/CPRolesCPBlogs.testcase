@@ -74,8 +74,8 @@
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
-			<var name="roleName" value="Guest" />
 			<var name="permissionDefinitionKey" value="${inlinePermissionDefinitionKey}" />
+			<var name="roleName" value="Guest" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -105,8 +105,8 @@
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
-			<var name="roleName" value="Guest" />
 			<var name="permissionDefinitionKey" value="${inlinePermissionDefinitionKey}" />
+			<var name="roleName" value="Guest" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

@@ -45,8 +45,8 @@
 		</execute>
 
 		<execute macro="Role#viewPermissionCP">
-			<var name="permissionNavigationValue" value="${permissionNavigation3Value}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition3Value}" />
+			<var name="permissionNavigationValue" value="${permissionNavigation3Value}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -62,8 +62,8 @@
 		</execute>
 
 		<execute macro="Role#viewPermissionCP">
-			<var name="permissionNavigationValue" value="${permissionNavigation4Value}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition4Value}" />
+			<var name="permissionNavigationValue" value="${permissionNavigation4Value}" />
 		</execute>
 	</command>
 

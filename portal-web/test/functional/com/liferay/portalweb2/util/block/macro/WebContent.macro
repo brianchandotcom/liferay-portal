@@ -138,6 +138,17 @@
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentContent}" />
 	</command>
 
+	<command name="addPGViaPanel">
+		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="NEW_WEB_CONTENT_ARTICLE_IFRAME" />
+		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
+		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
+		<execute action="PGWebcontentdisplayAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
+
+		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+	</command>
+
 	<command name="addPGViaWCD">
 		<execute action="PGWebcontentdisplay#click" locator-key1="ADD_WEB_CONTENT" value1="Add" />
 
@@ -154,17 +165,6 @@
 				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 			</else>
 		</if>
-	</command>
-
-	<command name="addPGViaPanel">
-		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="NEW_WEB_CONTENT_ARTICLE_IFRAME" />
-		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
-		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
-		<execute action="PGWebcontentdisplayAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-
-		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
-
-		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 	</command>
 
 	<command name="addTagPGViaWCD">
@@ -393,16 +393,6 @@
 		<execute action="CPWebcontentPreview#assertTextEquals" locator-key1="BODY_FIELD" value1="Text: ${webContentText}" />
 	</command>
 
-	<command name="searchPGViaWCS">
-		<var name='key_webContentSearchResultsName' value="${webContentSearchResultsName}" />
-
-		<execute action="PGWebcontentsearch#type" locator-key1="SEARCH_FIELD" value1="${webContentSearchTerm}" />
-		<execute action="PGWebcontentsearch#click" locator-key1="SEARCH_ICON" />
-
-		<execute action="PGWebcontentsearchResults#assertTextEquals" locator-key1="RESULTS_TABLE_NAME" value1="${webContentSearchResultsName}" />
-		<execute action="PGWebcontentsearchResults#assertTextEquals" locator-key1="RESULTS_TABLE_CONTENT" value1="${webContentSearchResultsContent}" />
-	</command>
-
 	<command name="searchNoPGViaWCS">
 		<var name='key_webContentSearchResultsName' value="${webContentSearchResultsName}" />
 
@@ -418,6 +408,16 @@
 				<execute action="PGWebcontentsearchResults#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No pages were found that matched the keywords: ${webContentSearchTerm}." />
 			</then>
 		</if>
+	</command>
+
+	<command name="searchPGViaWCS">
+		<var name='key_webContentSearchResultsName' value="${webContentSearchResultsName}" />
+
+		<execute action="PGWebcontentsearch#type" locator-key1="SEARCH_FIELD" value1="${webContentSearchTerm}" />
+		<execute action="PGWebcontentsearch#click" locator-key1="SEARCH_ICON" />
+
+		<execute action="PGWebcontentsearchResults#assertTextEquals" locator-key1="RESULTS_TABLE_NAME" value1="${webContentSearchResultsName}" />
+		<execute action="PGWebcontentsearchResults#assertTextEquals" locator-key1="RESULTS_TABLE_CONTENT" value1="${webContentSearchResultsContent}" />
 	</command>
 
 	<command name="tearDownCP">

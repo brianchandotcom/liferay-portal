@@ -412,9 +412,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteScopeSelected" value="true" />
 			<var name="sitePageName" value="${pageName2}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -437,8 +437,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
-			<var name="siteScopeType" value="Child Site" />
 			<var name="siteName" value="${childSiteName}" />
+			<var name="siteScopeType" value="Child Site" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -485,8 +485,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
-			<var name="siteScopeType" value="Parent Site" />
 			<var name="siteName" value="${parentSite}" />
+			<var name="siteScopeType" value="Parent Site" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -611,8 +611,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
-			<var name="siteScopeType" value="Site" />
 			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeType" value="Site" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

@@ -1,6 +1,6 @@
 <definition>
-	<var name="userEmailAddress" value="test@liferay.com" />
 	<var name="password" value="test" />
+	<var name="userEmailAddress" value="test@liferay.com" />
 
 	<command name="apiAxisView">
 		<execute action="Home#open" locator-key1="API_AXIS_URL" />
@@ -11,6 +11,15 @@
 		<execute action="Axisservices#assertTextPresent" value1="Portal_CompanyService" />
 	</command>
 
+	<command name="apiJsonwsAddressView">
+		<execute action="Home#open" locator-key1="API_JSON_URL" />
+
+		<execute action="Jsonwebservices#click" locator-key1="ADDRESS_ADD_ADDRESS" />
+
+		<execute action="JsonwebservicesAddress#assertTextEquals" locator-key1="API_METHOD" value1="/address/add-address" />
+		<execute action="JsonwebservicesAddress#assertElementPresent" locator-key1="INVOKE" />
+	</command>
+
 	<command name="apiJsonwsView">
 		<execute action="Home#open" locator-key1="API_JSON_URL" />
 
@@ -19,15 +28,6 @@
 		<execute action="Jsonwebservices#assertElementPresent" locator-key1="SEARCH" />
 		<execute action="Jsonwebservices#assertElementPresent" locator-key1="ADDRESS" />
 		<execute action="Jsonwebservices#assertElementPresent" locator-key1="WIKI_PAGE" />
-	</command>
-
-	<command name="apiJsonwsAddressView">
-		<execute action="Home#open" locator-key1="API_JSON_URL" />
-
-		<execute action="Jsonwebservices#click" locator-key1="ADDRESS_ADD_ADDRESS" />
-
-		<execute action="JsonwebservicesAddress#assertTextEquals" locator-key1="API_METHOD" value1="/address/add-address" />
-		<execute action="JsonwebservicesAddress#assertElementPresent" locator-key1="INVOKE" />
 	</command>
 
 	<command name="apiJsonwsWikiView">

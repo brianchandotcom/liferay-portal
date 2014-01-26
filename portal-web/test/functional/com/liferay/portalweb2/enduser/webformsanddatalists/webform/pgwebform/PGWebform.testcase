@@ -31,10 +31,10 @@
 		<var name="formInformationDescriptionEdit" value="Please let us know what you think!" />
 		<var name="formInformationTitleDefault" value="Suggestions" />
 		<var name="formInformationTitleEdit" value="Feed Back" />
-		<var name="formTextTitleDefault" value="Name" />
-		<var name="formTextTitleEdit" value="Your Name" />
 		<var name="formTextboxTitleDefault" value="Comments" />
 		<var name="formTextboxTitleEdit" value="Additional Comments" />
+		<var name="formTextTitleDefault" value="Name" />
+		<var name="formTextTitleEdit" value="Your Name" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -44,8 +44,8 @@
 			<var name="formDropdownTitle" value="${formDropdownTitleDefault}" />
 			<var name="formInformationDescription" value="${formInformationDescriptionDefault}" />
 			<var name="formInformationTitle" value="${formInformationTitleDefault}" />
-			<var name="formTextTitle" value="${formTextTitleDefault}" />
 			<var name="formTextboxTitle" value="${formTextboxTitleDefault}" />
+			<var name="formTextTitle" value="${formTextTitleDefault}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -53,11 +53,11 @@
 		</execute>
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG">
-			<var name="formTextTitle" value="${formTextTitleEdit}" />
 			<var name="formDropdownTitle" value="${formDropdownTitleEdit}" />
 			<var name="formInformationDescription" value="${formInformationDescriptionEdit}" />
 			<var name="formInformationTitle" value="${formInformationTitleEdit}" />
 			<var name="formTextboxTitle" value="${formTextboxTitleEdit}" />
+			<var name="formTextTitle" value="${formTextTitleEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -65,11 +65,11 @@
 		</execute>
 
 		<execute macro="WebForm#viewPG">
-			<var name="formTextTitle" value="${formTextTitleEdit}" />
 			<var name="formDropdownTitle" value="${formDropdownTitleEdit}" />
 			<var name="formInformationDescription" value="${formInformationDescriptionEdit}" />
 			<var name="formInformationTitle" value="${formInformationTitleEdit}" />
 			<var name="formTextboxTitle" value="${formTextboxTitleEdit}" />
+			<var name="formTextTitle" value="${formTextTitleEdit}" />
 		</execute>
 	</command>
 
@@ -78,10 +78,10 @@
 		<var name="formDropdownValue" value="Excellent" />
 		<var name="formInformationDescriptionDefault" value="Your input is valuable to us. Please send us your suggestions." />
 		<var name="formInformationTitleDefault" value="Suggestions" />
-		<var name="formTextTitleDefault" value="Name" />
-		<var name="formTextValue" value="Test Test" />
 		<var name="formTextboxTitleDefault" value="Comments" />
 		<var name="formTextboxValue" value="Page Objects + Hashi = Poshi" />
+		<var name="formTextTitleDefault" value="Name" />
+		<var name="formTextValue" value="Test Test" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -98,10 +98,10 @@
 			<var name="formDropdownValue" value="${formDropdownValue}" />
 			<var name="formInformationDescription" value="${formInformationDescriptionDefault}" />
 			<var name="formInformationTitle" value="${formInformationTitleDefault}" />
-			<var name="formTextTitle" value="${formTextTitleDefault}" />
-			<var name="formTextValue" value="${formTextValue}" />
 			<var name="formTextboxTitle" value="${formTextboxTitleDefault}" />
 			<var name="formTextboxValue" value="${formTextboxValue}" />
+			<var name="formTextTitle" value="${formTextTitleDefault}" />
+			<var name="formTextValue" value="${formTextValue}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

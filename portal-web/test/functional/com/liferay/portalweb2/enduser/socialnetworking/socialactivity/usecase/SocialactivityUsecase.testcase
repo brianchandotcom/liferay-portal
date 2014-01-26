@@ -23,14 +23,14 @@
 		<var name="entryComment5" value="Blogs Entry Comment 3" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="userAction1" value="Adds a Comment" />
-		<var name="userAction2" value="Reads a Blog" />
-		<var name="userAction3" value="Subscribes to a Blog" />
-		<var name="userAction4" value="Votes on a Blog" />
 		<var name="user1Name" value="Test Test" />
 		<var name="user1Rank" value="Rank: 1" />
 		<var name="user2Name" value="userfn userln" />
 		<var name="user2Rank" value="Rank: 2" />
+		<var name="userAction1" value="Adds a Comment" />
+		<var name="userAction2" value="Reads a Blog" />
+		<var name="userAction3" value="Subscribes to a Blog" />
+		<var name="userAction4" value="Votes on a Blog" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />

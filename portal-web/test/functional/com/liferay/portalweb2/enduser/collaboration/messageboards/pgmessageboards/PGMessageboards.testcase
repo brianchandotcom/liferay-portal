@@ -85,24 +85,24 @@
 	</command>
 
 	<command name="AddMBCategoryDescription" priority="5">
-		<var name="categoryName" value="MB Category Name" />
 		<var name="categoryDescription" value="MB Category Description" />
 		<var name="categoryDescriptionEnabled" value="true" />
+		<var name="categoryName" value="MB Category Name" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
 			<var name="categoryDescription" value="${categoryDescription}" />
 			<var name="categoryDescriptionEnabled" value="${categoryDescriptionEnabled}" />
+			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryName" value="${categoryName}" />
 			<var name="categoryDescription" value="${categoryDescription}" />
 			<var name="categoryDescriptionEnabled" value="${categoryDescriptionEnabled}" />
+			<var name="categoryName" value="${categoryName}" />
 		</execute>
 	</command>
 
@@ -190,8 +190,8 @@
 
 	<command name="AddMBCategorySubcategoryThread" priority="5">
 		<var name="categoryName" value="MB Category Name" />
-		<var name="subCategoryEnabled" value="true" />
 		<var name="subCategoryDescription" value="MB Subcategory Description" />
+		<var name="subCategoryEnabled" value="true" />
 		<var name="subCategoryName" value="MB Subcategory Name" />
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
@@ -598,10 +598,9 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#movePG">
-			<var name="categoryName" value="${categoryName1}" />
 			<var name="categoryName" value="${categoryName2}" />
-			<var name="explanationPost" value="explanationPost" />
 			<var name="explanationBody" value="${explanationBody}" />
+			<var name="explanationPost" value="explanationPost" />
 			<var name="explanationSubject" value="${explanationSubject}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />

@@ -6,24 +6,24 @@
 
 	<var name="key_siteName" value="${siteName}" />
 	<var name="pageName" value="Forums" />
-	<var name="siteName" value="Open Site Name" />
 	<var name="siteDescription" value="Open Site Description" />
+	<var name="siteName" value="Open Site Name" />
 	<var name="siteType" value="Open" />
 
 	<set-up>
 		<execute macro="SOUser#firstLoginPG" />
 
 		<execute macro="SOUserBar#addSOSite">
-			<var name="siteName" value="${siteName}" />
 			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteType" value="${siteType}" />
 		</execute>
 	</set-up>
 
 	<var name="categoryName" value="MB Category Name" />
 	<var name="threadBody" value="MB Category Thread Message Body" />
-	<var name="threadReplyBody" value="MB Category Thread Message Reply Body" />
 	<var name="threadBodyEdit" value="MB Category Thread Message Body Edit" />
+	<var name="threadReplyBody" value="MB Category Thread Message Reply Body" />
 	<var name="threadSubject" value="MB Category Thread Message Subject" />
 	<var name="threadSubjectEdit" value="MB Category Thread Message Subject Edit" />
 	<var name="userName" value="Test Test" />

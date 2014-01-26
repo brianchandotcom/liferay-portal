@@ -38,8 +38,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="${siteName}" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -53,8 +53,8 @@
 
 	<command name="AddMembersSiteUser" priority="5">
 		<var name="siteName" value="Site Name" />
-		<var name="teamName" value="Site Team Name" />
 		<var name="teamDescription" value="Site Team Description" />
+		<var name="teamName" value="Site Team Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -80,8 +80,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -93,8 +93,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#viewMemberCP">
@@ -109,8 +109,8 @@
 	<command name="AddSiteTeam" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="siteScopeName" value="Site Name" />
-		<var name="teamName" value="Site Team Name" />
 		<var name="teamDescription" value="Site Team Description" />
+		<var name="teamName" value="Site Team Name" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -121,18 +121,18 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
 			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Team#addCP">
-			<var name="teamName" value="${teamName}" />
 			<var name="teamDescription" value="${teamDescription}" />
+			<var name="teamName" value="${teamName}" />
 		</execute>
 
 		<execute macro="Team#viewCP">
-			<var name="teamName" value="${teamName}" />
 			<var name="teamDescription" value="${teamDescription}" />
+			<var name="teamName" value="${teamName}" />
 		</execute>
 	</command>
 
@@ -155,45 +155,45 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
 			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Team#addCP">
-			<var name="teamName" value="${teamName1}" />
 			<var name="teamDescription" value="${teamDescription1}" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamName" value="${teamName2}" />
-			<var name="teamDescription" value="${teamDescription2}" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="teamName" value="${teamName3}" />
-			<var name="teamDescription" value="${teamDescription3}" />
-		</execute>
-
-		<execute macro="Team#viewCP">
 			<var name="teamName" value="${teamName1}" />
-			<var name="teamDescription" value="${teamDescription1}" />
 		</execute>
 
-		<execute macro="Team#viewCP">
-			<var name="teamName" value="${teamName2}" />
+		<execute macro="Team#addCP">
 			<var name="teamDescription" value="${teamDescription2}" />
+			<var name="teamName" value="${teamName2}" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamDescription" value="${teamDescription3}" />
+			<var name="teamName" value="${teamName3}" />
 		</execute>
 
 		<execute macro="Team#viewCP">
-			<var name="teamName" value="${teamName3}" />
+			<var name="teamDescription" value="${teamDescription1}" />
+			<var name="teamName" value="${teamName1}" />
+		</execute>
+
+		<execute macro="Team#viewCP">
+			<var name="teamDescription" value="${teamDescription2}" />
+			<var name="teamName" value="${teamName2}" />
+		</execute>
+
+		<execute macro="Team#viewCP">
 			<var name="teamDescription" value="${teamDescription3}" />
+			<var name="teamName" value="${teamName3}" />
 		</execute>
 	</command>
 
 	<command name="AssignMembersSiteTeamUser" priority="5">
 		<var name="siteName" value="Site Name" />
-		<var name="teamName" value="Site Team Name" />
 		<var name="teamDescription" value="Site Team Description" />
+		<var name="teamName" value="Site Team Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -219,8 +219,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -232,13 +232,13 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
 			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Team#addCP">
-			<var name="teamName" value="${teamName}" />
 			<var name="teamDescription" value="${teamDescription}" />
+			<var name="teamName" value="${teamName}" />
 		</execute>
 
 		<execute macro="Team#assignMembersCP">
@@ -249,8 +249,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Team#viewMemberCP">
@@ -288,8 +288,8 @@
 	<command name="DeleteSiteTeam" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="siteScopeName" value="Site Name" />
-		<var name="teamName" value="Site Team Name" />
 		<var name="teamDescription" value="Site Team Description" />
+		<var name="teamName" value="Site Team Name" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -300,18 +300,18 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
 			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Team#addCP">
-			<var name="teamName" value="${teamName}" />
 			<var name="teamDescription" value="${teamDescription}" />
+			<var name="teamName" value="${teamName}" />
 		</execute>
 
 		<execute macro="Team#deleteCP">
-			<var name="teamName" value="${teamName}" />
 			<var name="teamDescription" value="${teamDescription}" />
+			<var name="teamName" value="${teamName}" />
 		</execute>
 
 		<execute macro="Team#viewDeleteCP">
@@ -322,10 +322,10 @@
 	<command name="EditSiteTeam" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="siteScopeName" value="Site Name" />
-		<var name="teamName" value="Site Team Name" />
-		<var name="teamNameEdit" value="Site Team Name Edit" />
 		<var name="teamDescription" value="Site Team Description" />
 		<var name="teamDescriptionEdit" value="Site Team Description Edit" />
+		<var name="teamName" value="Site Team Name" />
+		<var name="teamNameEdit" value="Site Team Name Edit" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -336,13 +336,13 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
 			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Team#addCP">
-			<var name="teamName" value="${teamName}" />
 			<var name="teamDescription" value="${teamDescription}" />
+			<var name="teamName" value="${teamName}" />
 		</execute>
 
 		<execute macro="Team#editCP">
@@ -351,8 +351,8 @@
 		</execute>
 
 		<execute macro="Team#viewCP">
-			<var name="teamName" value="${teamNameEdit}" />
 			<var name="teamDescription" value="${teamDescriptionEdit}" />
+			<var name="teamName" value="${teamNameEdit}" />
 		</execute>
 	</command>
 
@@ -408,8 +408,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#viewMemberCP">
@@ -421,8 +421,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Child SiteName" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Child SiteName" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -434,8 +434,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Child SiteName" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Child SiteName" />
 		</execute>
 
 		<execute macro="Site#viewMemberCP">
@@ -447,8 +447,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Child SiteName" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Child SiteName" />
 		</execute>
 
 		<execute macro="Site#removeMemberCP">
@@ -459,8 +459,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#removeMemberCP">
@@ -471,8 +471,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Child SiteName" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Child SiteName" />
 		</execute>
 
 		<execute macro="Site#viewLimitMembershipParentSiteCP">
@@ -545,8 +545,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="${orgName1}" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${orgName1}" />
 		</execute>
 
 		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_LABEL" value1="1 User" />
@@ -575,8 +575,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="${orgName1}" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${orgName1}" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -588,8 +588,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="${orgName1}" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${orgName1}" />
 		</execute>
 
 		<execute macro="Site#addMemberOrganizationCP">
@@ -597,8 +597,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="${orgName1}" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${orgName1}" />
 		</execute>
 
 		<execute macro="Site#viewMemberOrganizationCP">
@@ -606,8 +606,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="${orgName1}" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${orgName1}" />
 		</execute>
 
 		<execute macro="Site#addMemberOrganizationCP">
@@ -615,8 +615,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="${orgName1}" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${orgName1}" />
 		</execute>
 
 		<execute macro="Site#viewMemberOrganizationCP">
@@ -651,8 +651,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -663,8 +663,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
 			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#removeMemberCP">

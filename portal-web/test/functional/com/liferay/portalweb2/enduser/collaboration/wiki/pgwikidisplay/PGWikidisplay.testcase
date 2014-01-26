@@ -81,8 +81,8 @@
 				<p><a href=http://www.liferay.com>Welcome to LIFERAY</a><p>
 			]]>
 		</var>
-		<var name="wikiChildPageHTMLContent" value="Welcome to LIFERAY" />
 		<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
+		<var name="wikiChildPageHTMLContent" value="Welcome to LIFERAY" />
 		<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
 		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
 		<var name="wikiNodeName" value="Main" />
@@ -130,13 +130,13 @@
 
 	<command name="AddWikiFrontPageChildPageInvalidTitle" priority="5">
 		<var name="invalidTitleBackslash" value="Wiki\ Front\ Page\ Child\ Page\ Title\" />
-		<var name="invalidTitleRightBracket" value="Wiki] Front] Page] Child] Page] Title]" />
-		<var name="invalidTitleLeftBracket" value="Wiki[ Front[ Page[ Child[ Page[ Title[" />
-		<var name="invalidTitleSemicolon" value="Wiki; Front; Page; Child; Page; Title;" />
 		<var name="invalidTitleColon" value="Wiki: Front: Page: Child: Page: Title:" />
-		<var name="invalidTitleVerticalbar" value="Wiki| Front| Page| Child| Page| Title|" />
-		<var name="invalidTitleLessthan" value="Wiki&lt; Front&lt; Page&lt; Child&lt; Page&lt; Title&lt;" />
 		<var name="invalidTitleGreaterthan" value="Wiki&gt; Front&gt; Page&gt; Child&gt; Page&gt; Title&gt;" />
+		<var name="invalidTitleLeftBracket" value="Wiki[ Front[ Page[ Child[ Page[ Title[" />
+		<var name="invalidTitleLessthan" value="Wiki&lt; Front&lt; Page&lt; Child&lt; Page&lt; Title&lt;" />
+		<var name="invalidTitleRightBracket" value="Wiki] Front] Page] Child] Page] Title]" />
+		<var name="invalidTitleSemicolon" value="Wiki; Front; Page; Child; Page; Title;" />
+		<var name="invalidTitleVerticalbar" value="Wiki| Front| Page| Child| Page| Title|" />
 		<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
 		<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
 		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
@@ -282,8 +282,8 @@
 		</execute>
 
 		<execute macro="WikiPage#viewDefaultPGViaWD">
-			<var name="wikiPageName" value="${wikiPageTitle}" />
 			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiPageName" value="${wikiPageTitle}" />
 		</execute>
 	</command>
 
@@ -300,8 +300,8 @@
 		</execute>
 
 		<execute macro="WikiPage#addFrontPageCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
 			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiNodeName" value="${wikiNodeName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -318,9 +318,9 @@
 		</execute>
 
 		<execute macro="WikiPage#viewPGViaWD">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageRevision" value="${wikiPageRevision}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 			<var name="wikiPageUsername" value="${wikiPageUsername}" />
 		</execute>
 	</command>

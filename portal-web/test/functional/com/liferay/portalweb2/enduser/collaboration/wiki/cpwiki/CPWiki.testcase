@@ -10,16 +10,16 @@
 	</tear-down>
 
 	<command name="AddWikiFrontPage" priority="5">
-		<var name="wikiNodeName" value="Main" />
 		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
+		<var name="wikiNodeName" value="Main" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
 		<execute macro="WikiPage#addFrontPageCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
 			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiNodeName" value="${wikiNodeName}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -28,8 +28,8 @@
 
 		<execute macro="WikiPage#viewFrontPageCP">
 			<var name="portletName" value="Wiki" />
-			<var name="wikiNodeName" value="${wikiNodeName}" />
 			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiNodeName" value="${wikiNodeName}" />
 		</execute>
 	</command>
 
@@ -127,8 +127,8 @@
 	</command>
 
 	<command name="MoveToRecycleBinFrontPage" priority="5">
-		<var name="wikiNodeName" value="Main" />
 		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
+		<var name="wikiNodeName" value="Main" />
 		<var name="wikiPageTitle" value="FrontPage" />
 
 		<execute macro="Page#gotoContentCP">
@@ -136,8 +136,8 @@
 		</execute>
 
 		<execute macro="WikiPage#addFrontPageCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
 			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiNodeName" value="${wikiNodeName}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -145,8 +145,8 @@
 		</execute>
 
 		<execute macro="WikiPage#moveToRecycleBinCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
 			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiNodeName" value="${wikiNodeName}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -155,8 +155,8 @@
 		</execute>
 
 		<execute macro="WikiPage#viewFrontPageDefaultCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
 			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiNodeName" value="${wikiNodeName}" />
 		</execute>
 	</command>
 </definition>

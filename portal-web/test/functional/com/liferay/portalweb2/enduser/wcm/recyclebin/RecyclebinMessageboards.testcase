@@ -88,9 +88,9 @@
 
 		<execute macro="RecycleBin#restoreCP">
 			<var name="assetName" value="${threadSubject}" />
-			<var name="assetType" value="${assetType}" />
 			<var name="assetRestoreLocation" value="${assetRestoreLocation}" />
 			<var name="assetRestoreType" value="${assetRestoreType}" />
+			<var name="assetType" value="${assetType}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

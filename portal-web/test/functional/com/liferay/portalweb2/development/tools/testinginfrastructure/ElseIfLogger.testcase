@@ -3,6 +3,18 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<command name="MacroElseClauseEvaluated" priority="5">
+		<execute macro="ElseIfLogger#switchConditional">
+			<var name="switch" value="5" />
+		</execute>
+	</command>
+
+	<command name="MacroElseIfClauseEvaluated" priority="5">
+		<execute macro="ElseIfLogger#switchConditional">
+			<var name="switch" value="3" />
+		</execute>
+	</command>
+
 	<command name="TestCaseElseClauseEvaluated" priority="5">
 		<var name="switch" value="5" />
 
@@ -65,17 +77,5 @@
 				<echo message="last clause" />
 			</else>
 		</if>
-	</command>
-
-	<command name="MacroElseClauseEvaluated" priority="5">
-		<execute macro="ElseIfLogger#switchConditional">
-			<var name="switch" value="5" />
-		</execute>
-	</command>
-
-	<command name="MacroElseIfClauseEvaluated" priority="5">
-		<execute macro="ElseIfLogger#switchConditional">
-			<var name="switch" value="3" />
-		</execute>
 	</command>
 </definition>

@@ -1,6 +1,6 @@
 <definition>
-	<var name="userEmailAddress" value="test@liferay.com" />
 	<var name="password" value="test" />
+	<var name="userEmailAddress" value="test@liferay.com" />
 
 	<command name="addUserWithSORole">
 		<execute macro="Page#gotoCP">
@@ -10,8 +10,8 @@
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
@@ -42,14 +42,14 @@
 
 			<then>
 				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginFullName" value="Test Test" />
 					<var name="userLoginEmailAddress" value="test@liferay.com" />
+					<var name="userLoginFullName" value="Test Test" />
 				</execute>
 			</then>
 			<else>
 				<execute macro="User#loginPG">
-					<var name="userEmailAddress" value="test@liferay.com" />
 					<var name="password" value="test" />
+					<var name="userEmailAddress" value="test@liferay.com" />
 				</execute>
 			</else>
 		</if>

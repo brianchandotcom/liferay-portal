@@ -11,18 +11,6 @@
 		<execute action="PGBlogsConfiguration#assertClick" locator-key1="NAVIGATION_PERMISSIONS" value1="Permissions" />
 	</command>
 
-	<command name="gotoBlogsPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURLTemp}" />
-		</execute>
-
-		<execute action="PGBlogs#assertClick" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
-
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
-	</command>
-
 	<command name="gotoBlogsEntryCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="pageName" value="${pageName}" />
@@ -49,6 +37,18 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+	</command>
+
+	<command name="gotoBlogsPG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURLTemp}" />
+		</execute>
+
+		<execute action="PGBlogs#assertClick" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 	</command>

@@ -1,30 +1,6 @@
 <definition>
 	<var name="orgName" value="Organization Name" />
 
-	<command name="addCP">
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD" value1="Add" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD_REGULAR_ORGANIZATION" value1="Regular Organization" />
-
-		<execute action="CPUsersandorganizationsAddorganization#type" locator-key1="DETAILS_NAME_FIELD" value1="${orgName}" />
-		<execute action="CPUsersandorganizationsAddorganization#select" locator-key1="DETAILS_TYPE_SELECT" value1="${orgType}" />
-		<execute action="CPUsersandorganizationsAddorganization#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<if>
-			<equals arg1="${organizationName}" arg2="Duplicate" />
-			<then>
-				<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-				<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="The organization name is already taken." />
-			</then>
-			<else>
-				<var name="key_orgType" value="${orgType}" />
-
-				<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-				<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_NAME_FIELD" value1="${orgName}" />
-				<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_TYPE" value1="${orgType}" />
-			</else>
-		</if>
-	</command>
-
 	<command name="addAddressCP">
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
@@ -65,6 +41,30 @@
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="COMMENTS_FIELD" value1="${orgComment}" />
+	</command>
+
+	<command name="addCP">
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD" value1="Add" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD_REGULAR_ORGANIZATION" value1="Regular Organization" />
+
+		<execute action="CPUsersandorganizationsAddorganization#type" locator-key1="DETAILS_NAME_FIELD" value1="${orgName}" />
+		<execute action="CPUsersandorganizationsAddorganization#select" locator-key1="DETAILS_TYPE_SELECT" value1="${orgType}" />
+		<execute action="CPUsersandorganizationsAddorganization#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<if>
+			<equals arg1="${organizationName}" arg2="Duplicate" />
+			<then>
+				<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+				<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="The organization name is already taken." />
+			</then>
+			<else>
+				<var name="key_orgType" value="${orgType}" />
+
+				<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_NAME_FIELD" value1="${orgName}" />
+				<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_TYPE" value1="${orgType}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="addMemberCP">
@@ -125,35 +125,6 @@
 				<execute action="CPUsersandorganizationsOrganizationEdit#assertChecked" locator-key1="ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
 			</then>
 		</if>
-	</command>
-
-	<command name="manageMembershipOptionsInSites">
-		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_MANAGE_SITE" value1="Manage Site" />
-
-		<if>
-			<equals arg1="${selectMembershipType}" arg2="true" />
-			<then>
-				<execute action="CPSitesettings#assertTextEquals" locator-key1="MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE_LABEL" value1="Membership Type" />
-				<execute action="CPSitesettings#select" locator-key1="MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE" value1="${membershipType}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${allowManualMembershipManagement}" arg2="true" />
-			<then>
-				<execute action="CPSitesEdit#check" locator-key1="MEMBERSHIP_OPTIONS_MEMBERSHIP_MANAGEMENT_CHECKBOX" />
-			</then>
-		</if>
-
-		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPSitesettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="advancedSearchCP">
@@ -276,6 +247,35 @@
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_NAME_FIELD" value1="${orgNameEdit}" />
+	</command>
+
+	<command name="manageMembershipOptionsInSites">
+		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_MANAGE_SITE" value1="Manage Site" />
+
+		<if>
+			<equals arg1="${selectMembershipType}" arg2="true" />
+			<then>
+				<execute action="CPSitesettings#assertTextEquals" locator-key1="MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE_LABEL" value1="Membership Type" />
+				<execute action="CPSitesettings#select" locator-key1="MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE" value1="${membershipType}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${allowManualMembershipManagement}" arg2="true" />
+			<then>
+				<execute action="CPSitesEdit#check" locator-key1="MEMBERSHIP_OPTIONS_MEMBERSHIP_MANAGEMENT_CHECKBOX" />
+			</then>
+		</if>
+
+		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitesettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="removeMemberCP">

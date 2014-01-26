@@ -1,8 +1,8 @@
 <definition>
-	<var name="password" value="test" />
-	<var name="adminName" value="Joe Bloggs" />
-	<var name="adminListName" value="Bloggs, Joe" />
 	<var name="adminEmailAddress" value="test@liferay.com" />
+	<var name="adminListName" value="Bloggs, Joe" />
+	<var name="adminName" value="Joe Bloggs" />
+	<var name="password" value="test" />
 
 	<command name="addConnection">
 		<execute macro="SOUser#addUserWithSORole">
@@ -10,8 +10,8 @@
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
@@ -23,8 +23,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOContactsCenter#confirmRequestToConnect">
@@ -60,8 +60,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOContactsCenter#followUser">

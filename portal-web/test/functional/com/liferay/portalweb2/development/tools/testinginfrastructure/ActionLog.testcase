@@ -1,4 +1,20 @@
 <definition component-name="portal-tools">
+	<command name="EchoStatement" priority="5">
+		<echo message="echoMessage" />
+	</command>
+
+	<command name="ForLoops" priority="5">
+		<var name="list" value="1,2,3" />
+
+		<for list="${list}" param="param">
+			<echo message="${param}" />
+		</for>
+
+		<for list="a,b,c" param="param">
+			<echo message="${param}" />
+		</for>
+	</command>
+
 	<command name="IfStatements" priority="5">
 		<if>
 			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
@@ -39,18 +55,6 @@
 		</if>
 	</command>
 
-	<command name="ForLoops" priority="5">
-		<var name="list" value="1,2,3" />
-
-		<for list="${list}" param="param">
-			<echo message="${param}" />
-		</for>
-
-		<for list="a,b,c" param="param">
-			<echo message="${param}" />
-		</for>
-	</command>
-
 	<command name="WhileLoops" priority="5">
 		<while>
 			<condition action="Dockbar#isElementNotPresent" locator-key1="USER_NAME" />
@@ -79,9 +83,5 @@
 				<echo message="" />
 			</then>
 		</while>
-	</command>
-
-	<command name="EchoStatement" priority="5">
-		<echo message="echoMessage" />
 	</command>
 </definition>

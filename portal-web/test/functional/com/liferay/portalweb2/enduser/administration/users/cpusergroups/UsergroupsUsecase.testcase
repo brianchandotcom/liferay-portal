@@ -120,8 +120,8 @@
 		<var name="roleName1" value="Authenticated" />
 		<var name="roleName2" value="Test UserGroup Role" />
 		<var name="roleType" value="Regular" />
-		<var name="siteScopeName" value="Site Name" />
 		<var name="siteName" value="Site Name" />
+		<var name="siteScopeName" value="Site Name" />
 		<var name="userEmailAddress1" value="userea1@liferay.com" />
 		<var name="userEmailAddress2" value="userea2@liferay.com" />
 		<var name="userEmailAddress3" value="userea3@liferay.com" />
@@ -296,8 +296,8 @@
 		</execute>
 
 		<execute macro="Site#addMemberUserGroupCP">
-			<var name="userGroupName" value="${userGroupName}" />
 			<var name="siteName" value="${siteName}" />
+			<var name="userGroupName" value="${userGroupName}" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -306,15 +306,15 @@
 		</execute>
 
 		<execute macro="Site#assignSiteRolesSiteOwnerUserGroupsCP">
-			<var name="userGroupName" value="${userGroupName}" />
 			<var name="siteName" value="${siteName}" />
+			<var name="userGroupName" value="${userGroupName}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginUserPG">
-			<var name="userEmailAddress" value="${userEmailAddress3}" />
 			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
 		</execute>
 
 		<execute macro="Page#gotoCP" />
@@ -336,8 +336,8 @@
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="User#loginPG">
-			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -352,8 +352,8 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginUserPG">
-			<var name="userEmailAddress" value="${userEmailAddress5}" />
 			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress5}" />
 		</execute>
 
 		<execute macro="Page#gotoCP" />
@@ -365,8 +365,8 @@
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="User#loginPG">
-			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -402,8 +402,8 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginUserPG">
-			<var name="userEmailAddress" value="${userEmailAddress1}" />
 			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
 		</execute>
 
 		<execute macro="Page#gotoCP" />
@@ -415,8 +415,8 @@
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="User#loginPG">
-			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

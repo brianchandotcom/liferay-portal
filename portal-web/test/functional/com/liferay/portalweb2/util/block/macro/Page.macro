@@ -124,13 +124,6 @@
 		</if>
 	</command>
 
-	<command name="gotoMyDashboard">
-		<execute macro="Page#openURL" />
-
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#assertClick" locator-key1="USER_MY_DASHBOARD" value1="My Dashboard" />
-	</command>
-
 	<command name="gotoMyAccount">
 		<execute macro="Page#openURL" />
 
@@ -139,6 +132,13 @@
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
 		<execute action="Myaccount#assertClick" locator1="//ul[@class='nav control-panel-bar-secondary nav-pills']//a[contains(.,'${portletName}')]" value1="${portletName}" />
+	</command>
+
+	<command name="gotoMyDashboard">
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#assertClick" locator-key1="USER_MY_DASHBOARD" value1="My Dashboard" />
 	</command>
 
 	<command name="gotoMyProfile">
@@ -268,12 +268,12 @@
 		</while>
 	</command>
 
-	<command name="viewPG">
-		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
-	</command>
-
 	<command name="viewPageLayoutColumn">
 		<execute action="Home#assertElementPresent" locator-key1="${pageColumnLayout}" />
+	</command>
+
+	<command name="viewPG">
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
 	</command>
 
 	<command name="viewWithWorkflowPG">

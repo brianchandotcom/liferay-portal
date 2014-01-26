@@ -10,8 +10,8 @@
 	</tear-down>
 
 	<command name="ViewCKEditorsInheritanceNo" priority="5">
-		<var name="ckEditorFormatOptionsValid" value="Normal,Formatted" />
 		<var name="ckEditorFormatOptionsInvalid" value="Heading,Heading 2,Heading 3,Heading 4,Heading 5,Heading 6" />
+		<var name="ckEditorFormatOptionsValid" value="Normal,Formatted" />
 		<var name="invalidSubstring" value="Heading" />
 		<var name="portlet1Name" value="Message Boards" />
 		<var name="portlet2Name" value="Wiki" />

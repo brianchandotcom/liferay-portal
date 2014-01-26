@@ -175,8 +175,8 @@
 		</execute>
 
 		<execute macro="BlogsEntry#addCategoryCP">
-			<var name="entryTitle" value="${entryTitle}" />
 			<var name="categoryName" value="${categoryName}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
@@ -255,8 +255,8 @@
 		</execute>
 
 		<execute macro="BlogsEntry#addCategoryCP">
-			<var name="entryTitle" value="${entryTitle}" />
 			<var name="categoryName" value="${categoryName}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
@@ -311,10 +311,10 @@
 	</command>
 
 	<command name="SearchBlogsEntryQuotes" priority="5">
-		<var name="pageName" value="Blogs Page" />
-		<var name="portletName" value="Blogs" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="pageName" value="Blogs Page" />
+		<var name="portletName" value="Blogs" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -693,8 +693,8 @@
 	<command name="SearchMessageBoardsThread" priority="5">
 		<var name="pageName" value="Message Boards Page" />
 		<var name="portletName" value="Message Boards" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="threadBody" value="MB Thread Message Body" />
+		<var name="threadSubject" value="MB Thread Message Subject" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -713,8 +713,8 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadSubject" value="${threadSubject}" />
 			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

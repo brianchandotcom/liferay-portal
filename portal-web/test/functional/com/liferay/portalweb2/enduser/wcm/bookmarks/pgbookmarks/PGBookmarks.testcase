@@ -145,6 +145,29 @@
 		</execute>
 	</command>
 
+	<command name="DeleteFolder" priority="5">
+		<var name="folderDescription" value="Test Folder Description" />
+		<var name="folderName" value="Test Folder Name" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#addPG">
+			<var name="folderDescription" value="${folderDescription}" />
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#deletePG">
+			<var name="folderDescription" value="${folderDescription}" />
+			<var name="folderName" value="${folderName}" />
+		</execute>
+	</command>
+
 	<command name="DeleteFolderBookmark" priority="5">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
@@ -188,9 +211,11 @@
 		</execute>
 	</command>
 
-	<command name="DeleteFolder" priority="5">
+	<command name="EditFolder" priority="5">
 		<var name="folderDescription" value="Test Folder Description" />
+		<var name="folderDescriptionEdit" value="Test Folder Description Edit" />
 		<var name="folderName" value="Test Folder Name" />
+		<var name="folderNameEdit" value="Test Folder Name Edit" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -205,9 +230,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BookmarksFolder#deletePG">
+		<execute macro="BookmarksFolder#editPG">
 			<var name="folderDescription" value="${folderDescription}" />
+			<var name="folderDescriptionEdit" value="${folderDescriptionEdit}" />
 			<var name="folderName" value="${folderName}" />
+			<var name="folderNameEdit" value="${folderNameEdit}" />
 		</execute>
 	</command>
 
@@ -257,33 +284,6 @@
 			<var name="bookmarkNameEdit" value="${bookmarkNameEdit}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 			<var name="bookmarkURLEdit" value="${bookmarkURLEdit}" />
-		</execute>
-	</command>
-
-	<command name="EditFolder" priority="5">
-		<var name="folderDescription" value="Test Folder Description" />
-		<var name="folderDescriptionEdit" value="Test Folder Description Edit" />
-		<var name="folderName" value="Test Folder Name" />
-		<var name="folderNameEdit" value="Test Folder Name Edit" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BookmarksFolder#addPG">
-			<var name="folderDescription" value="${folderDescription}" />
-			<var name="folderName" value="${folderName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BookmarksFolder#editPG">
-			<var name="folderDescription" value="${folderDescription}" />
-			<var name="folderDescriptionEdit" value="${folderDescriptionEdit}" />
-			<var name="folderName" value="${folderName}" />
-			<var name="folderNameEdit" value="${folderNameEdit}" />
 		</execute>
 	</command>
 

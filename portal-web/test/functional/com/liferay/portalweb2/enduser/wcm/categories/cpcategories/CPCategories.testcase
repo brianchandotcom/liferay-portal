@@ -466,41 +466,6 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypes" priority="4">
-		<var name="vocabularyAssociatedAssetType1" value="Blogs Entry" />
-		<var name="vocabularyAssociatedAssetType2" value="Web Content Article" />
-		<var name="vocabularyName1" value="Vocabulary Name 1" />
-		<var name="vocabularyName2" value="Vocabulary Name 2" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType1}" />
-			<var name="vocabularyName" value="${vocabularyName1}" />
-		</execute>
-
-		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType1}" />
-			<var name="vocabularyName" value="${vocabularyName1}" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType2}" />
-			<var name="vocabularyName" value="${vocabularyName2}" />
-		</execute>
-
-		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType2}" />
-			<var name="vocabularyName" value="${vocabularyName2}" />
-		</execute>
-	</command>
-
 	<command name="AddVocabularyAssetTypeBlogsEntry" priority="5">
 		<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
 		<var name="vocabularyName" value="Vocabulary Name" />
@@ -555,6 +520,41 @@
 		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
 			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="AddVocabularyAssetTypes" priority="4">
+		<var name="vocabularyAssociatedAssetType1" value="Blogs Entry" />
+		<var name="vocabularyAssociatedAssetType2" value="Web Content Article" />
+		<var name="vocabularyName1" value="Vocabulary Name 1" />
+		<var name="vocabularyName2" value="Vocabulary Name 2" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType1}" />
+			<var name="vocabularyName" value="${vocabularyName1}" />
+		</execute>
+
+		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType1}" />
+			<var name="vocabularyName" value="${vocabularyName1}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType2}" />
+			<var name="vocabularyName" value="${vocabularyName2}" />
+		</execute>
+
+		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType2}" />
+			<var name="vocabularyName" value="${vocabularyName2}" />
 		</execute>
 	</command>
 
@@ -727,6 +727,33 @@
 		<execute macro="Vocabulary#addVocabularyWithNullTitle" />
 	</command>
 
+	<command name="DeleteAssociatedAssetTypeViaVocabulary" priority="3">
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
+			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#addAssociatedAssetTypeViaVocabularyCP">
+			<var name="vocabularyAssociatedAssetType2" value="Web Content Article" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#deleteAssociatedAssetTypeViaVocabularyCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
+			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
 	<command name="DeleteCategories" priority="4">
 		<var name="categoryName1" value="Category Name 1" />
 		<var name="categoryName2" value="Category Name 2" />
@@ -868,33 +895,6 @@
 
 		<execute action="CPCategories#assertTextNotPresent" locator-key1="CATEGORY_DETAILS_PROPERTY_KEY" value1="Category Property 2 Key" />
 		<execute action="CPCategories#assertTextNotPresent" locator-key1="CATEGORY_DETAILS_PROPERTY_VALUE" value1="Category Property 2 Value" />
-	</command>
-
-	<command name="DeleteAssociatedAssetTypeViaVocabulary" priority="3">
-		<var name="vocabularyName" value="Vocabulary Name" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
-			<var name="vocabularyName" value="${vocabularyName}" />
-		</execute>
-
-		<execute macro="Vocabulary#addAssociatedAssetTypeViaVocabularyCP">
-			<var name="vocabularyAssociatedAssetType2" value="Web Content Article" />
-			<var name="vocabularyName" value="${vocabularyName}" />
-		</execute>
-
-		<execute macro="Vocabulary#deleteAssociatedAssetTypeViaVocabularyCP">
-			<var name="vocabularyName" value="${vocabularyName}" />
-		</execute>
-
-		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
-			<var name="vocabularyName" value="${vocabularyName}" />
-		</execute>
 	</command>
 
 	<command name="DeleteSubcategoryViaActions" priority="5">

@@ -60,7 +60,6 @@
 		<var name="componentName" value="Community" />
 		<var name="portletNameList" value="Bookmarks,Friends Directory,Invitation,My Sites,My Sites Directory,Page Comments,Page Flags,Page Ratings,Portal Directory,Site Members Directory" />
 		<var name="siteName" value="Page Type Test Site Name" />
-		<var name="sitePagePrivacy" value="Public" />
 		<var name="sitePage1Name" value="Blank Page" />
 		<var name="sitePage2Description" value="Google" />
 		<var name="sitePage2LinkToURLURL" value="http://www.google.com/" />
@@ -72,6 +71,7 @@
 		<var name="sitePage3Type" value="Embedded" />
 		<var name="sitePage4Name" value="Panel Page" />
 		<var name="sitePage4Type" value="Panel" />
+		<var name="sitePagePrivacy" value="Public" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -173,9 +173,9 @@
 		<var name="entryTitle" value="Blog Post 1" />
 		<var name="pageName" value="Panel Test Page" />
 		<var name="pageType" value="Panel" />
-		<var name="portletNameList" value="Blogs,Message Boards" />
 		<var name="portlet1Name" value="Blogs" />
 		<var name="portlet2Name" value="Message Boards" />
+		<var name="portletNameList" value="Blogs,Message Boards" />
 		<var name="postCount" value="1" />
 		<var name="threadBody" value="This is Message Boards Thread 1" />
 		<var name="threadSubject" value="Thread 1" />

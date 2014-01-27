@@ -45,6 +45,12 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 
 	<p><%= LanguageUtil.get(pageContext, "upload-a-logo-for-the-" + (privateLayout ? "private" : "public") + "-pages-that-will-be-used-instead-of-the-default-enterprise-logo") %></p>
 
+	<c:if test="<%= liveGroup.isLayoutSetPrototype() %>">
+		<div class="alert alert-block">
+			<liferay-ui:message key="modifying-the-site-template-logo-will-only-affect-sites-that-are-created-after" />
+		</div>
+	</c:if>
+
 	<%
 	String companyLogoURL = themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId());
 	%>

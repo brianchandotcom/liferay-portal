@@ -75,7 +75,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.closeNoticeTimeout = 8000;
 
-	config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';
+	config.contentsCss = ['<%= HtmlUtil.escapeJS(cssPath) %>/main.css', '<%= HtmlUtil.escapeJS(cssPath) %>/aui.css'];
 
 	config.contentsLangDirection = '<%= PortalUtil.isRightToLeft(request) ? "rtl" : "ltr" %>';
 

@@ -124,8 +124,7 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testGetDiscussionMessageDisplay() throws Exception {
-		BlogsEntry entry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), _group, true);
+		BlogsEntry entry = addEntry(false);
 
 		try {
 			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
@@ -142,14 +141,11 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesPrevAndNextCenterElement() throws Exception {
-		BlogsEntry entryPrevious = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), _group, true);
+		BlogsEntry entryPrevious = addEntry(false);
 
-		BlogsEntry entryCenter = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), _group, true);
+		BlogsEntry entryCenter = addEntry(false);
 
-		BlogsEntry entryNext = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), _group, true);
+		BlogsEntry entryNext = addEntry(false);
 
 		BlogsEntry[] entriesPrevAndNextForCenter =
 			BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(
@@ -192,13 +188,11 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesPrevAndNextTopLeftElement() throws Exception {
-		BlogsEntry entryPrevious = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), _group, true);
+		BlogsEntry entryPrevious = addEntry(false);
 
-		BlogsEntry entryCenter = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), _group, true);
+		BlogsEntry entryCenter = addEntry(false);
 
-		BlogsTestUtil.addEntry(TestPropsValues.getUserId(), _group, true);
+		addEntry(false);
 
 		BlogsEntry[] entriesPrevAndNextForTopLeft =
 			BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(
@@ -235,13 +229,11 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesPrevAndNextTopRightElement() throws Exception {
-		BlogsTestUtil.addEntry(TestPropsValues.getUserId(), _group, true);
+		addEntry(false);
 
-		BlogsEntry entryCenter = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), _group, true);
+		BlogsEntry entryCenter = addEntry(false);
 
-		BlogsEntry entryNext = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), _group, true);
+		BlogsEntry entryNext = addEntry(false);
 
 		BlogsEntry[] entriesPrevAndNextForTopLeft =
 			BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(
@@ -278,8 +270,7 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntryByUrlAndGroup() throws Exception {
-		BlogsEntry entry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), _group, true);
+		BlogsEntry entry = addEntry(false);
 
 		BlogsEntry entryObtained = BlogsEntryLocalServiceUtil.getEntry(
 			entry.getGroupId(), entry.getUrlTitle());
@@ -296,7 +287,9 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = groupEntries.size();
 
-		addEntryInTrashAndEntryNotInTrash();
+		addEntry(false);
+
+		addEntry(true);
 
 		List<BlogsEntry> groupEntriesInTrash =
 			BlogsEntryLocalServiceUtil.getGroupsEntries(
@@ -448,32 +441,27 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testUpdateResources() throws Exception {
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), _group, true);
+		BlogsEntry blogsEntry = addEntry(false);
 
 		BlogsEntryLocalServiceUtil.updateEntryResources(
 			blogsEntry, new String[] {ActionKeys.ADD_DISCUSSION},
 			null);
 	}
 
-	protected BlogsEntry[] addEntryInTrashAndEntryNotInTrash()
-		throws Exception {
-
-		return addEntryInTrashAndEntryNotInTrash(TestPropsValues.getUser());
+	protected BlogsEntry addEntry(boolean statusInTrash) throws Exception {
+		return addEntry(TestPropsValues.getUserId(), statusInTrash);
 	}
 
-	protected BlogsEntry[] addEntryInTrashAndEntryNotInTrash(User user)
+	protected BlogsEntry addEntry(long userId, boolean statusInTrash)
 		throws Exception {
 
-		BlogsEntry[] blogs = new BlogsEntry[2];
+		BlogsEntry entry = BlogsTestUtil.addEntry(userId, _group, true);
 
-		blogs[0] = BlogsTestUtil.addEntry(user.getUserId(), _group, true);
+		if (statusInTrash) {
+			entry = BlogsEntryLocalServiceUtil.moveEntryToTrash(userId, entry);
+		}
 
-		BlogsEntryLocalServiceUtil.moveEntryToTrash(user.getUserId(), blogs[0]);
-
-		blogs[1] = BlogsTestUtil.addEntry(user.getUserId(), _group, true);
-
-		return blogs;
+		return entry;
 	}
 
 	protected void assertBlogsEntriesStatuses(
@@ -535,7 +523,9 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = initialEntries.size();
 
-		addEntryInTrashAndEntryNotInTrash();
+		addEntry(false);
+
+		addEntry(true);
 
 		List<BlogsEntry> actualEntries =
 			BlogsEntryLocalServiceUtil.getCompanyEntries(
@@ -558,7 +548,9 @@ public class BlogsEntryLocalServiceTest {
 		int initialCount = BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
 			_user.getCompanyId(), new Date(), queryDefinition);
 
-		addEntryInTrashAndEntryNotInTrash();
+		addEntry(false);
+
+		addEntry(true);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
@@ -590,7 +582,9 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = initialEntries.size();
 
-		addEntryInTrashAndEntryNotInTrash();
+		addEntry(false);
+
+		addEntry(true);
 
 		List<BlogsEntry> actualEntries = null;
 
@@ -629,7 +623,9 @@ public class BlogsEntryLocalServiceTest {
 				_group.getGroupId(), queryDefinition);
 		}
 
-		addEntryInTrashAndEntryNotInTrash();
+		addEntry(false);
+
+		addEntry(true);
 
 		int actualCount = 0;
 
@@ -661,7 +657,9 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = initialEntries.size();
 
-		addEntryInTrashAndEntryNotInTrash();
+		addEntry(false);
+
+		addEntry(true);
 
 		List<BlogsEntry> actualEntries =
 			BlogsEntryLocalServiceUtil.getGroupUserEntries(
@@ -687,7 +685,9 @@ public class BlogsEntryLocalServiceTest {
 				_group.getGroupId(), _user.getUserId(), new Date(),
 				queryDefinition);
 
-		addEntryInTrashAndEntryNotInTrash();
+		addEntry(false);
+
+		addEntry(true);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
@@ -716,7 +716,9 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = initialEntries.size();
 
-		addEntryInTrashAndEntryNotInTrash(user);
+		addEntry(user.getUserId(), false);
+
+		addEntry(user.getUserId(), true);
 
 		List<BlogsEntry> actualEntries =
 			BlogsEntryLocalServiceUtil.getOrganizationEntries(
@@ -744,7 +746,9 @@ public class BlogsEntryLocalServiceTest {
 			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
 				organization.getOrganizationId(), new Date(), queryDefinition);
 
-		addEntryInTrashAndEntryNotInTrash(user);
+		addEntry(user.getUserId(), false);
+
+		addEntry(user.getUserId(), true);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(

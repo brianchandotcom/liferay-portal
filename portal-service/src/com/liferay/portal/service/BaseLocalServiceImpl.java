@@ -71,12 +71,12 @@ public abstract class BaseLocalServiceImpl implements BaseLocalService {
 
 		if (plid == controlPanelPlid) {
 			plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
+		}
 
-			if (plid != LayoutConstants.DEFAULT_PLID) {
-				Layout layout = layoutPersistence.findByPrimaryKey(plid);
+		if (plid != LayoutConstants.DEFAULT_PLID) {
+			Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
-				layoutURL = getLayoutURL(layout, serviceContext);
-			}
+			return getLayoutURL(layout, serviceContext);
 		}
 
 		return layoutURL;

@@ -477,17 +477,17 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	protected void assertBlogsEntriesStatuses(
-		List<BlogsEntry> entries, boolean isInTrash) {
+		List<BlogsEntry> entries, boolean statusInTrash) {
 
 		for (BlogsEntry entry : entries) {
-			if (isInTrash &&
+			if (statusInTrash &&
 				(WorkflowConstants.STATUS_IN_TRASH != entry.getStatus())) {
 
 				Assert.fail(
 					"The blogEntry " + entry.getEntryId() +
 					" should be in trash");
 			}
-			else if (!isInTrash &&
+			else if (!statusInTrash &&
 					 (WorkflowConstants.STATUS_IN_TRASH ==
 						entry.getStatus())) {
 
@@ -520,10 +520,12 @@ public class BlogsEntryLocalServiceTest {
 		return entry;
 	}
 
-	protected void testGetCompanyEntries(boolean isInTrash) throws Exception {
+	protected void testGetCompanyEntries(boolean statusInTrash)
+		throws Exception {
+
 		QueryDefinition queryDefinition = _queryStatusInTrash;
 
-		if (!isInTrash) {
+		if (!statusInTrash) {
 			queryDefinition = _queryStatusNotInTrash;
 		}
 
@@ -541,15 +543,15 @@ public class BlogsEntryLocalServiceTest {
 
 		Assert.assertEquals(initialCount + 1, actualEntries.size());
 
-		assertBlogsEntriesStatuses(actualEntries, isInTrash);
+		assertBlogsEntriesStatuses(actualEntries, statusInTrash);
 	}
 
-	protected void testGetCompanyEntriesCount(boolean isInTrash)
+	protected void testGetCompanyEntriesCount(boolean statusInTrash)
 		throws Exception {
 
 		QueryDefinition queryDefinition = _queryStatusInTrash;
 
-		if (!isInTrash) {
+		if (!statusInTrash) {
 			queryDefinition = _queryStatusNotInTrash;
 		}
 
@@ -565,12 +567,13 @@ public class BlogsEntryLocalServiceTest {
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
 
-	protected void testGetGroupEntries(boolean isInTrash, boolean displayDate)
+	protected void testGetGroupEntries(
+			boolean statusInTrash, boolean displayDate)
 		throws Exception {
 
 		QueryDefinition queryDefinition = _queryStatusInTrash;
 
-		if (!isInTrash) {
+		if (!statusInTrash) {
 			queryDefinition = _queryStatusNotInTrash;
 		}
 
@@ -602,16 +605,16 @@ public class BlogsEntryLocalServiceTest {
 
 		Assert.assertEquals(initialCount + 1, actualEntries.size());
 
-		assertBlogsEntriesStatuses(actualEntries, isInTrash);
+		assertBlogsEntriesStatuses(actualEntries, statusInTrash);
 	}
 
 	protected void testGetGroupEntriesCount(
-			boolean isInTrash, boolean displayDate)
+			boolean statusInTrash, boolean displayDate)
 		throws Exception {
 
 		QueryDefinition queryDefinition = _queryStatusInTrash;
 
-			if (!isInTrash) {
+			if (!statusInTrash) {
 				queryDefinition = _queryStatusNotInTrash;
 			}
 
@@ -642,10 +645,12 @@ public class BlogsEntryLocalServiceTest {
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
 
-	protected void testGetGroupUserEntries(boolean isInTrash) throws Exception {
+	protected void testGetGroupUserEntries(boolean statusInTrash)
+		throws Exception {
+
 		QueryDefinition queryDefinition = _queryStatusInTrash;
 
-		if (!isInTrash) {
+		if (!statusInTrash) {
 			queryDefinition = _queryStatusNotInTrash;
 		}
 
@@ -665,15 +670,15 @@ public class BlogsEntryLocalServiceTest {
 
 		Assert.assertEquals(initialCount + 1, actualEntries.size());
 
-		assertBlogsEntriesStatuses(actualEntries, isInTrash);
+		assertBlogsEntriesStatuses(actualEntries, statusInTrash);
 	}
 
-	protected void testGetGroupUserEntriesCount(boolean isInTrash)
+	protected void testGetGroupUserEntriesCount(boolean statusInTrash)
 		throws Exception {
 
 		QueryDefinition queryDefinition = _queryStatusInTrash;
 
-		if (!isInTrash) {
+		if (!statusInTrash) {
 			queryDefinition = _queryStatusNotInTrash;
 		}
 
@@ -692,12 +697,12 @@ public class BlogsEntryLocalServiceTest {
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
 
-	protected void testGetOrganizationEntries(boolean isInTrash)
+	protected void testGetOrganizationEntries(boolean statusInTrash)
 		throws Exception {
 
 		QueryDefinition queryDefinition = _queryStatusInTrash;
 
-		if (!isInTrash) {
+		if (!statusInTrash) {
 			queryDefinition = _queryStatusNotInTrash;
 		}
 
@@ -719,15 +724,15 @@ public class BlogsEntryLocalServiceTest {
 
 		Assert.assertEquals(initialCount + 1, actualEntries.size());
 
-		assertBlogsEntriesStatuses(actualEntries, isInTrash);
+		assertBlogsEntriesStatuses(actualEntries, statusInTrash);
 	}
 
-	protected void testGetOrganizationEntriesCount(boolean isInTrash)
+	protected void testGetOrganizationEntriesCount(boolean statusInTrash)
 		throws Exception {
 
 		QueryDefinition queryDefinition = _queryStatusInTrash;
 
-		if (!isInTrash) {
+		if (!statusInTrash) {
 			queryDefinition = _queryStatusNotInTrash;
 		}
 

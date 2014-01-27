@@ -786,18 +786,16 @@ public class JournalArticleStagedModelDataHandler
 		JournalArticle existingArticle = null;
 
 		if (existingArticleResource != null) {
-			existingArticle =
-				JournalArticleLocalServiceUtil.fetchLatestArticle(
-					existingArticleResource.getResourcePrimKey(),
-					WorkflowConstants.STATUS_ANY, false);
+			existingArticle = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				existingArticleResource.getResourcePrimKey(),
+				WorkflowConstants.STATUS_ANY, false);
 		}
 
 		if ((existingArticle == null) && Validator.isNotNull(newArticleId) &&
 			(version > 0.0)) {
 
-			existingArticle =
-				JournalArticleLocalServiceUtil.fetchArticle(
-					groupId, newArticleId, version);
+			existingArticle = JournalArticleLocalServiceUtil.fetchArticle(
+				groupId, newArticleId, version);
 		}
 
 		return existingArticle;

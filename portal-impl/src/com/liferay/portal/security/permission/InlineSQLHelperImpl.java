@@ -315,15 +315,16 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	protected String getRolesOrOwnerSQL(
-		PermissionChecker permissionChecker, long groupId, String userIdField) {
+		PermissionChecker permissionChecker, long[] groupIds,
+		String userIdField) {
 
 		StringBundler sb = new StringBundler();
 
-		sb.append(" AND (");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		sb.append("InlineSQLResourcePermission.roleId IN (");
+		sb.append("ResourcePermission.roleId IN (");
 
-		long[] roleIds = ArrayUtil.toLongArray(getRoleIds(groupId));
+		long[] roleIds = getRoleIds(groupIds);
 
 		if (roleIds.length == 0) {
 			roleIds = _NO_ROLE_IDS;
@@ -346,7 +347,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 			else {
-				sb.append("(InlineSQLResourcePermission.ownerId = ");
+				sb.append("(ResourcePermission.ownerId = ");
 				sb.append(userId);
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -584,10 +585,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 				sb.append(groupId);
 				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				sb.append(
-					getRolesOrOwnerSQL(
-						permissionChecker, groupId, userIdField));
 			}
 			else {
 				viewableGroupIds.add(groupId);
@@ -618,14 +615,18 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		sb.append(")))");
 
+		String rolesOrOwnerSQL = getRolesOrOwnerSQL(
+			permissionChecker, groupIds, userIdField);
+
 		permissionJoin = StringUtil.replace(
 			permissionJoin,
 			new String[] {
-				"[$CLASS_NAME$]", "[$COMPANY_ID$]", "[$PRIM_KEYS$]"
+				"[$CLASS_NAME$]", "[$COMPANY_ID$]", "[$PRIM_KEYS$]",
+				"[$ROLES_OR_OWNER$]"
 			},
 			new String[] {
 				className, String.valueOf(permissionChecker.getCompanyId()),
-				sb.toString()
+				sb.toString(), rolesOrOwnerSQL
 			});
 
 		int pos = sql.indexOf(_WHERE_CLAUSE);

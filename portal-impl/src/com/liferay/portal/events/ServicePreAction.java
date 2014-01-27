@@ -2165,6 +2165,9 @@ public class ServicePreAction extends Action {
 
 		// Main Journal article
 
+		String strutsAction = PortalUtil.getStrutsAction(request);
+
+		if (strutsAction.equals(_PATH_PORTAL_LAYOUT)) {
 		long mainJournalArticleId = ParamUtil.getLong(request, "p_j_a_id");
 
 		if (mainJournalArticleId > 0) {
@@ -2185,6 +2188,7 @@ public class ServicePreAction extends Action {
 					_log.warn(nsae.getMessage());
 				}
 			}
+		}
 		}
 	}
 

@@ -15,11 +15,11 @@
 package com.liferay.portlet.documentlibrary.webdav;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.FileTestUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,12 +45,11 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	public void testMSOffice0Setup() throws Exception {
 		Class<?> clazz = getClass();
 
-		_testFileBytes = FileUtil.getBytes(
-			clazz.getResourceAsStream(_OFFICE_TEST_DOCX));
-		_testMetaBytes = FileUtil.getBytes(
-			clazz.getResourceAsStream(_OFFICE_TEST_META_DOCX));
-		_testDeltaBytes = FileUtil.getBytes(
-			clazz.getResourceAsStream(_OFFICE_TEST_DELTA_DOCX));
+		_testFileBytes = FileTestUtil.getBytes(getClass(), _OFFICE_TEST_DOCX);
+		_testMetaBytes = FileTestUtil.getBytes(
+			getClass(), _OFFICE_TEST_META_DOCX);
+		_testDeltaBytes = FileTestUtil.getBytes(
+			getClass(), _OFFICE_TEST_DELTA_DOCX);
 	}
 
 	@Test

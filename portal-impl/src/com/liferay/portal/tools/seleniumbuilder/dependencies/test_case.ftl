@@ -77,9 +77,9 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 			<#list varElements as varElement>
 				<#assign lineNumber = varElement.attributeValue("line-number")>
 
-				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pending", ${variableContext});
+				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pending");
 
-				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pass", ${variableContext});
+				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pass");
 			</#list>
 		</#if>
 	}
@@ -126,13 +126,13 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 				</#list>
 
 				if (!nested) {
-					selenium.sendLogger(currentTestCaseName + commandName, "start", commandScopeVariables);
+					selenium.sendLogger(currentTestCaseName + commandName, "start");
 
-					selenium.sendLogger(currentTestCaseName + commandName, "pending", commandScopeVariables);
+					selenium.sendLogger(currentTestCaseName + commandName, "pending");
 
 					<#assign lineNumber = methodElement.attributeValue("line-number")>
 
-					selenium.sendLogger(testCaseName + "${lineNumber}", "pending", commandScopeVariables);
+					selenium.sendLogger(testCaseName + "${lineNumber}", "pending");
 				}
 
 				<#assign blockElement = methodElement>
@@ -148,7 +148,7 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 				if (!nested) {
 					<#assign lineNumber = methodElement.attributeValue("line-number")>
 
-					selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pass", commandScopeVariables);
+					selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pass");
 				}
 			}
 		</#list>

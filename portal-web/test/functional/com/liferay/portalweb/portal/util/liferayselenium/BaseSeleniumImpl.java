@@ -480,11 +480,6 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void sendLogger(
-		String id, String status, Map<String, String> context) {
-	}
-
-	@Override
 	public void sendTestCaseCommandLogger(String command) {
 	}
 

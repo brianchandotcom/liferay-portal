@@ -44,7 +44,7 @@ public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)}
 			<#list varElements as varElement>
 				<#assign lineNumber = varElement.attributeValue("line-number")>
 
-				liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pending", definitionScopeVariables);
+				liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pending");
 
 				<#assign void = variableContextStack.push("definitionScopeVariables")>
 
@@ -52,7 +52,7 @@ public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)}
 
 				<#assign void = variableContextStack.pop()>
 
-				liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pass", definitionScopeVariables);
+				liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pass");
 			</#list>
 		</#if>
 	}

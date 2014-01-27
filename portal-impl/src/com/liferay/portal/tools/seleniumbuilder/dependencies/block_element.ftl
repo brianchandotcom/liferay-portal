@@ -21,7 +21,7 @@
 
 	<#assign lineNumber = element.attributeValue("line-number")>
 
-	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending", ${variableContext});
+	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending");
 
 	<#if name == "echo">
 		<#assign variableContext = variableContextStack.peek()>
@@ -36,7 +36,7 @@
 
 		<#assign lineNumber = element.attributeValue("line-number")>
 
-		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", ${variableContext});
+		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 	<#elseif name == "execute">
 		<#assign variableContext = variableContextStack.peek()>
 
@@ -82,12 +82,12 @@
 				finally {
 					<#assign lineNumber = element.attributeValue("line-number")>
 
-					${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", ${variableContext});
+					${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 				}
 			<#else>
 				<#assign lineNumber = element.attributeValue("line-number")>
 
-				${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", ${variableContext});
+				${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 			</#if>
 		<#elseif element.attributeValue("macro")??>
 			<#assign macroElement = element>
@@ -96,7 +96,7 @@
 
 			<#assign lineNumber = element.attributeValue("line-number")>
 
-			${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", ${variableContext});
+			${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 		<#elseif element.attributeValue("test-case")??>
 			<#assign testCaseElement = element>
 
@@ -104,7 +104,7 @@
 
 			<#assign lineNumber = element.attributeValue ("line-number")>
 
-			${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", ${variableContext});
+			${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 		</#if>
 	<#elseif name == "fail">
 		<#assign variableContext = variableContextStack.peek()>
@@ -157,7 +157,7 @@
 			else {
 				<#assign lineNumber = elseElement.attributeValue("line-number")>
 
-				${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending", executeScopeVariables);
+				${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending");
 
 				<#assign blockElement = elseElement>
 
@@ -165,13 +165,13 @@
 
 				<#assign lineNumber = elseElement.attributeValue("line-number")>
 
-				${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", executeScopeVariables);
+				${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 			}
 		</#if>
 
 		<#assign lineNumber = element.attributeValue("line-number")>
 
-		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", executeScopeVariables);
+		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 	<#elseif name == "property">
 		<#assign lineNumber = element.attributeValue("line-number")>
 
@@ -185,7 +185,7 @@
 
 		<#assign lineNumber = element.attributeValue("line-number")>
 
-		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", ${variableContext});
+		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 	<#elseif name == "while">
 		<#assign variableContext = variableContextStack.peek()>
 
@@ -201,7 +201,7 @@
 
 		<#assign lineNumber = element.attributeValue("line-number")>
 
-		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", ${variableContext});
+		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 	</#if>
 </#list>
 

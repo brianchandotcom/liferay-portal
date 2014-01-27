@@ -41,12 +41,12 @@ ${ifTypeStack.peek()} (
 	<#if ifTypeStack.peek() == "else if">
 		<#assign lineNumber = ifElement.attributeValue("line-number")>
 
-		 ${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending", commandScopeVariables);
+		 ${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending");
 	</#if>
 
 	<#assign lineNumber = conditionalElement.attributeValue("line-number")>
 
-	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending", commandScopeVariables);
+	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending");
 
 	<#assign conditionalElementLineNumbers = seleniumBuilderFileUtil.getChildElementLineNumbers(conditionalElement)>
 
@@ -56,13 +56,13 @@ ${ifTypeStack.peek()} (
 		${selenium}.sendLogger(${lineId} + "${conditionalElementLineNumber}", "pass");
 	</#list>
 
-	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", commandScopeVariables);
+	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 
 	<#assign thenElement = ifElement.element("then")>
 
 	<#assign lineNumber = thenElement.attributeValue("line-number")>
 
-	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending", commandScopeVariables);
+	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending");
 
 	<#assign blockElement = thenElement>
 
@@ -70,12 +70,12 @@ ${ifTypeStack.peek()} (
 
 	<#assign lineNumber = thenElement.attributeValue("line-number")>
 
-	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", commandScopeVariables);
+	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 
 	<#if ifTypeStack.peek() == "else if">
 		<#assign lineNumber = ifElement.attributeValue("line-number")>
 
-		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", commandScopeVariables);
+		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 	</#if>
 
 	<#if ifTypeStack.peek() == "while">

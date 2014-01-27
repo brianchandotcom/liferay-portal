@@ -206,9 +206,32 @@ public class JournalArticleStagedModelDataHandler
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement) {
 
-		return validateReference(
-			portletDataContext,
-			referenceElement.attributeValue("article-resource-uuid"));
+		String articleResourceUuid = referenceElement.attributeValue(
+			"article-resource-uuid");
+		String articleArticleId = referenceElement.attributeValue("article-id");
+		boolean preloaded = GetterUtil.getBoolean(
+			referenceElement.attributeValue("preloaded"));
+
+		try {
+			JournalArticle existingArticle = fetchExistingArticle(
+				articleResourceUuid, portletDataContext.getScopeGroupId(),
+				articleArticleId, null, 0.0, preloaded);
+
+			if (existingArticle == null) {
+				existingArticle = fetchExistingArticle(
+					articleResourceUuid, portletDataContext.getCompanyGroupId(),
+					articleArticleId, null, 0.0, preloaded);
+			}
+
+			if (existingArticle == null) {
+				return false;
+			}
+
+			return true;
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
@@ -794,30 +817,6 @@ public class JournalArticleStagedModelDataHandler
 			articleDefaultLocale, articleAvailableLocales);
 
 		article.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
-		JournalArticleResource articleResource =
-			JournalArticleResourceLocalServiceUtil.
-				fetchJournalArticleResourceByUuidAndGroupId(uuid, groupId);
-
-		if (articleResource == null) {
-			return false;
-		}
-
-		JournalArticle article = fetchExistingArticle(
-			articleResource.getUuid(), groupId, articleResource.getArticleId(),
-			null, 0.0, false);
-
-		if (article == null) {
-			return false;
-		}
-
-		return true;
 	}
 
 }

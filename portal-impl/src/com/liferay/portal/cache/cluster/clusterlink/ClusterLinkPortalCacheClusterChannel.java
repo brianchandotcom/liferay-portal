@@ -40,7 +40,7 @@ public class ClusterLinkPortalCacheClusterChannel
 		message.setDestinationName(_destinationName);
 		message.setPayload(portalCacheClusterEvent);
 
-		ClusterLinkUtil.sendMulticastMessage(message, _priority);
+		ClusterLinkUtil.sendMulticastMessage(message.toByteArray(), _priority);
 	}
 
 	private String _destinationName;

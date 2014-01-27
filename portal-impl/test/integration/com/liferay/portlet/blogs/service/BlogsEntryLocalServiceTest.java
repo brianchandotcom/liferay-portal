@@ -90,18 +90,6 @@ public class BlogsEntryLocalServiceTest {
 			entryInserted.getEntryId());
 
 		BlogsTestUtil.assertEqualEntry(entryInserted, entry);
-
-		try {
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				BlogsEntry.class.getName(), entry.getEntryId(),
-				WorkflowConstants.STATUS_ANY);
-		}
-		catch (Exception e) {
-			Assert.fail(
-				"The initial discussion has not been found for the blog " +
-					entry.getEntryId());
-		}
 	}
 
 	@Test
@@ -132,6 +120,24 @@ public class BlogsEntryLocalServiceTest {
 	@Test
 	public void testGetCompanyEntriesNotInTrash() throws Exception {
 		testGetCompanyEntries(false);
+	}
+
+	@Test
+	public void testGetDiscussionMessageDisplay() throws Exception {
+		BlogsEntry entry = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), _group, true);
+
+		try {
+			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				BlogsEntry.class.getName(), entry.getEntryId(),
+				WorkflowConstants.STATUS_ANY);
+		}
+		catch (Exception e) {
+			Assert.fail(
+				"The initial discussion has not been found for the blog " +
+					entry.getEntryId());
+		}
 	}
 
 	@Test

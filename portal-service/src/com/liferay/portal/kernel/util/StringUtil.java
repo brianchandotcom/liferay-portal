@@ -3794,7 +3794,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns a string representing the hexidecimal character codes of the
+	 * Returns a string representing the hexidecimal character code of the
 	 * integer.
 	 *
 	 * <p>
@@ -3812,7 +3812,7 @@ public class StringUtil {
 	 * </p>
 	 *
 	 * @param  i the integer to convert
-	 * @return a string representing the hexidecimal character codes of the
+	 * @return a string representing the hexidecimal character code of the
 	 *         integer
 	 */
 	public static String toHexString(int i) {
@@ -3831,7 +3831,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns a string representing the hexidecimal character codes of the long
+	 * Returns a string representing the hexidecimal character code of the long
 	 * integer.
 	 *
 	 * <p>
@@ -3847,7 +3847,7 @@ public class StringUtil {
 	 * </p>
 	 *
 	 * @param  l the long integer to convert
-	 * @return a string representing the hexidecimal character codes of the long
+	 * @return a string representing the hexidecimal character code of the long
 	 *         integer
 	 */
 	public static String toHexString(long l) {
@@ -3866,12 +3866,12 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns a string representing the hexidecimal character codes of the
+	 * Returns a string representing the hexidecimal character code of the
 	 * <code>Integer</code> or <code>Long</code> object type. If the object is
 	 * not an instance of these types, the object's original value is returned.
 	 *
 	 * @param  obj the object to convert
-	 * @return a string representing the hexidecimal character codes of the
+	 * @return a string representing the hexidecimal character code of the
 	 *         object
 	 */
 	public static String toHexString(Object obj) {

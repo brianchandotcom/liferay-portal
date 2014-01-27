@@ -485,6 +485,14 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void sendTestCaseCommandLogger(String command) {
+	}
+
+	@Override
+	public void sendTestCaseHeaderLogger(String command) {
+	}
+
+	@Override
 	public void setDefaultTimeout() {
 		int timeout = TestPropsValues.TIMEOUT_EXPLICIT_WAIT * 1000;
 

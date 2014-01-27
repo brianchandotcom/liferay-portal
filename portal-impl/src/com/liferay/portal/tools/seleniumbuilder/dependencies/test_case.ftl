@@ -101,6 +101,15 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 			</#if>
 
 			(String commandName, boolean nested) throws Exception {
+
+				<#if methodName == "set-up">
+					selenium.sendTestCaseCommandLogger("${testCaseName}#SetUp");
+				<#elseif methodName == "tear-down">
+					selenium.sendTestCaseCommandLogger("${testCaseName}#TearDown");
+				<#else>
+					selenium.sendTestCaseCommandLogger("${testCaseName}#${methodElement.attributeValue("name")}");
+				</#if>
+
 				commandScopeVariables = new HashMap<String, String>();
 
 				commandScopeVariables.putAll(definitionScopeVariables);
@@ -169,6 +178,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 						tearDownBeforeTest = false;
 					}
 				</#if>
+
+				selenium.sendTestCaseHeaderLogger("${testCaseName}#${commandName}");
 
 				<#if rootElement.element("set-up")??>
 					methodSetUp("${commandName}", false);

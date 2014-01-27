@@ -55,7 +55,7 @@ public class PortletStagingBackgroundTaskExecutor
 			sourcePlid, sourceGroupId, portletId, parameterMap, startDate,
 			endDate);
 
-		backgroundTask = markBackgroundTask(backgroundTask, "exported");
+		markBackgroundTask(backgroundTask.getBackgroundTaskId(), "exported");
 
 		MissingReferences missingReferences = null;
 
@@ -65,7 +65,8 @@ public class PortletStagingBackgroundTaskExecutor
 					userId, targetPlid, targetGroupId, portletId, parameterMap,
 					larFile);
 
-			backgroundTask = markBackgroundTask(backgroundTask, "validated");
+			markBackgroundTask(
+				backgroundTask.getBackgroundTaskId(), "validated");
 
 			LayoutLocalServiceUtil.importPortletInfo(
 				userId, targetPlid, targetGroupId, portletId, parameterMap,
@@ -75,7 +76,8 @@ public class PortletStagingBackgroundTaskExecutor
 			larFile.delete();
 		}
 
-		return processMissingReferences(backgroundTask, missingReferences);
+		return processMissingReferences(
+			backgroundTask.getBackgroundTaskId(), missingReferences);
 	}
 
 }

@@ -112,12 +112,14 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 					new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
 			}
 
-			backgroundTask = markBackgroundTask(backgroundTask, "exported");
+			markBackgroundTask(
+				backgroundTask.getBackgroundTaskId(), "exported");
 
 			missingReferences = StagingServiceHttp.validateStagingRequest(
 				httpPrincipal, stagingRequestId, privateLayout, parameterMap);
 
-			backgroundTask = markBackgroundTask(backgroundTask, "validated");
+			markBackgroundTask(
+				backgroundTask.getBackgroundTaskId(), "validated");
 
 			StagingServiceHttp.publishStagingRequest(
 				httpPrincipal, stagingRequestId, privateLayout, parameterMap);
@@ -141,7 +143,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			}
 		}
 
-		return processMissingReferences(backgroundTask, missingReferences);
+		return processMissingReferences(
+			backgroundTask.getBackgroundTaskId(), missingReferences);
 	}
 
 	protected File exportLayoutsAsFile(

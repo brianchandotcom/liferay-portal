@@ -315,6 +315,52 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		return roleIds;
 	}
 
+	protected String getRolesOrOwnerSQL(
+		PermissionChecker permissionChecker, long groupId, String userIdField) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(" AND (");
+
+		long[] roleIds = getRoleIds(groupId);
+
+		if (roleIds.length == 0) {
+			roleIds = _NO_ROLE_IDS;
+		}
+
+		for (int i = 0; i < roleIds.length; i++) {
+			if (i > 0) {
+				sb.append(" OR ");
+			}
+
+			sb.append("InlineSQLResourcePermission.roleId = ");
+			sb.append(roleIds[i]);
+		}
+
+		if (permissionChecker.isSignedIn()) {
+			sb.append(" OR ");
+
+			long userId = permissionChecker.getUserId();
+
+			if (Validator.isNotNull(userIdField)) {
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(userIdField);
+				sb.append(" = ");
+				sb.append(userId);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+			else {
+				sb.append("(InlineSQLResourcePermission.ownerId = ");
+				sb.append(userId);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
+	}
+
 	protected long getUserId() {
 		long userId = 0;
 
@@ -511,8 +557,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
 		sb.append(") AND ");
 
-		long userId = getUserId();
-
 		boolean hasPreviousViewableGroup = false;
 
 		List<Long> viewableGroupIds = new ArrayList<Long>();
@@ -545,41 +589,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				sb.append(groupId);
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 
-				long[] roleIds = getRoleIds(groupId);
-
-				if (roleIds.length == 0) {
-					roleIds = _NO_ROLE_IDS;
-				}
-
-				sb.append(" AND (");
-
-				for (int i = 0; i < roleIds.length; i++) {
-					if (i > 0) {
-						sb.append(" OR ");
-					}
-
-					sb.append("InlineSQLResourcePermission.roleId = ");
-					sb.append(roleIds[i]);
-				}
-
-				if (permissionChecker.isSignedIn()) {
-					sb.append(" OR ");
-
-					if (Validator.isNotNull(userIdField)) {
-						sb.append(StringPool.OPEN_PARENTHESIS);
-						sb.append(userIdField);
-						sb.append(" = ");
-						sb.append(userId);
-						sb.append(StringPool.CLOSE_PARENTHESIS);
-					}
-					else {
-						sb.append("(InlineSQLResourcePermission.ownerId = ");
-						sb.append(userId);
-						sb.append(StringPool.CLOSE_PARENTHESIS);
-					}
-				}
-
-				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.append(
+					getRolesOrOwnerSQL(
+						permissionChecker, groupId, userIdField));
 			}
 			else {
 				viewableGroupIds.add(groupId);

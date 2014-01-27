@@ -84,22 +84,22 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testAddEntryWithoutSmallImage() throws Exception {
-		BlogsEntry entryInserted = testAddEntry(false);
+		BlogsEntry originalEntry = testAddEntry(false);
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
-			entryInserted.getEntryId());
+		BlogsEntry actualEntry = BlogsEntryLocalServiceUtil.getBlogsEntry(
+			originalEntry.getEntryId());
 
-		BlogsTestUtil.assertEqualEntry(entryInserted, entry);
+		BlogsTestUtil.assertEqualEntry(originalEntry, actualEntry);
 	}
 
 	@Test
 	public void testAddEntryWithSmallImage() throws Exception {
-		BlogsEntry entryInserted = testAddEntry(true);
+		BlogsEntry originalEntry = testAddEntry(true);
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
-			entryInserted.getEntryId());
+		BlogsEntry actualEntry = BlogsEntryLocalServiceUtil.getBlogsEntry(
+			originalEntry.getEntryId());
 
-		BlogsTestUtil.assertEqualEntry(entryInserted, entry);
+		BlogsTestUtil.assertEqualEntry(originalEntry, actualEntry);
 	}
 
 	@Test
@@ -272,12 +272,12 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntryByGroupAndUrlTitle() throws Exception {
-		BlogsEntry entry = addEntry(false);
+		BlogsEntry originalEntry = addEntry(false);
 
-		BlogsEntry entryObtained = BlogsEntryLocalServiceUtil.getEntry(
-			entry.getGroupId(), entry.getUrlTitle());
+		BlogsEntry actualEntry = BlogsEntryLocalServiceUtil.getEntry(
+			originalEntry.getGroupId(), originalEntry.getUrlTitle());
 
-		BlogsTestUtil.assertEqualEntry(entry, entryObtained);
+		BlogsTestUtil.assertEqualEntry(originalEntry, actualEntry);
 	}
 
 	@Test
@@ -448,10 +448,10 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testUpdateEntryResources() throws Exception {
-		BlogsEntry blogsEntry = addEntry(false);
+		BlogsEntry entry = addEntry(false);
 
 		BlogsEntryLocalServiceUtil.updateEntryResources(
-			blogsEntry, new String[] {ActionKeys.ADD_DISCUSSION}, null);
+			entry, new String[] {ActionKeys.ADD_DISCUSSION}, null);
 	}
 
 	protected BlogsEntry addEntry(boolean statusInTrash) throws Exception {

@@ -45,6 +45,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * @author Cristina González
+ * @author Manuel de la Peña
+ */
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,

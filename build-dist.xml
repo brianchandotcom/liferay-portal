@@ -1132,12 +1132,6 @@ release was successful.</echo>
 						/>
 					</unzip>
 
-					<zip
-						basedir="tools/servers/jboss/patches/JBPAPP-9353/classes"
-						destfile="${app.server.jboss.dir}/modules/org/jboss/as/server/main/jboss-as-server-${app.server.jboss.version}.Final.jar"
-						update="yes"
-					/>
-
 					<echo file="${app.server.jboss.dir}/modules/ibm/jdk/main/module.xml"><![CDATA[<?xml version="1.0"?>
 
 						<module xmlns="urn:jboss:module:1.1" name="ibm.jdk">
@@ -1165,7 +1159,7 @@ release was successful.</echo>
 						</module>]]>
 					</echo>
 
-					<replace file="${app.server.jboss.dir}/modules/sun/jdk/main/module.xml">
+					<replace file="${app.server.jboss.dir}/modules/system/layers/base/sun/jdk/main/module.xml">
 						<replacetoken><![CDATA[<paths>]]></replacetoken>
 						<replacevalue>
 							<![CDATA[
@@ -1239,7 +1233,7 @@ release was successful.</echo>
 
 					<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
 						<![CDATA[
-							JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+							JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT"
 						]]>
 					</echo>
 
@@ -1253,7 +1247,7 @@ release was successful.</echo>
 						<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
 						<replacevalue>
 							<![CDATA[
-								set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+								set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT"
 
 								:JAVA_OPTS_SET
 							]]>

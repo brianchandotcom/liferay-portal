@@ -280,12 +280,52 @@ public class SeleniumBuilder {
 				Set<String> compontentTestCaseMethodNames =
 					testCaseMethodNameMap.get(componentNameKey);
 
-				String compontentTestCaseMethodNamesString = StringUtil.merge(
+				String testCaseMethodNamesString = StringUtil.merge(
 					compontentTestCaseMethodNames.toArray(
 						new String[compontentTestCaseMethodNames.size()]),
 					StringPool.SPACE);
 
-				sb.append(compontentTestCaseMethodNamesString);
+				sb.append(testCaseMethodNamesString);
+				sb.append("\n");
+			}
+			else {
+				sb.append("PortalSmokeTestCase#testSmoke\n");
+			}
+		}
+
+		sb.append("\n");
+
+		String[] products = new String[] {
+			"marketplace", "portal", "social-office"
+		};
+
+		for (String product : products) {
+			Set<String> productTestCaseMethodNames = new TreeSet<String>();
+
+			String productKey = product;
+
+			product = StringUtil.replace(product, "-", "_");
+			product = StringUtil.upperCase(product);
+
+			sb.append(product);
+			sb.append("_TEST_CASE_METHOD_NAMES=");
+
+			for (String componentName : componentNames) {
+				if (componentName.startsWith(productKey) &&
+					testCaseMethodNameMap.containsKey(componentName)) {
+
+					productTestCaseMethodNames.addAll(
+						testCaseMethodNameMap.get(componentName));
+				}
+			}
+
+			if (productTestCaseMethodNames.size() != 0) {
+				String testCaseMethodNamesString = StringUtil.merge(
+					productTestCaseMethodNames.toArray(
+						new String[productTestCaseMethodNames.size()]),
+						StringPool.SPACE);
+
+				sb.append(testCaseMethodNamesString);
 				sb.append("\n");
 			}
 			else {

@@ -89,11 +89,7 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
 			entryInserted.getEntryId());
 
-		Assert.assertFalse(entry.isSmallImage());
-
 		BlogsTestUtil.assertEqualEntry(entryInserted, entry);
-
-		Assert.assertFalse(entry.getSmallImage());
 
 		try {
 			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
@@ -115,11 +111,7 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
 			entryInserted.getEntryId());
 
-		Assert.assertTrue(entry.isSmallImage());
-
 		BlogsTestUtil.assertEqualEntry(entryInserted, entry);
-
-		Assert.assertTrue(entry.getSmallImage());
 	}
 
 	@Test
@@ -511,6 +503,13 @@ public class BlogsEntryLocalServiceTest {
 			_group.getGroupId(), _queryStatusApproved);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
+
+		if (smallImage) {
+			Assert.assertTrue(entry.isSmallImage());
+		}
+		else {
+			Assert.assertFalse(entry.isSmallImage());
+		}
 
 		return entry;
 	}

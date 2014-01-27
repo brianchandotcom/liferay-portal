@@ -135,13 +135,13 @@ public class BlogsEntryLocalServiceTest {
 		catch (Exception e) {
 			Assert.fail(
 				"The initial discussion has not been found for the blog " +
-					entry.getEntryId());
+					"entry " + entry.getEntryId());
 		}
 	}
 
 	@Test
 	public void testGetEntriesPrevAndNextCenterElement() throws Exception {
-		BlogsEntry entryPrevious = addEntry(false);
+		BlogsEntry entryPrev = addEntry(false);
 
 		BlogsEntry entryCenter = addEntry(false);
 
@@ -152,43 +152,45 @@ public class BlogsEntryLocalServiceTest {
 				entryCenter.getEntryId());
 
 		Assert.assertNotNull(
-			"The previous element for the blog " + entryCenter.getEntryId() +
-			" should be " + entryPrevious.getEntryId() + " but is null instead",
+			"The previous element of the blog entry " +
+				entryCenter.getEntryId() + " should be " +
+					entryPrev.getEntryId() + " but is null instead",
 			entriesPrevAndNextForCenter[0]);
 
 		Assert.assertNotNull(
-			"The center element for the blog " + entryCenter.getEntryId() +
-			" should be " + entryCenter.getEntryId() + " but is null instead",
+			"The center element of the blog entry " + entryCenter.getEntryId() +
+				" should be " + entryCenter.getEntryId() +
+					" but is null instead",
 			entriesPrevAndNextForCenter[1]);
 
 		Assert.assertNotNull(
-			"The next element for the blog " + entryCenter.getEntryId() +
-			" should be " + entryNext.getEntryId() + " but is null instead",
+			"The next element of the blog entry " + entryCenter.getEntryId() +
+				" should be " + entryNext.getEntryId() + " but is null instead",
 			entriesPrevAndNextForCenter[2]);
 
 		Assert.assertEquals(
-			"The left element " + entriesPrevAndNextForCenter[0].getEntryId() +
-				" should be " + entryPrevious.getEntryId(),
+			"The previous element of the blog entry" +
+				entryCenter.getEntryId() + " should be " +
+					entryPrev.getEntryId(),
 			entriesPrevAndNextForCenter[0].getEntryId(),
-			entryPrevious.getEntryId());
+			entryPrev.getEntryId());
 
 		Assert.assertEquals(
-			"The right element " + entriesPrevAndNextForCenter[2].getEntryId() +
-			" should be " + entryPrevious.getEntryId(),
-			entriesPrevAndNextForCenter[2].getEntryId(),
-			entryNext.getEntryId());
-
-		Assert.assertEquals(
-			"The center element " +
-			entriesPrevAndNextForCenter[1].getEntryId() +
-			" should be " + entryCenter.getEntryId(),
+			"The center element of the blog entry " + entryCenter.getEntryId() +
+				" should be " + entryCenter.getEntryId(),
 			entriesPrevAndNextForCenter[1].getEntryId(),
 			entryCenter.getEntryId());
+
+		Assert.assertEquals(
+			"The next element of the blog entry " + entryCenter.getEntryId() +
+				" should be " + entryNext.getEntryId(),
+			entriesPrevAndNextForCenter[2].getEntryId(),
+			entryNext.getEntryId());
 	}
 
 	@Test
 	public void testGetEntriesPrevAndNextTopLeftElement() throws Exception {
-		BlogsEntry entryPrevious = addEntry(false);
+		BlogsEntry entryPrev = addEntry(false);
 
 		BlogsEntry entryCenter = addEntry(false);
 
@@ -196,35 +198,35 @@ public class BlogsEntryLocalServiceTest {
 
 		BlogsEntry[] entriesPrevAndNextForTopLeft =
 			BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(
-				entryPrevious.getEntryId());
+				entryPrev.getEntryId());
 
 		Assert.assertNull(
-			"The previous element for the blog " + entryPrevious.getEntryId() +
-			" should be null", entriesPrevAndNextForTopLeft[0]);
+			"The previous element of the blog entry " + entryPrev.getEntryId() +
+				" should be null",
+			entriesPrevAndNextForTopLeft[0]);
 
 		Assert.assertNotNull(
-			"The center element for the blog " + entryPrevious.getEntryId() +
-			" should be " + entryPrevious.getEntryId() +
-			" but is null instead",entriesPrevAndNextForTopLeft[1]);
+			"The center element of the blog entry " + entryPrev.getEntryId() +
+				" should be " + entryPrev.getEntryId() + " but is null instead",
+			entriesPrevAndNextForTopLeft[1]);
 
 		Assert.assertNotNull(
-			"The next element for the blog " + entryCenter.getEntryId() +
-			" should be " + entryCenter.getEntryId() + " but is null instead",
+			"The next element of the blog entry " + entryPrev.getEntryId() +
+				" should be " + entryCenter.getEntryId() +
+					" but is null instead",
 			entriesPrevAndNextForTopLeft[2]);
 
 		Assert.assertEquals(
-			"The right element " +
-			entriesPrevAndNextForTopLeft[2].getEntryId() +
-			" should be " + entryCenter.getEntryId(),
-			entriesPrevAndNextForTopLeft[2].getEntryId(),
-			entryCenter.getEntryId());
+			"The center element of the blog entry " + entryPrev.getEntryId() +
+				" should be " + entryPrev.getEntryId(),
+			entriesPrevAndNextForTopLeft[1].getEntryId(),
+			entryPrev.getEntryId());
 
 		Assert.assertEquals(
-			"The center element " +
-			entriesPrevAndNextForTopLeft[1].getEntryId() +
-			" should be " + entryPrevious.getEntryId(),
-			entriesPrevAndNextForTopLeft[1].getEntryId(),
-			entryPrevious.getEntryId());
+			"The next element of the blog entry " + entryPrev.getEntryId() +
+				" should be " + entryCenter.getEntryId(),
+			entriesPrevAndNextForTopLeft[2].getEntryId(),
+			entryCenter.getEntryId());
 	}
 
 	@Test
@@ -235,90 +237,47 @@ public class BlogsEntryLocalServiceTest {
 
 		BlogsEntry entryNext = addEntry(false);
 
-		BlogsEntry[] entriesPrevAndNextForTopLeft =
+		BlogsEntry[] entriesPrevAndNextForTopRight =
 			BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(
 				entryNext.getEntryId());
 
 		Assert.assertNull(
-			"The next element for the blog " +
-			entryNext.getEntryId() + " should be null",
-			entriesPrevAndNextForTopLeft[2]);
+			"The next element of the blog entry " + entryNext.getEntryId() +
+				" should be null",
+			entriesPrevAndNextForTopRight[2]);
 
 		Assert.assertNotNull(
-			"The center element for the blog " + entryNext.getEntryId() +
-			" should be " + entryNext.getEntryId() + " but is null instead",
-			entriesPrevAndNextForTopLeft[1]);
+			"The center element of the blog entry " + entryNext.getEntryId() +
+				" should be " + entryNext.getEntryId() + " but is null instead",
+			entriesPrevAndNextForTopRight[1]);
 
 		Assert.assertNotNull(
-			"The previous element for the blog " + entryNext.getEntryId() +
-			" should be " + entryCenter.getEntryId() + " but is null instead",
-			entriesPrevAndNextForTopLeft[0]);
+			"The previous element of the blog entry " + entryNext.getEntryId() +
+				" should be " + entryCenter.getEntryId() +
+					" but is null instead",
+			entriesPrevAndNextForTopRight[0]);
 
 		Assert.assertEquals(
-			"The left element " + entriesPrevAndNextForTopLeft[0].getEntryId() +
-			" should be " + entryCenter.getEntryId(),
-			entriesPrevAndNextForTopLeft[0].getEntryId(),
+			"The previous element of the blog entry " + entryNext.getEntryId() +
+				" should be " + entryCenter.getEntryId(),
+			entriesPrevAndNextForTopRight[0].getEntryId(),
 			entryCenter.getEntryId());
 
 		Assert.assertEquals(
-			"The center element " +
-			entriesPrevAndNextForTopLeft[1].getEntryId() + " should be " +
-			entryNext.getEntryId(),
-			entriesPrevAndNextForTopLeft[1].getEntryId(),
+			"The center element of the blog entry" + entryNext.getEntryId() +
+				" should be " + entryNext.getEntryId(),
+			entriesPrevAndNextForTopRight[1].getEntryId(),
 			entryNext.getEntryId());
 	}
 
 	@Test
-	public void testGetEntryByUrlAndGroup() throws Exception {
+	public void testGetEntryByGroupAndUrlTitle() throws Exception {
 		BlogsEntry entry = addEntry(false);
 
 		BlogsEntry entryObtained = BlogsEntryLocalServiceUtil.getEntry(
 			entry.getGroupId(), entry.getUrlTitle());
 
 		BlogsTestUtil.assertEqualEntry(entry, entryObtained);
-	}
-
-	@Test
-	public void testGetGroupEntriesCompany() throws Exception {
-		List<BlogsEntry> groupEntries =
-			BlogsEntryLocalServiceUtil.getGroupsEntries(
-				_user.getCompanyId(), _group.getGroupId(), new Date(),
-				_queryStatusInTrash);
-
-		int initialCount = groupEntries.size();
-
-		addEntry(false);
-
-		addEntry(true);
-
-		List<BlogsEntry> groupEntriesInTrash =
-			BlogsEntryLocalServiceUtil.getGroupsEntries(
-				_user.getCompanyId(), _group.getGroupId(), new Date(),
-				_queryStatusInTrash);
-
-		Assert.assertEquals(initialCount + 1, groupEntriesInTrash.size());
-
-		for (BlogsEntry groupEntry : groupEntriesInTrash) {
-			if (WorkflowConstants.STATUS_IN_TRASH != groupEntry.getStatus()) {
-				Assert.fail(
-					"The blogEntry " + groupEntry.getEntryId() +
-						" is not in trash");
-			}
-
-			if (groupEntry.getCompanyId() != _user.getCompanyId()) {
-				Assert.fail(
-					"The companyId of the BlogEntry" + groupEntry.getEntryId() +
-					" should be " + _user.getCompanyId() + " bus is " +
-					groupEntry.getCompanyId() + " instead");
-			}
-		}
-	}
-
-	@Test
-	public void testGetGroupEntriesCountInTrashNoDisplayDate()
-		throws Exception {
-
-		testGetGroupEntriesCount(true, false);
 	}
 
 	@Test
@@ -329,10 +288,10 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetGroupEntriesCountNotInTrashNoDisplayDate()
+	public void testGetGroupEntriesCountInTrashWithoutDisplayDate()
 		throws Exception {
 
-		testGetGroupEntriesCount(false, false);
+		testGetGroupEntriesCount(true, false);
 	}
 
 	@Test
@@ -343,8 +302,10 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetGroupEntriesInTrashNoDisplayDate() throws Exception {
-		testGetGroupEntries(true, false);
+	public void testGetGroupEntriesCountNotInTrashWithoutDisplayDate()
+		throws Exception {
+
+		testGetGroupEntriesCount(false, false);
 	}
 
 	@Test
@@ -353,8 +314,10 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetGroupEntriesNotInTrashNoDisplayDate() throws Exception {
-		testGetGroupEntries(false, false);
+	public void testGetGroupEntriesInTrashWithoutDisplayDate()
+		throws Exception {
+
+		testGetGroupEntries(true, false);
 	}
 
 	@Test
@@ -362,6 +325,50 @@ public class BlogsEntryLocalServiceTest {
 		throws Exception {
 
 		testGetGroupEntries(false, true);
+	}
+
+	@Test
+	public void testGetGroupEntriesNotInTrashWithoutDisplayDate()
+		throws Exception {
+
+		testGetGroupEntries(false, false);
+	}
+
+	@Test
+	public void testGetGroupsEntries() throws Exception {
+		List<BlogsEntry> groupsEntries =
+			BlogsEntryLocalServiceUtil.getGroupsEntries(
+				_user.getCompanyId(), _group.getGroupId(), new Date(),
+				_queryStatusInTrash);
+
+		int initialCount = groupsEntries.size();
+
+		addEntry(false);
+
+		addEntry(true);
+
+		List<BlogsEntry> groupsEntriesInTrash =
+			BlogsEntryLocalServiceUtil.getGroupsEntries(
+				_user.getCompanyId(), _group.getGroupId(), new Date(),
+				_queryStatusInTrash);
+
+		Assert.assertEquals(initialCount + 1, groupsEntriesInTrash.size());
+
+		for (BlogsEntry groupsEntry : groupsEntriesInTrash) {
+			if (WorkflowConstants.STATUS_IN_TRASH != groupsEntry.getStatus()) {
+				Assert.fail(
+					"The blog entry " + groupsEntry.getEntryId() +
+						" is not in trash");
+			}
+
+			if (groupsEntry.getCompanyId() != _user.getCompanyId()) {
+				Assert.fail(
+					"The companyId of the blog entry " +
+						groupsEntry.getEntryId() + " should be " +
+							_user.getCompanyId() + " but is " +
+								groupsEntry.getCompanyId() + " instead");
+			}
+		}
 	}
 
 	@Test
@@ -440,12 +447,11 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateResources() throws Exception {
+	public void testUpdateEntryResources() throws Exception {
 		BlogsEntry blogsEntry = addEntry(false);
 
 		BlogsEntryLocalServiceUtil.updateEntryResources(
-			blogsEntry, new String[] {ActionKeys.ADD_DISCUSSION},
-			null);
+			blogsEntry, new String[] {ActionKeys.ADD_DISCUSSION}, null);
 	}
 
 	protected BlogsEntry addEntry(boolean statusInTrash) throws Exception {
@@ -464,7 +470,7 @@ public class BlogsEntryLocalServiceTest {
 		return entry;
 	}
 
-	protected void assertBlogsEntriesStatuses(
+	protected void assertBlogsEntriesStatus(
 		List<BlogsEntry> entries, boolean statusInTrash) {
 
 		for (BlogsEntry entry : entries) {
@@ -472,16 +478,15 @@ public class BlogsEntryLocalServiceTest {
 				(WorkflowConstants.STATUS_IN_TRASH != entry.getStatus())) {
 
 				Assert.fail(
-					"The blogEntry " + entry.getEntryId() +
-					" should be in trash");
+					"The blogs entry " + entry.getEntryId() +
+						" should be in trash");
 			}
 			else if (!statusInTrash &&
-					 (WorkflowConstants.STATUS_IN_TRASH ==
-						entry.getStatus())) {
+					 (WorkflowConstants.STATUS_IN_TRASH == entry.getStatus())) {
 
 				Assert.fail(
-					"The blogEntry " + entry.getEntryId() +
-					" shouldn't be in trash");
+					"The blogs entry " + entry.getEntryId() +
+						" shouldn't be in trash");
 			}
 		}
 	}
@@ -533,7 +538,7 @@ public class BlogsEntryLocalServiceTest {
 
 		Assert.assertEquals(initialCount + 1, actualEntries.size());
 
-		assertBlogsEntriesStatuses(actualEntries, statusInTrash);
+		assertBlogsEntriesStatus(actualEntries, statusInTrash);
 	}
 
 	protected void testGetCompanyEntriesCount(boolean statusInTrash)
@@ -552,9 +557,8 @@ public class BlogsEntryLocalServiceTest {
 
 		addEntry(true);
 
-		int actualCount =
-			BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
-				_user.getCompanyId(), new Date(), queryDefinition);
+		int actualCount = BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
+			_user.getCompanyId(), new Date(), queryDefinition);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -599,7 +603,7 @@ public class BlogsEntryLocalServiceTest {
 
 		Assert.assertEquals(initialCount + 1, actualEntries.size());
 
-		assertBlogsEntriesStatuses(actualEntries, statusInTrash);
+		assertBlogsEntriesStatus(actualEntries, statusInTrash);
 	}
 
 	protected void testGetGroupEntriesCount(
@@ -608,9 +612,9 @@ public class BlogsEntryLocalServiceTest {
 
 		QueryDefinition queryDefinition = _queryStatusInTrash;
 
-			if (!statusInTrash) {
-				queryDefinition = _queryStatusNotInTrash;
-			}
+		if (!statusInTrash) {
+			queryDefinition = _queryStatusNotInTrash;
+		}
 
 		int initialCount = 0;
 
@@ -668,7 +672,7 @@ public class BlogsEntryLocalServiceTest {
 
 		Assert.assertEquals(initialCount + 1, actualEntries.size());
 
-		assertBlogsEntriesStatuses(actualEntries, statusInTrash);
+		assertBlogsEntriesStatus(actualEntries, statusInTrash);
 	}
 
 	protected void testGetGroupUserEntriesCount(boolean statusInTrash)
@@ -680,19 +684,17 @@ public class BlogsEntryLocalServiceTest {
 			queryDefinition = _queryStatusNotInTrash;
 		}
 
-		int initialCount =
-			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
-				_group.getGroupId(), _user.getUserId(), new Date(),
-				queryDefinition);
+		int initialCount = BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
+			_group.getGroupId(), _user.getUserId(), new Date(),
+			queryDefinition);
 
 		addEntry(false);
 
 		addEntry(true);
 
-		int actualCount =
-			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
-				_group.getGroupId(), _user.getUserId(), new Date(),
-				queryDefinition);
+		int actualCount = BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
+			_group.getGroupId(), _user.getUserId(), new Date(),
+			queryDefinition);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -726,7 +728,7 @@ public class BlogsEntryLocalServiceTest {
 
 		Assert.assertEquals(initialCount + 1, actualEntries.size());
 
-		assertBlogsEntriesStatuses(actualEntries, statusInTrash);
+		assertBlogsEntriesStatus(actualEntries, statusInTrash);
 	}
 
 	protected void testGetOrganizationEntriesCount(boolean statusInTrash)

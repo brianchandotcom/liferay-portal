@@ -19,13 +19,14 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.Stack;
 
 /**
+ * A Stack wrapper class that can be used in FreeMarker.
+ *
  * @author Michael Hashimoto
  */
 public class FreeMarkerStack {
 
 	/**
-	 * Returns <code>true</code> if and only if this stack contains no items,
-	 * <code>false</code> otherwise
+	 * Tests if this stack is empty.
 	 *
 	 * @return <code>true</code> if and only if this stack contains no items,
 	 *         <code>false</code> otherwise
@@ -58,7 +59,7 @@ public class FreeMarkerStack {
 	 * Pushes an item onto the top of this stack.
 	 *
 	 * @param  object the item to be pushed onto this stack.
-	 * @return the object argument.
+	 * @return a blank String.
 	 */
 	public Object push(Object object) {
 		_stack.push(object);

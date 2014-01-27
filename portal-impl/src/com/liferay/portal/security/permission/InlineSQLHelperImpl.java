@@ -17,6 +17,7 @@ package com.liferay.portal.security.permission;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,6 +29,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -287,32 +289,29 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		return resourceBlockIds;
 	}
 
-	protected long[] getRoleIds(long groupId) {
-		long[] roleIds = PermissionChecker.DEFAULT_ROLE_IDS;
+	protected Set<Long> getRoleIds(long groupId) {
+		Set<Long> roleIds = Collections.emptySet();
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		if (permissionChecker != null) {
-			roleIds = permissionChecker.getRoleIds(
-				permissionChecker.getUserId(), groupId);
+			roleIds = SetUtil.fromArray(
+				permissionChecker.getRoleIds(
+					permissionChecker.getUserId(), groupId));
 		}
 
 		return roleIds;
 	}
 
 	protected long[] getRoleIds(long[] groupIds) {
-		long[] roleIds = PermissionChecker.DEFAULT_ROLE_IDS;
+		Set<Long> roleIds = new HashSet<Long>();
 
 		for (long groupId : groupIds) {
-			for (long roleId : getRoleIds(groupId)) {
-				if (!ArrayUtil.contains(roleIds, roleId)) {
-					roleIds = ArrayUtil.append(roleIds, roleId);
-				}
-			}
+			roleIds.addAll(getRoleIds(groupId));
 		}
 
-		return roleIds;
+		return ArrayUtil.toLongArray(roleIds);
 	}
 
 	protected String getRolesOrOwnerSQL(
@@ -322,20 +321,17 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		sb.append(" AND (");
 
-		long[] roleIds = getRoleIds(groupId);
+		sb.append("InlineSQLResourcePermission.roleId IN (");
+
+		long[] roleIds = ArrayUtil.toLongArray(getRoleIds(groupId));
 
 		if (roleIds.length == 0) {
 			roleIds = _NO_ROLE_IDS;
 		}
 
-		for (int i = 0; i < roleIds.length; i++) {
-			if (i > 0) {
-				sb.append(" OR ");
-			}
+		sb.append(StringUtil.merge(roleIds));
 
-			sb.append("InlineSQLResourcePermission.roleId = ");
-			sb.append(roleIds[i]);
-		}
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		if (permissionChecker.isSignedIn()) {
 			sb.append(" OR ");

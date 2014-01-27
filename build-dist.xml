@@ -1135,11 +1135,16 @@ release was successful.</echo>
 						/>
 					</unzip>
 
-					<zip
-						basedir="tools/servers/jboss/patches/JBPAPP-9353/classes"
-						destfile="${app.server.jboss.dir}/modules/org/jboss/as/server/main/jboss-as-server-${app.server.jboss.version}.Final.jar"
-						update="yes"
-					/>
+					<if>
+						<equals arg1="${app.server.jboss.major.version}" arg2="7" />
+						<then>
+							<zip
+								basedir="tools/servers/jboss/patches/JBPAPP-9353/classes"
+								destfile="${app.server.jboss.dir}/modules/org/jboss/as/server/main/jboss-as-server-${app.server.jboss.version}.Final.jar"
+								update="yes"
+							/>
+						</then>
+					</if>
 
 					<echo file="${app.server.jboss.dir}/modules/ibm/jdk/main/module.xml"><![CDATA[<?xml version="1.0"?>
 
@@ -1168,7 +1173,17 @@ release was successful.</echo>
 						</module>]]>
 					</echo>
 
-					<replace file="${app.server.jboss.dir}/modules/sun/jdk/main/module.xml">
+					<if>
+						<equals arg1="${app.server.jboss.major.version}" arg2="6" />
+						<then>
+							<property name="app.server.jboss.module.file" value="${app.server.jboss.dir}/modules/system/layers/base/sun/jdk/main/module.xml"/>
+						</then>
+						<else>
+							<property name="app.server.jboss.module.file" value="${app.server.jboss.dir}/modules/sun/jdk/main/module.xml"/>
+						</else>
+					</if>
+
+					<replace file="${app.server.jboss.module.file}">
 						<replacetoken><![CDATA[<paths>]]></replacetoken>
 						<replacevalue>
 							<![CDATA[
@@ -1240,28 +1255,58 @@ release was successful.</echo>
 						</else>
 					</if>
 
-					<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
-						<![CDATA[
-							JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
-						]]>
-					</echo>
+					<if>
+						<equals arg1="${app.server.jboss.major.version}" arg2="6" />
+						<then>
+							<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
+								<![CDATA[
+									JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT"
+								]]>
+							</echo>
+						</then>
+						<else>
+							<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
+								<![CDATA[
+									JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+								]]>
+							</echo>
+						</else>
+					</if>
 
 					<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
 						<replacetoken><![CDATA[set "JAVA_OPTS=-Xms64M ]]></replacetoken>
 						<replacevalue><![CDATA[rem set "JAVA_OPTS=-Xms64M ]]></replacevalue>
 					</replace>
 
-					<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
-						<replacefilter token="@java.security.config@" value="${java.security.config}" />
-						<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
-						<replacevalue>
-							<![CDATA[
-								set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+				<if>
+					<equals arg1="${app.server.jboss.major.version}" arg2="6" />
+					<then>
+						<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
+							<replacefilter token="@java.security.config@" value="${java.security.config}" />
+							<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
+							<replacevalue>
+								<![CDATA[
+									set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT"
 
-								:JAVA_OPTS_SET
-							]]>
-						</replacevalue>
-					</replace>
+									:JAVA_OPTS_SET
+								]]>
+							</replacevalue>
+						</replace>
+					</then>
+					<else>
+						<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
+							<replacefilter token="@java.security.config@" value="${java.security.config}" />
+							<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
+							<replacevalue>
+								<![CDATA[
+									set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+
+									:JAVA_OPTS_SET
+								]]>
+							</replacevalue>
+						</replace>
+					</else>
+				</if>
 
 					<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
 						<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">]]></replacetoken>

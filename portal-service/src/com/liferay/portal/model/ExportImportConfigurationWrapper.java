@@ -493,7 +493,8 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public int compareTo(ExportImportConfiguration exportImportConfiguration) {
+	public int compareTo(
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration) {
 		return _exportImportConfiguration.compareTo(exportImportConfiguration);
 	}
 
@@ -503,17 +504,17 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<ExportImportConfiguration> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ExportImportConfiguration> toCacheModel() {
 		return _exportImportConfiguration.toCacheModel();
 	}
 
 	@Override
-	public ExportImportConfiguration toEscapedModel() {
+	public com.liferay.portal.model.ExportImportConfiguration toEscapedModel() {
 		return new ExportImportConfigurationWrapper(_exportImportConfiguration.toEscapedModel());
 	}
 
 	@Override
-	public ExportImportConfiguration toUnescapedModel() {
+	public com.liferay.portal.model.ExportImportConfiguration toUnescapedModel() {
 		return new ExportImportConfigurationWrapper(_exportImportConfiguration.toUnescapedModel());
 	}
 
@@ -531,6 +532,11 @@ public class ExportImportConfigurationWrapper
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_exportImportConfiguration.persist();
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.io.Serializable> getSettingsMap() {
+		return _exportImportConfiguration.getSettingsMap();
 	}
 
 	@Override

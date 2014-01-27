@@ -33,4 +33,5 @@ public interface ExportImportConfiguration
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.ExportImportConfigurationImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.util.Map<java.lang.String, java.io.Serializable> getSettingsMap();
 }

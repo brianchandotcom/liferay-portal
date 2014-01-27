@@ -83,22 +83,12 @@
 		}
 	}
 
-	@include respond-to(phone, tablet) {
-		&.display-icon, &.display-descriptive {
-			border: 1px solid rgba(0, 0, 0, 0.1);
-			margin: 5px;
+	&.display-icon, &.display-descriptive {
+		border: 1px solid #E1E1E1;
+		margin: 5px;
 
-			.entry-selector, .folder-action, .entry-action {
-				&.overlay {
-					clip: rect(auto, auto, auto, auto);
-				}
-			}
-
-			.img-polaroid {
-				border-width: 0;
-
-				@include box-shadow(none);
-			}
+		img {
+			margin: 4px;
 		}
 	}
 

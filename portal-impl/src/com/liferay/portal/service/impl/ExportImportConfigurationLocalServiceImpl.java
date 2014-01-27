@@ -46,8 +46,7 @@ public class ExportImportConfigurationLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
 
-		final long exportImportConfigurationId =
-			counterLocalService.increment();
+		long exportImportConfigurationId = counterLocalService.increment();
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationPersistence.create(
@@ -77,7 +76,7 @@ public class ExportImportConfigurationLocalServiceImpl
 
 	@Override
 	public void deleteGroupExportImportConfigurations(long groupId)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		List<ExportImportConfiguration> exportImportConfigurations =
 			exportImportConfigurationPersistence.findByGroupId(groupId);
@@ -92,7 +91,7 @@ public class ExportImportConfigurationLocalServiceImpl
 	@Override
 	public List<ExportImportConfiguration> getExportImportConfigurations(
 			long groupId, int type)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		return exportImportConfigurationPersistence.findByG_T(groupId, type);
 	}
@@ -101,7 +100,7 @@ public class ExportImportConfigurationLocalServiceImpl
 	public List<ExportImportConfiguration> getExportImportConfigurations(
 			long groupId, int type, int start, int end,
 			OrderByComparator orderByComparator)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		return exportImportConfigurationPersistence.findByG_T(
 			groupId, type, start, end, orderByComparator);
@@ -109,7 +108,7 @@ public class ExportImportConfigurationLocalServiceImpl
 
 	@Override
 	public int getExportImportConfigurationsCount(long groupId, int type)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		return exportImportConfigurationPersistence.countByG_T(groupId, type);
 	}

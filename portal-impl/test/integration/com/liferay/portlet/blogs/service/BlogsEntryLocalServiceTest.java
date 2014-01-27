@@ -115,9 +115,11 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
 			entryInserted.getEntryId());
 
-		Assert.assertTrue(entry.getSmallImage());
+		Assert.assertTrue(entry.isSmallImage());
 
 		BlogsTestUtil.assertEqualEntry(entryInserted, entry);
+
+		Assert.assertTrue(entry.getSmallImage());
 	}
 
 	@Test

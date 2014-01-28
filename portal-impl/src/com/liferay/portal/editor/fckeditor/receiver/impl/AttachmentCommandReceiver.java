@@ -16,6 +16,8 @@ package com.liferay.portal.editor.fckeditor.receiver.impl;
 
 import com.liferay.portal.editor.fckeditor.command.CommandArgument;
 import com.liferay.portal.editor.fckeditor.exception.FCKException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -76,6 +78,10 @@ public class AttachmentCommandReceiver extends BaseCommandReceiver {
 				nodeId, title, inputStreamOVPs);
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
 			throw new FCKException(e);
 		}
 
@@ -95,6 +101,10 @@ public class AttachmentCommandReceiver extends BaseCommandReceiver {
 			_getFiles(commandArgument, document, rootNode);
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
 			throw new FCKException(e);
 		}
 	}
@@ -136,5 +146,8 @@ public class AttachmentCommandReceiver extends BaseCommandReceiver {
 				"url", attachmentURLPrefix + fileEntry.getTitle());
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+			AttachmentCommandReceiver.class);
 
 }

@@ -103,6 +103,10 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 		catch (FCKException fcke) {
 			Throwable cause = fcke.getCause();
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(cause, cause);
+			}
+
 			returnValue = "110";
 
 			if (cause != null) {
@@ -196,6 +200,10 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 				commandArgument, fileName, inputStream, contentType, size);
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
 			FCKException fcke = null;
 
 			if (e instanceof FCKException) {

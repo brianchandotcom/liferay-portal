@@ -19,6 +19,8 @@ import com.liferay.portal.editor.fckeditor.command.CommandArgument;
 import com.liferay.portal.editor.fckeditor.exception.FCKException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -63,6 +65,10 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 			_getFolders(commandArgument, document, rootNode);
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
 			throw new FCKException(e);
 		}
 	}
@@ -76,6 +82,10 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 			_getFiles(commandArgument, document, rootNode);
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
 			throw new FCKException(e);
 		}
 	}
@@ -271,5 +281,7 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 
 		return canonicalURL;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(PageCommandReceiver.class);
 
 }

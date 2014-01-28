@@ -52,7 +52,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -60,6 +59,8 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
+import com.liferay.portlet.PortletSettings;
+import com.liferay.portlet.PortletSettingsFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
@@ -103,7 +104,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -224,11 +224,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subject = ModelHintsUtil.trimString(
 			MBMessage.class.getName(), "subject", subject);
 
-		PortletPreferences preferences =
-			ServiceContextUtil.getPortletPreferences(serviceContext);
+		PortletSettings portletSettings =
+			PortletSettingsFactoryUtil.getGroupPortletSettings(
+				groupId, PortletKeys.MESSAGE_BOARDS);
 
-		if (preferences != null) {
-			if (!MBUtil.isAllowAnonymousPosting(preferences)) {
+		if (portletSettings != null) {
+			if (!MBUtil.isAllowAnonymousPosting(portletSettings)) {
 				if (anonymous || user.isDefaultUser()) {
 					throw new PrincipalException();
 				}
@@ -2013,26 +2014,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return;
 		}
 
-		PortletPreferences preferences =
-			ServiceContextUtil.getPortletPreferences(serviceContext);
-
-		if (preferences == null) {
-			long ownerId = message.getGroupId();
-			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
-			long plid = PortletKeys.PREFS_PLID_SHARED;
-			String portletId = PortletKeys.MESSAGE_BOARDS;
-			String defaultPreferences = null;
-
-			preferences = portletPreferencesLocalService.getPreferences(
-				message.getCompanyId(), ownerId, ownerType, plid, portletId,
-				defaultPreferences);
-		}
+		PortletSettings portletSettings =
+			PortletSettingsFactoryUtil.getGroupPortletSettings(
+				message.getGroupId(), PortletKeys.MESSAGE_BOARDS);
 
 		if (serviceContext.isCommandAdd() &&
-			MBUtil.getEmailMessageAddedEnabled(preferences)) {
+			MBUtil.getEmailMessageAddedEnabled(portletSettings)) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-				 MBUtil.getEmailMessageUpdatedEnabled(preferences)) {
+				 MBUtil.getEmailMessageUpdatedEnabled(portletSettings)) {
 		}
 		else {
 			return;
@@ -2075,10 +2065,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			categoryIds.addAll(category.getAncestorCategoryIds());
 		}
 
-		String fromName = MBUtil.getEmailFromName(
-			preferences, message.getCompanyId());
-		String fromAddress = MBUtil.getEmailFromAddress(
-			preferences, message.getCompanyId());
+		String fromName = MBUtil.getEmailFromName(portletSettings);
+		String fromAddress = MBUtil.getEmailFromAddress(portletSettings);
 
 		String replyToAddress = StringPool.BLANK;
 
@@ -2093,17 +2081,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		String signature = null;
 
 		if (serviceContext.isCommandUpdate()) {
-			subject = MBUtil.getEmailMessageUpdatedSubject(preferences);
-			body = MBUtil.getEmailMessageUpdatedBody(preferences);
-			signature = MBUtil.getEmailMessageUpdatedSignature(preferences);
+			subject = MBUtil.getEmailMessageUpdatedSubject(portletSettings);
+			body = MBUtil.getEmailMessageUpdatedBody(portletSettings);
+			signature = MBUtil.getEmailMessageUpdatedSignature(portletSettings);
 		}
 		else {
-			subject = MBUtil.getEmailMessageAddedSubject(preferences);
-			body = MBUtil.getEmailMessageAddedBody(preferences);
-			signature = MBUtil.getEmailMessageAddedSignature(preferences);
+			subject = MBUtil.getEmailMessageAddedSubject(portletSettings);
+			body = MBUtil.getEmailMessageAddedBody(portletSettings);
+			signature = MBUtil.getEmailMessageAddedSignature(portletSettings);
 		}
 
-		boolean htmlFormat = MBUtil.getEmailHtmlFormat(preferences);
+		boolean htmlFormat = MBUtil.getEmailHtmlFormat(portletSettings);
 
 		if (Validator.isNotNull(signature)) {
 			String signatureSeparator = null;

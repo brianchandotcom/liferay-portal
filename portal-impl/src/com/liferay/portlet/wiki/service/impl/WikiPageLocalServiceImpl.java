@@ -2244,10 +2244,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return StringPool.BLANK;
 		}
 
-		if (Validator.isNotNull(serviceContext.getLayoutFullURL())) {
-			return StringPool.BLANK;
-		}
-
 		HttpServletRequest request = serviceContext.getRequest();
 
 		if (request == null) {
@@ -2288,10 +2284,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	protected String getPageURL(
 			WikiNode node, WikiPage page, ServiceContext serviceContext)
 		throws PortalException, SystemException {
-
-		if (Validator.isNotNull(serviceContext.getLayoutFullURL())) {
-			return StringPool.BLANK;
-		}
 
 		HttpServletRequest request = serviceContext.getRequest();
 
@@ -2403,6 +2395,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			WikiNode node, WikiPage page, ServiceContext serviceContext,
 			boolean update)
 		throws PortalException, SystemException {
+
+		String layoutFullURL = serviceContext.getLayoutFullURL();
+
+		if (!page.isApproved() || Validator.isNull(layoutFullURL)) {
+			return;
+		}
 
 		PortletPreferences preferences = null;
 

@@ -6364,7 +6364,9 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle article, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (!article.isApproved()) {
+		String layoutFullURL = serviceContext.getLayoutFullURL();
+
+		if (!article.isApproved() || Validator.isNull(layoutFullURL)) {
 			return;
 		}
 

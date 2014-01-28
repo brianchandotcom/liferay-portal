@@ -1980,7 +1980,9 @@ public class DLAppHelperLocalServiceImpl
 			FileVersion fileVersion, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (!fileVersion.isApproved()) {
+		String layoutFullURL = serviceContext.getLayoutFullURL();
+
+		if (!fileVersion.isApproved() || Validator.isNull(layoutFullURL)) {
 			return;
 		}
 

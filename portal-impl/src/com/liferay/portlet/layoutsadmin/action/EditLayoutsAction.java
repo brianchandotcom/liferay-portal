@@ -283,9 +283,9 @@ public class EditLayoutsAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
 				if (cmd.equals(Constants.ADD)) {
-					SessionMessages.add(actionRequest,
-						PortalUtil.getPortletId(actionRequest) + "addError",
-						e);
+					SessionMessages.add(
+						actionRequest,
+						PortalUtil.getPortletId(actionRequest) + "addError", e);
 				}
 			}
 			else if (e instanceof SystemException) {

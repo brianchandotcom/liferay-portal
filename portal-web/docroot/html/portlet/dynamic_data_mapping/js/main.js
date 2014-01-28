@@ -126,7 +126,6 @@ AUI.add(
 							addNode: Liferay.Language.get('add-field'),
 							button: Liferay.Language.get('button'),
 							buttonType: Liferay.Language.get('button-type'),
-							close: Liferay.Language.get('close'),
 							deleteFieldsMessage: Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-entries'),
 							duplicateMessage: Liferay.Language.get('duplicate'),
 							editMessage: Liferay.Language.get('edit'),
@@ -553,6 +552,12 @@ AUI.add(
 						);
 
 						return fields;
+					},
+
+					// Overrides parent _setToolbar to remove the close button,
+					// included by default on Alloy's Diagram Builder.
+					_setToolbar: function(val) {
+						return val;
 					},
 
 					_syncFieldOptionsLocaleUI: function(field, locale) {

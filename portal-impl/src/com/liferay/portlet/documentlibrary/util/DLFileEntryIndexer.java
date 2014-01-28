@@ -113,8 +113,15 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 		MBMessage message = (MBMessage)obj;
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-			message.getClassPK());
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				message.getClassPK());
+		}
+		catch (Exception e) {
+			return;
+		}
 
 		if (fileEntry instanceof LiferayFileEntry) {
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();

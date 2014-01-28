@@ -86,7 +86,14 @@ public class WikiPageIndexer extends BaseIndexer {
 			classPK = message.getClassPK();
 		}
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
+		WikiPage page = null;
+
+		try {
+			page = WikiPageLocalServiceUtil.getPage(classPK);
+		}
+		catch (Exception e) {
+			return;
+		}
 
 		document.addKeyword(Field.NODE_ID, page.getNodeId());
 	}

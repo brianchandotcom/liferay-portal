@@ -85,8 +85,15 @@ public class MBMessageIndexer extends BaseIndexer {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
-		MBMessage message = MBMessageAttachmentsUtil.getMessage(
-			dlFileEntry.getFileEntryId());
+		MBMessage message = null;
+
+		try {
+			message = MBMessageAttachmentsUtil.getMessage(
+				dlFileEntry.getFileEntryId());
+		}
+		catch (Exception e) {
+			return;
+		}
 
 		document.addKeyword(Field.CATEGORY_ID, message.getCategoryId());
 

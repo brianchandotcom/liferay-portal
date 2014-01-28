@@ -38,6 +38,49 @@
 		</catch>
 	</trycatch>
 
+	<macrodef name="record-app-server-information">
+		<sequential>
+			<propertyregex
+				input="${app.server.version}"
+				override="true"
+				property="app.server.major.version"
+				regexp="(\d+\.\d+).*"
+				replace="\1"
+			/>
+
+			<propertycopy
+				from="env.key.app.server.${app.server.type}.${app.server.major.version}"
+				name="env.key.app.server"
+				override="true"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="record-browser-information">
+		<sequential>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="record-database-information">
+		<sequential>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="record-java-information">
+		<sequential>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="record-os-information">
+		<sequential>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="record-liferay-version-information">
+		<sequential>
+		</sequential>
+	</macrodef>
+
 	<target name="build-sql-file">
 		<if>
 			<isset property="sql.legacy.url" />
@@ -180,408 +223,38 @@ create database lportal2 character set utf8;</echo>
 	</target>
 
 	<target name="build-test-results-xml">
-		<if>
-			<equals arg1="${app.server.type}" arg2="tomcat" />
-			<then>
-				<script classpathref="project.classpath" language="beanshell">
-					String appServerVersion = project.getProperty("app.server.version");
-
-					int x = appServerVersion.lastIndexOf(".");
-
-					String appServerVersionMajor = appServerVersion.substring(0, x).trim();
-
-					String appServerType = project.getProperty("app.server.type");
-
-					String appServerIdPropertyName =
-						"app.server." + appServerType + "." + appServerVersionMajor + ".id";
-
-					project.setProperty("app.server.id.property.name", appServerIdPropertyName);
-				</script>
-			</then>
-		</if>
-
-		<propertycopy
-			from="${app.server.id.property.name}"
-			name="app.server.id"
-			override="true"
-		/>
-
-		<if>
-			<not>
-				<isset property="browser.type" />
-			</not>
-			<then>
-				<if>
-					<equals arg1="${test.browser}" arg2="googlechrome" />
-					<then>
-						<property name="browser.type" value="googlechrome" />
-					</then>
-					<elseif>
-						<or>
-							<equals arg1="${test.browser}" arg2="iehta" />
-							<equals arg1="${test.browser}" arg2="iexplore" />
-						</or>
-						<then>
-							<property name="browser.type" value="internetexplorer" />
-						</then>
-					</elseif>
-					<else>
-						<property name="browser.type" value="firefox" />
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="browser.version" />
-			</not>
-			<then>
-				<exec executable="firefox" outputproperty="firefox.version.output">
-					<arg line="-v | more" />
-				</exec>
-
-				<script classpathref="project.classpath" language="beanshell">
-					String firefoxVersionOutput = project.getProperty("firefox.version.output");
-
-					project.setProperty("browser.version", firefoxVersionOutput.trim());
-				</script>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="firefox" />
-			<then>
-				<script classpathref="project.classpath" language="beanshell">
-					<![CDATA[
-						import com.liferay.portal.kernel.util.GetterUtil;
-
-						import java.util.regex.Matcher;
-						import java.util.regex.Pattern;
-
-						String browserVersion = project.getProperty("browser.version");
-
-						String browserVersionMajor = "3.6";
-
-						try {
-							Pattern pattern = Pattern.compile("[0-9]*\\.[0-9]*");
-
-							Matcher matcher = pattern.matcher(browserVersion);
-
-							if (matcher.find()) {
-								browserVersionMajor = matcher.group();
-
-								double d = GetterUtil.getDouble(browserVersionMajor);
-
-								if (d >= 20) {
-									browserVersionMajor = "20.0";
-								}
-								else if (d >= 15) {
-									browserVersionMajor = "15.0";
-								}
-								else if (d >= 10) {
-									browserVersionMajor = "10.0";
-								}
-								else if (d >= 5) {
-									browserVersionMajor = "5.0";
-								}
-							}
-						}
-						catch (Exception e) {
-						}
-
-						String browserType = project.getProperty("browser.type");
-
-						String browserIdPropertyName =
-							"browser." + browserType + "." + browserVersionMajor + ".id";
-
-						project.setProperty("browser.id.property.name", browserIdPropertyName);
-					]]>
-				</script>
-			</then>
-		</if>
-
-		<propertycopy
-			from="${browser.id.property.name}"
-			name="browser.id"
-			override="true"
-		/>
-
-		<if>
-			<not>
-				<isset property="database.type" />
-			</not>
-			<then>
-				<property name="database.type" value="${database}" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="database.version" />
-			</not>
-			<then>
-				<exec executable="mysql" outputproperty="mysql.version.output">
-					<arg line="--version" />
-				</exec>
-
-				<script classpathref="project.classpath" language="beanshell">
-					String mysqlVersionOutput = project.getProperty("mysql.version.output");
-
-					int x = mysqlVersionOutput.indexOf("Distrib ");
-
-					x = mysqlVersionOutput.indexOf(" ", x);
-
-					int y = mysqlVersionOutput.indexOf(", ", x);
-
-					String mysqlVersion = mysqlVersionOutput.substring(x, y).trim();
-
-					project.setProperty("database.version", mysqlVersion);
-				</script>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${database.type}" arg2="mysql" />
-			<then>
-				<script classpathref="project.classpath" language="beanshell">
-					String databaseVersion = project.getProperty("database.version");
-
-					int x = databaseVersion.lastIndexOf(".");
-
-					String databaseVersionMajor = databaseVersion.substring(0, x).trim();
-
-					String databaseType = project.getProperty("database.type");
-
-					String databaseIdPropertyName =
-						"database." + databaseType + "." + databaseVersionMajor + ".id";
-
-					project.setProperty("database.id.property.name", databaseIdPropertyName);
-				</script>
-			</then>
-		</if>
-
-		<propertycopy
-			from="${database.id.property.name}"
-			name="database.id"
-			override="true"
-		/>
-
-		<if>
-			<not>
-				<isset property="java.name" />
-			</not>
-			<then>
-				<property name="java.name" value="${java.vm.name}" />
-			</then>
-		</if>
-
-		<script classpathref="project.classpath" language="beanshell">
-			String javaVersion = project.getProperty("java.version");
-
-			String javaVersionMajor = "";
-
-			if (javaVersion.contains("1.5.0")) {
-				javaVersionMajor = "5.0";
-			}
-			else if (javaVersion.contains("1.6.0")) {
-				javaVersionMajor = "6.0";
-			}
-			else if (javaVersion.contains("1.7.0")) {
-				javaVersionMajor = "7.0";
-			}
-
-			String javaName = project.getProperty("java.name");
-
-			if (javaName.contains("64-Bit")) {
-				javaVersionMajor += ".64";
-			}
-
-			String javaIdPropertyName = "java.jdk." + javaVersionMajor + ".id";
-
-			project.setProperty("java.id.property.name", javaIdPropertyName);
-		</script>
-
-		<propertycopy
-			from="${java.id.property.name}"
-			name="java.id"
-			override="true"
-		/>
-
-		<if>
-			<equals arg1="${os.name}" arg2="Windows 7" />
-			<then>
-				<property name="os.id.property.name" value="os.windows.7.id" />
-			</then>
-		</if>
-
-		<propertycopy
-			from="${os.id.property.name}"
-			name="os.id"
-			override="true"
-		/>
-
-		<if>
-			<not>
-				<isset property="liferay.plugins.edition" />
-			</not>
-			<then>
-				<property name="liferay.plugins.edition" value="CE" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="liferay.plugins.git.id" />
-			</not>
-			<then>
-				<exec dir="${lp.plugins.dir}" executable="git" outputproperty="liferay.plugins.git.log.output">
-					<arg line="log -n 1" />
-				</exec>
-
-				<script classpathref="project.classpath" language="beanshell">
-					String gitLogOutput = project.getProperty("liferay.plugins.git.log.output");
-
-					int x = gitLogOutput.indexOf("commit ");
-
-					x = gitLogOutput.indexOf(" ", x);
-
-					int y = gitLogOutput.indexOf("Author: ", x);
-
-					String gitID = gitLogOutput.substring(x, y).trim();
-
-					project.setProperty("liferay.plugins.git.id", gitID);
-				</script>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="liferay.plugins.version" />
-			</not>
-			<then>
-				<var name="lp.version" unset="true" />
-
-				<property file="${lp.plugins.dir}/build.${user.name}.properties" />
-				<property file="${lp.plugins.dir}/build.${env.COMPUTERNAME}.properties" />
-				<property file="${lp.plugins.dir}/build.${env.HOST}.properties" />
-				<property file="${lp.plugins.dir}/build.${env.HOSTNAME}.properties" />
-				<property file="${lp.plugins.dir}/build.properties" />
-
-				<property name="liferay.plugins.version" value="${lp.version}" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="liferay.plugins.version.major" />
-			</not>
-			<then>
-				<script classpathref="project.classpath" language="beanshell">
-					String liferayPluginsVersion = project.getProperty("liferay.plugins.version");
-
-					int x = liferayPluginsVersion.lastIndexOf(".");
-
-					String liferayPluginsVersionMajor = liferayPluginsVersion.substring(0, x).trim();
-
-					project.setProperty("liferay.plugins.version.major", liferayPluginsVersionMajor);
-				</script>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="liferay.portal.edition" />
-			</not>
-			<then>
-				<property name="liferay.portal.edition" value="CE" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="liferay.portal.git.id" />
-			</not>
-			<then>
-				<exec dir="${project.dir}" executable="git" outputproperty="liferay.portal.git.log.output">
-					<arg line="log -n 1" />
-				</exec>
-
-				<script classpathref="project.classpath" language="beanshell">
-					String gitLogOutput = project.getProperty("liferay.portal.git.log.output");
-
-					int x = gitLogOutput.indexOf("commit ");
-
-					x = gitLogOutput.indexOf(" ", x);
-
-					int y = gitLogOutput.indexOf("Author: ", x);
-
-					String gitID = gitLogOutput.substring(x, y).trim();
-
-					project.setProperty("liferay.portal.git.id", gitID);
-				</script>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="liferay.portal.version" />
-			</not>
-			<then>
-				<var name="lp.version" unset="true" />
-
-				<property file="${project.dir}/release.${user.name}.properties" />
-				<property file="${project.dir}/release.${env.COMPUTERNAME}.properties" />
-				<property file="${project.dir}/release.${env.HOST}.properties" />
-				<property file="${project.dir}/release.${env.HOSTNAME}.properties" />
-				<property file="${project.dir}/release.properties" />
-
-				<property name="liferay.portal.version" value="${lp.version}" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="liferay.portal.version.major" />
-			</not>
-			<then>
-				<script classpathref="project.classpath" language="beanshell">
-					String liferayPortalVersion = project.getProperty("liferay.portal.version");
-
-					int x = liferayPortalVersion.lastIndexOf(".");
-
-					String liferayPortalVersionMajor = liferayPortalVersion.substring(0, x).trim();
-
-					project.setProperty("liferay.portal.version.major", liferayPortalVersionMajor);
-				</script>
-			</then>
-		</if>
+		<record-app-server-information />
+		<record-browser-information />
+		<record-database-information />
+		<record-java-information />
+		<record-os-information />
+		<record-liferay-version-information />
 
 		<property name="file.properties">
 			<![CDATA[
-<environment-properties>
-	<property name="app.server.type" value="${app.server.type}" />
-	<property name="app.server.version" value="${app.server.version}" />
-	<property name="browser.type" value="${browser.type}" />
-	<property name="browser.version" value="${browser.version}" />
-	<property name="database.type" value="${database.type}" />
-	<property name="database.version" value="${database.version}" />
-	<property name="java.name" value="${java.name}" />
-	<property name="java.version" value="${java.version}" />
-	<property name="os.name" value="${os.name}" />
-	<property name="os.version" value="${os.version}" />
-	<property name="unique.id" value="${app.server.id}${browser.id}${database.id}${java.id}${os.id}" />
-</environment-properties>
-<test-properties>
-	<property name="liferay.plugins.edition" value="${liferay.plugins.edition}" />
-	<property name="liferay.plugins.git.id" value="${liferay.plugins.git.id}" />
-	<property name="liferay.plugins.version" value="${liferay.plugins.version}" />
-	<property name="liferay.plugins.version.major" value="${liferay.plugins.version.major}" />
-	<property name="liferay.portal.edition" value="${liferay.portal.edition}" />
-	<property name="liferay.portal.git.id" value="${liferay.portal.git.id}" />
-	<property name="liferay.portal.version" value="${liferay.portal.version}" />
-	<property name="liferay.portal.version.major" value="${liferay.portal.version.major}" />
-</test-properties>
+				<environment-properties>
+					<property name="app.server.type" value="${app.server.type}" />
+					<property name="app.server.version" value="${app.server.version}" />
+					<property name="browser.type" value="${browser.type}" />
+					<property name="browser.version" value="${browser.version}" />
+					<property name="database.type" value="${database.type}" />
+					<property name="database.version" value="${database.version}" />
+					<property name="java.name" value="${java.name}" />
+					<property name="java.version" value="${java.version}" />
+					<property name="os.name" value="${os.name}" />
+					<property name="os.version" value="${os.version}" />
+					<property name="unique.id" value="${env.key.app.server}${env.key.browser}${env.key.database}${env.key.java}${env.key.os}" />
+				</environment-properties>
+				<liferay-version-properties>
+					<property name="liferay.plugins.edition" value="${liferay.plugins.edition}" />
+					<property name="liferay.plugins.git.id" value="${liferay.plugins.git.id}" />
+					<property name="liferay.plugins.version" value="${liferay.plugins.version}" />
+					<property name="liferay.plugins.version.major" value="${liferay.plugins.version.major}" />
+					<property name="liferay.portal.edition" value="${liferay.portal.edition}" />
+					<property name="liferay.portal.git.id" value="${liferay.portal.git.id}" />
+					<property name="liferay.portal.version" value="${liferay.portal.version}" />
+					<property name="liferay.portal.version.major" value="${liferay.portal.version.major}" />
+				</liferay-version-properties>
 			]]>
 		</property>
 
@@ -595,60 +268,29 @@ create database lportal2 character set utf8;</echo>
 			<sequential>
 				<var name="file.name" value="@{file.name}" />
 
-				<script classpathref="project.classpath" language="beanshell">
-					<![CDATA[
-						import com.liferay.portal.kernel.util.StringUtil;
+				<for list="environment-properties,properties,property,liferay-version-properties" param="property.tag.name">
+					<sequential>
+						<replaceregexp
+							file="@{file.name}"
+							flags="g"
+							match="\s*\&lt;/?@{property.tag.name}[^\n^\r]*[\n\r]"
+							replace=""
+						/>
+					</sequential>
+				</for>
 
-						import java.io.FileInputStream;
+				<replaceregexp
+					file="@{file.name}"
+					match="(&lt;testcase)"
+					replace="${file.properties}\1"
+				/>
 
-						import java.util.Scanner;
-
-						String fileName = project.getProperty("file.name");
-
-						String fileContent = "";
-
-						try {
-							FileInputStream fileInputStream = new FileInputStream(fileName);
-
-							Scanner scanner = new Scanner(fileInputStream);
-
-							boolean addedProperties = false;
-
-							while (scanner.hasNextLine()) {
-								String line = scanner.nextLine();
-
-								if (line.contains("<properties") ||
-									line.contains("</properties") ||
-									line.contains("<property") ||
-									line.contains("<test-properties") ||
-									line.contains("</test-properties")) {
-
-									continue;
-								}
-
-								if (!addedProperties && line.contains("<testcase")) {
-									String fileProperties = project.getProperty("file.properties");
-
-									fileContent += fileProperties.trim() + "\n";
-
-									addedProperties = true;
-								}
-
-								fileContent += line.trim() + "\n";
-							}
-						}
-						catch (Exception e) {
-						}
-
-						while (fileContent.contains("\n\n")) {
-							fileContent = StringUtil.replace(fileContent, "\n\n", "\n");
-						}
-
-						project.setProperty("file.content", fileContent);
-					]]>
-				</script>
-
-				<echo file="@{file.name}">${file.content}</echo>
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="\&gt;[\n\s]*\&lt;"
+					replace="\&gt;${line.separator}\&lt;"
+				/>
 			</sequential>
 		</for>
 	</target>

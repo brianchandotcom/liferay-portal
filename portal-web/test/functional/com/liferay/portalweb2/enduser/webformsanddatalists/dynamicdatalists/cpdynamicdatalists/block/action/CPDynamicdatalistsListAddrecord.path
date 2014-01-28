@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>FIELD_LABEL</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/label</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//label</td>
 	<td></td>
 </tr>
 <tr>
@@ -89,8 +89,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LINK_TO_PAGE_SELECT_OPTION</td>
+	<td>//option[contains(.,'${key_recordFieldData}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NUMBER_FIELD</td>
 	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RADIO_OPTION_LABEL</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/label[contains(.,'${key_recordFieldData}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -22,9 +22,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 LayoutLister layoutLister = new LayoutLister();
 
 String rootNodeName = StringPool.BLANK;
-LayoutView layoutView = layoutLister.getLayoutView(layout.getGroupId(), layout.isPrivateLayout(), rootNodeName, locale);
-
-List layoutList = layoutView.getList();
+List<LayoutDescription> layoutDescriptions = layoutLister.getLayoutDescriptions(layout.getGroupId(), layout.isPrivateLayout(), rootNodeName, locale);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
@@ -38,39 +36,13 @@ List layoutList = layoutView.getList();
 			<aui:option value="" />
 
 			<%
-			for (int i = 0; i < layoutList.size(); i++) {
-
-				// id | parentId | ls | obj id | name | img | depth
-
-				String layoutDesc = (String)layoutList.get(i);
-
-				String[] nodeValues = StringUtil.split(layoutDesc, '|');
-
-				long objId = GetterUtil.getLong(nodeValues[3]);
-				String name = nodeValues[4];
-
-				int depth = 0;
-
-				if (i != 0) {
-					depth = GetterUtil.getInteger(nodeValues[6]);
-				}
-
-				for (int j = 0; j < depth; j++) {
-					name = "-&nbsp;" + name;
-				}
-
-				Layout curRootLayout = null;
-
-				try {
-					curRootLayout = LayoutLocalServiceUtil.getLayout(objId);
-				}
-				catch (Exception e) {
-				}
+			for (LayoutDescription layoutDescription : layoutDescriptions) {
+				Layout curRootLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
 
 				if (curRootLayout != null) {
 			%>
 
-				<aui:option label="<%= name %>" selected="<%= curRootLayout.getUuid().equals(rootLayoutUuid) %>" value="<%= curRootLayout.getUuid() %>" />
+				<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= curRootLayout.getUuid().equals(rootLayoutUuid) %>" value="<%= curRootLayout.getUuid() %>" />
 
 			<%
 				}

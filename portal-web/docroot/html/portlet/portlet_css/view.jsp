@@ -71,45 +71,15 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 
 						Group group = layout.getGroup();
 
-						LayoutView layoutView = layoutLister.getLayoutView(layout.getGroup().getGroupId(), layout.isPrivateLayout(), group.getName(), locale);
+						List<LayoutDescription> layoutDescriptions = layoutLister.getLayoutDescriptions(layout.getGroup().getGroupId(), layout.isPrivateLayout(), group.getName(), locale);
 
-						List layoutList = layoutView.getList();
-
-						for (int i = 0; i < layoutList.size(); i++) {
-
-							// id | parentId | ls | obj id | name | img | depth
-
-							String layoutDesc = (String)layoutList.get(i);
-
-							String[] nodeValues = StringUtil.split(layoutDesc, '|');
-
-							long objId = GetterUtil.getLong(nodeValues[3]);
-							String name = HtmlUtil.escape(nodeValues[4]);
-
-							int depth = 0;
-
-							if (i != 0) {
-								depth = GetterUtil.getInteger(nodeValues[6]);
-							}
-
-							for (int j = 0; j < depth; j++) {
-								name = "-&nbsp;" + name;
-							}
-
-							Layout linkableLayout = null;
-
-							try {
-								if (objId > 0) {
-									linkableLayout = LayoutLocalServiceUtil.getLayout(objId);
-								}
-							}
-							catch (Exception e) {
-							}
+						for (LayoutDescription layoutDescription : layoutDescriptions) {
+							Layout linkableLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
 
 							if (linkableLayout != null) {
 						%>
 
-								<aui:option label="<%= name %>" selected="<%= linkableLayout.getUuid().equals(linkToLayoutUuid) %>" value="<%= linkableLayout.getUuid() %>" />
+								<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= linkableLayout.getUuid().equals(linkToLayoutUuid) %>" value="<%= linkableLayout.getUuid() %>" />
 
 						<%
 							}

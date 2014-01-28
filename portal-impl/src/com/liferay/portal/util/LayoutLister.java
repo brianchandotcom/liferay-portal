@@ -16,7 +16,6 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -30,31 +29,29 @@ import java.util.Locale;
  */
 public class LayoutLister {
 
-	public LayoutView getLayoutView(
+	public List<LayoutDescription> getLayoutDescriptions(
 			long groupId, boolean privateLayout, String rootNodeName,
 			Locale locale)
 		throws PortalException, SystemException {
 
 		_locale = locale;
-		_nodeId = 1;
 
-		_list = new ArrayList<String>();
+		_list = new ArrayList<LayoutDescription>();
 
 		_list.add(
-			"1|0|0|" + LayoutConstants.DEFAULT_PLID + "|" + rootNodeName +
-				"|0");
+			new LayoutDescription(
+				LayoutConstants.DEFAULT_PLID, rootNodeName, 0));
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, privateLayout);
 
-		_createList(
-			layouts, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, _nodeId, 0);
+		_createList(layouts, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0);
 
-		return new LayoutView(_list, _depth);
+		return _list;
 	}
 
 	private void _createList(
-			List<Layout> layouts, long parentLayoutId, int parentId, int depth)
+			List<Layout> layouts, long parentLayoutId, int depth)
 		throws PortalException, SystemException {
 
 		List<Layout> matchedLayouts = new ArrayList<Layout>();
@@ -70,45 +67,17 @@ public class LayoutLister {
 
 			if (i == 0) {
 				depth++;
-
-				if (depth > _depth) {
-					_depth = depth;
-				}
 			}
 
-			StringBundler sb = new StringBundler(13);
+			_list.add(
+				new LayoutDescription(
+					layout.getPlid(), layout.getName(_locale), depth));
 
-			sb.append(++_nodeId);
-			sb.append("|");
-			sb.append(parentId);
-			sb.append("|");
-
-			if ((i + 1) == matchedLayouts.size()) {
-				sb.append("1");
-			}
-			else {
-				sb.append("0");
-			}
-
-			sb.append("|");
-			sb.append(layout.getPlid());
-			sb.append("|");
-			sb.append(layout.getName(_locale));
-			sb.append("|");
-			//sb.append("9");
-			sb.append("11");
-			sb.append("|");
-			sb.append(depth);
-
-			_list.add(sb.toString());
-
-			_createList(layouts, layout.getLayoutId(), _nodeId, depth);
+			_createList(layouts, layout.getLayoutId(), depth);
 		}
 	}
 
-	private int _depth;
-	private List<String> _list;
+	private List<LayoutDescription> _list;
 	private Locale _locale;
-	private int _nodeId;
 
 }

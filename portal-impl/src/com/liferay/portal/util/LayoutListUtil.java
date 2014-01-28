@@ -14,9 +14,16 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.cache.Lifecycle;
+import com.liferay.portal.kernel.cache.ThreadLocalCache;
+import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.impl.LayoutImpl;
@@ -36,6 +43,47 @@ import java.util.Locale;
 public class LayoutListUtil {
 
 	public static List<LayoutDescription> getLayoutDescriptions(
+			long groupId, boolean privateLayout, String rootNodeName,
+			Locale locale)
+		throws PortalException, SystemException {
+
+		ThreadLocalCache<List<LayoutDescription>> threadLocalCache =
+			ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, LayoutListUtil.class.getName());
+
+		String cacheKey = buildCacheKey(
+			groupId, privateLayout, rootNodeName, locale);
+
+		List<LayoutDescription> list = threadLocalCache.get(cacheKey);
+
+		if (list == null) {
+			list = doGetLayoutDescriptions(
+				groupId, privateLayout, rootNodeName, locale);
+
+			threadLocalCache.put(cacheKey, list);
+		}
+
+		return list;
+	}
+
+	protected static String buildCacheKey(
+		long groupId, boolean privateLayout, String rootNodeName,
+		Locale locale) {
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(StringUtil.toHexString(groupId));
+		sb.append(StringPool.POUND);
+		sb.append(privateLayout);
+		sb.append(StringPool.POUND);
+		sb.append(rootNodeName);
+		sb.append(StringPool.POUND);
+		sb.append(LocaleUtil.toLanguageId(locale));
+
+		return sb.toString();
+	}
+
+	protected static List<LayoutDescription> doGetLayoutDescriptions(
 			long groupId, boolean privateLayout, String rootNodeName,
 			Locale locale)
 		throws PortalException, SystemException {

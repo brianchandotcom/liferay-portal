@@ -30,6 +30,12 @@
 	</command>
 
 	<command name="clickAtNavigation">
+		<execute function="Click#clickAtNonLiferayNavigation" />
+
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/aui/aui-url/aui-url-min.js')]" />
+	</command>
+
+	<command name="clickAtNonLiferayNavigation">
 		<execute selenium="pause" argument1="1000" />
 
 		<if>
@@ -48,8 +54,6 @@
 		<execute function="Click#clickAt" />
 
 		<execute selenium="pause" argument1="1000" />
-
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/aui/aui-url/aui-url-min.js')]" />
 	</command>
 
 	<command name="clickAtSidebarClickAt">

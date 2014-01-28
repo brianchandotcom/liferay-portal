@@ -88,13 +88,41 @@
 			</then>
 		</if>
 
+		<if>
+			<isset var="sitePageType" />
+			<then>
+				<execute macro="SitePage#selectSitePageTypeRadioCP">
+					<var name="sitePageType" value="${sitePageType}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute action="CPSitepagesAddpage#click" locator-key1="ADD_PAGE_BUTTON" />
 
 		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute macro="SitePage#expandRootCP" />
 
-		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
+	</command>
+
+	<command name="addSitePageTypeEmbeddedCP">
+		<execute action="CPSitepagesAddpage#type" locator-key1="PAGE_TYPE_EMBEDDED_URL_FIELD" value1="${pageTypeURL}" />
+		<execute action="CPSitepagesAddpage#type" locator-key1="PAGE_TYPE_EMBEDDED_DESCRIPTION_FIELD" value1="${pageTypeDescription}" />
+	</command>
+
+	<command name="addSitePageTypeLinkToURLCP">
+		<execute action="CPSitepagesAddpage#type" locator-key1="PAGE_TYPE_LINK_TO_URL_URL_FIELD" value1="${pageTypeURL}" />
+		<execute action="CPSitepagesAddpage#type" locator-key1="PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD" value1="${pageTypeDescription}" />
+	</command>
+
+	<command name="addSitePageTypePanelCP">
+		<var name="key_componentOrPortletName" value="${componentName}" />
+
+		<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_PANEL_CHECKBOX" />
+		<execute action="CPSitepagesAddpage#assertChecked" locator-key1="PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 	</command>
 
 	<command name="expandRootCP">
@@ -135,6 +163,34 @@
 		<execute action="Home#assertLocation" value1="${sitePageURL}" />
 	</command>
 
+	<command name="selectSitePageTypeRadioCP">
+		<var name="key_pageType" value="${sitePageType}" />
+
+		<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_RADIO" />
+
+		<if>
+			<equals arg1="${sitePageType}" arg2="Embedded" />
+			<then>
+				<execute macro="SitePage#addSitePageTypeEmbeddedCP">
+					<var name="pageTypeDescription" value="${pageTypeDescription}" />
+					<var name="pageTypeURL" value="${pageTypeURL}" />
+				</execute>
+			</then>
+			<elseif>
+				<equals arg1="${sitePageType}" arg2="Link to URL" />
+				<then>
+					<execute macro="SitePage#addSitePageTypeLinkToURLCP">
+						<var name="pageTypeDescription" value="${pageTypeDescription}" />
+						<var name="pageTypeURL" value="${pageTypeURL}" />
+					</execute>
+				</then>
+			</elseif>
+			<else>
+				<execute macro="SitePage#addSitePageTypePanelCP" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewDefaultSiteTemplatePagesPG">
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
@@ -170,6 +226,26 @@
 		<execute action="Dockbar#click" locator-key1="EDIT" />
 		<execute action="Dockbar#assertTextEquals" locator-key1="EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
 		<execute action="Dockbar#assertChecked" locator-key1="EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX" />
+	</command>
+
+	<command name="viewPanelPortletListCP">
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
+
+		<var name="key_componentName" value="${componentName}" />
+
+		<execute action="CPSitepages#click" locator-key1="DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW" />
+
+		<var name="key_componentOrPortletName" value="${componentName}" />
+
+		<execute action="CPSitepages#assertChecked" locator-key1="DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
+
+		<for list="${portletNameList}" param="portletName" >
+			<var name="key_componentOrPortletName" value="${portletName}" />
+
+			<execute action="CPSitepages#assertChecked" locator-key1="DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
+		</for>
 	</command>
 
 	<command name="viewPG">

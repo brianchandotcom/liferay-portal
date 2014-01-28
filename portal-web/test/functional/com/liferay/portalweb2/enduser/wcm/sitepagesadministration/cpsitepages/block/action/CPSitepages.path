@@ -24,8 +24,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HEADER</td>
-	<td>//div[@class='row-fluid ']/h1</td>
+	<td>INFO_MESSAGE_1</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE_2</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,6 +41,11 @@
 <tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -122,23 +132,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TREE_PAGE_LINK_1</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_TREE_PAGE_ARROW_2</td>
 	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../i[contains(@class,'tree-hitarea')])[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TREE_PAGE_LINK_2</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[2]</td>
+	<td>PAGE_TREE_PAGE_ARROW_3</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../i[contains(@class,'tree-hitarea')])[3]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TREE_PAGE_ARROW_3</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../i[contains(@class,'tree-hitarea')])[3]</td>
+	<td>PAGE_TREE_PAGE_LINK</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_') and contains(.,'${key_sitePageName}')])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_PAGE_LINK_1</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_PAGE_LINK_2</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -180,6 +195,27 @@
 <tr>
 	<td>DETAILS_TYPE_SELECT</td>
 	<td>//select[@id='_156_type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS_PAGE_TYPE_PANEL-->
+<tr>
+	<td>DETAILS_PAGE_TYPE_PANEL_DESCRIPTION_FIELD</td>
+	<td>//div[@id='_156_layoutTypeForm']/div/div/textarea[@id='_156_descriptionPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW</td>
+	<td>//div[contains(@id,'detailsselectPortletsTree')]//span[contains(.,'${key_componentName}')]/../i[contains(@class,'tree-hitarea icon-plus')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT</td>
+	<td>//li[contains(@id,'detailsselectPortletsRootNode')]//span[contains(.,'${key_componentOrPortletName}')]/../i[contains(@class,'tree-node-checkbox')]/input</td>
 	<td></td>
 </tr>
 <tr>

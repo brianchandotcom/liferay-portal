@@ -24,6 +24,10 @@
 			<execute function="Click#click" />
 		</case>
 
+		<case comparator="contains" locator1="Link to URL" >
+			<execute function="Click#clickAtNonLiferayNavigation" />
+		</case>
+
 		<case comparator="startsWith" locator1="//ul[@class='nav control-panel-bar-secondary nav-pills']//a[contains(.,">
 			<execute function="Click#clickAtAndWait" />
 		</case>

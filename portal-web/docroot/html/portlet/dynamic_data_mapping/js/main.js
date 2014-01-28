@@ -126,7 +126,6 @@ AUI.add(
 							addNode: Liferay.Language.get('add-field'),
 							button: Liferay.Language.get('button'),
 							buttonType: Liferay.Language.get('button-type'),
-							close: Liferay.Language.get('close'),
 							deleteFieldsMessage: Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-entries'),
 							duplicateMessage: Liferay.Language.get('duplicate'),
 							editMessage: Liferay.Language.get('edit'),
@@ -531,7 +530,7 @@ AUI.add(
 					_renderSettings: function() {
 						var instance = this;
 
-						LiferayFormBuilder.superclass._renderSettings.apply(instance, arguments);
+						instance._renderPropertyList();
 
 						instance.propertyList.on('model:change', instance._onPropertyModelChange, instance);
 					},

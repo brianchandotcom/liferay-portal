@@ -530,7 +530,7 @@ AUI.add(
 					_renderSettings: function() {
 						var instance = this;
 
-						LiferayFormBuilder.superclass._renderSettings.apply(instance, arguments);
+						instance._renderPropertyList();
 
 						instance.propertyList.on('model:change', instance._onPropertyModelChange, instance);
 					},
@@ -552,12 +552,6 @@ AUI.add(
 						);
 
 						return fields;
-					},
-
-					// Overrides parent _setToolbar to remove the close button,
-					// included by default on Alloy's Diagram Builder.
-					_setToolbar: function(val) {
-						return val;
 					},
 
 					_syncFieldOptionsLocaleUI: function(field, locale) {

@@ -62,8 +62,6 @@ public abstract class BaseLocalServiceImpl implements BaseLocalService {
 			long groupId, String portletId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutURL = StringPool.BLANK;
-
 		long plid = serviceContext.getPlid();
 
 		long controlPanelPlid = PortalUtil.getControlPanelPlid(
@@ -73,10 +71,12 @@ public abstract class BaseLocalServiceImpl implements BaseLocalService {
 			plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
 		}
 
+		String layoutURL = StringPool.BLANK;
+
 		if (plid != LayoutConstants.DEFAULT_PLID) {
 			Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
-			return getLayoutURL(layout, serviceContext);
+			layoutURL = getLayoutURL(layout, serviceContext);
 		}
 
 		return layoutURL;

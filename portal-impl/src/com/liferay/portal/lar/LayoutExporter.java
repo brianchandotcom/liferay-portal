@@ -575,36 +575,6 @@ public class LayoutExporter {
 		return zipWriter.getFile();
 	}
 
-	protected void exportAssetCategories(
-			PortletDataContext portletDataContext, boolean exportPortletDataAll,
-			boolean exportCategories, boolean companyGroup)
-		throws Exception {
-
-		if (exportPortletDataAll || exportCategories || companyGroup) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Export categories");
-			}
-
-			List<AssetVocabulary> assetVocabularies =
-				AssetVocabularyLocalServiceUtil.getGroupVocabularies(
-					portletDataContext.getGroupId());
-
-			for (AssetVocabulary assetVocabulary : assetVocabularies) {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, assetVocabulary);
-			}
-
-			List<AssetCategory> assetCategories =
-				AssetCategoryUtil.findByGroupId(
-					portletDataContext.getGroupId());
-
-			for (AssetCategory assetCategory : assetCategories) {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, assetCategory);
-			}
-		}
-	}
-
 	protected void exportLayout(
 			PortletDataContext portletDataContext, List<Portlet> portlets,
 			long[] layoutIds, Map<String, Object[]> portletIds, Layout layout)

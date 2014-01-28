@@ -766,31 +766,6 @@ public class LayoutImporter {
 		zipReader.close();
 	}
 
-	protected void importAssetCategories(PortletDataContext portletDataContext)
-		throws Exception {
-
-		Element assetVocabulariesElement =
-			portletDataContext.getImportDataGroupElement(AssetVocabulary.class);
-
-		List<Element> assetVocabularyElements =
-			assetVocabulariesElement.elements();
-
-		for (Element assetVocabularyElement : assetVocabularyElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, assetVocabularyElement);
-		}
-
-		Element assetCategoriesElement =
-			portletDataContext.getImportDataGroupElement(AssetCategory.class);
-
-		List<Element> assetCategoryElements = assetCategoriesElement.elements();
-
-		for (Element assetCategoryElement : assetCategoryElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, assetCategoryElement);
-		}
-	}
-
 	protected void importLayout(
 			PortletDataContext portletDataContext,
 			List<String> sourceLayoutsUuids, List<Layout> newLayouts,

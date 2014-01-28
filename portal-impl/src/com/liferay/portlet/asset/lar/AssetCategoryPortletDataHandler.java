@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.lar;
 
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.xml.Element;
 
 import javax.portlet.PortletPreferences;
 
@@ -35,8 +36,29 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		return super.doExportData(
-			portletDataContext, portletId, portletPreferences);
+		if (exportPortletDataAll || exportCategories || companyGroup) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Export categories");
+			}
+
+			List<AssetVocabulary> assetVocabularies =
+				AssetVocabularyLocalServiceUtil.getGroupVocabularies(
+					portletDataContext.getGroupId());
+
+			for (AssetVocabulary assetVocabulary : assetVocabularies) {
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, assetVocabulary);
+			}
+
+			List<AssetCategory> assetCategories =
+				AssetCategoryUtil.findByGroupId(
+					portletDataContext.getGroupId());
+
+			for (AssetCategory assetCategory : assetCategories) {
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, assetCategory);
+			}
+		}
 	}
 
 	@Override
@@ -45,8 +67,26 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		return super.doImportData(
-			portletDataContext, portletId, portletPreferences, data);
+		Element assetVocabulariesElement =
+			portletDataContext.getImportDataGroupElement(AssetVocabulary.class);
+
+		List<Element> assetVocabularyElements =
+			assetVocabulariesElement.elements();
+
+		for (Element assetVocabularyElement : assetVocabularyElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, assetVocabularyElement);
+		}
+
+		Element assetCategoriesElement =
+			portletDataContext.getImportDataGroupElement(AssetCategory.class);
+
+		List<Element> assetCategoryElements = assetCategoriesElement.elements();
+
+		for (Element assetCategoryElement : assetCategoryElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, assetCategoryElement);
+		}
 	}
 
 }

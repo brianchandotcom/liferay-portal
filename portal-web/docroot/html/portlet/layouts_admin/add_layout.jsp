@@ -157,6 +157,8 @@ else {
 						<%
 						liferayPortletRequest.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutView.getList());
 
+						int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(group, privateLayout);
+
 						for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
 							if (PropsValues.LAYOUT_TYPES[i].equals("portlet")) {
 								continue;
@@ -165,7 +167,7 @@ else {
 
 							<aui:nav-item cssClass="lfr-page-template" data-search='<%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]) %>'>
 								<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-type="<%= PropsValues.LAYOUT_TYPES[i] %>">
-									<aui:input id='<%= "addLayoutSelectedPageTemplate" + PropsValues.LAYOUT_TYPES[i] %>' label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' name="selectedPageTemplate" type="radio" />
+									<aui:input disabled="<%= (layoutsCount == 0) && !PortalUtil.isLayoutFirstPageable(PropsValues.LAYOUT_TYPES[i]) %>" id='<%= "addLayoutSelectedPageTemplate" + PropsValues.LAYOUT_TYPES[i] %>' label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' name="selectedPageTemplate" type="radio" />
 
 									<div class="lfr-page-template-description">
 										<small><%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i] + ".description" ) %></small>

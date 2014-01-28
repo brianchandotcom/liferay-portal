@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -60,10 +61,17 @@ public class PortletSettingsFactoryImpl implements PortletSettingsFactory {
 			Layout layout, String portletId)
 		throws SystemException {
 
+		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
+		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
+
+		if (PortletConstants.hasUserId(portletId)) {
+			ownerId = PortletConstants.getUserId(portletId);
+			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
+		}
+
 		PortletPreferences instancePortletPreferences =
 			PortletPreferencesLocalServiceUtil.getPreferences(
-				layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+				layout.getCompanyId(), ownerId, ownerType, layout.getPlid(),
 				portletId);
 
 		InstancePortletSettings instancePortletSettings =

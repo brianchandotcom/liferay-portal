@@ -304,21 +304,21 @@
 	<command name="viewPageLayoutColumn">
 		<execute action="Home#assertElementPresent" locator-key1="${pageColumnLayout}" />
 	</command>
-	
+
 	<command name="viewPanelPortletListPG">
 		<var name="key_componentName" value="${componentName}" />
 
-		<execute action="PGPanel#assertTextEquals" locator-key1="PANEL_TITLE" value1="${componentName}"/>
+		<execute action="PGPanel#assertTextEquals" locator-key1="PANEL_TITLE" value1="${componentName}" />
 
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute action="PGPanel#assertTextEquals" locator-key1="PANEL_PAGE_TITLE" value1="${pageName}"/>
-		<execute action="PGPanel#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Please select a tool from the left menu."/>
+		<execute action="PGPanel#assertTextEquals" locator-key1="PANEL_PAGE_TITLE" value1="${pageName}" />
+		<execute action="PGPanel#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Please select a tool from the left menu." />
 
 		<for list="${portletNameList}" param="portletName" >
 			<var name="key_portletName" value="${portletName}" />
 
-			<execute action="PGPanel#assertTextEquals" locator-key1="MENU_ITEM" value1="${portletName}"/>
+			<execute action="PGPanel#assertTextEquals" locator-key1="MENU_ITEM" value1="${portletName}" />
 		</for>
 	</command>
 

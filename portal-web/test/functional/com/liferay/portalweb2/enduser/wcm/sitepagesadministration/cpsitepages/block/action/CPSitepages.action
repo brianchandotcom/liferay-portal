@@ -1,7 +1,7 @@
 <definition>
 	<command name="assertChecked">
 		<case locator-key1="DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT">
-			<execute function="AssertChecked#assertCheckedIfNotVisible" />
+			<execute function="AssertChecked#waitForElementPresentAssertChecked" />
 		</case>
 	</command>
 

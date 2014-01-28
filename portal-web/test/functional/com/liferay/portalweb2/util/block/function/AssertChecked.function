@@ -5,7 +5,7 @@
 		<execute selenium="assertChecked" />
 	</command>
 
-	<command name="assertCheckedIfNotVisible">
+	<command name="waitForElementPresentAssertChecked">
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="assertChecked" />

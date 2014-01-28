@@ -196,7 +196,7 @@
 
 		<var name="key_portletName" value="${portlet1Name}" />
 
-		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="${portlet1Name}"/>
+		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="${portlet1Name}" />
 
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryContent" value="${entryContent}" />
@@ -210,7 +210,7 @@
 
 		<var name="key_portletName" value="${portlet2Name}" />
 
-		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="${portlet2Name}"/>
+		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="${portlet2Name}" />
 
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="${threadBody}" />
@@ -221,7 +221,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="${portlet2Name}"/>
+		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="${portlet2Name}" />
 
 		<execute macro="MessageboardsThread#viewPG">
 			<var name="postCount" value="${postCount}" />

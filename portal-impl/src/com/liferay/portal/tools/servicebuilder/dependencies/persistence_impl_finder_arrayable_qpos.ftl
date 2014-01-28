@@ -1,7 +1,11 @@
 <#list finderColsList as finderCol>
 	<#if finderCol.hasArrayableOperator()>
 		if (${finderCol.names} != null) {
-			qPos.add(${finderCol.names});
+			for (int i = 0; i < ${finderCol.names}.length; i++) {
+				if (Validator.isNotNull(${finderCol.names}[i])) {
+					qPos.add(${finderCol.names}[i]);
+				}
+			}
 		}
 	<#else>
 		<#if !finderCol.isPrimitiveType()>

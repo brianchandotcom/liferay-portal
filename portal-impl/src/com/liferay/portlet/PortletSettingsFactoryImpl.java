@@ -48,7 +48,12 @@ public class PortletSettingsFactoryImpl implements PortletSettingsFactory {
 
 		Properties portalProperties = PropsUtil.getProperties(portletId, false);
 
-		return new PortletSettingsImpl(companySettings, portalProperties);
+		CompanyPortletSettings companyPortletSettings =
+			new CompanyPortletSettings(companySettings);
+
+		companyPortletSettings.setPortalProperties(portalProperties);
+
+		return companyPortletSettings;
 	}
 
 	@Override
@@ -83,8 +88,14 @@ public class PortletSettingsFactoryImpl implements PortletSettingsFactory {
 
 		Properties portalProperties = PropsUtil.getProperties(portletId, false);
 
-		return new PortletSettingsImpl(
-			instanceSettings, siteSettings, companySettings, portalProperties);
+		InstancePortletSettings instancePortletSettings =
+			new InstancePortletSettings(instanceSettings);
+
+		instancePortletSettings.setSiteDefaultSettings(siteSettings);
+		instancePortletSettings.setCompanyDefaultSettings(companySettings);
+		instancePortletSettings.setPortalProperties(portalProperties);
+
+		return instancePortletSettings;
 	}
 
 	@Override
@@ -107,8 +118,13 @@ public class PortletSettingsFactoryImpl implements PortletSettingsFactory {
 
 		Properties portalProperties = PropsUtil.getProperties(portletId, false);
 
-		return new PortletSettingsImpl(
-			siteSettings, companySettings, portalProperties);
+		InstancePortletSettings sitePortletSettings =
+			new InstancePortletSettings(siteSettings);
+
+		sitePortletSettings.setCompanyDefaultSettings(companySettings);
+		sitePortletSettings.setPortalProperties(portalProperties);
+
+		return sitePortletSettings;
 	}
 
 }

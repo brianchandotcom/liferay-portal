@@ -14,18 +14,30 @@
 
 package com.liferay.portlet;
 
+import javax.portlet.PortletPreferences;
+
 /**
- * @author Raymond Augé
  * @author Jorge Ferrer
  */
-public interface PortletSettings {
+public class SitePortletSettings extends CompanyPortletSettings {
 
-	public String getValue(String key, String def);
+	public SitePortletSettings(PortletPreferences preferences) {
+		super._sitePreferences = preferences;
+	}
 
-	public String[] getValues(String key, String[] def);
+	public PortletSettings setCompanyDefaultSettings(
+		PortletPreferences preferences) {
 
-	public PortletSettings setValue(String key, String value);
+		super._companyPreferences = preferences;
 
-	public PortletSettings setValues(String key, String[] values);
+		return this;
+	}
+
+	protected SitePortletSettings() {
+	}
+
+	protected PortletPreferences getWriteablePreferences() {
+		return super._sitePreferences;
+	}
 
 }

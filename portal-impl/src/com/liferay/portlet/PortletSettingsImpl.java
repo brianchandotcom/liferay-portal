@@ -21,35 +21,13 @@ import com.liferay.util.xml.XMLFormatter;
 import java.util.Properties;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
 
 /**
  * @author Raymond Augé
+ * @author Jorge Ferrer
  */
-public class PortletSettingsImpl implements PortletSettings {
-
-	public PortletSettingsImpl(
-		PortletPreferences instancePreferences,
-		PortletPreferences sitePreferences,
-		PortletPreferences companyPreferences, Properties portalProperties) {
-
-		_instancePreferences = instancePreferences;
-		_sitePreferences = sitePreferences;
-		_companyPreferences = companyPreferences;
-		_portalProperties = portalProperties;
-	}
-
-	public PortletSettingsImpl(
-		PortletPreferences sitePreferences,
-		PortletPreferences companyPreferences, Properties portalProperties) {
-
-		this(null, sitePreferences, companyPreferences, portalProperties);
-	}
-
-	public PortletSettingsImpl(
-		PortletPreferences companyPreferences, Properties portalProperties) {
-
-		this(null, null, companyPreferences, portalProperties);
-	}
+public abstract class PortletSettingsImpl implements PortletSettings {
 
 	@Override
 	public String getValue(String key, String def) {
@@ -113,6 +91,9 @@ public class PortletSettingsImpl implements PortletSettings {
 		return normalizeValues(def);
 	}
 
+	protected PortletSettingsImpl() {
+	}
+
 	protected String normalizeValue(String value) {
 		if (isNull(value)) {
 			return null;
@@ -145,15 +126,43 @@ public class PortletSettingsImpl implements PortletSettings {
 		return actualValues;
 	}
 
+	public PortletSettings setValue(String key, String value) {
+		try {
+			getWriteablePreferences().setValue(key, value);
+		}
+		catch (ReadOnlyException roe) {
+
+			// This should never occur
+
+		}
+
+		return this;
+	}
+
+	public PortletSettings setValues(String key, String[] values) {
+		try {
+			getWriteablePreferences().setValues(key, values);
+		}
+		catch (ReadOnlyException roe) {
+
+			// This should never occur
+
+		}
+
+		return this;
+	}
+
+	protected abstract PortletPreferences getWriteablePreferences();
+
+	protected PortletPreferences _companyPreferences;
+	protected PortletPreferences _instancePreferences;
+	protected Properties _portalProperties;
+	protected PortletPreferences _sitePreferences;
+
 	private boolean isNull(String value) {
 		return (value == null) || value.equals(_NULL_VALUE);
 	}
 
 	private static final String _NULL_VALUE = "NULL_VALUE";
-
-	private PortletPreferences _companyPreferences;
-	private PortletPreferences _instancePreferences;
-	private Properties _portalProperties;
-	private PortletPreferences _sitePreferences;
 
 }

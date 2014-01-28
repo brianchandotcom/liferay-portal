@@ -33,7 +33,8 @@ import javax.portlet.PortletResponse;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 /**
  * @author Raymond Augé
@@ -78,11 +79,18 @@ public class FreeMarkerTemplateTaglibSupportProvider
 
 		template.put("PortletJspTagLibs", taglibsFactory);
 
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			portletResponse);
+		HttpServletRequestWrapper httpServletRequestWrapper =
+			new HttpServletRequestWrapper(
+				PortalUtil.getHttpServletRequest(portletRequest));
 
-		HttpRequestHashModel httpRequestHashModel = new HttpRequestHashModel(
-			request, response, ObjectWrapper.DEFAULT_WRAPPER);
+		HttpServletResponseWrapper httpServletResponseWrapper =
+			new HttpServletResponseWrapper(
+				PortalUtil.getHttpServletResponse(portletResponse));
+
+		HttpRequestHashModel httpRequestHashModel =
+			new HttpRequestHashModel(
+				httpServletRequestWrapper, httpServletResponseWrapper,
+				ObjectWrapper.DEFAULT_WRAPPER);
 
 		template.put("Request", httpRequestHashModel);
 	}

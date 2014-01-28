@@ -350,7 +350,7 @@ if (Validator.isNotNull(historyKey)) {
 										if (errorField) {
 											var errorSection = errorField.ancestor('.form-section');
 
-											var errorSectionId = errorSection.get('id');
+											var errorSectionId = errorSection.attr('id');
 
 											selectTabBySectionId(errorSectionId);
 

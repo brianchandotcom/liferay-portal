@@ -23,7 +23,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectCategory");
 
-long excludedCategoryId = ParamUtil.getLong(request, "excludedCategoryId");
+long excludedCategoryId = ParamUtil.getLong(request, "excludedMBCategoryId");
 
 MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, categoryId);
 

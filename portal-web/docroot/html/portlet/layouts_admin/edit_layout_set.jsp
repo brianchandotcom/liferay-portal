@@ -216,6 +216,10 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 	var clickHandler = function(event) {
 		var dataValue = event.target.ancestor('li').attr('data-value');
 
+		executeAction(dataValue);
+	}
+
+	var executeAction = function(dataValue) {
 		if (dataValue === 'add-page' || dataValue === 'add-child-page') {
 			var content = A.one('#<portlet:namespace />addLayout');
 
@@ -294,6 +298,10 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 	};
 
 	A.one('#<portlet:namespace />layoutsNav').delegate('click', clickHandler, 'li a');
+
+	<c:if test='<%= layout.isTypeControlPanel() && Validator.isNotNull(SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "addError")) %>'>
+		executeAction('add-page');
+	</c:if>
 </aui:script>
 
 <%!

@@ -43,11 +43,11 @@ else {
 }
 %>
 
-<portlet:actionURL var="editLayoutActionURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+<portlet:actionURL var="editLayoutActionURL" windowState="<%= layout.isTypeControlPanel() ? LiferayWindowState.NORMAL.toString() : LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 </portlet:actionURL>
 
-<portlet:renderURL var="editLayoutRenderURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+<portlet:renderURL var="editLayoutRenderURL" windowState="<%= layout.isTypeControlPanel() ? LiferayWindowState.NORMAL.toString() : LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 </portlet:renderURL>
 

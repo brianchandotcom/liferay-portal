@@ -326,7 +326,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 					A.one('#<portlet:namespace />layoutsNav').delegate('click', clickHandler, 'li a');
 
-					<c:if test='<%= layout.isTypeControlPanel() && Validator.isNotNull(SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "addError")) %>'>
+					<c:if test='<%= layout.isTypeControlPanel() && (SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "addError") != null) %>'>
 						executeAction('add-page');
 					</c:if>
 				</aui:script>

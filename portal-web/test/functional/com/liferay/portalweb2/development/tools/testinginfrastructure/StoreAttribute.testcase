@@ -7,10 +7,34 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<command name="storeAttributeHref" priority="5">
+		<var name="attributeValue" locator="//a[@rel='external']" attribute="href" />
+
+		<echo message="Test storeAttribute #1: storing href values in attributeValue" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${attributeValue}" />
+			<var name="expected" value="http://www.liferay.com/" />
+		</execute>
+	</command>
+
+	<command name="storeAttributeHrefWithVariablesInLocator" priority="5">
+		<var name="rel-name">external</var>
+
+		<var name="attributeValue" locator="//a[@rel='${rel-name}']" attribute="href" />
+
+		<echo message="Test storeAttribute #2: storing href values in attributeValue" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${attributeValue}" />
+			<var name="expected" value="http://www.liferay.com/" />
+		</execute>
+	</command>
+
 	<command name="storeAttributeWithoutVariablesInLocator" priority="5">
 		<var name="attributeValue" path="TestUtils" locator-key="TEST_PATH" attribute="class" />
 
-		<echo message="Test storeAttribute #1: using locator-key/path with xpath containing no variables" />
+		<echo message="Test storeAttribute #3: using locator-key/path with xpath containing no variables" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${attributeValue}" />
@@ -21,7 +45,7 @@
 	<command name="storeAttributeWithoutVariablesInLocatorKey" priority="5">
 		<var name="attributeValue" locator="//h1[@class='site-title']/a/span" attribute="class" />
 
-		<echo message="Test storeAttribute #2: using locator with xpath containing no variables" />
+		<echo message="Test storeAttribute #4: using locator with xpath containing no variables" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${attributeValue}" />
@@ -34,7 +58,7 @@
 
 		<var name="attributeValue" path="TestUtils" locator-key="TEST_VAR_PATH" attribute="class" />
 
-		<echo message="Test storeAttribute #3: using locator-key/path with xpath containing variables" />
+		<echo message="Test storeAttribute #5: using locator-key/path with xpath containing variables" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${attributeValue}" />
@@ -47,7 +71,7 @@
 
 		<var name="attributeValue" locator="//h1[@class='${class-name}']" attribute="class" />
 
-		<echo message="Test storeAttribute #4: using locator with xpath containing variables" />
+		<echo message="Test storeAttribute #6: using locator with xpath containing variables" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${attributeValue}" />
@@ -62,7 +86,7 @@
 
 		<var name="attributeValue" locator="//h1[@class='${class-name}']" attribute="c${attributeNamePart1}${attributeNamePart2}" />
 
-		<echo message="Test storeAttribute #5: using locator with xpath containing variables" />
+		<echo message="Test storeAttribute #7: using locator with xpath containing variables" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${attributeValue}" />

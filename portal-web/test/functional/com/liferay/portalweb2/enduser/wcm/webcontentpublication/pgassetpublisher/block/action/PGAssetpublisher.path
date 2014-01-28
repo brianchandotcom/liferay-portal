@@ -174,8 +174,13 @@
 </tr>
 <!--ASSET_ABSTRACT_BOOKMARK-->
 <tr>
-	<td>ASSET_ABSTRACT_BOOKMARK_ICON</td>
-	<td>//span[contains(.,'${bookmarkName}')]/a/img</td>
+	<td>ASSET_ABSTRACT_BOOKMARK_TABLE_DISPLAY_TEMPLATE_STAR_ICON</td>
+	<td>//h3/a[contains(.,'${bookmarkName}')]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_BOOKMARK_TITLE_LIST_DISPLAY_TEMPLATE_STAR_ICON</td>
+	<td>//a[contains(.,'${bookmarkName}')]/img</td>
 	<td></td>
 </tr>
 <tr>

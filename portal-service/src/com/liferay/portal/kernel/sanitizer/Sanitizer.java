@@ -14,20 +14,18 @@
 
 package com.liferay.portal.kernel.sanitizer;
 
-import com.liferay.portal.kernel.util.ContentTypes;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.Map;
 
 /**
- * Content can be stripped of offensive vocabulary or malicious HTML content,
- * e.g. XSS. Sanitizers are dynamically configurable components that implement
- * this interface. New implementations can be deployed as a hook, customizing the
- * portal.property entry {@code sanitizer.impl=(name of implementing class)}.
- * All installed Sanitizers are chained
- * 
+ * Provides constants and methods for sanitizing offensive vocabulary or
+ * malicious HTML content. This interface is implemented by dynamically
+ * configurable sanitizer components that can be deployed as a hook, customizing
+ * the portal property <code>sanitizer.impl</code>. All installed sanitizers are
+ * chained.
+ *
  * @author Zsolt Balogh
  * @author Brian Wing Shun Chan
  */
@@ -40,21 +38,21 @@ public interface Sanitizer {
 	public static final String MODE_XSS = "XSS";
 
 	/**
-	 * Sanitize the content given as bytearray, return the result as
-	 * bytearray as well. This method may on the parameter bytearray,
-	 * don't rely on it to be unchanged.
-	 *  
-	 * @param companyId   the instance in which the given content is contained
-	 * @param groupId     the site in which the given content is contained
-	 * @param userId      the user who has changed the given content
-	 * @param className   classname of the given content model implementation
-	 * @param classPK     primary key of the content to sanitize, 0 if not available
-	 * @param contentType {@link ContentTypes}
-	 * @param modes       any of this class's constants MODE_ALL, MODE_BAD_WORDS, MODE_XSS
-	 * @param bytes       the content to be sanitized. The sanitizer may change this array
-	 * @param options
-	 * @return            the sanitized content
-	 * @throws SanitizerException
+	 * Returns the sanitized content as a byte array.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  groupId the primary key of the site's group
+	 * @param  userId the user who changed the content
+	 * @param  className the class name of the content model implementation
+	 * @param  classPK the primary key of the content to sanitize,
+	 *         <code>0</code> if not available
+	 * @param  contentType the content type. For more information, see {@link
+	 *         com.liferay.portal.kernel.util.ContentTypes}.
+	 * @param  modes the sanitizer modes
+	 * @param  bytes the content to be sanitized
+	 * @param  options the options map
+	 * @return the sanitized content
+	 * @throws SanitizerException if a sanitizer exception occurred
 	 */
 	public byte[] sanitize(
 			long companyId, long groupId, long userId, String className,
@@ -63,20 +61,22 @@ public interface Sanitizer {
 		throws SanitizerException;
 
 	/**
-	 * Sanitize the given InputStream, stream the result into the 
-	 * given OutputStream
-
-	 * @param companyId   the instance in which the given content is contained
-	 * @param groupId     the site in which the given content is contained
-	 * @param userId      the user who has changed the given content
-	 * @param className   classname of the given content model implementation
-	 * @param classPK     primary key of the content to sanitize, 0 if not available
-	 * @param contentType {@link ContentTypes}
-	 * @param modes       any of this class's constants MODE_ALL, MODE_BAD_WORDS, MODE_XSS
-	 * @param inputStream the content to be sanitized
-	 * @param outputStream the result of the sanitization process
-	 * @param options
-	 * @throws SanitizerException
+	 * Sanitizes the input stream content and streams the result as the output
+	 * stream.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  groupId the primary key of the site's group
+	 * @param  userId the user who changed the content
+	 * @param  className the class name of the content model implementation
+	 * @param  classPK the primary key of the content to sanitize,
+	 *         <code>0</code> if not available
+	 * @param  contentType the content type. For more information, see {@link
+	 *         com.liferay.portal.kernel.util.ContentTypes}.
+	 * @param  modes the sanitizer modes
+	 * @param  inputStream the content to be sanitized
+	 * @param  outputStream the result of the sanitizing process
+	 * @param  options the options map
+	 * @throws SanitizerException if a sanitizer exception occurred
 	 */
 	public void sanitize(
 			long companyId, long groupId, long userId, String className,
@@ -86,19 +86,21 @@ public interface Sanitizer {
 		throws SanitizerException;
 
 	/**
-	 * Sanitize the given String, return the sanitized String.
-	 * 
-	 * @param companyId   the instance in which the given content is contained
-	 * @param groupId     the site in which the given content is contained
-	 * @param userId      the user who has changed the given content
-	 * @param className   classname of the given content model implementation
-	 * @param classPK     primary key of the content to sanitize, 0 if not available
-	 * @param contentType {@link ContentTypes}
-	 * @param modes       any of this class's constants MODE_ALL, MODE_BAD_WORDS, MODE_XSS
-	 * @param s           the content to sanitize
-	 * @param options
-	 * @return            the sanitized content
-	 * @throws SanitizerException
+	 * Returns the sanitized content as a string.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  groupId the primary key of the site's group
+	 * @param  userId the user who changed the content
+	 * @param  className the class name of the content model implementation
+	 * @param  classPK the primary key of the content to sanitize,
+	 *         <code>0</code> if not available
+	 * @param  contentType the content type. For more information, see {@link
+	 *         com.liferay.portal.kernel.util.ContentTypes}.
+	 * @param  modes the sanitizer modes
+	 * @param  s the content to sanitize
+	 * @param  options the options map
+	 * @return the sanitized content
+	 * @throws SanitizerException if a sanitizer exception occurred
 	 */
 	public String sanitize(
 			long companyId, long groupId, long userId, String className,

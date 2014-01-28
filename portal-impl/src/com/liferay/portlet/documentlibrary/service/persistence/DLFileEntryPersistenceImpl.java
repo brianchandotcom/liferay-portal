@@ -6247,7 +6247,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			qPos.add(groupId);
 
 			if (folderIds != null) {
-				qPos.add(folderIds);
+				for (int i = 0; i < folderIds.length; i++) {
+					if (Validator.isNotNull(folderIds[i])) {
+						qPos.add(folderIds[i]);
+					}
+				}
 			}
 
 			return (List<DLFileEntry>)QueryUtil.list(q, getDialect(), start, end);
@@ -6411,7 +6415,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				qPos.add(groupId);
 
 				if (folderIds != null) {
-					qPos.add(folderIds);
+					for (int i = 0; i < folderIds.length; i++) {
+						if (Validator.isNotNull(folderIds[i])) {
+							qPos.add(folderIds[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -6586,7 +6594,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				qPos.add(groupId);
 
 				if (folderIds != null) {
-					qPos.add(folderIds);
+					for (int i = 0; i < folderIds.length; i++) {
+						if (Validator.isNotNull(folderIds[i])) {
+							qPos.add(folderIds[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -6731,7 +6743,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			qPos.add(groupId);
 
 			if (folderIds != null) {
-				qPos.add(folderIds);
+				for (int i = 0; i < folderIds.length; i++) {
+					if (Validator.isNotNull(folderIds[i])) {
+						qPos.add(folderIds[i]);
+					}
+				}
 			}
 
 			Long count = (Long)q.uniqueResult();
@@ -7739,7 +7755,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			qPos.add(userId);
 
 			if (folderIds != null) {
-				qPos.add(folderIds);
+				for (int i = 0; i < folderIds.length; i++) {
+					if (Validator.isNotNull(folderIds[i])) {
+						qPos.add(folderIds[i]);
+					}
+				}
 			}
 
 			return (List<DLFileEntry>)QueryUtil.list(q, getDialect(), start, end);
@@ -7919,7 +7939,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				qPos.add(userId);
 
 				if (folderIds != null) {
-					qPos.add(folderIds);
+					for (int i = 0; i < folderIds.length; i++) {
+						if (Validator.isNotNull(folderIds[i])) {
+							qPos.add(folderIds[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -8113,7 +8137,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				qPos.add(userId);
 
 				if (folderIds != null) {
-					qPos.add(folderIds);
+					for (int i = 0; i < folderIds.length; i++) {
+						if (Validator.isNotNull(folderIds[i])) {
+							qPos.add(folderIds[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -8274,7 +8302,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			qPos.add(userId);
 
 			if (folderIds != null) {
-				qPos.add(folderIds);
+				for (int i = 0; i < folderIds.length; i++) {
+					if (Validator.isNotNull(folderIds[i])) {
+						qPos.add(folderIds[i]);
+					}
+				}
 			}
 
 			Long count = (Long)q.uniqueResult();
@@ -9865,7 +9897,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			qPos.add(groupId);
 
 			if (folderIds != null) {
-				qPos.add(folderIds);
+				for (int i = 0; i < folderIds.length; i++) {
+					if (Validator.isNotNull(folderIds[i])) {
+						qPos.add(folderIds[i]);
+					}
+				}
 			}
 
 			qPos.add(fileEntryTypeId);
@@ -10045,7 +10081,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				qPos.add(groupId);
 
 				if (folderIds != null) {
-					qPos.add(folderIds);
+					for (int i = 0; i < folderIds.length; i++) {
+						if (Validator.isNotNull(folderIds[i])) {
+							qPos.add(folderIds[i]);
+						}
+					}
 				}
 
 				qPos.add(fileEntryTypeId);
@@ -10239,7 +10279,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				qPos.add(groupId);
 
 				if (folderIds != null) {
-					qPos.add(folderIds);
+					for (int i = 0; i < folderIds.length; i++) {
+						if (Validator.isNotNull(folderIds[i])) {
+							qPos.add(folderIds[i]);
+						}
+					}
 				}
 
 				qPos.add(fileEntryTypeId);
@@ -10400,7 +10444,11 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			qPos.add(groupId);
 
 			if (folderIds != null) {
-				qPos.add(folderIds);
+				for (int i = 0; i < folderIds.length; i++) {
+					if (Validator.isNotNull(folderIds[i])) {
+						qPos.add(folderIds[i]);
+					}
+				}
 			}
 
 			qPos.add(fileEntryTypeId);

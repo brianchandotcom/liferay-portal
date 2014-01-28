@@ -2340,7 +2340,11 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			if (groupIds != null) {
-				qPos.add(groupIds);
+				for (int i = 0; i < groupIds.length; i++) {
+					if (Validator.isNotNull(groupIds[i])) {
+						qPos.add(groupIds[i]);
+					}
+				}
 			}
 
 			return (List<DLFileEntryType>)QueryUtil.list(q, getDialect(),
@@ -2489,7 +2493,11 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (groupIds != null) {
-					qPos.add(groupIds);
+					for (int i = 0; i < groupIds.length; i++) {
+						if (Validator.isNotNull(groupIds[i])) {
+							qPos.add(groupIds[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -2644,7 +2652,11 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (groupIds != null) {
-					qPos.add(groupIds);
+					for (int i = 0; i < groupIds.length; i++) {
+						if (Validator.isNotNull(groupIds[i])) {
+							qPos.add(groupIds[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -2771,7 +2783,11 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			if (groupIds != null) {
-				qPos.add(groupIds);
+				for (int i = 0; i < groupIds.length; i++) {
+					if (Validator.isNotNull(groupIds[i])) {
+						qPos.add(groupIds[i]);
+					}
+				}
 			}
 
 			Long count = (Long)q.uniqueResult();

@@ -1147,7 +1147,11 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 				qPos.add(tableId);
 
 				if (names != null) {
-					qPos.add(names);
+					for (int i = 0; i < names.length; i++) {
+						if (Validator.isNotNull(names[i])) {
+							qPos.add(names[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -1504,7 +1508,11 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 				qPos.add(tableId);
 
 				if (names != null) {
-					qPos.add(names);
+					for (int i = 0; i < names.length; i++) {
+						if (Validator.isNotNull(names[i])) {
+							qPos.add(names[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -1673,7 +1681,11 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			qPos.add(tableId);
 
 			if (names != null) {
-				qPos.add(names);
+				for (int i = 0; i < names.length; i++) {
+					if (Validator.isNotNull(names[i])) {
+						qPos.add(names[i]);
+					}
+				}
 			}
 
 			Long count = (Long)q.uniqueResult();

@@ -1,4 +1,17 @@
 <definition>
+	<command name="addPageTypePanelPG">
+		<var name="key_componentName" value="${componentName}" />
+
+		<execute action="Dockbar#click" locator-key1="ADD_PAGE_PANEL_COMPONENT_TREE_ARROW" />
+
+		<for list="${portletNameList}" param="portletName" >
+			<var name="key_componentOrPortletName" value="${portletName}" />
+
+			<execute action="Dockbar#click" locator-key1="ADD_PAGE_TYPE_PANEL_CHECKBOX" value1="${portletName}" />
+			<execute action="Dockbar#assertChecked" locator-key1="ADD_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
+		</for>
+	</command>
+
 	<command name="addPG">
 		<execute macro="Page#openURL" />
 
@@ -20,19 +33,6 @@
 		<var name="key_pageName" value="${pageName}" />
 
 		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
-	</command>
-
-	<command name="addPageTypePanelPG">
-		<var name="key_componentName" value="${componentName}" />
-
-		<execute action="Dockbar#click" locator-key1="ADD_PAGE_PANEL_COMPONENT_TREE_ARROW" />
-
-		<for list="${portletNameList}" param="portletName" >
-			<var name="key_componentOrPortletName" value="${portletName}" />
-
-			<execute action="Dockbar#click" locator-key1="ADD_PAGE_TYPE_PANEL_CHECKBOX" value1="${portletName}" />
-			<execute action="Dockbar#assertChecked" locator-key1="ADD_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
-		</for>
 	</command>
 
 	<command name="addWithWorkflowPG">

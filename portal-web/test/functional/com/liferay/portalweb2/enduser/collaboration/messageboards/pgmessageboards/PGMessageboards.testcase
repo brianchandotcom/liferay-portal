@@ -27,45 +27,21 @@
 	</tear-down>
 
 	<command name="AddMBCategories" priority="5">
-		<var name="categoryName1" value="MB Category1 Name" />
-		<var name="categoryName2" value="MB Category2 Name" />
-		<var name="categoryName3" value="MB Category3 Name" />
+		<var name="categoryNameList" value="MB Category1 Name,MB Category2 Name,MB Category3 Name" />
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<for list="${categoryNameList}" param="categoryName" >
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
 
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName1}" />
-		</execute>
+			<execute macro="MessageboardsCategory#addPG">
+				<var name="categoryName" value="${categoryName}" />
+			</execute>
 
-		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryName" value="${categoryName1}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName2}" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryName" value="${categoryName2}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName3}" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryName" value="${categoryName3}" />
-		</execute>
+			<execute macro="MessageboardsCategory#viewPG">
+				<var name="categoryName" value="${categoryName}" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="AddMBCategory" priority="5">
@@ -414,6 +390,28 @@
 		</execute>
 	</command>
 
+	<command name="DeleteMBCategories" priority="5">
+		<var name="categoryNameList" value="MB Category1 Name,MB Category2 Name,MB Category3 Name" />
+
+		<for list="${categoryNameList}" param="categoryName" >
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
+
+			<execute macro="MessageboardsCategory#addPG">
+				<var name="categoryName" value="${categoryName}" />
+			</execute>
+		</for>
+
+		<execute macro="MessageboardsCategory#tearDownCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#viewDefaultPG" />
+	</command>
+
 	<command name="DeleteMBCategory" priority="5">
 		<var name="categoryName" value="MB Category Name" />
 
@@ -428,6 +426,12 @@
 		<execute macro="MessageboardsCategory#deletePG">
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#viewDefaultPG" />
 	</command>
 
 	<command name="DeleteMBThread" priority="5">
@@ -600,7 +604,7 @@
 		<execute macro="MessageboardsThread#movePG">
 			<var name="categoryName" value="${categoryName2}" />
 			<var name="explanationBody" value="${explanationBody}" />
-			<var name="explanationPost" value="explanationPost" />
+			<var name="explanationPost" value="true" />
 			<var name="explanationSubject" value="${explanationSubject}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />

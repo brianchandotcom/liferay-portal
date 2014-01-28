@@ -11,10 +11,15 @@ $editLayoutPanelWidth: 460px;
 		#navigation {
 			display: none;
 			left: 0;
-			position: fixed;
-			top: 60px;
-			width: 100%;
+			position: absolute;
+			right: 0;
+			top: -5px;
 			z-index: 301;
+
+			@include respond-to(phone) {
+				left: -20px;
+				right: -20px;
+			}
 
 			&.open {
 				display: block;

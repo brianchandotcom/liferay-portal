@@ -110,7 +110,8 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 					render: function(event) {
 						new A.Tooltip(
 							{
-								trigger: '#<portlet:namespace/>basicPreviewButton'
+								trigger: '#<portlet:namespace/>basicPreviewButton',
+								zIndex: Liferay.zIndex.TOOLTIP
 							}
 						).render();
 					}

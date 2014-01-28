@@ -27,7 +27,6 @@ import java.util.List;
 
 /**
  * @author Norbert Kocsis
- *
  */
 public class UserGroupGroupRoleFinderImpl
 	extends BasePersistenceImpl<UserGroupGroupRole>

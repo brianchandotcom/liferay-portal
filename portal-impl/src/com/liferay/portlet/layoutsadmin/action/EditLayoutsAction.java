@@ -281,6 +281,12 @@ public class EditLayoutsAction extends PortletAction {
 					 e instanceof UploadException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
+
+				if (cmd.equals(Constants.ADD)) {
+					SessionMessages.add(actionRequest,
+						PortalUtil.getPortletId(actionRequest) + "addError",
+						e);
+				}
 			}
 			else if (e instanceof SystemException) {
 				SessionErrors.add(actionRequest, e.getClass(), e);

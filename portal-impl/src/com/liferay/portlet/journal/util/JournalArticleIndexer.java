@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -266,13 +268,31 @@ public class JournalArticleIndexer extends BaseIndexer {
 			return;
 		}
 
-		field = DocumentImpl.getLocalizedName(searchContext.getLocale(), field);
+		String localizedField = DocumentImpl.getLocalizedName(
+			searchContext.getLocale(), field);
 
-		if (searchContext.isAndSearch()) {
-			searchQuery.addRequiredTerm(field, value, like);
+		if (Validator.isNull(searchContext.getKeywords())) {
+			BooleanQuery multiFieldQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
+
+			multiFieldQuery.addTerm(field, value, like);
+			multiFieldQuery.addTerm(localizedField, value, like);
+
+			BooleanClauseOccur booleanClauseOccur = BooleanClauseOccur.SHOULD;
+
+			if (searchContext.isAndSearch()) {
+				booleanClauseOccur = BooleanClauseOccur.MUST;
+			}
+
+			searchQuery.add(multiFieldQuery, booleanClauseOccur);
 		}
 		else {
-			searchQuery.addTerm(field, value, like);
+			if (searchContext.isAndSearch()) {
+				searchQuery.addRequiredTerm(localizedField, value, like);
+			}
+			else {
+				searchQuery.addTerm(localizedField, value, like);
+			}
 		}
 	}
 

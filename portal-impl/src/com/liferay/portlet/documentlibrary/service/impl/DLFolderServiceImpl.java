@@ -354,9 +354,22 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, true, parentFolderId, false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
+	 *             long, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public void getSubfolderIds(
 			List<Long> folderIds, long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		getSubfolderIds(folderIds, groupId, folderId, true);
+	}
+
+	@Override
+	public void getSubfolderIds(
+			List<Long> folderIds, long groupId, long folderId, boolean recurse)
 		throws PortalException, SystemException {
 
 		if (!DLFolderPermission.contains(
@@ -375,8 +388,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 			folderIds.add(dlFolder.getFolderId());
 
-			getSubfolderIds(
-				folderIds, dlFolder.getGroupId(), dlFolder.getFolderId());
+			if (recurse) {
+				getSubfolderIds(
+					folderIds, dlFolder.getGroupId(), dlFolder.getFolderId(),
+					recurse);
+			}
 		}
 	}
 
@@ -387,7 +403,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		List<Long> folderIds = new ArrayList<Long>();
 
-		getSubfolderIds(folderIds, groupId, folderId);
+		getSubfolderIds(folderIds, groupId, folderId, recurse);
 
 		return folderIds;
 	}

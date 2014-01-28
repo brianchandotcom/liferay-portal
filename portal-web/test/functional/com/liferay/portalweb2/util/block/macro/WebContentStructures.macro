@@ -13,6 +13,7 @@
 		<execute macro="CPWebcontentStructuresAddstructure#showDetails" />
 
 		<execute action="CPWebcontentStructuresAddstructure#type" locator-key1="DESCRIPTION_FIELD" value1="${structureDescription}" />
+		<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
 
 		<for list="${structureFieldNames}" param="structureFieldName">
 			<execute macro="DynamicDataMapping#addField">
@@ -21,6 +22,9 @@
 				<var name="fieldName" value="${structureFieldName}" />
 			</execute>
 		</for>
+
+		<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
+		<execute action="CPWebcontentStructuresAddstructure#selectFrame" locator-key1="STRUCTURES_IFRAME" />
 
 		<execute action="CPWebcontentStructuresAddstructure#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPWebcontentStructuresAddstructure#selectFrame" />
@@ -130,6 +134,8 @@
 				<execute action="CPWebcontentStructuresEditstructure#assertTextEquals" locator-key1="DESCRIPTION_FIELD" value1="${structureDescription}" />
 			</then>
 		</if>
+
+		<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
 
 		<for list="${structureFieldNames}" param="structureFieldName">
 			<execute macro="DynamicDataMapping#viewField">

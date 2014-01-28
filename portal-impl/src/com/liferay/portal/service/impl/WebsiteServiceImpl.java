@@ -31,7 +31,7 @@ import java.util.List;
 public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addWebsite( String, long,
+	 * @deprecated As of 6.2.0, replaced by {@link #addWebsite(String, long,
 	 *             String, int, boolean, ServiceContext)}
 	 */
 	@Deprecated

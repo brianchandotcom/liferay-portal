@@ -619,8 +619,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @return     the user's groups &quot;sites&quot;
 	 * @throws     PortalException if a portal exception occurred
 	 * @throws     SystemException if a system exception occurred
-	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(
-	 *             String[], int)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(String[],
+	 *             int)}
 	 */
 	@Deprecated
 	@Override

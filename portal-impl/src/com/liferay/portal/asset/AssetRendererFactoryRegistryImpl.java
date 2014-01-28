@@ -32,8 +32,8 @@ public class AssetRendererFactoryRegistryImpl
 	implements AssetRendererFactoryRegistry {
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getAssetRendererFactories(
-	 *             long)}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #getAssetRendererFactories(long)}
 	 */
 	@Deprecated
 	@Override
@@ -63,7 +63,7 @@ public class AssetRendererFactoryRegistryImpl
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getClassNameIds( long)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getClassNameIds(long)}
 	 */
 	@Deprecated
 	@Override

@@ -264,7 +264,7 @@
 
 		String javaScriptRootPath = themeDisplay.getPathContext() + "/html/js";
 
-		String alloyComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", javaScriptLastModified);
+		String alloyComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "&themeId=" + themeDisplay.getThemeId() + "&minifierType=", javaScriptLastModified);
 		%>
 
 		Liferay.AUI = {

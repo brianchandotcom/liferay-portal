@@ -17,6 +17,12 @@
 <c:if test="<%= (portlets != null) && !portlets.isEmpty() %>">
 
 	<%
+	StringBuilder sb = new StringBuilder();
+
+	long javaScriptLastModified = ServletContextUtil.getLastModified(application, "/html/js/", true);
+
+	String alloyComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "&themeId=" + themeDisplay.getThemeId() + "&minifierType=", javaScriptLastModified);
+
 	Set<String> portletResourceStaticURLs = (Set<String>)request.getAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS);
 
 	if (portletResourceStaticURLs == null) {
@@ -27,52 +33,94 @@
 
 	for (Portlet curPortlet : portlets) {
 		for (String headerPortalCss : curPortlet.getHeaderPortalCss()) {
-			if (!HttpUtil.hasProtocol(headerPortalCss)) {
-				Portlet curRootPortlet = curPortlet.getRootPortlet();
+			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortalCss) &&
+				!portletResourceStaticURLs.contains(headerPortalCss)) {
 
-				headerPortalCss = PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + headerPortalCss, curRootPortlet.getTimestamp());
-			}
-
-			if (!headerPortalCss.contains(Http.PROTOCOL_DELIMITER)) {
-				String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-				headerPortalCss = cdnBaseURL.concat(headerPortalCss);
-			}
-
-			if (!portletResourceStaticURLs.contains(headerPortalCss)) {
 				portletResourceStaticURLs.add(headerPortalCss);
-	%>
 
-				<link href="<%= HtmlUtil.escape(headerPortalCss) %>" rel="stylesheet" type="text/css" />
+				sb.append("&");
+				sb.append(HtmlUtil.escape(headerPortalCss));
+			}
+			else {
+				if (!HttpUtil.hasProtocol(headerPortalCss)) {
+					Portlet curRootPortlet = curPortlet.getRootPortlet();
 
-	<%
+					headerPortalCss = PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + headerPortalCss, curRootPortlet.getTimestamp());
+				}
+
+				if (!headerPortalCss.contains(Http.PROTOCOL_DELIMITER)) {
+					String cdnBaseURL = themeDisplay.getCDNBaseURL();
+
+					headerPortalCss = cdnBaseURL.concat(headerPortalCss);
+				}
+
+				if (!portletResourceStaticURLs.contains(headerPortalCss)) {
+					portletResourceStaticURLs.add(headerPortalCss);
+		%>
+
+					<link href="<%= HtmlUtil.escape(headerPortalCss) %>" rel="stylesheet" type="text/css" />
+
+		<%
+				}
 			}
 		}
 	}
 
-	for (Portlet curPortlet : portlets) {
-		for (String headerPortletCss : curPortlet.getHeaderPortletCss()) {
-			if (!HttpUtil.hasProtocol(headerPortletCss)) {
-				Portlet curRootPortlet = curPortlet.getRootPortlet();
-
-				headerPortletCss = PortalUtil.getStaticResourceURL(request, curPortlet.getStaticResourcePath() + headerPortletCss, curRootPortlet.getTimestamp());
-			}
-
-			if (!headerPortletCss.contains(Http.PROTOCOL_DELIMITER)) {
-				String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-				headerPortletCss = cdnBaseURL.concat(headerPortletCss);
-			}
-
-			if (!portletResourceStaticURLs.contains(headerPortletCss)) {
-				portletResourceStaticURLs.add(headerPortletCss);
+	if (themeDisplay.isThemeJsFastLoad() && (sb.length() > 0)) {
+		sb.insert(0, alloyComboPath);
 	%>
 
-				<link href="<%= HtmlUtil.escape(headerPortletCss) %>" rel="stylesheet" type="text/css" />
+		<link href="<%= sb.toString() %>" rel="stylesheet" type="text/css" />
 
 	<%
+		sb.delete(0, sb.length());
+
+	}
+
+	for (Portlet curPortlet : portlets) {
+		for (String headerPortletCss : curPortlet.getHeaderPortletCss()) {
+			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortletCss) &&
+				!portletResourceStaticURLs.contains(headerPortletCss)) {
+
+				portletResourceStaticURLs.add(headerPortletCss);
+
+				sb.append("&");
+				sb.append(HtmlUtil.escape(headerPortletCss));
+			}
+			else {
+				if (!HttpUtil.hasProtocol(headerPortletCss)) {
+					Portlet curRootPortlet = curPortlet.getRootPortlet();
+
+					headerPortletCss = PortalUtil.getStaticResourceURL(request, curPortlet.getStaticResourcePath() + headerPortletCss, curRootPortlet.getTimestamp());
+				}
+
+				if (!headerPortletCss.contains(Http.PROTOCOL_DELIMITER)) {
+					String cdnBaseURL = themeDisplay.getCDNBaseURL();
+
+					headerPortletCss = cdnBaseURL.concat(headerPortletCss);
+				}
+
+				if (!portletResourceStaticURLs.contains(headerPortletCss)) {
+					portletResourceStaticURLs.add(headerPortletCss);
+		%>
+
+					<link href="<%= HtmlUtil.escape(headerPortletCss) %>" rel="stylesheet" type="text/css" />
+
+		<%
+				}
 			}
 		}
+	}
+
+	if (themeDisplay.isThemeJsFastLoad() && (sb.length() > 0)) {
+		sb.insert(0, alloyComboPath);
+	%>
+
+		<link href="<%= sb.toString() %>" rel="stylesheet" type="text/css" />
+
+	<%
+		sb.delete(0, sb.length());
+
 	}
 	%>
 

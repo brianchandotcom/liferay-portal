@@ -370,7 +370,7 @@ public class ComboServlet extends HttpServlet {
 	private static final FileContentBag _EMPTY_FILE_CONTENT_BAG =
 		new FileContentBag(new byte[0], 0);
 
-	private static final String _JAVASCRIPT_DIR = "html/js";
+	private static final String _JAVASCRIPT_DIR = "html";
 
 	private static final String _JAVASCRIPT_MINIFIED_SUFFIX = "-min.js";
 

@@ -30,7 +30,7 @@ import com.liferay.portlet.social.service.persistence.SocialRequestActionableDyn
 
 /**
  * @author Bryan Engler
- * @auther Sherry Yang
+ * @author Sherry Yang
  */
 public class VerifySocial extends VerifyProcess {
 

@@ -60,22 +60,24 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * ThemeDisplay is an information context object that holds data commonly
- * referred to for various kinds of frontend information. Among them the
- * current page (layout), information about the theme, as well as general
- * portal configuration and URLs. 
+ * referred to for various kinds of frontend information. Among them the current
+ * page (layout), information about the theme, as well as general portal
+ * configuration and URLs.
+ *
  * <p>
- * The classname is nondescriptive for historic reasons - this class came 
- * into existence long time ago and accumulated all the context 
- * information it has nowadays.
+ * Liferay makes the ThemeDisplay available as request attribute as well as in
+ * various scripting and templating scopes. A typical way to obtain ThemeDisplay
+ * is, from a request:
+ * </p>
+ *
  * <p>
- * Liferay makes the ThemeDisplay available as request attribute as well
- * as in various scripting and templating scopes. A typical way to obtain
- * ThemeDisplay is, from a request:
- * 
  * <pre>
+ * <code>
  * themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+ * </code>
  * </pre>
- * 
+ * </p>
+ *
  * @author Brian Wing Shun Chan
  */
 @ProviderType
@@ -110,14 +112,14 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * In case a Content Delivery Network is used and configured
-	 * (see portal.properties: cdn.host.http and cdn.host.https)
-	 * obtain the configured base URL, otherwise the current portal's
-	 * URL.
-	 * 
-	 * @return a full CDN base URL or the portal's URL
+	 * Returns the CDN base URL, or the current portal URL if the CDN base URL
+	 * is <code>null</code>. The CDN base URL can be configured by setting the
+	 * <code>cdn.host.http</code> or <code>cdn.host.https</code> portal
+	 * property.
+	 *
+	 * @return the CDN base URL, or the current portal URL if the CDN base URL
+	 *         is <code>null</code>
 	 */
-	
 	public String getCDNBaseURL() {
 		if (_cdnBaseURL != null) {
 			return _cdnBaseURL;
@@ -146,13 +148,11 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * In case a Content Delivery Network is used and configured
-	 * for dynamic resources - like minified CSS and JS files 
-	 * (see portal.properties: cdn.dynamic.resources.enabled)
-	 * obtain the configured host, otherwise the current portal's
-	 * URL.
+	 * Returns the CDN dynamic resources host, or the current portal URL if the
+	 * CDN dynamic resources host is <code>null</code>. The CDN is used and
+	 * configured for dynamic resources like minified CSS and JS files by
+	 * setting the <code>cdn.dynamic.resources.enabled</code> portal property.
 	 */
-	
 	public String getCDNDynamicResourcesHost() {
 		return _cdnDynamicResourcesHost;
 	}
@@ -160,25 +160,24 @@ public class ThemeDisplay
 	public String getCDNHost() {
 		return _cdnHost;
 	}
-	
+
 	public ColorScheme getColorScheme() {
 		return _colorScheme;
 	}
 
 	/**
-	 * @return The color scheme id as defined in the current theme's liferay-look-and-feel.xml 
+	 * @return The color scheme ID as defined in the current theme's
+	 *         liferay-look-and-feel.xml
 	 */
-
 	public String getColorSchemeId() {
 		return _colorScheme.getColorSchemeId();
 	}
 
 	/**
 	 * Company is the technical name for a portal instance
-	 * 
-	 * @return The current portal instance (company) bean 
+	 *
+	 * @return The current portal instance (company) bean
 	 */
-
 	public Company getCompany() {
 		return _company;
 	}
@@ -189,8 +188,8 @@ public class ThemeDisplay
 
 	/**
 	 * Company is the technical name for a portal instance
-	 * 
-	 * @return the current portal instance id
+	 *
+	 * @return the current portal instance ID
 	 */
 	public long getCompanyId() {
 		return _company.getCompanyId();
@@ -198,30 +197,27 @@ public class ThemeDisplay
 
 	/**
 	 * Company is the technical name for a portal instance
-	 * 
+	 *
 	 * @return the server relative path to the current instance's logo
 	 */
-
 	public String getCompanyLogo() {
 		return _companyLogo;
 	}
 
 	/**
 	 * Company is the technical name for a portal instance
-	 * 
+	 *
 	 * @return the height of the current instance's logo in pixel
 	 */
-
 	public int getCompanyLogoHeight() {
 		return _companyLogoHeight;
 	}
 
 	/**
 	 * Company is the technical name for a portal instance
-	 * 
+	 *
 	 * @return the width of the current instance's logo in pixel
 	 */
-
 	public int getCompanyLogoWidth() {
 		return _companyLogoWidth;
 	}
@@ -252,7 +248,6 @@ public class ThemeDisplay
 	 * @throws PortalException
 	 * @throws SystemException
 	 */
-
 	public long getDefaultUserId() throws PortalException, SystemException {
 		return getDefaultUser().getUserId();
 	}
@@ -260,7 +255,6 @@ public class ThemeDisplay
 	/**
 	 * @return information about the detected (possibly mobile) device/browser
 	 */
-
 	public Device getDevice() {
 		return _device;
 	}
@@ -271,10 +265,10 @@ public class ThemeDisplay
 
 	/**
 	 * With impersonation, administrative users can act on other user's behalf
-	 * 
-	 * @return the encrypted userId, typically passed as HTTP-parameter doAsUserId
+	 *
+	 * @return the encrypted userId, typically passed as HTTP-parameter
+	 *         doAsUserId
 	 */
-	
 	public String getDoAsUserId() {
 		return _doAsUserId;
 	}
@@ -290,7 +284,6 @@ public class ThemeDisplay
 	/**
 	 * @return the current language's name, e.g. en_GB for british english
 	 */
-	
 	public String getI18nLanguageId() {
 		return _i18nLanguageId;
 	}
@@ -299,10 +292,10 @@ public class ThemeDisplay
 	 * You can switch Liferay's UI language by adding the language code into the
 	 * URL path, e.g. http://localhost:8080/de/web/guest/home will use the
 	 * german localization ("de").
-	 * 
-	 * @return the path element for the current language, including a leading slash, e.g. "/de"
+	 *
+	 * @return the path element for the current language, including a leading
+	 *         slash, e.g. "/de"
 	 */
-
 	public String getI18nPath() {
 		return _i18nPath;
 	}
@@ -310,14 +303,13 @@ public class ThemeDisplay
 	/**
 	 * @return the current language's name, e.g. en_GB for british english
 	 */
-	
 	public String getLanguageId() {
 		return _languageId;
 	}
 
 	/**
 	 * Layout is Liferay's technical name for a page
-	 * 
+	 *
 	 * @return the currently displayed layout/page
 	 */
 	public Layout getLayout() {
@@ -326,10 +318,9 @@ public class ThemeDisplay
 
 	/**
 	 * Layout is Liferay's technical name for a page
-	 * 
+	 *
 	 * @return the current site's toplevel pages (layouts)
 	 */
-	
 	public List<Layout> getLayouts() {
 		return _layouts;
 	}
@@ -337,7 +328,7 @@ public class ThemeDisplay
 	/**
 	 * A site in Liferay can have public and private pages. They are contained
 	 * in the public layoutset and the private layoutset.
-	 * 
+	 *
 	 * @return the current (public or private) Layoutset
 	 */
 	public LayoutSet getLayoutSet() {
@@ -346,8 +337,9 @@ public class ThemeDisplay
 
 	/**
 	 * Sites can have a logo configured for them
-	 * 
-	 * @return the path to the currently configured site logo, <code>null</code> if unconfigured
+	 *
+	 * @return the path to the currently configured site logo, <code>null</code>
+	 *         if unconfigured
 	 */
 	public String getLayoutSetLogo() {
 		return _layoutSetLogo;
@@ -358,8 +350,9 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @return numeric lifecycle indicator as it may be passed by parameter p_p_lifecycle, 
-	 *         e.g. "0" for RENDER, "1" for ACTION, "2" for RESOURCE.
+	 * @return numeric lifecycle indicator as it may be passed by parameter
+	 *         p_p_lifecycle, e.g. "0" for RENDER, "1" for ACTION, "2" for
+	 *         RESOURCE.
 	 */
 	public String getLifecycle() {
 		return _lifecycle;
@@ -409,8 +402,8 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @return base URL for the current color scheme's images. 
-	 *         Can be configured in your theme's liferay-look-and-feel.xml
+	 * @return base URL for the current color scheme's images. Can be configured
+	 *         in your theme's liferay-look-and-feel.xml
 	 */
 	public String getPathColorSchemeImages() {
 		return _pathColorSchemeImages;
@@ -452,8 +445,9 @@ public class ThemeDisplay
 		return _pathImage;
 	}
 
-	/** 
-	 * @return URL for retrieving the portal's javascript resources, typically "/html/js"
+	/**
+	 * @return URL for retrieving the portal's javascript resources, typically
+	 *         "/html/js"
 	 */
 	public String getPathJavaScript() {
 		return _pathJavaScript;
@@ -471,7 +465,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @return URL of the current theme's CSS directory 
+	 * @return URL of the current theme's CSS directory
 	 */
 	public String getPathThemeCss() {
 		return _pathThemeCss;
@@ -500,7 +494,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @return base URL for the currently used theme 
+	 * @return base URL for the currently used theme
 	 */
 	public String getPathThemeRoot() {
 		return _pathThemeRoot;
@@ -521,21 +515,20 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * plid historically was short for "portlet layout id". This is the primary key (id) of the current layout (page)
-	 * 
-	 * @return the current page's (layout's) id.
+	 * plid historically was short for "portlet layout ID". This is the primary
+	 * key (id) of the current layout (page)
+	 *
+	 * @return the current page's (layout's) ID.
 	 */
 	public long getPlid() {
 		return _plid;
 	}
 
 	/**
-	 * The portal's base URL can be configured in portal-ext.properties 
-	 * (see <code>web.server.host</code> and <code>portal.ctx</code> in portal.properties)
-	 * 
-	 * @return
+	 * The portal's base URL can be configured in portal-ext.properties (see
+	 * <code>web.server.host</code> and <code>portal.ctx</code> in
+	 * portal.properties)
 	 */
-	
 	public String getPortalURL() {
 		return _portalURL;
 	}
@@ -569,19 +562,19 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * Administrative users are able to impersonate other users. 
-	 * This reveals the identity of the user who actually logged in. 
-	 * 
-	 * @see #getUser() for the effective (maybe impersonated) user
+	 * Administrative users are able to impersonate other users. This reveals
+	 * the identity of the user who actually logged in.
+	 *
 	 * @return the user object for the currently logged in user
+	 * @see    #getUser() for the effective (maybe impersonated) user
 	 */
 	public User getRealUser() {
 		return _realUser;
 	}
 
 	/**
-	 * @see #getRealUser()
-	 * @return the user id of the currently logged in user
+	 * @return the user ID of the currently logged in user
+	 * @see    #getRealUser()
 	 */
 	public long getRealUserId() {
 		return _realUser.getUserId();
@@ -610,7 +603,8 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @return the currently active group id (e.g. site). Can be a subscope's id as well
+	 * @return the currently active group ID (e.g. site). Can be a subscope's ID
+	 *         as well
 	 */
 	public long getScopeGroupId() {
 		return _scopeGroupId;
@@ -627,8 +621,10 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @return the name of the currently active group (e.g. site name). 
-	 *         Can be a subscope's name as well. 
+	 * @return the name of the currently active group (e.g. site name). Can be a
+	 *         subscope's name as well.
+	 * @throws PortalException
+	 * @throws SystemException
 	 */
 	public String getScopeGroupName() throws PortalException, SystemException {
 		if (_scopeGroup == null) {
@@ -651,25 +647,25 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @return the current server name. Typically determined from the request, 
-	 *         can be configured with portal-ext.properties entry for 
-	 *         <code>web.server.host</code> 
+	 * @return the current server name. Typically determined from the request,
+	 *         can be configured with portal-ext.properties entry for
+	 *         <code>web.server.host</code>
 	 */
 	public String getServerName() {
 		return _serverName;
 	}
 
 	/**
-	 * @return the current server port. Typically determined from the request, 
-	 *         can be configured with portal-ext.properties entry for 
-	 *         <code>web.server.port</code> 
+	 * @return the current server port. Typically determined from the request,
+	 *         can be configured with portal-ext.properties entry for
+	 *         <code>web.server.port</code>
 	 */
 	public int getServerPort() {
 		return _serverPort;
 	}
 
 	/**
-	 * @return session id if available to the application (can be empty)
+	 * @return session ID if available to the application (can be empty)
 	 */
 	public String getSessionId() {
 		return _sessionId;
@@ -710,11 +706,13 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * Themes have configurable settings (declared in in liferay-look-and-feel.xml, 
-	 * optionally configurable on the UI).
-	 * 
-	 * @param key the key as given in the current theme's liferay-look-and-feel.xml
-	 * @return the theme setting value as configured on UI or liferay-look-and-feel.xml
+	 * Themes have configurable settings (declared in in
+	 * liferay-look-and-feel.xml, optionally configurable on the UI).
+	 *
+	 * @param  key the key as given in the current theme's
+	 *         liferay-look-and-feel.xml
+	 * @return the theme setting value as configured on UI or
+	 *         liferay-look-and-feel.xml
 	 */
 	public String getThemeSetting(String key) {
 		Theme theme = getTheme();
@@ -727,9 +725,9 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * Themes have configurable settings (declared in in liferay-look-and-feel.xml, 
-	 * optionally configurable on the UI).
-     */
+	 * Themes have configurable settings (declared in in
+	 * liferay-look-and-feel.xml, optionally configurable on the UI).
+	 */
 	public Properties getThemeSettings() {
 		Theme theme = getTheme();
 
@@ -863,8 +861,9 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * The user (might be impersonated) that the current request is being handled for
-	 * 
+	 * The user (might be impersonated) that the current request is being
+	 * handled for
+	 *
 	 * @return the bean for the currently served user
 	 */
 	public User getUser() {
@@ -872,9 +871,10 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * The user (might be impersonated) that the current request is being handled for
-	 * 
-	 * @return the id of the currently served user
+	 * The user (might be impersonated) that the current request is being
+	 * handled for
+	 *
+	 * @return the ID of the currently served user
 	 */
 	public long getUserId() {
 		return _user.getUserId();
@@ -901,13 +901,11 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * Administrative users are able to impersonate other users. 
-	 * This method determines if the current request is handled 
-	 * for an impersonated user
-	 * 
+	 * Administrative users are able to impersonate other users. This method
+	 * determines if the current request is handled for an impersonated user
+	 *
 	 * @see #getUser()
 	 * @see #getRealUser()
-	 * @return
 	 */
 	public boolean isImpersonated() {
 		if (getUserId() == getRealUserId()) {

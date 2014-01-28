@@ -69,8 +69,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.crypto.KeyGenerator;
 
@@ -198,7 +196,7 @@ public class LicenseUtil {
 			return new HashSet<String>(_macAddresses);
 		}
 
-		Set<String> macAddresses = new HashSet<String>();
+		_macAddresses = new HashSet<String>();
 
 		try {
 			List<NetworkInterface> networkInterfaces = Collections.list(
@@ -211,8 +209,8 @@ public class LicenseUtil {
 					continue;
 				}
 
-				int macAddressLength = hardwareAddress.length * 3 - 1;
-				StringBuilder sb = new StringBuilder(macAddressLength);
+				StringBuilder sb = new StringBuilder(
+					(hardwareAddress.length * 3) - 1);
 
 				String hexString = StringUtil.bytesToHexString(hardwareAddress);
 
@@ -225,9 +223,7 @@ public class LicenseUtil {
 					sb.append(Character.toLowerCase(hexString.charAt(i + 1)));
 				}
 
-				String macAddress = sb.toString();
-
-				macAddresses.add(macAddress);
+				_macAddresses.add(sb.toString());
 			}
 		}
 		catch (Exception e) {
@@ -236,9 +232,7 @@ public class LicenseUtil {
 			_log.error(e, e);
 		}
 
-		_macAddresses = macAddresses;
-
-		return macAddresses;
+		return new HashSet<String>(_macAddresses);
 	}
 
 	public static byte[] getServerIdBytes() throws Exception {

@@ -126,6 +126,12 @@ The trash-enabled value specifies whether trash related methods should be
 generated or not.
 
 The deprecated value specifies whether the entity's services are deprecated.
+
+The autowire-services value specifies whether or not to autowire by default
+all the entities' dependencies. The default value is true, so all your entity's
+dependencies (defined in the same service builder file) will be automatically
+wired
+
 -->
 <!ATTLIST entity
 	name CDATA #REQUIRED
@@ -145,6 +151,7 @@ The deprecated value specifies whether the entity's services are deprecated.
 	mvcc-enabled CDATA #IMPLIED
 	trash-enabled CDATA #IMPLIED
 	deprecated CDATA #IMPLIED
+	autowire-services CDATA #IMPLIED
 >
 
 <!--

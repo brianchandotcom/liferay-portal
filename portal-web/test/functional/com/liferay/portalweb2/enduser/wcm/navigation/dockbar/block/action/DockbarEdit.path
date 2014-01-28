@@ -1,0 +1,98 @@
+<html>
+<head>
+<title>DockbarEdit</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DockbarEdit</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>DockbarEdit</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCKBAR-->
+<tr>
+	<td>DOCKBAR_EDIT</td>
+	<td>//a[@id='_145_editLayoutPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_COPY_APPLICATIONS</td>
+	<td>//li[@data-value='copy-applications']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COPY_APPLICATIONS-->
+<tr>
+	<td>COPY_APPLICATIONS_MESSAGE_INFO</td>
+	<td>//div[@id='_145_copyPortletsFromPage']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COPY_APPLICATIONS_COPY_FROM_PAGE_LABEL</td>
+	<td>//div[@id='_145_copyPortletsFromPage']//label[@for='_145_copyLayoutId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT</td>
+	<td>//div[@id='_145_copyPortletsFromPage']//select[@id='_145_copyLayoutId']/option[@value='1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COPY_BUTTON</td>
+	<td>//div[@id='_145_copyPortletsFromPage']//button[@id='_145_copySubmitButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS-->
+<tr>
+	<td>DETAILS_TYPE_PAGE_OPTIONS</td>
+	<td>//div[contains(@id,'typeOptions')]//select[@id='_145_type']/option[@value='embedded']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_TYPE_PAGE_URL</td>
+	<td>//input[@id='_145_urlEmbedded']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCKBAR_LIFERAY_BANNER</td>
+	<td>//div[@class='banner-content']//img[@alt='Liferay']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

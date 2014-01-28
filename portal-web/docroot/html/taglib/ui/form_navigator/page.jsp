@@ -183,18 +183,6 @@ if (Validator.isNotNull(historyKey)) {
 					}
 				).render();
 
-				function onSubmitError() {
-					var instance = this;
-
-					var boundingBox = A.one(instance.get('boundingBox');
-					var field = boundingBox.one(instance.get('errorClass')));
-					var formSection = field.ancestor('.form-section');
-					var sectionId = formSection.get('id');
-
-					selectTabBySectionId(sectionId);
-					updateSectionError();
-				}
-
 				var history = new A.HistoryHash();
 
 				function selectTabBySectionId(sectionId) {
@@ -347,16 +335,29 @@ if (Validator.isNotNull(historyKey)) {
 					Liferay.after(
 						'form:registered',
 						function(event) {
-							var formId = formNode.attr('id');
+							var form = event.form;
 
-							if (event.formName === formId) {
-								if (event.form) {
-									var validator = event.form.formValidator;
+							if (form.formNode.compareTo(formNode)) {
+								var validator = form.formValidator;
 
-									if (A.instanceOf(validator, A.FormValidator)) {
-										validator.on('submitError', A.bind(onSubmitError, validator));
+								validator.on(
+									'submitError',
+									function() {
+										var errorClass = validator.get('errorClass');
+
+										var errorField = formNode.one('.' + errorClass);
+
+										if (errorField) {
+											var errorSection = errorField.ancestor('.form-section');
+
+											var errorSectionId = errorSection.get('id');
+
+											selectTabBySectionId(errorSectionId);
+
+											updateSectionError();
+										}
 									}
-								}
+								);
 							}
 						}
 					);

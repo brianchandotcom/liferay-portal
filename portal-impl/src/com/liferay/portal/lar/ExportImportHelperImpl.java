@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -64,6 +65,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -71,7 +73,10 @@ import com.liferay.portal.kernel.xml.ElementHandler;
 import com.liferay.portal.kernel.xml.ElementProcessor;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.lar.exportimportconfiguration.ExportImportConfigurationConstants;
+import com.liferay.portal.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutFriendlyURL;
@@ -83,6 +88,7 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -90,6 +96,7 @@ import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.OrganizationUtil;
 import com.liferay.portal.service.persistence.SystemEventActionableDynamicQuery;
@@ -120,6 +127,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.io.StringReader;
 
 import java.util.ArrayList;
@@ -148,6 +156,201 @@ import org.xml.sax.InputSource;
  * @author Mate Thurzo
  */
 public class ExportImportHelperImpl implements ExportImportHelper {
+
+	@Override
+	public ExportImportConfiguration createLayoutExportConfiguration(
+			PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long userId = themeDisplay.getUserId();
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+
+		boolean privateLayout = ParamUtil.getBoolean(
+			portletRequest, "privateLayout");
+
+		DateRange dateRange = getDateRange(
+			portletRequest, groupId, privateLayout, 0, null, "all");
+
+		String exportImportConfigurationName = ParamUtil.getString(
+			portletRequest, "exportImportConfigurationName");
+
+		String exportImportConfigurationDescription = ParamUtil.getString(
+			portletRequest, "exportImportConfigurationDescription");
+
+		Map<String, Serializable> configurationContextMap =
+			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+				userId, groupId, privateLayout, null,
+				portletRequest.getParameterMap(), dateRange.getStartDate(),
+				dateRange.getEndDate());
+
+		return ExportImportConfigurationLocalServiceUtil.
+			addExportImportConfiguration(
+				userId, groupId, exportImportConfigurationName,
+				exportImportConfigurationDescription,
+				ExportImportConfigurationConstants.TYPE_LAYOUT_EXPORT,
+				configurationContextMap, new ServiceContext());
+	}
+
+	@Override
+	public ExportImportConfiguration createLocalLayoutPublishConfiguration(
+			PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long userId = themeDisplay.getUserId();
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+
+		Group liveGroup = GroupLocalServiceUtil.getGroup(groupId);
+		Group stagingGroup = liveGroup.getStagingGroup();
+
+		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
+
+		boolean privateLayout = true;
+
+		if (tabs1.equals("public-pages")) {
+			privateLayout = false;
+		}
+
+		String scope = ParamUtil.getString(portletRequest, "scope");
+
+		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<Long, Boolean>();
+
+		if (scope.equals("selected-pages")) {
+			layoutIdMap = getLayoutIdMap(portletRequest);
+		}
+
+		Map<String, String[]> parameterMap = StagingUtil.getStagingParameters(
+			portletRequest);
+
+		DateRange dateRange = getDateRange(
+			portletRequest, stagingGroup.getGroupId(), privateLayout, 0, null,
+			"fromLastPublishDate");
+
+		String exportImportConfigurationName = ParamUtil.getString(
+			portletRequest, "exportImportConfigurationName");
+
+		String exportImportConfigurationDescription = ParamUtil.getString(
+			portletRequest, "exportImportConfigurationDescription");
+
+		Map<String, Serializable> configurationContextMap =
+			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+				userId, stagingGroup.getGroupId(), groupId, privateLayout,
+				layoutIdMap, parameterMap, dateRange.getStartDate(),
+				dateRange.getEndDate());
+
+		return ExportImportConfigurationLocalServiceUtil.
+			addExportImportConfiguration(
+				userId, groupId, exportImportConfigurationName,
+				exportImportConfigurationDescription,
+				ExportImportConfigurationConstants.TYPE_LAYOUT_PUBLISH_LOCAL,
+				configurationContextMap, new ServiceContext());
+	}
+
+	@Override
+	public ExportImportConfiguration createRemoteLayoutPublishConfiguration(
+			PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long userId = themeDisplay.getUserId();
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+
+		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
+
+		boolean privateLayout = true;
+
+		if (tabs1.equals("public-pages")) {
+			privateLayout = false;
+		}
+
+		String scope = ParamUtil.getString(portletRequest, "scope");
+
+		if (Validator.isNull(scope)) {
+			scope = "all-pages";
+		}
+
+		Map<Long, Boolean> layoutIdMap = null;
+
+		if (scope.equals("selected-pages")) {
+			layoutIdMap = getLayoutIdMap(portletRequest);
+		}
+
+		Map<String, String[]> parameterMap = StagingUtil.getStagingParameters(
+			portletRequest);
+
+		parameterMap.put(
+			PortletDataHandlerKeys.PUBLISH_TO_REMOTE,
+			new String[] {Boolean.TRUE.toString()});
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		UnicodeProperties groupTypeSettingsProperties =
+			group.getTypeSettingsProperties();
+
+		String remoteAddress = ParamUtil.getString(
+			portletRequest, "remoteAddress",
+			groupTypeSettingsProperties.getProperty("remoteAddress"));
+
+		remoteAddress = StagingUtil.stripProtocolFromRemoteAddress(
+			remoteAddress);
+
+		int remotePort = ParamUtil.getInteger(
+			portletRequest, "remotePort",
+			GetterUtil.getInteger(
+				groupTypeSettingsProperties.getProperty("remotePort")));
+
+		String remotePathContext = ParamUtil.getString(
+			portletRequest, "remotePathContext",
+			groupTypeSettingsProperties.getProperty("remotePathContext"));
+
+		boolean secureConnection = ParamUtil.getBoolean(
+			portletRequest, "secureConnection",
+			GetterUtil.getBoolean(
+				groupTypeSettingsProperties.getProperty("secureConnection")));
+
+		long remoteGroupId = ParamUtil.getLong(
+			portletRequest, "remoteGroupId",
+			GetterUtil.getLong(
+				groupTypeSettingsProperties.getProperty("remoteGroupId")));
+
+		boolean remotePrivateLayout = ParamUtil.getBoolean(
+			portletRequest, "remotePrivateLayout");
+
+		StagingUtil.validateRemote(
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			remoteGroupId);
+
+		DateRange dateRange = getDateRange(
+			portletRequest, groupId, privateLayout, 0, null,
+			"fromLastPublishDate");
+
+		String exportImportConfigurationName = ParamUtil.getString(
+			portletRequest, "exportImportConfigurationName");
+
+		String exportImportConfigurationDescription = ParamUtil.getString(
+			portletRequest, "exportImportConfigurationDescription");
+
+		Map<String, Serializable> configurationContextMap =
+			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+				userId, groupId, privateLayout, layoutIdMap, parameterMap,
+				remoteAddress, remotePort, remotePathContext, secureConnection,
+				remoteGroupId, remotePrivateLayout, dateRange.getStartDate(),
+				dateRange.getEndDate());
+
+		return ExportImportConfigurationLocalServiceUtil.
+			addExportImportConfiguration(
+				userId, remoteGroupId, exportImportConfigurationName,
+				exportImportConfigurationDescription,
+				ExportImportConfigurationConstants.TYPE_LAYOUT_PUBLISH_REMOTE,
+				configurationContextMap, new ServiceContext());
+	}
 
 	@Override
 	public Calendar getCalendar(

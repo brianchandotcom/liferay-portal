@@ -102,7 +102,23 @@
 		<if>
 			<equals arg1="${field}" arg2="Documents and Media" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="DECIMAL_FIELD" value1="${recordFieldData}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="DOCUMENTS_AND_MEDIA_SELECT" value1="Select" />
+
+				<execute action="CPDynamicdatalistsListAddrecordSelect#selectFrame" locator-key1="SELECT_DOCUMENT_IFRAME" />
+				<execute action="CPDynamicdatalistsListAddrecordSelect#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+				<execute action="CPDynamicdatalistsListAddrecordSelect#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+
+				<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${document}" />
+				<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#type" locator-key1="TITLE_FIELD" value1="${recordFieldData}" />
+				<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+				<var name="key_documentTitle" value="${recordFieldData}" />
+
+				<execute action="CPDynamicdatalistsListAddrecordSelect#assertTextEquals" locator-key1="DOCUMENTS_TABLE_DOCUMENT" value1="${recordFieldData}" />
+				<execute action="CPDynamicdatalistsListAddrecordSelect#click" locator-key1="DOCUMENTS_TABLE_CHOOSE" />
+
+				<execute action="CPDynamicdatalistsListAddrecord#selectFrame" value1="relative=top" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="DOCUMENTS_AND_MEDIA_FIELD" value1="${recordFieldData}" />
 			</then>
 		</if>
 
@@ -123,7 +139,10 @@
 		<if>
 			<equals arg1="${field}" arg2="Link to Page" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#select" locator-key1="LINK_TO_PAGE_SELECT" value1="${recordFieldData}" />
+				<var name="key_recordFieldData" value="${recordFieldData}" />
+
+				<execute action="CPDynamicdatalistsListAddrecord#click" locator-key1="LINK_TO_PAGE_SELECT" />
+				<execute action="CPDynamicdatalistsListAddrecord#doubleClick" locator-key1="LINK_TO_PAGE_SELECT_OPTION" />
 			</then>
 		</if>
 
@@ -139,7 +158,8 @@
 			<then>
 				<var name="key_recordFieldData" value="${recordFieldData}" />
 
-				<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="RADIO_OPTION_RADIO" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="RADIO_OPTION_LABEL" value1="${recordFieldData}" />
+				<execute action="CPDynamicdatalistsListAddrecord#click" locator-key1="RADIO_OPTION_RADIO" />
 			</then>
 		</if>
 

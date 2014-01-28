@@ -23,6 +23,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.ActionResponseImpl;
+import com.liferay.portlet.messageboards.LockedThreadException;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
@@ -68,7 +69,8 @@ public class MoveThreadAction extends PortletAction {
 			moveThread(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof PrincipalException ||
+			if (e instanceof LockedThreadException ||
+				e instanceof PrincipalException ||
 				e instanceof RequiredMessageException) {
 
 				SessionErrors.add(actionRequest, e.getClass());

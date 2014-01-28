@@ -302,6 +302,10 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	public MBThread moveThread(long categoryId, long threadId)
 		throws PortalException, SystemException {
 
+		if (lockLocalService.isLocked(MBThread.class.getName(), threadId)) {
+			throw new LockedThreadException();
+		}
+
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
 		MBCategoryPermission.check(

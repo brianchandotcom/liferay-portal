@@ -331,6 +331,36 @@ if (Validator.isNotNull(historyKey)) {
 					formNode.on('blur', updateSectionError, 'input, select, textarea');
 
 					formNode.on('autofields:update', updateSectionError);
+
+					Liferay.after(
+						'form:registered',
+						function(event) {
+							var form = event.form;
+
+							if (form.formNode.compareTo(formNode)) {
+								var validator = form.formValidator;
+
+								validator.on(
+									'submitError',
+									function() {
+										var errorClass = validator.get('errorClass');
+
+										var errorField = formNode.one('.' + errorClass);
+
+										if (errorField) {
+											var errorSection = errorField.ancestor('.form-section');
+
+											var errorSectionId = errorSection.attr('id');
+
+											selectTabBySectionId(errorSectionId);
+
+											updateSectionError();
+										}
+									}
+								);
+							}
+						}
+					);
 				}
 			</aui:script>
 		</c:otherwise>

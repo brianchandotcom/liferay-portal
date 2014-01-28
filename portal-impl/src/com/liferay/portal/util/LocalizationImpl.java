@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portlet.PortletSettings;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -501,6 +502,53 @@ public class LocalizationImpl implements Localization {
 		PortletRequest portletRequest, String parameter) {
 
 		return getLocalizationMap(portletRequest, parameter);
+	}
+
+	@Override
+	public String getPortletSettingsValue(
+		PortletSettings portletSettings, String key, String languageId) {
+
+		return getPortletSettingsValue(portletSettings, key, languageId, true);
+	}
+
+	@Override
+	public String getPortletSettingsValue(
+		PortletSettings portletSettings, String key, String languageId,
+		boolean useDefault) {
+
+		String localizedKey = getPreferencesKey(key, languageId);
+
+		String value = portletSettings.getValue(localizedKey, StringPool.BLANK);
+
+		if (useDefault && Validator.isNull(value)) {
+			value = portletSettings.getValue(key, StringPool.BLANK);
+		}
+
+		return value;
+	}
+
+	@Override
+	public String[] getPortletSettingsValues(
+		PortletSettings portletSettings, String key, String languageId) {
+
+		return getPortletSettingsValues(portletSettings, key, languageId, true);
+	}
+
+	@Override
+	public String[] getPortletSettingsValues(
+		PortletSettings portletSettings, String key, String languageId,
+		boolean useDefault) {
+
+		String localizedKey = getPreferencesKey(key, languageId);
+
+		String[] values = portletSettings.getValues(
+			localizedKey, new String[0]);
+
+		if (useDefault && ArrayUtil.isEmpty(values)) {
+			values = portletSettings.getValues(key, new String[0]);
+		}
+
+		return values;
 	}
 
 	@Override

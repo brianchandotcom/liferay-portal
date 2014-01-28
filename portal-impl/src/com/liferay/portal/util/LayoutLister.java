@@ -16,16 +16,22 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class LayoutLister {
 
@@ -34,50 +40,50 @@ public class LayoutLister {
 			Locale locale)
 		throws PortalException, SystemException {
 
-		_locale = locale;
+		List<LayoutDescription> list = new ArrayList<LayoutDescription>();
 
-		_list = new ArrayList<LayoutDescription>();
+		List<Layout> layouts = new ArrayList<Layout>(
+			LayoutLocalServiceUtil.getLayouts(groupId, privateLayout));
 
-		_list.add(
-			new LayoutDescription(
-				LayoutConstants.DEFAULT_PLID, rootNodeName, 0));
+		Deque<ObjectValuePair<Layout, Integer>> deque =
+			new LinkedList<ObjectValuePair<Layout, Integer>>();
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout);
+		Layout rootLayout = new LayoutImpl();
 
-		_createList(layouts, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0);
+		rootLayout.setPlid(LayoutConstants.DEFAULT_PLID);
+		rootLayout.setName(rootNodeName);
 
-		return _list;
-	}
+		deque.push(new ObjectValuePair<Layout, Integer>(rootLayout, 0));
 
-	private void _createList(
-			List<Layout> layouts, long parentLayoutId, int depth)
-		throws PortalException, SystemException {
+		ObjectValuePair<Layout, Integer> current = null;
 
-		List<Layout> matchedLayouts = new ArrayList<Layout>();
+		while ((current = deque.pollFirst()) != null) {
+			Layout currentLayout = current.getKey();
 
-		for (Layout layout : layouts) {
-			if (layout.getParentLayoutId() == parentLayoutId) {
-				matchedLayouts.add(layout);
-			}
-		}
+			Integer currentDepth = current.getValue();
 
-		for (int i = 0; i < matchedLayouts.size(); i++) {
-			Layout layout = matchedLayouts.get(i);
-
-			if (i == 0) {
-				depth++;
-			}
-
-			_list.add(
+			list.add(
 				new LayoutDescription(
-					layout.getPlid(), layout.getName(_locale), depth));
+					currentLayout.getPlid(), currentLayout.getName(locale),
+					currentDepth));
 
-			_createList(layouts, layout.getLayoutId(), depth);
+			ListIterator<Layout> listIterator = layouts.listIterator(
+				layouts.size());
+
+			while (listIterator.hasPrevious()) {
+				Layout layout = listIterator.previous();
+
+				if (layout.getParentLayoutId() == currentLayout.getLayoutId()) {
+					listIterator.remove();
+
+					deque.push(
+						new ObjectValuePair<Layout, Integer>(
+							layout, currentDepth + 1));
+				}
+			}
 		}
-	}
 
-	private List<LayoutDescription> _list;
-	private Locale _locale;
+		return list;
+	}
 
 }

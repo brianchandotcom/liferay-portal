@@ -19,10 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-LayoutLister layoutLister = new LayoutLister();
-
 String rootNodeName = StringPool.BLANK;
-List<LayoutDescription> layoutDescriptions = layoutLister.getLayoutDescriptions(layout.getGroupId(), layout.isPrivateLayout(), rootNodeName, locale);
+List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(layout.getGroupId(), layout.isPrivateLayout(), rootNodeName, locale);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />

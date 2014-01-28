@@ -67,11 +67,9 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 						<%
 						String linkToLayoutUuid = StringPool.BLANK;
 
-						LayoutLister layoutLister = new LayoutLister();
-
 						Group group = layout.getGroup();
 
-						List<LayoutDescription> layoutDescriptions = layoutLister.getLayoutDescriptions(layout.getGroup().getGroupId(), layout.isPrivateLayout(), group.getName(), locale);
+						List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(layout.getGroup().getGroupId(), layout.isPrivateLayout(), group.getName(), locale);
 
 						for (LayoutDescription layoutDescription : layoutDescriptions) {
 							Layout linkableLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());

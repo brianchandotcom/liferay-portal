@@ -33,9 +33,9 @@ import java.util.Locale;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class LayoutLister {
+public class LayoutListUtil {
 
-	public List<LayoutDescription> getLayoutDescriptions(
+	public static List<LayoutDescription> getLayoutDescriptions(
 			long groupId, boolean privateLayout, String rootNodeName,
 			Locale locale)
 		throws PortalException, SystemException {

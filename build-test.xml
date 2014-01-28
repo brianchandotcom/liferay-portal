@@ -670,7 +670,9 @@
 							while (scanner.hasNextLine()) {
 								String line = scanner.nextLine();
 
-								if (line.contains("<properties") ||
+								if (line.contains("<environment-properties") ||
+									line.contains("</environment-properties") ||
+									line.contains("<properties") ||
 									line.contains("</properties") ||
 									line.contains("<property") ||
 									line.contains("<test-properties") ||

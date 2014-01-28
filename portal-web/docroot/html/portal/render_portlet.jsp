@@ -52,6 +52,10 @@ PortletPreferences portletPreferences = PortletPreferencesLocalServiceUtil.getSt
 
 PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletId);
 
+PortletSettings portletCompanySettings = PortletSettingsFactoryUtil.getPortletCompanySettings(layout.getCompanyId(), portletId);
+PortletSettings portletInstanceSettings = PortletSettingsFactoryUtil.getPortletInstanceSettings(layout, portletId);
+PortletSettings portletSiteSettings = PortletSettingsFactoryUtil.getPortletSiteSettings(themeDisplay.getSiteGroupId(), portletId);
+
 Group group = null;
 boolean privateLayout = false;
 
@@ -369,7 +373,10 @@ portletDisplay.setStateMax(stateMax);
 portletDisplay.setStateMin(stateMin);
 portletDisplay.setStateNormal(windowState.equals(WindowState.NORMAL));
 portletDisplay.setStatePopUp(themeDisplay.isStatePopUp());
+portletDisplay.setPortletCompanySettings(portletCompanySettings);
+portletDisplay.setPortletInstanceSettings(portletInstanceSettings);
 portletDisplay.setPortletSetup(portletSetup);
+portletDisplay.setPortletSiteSettings(portletSiteSettings);
 portletDisplay.setWebDAVEnabled(portlet.getWebDAVStorageInstance() != null);
 
 // Portlet custom CSS class name

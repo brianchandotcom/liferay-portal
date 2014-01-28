@@ -26,8 +26,6 @@ import com.thoughtworks.selenium.Selenium;
 
 import java.lang.reflect.Field;
 
-import java.util.Map;
-
 /**
  * @author Brian Wing Shun Chan
  */

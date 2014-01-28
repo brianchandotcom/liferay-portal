@@ -40,9 +40,8 @@
 					formValidator.validateField(field);
 				}
 			}
-
 		},
-		['aui-base']
+		['liferay-form']
 	);
 </@>
 

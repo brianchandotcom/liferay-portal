@@ -16,8 +16,6 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.thoughtworks.selenium.Selenium;
 
-import java.util.Map;
-
 /**
  * @author Brian Wing Shun Chan
  */

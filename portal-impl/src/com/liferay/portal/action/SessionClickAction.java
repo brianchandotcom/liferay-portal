@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.SessionClicks;
 
@@ -47,6 +48,9 @@ public class SessionClickAction extends Action {
 		throws Exception {
 
 		try {
+			AuthTokenUtil.checkCSRFToken(
+				request, SessionClickAction.class.getName());
+
 			HttpSession session = request.getSession();
 
 			Enumeration<String> enu = request.getParameterNames();

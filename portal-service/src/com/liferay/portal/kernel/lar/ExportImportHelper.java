@@ -80,15 +80,15 @@ public interface ExportImportHelper {
 	public static final String TEMP_FOLDER_NAME =
 		ExportImportHelper.class.getName();
 
-	public ExportImportConfiguration createLayoutExportConfiguration(
+	public ExportImportConfiguration createExportLayoutConfiguration(
 			PortletRequest portletRequest)
 		throws Exception;
 
-	public ExportImportConfiguration createLocalLayoutPublishConfiguration(
+	public ExportImportConfiguration createPublishLayoutLocalConfiguration(
 			PortletRequest portletRequest)
 		throws Exception;
 
-	public ExportImportConfiguration createRemoteLayoutPublishConfiguration(
+	public ExportImportConfiguration createPublishLayoutRemoteConfiguration(
 			PortletRequest portletRequest)
 		throws Exception;
 

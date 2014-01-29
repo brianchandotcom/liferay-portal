@@ -19,14 +19,10 @@ package com.liferay.portal.lar.exportimportconfiguration;
  */
 public class ExportImportConfigurationConstants {
 
-	public static final int TYPE_LAYOUT_EXPORT = 0;
+	public static final int TYPE_EXPORT_LAYOUT = 0;
 
-	public static final int TYPE_LAYOUT_PUBLISH_LOCAL = 1;
+	public static final int TYPE_PUBLISH_LAYOUT_LOCAL = 1;
 
-	public static final int TYPE_LAYOUT_PUBLISH_REMOTE = 2;
-
-	public static final int TYPE_SCHEDULED_LAYOUT_PUBLISH_LOCAL = 3;
-
-	public static final int TYPE_SCHEDULED_LAYOUT_PUBLISH_REMOTE = 4;
+	public static final int TYPE_PUBLISH_LAYOUT_REMOTE = 2;
 
 }

@@ -158,7 +158,7 @@ import org.xml.sax.InputSource;
 public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
-	public ExportImportConfiguration createLayoutExportConfiguration(
+	public ExportImportConfiguration createExportLayoutConfiguration(
 			PortletRequest portletRequest)
 		throws Exception {
 
@@ -190,12 +190,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			addExportImportConfiguration(
 				userId, groupId, exportImportConfigurationName,
 				exportImportConfigurationDescription,
-				ExportImportConfigurationConstants.TYPE_LAYOUT_EXPORT,
+				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 				configurationContextMap, new ServiceContext());
 	}
 
 	@Override
-	public ExportImportConfiguration createLocalLayoutPublishConfiguration(
+	public ExportImportConfiguration createPublishLayoutLocalConfiguration(
 			PortletRequest portletRequest)
 		throws Exception {
 
@@ -247,12 +247,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			addExportImportConfiguration(
 				userId, groupId, exportImportConfigurationName,
 				exportImportConfigurationDescription,
-				ExportImportConfigurationConstants.TYPE_LAYOUT_PUBLISH_LOCAL,
+				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL,
 				configurationContextMap, new ServiceContext());
 	}
 
 	@Override
-	public ExportImportConfiguration createRemoteLayoutPublishConfiguration(
+	public ExportImportConfiguration createPublishLayoutRemoteConfiguration(
 			PortletRequest portletRequest)
 		throws Exception {
 
@@ -348,7 +348,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			addExportImportConfiguration(
 				userId, remoteGroupId, exportImportConfigurationName,
 				exportImportConfigurationDescription,
-				ExportImportConfigurationConstants.TYPE_LAYOUT_PUBLISH_REMOTE,
+				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE,
 				configurationContextMap, new ServiceContext());
 	}
 

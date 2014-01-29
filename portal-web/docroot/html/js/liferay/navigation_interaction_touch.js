@@ -23,7 +23,7 @@ AUI.add(
 						event.preventDefault();
 					}
 
-					instance._handleShowNavigationMenu(menuNew, instance.MAP_HOVER.menu);
+					instance._handleShowNavigationMenu(menuNew, instance.MAP_HOVER.menu, event);
 				}
 			},
 			true

@@ -135,7 +135,7 @@ AUI.add(
 						instance._handleKey(event, DIRECTION_RIGHT);
 					},
 
-					_handleShowNavigationMenu: function(menuNew, menuOld) {
+					_handleShowNavigationMenu: function(menuNew, menuOld, event) {
 						var instance = this;
 
 						var focusedChange = (event.type.indexOf('focusedChange') !== -1);
@@ -244,7 +244,7 @@ AUI.add(
 
 							var menuNew = menuLink.ancestor(instance._directChildLi);
 
-							instance._handleShowNavigationMenu(menuNew, menuOld);
+							instance._handleShowNavigationMenu(menuNew, menuOld, event);
 						}
 						else if (menuOld) {
 							Liferay.fire('hideNavigationMenu', mapHover);

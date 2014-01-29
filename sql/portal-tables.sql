@@ -1835,7 +1835,7 @@ create table ShoppingCart (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	itemIds STRING null,
+	itemIds TEXT null,
 	couponCodes VARCHAR(75) null,
 	altShipping INTEGER,
 	insure BOOLEAN

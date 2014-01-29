@@ -35,7 +35,9 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 
 import java.util.List;
 
@@ -362,24 +364,40 @@ public class LiferaySeleniumHelper {
 
 		Runtime runtime = Runtime.getRuntime();
 
-		String projectDir = liferaySelenium.getProjectDir();
+		String command;
 
 		if (!OSDetector.isWindows()) {
+			String projectDir = liferaySelenium.getProjectDir();
+
 			projectDir = StringUtil.replace(projectDir, "\\", "//");
+
 			runtime.exec("bash -c cd " + projectDir);
-			runtime.exec("bash -c ant -f " + fileName + " " + target);
-			runtime.exec("bash -c ant -f " + fileName + " " + target);
+
+			command = "bash -c ant -f " + fileName + " " + target;
 		}
 		else {
-			runtime.exec("cmd /c cd " + projectDir);
-			runtime.exec("cmd /c ant -f " + fileName + " " + target);
+			runtime.exec("cmd /c cd " + liferaySelenium.getProjectDir());
+
+			command = "cmd /c ant -f " + fileName + " " + target;
 		}
 
-		if (target.contains("startup")) {
-			Thread.sleep(80000);
-		}
-		else {
-			Thread.sleep(15000);
+		Process process = runtime.exec(command);
+
+		InputStreamReader inputStreamReader = new InputStreamReader(
+			process.getInputStream());
+
+		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+		String line = null;
+
+		while ((line = bufferedReader.readLine()) != null) {
+			System.out.println(line);
+
+			if (line.contains("BUILD FAILED") ||
+				line.contains("BUILD SUCCESSFUL")) {
+
+				break;
+			}
 		}
 	}
 

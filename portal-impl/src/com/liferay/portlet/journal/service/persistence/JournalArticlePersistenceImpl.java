@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -49,6 +48,8 @@ import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
 import com.liferay.portlet.journal.model.impl.JournalArticleModelImpl;
 
 import java.io.Serializable;
+
+import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16785,7 +16786,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -17081,7 +17082,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		QueryPos qPos = QueryPos.getInstance(q);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		qPos.add(status);
@@ -17168,7 +17169,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);

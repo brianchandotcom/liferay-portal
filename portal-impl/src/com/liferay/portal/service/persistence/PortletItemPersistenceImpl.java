@@ -1389,7 +1389,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 				qPos.add(groupId);
 
 				if (bindName) {
-					qPos.add(name.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(name));
 				}
 
 				if (bindPortletId) {
@@ -1539,7 +1539,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 				qPos.add(groupId);
 
 				if (bindName) {
-					qPos.add(name.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(name));
 				}
 
 				if (bindPortletId) {

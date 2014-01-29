@@ -4205,7 +4205,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(title));
 				}
 
 				if (!pagination) {
@@ -4501,7 +4501,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindTitle) {
-			qPos.add(title.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(title));
 		}
 
 		if (orderByComparator != null) {
@@ -4590,7 +4590,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(title));
 				}
 
 				count = (Long)q.uniqueResult();
@@ -5299,7 +5299,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(parentTitle));
 				}
 
 				if (!pagination) {
@@ -5598,7 +5598,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindParentTitle) {
-			qPos.add(parentTitle.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(parentTitle));
 		}
 
 		if (orderByComparator != null) {
@@ -5688,7 +5688,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(parentTitle));
 				}
 
 				count = (Long)q.uniqueResult();
@@ -5874,7 +5874,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindRedirectTitle) {
-					qPos.add(redirectTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(redirectTitle));
 				}
 
 				if (!pagination) {
@@ -6173,7 +6173,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindRedirectTitle) {
-			qPos.add(redirectTitle.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(redirectTitle));
 		}
 
 		if (orderByComparator != null) {
@@ -6263,7 +6263,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindRedirectTitle) {
-					qPos.add(redirectTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(redirectTitle));
 				}
 
 				count = (Long)q.uniqueResult();
@@ -10858,7 +10858,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(title));
 				}
 
 				qPos.add(version);
@@ -10977,7 +10977,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(title));
 				}
 
 				qPos.add(version);
@@ -11178,7 +11178,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(title));
 				}
 
 				qPos.add(head);
@@ -11492,7 +11492,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindTitle) {
-			qPos.add(title.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(title));
 		}
 
 		qPos.add(head);
@@ -11588,7 +11588,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(title));
 				}
 
 				qPos.add(head);
@@ -11789,7 +11789,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(title));
 				}
 
 				qPos.add(status);
@@ -12103,7 +12103,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindTitle) {
-			qPos.add(title.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(title));
 		}
 
 		qPos.add(status);
@@ -12199,7 +12199,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(title));
 				}
 
 				qPos.add(status);
@@ -12403,7 +12403,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(parentTitle));
 				}
 
 				if (!pagination) {
@@ -12719,7 +12719,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (bindParentTitle) {
-			qPos.add(parentTitle.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(parentTitle));
 		}
 
 		if (orderByComparator != null) {
@@ -12815,7 +12815,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(parentTitle));
 				}
 
 				count = (Long)q.uniqueResult();
@@ -15165,7 +15165,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(title));
 				}
 
 				qPos.add(head);
@@ -15497,7 +15497,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindTitle) {
-			qPos.add(title.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(title));
 		}
 
 		qPos.add(head);
@@ -15672,7 +15672,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			qPos.add(nodeId);
 
 			if (bindTitle) {
-				qPos.add(title.toLowerCase());
+				qPos.add(StringUtil.toLowerCase(title));
 			}
 
 			qPos.add(head);
@@ -15880,7 +15880,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (bindTitle) {
-			qPos.add(title.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(title));
 		}
 
 		qPos.add(head);
@@ -15982,7 +15982,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(nodeId);
 
 				if (bindTitle) {
-					qPos.add(title.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(title));
 				}
 
 				qPos.add(head);
@@ -16066,7 +16066,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			qPos.add(nodeId);
 
 			if (bindTitle) {
-				qPos.add(title.toLowerCase());
+				qPos.add(StringUtil.toLowerCase(title));
 			}
 
 			qPos.add(head);
@@ -17297,7 +17297,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(parentTitle));
 				}
 
 				qPos.add(status);
@@ -17629,7 +17629,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (bindParentTitle) {
-			qPos.add(parentTitle.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(parentTitle));
 		}
 
 		qPos.add(status);
@@ -17731,7 +17731,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(parentTitle));
 				}
 
 				qPos.add(status);
@@ -17926,7 +17926,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(parentTitle));
 				}
 
 				qPos.add(status);
@@ -18258,7 +18258,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (bindParentTitle) {
-			qPos.add(parentTitle.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(parentTitle));
 		}
 
 		qPos.add(status);
@@ -18360,7 +18360,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(parentTitle));
 				}
 
 				qPos.add(status);
@@ -18576,7 +18576,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindRedirectTitle) {
-					qPos.add(redirectTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(redirectTitle));
 				}
 
 				qPos.add(status);
@@ -18908,7 +18908,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (bindRedirectTitle) {
-			qPos.add(redirectTitle.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(redirectTitle));
 		}
 
 		qPos.add(status);
@@ -19010,7 +19010,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindRedirectTitle) {
-					qPos.add(redirectTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(redirectTitle));
 				}
 
 				qPos.add(status);
@@ -19206,7 +19206,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindRedirectTitle) {
-					qPos.add(redirectTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(redirectTitle));
 				}
 
 				qPos.add(status);
@@ -19538,7 +19538,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (bindRedirectTitle) {
-			qPos.add(redirectTitle.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(redirectTitle));
 		}
 
 		qPos.add(status);
@@ -19640,7 +19640,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindRedirectTitle) {
-					qPos.add(redirectTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(redirectTitle));
 				}
 
 				qPos.add(status);
@@ -19868,7 +19868,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(parentTitle));
 				}
 
 				qPos.add(status);
@@ -20218,7 +20218,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (bindParentTitle) {
-			qPos.add(parentTitle.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(parentTitle));
 		}
 
 		qPos.add(status);
@@ -20400,7 +20400,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			qPos.add(head);
 
 			if (bindParentTitle) {
-				qPos.add(parentTitle.toLowerCase());
+				qPos.add(StringUtil.toLowerCase(parentTitle));
 			}
 
 			qPos.add(status);
@@ -20616,7 +20616,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (bindParentTitle) {
-			qPos.add(parentTitle.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(parentTitle));
 		}
 
 		qPos.add(status);
@@ -20726,7 +20726,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				qPos.add(head);
 
 				if (bindParentTitle) {
-					qPos.add(parentTitle.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(parentTitle));
 				}
 
 				qPos.add(status);
@@ -20815,7 +20815,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			qPos.add(head);
 
 			if (bindParentTitle) {
-				qPos.add(parentTitle.toLowerCase());
+				qPos.add(StringUtil.toLowerCase(parentTitle));
 			}
 
 			qPos.add(status);

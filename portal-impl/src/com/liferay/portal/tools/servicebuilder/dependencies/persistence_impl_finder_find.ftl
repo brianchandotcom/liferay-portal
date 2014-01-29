@@ -280,7 +280,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				<#include "persistence_impl_finder_qpos.ftl">
+				<@FinderQPos />
 
 				if (!pagination) {
 					list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end, false);
@@ -568,7 +568,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			<#include "persistence_impl_finder_qpos.ftl">
+			<@FinderQPos />
 
 			if (orderByComparator != null) {
 				Object[] values = orderByComparator.getOrderByConditionValues(${entity.varName});
@@ -700,7 +700,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					QueryPos qPos = QueryPos.getInstance(q);
 
-					<#include "persistence_impl_finder_qpos.ftl">
+					<@FinderQPos />
 
 					return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
 				}
@@ -772,7 +772,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					QueryPos qPos = QueryPos.getInstance(q);
 
-					<#include "persistence_impl_finder_qpos.ftl">
+					<@FinderQPos />
 
 					return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
 				}
@@ -878,7 +878,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					QueryPos qPos = QueryPos.getInstance(q);
 
-					<#include "persistence_impl_finder_qpos.ftl">
+					<@FinderQPos />
 
 					if (orderByComparator != null) {
 						Object[] values = orderByComparator.getOrderByConditionValues(${entity.varName});
@@ -1015,7 +1015,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					QueryPos qPos = QueryPos.getInstance(q);
 
-					<#include "persistence_impl_finder_qpos.ftl">
+					<@FinderQPos />
 
 					if (orderByComparator != null) {
 						Object[] values = orderByComparator.getOrderByConditionValues(${entity.varName});
@@ -1200,7 +1200,9 @@ that may or may not be enforced with a unique index at the database level. Case
 
 						QueryPos qPos = QueryPos.getInstance(q);
 
-						<#include "persistence_impl_finder_arrayable_qpos.ftl">
+						<@FinderQPos
+							_arrayable=true
+						/>
 
 						return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
 					}
@@ -1273,7 +1275,9 @@ that may or may not be enforced with a unique index at the database level. Case
 
 						QueryPos qPos = QueryPos.getInstance(q);
 
-						<#include "persistence_impl_finder_arrayable_qpos.ftl">
+						<@FinderQPos
+							_arrayable=true
+						/>
 
 						return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
 					}
@@ -1561,7 +1565,9 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					QueryPos qPos = QueryPos.getInstance(q);
 
-					<#include "persistence_impl_finder_arrayable_qpos.ftl">
+					<@FinderQPos
+						_arrayable=true
+					/>
 
 					if (!pagination) {
 						list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end, false);
@@ -1763,7 +1769,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				<#include "persistence_impl_finder_qpos.ftl">
+				<@FinderQPos />
 
 				List<${entity.name}> list = q.list();
 

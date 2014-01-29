@@ -2497,11 +2497,11 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindRepoGroupId) {
-					qPos.add(repoGroupId.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(repoGroupId));
 				}
 
 				if (bindRepoArtifactId) {
-					qPos.add(repoArtifactId.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(repoArtifactId));
 				}
 
 				List<SCProductEntry> list = q.list();
@@ -2633,11 +2633,11 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindRepoGroupId) {
-					qPos.add(repoGroupId.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(repoGroupId));
 				}
 
 				if (bindRepoArtifactId) {
-					qPos.add(repoArtifactId.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(repoArtifactId));
 				}
 
 				count = (Long)q.uniqueResult();

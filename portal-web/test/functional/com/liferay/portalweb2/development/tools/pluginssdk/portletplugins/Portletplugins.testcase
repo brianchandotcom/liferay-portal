@@ -536,6 +536,7 @@
 	</command>
 
 	<command name="PluginsSecurityManagerPortletSmoke" priority="5">
+		<property name="java.security" value="true" />
 		<property name="portlet.plugins.includes" value="plugins-security-manager-portlet" />
 
 		<var name="appName" value="Plugins Security Manager" />

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.BaseModel;
@@ -80,8 +81,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 				group.getGroupId());
 
 		String xsd = StringUtil.read(
-			FileTestUtil.getFileInputStream(
-				getClass(),
+			getClass().getResourceAsStream(
 				_JOURNAL_DEPENDENCIES_PATH +
 					"test-ddm-structure-image-field.xml"));
 
@@ -93,8 +93,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 			serviceContext.getScopeGroupId(), ddmStructure.getStructureId());
 
 		String content = StringUtil.read(
-			FileTestUtil.getFileInputStream(
-				getClass(),
+			getClass().getResourceAsStream(
 				_JOURNAL_DEPENDENCIES_PATH +
 					"test-journal-content-image-field.xml"));
 

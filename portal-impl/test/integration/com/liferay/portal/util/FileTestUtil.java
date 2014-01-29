@@ -15,9 +15,6 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringPool;
-
-import java.io.InputStream;
 
 /**
  * @author Cristina González
@@ -27,17 +24,7 @@ public class FileTestUtil {
 	public static byte[] getBytes(Class<?> clazz, String fileName)
 		throws Exception {
 
-		return FileUtil.getBytes(getFileInputStream(clazz, fileName));
+		return FileUtil.getBytes(clazz.getResourceAsStream(fileName));
 	}
-
-	public static InputStream getFileInputStream(
-			Class<?> clazz, String fileName)
-		throws Exception {
-
-		InputStream inputStream = clazz.getResourceAsStream(fileName);
-
-		return inputStream;
-	}
-
 
 }

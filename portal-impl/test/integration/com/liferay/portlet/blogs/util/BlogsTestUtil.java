@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.util;
 
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -21,7 +22,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.util.FileTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
@@ -114,8 +114,7 @@ public class BlogsTestUtil {
 
 			if (smallImage) {
 				smallImageFileName = "image.jpg";
-				smallImageInputStream = FileTestUtil.getFileInputStream(
-					BlogsTestUtil.class,
+				smallImageInputStream = BlogsTestUtil.class.getResourceAsStream(
 					"com/liferay/portal/util/dependencies/test.jpg");
 			}
 

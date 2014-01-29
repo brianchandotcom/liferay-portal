@@ -37,7 +37,7 @@ boolean hasDistributionScope = false;
 
 			<%
 			for (Group group : groups) {
-				if ((group.isOrganization() || (group.isRegularSite() && group.isSite())) && GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+				if (((group.isOrganization() && group.isSite()) || group.isRegularSite()) && GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 					hasDistributionScope = true;
 			%>
 

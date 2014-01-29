@@ -1646,6 +1646,7 @@ public class StagingImpl implements Staging {
 			String.valueOf(layoutSetBranchId));
 	}
 
+	@Override
 	public String stripProtocolFromRemoteAddress(String remoteAddress) {
 		if (remoteAddress.startsWith(Http.HTTP_WITH_SLASH)) {
 			remoteAddress = remoteAddress.substring(

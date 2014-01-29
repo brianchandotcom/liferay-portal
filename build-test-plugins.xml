@@ -29,6 +29,24 @@ plugins.includes=${plugins.includes}</echo>
 		</if>
 
 		<if>
+			<equals arg1="${java.security}" arg2="true" />
+			<then>
+				<loadfile failonerror="false" property="liferay-plugin-package.properties.content" srcfile="${lp.plugins.dir}/${plugin.types}/${portlet.plugins.includes}/docroot/WEB-INF/liferay-plugin-package.properties" />
+
+				<if>
+					<not>
+						<contains string="${liferay-plugin-package.properties.content}" substring="security-manager-enabled=true" />
+					</not>
+					<then>
+						<echo append="true" file="${lp.plugins.dir}/${plugin.types}/${portlet.plugins.includes}/docroot/WEB-INF/liferay-plugin-package.properties">
+
+security-manager-enabled=true</echo>
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
 			<isset property="plugin.portlets.properties" />
 			<then>
 				<echo file="${lp.plugins.dir}/${plugin.types}/${portlet.plugins.includes}/docroot/WEB-INF/src/portlet-ext.properties">${plugin.portlets.properties}</echo>

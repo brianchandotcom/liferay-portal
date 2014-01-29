@@ -968,6 +968,15 @@ ${custom.properties}</echo>
 		</if>
 
 		<if>
+			<equals arg1="${java.security}" arg2="true" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+portal.security.manager.strategy=liferay</echo>
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${portal.version}" arg2="5.1.2" />
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
@@ -2234,6 +2243,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 	</target>
 
 	<target name="run-simple-server" depends="generate-test-properties">
+		<if>
+			<equals arg1="${app.server.type}" arg2="tomcat" />
+			<then>
+				<ant antfile="build-dist.xml" target="configure-java-security-tomcat" />
+			</then>
+		</if>
+
 		<antcall target="clean-up-java-processes" inheritAll="false" />
 
 		<if>

@@ -12,27 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.upgrade;
+package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeSchema;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeShopping;
+import com.liferay.portal.upgrade.v7_0_0.util.ShoppingCartTable;
+
+import java.sql.SQLException;
 
 /**
- * @author Julio Camarero
+ * @author Kenneth Chang
  */
-public class UpgradeProcess_7_0_0 extends UpgradeProcess {
-
-	@Override
-	public int getThreshold() {
-		return ReleaseInfo.RELEASE_7_0_0_BUILD_NUMBER;
-	}
+public class UpgradeShopping extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeSchema.class);
-		upgrade(UpgradeShopping.class);
+		try {
+			runSQL("alter_column_type ShoppingCart itemIds TEXT null");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				ShoppingCartTable.TABLE_NAME, ShoppingCartTable.TABLE_COLUMNS,
+				ShoppingCartTable.TABLE_SQL_CREATE,
+				ShoppingCartTable.TABLE_SQL_ADD_INDEXES);
+		}
 	}
 
 }

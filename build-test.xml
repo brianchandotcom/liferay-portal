@@ -35,6 +35,19 @@
 
 	<target name="build-sql-file">
 		<if>
+			<isset property="shard" />
+			<then>
+				<echo file="create-shard.sql">
+drop database if exists lportal;
+drop database if exists lportal1;
+drop database if exists lportal2;
+create database lportal character set utf8;
+create database lportal1 character set utf8;
+create database lportal2 character set utf8;</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="sql.legacy.url" />
 			<then>
 				<delete dir="sql/legacy" failonerror="false" />
@@ -1898,6 +1911,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 
 		<if>
+			<isset property="shard" />
+			<then>
+				<ant antfile="build-test-db-sharding.xml" target="prepare-sharding-properties" />
+			</then>
+		</if>
+
+		<if>
 			<not>
 				<isset property="skip.rebuild-database" />
 			</not>
@@ -1973,6 +1993,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 						</exec>
 					</else>
 				</if>
+			</then>
+		</if>
+
+		<if>
+			<isset property="shard" />
+			<then>
+				<delete file="create-shard.sql" />
 			</then>
 		</if>
 

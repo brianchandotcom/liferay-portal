@@ -54,7 +54,7 @@ public int countBy${finder.name}(
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			<#include "persistence_impl_finder_qpos.ftl">
+			<@FinderQPos />
 
 			count = (Long)q.uniqueResult();
 
@@ -133,7 +133,9 @@ public int countBy${finder.name}(
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				<#include "persistence_impl_finder_arrayable_qpos.ftl">
+				<@FinderQPos
+					_arrayable=true
+				/>
 
 				count = (Long)q.uniqueResult();
 
@@ -203,7 +205,7 @@ public int countBy${finder.name}(
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				<#include "persistence_impl_finder_qpos.ftl">
+				<@FinderQPos />
 
 				Long count = (Long)q.uniqueResult();
 
@@ -239,7 +241,7 @@ public int countBy${finder.name}(
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				<#include "persistence_impl_finder_qpos.ftl">
+				<@FinderQPos />
 
 				Long count = (Long)q.uniqueResult();
 
@@ -332,7 +334,9 @@ public int countBy${finder.name}(
 
 					QueryPos qPos = QueryPos.getInstance(q);
 
-					<#include "persistence_impl_finder_arrayable_qpos.ftl">
+					<@FinderQPos
+						_arrayable=true
+					/>
 
 					Long count = (Long)q.uniqueResult();
 
@@ -376,7 +380,9 @@ public int countBy${finder.name}(
 
 					QueryPos qPos = QueryPos.getInstance(q);
 
-					<#include "persistence_impl_finder_arrayable_qpos.ftl">
+					<@FinderQPos
+						_arrayable=true
+					/>
 
 					Long count = (Long)q.uniqueResult();
 

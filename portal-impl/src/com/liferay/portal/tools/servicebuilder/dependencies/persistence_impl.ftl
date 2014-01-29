@@ -1,3 +1,5 @@
+<#include "persistence_impl_macro.ftl">
+
 <#if entity.isHierarchicalTree()>
 	<#if entity.hasColumn("groupId")>
 		<#assign scopeColumn = entity.getColumn("groupId")>

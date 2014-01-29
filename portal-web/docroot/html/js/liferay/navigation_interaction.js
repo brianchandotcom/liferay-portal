@@ -138,16 +138,20 @@ AUI.add(
 					_handleShowNavigationMenu: function(menuNew, menuOld) {
 						var instance = this;
 
-						var mapHover = instance.MAP_HOVER;
+						var focusedChange = (event.type.indexOf('focusedChange') !== -1);
 
-						if (!(instance._lastShownMenu && (event.type.indexOf('focusedChange') !== -1))) {
-							var updateMenu = (menuOld && (menuOld != menuNew));
+						var updateNavigationMenus = !(instance._lastShownMenu && focusedChange);
 
-							if (updateMenu) {
+						if (updateNavigationMenus) {
+							var mapHover = instance.MAP_HOVER;
+
+							var menuOldDistinct = (menuOld && (menuOld != menuNew));
+
+							if (menuOldDistinct) {
 								Liferay.fire('hideNavigationMenu', mapHover);
 							}
 
-							if (!menuOld || updateMenu) {
+							if (!menuOld || menuOldDistinct) {
 								mapHover.menu = menuNew;
 
 								Liferay.fire('showNavigationMenu', mapHover);

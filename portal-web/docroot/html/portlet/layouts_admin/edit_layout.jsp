@@ -233,10 +233,10 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 						var dataValue = target.ancestor('li').attr('data-value') || target.attr('data-value');
 
-						executeAction(dataValue);
-					}
+						processDataValue(dataValue);
+					};
 
-					var executeAction = function(dataValue) {
+					var processDataValue = function(dataValue) {
 						if (dataValue === 'add-child-page') {
 							content = A.one('#<portlet:namespace />addLayout');
 
@@ -327,7 +327,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					A.one('#<portlet:namespace />layoutsNav').delegate('click', clickHandler, 'li a');
 
 					<c:if test='<%= layout.isTypeControlPanel() && (SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "addError") != null) %>'>
-						executeAction('add-page');
+						processDataValue('add-page');
 					</c:if>
 				</aui:script>
 			</c:if>

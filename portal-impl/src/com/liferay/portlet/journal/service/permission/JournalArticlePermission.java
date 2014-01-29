@@ -123,6 +123,12 @@ public class JournalArticlePermission {
 		}
 
 		if (actionId.equals(ActionKeys.VIEW) &&
+			!PropsValues.JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED) {
+
+			return true;
+		}
+
+		if (actionId.equals(ActionKeys.VIEW) &&
 			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
 			long folderId = article.getFolderId();

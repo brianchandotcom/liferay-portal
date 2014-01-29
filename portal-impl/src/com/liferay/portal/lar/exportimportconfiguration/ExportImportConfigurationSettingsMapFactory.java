@@ -14,6 +14,8 @@
 
 package com.liferay.portal.lar.exportimportconfiguration;
 
+import com.liferay.portal.kernel.util.MapUtil;
+
 import java.io.Serializable;
 
 import java.util.Date;
@@ -68,7 +70,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 			settingsMap.put("endDate", endDate);
 		}
 
-		if ((layoutIdMap != null) && layoutIdMap.isEmpty()) {
+		if (MapUtil.isNotEmpty(layoutIdMap)) {
 			HashMap<Long, Boolean> serializableLayoutIdMap =
 				new HashMap<Long, Boolean>(layoutIdMap);
 

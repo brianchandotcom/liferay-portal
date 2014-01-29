@@ -83,7 +83,7 @@
 		}
 	}
 
-	&.display-icon, &.display-descriptive {
+	&.display-descriptive, &.display-icon {
 		border: 1px solid #E1E1E1;
 		margin: 5px;
 

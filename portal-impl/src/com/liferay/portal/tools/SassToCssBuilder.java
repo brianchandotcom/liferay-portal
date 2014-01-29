@@ -42,6 +42,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -49,6 +53,7 @@ import org.apache.tools.ant.DirectoryScanner;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Eduardo Lundgren
+ * @author Shuyang Zhou
  */
 public class SassToCssBuilder {
 
@@ -160,65 +165,71 @@ public class SassToCssBuilder {
 
 		_tempDir = SystemProperties.get(SystemProperties.TMP_DIR);
 
+		RubyExecutor rubyExecutor = new RubyExecutor();
+
+		rubyExecutor.setExecuteInSeparateThread(false);
+
+		List<String> fileNameList = new ArrayList<String>();
+
 		for (String dirName : dirNames) {
-
-			// Create a new Ruby executor as a workaround for a bug with Ruby
-			// that breaks "ant build-css" when it parses too many CSS files
-
-			_rubyExecutor = new RubyExecutor();
-
-			_rubyExecutor.setExecuteInSeparateThread(false);
-
-			_parseSassDirectory(dirName, docrootDirName, portalCommonDirName);
+			_collectSassFiles(fileNameList, dirName, docrootDirName);
 		}
+
+		Runtime runtime = Runtime.getRuntime();
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			runtime.availableProcessors());
+
+		List<Future<String>> futureList = new ArrayList<Future<String>>(
+			fileNameList.size());
+
+		for (String fileName : fileNameList) {
+			Callable<String> callable = new CacheSassCallable(
+				rubyExecutor, docrootDirName, portalCommonDirName, fileName);
+
+			futureList.add(executorService.submit(callable));
+		}
+
+		for (Future<String> future : futureList) {
+			System.out.println(future.get());
+		}
+
+		executorService.shutdownNow();
 	}
 
-	private void _cacheSass(
-			String docrootDirName, String portalCommonDirName, String fileName)
+	private void _collectSassFiles(
+			List<String> fileNameList, String dirName, String docrootDirName)
 		throws Exception {
 
-		if (fileName.contains("_rtl")) {
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		String basedir = docrootDirName.concat(dirName);
+
+		directoryScanner.setBasedir(basedir);
+
+		directoryScanner.setExcludes(
+			new String[] {
+				"**\\_diffs\\**", "**\\.sass-cache*\\**",
+				"**\\.sass_cache_*\\**", "**\\_sass_cache_*\\**",
+				"**\\_styled\\**", "**\\_unstyled\\**"
+			});
+		directoryScanner.setIncludes(new String[] {"**\\*.css"});
+
+		directoryScanner.scan();
+
+		String[] fileNames = directoryScanner.getIncludedFiles();
+
+		if (!_isModified(basedir, fileNames)) {
 			return;
 		}
 
-		File cacheFile = getCacheFile(docrootDirName.concat(fileName));
+		for (String fileName : fileNames) {
+			if (fileName.contains("_rtl")) {
+				continue;
+			}
 
-		String parsedContent = _parseSassFile(
-			docrootDirName, portalCommonDirName, fileName);
-
-		FileUtil.write(cacheFile, parsedContent);
-
-		File file = new File(docrootDirName.concat(fileName));
-
-		long lastModified = file.lastModified();
-
-		cacheFile.setLastModified(lastModified);
-
-		// Generate RTL cache
-
-		File rtlCacheFile = getCacheFile(
-			docrootDirName.concat(fileName), "_rtl");
-
-		String rtlCss = RTLCSSUtil.getRtlCss(parsedContent);
-
-		// Append custom CSS for RTL
-
-		String rtlCustomFileName = getRtlCustomFileName(fileName);
-
-		File rtlCustomFile = new File(docrootDirName, rtlCustomFileName);
-
-		if (rtlCustomFile.exists()) {
-			lastModified = rtlCustomFile.lastModified();
-
-			String rtlCustomCss = _parseSassFile(
-				docrootDirName, portalCommonDirName, rtlCustomFileName);
-
-			rtlCss += rtlCustomCss;
+			fileNameList.add(_normalizeFileName(dirName, fileName));
 		}
-
-		FileUtil.write(rtlCacheFile, rtlCss);
-
-		rtlCacheFile.setLastModified(lastModified);
 	}
 
 	private String _getCssThemePath(String fileName) {
@@ -278,56 +289,9 @@ public class SassToCssBuilder {
 		);
 	}
 
-	private void _parseSassDirectory(
-			String dirName, String docrootDirName, String portalCommonDirName)
-		throws Exception {
-
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		String basedir = docrootDirName.concat(dirName);
-
-		directoryScanner.setBasedir(basedir);
-
-		directoryScanner.setExcludes(
-			new String[] {
-				"**\\_diffs\\**", "**\\.sass-cache*\\**",
-				"**\\.sass_cache_*\\**", "**\\_sass_cache_*\\**",
-				"**\\_styled\\**", "**\\_unstyled\\**"
-			});
-		directoryScanner.setIncludes(new String[] {"**\\*.css"});
-
-		directoryScanner.scan();
-
-		String[] fileNames = directoryScanner.getIncludedFiles();
-
-		if (!_isModified(basedir, fileNames)) {
-			return;
-		}
-
-		for (String fileName : fileNames) {
-			fileName = _normalizeFileName(dirName, fileName);
-
-			try {
-				long start = System.currentTimeMillis();
-
-				_cacheSass(docrootDirName, portalCommonDirName, fileName);
-
-				long end = System.currentTimeMillis();
-
-				System.out.println(
-					"Parsed " + docrootDirName + fileName + " in " +
-						(end - start) + " ms");
-			}
-			catch (Exception e) {
-				System.out.println("Unable to parse " + fileName);
-
-				e.printStackTrace();
-			}
-		}
-	}
-
 	private String _parseSassFile(
-			String docrootDirName, String portalCommonDirName, String fileName)
+			RubyExecutor rubyExecutor, String docrootDirName,
+			String portalCommonDirName, String fileName)
 		throws Exception {
 
 		String filePath = docrootDirName.concat(fileName);
@@ -348,15 +312,85 @@ public class SassToCssBuilder {
 
 		inputObjects.put("out", unsyncPrintWriter);
 
-		_rubyExecutor.eval(null, inputObjects, null, _rubyScript);
+		rubyExecutor.eval(null, inputObjects, null, _rubyScript);
 
 		unsyncPrintWriter.flush();
 
 		return unsyncByteArrayOutputStream.toString();
 	}
 
-	private RubyExecutor _rubyExecutor;
 	private String _rubyScript;
 	private String _tempDir;
+
+	private class CacheSassCallable implements Callable<String> {
+
+		public CacheSassCallable(
+			RubyExecutor rubyExecutor, String docrootDirName,
+			String portalCommonDirName, String fileName) {
+
+			_rubyExecutor = rubyExecutor;
+			_docrootDirName = docrootDirName;
+			_portalCommonDirName = portalCommonDirName;
+			_fileName = fileName;
+		}
+
+		@Override
+		public String call() throws Exception {
+			long start = System.currentTimeMillis();
+
+			String fileName = _docrootDirName.concat(_fileName);
+
+			File cacheFile = getCacheFile(fileName);
+
+			String parsedContent = _parseSassFile(
+				_rubyExecutor, _docrootDirName, _portalCommonDirName,
+				_fileName);
+
+			FileUtil.write(cacheFile, parsedContent);
+
+			File file = new File(fileName);
+
+			long lastModified = file.lastModified();
+
+			cacheFile.setLastModified(lastModified);
+
+			// Generate RTL cache
+
+			File rtlCacheFile = getCacheFile(fileName, "_rtl");
+
+			String rtlCss = RTLCSSUtil.getRtlCss(parsedContent);
+
+			// Append custom CSS for RTL
+
+			String rtlCustomFileName = getRtlCustomFileName(fileName);
+
+			File rtlCustomFile = new File(_docrootDirName, rtlCustomFileName);
+
+			if (rtlCustomFile.exists()) {
+				lastModified = rtlCustomFile.lastModified();
+
+				String rtlCustomCss = _parseSassFile(
+					_rubyExecutor, _docrootDirName, _portalCommonDirName,
+					rtlCustomFileName);
+
+				rtlCss += rtlCustomCss;
+			}
+
+			FileUtil.write(rtlCacheFile, rtlCss);
+
+			rtlCacheFile.setLastModified(lastModified);
+
+			long end = System.currentTimeMillis();
+
+			return "Parsed " + _docrootDirName + _fileName + " in " +
+				(end - start) + " ms";
+		}
+
+		private RubyExecutor _rubyExecutor;
+		private String _docrootDirName;
+		private String _portalCommonDirName;
+		private String _fileName;
+
+	}
 
 }

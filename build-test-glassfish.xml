@@ -8,17 +8,7 @@
 
 		<record action="start" name="log" />
 
-		<antcall target="run-simple-server">
-			<param name="simple.server.dir" value="${app.server.glassfish.dir}" />
-			<param name="simple.server.bin.dir" value="${app.server.glassfish.bin.dir}" />
-			<param name="simple.server.deploy.dir" value="${app.server.glassfish.deploy.dir}" />
-			<param name="simple.server.lib.global.dir" value="${app.server.glassfish.lib.global.dir}" />
-			<param name="simple.server.portal.dir" value="${app.server.glassfish.instance.dir}/applications/liferay-portal" />
-			<param name="simple.server.start.executable" value="asadmin${file.suffix.bat}" />
-			<param name="simple.server.start.executable.arg.line" value="start-domain -v" />
-			<param name="simple.server.stop.executable" value="asadmin${file.suffix.bat}" />
-			<param name="simple.server.stop.executable.arg.line" value="stop-domain" />
-		</antcall>
+		<antcall target="run-simple-server" />
 
 		<record action="stop" name="log" />
 
@@ -26,6 +16,8 @@
 	</target>
 
 	<target name="run-selenium-glassfish">
+		<echo file="app.server.${user.name}.properties">app.server.type=glassfish</echo>
+
 		<if>
 			<not>
 				<isset property="build.app.server" />
@@ -52,7 +44,7 @@
 
 		<antcall target="start-selenium" />
 
-		<antcall target="run-glassfish">
+		<antcall target="run-glassfish" inheritAll="false">
 			<param name="test.class" value="${test.name}" />
 		</antcall>
 

@@ -8,18 +8,7 @@
 
 		<record action="start" name="log" />
 
-		<antcall target="run-simple-server">
-			<param name="simple.server.type" value="jboss" />
-			<param name="simple.server.dir" value="${app.server.jboss.dir}" />
-			<param name="simple.server.bin.dir" value="${app.server.jboss.bin.dir}" />
-			<param name="simple.server.deploy.dir" value="${app.server.jboss.deploy.dir}" />
-			<param name="simple.server.lib.global.dir" value="${app.server.jboss.lib.global.dir}" />
-			<param name="simple.server.portal.dir" value="${app.server.jboss.portal.dir}" />
-			<param name="simple.server.start.executable" value="standalone${file.suffix.bat}" />
-			<param name="simple.server.start.executable.arg.line" value="" />
-			<param name="simple.server.stop.executable" value="jboss-cli${file.suffix.bat}" />
-			<param name="simple.server.stop.executable.arg.line" value="--connect command=:shutdown" />
-		</antcall>
+		<antcall target="run-simple-server" />
 
 		<record action="stop" name="log" />
 
@@ -27,6 +16,11 @@
 	</target>
 
 	<target name="run-selenium-jboss-eap">
+		<echo file="app.server.${user.name}.properties">app.server.type=jboss
+app.server.jboss.version=6.1.0
+app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
+app.server.jboss.zip.name=jboss-eap-6.1.0.zip</echo>
+
 		<if>
 			<not>
 				<isset property="build.app.server" />
@@ -42,7 +36,7 @@
 
 		<antcall target="start-selenium" />
 
-		<antcall target="run-jboss-eap">
+		<antcall target="run-jboss-eap" inheritAll="false">
 			<param name="test.class" value="${test.name}" />
 		</antcall>
 

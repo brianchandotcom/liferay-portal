@@ -1,17 +1,7 @@
 <definition component-name="portal-tools">
-	<command name="changeSystemTime" priority="5">
-		<var name="hours" value="3" />
-
-		<execute action="BaseLiferay#commandLineAntTarget" locator1="build-test.xml" value1="change-system-time -Dhours=${hours}" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute action="BaseLiferay#commandLineAntTarget" locator1="build-test.xml" value1="change-system-time-to-default" />
-	</command>
-
 	<command name="shutDownStartUpAppServer" priority="5">
-		<execute action="BaseLiferay#commandLineAntTarget" locator1="build-test.xml" value1="shutdown-appserver" />
-		<execute action="BaseLiferay#commandLineAntTarget" locator1="build-test.xml" value1="startup-appserver" />
+		<execute action="BaseLiferay#commandLineAntTarget" locator1="build-test.xml" value1="stop-app-server" />
+		<execute action="BaseLiferay#commandLineAntTarget" locator1="build-test.xml" value1="start-app-server" />
 
 		<execute macro="User#firstLoginPG" />
 	</command>

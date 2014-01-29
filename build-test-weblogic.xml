@@ -4,6 +4,8 @@
 	<import file="build-test.xml" />
 
 	<target name="run-selenium-weblogic">
+		<echo file="app.server.${user.name}.properties">app.server.type=weblogic</echo>
+
 		<if>
 			<not>
 				<isset property="build.app.server" />
@@ -23,7 +25,7 @@
 
 		<antcall target="start-selenium" />
 
-		<antcall target="run-weblogic">
+		<antcall target="run-weblogic" inheritAll="false">
 			<param name="test.class" value="${test.name}" />
 		</antcall>
 
@@ -35,21 +37,7 @@
 
 		<record action="start" name="log" />
 
-		<condition property="file.suffix.cmd" value=".cmd" else=".sh">
-			<contains string="${os.name}" substring="Windows" casesensitive="false" />
-		</condition>
-
-		<antcall target="run-simple-server">
-			<param name="simple.server.dir" value="${app.server.weblogic.dir}" />
-			<param name="simple.server.bin.dir" value="${app.server.weblogic.bin.dir}" />
-			<param name="simple.server.deploy.dir" value="${app.server.weblogic.deploy.dir}" />
-			<param name="simple.server.lib.global.dir" value="${app.server.weblogic.lib.global.dir}" />
-			<param name="simple.server.portal.dir" value="${app.server.weblogic.portal.dir}" />
-			<param name="simple.server.start.executable" value="../startWebLogic${file.suffix.cmd}" />
-			<param name="simple.server.start.executable.arg.line" value="" />
-			<param name="simple.server.stop.executable" value="../stopWebLogic${file.suffix.cmd}" />
-			<param name="simple.server.stop.executable.arg.line" value="" />
-		</antcall>
+		<antcall target="run-simple-server" />
 
 		<record action="stop" name="log" />
 

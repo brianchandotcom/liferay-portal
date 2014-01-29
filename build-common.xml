@@ -225,6 +225,10 @@
 		<contains string="${os.name}" substring="Windows" casesensitive="false" />
 	</condition>
 
+	<condition property="file.suffix.cmd" value=".cmd" else=".sh">
+		<contains string="${os.name}" substring="Windows" casesensitive="false" />
+	</condition>
+
 	<condition property="file.suffix.exe" value=".exe" else="">
 		<contains string="${os.name}" substring="Windows" casesensitive="false" />
 	</condition>

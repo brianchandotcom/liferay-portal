@@ -6,17 +6,7 @@
 	<target name="run-resin">
 		<antcall target="clean-up-logs" />
 
-		<antcall target="run-simple-server">
-			<param name="simple.server.dir" value="${app.server.resin.dir}" />
-			<param name="simple.server.bin.dir" value="${app.server.resin.bin.dir}" />
-			<param name="simple.server.deploy.dir" value="${app.server.resin.deploy.dir}" />
-			<param name="simple.server.lib.global.dir" value="${app.server.resin.lib.global.dir}" />
-			<param name="simple.server.portal.dir" value="${app.server.resin.portal.dir}" />
-			<param name="simple.server.start.executable" value="start${file.suffix.bat}" />
-			<param name="simple.server.start.executable.arg.line" value="" />
-			<param name="simple.server.stop.executable" value="stop${file.suffix.bat}" />
-			<param name="simple.server.stop.executable.arg.line" value="" />
-		</antcall>
+		<antcall target="run-simple-server" />
 
 		<antcall target="copy-log-file" />
 
@@ -24,6 +14,8 @@
 	</target>
 
 	<target name="run-selenium-resin">
+		<echo file="app.server.${user.name}.properties">app.server.type=resin</echo>
+
 		<if>
 			<not>
 				<isset property="build.app.server" />
@@ -65,7 +57,7 @@
 
 		<antcall target="start-selenium" />
 
-		<antcall target="run-resin">
+		<antcall target="run-resin" inheritAll="false">
 			<param name="test.class" value="${test.name}" />
 		</antcall>
 

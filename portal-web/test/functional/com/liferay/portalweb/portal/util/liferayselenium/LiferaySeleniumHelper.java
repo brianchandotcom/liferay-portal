@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -352,6 +353,33 @@ public class LiferaySeleniumHelper {
 		if (liferaySelenium.isNotVisible(locator)) {
 			throw new Exception(
 				"Element is not visible at \"" + locator + "\"");
+		}
+	}
+
+	public static void commandLineAntTarget(
+			LiferaySelenium liferaySelenium, String fileName, String target)
+		throws Exception {
+
+		Runtime runtime = Runtime.getRuntime();
+
+		String projectDir = liferaySelenium.getProjectDir();
+
+		if (!OSDetector.isWindows()) {
+			projectDir = StringUtil.replace(projectDir, "\\", "//");
+			runtime.exec("bash -c cd " + projectDir);
+			runtime.exec("bash -c ant -f " + fileName + " " + target);
+			runtime.exec("bash -c ant -f " + fileName + " " + target);
+		}
+		else {
+			runtime.exec("cmd /c cd " + projectDir);
+			runtime.exec("cmd /c ant -f " + fileName + " " + target);
+		}
+
+		if (target.contains("startup")) {
+			Thread.sleep(80000);
+		}
+		else {
+			Thread.sleep(15000);
 		}
 	}
 

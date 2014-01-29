@@ -284,6 +284,44 @@
 		</if>
 	</target>
 
+	<target name="change-system-time">
+		 <tstamp>
+			<format property="future.time" pattern="hh:mm" offset="${hours}" unit="hour" />
+		</tstamp>
+
+		<echo message="Add hours: ${hours}" />
+		<echo message="current time: ${future.time}" />
+
+	  	<exec executable="/bin/sh" os="${os.unix}">
+	   		<arg line="-c date +%T -s ${future.time}" />
+	  	</exec>
+
+	  	<exec executable="cmd.exe" os="${os.windows}">
+	   		<arg line="/c Time ${future.time}" />
+	  	</exec>
+	</target>
+
+	<target name="change-system-time-to-default">
+		 <tstamp>
+			<format property="current.time" pattern="hh:mm" />
+		</tstamp>
+
+		<echo message="Add hours: ${hours}" />
+		<echo message="current time: ${current.time}" />
+
+	  	<exec executable="/bin/sh" os="${os.unix}">
+	   		<arg line="-c apt-get install ntpdate" />
+	  	</exec>
+
+	  	<exec executable="/bin/sh" os="${os.unix}">
+	   		<arg line="-c sudo ntpdate pool.ntp.org" />
+	  	</exec>
+
+	  	<exec executable="cmd.exe" os="${os.windows}">
+	   		<arg line="/c w32tm /resync" />
+	  	</exec>
+	</target>
+
 	<target name="clean-up-logs">
 		<delete file="log" />
 		<delete file="portal-web/test-ant-scripts/log" />
@@ -2439,6 +2477,38 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</or>
 			<then>
 				<antcall target="stop-ie-driver" />
+			</then>
+		</if>
+	</target>
+
+	<target name="shutdown-appserver">
+		<var name="simple.server.dir" value="${app.server.tomcat.dir}" />
+		<var name="simple.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
+		<var name="simple.server.stop.executable" value="shutdown${file.suffix.bat}" />
+		<var name="simple.server.stop.executable.arg.line" value="" />
+
+		<if>
+			<contains string="${simple.server.dir}" substring="tomcat" />
+			<then>
+				<exec dir="${simple.server.bin.dir}" executable="${simple.server.stop.executable}" resolveexecutable="true">
+					<arg line="${simple.server.stop.executable.arg.line}" />
+				</exec>
+			</then>
+		</if>
+	</target>
+
+	<target name="startup-appserver">
+		<var name="simple.server.dir" value="${app.server.tomcat.dir}" />
+		<var name="simple.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
+		<var name="simple.server.start.executable" value="catalina${file.suffix.bat}" />
+		<var name="simple.server.start.executable.arg.line" value="run" />
+
+		<if>
+			<contains string="${simple.server.dir}" substring="tomcat" />
+			<then>
+				<exec dir="${simple.server.bin.dir}" executable="${simple.server.start.executable}" resolveexecutable="true">
+					<arg line="${simple.server.start.executable.arg.line}" />
+				</exec>
 			</then>
 		</if>
 	</target>

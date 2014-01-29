@@ -268,6 +268,13 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void commandLineAntTarget(String fileName, String target)
+		throws Exception {
+
+		LiferaySeleniumHelper.commandLineAntTarget(this, fileName, target);
+	}
+
+	@Override
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception {
 

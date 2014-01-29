@@ -1,0 +1,5 @@
+<definition>
+	<command name="commandLineAntTarget">
+		<execute selenium="commandLineAntTarget" />
+	</command>
+</definition>

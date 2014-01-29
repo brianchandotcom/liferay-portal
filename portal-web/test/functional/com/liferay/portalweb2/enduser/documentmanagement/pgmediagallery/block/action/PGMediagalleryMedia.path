@@ -24,33 +24,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MEDIA_THUMBNAIL</td>
-	<td>//img[@class='image-viewer-image']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MEDIA_CAPTION</td>
-	<td>//h4[@class='image-viewer-caption']</td>
+	<td>//h4[@class='image-viewer-caption' and contains(.,'{key_mgDocumentTitle} - {key_mgDocumentDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOWNLOAD</td>
-	<td>//img[contains(@title,'Download' )]</td>
+	<td>MEDIA_COUNT</td>
+	<td>//h5[@class='image-viewer-info']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>VIEW</td>
-	<td>//img[@title='View']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT</td>
-	<td>//img[@title='Edit']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS</td>
-	<td>//img[@title='Permissions']</td>
+	<td>MEDIA_ICON</td>
+	<td>//img[@class='image-viewer-image']</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,6 +46,37 @@
 <tr>
 	<td>CONFIRMATION</td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY-->
+<tr>
+	<td>ENTRY_DOWNLOAD_ICON</td>
+	<td>//span[contains(.,'Download')]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_VIEW_ICON</td>
+	<td>//span[contains(.,'View')]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_EDIT_ICON</td>
+	<td>//span[contains(.,'Edit')]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_PERMISSIONS_ICON</td>
+	<td>//span[contains(.,'Permissions')]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_RECYCLE_BIN_ICON</td>
+	<td>//span[contains(.,'Move to the Recycle Bin')]/a/img</td>
 	<td></td>
 </tr>
 </tbody>

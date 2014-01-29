@@ -12,7 +12,7 @@
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 
-		<case locator-key1="ENTRY_TITLE_1">
+		<case locator-key1="ENTRY_TITLE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>

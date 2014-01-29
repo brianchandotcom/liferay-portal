@@ -71,11 +71,6 @@
 		<execute action="PGMediagalleryAddmedia#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGMediagallery#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGMediagallery#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${mgFolderName}" />
-		<execute action="PGMediagallery#assertClick" locator-key1="ENTRY_TITLE_1" value1="${mgFolderName}" />
-
-		<execute action="PGMediagalleryFolder#assertElementPresent" locator-key1="MEDIA_THUMBNAIL" />
-		<execute action="PGMediagalleryFolder#assertElementPresent" locator-key1="MEDIA_TITLE" value1="${mgDocumentTitle}" />
 	</command>
 
 	<command name="cancelCheckoutPG">
@@ -180,12 +175,12 @@
 	</command>
 
 	<command name="deletePGViaMG">
-		<execute action="PGMediagalleryFolder#assertClick" locator-key1="MEDIA_TITLE" value1="${mgDocumentTitle}" />
+		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
+		<execute action="PGMediagalleryFolder#assertClick" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
 		<execute action="PGMediagalleryMedia#click" locator-key1="MOVE_TO_THE_RECYCLE_BIN" />
-
-		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE" value1="The Document ${mgDocumentTitle} was moved to the Recycle Bin. Undo" />
-		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no media files in this folder." />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
+		<execute action="PGMediagalleryFolder#assertElementNotPresent" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
 	</command>
 
 	<command name="downloadCP">
@@ -274,17 +269,22 @@
 	</command>
 
 	<command name="editPGViaMG">
-		<execute action="PGMediagalleryFolder#assertClick" locator-key1="MEDIA_TITLE" value1="${mgDocumentTitle}" />
+		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
+
+		<execute action="PGMediagalleryFolder#assertClick" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
+
+		<var name="key_mgDocumentDescription" value="${mgDocumentDescription}" />
+		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
 		<execute action="PGMediagalleryMedia#assertTextEquals" locator-key1="MEDIA_CAPTION" value1="${mgDocumentTitle} - ${mgDocumentDescription}" />
-		<execute action="PGMediagalleryMedia#click" locator-key1="EDIT" />
+		<execute action="PGMediagalleryMedia#click" locator-key1="ENTRY_EDIT_ICON" />
 
-		<execute action="PGMediagalleryEditmedia#type" locator-key1="TITLE_FIELD" value1="${mgDocumentTitle} Edit" />
-		<execute action="PGMediagalleryEditmedia#type" locator-key1="DESCRIPTION_FIELD" value1="${mgDocumentDescription} Edit" />
+		<execute action="PGMediagalleryEditmedia#type" locator-key1="TITLE_FIELD" value1="${mgDocumentTitleEdit}" />
+		<execute action="PGMediagalleryEditmedia#type" locator-key1="DESCRIPTION_FIELD" value1="${mgDocumentDescriptionEdit}" />
 		<execute action="PGMediagalleryEditmedia#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="MEDIA_TITLE" value1="${mgDocumentTitle} Edit" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitleEdit}" />
 	</command>
 
 	<command name="lockPG">
@@ -556,18 +556,40 @@
 	</command>
 
 	<command name="searchPGviaMG">
-		<execute action="PGMediagallery#type" locator-key1="SEARCH_FIELD" value1="${mgDocumentTitle}"/>
-		<execute action="PGMediagallery#click" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="PGMediagallery#assertElementPresent" locator-key1="ENTRY_THUMBNAIL_1" />
-		<execute action="PGMediagallery#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${mgDocumentTitle}"/>
+		<if>
+			<equals arg1="${mediaGallerySearch}" arg2="Entry" />
+			<then>
+				<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
-		<execute macro="Page#gotoPG" />
+				<execute action="PGMediagallery#type" locator-key1="SEARCH_FIELD" value1="${mgDocumentTitle}" />
+				<execute action="PGMediagallery#click" locator-key1="SEARCH_BUTTON" value1="Search" />
 
-		<execute action="PGMediagallery#type" locator-key1="SEARCH_FIELD" value1="${mgEntryQuotes}"/>
-		<execute action="PGMediagallery#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="PGMediagallery#assertElementNotPresent" locator-key1="ENTRY_THUMBNAIL_1" />
-		<execute action="PGMediagallery#assertElementNotPresent" locator-key1="ENTRY_TITLE_1" value1="${mgEntryQuotes}"/>
-		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no media files in this folder." />
+				<execute action="PGMediagallery#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
+			</then>
+			<elseif>
+				<equals arg1="${mediaGallerySearch}" arg2="Null" />
+				<then>
+					<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
+
+					<execute action="PGMediagallery#type" locator-key1="SEARCH_FIELD" value1="asdf" />
+					<execute action="PGMediagallery#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+
+					<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no media files in this folder." />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${mediaGallerySearch}" arg2="Quotes" />
+				<then>
+					<var name="quotes"><![CDATA["${mgDocumentTitle}"]]></var>
+					<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
+
+					<execute action="PGMediagallery#type" locator-key1="SEARCH_FIELD" value1="${quotes}" />
+					<execute action="PGMediagallery#click" locator-key1="SEARCH_BUTTON" value1="Search" />
+
+					<execute action="PGMediagallery#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
+				</then>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="tearDownCP">
@@ -856,6 +878,13 @@
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_DOWNLOAD_DOCUMENT" />
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_GET_URL_OR_WEBDAV_URL" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_AUTOMATICALLY_EXTRACTED_METADATA" value1="Automatically Extracted Metadata" />
+	</command>
+
+	<command name="viewPGViaMG">
+		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
+
+		<execute action="PGMediagalleryFolder#assertElementPresent" locator-key1="ENTRY_THUMBNAIL" />
+		<execute action="PGMediagalleryFolder#assertElementPresent" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
 	</command>
 
 	<command name="viewPGviaStagingLocalLive">

@@ -24,23 +24,45 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BACK_BUTTON</td>
+	<td>//a[contains(@id,'TabsBack')]/span[contains(.,'Back')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECYCLE_BIN_SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(@class,'taglib-trash-undo')]/form</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MEDIA_THUMBNAIL</td>
-	<td>//span[@class='image-thumbnail']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MEDIA_TITLE</td>
-	<td>//span[@class='image-title']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUBFOLDER-->
+<tr>
+	<td>SUBFOLDER_THUMBNAIL</td>
+	<td>//a[contains(.,'${key_mgDocumentTitle}')]/span[@class='image-thumbnail']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBFOLDER_NAME</td>
+	<td>//span[@class='image-title' and contains(.,'${mgSubfolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER-->
+<tr>
+	<td>FOLDER_NAME</td>
+	<td>//div[@class='lfr-asset-name']/h4[contains(.,'${key_mgFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,13 +76,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUBFOLDER_NAME</td>
-	<td>//span[@class='image-title' and contains(.,'${mgSubfolderName}')]</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY-->
+<tr>
+	<td>ENTRY_THUMBNAIL</td>
+	<td>//a[contains(.,'${key_mgDocumentTitle}')]/span[@class='image-thumbnail']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TITLE_1</td>
-	<td>//div[@class='lfr-asset-name']/h4</td>
+	<td>ENTRY_TITLE</td>
+	<td>//span[@class='image-title' and contains(.,'${key_mgDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,7 +99,7 @@
 <!--SEARCH-->
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[contains(@class,'search-query') and @placeholder='Keywords']</td>
+	<td>//input[contains(@class,'search-query') and @placeholder='Search']</td>
 	<td></td>
 </tr>
 <tr>

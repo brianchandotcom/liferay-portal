@@ -24,18 +24,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RECYCLE_BIN_SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(@class,'taglib-trash-undo')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>RECYCLE_BIN_SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(@class,'taglib-trash-undo')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_MESSSAGE</td>
-	<td>//div[contains(@id,'imageGalleryAssetInfo')]</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -43,19 +43,19 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--MENUBAR-->
+<!--TOOLBAR-->
 <tr>
-	<td>HOME</td>
+	<td>TOOLBAR_HOME</td>
 	<td>//ul[@role='menubar']/li[contains(.,'Home')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>Recent</td>
+	<td>TOOLBAR_RECENT</td>
 	<td>//ul[@role='menubar']/li[contains(.,'Recent')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>Mine</td>
+	<td>TOOLBAR_MINE</td>
 	<td>//ul[@role='menubar']/li[contains(.,'Mine')]/a/span</td>
 	<td></td>
 </tr>
@@ -66,33 +66,33 @@
 </tr>
 <!--OPTIONS_MENULIST-->
 <tr>
-	<td>OPTIONS_MENULIST_LOOKANDFEEL</td>
-	<td>//ul/li[contains(.,'Look and Feel')]/a</td>
+	<td>OPTIONS_MENULIST_LOOK_AND_FEEL</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'Look and Feel')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_MENULIST_CONFIGURATION</td>
-	<td>//ul/li[contains(.,'Configuration')]/a</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'Configuration')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS_MENULIST_EXPORTIMPORT</td>
-	<td>//ul/li[contains(.,'Export / Import')]/a</td>
+	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'Export / Import')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_MENULIST_MAXIMIZE</td>
-	<td>//ul/li[contains(.,'Maximize')]/a</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'Maximize')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_MENULIST_MINIMIZE</td>
-	<td>//ul/li[contains(.,'Minimize')]/a</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'Minimize')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_MENULIST_REMOVE</td>
-	<td>//ul/li[contains(.,'Remove')]/a</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'Remove')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -118,23 +118,34 @@
 </tr>
 <!--ENTRY-->
 <tr>
-	<td>ENTRY_THUMBNAIL_1</td>
-	<td>//span[@class='image-thumbnail']</td>
+	<td>ENTRY_THUMBNAIL</td>
+	<td>//a[contains(.,'${key_mgDocumentTitle}')]/span[@class='image-thumbnail']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TITLE_1</td>
-	<td>//span[@class='image-title']</td>
+	<td>ENTRY_TITLE</td>
+	<td>//span[@class='image-title' and contains(.,'${key_mgDocumentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRIES_FOLDER</td>
+	<td>//span[@class='image-thumbnail']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER-->
+<tr>
+	<td>FOLDER_THUMBNAIL</td>
+	<td>//a[contains(.,'${key_mgFolderName}')]/span[@class='image-thumbnail']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_NAME</td>
-	<td>//span[@class='image-title' and contains(.,'${mgFolderName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_THUMBNAIL</td>
-	<td>//a[contains(.,'${mgFolderName}')]/span[@class='image-thumbnail']</td>
+	<td>//span[@class='image-title' and contains(.,'${key_mgFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -171,6 +182,11 @@
 <tr>
 	<td>FOLDER_MENU_ADD_MEDIA</td>
 	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li[contains(.,'Add Media')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_VIEW_SLIDE_SHOW</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li[contains(.,'View Slide Show')]/a/span</td>
 	<td></td>
 </tr>
 <tr>

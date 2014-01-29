@@ -603,6 +603,10 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		clearLastPublishDate(liveGroup.getGroupId(), true);
 		clearLastPublishDate(liveGroup.getGroupId(), false);
 
+		if (liveGroup.getRemoteStagingGroupCount() > 0) {
+			return;
+		}
+
 		Set<String> parameterNames = serviceContext.getAttributes().keySet();
 
 		for (String parameterName : parameterNames) {

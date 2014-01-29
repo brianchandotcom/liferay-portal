@@ -104,6 +104,9 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 					backgroundTaskStatusMessageListener);
 			}
 
+			backgroundTask = BackgroundTaskLocalServiceUtil.fetchBackgroundTask(
+				backgroundTask.getBackgroundTaskId());
+
 			BackgroundTaskResult backgroundTaskResult =
 				backgroundTaskExecutor.execute(backgroundTask);
 

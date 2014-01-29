@@ -31,7 +31,6 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.StagingLocalServiceUtil;
-import com.liferay.portal.service.persistence.BackgroundTaskUtil;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
 
@@ -75,7 +74,7 @@ public class LayoutStagingBackgroundTaskExecutor
 					targetGroupId, taskContextMap, userId);
 
 			missingReferences = TransactionalCallableUtil.call(
-					_transactionAttribute, layoutStagingCallable);
+				_transactionAttribute, layoutStagingCallable);
 		}
 		catch (Throwable t) {
 			Group sourceGroup = GroupLocalServiceUtil.getGroup(sourceGroupId);
@@ -99,7 +98,8 @@ public class LayoutStagingBackgroundTaskExecutor
 			StagingUtil.unlockGroup(targetGroupId);
 		}
 
-		return processMissingReferences(backgroundTask, missingReferences);
+		return processMissingReferences(
+			backgroundTask.getBackgroundTaskId(), missingReferences);
 	}
 
 	protected void initLayoutSetBranches(
@@ -170,18 +170,14 @@ public class LayoutStagingBackgroundTaskExecutor
 					_sourceGroupId, privateLayout, layoutIds, parameterMap,
 					startDate, endDate);
 
-				BackgroundTask backgroundTask =
-					BackgroundTaskUtil.findByPrimaryKey(_backgroundTaskId);
-
-				backgroundTask = markBackgroundTask(backgroundTask, "exported");
+				markBackgroundTask(_backgroundTaskId, "exported");
 
 				missingReferences =
 					LayoutLocalServiceUtil.validateImportLayoutsFile(
 						_userId, _targetGroupId, privateLayout, parameterMap,
 						file);
 
-				backgroundTask = markBackgroundTask(
-					backgroundTask, "validated");
+				markBackgroundTask(_backgroundTaskId, "validated");
 
 				LayoutLocalServiceUtil.importLayouts(
 					_userId, _targetGroupId, privateLayout, parameterMap, file);

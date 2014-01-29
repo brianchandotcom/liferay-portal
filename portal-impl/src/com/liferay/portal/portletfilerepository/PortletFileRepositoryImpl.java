@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -272,6 +273,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
 
+			SystemEventHierarchyEntryThreadLocal.push(FileEntry.class);
+
 			DLAppLocalServiceUtil.deleteFileEntry(fileEntryId);
 		}
 		catch (NoSuchRepositoryEntryException nsree) {
@@ -281,6 +284,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
+
+			SystemEventHierarchyEntryThreadLocal.pop(FileEntry.class);
 		}
 	}
 
@@ -304,6 +309,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
 
+			SystemEventHierarchyEntryThreadLocal.push(Folder.class);
+
 			DLAppLocalServiceUtil.deleteFolder(folderId);
 		}
 		catch (NoSuchRepositoryEntryException nsree) {
@@ -313,6 +320,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
+
+			SystemEventHierarchyEntryThreadLocal.pop(Folder.class);
 		}
 	}
 

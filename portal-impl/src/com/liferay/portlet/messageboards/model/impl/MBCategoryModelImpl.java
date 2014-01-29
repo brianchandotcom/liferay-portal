@@ -112,12 +112,13 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBCategory"),
 			true);
-	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long PARENTCATEGORYID_COLUMN_BITMASK = 4L;
-	public static long STATUS_COLUMN_BITMASK = 8L;
-	public static long UUID_COLUMN_BITMASK = 16L;
-	public static long NAME_COLUMN_BITMASK = 32L;
+	public static long CATEGORYID_COLUMN_BITMASK = 1L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long PARENTCATEGORYID_COLUMN_BITMASK = 8L;
+	public static long STATUS_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
+	public static long NAME_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -390,7 +391,19 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	@Override
 	public void setCategoryId(long categoryId) {
+		_columnBitmask |= CATEGORYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCategoryId) {
+			_setOriginalCategoryId = true;
+
+			_originalCategoryId = _categoryId;
+		}
+
 		_categoryId = categoryId;
+	}
+
+	public long getOriginalCategoryId() {
+		return _originalCategoryId;
 	}
 
 	@JSON
@@ -1029,6 +1042,10 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 		mbCategoryModelImpl._originalUuid = mbCategoryModelImpl._uuid;
 
+		mbCategoryModelImpl._originalCategoryId = mbCategoryModelImpl._categoryId;
+
+		mbCategoryModelImpl._setOriginalCategoryId = false;
+
 		mbCategoryModelImpl._originalGroupId = mbCategoryModelImpl._groupId;
 
 		mbCategoryModelImpl._setOriginalGroupId = false;
@@ -1301,6 +1318,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	private String _uuid;
 	private String _originalUuid;
 	private long _categoryId;
+	private long _originalCategoryId;
+	private boolean _setOriginalCategoryId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;

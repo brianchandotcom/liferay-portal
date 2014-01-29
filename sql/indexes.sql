@@ -376,6 +376,7 @@ create index IX_48814BBA on MBBan (userId);
 create index IX_4F841574 on MBBan (uuid_, companyId);
 create unique index IX_2A3B68F6 on MBBan (uuid_, groupId);
 
+create index IX_D1642361 on MBCategory (categoryId, groupId, parentCategoryId, status);
 create index IX_E15A5DB5 on MBCategory (companyId, status);
 create index IX_C295DBEE on MBCategory (groupId, parentCategoryId, status);
 create index IX_DA84A9F7 on MBCategory (groupId, status);

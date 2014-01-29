@@ -1819,6 +1819,12 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
+	public com.liferay.portal.model.Layout getLinkedToLayout()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layout.getLinkedToLayout();
+	}
+
+	@Override
 	public long getParentPlid()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

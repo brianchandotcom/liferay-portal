@@ -132,6 +132,14 @@ public interface Portal {
 	public void addPageTitle(String title, HttpServletRequest request);
 
 	/**
+	 * Adds the portal event listener to the portal. The listener will be
+	 * notified whenever the portal address or port is set.
+	 *
+	 * @param portalEventListener the portal event listener to add
+	 */
+	public void addPortalEventListener(PortalEventListener portalEventListener);
+
+	/**
 	 * Adds the portal port event listener to the portal. The listener will be
 	 * notified whenever the portal port is set.
 	 *
@@ -1293,6 +1301,9 @@ public interface Portal {
 	public boolean isUpdateAvailable() throws SystemException;
 
 	public boolean isValidResourceId(String resourceId);
+
+	public void removePortalEventListener(
+		PortalEventListener portalEventListener);
 
 	public void removePortalPortEventListener(
 		PortalPortEventListener portalPortEventListener);

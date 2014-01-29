@@ -162,7 +162,7 @@ userTracker = userTracker.toEscapedModel();
 						%>
 
 									<dt>
-										<%= attrName %>
+										<%= HtmlUtil.escape(attrName) %>
 									</dt>
 
 						<%

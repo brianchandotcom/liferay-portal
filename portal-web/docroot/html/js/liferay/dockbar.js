@@ -144,11 +144,16 @@ AUI.add(
 
 						if (panelTrigger) {
 							panelTrigger.on(
-								EVENT_CLICK,
+								'gesturemovestart',
 								function(event) {
-									event.halt();
+									event.currentTarget.once(
+										'gesturemoveend',
+										function(event) {
+											event.halt();
 
-									instance._togglePanel(panelId);
+											instance._togglePanel(panelId);
+										}
+									);
 								}
 							);
 						}
@@ -493,6 +498,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-node', 'aui-overlay-mask-deprecated', 'event-touch']
+		requires: ['aui-node', 'aui-overlay-mask-deprecated', 'event-move', 'event-touch']
 	}
 );

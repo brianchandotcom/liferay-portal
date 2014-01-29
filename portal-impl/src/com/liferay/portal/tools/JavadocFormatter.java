@@ -1608,13 +1608,23 @@ public class JavadocFormatter {
 	}
 
 	private String _trimMultilineText(String text) {
-		String[] textArray = StringUtil.splitLines(text);
+		String[] lines = StringUtil.splitLines(text);
 
-		for (int i = 0; i < textArray.length; i++) {
-			textArray[i] = textArray[i].trim();
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < lines.length; i++) {
+			String line = lines[i].trim();
+
+			sb.append(line);
+
+			if (!line.endsWith(StringPool.OPEN_PARENTHESIS) &&
+				(i < (lines.length - 1))) {
+
+				sb.append(StringPool.SPACE);
+			}
 		}
 
-		return StringUtil.merge(textArray, " ");
+		return sb.toString();
 	}
 
 	private void _updateJavadocsXmlFile(

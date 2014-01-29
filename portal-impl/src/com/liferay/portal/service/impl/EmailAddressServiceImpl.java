@@ -32,7 +32,7 @@ import java.util.List;
 public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addEmailAddress( String,
+	 * @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(String,
 	 *             long, String, int, boolean, ServiceContext)}
 	 */
 	@Deprecated

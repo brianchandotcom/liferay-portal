@@ -145,7 +145,7 @@ public class WikiTestUtil {
 		throws Exception {
 
 		byte[] fileBytes = FileUtil.getBytes(
-			clazz.getResourceAsStream("dependencies/OSX_Test.docx"));
+			clazz, "dependencies/OSX_Test.docx");
 
 		File file = null;
 

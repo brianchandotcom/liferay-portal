@@ -115,10 +115,8 @@ public class DLFileEntryTypeServiceTest {
 	public void testAddFileEntryType() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
-		Class<?> clazz = getClass();
-
 		byte[] testFileBytes = FileUtil.getBytes(
-			clazz.getResourceAsStream(_TEST_DDM_STRUCTURE));
+			getClass(), _TEST_DDM_STRUCTURE);
 
 		serviceContext.setAttribute("xsd", new String(testFileBytes));
 

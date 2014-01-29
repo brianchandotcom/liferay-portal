@@ -28,8 +28,6 @@ import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
 import com.liferay.portlet.social.util.SocialActivityTestUtil;
 import com.liferay.portlet.social.util.SocialConfigurationUtil;
 
-import java.io.InputStream;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -45,10 +43,8 @@ public class BaseSocialActivityTestCase {
 
 		Class<?> clazz = SocialActivitySettingLocalServiceTest.class;
 
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/liferay-social.xml");
-
-		String xml = new String(FileUtil.getBytes(inputStream));
+		String xml = new String(
+			FileUtil.getBytes(clazz, "dependencies/liferay-social.xml"));
 
 		SocialConfigurationUtil.read(
 			clazz.getClassLoader(), new String[] {xml});

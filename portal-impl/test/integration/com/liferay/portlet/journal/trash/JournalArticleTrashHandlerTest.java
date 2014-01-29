@@ -49,8 +49,6 @@ import com.liferay.portlet.journal.util.JournalTestUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
 
-import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,7 +80,9 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 				group.getGroupId());
 
 		String xsd = StringUtil.read(
-			getFile("test-ddm-structure-image-field.xml"));
+			getClass().getResourceAsStream(
+				_JOURNAL_DEPENDENCIES_PATH +
+					"test-ddm-structure-image-field.xml"));
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			serviceContext.getScopeGroupId(), JournalArticle.class.getName(),
@@ -92,12 +92,16 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 			serviceContext.getScopeGroupId(), ddmStructure.getStructureId());
 
 		String content = StringUtil.read(
-			getFile("test-journal-content-image-field.xml"));
+			getClass().getResourceAsStream(
+				_JOURNAL_DEPENDENCIES_PATH +
+					"test-journal-content-image-field.xml"));
 
 		Map<String, byte[]> images = new HashMap<String, byte[]>();
 
 		images.put(
-			"_image_1_0_en_US", FileUtil.getBytes(getFile("liferay.png")));
+			"_image_1_0_en_US",
+			FileUtil.getBytes(
+				getClass(), _JOURNAL_DEPENDENCIES_PATH + "liferay.png"));
 
 		baseModel = JournalTestUtil.addArticleWithXMLContent(
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, content,
@@ -210,17 +214,6 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		return JournalArticleLocalServiceUtil.getArticles(
 			folder.getGroupId(), folder.getFolderId());
-	}
-
-	protected InputStream getFile(String fileName) throws Exception {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portlet/journal/dependencies/" + fileName);
-
-		return inputStream;
 	}
 
 	@Override
@@ -336,5 +329,8 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
+
+	private static final String _JOURNAL_DEPENDENCIES_PATH =
+		"/com/liferay/portlet/journal/dependencies/";
 
 }

@@ -213,6 +213,12 @@ public class FileUtil {
 		return getFile().getAbsolutePath(file);
 	}
 
+	public static byte[] getBytes(Class<?> clazz, String fileName)
+		throws Exception {
+
+		return getFile().getBytes(clazz, fileName);
+	}
+
 	public static byte[] getBytes(File file) throws IOException {
 		PortalFilePermission.checkRead(_getPath(file));
 

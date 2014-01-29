@@ -210,8 +210,7 @@ public class ConvertDocumentLibraryTest {
 	protected Image addImage() throws Exception {
 		return ImageLocalServiceUtil.updateImage(
 			CounterLocalServiceUtil.increment(),
-			FileUtil.getBytes(
-				getClass().getResourceAsStream("dependencies/liferay.jpg")));
+			FileUtil.getBytes(getClass(), "dependencies/liferay.jpg"));
 	}
 
 	protected MBMessage addMBMessageAttachment() throws Exception {

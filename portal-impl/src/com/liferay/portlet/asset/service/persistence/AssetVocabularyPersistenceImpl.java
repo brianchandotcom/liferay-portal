@@ -3222,7 +3222,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 				qPos.add(groupId);
 
 				if (bindName) {
-					qPos.add(name.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(name));
 				}
 
 				if (!pagination) {
@@ -3521,7 +3521,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		qPos.add(groupId);
 
 		if (bindName) {
-			qPos.add(name.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(name));
 		}
 
 		if (orderByComparator != null) {
@@ -3679,7 +3679,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			qPos.add(groupId);
 
 			if (bindName) {
-				qPos.add(name.toLowerCase());
+				qPos.add(StringUtil.toLowerCase(name));
 			}
 
 			return (List<AssetVocabulary>)QueryUtil.list(q, getDialect(),
@@ -3878,7 +3878,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		qPos.add(groupId);
 
 		if (bindName) {
-			qPos.add(name.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(name));
 		}
 
 		if (orderByComparator != null) {
@@ -3968,7 +3968,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 				qPos.add(groupId);
 
 				if (bindName) {
-					qPos.add(name.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(name));
 				}
 
 				count = (Long)q.uniqueResult();
@@ -4042,7 +4042,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			qPos.add(groupId);
 
 			if (bindName) {
-				qPos.add(name.toLowerCase());
+				qPos.add(StringUtil.toLowerCase(name));
 			}
 
 			Long count = (Long)q.uniqueResult();

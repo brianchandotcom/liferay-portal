@@ -5679,7 +5679,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				qPos.add(companyId);
 
 				if (bindName) {
-					qPos.add(name.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(name));
 				}
 
 				List<Role> list = q.list();
@@ -5791,7 +5791,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				qPos.add(companyId);
 
 				if (bindName) {
-					qPos.add(name.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(name));
 				}
 
 				count = (Long)q.uniqueResult();

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -43,6 +42,8 @@ import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
 import com.liferay.portlet.trash.model.impl.TrashEntryModelImpl;
 
 import java.io.Serializable;
+
+import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1206,7 +1207,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 				qPos.add(groupId);
 
 				if (bindCreateDate) {
-					qPos.add(CalendarUtil.getTimestamp(createDate));
+					qPos.add(new Timestamp(createDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -1502,7 +1503,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		qPos.add(groupId);
 
 		if (bindCreateDate) {
-			qPos.add(CalendarUtil.getTimestamp(createDate));
+			qPos.add(new Timestamp(createDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -1589,7 +1590,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 				qPos.add(groupId);
 
 				if (bindCreateDate) {
-					qPos.add(CalendarUtil.getTimestamp(createDate));
+					qPos.add(new Timestamp(createDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();

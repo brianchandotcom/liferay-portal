@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -48,6 +47,8 @@ import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 
 import java.io.Serializable;
+
+import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1212,7 +1213,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindPublishDate) {
-					qPos.add(CalendarUtil.getTimestamp(publishDate));
+					qPos.add(new Timestamp(publishDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -1493,7 +1494,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		QueryPos qPos = QueryPos.getInstance(q);
 
 		if (bindPublishDate) {
-			qPos.add(CalendarUtil.getTimestamp(publishDate));
+			qPos.add(new Timestamp(publishDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -1572,7 +1573,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindPublishDate) {
-					qPos.add(CalendarUtil.getTimestamp(publishDate));
+					qPos.add(new Timestamp(publishDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();
@@ -1744,7 +1745,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindExpirationDate) {
-					qPos.add(CalendarUtil.getTimestamp(expirationDate));
+					qPos.add(new Timestamp(expirationDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -2025,7 +2026,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		QueryPos qPos = QueryPos.getInstance(q);
 
 		if (bindExpirationDate) {
-			qPos.add(CalendarUtil.getTimestamp(expirationDate));
+			qPos.add(new Timestamp(expirationDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -2106,7 +2107,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindExpirationDate) {
-					qPos.add(CalendarUtil.getTimestamp(expirationDate));
+					qPos.add(new Timestamp(expirationDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();

@@ -134,6 +134,36 @@ public class DDMStructureLinkPersistenceTest {
 	}
 
 	@Test
+	public void testCountByClassNameId() {
+		try {
+			_persistence.countByClassNameId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByClassPK() {
+		try {
+			_persistence.countByClassPK(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByStructureId() {
+		try {
+			_persistence.countByStructureId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDMStructureLink newDDMStructureLink = addDDMStructureLink();
 

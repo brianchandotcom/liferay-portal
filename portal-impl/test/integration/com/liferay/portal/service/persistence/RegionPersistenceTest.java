@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.model.impl.RegionModelImpl;
@@ -135,6 +136,47 @@ public class RegionPersistenceTest {
 			newRegion.getRegionCode());
 		Assert.assertEquals(existingRegion.getName(), newRegion.getName());
 		Assert.assertEquals(existingRegion.getActive(), newRegion.getActive());
+	}
+
+	@Test
+	public void testCountByCountryId() {
+		try {
+			_persistence.countByCountryId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByActive() {
+		try {
+			_persistence.countByActive(ServiceTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_R() {
+		try {
+			_persistence.countByC_R(ServiceTestUtil.nextLong(), StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_A() {
+		try {
+			_persistence.countByC_A(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

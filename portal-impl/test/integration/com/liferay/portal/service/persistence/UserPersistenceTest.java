@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
@@ -270,6 +271,176 @@ public class UserPersistenceTest {
 		Assert.assertEquals(existingUser.getEmailAddressVerified(),
 			newUser.getEmailAddressVerified());
 		Assert.assertEquals(existingUser.getStatus(), newUser.getStatus());
+	}
+
+	@Test
+	public void testCountByUuid() {
+		try {
+			_persistence.countByUuid(StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByUuid_C() {
+		try {
+			_persistence.countByUuid_C(StringPool.BLANK,
+				ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByCompanyId() {
+		try {
+			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByContactId() {
+		try {
+			_persistence.countByContactId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByEmailAddress() {
+		try {
+			_persistence.countByEmailAddress(StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByPortraitId() {
+		try {
+			_persistence.countByPortraitId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_U() {
+		try {
+			_persistence.countByC_U(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_CD() {
+		try {
+			_persistence.countByC_CD(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextDate());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_MD() {
+		try {
+			_persistence.countByC_MD(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextDate());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_DU() {
+		try {
+			_persistence.countByC_DU(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_SN() {
+		try {
+			_persistence.countByC_SN(ServiceTestUtil.nextLong(),
+				StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_EA() {
+		try {
+			_persistence.countByC_EA(ServiceTestUtil.nextLong(),
+				StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_FID() {
+		try {
+			_persistence.countByC_FID(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_O() {
+		try {
+			_persistence.countByC_O(ServiceTestUtil.nextLong(), StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_S() {
+		try {
+			_persistence.countByC_S(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_CD_MD() {
+		try {
+			_persistence.countByC_CD_MD(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextDate(), ServiceTestUtil.nextDate());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

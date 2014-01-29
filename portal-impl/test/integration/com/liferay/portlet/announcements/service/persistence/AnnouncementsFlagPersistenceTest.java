@@ -140,6 +140,27 @@ public class AnnouncementsFlagPersistenceTest {
 	}
 
 	@Test
+	public void testCountByEntryId() {
+		try {
+			_persistence.countByEntryId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByU_E_V() {
+		try {
+			_persistence.countByU_E_V(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AnnouncementsFlag newAnnouncementsFlag = addAnnouncementsFlag();
 

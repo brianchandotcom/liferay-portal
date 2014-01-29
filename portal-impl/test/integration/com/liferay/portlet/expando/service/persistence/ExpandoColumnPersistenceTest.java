@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -144,6 +145,37 @@ public class ExpandoColumnPersistenceTest {
 			newExpandoColumn.getDefaultData());
 		Assert.assertEquals(existingExpandoColumn.getTypeSettings(),
 			newExpandoColumn.getTypeSettings());
+	}
+
+	@Test
+	public void testCountByTableId() {
+		try {
+			_persistence.countByTableId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByT_N() {
+		try {
+			_persistence.countByT_N(ServiceTestUtil.nextLong(), StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByT_NArrayable() {
+		try {
+			_persistence.countByT_N(ServiceTestUtil.nextLong(),
+				new String[] { StringPool.BLANK });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

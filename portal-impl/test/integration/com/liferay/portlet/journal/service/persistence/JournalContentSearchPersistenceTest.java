@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -144,6 +145,93 @@ public class JournalContentSearchPersistenceTest {
 			newJournalContentSearch.getPortletId());
 		Assert.assertEquals(existingJournalContentSearch.getArticleId(),
 			newJournalContentSearch.getArticleId());
+	}
+
+	@Test
+	public void testCountByPortletId() {
+		try {
+			_persistence.countByPortletId(StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByArticleId() {
+		try {
+			_persistence.countByArticleId(StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_P() {
+		try {
+			_persistence.countByG_P(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_A() {
+		try {
+			_persistence.countByG_A(ServiceTestUtil.nextLong(), StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_P_L() {
+		try {
+			_persistence.countByG_P_L(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.randomBoolean(), ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_P_A() {
+		try {
+			_persistence.countByG_P_A(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.randomBoolean(), StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_P_L_P() {
+		try {
+			_persistence.countByG_P_L_P(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.randomBoolean(), ServiceTestUtil.nextLong(),
+				StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_P_L_P_A() {
+		try {
+			_persistence.countByG_P_L_P_A(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.randomBoolean(), ServiceTestUtil.nextLong(),
+				StringPool.BLANK, StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

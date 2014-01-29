@@ -646,7 +646,11 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (scopes != null) {
-					qPos.add(scopes);
+					for (int i = 0; i < scopes.length; i++) {
+						if (Validator.isNotNull(scopes[i])) {
+							qPos.add(scopes[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -801,7 +805,11 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (scopes != null) {
-					qPos.add(scopes);
+					for (int i = 0; i < scopes.length; i++) {
+						if (Validator.isNotNull(scopes[i])) {
+							qPos.add(scopes[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -3492,7 +3500,11 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				}
 
 				if (roleIds != null) {
-					qPos.add(roleIds);
+					for (int i = 0; i < roleIds.length; i++) {
+						if (Validator.isNotNull(roleIds[i])) {
+							qPos.add(roleIds[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -3995,7 +4007,11 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				}
 
 				if (roleIds != null) {
-					qPos.add(roleIds);
+					for (int i = 0; i < roleIds.length; i++) {
+						if (Validator.isNotNull(roleIds[i])) {
+							qPos.add(roleIds[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();

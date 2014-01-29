@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Subscription;
@@ -1904,7 +1905,11 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 				qPos.add(classNameId);
 
 				if (classPKs != null) {
-					qPos.add(classPKs);
+					for (int i = 0; i < classPKs.length; i++) {
+						if (Validator.isNotNull(classPKs[i])) {
+							qPos.add(classPKs[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -2292,7 +2297,11 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 				qPos.add(classNameId);
 
 				if (classPKs != null) {
-					qPos.add(classPKs);
+					for (int i = 0; i < classPKs.length; i++) {
+						if (Validator.isNotNull(classPKs[i])) {
+							qPos.add(classPKs[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();

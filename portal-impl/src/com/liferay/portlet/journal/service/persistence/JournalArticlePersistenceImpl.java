@@ -3935,7 +3935,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (structureIds != null) {
-					qPos.add(structureIds);
+					for (int i = 0; i < structureIds.length; i++) {
+						if (Validator.isNotNull(structureIds[i])) {
+							qPos.add(structureIds[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -4116,7 +4120,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (structureIds != null) {
-					qPos.add(structureIds);
+					for (int i = 0; i < structureIds.length; i++) {
+						if (Validator.isNotNull(structureIds[i])) {
+							qPos.add(structureIds[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -8638,7 +8646,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			qPos.add(groupId);
 
 			if (folderIds != null) {
-				qPos.add(folderIds);
+				for (int i = 0; i < folderIds.length; i++) {
+					if (Validator.isNotNull(folderIds[i])) {
+						qPos.add(folderIds[i]);
+					}
+				}
 			}
 
 			return (List<JournalArticle>)QueryUtil.list(q, getDialect(), start,
@@ -8804,7 +8816,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				qPos.add(groupId);
 
 				if (folderIds != null) {
-					qPos.add(folderIds);
+					for (int i = 0; i < folderIds.length; i++) {
+						if (Validator.isNotNull(folderIds[i])) {
+							qPos.add(folderIds[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -8979,7 +8995,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				qPos.add(groupId);
 
 				if (folderIds != null) {
-					qPos.add(folderIds);
+					for (int i = 0; i < folderIds.length; i++) {
+						if (Validator.isNotNull(folderIds[i])) {
+							qPos.add(folderIds[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -9124,7 +9144,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			qPos.add(groupId);
 
 			if (folderIds != null) {
-				qPos.add(folderIds);
+				for (int i = 0; i < folderIds.length; i++) {
+					if (Validator.isNotNull(folderIds[i])) {
+						qPos.add(folderIds[i]);
+					}
+				}
 			}
 
 			Long count = (Long)q.uniqueResult();
@@ -17859,7 +17883,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				qPos.add(indexable);
 
 				if (statuses != null) {
-					qPos.add(statuses);
+					for (int i = 0; i < statuses.length; i++) {
+						if (Validator.isNotNull(statuses[i])) {
+							qPos.add(statuses[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -18053,7 +18081,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				qPos.add(indexable);
 
 				if (statuses != null) {
-					qPos.add(statuses);
+					for (int i = 0; i < statuses.length; i++) {
+						if (Validator.isNotNull(statuses[i])) {
+							qPos.add(statuses[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -20050,7 +20082,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			qPos.add(folderId);
 
 			if (statuses != null) {
-				qPos.add(statuses);
+				for (int i = 0; i < statuses.length; i++) {
+					if (Validator.isNotNull(statuses[i])) {
+						qPos.add(statuses[i]);
+					}
+				}
 			}
 
 			return (List<JournalArticle>)QueryUtil.list(q, getDialect(), start,
@@ -20231,7 +20267,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				qPos.add(folderId);
 
 				if (statuses != null) {
-					qPos.add(statuses);
+					for (int i = 0; i < statuses.length; i++) {
+						if (Validator.isNotNull(statuses[i])) {
+							qPos.add(statuses[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -20425,7 +20465,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				qPos.add(folderId);
 
 				if (statuses != null) {
-					qPos.add(statuses);
+					for (int i = 0; i < statuses.length; i++) {
+						if (Validator.isNotNull(statuses[i])) {
+							qPos.add(statuses[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -20586,7 +20630,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			qPos.add(folderId);
 
 			if (statuses != null) {
-				qPos.add(statuses);
+				for (int i = 0; i < statuses.length; i++) {
+					if (Validator.isNotNull(statuses[i])) {
+						qPos.add(statuses[i]);
+					}
+				}
 			}
 
 			Long count = (Long)q.uniqueResult();
@@ -25364,7 +25412,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 
 			if (statuses != null) {
-				qPos.add(statuses);
+				for (int i = 0; i < statuses.length; i++) {
+					if (Validator.isNotNull(statuses[i])) {
+						qPos.add(statuses[i]);
+					}
+				}
 			}
 
 			return (List<JournalArticle>)QueryUtil.list(q, getDialect(), start,
@@ -25560,7 +25612,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				}
 
 				if (statuses != null) {
-					qPos.add(statuses);
+					for (int i = 0; i < statuses.length; i++) {
+						if (Validator.isNotNull(statuses[i])) {
+							qPos.add(statuses[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -25782,7 +25838,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				}
 
 				if (statuses != null) {
-					qPos.add(statuses);
+					for (int i = 0; i < statuses.length; i++) {
+						if (Validator.isNotNull(statuses[i])) {
+							qPos.add(statuses[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -25971,7 +26031,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			}
 
 			if (statuses != null) {
-				qPos.add(statuses);
+				for (int i = 0; i < statuses.length; i++) {
+					if (Validator.isNotNull(statuses[i])) {
+						qPos.add(statuses[i]);
+					}
+				}
 			}
 
 			Long count = (Long)q.uniqueResult();

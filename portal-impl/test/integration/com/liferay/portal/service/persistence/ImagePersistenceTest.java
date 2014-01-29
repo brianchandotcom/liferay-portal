@@ -140,6 +140,16 @@ public class ImagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByLtSize() {
+		try {
+			_persistence.countByLtSize(ServiceTestUtil.nextInt());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Image newImage = addImage();
 

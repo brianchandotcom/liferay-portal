@@ -6732,7 +6732,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			qPos.add(companyId);
 
 			if (types != null) {
-				qPos.add(types);
+				for (int i = 0; i < types.length; i++) {
+					if (Validator.isNotNull(types[i])) {
+						qPos.add(types[i]);
+					}
+				}
 			}
 
 			return (List<Role>)QueryUtil.list(q, getDialect(), start, end);
@@ -6894,7 +6898,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				qPos.add(companyId);
 
 				if (types != null) {
-					qPos.add(types);
+					for (int i = 0; i < types.length; i++) {
+						if (Validator.isNotNull(types[i])) {
+							qPos.add(types[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -7067,7 +7075,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				qPos.add(companyId);
 
 				if (types != null) {
-					qPos.add(types);
+					for (int i = 0; i < types.length; i++) {
+						if (Validator.isNotNull(types[i])) {
+							qPos.add(types[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -7210,7 +7222,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			qPos.add(companyId);
 
 			if (types != null) {
-				qPos.add(types);
+				for (int i = 0; i < types.length; i++) {
+					if (Validator.isNotNull(types[i])) {
+						qPos.add(types[i]);
+					}
+				}
 			}
 
 			Long count = (Long)q.uniqueResult();

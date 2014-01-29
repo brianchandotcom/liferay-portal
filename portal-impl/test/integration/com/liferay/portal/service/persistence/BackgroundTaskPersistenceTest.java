@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -180,6 +181,157 @@ public class BackgroundTaskPersistenceTest {
 			newBackgroundTask.getStatus());
 		Assert.assertEquals(existingBackgroundTask.getStatusMessage(),
 			newBackgroundTask.getStatusMessage());
+	}
+
+	@Test
+	public void testCountByGroupId() {
+		try {
+			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByCompanyId() {
+		try {
+			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByStatus() {
+		try {
+			_persistence.countByStatus(ServiceTestUtil.nextInt());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_T() {
+		try {
+			_persistence.countByG_T(ServiceTestUtil.nextLong(), StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_TArrayable() {
+		try {
+			_persistence.countByG_T(ServiceTestUtil.nextLong(),
+				new String[] { StringPool.BLANK });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_S() {
+		try {
+			_persistence.countByG_S(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByT_S() {
+		try {
+			_persistence.countByT_S(StringPool.BLANK, ServiceTestUtil.nextInt());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByT_SArrayable() {
+		try {
+			_persistence.countByT_S(new String[] { StringPool.BLANK },
+				ServiceTestUtil.nextInt());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_N_T() {
+		try {
+			_persistence.countByG_N_T(ServiceTestUtil.nextLong(),
+				StringPool.BLANK, StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_T_C() {
+		try {
+			_persistence.countByG_T_C(ServiceTestUtil.nextLong(),
+				StringPool.BLANK, ServiceTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_T_CArrayable() {
+		try {
+			_persistence.countByG_T_C(ServiceTestUtil.nextLong(),
+				new String[] { StringPool.BLANK },
+				ServiceTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_T_S() {
+		try {
+			_persistence.countByG_T_S(ServiceTestUtil.nextLong(),
+				StringPool.BLANK, ServiceTestUtil.nextInt());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_T_SArrayable() {
+		try {
+			_persistence.countByG_T_S(ServiceTestUtil.nextLong(),
+				new String[] { StringPool.BLANK }, ServiceTestUtil.nextInt());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_N_T_C() {
+		try {
+			_persistence.countByG_N_T_C(ServiceTestUtil.nextLong(),
+				StringPool.BLANK, StringPool.BLANK,
+				ServiceTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

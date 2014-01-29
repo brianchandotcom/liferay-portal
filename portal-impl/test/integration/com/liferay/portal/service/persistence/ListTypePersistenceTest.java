@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ListType;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -124,6 +125,16 @@ public class ListTypePersistenceTest {
 			newListType.getListTypeId());
 		Assert.assertEquals(existingListType.getName(), newListType.getName());
 		Assert.assertEquals(existingListType.getType(), newListType.getType());
+	}
+
+	@Test
+	public void testCountByType() {
+		try {
+			_persistence.countByType(StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

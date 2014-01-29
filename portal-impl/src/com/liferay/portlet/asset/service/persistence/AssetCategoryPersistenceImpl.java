@@ -4255,7 +4255,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			qPos.add(groupId);
 
 			if (vocabularyIds != null) {
-				qPos.add(vocabularyIds);
+				for (int i = 0; i < vocabularyIds.length; i++) {
+					if (Validator.isNotNull(vocabularyIds[i])) {
+						qPos.add(vocabularyIds[i]);
+					}
+				}
 			}
 
 			return (List<AssetCategory>)QueryUtil.list(q, getDialect(), start,
@@ -4421,7 +4425,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				qPos.add(groupId);
 
 				if (vocabularyIds != null) {
-					qPos.add(vocabularyIds);
+					for (int i = 0; i < vocabularyIds.length; i++) {
+						if (Validator.isNotNull(vocabularyIds[i])) {
+							qPos.add(vocabularyIds[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -4598,7 +4606,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				qPos.add(groupId);
 
 				if (vocabularyIds != null) {
-					qPos.add(vocabularyIds);
+					for (int i = 0; i < vocabularyIds.length; i++) {
+						if (Validator.isNotNull(vocabularyIds[i])) {
+							qPos.add(vocabularyIds[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -4743,7 +4755,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			qPos.add(groupId);
 
 			if (vocabularyIds != null) {
-				qPos.add(vocabularyIds);
+				for (int i = 0; i < vocabularyIds.length; i++) {
+					if (Validator.isNotNull(vocabularyIds[i])) {
+						qPos.add(vocabularyIds[i]);
+					}
+				}
 			}
 
 			Long count = (Long)q.uniqueResult();
@@ -8468,7 +8484,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			}
 
 			if (vocabularyIds != null) {
-				qPos.add(vocabularyIds);
+				for (int i = 0; i < vocabularyIds.length; i++) {
+					if (Validator.isNotNull(vocabularyIds[i])) {
+						qPos.add(vocabularyIds[i]);
+					}
+				}
 			}
 
 			return (List<AssetCategory>)QueryUtil.list(q, getDialect(), start,
@@ -8664,7 +8684,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				}
 
 				if (vocabularyIds != null) {
-					qPos.add(vocabularyIds);
+					for (int i = 0; i < vocabularyIds.length; i++) {
+						if (Validator.isNotNull(vocabularyIds[i])) {
+							qPos.add(vocabularyIds[i]);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -8886,7 +8910,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				}
 
 				if (vocabularyIds != null) {
-					qPos.add(vocabularyIds);
+					for (int i = 0; i < vocabularyIds.length; i++) {
+						if (Validator.isNotNull(vocabularyIds[i])) {
+							qPos.add(vocabularyIds[i]);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -9075,7 +9103,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			}
 
 			if (vocabularyIds != null) {
-				qPos.add(vocabularyIds);
+				for (int i = 0; i < vocabularyIds.length; i++) {
+					if (Validator.isNotNull(vocabularyIds[i])) {
+						qPos.add(vocabularyIds[i]);
+					}
+				}
 			}
 
 			Long count = (Long)q.uniqueResult();

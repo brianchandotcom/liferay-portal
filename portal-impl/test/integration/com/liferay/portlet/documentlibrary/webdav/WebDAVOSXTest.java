@@ -45,10 +45,9 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	public void testMSOffice0Setup() throws Exception {
 		Class<?> clazz = getClass();
 
-		_testFileBytes = FileUtil.getBytes(getClass(), _OFFICE_TEST_DOCX);
-		_testMetaBytes = FileUtil.getBytes(getClass(), _OFFICE_TEST_META_DOCX);
-		_testDeltaBytes = FileUtil.getBytes(
-			getClass(), _OFFICE_TEST_DELTA_DOCX);
+		_testFileBytes = FileUtil.getBytes(clazz, _OFFICE_TEST_DOCX);
+		_testMetaBytes = FileUtil.getBytes(clazz, _OFFICE_TEST_META_DOCX);
+		_testDeltaBytes = FileUtil.getBytes(clazz, _OFFICE_TEST_DELTA_DOCX);
 	}
 
 	@Test

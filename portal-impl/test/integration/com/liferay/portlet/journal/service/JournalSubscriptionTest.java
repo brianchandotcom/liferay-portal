@@ -52,6 +52,7 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 			group.getGroupId());
 
 		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
 
 		JournalArticle article = JournalTestUtil.addArticle(
 			group.getGroupId(), ServiceTestUtil.randomString(),
@@ -131,6 +132,7 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 			group.getGroupId());
 
 		serviceContext.setCommand(Constants.UPDATE);
+		serviceContext.setLayoutFullURL("http://localhost");
 
 		article = JournalTestUtil.updateArticle(
 			article, ServiceTestUtil.randomString(),

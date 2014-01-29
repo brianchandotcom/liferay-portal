@@ -52,6 +52,7 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 			group.getGroupId());
 
 		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
 
 		WikiPage page = WikiPageLocalServiceUtil.addPage(
 			TestPropsValues.getUserId(), containerModelId,
@@ -135,6 +136,7 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 			group.getGroupId());
 
 		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
 
 		page = WikiPageLocalServiceUtil.updatePage(
 			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle(),

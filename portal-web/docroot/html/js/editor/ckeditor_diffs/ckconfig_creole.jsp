@@ -25,6 +25,7 @@
 String attachmentURLPrefix = ParamUtil.getString(request, "attachmentURLPrefix");
 String contentsLanguageId = ParamUtil.getString(request, "contentsLanguageId");
 String cssClasses = ParamUtil.getString(request, "cssClasses");
+String cssPath = ParamUtil.getString(request, "cssPath");
 String languageId = ParamUtil.getString(request, "languageId");
 String name = ParamUtil.getString(request, "name");
 boolean resizable = ParamUtil.getBoolean(request, "resizable");

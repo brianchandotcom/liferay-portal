@@ -52,6 +52,7 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 			group.getGroupId());
 
 		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
 
 		String name = ServiceTestUtil.randomString();
 

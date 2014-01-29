@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -391,6 +392,19 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 
 		return _layoutType;
+	}
+
+	@Override
+	public Layout getLinkedToLayout() throws SystemException {
+		long linkToLayoutId = GetterUtil.getLong(
+			getTypeSettingsProperty("linkToLayoutId"));
+
+		if (linkToLayoutId <= 0) {
+			return null;
+		}
+
+		return LayoutLocalServiceUtil.fetchLayout(
+			getGroupId(), isPrivateLayout(), linkToLayoutId);
 	}
 
 	@Override

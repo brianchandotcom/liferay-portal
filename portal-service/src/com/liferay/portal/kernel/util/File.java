@@ -85,6 +85,8 @@ public interface File {
 
 	public String getAbsolutePath(java.io.File file);
 
+	public byte[] getBytes(Class<?> clazz, String fileName) throws IOException;
+
 	public byte[] getBytes(InputStream is) throws IOException;
 
 	public byte[] getBytes(InputStream is, int bufferSize) throws IOException;

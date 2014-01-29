@@ -31,7 +31,6 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.util.FileTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -101,7 +100,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		images.put(
 			"_image_1_0_en_US",
-			FileTestUtil.getBytes(
+			FileUtil.getBytes(
 				getClass(), _JOURNAL_DEPENDENCIES_PATH + "liferay.png"));
 
 		baseModel = JournalTestUtil.addArticleWithXMLContent(

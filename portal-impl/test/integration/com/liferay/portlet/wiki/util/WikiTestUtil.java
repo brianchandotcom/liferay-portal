@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.util.FileTestUtil;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
@@ -145,7 +144,7 @@ public class WikiTestUtil {
 			Class<?> clazz)
 		throws Exception {
 
-		byte[] fileBytes = FileTestUtil.getBytes(
+		byte[] fileBytes = FileUtil.getBytes(
 			clazz, "dependencies/OSX_Test.docx");
 
 		File file = null;

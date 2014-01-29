@@ -81,6 +81,9 @@ public interface LiferaySelenium extends Selenium {
 
 	public void clickAtAndWait(String locator, String coordString);
 
+	public void commandLineAntTarget(String fileName, String target)
+		throws Exception;
+
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception;
 

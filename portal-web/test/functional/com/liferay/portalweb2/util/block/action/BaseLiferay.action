@@ -101,6 +101,12 @@
 		</default>
 	</command>
 
+	<command name="commandLineAntTarget">
+		<default>
+			<execute function="CommandLineAntTarget#commandLineAntTarget" />
+		</default>
+	</command>
+
 	<command name="confirm">
 		<default>
 			<execute function="Confirm#assertConfirmation" />

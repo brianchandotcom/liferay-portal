@@ -121,6 +121,12 @@ public class PortalUtil {
 		getPortal().addPageTitle(title, request);
 	}
 
+	public static void addPortalEventListener(
+		PortalEventListener portalEventListener) {
+
+		getPortal().addPortalEventListener(portalEventListener);
+	}
+
 	public static void addPortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
 
@@ -2028,6 +2034,12 @@ public class PortalUtil {
 
 		return getPortal().updateWindowState(
 			portletId, user, layout, windowState, request);
+	}
+
+	public void removePortalEventListener(
+		PortalEventListener portalEventListener) {
+
+		getPortal().removePortalEventListener(portalEventListener);
 	}
 
 	public void removePortalPortEventListener(

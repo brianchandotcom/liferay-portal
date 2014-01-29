@@ -557,6 +557,15 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public void addPortalEventListener(
+		PortalEventListener portalEventListener) {
+
+		if (!_portalEventListeners.contains(portalEventListener)) {
+			_portalEventListeners.add(portalEventListener);
+		}
+	}
+
+	@Override
 	public void addPortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
 
@@ -6478,6 +6487,13 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public void removePortalEventListener(
+		PortalEventListener portalEventListener) {
+
+		_portalEventListeners.remove(portalEventListener);
+	}
+
+	@Override
 	public void removePortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
 
@@ -7872,6 +7888,8 @@ public class PortalImpl implements Portal {
 	private String _pathProxy;
 	private Map<String, Long> _plidToPortletIdMap =
 		new ConcurrentHashMap<String, Long>();
+	private List<PortalEventListener> _portalEventListeners =
+		new ArrayList<PortalEventListener>();
 	private final AtomicInteger _portalPort = new AtomicInteger(-1);
 	private List<PortalPortEventListener> _portalPortEventListeners =
 		new ArrayList<PortalPortEventListener>();

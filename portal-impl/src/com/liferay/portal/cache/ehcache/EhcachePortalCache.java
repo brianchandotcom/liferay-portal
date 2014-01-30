@@ -17,6 +17,7 @@ package com.liferay.portal.cache.ehcache;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.Serializable;
 
@@ -107,10 +108,13 @@ public class EhcachePortalCache<K extends Serializable, V>
 		CacheEventListener cacheEventListener =
 			new PortalCacheCacheEventListener<K, V>(cacheListener, this);
 
-		_cacheEventListeners.put(cacheListener, cacheEventListener);
-
 		NotificationScope notificationScope = getNotificationScope(
 			cacheListenerScope);
+
+		_cacheEventListeners.put(
+			cacheListener,
+			new ObjectValuePair<CacheEventListener, NotificationScope>(
+				cacheEventListener, notificationScope));
 
 		RegisteredEventListeners registeredEventListeners =
 			_ehcache.getCacheEventNotificationService();
@@ -131,21 +135,31 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	public void setEhcache(Ehcache ehcache) {
 		_ehcache = ehcache;
+
+		RegisteredEventListeners registeredEventListeners =
+			ehcache.getCacheEventNotificationService();
+
+		for (ObjectValuePair<CacheEventListener, NotificationScope>
+				objectValuePair : _cacheEventListeners.values()) {
+
+			registeredEventListeners.registerListener(
+				objectValuePair.getKey(), objectValuePair.getValue());
+		}
 	}
 
 	@Override
 	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
-		CacheEventListener cacheEventListener = _cacheEventListeners.get(
-			cacheListener);
+		ObjectValuePair<CacheEventListener, NotificationScope> objectValuePair =
+			_cacheEventListeners.remove(cacheListener);
 
-		if (cacheEventListener != null) {
-			RegisteredEventListeners registeredEventListeners =
-				_ehcache.getCacheEventNotificationService();
-
-			registeredEventListeners.unregisterListener(cacheEventListener);
+		if (objectValuePair == null) {
+			return;
 		}
 
-		_cacheEventListeners.remove(cacheListener);
+		RegisteredEventListeners registeredEventListeners =
+			_ehcache.getCacheEventNotificationService();
+
+		registeredEventListeners.unregisterListener(objectValuePair.getKey());
 	}
 
 	@Override
@@ -153,10 +167,11 @@ public class EhcachePortalCache<K extends Serializable, V>
 		RegisteredEventListeners registeredEventListeners =
 			_ehcache.getCacheEventNotificationService();
 
-		for (CacheEventListener cacheEventListener :
-				_cacheEventListeners.values()) {
+		for (ObjectValuePair<CacheEventListener, NotificationScope>
+				objectValuePair : _cacheEventListeners.values()) {
 
-			registeredEventListeners.unregisterListener(cacheEventListener);
+			registeredEventListeners.unregisterListener(
+				objectValuePair.getKey());
 		}
 
 		_cacheEventListeners.clear();
@@ -176,8 +191,8 @@ public class EhcachePortalCache<K extends Serializable, V>
 		}
 	}
 
-	private Map<CacheListener<K, V>, CacheEventListener> _cacheEventListeners =
-		new ConcurrentHashMap<CacheListener<K, V>, CacheEventListener>();
+	private Map<CacheListener<K, V>, ObjectValuePair<CacheEventListener, NotificationScope>> _cacheEventListeners =
+		new ConcurrentHashMap<CacheListener<K, V>, ObjectValuePair<CacheEventListener, NotificationScope>>();
 	private Ehcache _ehcache;
 
 }

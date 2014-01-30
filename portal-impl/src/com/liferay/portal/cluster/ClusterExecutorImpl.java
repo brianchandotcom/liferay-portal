@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WeakValueConcurrentHashMap;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.util.PortalPortEventListener;
+import com.liferay.portal.util.PortalEventListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -68,7 +68,7 @@ import org.jgroups.JChannel;
  */
 @DoPrivileged
 public class ClusterExecutorImpl
-	extends ClusterBase implements ClusterExecutor, PortalPortEventListener {
+	extends ClusterBase implements ClusterExecutor, PortalEventListener {
 
 	public static final String CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL =
 		"CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL";
@@ -266,7 +266,7 @@ public class ClusterExecutorImpl
 		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
 			CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL);
 
-		PortalUtil.addPortalPortEventListener(this);
+		PortalUtil.addPortalEventListener(this);
 
 		_localAddress = new AddressImpl(_controlJChannel.getAddress());
 
@@ -308,7 +308,9 @@ public class ClusterExecutorImpl
 	}
 
 	@Override
-	public void portalPortConfigured(int port) {
+	public void portalLocalAddressConfigured(
+		InetAddress inetAddress, int port) {
+
 		if (!isEnabled() || (_localClusterNode.getPort() == _port)) {
 			return;
 		}
@@ -326,6 +328,11 @@ public class ClusterExecutorImpl
 		catch (Exception e) {
 			_log.error("Unable to determine configure node port", e);
 		}
+	}
+
+	@Override
+	public void portalServerAddressConfigured(
+		InetAddress inetAddress, int port) {
 	}
 
 	@Override
@@ -428,7 +435,7 @@ public class ClusterExecutorImpl
 		int port = _port;
 
 		if (port <= 0) {
-			port = PortalUtil.getPortalPort(_secure);
+			port = PortalUtil.getPortalLocalPort(_secure);
 		}
 
 		localClusterNode.setPort(port);

@@ -199,6 +199,14 @@ public class BookmarksFolderAssetRenderer
 	}
 
 	@Override
+	public boolean hasEditPermission(PermissionChecker permissionChecker)
+		throws PortalException, SystemException {
+
+		return BookmarksFolderPermission.contains(
+			permissionChecker, _folder, ActionKeys.UPDATE);
+	}
+
+	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException, SystemException {
 

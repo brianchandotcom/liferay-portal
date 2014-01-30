@@ -45,6 +45,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.net.InetAddress;
+
 import java.sql.SQLException;
 
 import java.util.Date;
@@ -1089,6 +1091,14 @@ public class PortalUtil {
 		return getPortal().getPortalLibDir();
 	}
 
+	public static InetAddress getPortalLocalAddress(boolean secure) {
+		return getPortal().getPortalLocalAddress(secure);
+	}
+
+	public static int getPortalLocalPort(boolean secure) {
+		return getPortal().getPortalLocalPort(secure);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getPortalPort(boolean)}
 	 */
@@ -1103,6 +1113,14 @@ public class PortalUtil {
 
 	public static Properties getPortalProperties() {
 		return getPortal().getPortalProperties();
+	}
+
+	public static InetAddress getPortalServerAddress(boolean secure) {
+		return getPortal().getPortalServerAddress(secure);
+	}
+
+	public static int getPortalServerPort(boolean secure) {
+		return getPortal().getPortalServerPort(secure);
 	}
 
 	public static String getPortalURL(HttpServletRequest request) {
@@ -1978,6 +1996,10 @@ public class PortalUtil {
 	 */
 	public static void setPageTitle(String title, HttpServletRequest request) {
 		getPortal().setPageTitle(title, request);
+	}
+
+	public static void setPortalAddresses(HttpServletRequest request) {
+		getPortal().setPortalAddresses(request);
 	}
 
 	/**

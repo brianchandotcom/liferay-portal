@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
@@ -78,7 +77,6 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -96,23 +94,16 @@ import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
 import com.liferay.portlet.journal.model.impl.JournalFeedImpl;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBBanImpl;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.persistence.MBDiscussionUtil;
-import com.liferay.portlet.messageboards.service.persistence.MBMessageUtil;
 import com.liferay.portlet.polls.model.impl.PollsChoiceImpl;
 import com.liferay.portlet.polls.model.impl.PollsQuestionImpl;
 import com.liferay.portlet.polls.model.impl.PollsVoteImpl;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.impl.RatingsEntryImpl;
-import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 import com.liferay.portlet.wiki.model.impl.WikiNodeImpl;
 import com.liferay.portlet.wiki.model.impl.WikiPageImpl;
 
@@ -283,23 +274,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		addLocks(clazz, String.valueOf(classPK));
 		addPermissions(clazz, classPK);
 
-		boolean portletDataAll = MapUtil.getBoolean(
-			getParameterMap(), PortletDataHandlerKeys.PORTLET_DATA_ALL);
-
-		if (portletDataAll ||
-			MapUtil.getBoolean(
-				getParameterMap(), PortletDataHandlerKeys.COMMENTS)) {
-
-			addComments(clazz, classPK);
-		}
-
-		if (portletDataAll ||
-			MapUtil.getBoolean(
-				getParameterMap(), PortletDataHandlerKeys.RATINGS)) {
-
-			addRatingsEntries(clazz, classPK);
-		}
-
 		addZipEntry(path, classedModel);
 	}
 
@@ -331,44 +305,28 @@ public class PortletDataContextImpl implements PortletDataContext {
 		addClassedModel(element, path, classedModel);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#exportComments(
+	 *             com.liferay.portal.kernel.lar.PortletDataContext,
+	 *             com.liferay.portal.model.StagedModel)}
+	 */
+	@Deprecated
 	@Override
 	public void addComments(Class<?> clazz, long classPK)
 		throws SystemException {
-
-		long classNameId = PortalUtil.getClassNameId(clazz);
-
-		MBDiscussion discussion = MBDiscussionUtil.fetchByC_C(
-			classNameId, classPK);
-
-		if (discussion == null) {
-			return;
-		}
-
-		List<MBMessage> messages = MBMessageLocalServiceUtil.getThreadMessages(
-			discussion.getThreadId(), WorkflowConstants.STATUS_APPROVED);
-
-		if (messages.isEmpty()) {
-			return;
-		}
-
-		MBMessage firstMessage = messages.get(0);
-
-		if ((messages.size() == 1) && firstMessage.isRoot()) {
-			return;
-		}
-
-		for (MBMessage message : messages) {
-			addRatingsEntries(MBDiscussion.class, message.getPrimaryKey());
-		}
-
-		_commentsMap.put(getPrimaryKeyString(clazz, classPK), messages);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#exportComments(
+	 *             com.liferay.portal.kernel.lar.PortletDataContext,
+	 *             com.liferay.portal.model.StagedModel)}
+	 */
+	@Deprecated
 	@Override
 	public void addComments(
 		String className, long classPK, List<MBMessage> messages) {
-
-		_commentsMap.put(getPrimaryKeyString(className, classPK), messages);
 	}
 
 	/**
@@ -534,27 +492,28 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return value;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#exportRatings(
+	 *             com.liferay.portal.kernel.lar.PortletDataContext,
+	 *             com.liferay.portal.model.StagedModel)}
+	 */
+	@Deprecated
 	@Override
 	public void addRatingsEntries(Class<?> clazz, long classPK)
 		throws SystemException {
-
-		List<RatingsEntry> ratingsEntries =
-			RatingsEntryLocalServiceUtil.getEntries(clazz.getName(), classPK);
-
-		if (ratingsEntries.size() == 0) {
-			return;
-		}
-
-		_ratingsEntriesMap.put(
-			getPrimaryKeyString(clazz, classPK), ratingsEntries);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#exportRatings(
+	 *             com.liferay.portal.kernel.lar.PortletDataContext,
+	 *             com.liferay.portal.model.StagedModel)}
+	 */
+	@Deprecated
 	@Override
 	public void addRatingsEntries(
 		String className, long classPK, List<RatingsEntry> ratingsEntries) {
-
-		_ratingsEntriesMap.put(
-			getPrimaryKeyString(className, classPK), ratingsEntries);
 	}
 
 	/**
@@ -870,9 +829,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _xStream.getClassLoader();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Map<String, List<MBMessage>> getComments() {
-		return _commentsMap;
+		return Collections.emptyMap();
 	}
 
 	@Override
@@ -1112,9 +1075,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _primaryKeys;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Map<String, List<RatingsEntry>> getRatingsEntries() {
-		return _ratingsEntriesMap;
+		return Collections.emptyMap();
 	}
 
 	@Override
@@ -1482,23 +1449,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		importLocks(clazz, String.valueOf(classPK), String.valueOf(newClassPK));
 		importPermissions(clazz, classPK, newClassPK);
-
-		boolean portletDataAll = MapUtil.getBoolean(
-			getParameterMap(), PortletDataHandlerKeys.PORTLET_DATA_ALL);
-
-		if (portletDataAll ||
-			MapUtil.getBoolean(
-				getParameterMap(), PortletDataHandlerKeys.COMMENTS)) {
-
-			importComments(clazz, classPK, newClassPK, getScopeGroupId());
-		}
-
-		if (portletDataAll ||
-			MapUtil.getBoolean(
-				getParameterMap(), PortletDataHandlerKeys.RATINGS)) {
-
-			importRatingsEntries(clazz, classPK, newClassPK);
-		}
 	}
 
 	/**
@@ -1530,122 +1480,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 			classedModel, newClassedModel, classedModel.getModelClass());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#importComments(
+	 *             com.liferay.portal.kernel.lar.PortletDataContext,
+	 *             com.liferay.portal.model.StagedModel)}
+	 */
+	@Deprecated
 	@Override
 	public void importComments(
 			Class<?> clazz, long classPK, long newClassPK, long groupId)
 		throws PortalException, SystemException {
-
-		Map<Long, Long> messagePKs = new HashMap<Long, Long>();
-		Map<Long, Long> threadPKs = new HashMap<Long, Long>();
-
-		List<MBMessage> messages = _commentsMap.get(
-			getPrimaryKeyString(clazz, classPK));
-
-		if (messages == null) {
-			return;
-		}
-
-		MBMessage firstMessage = messages.get(0);
-
-		if ((messages.size() == 1) && firstMessage.isRoot()) {
-			return;
-		}
-
-		long classNameId = PortalUtil.getClassNameId(clazz);
-
-		MBDiscussion discussion = MBDiscussionUtil.fetchByC_C(
-			classNameId, newClassPK);
-
-		for (MBMessage message : messages) {
-			long userId = getUserId(message.getUserUuid());
-			long parentMessageId = MapUtil.getLong(
-				messagePKs, message.getParentMessageId(),
-				message.getParentMessageId());
-			long threadId = MapUtil.getLong(
-				threadPKs, message.getThreadId(), message.getThreadId());
-
-			if (message.isRoot()) {
-				if (discussion != null) {
-					MBThread thread = MBThreadLocalServiceUtil.getThread(
-						discussion.getThreadId());
-
-					long rootMessageId = thread.getRootMessageId();
-
-					messagePKs.put(message.getMessageId(), rootMessageId);
-					threadPKs.put(message.getThreadId(), thread.getThreadId());
-				}
-				else if (clazz == Layout.class) {
-					MBMessage importedMessage =
-						MBMessageLocalServiceUtil.addDiscussionMessage(
-							userId, message.getUserName(), groupId,
-							clazz.getName(), newClassPK,
-							WorkflowConstants.ACTION_PUBLISH);
-
-					messagePKs.put(
-						message.getMessageId(), importedMessage.getMessageId());
-					threadPKs.put(
-						message.getThreadId(), importedMessage.getThreadId());
-				}
-			}
-			else {
-				ServiceContext serviceContext = new ServiceContext();
-
-				serviceContext.setCreateDate(message.getCreateDate());
-				serviceContext.setModifiedDate(message.getModifiedDate());
-				serviceContext.setScopeGroupId(groupId);
-
-				MBMessage importedMessage = null;
-
-				if (_dataStrategy.equals(
-						PortletDataHandlerKeys.DATA_STRATEGY_MIRROR) ||
-					_dataStrategy.equals(
-						PortletDataHandlerKeys.
-							DATA_STRATEGY_MIRROR_OVERWRITE)) {
-
-					MBMessage existingMessage = MBMessageUtil.fetchByUUID_G(
-						message.getUuid(), groupId);
-
-					if (existingMessage == null) {
-						serviceContext.setUuid(message.getUuid());
-
-						importedMessage =
-							MBMessageLocalServiceUtil.addDiscussionMessage(
-								userId, message.getUserName(), groupId,
-								clazz.getName(), newClassPK, threadId,
-								parentMessageId, message.getSubject(),
-								message.getBody(), serviceContext);
-					}
-					else {
-						serviceContext.setWorkflowAction(
-							WorkflowConstants.ACTION_PUBLISH);
-
-						importedMessage =
-							MBMessageLocalServiceUtil.updateDiscussionMessage(
-								userId, existingMessage.getMessageId(),
-								clazz.getName(), newClassPK,
-								message.getSubject(), message.getBody(),
-								serviceContext);
-					}
-				}
-				else {
-					importedMessage =
-						MBMessageLocalServiceUtil.addDiscussionMessage(
-							userId, message.getUserName(), groupId,
-							clazz.getName(), newClassPK, threadId,
-							parentMessageId, message.getSubject(),
-							message.getBody(), serviceContext);
-				}
-
-				messagePKs.put(
-					message.getMessageId(), importedMessage.getMessageId());
-				threadPKs.put(
-					message.getThreadId(), importedMessage.getThreadId());
-			}
-
-			importRatingsEntries(
-				MBDiscussion.class, message.getPrimaryKey(),
-				messagePKs.get(message.getPrimaryKey()));
-		}
 	}
 
 	@Override
@@ -1776,30 +1621,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 		importPermissions(resourceName, getSourceGroupId(), getScopeGroupId());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#importRatings(
+	 *             com.liferay.portal.kernel.lar.PortletDataContext,
+	 *             com.liferay.portal.model.StagedModel)}
+	 */
+	@Deprecated
 	@Override
 	public void importRatingsEntries(
 			Class<?> clazz, long classPK, long newClassPK)
 		throws PortalException, SystemException {
-
-		List<RatingsEntry> ratingsEntries = _ratingsEntriesMap.get(
-			getPrimaryKeyString(clazz, classPK));
-
-		if (ratingsEntries == null) {
-			return;
-		}
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		for (RatingsEntry ratingsEntry : ratingsEntries) {
-			long userId = getUserId(ratingsEntry.getUserUuid());
-
-			serviceContext.setCreateDate(ratingsEntry.getCreateDate());
-			serviceContext.setModifiedDate(ratingsEntry.getModifiedDate());
-
-			RatingsEntryLocalServiceUtil.updateEntry(
-				userId, clazz.getName(), newClassPK, ratingsEntry.getScore(),
-				serviceContext);
-		}
 	}
 
 	@Override
@@ -2559,8 +2391,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		new HashMap<String, List<AssetLink>>();
 	private Map<String, String[]> _assetTagNamesMap =
 		new HashMap<String, String[]>();
-	private Map<String, List<MBMessage>> _commentsMap =
-		new HashMap<String, List<MBMessage>>();
 	private long _companyGroupId;
 	private long _companyId;
 	private String _dataStrategy;
@@ -2588,8 +2418,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private PortletDataContextListener _portletDataContextListener;
 	private Set<String> _primaryKeys = new HashSet<String>();
 	private boolean _privateLayout;
-	private Map<String, List<RatingsEntry>> _ratingsEntriesMap =
-		new HashMap<String, List<RatingsEntry>>();
 	private Set<String> _references = new HashSet<String>();
 	private Set<String> _scopedPrimaryKeys = new HashSet<String>();
 	private long _scopeGroupId;

@@ -710,7 +710,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindDirectDownloadURL) {
-					qPos.add(directDownloadURL.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(directDownloadURL));
 				}
 
 				List<SCProductVersion> list = q.list();
@@ -823,7 +823,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindDirectDownloadURL) {
-					qPos.add(directDownloadURL.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(directDownloadURL));
 				}
 
 				count = (Long)q.uniqueResult();

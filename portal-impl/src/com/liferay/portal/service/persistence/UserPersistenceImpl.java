@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -48,6 +47,8 @@ import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
 import java.io.Serializable;
+
+import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -3025,7 +3026,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				qPos.add(companyId);
 
 				if (bindCreateDate) {
-					qPos.add(CalendarUtil.getTimestamp(createDate));
+					qPos.add(new Timestamp(createDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -3319,7 +3320,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		qPos.add(companyId);
 
 		if (bindCreateDate) {
-			qPos.add(CalendarUtil.getTimestamp(createDate));
+			qPos.add(new Timestamp(createDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -3406,7 +3407,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				qPos.add(companyId);
 
 				if (bindCreateDate) {
-					qPos.add(CalendarUtil.getTimestamp(createDate));
+					qPos.add(new Timestamp(createDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();
@@ -3584,7 +3585,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				qPos.add(companyId);
 
 				if (bindModifiedDate) {
-					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
+					qPos.add(new Timestamp(modifiedDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -3878,7 +3879,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		qPos.add(companyId);
 
 		if (bindModifiedDate) {
-			qPos.add(CalendarUtil.getTimestamp(modifiedDate));
+			qPos.add(new Timestamp(modifiedDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -3965,7 +3966,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				qPos.add(companyId);
 
 				if (bindModifiedDate) {
-					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
+					qPos.add(new Timestamp(modifiedDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();
@@ -5963,11 +5964,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				qPos.add(companyId);
 
 				if (bindCreateDate) {
-					qPos.add(CalendarUtil.getTimestamp(createDate));
+					qPos.add(new Timestamp(createDate.getTime()));
 				}
 
 				if (bindModifiedDate) {
-					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
+					qPos.add(new Timestamp(modifiedDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -6287,11 +6288,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		qPos.add(companyId);
 
 		if (bindCreateDate) {
-			qPos.add(CalendarUtil.getTimestamp(createDate));
+			qPos.add(new Timestamp(createDate.getTime()));
 		}
 
 		if (bindModifiedDate) {
-			qPos.add(CalendarUtil.getTimestamp(modifiedDate));
+			qPos.add(new Timestamp(modifiedDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -6391,11 +6392,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				qPos.add(companyId);
 
 				if (bindCreateDate) {
-					qPos.add(CalendarUtil.getTimestamp(createDate));
+					qPos.add(new Timestamp(createDate.getTime()));
 				}
 
 				if (bindModifiedDate) {
-					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
+					qPos.add(new Timestamp(modifiedDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();

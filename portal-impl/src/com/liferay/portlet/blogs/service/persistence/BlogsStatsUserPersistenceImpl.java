@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -44,6 +43,8 @@ import com.liferay.portlet.blogs.model.impl.BlogsStatsUserImpl;
 import com.liferay.portlet.blogs.model.impl.BlogsStatsUserModelImpl;
 
 import java.io.Serializable;
+
+import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -2491,7 +2492,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 				qPos.add(userId);
 
 				if (bindLastPostDate) {
-					qPos.add(CalendarUtil.getTimestamp(lastPostDate));
+					qPos.add(new Timestamp(lastPostDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -2787,7 +2788,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		qPos.add(userId);
 
 		if (bindLastPostDate) {
-			qPos.add(CalendarUtil.getTimestamp(lastPostDate));
+			qPos.add(new Timestamp(lastPostDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -2874,7 +2875,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 				qPos.add(userId);
 
 				if (bindLastPostDate) {
-					qPos.add(CalendarUtil.getTimestamp(lastPostDate));
+					qPos.add(new Timestamp(lastPostDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();

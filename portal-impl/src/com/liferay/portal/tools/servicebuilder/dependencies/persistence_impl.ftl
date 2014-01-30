@@ -1,3 +1,5 @@
+<#include "persistence_impl_macro.ftl">
+
 <#if entity.isHierarchicalTree()>
 	<#if entity.hasColumn("groupId")>
 		<#assign scopeColumn = entity.getColumn("groupId")>
@@ -44,7 +46,6 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -69,6 +70,7 @@ import java.io.Serializable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Collections;

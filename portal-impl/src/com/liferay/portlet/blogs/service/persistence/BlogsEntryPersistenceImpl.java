@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
-import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -53,6 +52,8 @@ import com.liferay.portlet.blogs.model.impl.BlogsEntryImpl;
 import com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl;
 
 import java.io.Serializable;
+
+import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -3479,7 +3480,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(companyId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -3775,7 +3776,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(companyId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -3862,7 +3863,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(companyId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();
@@ -5332,7 +5333,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(groupId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -5628,7 +5629,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(groupId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -5784,7 +5785,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(groupId);
 
 			if (bindDisplayDate) {
-				qPos.add(CalendarUtil.getTimestamp(displayDate));
+				qPos.add(new Timestamp(displayDate.getTime()));
 			}
 
 			return (List<BlogsEntry>)QueryUtil.list(q, getDialect(), start, end);
@@ -5978,7 +5979,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(groupId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -6065,7 +6066,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(groupId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();
@@ -6136,7 +6137,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(groupId);
 
 			if (bindDisplayDate) {
-				qPos.add(CalendarUtil.getTimestamp(displayDate));
+				qPos.add(new Timestamp(displayDate.getTime()));
 			}
 
 			Long count = (Long)q.uniqueResult();
@@ -8095,7 +8096,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -8391,7 +8392,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		QueryPos qPos = QueryPos.getInstance(q);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		qPos.add(status);
@@ -8478,7 +8479,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -9780,7 +9781,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(companyId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -10094,7 +10095,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(companyId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		qPos.add(status);
@@ -10187,7 +10188,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(companyId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -10366,7 +10367,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(companyId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -10679,7 +10680,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(companyId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		qPos.add(status);
@@ -10772,7 +10773,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(companyId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -10951,7 +10952,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(userId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -11264,7 +11265,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(userId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -11428,7 +11429,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(userId);
 
 			if (bindDisplayDate) {
-				qPos.add(CalendarUtil.getTimestamp(displayDate));
+				qPos.add(new Timestamp(displayDate.getTime()));
 			}
 
 			return (List<BlogsEntry>)QueryUtil.list(q, getDialect(), start, end);
@@ -11628,7 +11629,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(userId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -11721,7 +11722,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(userId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();
@@ -11797,7 +11798,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(userId);
 
 			if (bindDisplayDate) {
-				qPos.add(CalendarUtil.getTimestamp(displayDate));
+				qPos.add(new Timestamp(displayDate.getTime()));
 			}
 
 			Long count = (Long)q.uniqueResult();
@@ -13892,7 +13893,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(groupId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -14206,7 +14207,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(groupId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		qPos.add(status);
@@ -14371,7 +14372,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(groupId);
 
 			if (bindDisplayDate) {
-				qPos.add(CalendarUtil.getTimestamp(displayDate));
+				qPos.add(new Timestamp(displayDate.getTime()));
 			}
 
 			qPos.add(status);
@@ -14571,7 +14572,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(groupId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		qPos.add(status);
@@ -14664,7 +14665,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(groupId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -14740,7 +14741,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(groupId);
 
 			if (bindDisplayDate) {
-				qPos.add(CalendarUtil.getTimestamp(displayDate));
+				qPos.add(new Timestamp(displayDate.getTime()));
 			}
 
 			qPos.add(status);
@@ -14914,7 +14915,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(groupId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -15227,7 +15228,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(groupId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		qPos.add(status);
@@ -15391,7 +15392,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(groupId);
 
 			if (bindDisplayDate) {
-				qPos.add(CalendarUtil.getTimestamp(displayDate));
+				qPos.add(new Timestamp(displayDate.getTime()));
 			}
 
 			qPos.add(status);
@@ -15591,7 +15592,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(groupId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		qPos.add(status);
@@ -15684,7 +15685,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(groupId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -15760,7 +15761,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(groupId);
 
 			if (bindDisplayDate) {
-				qPos.add(CalendarUtil.getTimestamp(displayDate));
+				qPos.add(new Timestamp(displayDate.getTime()));
 			}
 
 			qPos.add(status);
@@ -15946,7 +15947,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(userId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -16277,7 +16278,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(userId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		qPos.add(status);
@@ -16449,7 +16450,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(userId);
 
 			if (bindDisplayDate) {
-				qPos.add(CalendarUtil.getTimestamp(displayDate));
+				qPos.add(new Timestamp(displayDate.getTime()));
 			}
 
 			qPos.add(status);
@@ -16656,7 +16657,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(userId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		qPos.add(status);
@@ -16755,7 +16756,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(userId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -16836,7 +16837,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(userId);
 
 			if (bindDisplayDate) {
-				qPos.add(CalendarUtil.getTimestamp(displayDate));
+				qPos.add(new Timestamp(displayDate.getTime()));
 			}
 
 			qPos.add(status);
@@ -17023,7 +17024,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(userId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -17352,7 +17353,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(userId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		qPos.add(status);
@@ -17524,7 +17525,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(userId);
 
 			if (bindDisplayDate) {
-				qPos.add(CalendarUtil.getTimestamp(displayDate));
+				qPos.add(new Timestamp(displayDate.getTime()));
 			}
 
 			qPos.add(status);
@@ -17731,7 +17732,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		qPos.add(userId);
 
 		if (bindDisplayDate) {
-			qPos.add(CalendarUtil.getTimestamp(displayDate));
+			qPos.add(new Timestamp(displayDate.getTime()));
 		}
 
 		qPos.add(status);
@@ -17830,7 +17831,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				qPos.add(userId);
 
 				if (bindDisplayDate) {
-					qPos.add(CalendarUtil.getTimestamp(displayDate));
+					qPos.add(new Timestamp(displayDate.getTime()));
 				}
 
 				qPos.add(status);
@@ -17911,7 +17912,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			qPos.add(userId);
 
 			if (bindDisplayDate) {
-				qPos.add(CalendarUtil.getTimestamp(displayDate));
+				qPos.add(new Timestamp(displayDate.getTime()));
 			}
 
 			qPos.add(status);

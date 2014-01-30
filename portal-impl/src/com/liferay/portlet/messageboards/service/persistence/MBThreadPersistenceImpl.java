@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -49,6 +48,8 @@ import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
 
 import java.io.Serializable;
+
+import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6446,7 +6447,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindLastPostDate) {
-					qPos.add(CalendarUtil.getTimestamp(lastPostDate));
+					qPos.add(new Timestamp(lastPostDate.getTime()));
 				}
 
 				qPos.add(priority);
@@ -6742,7 +6743,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		QueryPos qPos = QueryPos.getInstance(q);
 
 		if (bindLastPostDate) {
-			qPos.add(CalendarUtil.getTimestamp(lastPostDate));
+			qPos.add(new Timestamp(lastPostDate.getTime()));
 		}
 
 		qPos.add(priority);
@@ -6829,7 +6830,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindLastPostDate) {
-					qPos.add(CalendarUtil.getTimestamp(lastPostDate));
+					qPos.add(new Timestamp(lastPostDate.getTime()));
 				}
 
 				qPos.add(priority);
@@ -7025,7 +7026,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				qPos.add(categoryId);
 
 				if (bindLastPostDate) {
-					qPos.add(CalendarUtil.getTimestamp(lastPostDate));
+					qPos.add(new Timestamp(lastPostDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -7338,7 +7339,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		qPos.add(categoryId);
 
 		if (bindLastPostDate) {
-			qPos.add(CalendarUtil.getTimestamp(lastPostDate));
+			qPos.add(new Timestamp(lastPostDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -7502,7 +7503,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			qPos.add(categoryId);
 
 			if (bindLastPostDate) {
-				qPos.add(CalendarUtil.getTimestamp(lastPostDate));
+				qPos.add(new Timestamp(lastPostDate.getTime()));
 			}
 
 			return (List<MBThread>)QueryUtil.list(q, getDialect(), start, end);
@@ -7702,7 +7703,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		qPos.add(categoryId);
 
 		if (bindLastPostDate) {
-			qPos.add(CalendarUtil.getTimestamp(lastPostDate));
+			qPos.add(new Timestamp(lastPostDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -7795,7 +7796,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				qPos.add(categoryId);
 
 				if (bindLastPostDate) {
-					qPos.add(CalendarUtil.getTimestamp(lastPostDate));
+					qPos.add(new Timestamp(lastPostDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();
@@ -7871,7 +7872,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			qPos.add(categoryId);
 
 			if (bindLastPostDate) {
-				qPos.add(CalendarUtil.getTimestamp(lastPostDate));
+				qPos.add(new Timestamp(lastPostDate.getTime()));
 			}
 
 			Long count = (Long)q.uniqueResult();

@@ -7585,7 +7585,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				qPos.add(groupId);
 
 				if (bindName) {
-					qPos.add(name.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(name));
 				}
 
 				qPos.add(vocabularyId);
@@ -7902,7 +7902,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		qPos.add(groupId);
 
 		if (bindName) {
-			qPos.add(name.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(name));
 		}
 
 		qPos.add(vocabularyId);
@@ -8069,7 +8069,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			qPos.add(groupId);
 
 			if (bindName) {
-				qPos.add(name.toLowerCase());
+				qPos.add(StringUtil.toLowerCase(name));
 			}
 
 			qPos.add(vocabularyId);
@@ -8273,7 +8273,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		qPos.add(groupId);
 
 		if (bindName) {
-			qPos.add(name.toLowerCase());
+			qPos.add(StringUtil.toLowerCase(name));
 		}
 
 		qPos.add(vocabularyId);
@@ -8464,7 +8464,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			qPos.add(groupId);
 
 			if (bindName) {
-				qPos.add(name);
+				qPos.add(StringUtil.toLowerCase(name));
 			}
 
 			if (vocabularyIds != null) {
@@ -8660,7 +8660,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				qPos.add(groupId);
 
 				if (bindName) {
-					qPos.add(name);
+					qPos.add(StringUtil.toLowerCase(name));
 				}
 
 				if (vocabularyIds != null) {
@@ -8772,7 +8772,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				qPos.add(groupId);
 
 				if (bindName) {
-					qPos.add(name.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(name));
 				}
 
 				qPos.add(vocabularyId);
@@ -8882,7 +8882,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				qPos.add(groupId);
 
 				if (bindName) {
-					qPos.add(name);
+					qPos.add(StringUtil.toLowerCase(name));
 				}
 
 				if (vocabularyIds != null) {
@@ -8965,7 +8965,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			qPos.add(groupId);
 
 			if (bindName) {
-				qPos.add(name.toLowerCase());
+				qPos.add(StringUtil.toLowerCase(name));
 			}
 
 			qPos.add(vocabularyId);
@@ -9071,7 +9071,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			qPos.add(groupId);
 
 			if (bindName) {
-				qPos.add(name);
+				qPos.add(StringUtil.toLowerCase(name));
 			}
 
 			if (vocabularyIds != null) {

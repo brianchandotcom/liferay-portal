@@ -198,7 +198,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindServletContextName) {
-					qPos.add(servletContextName.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(servletContextName));
 				}
 
 				List<Release> list = q.list();
@@ -304,7 +304,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (bindServletContextName) {
-					qPos.add(servletContextName.toLowerCase());
+					qPos.add(StringUtil.toLowerCase(servletContextName));
 				}
 
 				count = (Long)q.uniqueResult();

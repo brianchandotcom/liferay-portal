@@ -75,10 +75,6 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
-import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.util.xml.DocUtil;
 
 import java.io.File;
@@ -398,7 +394,6 @@ public class PortletExporter {
 
 		exportAssetLinks(portletDataContext);
 		exportAssetTags(portletDataContext);
-		exportComments(portletDataContext);
 		exportExpandoTables(portletDataContext);
 		exportLocks(portletDataContext);
 
@@ -409,8 +404,6 @@ public class PortletExporter {
 			_permissionExporter.exportPortletDataPermissions(
 				portletDataContext);
 		}
-
-		exportRatingsEntries(portletDataContext, rootElement);
 
 		ExportImportHelperUtil.writeManifestSummary(
 			document, portletDataContext.getManifestSummary());
@@ -552,67 +545,6 @@ public class PortletExporter {
 
 		portletDataContext.addZipEntry(
 			ExportImportPathUtil.getRootPath(portletDataContext) + "/tags.xml",
-			document.formattedString());
-	}
-
-	protected void exportComments(PortletDataContext portletDataContext)
-		throws Exception {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("comments");
-
-		Map<String, List<MBMessage>> commentsMap =
-			portletDataContext.getComments();
-
-		for (Map.Entry<String, List<MBMessage>> entry :
-				commentsMap.entrySet()) {
-
-			String[] commentParts = StringUtil.split(
-				entry.getKey(), CharPool.POUND);
-
-			String className = commentParts[0];
-			String classPK = commentParts[1];
-
-			String commentsPath = getCommentsPath(
-				portletDataContext, className, classPK);
-
-			Element assetElement = rootElement.addElement("asset");
-
-			assetElement.addAttribute("path", commentsPath);
-			assetElement.addAttribute("class-name", className);
-			assetElement.addAttribute("class-pk", classPK);
-
-			List<MBMessage> mbMessages = entry.getValue();
-
-			for (MBMessage mbMessage : mbMessages) {
-				String commentPath = getCommentPath(
-					portletDataContext, className, classPK, mbMessage);
-
-				if (portletDataContext.isPathNotProcessed(commentPath)) {
-					User user = UserLocalServiceUtil.fetchUser(
-						mbMessage.getUserId());
-
-					if (user == null) {
-						continue;
-					}
-
-					portletDataContext.addZipEntry(commentPath, mbMessage);
-
-					MBDiscussion mbDiscussion =
-						MBDiscussionLocalServiceUtil.getDiscussion(
-							className, GetterUtil.getLong(classPK));
-
-					portletDataContext.addReferenceElement(
-						mbDiscussion, assetElement, user,
-						PortletDataContext.REFERENCE_TYPE_WEAK, true);
-				}
-			}
-		}
-
-		portletDataContext.addZipEntry(
-			ExportImportPathUtil.getRootPath(portletDataContext) +
-				"/comments.xml",
 			document.formattedString());
 	}
 
@@ -1083,62 +1015,6 @@ public class PortletExporter {
 		}
 	}
 
-	protected void exportRatingsEntries(
-			PortletDataContext portletDataContext, Element parentElement)
-		throws Exception {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("ratings");
-
-		Map<String, List<RatingsEntry>> ratingsEntriesMap =
-			portletDataContext.getRatingsEntries();
-
-		for (Map.Entry<String, List<RatingsEntry>> entry :
-				ratingsEntriesMap.entrySet()) {
-
-			String[] ratingsEntryParts = StringUtil.split(
-				entry.getKey(), CharPool.POUND);
-
-			String className = ratingsEntryParts[0];
-			String classPK = ratingsEntryParts[1];
-
-			String ratingsEntriesPath = getRatingsEntriesPath(
-				portletDataContext, className, classPK);
-
-			Element assetElement = rootElement.addElement("asset");
-
-			assetElement.addAttribute("path", ratingsEntriesPath);
-			assetElement.addAttribute("class-name", className);
-			assetElement.addAttribute("class-pk", classPK);
-
-			List<RatingsEntry> ratingsEntries = entry.getValue();
-
-			for (RatingsEntry ratingsEntry : ratingsEntries) {
-				String ratingsEntryPath = getRatingsEntryPath(
-					portletDataContext, className, classPK, ratingsEntry);
-
-				User user = UserLocalServiceUtil.fetchUser(
-					ratingsEntry.getUserId());
-
-				if (user == null) {
-					continue;
-				}
-
-				portletDataContext.addZipEntry(ratingsEntryPath, ratingsEntry);
-
-				portletDataContext.addReferenceElement(
-					ratingsEntry, assetElement, user,
-					PortletDataContext.REFERENCE_TYPE_WEAK, true);
-			}
-		}
-
-		portletDataContext.addZipEntry(
-			ExportImportPathUtil.getRootPath(portletDataContext) +
-				"/ratings.xml",
-			document.formattedString());
-	}
-
 	protected String getAssetLinkPath(
 		PortletDataContext portletDataContext, long assetLinkId) {
 
@@ -1161,40 +1037,6 @@ public class PortletExporter {
 		sb.append("/tags/");
 		sb.append(assetCategoryId);
 		sb.append(".xml");
-
-		return sb.toString();
-	}
-
-	protected String getCommentPath(
-		PortletDataContext portletDataContext, String className, String classPK,
-		MBMessage mbMessage) {
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
-		sb.append("/comments/");
-		sb.append(PortalUtil.getClassNameId(className));
-		sb.append(CharPool.FORWARD_SLASH);
-		sb.append(classPK);
-		sb.append(CharPool.FORWARD_SLASH);
-		sb.append(mbMessage.getMessageId());
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
-	protected String getCommentsPath(
-		PortletDataContext portletDataContext, String className,
-		String classPK) {
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
-		sb.append("/comments/");
-		sb.append(PortalUtil.getClassNameId(className));
-		sb.append(CharPool.FORWARD_SLASH);
-		sb.append(classPK);
-		sb.append(CharPool.FORWARD_SLASH);
 
 		return sb.toString();
 	}
@@ -1248,40 +1090,6 @@ public class PortletExporter {
 		sb.append(plid);
 		sb.append(CharPool.FORWARD_SLASH);
 		sb.append("portlet-preferences.xml");
-
-		return sb.toString();
-	}
-
-	protected String getRatingsEntriesPath(
-		PortletDataContext portletDataContext, String className,
-		String classPK) {
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
-		sb.append("/ratings/");
-		sb.append(PortalUtil.getClassNameId(className));
-		sb.append(CharPool.FORWARD_SLASH);
-		sb.append(classPK);
-		sb.append(CharPool.FORWARD_SLASH);
-
-		return sb.toString();
-	}
-
-	protected String getRatingsEntryPath(
-		PortletDataContext portletDataContext, String className, String classPK,
-		RatingsEntry ratingsEntry) {
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
-		sb.append("/ratings/");
-		sb.append(PortalUtil.getClassNameId(className));
-		sb.append(CharPool.FORWARD_SLASH);
-		sb.append(classPK);
-		sb.append(CharPool.FORWARD_SLASH);
-		sb.append(ratingsEntry.getEntryId());
-		sb.append(".xml");
 
 		return sb.toString();
 	}

@@ -39,6 +39,14 @@
 		</execute>
 	</command>
 
+	<command name="IPAddress" priority="5">
+		<echo message="Test IPAddress()" />
+
+		<var name="ip" value="${getIPAddress()}" />
+
+		<echo message="${ip}" />
+	</command>
+
 	<command name="Length" priority="5">
 		<echo message="Test length()" />
 

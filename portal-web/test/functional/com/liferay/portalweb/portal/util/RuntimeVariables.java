@@ -22,6 +22,8 @@ import com.liferay.util.ContextReplace;
 
 import java.io.File;
 
+import java.net.InetAddress;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -111,6 +113,17 @@ public class RuntimeVariables {
 				if (method.startsWith("getFirstNumber")) {
 					result = operandValue.replaceFirst("\\D*(\\d*).*", "$1");
 				}
+				else if (method.startsWith("getIPAddress")) {
+					result = "";
+
+					try {
+						InetAddress inetAddress = InetAddress.getLocalHost();
+
+						result = inetAddress.getHostAddress();
+					}
+					catch (Exception e) {
+					}
+				}
 				else if (method.startsWith("increment")) {
 					int i = GetterUtil.getInteger(operandValue) + 1;
 
@@ -129,6 +142,21 @@ public class RuntimeVariables {
 				else if (method.startsWith("uppercase")) {
 					result = StringUtil.toUpperCase(operandValue);
 				}
+
+				varValue = varValue.replaceFirst(replaceRegex, result);
+			}
+			else if (statement.equals("getIPAddress()")) {
+				String result = "";
+
+				try {
+					InetAddress inetAddress = InetAddress.getLocalHost();
+
+					result = inetAddress.getHostAddress();
+				}
+				catch (Exception e) {
+				}
+
+				String replaceRegex = "\\$\\{([^}]*?)\\}";
 
 				varValue = varValue.replaceFirst(replaceRegex, result);
 			}

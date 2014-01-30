@@ -1700,7 +1700,9 @@ public class SeleniumBuilderFileUtil {
 					}
 				}
 				else {
-					if (statement.matches(".*[\\?\\(\\)\\}\\{].*")) {
+					if (statement.matches(".*[\\?\\(\\)\\}\\{].*") &&
+						!statement.contains("getIPAddress")) {
+
 						throwValidationException(
 							1006, fileName, element, "value");
 					}
@@ -1753,8 +1755,8 @@ public class SeleniumBuilderFileUtil {
 		});
 	private static List<String> _methodNames = ListUtil.fromArray(
 		new String[] {
-			"getFirstNumber", "increment", "length", "lowercase", "replace",
-			"uppercase"
+			"getFirstNumber", "getIPAddress", "increment", "length",
+			"lowercase", "replace", "uppercase"
 		});
 	private static List<String> _reservedTags = ListUtil.fromArray(
 		new String[] {

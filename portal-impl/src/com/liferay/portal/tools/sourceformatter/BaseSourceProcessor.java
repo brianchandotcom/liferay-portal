@@ -654,12 +654,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
-	protected Properties getExclusionsProperties(String fileName)
+	protected InputStream getExclusionsInputStream(String fileName)
 		throws IOException {
 
-		InputStream inputStream = null;
-
-		int level = 0;
+		_pluginsDirectorylevel = 0;
 
 		if (portalSource) {
 			ClassLoader classLoader =
@@ -675,35 +673,40 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				return null;
 			}
 
-			inputStream = url.openStream();
+			return url.openStream();
 		}
-		else {
-			try {
-				inputStream = new FileInputStream(fileName);
-			}
-			catch (FileNotFoundException fnfe) {
-			}
 
-			if (inputStream == null) {
-				try {
-					inputStream = new FileInputStream("../" + fileName);
+		try {
+			return new FileInputStream(fileName);
+		}
+		catch (FileNotFoundException fnfe) {
+		}
 
-					level = 1;
-				}
-				catch (FileNotFoundException fnfe) {
-				}
-			}
+		try {
+			_pluginsDirectorylevel = 1;
 
-			if (inputStream == null) {
-				try {
-					inputStream = new FileInputStream("../../" + fileName);
+			return new FileInputStream("../" + fileName);
+		}
+		catch (FileNotFoundException fnfe) {
+		}
 
-					level = 2;
-				}
-				catch (FileNotFoundException fnfe) {
-					return null;
-				}
-			}
+		try {
+			_pluginsDirectorylevel = 2;
+
+			return new FileInputStream("../../" + fileName);
+		}
+		catch (FileNotFoundException fnfe) {
+			return null;
+		}
+	}
+
+	protected Properties getExclusionsProperties(String fileName)
+		throws IOException {
+
+		InputStream inputStream = getExclusionsInputStream(fileName);
+
+		if (inputStream == null) {
+			return null;
 		}
 
 		Properties properties = new Properties();
@@ -712,8 +715,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		inputStream.close();
 
-		if (level > 0) {
-			properties = stripTopLevelDirectories(properties, level);
+		if (_pluginsDirectorylevel > 0) {
+			properties = stripTopLevelDirectories(
+				properties, _pluginsDirectorylevel);
 		}
 
 		return properties;
@@ -726,18 +730,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		directoryScanner.setBasedir(basedir);
 
-		excludes = ArrayUtil.append(
-			excludes, _excludes,
-			new String[] {
-				"**\\.git\\**", "**\\bin\\**", "**\\classes\\**",
-				"**\\test-classes\\**", "**\\test-coverage\\**",
-				"**\\test-results\\**", "**\\tmp\\**"
-			});
-
-		if (portalSource) {
-			excludes = ArrayUtil.append(
-				excludes, new String[] {"**\\webapps\\**"});
-		}
+		excludes = ArrayUtil.append(excludes, _excludes);
 
 		directoryScanner.setExcludes(excludes);
 
@@ -800,7 +793,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 							else {
 								return new String[] {languageKey};
 							}
-
 						}
 
 						sb.append(match.charAt(i));
@@ -919,6 +911,45 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected boolean isAutoFix() {
 		return _autoFix;
+	}
+
+	protected boolean isExcluded(Properties properties, String fileName) {
+		return isExcluded(properties, fileName, -1);
+	}
+
+	protected boolean isExcluded(
+		Properties properties, String fileName, int lineCount) {
+
+		return isExcluded(properties, fileName, lineCount, null);
+	}
+
+	protected boolean isExcluded(
+		Properties properties, String fileName, int lineCount,
+		String javaTermName) {
+
+		if (properties == null) {
+			return false;
+		}
+
+		if (properties.getProperty(fileName) != null) {
+			return true;
+		}
+
+		if ((lineCount > 0) &&
+			(properties.getProperty(fileName + StringPool.AT + lineCount) !=
+				null)) {
+
+			return true;
+		}
+
+		if (Validator.isNotNull(javaTermName) &&
+			(properties.getProperty(fileName + StringPool.AT + javaTermName) !=
+				null)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void processErrorMessage(String fileName, String message) {
@@ -1135,6 +1166,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
 		Pattern.MULTILINE);
 
+	private String[] _getExcludes() throws IOException {
+		List<String> excludesList = ListUtil.fromString(
+			GetterUtil.getString(
+				System.getProperty("source.formatter.excludes")));
+
+		InputStream inputStream = getExclusionsInputStream(
+			"source_formatter_excludes.txt");
+
+		if (inputStream != null) {
+			StringUtil.readLines(inputStream, excludesList);
+		}
+
+		return excludesList.toArray(new String[excludesList.size()]);
+	}
+
 	private void _init(
 			boolean useProperties, boolean printErrors, boolean autoFix,
 			String mainReleaseVersion)
@@ -1154,11 +1200,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		BaseSourceProcessor.mainReleaseVersion = mainReleaseVersion;
 
-		_excludes = StringUtil.split(
-			GetterUtil.getString(
-				System.getProperty("source.formatter.excludes")));
-
 		portalSource = _isPortalSource();
+
+		_excludes = _getExcludes();
 
 		_printErrors = printErrors;
 
@@ -1174,14 +1218,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	private static boolean _autoFix;
-	private static Map<String, String> _compatClassNamesMap;
-	private static String _copyright;
-	private static List<String> _errorMessages = new ArrayList<String>();
-	private static String[] _excludes;
-	private static boolean _initialized;
-	private static String _oldCopyright;
-	private static Properties _portalLanguageKeysProperties;
-	private static boolean _printErrors;
+	private boolean _autoFix;
+	private Map<String, String> _compatClassNamesMap;
+	private String _copyright;
+	private List<String> _errorMessages = new ArrayList<String>();
+	private String[] _excludes;
+	private boolean _initialized;
+	private String _oldCopyright;
+	private int _pluginsDirectorylevel;
+	private Properties _portalLanguageKeysProperties;
+	private boolean _printErrors;
 
 }

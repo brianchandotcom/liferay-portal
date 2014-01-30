@@ -262,9 +262,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_unusedVariablesExclusions = getExclusionsProperties(
 			"source_formatter_jsp_unused_variables_exclusions.properties");
 
-		String[] excludes = new String[] {
-			"**\\portal\\aui\\**", "**\\null.jsp", "**\\tools\\**"
-		};
+		String[] excludes = new String[] {"**\\null.jsp", "**\\tools\\**"};
 		String[] includes = new String[] {
 			"**\\*.jsp", "**\\*.jspf", "**\\*.vm"
 		};
@@ -512,14 +510,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				checkInefficientStringMethods(line, fileName, lineCount);
 			}
 
-			String excluded = null;
-
-			if (_unusedVariablesExclusions != null) {
-				excluded = _unusedVariablesExclusions.getProperty(
-					fileName + StringPool.AT + lineCount);
-			}
-
-			if ((excluded == null) && javaSource && portalSource &&
+			if (javaSource && portalSource &&
+				!isExcluded(_unusedVariablesExclusions, fileName, lineCount) &&
 				!_jspContents.isEmpty() &&
 				hasUnusedVariable(fileName, trimmedLine)) {
 

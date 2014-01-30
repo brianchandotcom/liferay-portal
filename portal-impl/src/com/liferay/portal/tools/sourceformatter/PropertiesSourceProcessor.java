@@ -92,23 +92,20 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			_portalPortalProperties = ContentUtil.get("portal.properties");
 		}
 
-		String[] excludes = null;
 		String[] includes = null;
 
 		if (portalSource) {
-			excludes = new String[] {"**\\bin\\**", "**\\classes\\**"};
 			includes = new String[] {
 				"**\\portal-ext.properties", "**\\portal-legacy-*.properties"
 			};
 		}
 		else {
-			excludes = new String[0];
 			includes = new String[] {
 				"**\\portal.properties", "**\\portal-ext.properties"
 			};
 		}
 
-		List<String> fileNames = getFileNames(excludes, includes);
+		List<String> fileNames = getFileNames(new String[0], includes);
 
 		for (String fileName : fileNames) {
 			File file = new File(BASEDIR + fileName);

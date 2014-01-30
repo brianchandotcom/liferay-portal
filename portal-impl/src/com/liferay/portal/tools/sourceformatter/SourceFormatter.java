@@ -169,11 +169,11 @@ public class SourceFormatter {
 		}
 	}
 
-	private static boolean _autoFix;
-	private static List<String> _errorMessages = new UniqueList<String>();
-	private static String _mainReleaseVersion;
-	private static boolean _printErrors;
-	private static boolean _throwException;
-	private static boolean _useProperties;
+	private boolean _autoFix;
+	private List<String> _errorMessages = new UniqueList<String>();
+	private String _mainReleaseVersion;
+	private boolean _printErrors;
+	private boolean _throwException;
+	private boolean _useProperties;
 
 }

@@ -303,6 +303,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		Properties exclusions = getExclusionsProperties(
 			"source_formatter_xml_exclusions.properties");
 
+		_friendlyUrlRoutesSortExclusions = getExclusionsProperties(
+			"source_formatter_friendly_url_routes_sort_exclusions.properties");
+
 		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
@@ -311,9 +314,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			if ((exclusions != null) &&
-				(exclusions.getProperty(fileName) != null)) {
-
+			if (isExcluded(exclusions, fileName)) {
 				continue;
 			}
 
@@ -357,8 +358,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			else if (portalSource && fileName.endsWith("/tiles-defs.xml")) {
 				formatTilesDefsXML(fileName, newContent);
 			}
-			else if (portalSource && fileName.endsWith("WEB-INF/web.xml") ||
-					 !portalSource && fileName.endsWith("/web.xml")) {
+			else if ((portalSource && fileName.endsWith("WEB-INF/web.xml")) ||
+					 (!portalSource && fileName.endsWith("/web.xml"))) {
 
 				newContent = formatWebXML(fileName, newContent);
 			}
@@ -446,16 +447,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String formatFriendlyURLRoutesXML(String fileName, String content)
 		throws DocumentException, IOException {
 
-		Properties friendlyUrlRoutesSortExclusions = getExclusionsProperties(
-			"source_formatter_friendly_url_routes_sort_exclusions.properties");
-
-		String excluded = null;
-
-		if (friendlyUrlRoutesSortExclusions != null) {
-			excluded = friendlyUrlRoutesSortExclusions.getProperty(fileName);
-		}
-
-		if (excluded != null) {
+		if (isExcluded(_friendlyUrlRoutesSortExclusions, fileName)) {
 			return content;
 		}
 
@@ -983,37 +975,36 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		">\n\t+<!--[\n ]");
 	private static Pattern _commentPattern2 = Pattern.compile(
 		"[\t ]-->\n[\t<]");
-	private static Pattern _poshiClosingTagPattern = Pattern.compile(
-		"</[^>/]*>");
-	private static Pattern _poshiCommandsPattern = Pattern.compile(
+
+	private Properties _friendlyUrlRoutesSortExclusions;
+	private Pattern _poshiClosingTagPattern = Pattern.compile("</[^>/]*>");
+	private Pattern _poshiCommandsPattern = Pattern.compile(
 		"\\<command name=\\\"([^\\\"]*)\\\".*\\>[\\s\\S]*?\\</command\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+");
-	private static Pattern _poshiElementWithNoChildPattern = Pattern.compile(
+	private Pattern _poshiElementWithNoChildPattern = Pattern.compile(
 		"\\\"[\\s]*\\>[\\n\\s\\t]*\\</[a-z\\-]+>");
-	private static Pattern _poshiEndLinesAfterClosingElementPattern =
-		Pattern.compile("(\\</[a-z\\-]+>)(\\n+)\\t*\\<[a-z]+");
-	private static Pattern _poshiEndLinesBeforeClosingElementPattern =
-		Pattern.compile("(\\n+)(\\t*</[a-z\\-]+>)");
-	private static Pattern _poshiEndLinesPattern = Pattern.compile(
+	private Pattern _poshiEndLinesAfterClosingElementPattern = Pattern.compile(
+		"(\\</[a-z\\-]+>)(\\n+)\\t*\\<[a-z]+");
+	private Pattern _poshiEndLinesBeforeClosingElementPattern = Pattern.compile(
+		"(\\n+)(\\t*</[a-z\\-]+>)");
+	private Pattern _poshiEndLinesPattern = Pattern.compile(
 		"\\>\\n\\n\\n+(\\t*\\<)");
-	private static Pattern _poshiOpeningTagPattern = Pattern.compile(
+	private Pattern _poshiOpeningTagPattern = Pattern.compile(
 		"<[^/][^>]*[^/]>");
-	private static Pattern _poshiQuoteWithSlashPattern = Pattern.compile(
+	private Pattern _poshiQuoteWithSlashPattern = Pattern.compile(
 		"\"[^\"]*\\>[^\"]*\"");
-	private static Pattern _poshiSetUpPattern = Pattern.compile(
+	private Pattern _poshiSetUpPattern = Pattern.compile(
 		"\\n[\\t]++\\<set-up\\>([\\s\\S]*?)\\</set-up\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+\\n");
-	private static Pattern _poshiTabsPattern = Pattern.compile(
-		"\\n*([ \\t]*<).*");
-	private static Pattern _poshiTearDownPattern = Pattern.compile(
+	private Pattern _poshiTabsPattern = Pattern.compile("\\n*([ \\t]*<).*");
+	private Pattern _poshiTearDownPattern = Pattern.compile(
 		"\\n[\\t]++\\<tear-down\\>([\\s\\S]*?)\\</tear-down\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+\\n");
-	private static Pattern _poshiVariableLinePattern = Pattern.compile(
+	private Pattern _poshiVariableLinePattern = Pattern.compile(
 		"([\\t]*+)(\\<var name=\\\"([^\\\"]*)\\\".*?/\\>.*+(?:\\</var\\>)??)");
-	private static Pattern _poshiVariablesBlockPattern = Pattern.compile(
+	private Pattern _poshiVariablesBlockPattern = Pattern.compile(
 		"((?:[\\t]*+\\<var.*?\\>\\n[\\t]*+){2,}?)" +
 			"(?:(?:\\n){1,}+|\\</execute\\>)");
-	private static Pattern _poshiWholeTagPattern = Pattern.compile(
-		"<[^\\>^/]*\\/>");
+	private Pattern _poshiWholeTagPattern = Pattern.compile("<[^\\>^/]*\\/>");
 
 }

@@ -259,6 +259,8 @@ public class EditLayoutsAction extends PortletAction {
 				updateLayoutRevision(actionRequest, themeDisplay);
 			}
 
+			SessionMessages.crossLayoutAdd(actionRequest, "requestProcessed");
+
 			sendRedirect(
 				portletConfig, actionRequest, actionResponse, redirect,
 				closeRedirect);

@@ -20,7 +20,7 @@
 
 <div id="<portlet:namespace />editLayoutContainer">
 	<c:choose>
-		<c:when test='<%= SessionMessages.contains(renderRequest, "requestProcessed") || ((selPlid == 0) && Validator.isNotNull(closeRedirect)) %>'>
+		<c:when test='<%= SessionMessages.crossLayoutContains(renderRequest, "requestProcessed") || ((selPlid == 0) && Validator.isNotNull(closeRedirect)) %>'>
 
 			<%
 			String refreshURL = null;
@@ -29,7 +29,7 @@
 				refreshURL = closeRedirect;
 			}
 			else {
-				refreshURL = (String)SessionMessages.get(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT);
+				refreshURL = (String)SessionMessages.crossLayoutGet(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT);
 			}
 
 			if (Validator.isNull(refreshURL)) {

@@ -303,6 +303,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		Properties exclusions = getExclusionsProperties(
 			"source_formatter_xml_exclusions.properties");
 
+		_friendlyUrlRoutesSortExclusions = getExclusionsProperties(
+			"source_formatter_friendly_url_routes_sort_exclusions.properties");
+
 		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
@@ -446,13 +449,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String formatFriendlyURLRoutesXML(String fileName, String content)
 		throws DocumentException, IOException {
 
-		Properties friendlyUrlRoutesSortExclusions = getExclusionsProperties(
-			"source_formatter_friendly_url_routes_sort_exclusions.properties");
-
 		String excluded = null;
 
-		if (friendlyUrlRoutesSortExclusions != null) {
-			excluded = friendlyUrlRoutesSortExclusions.getProperty(fileName);
+		if (_friendlyUrlRoutesSortExclusions != null) {
+			excluded = _friendlyUrlRoutesSortExclusions.getProperty(fileName);
 		}
 
 		if (excluded != null) {
@@ -983,6 +983,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		">\n\t+<!--[\n ]");
 	private static Pattern _commentPattern2 = Pattern.compile(
 		"[\t ]-->\n[\t<]");
+	private static Properties _friendlyUrlRoutesSortExclusions;
 	private static Pattern _poshiClosingTagPattern = Pattern.compile(
 		"</[^>/]*>");
 	private static Pattern _poshiCommandsPattern = Pattern.compile(

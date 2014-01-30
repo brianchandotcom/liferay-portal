@@ -512,14 +512,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				checkInefficientStringMethods(line, fileName, lineCount);
 			}
 
-			String excluded = null;
-
-			if (_unusedVariablesExclusions != null) {
-				excluded = _unusedVariablesExclusions.getProperty(
-					fileName + StringPool.AT + lineCount);
-			}
-
-			if ((excluded == null) && javaSource && portalSource &&
+			if (javaSource && portalSource &&
+				!isExcluded(_unusedVariablesExclusions, fileName, lineCount) &&
 				!_jspContents.isEmpty() &&
 				hasUnusedVariable(fileName, trimmedLine)) {
 

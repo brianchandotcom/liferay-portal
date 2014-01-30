@@ -914,6 +914,45 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _autoFix;
 	}
 
+	protected boolean isExcluded(Properties properties, String fileName) {
+		return isExcluded(properties, fileName, -1);
+	}
+
+	protected boolean isExcluded(
+		Properties properties, String fileName, int lineCount) {
+
+		return isExcluded(properties, fileName, lineCount, null);
+	}
+
+	protected boolean isExcluded(
+		Properties properties, String fileName, int lineCount,
+		String javaTermName) {
+
+		if (properties == null) {
+			return false;
+		}
+
+		if (properties.getProperty(fileName) != null) {
+			return true;
+		}
+
+		if ((lineCount > 0) &&
+			(properties.getProperty(fileName + StringPool.AT + lineCount) !=
+				null)) {
+
+			return true;
+		}
+
+		if (Validator.isNotNull(javaTermName) &&
+			(properties.getProperty(fileName + StringPool.AT + javaTermName) !=
+				null)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void processErrorMessage(String fileName, String message) {
 		_errorMessages.add(message);
 

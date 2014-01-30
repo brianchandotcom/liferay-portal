@@ -724,23 +724,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String javaTermName = javaTerm.getName();
 
-			String excluded = null;
+			if (isExcluded(
+					_javaTermSortExclusions, fileName, javaTerm.getLineCount(),
+					javaTermName)) {
 
-			if (_javaTermSortExclusions != null) {
-				excluded = _javaTermSortExclusions.getProperty(
-					fileName + StringPool.AT + javaTerm.getLineCount());
-
-				if (excluded == null) {
-					excluded = _javaTermSortExclusions.getProperty(
-						fileName + StringPool.AT + javaTermName);
-				}
-
-				if (excluded == null) {
-					excluded = _javaTermSortExclusions.getProperty(fileName);
-				}
-			}
-
-			if (excluded != null) {
 				previousJavaTerm = javaTerm;
 
 				continue;
@@ -960,13 +947,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		String excluded = null;
-
-		if (_staticLogVariableExclusions != null) {
-			excluded = _staticLogVariableExclusions.getProperty(fileName);
-		}
-
-		if (excluded == null) {
+		if (!isExcluded(_staticLogVariableExclusions, fileName)) {
 			newContent = StringUtil.replace(
 				newContent, "private Log _log", "private static Log _log");
 		}
@@ -990,13 +971,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-34911
 
-		excluded = null;
-
-		if (_upgradeServiceUtilExclusions != null) {
-			excluded = _upgradeServiceUtilExclusions.getProperty(fileName);
-		}
-
-		if ((excluded == null) && portalSource &&
+		if (portalSource &&
+			!isExcluded(_upgradeServiceUtilExclusions, fileName) &&
 			fileName.contains("/portal/upgrade/") &&
 			!fileName.contains("/test/") &&
 			newContent.contains("ServiceUtil.")) {
@@ -1074,13 +1050,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-39508
 
-		excluded = null;
-
-		if (_secureRandomExclusions != null) {
-			excluded = _secureRandomExclusions.getProperty(fileName);
-		}
-
-		if ((excluded == null) &&
+		if (!isExcluded(_secureRandomExclusions, fileName) &&
 			content.contains("java.security.SecureRandom") &&
 			!content.contains("javax.crypto.KeyGenerator")) {
 
@@ -1356,8 +1326,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					ifClause = StringPool.BLANK;
 				}
 			}
-
-			String excluded = null;
 
 			if (line.startsWith(StringPool.TAB + "private ") ||
 				line.equals(StringPool.TAB + "private") ||
@@ -1650,21 +1618,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					fileName, "{:" + fileName + " " + lineCount);
 			}
 
-			excluded = null;
-
-			if (_lineLengthExclusions != null) {
-				excluded = _lineLengthExclusions.getProperty(
-					fileName + StringPool.AT + lineCount);
-
-				if (excluded == null) {
-					excluded = _lineLengthExclusions.getProperty(fileName);
-				}
-			}
-
 			Tuple combinedLines = null;
 			int lineLength = getLineLength(line);
 
-			if ((excluded == null) &&
+			if (!isExcluded(_lineLengthExclusions, fileName, lineCount) &&
 				!line.startsWith("import ") && !line.startsWith("package ") &&
 				!line.matches("\\s*\\*.*")) {
 
@@ -2712,23 +2669,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			int javaTermLineCount = javaTerm.getLineCount();
 			String javaTermName = javaTerm.getName();
 
-			String excluded = null;
+			if (isExcluded(
+					_javaTermSortExclusions, fileName, javaTermLineCount,
+					javaTermName)) {
 
-			if (_javaTermSortExclusions != null) {
-				excluded = _javaTermSortExclusions.getProperty(
-					fileName + StringPool.AT + javaTermLineCount);
-
-				if (excluded == null) {
-					excluded = _javaTermSortExclusions.getProperty(
-						fileName + StringPool.AT + javaTermName);
-				}
-
-				if (excluded == null) {
-					excluded = _javaTermSortExclusions.getProperty(fileName);
-				}
-			}
-
-			if (excluded != null) {
 				previousJavaTerm = javaTerm;
 
 				continue;

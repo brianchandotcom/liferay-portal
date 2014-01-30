@@ -314,9 +314,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			if ((exclusions != null) &&
-				(exclusions.getProperty(fileName) != null)) {
-
+			if (isExcluded(exclusions, fileName)) {
 				continue;
 			}
 
@@ -449,13 +447,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String formatFriendlyURLRoutesXML(String fileName, String content)
 		throws DocumentException, IOException {
 
-		String excluded = null;
-
-		if (_friendlyUrlRoutesSortExclusions != null) {
-			excluded = _friendlyUrlRoutesSortExclusions.getProperty(fileName);
-		}
-
-		if (excluded != null) {
+		if (isExcluded(_friendlyUrlRoutesSortExclusions, fileName)) {
 			return content;
 		}
 

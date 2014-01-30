@@ -544,7 +544,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean hasLocalOrRemoteStagingGroup() {
-		if (hasStagingGroup() || (getRemoteStagingGroupCount() > 0)) {
+		if (hasStagingGroup() || hasRemoteStagingGroup()) {
 			return true;
 		}
 
@@ -569,6 +569,15 @@ public class GroupImpl extends GroupBaseImpl {
 		else {
 			return false;
 		}
+	}
+
+	@Override
+	public boolean hasRemoteStagingGroup() {
+		if (getRemoteStagingGroupCount() > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

@@ -157,14 +157,6 @@
 		background-color: #D3E8F1;
 	}
 
-	.overlay {
-		clip: rect(0, 0, 0, 0);
-	}
-
-	&:hover .overlay, &.hover .overlay, &:hover .entry-selector, &.selected .entry-selector {
-		clip: rect(auto auto auto auto);
-	}
-
 	.entry-title .entry-categories, a.entry-title .entry-tags {
 		font-size: 16px ;
 	}

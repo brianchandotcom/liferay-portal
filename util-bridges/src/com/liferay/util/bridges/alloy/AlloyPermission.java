@@ -16,8 +16,8 @@ package com.liferay.util.bridges.alloy;
 
 import com.liferay.portal.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -55,8 +55,7 @@ public class AlloyPermission {
 		String controller, String actionId) {
 
 		actionId =
-			StringUtil.toUpperCase(actionId) + StringPool.UNDERLINE +
-				StringUtil.toUpperCase(controller);
+			_formatName(actionId) + StringPool.POUND + controller.toUpperCase();
 
 		try {
 			ResourceActionsUtil.checkAction(portletId, actionId);
@@ -77,6 +76,22 @@ public class AlloyPermission {
 		return contains(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
 			portletDisplay.getRootPortletId(), controller, actionId);
+	}
+
+	private static String _formatName(String name) {
+		StringBuilder sb = new StringBuilder(name.toUpperCase());
+
+		for (int i = 0; i < name.length(); i++) {
+			char c = name.charAt(i);
+
+			if (Character.isUpperCase(c) && (i > 0)) {
+				int delta = sb.length() - name.length();
+
+				sb.insert(i + delta, CharPool.UNDERLINE);
+			}
+		}
+
+		return sb.toString();
 	}
 
 }

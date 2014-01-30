@@ -133,7 +133,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 					JSONFactoryUtil.serialize(message)));
 
 			auditMessage.setServerName(InetAddressUtil.getLocalHostName());
-			auditMessage.setServerPort(PortalUtil.getPortalPort(false));
+			auditMessage.setServerPort(PortalUtil.getPortalLocalPort(false));
 
 			AuditRouterUtil.route(auditMessage);
 		}

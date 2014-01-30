@@ -31,10 +31,13 @@ import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WeakValueConcurrentHashMap;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PortalEventListener;
@@ -93,14 +96,25 @@ public class ClusterExecutorImpl
 			addClusterEventListener(new LiveUsersClusterEventListenerImpl());
 		}
 
+		String portalAddress = null;
+
 		_secure = StringUtil.equalsIgnoreCase(
 			Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL);
 
 		if (_secure) {
-			_port = PropsValues.PORTAL_INSTANCE_HTTPS_PORT;
+			portalAddress = PropsValues.PORTAL_INSTANCE_HTTPS_ADDRESS;
 		}
 		else {
-			_port = PropsValues.PORTAL_INSTANCE_HTTP_PORT;
+			portalAddress = PropsValues.PORTAL_INSTANCE_HTTP_ADDRESS;
+		}
+
+		if (Validator.isNotNull(portalAddress)) {
+			int index = portalAddress.indexOf(CharPool.COLON);
+
+			if (index != -1) {
+				_port = GetterUtil.getInteger(
+					portalAddress.substring(index + 1), _port);
+			}
 		}
 
 		super.afterPropertiesSet();

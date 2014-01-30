@@ -1,3 +1,5 @@
+@import "mixins";
+
 .taglib-ratings {
 	&.stars {
 		overflow: hidden;
@@ -30,6 +32,16 @@
 			.rating-label {
 				display: inline-block;
 				padding: 0 5px;
+			}
+
+			@include respond-to(phone, tablet) {
+				.rating-label {
+					vertical-align: text-bottom;
+				}
+
+				a {
+					font-size: 1.5em;
+				}
 			}
 		}
 	}

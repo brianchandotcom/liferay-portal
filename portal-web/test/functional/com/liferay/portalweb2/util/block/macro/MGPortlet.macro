@@ -1,9 +1,5 @@
 <definition>
 	<command name="configureShowAllPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGMediagallery#assertElementPresent" locator-key1="OPTIONS" />
 		<execute action="PGMediagallery#assertClick" locator-key1="OPTIONS" value1="Options" />
 		<execute action="PGMediagallery#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />

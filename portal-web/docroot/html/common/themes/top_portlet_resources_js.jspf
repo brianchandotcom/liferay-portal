@@ -29,9 +29,7 @@
 
 	for (Portlet curPortlet : portlets) {
 		for (String headerPortalJavaScript : curPortlet.getHeaderPortalJavaScript()) {
-			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortalJavaScript) &&
-				!portletResourceStaticURLs.contains(headerPortalJavaScript) && !themeDisplay.isIncludedJs(headerPortalJavaScript)) {
-
+			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortalJavaScript) && !portletResourceStaticURLs.contains(headerPortalJavaScript) && !themeDisplay.isIncludedJs(headerPortalJavaScript)) {
 				portletResourceStaticURLs.add(headerPortalJavaScript);
 
 				sb.append("&");
@@ -64,21 +62,17 @@
 
 	if (themeDisplay.isThemeJsFastLoad() && (sb.length() > 0)) {
 		sb.insert(0, alloyComboPath);
-
 	%>
 
 		<script src="<%= sb.toString() %> " type="text/javascript"></script>
 
 	<%
-
 		sb.delete(0, sb.length());
 	}
 
 	for (Portlet curPortlet : portlets) {
 		for (String headerPortletJavaScript : curPortlet.getHeaderPortletJavaScript()) {
-			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortletJavaScript) &&
-				!portletResourceStaticURLs.contains(headerPortletJavaScript)) {
-
+			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortletJavaScript) && !portletResourceStaticURLs.contains(headerPortletJavaScript)) {
 				portletResourceStaticURLs.add(headerPortletJavaScript);
 
 				sb.append("&");
@@ -111,13 +105,11 @@
 
 	if (themeDisplay.isThemeJsFastLoad() && (sb.length() > 0)) {
 		sb.insert(0, alloyComboPath);
-
 	%>
 
 		<script src="<%= sb.toString() %> " type="text/javascript"></script>
 
 	<%
-
 		sb.delete(0, sb.length());
 	}
 	%>

@@ -501,6 +501,7 @@ create index IX_8E6DA3A1 on PortletPreferences (portletId);
 
 create index IX_A1A8CB8B on RatingsEntry (classNameId, classPK, score);
 create unique index IX_B47E3C11 on RatingsEntry (userId, classNameId, classPK);
+create index IX_9F242DF6 on RatingsEntry (uuid_, companyId);
 
 create unique index IX_A6E99284 on RatingsStats (classNameId, classPK);
 

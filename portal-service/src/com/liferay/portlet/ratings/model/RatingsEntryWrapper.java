@@ -16,6 +16,7 @@ package com.liferay.portlet.ratings.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -53,6 +54,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("entryId", getEntryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -68,6 +70,12 @@ public class RatingsEntryWrapper implements RatingsEntry,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long entryId = (Long)attributes.get("entryId");
 
 		if (entryId != null) {
@@ -141,6 +149,26 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_ratingsEntry.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the uuid of this ratings entry.
+	*
+	* @return the uuid of this ratings entry
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _ratingsEntry.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this ratings entry.
+	*
+	* @param uuid the uuid of this ratings entry
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_ratingsEntry.setUuid(uuid);
 	}
 
 	/**
@@ -482,6 +510,11 @@ public class RatingsEntryWrapper implements RatingsEntry,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _ratingsEntry.getStagedModelType();
 	}
 
 	/**

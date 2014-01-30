@@ -2328,6 +2328,7 @@
 		<field name="voteDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.ratings.model.RatingsEntry">
+		<field name="uuid" type="String" />
 		<field name="entryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

@@ -128,6 +128,9 @@ public class VerifyUUID extends VerifyProcess {
 			"PollsVote", "voteId"
 		},
 		new String[] {
+			"RatingsEntry", "entryId"
+		},
+		new String[] {
 			"Role_", "roleId"
 		},
 		new String[] {

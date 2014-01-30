@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PortalImpl;
@@ -108,44 +109,62 @@ public abstract class BaseClusterExecutorImplTestCase
 	}
 
 	@Aspect
-	public static class InetAddressUtilExceptionAdvice {
+	public static class SetBadPortalAddressAdvice {
+
+		public static final String BAD_ADDRESS = "bad address";
 
 		@Around(
-			"call(* com.liferay.portal.kernel.util.InetAddressUtil." +
-				"getLocalInetAddress())")
-		public Object throwException(ProceedingJoinPoint proceedingJoinPoint)
+			"set(* com.liferay.portal.util.PropsValues." +
+				"PORTAL_INSTANCE_HTTP_ADDRESS)")
+		public Object setPortalAddress(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
-			throw new Exception();
+			return proceedingJoinPoint.proceed(
+				new Object[] {BAD_ADDRESS + StringPool.COLON + 8080});
+		}
+
+		@Around(
+			"set(* com.liferay.portal.util.PropsValues." +
+				"PORTAL_INSTANCE_HTTPS_ADDRESS)")
+		public Object setSecurePortalAddress(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			return proceedingJoinPoint.proceed(new Object[] {BAD_ADDRESS});
 		}
 
 	}
 
 	@Aspect
-	public static class SetPortalPortAdvice {
+	public static class SetPortalAddressAdvice {
 
+		public static final String PORTAL_ADDRESS = "127.0.0.1";
 		public static final int PORTAL_PORT = 80;
 
+		public static final String SECURE_PORTAL_ADDRESS = "127.0.1.1";
 		public static final int SECURE_PORTAL_PORT = 81;
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"PORTAL_INSTANCE_HTTP_PORT)")
-		public Object setPortalPort(ProceedingJoinPoint proceedingJoinPoint)
+				"PORTAL_INSTANCE_HTTP_ADDRESS)")
+		public Object setPortalAddress(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
-			return proceedingJoinPoint.proceed(new Object[] {PORTAL_PORT});
+			return proceedingJoinPoint.proceed(
+				new Object[] {PORTAL_ADDRESS + StringPool.COLON + PORTAL_PORT});
 		}
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"PORTAL_INSTANCE_HTTPS_PORT)")
-		public Object setSecurePortalPort(
+				"PORTAL_INSTANCE_HTTPS_ADDRESS)")
+		public Object setSecurePortalAddress(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
 			return proceedingJoinPoint.proceed(
-				new Object[] {SECURE_PORTAL_PORT});
+				new Object[] {
+					SECURE_PORTAL_ADDRESS + StringPool.COLON +
+						SECURE_PORTAL_PORT});
 		}
 
 	}
@@ -277,8 +296,6 @@ public abstract class BaseClusterExecutorImplTestCase
 
 			channel.setReceiver(
 				new MockClusterRequestReceiver(clusterExecutorImpl));
-
-			ClusterExecutorImpl.bindInetAddress = null;
 		}
 
 		clusterExecutorImpl.initialize();

@@ -29,6 +29,16 @@ import javax.servlet.jsp.PageContext;
  */
 public class PortletDisplayTemplateUtil {
 
+	/**
+	 * Returns the portlet display template's DDM template matching the group
+	 * and display style stored in the portlet configuration.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  displayStyle the display style stored in the portlet
+	 *         configuration
+	 * @return the portlet display template's DDM template matching the group
+	 *         and the display style stored in the portlet configuration
+	 */
 	public static DDMTemplate fetchDDMTemplate(
 		long groupId, String displayStyle) {
 
@@ -36,10 +46,25 @@ public class PortletDisplayTemplateUtil {
 			groupId, displayStyle);
 	}
 
+	/**
+	 * Returns the group ID of the portlet display template's DDM template.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the group ID of the portlet display template's DDM template
+	 */
 	public static long getDDMTemplateGroupId(long groupId) {
 		return getPortletDisplayTemplate().getDDMTemplateGroupId(groupId);
 	}
 
+	/**
+	 * Returns the UUID of the portlet display template's DDM template from the
+	 * display style stored in the portlet configuration.
+	 *
+	 * @param  displayStyle the display style stored in the portlet
+	 *         configuration
+	 * @return the UUID of the portlet display template's DDM template from the
+	 *         display style stored in the portlet configuration
+	 */
 	public static String getDDMTemplateUuid(String displayStyle) {
 		return getPortletDisplayTemplate().getDDMTemplateUuid(displayStyle);
 	}
@@ -51,6 +76,18 @@ public class PortletDisplayTemplateUtil {
 		return _portletDisplayTemplate;
 	}
 
+	/**
+	 * Returns the primary key of the portlet display template's DDM template
+	 * matching the group and the display style stored in the portlet
+	 * configuration.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  displayStyle the display style stored in the portlet
+	 *         configuration
+	 * @return the primary key of the portlet display template's DDM template
+	 *         matching the group and the display style stored in the portlet
+	 *         configuration
+	 */
 	public static long getPortletDisplayTemplateDDMTemplateId(
 		long groupId, String displayStyle) {
 
@@ -59,16 +96,46 @@ public class PortletDisplayTemplateUtil {
 				groupId, displayStyle);
 	}
 
+	/**
+	 * Returns the portlet display template handlers.
+	 *
+	 * @return the portlet display template handlers
+	 */
 	public static List<TemplateHandler> getPortletDisplayTemplateHandlers() {
 		return getPortletDisplayTemplate().getPortletDisplayTemplateHandlers();
 	}
 
+	/**
+	 * Returns the portlet display template's map of script variable groups for
+	 * which hints are displayed in the template editor palette.
+	 *
+	 * @param  language the portlet display template's scripting language.
+	 *         Acceptable values for the FreeMarker, Velocity, or XSL languages
+	 *         are {@link TemplateConstants.LANG_TYPE_FTL}, {@link
+	 *         TemplateConstants.LANG_TYPE_VM}, or {@link
+	 *         TemplateConstants.LANG_TYPE_XSL}, respectively.
+	 * @return the portlet display template's map of script variable groups for
+	 *         which hints are displayed in the template editor palette
+	 * @see    TemplateHandler#getTemplateVariableGroups(long, String, Locale)
+	 */
 	public static Map<String, TemplateVariableGroup>
 		getTemplateVariableGroups(String language) {
 
 		return getPortletDisplayTemplate().getTemplateVariableGroups(language);
 	}
 
+	/**
+	 * Returns the result of rendering the DDM template with the entries in the
+	 * page context.
+	 *
+	 * @param  pageContext the page context in which the template is rendered.
+	 *         For example, this could be the context of the JSP view.
+	 * @param  ddmTemplateId the primary key of the DDM template
+	 * @param  entries the entries that are rendered in the template
+	 * @return the result of rendering the DDM template with the entries in the
+	 *         page context
+	 * @throws Exception if the DDM template could not be rendered
+	 */
 	public static String renderDDMTemplate(
 			PageContext pageContext, long ddmTemplateId, List<?> entries)
 		throws Exception {
@@ -77,6 +144,20 @@ public class PortletDisplayTemplateUtil {
 			pageContext, ddmTemplateId, entries);
 	}
 
+	/**
+	 * Returns the result of rendering the DDM template with the entries in the
+	 * page context and template context.
+	 *
+	 * @param  pageContext the page context in which the template is rendered.
+	 *         For example, this could be the context of the JSP view.
+	 * @param  ddmTemplateId the primary key of the DDM template
+	 * @param  entries the entries that are rendered in the template
+	 * @param  contextObjects the map of objects defining the context in which
+	 *         the template is rendered
+	 * @return the result of rendering the DDM template with the entries in the
+	 *         page context and template context
+	 * @throws Exception if the DDM template could not be rendered
+	 */
 	public static String renderDDMTemplate(
 			PageContext pageContext, long ddmTemplateId, List<?> entries,
 			Map<String, Object> contextObjects)

@@ -259,6 +259,11 @@ public class EditLayoutsAction extends PortletAction {
 				updateLayoutRevision(actionRequest, themeDisplay);
 			}
 
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+
+			SessionMessages.add(request, "requestProcessed");
+
 			sendRedirect(
 				portletConfig, actionRequest, actionResponse, redirect,
 				closeRedirect);

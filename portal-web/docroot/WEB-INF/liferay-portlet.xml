@@ -762,6 +762,7 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
+		<header-portlet-css>/html/portlet/language/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-language</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>

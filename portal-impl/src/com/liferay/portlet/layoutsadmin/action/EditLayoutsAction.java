@@ -174,10 +174,11 @@ public class EditLayoutsAction extends PortletAction {
 						layout);
 				}
 				else if (cmd.equals(Constants.UPDATE)) {
-					redirect = updateCloseRedirect(
+					redirect = updateRedirect(
 						themeDisplay, redirect, null, layout, oldFriendlyURL);
 					closeRedirect = updateCloseRedirect(
-						themeDisplay, closeRedirect, null, layout, oldFriendlyURL);
+						themeDisplay, closeRedirect, null, layout,
+						oldFriendlyURL);
 				}
 			}
 			else if (cmd.equals(Constants.DELETE)) {
@@ -1016,7 +1017,8 @@ public class EditLayoutsAction extends PortletAction {
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
 
-			if (oldFriendlyURL.equals(
+			if (!layout.isTypeURL() && !layout.isTypeLinkToLayout() &&
+				oldFriendlyURL.equals(
 					layout.getFriendlyURL(themeDisplay.getLocale()))) {
 
 				oldFriendlyURL = StringPool.BLANK;
@@ -1224,6 +1226,46 @@ public class EditLayoutsAction extends PortletAction {
 				groupId, privateLayout, layoutId, deviceThemeId,
 				deviceColorSchemeId, deviceCss, deviceWapTheme);
 		}
+	}
+
+	protected String updateRedirect(
+		ThemeDisplay themeDisplay, String redirect, Group group, Layout layout,
+		String oldLayoutFriendlyURL) {
+
+		if (Validator.isNull(redirect) ||
+			Validator.isNull(oldLayoutFriendlyURL)) {
+
+			return redirect;
+		}
+
+		if (layout != null) {
+			String oldPath = oldLayoutFriendlyURL;
+
+			if (layout.isTypeLinkToLayout() || layout.isTypeURL()) {
+				try {
+					layout = LayoutLocalServiceUtil.fetchFirstLayout(
+						layout.getGroupId(), layout.getPrivateLayout(),
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+				}
+				catch (Exception e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("First layout can not be found");
+					}
+				}
+			}
+
+			String newPath = layout.getFriendlyURL(themeDisplay.getLocale());
+
+			return PortalUtil.updateRedirect(redirect, oldPath, newPath);
+		}
+		else if (group != null) {
+			String oldPath = group.getFriendlyURL() + oldLayoutFriendlyURL;
+			String newPath = group.getFriendlyURL();
+
+			return PortalUtil.updateRedirect(redirect, oldPath, newPath);
+		}
+
+		return redirect;
 	}
 
 	protected UnicodeProperties updateThemeSettingsProperties(

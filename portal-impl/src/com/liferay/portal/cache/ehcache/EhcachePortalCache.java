@@ -107,10 +107,12 @@ public class EhcachePortalCache<K extends Serializable, V>
 		CacheEventListener cacheEventListener =
 			new PortalCacheCacheEventListener<K, V>(cacheListener, this);
 
-		_cacheEventListeners.put(cacheListener, cacheEventListener);
-
 		NotificationScope notificationScope = getNotificationScope(
 			cacheListenerScope);
+
+		_cacheEventListeners.put(
+			cacheListener,
+			new RegistrationPair(cacheEventListener, notificationScope));
 
 		RegisteredEventListeners registeredEventListeners =
 			_ehcache.getCacheEventNotificationService();
@@ -131,21 +133,33 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	public void setEhcache(Ehcache ehcache) {
 		_ehcache = ehcache;
+
+		RegisteredEventListeners registeredEventListeners =
+			ehcache.getCacheEventNotificationService();
+
+		for (RegistrationPair registrationPair :
+				_cacheEventListeners.values()) {
+
+			registeredEventListeners.registerListener(
+				registrationPair._cacheEventListener,
+				registrationPair._notificationScope);
+		}
 	}
 
 	@Override
 	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
-		CacheEventListener cacheEventListener = _cacheEventListeners.get(
+		RegistrationPair registrationPair = _cacheEventListeners.remove(
 			cacheListener);
 
-		if (cacheEventListener != null) {
-			RegisteredEventListeners registeredEventListeners =
-				_ehcache.getCacheEventNotificationService();
-
-			registeredEventListeners.unregisterListener(cacheEventListener);
+		if (registrationPair == null) {
+			return;
 		}
 
-		_cacheEventListeners.remove(cacheListener);
+		RegisteredEventListeners registeredEventListeners =
+			_ehcache.getCacheEventNotificationService();
+
+		registeredEventListeners.unregisterListener(
+			registrationPair._cacheEventListener);
 	}
 
 	@Override
@@ -153,10 +167,11 @@ public class EhcachePortalCache<K extends Serializable, V>
 		RegisteredEventListeners registeredEventListeners =
 			_ehcache.getCacheEventNotificationService();
 
-		for (CacheEventListener cacheEventListener :
+		for (RegistrationPair registrationPair :
 				_cacheEventListeners.values()) {
 
-			registeredEventListeners.unregisterListener(cacheEventListener);
+			registeredEventListeners.unregisterListener(
+				registrationPair._cacheEventListener);
 		}
 
 		_cacheEventListeners.clear();
@@ -176,8 +191,23 @@ public class EhcachePortalCache<K extends Serializable, V>
 		}
 	}
 
-	private Map<CacheListener<K, V>, CacheEventListener> _cacheEventListeners =
-		new ConcurrentHashMap<CacheListener<K, V>, CacheEventListener>();
+	private Map<CacheListener<K, V>, RegistrationPair> _cacheEventListeners =
+		new ConcurrentHashMap<CacheListener<K, V>, RegistrationPair>();
 	private Ehcache _ehcache;
+
+	private static class RegistrationPair {
+
+		public RegistrationPair(
+			CacheEventListener cacheEventListener,
+			NotificationScope notificationScope) {
+
+			_cacheEventListener = cacheEventListener;
+			_notificationScope = notificationScope;
+		}
+
+		private CacheEventListener _cacheEventListener;
+		private NotificationScope _notificationScope;
+
+	}
 
 }

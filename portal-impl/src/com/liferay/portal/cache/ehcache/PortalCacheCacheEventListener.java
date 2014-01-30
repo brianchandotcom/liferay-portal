@@ -50,6 +50,14 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	public void dispose() {
 	}
 
+	public CacheListener<K, V> getCacheListener() {
+		return _cacheListener;
+	}
+
+	public PortalCache<K, V> getPortalCache() {
+		return _portalCache;
+	}
+
 	@Override
 	public void notifyElementEvicted(Ehcache ehcache, Element element) {
 		K key = (K)element.getObjectKey();

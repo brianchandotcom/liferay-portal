@@ -51,6 +51,16 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 			return value;
 		}
 
+		inetAddress = clusterNode._portalAddress;
+
+		hostAddress = _portalAddress.getHostAddress();
+
+		value = hostAddress.compareTo(inetAddress.getHostAddress());
+
+		if (value != 0) {
+			return value;
+		}
+
 		if (_port > clusterNode._port) {
 			value = 1;
 		}
@@ -92,6 +102,10 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 		return _port;
 	}
 
+	public InetAddress getPortalAddress() {
+		return _portalAddress;
+	}
+
 	@Override
 	public int hashCode() {
 		return _clusterNodeId.hashCode();
@@ -99,6 +113,10 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 
 	public void setPort(int port) {
 		_port = port;
+	}
+
+	public void setPortalAddress(InetAddress portalAddress) {
+		_portalAddress = portalAddress;
 	}
 
 	@Override
@@ -109,6 +127,8 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 		sb.append(_clusterNodeId);
 		sb.append(", inetAddress=");
 		sb.append(_inetAddress);
+		sb.append(", portalAddress=");
+		sb.append(_portalAddress);
 		sb.append(", port=");
 		sb.append(_port);
 		sb.append("}");
@@ -119,5 +139,6 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 	private String _clusterNodeId;
 	private InetAddress _inetAddress;
 	private int _port;
+	private InetAddress _portalAddress;
 
 }

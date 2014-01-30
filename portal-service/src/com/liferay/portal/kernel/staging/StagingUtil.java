@@ -475,6 +475,10 @@ public class StagingUtil {
 			user, layoutSetId, layoutSetBranchId);
 	}
 
+	public static String stripProtocolFromRemoteAddress(String remoteAddress) {
+		return getStaging().stripProtocolFromRemoteAddress(remoteAddress);
+	}
+
 	public static void unlockGroup(long groupId) throws SystemException {
 		getStaging().unlockGroup(groupId);
 	}

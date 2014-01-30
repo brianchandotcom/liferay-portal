@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
@@ -38,6 +39,7 @@ import javax.portlet.PortletRequest;
 
 /**
  * @author Zsolt Berentey
+ * @author Levente Hudák
  */
 @ProviderType
 public interface ExportImportHelper {
@@ -77,6 +79,18 @@ public interface ExportImportHelper {
 
 	public static final String TEMP_FOLDER_NAME =
 		ExportImportHelper.class.getName();
+
+	public ExportImportConfiguration createExportLayoutConfiguration(
+			PortletRequest portletRequest)
+		throws Exception;
+
+	public ExportImportConfiguration createPublishLayoutLocalConfiguration(
+			PortletRequest portletRequest)
+		throws Exception;
+
+	public ExportImportConfiguration createPublishLayoutRemoteConfiguration(
+			PortletRequest portletRequest)
+		throws Exception;
 
 	public Calendar getCalendar(
 		PortletRequest portletRequest, String paramPrefix,

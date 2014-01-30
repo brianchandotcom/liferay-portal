@@ -246,6 +246,18 @@ public class MapUtil {
 		return GetterUtil.getString(String.valueOf(value), defaultValue);
 	}
 
+	public static boolean isEmpty(Map<?, ?> map) {
+		if ((map == null) || map.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isNotEmpty(Map<?, ?> map) {
+		return !isEmpty(map);
+	}
+
 	public static <K, V> void merge(
 		Map<K, V> master, Map<? super K, ? super V> copy) {
 

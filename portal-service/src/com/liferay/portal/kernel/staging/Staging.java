@@ -277,6 +277,8 @@ public interface Staging {
 			User user, long layoutSetId, long layoutSetBranchId)
 		throws SystemException;
 
+	public String stripProtocolFromRemoteAddress(String remoteAddress);
+
 	public void unlockGroup(long groupId) throws SystemException;
 
 	public void unscheduleCopyFromLive(PortletRequest PortletRequest)

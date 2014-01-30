@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
@@ -39,9 +40,35 @@ import javax.portlet.PortletRequest;
 
 /**
  * @author Zsolt Berentey
+ * @author Levente Hudák
  */
 @ProviderType
 public class ExportImportHelperUtil {
+
+	public static ExportImportConfiguration createExportLayoutConfiguration(
+			PortletRequest portletRequest)
+		throws Exception {
+
+		return getExportImportHelper().createExportLayoutConfiguration(
+			portletRequest);
+	}
+
+	public static ExportImportConfiguration
+			createPublishLayoutLocalConfiguration(PortletRequest portletRequest)
+		throws Exception {
+
+		return getExportImportHelper().createPublishLayoutLocalConfiguration(
+			portletRequest);
+	}
+
+	public static ExportImportConfiguration
+			createPublishLayoutRemoteConfiguration(
+				PortletRequest portletRequest)
+		throws Exception {
+
+		return getExportImportHelper().createPublishLayoutRemoteConfiguration(
+			portletRequest);
+	}
 
 	public static Calendar getCalendar(
 		PortletRequest portletRequest, String paramPrefix,

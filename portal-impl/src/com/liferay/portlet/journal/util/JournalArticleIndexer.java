@@ -287,12 +287,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			searchQuery.add(multiFieldQuery, booleanClauseOccur);
 		}
 		else {
-			if (searchContext.isAndSearch()) {
-				searchQuery.addRequiredTerm(localizedField, value, like);
-			}
-			else {
-				searchQuery.addTerm(localizedField, value, like);
-			}
+			searchQuery.addTerm(localizedField, value, like);
 		}
 	}
 

@@ -198,6 +198,14 @@ public class JournalFolderAssetRenderer
 	}
 
 	@Override
+	public boolean hasEditPermission(PermissionChecker permissionChecker)
+		throws PortalException, SystemException {
+
+		return JournalFolderPermission.contains(
+			permissionChecker, _folder, ActionKeys.UPDATE);
+	}
+
+	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException, SystemException {
 

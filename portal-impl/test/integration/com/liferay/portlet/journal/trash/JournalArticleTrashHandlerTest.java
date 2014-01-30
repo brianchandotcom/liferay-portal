@@ -83,7 +83,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		String xsd = StringUtil.read(
 			clazz.getResourceAsStream(
-				"com/liferay/portlet/journal/dependencies/" +
+				"/com/liferay/portlet/journal/dependencies/" +
 					"test-ddm-structure-image-field.xml"));
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
@@ -95,7 +95,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		String content = StringUtil.read(
 			clazz.getResourceAsStream(
-				"com/liferay/portlet/journal/dependencies/" +
+				"/com/liferay/portlet/journal/dependencies/" +
 					"test-journal-content-image-field.xml"));
 
 		Map<String, byte[]> images = new HashMap<String, byte[]>();
@@ -103,7 +103,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 		images.put(
 			"_image_1_0_en_US",
 			FileUtil.getBytes(
-				clazz, "com/liferay/portlet/journal/dependencies/liferay.png"));
+				clazz, "/com/liferay/portlet/journal/dependencies/liferay.png"));
 
 		baseModel = JournalTestUtil.addArticleWithXMLContent(
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, content,

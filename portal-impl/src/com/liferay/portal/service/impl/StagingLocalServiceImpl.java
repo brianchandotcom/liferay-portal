@@ -603,7 +603,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		clearLastPublishDate(liveGroup.getGroupId(), true);
 		clearLastPublishDate(liveGroup.getGroupId(), false);
 
-		if (liveGroup.getRemoteStagingGroupCount() > 0) {
+		if (liveGroup.hasRemoteStagingGroup()) {
 			return;
 		}
 

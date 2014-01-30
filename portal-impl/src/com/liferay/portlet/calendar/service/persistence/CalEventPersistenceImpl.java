@@ -4266,7 +4266,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			qPos.add(groupId);
 
 			if (types != null) {
-				qPos.add(types);
+				for (int i = 0; i < types.length; i++) {
+					if ((types[i] != null) &&
+							!types[i].equals(StringPool.BLANK)) {
+						qPos.add(types);
+					}
+				}
 			}
 
 			return (List<CalEvent>)QueryUtil.list(q, getDialect(), start, end);
@@ -4438,7 +4443,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				qPos.add(groupId);
 
 				if (types != null) {
-					qPos.add(types);
+					for (int i = 0; i < types.length; i++) {
+						if ((types[i] != null) &&
+								!types[i].equals(StringPool.BLANK)) {
+							qPos.add(types);
+						}
+					}
 				}
 
 				if (!pagination) {
@@ -4636,7 +4646,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				qPos.add(groupId);
 
 				if (types != null) {
-					qPos.add(types);
+					for (int i = 0; i < types.length; i++) {
+						if ((types[i] != null) &&
+								!types[i].equals(StringPool.BLANK)) {
+							qPos.add(types);
+						}
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -4805,7 +4820,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			qPos.add(groupId);
 
 			if (types != null) {
-				qPos.add(types);
+				for (int i = 0; i < types.length; i++) {
+					if ((types[i] != null) &&
+							!types[i].equals(StringPool.BLANK)) {
+						qPos.add(types);
+					}
+				}
 			}
 
 			Long count = (Long)q.uniqueResult();
@@ -6806,7 +6826,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			qPos.add(groupId);
 
 			if (types != null) {
-				qPos.add(types);
+				for (int i = 0; i < types.length; i++) {
+					if ((types[i] != null) &&
+							!types[i].equals(StringPool.BLANK)) {
+						qPos.add(types);
+					}
+				}
 			}
 
 			qPos.add(repeating);
@@ -6996,7 +7021,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				qPos.add(groupId);
 
 				if (types != null) {
-					qPos.add(types);
+					for (int i = 0; i < types.length; i++) {
+						if ((types[i] != null) &&
+								!types[i].equals(StringPool.BLANK)) {
+							qPos.add(types);
+						}
+					}
 				}
 
 				qPos.add(repeating);
@@ -7214,7 +7244,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				qPos.add(groupId);
 
 				if (types != null) {
-					qPos.add(types);
+					for (int i = 0; i < types.length; i++) {
+						if ((types[i] != null) &&
+								!types[i].equals(StringPool.BLANK)) {
+							qPos.add(types);
+						}
+					}
 				}
 
 				qPos.add(repeating);
@@ -7399,7 +7434,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			qPos.add(groupId);
 
 			if (types != null) {
-				qPos.add(types);
+				for (int i = 0; i < types.length; i++) {
+					if ((types[i] != null) &&
+							!types[i].equals(StringPool.BLANK)) {
+						qPos.add(types);
+					}
+				}
 			}
 
 			qPos.add(repeating);

@@ -822,10 +822,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected String format(String fileName) throws Exception {
-		if (fileName.contains("SourceProcessor")) {
-			return null;
-		}
-
 		File file = new File(BASEDIR + fileName);
 
 		fileName = StringUtil.replace(
@@ -2488,11 +2484,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Collection<String> fileNames = new TreeSet<String>();
 
 		String[] excludes = new String[] {
-			"**\\*_IW.java", "**\\PropsValues.java", "**\\counter\\service\\**",
-			"**\\jsp\\*", "**\\model\\impl\\*BaseImpl.java",
-			"**\\model\\impl\\*Model.java", "**\\model\\impl\\*ModelImpl.java",
-			"**\\portal\\service\\**", "**\\portal-client\\**",
-			"**\\portal-web\\test\\**\\*Test.java",
+			"**\\*_IW.java", "**\\*SourceProcessor.java",
+			"**\\PropsValues.java", "**\\counter\\service\\**", "**\\jsp\\*",
+			"**\\model\\impl\\*BaseImpl.java", "**\\model\\impl\\*Model.java",
+			"**\\model\\impl\\*ModelImpl.java", "**\\portal\\service\\**",
+			"**\\portal-client\\**", "**\\portal-web\\test\\**\\*Test.java",
 			"**\\portal-web\\test\\**\\*Tests.java",
 			"**\\portlet\\**\\service\\**", "**\\test\\*-generated\\**",
 			"**\\tools\\tck\\**"

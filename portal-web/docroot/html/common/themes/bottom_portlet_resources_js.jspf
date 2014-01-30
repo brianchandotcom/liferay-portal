@@ -21,7 +21,7 @@
 
 	long javaScriptLastModified = ServletContextUtil.getLastModified(application, "/html/js/", true);
 
-	String alloyComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "&themeId=" + themeDisplay.getThemeId() + "&minifierType=", javaScriptLastModified);
+	String alloyComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=&themeId=" + themeDisplay.getThemeId(), javaScriptLastModified);
 
 	Set<String> portletResourceStaticURLs = (Set<String>)request.getAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS);
 
@@ -33,9 +33,7 @@
 
 	for (Portlet curPortlet : portlets) {
 		for (String footerPortalJavaScript : curPortlet.getFooterPortalJavaScript()) {
-			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(footerPortalJavaScript) &&
-				!portletResourceStaticURLs.contains(footerPortalJavaScript) && !themeDisplay.isIncludedJs(footerPortalJavaScript)) {
-
+			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(footerPortalJavaScript) && !portletResourceStaticURLs.contains(footerPortalJavaScript) && !themeDisplay.isIncludedJs(footerPortalJavaScript)) {
 				portletResourceStaticURLs.add(footerPortalJavaScript);
 
 				sb.append("&");
@@ -79,9 +77,7 @@
 
 	for (Portlet curPortlet : portlets) {
 		for (String footerPortletJavaScript : curPortlet.getFooterPortletJavaScript()) {
-			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(footerPortletJavaScript) &&
-				!portletResourceStaticURLs.contains(footerPortletJavaScript)) {
-
+			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(footerPortletJavaScript) && !portletResourceStaticURLs.contains(footerPortletJavaScript)) {
 				portletResourceStaticURLs.add(footerPortletJavaScript);
 
 				sb.append("&");

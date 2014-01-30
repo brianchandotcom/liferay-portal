@@ -5,6 +5,12 @@
 		</default>
 	</command>
 
+	<command name="antCommand">
+		<default>
+			<execute function="AntCommand#antCommand" />
+		</default>
+	</command>
+
 	<command name="assertChecked">
 		<default>
 			<execute function="AssertChecked#assertChecked" />

@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
 <project name="portal-test-websphere" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<echo file="test.environment.properties" message="app.server.type=websphere" />
+
 	<import file="build-test.xml" />
 
 	<target name="run-selenium-websphere">

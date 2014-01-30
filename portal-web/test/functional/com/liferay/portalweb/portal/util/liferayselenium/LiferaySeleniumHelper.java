@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -34,7 +35,9 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 
 import java.util.List;
 
@@ -44,6 +47,49 @@ import javax.imageio.ImageIO;
  * @author Brian Wing Shun Chan
  */
 public class LiferaySeleniumHelper {
+
+	public static void antCommand(
+			LiferaySelenium liferaySelenium, String fileName, String target)
+		throws Exception {
+
+		Runtime runtime = Runtime.getRuntime();
+
+		String command;
+
+		if (!OSDetector.isWindows()) {
+			String projectDir = liferaySelenium.getProjectDir();
+
+			projectDir = StringUtil.replace(projectDir, "\\", "//");
+
+			runtime.exec("bash -c cd " + projectDir);
+
+			command = "bash -c ant -f " + fileName + " " + target;
+		}
+		else {
+			runtime.exec("cmd /c cd " + liferaySelenium.getProjectDir());
+
+			command = "cmd /c ant -f " + fileName + " " + target;
+		}
+
+		Process process = runtime.exec(command);
+
+		InputStreamReader inputStreamReader = new InputStreamReader(
+			process.getInputStream());
+
+		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+		String line = null;
+
+		while ((line = bufferedReader.readLine()) != null) {
+			System.out.println(line);
+
+			if (line.contains("BUILD FAILED") ||
+				line.contains("BUILD SUCCESSFUL")) {
+
+				break;
+			}
+		}
+	}
 
 	public static void assertAlert(
 			LiferaySelenium liferaySelenium, String pattern)

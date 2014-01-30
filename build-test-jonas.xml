@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
 <project name="portal-test-jonas" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<echo file="test.environment.properties" message="app.server.type=jonas" />
+
 	<import file="build-test.xml" />
 
 	<target name="run-jonas">

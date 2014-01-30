@@ -30,15 +30,15 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 			<aui:fieldset cssClass="checkBoxes">
 				<aui:col width="<%= 50 %>">
-					<aui:input label="show-current-site" name="preferences--showCurrentGroup--" type="checkbox" value="<%= showCurrentGroup %>" />
-					<aui:input label="show-current-application" name="preferences--showCurrentPortlet--" type="checkbox" value="<%= showCurrentPortlet %>" />
-					<aui:input label="show-guest-site" name="preferences--showGuestGroup--" type="checkbox" value="<%= showGuestGroup %>" />
+					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(portletResource) + "_showCurrentGroup" %>' label="show-current-site" name="preferences--showCurrentGroup--" type="checkbox" value="<%= showCurrentGroup %>" />
+					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(portletResource) + "_showCurrentPortlet" %>' label="show-current-application" name="preferences--showCurrentPortlet--" type="checkbox" value="<%= showCurrentPortlet %>" />
+					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(portletResource) + "_showGuestGroup" %>' label="show-guest-site" name="preferences--showGuestGroup--" type="checkbox" value="<%= showGuestGroup %>" />
 				</aui:col>
 
 				<aui:col width="<%= 50 %>">
-					<aui:input label="show-page" name="preferences--showLayout--" type="checkbox" value="<%= showLayout %>" />
-					<aui:input label="show-parent-sites" name="preferences--showParentGroups--" type="checkbox" value="<%= showParentGroups %>" />
-					<aui:input label="show-application-breadcrumb" name="preferences--showPortletBreadcrumb--" type="checkbox" value="<%= showPortletBreadcrumb %>" />
+					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(portletResource) + "_showLayout" %>' label="show-page" name="preferences--showLayout--" type="checkbox" value="<%= showLayout %>" />
+					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(portletResource) + "_showParentGroups" %>' label="show-parent-sites" name="preferences--showParentGroups--" type="checkbox" value="<%= showParentGroups %>" />
+					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(portletResource) + "_showPortletBreadcrumb" %>' label="show-application-breadcrumb" name="preferences--showPortletBreadcrumb--" type="checkbox" value="<%= showPortletBreadcrumb %>" />
 				</aui:col>
 			</aui:fieldset>
 
@@ -59,15 +59,19 @@ String redirect = ParamUtil.getString(request, "redirect");
 <aui:script use="aui-base">
 	var formNode = A.one('#<portlet:namespace />fm');
 
-	var toggleCustomFields = function() {
-		var data = {
-			'_<%= HtmlUtil.escapeJS(portletResource) %>_showCurrentGroup': formNode.one('#<portlet:namespace />showCurrentGroup').val(),
-			'_<%= HtmlUtil.escapeJS(portletResource) %>_showCurrentPortlet': formNode.one('#<portlet:namespace />showCurrentPortlet').val(),
-			'_<%= HtmlUtil.escapeJS(portletResource) %>_showGuestGroup': formNode.one('#<portlet:namespace />showGuestGroup').val(),
-			'_<%= HtmlUtil.escapeJS(portletResource) %>_showLayout': formNode.one('#<portlet:namespace />showLayout').val(),
-			'_<%= HtmlUtil.escapeJS(portletResource) %>_showParentGroups': formNode.one('#<portlet:namespace />showParentGroups').val(),
-			'_<%= HtmlUtil.escapeJS(portletResource) %>_showPortletBreadcrumb': formNode.one('#<portlet:namespace />showPortletBreadcrumb').val()
-		};
+	var data = {
+		'_<%= HtmlUtil.escapeJS(portletResource) %>_showCurrentGroup': <%= showCurrentGroup %>,
+		'_<%= HtmlUtil.escapeJS(portletResource) %>_showCurrentPortlet': <%= showCurrentPortlet %>,
+		'_<%= HtmlUtil.escapeJS(portletResource) %>_showGuestGroup': <%= showGuestGroup %>,
+		'_<%= HtmlUtil.escapeJS(portletResource) %>_showLayout': <%= showLayout %>,
+		'_<%= HtmlUtil.escapeJS(portletResource) %>_showParentGroups': <%= showParentGroups %>,
+		'_<%= HtmlUtil.escapeJS(portletResource) %>_showPortletBreadcrumb': <%= showPortletBreadcrumb %>
+	}
+
+	var toggleCustomFields = function(event) {
+		var target = event.currentTarget;
+
+		data[target.attr('data-key')] = target.get('checked');
 
 		Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
 	};

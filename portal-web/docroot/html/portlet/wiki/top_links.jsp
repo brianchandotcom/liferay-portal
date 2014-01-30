@@ -47,7 +47,7 @@ if (categoryId > 0) {
 }
 %>
 
-<c:if test='<%= !strutsAction.endsWith("view_page_attachments") %>'>
+<c:if test='<%= !strutsAction.endsWith("view_page_activities") && !strutsAction.endsWith("view_page_attachments") %>'>
 	<portlet:actionURL var="undoTrashURL">
 		<portlet:param name="struts_action" value="/wiki/edit_page" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />

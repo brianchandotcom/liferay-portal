@@ -86,7 +86,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DETAILS_SELECT_LINK</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PARENT_ORGANIZATION-->
+<tr>
+	<td>PARENT_ORGANIZATION_SELECT_BUTTON</td>
 	<td>//span[@class='modify-link']/a/span</td>
 	<td></td>
 </tr>
@@ -95,19 +101,19 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--DETAILS_PARENT_ORGANIZATION_TABLE-->
+<!--PARENT_ORGANIZATION_TABLE-->
 <tr>
-	<td>DETAILS_PARENT_ORGANIZATION_TABLE_NAME</td>
+	<td>PARENT_ORGANIZATION_TABLE_NAME</td>
 	<td>//div[@id='_125_parentOrganizationSearchContainer']//tr/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DETAILS_PARENT_ORGANIZATION_TABLE_TYPE</td>
+	<td>PARENT_ORGANIZATION_TABLE_TYPE</td>
 	<td>//div[@id='_125_parentOrganizationSearchContainer']//tr/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DETAILS_PARENT_ORGANIZATION_TABLE_REMOVE</td>
+	<td>PARENT_ORGANIZATION_TABLE_REMOVE</td>
 	<td>//div[@id='_125_parentOrganizationSearchContainer']//tr/td[3]/a</td>
 	<td></td>
 </tr>

@@ -308,6 +308,31 @@
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 	</command>
 
+	<command name="selectParentOrganizationCP">
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="PARENT_ORGANIZATION_SELECT_BUTTON" value1="Select" />
+
+		<execute action="CPUsersandorganizationsOrganizationEditSelectParentOrganization#selectFrame" locator-key1="SELECT_ORGANIZATION_IFRAME" />
+		<execute action="CPUsersandorganizationsOrganizationEditSelectParentOrganization#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+
+		<var name="key_orgName" value="${parentOrgName}" />
+
+		<execute action="CPUsersandorganizationsOrganizationEditSelectParentOrganization#assertClick" locator-key1="ORGANIZATION_TABLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="CPUsersandorganizationsOrganizationEditSelectParentOrganization#selectFrame" value1="relative=top" />
+
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="PARENT_ORGANIZATION_TABLE_NAME" value1="${parentOrgName}" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -424,6 +449,40 @@
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_NAME_FIELD" value1="${orgNameEdit}" />
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_TYPE" value1="${orgType}" />
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="ORGANIZATION_NAME" value1="${orgNameEdit}" />
+	</command>
+
+	<command name="viewParentOrganizationCP">
+		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="PARENT_ORGANIZATION_SELECT_BUTTON" value1="Select" />
+
+		<execute action="CPUsersandorganizationsOrganizationEditSelectParentOrganization#selectFrame" locator-key1="SELECT_ORGANIZATION_IFRAME" />
+
+		<if>
+			<equals arg1="${parentOrgExist}" arg2="true" />
+			<then>
+				<var name="key_orgName" value="${subOrgName}" />
+
+				<execute action="CPUsersandorganizationsOrganizationEditSelectParentOrganization#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${subOrgName}" />
+				<execute action="CPUsersandorganizationsOrganizationEditSelectParentOrganization#assertTextEquals" locator-key1="ORGANIZATION_TABLE_PARENT_ORGANIZATION" value1="${parentOrgName}" />
+			</then>
+			<elseif>
+				<equals arg1="${parentOrgExist}" arg2="false" />
+				<then>
+					<execute action="CPUsersandorganizationsOrganizationEditSelectParentOrganization#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+					<execute action="CPUsersandorganizationsOrganizationEditSelectParentOrganization#assertTextEquals" locator-key1="ORGANIZATION_TABLE_PARENT_ORGANIZATION" value1="" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="CPUsersandorganizationsOrganizationEditSelectParentOrganization#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewRemoveMemberCP">

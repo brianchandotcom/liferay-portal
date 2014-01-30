@@ -33,7 +33,7 @@
 			<var name="searchToken" value="${suborgSearchName}" />
 		</execute>
 
-		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_PARENT_ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_PARENT_ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="PARENT_ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="PARENT_ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
 	</command>
 </definition>

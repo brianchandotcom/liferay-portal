@@ -87,7 +87,7 @@
 <!--ADD_MENULIST-->
 <tr>
 	<td>ADD_MENULIST</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'${key_adtTitle} Template')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'${key_adtType} Template')]</td>
 	<td></td>
 </tr>
 <tr>

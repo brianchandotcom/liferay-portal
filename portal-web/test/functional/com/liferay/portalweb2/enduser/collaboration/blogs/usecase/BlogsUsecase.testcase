@@ -23,6 +23,8 @@
 
 		<execute macro="BlogsPortlet#tearDownConfigurationScopePG" />
 
+		<execute macro="Organization#tearDownCP" />
+
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
@@ -107,6 +109,92 @@
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="ViewParentOrganizationViaSelectOrganizationInBlogsConfiguration" priority="4">
+		<var name="orgName1" value="Organization1 Name" />
+		<var name="orgName2" value="Organization2 Name" />
+		<var name="orgName3" value="Organization3 Name" />x
+		<var name="orgNameList" value="Organization1 Name,Organization2 Name,Organization3 Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="parentOrg" value="true" />
+		<var name="parentOrgExist" value="true" />
+		<var name="parentOrgName" value="Organization1 Name" />
+		<var name="subOrgName" value="Organization3 Name" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs Aggregator" />
+		</execute>
+
+		<execute macro="BlogsAggregatorPortlet#viewSelectOrganizationNoPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<for list="${orgNameList}" param="orgName">
+			<execute macro="Organization#addCP">
+				<var name="orgName" value="${orgName}" />
+				<var name="orgType" value="${orgType}" />
+			</execute>
+
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Users and Organizations" />
+			</execute>
+		</for>
+
+		<execute macro="Organization#selectParentOrganizationCP">
+			<var name="orgName" value="${orgName3}" />
+			<var name="parentOrgName" value="${parentOrgName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#viewParentOrganizationCP">
+			<var name="orgName" value="${orgName1}" />
+			<var name="parentOrgExist" value="true" />
+			<var name="parentOrgName" value="${parentOrgName}" />
+			<var name="subOrgName" value="${subOrgName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#viewParentOrganizationCP">
+			<var name="orgName" value="${orgName2}" />
+			<var name="parentOrgExist" value="false" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsAggregatorPortlet#viewParentOrganizationPG">
+			<var name="orgName" value="${orgName2}" />
+			<var name="parentOrgExist" value="false" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsAggregatorPortlet#viewParentOrganizationPG">
+			<var name="orgName" value="${orgName3}" />
+			<var name="parentOrgExist" value="true" />
+			<var name="parentOrgName" value="${parentOrgName}" />
+			<var name="subOrgName" value="${subOrgName}" />
 		</execute>
 	</command>
 </definition>

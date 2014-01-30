@@ -260,7 +260,8 @@
 	<td>COMMENTS_REPLY_BUTTON</td>
 	<td>//button[@type='button' and contains(.,'Reply')]</td>
 	<td></td>
-</tr><tr>
+</tr>
+<tr>
 	<td>COMMENTS_REPLY_AS_BUTTON</td>
 	<td>//button[@type='button' and contains(.,'Reply as...')]</td>
 	<td></td>
@@ -294,6 +295,11 @@
 <tr>
 	<td>COMMENT_3</td>
 	<td>xpath=(//div[@class='lfr-discussion-message'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_USER_NAME</td>
+	<td>//span[@class='user-name']</td>
 	<td></td>
 </tr>
 <tr>

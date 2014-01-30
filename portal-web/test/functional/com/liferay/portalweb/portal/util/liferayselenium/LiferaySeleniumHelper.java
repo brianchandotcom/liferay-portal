@@ -48,6 +48,49 @@ import javax.imageio.ImageIO;
  */
 public class LiferaySeleniumHelper {
 
+	public static void antCommand(
+			LiferaySelenium liferaySelenium, String fileName, String target)
+		throws Exception {
+
+		Runtime runtime = Runtime.getRuntime();
+
+		String command;
+
+		if (!OSDetector.isWindows()) {
+			String projectDir = liferaySelenium.getProjectDir();
+
+			projectDir = StringUtil.replace(projectDir, "\\", "//");
+
+			runtime.exec("bash -c cd " + projectDir);
+
+			command = "bash -c ant -f " + fileName + " " + target;
+		}
+		else {
+			runtime.exec("cmd /c cd " + liferaySelenium.getProjectDir());
+
+			command = "cmd /c ant -f " + fileName + " " + target;
+		}
+
+		Process process = runtime.exec(command);
+
+		InputStreamReader inputStreamReader = new InputStreamReader(
+			process.getInputStream());
+
+		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+		String line = null;
+
+		while ((line = bufferedReader.readLine()) != null) {
+			System.out.println(line);
+
+			if (line.contains("BUILD FAILED") ||
+				line.contains("BUILD SUCCESSFUL")) {
+
+				break;
+			}
+		}
+	}
+
 	public static void assertAlert(
 			LiferaySelenium liferaySelenium, String pattern)
 		throws Exception {
@@ -355,49 +398,6 @@ public class LiferaySeleniumHelper {
 		if (liferaySelenium.isNotVisible(locator)) {
 			throw new Exception(
 				"Element is not visible at \"" + locator + "\"");
-		}
-	}
-
-	public static void commandLineAntTarget(
-			LiferaySelenium liferaySelenium, String fileName, String target)
-		throws Exception {
-
-		Runtime runtime = Runtime.getRuntime();
-
-		String command;
-
-		if (!OSDetector.isWindows()) {
-			String projectDir = liferaySelenium.getProjectDir();
-
-			projectDir = StringUtil.replace(projectDir, "\\", "//");
-
-			runtime.exec("bash -c cd " + projectDir);
-
-			command = "bash -c ant -f " + fileName + " " + target;
-		}
-		else {
-			runtime.exec("cmd /c cd " + liferaySelenium.getProjectDir());
-
-			command = "cmd /c ant -f " + fileName + " " + target;
-		}
-
-		Process process = runtime.exec(command);
-
-		InputStreamReader inputStreamReader = new InputStreamReader(
-			process.getInputStream());
-
-		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-		String line = null;
-
-		while ((line = bufferedReader.readLine()) != null) {
-			System.out.println(line);
-
-			if (line.contains("BUILD FAILED") ||
-				line.contains("BUILD SUCCESSFUL")) {
-
-				break;
-			}
 		}
 	}
 

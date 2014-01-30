@@ -5,6 +5,12 @@
 		</default>
 	</command>
 
+	<command name="antCommand">
+		<default>
+			<execute function="AntCommand#antCommand" />
+		</default>
+	</command>
+
 	<command name="assertChecked">
 		<default>
 			<execute function="AssertChecked#assertChecked" />
@@ -98,12 +104,6 @@
 	<command name="close">
 		<default>
 			<execute function="Close#close" />
-		</default>
-	</command>
-
-	<command name="commandLineAntTarget">
-		<default>
-			<execute function="CommandLineAntTarget#commandLineAntTarget" />
 		</default>
 	</command>
 

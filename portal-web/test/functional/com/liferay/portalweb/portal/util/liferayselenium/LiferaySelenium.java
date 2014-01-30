@@ -21,6 +21,8 @@ import com.thoughtworks.selenium.Selenium;
  */
 public interface LiferaySelenium extends Selenium {
 
+	public void antCommand(String fileName, String target) throws Exception;
+
 	public void assertAlert(String pattern) throws Exception;
 
 	public void assertChecked(String pattern) throws Exception;
@@ -80,9 +82,6 @@ public interface LiferaySelenium extends Selenium {
 	public void clickAndWait(String locator);
 
 	public void clickAtAndWait(String locator, String coordString);
-
-	public void commandLineAntTarget(String fileName, String target)
-		throws Exception;
 
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception;

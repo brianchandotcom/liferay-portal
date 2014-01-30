@@ -21,7 +21,7 @@
 
 	long javaScriptLastModified = ServletContextUtil.getLastModified(application, "/html/js/", true);
 
-	String alloyComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "&themeId=" + themeDisplay.getThemeId() + "&minifierType=", javaScriptLastModified);
+	String alloyComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=&themeId=" + themeDisplay.getThemeId(), javaScriptLastModified);
 
 	Set<String> portletResourceStaticURLs = (Set<String>)request.getAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS);
 
@@ -33,9 +33,7 @@
 
 	for (Portlet curPortlet : portlets) {
 		for (String headerPortalCss : curPortlet.getHeaderPortalCss()) {
-			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortalCss) &&
-				!portletResourceStaticURLs.contains(headerPortalCss)) {
-
+			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortalCss) && !portletResourceStaticURLs.contains(headerPortalCss)) {
 				portletResourceStaticURLs.add(headerPortalCss);
 
 				sb.append("&");
@@ -79,9 +77,7 @@
 
 	for (Portlet curPortlet : portlets) {
 		for (String headerPortletCss : curPortlet.getHeaderPortletCss()) {
-			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortletCss) &&
-				!portletResourceStaticURLs.contains(headerPortletCss)) {
-
+			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortletCss) && !portletResourceStaticURLs.contains(headerPortletCss)) {
 				portletResourceStaticURLs.add(headerPortletCss);
 
 				sb.append("&");

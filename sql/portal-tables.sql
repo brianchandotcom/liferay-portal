@@ -1977,7 +1977,7 @@ create table ShoppingOrder (
 	ccExpMonth INTEGER,
 	ccExpYear INTEGER,
 	ccVerNumber VARCHAR(75) null,
-	comments STRING null,
+	comments TEXT null,
 	ppTxnId VARCHAR(75) null,
 	ppPaymentStatus VARCHAR(75) null,
 	ppPaymentGross DOUBLE,

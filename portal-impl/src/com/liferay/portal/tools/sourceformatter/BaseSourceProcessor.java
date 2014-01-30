@@ -1218,15 +1218,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	private static boolean _autoFix;
-	private static Map<String, String> _compatClassNamesMap;
-	private static String _copyright;
-	private static List<String> _errorMessages = new ArrayList<String>();
-	private static String[] _excludes;
-	private static boolean _initialized;
-	private static String _oldCopyright;
-	private static int _pluginsDirectorylevel;
-	private static Properties _portalLanguageKeysProperties;
-	private static boolean _printErrors;
+	private boolean _autoFix;
+	private Map<String, String> _compatClassNamesMap;
+	private String _copyright;
+	private List<String> _errorMessages = new ArrayList<String>();
+	private String[] _excludes;
+	private boolean _initialized;
+	private String _oldCopyright;
+	private int _pluginsDirectorylevel;
+	private Properties _portalLanguageKeysProperties;
+	private boolean _printErrors;
 
 }

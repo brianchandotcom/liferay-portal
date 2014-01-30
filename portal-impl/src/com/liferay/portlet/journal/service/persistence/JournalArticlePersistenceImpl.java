@@ -3935,12 +3935,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (structureIds != null) {
-					for (int i = 0; i < structureIds.length; i++) {
-						if ((structureIds[i] != null) &&
-								!structureIds[i].equals(StringPool.BLANK)) {
-							qPos.add(structureIds);
-						}
-					}
+					qPos.add(structureIds);
 				}
 
 				if (!pagination) {
@@ -4121,12 +4116,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (structureIds != null) {
-					for (int i = 0; i < structureIds.length; i++) {
-						if ((structureIds[i] != null) &&
-								!structureIds[i].equals(StringPool.BLANK)) {
-							qPos.add(structureIds);
-						}
-					}
+					qPos.add(structureIds);
 				}
 
 				count = (Long)q.uniqueResult();

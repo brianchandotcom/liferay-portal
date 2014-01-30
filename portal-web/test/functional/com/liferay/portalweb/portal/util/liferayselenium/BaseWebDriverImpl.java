@@ -99,7 +99,18 @@ public abstract class BaseWebDriverImpl
 			return;
 		}
 
-		String pageSource = getPageSource();
+		String pageSource;
+
+		try {
+			pageSource = getPageSource();
+		}
+		catch (Exception e) {
+			WebDriver.TargetLocator targetLocator = switchTo();
+
+			targetLocator.window(defaultWindowHandle);
+
+			pageSource = getPageSource();
+		}
 
 		if (pageSource.contains(
 				"html id=\"feedHandler\" xmlns=" +

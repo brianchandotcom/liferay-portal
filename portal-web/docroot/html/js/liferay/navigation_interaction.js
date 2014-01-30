@@ -138,11 +138,9 @@ AUI.add(
 					_handleShowNavigationMenu: function(menuNew, menuOld, event) {
 						var instance = this;
 
-						var focusedChange = (event.type.indexOf('focusedChange') !== -1);
+						if (!(instance._lastShownMenu &&
+							event.type.indexOf('focusedChange') > -1)) {
 
-						var updateNavigationMenus = !(instance._lastShownMenu && focusedChange);
-
-						if (updateNavigationMenus) {
 							var mapHover = instance.MAP_HOVER;
 
 							var menuOldDistinct = (menuOld && (menuOld != menuNew));

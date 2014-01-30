@@ -19,9 +19,7 @@
 	<%
 	StringBuilder sb = new StringBuilder();
 
-	long javaScriptLastModified = ServletContextUtil.getLastModified(application, "/html/js/", true);
-
-	String portletComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=&themeId=" + themeDisplay.getThemeId(), javaScriptLastModified);
+	String portletComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=&themeId=" + themeDisplay.getThemeId());
 
 	Set<String> portletResourceStaticURLs = (Set<String>)request.getAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS);
 

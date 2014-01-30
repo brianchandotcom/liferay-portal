@@ -834,7 +834,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 				throw new Exception(sb.toString());
 			}
 
-			InetAddress inetAddress = clusterNode.getInetAddress();
+			InetAddress inetAddress = clusterNode.getPortalAddress();
 
 			String fileName = PortalUtil.getPathContext();
 

@@ -48,6 +48,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.Serializable;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -114,6 +115,16 @@ public class ClusterExecutorImpl
 			if (index != -1) {
 				_port = GetterUtil.getInteger(
 					portalAddress.substring(index + 1), _port);
+
+				String host = portalAddress.substring(0, index);
+
+				try {
+					_portalAddress = InetAddress.getByName(host);
+				}
+				catch (UnknownHostException uhex) {
+					_log.error(
+						"Unable to get InetAddress by name :" + host, uhex);
+				}
 			}
 		}
 
@@ -319,11 +330,12 @@ public class ClusterExecutorImpl
 	public void portalLocalAddressConfigured(
 		InetAddress inetAddress, int port) {
 
-		if (!isEnabled() || (_localClusterNode.getPort() == _port)) {
+		if (!isEnabled() || ((_portalAddress != null) && (_port > 0))) {
 			return;
 		}
 
 		try {
+			_localClusterNode.setPortalAddress(inetAddress);
 			_localClusterNode.setPort(port);
 
 			memberJoined(_localAddress, _localClusterNode);
@@ -443,6 +455,14 @@ public class ClusterExecutorImpl
 		}
 
 		localClusterNode.setPort(port);
+
+		InetAddress portalAddress = _portalAddress;
+
+		if (portalAddress == null) {
+			portalAddress = PortalUtil.getPortalLocalAddress(_secure);
+		}
+
+		localClusterNode.setPortalAddress(portalAddress);
 
 		_localClusterNode = localClusterNode;
 	}
@@ -589,6 +609,7 @@ public class ClusterExecutorImpl
 	private Address _localAddress;
 	private ClusterNode _localClusterNode;
 	private int _port;
+	private InetAddress _portalAddress;
 	private boolean _secure;
 	private boolean _shortcutLocalMethod;
 

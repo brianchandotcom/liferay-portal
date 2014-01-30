@@ -118,6 +118,7 @@
 					{
 						cssClass: 'tooltip-help',
 						opacity: 1,
+						trigger: obj,
 						visible: false,
 						zIndex: Liferay.zIndex.TOOLTIP
 					}

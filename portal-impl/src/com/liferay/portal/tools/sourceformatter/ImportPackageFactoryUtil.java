@@ -45,7 +45,7 @@ public class ImportPackageFactoryUtil {
 	}
 
 	private static final Pattern _javaImportPattern = Pattern.compile(
-		"import ([^\\s;]+)");
+		"import ([^;]+);");
 	private static final Pattern _jspImportPattern = Pattern.compile(
 		"import=\"([^\\s\"]+)\"");
 

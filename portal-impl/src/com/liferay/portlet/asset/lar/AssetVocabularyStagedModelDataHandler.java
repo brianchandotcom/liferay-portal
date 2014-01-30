@@ -58,12 +58,131 @@ public class AssetVocabularyStagedModelDataHandler
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, AssetVocabulary vocabulary)
 		throws Exception {
+
+		String path = getAssetVocabulariesPath(
+			portletDataContext, assetVocabulary.getVocabularyId());
+
+		if (!portletDataContext.isPathNotProcessed(path)) {
+			return;
+		}
+
+		Element assetVocabularyElement = assetVocabulariesElement.addElement(
+			"vocabulary");
+
+		assetVocabularyElement.addAttribute("path", path);
+
+		assetVocabulary.setUserUuid(assetVocabulary.getUserUuid());
+
+		portletDataContext.addZipEntry(path, assetVocabulary);
+
+		portletDataContext.addPermissions(
+			AssetVocabulary.class, assetVocabulary.getVocabularyId());
 	}
 
 	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, AssetVocabulary vocabulary)
 		throws Exception {
+
+		long userId = portletDataContext.getUserId(
+			assetVocabulary.getUserUuid());
+		long groupId = portletDataContext.getScopeGroupId();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCreateDate(assetVocabulary.getCreateDate());
+		serviceContext.setModifiedDate(assetVocabulary.getModifiedDate());
+		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
+
+		AssetVocabulary importedAssetVocabulary = null;
+
+		AssetVocabulary existingAssetVocabulary =
+			AssetVocabularyUtil.fetchByUUID_G(
+				assetVocabulary.getUuid(), groupId);
+
+		if (existingAssetVocabulary == null) {
+			existingAssetVocabulary = AssetVocabularyUtil.fetchByUUID_G(
+				assetVocabulary.getUuid(),
+				portletDataContext.getCompanyGroupId());
+		}
+
+		if (existingAssetVocabulary == null) {
+			String name = getAssetVocabularyName(
+				null, groupId, assetVocabulary.getName(), 2);
+
+			serviceContext.setUuid(assetVocabulary.getUuid());
+
+			importedAssetVocabulary =
+				AssetVocabularyLocalServiceUtil.addVocabulary(
+					userId, StringPool.BLANK,
+					getAssetVocabularyTitleMap(groupId, assetVocabulary, name),
+					assetVocabulary.getDescriptionMap(),
+					assetVocabulary.getSettings(), serviceContext);
+		}
+		else if (portletDataContext.isCompanyStagedGroupedModel(
+					existingAssetVocabulary)) {
+
+			return;
+		}
+		else {
+			String name = getAssetVocabularyName(
+				assetVocabulary.getUuid(), groupId, assetVocabulary.getName(),
+				2);
+
+			importedAssetVocabulary =
+				AssetVocabularyLocalServiceUtil.updateVocabulary(
+					existingAssetVocabulary.getVocabularyId(), StringPool.BLANK,
+					getAssetVocabularyTitleMap(groupId, assetVocabulary, name),
+					assetVocabulary.getDescriptionMap(),
+					assetVocabulary.getSettings(), serviceContext);
+		}
+
+		assetVocabularyPKs.put(
+			assetVocabulary.getVocabularyId(),
+			importedAssetVocabulary.getVocabularyId());
+
+		portletDataContext.importPermissions(
+			AssetVocabulary.class, assetVocabulary.getVocabularyId(),
+			importedAssetVocabulary.getVocabularyId());
+	}
+
+	protected String getAssetVocabularyName(
+			String uuid, long groupId, String name, int count)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetVocabularyUtil.fetchByG_N(
+			groupId, name);
+
+		if (assetVocabulary == null) {
+			return name;
+		}
+
+		if (Validator.isNotNull(uuid) &&
+			uuid.equals(assetVocabulary.getUuid())) {
+
+			return name;
+		}
+
+		name = StringUtil.appendParentheticalSuffix(name, count);
+
+		return getAssetVocabularyName(uuid, groupId, name, ++count);
+	}
+
+	protected Map<Locale, String> getAssetVocabularyTitleMap(
+			long groupId, AssetVocabulary assetVocabulary, String name)
+		throws PortalException, SystemException {
+
+		Map<Locale, String> titleMap = assetVocabulary.getTitleMap();
+
+		if (titleMap == null) {
+			titleMap = new HashMap<Locale, String>();
+		}
+
+		titleMap.put(PortalUtil.getSiteDefaultLocale(groupId), name);
+
+		return titleMap;
 	}
 
 	@Override

@@ -358,8 +358,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			else if (portalSource && fileName.endsWith("/tiles-defs.xml")) {
 				formatTilesDefsXML(fileName, newContent);
 			}
-			else if (portalSource && fileName.endsWith("WEB-INF/web.xml") ||
-					 !portalSource && fileName.endsWith("/web.xml")) {
+			else if ((portalSource && fileName.endsWith("WEB-INF/web.xml")) ||
+					 (!portalSource && fileName.endsWith("/web.xml"))) {
 
 				newContent = formatWebXML(fileName, newContent);
 			}

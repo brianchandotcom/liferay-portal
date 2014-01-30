@@ -793,7 +793,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 							else {
 								return new String[] {languageKey};
 							}
-
 						}
 
 						sb.append(match.charAt(i));

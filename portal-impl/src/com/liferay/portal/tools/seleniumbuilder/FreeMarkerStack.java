@@ -36,10 +36,10 @@ public class FreeMarkerStack {
 	}
 
 	/**
-	 * Returns the object at the top of the stack without removing it from the
+	 * Returns the object at the top of the stack, without removing it from the
 	 * stack.
 	 *
-	 * @return the object at the top of the stack without removing it from the
+	 * @return the object at the top of the stack, without removing it from the
 	 *         stack
 	 */
 	public Object peek() {
@@ -47,16 +47,16 @@ public class FreeMarkerStack {
 	}
 
 	/**
-	 * Returns the object at the top of the stack by removing it from the stack.
+	 * Returns the object at the top of the stack, removing it from the stack.
 	 *
-	 * @return the object at the top of the stack by removing it from the stack
+	 * @return the object at the top of the stack
 	 */
 	public Object pop() {
 		return _stack.pop();
 	}
 
 	/**
-	 * Returns a blank string and pushes the object onto the stack.
+	 * Pushes the object onto the stack.
 	 *
 	 * @param  object the item to be pushed onto the stack
 	 * @return a blank string

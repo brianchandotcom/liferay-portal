@@ -67,12 +67,12 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "itemIds", Types.VARCHAR },
+			{ "itemIds", Types.CLOB },
 			{ "couponCodes", Types.VARCHAR },
 			{ "altShipping", Types.INTEGER },
 			{ "insure", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ShoppingCart (cartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,itemIds STRING null,couponCodes VARCHAR(75) null,altShipping INTEGER,insure BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table ShoppingCart (cartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,itemIds TEXT null,couponCodes VARCHAR(75) null,altShipping INTEGER,insure BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table ShoppingCart";
 	public static final String ORDER_BY_JPQL = " ORDER BY shoppingCart.cartId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ShoppingCart.cartId ASC";

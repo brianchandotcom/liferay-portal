@@ -2353,7 +2353,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="itemIds" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="couponCodes" type="String" />
 		<field name="altShipping" type="int" />

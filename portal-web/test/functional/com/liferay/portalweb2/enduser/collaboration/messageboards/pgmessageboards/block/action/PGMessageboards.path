@@ -111,6 +111,11 @@
 </tr>
 <!--CATEGORY_TABLE-->
 <tr>
+	<td>CATEGORY_TABLE_PANEL</td>
+	<td>//div[@id=&quot;messageBoardsCategoriesPanel&quot;]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_TABLE_CATEGORY</td>
 	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[1]/a/span[@class='category-title']</td>
 	<td></td>
@@ -128,6 +133,11 @@
 <tr>
 	<td>CATEGORY_TABLE_CATEGORY_SUBCATEGORY_GENERIC</td>
 	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[1]/td/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY_GENERIC</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[1]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -202,6 +212,11 @@
 	<td></td>
 </tr>
 <!--THREAD_TABLE-->
+<tr>
+	<td>THREAD_TABLE_PANEL</td>
+	<td>//div[@id=&quot;messageBoardsThreadsPanel&quot;]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>THREAD_TABLE_THREAD</td>
 	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]/a</td>

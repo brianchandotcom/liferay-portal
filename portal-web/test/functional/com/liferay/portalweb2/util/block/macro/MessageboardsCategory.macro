@@ -181,6 +181,11 @@
 		<execute action="CPMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${categoryName}" />
 	</command>
 
+	<command name="viewDefaultPG">
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_PANEL" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY_GENERIC" />
+	</command>
+
 	<command name="viewNoCP">
 		<var name="key_categoryName" value="${categoryName}" />
 
@@ -191,16 +196,6 @@
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_THREADS" />
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_POSTS" />
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_ACTIONS" />
-	</command>
-
-	<command name="viewNoPG">
-		<var name="key_categoryName" value="${categoryName}" />
-
-		<execute action="PGMessageboards#assertTextNotPresent" value1="${categoryName}" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORIES" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_THREADS" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_POSTS" />
 	</command>
 
 	<command name="viewNoSubcategoryCP">

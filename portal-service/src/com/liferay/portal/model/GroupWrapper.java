@@ -980,6 +980,11 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public boolean hasRemoteStagingGroup() {
+		return _group.hasRemoteStagingGroup();
+	}
+
+	@Override
 	public boolean hasStagingGroup() {
 		return _group.hasStagingGroup();
 	}

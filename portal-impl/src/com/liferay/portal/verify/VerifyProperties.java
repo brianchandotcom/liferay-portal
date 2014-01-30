@@ -449,6 +449,12 @@ public class VerifyProperties extends VerifyProcess {
 			"velocity.engine.restricted.variables"
 		},
 		new String[] {
+			"portal.instance.http.port", "portal.instance.http.address"
+		},
+		new String[] {
+			"portal.instance.https.port", "portal.instance.https.address"
+		},
+		new String[] {
 			"referer.url.domains.allowed", "redirect.url.domains.allowed"
 		},
 		new String[] {

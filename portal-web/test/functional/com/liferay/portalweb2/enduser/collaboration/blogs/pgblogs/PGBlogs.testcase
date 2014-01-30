@@ -1040,9 +1040,9 @@
 
 	<command name="ViewBlogsEntryCommentAsGuest" priority="4">
 		<var name="entryComment" value="Blogs Entry Comment" />
-		<var name="guestEntryComment" value="Guest Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="guestEntryComment" value="Guest Blogs Entry Comment" />
 		<var name="password" value="test" />
 		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX" />
 		<var name="roleName" value="Guest" />

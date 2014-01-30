@@ -21,7 +21,7 @@
 
 	long javaScriptLastModified = ServletContextUtil.getLastModified(application, "/html/js/", true);
 
-	String alloyComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=&themeId=" + themeDisplay.getThemeId(), javaScriptLastModified);
+	String portletComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=&themeId=" + themeDisplay.getThemeId(), javaScriptLastModified);
 
 	Set<String> portletResourceStaticURLs = (Set<String>)request.getAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS);
 
@@ -65,7 +65,7 @@
 	}
 
 	if (themeDisplay.isThemeJsFastLoad() && (sb.length() > 0)) {
-		sb.insert(0, alloyComboPath);
+		sb.insert(0, portletComboPath);
 	%>
 
 	<script src="<%= sb.toString() %> " type="text/javascript"></script>
@@ -109,7 +109,7 @@
 	}
 
 	if (themeDisplay.isThemeJsFastLoad() && (sb.length() > 0)) {
-		sb.insert(0, alloyComboPath);
+		sb.insert(0, portletComboPath);
 	%>
 
 		<script src="<%= sb.toString() %> " type="text/javascript"></script>

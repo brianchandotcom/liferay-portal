@@ -146,7 +146,9 @@ public interface Portal {
 	 * notified whenever the portal port is set.
 	 *
 	 * @param portalPortEventListener the portal port event listener to add
+	 * @deprecated As of 7.0.0
 	 */
+	@Deprecated
 	public void addPortalPortEventListener(
 		PortalPortEventListener portalPortEventListener);
 
@@ -917,6 +919,11 @@ public interface Portal {
 	@Deprecated
 	public int getPortalPort();
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the more general {@link
+	 *             #getPortalServerPort(boolean)}
+	 */
+	@Deprecated
 	public int getPortalPort(boolean secure);
 
 	public Properties getPortalProperties();
@@ -1315,6 +1322,10 @@ public interface Portal {
 	public void removePortalEventListener(
 		PortalEventListener portalEventListener);
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void removePortalPortEventListener(
 		PortalPortEventListener portalPortEventListener);
 
@@ -1389,7 +1400,10 @@ public interface Portal {
 
 	/**
 	 * Sets the port obtained on the first request to the portal.
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #setPortalAddresses(HttpServletRequest)}
 	 */
+	@Deprecated
 	public void setPortalPort(HttpServletRequest request);
 
 	public void storePreferences(PortletPreferences portletPreferences)

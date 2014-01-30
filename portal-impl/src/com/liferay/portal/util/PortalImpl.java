@@ -567,6 +567,10 @@ public class PortalImpl implements Portal {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public void addPortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
@@ -3924,6 +3928,11 @@ public class PortalImpl implements Portal {
 		return _portalPort.get();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the more general {@link
+	 *             #getPortalServerPort(boolean)}
+	 */
+	@Deprecated
 	@Override
 	public int getPortalPort(boolean secure) {
 		if (secure) {
@@ -6567,6 +6576,10 @@ public class PortalImpl implements Portal {
 		_portalEventListeners.remove(portalEventListener);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public void removePortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
@@ -6904,6 +6917,11 @@ public class PortalImpl implements Portal {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the more general {@link
+	 *             #setPortalAddresses(HttpServletRequest)}
+	 */
+	@Deprecated
 	@Override
 	public void setPortalPort(HttpServletRequest request) {
 		if (request.isSecure()) {

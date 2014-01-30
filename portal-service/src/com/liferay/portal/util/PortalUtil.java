@@ -129,6 +129,10 @@ public class PortalUtil {
 		getPortal().addPortalEventListener(portalEventListener);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static void addPortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
 
@@ -1107,6 +1111,10 @@ public class PortalUtil {
 		return getPortal().getPortalPort();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the more general {@link
+	 *             #getPortalServerPort(boolean)}
+	 */
 	public static int getPortalPort(boolean secure) {
 		return getPortal().getPortalPort(secure);
 	}
@@ -2004,7 +2012,10 @@ public class PortalUtil {
 
 	/**
 	 * Sets the port obtained on the first request to the portal.
+     * @deprecated As of 7.0.0, replaced by {@link
+	 *             #setPortalAddresses(HttpServletRequest)}
 	 */
+	@Deprecated
 	public static void setPortalPort(HttpServletRequest request) {
 		getPortal().setPortalPort(request);
 	}
@@ -2064,6 +2075,10 @@ public class PortalUtil {
 		getPortal().removePortalEventListener(portalEventListener);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void removePortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
 

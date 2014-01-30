@@ -2489,9 +2489,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**\\model\\impl\\*BaseImpl.java", "**\\model\\impl\\*Model.java",
 			"**\\model\\impl\\*ModelImpl.java", "**\\portal\\service\\**",
 			"**\\portal-client\\**", "**\\portal-web\\test\\**\\*Test.java",
-			"**\\portal-web\\test\\**\\*Tests.java",
-			"**\\portlet\\**\\service\\**", "**\\test\\*-generated\\**",
-			"**\\tools\\tck\\**"
+			"**\\portlet\\**\\service\\**", "**\\test\\*-generated\\**"
 		};
 		String[] includes = new String[] {"**\\*.java"};
 
@@ -2517,9 +2515,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**\\service\\persistence\\*Query.java",
 			"**\\service\\persistence\\impl\\*.java",
 			"**\\portal-impl\\test\\**\\*.java",
-			"**\\portal-service\\**\\liferay\\documentlibrary\\**.java",
-			"**\\portal-service\\**\\liferay\\lock\\**.java",
-			"**\\portal-service\\**\\liferay\\mail\\**.java",
 			"**\\util-bridges\\**\\*.java"
 		};
 

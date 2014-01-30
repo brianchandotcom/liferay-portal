@@ -123,10 +123,10 @@ public class PortalUtil {
 		getPortal().addPageTitle(title, request);
 	}
 
-	public static void addPortalEventListener(
+	public static boolean addPortalEventListener(
 		PortalEventListener portalEventListener) {
 
-		getPortal().addPortalEventListener(portalEventListener);
+		return getPortal().addPortalEventListener(portalEventListener);
 	}
 
 	/**
@@ -1091,6 +1091,10 @@ public class PortalUtil {
 		return _portal;
 	}
 
+	public static PortalEventListener[] getPortalEventListeners() {
+		return getPortal().getPortalEventListeners();
+	}
+
 	public static String getPortalLibDir() {
 		return getPortal().getPortalLibDir();
 	}
@@ -2012,7 +2016,7 @@ public class PortalUtil {
 
 	/**
 	 * Sets the port obtained on the first request to the portal.
-     * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #setPortalAddresses(HttpServletRequest)}
 	 */
 	@Deprecated
@@ -2069,10 +2073,10 @@ public class PortalUtil {
 			portletId, user, layout, windowState, request);
 	}
 
-	public void removePortalEventListener(
+	public boolean removePortalEventListener(
 		PortalEventListener portalEventListener) {
 
-		getPortal().removePortalEventListener(portalEventListener);
+		return getPortal().removePortalEventListener(portalEventListener);
 	}
 
 	/**

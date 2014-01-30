@@ -240,6 +240,7 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
@@ -559,12 +560,10 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public void addPortalEventListener(
+	public boolean addPortalEventListener(
 		PortalEventListener portalEventListener) {
 
-		if (!_portalEventListeners.contains(portalEventListener)) {
-			_portalEventListeners.add(portalEventListener);
-		}
+		return _portalEventListeners.add(portalEventListener);
 	}
 
 	/**
@@ -3879,6 +3878,12 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public PortalEventListener[] getPortalEventListeners() {
+		return _portalEventListeners.toArray(
+			new PortalEventListener[_portalEventListeners.size()]);
+	}
+
+	@Override
 	public String getPortalLibDir() {
 		return PropsValues.LIFERAY_LIB_PORTAL_DIR;
 	}
@@ -6570,10 +6575,10 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public void removePortalEventListener(
+	public boolean removePortalEventListener(
 		PortalEventListener portalEventListener) {
 
-		_portalEventListeners.remove(portalEventListener);
+		return _portalEventListeners.remove(portalEventListener);
 	}
 
 	/**
@@ -8071,8 +8076,8 @@ public class PortalImpl implements Portal {
 	private String _pathProxy;
 	private Map<String, Long> _plidToPortletIdMap =
 		new ConcurrentHashMap<String, Long>();
-	private List<PortalEventListener> _portalEventListeners =
-		new ArrayList<PortalEventListener>();
+	private Set<PortalEventListener> _portalEventListeners =
+		new CopyOnWriteArraySet<PortalEventListener>();
 	private final AtomicReference<ObjectValuePair<InetAddress, Integer>>
 		_portalLocalAddress =
 			new AtomicReference<ObjectValuePair<InetAddress, Integer>>(null);

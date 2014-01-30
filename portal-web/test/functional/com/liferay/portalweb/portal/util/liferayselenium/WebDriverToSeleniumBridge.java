@@ -78,7 +78,7 @@ public class WebDriverToSeleniumBridge
 		initKeys();
 		initKeysSpecialChars();
 
-		_defaultWindowHandle = getWindowHandle();
+		defaultWindowHandle = getWindowHandle();
 	}
 
 	@Override
@@ -1286,7 +1286,7 @@ public class WebDriverToSeleniumBridge
 		WebDriver.TargetLocator targetLocator = switchTo();
 
 		if (locator.equals("relative=parent")) {
-			targetLocator.window(_defaultWindowHandle);
+			targetLocator.window(defaultWindowHandle);
 
 			if (!_frameWebElements.isEmpty()) {
 				_frameWebElements.pop();
@@ -1299,7 +1299,7 @@ public class WebDriverToSeleniumBridge
 		else if (locator.equals("relative=top")) {
 			_frameWebElements = new Stack<WebElement>();
 
-			targetLocator.window(_defaultWindowHandle);
+			targetLocator.window(defaultWindowHandle);
 		}
 		else {
 			_frameWebElements.push(getWebElement(locator));
@@ -1353,7 +1353,7 @@ public class WebDriverToSeleniumBridge
 		else if (windowID.equals("null")) {
 			WebDriver.TargetLocator targetLocator = switchTo();
 
-			targetLocator.window(_defaultWindowHandle);
+			targetLocator.window(defaultWindowHandle);
 		}
 		else {
 			String targetWindowTitle = windowID;
@@ -1595,7 +1595,7 @@ public class WebDriverToSeleniumBridge
 					targetLocator.window(windowHandle);
 
 					if (targetWindowTitle.equals(getTitle())) {
-						targetLocator.window(_defaultWindowHandle);
+						targetLocator.window(defaultWindowHandle);
 
 						return;
 					}
@@ -1890,10 +1890,11 @@ public class WebDriverToSeleniumBridge
 		select.selectByIndex(index);
 	}
 
+	protected String defaultWindowHandle;
+
 	private static Log _log = LogFactoryUtil.getLog(
 		WebDriverToSeleniumBridge.class);
 
-	private String _defaultWindowHandle;
 	private Stack<WebElement> _frameWebElements = new Stack<WebElement>();
 	private Keys[] _keysArray = new Keys[128];
 	private Map<String, String> _keysSpecialChars =

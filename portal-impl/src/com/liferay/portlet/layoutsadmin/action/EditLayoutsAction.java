@@ -167,15 +167,18 @@ public class EditLayoutsAction extends PortletAction {
 				layout = (Layout)returnValue[0];
 				oldFriendlyURL = (String)returnValue[1];
 
-				redirect = updateCloseRedirect(
-					themeDisplay, redirect, null, layout, oldFriendlyURL);
-				closeRedirect = updateCloseRedirect(
-					themeDisplay, closeRedirect, null, layout, oldFriendlyURL);
-
-				SessionMessages.add(
-					actionRequest,
-					PortalUtil.getPortletId(actionRequest) + "pageAdded",
-					layout);
+				if (cmd.equals(Constants.ADD)) {
+					SessionMessages.add(
+						actionRequest,
+						PortalUtil.getPortletId(actionRequest) + "pageAdded",
+						layout);
+				}
+				else if (cmd.equals(Constants.UPDATE)) {
+					redirect = updateCloseRedirect(
+						themeDisplay, redirect, null, layout, oldFriendlyURL);
+					closeRedirect = updateCloseRedirect(
+						themeDisplay, closeRedirect, null, layout, oldFriendlyURL);
+				}
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				long plid = ParamUtil.getLong(actionRequest, "plid");

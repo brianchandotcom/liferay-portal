@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -270,16 +269,11 @@ public class ClusterExecutorImpl
 
 		_localAddress = new AddressImpl(_controlJChannel.getAddress());
 
-		try {
-			initLocalClusterNode();
+		initLocalClusterNode();
 
-			memberJoined(_localAddress, _localClusterNode);
+		memberJoined(_localAddress, _localClusterNode);
 
-			sendNotifyRequest();
-		}
-		catch (Exception e) {
-			_log.error("Unable to determine local network address", e);
-		}
+		sendNotifyRequest();
 
 		ClusterRequestReceiver clusterRequestReceiver =
 			(ClusterRequestReceiver)_controlJChannel.getReceiver();
@@ -422,12 +416,8 @@ public class ClusterExecutorImpl
 			controlProperty, clusterRequestReceiver, _DEFAULT_CLUSTER_NAME);
 	}
 
-	protected void initLocalClusterNode() throws Exception {
-		InetAddress inetAddress = bindInetAddress;
-
-		if (inetAddress == null) {
-			inetAddress = InetAddressUtil.getLocalInetAddress();
-		}
+	protected void initLocalClusterNode() {
+		InetAddress inetAddress = getBindInetAddress(_controlJChannel);
 
 		ClusterNode localClusterNode = new ClusterNode(
 			PortalUUIDUtil.generate(), inetAddress);

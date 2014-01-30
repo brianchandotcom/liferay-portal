@@ -53,7 +53,9 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
 	@Override
 	public InetAddress getBindInetAddress() {
-		return bindInetAddress;
+		JChannel jChannel = _transportChannels.get(0);
+
+		return getBindInetAddress(jChannel);
 	}
 
 	@Override

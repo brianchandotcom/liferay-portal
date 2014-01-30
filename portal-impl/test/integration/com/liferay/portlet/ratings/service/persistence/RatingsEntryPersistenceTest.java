@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -115,6 +116,8 @@ public class RatingsEntryPersistenceTest {
 
 		RatingsEntry newRatingsEntry = _persistence.create(pk);
 
+		newRatingsEntry.setUuid(ServiceTestUtil.randomString());
+
 		newRatingsEntry.setCompanyId(ServiceTestUtil.nextLong());
 
 		newRatingsEntry.setUserId(ServiceTestUtil.nextLong());
@@ -135,6 +138,8 @@ public class RatingsEntryPersistenceTest {
 
 		RatingsEntry existingRatingsEntry = _persistence.findByPrimaryKey(newRatingsEntry.getPrimaryKey());
 
+		Assert.assertEquals(existingRatingsEntry.getUuid(),
+			newRatingsEntry.getUuid());
 		Assert.assertEquals(existingRatingsEntry.getEntryId(),
 			newRatingsEntry.getEntryId());
 		Assert.assertEquals(existingRatingsEntry.getCompanyId(),
@@ -155,6 +160,35 @@ public class RatingsEntryPersistenceTest {
 			newRatingsEntry.getClassPK());
 		AssertUtils.assertEquals(existingRatingsEntry.getScore(),
 			newRatingsEntry.getScore());
+	}
+
+	@Test
+	public void testCountByUuid() {
+		try {
+			_persistence.countByUuid(StringPool.BLANK);
+
+			_persistence.countByUuid(StringPool.NULL);
+
+			_persistence.countByUuid((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByUuid_C() {
+		try {
+			_persistence.countByUuid_C(StringPool.BLANK,
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+			_persistence.countByUuid_C((String)null, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -230,10 +264,10 @@ public class RatingsEntryPersistenceTest {
 	}
 
 	protected OrderByComparator getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("RatingsEntry", "entryId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "score", true);
+		return OrderByComparatorFactoryUtil.create("RatingsEntry", "uuid",
+			true, "entryId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"classNameId", true, "classPK", true, "score", true);
 	}
 
 	@Test
@@ -370,6 +404,8 @@ public class RatingsEntryPersistenceTest {
 		long pk = ServiceTestUtil.nextLong();
 
 		RatingsEntry ratingsEntry = _persistence.create(pk);
+
+		ratingsEntry.setUuid(ServiceTestUtil.randomString());
 
 		ratingsEntry.setCompanyId(ServiceTestUtil.nextLong());
 

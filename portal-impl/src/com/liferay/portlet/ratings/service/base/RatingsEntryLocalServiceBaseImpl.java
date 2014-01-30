@@ -234,6 +234,20 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the ratings entry with the matching UUID and company.
+	 *
+	 * @param uuid the ratings entry's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public RatingsEntry fetchRatingsEntryByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return ratingsEntryPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
 	 * Returns the ratings entry with the primary key.
 	 *
 	 * @param entryId the primary key of the ratings entry
@@ -251,6 +265,21 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException, SystemException {
 		return ratingsEntryPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the ratings entry with the matching UUID and company.
+	 *
+	 * @param uuid the ratings entry's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching ratings entry
+	 * @throws PortalException if a matching ratings entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public RatingsEntry getRatingsEntryByUuidAndCompanyId(String uuid,
+		long companyId) throws PortalException, SystemException {
+		return ratingsEntryPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**

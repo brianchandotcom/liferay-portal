@@ -155,11 +155,15 @@ public class LuceneHelperImplTest {
 		mockServer.start();
 
 		int port = mockServer.getPort();
+		InetAddress inetAddress = mockServer.getAddress();
 
 		_mockClusterExecutor.setNodeNumber(2);
+
 		_mockClusterExecutor.setPort(port);
+		_mockClusterExecutor.setPortalAddress(inetAddress);
 
 		_clusterNode.setPort(port);
+		_clusterNode.setPortalAddress(inetAddress);
 
 		JDKLoggerTestUtil.configureJDKLogger(
 			LuceneHelperImpl.class.getName(), Level.OFF);
@@ -251,6 +255,7 @@ public class LuceneHelperImplTest {
 
 		_mockClusterExecutor.setNodeNumber(2);
 		_mockClusterExecutor.setPort(mockServer.getPort());
+		_mockClusterExecutor.setPortalAddress(mockServer.getAddress());
 
 		JDKLoggerTestUtil.configureJDKLogger(
 			LuceneHelperImpl.class.getName(), Level.INFO);
@@ -634,6 +639,7 @@ public class LuceneHelperImplTest {
 					_localhostInetAddress);
 
 				clusterNode.setPort(_port);
+				clusterNode.setPortalAddress(_portalAddress);
 
 				clusterNodeResponse.setClusterNode(clusterNode);
 
@@ -760,6 +766,10 @@ public class LuceneHelperImplTest {
 			_port = port;
 		}
 
+		public void setPortalAddress(InetAddress portalAddress) {
+			_portalAddress = portalAddress;
+		}
+
 		public void setNodeNumber(int nodeNumber) {
 			for (int i = 0; i < nodeNumber; i++) {
 				_addresses.add(new AddressImpl(new MockAddress()));
@@ -799,6 +809,7 @@ public class LuceneHelperImplTest {
 			LuceneHelperUtil.class, "getLastGeneration", long.class);
 		private boolean _invokeMethodThrowException = false;
 		private int _port = 0;
+		private InetAddress _portalAddress;
 		private boolean _throwException = false;
 
 	}
@@ -878,6 +889,10 @@ public class LuceneHelperImplTest {
 
 		public int getPort() {
 			return _serverSocket.getLocalPort();
+		}
+
+		public InetAddress getAddress() {
+			return _serverSocket.getInetAddress();
 		}
 
 		@Override

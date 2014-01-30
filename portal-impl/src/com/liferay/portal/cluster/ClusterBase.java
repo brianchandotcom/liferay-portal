@@ -120,10 +120,6 @@ public abstract class ClusterBase {
 	}
 
 	protected InetAddress getBindInetAddress(JChannel jchannel) {
-		if (_autoDetectedAddress != null) {
-			return _autoDetectedAddress;
-		}
-
 		ProtocolStack protocolStack = jchannel.getProtocolStack();
 
 		Protocol protocol = protocolStack.getBottomProtocol();
@@ -157,18 +153,19 @@ public abstract class ClusterBase {
 
 		SocketUtil.BindInfo bindInfo = SocketUtil.getBindInfo(host, port);
 
-		_autoDetectedAddress = bindInfo.getInetAddress();
+		InetAddress autoDetectedAddress = bindInfo.getInetAddress();
+
 		NetworkInterface networkInterface = bindInfo.getNetworkInterface();
 
 		System.setProperty(
-			"jgroups.bind_addr", _autoDetectedAddress.getHostAddress());
+			"jgroups.bind_addr", autoDetectedAddress.getHostAddress());
 		System.setProperty(
 			"jgroups.bind_interface", networkInterface.getName());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Setting JGroups outgoing IP address to " +
-					_autoDetectedAddress.getHostAddress() + " and interface " +
+					autoDetectedAddress.getHostAddress() + " and interface " +
 						"to " + networkInterface.getName());
 		}
 	}
@@ -200,7 +197,6 @@ public abstract class ClusterBase {
 
 	private static Log _log = LogFactoryUtil.getLog(ClusterBase.class);
 
-	private static InetAddress _autoDetectedAddress;
 	private static boolean _initialized;
 
 }

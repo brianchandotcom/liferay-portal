@@ -39,6 +39,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.net.InetAddress;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -904,6 +906,10 @@ public interface Portal {
 
 	public String getPortalLibDir();
 
+	public InetAddress getPortalLocalAddress(boolean secure);
+
+	public int getPortalLocalPort(boolean secure);
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by the more general {@link
 	 *             #getPortalPort(boolean)}
@@ -914,6 +920,10 @@ public interface Portal {
 	public int getPortalPort(boolean secure);
 
 	public Properties getPortalProperties();
+
+	public InetAddress getPortalServerAddress(boolean secure);
+
+	public int getPortalServerPort(boolean secure);
 
 	public String getPortalURL(HttpServletRequest request);
 
@@ -1374,6 +1384,8 @@ public interface Portal {
 	 * title.
 	 */
 	public void setPageTitle(String title, HttpServletRequest request);
+
+	public void setPortalAddresses(HttpServletRequest request);
 
 	/**
 	 * Sets the port obtained on the first request to the portal.

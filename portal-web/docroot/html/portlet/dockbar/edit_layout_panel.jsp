@@ -20,7 +20,7 @@
 
 <div id="<portlet:namespace />editLayoutContainer">
 	<c:choose>
-		<c:when test='<%= SessionMessages.contains(renderRequest, "requestProcessed") || ((selPlid == 0) && Validator.isNotNull(closeRedirect)) %>'>
+		<c:when test='<%= SessionMessages.contains(renderRequest, "requestProcessed") || SessionMessages.contains(request, "requestProcessed") || ((selPlid == 0) && Validator.isNotNull(closeRedirect)) %>'>
 
 			<%
 			String refreshURL = null;
@@ -30,6 +30,10 @@
 			}
 			else {
 				refreshURL = (String)SessionMessages.get(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT);
+
+				if (Validator.isNull(refreshURL)) {
+					refreshURL = (String)SessionMessages.get(request, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT);
+				}
 			}
 
 			if (Validator.isNull(refreshURL)) {

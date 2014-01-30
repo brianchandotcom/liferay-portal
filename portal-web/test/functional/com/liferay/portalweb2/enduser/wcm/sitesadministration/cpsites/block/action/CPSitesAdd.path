@@ -39,6 +39,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -47,6 +57,11 @@
 <tr>
 	<td>DETAILS_NAME</td>
 	<td>//input[@id='_134_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_REQUIRED_INFO_MESSAGE</td>
+	<td>//div[contains(@class,'required') and contains(@role,'alert')]</td>
 	<td></td>
 </tr>
 <tr>

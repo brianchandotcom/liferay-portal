@@ -135,11 +135,12 @@ public interface Portal {
 
 	/**
 	 * Adds the portal event listener to the portal. The listener will be
-	 * notified whenever the portal address or port is set.
+	 * notified whenever the portal address and port is set.
 	 *
 	 * @param portalEventListener the portal event listener to add
 	 */
-	public void addPortalEventListener(PortalEventListener portalEventListener);
+	public boolean addPortalEventListener(
+		PortalEventListener portalEventListener);
 
 	/**
 	 * Adds the portal port event listener to the portal. The listener will be
@@ -906,6 +907,8 @@ public interface Portal {
 	public long getPlidFromPortletId(long groupId, String portletId)
 		throws PortalException, SystemException;
 
+	public PortalEventListener[] getPortalEventListeners();
+
 	public String getPortalLibDir();
 
 	public InetAddress getPortalLocalAddress(boolean secure);
@@ -1319,7 +1322,7 @@ public interface Portal {
 
 	public boolean isValidResourceId(String resourceId);
 
-	public void removePortalEventListener(
+	public boolean removePortalEventListener(
 		PortalEventListener portalEventListener);
 
 	/**

@@ -169,13 +169,6 @@
 	#blogsCommentsPanelContainer {
 		border-width: 0;
 	}
-
-	#blogsEntryAbstractPanel {
-		textarea.input-xxlarge {
-			@include box-sizing(border-box);
-			width: 100%;
-		}
-	}
 }
 
 .social-boomarks-options {

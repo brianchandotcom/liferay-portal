@@ -22,6 +22,8 @@ import com.liferay.util.ContextReplace;
 
 import java.io.File;
 
+import java.net.InetAddress;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -131,6 +133,18 @@ public class RuntimeVariables {
 				}
 
 				varValue = varValue.replaceFirst(replaceRegex, result);
+			}
+			else if (statement.equals("getIPAddress()")) {
+				try {
+					InetAddress inetAddress = InetAddress.getLocalHost();
+
+					String result = inetAddress.getHostAddress();
+
+					varValue = varValue.replaceFirst(
+						"\\$\\{([^}]*?)\\}", result);
+				}
+				catch (Exception e) {
+				}
 			}
 			else {
 				String varName = statement;

@@ -4652,6 +4652,8 @@ public class ServiceBuilder {
 				col.setComparator(finderColComparator);
 				col.setArrayableOperator(finderColArrayableOperator);
 
+				col.validate();
+
 				finderColsList.add(col);
 			}
 

@@ -35,10 +35,6 @@
 			}
 
 			@include respond-to(phone, tablet) {
-				.rating-label {
-					vertical-align: text-bottom;
-				}
-
 				a {
 					font-size: 1.5em;
 				}

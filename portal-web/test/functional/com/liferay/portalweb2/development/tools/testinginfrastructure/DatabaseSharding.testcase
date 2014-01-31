@@ -1,0 +1,7 @@
+<definition component-name="portal-tools">
+	<property name="database.sharding" value="true" />
+
+	<command name="Smoke" priority="5">
+		<execute macro="User#firstLoginPG" />
+	</command>
+</definition>

@@ -57,12 +57,10 @@ public class LiferayResourceBundle extends ResourceBundle {
 		LanguageResources.fixValues(_map, properties);
 	}
 
-	public LiferayResourceBundle(String string, String charsetName)
-		throws IOException {
-
+	public LiferayResourceBundle(String string) throws IOException {
 		_map = new HashMap<String, String>();
 
-		Properties properties = PropertiesUtil.load(string, charsetName);
+		Properties properties = PropertiesUtil.load(string);
 
 		LanguageResources.fixValues(_map, properties);
 	}

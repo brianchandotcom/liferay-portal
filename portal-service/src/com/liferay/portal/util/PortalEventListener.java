@@ -14,16 +14,17 @@
 
 package com.liferay.portal.util;
 
-import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 /**
  * @author Tina Tian
  */
 public interface PortalEventListener {
 
-	public void portalLocalAddressConfigured(InetAddress inetAddress, int port);
+	public void portalLocalAddressConfigured(
+		InetSocketAddress localInetSocketAddress);
 
 	public void portalServerAddressConfigured(
-		InetAddress inetAddress, int port);
+		InetSocketAddress serverInetSocketAddress);
 
 }

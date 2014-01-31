@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.upgrade.util.UpgradeUtil;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
@@ -259,7 +259,7 @@ public class UpgradeExpando extends UpgradeProcess {
 			_log.debug("Upgrading " + tableName);
 		}
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = UpgradeUtil.getClassNameId(className);
 
 		Connection con = null;
 		PreparedStatement ps = null;

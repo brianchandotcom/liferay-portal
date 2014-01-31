@@ -23,6 +23,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.upgrade.util.UpgradeUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 
@@ -75,14 +76,14 @@ public class UpgradePermission extends UpgradeProcess {
 	protected void addSingleApproverWorkflowRoles(long companyId)
 		throws Exception {
 
-		long classNameId = PortalUtil.getClassNameId(Role.class.getName());
+		long classNameId = UpgradeUtil.getClassNameId(Role.class.getName());
 		long roleId = increment();
 
 		addRole(
 			roleId, companyId, classNameId, roleId,
 			_ROLE_COMMUNITY_CONTENT_REVIEWER, RoleConstants.TYPE_SITE);
 
-		classNameId = PortalUtil.getClassNameId(Organization.class.getName());
+		classNameId = UpgradeUtil.getClassNameId(Organization.class.getName());
 		roleId = increment();
 
 		addRole(
@@ -90,7 +91,7 @@ public class UpgradePermission extends UpgradeProcess {
 			_ROLE_ORGANIZATION_CONTENT_REVIEWER,
 			RoleConstants.TYPE_ORGANIZATION);
 
-		classNameId = PortalUtil.getClassNameId(Company.class.getName());
+		classNameId = UpgradeUtil.getClassNameId(Company.class.getName());
 		roleId = increment();
 
 		addRole(

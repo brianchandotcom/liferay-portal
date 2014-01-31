@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.upgrade.util.UpgradeUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.social.WikiActivityKeys;
@@ -92,7 +92,7 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void updateJournalActivities() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+		long classNameId = UpgradeUtil.getClassNameId(JournalArticle.class);
 
 		String[] tableNames = {"SocialActivity", "SocialActivityCounter"};
 
@@ -150,7 +150,7 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void updateWikiPageActivities() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(WikiPage.class);
+		long classNameId = UpgradeUtil.getClassNameId(WikiPage.class);
 
 		runSQL("delete from SocialActivity where classNameId = " + classNameId);
 

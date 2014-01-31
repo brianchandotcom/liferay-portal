@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.upgrade.util.UpgradeUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -323,7 +324,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			long classNameId = PortalUtil.getClassNameId(className);
+			long classNameId = UpgradeUtil.getClassNameId(className);
 
 			StringBundler sb = new StringBundler(5);
 
@@ -453,13 +454,13 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append("activityType = 0 and name = 'enabled' and ");
 			sb.append("value = 'true' and classNameId in (");
 
-			long mbMessageClassNameId = PortalUtil.getClassNameId(
+			long mbMessageClassNameId = UpgradeUtil.getClassNameId(
 				MBMessage.class);
 
 			sb.append(mbMessageClassNameId);
 			sb.append(", ");
 
-			long mbThreadClassNameId = PortalUtil.getClassNameId(
+			long mbThreadClassNameId = UpgradeUtil.getClassNameId(
 				MBThread.class);
 
 			sb.append(mbThreadClassNameId);
@@ -527,7 +528,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 		}
 
-		long classNameId = PortalUtil.getClassNameId(User.class);
+		long classNameId = UpgradeUtil.getClassNameId(User.class);
 		long classPK = rs.getLong("userId");
 		String name = SocialActivityCounterConstants.NAME_PARTICIPATION;
 		int ownerType = SocialActivityCounterConstants.TYPE_ACTOR;
@@ -723,8 +724,8 @@ public class UpgradeSocial extends UpgradeProcess {
 		Class<?> equityClass, String equityActionId, Class<?> activityClass,
 		int activityType) {
 
-		long equityClassNameId = PortalUtil.getClassNameId(equityClass);
-		long activityClassNameId = PortalUtil.getClassNameId(activityClass);
+		long equityClassNameId = UpgradeUtil.getClassNameId(equityClass);
+		long activityClassNameId = UpgradeUtil.getClassNameId(activityClass);
 
 		_equityToActivityMap.put(
 			encodeEquityToActivityKey(equityClassNameId, equityActionId),

@@ -17,7 +17,7 @@ package com.liferay.portal.upgrade.v6_2_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.User;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.upgrade.util.UpgradeUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -26,7 +26,7 @@ public class UpgradeUser extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(User.class);
+		long classNameId = UpgradeUtil.getClassNameId(User.class);
 
 		runSQL("update Contact_ set classNameId = " + classNameId);
 

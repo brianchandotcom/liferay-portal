@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.upgrade.util.UpgradeUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -474,7 +474,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				"select groupId from Group_ where classNameId = ? and " +
 					"classPK = ?");
 
-			ps.setLong(1, PortalUtil.getClassNameId(Company.class.getName()));
+			ps.setLong(1, UpgradeUtil.getClassNameId(Company.class.getName()));
 			ps.setLong(2, companyId);
 
 			rs = ps.executeQuery();

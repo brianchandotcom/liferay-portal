@@ -1,0 +1,20 @@
+@import "mixins";
+
+@include respond-to(phone, tablet) {
+	.portlet-language .portlet-body {
+		.current-language, .taglib-icon, .taglib-language-list-text {
+			border: 1px solid #EAEAEA;
+			display: inline-block;
+			margin: 2px 0;
+			padding: 6px 10px;
+
+			&:focus, &:hover {
+				background-color: #EEE;
+			}
+		}
+
+		img {
+			vertical-align: baseline;
+		}
+	}
+}

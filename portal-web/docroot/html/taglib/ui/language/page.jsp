@@ -144,11 +144,17 @@ for (int i = 0; i < locales.length; i++) {
 					</c:choose>
 				</c:when>
 				<c:otherwise>
+
+					<%
+					boolean currentLanguage = languageId.equals(currentLanguageId);
+					%>
+
 					<liferay-ui:icon
+						cssClass='<%= currentLanguage ? "current-language" : "" %>'
 						image='<%= "../language/" + currentLanguageId %>'
 						lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"
 						message="<%= LocaleUtil.getLongDisplayName(locales[i], duplicateLanguages) %>"
-						url="<%= languageId.equals(currentLanguageId) ? null : HttpUtil.setParameter(formAction, namespace + name, currentLanguageId) %>"
+						url="<%= currentLanguage ? null : HttpUtil.setParameter(formAction, namespace + name, currentLanguageId) %>"
 					/>
 				</c:otherwise>
 			</c:choose>

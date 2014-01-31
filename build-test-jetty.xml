@@ -8,17 +8,7 @@
 
 		<record action="start" name="log" />
 
-		<antcall target="run-simple-server">
-			<param name="simple.server.dir" value="${app.server.jetty.dir}" />
-			<param name="simple.server.bin.dir" value="${app.server.jetty.bin.dir}" />
-			<param name="simple.server.deploy.dir" value="${app.server.jetty.deploy.dir}" />
-			<param name="simple.server.lib.global.dir" value="${app.server.jetty.lib.global.dir}" />
-			<param name="simple.server.portal.dir" value="${app.server.jetty.portal.dir}" />
-			<param name="simple.server.start.executable" value="run${file.suffix.bat}" />
-			<param name="simple.server.start.executable.arg.line" value="" />
-			<param name="simple.server.stop.executable" value="shutdown${file.suffix.bat}" />
-			<param name="simple.server.stop.executable.arg.line" value="" />
-		</antcall>
+		<antcall target="run-simple-server" />
 
 		<record action="stop" name="log" />
 
@@ -26,6 +16,8 @@
 	</target>
 
 	<target name="run-selenium-jetty">
+		<echo file="app.server.${user.name}.properties">app.server.type=jetty</echo>
+
 		<if>
 			<not>
 				<isset property="build.app.server" />
@@ -77,7 +69,7 @@
 
 		<antcall target="start-selenium" />
 
-		<antcall target="run-jetty">
+		<antcall target="run-jetty" inheritAll="false">
 			<param name="test.class" value="${test.name}" />
 		</antcall>
 

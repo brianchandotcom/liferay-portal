@@ -8,7 +8,7 @@
 			<equals arg1="${app.server.type}" arg2="websphere" />
 			<then>
 				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.type=websphere
-app.server.dir=${simple.server.dir}
+app.server.dir=${app.server.dir}
 app.server.deploy.dir=${app.server.dir}/profiles/liferay/wsadmin-deploy
 app.server.lib.global.dir=${app.server.dir}/lib/ext
 app.server.portal.dir=${app.server.dir}/profiles/liferay/installedApps/liferay-cell/liferay-portal.ear/liferay-portal.war
@@ -18,9 +18,9 @@ auto.deploy.dir=${liferay.home}/deploy
 plugins.includes=${plugins.includes}</echo>
 			</then>
 			<else>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.dir=${simple.server.dir}
-app.server.lib.global.dir=${simple.server.lib.global.dir}
-app.server.portal.dir=${simple.server.portal.dir}
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.dir=${app.server.dir}
+app.server.lib.global.dir=${app.server.lib.global.dir}
+app.server.portal.dir=${app.server.portal.dir}
 
 auto.deploy.dir=${liferay.home}/deploy
 

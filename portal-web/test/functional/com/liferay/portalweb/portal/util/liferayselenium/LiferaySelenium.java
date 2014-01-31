@@ -21,6 +21,8 @@ import com.thoughtworks.selenium.Selenium;
  */
 public interface LiferaySelenium extends Selenium {
 
+	public void antCommand(String fileName, String target) throws Exception;
+
 	public void assertAlert(String pattern) throws Exception;
 
 	public void assertChecked(String pattern) throws Exception;

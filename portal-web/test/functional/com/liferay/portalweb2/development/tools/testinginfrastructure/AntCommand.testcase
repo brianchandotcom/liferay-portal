@@ -1,0 +1,9 @@
+<definition component-name="portal-tools">
+	<command name="StopAndStartAppServer" priority="5">
+		<execute action="BaseLiferay#antCommand" locator1="build-test.xml" value1="stop-app-server" />
+
+		<execute action="BaseLiferay#antCommand" locator1="build-test.xml" value1="start-app-server" />
+
+		<execute macro="User#firstLoginPG" />
+	</command>
+</definition>

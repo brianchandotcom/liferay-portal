@@ -10,6 +10,11 @@
 	<property file="${project.dir}/test.${env.HOSTNAME}.properties" />
 	<property file="${project.dir}/test.properties" />
 
+	<propertycopy from="app.server.${app.server.type}.start.executable" name="app.server.start.executable" />
+	<propertycopy from="app.server.${app.server.type}.start.executable.arg.line" name="app.server.start.executable.arg.line" />
+	<propertycopy from="app.server.${app.server.type}.stop.executable" name="app.server.stop.executable" />
+	<propertycopy from="app.server.${app.server.type}.stop.executable.arg.line" name="app.server.stop.executable.arg.line" />
+
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
@@ -328,7 +333,7 @@ create database lportal2 character set utf8;</echo>
 			<then>
 				<delete includeemptydirs="true" failonerror="false">
 					<fileset
-						dir="${simple.server.lib.global.dir}"
+						dir="${app.server.lib.global.dir}"
 						includes="${jdbc.db2.driver}"
 					/>
 				</delete>
@@ -344,7 +349,7 @@ create database lportal2 character set utf8;</echo>
 				<and>
 					<equals arg1="${database}" arg2="mysql" />
 					<not>
-						<available file="${simple.server.lib.global.dir}/${jdbc.mysql.driver}" />
+						<available file="${app.server.lib.global.dir}/${jdbc.mysql.driver}" />
 					</not>
 				</and>
 				<then>
@@ -361,7 +366,7 @@ create database lportal2 character set utf8;</echo>
 				<then>
 					<delete includeemptydirs="true" failonerror="false">
 						<fileset
-							dir="${simple.server.lib.global.dir}"
+							dir="${app.server.lib.global.dir}"
 							includes="${jdbc.oracle.driver}"
 						/>
 					</delete>
@@ -379,7 +384,7 @@ create database lportal2 character set utf8;</echo>
 				<then>
 					<delete includeemptydirs="true" failonerror="false">
 						<fileset
-							dir="${simple.server.lib.global.dir}"
+							dir="${app.server.lib.global.dir}"
 							includes="${jdbc.oracle.driver}"
 						/>
 					</delete>
@@ -2268,7 +2273,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<then>
 				<delete includeemptydirs="true" failonerror="false">
 					<fileset
-						dir="${simple.server.deploy.dir}"
+						dir="${app.server.deploy.dir}"
 						excludes=",*.dodeploy,*.rar,*.sar/**,*.xml,.autodeploystatus/**,liferay-portal/**,liferay-portal.war/**,security/**,root/**,ROOT/**,ROOT.war/**,tunnel-web/**,tunnel-web.war/**"
 					/>
 				</delete>
@@ -2276,34 +2281,11 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 
 		<if>
-			<and>
-				<contains string="${simple.server.dir}" substring="glassfish" />
-				<or>
-					<isset property="hook.plugins.includes" />
-					<isset property="layouttpl.plugins.includes" />
-					<isset property="portlet.plugins.includes" />
-					<isset property="theme.plugins.includes" />
-					<isset property="web.plugins.includes" />
-				</or>
-			</and>
+			<equals arg1="${app.server.type}" arg2="glassfish" />
 			<then>
-				<parallel>
-					<exec dir="${simple.server.bin.dir}" executable="${simple.server.start.executable}" resolveexecutable="true">
-						<arg line="${simple.server.start.executable.arg.line}" />
-					</exec>
+				<antcall target="start-app-server" />
 
-					<sequential>
-						<waitfor maxwait="5" maxwaitunit="minute">
-							<http url="http://localhost:8080/web/guest" />
-						</waitfor>
-
-						<sleep seconds="60" />
-
-						<exec dir="${simple.server.bin.dir}" executable="${simple.server.stop.executable}" resolveexecutable="true">
-							<arg line="${simple.server.stop.executable.arg.line}" />
-						</exec>
-					</sequential>
-				</parallel>
+				<antcall target="stop-app-server" />
 			</then>
 		</if>
 
@@ -2405,106 +2387,82 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</then>
 		</if>
 
-		<parallel>
-			<exec dir="${simple.server.bin.dir}" executable="${simple.server.start.executable}" resolveexecutable="true">
-				<arg line="${simple.server.start.executable.arg.line}" />
-			</exec>
+		<antcall target="start-app-server" />
 
-			<if>
-				<equals arg1="${simple.server.type}" arg2="jboss" />
-				<then>
-					<echo file="${simple.server.deploy.dir}/ROOT.war.dodeploy"></echo>
-				</then>
-			</if>
-
+		<for param="log.file">
+			<path>
+				<fileset dir="${liferay.home}/logs">
+					<include name="*.log" />
+				</fileset>
+			</path>
 			<sequential>
-				<waitfor maxwait="5" maxwaitunit="minute">
-					<and>
-						<available file="${liferay.home}/logs" />
-						<http url="http://localhost:8080/web/guest" />
-					</and>
-				</waitfor>
-
-				<for param="log.file">
-					<path>
-						<fileset dir="${liferay.home}/logs">
-							<include name="*.log" />
-						</fileset>
-					</path>
-					<sequential>
-						<var name="log.file" value="@{log.file}" />
-					</sequential>
-				</for>
-
-				<script classpathref="project.classpath" language="beanshell">
-					<![CDATA[
-						import com.liferay.portal.kernel.util.StringUtil;
-
-						import org.apache.commons.io.FileUtils;
-
-						Set requiredPluginNamesSet = new HashSet();
-
-						requiredPluginNamesSet.add("marketplace-portlet");
-
-						String[] pluginTypes = {"hook", "layouttpl", "portlet", "theme", "web"};
-
-						for (String pluginType : pluginTypes) {
-							String[] pluginNames = StringUtil.split(project.getProperty(pluginType + ".plugins.includes"), ',');
-
-							for (String pluginName : pluginNames) {
-								requiredPluginNamesSet.add(pluginName);
-							}
-						}
-
-						System.out.println("Ensuring the following plugins have been deployed:");
-						System.out.println(StringUtil.merge(requiredPluginNamesSet));
-
-						int i = 0;
-
-						for (String pluginName : requiredPluginNamesSet) {
-							String content = "";
-
-							while (i < 120 && !content.contains(pluginName + " is available for use")) {
-								try {
-									Thread.sleep(1000);
-
-									File file = new File(StringUtil.replace(project.getProperty("log.file"), "\\", "/"));
-
-									content = FileUtils.readFileToString(file);
-
-									i++;
-								}
-								catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
-						}
-					]]>
-				</script>
-
-				<if>
-					<contains string="${hook.plugins.includes}" substring="so-hook" />
-					<then>
-						<echo file="${app.server.portal.dir}/html/portlet/dockbar/license_warning.jsp" />
-					</then>
-				</if>
-
-				<if>
-					<equals arg1="${test.ant.script.actions}" arg2="db-failover" />
-					<then>
-						<ant antfile="build-test-db-failover.xml" target="run-db-failover" />
-					</then>
-				</if>
-
-				<antcall target="run-selenium-test" />
-
-				<sleep seconds="15" />
-
-				<exec dir="${simple.server.bin.dir}" executable="${simple.server.stop.executable}" resolveexecutable="true">
-					<arg line="${simple.server.stop.executable.arg.line}" />
-				</exec>
+				<var name="log.file" value="@{log.file}" />
 			</sequential>
-		</parallel>
+		</for>
+
+		<script classpathref="project.classpath" language="beanshell">
+			<![CDATA[
+				import com.liferay.portal.kernel.util.StringUtil;
+
+				import org.apache.commons.io.FileUtils;
+
+				Set requiredPluginNamesSet = new HashSet();
+
+				requiredPluginNamesSet.add("marketplace-portlet");
+
+				String[] pluginTypes = {"hook", "layouttpl", "portlet", "theme", "web"};
+
+				for (String pluginType : pluginTypes) {
+					String[] pluginNames = StringUtil.split(project.getProperty(pluginType + ".plugins.includes"), ',');
+
+					for (String pluginName : pluginNames) {
+						requiredPluginNamesSet.add(pluginName);
+					}
+				}
+
+				System.out.println("Ensuring the following plugins have been deployed:");
+				System.out.println(StringUtil.merge(requiredPluginNamesSet));
+
+				int i = 0;
+
+				for (String pluginName : requiredPluginNamesSet) {
+					String content = "";
+
+					while (i < 120 && !content.contains(pluginName + " is available for use")) {
+						try {
+							Thread.sleep(1000);
+
+							File file = new File(StringUtil.replace(project.getProperty("log.file"), "\\", "/"));
+
+							content = FileUtils.readFileToString(file);
+
+							i++;
+						}
+						catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			]]>
+		</script>
+
+		<if>
+			<contains string="${hook.plugins.includes}" substring="so-hook" />
+			<then>
+				<echo file="${app.server.portal.dir}/html/portlet/dockbar/license_warning.jsp" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${test.ant.script.actions}" arg2="db-failover" />
+			<then>
+				<ant antfile="build-test-db-failover.xml" target="run-db-failover" />
+			</then>
+		</if>
+
+		<antcall target="run-selenium-test" />
+
+		<antcall target="stop-app-server" />
 
 		<if>
 			<equals arg1="${test.browser}" arg2="googlechrome" />
@@ -2522,6 +2480,28 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				<antcall target="stop-ie-driver" />
 			</then>
 		</if>
+	</target>
+
+	<target name="start-app-server">
+		<if>
+			<equals arg1="${app.server.type}" arg2="jboss" />
+			<then>
+				<echo file="${app.server.deploy.dir}/ROOT.war.dodeploy"></echo>
+			</then>
+		</if>
+
+		<forget>
+			<exec dir="${app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+				<arg line="${app.server.start.executable.arg.line}" />
+			</exec>
+		</forget>
+
+		<waitfor maxwait="5" maxwaitunit="minute">
+			<and>
+				<available file="${liferay.home}/logs" />
+				<http url="http://localhost:8080/web/guest" />
+			</and>
+		</waitfor>
 	</target>
 
 	<target name="start-chrome-driver">
@@ -2603,6 +2583,12 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		>
 			<arg line="-port 14444 -singleWindow" />
 		</java>
+	</target>
+
+	<target name="stop-app-server">
+		<exec dir="${app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
+			<arg line="${app.server.stop.executable.arg.line}" />
+		</exec>
 	</target>
 
 	<target name="stop-chrome-driver">

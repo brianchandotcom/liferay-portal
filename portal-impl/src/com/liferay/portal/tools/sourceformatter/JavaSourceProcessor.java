@@ -1218,7 +1218,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			// LPS-42599
 
-			if (line.contains("= session.createSQLQuery(")) {
+			if (line.contains("= session.createSQLQuery(") &&
+				content.contains("com.liferay.portal.kernel.dao.orm.Session")) {
+
 				line = StringUtil.replace(
 					line, "createSQLQuery", "createSynchronizedSQLQuery");
 			}

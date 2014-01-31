@@ -153,7 +153,7 @@ public class DLFileEntryLocalServiceImpl
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(title)) {
-			if (size == 0) {
+			if (Validator.isNull(sourceFileName)) {
 				throw new FileNameException();
 			}
 			else {

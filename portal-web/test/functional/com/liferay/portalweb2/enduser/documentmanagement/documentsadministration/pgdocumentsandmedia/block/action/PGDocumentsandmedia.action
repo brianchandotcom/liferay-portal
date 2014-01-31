@@ -26,7 +26,7 @@
 	</command>
 
 	<command name="assertElementNotPresent">
-		<case locator-key1="ENTRIES_DOCUMENT">
+		<case locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL">
 			<execute function="AssertElementNotPresent#assertNotVisible" />
 		</case>
 
@@ -39,10 +39,14 @@
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+
+		<case locator-key1="ERROR_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 
 	<command name="isElementPresent">
-		<case locator-key1="ENTRIES_DOCUMENT">
+		<case locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL">
 			<execute function="IsElementPresent#isVisible" />
 		</case>
 	</command>

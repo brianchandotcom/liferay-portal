@@ -192,7 +192,7 @@ String modules = "aui-node-base";
 if (inlineEdit && (inlineEditSaveURL != null)) {
 	textareaName = name + "_original";
 
-	modules += " inline-editor-ckeditor";
+	modules += ",inline-editor-ckeditor";
 }
 %>
 

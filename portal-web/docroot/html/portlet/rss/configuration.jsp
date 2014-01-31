@@ -45,7 +45,7 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 <aui:form action="<%= configurationURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationURL.toString() %>" />
-	<aui:input name="typeSelection" type="hidden" />
+	<aui:input name="typeSelection" type="hidden" value="<%= typeSelection %>" />
 	<aui:input name="articleGroupId" type="hidden" />
 	<aui:input name="articleId" type="hidden" />
 	<aui:input name="assetOrder" type="hidden" />

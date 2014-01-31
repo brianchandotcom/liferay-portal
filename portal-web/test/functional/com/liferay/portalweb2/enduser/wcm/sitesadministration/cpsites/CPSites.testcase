@@ -204,6 +204,75 @@
 		</execute>
 	</command>
 
+	<command name="AddSiteWithCommaInName" priority="3">
+		<var name="siteName" value="Site Name," />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+	</command>
+
+	<command name="AddSiteWithInvalidDuplicateName" priority="3">
+		<var name="siteName" value="Site Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCannotAdd">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameInvalid" value="Duplicate" />
+		</execute>
+	</command>
+
+	<command name="AddSiteWithInvalidName" priority="3">
+		<var name="siteNameList" value="Site Name*,22222" />
+
+		<for list="${siteNameList}" param="siteName" >
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Sites" />
+			</execute>
+
+			<execute macro="Site#viewCannotAdd">
+				<var name="siteName" value="${siteName}" />
+				<var name="siteNameInvalid" value="Invalid" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="AddSiteWithNullName" priority="3">
+		<var name="siteName" value=" " />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCannotAdd">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameInvalid" value="Null" />
+		</execute>
+	</command>
+
 	<command name="DeleteSite" priority="5">
 		<var name="siteName" value="Site Name" />
 

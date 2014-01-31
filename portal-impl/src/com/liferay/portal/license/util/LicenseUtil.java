@@ -297,13 +297,14 @@ public class LicenseUtil {
 				catch (Exception e) {
 					_log.error(e, e);
 
-					InetAddress inetAddress = clusterNode.getInetAddress();
+					InetAddress inetAddress = clusterNode.getBindInetAddress();
 
 					String message =
 						"Error contacting " + inetAddress.getHostName();
 
-					if (clusterNode.getPort() != -1) {
-						message += StringPool.COLON + clusterNode.getPort();
+					if (clusterNode.getPortalPort() != -1) {
+						message +=
+							StringPool.COLON + clusterNode.getPortalPort();
 					}
 
 					request.setAttribute(

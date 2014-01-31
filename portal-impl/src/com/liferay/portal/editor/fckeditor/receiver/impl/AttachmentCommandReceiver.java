@@ -148,6 +148,6 @@ public class AttachmentCommandReceiver extends BaseCommandReceiver {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-			AttachmentCommandReceiver.class);
+		AttachmentCommandReceiver.class);
 
 }

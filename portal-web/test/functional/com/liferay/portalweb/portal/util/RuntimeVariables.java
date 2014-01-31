@@ -113,17 +113,6 @@ public class RuntimeVariables {
 				if (method.startsWith("getFirstNumber")) {
 					result = operandValue.replaceFirst("\\D*(\\d*).*", "$1");
 				}
-				else if (method.startsWith("getIPAddress")) {
-					result = "";
-
-					try {
-						InetAddress inetAddress = InetAddress.getLocalHost();
-
-						result = inetAddress.getHostAddress();
-					}
-					catch (Exception e) {
-					}
-				}
 				else if (method.startsWith("increment")) {
 					int i = GetterUtil.getInteger(operandValue) + 1;
 
@@ -146,19 +135,16 @@ public class RuntimeVariables {
 				varValue = varValue.replaceFirst(replaceRegex, result);
 			}
 			else if (statement.equals("getIPAddress()")) {
-				String result = "";
-
 				try {
 					InetAddress inetAddress = InetAddress.getLocalHost();
 
-					result = inetAddress.getHostAddress();
+					String result = inetAddress.getHostAddress();
+
+					varValue = varValue.replaceFirst(
+						"\\$\\{([^}]*?)\\}", result);
 				}
 				catch (Exception e) {
 				}
-
-				String replaceRegex = "\\$\\{([^}]*?)\\}";
-
-				varValue = varValue.replaceFirst(replaceRegex, result);
 			}
 			else {
 				String varName = statement;

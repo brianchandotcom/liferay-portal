@@ -1,3 +1,3 @@
 <definition>
-	<var name="test" value="${test?replace}" />
+	<var name="name" locator="//div" attribute="" />
 </definition>

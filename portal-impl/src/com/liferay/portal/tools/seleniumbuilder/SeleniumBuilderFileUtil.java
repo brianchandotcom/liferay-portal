@@ -1699,14 +1699,6 @@ public class SeleniumBuilderFileUtil {
 							1013, fileName, element, method);
 					}
 				}
-				else {
-					if (statement.matches(".*[\\?\\(\\)\\}\\{].*") &&
-						!statement.contains("getIPAddress")) {
-
-						throwValidationException(
-							1006, fileName, element, "value");
-					}
-				}
 			}
 		}
 

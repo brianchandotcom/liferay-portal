@@ -876,8 +876,8 @@
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRIES_DOCUMENT" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -907,7 +907,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="ENTRIES_DOCUMENT" />
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL" />
 	</command>
 
 	<command name="LayoutScope" priority="5">

@@ -290,7 +290,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMDocument#viewPGLiveStaging">
+		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>

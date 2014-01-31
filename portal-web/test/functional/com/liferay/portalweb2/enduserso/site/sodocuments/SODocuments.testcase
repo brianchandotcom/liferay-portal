@@ -75,7 +75,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMDocument#viewPG">
+		<execute macro="DMDocument#viewAllPG">
 			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
 	</command>
@@ -111,7 +111,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMDocument#viewPG">
+		<execute macro="DMDocument#viewAllPG">
 			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
 	</command>
@@ -135,7 +135,7 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMDocument#viewPG">
+		<execute macro="DMDocument#viewAllPG">
 			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
 	</command>
@@ -187,7 +187,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMDocument#viewPG">
+		<execute macro="DMDocument#viewAllPG">
 			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
 	</command>
@@ -458,7 +458,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMDocument#viewPG">
+		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentSize" value="${dmDocumentSize2}" />
 			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO2}" />
@@ -514,7 +514,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMDocument#viewPG">
+		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentSize" value="${dmDocumentSize2}" />
 			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO2}" />
@@ -570,7 +570,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMDocument#viewPG">
+		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentSize" value="${dmDocumentSize2}" />
 			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO2}" />
@@ -612,7 +612,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMDocument#publishDraftDMFolderDocument" />
+		<execute macro="DMDocument#publishDraftPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
@@ -620,7 +620,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMDocument#viewPG">
+		<execute macro="DMDocument#viewAllPG">
 			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
 	</command>
@@ -665,7 +665,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMDocument#saveAndCheckinPG">
+		<execute macro="DMDocument#editSaveAndCheckinPG">
 			<var name="changeLog" value="Major Revision" />
 			<var name="revision" value="Major" />
 		</execute>
@@ -731,7 +731,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMDocument#saveAndCheckinPG">
+		<execute macro="DMDocument#editSaveAndCheckinPG">
 			<var name="changeLog" value="Minor Revision" />
 			<var name="revision" value="Minor" />
 		</execute>
@@ -828,7 +828,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMDocument#saveAsDraftEditDMFolderDocument" />
+		<execute macro="DMDocument#editSaveAsDraftPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
@@ -836,7 +836,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMDocument#viewSaveAsDraftEditDMFolderDocumentPG">
+		<execute macro="DMDocument#viewEditedDraftPG">
 			<var name="versionNumber" value="${dmDocumentVersionNumberEdit}" />
 		</execute>
 	</command>
@@ -1024,7 +1024,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMDocument#saveAsDraftEditDMFolderDocument" />
+		<execute macro="DMDocument#editSaveAsDraftPG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />

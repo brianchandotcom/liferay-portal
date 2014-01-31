@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -80,7 +81,7 @@ public class AlloyPermission {
 	}
 
 	private static String _formatActionId(String actionId) {
-		StringBuilder sb = new StringBuilder(actionId.toUpperCase());
+		StringBuilder sb = new StringBuilder(StringUtil.toUpperCase(actionId));
 
 		for (int i = 0; i < actionId.length(); i++) {
 			char c = actionId.charAt(i);

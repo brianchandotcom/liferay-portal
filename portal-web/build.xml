@@ -49,6 +49,36 @@
 		<pathelement location="${project.dir}/lib/portal/velocity.jar" />
 	</path>
 
+	<macrodef name="build-selenium">
+		<attribute name="build.selenium.dir" default="${basedir.unix}" />
+
+		<sequential>
+			<delete dir="@{build.selenium.dir}/test/functional-generated" />
+
+			<if>
+				<not>
+					<isset property="selenium.types" />
+				</not>
+				<then>
+					<property name="selenium.types" value="action,function,macro,path,testcase,testsuite" />
+				</then>
+			</if>
+
+			<java
+				classname="com.liferay.portal.tools.seleniumbuilder.SeleniumBuilder"
+				classpathref="project.classpath"
+				failonerror="true"
+				fork="true"
+				maxmemory="1024m"
+				newenvironment="true"
+			>
+				<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+				<arg value="selenium.base.dir=@{build.selenium.dir}/test/functional" />
+				<arg value="selenium.types=${selenium.types}" />
+			</java>
+		</sequential>
+	</macrodef>
+
 	<target name="build-alloy">
 		<antcall target="build-alloy-bootstrap" />
 
@@ -860,29 +890,7 @@
 	</target>
 
 	<target name="build-selenium-new">
-		<delete dir="${basedir.unix}/test/functional-generated" />
-
-		<if>
-			<not>
-				<isset property="selenium.types" />
-			</not>
-			<then>
-				<property name="selenium.types" value="action,function,macro,path,testcase,testsuite" />
-			</then>
-		</if>
-
-		<java
-			classname="com.liferay.portal.tools.seleniumbuilder.SeleniumBuilder"
-			classpathref="project.classpath"
-			failonerror="true"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg value="selenium.base.dir=test/functional" />
-			<arg value="selenium.types=${selenium.types}" />
-		</java>
+		<build-selenium />
 	</target>
 
 	<target name="build-selenium-new-action">

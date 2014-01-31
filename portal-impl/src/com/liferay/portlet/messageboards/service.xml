@@ -110,12 +110,12 @@
 			<finder-column name="status" />
 		</finder>
 		<finder name="NotC_G_P" return-type="Collection">
-			<finder-column name="categoryId" comparator="!=" arrayable-operator="OR" />
+			<finder-column name="categoryId" comparator="!=" arrayable-operator="AND" />
 			<finder-column name="groupId" />
 			<finder-column name="parentCategoryId" arrayable-operator="OR" />
 		</finder>
 		<finder name="NotC_G_P_S" return-type="Collection">
-			<finder-column name="categoryId" comparator="!=" arrayable-operator="OR" />
+			<finder-column name="categoryId" comparator="!=" arrayable-operator="AND" />
 			<finder-column name="groupId" />
 			<finder-column name="parentCategoryId" arrayable-operator="OR" />
 			<finder-column name="status" />

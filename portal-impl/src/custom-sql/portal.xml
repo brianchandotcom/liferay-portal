@@ -50,7 +50,8 @@
 					WHERE
 						(ResourcePermission.companyId = [$COMPANY_ID$]) AND
 						(ResourcePermission.name = '[$CLASS_NAME$]') AND
-						(MOD(ResourcePermission.actionIds, 2) = 1)
+						(MOD(ResourcePermission.actionIds, 2) = 1) AND
+						[$ROLES_OR_OWNER$]
 				)
 			InlineSQLResourcePermission ON
 				[$PRIM_KEYS$]

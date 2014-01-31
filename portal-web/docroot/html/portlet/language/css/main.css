@@ -11,6 +11,10 @@
 			display: inline-block;
 			margin: 2px 0;
 			padding: 6px 10px;
+
+			&:focus, &:hover {
+				background-color: #EEE;
+			}
 		}
 
 		img {

@@ -119,8 +119,14 @@ public abstract class BaseClusterExecutorImplTestCase
 		public Object setPortalAddress(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
-			return proceedingJoinPoint.proceed(
-				new Object[] {BAD_ADDRESS + StringPool.COLON + 8080});
+			String address = BAD_ADDRESS;
+
+			if (_port != null) {
+				address = address.concat(StringPool.COLON).concat(
+					_port.toString());
+			}
+
+			return proceedingJoinPoint.proceed(new Object[] {address});
 		}
 
 		@Around(
@@ -130,8 +136,21 @@ public abstract class BaseClusterExecutorImplTestCase
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
-			return proceedingJoinPoint.proceed(new Object[] {BAD_ADDRESS});
+			String address = BAD_ADDRESS;
+
+			if (_port != null) {
+				address = address.concat(StringPool.COLON).concat(
+					_port.toString());
+			}
+
+			return proceedingJoinPoint.proceed(new Object[] {address});
 		}
+
+		public static void setPort(int port) {
+			_port = port;
+		}
+
+		private static Integer _port;
 
 	}
 

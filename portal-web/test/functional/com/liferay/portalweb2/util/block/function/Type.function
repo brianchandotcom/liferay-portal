@@ -55,6 +55,12 @@
 		<execute selenium="pause" argument1="1000" />
 	</command>
 
+	<command name="typeImageElement">
+		<execute selenium="typeImageElement" />
+
+		<execute selenium="pause" argument1="2000" />
+	</command>
+
 	<command name="typeWaitForCKEditor">
 		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
 

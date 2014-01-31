@@ -48,7 +48,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.Serializable;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.InetSocketAddress;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -97,36 +97,8 @@ public class ClusterExecutorImpl
 			addClusterEventListener(new LiveUsersClusterEventListenerImpl());
 		}
 
-		String portalAddress = null;
-
 		_secure = StringUtil.equalsIgnoreCase(
 			Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL);
-
-		if (_secure) {
-			portalAddress = PropsValues.PORTAL_INSTANCE_HTTPS_ADDRESS;
-		}
-		else {
-			portalAddress = PropsValues.PORTAL_INSTANCE_HTTP_ADDRESS;
-		}
-
-		if (Validator.isNotNull(portalAddress)) {
-			int index = portalAddress.indexOf(CharPool.COLON);
-
-			if (index != -1) {
-				_port = GetterUtil.getInteger(
-					portalAddress.substring(index + 1), _port);
-
-				String host = portalAddress.substring(0, index);
-
-				try {
-					_portalAddress = InetAddress.getByName(host);
-				}
-				catch (UnknownHostException uhex) {
-					_log.error(
-						"Unable to get InetAddress by name :" + host, uhex);
-				}
-			}
-		}
 
 		super.afterPropertiesSet();
 	}
@@ -328,15 +300,16 @@ public class ClusterExecutorImpl
 
 	@Override
 	public void portalLocalAddressConfigured(
-		InetAddress inetAddress, int port) {
+		InetSocketAddress inetSocketAddress) {
 
-		if (!isEnabled() || ((_portalAddress != null) && (_port > 0))) {
+		if (!isEnabled() ||
+			(_localClusterNode.getPortalInetSocketAddress() != null)) {
+
 			return;
 		}
 
 		try {
-			_localClusterNode.setPortalAddress(inetAddress);
-			_localClusterNode.setPort(port);
+			_localClusterNode.setPortalInetSocketAddress(inetSocketAddress);
 
 			memberJoined(_localAddress, _localClusterNode);
 
@@ -352,7 +325,7 @@ public class ClusterExecutorImpl
 
 	@Override
 	public void portalServerAddressConfigured(
-		InetAddress inetAddress, int port) {
+		InetSocketAddress inetSocketAddress) {
 	}
 
 	@Override
@@ -419,6 +392,41 @@ public class ClusterExecutorImpl
 		return clusterNodeResponse;
 	}
 
+	protected InetSocketAddress getConfiguredPortalInetSockAddress(
+		boolean secure) {
+
+		InetSocketAddress inetSocketAddress = null;
+
+		String portalAddress = null;
+
+		if (secure) {
+			portalAddress = PropsValues.PORTAL_INSTANCE_HTTPS_ADDRESS;
+		}
+		else {
+			portalAddress = PropsValues.PORTAL_INSTANCE_HTTP_ADDRESS;
+		}
+
+		if (Validator.isNotNull(portalAddress)) {
+			String[] parts = StringUtil.split(portalAddress, CharPool.COLON);
+
+			if (parts.length == 2) {
+				try {
+					inetSocketAddress = new InetSocketAddress(
+						InetAddress.getByName(parts[0]),
+						GetterUtil.getIntegerStrict(parts[1]));
+				}
+				catch (Exception e) {
+					_log.error(
+						"Unable to parse portal InetSocketAddress from :" +
+							portalAddress,
+						e);
+				}
+			}
+		}
+
+		return inetSocketAddress;
+	}
+
 	protected JChannel getControlChannel() {
 		return _controlJChannel;
 	}
@@ -443,26 +451,18 @@ public class ClusterExecutorImpl
 	}
 
 	protected void initLocalClusterNode() {
-		InetAddress inetAddress = getBindInetAddress(_controlJChannel);
+		InetAddress bindInetAddress = getBindInetAddress(_controlJChannel);
 
 		ClusterNode localClusterNode = new ClusterNode(
-			PortalUUIDUtil.generate(), inetAddress);
+			PortalUUIDUtil.generate(), bindInetAddress);
 
-		int port = _port;
+		InetSocketAddress portalInetSocketAddress =
+			getConfiguredPortalInetSockAddress(_secure);
 
-		if (port <= 0) {
-			port = PortalUtil.getPortalLocalPort(_secure);
+		if (portalInetSocketAddress != null) {
+			localClusterNode.setPortalInetSocketAddress(
+				portalInetSocketAddress);
 		}
-
-		localClusterNode.setPort(port);
-
-		InetAddress portalAddress = _portalAddress;
-
-		if (portalAddress == null) {
-			portalAddress = PortalUtil.getPortalLocalAddress(_secure);
-		}
-
-		localClusterNode.setPortalAddress(portalAddress);
 
 		_localClusterNode = localClusterNode;
 	}
@@ -608,8 +608,6 @@ public class ClusterExecutorImpl
 		new ConcurrentHashMap<Address, ClusterNode>();
 	private Address _localAddress;
 	private ClusterNode _localClusterNode;
-	private int _port;
-	private InetAddress _portalAddress;
 	private boolean _secure;
 	private boolean _shortcutLocalMethod;
 

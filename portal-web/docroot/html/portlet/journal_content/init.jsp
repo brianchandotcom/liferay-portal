@@ -16,8 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.journal.NoSuchArticleException" %><%@
-page import="com.liferay.portlet.journal.service.permission.JournalArticlePermission" %><%@
+<%@ page import="com.liferay.portlet.journal.service.permission.JournalArticlePermission" %><%@
 page import="com.liferay.portlet.journal.service.permission.JournalPermission" %>
 
 <%

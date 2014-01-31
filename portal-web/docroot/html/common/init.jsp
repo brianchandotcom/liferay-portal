@@ -245,6 +245,7 @@ page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalSer
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission" %><%@
 page import="com.liferay.portlet.expando.model.ExpandoBridge" %><%@
+page import="com.liferay.portlet.journal.NoSuchArticleException" %><%@
 page import="com.liferay.portlet.journal.action.EditArticleAction" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticleConstants" %><%@

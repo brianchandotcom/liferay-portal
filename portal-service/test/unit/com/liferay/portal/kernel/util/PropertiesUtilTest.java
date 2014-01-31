@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 
 import java.util.Properties;
@@ -38,26 +37,12 @@ public class PropertiesUtilTest {
 	}
 
 	@Test
-	public void testLoadJDK5() throws Exception {
-		byte[] utf8Encoded = _PROPERTIES_STRING.getBytes(StringPool.UTF8);
-
-		Properties properties = PropertiesUtil.loadJDK5(
-			new UnsyncByteArrayInputStream(utf8Encoded), StringPool.UTF8);
+	public void testLoad2() throws Exception {
+		Properties properties = PropertiesUtil.load(
+			new UnsyncStringReader(_PROPERTIES_STRING));
 
 		for (String[] property : _PROPERTIES_ARRAY) {
 			Assert.assertEquals(property[1], properties.get(property[0]));
-		}
-	}
-
-	@Test
-	public void testLoadJDK6() throws Exception {
-		if (JavaDetector.isJDK6() || JavaDetector.isJDK7()) {
-			Properties properties = PropertiesUtil.loadJDK6(
-				new UnsyncStringReader(_PROPERTIES_STRING));
-
-			for (String[] property : _PROPERTIES_ARRAY) {
-				Assert.assertEquals(property[1], properties.get(property[0]));
-			}
 		}
 	}
 

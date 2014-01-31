@@ -297,6 +297,7 @@
 				<classpath mode="compile">lib/development/selenium-java.jar</classpath>
 				<classpath mode="compile">lib/development/selenium-server.jar</classpath>
 				<classpath mode="compile">lib/development/servlet-api.jar</classpath>
+				<classpath mode="compile">lib/development/sikuli-script.jar</classpath>
 				<classpath mode="compile">lib/development/smtp.jar</classpath>
 				<classpath mode="compile">lib/development/sonar-ant-task.jar</classpath>
 				<classpath mode="compile">lib/development/spring-instrument.jar</classpath>

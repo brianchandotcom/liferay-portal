@@ -66,6 +66,12 @@
 		<execute function="Click#clickAt" />
 	</command>
 
+	<command name="clickImageElement">
+		<execute selenium="clickImageElement" />
+
+		<execute selenium="pause" argument1="2000" />
+	</command>
+
 	<command name="clickWaitForInlineCKEditor">
 		<if>
 			<condition selenium="isElementPresent" argument1="//div[contains(@class,'cke_editable_inline')]" />

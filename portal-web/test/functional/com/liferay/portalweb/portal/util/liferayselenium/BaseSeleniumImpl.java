@@ -43,6 +43,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void antCommand(String fileName, String target) throws Exception {
+		LiferaySeleniumHelper.antCommand(this, fileName, target);
+	}
+
+	@Override
 	public void assertAlert(String pattern) throws Exception {
 		LiferaySeleniumHelper.assertAlert(this, pattern);
 	}
@@ -193,13 +198,6 @@ public abstract class BaseSeleniumImpl
 	public void clickAtAndWait(String locator, String coordString) {
 		super.clickAt(locator, coordString);
 		super.waitForPageToLoad("30000");
-	}
-
-	@Override
-	public void commandLineAntTarget(String fileName, String target)
-		throws Exception {
-
-		LiferaySeleniumHelper.commandLineAntTarget(this, fileName, target);
 	}
 
 	@Override

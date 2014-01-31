@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.upgrade.util.UpgradeUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -132,7 +132,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			String className, String tableName, String columnName)
 		throws Exception {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = UpgradeUtil.getClassNameId(className);
 
 		StringBundler sb = new StringBundler(11);
 
@@ -156,7 +156,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			String columnName2)
 		throws Exception {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = UpgradeUtil.getClassNameId(className);
 
 		Connection con = null;
 		PreparedStatement ps = null;

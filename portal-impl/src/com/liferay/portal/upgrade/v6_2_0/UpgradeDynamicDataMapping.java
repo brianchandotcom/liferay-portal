@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.upgrade.util.UpgradeUtil;
 import com.liferay.portal.upgrade.v6_2_0.util.DDMTemplateTable;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
@@ -60,7 +60,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				DDMTemplateTable.TABLE_SQL_ADD_INDEXES);
 		}
 
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+		long classNameId = UpgradeUtil.getClassNameId(DDMStructure.class);
 
 		try {
 			runSQL("update DDMTemplate set classNameId = " + classNameId);

@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.upgrade.util.UpgradeUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.AssetEntryTable;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -80,7 +80,7 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected void updateAssetClassTypeId() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+		long classNameId = UpgradeUtil.getClassNameId(JournalArticle.class);
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -113,9 +113,9 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected void updateIGImageClassName() throws Exception {
-		long dlFileEntryClassNameId = PortalUtil.getClassNameId(
+		long dlFileEntryClassNameId = UpgradeUtil.getClassNameId(
 			DLFileEntry.class.getName());
-		long igImageClassNameId = PortalUtil.getClassNameId(
+		long igImageClassNameId = UpgradeUtil.getClassNameId(
 			"com.liferay.portlet.imagegallery.model.IGImage");
 
 		if (PropsValues.DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE) {

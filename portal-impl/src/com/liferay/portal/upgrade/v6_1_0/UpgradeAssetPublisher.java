@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.upgrade.util.UpgradeUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -93,9 +93,9 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 			return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 		}
 
-		long dlFileEntryClassNameId = PortalUtil.getClassNameId(
+		long dlFileEntryClassNameId = UpgradeUtil.getClassNameId(
 			DLFileEntry.class.getName());
-		long igImageClassNameId = PortalUtil.getClassNameId(
+		long igImageClassNameId = UpgradeUtil.getClassNameId(
 			"com.liferay.portlet.imagegallery.model.IGImage");
 
 		List<String> classNameIdsList = ListUtil.fromArray(classNameIds);

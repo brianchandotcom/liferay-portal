@@ -1,5 +1,6 @@
 ## 
 ## See http://www.useragentstring.com/pages/useragentstring.php
+## See http://msdn.microsoft.com/en-us/library/ie/hh869301(v=vs.85).aspx for IE11
 ##
 
 ## Android
@@ -53,6 +54,11 @@ Firefox 22 var2, 22.0, 22.0, mozilla/5.0 (windows nt 6.1; win64; x64; rv:22.0) g
 Firefox 22 var3, 22.0, 22.0, mozilla/5.0 (windows nt 6.1; rv:22.0) gecko/20130405 firefox/22.0
 Firefox 21 var1, 21.0, 16.0, mozilla/5.0 (windows nt 6.2; win64; x64; rv:16.0.1) gecko/20121011 firefox/21.0.1
 Firefox 21 var2, 21.0, 16.0, mozilla/5.0 (windows nt 6.1; win64; x64; rv:16.0.1) gecko/20121011 firefox/21.0.1
+
+## IE 11.0
+
+IE 11 var1, , 11.0, mozilla/5.0 (windows nt 6.3; trident/7.0; rv:11.0) like gecko
+IE 11 var2, , 11.0, mozilla/5.0 (windows nt 6.1; trident/7.0; rv:11.0) like gecko
 
 ## IE 10.6
 

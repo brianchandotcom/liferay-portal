@@ -99,6 +99,9 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public com.liferay.portal.model.LayoutType getLayoutType();
 
+	public com.liferay.portal.model.Layout getLinkedToLayout()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public long getParentPlid()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

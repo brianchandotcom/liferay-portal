@@ -136,6 +136,10 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		return LANGUAGE;
 	}
 
+	public ScriptingContainer getScriptingContainer() {
+		return _scriptingContainer;
+	}
+
 	public void setExecuteInSeparateThread(boolean executeInSeparateThread) {
 		_executeInSeparateThread = executeInSeparateThread;
 	}

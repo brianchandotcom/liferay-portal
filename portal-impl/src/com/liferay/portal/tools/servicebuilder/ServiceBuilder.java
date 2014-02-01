@@ -112,6 +112,7 @@ import org.dom4j.DocumentException;
  * @author Prashant Dighe
  * @author Shuyang Zhou
  * @author James Lefeu
+ * @author Miguel Pastor
  */
 public class ServiceBuilder {
 
@@ -697,6 +698,8 @@ public class ServiceBuilder {
 			if (build) {
 				for (int x = 0; x < _ejbList.size(); x++) {
 					Entity entity = _ejbList.get(x);
+
+					_resolveDependencies(entity);
 
 					if (_isTargetEntity(entity)) {
 						System.out.println("Building " + entity.getName());
@@ -2461,8 +2464,7 @@ public class ServiceBuilder {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
-		context.put(
-			"referenceList", _mergeReferenceList(entity.getReferenceList()));
+		context.put("referenceList", _mergeReferenceList(entity));
 
 		// Content
 
@@ -2753,8 +2755,7 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 		context.put("methods", methods);
 		context.put("sessionTypeName",_getSessionTypeName(sessionType));
-		context.put(
-			"referenceList", _mergeReferenceList(entity.getReferenceList()));
+		context.put("referenceList", _mergeReferenceList(entity));
 
 		context = _putDeprecatedKeys(context, javaClass);
 
@@ -4267,11 +4268,19 @@ public class ServiceBuilder {
 		return value.equals(type.getValue());
 	}
 
-	private List<Entity> _mergeReferenceList(List<Entity> referenceList) {
+	private List<Entity> _mergeReferenceList(Entity entity) throws IOException {
+		List<Entity> referenceList = entity.getReferenceList();
+
 		List<Entity> list = new ArrayList<Entity>(
 			_ejbList.size() + referenceList.size());
 
-		list.addAll(_ejbList);
+		if (entity.isAutoWiredServices()) {
+			list.addAll(_ejbList);
+		}
+		else {
+			list.add(entity);
+		}
+
 		list.addAll(referenceList);
 
 		return list;
@@ -4303,6 +4312,8 @@ public class ServiceBuilder {
 			entityElement.attributeValue("local-service"));
 		boolean remoteService = GetterUtil.getBoolean(
 			entityElement.attributeValue("remote-service"), true);
+		boolean autowireServices = GetterUtil.getBoolean(
+			entityElement.attributeValue("autowire-services"), true);
 		String persistenceClass = GetterUtil.getString(
 			entityElement.attributeValue("persistence-class"),
 			_packagePath + ".service.persistence." + ejbName +
@@ -4664,6 +4675,7 @@ public class ServiceBuilder {
 		}
 
 		List<Entity> referenceList = new ArrayList<Entity>();
+		List<String> unresolvedReferences = new ArrayList<String>();
 
 		if (_build) {
 			if (Validator.isNotNull(_pluginName)) {
@@ -4703,7 +4715,12 @@ public class ServiceBuilder {
 			}
 
 			for (String referenceName : referenceSet) {
-				referenceList.add(getEntity(referenceName));
+				try {
+					referenceList.add(getEntity(referenceName));
+				}
+				catch (RuntimeException re) {
+					unresolvedReferences.add(referenceName);
+				}
 			}
 		}
 
@@ -4726,7 +4743,8 @@ public class ServiceBuilder {
 				sessionFactory, txManager, cacheEnabled, dynamicUpdateEnabled,
 				jsonEnabled, mvccEnabled, trashEnabled, deprecated, pkList,
 				regularColList, blobList, collectionList, columnList, order,
-				finderList, referenceList, txRequiredList));
+				finderList, referenceList, txRequiredList,
+				unresolvedReferences, autowireServices));
 	}
 
 	private String _processTemplate(String name, Map<String, Object> context)
@@ -4758,6 +4776,24 @@ public class ServiceBuilder {
 		StringUtil.readLines(classLoader.getResourceAsStream(fileName), lines);
 
 		return lines;
+	}
+
+	private void _resolveDependencies(Entity entity) throws IOException {
+		if (entity.isResolved()) {
+			return;
+		}
+
+		for (String reference : entity.getUnresolvedReferences()) {
+			Entity entityReference = getEntity(reference);
+
+			if (entityReference == null) {
+				throw new RuntimeException(
+					"Cannot find " + reference + " in " +
+						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
+			}
+
+			entity.addReference(entityReference);
+		}
 	}
 
 	private void _updateSQLFile(

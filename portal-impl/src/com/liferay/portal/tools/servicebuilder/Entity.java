@@ -89,7 +89,8 @@ public class Entity {
 		this(
 			null, null, null, name, null, null, null, false, false, false, true,
 			null, null, null, null, null, true, false, false, false, false,
-			false, null, null, null, null, null, null, null, null, null);
+			false, null, null, null, null, null, null, null, null, null, null,
+			true);
 	}
 
 	public Entity(
@@ -103,7 +104,8 @@ public class Entity {
 		List<EntityColumn> regularColList, List<EntityColumn> blobList,
 		List<EntityColumn> collectionList, List<EntityColumn> columnList,
 		EntityOrder order, List<EntityFinder> finderList,
-		List<Entity> referenceList, List<String> txRequiredList) {
+		List<Entity> referenceList, List<String> txRequiredList,
+		List<String> unresolvedReferences, boolean autowireServices) {
 
 		_packagePath = packagePath;
 		_portletName = portletName;
@@ -138,6 +140,8 @@ public class Entity {
 		_finderList = finderList;
 		_referenceList = referenceList;
 		_txRequiredList = txRequiredList;
+		_unresolvedReferences = unresolvedReferences;
+		_autowireServices = autowireServices;
 
 		if (_finderList != null) {
 			Set<EntityColumn> finderColumns = new HashSet<EntityColumn>();
@@ -173,6 +177,10 @@ public class Entity {
 				}
 			}
 		}
+	}
+
+	public void addReference(Entity reference) {
+		_referenceList.add(reference);
 	}
 
 	@Override
@@ -430,6 +438,10 @@ public class Entity {
 		return finderList;
 	}
 
+	public List<String> getUnresolvedReferences() {
+		return _unresolvedReferences;
+	}
+
 	public String getVarName() {
 		return TextFormatter.format(_name, TextFormatter.I);
 	}
@@ -605,6 +617,10 @@ public class Entity {
 		return false;
 	}
 
+	public boolean isAutoWiredServices() {
+		return _autowireServices;
+	}
+
 	public boolean isCacheEnabled() {
 		return _cacheEnabled;
 	}
@@ -739,6 +755,10 @@ public class Entity {
 		return _portalReference;
 	}
 
+	public boolean isResolved() {
+		return _unresolvedReferences.isEmpty();
+	}
+
 	public boolean isResourcedModel() {
 		String pkVarName = getPKVarName();
 
@@ -838,6 +858,7 @@ public class Entity {
 	}
 
 	private String _alias;
+	private boolean _autowireServices;
 	private List<EntityColumn> _blobList;
 	private boolean _cacheEnabled;
 	private List<EntityColumn> _collectionList;
@@ -871,6 +892,7 @@ public class Entity {
 	private boolean _trashEnabled;
 	private String _txManager;
 	private List<String> _txRequiredList;
+	private List<String> _unresolvedReferences = new ArrayList<String>();
 	private boolean _uuid;
 	private boolean _uuidAccessor;
 

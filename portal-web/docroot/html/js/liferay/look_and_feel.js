@@ -30,129 +30,6 @@ AUI.add(
 
 		var COLOR = 'color';
 
-		var DEFAULT_DATA = {
-			advancedData: {
-				customCSS: EMPTY,
-				customCSSClassName: EMPTY
-			},
-			bgData: {
-				backgroundColor: EMPTY,
-				backgroundImage: EMPTY,
-				backgroundPosition: {
-					left: {
-						unit: PX,
-						value: EMPTY
-					},
-					top: {
-						unit: PX,
-						value: EMPTY
-					}
-				},
-				backgroundRepeat: EMPTY,
-				useBgImage: false
-			},
-			borderData: {
-				borderColor: {
-					bottom: EMPTY,
-					left: EMPTY,
-					right: EMPTY,
-					sameForAll: true,
-					top: EMPTY
-				},
-				borderStyle: {
-					bottom: EMPTY,
-					left: EMPTY,
-					right: EMPTY,
-					sameForAll: true,
-					top: EMPTY
-				},
-				borderWidth: {
-					bottom: {
-						unit: PX,
-						value: EMPTY
-					},
-					left: {
-						unit: PX,
-						value: EMPTY
-					},
-					right: {
-						unit: PX,
-						value: EMPTY
-					},
-					sameForAll: true,
-					top: {
-						unit: PX,
-						value: EMPTY
-					}
-				}
-			},
-			portletData: {
-				customTitle: EMPTY,
-				language: 'en_US',
-				portletLinksTarget: EMPTY,
-				showBorders: EMPTY,
-				title: EMPTY,
-				titles: {},
-				useCustomTitle: false
-			},
-			spacingData: {
-				margin: {
-					bottom: {
-						unit: PX,
-						value: EMPTY
-					},
-					left: {
-						unit: PX,
-						value: EMPTY
-					},
-					right: {
-						unit: PX,
-						value: EMPTY
-					},
-					sameForAll: true,
-					top: {
-						unit: PX,
-						value: EMPTY
-					}
-				},
-				padding: {
-					bottom: {
-						unit: PX,
-						value: EMPTY
-					},
-					left: {
-						unit: PX,
-						value: EMPTY
-					},
-					right: {
-						unit: PX,
-						value: EMPTY
-					},
-					sameForAll: true,
-					top: {
-						unit: PX,
-						value: EMPTY
-					}
-				}
-			},
-			textData: {
-				color: EMPTY,
-				fontFamily: EMPTY,
-				fontSize: EMPTY,
-				fontStyle: EMPTY,
-				fontWeight: EMPTY,
-				letterSpacing: EMPTY,
-				lineHeight: EMPTY,
-				textAlign: EMPTY,
-				textDecoration: EMPTY,
-				wordSpacing: EMPTY
-			},
-			wapData: {
-				initialWindowState: 'NORMAL',
-				title: EMPTY
-			}
-		};
-
 		var DISABLED = 'disabled';
 
 		var EMPTY = '';
@@ -886,6 +763,133 @@ AUI.add(
 				return '.' + boundaryClasses.join('.') + portletClasses;
 			},
 
+			_getDefaultData: function() {
+				var instance = this;
+
+				return {
+					advancedData: {
+						customCSS: EMPTY,
+						customCSSClassName: EMPTY
+					},
+					bgData: {
+						backgroundColor: EMPTY,
+						backgroundImage: EMPTY,
+						backgroundPosition: {
+							left: {
+								unit: PX,
+								value: EMPTY
+							},
+							top: {
+								unit: PX,
+								value: EMPTY
+							}
+						},
+						backgroundRepeat: EMPTY,
+						useBgImage: false
+					},
+					borderData: {
+						borderColor: {
+							bottom: EMPTY,
+							left: EMPTY,
+							right: EMPTY,
+							sameForAll: true,
+							top: EMPTY
+						},
+						borderStyle: {
+							bottom: EMPTY,
+							left: EMPTY,
+							right: EMPTY,
+							sameForAll: true,
+							top: EMPTY
+						},
+						borderWidth: {
+							bottom: {
+								unit: PX,
+								value: EMPTY
+							},
+							left: {
+								unit: PX,
+								value: EMPTY
+							},
+							right: {
+								unit: PX,
+								value: EMPTY
+							},
+							sameForAll: true,
+							top: {
+								unit: PX,
+								value: EMPTY
+							}
+						}
+					},
+					portletData: {
+						customTitle: EMPTY,
+						language: 'en_US',
+						portletLinksTarget: EMPTY,
+						showBorders: EMPTY,
+						title: EMPTY,
+						titles: {},
+						useCustomTitle: false
+					},
+					spacingData: {
+						margin: {
+							bottom: {
+								unit: PX,
+								value: EMPTY
+							},
+							left: {
+								unit: PX,
+								value: EMPTY
+							},
+							right: {
+								unit: PX,
+								value: EMPTY
+							},
+							sameForAll: true,
+							top: {
+								unit: PX,
+								value: EMPTY
+							}
+						},
+						padding: {
+							bottom: {
+								unit: PX,
+								value: EMPTY
+							},
+							left: {
+								unit: PX,
+								value: EMPTY
+							},
+							right: {
+								unit: PX,
+								value: EMPTY
+							},
+							sameForAll: true,
+							top: {
+								unit: PX,
+								value: EMPTY
+							}
+						}
+					},
+					textData: {
+						color: EMPTY,
+						fontFamily: EMPTY,
+						fontSize: EMPTY,
+						fontStyle: EMPTY,
+						fontWeight: EMPTY,
+						letterSpacing: EMPTY,
+						lineHeight: EMPTY,
+						textAlign: EMPTY,
+						textDecoration: EMPTY,
+						wordSpacing: EMPTY
+					},
+					wapData: {
+						initialWindowState: 'NORMAL',
+						title: EMPTY
+					}
+				};
+			},
+
 			_getNodeById: function(id) {
 				var instance = this;
 
@@ -940,7 +944,7 @@ AUI.add(
 
 				var newPanel = instance._newPanel;
 
-				var portletConfig = A.clone(DEFAULT_DATA);
+				var portletConfig = instance._getDefaultData();
 
 				if (!instantiated) {
 					newPanel.addClass(INSTANTIATED);
@@ -1221,7 +1225,7 @@ AUI.add(
 								customStyle.remove(true);
 							}
 
-							instance._objData = A.merge(instance._objData, DEFAULT_DATA);
+							A.mix(instance._objData, instance._getDefaultData(), true);
 
 							instance._setDefaults();
 						}

@@ -629,7 +629,6 @@
 	</command>
 
 	<command name="viewDocumentAuthorCmdPG">
-
 		<if>
 			<not>
 				<contains string="${dmDocumentAuthor}" substring="{dmDocumentAuthor}" />

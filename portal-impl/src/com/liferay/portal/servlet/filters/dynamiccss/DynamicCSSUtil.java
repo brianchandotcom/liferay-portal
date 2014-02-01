@@ -14,8 +14,6 @@
 
 package com.liferay.portal.servlet.filters.dynamiccss;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -29,7 +27,6 @@ import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.PortletConstants;
@@ -48,8 +45,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,6 +52,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.time.StopWatch;
+
+import org.jruby.RubyArray;
+import org.jruby.RubyException;
+import org.jruby.embed.ScriptingContainer;
+import org.jruby.exceptions.RaiseException;
+import org.jruby.runtime.builtin.IRubyObject;
 
 /**
  * @author Raymond Augé
@@ -66,10 +67,15 @@ public class DynamicCSSUtil {
 
 	public static void init() {
 		try {
-			_rubyScript = StringUtil.read(
+			String rubyScript = StringUtil.read(
 				ClassLoaderUtil.getPortalClassLoader(),
 				"com/liferay/portal/servlet/filters/dynamiccss" +
 					"/dependencies/main.rb");
+
+			RubyExecutor rubyExecutor = new RubyExecutor();
+
+			_scriptingContainer = rubyExecutor.getScriptingContainer();
+			_scriptObject = _scriptingContainer.runScriptlet(rubyScript);
 
 			RTLCSSUtil.init();
 		}
@@ -406,8 +412,6 @@ public class DynamicCSSUtil {
 			String content)
 		throws Exception {
 
-		Map<String, Object> inputObjects = new HashMap<String, Object>();
-
 		String portalWebDir = PortalUtil.getPortalWebDir();
 
 		String commonSassPath = portalWebDir.concat(_SASS_COMMON_DIR);
@@ -429,33 +433,49 @@ public class DynamicCSSUtil {
 			}
 		}
 
-		inputObjects.put("commonSassPath", commonSassPath);
-		inputObjects.put("content", content);
-		inputObjects.put("cssRealPath", resourcePath);
-		inputObjects.put("cssThemePath",cssThemePath);
-
 		File sassTempDir = _getSassTempDir(servletContext);
 
-		inputObjects.put("sassCachePath", sassTempDir.getCanonicalPath());
+		Object args[] = new Object[] {
+			content, commonSassPath, resourcePath,
+			cssThemePath, sassTempDir.getCanonicalPath(),
+			_log.isDebugEnabled()
+		};
 
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
+		try {
+			content = _scriptingContainer.callMethod(
+				_scriptObject, "process", args, String.class);
+		}
+		catch (Exception e) {
+			if (e instanceof RaiseException) {
+				RaiseException raiseException = (RaiseException)e;
 
-		UnsyncPrintWriter unsyncPrintWriter = UnsyncPrintWriterPool.borrow(
-			unsyncByteArrayOutputStream);
+				RubyException exception = raiseException.getException();
 
-		inputObjects.put("out", unsyncPrintWriter);
+				_log.error(
+					String.valueOf(exception.message.toJava(String.class)));
 
-		_rubyExecutor.eval(null, inputObjects, null, _rubyScript);
+				IRubyObject backtrace = exception.getBacktrace();
 
-		unsyncPrintWriter.flush();
+				RubyArray rubyArray = (RubyArray)backtrace.toJava(
+					RubyArray.class);
 
-		return unsyncByteArrayOutputStream.toString();
+				for (int i = 0; i < rubyArray.size(); i++) {
+					Object item = rubyArray.get(i);
+
+					_log.error(String.valueOf(item));
+				}
+			}
+			else {
+				_log.error(e, e);
+			}
+		}
+
+		return content;
 	}
 
 	/**
 	 * @see com.liferay.portal.servlet.filters.aggregate.AggregateFilter#aggregateCss(
-	 *      AggregateContext, String)
+	 *      com.liferay.portal.servlet.filters.aggregate.AggregateContext, String)
 	 */
 	private static String propagateQueryString(
 		String content, String queryString) {
@@ -503,7 +523,7 @@ public class DynamicCSSUtil {
 		"\\/([^\\/]+)-theme\\/", Pattern.CASE_INSENSITIVE);
 	private static Pattern _portalThemePattern = Pattern.compile(
 		"themes\\/([^\\/]+)\\/css", Pattern.CASE_INSENSITIVE);
-	private static RubyExecutor _rubyExecutor = new RubyExecutor();
-	private static String _rubyScript;
+	private static ScriptingContainer _scriptingContainer;
+	private static Object _scriptObject;
 
 }

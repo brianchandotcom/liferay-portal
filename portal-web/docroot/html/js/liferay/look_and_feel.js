@@ -141,6 +141,10 @@ AUI.add(
 							instance._currentPopup = Liferay.Util.Window.getWindow(
 								{
 									dialog: {
+										draggable: {
+											handles: ['.modal-header']
+										},
+										modal: false,
 										on: {
 											visibleChange: function(event) {
 												if (!event.newVal && Browser.isIe() && Browser.getMajorVersion() == 6) {

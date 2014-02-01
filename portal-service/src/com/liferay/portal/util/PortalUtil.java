@@ -45,6 +45,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.net.InetAddress;
+
 import java.sql.SQLException;
 
 import java.util.Date;
@@ -121,6 +123,16 @@ public class PortalUtil {
 		getPortal().addPageTitle(title, request);
 	}
 
+	public static boolean addPortalEventListener(
+		PortalEventListener portalEventListener) {
+
+		return getPortal().addPortalEventListener(portalEventListener);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static void addPortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
 
@@ -1079,8 +1091,20 @@ public class PortalUtil {
 		return _portal;
 	}
 
+	public static PortalEventListener[] getPortalEventListeners() {
+		return getPortal().getPortalEventListeners();
+	}
+
 	public static String getPortalLibDir() {
 		return getPortal().getPortalLibDir();
+	}
+
+	public static InetAddress getPortalLocalAddress(boolean secure) {
+		return getPortal().getPortalLocalAddress(secure);
+	}
+
+	public static int getPortalLocalPort(boolean secure) {
+		return getPortal().getPortalLocalPort(secure);
 	}
 
 	/**
@@ -1091,12 +1115,24 @@ public class PortalUtil {
 		return getPortal().getPortalPort();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the more general {@link
+	 *             #getPortalServerPort(boolean)}
+	 */
 	public static int getPortalPort(boolean secure) {
 		return getPortal().getPortalPort(secure);
 	}
 
 	public static Properties getPortalProperties() {
 		return getPortal().getPortalProperties();
+	}
+
+	public static InetAddress getPortalServerAddress(boolean secure) {
+		return getPortal().getPortalServerAddress(secure);
+	}
+
+	public static int getPortalServerPort(boolean secure) {
+		return getPortal().getPortalServerPort(secure);
 	}
 
 	public static String getPortalURL(HttpServletRequest request) {
@@ -1974,9 +2010,16 @@ public class PortalUtil {
 		getPortal().setPageTitle(title, request);
 	}
 
+	public static void setPortalAddresses(HttpServletRequest request) {
+		getPortal().setPortalAddresses(request);
+	}
+
 	/**
 	 * Sets the port obtained on the first request to the portal.
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #setPortalAddresses(HttpServletRequest)}
 	 */
+	@Deprecated
 	public static void setPortalPort(HttpServletRequest request) {
 		getPortal().setPortalPort(request);
 	}
@@ -2030,6 +2073,16 @@ public class PortalUtil {
 			portletId, user, layout, windowState, request);
 	}
 
+	public boolean removePortalEventListener(
+		PortalEventListener portalEventListener) {
+
+		return getPortal().removePortalEventListener(portalEventListener);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void removePortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
 

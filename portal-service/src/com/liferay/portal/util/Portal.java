@@ -39,6 +39,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.net.InetAddress;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -132,11 +134,22 @@ public interface Portal {
 	public void addPageTitle(String title, HttpServletRequest request);
 
 	/**
+	 * Adds the portal event listener to the portal. The listener will be
+	 * notified whenever the portal address and port is set.
+	 *
+	 * @param portalEventListener the portal event listener to add
+	 */
+	public boolean addPortalEventListener(
+		PortalEventListener portalEventListener);
+
+	/**
 	 * Adds the portal port event listener to the portal. The listener will be
 	 * notified whenever the portal port is set.
 	 *
 	 * @param portalPortEventListener the portal port event listener to add
+	 * @deprecated As of 7.0.0
 	 */
+	@Deprecated
 	public void addPortalPortEventListener(
 		PortalPortEventListener portalPortEventListener);
 
@@ -894,7 +907,13 @@ public interface Portal {
 	public long getPlidFromPortletId(long groupId, String portletId)
 		throws PortalException, SystemException;
 
+	public PortalEventListener[] getPortalEventListeners();
+
 	public String getPortalLibDir();
+
+	public InetAddress getPortalLocalAddress(boolean secure);
+
+	public int getPortalLocalPort(boolean secure);
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by the more general {@link
@@ -903,9 +922,18 @@ public interface Portal {
 	@Deprecated
 	public int getPortalPort();
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the more general {@link
+	 *             #getPortalServerPort(boolean)}
+	 */
+	@Deprecated
 	public int getPortalPort(boolean secure);
 
 	public Properties getPortalProperties();
+
+	public InetAddress getPortalServerAddress(boolean secure);
+
+	public int getPortalServerPort(boolean secure);
 
 	public String getPortalURL(HttpServletRequest request);
 
@@ -1294,6 +1322,13 @@ public interface Portal {
 
 	public boolean isValidResourceId(String resourceId);
 
+	public boolean removePortalEventListener(
+		PortalEventListener portalEventListener);
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void removePortalPortEventListener(
 		PortalPortEventListener portalPortEventListener);
 
@@ -1364,9 +1399,14 @@ public interface Portal {
 	 */
 	public void setPageTitle(String title, HttpServletRequest request);
 
+	public void setPortalAddresses(HttpServletRequest request);
+
 	/**
 	 * Sets the port obtained on the first request to the portal.
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #setPortalAddresses(HttpServletRequest)}
 	 */
+	@Deprecated
 	public void setPortalPort(HttpServletRequest request);
 
 	public void storePreferences(PortletPreferences portletPreferences)

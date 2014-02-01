@@ -1941,10 +1941,12 @@
 							'gesturemoveend',
 							function(event) {
 								if (icon) {
-									icon.toggleClass(iconVisibleClass).toggleClass(iconHiddenClass);
+									icon.toggleClass(iconVisibleClass);
+									icon.toggleClass(iconHiddenClass);
 								}
 
-								docBody.toggleClass(visibleClass).toggleClass(hiddenClass);
+								docBody.toggleClass(visibleClass);
+								docBody.toggleClass(hiddenClass);
 
 								Liferay._editControlsState = (docBody.hasClass(visibleClass) ? 'visible' : 'hidden');
 

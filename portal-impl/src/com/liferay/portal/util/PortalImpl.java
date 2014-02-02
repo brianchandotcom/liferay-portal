@@ -6904,7 +6904,11 @@ public class PortalImpl implements Portal {
 			localInetAddress = InetAddress.getByName(localAddress);
 			serverInetAddress = InetAddress.getByName(serverAddress);
 		}
-		catch (Exception ex) {
+		catch (UnknownHostException uhe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to resolve portal host", uhe);
+			}
+
 			return;
 		}
 

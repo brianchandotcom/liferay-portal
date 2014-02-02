@@ -41,6 +41,7 @@ import com.liferay.portal.uuid.PortalUUIDImpl;
 import java.lang.reflect.Field;
 
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
 import java.util.ArrayList;
@@ -250,6 +251,8 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 	)
 	@Test
 	public void testErrorLogAndExceptions() throws Exception {
+		SetBadPortalAddressAdvice.setPort(8080);
+
 		JDKLoggerTestUtil.configureJDKLogger(
 			ClusterBase.class.getName(), Level.FINE);
 
@@ -279,19 +282,34 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			clusterExecutorImpl.afterPropertiesSet();
 
-			assertLogger(
-				logRecords,
-				"Unable to get InetAddress by name :" +
-					SetBadPortalAddressAdvice.BAD_ADDRESS,
-				UnknownHostException.class);
-
 			clusterExecutorImpl.initialize();
 
-			assertLogger(
-				logRecords, "Unable to send notify message", Exception.class);
+			Assert.assertEquals(2, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Unable to parse portal InetSocketAddress from :" +
+					"bad address:8080",
+				logRecord.getMessage());
+
+			Throwable throwable = logRecord.getThrown();
+
+			Assert.assertSame(UnknownHostException.class, throwable.getClass());
+
+			logRecord = logRecords.get(1);
+
+			Assert.assertEquals(
+				"Unable to send notify message", logRecord.getMessage());
+
+			throwable = logRecord.getThrown();
+
+			Assert.assertSame(Exception.class, throwable.getClass());
+
+			logRecords.clear();
 
 			clusterExecutorImpl.portalLocalAddressConfigured(
-				InetAddress.getLocalHost(), 80);
+				new InetSocketAddress(InetAddress.getLocalHost(), 80));
 
 			assertLogger(
 				logRecords, "Unable to determine configure node port",
@@ -943,17 +961,17 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			assertClusterEvent(
 				clusterEvent, ClusterEventType.DEPART, clusterNode2);
 
-			Assert.assertEquals(-1, clusterNode2.getPort());
-			Assert.assertEquals(null, clusterNode2.getPortalAddress());
+			Assert.assertNull(clusterNode2.getPortalInetSocketAddress());
 
 			InetAddress inetAddress = InetAddress.getLocalHost();
 			int port = 8080;
 
 			clusterExecutorImpl2.portalLocalAddressConfigured(
-				inetAddress, port);
+				new InetSocketAddress(inetAddress, port));
 
-			Assert.assertEquals(port, clusterNode2.getPort());
-			Assert.assertEquals(inetAddress, clusterNode2.getPortalAddress());
+			Assert.assertEquals(
+				new InetSocketAddress(inetAddress, port),
+				clusterNode2.getPortalInetSocketAddress());
 
 			clusterEvent = mockClusterEventListener.waitJoinMessage();
 
@@ -987,23 +1005,24 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			ClusterNode clusterNode = clusterExecutorImpl.getLocalClusterNode();
 
 			Assert.assertEquals(
-				SetPortalAddressAdvice.PORTAL_PORT, clusterNode.getPort());
-			Assert.assertEquals(
-				InetAddress.getByName(
-					SetPortalAddressAdvice.PORTAL_ADDRESS),
-				clusterNode.getPortalAddress());
+				new InetSocketAddress(
+					InetAddress.getByName(
+						SetPortalAddressAdvice.PORTAL_ADDRESS),
+					SetPortalAddressAdvice.PORTAL_PORT),
+				clusterNode.getPortalInetSocketAddress());
 
 			clusterExecutorImpl.portalLocalAddressConfigured(
-				InetAddress.getByName(
-					SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-				SetPortalAddressAdvice.SECURE_PORTAL_PORT);
+				new InetSocketAddress(
+					InetAddress.getByName(
+						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalAddressAdvice.SECURE_PORTAL_PORT));
 
 			Assert.assertEquals(
-				SetPortalAddressAdvice.PORTAL_PORT, clusterNode.getPort());
-			Assert.assertEquals(
-				InetAddress.getByName(
-					SetPortalAddressAdvice.PORTAL_ADDRESS),
-				clusterNode.getPortalAddress());
+				new InetSocketAddress(
+					InetAddress.getByName(
+						SetPortalAddressAdvice.PORTAL_ADDRESS),
+					SetPortalAddressAdvice.PORTAL_PORT),
+				clusterNode.getPortalInetSocketAddress());
 		}
 		finally {
 			if (clusterExecutorImpl != null) {
@@ -1029,24 +1048,24 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			ClusterNode clusterNode = clusterExecutorImpl.getLocalClusterNode();
 
 			Assert.assertEquals(
-				SetPortalAddressAdvice.SECURE_PORTAL_PORT,
-				clusterNode.getPort());
-			Assert.assertEquals(
-				InetAddress.getByName(
-					SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-				clusterNode.getPortalAddress());
+				new InetSocketAddress(
+					InetAddress.getByName(
+						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalAddressAdvice.SECURE_PORTAL_PORT),
+				clusterNode.getPortalInetSocketAddress());
 
 			clusterExecutorImpl.portalLocalAddressConfigured(
-				InetAddress.getByName(SetPortalAddressAdvice.PORTAL_ADDRESS),
-				SetPortalAddressAdvice.PORTAL_PORT);
+				new InetSocketAddress(
+					InetAddress.getByName(
+						SetPortalAddressAdvice.PORTAL_ADDRESS),
+					SetPortalAddressAdvice.PORTAL_PORT));
 
 			Assert.assertEquals(
-				SetPortalAddressAdvice.SECURE_PORTAL_PORT,
-				clusterNode.getPort());
-			Assert.assertEquals(
-				InetAddress.getByName(
-					SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-				clusterNode.getPortalAddress());
+				new InetSocketAddress(
+					InetAddress.getByName(
+						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalAddressAdvice.SECURE_PORTAL_PORT),
+				clusterNode.getPortalInetSocketAddress());
 		}
 		finally {
 			if (clusterExecutorImpl != null) {
@@ -1067,49 +1086,40 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		ClusterExecutorImpl clusterExecutorImpl = null;
 
 		try {
+			List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+				ClusterExecutorImpl.class.getName(), Level.SEVERE);
+
 			clusterExecutorImpl = getClusterExecutorImpl(false, false);
 
 			ClusterNode clusterNode = clusterExecutorImpl.getLocalClusterNode();
 
-			Assert.assertEquals(-1, clusterNode.getPort());
-			Assert.assertEquals(null, clusterNode.getPortalAddress());
-
-			Field portalAddressField = ReflectionUtil.getDeclaredField(
-				ClusterExecutorImpl.class, "_portalAddress");
-			Field portalPortField = ReflectionUtil.getDeclaredField(
-				ClusterExecutorImpl.class, "_port");
-
-			portalAddressField.set(
-				clusterExecutorImpl, InetAddress.getLocalHost());
+			Assert.assertNull(clusterNode.getPortalInetSocketAddress());
 
 			clusterExecutorImpl.portalLocalAddressConfigured(
-				InetAddress.getByName(
-					SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-				SetPortalAddressAdvice.SECURE_PORTAL_PORT);
+				new InetSocketAddress(
+					InetAddress.getByName(
+						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalAddressAdvice.SECURE_PORTAL_PORT));
 
 			Assert.assertEquals(
-				SetPortalAddressAdvice.SECURE_PORTAL_PORT,
-				clusterNode.getPort());
-			Assert.assertEquals(
-				InetAddress.getByName(
-					SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-				clusterNode.getPortalAddress());
-
-			portalAddressField.set(clusterExecutorImpl, null);
-			portalPortField.set(clusterExecutorImpl, 80);
+				new InetSocketAddress(
+					InetAddress.getByName(
+						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalAddressAdvice.SECURE_PORTAL_PORT),
+				clusterNode.getPortalInetSocketAddress());
 
 			clusterExecutorImpl.portalLocalAddressConfigured(
-				InetAddress.getByName(
-					SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-				SetPortalAddressAdvice.SECURE_PORTAL_PORT);
+				new InetSocketAddress(
+					InetAddress.getByName(
+						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalAddressAdvice.SECURE_PORTAL_PORT));
 
 			Assert.assertEquals(
-				SetPortalAddressAdvice.SECURE_PORTAL_PORT,
-				clusterNode.getPort());
-			Assert.assertEquals(
-				InetAddress.getByName(
-					SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-				clusterNode.getPortalAddress());
+				new InetSocketAddress(
+					InetAddress.getByName(
+						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalAddressAdvice.SECURE_PORTAL_PORT),
+				clusterNode.getPortalInetSocketAddress());
 		}
 		finally {
 			if (clusterExecutorImpl != null) {
@@ -1126,9 +1136,11 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		try {
 			clusterExecutorImpl = getClusterExecutorImpl(false, false);
 
-			clusterExecutorImpl.portalServerAddressConfigured(null, 80);
+			clusterExecutorImpl.portalServerAddressConfigured(
+				new InetSocketAddress(80));
 
-			clusterExecutorImpl.portalLocalAddressConfigured(null, 80);
+			clusterExecutorImpl.portalLocalAddressConfigured(
+				new InetSocketAddress(80));
 		}
 		finally {
 			if (clusterExecutorImpl != null) {

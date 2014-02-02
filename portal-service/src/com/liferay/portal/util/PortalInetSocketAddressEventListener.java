@@ -19,7 +19,7 @@ import java.net.InetSocketAddress;
 /**
  * @author Tina Tian
  */
-public interface PortalEventListener {
+public interface PortalInetSocketAddressEventListener {
 
 	public void portalLocalAddressConfigured(
 		InetSocketAddress localInetSocketAddress);

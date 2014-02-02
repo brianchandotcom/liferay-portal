@@ -566,10 +566,12 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public boolean addPortalEventListener(
-		PortalEventListener portalEventListener) {
+	public boolean addPortalInetSocketAddressEventListener(
+		PortalInetSocketAddressEventListener
+			portalInetSocketAddressEventListener) {
 
-		return _portalEventListeners.add(portalEventListener);
+		return _portalInetSocketAddressEventListeners.add(
+			portalInetSocketAddressEventListener);
 	}
 
 	/**
@@ -3905,9 +3907,12 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public PortalEventListener[] getPortalEventListeners() {
-		return _portalEventListeners.toArray(
-			new PortalEventListener[_portalEventListeners.size()]);
+	public PortalInetSocketAddressEventListener[]
+		getPortalInetSocketAddressEventListeners() {
+
+		return _portalInetSocketAddressEventListeners.toArray(
+			new PortalInetSocketAddressEventListener[
+				_portalInetSocketAddressEventListeners.size()]);
 	}
 
 	@Override
@@ -6602,10 +6607,12 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public boolean removePortalEventListener(
-		PortalEventListener portalEventListener) {
+	public boolean removePortalInetSocketAddressEventListener(
+		PortalInetSocketAddressEventListener
+			portalInetSocketAddressEventListener) {
 
-		return _portalEventListeners.remove(portalEventListener);
+		return _portalInetSocketAddressEventListeners.remove(
+			portalInetSocketAddressEventListener);
 	}
 
 	/**
@@ -6913,13 +6920,15 @@ public class PortalImpl implements Portal {
 				if (_securePortalLocalAddress.compareAndSet(
 						null, localInetSocketAddress)) {
 
-					notifyPortalEventListeners(localInetSocketAddress, true);
+					notifyPortalInetSocketAddressEventListeners(
+						localInetSocketAddress, true);
 				}
 
 				if (_securePortalServerAddress.compareAndSet(
 						null, serverInetSocketAddress)) {
 
-					notifyPortalEventListeners(serverInetSocketAddress, false);
+					notifyPortalInetSocketAddressEventListeners(
+						serverInetSocketAddress, false);
 				}
 			}
 		}
@@ -6927,13 +6936,15 @@ public class PortalImpl implements Portal {
 			if (_portalLocalAddress.compareAndSet(
 					null, localInetSocketAddress)) {
 
-				notifyPortalEventListeners(localInetSocketAddress, true);
+				notifyPortalInetSocketAddressEventListeners(
+					localInetSocketAddress, true);
 			}
 
 			if (_portalServerAddress.compareAndSet(
 					null, serverInetSocketAddress)) {
 
-				notifyPortalEventListeners(serverInetSocketAddress, false);
+				notifyPortalInetSocketAddressEventListeners(
+					serverInetSocketAddress, false);
 			}
 		}
 	}
@@ -7963,17 +7974,20 @@ public class PortalImpl implements Portal {
 		return false;
 	}
 
-	protected void notifyPortalEventListeners(
+	protected void notifyPortalInetSocketAddressEventListeners(
 		InetSocketAddress inetSocketAddress, boolean local) {
 
-		for (PortalEventListener portalEventListener : _portalEventListeners) {
+		for (PortalInetSocketAddressEventListener
+				portalInetSocketAddressEventListener :
+					_portalInetSocketAddressEventListeners) {
+
 			if (local) {
-				portalEventListener.portalLocalAddressConfigured(
-					inetSocketAddress);
+				portalInetSocketAddressEventListener.
+					portalLocalAddressConfigured(inetSocketAddress);
 			}
 			else {
-				portalEventListener.portalServerAddressConfigured(
-					inetSocketAddress);
+				portalInetSocketAddressEventListener.
+					portalServerAddressConfigured(inetSocketAddress);
 			}
 		}
 	}
@@ -8092,8 +8106,9 @@ public class PortalImpl implements Portal {
 	private String _pathProxy;
 	private Map<String, Long> _plidToPortletIdMap =
 		new ConcurrentHashMap<String, Long>();
-	private Set<PortalEventListener> _portalEventListeners =
-		new CopyOnWriteArraySet<PortalEventListener>();
+	private Set<PortalInetSocketAddressEventListener>
+		_portalInetSocketAddressEventListeners =
+			new CopyOnWriteArraySet<PortalInetSocketAddressEventListener>();
 	private final AtomicReference<InetSocketAddress> _portalLocalAddress =
 		new AtomicReference<InetSocketAddress>();
 	private final AtomicInteger _portalPort = new AtomicInteger(-1);

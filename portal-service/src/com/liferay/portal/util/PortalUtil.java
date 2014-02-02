@@ -123,10 +123,12 @@ public class PortalUtil {
 		getPortal().addPageTitle(title, request);
 	}
 
-	public static boolean addPortalEventListener(
-		PortalEventListener portalEventListener) {
+	public static boolean addPortalInetSocketAddressEventListener(
+		PortalInetSocketAddressEventListener
+			portalInetSocketAddressEventListener) {
 
-		return getPortal().addPortalEventListener(portalEventListener);
+		return getPortal().addPortalInetSocketAddressEventListener(
+			portalInetSocketAddressEventListener);
 	}
 
 	/**
@@ -1091,8 +1093,10 @@ public class PortalUtil {
 		return _portal;
 	}
 
-	public static PortalEventListener[] getPortalEventListeners() {
-		return getPortal().getPortalEventListeners();
+	public static PortalInetSocketAddressEventListener[]
+		getPortalInetSocketAddressEventListeners() {
+
+		return getPortal().getPortalInetSocketAddressEventListeners();
 	}
 
 	public static String getPortalLibDir() {
@@ -2074,9 +2078,11 @@ public class PortalUtil {
 	}
 
 	public boolean removePortalEventListener(
-		PortalEventListener portalEventListener) {
+		PortalInetSocketAddressEventListener
+			portalInetSocketAddressEventListener) {
 
-		return getPortal().removePortalEventListener(portalEventListener);
+		return getPortal().removePortalInetSocketAddressEventListener(
+			portalInetSocketAddressEventListener);
 	}
 
 	/**

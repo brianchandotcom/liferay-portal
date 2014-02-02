@@ -134,13 +134,17 @@ public interface Portal {
 	public void addPageTitle(String title, HttpServletRequest request);
 
 	/**
-	 * Adds the portal event listener to the portal. The listener will be
-	 * notified whenever the portal address and port is set.
+	 * Adds the portal InetSocketAddress listener to the portal. The listener
+	 * will be notified whenever the portal address and port is set.
 	 *
-	 * @param portalEventListener the portal event listener to add
+	 * @param portalInetSocketAddressEventListener the portal event listener to
+	 *		  add
+	 * @return true if the portalInetSocketAddressEventListener has been added,
+	 *		  otherwise false.
 	 */
-	public boolean addPortalEventListener(
-		PortalEventListener portalEventListener);
+	public boolean addPortalInetSocketAddressEventListener(
+		PortalInetSocketAddressEventListener
+			portalInetSocketAddressEventListener);
 
 	/**
 	 * Adds the portal port event listener to the portal. The listener will be
@@ -907,7 +911,8 @@ public interface Portal {
 	public long getPlidFromPortletId(long groupId, String portletId)
 		throws PortalException, SystemException;
 
-	public PortalEventListener[] getPortalEventListeners();
+	public PortalInetSocketAddressEventListener[]
+		getPortalInetSocketAddressEventListeners();
 
 	public String getPortalLibDir();
 
@@ -1322,8 +1327,9 @@ public interface Portal {
 
 	public boolean isValidResourceId(String resourceId);
 
-	public boolean removePortalEventListener(
-		PortalEventListener portalEventListener);
+	public boolean removePortalInetSocketAddressEventListener(
+		PortalInetSocketAddressEventListener
+			portalInetSocketAddressEventListener);
 
 	/**
 	 * @deprecated As of 7.0.0

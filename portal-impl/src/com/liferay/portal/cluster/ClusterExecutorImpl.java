@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WeakValueConcurrentHashMap;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.util.PortalEventListener;
+import com.liferay.portal.util.PortalInetSocketAddressEventListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -71,7 +71,8 @@ import org.jgroups.JChannel;
  */
 @DoPrivileged
 public class ClusterExecutorImpl
-	extends ClusterBase implements ClusterExecutor, PortalEventListener {
+	extends ClusterBase
+	implements ClusterExecutor, PortalInetSocketAddressEventListener {
 
 	public static final String CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL =
 		"CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL";
@@ -262,7 +263,7 @@ public class ClusterExecutorImpl
 		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
 			CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL);
 
-		PortalUtil.addPortalEventListener(this);
+		PortalUtil.addPortalInetSocketAddressEventListener(this);
 
 		_localAddress = new AddressImpl(_controlJChannel.getAddress());
 

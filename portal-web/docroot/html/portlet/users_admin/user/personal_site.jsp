@@ -29,8 +29,12 @@ LayoutSet publicLayoutSet = null;
 LayoutSetPrototype publicLayoutSetPrototype = null;
 boolean publicLayoutSetPrototypeLinkEnabled = true;
 
+boolean hasGroupUpdatePermission = true;
+
 if (selUser != null) {
 	Group userGroup = selUser.getGroup();
+
+	hasGroupUpdatePermission = GroupPermissionUtil.contains(themeDisplay.getPermissionChecker(), userGroup.getGroupId(), ActionKeys.UPDATE);
 
 	if (userGroup != null) {
 		try {
@@ -77,7 +81,7 @@ if (selUser != null) {
 	%>
 
 	<c:choose>
-		<c:when test="<%= PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED && ((selUser == null) || ((publicLayoutSetPrototype == null) && (selUser.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
+		<c:when test="<%= PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED && hasGroupUpdatePermission && ((selUser == null) || ((publicLayoutSetPrototype == null) && (selUser.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
 			<aui:select label="public-pages" name="publicLayoutSetPrototypeId">
 				<aui:option label="none" selected="<%= true %>" value="" />
 
@@ -149,7 +153,7 @@ if (selUser != null) {
 	</c:choose>
 
 	<c:choose>
-		<c:when test="<%= PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED && ((selUser == null) || ((privateLayoutSetPrototype == null) && (selUser.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
+		<c:when test="<%= PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED && hasGroupUpdatePermission && ((selUser == null) || ((privateLayoutSetPrototype == null) && (selUser.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
 			<aui:select label="private-pages" name="privateLayoutSetPrototypeId">
 				<aui:option label="none" selected="<%= true %>" value="" />
 

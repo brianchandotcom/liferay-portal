@@ -418,10 +418,6 @@
 		<put name="portlet_content" value="/portlet/dockbar/add_content_redirect.jsp" />
 	</definition>
 
-	<definition name="portlet.dockbar.add_layout" extends="portlet.dockbar">
-		<put name="portlet_content" value="/portlet/layouts_admin/add_layout.jsp" />
-	</definition>
-
 	<definition name="portlet.dockbar.add_panel" extends="portlet.dockbar">
 		<put name="portlet_content" value="/portlet/dockbar/add_panel.jsp" />
 	</definition>
@@ -863,6 +859,10 @@
 	<!-- Layouts Admin -->
 
 	<definition name="portlet.layouts_admin" extends="portlet" />
+
+	<definition name="portlet.layouts_admin.add_layout" extends="portlet.layouts_admin">
+		<put name="portlet_content" value="/portlet/layouts_admin/add_layout.jsp" />
+	</definition>
 
 	<definition name="portlet.layouts_admin.edit_layouts" extends="portlet.layouts_admin">
 		<put name="portlet_content" value="/portlet/layouts_admin/view.jsp" />

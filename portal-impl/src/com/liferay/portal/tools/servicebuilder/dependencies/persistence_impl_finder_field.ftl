@@ -1,3 +1,11 @@
+<#assign finderColConjunction = "">
+
+<#if finderCol_has_next>
+	<#assign finderColConjunction = " AND ">
+<#elseif finder.where?? && validator.isNotNull(finder.getWhere())>
+	<#assign finderColConjunction = " AND " + finder.where>
+</#if>
+
 <#if !finderCol.isPrimitiveType()>
 	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_1${finderFieldSuffix} =
 
@@ -38,7 +46,7 @@ private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol
 	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_3${finderFieldSuffix} = "(${entity.alias}<#if entity.hasCompoundPK() && finderCol.isPrimary()>.id</#if>.${finderColName} IS NULL OR ${finderColExpression})${finderColConjunction}";
 </#if>
 
-<#if finder.hasArrayableOperator()>
+<#if finderCol.hasArrayableOperator() && finderColConjunction != "">
 	<#if !finderCol.isPrimitiveType()>
 		private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_4${finderFieldSuffix} = "(" + removeConjunction(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_1) + ")";
 	</#if>

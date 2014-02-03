@@ -1,5 +1,3 @@
-boolean conjunctionable = false;
-
 <#list finderColsList as finderCol>
 	<#if sqlQuery?? && sqlQuery && (finderCol.name != finderCol.DBName)>
 		<#assign finderFieldSuffix = finderFieldSQLSuffix>
@@ -9,10 +7,6 @@ boolean conjunctionable = false;
 
 	<#if finderCol.hasArrayableOperator()>
 		if ((${finderCol.names} == null) || (${finderCol.names}.length > 0)) {
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < ${finderCol.names}.length; i++) {
@@ -29,23 +23,17 @@ boolean conjunctionable = false;
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 
-			conjunctionable = true;
+			<#if finderCol_has_next>
+				query.append(WHERE_AND);
+			</#if>
 		}
 	<#else>
-		if (conjunctionable) {
-			query.append(WHERE_AND);
-		}
-
-		<#include "persistence_impl_finder_arrayable_col.ftl">
-
-		conjunctionable = true;
+		<#include "persistence_impl_finder_col.ftl">
 	</#if>
 </#list>
 
 <#if finder.where?? && validator.isNotNull(finder.getWhere())>
-	if (conjunctionable) {
-		query.append(WHERE_AND);
-	}
-
 	query.append("${finder.where}");
+<#else>
+	query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)), query.index() - 1);
 </#if>

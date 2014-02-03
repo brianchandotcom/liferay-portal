@@ -61,6 +61,10 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.language = '<%= HtmlUtil.escapeJS(languageId.replace("iw_", "he_")) %>';
 
+	config.pasteFromWordRemoveFontStyles = false;
+
+	config.pasteFromWordRemoveStyles = false;
+
 	config.removePlugins = [
 		'elementspath',
 		'save',

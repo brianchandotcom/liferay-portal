@@ -116,6 +116,10 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.newThreadURL = '<%= MBThreadConstants.NEW_THREAD_URL %>';
 
+	config.pasteFromWordRemoveFontStyles = false;
+
+	config.pasteFromWordRemoveStyles = false;
+
 	<c:if test="<%= resizable %>">
 		config.resize_dir = 'vertical';
 	</c:if>

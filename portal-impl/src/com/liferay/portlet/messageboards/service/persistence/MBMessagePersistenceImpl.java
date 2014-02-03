@@ -8075,25 +8075,13 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
 
-			boolean conjunctionable = false;
-
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_U_C_USERID_5);
-
-			conjunctionable = true;
+			query.append(_FINDER_COLUMN_U_C_USERID_2);
 
 			if ((classNameIds == null) || (classNameIds.length > 0)) {
-				if (conjunctionable) {
-					query.append(WHERE_AND);
-				}
-
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < classNameIds.length; i++) {
-					query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_5);
+					query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_2);
 
 					if ((i + 1) < classNameIds.length) {
 						query.append(WHERE_OR);
@@ -8101,9 +8089,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				}
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				conjunctionable = true;
 			}
+
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -8261,25 +8250,13 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
 
-			boolean conjunctionable = false;
-
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_U_C_USERID_5);
-
-			conjunctionable = true;
+			query.append(_FINDER_COLUMN_U_C_USERID_2);
 
 			if ((classNameIds == null) || (classNameIds.length > 0)) {
-				if (conjunctionable) {
-					query.append(WHERE_AND);
-				}
-
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < classNameIds.length; i++) {
-					query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_5);
+					query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_2);
 
 					if ((i + 1) < classNameIds.length) {
 						query.append(WHERE_OR);
@@ -8287,9 +8264,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				}
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				conjunctionable = true;
 			}
+
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
 
 			String sql = query.toString();
 
@@ -8328,11 +8306,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	private static final String _FINDER_COLUMN_U_C_USERID_2 = "mbMessage.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_USERID_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_U_C_USERID_2) + ")";
 	private static final String _FINDER_COLUMN_U_C_CLASSNAMEID_2 = "mbMessage.classNameId = ?";
-	private static final String _FINDER_COLUMN_U_C_CLASSNAMEID_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_U_C_CLASSNAMEID_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
@@ -15040,21 +15014,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
 
-			boolean conjunctionable = false;
-
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_U_C_S_USERID_5);
-
-			conjunctionable = true;
+			query.append(_FINDER_COLUMN_U_C_S_USERID_2);
 
 			if ((classNameIds == null) || (classNameIds.length > 0)) {
-				if (conjunctionable) {
-					query.append(WHERE_AND);
-				}
-
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < classNameIds.length; i++) {
@@ -15067,16 +15029,13 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
-				conjunctionable = true;
-			}
-
-			if (conjunctionable) {
 				query.append(WHERE_AND);
 			}
 
-			query.append(_FINDER_COLUMN_U_C_S_STATUS_5);
+			query.append(_FINDER_COLUMN_U_C_S_STATUS_2);
 
-			conjunctionable = true;
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -15243,21 +15202,9 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
 
-			boolean conjunctionable = false;
-
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_U_C_S_USERID_5);
-
-			conjunctionable = true;
+			query.append(_FINDER_COLUMN_U_C_S_USERID_2);
 
 			if ((classNameIds == null) || (classNameIds.length > 0)) {
-				if (conjunctionable) {
-					query.append(WHERE_AND);
-				}
-
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < classNameIds.length; i++) {
@@ -15270,16 +15217,13 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
-				conjunctionable = true;
-			}
-
-			if (conjunctionable) {
 				query.append(WHERE_AND);
 			}
 
-			query.append(_FINDER_COLUMN_U_C_S_STATUS_5);
+			query.append(_FINDER_COLUMN_U_C_S_STATUS_2);
 
-			conjunctionable = true;
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
 
 			String sql = query.toString();
 
@@ -15320,14 +15264,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	private static final String _FINDER_COLUMN_U_C_S_USERID_2 = "mbMessage.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_S_USERID_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_U_C_S_USERID_2) + ")";
 	private static final String _FINDER_COLUMN_U_C_S_CLASSNAMEID_2 = "mbMessage.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_U_C_S_CLASSNAMEID_5 = "(" +
 		removeConjunction(_FINDER_COLUMN_U_C_S_CLASSNAMEID_2) + ")";
 	private static final String _FINDER_COLUMN_U_C_S_STATUS_2 = "mbMessage.status = ?";
-	private static final String _FINDER_COLUMN_U_C_S_STATUS_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_U_C_S_STATUS_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_S = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_S",

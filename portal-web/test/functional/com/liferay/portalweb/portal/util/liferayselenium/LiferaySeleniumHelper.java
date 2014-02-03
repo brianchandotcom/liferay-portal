@@ -65,9 +65,9 @@ public class LiferaySeleniumHelper {
 
 			projectDir = StringUtil.replace(projectDir, "\\", "//");
 
-			runtime.exec("bash -c cd " + projectDir);
+			runtime.exec("/bin/bash cd " + projectDir);
 
-			command = "bash -c ant -f " + fileName + " " + target;
+			command = "/bin/bash ant -f " + fileName + " " + target;
 		}
 		else {
 			runtime.exec("cmd /c cd " + liferaySelenium.getProjectDir());

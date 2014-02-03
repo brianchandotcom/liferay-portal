@@ -108,6 +108,14 @@ public int countBy${finder.name}(
 				if (${finderCol.names} == null) {
 					${finderCol.names} = new ${finderCol.type}[0];
 				}
+				else {
+					${finderCol.names} =
+						<#if finderCol.type == "String">
+							ArrayUtil.distinct(${finderCol.names});
+						<#else>
+							ArrayUtil.unique(${finderCol.names});
+						</#if>
+				}
 			</#if>
 		</#list>
 
@@ -324,6 +332,14 @@ public int countBy${finder.name}(
 				<#if finderCol.hasArrayableOperator()>
 					if (${finderCol.names} == null) {
 						${finderCol.names} = new ${finderCol.type}[0];
+					}
+					else {
+						${finderCol.names} =
+							<#if finderCol.type == "String">
+								ArrayUtil.distinct(${finderCol.names});
+							<#else>
+								ArrayUtil.unique(${finderCol.names});
+							</#if>
 					}
 				</#if>
 			</#list>

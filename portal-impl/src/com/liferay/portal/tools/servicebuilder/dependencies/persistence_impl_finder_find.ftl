@@ -1183,6 +1183,14 @@ that may or may not be enforced with a unique index at the database level. Case
 						if (${finderCol.names} == null) {
 							${finderCol.names} = new ${finderCol.type}[0];
 						}
+						else {
+							${finderCol.names} =
+								<#if finderCol.type == "String">
+									ArrayUtil.distinct(${finderCol.names});
+								<#else>
+									ArrayUtil.unique(${finderCol.names});
+								</#if>
+						}
 					</#if>
 				</#list>
 
@@ -1446,6 +1454,14 @@ that may or may not be enforced with a unique index at the database level. Case
 				<#if finderCol.hasArrayableOperator()>
 					if (${finderCol.names} == null) {
 						${finderCol.names} = new ${finderCol.type}[0];
+					}
+					else {
+						${finderCol.names} =
+							<#if finderCol.type == "String">
+								ArrayUtil.distinct(${finderCol.names});
+							<#else>
+								ArrayUtil.unique(${finderCol.names});
+							</#if>
 					}
 				</#if>
 			</#list>

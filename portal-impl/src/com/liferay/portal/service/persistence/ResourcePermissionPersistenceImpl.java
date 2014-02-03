@@ -565,7 +565,14 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	@Override
 	public List<ResourcePermission> findByScope(int[] scopes, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		if ((scopes != null) && (scopes.length == 1)) {
+		if (scopes == null) {
+			scopes = new int[0];
+		}
+		else {
+			scopes = ArrayUtil.unique(scopes);
+		}
+
+		if (scopes.length == 1) {
 			return findByScope(scopes[0], start, end, orderByComparator);
 		}
 
@@ -603,7 +610,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 			query.append(_SQL_SELECT_RESOURCEPERMISSION_WHERE);
 
-			if ((scopes == null) || (scopes.length > 0)) {
+			if (scopes.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < scopes.length; i++) {
@@ -640,7 +647,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (scopes != null) {
+				if (scopes.length > 0) {
 					qPos.add(scopes);
 				}
 
@@ -752,6 +759,13 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 */
 	@Override
 	public int countByScope(int[] scopes) throws SystemException {
+		if (scopes == null) {
+			scopes = new int[0];
+		}
+		else {
+			scopes = ArrayUtil.unique(scopes);
+		}
+
 		Object[] finderArgs = new Object[] { StringUtil.merge(scopes) };
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_SCOPE,
@@ -762,7 +776,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 			query.append(_SQL_COUNT_RESOURCEPERMISSION_WHERE);
 
-			if ((scopes == null) || (scopes.length > 0)) {
+			if (scopes.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < scopes.length; i++) {
@@ -790,7 +804,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (scopes != null) {
+				if (scopes.length > 0) {
 					qPos.add(scopes);
 				}
 
@@ -3311,7 +3325,14 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	public List<ResourcePermission> findByC_N_S_P_R(long companyId,
 		String name, int scope, String primKey, long[] roleIds, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		if ((roleIds != null) && (roleIds.length == 1)) {
+		if (roleIds == null) {
+			roleIds = new long[0];
+		}
+		else {
+			roleIds = ArrayUtil.unique(roleIds);
+		}
+
+		if (roleIds.length == 1) {
 			ResourcePermission resourcePermission = fetchByC_N_S_P_R(companyId,
 					name, scope, primKey, roleIds[0]);
 
@@ -3401,7 +3422,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_2);
 			}
 
-			if ((roleIds == null) || (roleIds.length > 0)) {
+			if (roleIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < roleIds.length; i++) {
@@ -3450,7 +3471,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 					qPos.add(primKey);
 				}
 
-				if (roleIds != null) {
+				if (roleIds.length > 0) {
 					qPos.add(roleIds);
 				}
 
@@ -3840,6 +3861,13 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	@Override
 	public int countByC_N_S_P_R(long companyId, String name, int scope,
 		String primKey, long[] roleIds) throws SystemException {
+		if (roleIds == null) {
+			roleIds = new long[0];
+		}
+		else {
+			roleIds = ArrayUtil.unique(roleIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				companyId, name, scope, primKey, StringUtil.merge(roleIds)
 			};
@@ -3884,7 +3912,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_2);
 			}
 
-			if ((roleIds == null) || (roleIds.length > 0)) {
+			if (roleIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < roleIds.length; i++) {
@@ -3924,7 +3952,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 					qPos.add(primKey);
 				}
 
-				if (roleIds != null) {
+				if (roleIds.length > 0) {
 					qPos.add(roleIds);
 				}
 

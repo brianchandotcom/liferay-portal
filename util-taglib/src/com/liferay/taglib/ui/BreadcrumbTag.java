@@ -200,37 +200,11 @@ public class BreadcrumbTag extends IncludeTag {
 			return;
 		}
 
-		if (group.isSite()) {
-			Group parentSite = group.getParentGroup();
+		LayoutSet parentLayoutSet = getParentLayoutSet(layoutSet);
 
-			if (parentSite != null) {
-				LayoutSet parentLayoutSet =
-					LayoutSetLocalServiceUtil.getLayoutSet(
-						parentSite.getGroupId(), layoutSet.isPrivateLayout());
-
-				buildParentGroupsBreadcrumb(
-					parentLayoutSet, portletURL, themeDisplay, sb);
-			}
-		}
-		else if (group.isUser()) {
-			User groupUser = UserLocalServiceUtil.getUser(group.getClassPK());
-
-			List<Organization> organizations =
-				OrganizationLocalServiceUtil.getUserOrganizations(
-					groupUser.getUserId());
-
-			if (!organizations.isEmpty()) {
-				Organization organization = organizations.get(0);
-
-				Group parentGroup = organization.getGroup();
-
-				LayoutSet parentLayoutSet =
-					LayoutSetLocalServiceUtil.getLayoutSet(
-						parentGroup.getGroupId(), layoutSet.isPrivateLayout());
-
-				buildParentGroupsBreadcrumb(
-					parentLayoutSet, portletURL, themeDisplay, sb);
-			}
+		if (parentLayoutSet != null) {
+			buildParentGroupsBreadcrumb(
+				parentLayoutSet, portletURL, themeDisplay, sb);
 		}
 
 		int layoutsPageCount = 0;
@@ -470,6 +444,41 @@ public class BreadcrumbTag extends IncludeTag {
 	@Override
 	protected String getPage() {
 		return _PAGE;
+	}
+
+	protected LayoutSet getParentLayoutSet(LayoutSet layoutSet)
+		throws Exception {
+
+		Group group = layoutSet.getGroup();
+
+		LayoutSet parentLayoutSet = null;
+
+		if (group.isSite()) {
+			Group parentSite = group.getParentGroup();
+
+			if (parentSite != null) {
+				parentLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					parentSite.getGroupId(), layoutSet.isPrivateLayout());
+			}
+		}
+		else if (group.isUser()) {
+			User groupUser = UserLocalServiceUtil.getUser(group.getClassPK());
+
+			List<Organization> organizations =
+				OrganizationLocalServiceUtil.getUserOrganizations(
+					groupUser.getUserId());
+
+			if (!organizations.isEmpty()) {
+				Organization organization = organizations.get(0);
+
+				Group parentGroup = organization.getGroup();
+
+				parentLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					parentGroup.getGroupId(), layoutSet.isPrivateLayout());
+			}
+		}
+
+		return parentLayoutSet;
 	}
 
 	protected void initShowParentGroups(HttpServletRequest request) {

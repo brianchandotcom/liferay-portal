@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.lar.exportimportconfiguration.ExportImportConfigurationConstants;
 import com.liferay.portal.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portal.model.ExportImportConfiguration;
@@ -30,11 +31,9 @@ import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.Serializable;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -49,36 +48,9 @@ public class ExportImportConfigurationUtil {
 			PortletRequest portletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long userId = themeDisplay.getUserId();
-		long groupId = ParamUtil.getLong(portletRequest, "groupId");
-
-		boolean privateLayout = ParamUtil.getBoolean(
-			portletRequest, "privateLayout");
-
-		DateRange dateRange = ExportImportHelperUtil.getDateRange(
-			portletRequest, groupId, privateLayout, 0, null, "all");
-
-		String exportImportConfigurationName = ParamUtil.getString(
-			portletRequest, "exportImportConfigurationName");
-
-		String exportImportConfigurationDescription = ParamUtil.getString(
-			portletRequest, "exportImportConfigurationDescription");
-
-		Map<String, Serializable> configurationContextMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				userId, groupId, privateLayout, null,
-				portletRequest.getParameterMap(), dateRange.getStartDate(),
-				dateRange.getEndDate());
-
-		return ExportImportConfigurationLocalServiceUtil.
-			addExportImportConfiguration(
-				userId, groupId, exportImportConfigurationName,
-				exportImportConfigurationDescription,
-				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-				configurationContextMap, new ServiceContext());
+		return doCreateConfiguration(
+			portletRequest,
+			ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT);
 	}
 
 	public static ExportImportConfiguration
@@ -86,61 +58,23 @@ public class ExportImportConfigurationUtil {
 				PortletRequest portletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long userId = themeDisplay.getUserId();
-		long groupId = ParamUtil.getLong(portletRequest, "groupId");
-
-		Group liveGroup = GroupLocalServiceUtil.getGroup(groupId);
-		Group stagingGroup = liveGroup.getStagingGroup();
-
-		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
-
-		boolean privateLayout = true;
-
-		if (tabs1.equals("public-pages")) {
-			privateLayout = false;
-		}
-
-		String scope = ParamUtil.getString(portletRequest, "scope");
-
-		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<Long, Boolean>();
-
-		if (scope.equals("selected-pages")) {
-			layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(portletRequest);
-		}
-
-		Map<String, String[]> parameterMap = StagingUtil.getStagingParameters(
-			portletRequest);
-
-		DateRange dateRange = ExportImportHelperUtil.getDateRange(
-			portletRequest, stagingGroup.getGroupId(), privateLayout, 0, null,
-			"fromLastPublishDate");
-
-		String exportImportConfigurationName = ParamUtil.getString(
-			portletRequest, "exportImportConfigurationName");
-
-		String exportImportConfigurationDescription = ParamUtil.getString(
-			portletRequest, "exportImportConfigurationDescription");
-
-		Map<String, Serializable> configurationContextMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				userId, stagingGroup.getGroupId(), groupId, privateLayout,
-				layoutIdMap, parameterMap, dateRange.getStartDate(),
-				dateRange.getEndDate());
-
-		return ExportImportConfigurationLocalServiceUtil.
-			addExportImportConfiguration(
-				userId, groupId, exportImportConfigurationName,
-				exportImportConfigurationDescription,
-				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL,
-				configurationContextMap, new ServiceContext());
+		return doCreateConfiguration(
+			portletRequest,
+			ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL);
 	}
 
 	public static ExportImportConfiguration
 			createPublishLayoutRemoteConfiguration(
 				PortletRequest portletRequest)
+		throws Exception {
+
+		return doCreateConfiguration(
+			portletRequest,
+			ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE);
+	}
+
+	protected static ExportImportConfiguration doCreateConfiguration(
+			PortletRequest portletRequest, int configurationType)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -149,12 +83,59 @@ public class ExportImportConfigurationUtil {
 		long userId = themeDisplay.getUserId();
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 
-		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
+		Map<String, Serializable> configurationContextMap = null;
+
+		if (configurationType ==
+				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) {
+
+			configurationContextMap = doCreateConfigurationContextMap(
+				portletRequest, userId, groupId, true,
+				ExportImportDateUtil.RANGE_ALL);
+		}
+		else {
+			configurationContextMap = doCreateConfigurationContextMap(
+				portletRequest, userId, groupId, false,
+				ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
+		}
+
+		String exportImportConfigurationName = ParamUtil.getString(
+			portletRequest, "exportImportConfigurationName");
+
+		String exportImportConfigurationDescription = ParamUtil.getString(
+			portletRequest, "exportImportConfigurationDescription");
+
+		return ExportImportConfigurationLocalServiceUtil.
+			addExportImportConfiguration(
+				userId, groupId, exportImportConfigurationName,
+				exportImportConfigurationDescription, configurationType,
+				configurationContextMap, new ServiceContext());
+	}
+
+	protected static Map<String, Serializable> doCreateConfigurationContextMap(
+			PortletRequest portletRequest, long userId, long groupId,
+			boolean exportConfiguration, String defaultDateRange)
+		throws Exception {
 
 		boolean privateLayout = true;
 
+		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
+
 		if (tabs1.equals("public-pages")) {
 			privateLayout = false;
+		}
+		else {
+			privateLayout = ParamUtil.getBoolean(
+				portletRequest, "privateLayout");
+		}
+
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
+			portletRequest, groupId, privateLayout, 0, null, defaultDateRange);
+
+		if (exportConfiguration) {
+			return ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+				userId, groupId, privateLayout, null,
+				portletRequest.getParameterMap(), dateRange.getStartDate(),
+				dateRange.getEndDate());
 		}
 
 		String scope = ParamUtil.getString(portletRequest, "scope");
@@ -169,17 +150,27 @@ public class ExportImportConfigurationUtil {
 			layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(portletRequest);
 		}
 
+		Group stagingGroup = GroupLocalServiceUtil.getGroup(groupId);
+		Group liveGroup = stagingGroup.getLiveGroup();
+
 		Map<String, String[]> parameterMap = StagingUtil.getStagingParameters(
 			portletRequest);
 
-		parameterMap.put(
-			PortletDataHandlerKeys.PUBLISH_TO_REMOTE,
-			new String[] {Boolean.TRUE.toString()});
+		if (liveGroup != null) {
+			return ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+				userId, stagingGroup.getGroupId(), liveGroup.getGroupId(),
+				privateLayout, layoutIdMap, parameterMap,
+				dateRange.getStartDate(), dateRange.getEndDate());
+		}
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		if (liveGroup == null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.PUBLISH_TO_REMOTE,
+				new String[] {Boolean.TRUE.toString()});
+		}
 
 		UnicodeProperties groupTypeSettingsProperties =
-			group.getTypeSettingsProperties();
+			stagingGroup.getTypeSettingsProperties();
 
 		String remoteAddress = ParamUtil.getString(
 			portletRequest, "remoteAddress",
@@ -214,29 +205,11 @@ public class ExportImportConfigurationUtil {
 			remoteAddress, remotePort, remotePathContext, secureConnection,
 			remoteGroupId);
 
-		DateRange dateRange = ExportImportHelperUtil.getDateRange(
-			portletRequest, groupId, privateLayout, 0, null,
-			"fromLastPublishDate");
-
-		String exportImportConfigurationName = ParamUtil.getString(
-			portletRequest, "exportImportConfigurationName");
-
-		String exportImportConfigurationDescription = ParamUtil.getString(
-			portletRequest, "exportImportConfigurationDescription");
-
-		Map<String, Serializable> configurationContextMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				userId, groupId, privateLayout, layoutIdMap, parameterMap,
-				remoteAddress, remotePort, remotePathContext, secureConnection,
-				remoteGroupId, remotePrivateLayout, dateRange.getStartDate(),
-				dateRange.getEndDate());
-
-		return ExportImportConfigurationLocalServiceUtil.
-			addExportImportConfiguration(
-				userId, remoteGroupId, exportImportConfigurationName,
-				exportImportConfigurationDescription,
-				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE,
-				configurationContextMap, new ServiceContext());
+		return ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+			userId, groupId, privateLayout, layoutIdMap, parameterMap,
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			remoteGroupId, remotePrivateLayout, dateRange.getStartDate(),
+			dateRange.getEndDate());
 	}
 
 }

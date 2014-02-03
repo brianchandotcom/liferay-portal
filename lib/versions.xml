@@ -435,18 +435,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/development/jnet.jar</file-name>
-		<version></version>
-		<project-name>jnet</project-name>
-		<project-url>http://jnet.dev.java.net</project-url>
-		<licenses>
-			<license>
-				<license-name>GPL 2.0</license-name>
-				<license-url>http://www.gnu.org/licenses/gpl-2.0.html</license-url>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>lib/development/jsp-api.jar</file-name>
 		<version>2.1</version>
 		<project-name>JavaServer Pages</project-name>

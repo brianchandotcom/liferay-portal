@@ -31,6 +31,10 @@ public class StartupHelperUtil {
 		return _startupHelper;
 	}
 
+	public static boolean isStartupFinished() {
+		return getStartupHelper().isStartupFinished();
+	}
+
 	public static boolean isUpgraded() {
 		return getStartupHelper().isUpgraded();
 	}
@@ -41,6 +45,10 @@ public class StartupHelperUtil {
 
 	public static void setDropIndexes(boolean dropIndexes) {
 		getStartupHelper().setDropIndexes(dropIndexes);
+	}
+
+	public static void setStartupFinished(boolean startupFinished) {
+		getStartupHelper().setStartupFinished(startupFinished);
 	}
 
 	public static void updateIndexes() {

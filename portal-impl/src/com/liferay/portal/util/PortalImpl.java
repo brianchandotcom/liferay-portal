@@ -20,6 +20,7 @@ import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
@@ -56,7 +57,6 @@ import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
-import com.liferay.portal.kernel.upgrade.UpgradeProcessThreadLocal;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -1436,7 +1436,7 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public long getClassNameId(String value) {
-		if (!UpgradeProcessThreadLocal.isOriginatesFromUpgradeProcess()) {
+		if (StartupHelperUtil.isStartupFinished()) {
 			return ClassNameLocalServiceUtil.getClassNameId(value);
 		}
 

@@ -40,6 +40,10 @@ import java.sql.Connection;
  */
 public class StartupHelper {
 
+	public boolean isStartupFinished() {
+		return _startupFinished;
+	}
+
 	public boolean isUpgraded() {
 		return _upgraded;
 	}
@@ -50,6 +54,10 @@ public class StartupHelper {
 
 	public void setDropIndexes(boolean dropIndexes) {
 		_dropIndexes = dropIndexes;
+	}
+
+	public void setStartupFinished(boolean startupFinished) {
+		_startupFinished = startupFinished;
 	}
 
 	public void updateIndexes() {
@@ -158,6 +166,7 @@ public class StartupHelper {
 	private static Log _log = LogFactoryUtil.getLog(StartupHelper.class);
 
 	private boolean _dropIndexes;
+	private boolean _startupFinished;
 	private boolean _upgraded;
 	private boolean _verified;
 

@@ -14,7 +14,10 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.util.PortalUtil;
+
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -129,6 +132,40 @@ public class SessionMessages {
 		add(portletRequest.getPortletSession(false), key, value);
 	}
 
+	public static void crossLayoutAdd(
+		PortletRequest portletRequest, String key, Object value) {
+
+		add(portletRequest, key, value);
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		add(request, key, value);
+	}
+
+	public static void crossLayoutAdd(
+		PortletRequest portletRequest, String key) {
+
+		add(portletRequest, key);
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		add(request, key);
+	}
+
+	public static void crossLayoutAdd(
+		PortletRequest portletRequest, Class<?> clazz) {
+
+		crossLayoutAdd(portletRequest, clazz.getName());
+	}
+
+	public static void crossLayoutAdd(
+		PortletRequest portletRequest, Class<?> clazz, Object value) {
+
+		crossLayoutAdd(portletRequest, clazz.getName(), value);
+	}
+
 	public static void add(PortletSession portletSession, Class<?> clazz) {
 		add(portletSession, clazz.getName());
 	}
@@ -177,6 +214,15 @@ public class SessionMessages {
 		clear(portletRequest.getPortletSession(false));
 	}
 
+	public static void crossLayoutclear(PortletRequest portletRequest) {
+		clear(portletRequest);
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		clear(request);
+	}
+
 	public static void clear(PortletSession portletSession) {
 		Map<String, Object> map = _getMap(portletSession, false);
 
@@ -216,6 +262,25 @@ public class SessionMessages {
 
 	public static boolean contains(PortletRequest portletRequest, String key) {
 		return contains(portletRequest.getPortletSession(false), key);
+	}
+
+	public static boolean crossLayoutContains(
+		PortletRequest portletRequest, String key) {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		if (contains(portletRequest, key) || contains(request, key)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean crossLayoutContains(
+		PortletRequest portletRequest, Class<?> clazz) {
+
+		return crossLayoutContains(portletRequest, clazz.getName());
 	}
 
 	public static boolean contains(
@@ -260,8 +325,29 @@ public class SessionMessages {
 		return get(portletRequest.getPortletSession(false), clazz.getName());
 	}
 
+	public static Object crossLayoutGet(
+		PortletRequest portletRequest, Class<?> clazz) {
+
+		return get(portletRequest, clazz.getName());
+	}
+
 	public static Object get(PortletRequest portletRequest, String key) {
 		return get(portletRequest.getPortletSession(false), key);
+	}
+
+	public static Object crossLayoutGet(
+		PortletRequest portletRequest, String key) {
+
+		Object portletObject = get(portletRequest, key);
+
+		if (portletObject != null) {
+			return portletObject;
+		}
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		return get(request, key);
 	}
 
 	public static Object get(PortletSession portletSession, Class<?> clazz) {
@@ -296,6 +382,17 @@ public class SessionMessages {
 		return isEmpty(portletRequest.getPortletSession(false));
 	}
 
+	public static boolean crossLayoutIsEmpty(PortletRequest portletRequest) {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		if (isEmpty(portletRequest) && isEmpty(request)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isEmpty(PortletSession portletSession) {
 		Map<String, Object> map = _getMap(portletSession, false);
 
@@ -304,6 +401,14 @@ public class SessionMessages {
 		}
 
 		return map.isEmpty();
+	}
+
+	public static Iterator<String> crossLayoutIterator(
+		PortletRequest portletRequest) {
+
+		Set<String> set = crossLayoutkeySet(portletRequest);
+
+		return set.iterator();
 	}
 
 	public static Iterator<String> iterator(HttpServletRequest request) {
@@ -356,6 +461,19 @@ public class SessionMessages {
 		return Collections.unmodifiableSet(map.keySet());
 	}
 
+	public static Set<String> crossLayoutkeySet(PortletRequest portletRequest) {
+		Set<String> crossLayoutkeySet = new HashSet<String>();
+
+		crossLayoutkeySet.addAll(keySet(portletRequest));
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		crossLayoutkeySet.addAll(keySet(request));
+
+		return Collections.unmodifiableSet(crossLayoutkeySet);
+	}
+
 	public static Set<String> keySet(PortletRequest portletRequest) {
 		return keySet(portletRequest.getPortletSession(false));
 	}
@@ -386,6 +504,15 @@ public class SessionMessages {
 		print(portletRequest.getPortletSession(false));
 	}
 
+	public static void crossLayoutPrint(PortletRequest portletRequest) {
+		print(portletRequest);
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		print(request);
+	}
+
 	public static void print(PortletSession portletSession) {
 		Iterator<String> itr = iterator(portletSession);
 
@@ -406,6 +533,13 @@ public class SessionMessages {
 		}
 
 		return map.size();
+	}
+
+	public static int crossLayoutSize(PortletRequest portletRequest) {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		return size(portletRequest) + size(request);
 	}
 
 	public static int size(PortletRequest portletRequest) {

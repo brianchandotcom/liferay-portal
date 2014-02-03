@@ -20,8 +20,8 @@ import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelper;
-import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -257,9 +257,9 @@ public class ExportImportAction extends ImportLayoutsAction {
 			String fileName = ParamUtil.getString(
 				actionRequest, "exportFileName");
 
-			DateRange dateRange = ExportImportHelperUtil.getDateRange(
+			DateRange dateRange = ExportImportDateUtil.getDateRange(
 				actionRequest, groupId, false, plid, portlet.getPortletId(),
-				"all");
+				ExportImportDateUtil.RANGE_ALL);
 
 			LayoutServiceUtil.exportPortletInfoAsFileInBackground(
 				portlet.getPortletId(), plid, groupId, portlet.getPortletId(),

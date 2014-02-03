@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
@@ -312,9 +313,9 @@ public class StagingImpl implements Staging {
 		Map<String, String[]> parameterMap = getStagingParameters(
 			portletRequest);
 
-		DateRange dateRange = ExportImportHelperUtil.getDateRange(
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			portletRequest, sourceGroupId, false, sourcePlid, portletId,
-			"fromLastPublishDate");
+			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
 
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
@@ -2228,9 +2229,9 @@ public class StagingImpl implements Staging {
 			layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(portletRequest);
 		}
 
-		DateRange dateRange = ExportImportHelperUtil.getDateRange(
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			portletRequest, sourceGroupId, privateLayout, 0, null,
-			"fromLastPublishDate");
+			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
 
 		if (schedule) {
 			String groupName = getSchedulerGroupName(
@@ -2239,7 +2240,7 @@ public class StagingImpl implements Staging {
 			int recurrenceType = ParamUtil.getInteger(
 				portletRequest, "recurrenceType");
 
-			Calendar startCalendar = ExportImportHelperUtil.getCalendar(
+			Calendar startCalendar = ExportImportDateUtil.getCalendar(
 				portletRequest, "schedulerStartDate", true);
 
 			String cronText = SchedulerEngineHelperUtil.getCronText(
@@ -2251,7 +2252,7 @@ public class StagingImpl implements Staging {
 				portletRequest, "endDateType");
 
 			if (endDateType == 1) {
-				Calendar endCalendar = ExportImportHelperUtil.getCalendar(
+				Calendar endCalendar = ExportImportDateUtil.getCalendar(
 					portletRequest, "schedulerEndDate", true);
 
 				schedulerEndDate = endCalendar.getTime();
@@ -2381,9 +2382,9 @@ public class StagingImpl implements Staging {
 			remoteAddress, remotePort, remotePathContext, secureConnection,
 			remoteGroupId);
 
-		DateRange dateRange = ExportImportHelperUtil.getDateRange(
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			portletRequest, groupId, privateLayout, 0, null,
-			"fromLastPublishDate");
+			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
 
 		if (schedule) {
 			String groupName = getSchedulerGroupName(
@@ -2392,7 +2393,7 @@ public class StagingImpl implements Staging {
 			int recurrenceType = ParamUtil.getInteger(
 				portletRequest, "recurrenceType");
 
-			Calendar startCalendar = ExportImportHelperUtil.getCalendar(
+			Calendar startCalendar = ExportImportDateUtil.getCalendar(
 				portletRequest, "schedulerStartDate", true);
 
 			String cronText = SchedulerEngineHelperUtil.getCronText(
@@ -2404,7 +2405,7 @@ public class StagingImpl implements Staging {
 				portletRequest, "endDateType");
 
 			if (endDateType == 1) {
-				Calendar endCalendar = ExportImportHelperUtil.getCalendar(
+				Calendar endCalendar = ExportImportDateUtil.getCalendar(
 					portletRequest, "schedulerEndDate", true);
 
 				schedulerEndDate = endCalendar.getTime();

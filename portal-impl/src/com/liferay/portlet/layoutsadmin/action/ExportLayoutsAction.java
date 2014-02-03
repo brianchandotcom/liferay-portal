@@ -15,6 +15,7 @@
 package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -74,8 +75,9 @@ public class ExportLayoutsAction extends PortletAction {
 			boolean privateLayout = ParamUtil.getBoolean(
 				actionRequest, "privateLayout");
 			long[] layoutIds = getLayoutIds(actionRequest);
-			DateRange dateRange = ExportImportHelperUtil.getDateRange(
-				actionRequest, groupId, privateLayout, 0, null, "all");
+			DateRange dateRange = ExportImportDateUtil.getDateRange(
+				actionRequest, groupId, privateLayout, 0, null,
+				ExportImportDateUtil.RANGE_ALL);
 
 			if (Validator.isNotNull(cmd)) {
 				LayoutServiceUtil.exportLayoutsAsFileInBackground(

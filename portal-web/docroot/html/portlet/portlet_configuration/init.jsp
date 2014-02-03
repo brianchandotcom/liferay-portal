@@ -24,6 +24,7 @@ page import="com.liferay.portal.NoSuchResourceException" %><%@
 page import="com.liferay.portal.PortletIdException" %><%@
 page import="com.liferay.portal.PortletItemNameException" %><%@
 page import="com.liferay.portal.ResourcePrimKeyException" %><%@
+page import="com.liferay.portal.kernel.lar.ExportImportDateUtil" %><%@
 page import="com.liferay.portal.kernel.lar.ExportImportHelper" %><%@
 page import="com.liferay.portal.kernel.lar.ExportImportHelperUtil" %><%@
 page import="com.liferay.portal.kernel.lar.ManifestSummary" %><%@

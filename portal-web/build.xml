@@ -54,7 +54,15 @@
 
 		<property name="alloy.version" value="2.0.0" />
 
-		<property name="alloy.file" value="alloy-${alloy.version}.zip" />
+		<path id="alloy.zip.path">
+			<fileset dir="third-party/">
+				<include name="alloy-${alloy.version}*.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloy.zip.path" refid="alloy.zip.path" />
+		
+		<basename file="${alloy.zip.path}" property="alloy.file" />
 
 		<if>
 			<not>

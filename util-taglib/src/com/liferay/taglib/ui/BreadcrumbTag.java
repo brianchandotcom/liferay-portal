@@ -233,6 +233,43 @@ public class BreadcrumbTag extends IncludeTag {
 		}
 	}
 
+	protected void buildCurrentGroupBreadcrumb(
+			LayoutSet layoutSet, PortletURL portletURL,
+			ThemeDisplay themeDisplay, StringBundler sb)
+		throws Exception {
+
+		Group group = layoutSet.getGroup();
+
+		if (group.isControlPanel()) {
+			return;
+		}
+
+		int layoutsPageCount = 0;
+
+		if (layoutSet.isPrivateLayout()) {
+			layoutsPageCount = group.getPrivateLayoutsPageCount();
+		}
+		else {
+			layoutsPageCount = group.getPublicLayoutsPageCount();
+		}
+
+		if ((layoutsPageCount > 0) && !group.isGuest()) {
+			String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
+				layoutSet, themeDisplay);
+
+			if (themeDisplay.isAddSessionIdToURL()) {
+				layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(
+					layoutSetFriendlyURL, themeDisplay.getSessionId());
+			}
+
+			sb.append("<li><a href=\"");
+			sb.append(layoutSetFriendlyURL);
+			sb.append("\">");
+			sb.append(HtmlUtil.escape(group.getDescriptiveName()));
+			sb.append("</a><span class=\"divider\">/</span></li>");
+		}
+	}
+
 	protected void buildPortletBreadcrumb(
 			HttpServletRequest request, boolean showCurrentGroup,
 			boolean showCurrentPortlet, ThemeDisplay themeDisplay,
@@ -370,7 +407,17 @@ public class BreadcrumbTag extends IncludeTag {
 			}
 
 			if (_showParentGroups) {
-				buildParentGroupsBreadcrumb(
+				LayoutSet parentLayoutSet = getParentLayoutSet(
+					_selLayout.getLayoutSet());
+
+				if (parentLayoutSet != null) {
+					buildParentGroupsBreadcrumb(
+						parentLayoutSet, _portletURL, themeDisplay, sb);
+				}
+			}
+
+			if (_showCurrentGroup) {
+				buildCurrentGroupBreadcrumb(
 					_selLayout.getLayoutSet(), _portletURL, themeDisplay, sb);
 			}
 

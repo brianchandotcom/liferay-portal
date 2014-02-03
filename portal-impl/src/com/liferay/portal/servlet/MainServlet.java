@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.dao.shard.ShardDataSourceTargetSource;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.events.StartupAction;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
@@ -351,6 +352,8 @@ public class MainServlet extends ActionServlet {
 		}
 
 		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, true);
+
+		StartupHelperUtil.setStartupFinished(true);
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 	}

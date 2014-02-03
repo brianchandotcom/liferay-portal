@@ -2537,7 +2537,9 @@
 			<hint name="display-width">30</hint>
 		</field>
 		<field name="comments" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
+			<hint name="display-height">105</hint>
+			<hint name="display-width">500</hint>
 		</field>
 		<field name="ppTxnId" type="String" />
 		<field name="ppPaymentStatus" type="String" />

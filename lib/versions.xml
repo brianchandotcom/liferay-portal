@@ -564,8 +564,8 @@
 		<project-url>http://code.google.com/p/objenesis</project-url>
 		<licenses>
 			<license>
-				<license-name>MIT License</license-name>
-				<license-url>http://opensource.org/licenses/MIT</license-url>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 			</license>
 		</licenses>
 	</library>

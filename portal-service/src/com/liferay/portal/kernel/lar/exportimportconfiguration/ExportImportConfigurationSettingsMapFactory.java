@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lar.exportimportconfiguration;
+package com.liferay.portal.kernel.lar.exportimportconfiguration;
 
 import com.liferay.portal.kernel.util.MapUtil;
 

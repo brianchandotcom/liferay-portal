@@ -1178,6 +1178,14 @@ that may or may not be enforced with a unique index at the database level. Case
 					start, end, orderByComparator);
 				}
 
+				<#list finderColsList as finderCol>
+					<#if finderCol.hasArrayableOperator()>
+						if (${finderCol.names} == null) {
+							${finderCol.names} = new ${finderCol.type}[0];
+						}
+					</#if>
+				</#list>
+
 				<#if entity.isPermissionedModel()>
 					<#include "persistence_impl_find_by_arrayable_query.ftl">
 
@@ -1434,6 +1442,14 @@ that may or may not be enforced with a unique index at the database level. Case
 		</#list>
 
 		int start, int end, OrderByComparator orderByComparator) throws SystemException {
+			<#list finderColsList as finderCol>
+				<#if finderCol.hasArrayableOperator()>
+					if (${finderCol.names} == null) {
+						${finderCol.names} = new ${finderCol.type}[0];
+					}
+				</#if>
+			</#list>
+
 			if (
 			<#assign firstCol = true>
 			<#list finderColsList as finderCol>
@@ -1444,7 +1460,7 @@ that may or may not be enforced with a unique index at the database level. Case
 						&&
 					</#if>
 
-					(${finderCol.names} != null) && (${finderCol.names}.length == 1)
+					${finderCol.names}.length == 1
 				</#if>
 			</#list>
 			) {

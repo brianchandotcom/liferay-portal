@@ -103,6 +103,14 @@ public int countBy${finder.name}(
 	</#list>
 
 	) throws SystemException {
+		<#list finderColsList as finderCol>
+			<#if finderCol.hasArrayableOperator()>
+				if (${finderCol.names} == null) {
+					${finderCol.names} = new ${finderCol.type}[0];
+				}
+			</#if>
+		</#list>
+
 		Object[] finderArgs = new Object[] {
 			<#list finderColsList as finderCol>
 				<#if finderCol.hasArrayableOperator()>
@@ -311,6 +319,14 @@ public int countBy${finder.name}(
 
 				);
 			}
+
+			<#list finderColsList as finderCol>
+				<#if finderCol.hasArrayableOperator()>
+					if (${finderCol.names} == null) {
+						${finderCol.names} = new ${finderCol.type}[0];
+					}
+				</#if>
+			</#list>
 
 			<#if entity.isPermissionedModel()>
 				<#include "persistence_impl_count_by_arrayable_query.ftl">

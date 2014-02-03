@@ -4179,25 +4179,13 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			query.append(_FILTER_SQL_SELECT_ASSETCATEGORY_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		boolean conjunctionable = false;
-
-		if (conjunctionable) {
-			query.append(WHERE_AND);
-		}
-
-		query.append(_FINDER_COLUMN_G_V_GROUPID_5);
-
-		conjunctionable = true;
+		query.append(_FINDER_COLUMN_G_V_GROUPID_2);
 
 		if ((vocabularyIds == null) || (vocabularyIds.length > 0)) {
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < vocabularyIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_V_VOCABULARYID_5);
+				query.append(_FINDER_COLUMN_G_V_VOCABULARYID_2);
 
 				if ((i + 1) < vocabularyIds.length) {
 					query.append(WHERE_OR);
@@ -4205,9 +4193,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			}
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
-
-			conjunctionable = true;
 		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_ASSETCATEGORY_NO_INLINE_DISTINCT_WHERE_2);
@@ -4368,25 +4357,13 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 			query.append(_SQL_SELECT_ASSETCATEGORY_WHERE);
 
-			boolean conjunctionable = false;
-
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_G_V_GROUPID_5);
-
-			conjunctionable = true;
+			query.append(_FINDER_COLUMN_G_V_GROUPID_2);
 
 			if ((vocabularyIds == null) || (vocabularyIds.length > 0)) {
-				if (conjunctionable) {
-					query.append(WHERE_AND);
-				}
-
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < vocabularyIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_V_VOCABULARYID_5);
+					query.append(_FINDER_COLUMN_G_V_VOCABULARYID_2);
 
 					if ((i + 1) < vocabularyIds.length) {
 						query.append(WHERE_OR);
@@ -4394,9 +4371,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				}
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				conjunctionable = true;
 			}
+
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -4554,25 +4532,13 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 			query.append(_SQL_COUNT_ASSETCATEGORY_WHERE);
 
-			boolean conjunctionable = false;
-
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_G_V_GROUPID_5);
-
-			conjunctionable = true;
+			query.append(_FINDER_COLUMN_G_V_GROUPID_2);
 
 			if ((vocabularyIds == null) || (vocabularyIds.length > 0)) {
-				if (conjunctionable) {
-					query.append(WHERE_AND);
-				}
-
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < vocabularyIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_V_VOCABULARYID_5);
+					query.append(_FINDER_COLUMN_G_V_VOCABULARYID_2);
 
 					if ((i + 1) < vocabularyIds.length) {
 						query.append(WHERE_OR);
@@ -4580,9 +4546,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				}
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				conjunctionable = true;
 			}
+
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
 
 			String sql = query.toString();
 
@@ -4694,25 +4661,13 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 		query.append(_FILTER_SQL_COUNT_ASSETCATEGORY_WHERE);
 
-		boolean conjunctionable = false;
-
-		if (conjunctionable) {
-			query.append(WHERE_AND);
-		}
-
-		query.append(_FINDER_COLUMN_G_V_GROUPID_5);
-
-		conjunctionable = true;
+		query.append(_FINDER_COLUMN_G_V_GROUPID_2);
 
 		if ((vocabularyIds == null) || (vocabularyIds.length > 0)) {
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < vocabularyIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_V_VOCABULARYID_5);
+				query.append(_FINDER_COLUMN_G_V_VOCABULARYID_2);
 
 				if ((i + 1) < vocabularyIds.length) {
 					query.append(WHERE_OR);
@@ -4720,9 +4675,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			}
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
-
-			conjunctionable = true;
 		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				AssetCategory.class.getName(),
@@ -4759,11 +4715,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	}
 
 	private static final String _FINDER_COLUMN_G_V_GROUPID_2 = "assetCategory.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_V_GROUPID_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_V_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_V_VOCABULARYID_2 = "assetCategory.vocabularyId = ?";
-	private static final String _FINDER_COLUMN_G_V_VOCABULARYID_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_V_VOCABULARYID_2) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_P_N = new FinderPath(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetCategoryModelImpl.FINDER_CACHE_ENABLED,
 			AssetCategoryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -8368,45 +8320,27 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			query.append(_FILTER_SQL_SELECT_ASSETCATEGORY_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		boolean conjunctionable = false;
-
-		if (conjunctionable) {
-			query.append(WHERE_AND);
-		}
-
-		query.append(_FINDER_COLUMN_G_LIKEN_V_GROUPID_5);
-
-		conjunctionable = true;
-
-		if (conjunctionable) {
-			query.append(WHERE_AND);
-		}
+		query.append(_FINDER_COLUMN_G_LIKEN_V_GROUPID_2);
 
 		boolean bindName = false;
 
 		if (name == null) {
-			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_4);
+			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_1);
 		}
 		else if (name.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_6);
+			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_3);
 		}
 		else {
 			bindName = true;
 
-			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_5);
+			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_2);
 		}
 
-		conjunctionable = true;
-
 		if ((vocabularyIds == null) || (vocabularyIds.length > 0)) {
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < vocabularyIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_LIKEN_V_VOCABULARYID_5);
+				query.append(_FINDER_COLUMN_G_LIKEN_V_VOCABULARYID_2);
 
 				if ((i + 1) < vocabularyIds.length) {
 					query.append(WHERE_OR);
@@ -8414,9 +8348,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			}
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
-
-			conjunctionable = true;
 		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_ASSETCATEGORY_NO_INLINE_DISTINCT_WHERE_2);
@@ -8587,45 +8522,27 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 			query.append(_SQL_SELECT_ASSETCATEGORY_WHERE);
 
-			boolean conjunctionable = false;
-
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_G_LIKEN_V_GROUPID_5);
-
-			conjunctionable = true;
-
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
+			query.append(_FINDER_COLUMN_G_LIKEN_V_GROUPID_2);
 
 			boolean bindName = false;
 
 			if (name == null) {
-				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_4);
+				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_1);
 			}
 			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_6);
+				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_5);
+				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_2);
 			}
 
-			conjunctionable = true;
-
 			if ((vocabularyIds == null) || (vocabularyIds.length > 0)) {
-				if (conjunctionable) {
-					query.append(WHERE_AND);
-				}
-
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < vocabularyIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_LIKEN_V_VOCABULARYID_5);
+					query.append(_FINDER_COLUMN_G_LIKEN_V_VOCABULARYID_2);
 
 					if ((i + 1) < vocabularyIds.length) {
 						query.append(WHERE_OR);
@@ -8633,9 +8550,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				}
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				conjunctionable = true;
 			}
+
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -8818,45 +8736,27 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 			query.append(_SQL_COUNT_ASSETCATEGORY_WHERE);
 
-			boolean conjunctionable = false;
-
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_G_LIKEN_V_GROUPID_5);
-
-			conjunctionable = true;
-
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
+			query.append(_FINDER_COLUMN_G_LIKEN_V_GROUPID_2);
 
 			boolean bindName = false;
 
 			if (name == null) {
-				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_4);
+				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_1);
 			}
 			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_6);
+				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_5);
+				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_2);
 			}
 
-			conjunctionable = true;
-
 			if ((vocabularyIds == null) || (vocabularyIds.length > 0)) {
-				if (conjunctionable) {
-					query.append(WHERE_AND);
-				}
-
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < vocabularyIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_LIKEN_V_VOCABULARYID_5);
+					query.append(_FINDER_COLUMN_G_LIKEN_V_VOCABULARYID_2);
 
 					if ((i + 1) < vocabularyIds.length) {
 						query.append(WHERE_OR);
@@ -8864,9 +8764,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				}
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				conjunctionable = true;
 			}
+
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
 
 			String sql = query.toString();
 
@@ -9002,45 +8903,27 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 		query.append(_FILTER_SQL_COUNT_ASSETCATEGORY_WHERE);
 
-		boolean conjunctionable = false;
-
-		if (conjunctionable) {
-			query.append(WHERE_AND);
-		}
-
-		query.append(_FINDER_COLUMN_G_LIKEN_V_GROUPID_5);
-
-		conjunctionable = true;
-
-		if (conjunctionable) {
-			query.append(WHERE_AND);
-		}
+		query.append(_FINDER_COLUMN_G_LIKEN_V_GROUPID_2);
 
 		boolean bindName = false;
 
 		if (name == null) {
-			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_4);
+			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_1);
 		}
 		else if (name.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_6);
+			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_3);
 		}
 		else {
 			bindName = true;
 
-			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_5);
+			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_2);
 		}
 
-		conjunctionable = true;
-
 		if ((vocabularyIds == null) || (vocabularyIds.length > 0)) {
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < vocabularyIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_LIKEN_V_VOCABULARYID_5);
+				query.append(_FINDER_COLUMN_G_LIKEN_V_VOCABULARYID_2);
 
 				if ((i + 1) < vocabularyIds.length) {
 					query.append(WHERE_OR);
@@ -9048,9 +8931,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			}
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
-
-			conjunctionable = true;
 		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				AssetCategory.class.getName(),
@@ -9091,20 +8975,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	}
 
 	private static final String _FINDER_COLUMN_G_LIKEN_V_GROUPID_2 = "assetCategory.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_LIKEN_V_GROUPID_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_LIKEN_V_GROUPID_2) + ")";
 	private static final String _FINDER_COLUMN_G_LIKEN_V_NAME_1 = "assetCategory.name LIKE NULL AND ";
 	private static final String _FINDER_COLUMN_G_LIKEN_V_NAME_2 = "lower(assetCategory.name) LIKE ? AND ";
 	private static final String _FINDER_COLUMN_G_LIKEN_V_NAME_3 = "(assetCategory.name IS NULL OR assetCategory.name LIKE '') AND ";
-	private static final String _FINDER_COLUMN_G_LIKEN_V_NAME_4 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_LIKEN_V_NAME_1) + ")";
-	private static final String _FINDER_COLUMN_G_LIKEN_V_NAME_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_LIKEN_V_NAME_2) + ")";
-	private static final String _FINDER_COLUMN_G_LIKEN_V_NAME_6 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_LIKEN_V_NAME_3) + ")";
 	private static final String _FINDER_COLUMN_G_LIKEN_V_VOCABULARYID_2 = "assetCategory.vocabularyId = ?";
-	private static final String _FINDER_COLUMN_G_LIKEN_V_VOCABULARYID_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_LIKEN_V_VOCABULARYID_2) + ")";
 	public static final FinderPath FINDER_PATH_FETCH_BY_P_N_V = new FinderPath(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetCategoryModelImpl.FINDER_CACHE_ENABLED,
 			AssetCategoryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByP_N_V",

@@ -99,6 +99,7 @@ public class JournalConverterImpl implements JournalConverter {
 		_journalTypesToDDMTypes.put("link_to_layout", "ddm-link-to-page");
 		_journalTypesToDDMTypes.put("list", "select");
 		_journalTypesToDDMTypes.put("multi-list", "select");
+		_journalTypesToDDMTypes.put("selection_break", "ddm-separator");
 		_journalTypesToDDMTypes.put("text", "text");
 		_journalTypesToDDMTypes.put("text_area", "ddm-text-html");
 		_journalTypesToDDMTypes.put("text_box", "textarea");
@@ -779,13 +780,6 @@ public class JournalConverterImpl implements JournalConverter {
 
 		if (type.equals("multi-list")) {
 			element.addAttribute("multiple", "true");
-		}
-		else if (type.equals("selection_break")) {
-			Element parentElement = element.getParent();
-
-			parentElement.remove(element);
-
-			return;
 		}
 		else {
 			Element parentElement = element.getParent();

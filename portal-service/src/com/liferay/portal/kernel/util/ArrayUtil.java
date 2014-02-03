@@ -825,12 +825,8 @@ public class ArrayUtil {
 			set = new TreeSet<String>(comparator);
 		}
 
-		for (int i = 0; i < array.length; i++) {
-			String s = array[i];
-
-			if (!set.contains(s)) {
-				set.add(s);
-			}
+		for (String s : array) {
+			set.add(s);
 		}
 
 		return set.toArray(new String[set.size()]);

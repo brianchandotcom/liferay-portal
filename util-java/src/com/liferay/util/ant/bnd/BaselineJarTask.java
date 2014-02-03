@@ -161,8 +161,9 @@ public class BaselineJarTask extends BaseBndTask {
 					}
 				}
 
-				if ((_reportLevelIsStandard || _reportOnlyDirtyPackages) &&
-					warnings.equals("-")) {
+				if (((_reportLevelIsStandard || _reportOnlyDirtyPackages) &&
+					 warnings.equals("-")) ||
+					(_reportOnlyDirtyPackages && (delta == Delta.REMOVED))) {
 
 					continue;
 				}

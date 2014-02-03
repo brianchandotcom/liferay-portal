@@ -164,10 +164,15 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 				_log.info("Upgrading " + getClass().getName());
 			}
 
+			UpgradeProcessThreadLocal.setOriginatesFromUpgradeProcess(true);
+
 			doUpgrade();
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);
+		}
+		finally {
+			UpgradeProcessThreadLocal.setOriginatesFromUpgradeProcess(false);
 		}
 	}
 

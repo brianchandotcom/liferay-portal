@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.db;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.SystemException;
 
 import java.io.IOException;
@@ -29,6 +31,7 @@ import javax.naming.NamingException;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface DB {
 
 	public static final int BARE = 0;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.theme;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -59,6 +61,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class ThemeDisplay
 	implements Cloneable, Mergeable<ThemeDisplay>, Serializable {
 

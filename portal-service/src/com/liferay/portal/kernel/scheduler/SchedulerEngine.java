@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
@@ -30,6 +32,7 @@ import java.util.List;
  * @author Shuyang Zhou
  * @author Tina Tian
  */
+@ProviderType
 public interface SchedulerEngine {
 
 	public static final String DESCRIPTION = "DESCRIPTION";

@@ -25,11 +25,13 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -133,6 +135,12 @@ public class AnnouncementsUtil {
 			roles = RoleLocalServiceUtil.getUserRoles(userId);
 
 			roles = ListUtil.copy(roles);
+		}
+
+		List<Team> teams = TeamLocalServiceUtil.getUserTeams(userId);
+
+		for (Team team : teams) {
+			roles.add(team.getRole());
 		}
 
 		if (_PERMISSIONS_CHECK_GUEST_ENABLED) {

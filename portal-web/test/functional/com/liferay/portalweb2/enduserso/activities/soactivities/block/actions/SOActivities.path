@@ -112,12 +112,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIVITIES_DOCUMENT_TITLE_INCREMENT</td>
+	<td>ACTIVITIES_DOCUMENT_TITLE</td>
 	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='activity-subentry'][${documentTitleRow}]/span[@class='activity-subentry-title']/a/span[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIVITIES_DOCUMENT_DESCRIPTION_INCREMENT</td>
+	<td>ACTIVITIES_DOCUMENT_DESCRIPTION</td>
 	<td>//div[contains(@class,'activity-item')][${key_row}]//div[@class='activity-subentry'][${documentTitleRow}]/span[@class='activity-subentry-body']</td>
 	<td></td>
 </tr>

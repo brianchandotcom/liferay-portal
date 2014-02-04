@@ -50,6 +50,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_TEMPLATE_TABLE_NAME_1</td>
+	<td>xpath=(//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_TABLE_NAME_2</td>
+	<td>xpath=(//tr/td[1]/a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_TABLE_NAME_3</td>
+	<td>xpath=(//tr/td[1]/a)[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_TEMPLATE_TABLE_ACTIVE</td>
 	<td>//tr[contains(.,'${key_siteTemplateName}')]/td[2]/a</td>
 	<td></td>

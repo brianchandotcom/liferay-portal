@@ -78,8 +78,19 @@
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 		</execute>
 
-		<execute macro="PageTemplate#deletePageTemplateCP">
-			<var name="pageTemplateActive" value="No" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#deleteCP">
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#viewDefaultCP">
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 		</execute>
 	</command>

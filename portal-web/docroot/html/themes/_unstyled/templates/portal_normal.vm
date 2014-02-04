@@ -36,10 +36,6 @@ $theme.include($body_top_include)
 					</span>
 				#end
 			</h1>
-
-			<h2 class="page-title">
-				<span>$the_title</span>
-			</h2>
 		</div>
 
 		#if (!$is_signed_in)
@@ -51,8 +47,14 @@ $theme.include($body_top_include)
 		#end
 	</header>
 
-	<div id="content">
-		<nav id="breadcrumbs">#breadcrumbs()</nav>
+	<section id="content">
+		<h1 class="hide-accessible">$the_title</h1>
+
+		<nav id="breadcrumbs">
+			<h1 class="hide-accessible">#language ("breadcrumbs")</h1>
+
+			#breadcrumbs()
+		</nav>
 
 		#if ($selectable)
 			$theme.include($content_include)
@@ -63,7 +65,7 @@ $theme.include($body_top_include)
 
 			$theme.wrapPortlet("portlet.vm", $content_include)
 		#end
-	</div>
+	</section>
 
 	<footer id="footer" role="contentinfo">
 		<p class="powered-by">

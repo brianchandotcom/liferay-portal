@@ -3409,7 +3409,7 @@
 	<library>
 		<file-name>lib/portal/streambuffer.jar</file-name>
 		<version>0.9</version>
-		<project-name>XML Stream Buffer</project-name>
+		http://stax-ex.java.net</<project-name>XML Stream Buffer</project-name>
 		<project-url>http://java.net/projects/xmlstreambuffer</project-url>
 		<licenses>
 			<license>
@@ -3606,8 +3606,8 @@
 		<project-url>http://xiph.org/vorbis</project-url>
 		<licenses>
 			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+				<license-name>BSD Style License</license-name>
+				<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -3618,8 +3618,8 @@
 		<project-url>http://xiph.org/vorbis</project-url>
 		<licenses>
 			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+				<license-name>BSD Style License</license-name>
+				<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 			</license>
 		</licenses>
 	</library>

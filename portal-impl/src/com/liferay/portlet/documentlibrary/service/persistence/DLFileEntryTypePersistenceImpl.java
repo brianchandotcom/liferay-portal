@@ -2337,8 +2337,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				q.addEntity(_FILTER_ENTITY_TABLE, DLFileEntryTypeImpl.class);
 			}
 
-			QueryPos qPos = QueryPos.getInstance(q);
-
 			return (List<DLFileEntryType>)QueryUtil.list(q, getDialect(),
 				start, end);
 		}
@@ -2481,8 +2479,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				session = openSession();
 
 				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
 
 				if (!pagination) {
 					list = (List<DLFileEntryType>)QueryUtil.list(q,
@@ -2633,8 +2629,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 				Query q = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
 				count = (Long)q.uniqueResult();
 
 				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_GROUPID,
@@ -2755,8 +2749,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 			q.addScalar(COUNT_COLUMN_NAME,
 				com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
 
 			Long count = (Long)q.uniqueResult();
 

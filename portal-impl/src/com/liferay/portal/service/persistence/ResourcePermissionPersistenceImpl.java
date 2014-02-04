@@ -643,8 +643,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 				Query q = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
 				if (!pagination) {
 					list = (List<ResourcePermission>)QueryUtil.list(q,
 							getDialect(), start, end, false);
@@ -793,8 +791,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				session = openSession();
 
 				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
 
 				count = (Long)q.uniqueResult();
 

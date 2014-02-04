@@ -224,6 +224,8 @@
 		<staged-model-data-handler-class>com.liferay.portlet.documentlibrary.lar.RepositoryStagedModelDataHandler</staged-model-data-handler-class>
 		<social-activity-interpreter-class>com.liferay.portlet.documentlibrary.social.DLFileEntryActivityInterpreter</social-activity-interpreter-class>
 		<social-activity-interpreter-class>com.liferay.portlet.documentlibrary.social.DLFolderActivityInterpreter</social-activity-interpreter-class>
+		<user-notification-definitions>com/liferay/portlet/documentlibrary/document-library-user-notification-definitions.xml</user-notification-definitions>
+		<user-notification-handler-class>com.liferay.portlet.documentlibrary.notifications.DocumentLibraryUserNotificationHandler</user-notification-handler-class>
 		<webdav-storage-token>document_library</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>

@@ -2771,8 +2771,8 @@
 		<project-url>http://mimepull.java.net</project-url>
 		<licenses>
 			<license>
-				<license-name>CDDL 1.0</license-name>
-				<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
+				<license-name>CDDL 1.1</license-name>
+				<license-url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</license-url>
 			</license>
 		</licenses>
 	</library>

@@ -1,0 +1,531 @@
+<definition component-name="social-office-site">
+	<property name="hook.plugins.includes" value="deploy-listener-hook,portal-compat-hook,so-activities-hook,so-hook" />
+	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
+	<property name="theme.plugins.includes" value="so-theme" />
+	<property name="web.plugins.includes" value="resources-importer-web" />
+
+	<set-up>
+		<execute macro="SOUser#firstLoginPG" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="Open Site Description" />
+			<var name="siteName" value="Open Site Name" />
+			<var name="siteType" value="Open" />
+		</execute>
+	</set-up>
+
+	<command name="ViewDMFolderDocumentSiteActivitiesSite" priority="5">
+		<var name="adminEmailAddress" value="test@liferay.com" />
+		<var name="adminName" value="Test Test" />
+		<var name="dmDocumentDescription" value="DM Folder Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentSize" value="21.5k" />
+		<var name="dmDocumentSizeRoundedUp" value="22k" />
+		<var name="dmDocumentTitle" value="DM Folder Document Title" />
+		<var name="dmFolderDescription" value="DM Folder Description" />
+		<var name="dmFolderName" value="DM Folder Name" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="siteURL" value="true" />
+		<var name="soPage" value="true" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}2" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" >
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}1" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}1" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="documentTitleRow" value="1" />
+		<var name="row" value="1" />
+
+		<execute macro="SOActivities#viewMultipleDocumentsActivityEntry">
+			<var name="documentsAction" value="Uploaded 2 new documents." />
+			<var name="number" value="${number}" />
+			<var name="userName" value="Test" />
+		</execute>
+
+		<var name="key_row" value="${row}" />
+
+		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE" value1="${dmDocumentTitle}${documentTitleRow}" />
+
+		<execute macro="SODocuments#viewPGDocumentDetailView">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}${documentTitleRow}" />
+			<var name="dmDocumentSize" value="${dmDocumentSize}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}${documentTitleRow}" />
+			<var name="dmDocumentUploader" value="${adminName}" />
+			<var name="dmDocumentVersionNumber" value="1.0" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="documentTitleRow" value="${documentTitleRow?increment()}" />
+
+		<execute action="SOActivities#click" locator-key1="ACTIVITIES_DOCUMENT_TITLE" value1="${dmDocumentTitle}${documentTitleRow}" />
+
+		<execute macro="SODocuments#viewPGDocumentDetailView">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}${documentTitleRow}" />
+			<var name="dmDocumentSize" value="${dmDocumentSize}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}${documentTitleRow}" />
+			<var name="dmDocumentUploader" value="${adminName}" />
+			<var name="dmDocumentVersionNumber" value="1.0" />
+		</execute>
+	</command>
+
+	<command name="ViewMBCategoryThreadMessageSiteActivitiesSite" priority="5">
+		<var name="adminEmailAddress" value="test@liferay.com" />
+		<var name="adminFirstName" value="Test" />
+		<var name="adminName" value="Test Test" />
+		<var name="categoryName" value="MB Category Name" />
+		<var name="forumsAction" value="Wrote a new forum post in" />
+		<var name="password" value="test" />
+		<var name="roleName" value="Social Office" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="threadBody" value="MB Category Thread Message Body" />
+		<var name="threadSubject" value="MB Category Thread Message Subject" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}1" />
+			<var name="number" value="${number}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}1" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG" >
+			<var name="threadBody" value="${threadBody}1" />
+			<var name="threadSubject" value="${threadSubject}1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}2" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG" >
+			<var name="threadBody" value="${threadBody}2" />
+			<var name="threadSubject" value="${threadSubject}2" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewForumsActivityEntry">
+			<var name="action" value="${forumsAction} ${categoryName}2." />
+			<var name="row" value="01" />
+			<var name="threadBody" value="${threadBody}2" />
+			<var name="threadSubject" value="${threadSubject}2" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewForumsActivityEntry">
+			<var name="action" value="${forumsAction} ${categoryName}1." />
+			<var name="row" value="02" />
+			<var name="threadBody" value="${threadBody}1" />
+			<var name="threadSubject" value="${threadSubject}1" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+	</command>
+
+	<command name="ViewSiteActivitiesDashboard" priority="5">
+		<var name="adminEmailAddress" value="test@liferay.com" />
+		<var name="adminName" value="Test Test" />
+		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
+		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
+		<var name="bookmarksEntryUrl" value="http://www.google.com" />
+		<var name="categoryName" value="MB Category Name" />
+		<var name="dmDocumentDescription" value="DM Folder Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentTitle" value="DM Folder Document Title" />
+		<var name="dmFolderDescription" value="DM Folder Description" />>
+		<var name="dmFolderName" value="DM Folder Name" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="eventDescription" value="Calendar Event Description" />
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="password" value="test" />
+		<var name="roleName" value="Social Office" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="threadBody" value="MB Category Thread Message Body" />
+		<var name="threadSubject" value="MB Category Thread Message Subject" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+		<var name="wikiPageContentEdit" value="Wiki FrontPage Content Edit" />
+
+		<execute macro="SOActivities#addSiteContent">
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}" />
+			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />>
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="eventDescription" value="${eventDescription}" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${adminName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageContentEdit" value="${wikiPageContentEdit}" />
+		</execute>
+
+		<execute macro="SOUserBar#dashboardPG">
+			<var name="userName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewSiteContent">
+			<var name="blogsAction" value="Wrote a new blog entry." />
+			<var name="bookmarkAction" value="Added a new bookmark." />
+			<var name="calendarAction" value="Added a new calendar event." />
+			<var name="dmDocumentVersionNumber" value="1.0" />
+			<var name="documentsAction" value="Uploaded a new document in the DM Folder Name folder." />
+			<var name="forumsAction" value="Wrote a new forum post in MB Category Name." />
+			<var name="userName" value="Test in ${siteName}" />
+			<var name="wikiAction" value="Made 2 updates to a wiki page in the Main wiki." />
+			<var name="wikiPageContent" value="${wikiPageContentEdit}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+	</command>
+
+	<command name="ViewSiteActivitiesProfile" priority="5">
+		<var name="adminEmailAddress" value="test@liferay.com" />
+		<var name="adminName" value="Test Test" />
+		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
+		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
+		<var name="bookmarksEntryUrl1" value="http://www.google.com" />
+		<var name="bookmarksEntryUrl2" value="http://www.yahoo.com" />
+		<var name="categoryName" value="MB Category Name" />
+		<var name="dmDocumentDescription" value="DM Folder Document Description" />
+		<var name="dmDocumentFile1" value="Document_1.doc" />
+		<var name="dmDocumentFile2" value="Document_2.doc" />
+		<var name="dmDocumentTitle" value="DM Folder Document Title" />
+		<var name="dmFolderDescription" value="DM Folder Description" />
+		<var name="dmFolderName" value="DM Folder Name" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="eventDescription" value="Calendar Event Description" />
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="password" value="test" />
+		<var name="roleName" value="Social Office" />
+		<var name="roleName2" value="Site Administrator" />
+		<var name="roleType2" value="Site" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="threadBody" value="MB Category Thread Message Body" />
+		<var name="threadSubject" value="MB Category Thread Message Subject" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+		<var name="wikiPageContentEdit1" value="Wiki FrontPage Content Edit1" />
+		<var name="wikiPageContentEdit2" value="Wiki FrontPage Content Edit2" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="roleName" value="${roleName2}" />
+			<var name="roleType" value="${roleType2}" />
+			<var name="searchTerm" value="${roleName2}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOActivities#addSiteContent">
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}01" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}01" />
+			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl1}" />
+			<var name="categoryName" value="${categoryName}01" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}01" />
+			<var name="dmDocumentFile" value="${dmDocumentFile1}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}01" />
+			<var name="dmFolderDescription" value="${dmFolderDescription}01" />
+			<var name="dmFolderName" value="${dmFolderName}01" />
+			<var name="entryContent" value="${entryContent}01" />
+			<var name="entryTitle" value="${entryTitle}01" />
+			<var name="eventDescription" value="${eventDescription}01" />
+			<var name="eventTitle" value="${eventTitle}01" />
+			<var name="siteName" value="${siteName1}" />
+			<var name="threadBody" value="${threadBody}01" />
+			<var name="threadSubject" value="${threadSubject}01" />
+			<var name="wikiPageContent" value="${wikiPageContent}01" />
+			<var name="wikiPageContentEdit" value="${wikiPageContentEdit1}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+
+		<execute macro="SOActivities#addSiteContent">
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}02" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}02" />
+			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl2}" />
+			<var name="categoryName" value="${categoryName}02" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}02" />
+			<var name="dmDocumentFile" value="${dmDocumentFile2}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}02" />
+			<var name="dmFolderDescription" value="${dmFolderDescription}02" />
+			<var name="dmFolderName" value="${dmFolderName}02" />
+			<var name="entryContent" value="${entryContent}02" />
+			<var name="entryTitle" value="${entryTitle}02" />
+			<var name="eventDescription" value="${eventDescription}02" />
+			<var name="eventTitle" value="${eventTitle}02" />
+			<var name="siteName" value="${siteName}" />
+			<var name="threadBody" value="${threadBody}02" />
+			<var name="threadSubject" value="${threadSubject}02" />
+			<var name="wikiEditOnly" value="true" />
+			<var name="wikiPageContentEdit" value="${wikiPageContentEdit2}" />
+		</execute>
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOActivities#viewSiteContent">
+			<var name="blogsAction" value="Wrote a new blog entry." />
+			<var name="bookmarkAction" value="Added a new bookmark." />
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}02" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}02" />
+			<var name="calendarAction" value="Added a new calendar event." />
+			<var name="categoryName" value="${categoryName}02" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}02" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}02" />
+			<var name="dmDocumentVersionNumber" value="1.0" />
+			<var name="documentsAction" value="Uploaded a new document in the ${dmFolderName}02 folder." />
+			<var name="entryContent" value="${entryContent}02" />
+			<var name="entryTitle" value="${entryTitle}02" />
+			<var name="eventDescription" value="${eventDescription}02" />
+			<var name="forumsAction" value="Wrote a new forum post in ${categoryName}." />
+			<var name="siteName" value="${siteName}" />
+			<var name="threadBody" value="${threadBody}02" />
+			<var name="threadSubject" value="${threadSubject}02" />
+			<var name="userName" value="${userFirstName} in ${siteName}" />
+			<var name="wikiAction" value="Updated a wiki page in the Main wiki." />
+			<var name="wikiPageContent" value="${wikiPageContentEdit2}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOActivities#viewSiteContent">
+			<var name="blogsAction" value="Wrote a new blog entry." />
+			<var name="bookmarkAction" value="Added a new bookmark." />
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}01" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}01" />
+			<var name="calendarAction" value="Added a new calendar event." />
+			<var name="categoryName" value="${categoryName}01" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}01" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}01" />
+			<var name="dmDocumentVersionNumber" value="1.0" />
+			<var name="documentsAction" value="Uploaded a new document in the ${dmFolderName}01 folder." />
+			<var name="entryContent" value="${entryContent}01" />
+			<var name="entryTitle" value="${entryTitle}01" />
+			<var name="eventDescription" value="${eventDescription}01" />
+			<var name="forumsAction" value="Wrote a new forum post in ${categoryName}." />
+			<var name="siteName" value="${siteName}" />
+			<var name="threadBody" value="${threadBody}01" />
+			<var name="threadSubject" value="${threadSubject}01" />
+			<var name="userName" value="Test in ${siteName}" />
+			<var name="wikiAction" value="Made 2 updates to a wiki page in the Main wiki." />
+			<var name="wikiPageContent" value="${wikiPageContentEdit2}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+	</command>
+
+	<command name="ViewSiteActivitiesSites" priority="5">
+		<var name="adminEmailAddress" value="test@liferay.com" />
+		<var name="adminName" value="Test Test" />
+		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
+		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
+		<var name="bookmarksEntryUrl" value="http://www.google.com" />
+		<var name="categoryName" value="MB Category Name" />
+		<var name="dmDocumentDescription" value="DM Folder Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentTitle" value="DM Folder Document Title" />
+		<var name="dmFolderDescription" value="DM Folder Description" />>
+		<var name="dmFolderName" value="DM Folder Name" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="eventDescription" value="Calendar Event Description" />
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="password" value="test" />
+		<var name="roleName" value="Social Office" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="siteURL" value="true" />
+		<var name="soPage" value="true" />
+		<var name="threadBody" value="MB Category Thread Message Body" />
+		<var name="threadSubject" value="MB Category Thread Message Subject" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+		<var name="wikiPageContentEdit" value="Wiki FrontPage Content Edit" />
+
+		<execute macro="SOActivities#addSiteContent">
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}" />
+			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />>
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="eventDescription" value="${eventDescription}" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${adminName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageContentEdit" value="${wikiPageContentEdit}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOActivities#viewSiteContent">
+			<var name="blogsAction" value="Wrote a new blog entry." />
+			<var name="bookmarkAction" value="Added a new bookmark." />
+			<var name="calendarAction" value="Added a new calendar event." />
+			<var name="dmDocumentVersionNumber" value="1.0" />
+			<var name="documentsAction" value="Uploaded a new document in the DM Folder Name folder." />
+			<var name="forumsAction" value="Wrote a new forum post in MB Category Name." />
+			<var name="userName" value="Test" />
+			<var name="wikiAction" value="Made 2 updates to a wiki page in the Main wiki." />
+			<var name="wikiPageContent" value="${wikiPageContentEdit}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="SOSite#tearDownCP" />
+
+		<execute macro="SOUser#tearDownCP" />
+	</tear-down>
+</definition>

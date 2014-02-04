@@ -1,0 +1,76 @@
+<definition>
+	<command name="addBookmarksEntry">
+		<execute action="SOSiteHome#click" locator-key1="BOOKMARKS_ADD_ENTRY_LINK" />
+
+		<execute action="SOSiteHomeBookmarksAdd#type" locator-key1="NAME_FIELD" value1="${bookmarksEntryName}" />
+		<execute action="SOSiteHomeBookmarksAdd#type" locator-key1="URL_FIELD" value1="${bookmarksEntryUrl}" />
+		<execute action="SOSiteHomeBookmarksAdd#type" locator-key1="DESCRIPTION_FIELD" value1="${bookmarksEntryDescription}" />
+		<execute action="SOSiteHomeBookmarksAdd#click" locator-key1="SAVE_BUTTON"  />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_bookmarksEntryName" value="${bookmarksEntryName}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="BOOKMARKS_ENTRY_LINK" value1="${bookmarksEntryName}" />
+	</command>
+
+	<command name="deleteBookmarksEntry">
+		<execute action="SOSiteHome#assertClick" locator-key1="BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
+		<execute action="SOSiteHome#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute action="SOSiteHome#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this?" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="BOOKMARKS_NO_ENTRIES_MESSAGE" value1="There are no entries." />
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="BOOKMARKS_ENTRY_LINK" />
+	</command>
+
+	<command name="editBookmarksEntry">
+		<execute action="SOSiteHome#assertClick" locator-key1="BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
+		<execute action="SOSiteHome#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="SOSiteHomeBookmarksAdd#type" locator-key1="NAME_FIELD" value1="${bookmarksEntryNameEdit}" />
+		<execute action="SOSiteHomeBookmarksAdd#type" locator-key1="URL_FIELD" value1="${bookmarksEntryUrlEdit}" />
+		<execute action="SOSiteHomeBookmarksAdd#type" locator-key1="DESCRIPTION_FIELD" value1="${bookmarksEntryDescriptionEdit}" />
+		<execute action="SOSiteHomeBookmarksAdd#click" locator-key1="SAVE_BUTTON"  />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_bookmarksEntryName" value="${bookmarksEntryNameEdit}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="BOOKMARKS_ENTRY_LINK" value1="${bookmarksEntryNameEdit}" />
+	</command>
+
+	<command name="viewBookmarksEntry">
+		<var name="key_bookmarksEntryName" value="${bookmarksEntryName}" />
+
+		<execute action="SOSiteHome#click" locator-key1="BOOKMARKS_ENTRY_LINK" />
+
+		<if>
+			<equals arg1="${bookmarksEntryUrl}" arg2="http://www.google.com" />
+			<then>
+				<execute action="SOSiteHome#selectWindow" locator-key1="BOOKMARKS_POP_UP_GOOGLE" />
+				<execute action="SOSiteHome#assertElementPresent" locator-key1="BOOKMARKS_POP_UP_IMAGE_GOOGLE" />
+				<execute action="SOSiteHome#close" locator-key1="BOOKMARKS_POP_UP_GOOGLE" />
+			</then>
+			<elseif>
+				<equals arg1="${bookmarksEntryUrl}" arg2="http://www.yahoo.com" />
+				<then>
+					<execute action="SOSiteHome#selectWindow" locator-key1="BOOKMARKS_POP_UP_YAHOO" />
+					<execute action="SOSiteHome#assertElementPresent" locator-key1="BOOKMARKS_POP_UP_IMAGE_YAHOO" />
+					<execute action="SOSiteHome#close" locator-key1="BOOKMARKS_POP_UP_YAHOO" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOSiteHome#selectWindow" locator-key1="BOOKMARKS_POP_UP_MSN" />
+				<execute action="SOSiteHome#assertElementPresent" locator-key1="BOOKMARKS_POP_UP_IMAGE_MSN" />
+				<execute action="SOSiteHome#close" locator-key1="BOOKMARKS_POP_UP_MSN" />
+			</else>
+		</if>
+
+		<execute action="SOSiteHome#assertClick" locator-key1="BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
+		<execute action="SOSiteHome#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="SOSiteHomeBookmarksAdd#assertTextEquals" locator-key1="NAME_FIELD" value1="${bookmarksEntryName}" />
+		<execute action="SOSiteHomeBookmarksAdd#assertTextEquals" locator-key1="URL_FIELD" value1="${bookmarksEntryUrl}" />
+		<execute action="SOSiteHomeBookmarksAdd#assertTextEquals" locator-key1="DESCRIPTION_FIELD" value1="${bookmarksEntryDescription}" />
+	</command>
+</definition>

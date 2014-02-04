@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_HEADER_TITLE</td>
+	<td>//h3[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

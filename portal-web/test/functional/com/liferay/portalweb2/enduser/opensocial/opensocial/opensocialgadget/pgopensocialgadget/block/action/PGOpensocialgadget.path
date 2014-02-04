@@ -31,7 +31,7 @@
 <tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
-	<td>Configure a gadget to be displayed in this portlet</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

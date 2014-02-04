@@ -2374,8 +2374,8 @@
 		<project-url>https://github.com/douglascrockford/JSON-java</project-url>
 		<licenses>
 			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+				<license-name>JSON License</license-name>
+				<license-url>https://github.com/douglascrockford/JSON-java/blob/master/README</license-url>
 			</license>
 		</licenses>
 		<comments>

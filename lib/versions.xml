@@ -2735,8 +2735,8 @@
 		<project-url>http://www.drewnoakes.com/code/exif</project-url>
 		<licenses>
 			<license>
-				<license-name>Public Domain</license-name>
-				<license-url>http://en.wikipedia.org/wiki/Public_domain</license-url>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 			</license>
 		</licenses>
 	</library>

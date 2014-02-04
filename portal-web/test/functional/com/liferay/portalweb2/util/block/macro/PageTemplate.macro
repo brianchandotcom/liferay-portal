@@ -23,6 +23,16 @@
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}" />
 	</command>
 
+	<command name="deleteCP">
+		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+
+		<execute action="CPPagetemplates#assertClick" locator-key1="PAGE_TEMPLATE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPPagetemplates#assertClick" locator-key1="PAGE_TEMPLATE_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPPagetemplates#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="editCP">
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
@@ -66,5 +76,12 @@
 				<execute action="CPPagetemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
+	</command>
+
+	<command name="viewDefaultCP">
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_1" value1="Blog" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_2" value1="Content Display Page" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_3" value1="Wiki" />
+		<execute action="CPPagetemplates#assertElementNotPresent" locator-key1="PAGE_TEMPLATE_TABLE_NAME_4" />
 	</command>
 </definition>

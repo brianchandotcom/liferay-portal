@@ -5,7 +5,7 @@
 		<execute action="CPSitetemplatesAdd#type" locator-key1="NAME_FIELD" value1="${siteTemplateName}" />
 
 		<if>
-			<equals arg1="${siteTemplateActive}" arg2="No" />
+			<equals arg1="${siteTemplateActive}" arg2="false" />
 			<then>
 				<execute action="CPSitetemplatesAdd#uncheck" locator-key1="ACTIVE_CHECKBOX" />
 			</then>
@@ -21,6 +21,17 @@
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 		<execute action="CPSitetemplatesConfiguration#assertTextEquals" locator-key1="SITE_TEMPLATE_NAME" value1="${siteTemplateName}" />
+	</command>
+
+	<command name="deleteCP">
+
+		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+		<execute action="CPSitetemplates#assertClick" locator-key1="SITE_TEMPLATE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSitetemplates#assertClick" locator-key1="SITE_TEMPLATE_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPSitetemplates#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editCP">
@@ -41,7 +52,7 @@
 		<execute action="CPSitetemplateSettings#type" locator-key1="NAME_FIELD" value1="${siteTemplateName} Edit" />
 
 		<if>
-			<equals arg1="${siteTemplateActiveEdit}" arg2="No" />
+			<equals arg1="${siteTemplateActiveEdit}" arg2="false" />
 			<then>
 				<execute action="CPSitetemplateSettings#uncheck" locator-key1="ACTIVE_CHECKBOX" />
 			</then>
@@ -69,6 +80,12 @@
 				<execute action="CPSitetemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
+	</command>
+
+	<command name="viewDefaultCP">
+		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_NAME_1" value1="Community Site" />
+		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_NAME_2" value1="Intranet Site" />
+		<execute action="CPSitetemplates#assertElementNotPresent" locator-key1="SITE_TEMPLATE_TABLE_NAME_3" />
 	</command>
 
 	<command name="viewEditCP">

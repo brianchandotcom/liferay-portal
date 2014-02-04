@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.NotificationConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
@@ -72,10 +73,10 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 
 		String title = StringPool.BLANK;
 
-		if (notificationType == 0) {
+		if (notificationType == NotificationConstants.TYPE_ADD_ENTRY) {
 			title = "x-wrote-a-new-blog-entry";
 		}
-		else if (notificationType == 1) {
+		else if (notificationType == NotificationConstants.TYPE_UPDATE_ENTRY) {
 			title = "x-updated-a-blog-entry";
 		}
 

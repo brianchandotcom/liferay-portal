@@ -2445,8 +2445,8 @@
 		<project-url>https://jstl.dev.java.net</project-url>
 		<licenses>
 			<license>
-				<license-name>LGPL 2.1</license-name>
-				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+				<license-name>CDDL 1.1</license-name>
+				<license-url>http://web.archive.org/web/20090305064954/http://www.sun.com/cddl/cddl.html</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -2457,8 +2457,8 @@
 		<project-url>https://jstl.dev.java.net</project-url>
 		<licenses>
 			<license>
-				<license-name>LGPL 2.1</license-name>
-				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+				<license-name>CDDL 1.1</license-name>
+				<license-url>http://web.archive.org/web/20090305064954/http://www.sun.com/cddl/cddl.html</license-url>
 			</license>
 		</licenses>
 	</library>

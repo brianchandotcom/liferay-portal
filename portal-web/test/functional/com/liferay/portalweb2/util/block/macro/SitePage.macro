@@ -130,6 +130,20 @@
 		<execute action="CPBlogs#assertTextNotPresent" locator-key1="PORTLET_TITLE" value1="Blogs" />
 	</command>
 
+	<command name="deleteSitepagesCP">
+		<while>
+			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_2" />
+			<then>
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_2" />
+				<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_DELETE" value1="Delete" />
+
+				<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete the selected page?" />
+
+				<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</then>
+		</while>
+	</command>
+
 	<command name="deleteSitepagesPG">
 		<execute macro="Page#openURL" />
 
@@ -159,7 +173,7 @@
 		<execute action="CPSitepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
 
 		<if>
-			<condition action="CPSitepages#isElementNotPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+			<condition action="CPSitepages#isNotVisible" locator-key1="PAGE_TREE_PAGE_LINK_1" />
 			<then>
 				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
 			</then>
@@ -171,7 +185,7 @@
 		<execute action="CPSitepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_2" />
 
 		<if>
-			<condition action="CPSitepages#isElementNotPresent" locator-key1="PAGE_TREE_PAGE_LINK_2" />
+			<condition action="CPSitepages#isNotVisible" locator-key1="PAGE_TREE_PAGE_LINK_2" />
 			<then>
 				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_ARROW_1" />
 			</then>

@@ -368,6 +368,43 @@
 		</execute>
 	</command>
 
+	<command name="DeleteSitePages" priority="4">
+		<var name="portletName" value="Site Pages" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageNameList" value="Site Page 1,Site Page 2,Site Page 3" />
+		<var name="sitePagePrivacy" value="Public" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<for list="${sitePageNameList}" param="sitePageName">
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Sites" />
+			</execute>
+
+			<execute macro="SitePage#addCP">
+				<var name="siteName" value="${siteName}" />
+				<var name="sitePageName" value="${sitePageName}" />
+				<var name="sitePagePrivacy" value="Public" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPagesCP" >
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="SitePage#deleteSitepagesCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${sitePageName2}" />
+		</execute>
+	</command>
+
 	<command name="SaveEmbeddedPageType" priority="4">
 		<var name="siteName" value="Site Name" />
 		<var name="sitePageName" value="Site Page" />

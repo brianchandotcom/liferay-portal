@@ -153,6 +153,12 @@
 		</default>
 	</command>
 
+	<command name="isNotVisible">
+		<default>
+			<execute function="IsNotVisible#isNotVisible" />
+		</default>
+	</command>
+
 	<command name="isTextEqual">
 		<case comparator="contains" locator1="/input">
 			<execute function="IsTextEqual#isValue" />
@@ -170,6 +176,12 @@
 
 		<default>
 			<execute function="IsTextNotEqual#isNotText" />
+		</default>
+	</command>
+
+	<command name="isVisible">
+		<default>
+			<execute function="IsVisible#isVisible" />
 		</default>
 	</command>
 

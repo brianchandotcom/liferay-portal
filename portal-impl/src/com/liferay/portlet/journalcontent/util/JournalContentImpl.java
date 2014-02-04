@@ -28,7 +28,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
@@ -140,6 +139,13 @@ public class JournalContentImpl implements JournalContent {
 
 		if (themeDisplay != null) {
 			try {
+				if (!JournalArticlePermission.contains(
+						themeDisplay.getPermissionChecker(), groupId, articleId,
+						ActionKeys.VIEW)) {
+
+					return null;
+				}
+
 				Layout layout = themeDisplay.getLayout();
 
 				LayoutSet layoutSet = layout.getLayoutSet();
@@ -170,19 +176,6 @@ public class JournalContentImpl implements JournalContent {
 
 				portalCache.put(key, articleDisplay);
 			}
-		}
-
-		try {
-			if (PropsValues.JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED &&
-				(articleDisplay != null) && (themeDisplay != null) &&
-				!JournalArticlePermission.contains(
-					themeDisplay.getPermissionChecker(), groupId, articleId,
-					ActionKeys.VIEW)) {
-
-				articleDisplay = null;
-			}
-		}
-		catch (Exception e) {
 		}
 
 		if (_log.isDebugEnabled()) {

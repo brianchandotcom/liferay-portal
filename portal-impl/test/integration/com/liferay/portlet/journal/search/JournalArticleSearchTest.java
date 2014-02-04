@@ -111,6 +111,11 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected boolean checkBaseModelPermission() {
+		return PropsValues.JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED;
+	}
+
+	@Override
 	protected void expireBaseModelVersions(
 			BaseModel<?> baseModel, boolean expireAllVersions,
 			ServiceContext serviceContext)

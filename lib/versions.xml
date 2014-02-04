@@ -435,14 +435,14 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/development/jnet.jar</file-name>
-		<version></version>
-		<project-name>jnet</project-name>
-		<project-url>http://jnet.dev.java.net</project-url>
+		<file-name>lib/development/jserrorcollector.jar</file-name>
+		<version>c7d2d9161321e9aa09bbbf566bce2922d169b9dd</version>
+		<project-name>JSErrorCollector</project-name>
+		<project-url>https://github.com/mguillem/JSErrorCollector</project-url>
 		<licenses>
 			<license>
-				<license-name>GPL 2.0</license-name>
-				<license-url>http://www.gnu.org/licenses/gpl-2.0.html</license-url>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -576,8 +576,8 @@
 		<project-url>http://code.google.com/p/objenesis</project-url>
 		<licenses>
 			<license>
-				<license-name>MIT License</license-name>
-				<license-url>http://opensource.org/licenses/MIT</license-url>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -1142,8 +1142,8 @@
 		<project-url>http://www.bouncycastle.org</project-url>
 		<licenses>
 			<license>
-				<license-name>BSD Style License</license-name>
-				<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+				<license-name>MIT License</license-name>
+				<license-url>http://opensource.org/licenses/MIT</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -1154,8 +1154,8 @@
 		<project-url>http://www.bouncycastle.org</project-url>
 		<licenses>
 			<license>
-				<license-name>BSD Style License</license-name>
-				<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+				<license-name>MIT License</license-name>
+				<license-url>http://opensource.org/licenses/MIT</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -1175,25 +1175,14 @@
 		</comments>
 	</library>
 	<library>
-		<file-name>lib/portal/bnd-repository.jar</file-name>
-		<version>2.1.0</version>
-		<project-name>Bndtools</project-name>
-		<project-url>http://bndtools.org/</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>lib/portal/bobo-browse.jar</file-name>
 		<version>3.2.0</version>
 		<project-name>Bob Browse</project-name>
 		<project-url>http://code.google.com/p/bobo-browse</project-url>
 		<licenses>
 			<license>
-				<license-name>LGPL 3</license-name>
-				<license-url>http://www.gnu.org/licenses/lgpl.html</license-url>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 			</license>
 		</licenses>
 		<comments>
@@ -1607,8 +1596,8 @@
 	<library>
 		<file-name>lib/portal/crypt.jar</file-name>
 		<version></version>
-		<project-name>Unix Crypt</project-name>
-		<project-url>http://www.dynamic.net.au/christos/crypt</project-url>
+		<project-name>Manticore UFC Crypt</project-name>
+		<project-url>http://manticore.2y.net/Java/examples/crypt.zip</project-url>
 		<licenses>
 			<license>
 				<license-name>LGPL 2.1</license-name>
@@ -1841,8 +1830,8 @@
 		<project-url>http://www.caucho.com/hessian</project-url>
 		<licenses>
 			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+				<license-name>Apache License 1.1</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-1.1</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -2090,11 +2079,11 @@
 		<file-name>lib/portal/java-diff.jar</file-name>
 		<version>1.0.5</version>
 		<project-name>Java Diff</project-name>
-		<project-url>http://www.incava.org/projects/java/java-diff</project-url>
+		<project-url>http://repo1.maven.org/maven2/org/incava/java-diff/1.1/</project-url>
 		<licenses>
 			<license>
-				<license-name>LGPL 2.1</license-name>
-				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+				<license-name>BSD Style License</license-name>
+				<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -2379,26 +2368,14 @@
 		</comments>
 	</library>
 	<library>
-		<file-name>lib/portal/jserrorcollector.jar</file-name>
-		<version>c7d2d9161321e9aa09bbbf566bce2922d169b9dd</version>
-		<project-name>JSErrorCollector</project-name>
-		<project-url>https://github.com/mguillem/JSErrorCollector</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>lib/portal/json-java.jar</file-name>
 		<version>c7d2d9161321e9aa09bbbf566bce2922d169b9dd</version>
 		<project-name>JSON in Java</project-name>
 		<project-url>https://github.com/douglascrockford/JSON-java</project-url>
 		<licenses>
 			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+				<license-name>JSON License</license-name>
+				<license-url>https://github.com/douglascrockford/JSON-java/blob/master/README</license-url>
 			</license>
 		</licenses>
 		<comments>
@@ -2468,8 +2445,8 @@
 		<project-url>https://jstl.dev.java.net</project-url>
 		<licenses>
 			<license>
-				<license-name>LGPL 2.1</license-name>
-				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+				<license-name>CDDL 1.1</license-name>
+				<license-url>http://web.archive.org/web/20090305064954/http://www.sun.com/cddl/cddl.html</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -2480,8 +2457,8 @@
 		<project-url>https://jstl.dev.java.net</project-url>
 		<licenses>
 			<license>
-				<license-name>LGPL 2.1</license-name>
-				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+				<license-name>CDDL 1.1</license-name>
+				<license-url>http://web.archive.org/web/20090305064954/http://www.sun.com/cddl/cddl.html</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -2528,8 +2505,8 @@
 		<project-url>http://www.jython.org</project-url>
 		<licenses>
 			<license>
-				<license-name>BSD Style License</license-name>
-				<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+				<license-name>Python Software Foundation License 2</license-name>
+				<license-url>http://www.jython.org/license.html</license-url>
 			</license>
 		</licenses>
 		<comments>
@@ -2758,8 +2735,8 @@
 		<project-url>http://www.drewnoakes.com/code/exif</project-url>
 		<licenses>
 			<license>
-				<license-name>Public Domain</license-name>
-				<license-url>http://en.wikipedia.org/wiki/Public_domain</license-url>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -2794,8 +2771,8 @@
 		<project-url>http://mimepull.java.net</project-url>
 		<licenses>
 			<license>
-				<license-name>CDDL 1.0</license-name>
-				<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
+				<license-name>CDDL 1.1</license-name>
+				<license-url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -2831,8 +2808,8 @@
 		<project-url>http://www.unidata.ucar.edu/packages/netcdf-java</project-url>
 		<licenses>
 			<license>
-				<license-name>LGPL 2.1</license-name>
-				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+				<license-name>Netcdf License</license-name>
+				<license-url>http://www.unidata.ucar.edu/software/netcdf/copyright.html</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -3432,7 +3409,7 @@
 	<library>
 		<file-name>lib/portal/streambuffer.jar</file-name>
 		<version>0.9</version>
-		<project-name>XML Stream Buffer</project-name>
+		http://stax-ex.java.net</<project-name>XML Stream Buffer</project-name>
 		<project-url>http://java.net/projects/xmlstreambuffer</project-url>
 		<licenses>
 			<license>
@@ -3629,8 +3606,8 @@
 		<project-url>http://xiph.org/vorbis</project-url>
 		<licenses>
 			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+				<license-name>BSD Style License</license-name>
+				<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -3641,8 +3618,8 @@
 		<project-url>http://xiph.org/vorbis</project-url>
 		<licenses>
 			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+				<license-name>BSD Style License</license-name>
+				<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -3853,6 +3830,17 @@
 			<license-name>Public Domain</license-name>
 			<license-url>http://en.wikipedia.org/wiki/Public_domain</license-url>
 		</license>
+	</library>
+	<library>
+		<file-name>osgi/lib/plugins/bnd-repository.jar</file-name>
+		<version>2.1.0</version>
+		<project-name>Bndtools</project-name>
+		<project-url>http://bndtools.org/</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
 	</library>
 	<library>
 		<file-name>osgi/lib/common/core/osgi.cmpn.jar</file-name>

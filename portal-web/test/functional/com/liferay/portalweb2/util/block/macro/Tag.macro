@@ -104,22 +104,14 @@
 			</then>
 		</if>
 
-		<execute action="PGBlogsAdd#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName1},${tagName2},${tagName3}" />
+		<for list="${tagNameList}" param="tagName">
+			<execute action="PGBlogsAdd#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+			<execute action="PGBlogsAdd#click" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />
+		</for>
+
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<var name="key_tagName" value="${tagName1}" />
-
-		<execute action="PGBlogs#assertTextEquals" locator-key1="TAG" value1="${tagName1}" />
-
-		<var name="key_tagName" value="${tagName2}" />
-
-		<execute action="PGBlogs#assertTextEquals" locator-key1="TAG" value1="${tagName2}" />
-
-		<var name="key_tagName" value="${tagName3}" />
-
-		<execute action="PGBlogs#assertTextEquals" locator-key1="TAG" value1="${tagName3}" />
 	</command>
 
 	<!--
@@ -366,6 +358,14 @@
 	<command name="viewFrontPageTagPG">
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TAG" value1="${wikiTagName}" />
+	</command>
+
+	<command name="viewMultipleViaBlogsPG">
+		<for list ="${tagNameList}" param="tagName">
+			<var name="key_tagName" value="${tagName}" />
+
+			<execute action="PGBlogs#assertTextEquals" locator-key1="TAG" value1="${tagName}" />
+		</for>
 	</command>
 
 	<command name="viewTagsCP">

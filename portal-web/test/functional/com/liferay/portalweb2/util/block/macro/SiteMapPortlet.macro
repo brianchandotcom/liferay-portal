@@ -1,0 +1,37 @@
+<definition>
+	<command name="viewCustomADTMultiColumnPG">
+		<for list="${listPageName}" param="pageName">
+			<var name="key_pageName" value="${pageName}" />
+			<execute action="PGSiteMapPortlet#assertTextEquals" locator-key1="ADT_MULTI_COLUMN_PAGE_DISPLAY" value1="${pageName}" />
+		</for>
+
+		<if>
+			<isset var="listChildPageName" />
+			<then>
+				<for list="${listChildPageName}" param="childPageName">
+					<var name="key_childPageName" value="${childPageName}" />
+
+					<execute action="PGSiteMapPortlet#assertTextEquals" locator-key1="ADT_MULTI_COLUMN_CHILD_PAGE_DISPLAY" value1="${childPageName}" />
+				</for>
+			</then>
+		</if>
+	</command>
+
+	<command name="viewDefaultPG">
+		<for list="${listPageName}" param="pageName">
+			<var name="key_pageName" value="${pageName}" />
+			<execute action="PGSiteMapPortlet#assertTextEquals" locator-key1="SITE_MAP_PAGE_DISPLAY" value1="${pageName}" />
+		</for>
+
+		<if>
+			<isset var="listChildPageName" />
+			<then>
+				<for list="${listChildPageName}" param="childPageName">
+					<var name="key_childPageName" value="${childPageName}" />
+
+					<execute action="PGSiteMapPortlet#assertTextEquals" locator-key1="SITE_MAP_CHILD_PAGE_DISPLAY" value1="${childPageName}" />
+				</for>
+			</then>
+		</if>
+	</command>
+</definition>

@@ -17,6 +17,10 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="MGPortlet#configureShowAllPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

@@ -52,7 +52,6 @@
 	</command>
 
 	<command name="addPGViaMG">
-		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no media files in this folder." />
 		<execute action="PGMediagalleryFolder#assertClick" locator-key1="FOLDER_MENU_ADD_MEDIA" value1="Add Media" />
 
 		<execute action="PGMediagallerySelectmediatype#selectFrame" locator-key1="SELECT_MEDIA_TYPE_IFRAME" />

@@ -6,8 +6,6 @@
 	</set-up>
 
 	<tear-down>
-		<var name="defaultADT" value="Full Content" />
-
 		<execute macro="BlogsEntry#tearDownCP" />
 
 		<execute macro="Page#gotoPG">
@@ -18,19 +16,16 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ApplicationDisplayTemplates#tearDownADTviaPortletPG">
-			<var name="defaultADT" value="${defaultADT}" />
-		</execute>
-
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="addPG" priority="5">
+	<command name="AddPG" priority="5">
 		<var name="adtFile" value="portlet_display_template_basic.ftl" />
 		<var name="adtType" value="Blogs" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="portletName" value="Blogs" />
+		<var name="siteName" value="Liferay" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -47,6 +42,7 @@
 		<execute macro="ApplicationDisplayTemplates#addPG">
 			<var name="adtFile" value="${adtFile}" />
 			<var name="adtType" value="${adtType}" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -60,9 +56,13 @@
 		<execute macro="ApplicationDisplayTemplates#viewADTviaPortletPG">
 			<var name="adtType" value="${adtType}" />
 		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#tearDownADTviaPortletPG">
+			<var name="defaultADT" value="Full Content" />
+		</execute>
 	</command>
 
-	<command name="addPGviaBlogs" priority="5">
+	<command name="AddPGviaBlogs" priority="5">
 		<var name="adtFile" value="portlet_display_template_basic.ftl" />
 		<var name="adtType" value="Blogs" />
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -93,6 +93,7 @@
 		<execute macro="ApplicationDisplayTemplates#addPG">
 			<var name="adtFile" value="${adtFile}" />
 			<var name="adtType" value="${adtType}" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -110,5 +111,9 @@
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_EDIT_1" value1="Edit" />
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_PERMISSIONS_1" value1="Permissions" />
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_RECYCLE_BIN_1" value1="Move to the Recycle Bin" />
+
+		<execute macro="ApplicationDisplayTemplates#tearDownADTviaPortletPG">
+			<var name="defaultADT" value="Full Content" />
+		</execute>
 	</command>
 </definition>

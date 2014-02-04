@@ -139,7 +139,7 @@
 <!--ASSET_ABSTRACT-->
 <tr>
 	<td>ASSET_ABSTRACT_TITLE</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//h3[@class='asset-title']/a</td>
+	<td>//h3[@class='asset-title']/a[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -154,7 +154,7 @@
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_DESCRIPTION</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//p[@class='asset-description']</td>
+	<td>//div[contains(.,'${key_assetTitle}')]//div[@class='asset-summary']</td>
 	<td></td>
 </tr>
 <tr>
@@ -164,7 +164,22 @@
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_READ_MORE</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//div[@class='asset-more']/a</td>
+	<td>//a[contains(.,'Read More')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_COMMENTS_BE_THE_FIRST</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/a[contains(.,'Be the first.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_COMMENTS_SUBCRIBE_TO_COMMENTS</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/span[@class='subscribe-link']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -331,14 +346,29 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--DISPLAY_TEMPLATE_FULL_CONTENT-->
+<!--DISPLAY_ICON-->
 <tr>
-	<td>DISPLAY_TEMPLATE_FULL_CONTENT_TWITTER</td>
+	<td>DISPLAY_ICON_PRINT</td>
+	<td>//div[contains(@class,'asset-actions')]/span/a[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_ICON_FLAG</td>
+	<td>//div[contains(@class,'asset-actions')]/div[@title='Flag']/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_ICON_EDIT</td>
+	<td>//div[contains(@class,'asset-actions')]/span/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_ICON_TWITTER</td>
 	<td>//li[@class='taglib-social-bookmark-twitter']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_TEMPLATE_FULL_CONTENT_GOOGLE_PLUS</td>
+	<td>DISPLAY_ICON_GOOGLE_PLUS</td>
 	<td>//li[@class='taglib-social-bookmark-plusone']</td>
 	<td></td>
 </tr>

@@ -8,4 +8,10 @@
 			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
 		</case>
 	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="ASSET_ABSTRACT_DESCRIPTION">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
 </definition>

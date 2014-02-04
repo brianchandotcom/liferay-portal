@@ -10,8 +10,8 @@
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
+	<td></td>
 	<td>PGADTConfiguration</td>
-	<td></td>
 </tr>
 <tr>
 	<td></td>
@@ -19,12 +19,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADT_CONFIGURATION_IFRAME</td>
-	<td>//iframe</td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortletConfiguration</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADT_CONFIGURATION_IFRAME_TOP</td>
+	<td></td>
 	<td></td>
 	<td></td>
 </tr>
@@ -36,7 +36,7 @@
 <tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
-	<td>You have successfully updated the setup. </td>
+	<td></td>
 </tr>
 <tr>
 	<td>SETUP</td>
@@ -44,13 +44,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_SETTINGS</td>
-	<td>//a[contains(.,'Display Settings')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MANAGE_DISPLAY_TEMPLATES_LINK</td>
-	<td>//a[@id='_86_selectDDMTemplate']/span[contains(.,'Manage Display Templates for Liferay')]</td>
+	<td>//span/a/span[contains(.,'Manage Display Templates')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,7 +55,7 @@
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//div[@class='button-holder ']/button[contains(.,' Save ')]</td>
+	<td>//button[contains(.,' Save ')]</td>
 	<td></td>
 </tr>
 </tbody>

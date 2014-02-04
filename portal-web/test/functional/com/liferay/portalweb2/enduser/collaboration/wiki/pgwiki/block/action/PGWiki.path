@@ -79,6 +79,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_BUTTON</td>
+	<td>//div[@class='page-actions top-actions']//a[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRINT_BUTTON</td>
+	<td>//div[@class='page-actions top-actions']//a[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RATINGS_LABEL</td>
+	<td>xPath=(//div[@class='rating-label'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RATINGS_AVERAGE</td>
+	<td>xPath=(//div[@class='rating-label'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WIKI_NODE_MAIN</td>
 	<td>//span[@class='nav-item-label' and contains(.,'Main')]</td>
 	<td></td>
@@ -174,6 +194,73 @@
 <tr>
 	<td>WIKI_PAGE_CHILD_PAGE_GENERIC</td>
 	<td>//div[@class='child-pages']/ul/li/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENTS-->
+<tr>
+	<td>COMMENTS_DROP_DOWN</td>
+	<td>//div[@id='wikiCommentsPanelContainer']//div[@class='accordion-toggle']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_BE_THE_FIRST_LINK</td>
+	<td>//a[contains(.,'Be the first.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_SUBSCRIBE_TO_COMMENTS_LINK</td>
+	<td>//span[contains(.,'Subscribe to Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADT_SOCIAL-->
+<tr>
+	<td>ADT_SOCIAL_WIKI_PAGE_TITLE</td>
+	<td>//h1[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_SOCIAL_WIKI_PAGE_BODY</td>
+	<td>//div[@class='wiki-content']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_SOCIAL_LAST_MODIFIED_MESSAGE</td>
+	<td>//div[@class='wiki-info']/span[contains(.,'Last Modified')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_SOCIAL_EDIT_ICON</td>
+	<td>//img[@title='FrontPage']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_SOCIAL_DETAILS_ICON</td>
+	<td>//img[@title='Details']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_SOCIAL_PRINT_ICON</td>
+	<td>//img[@title='Print']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_SOCIAL_TWITTER</td>
+	<td>//li[@class='taglib-social-bookmark-twitter']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_SOCIAL_GOOGLE_PLUS</td>
+	<td>//li[@class='taglib-social-bookmark-plusone']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -16,15 +16,12 @@
 
 <%@ include file="/html/portlet/language/init.jsp" %>
 
-<%
-String redirect = ParamUtil.getString(request, "redirect");
-%>
-
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
 	<aui:fieldset label="languages">
 		<aui:input name="preferences--languageIds--" type="hidden" />

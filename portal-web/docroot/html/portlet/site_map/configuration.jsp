@@ -17,18 +17,17 @@
 <%@ include file="/html/portlet/site_map/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 String rootNodeName = StringPool.BLANK;
 
 List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(layout.getGroupId(), layout.isPrivateLayout(), rootNodeName, locale);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
 	<aui:fieldset>
 		<aui:select label="root-layout" name="preferences--rootLayoutUuid--">

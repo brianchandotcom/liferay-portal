@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 try {
 	Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 
@@ -35,10 +33,11 @@ catch (NoSuchFolderException nsfe) {
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 	<aui:input name="preferences--mimeTypes--" type="hidden" />
 	<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= rootFolderId %>" />
 

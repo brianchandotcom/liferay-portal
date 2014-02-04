@@ -16,17 +16,14 @@
 
 <%@ include file="/html/portlet/navigation/init.jsp" %>
 
-<%
-String redirect = ParamUtil.getString(request, "redirect");
-%>
-
 <aui:row>
 	<aui:col width="<%= 50 %>">
 		<liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
+		<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
 		<aui:form action="<%= configurationURL %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+			<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
 			<aui:fieldset column="<%= true %>">
 				<aui:select name="preferences--displayStyle--">

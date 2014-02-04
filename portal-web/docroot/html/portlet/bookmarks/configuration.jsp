@@ -19,8 +19,6 @@
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2", "display-settings");
 
-String redirect = ParamUtil.getString(request, "redirect");
-
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", BookmarksUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", BookmarksUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
 
@@ -67,15 +65,17 @@ catch (NoSuchFolderException nsfe) {
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
 	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
 </liferay-portlet:renderURL>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL">
+	<portlet:param name="tabs2" value="<%= tabs2 %>" />
+</liferay-portlet:renderURL>
 
 <aui:form action="<%= configurationURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
 	<liferay-ui:tabs
 		names="display-settings,email-from,entry-added-email,entry-updated-email"

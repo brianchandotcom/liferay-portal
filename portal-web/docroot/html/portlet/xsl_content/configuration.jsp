@@ -16,15 +16,12 @@
 
 <%@ include file="/html/portlet/xsl_content/init.jsp" %>
 
-<%
-String redirect = ParamUtil.getString(request, "redirect");
-%>
-
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
 	<liferay-ui:error key="xmlUrl" message="please-enter-a-valid-xml-url" />
 	<liferay-ui:error key="xslUrl" message="please-enter-a-valid-xsl-url" />

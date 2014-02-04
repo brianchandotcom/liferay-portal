@@ -1130,8 +1130,8 @@
 		<project-url>http://www.bouncycastle.org</project-url>
 		<licenses>
 			<license>
-				<license-name>BSD Style License</license-name>
-				<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+				<license-name>MIT License</license-name>
+				<license-url>http://opensource.org/licenses/MIT</license-url>
 			</license>
 		</licenses>
 	</library>
@@ -1142,8 +1142,8 @@
 		<project-url>http://www.bouncycastle.org</project-url>
 		<licenses>
 			<license>
-				<license-name>BSD Style License</license-name>
-				<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+				<license-name>MIT License</license-name>
+				<license-url>http://opensource.org/licenses/MIT</license-url>
 			</license>
 		</licenses>
 	</library>

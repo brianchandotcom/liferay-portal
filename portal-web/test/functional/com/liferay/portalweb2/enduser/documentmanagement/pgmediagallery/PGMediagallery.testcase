@@ -297,6 +297,10 @@
 			<var name="mgFolderName" value="${mgFolderNameEdit}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DMFolder#viewPGViaMG">
 			<var name="mgFolderName" value="${mgFolderNameEdit}" />
 		</execute>

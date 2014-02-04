@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelper;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
@@ -47,7 +48,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateRange;
@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -87,7 +86,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -97,8 +95,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
@@ -130,7 +126,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -149,116 +144,36 @@ import org.xml.sax.InputSource;
  */
 public class ExportImportHelperImpl implements ExportImportHelper {
 
+	/**
+	 * @deprecated As of 7.0.0, moved to {@link
+	 *             ExportImportDateUtil.getCalendar(PortletRequest, String,
+	 *             boolean)}
+	 */
+	@Deprecated
 	@Override
 	public Calendar getCalendar(
 		PortletRequest portletRequest, String paramPrefix,
 		boolean timeZoneSensitive) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		int dateMonth = ParamUtil.getInteger(
-			portletRequest, paramPrefix + "Month");
-		int dateDay = ParamUtil.getInteger(portletRequest, paramPrefix + "Day");
-		int dateYear = ParamUtil.getInteger(
-			portletRequest, paramPrefix + "Year");
-		int dateHour = ParamUtil.getInteger(
-			portletRequest, paramPrefix + "Hour");
-		int dateMinute = ParamUtil.getInteger(
-			portletRequest, paramPrefix + "Minute");
-		int dateAmPm = ParamUtil.getInteger(
-			portletRequest, paramPrefix + "AmPm");
-
-		if (dateAmPm == Calendar.PM) {
-			dateHour += 12;
-		}
-
-		Locale locale = null;
-		TimeZone timeZone = null;
-
-		if (timeZoneSensitive) {
-			locale = themeDisplay.getLocale();
-			timeZone = themeDisplay.getTimeZone();
-		}
-		else {
-			locale = LocaleUtil.getDefault();
-			timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
-
-		calendar.set(Calendar.MONTH, dateMonth);
-		calendar.set(Calendar.DATE, dateDay);
-		calendar.set(Calendar.YEAR, dateYear);
-		calendar.set(Calendar.HOUR_OF_DAY, dateHour);
-		calendar.set(Calendar.MINUTE, dateMinute);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-
-		return calendar;
+		return ExportImportDateUtil.getCalendar(
+			portletRequest, paramPrefix, timeZoneSensitive);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, moved to {@link
+	 *             ExportImportDateUtil.getDateRange(PortletRequest, long,
+	 *             boolean, long, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public DateRange getDateRange(
 			PortletRequest portletRequest, long groupId, boolean privateLayout,
 			long plid, String portletId, String defaultRange)
 		throws Exception {
 
-		Date startDate = null;
-		Date endDate = null;
-
-		String range = ParamUtil.getString(
-			portletRequest, "range", defaultRange);
-
-		if (range.equals("dateRange")) {
-			Calendar startCalendar = getCalendar(
-				portletRequest, "startDate", true);
-
-			startDate = startCalendar.getTime();
-
-			Calendar endCalendar = getCalendar(portletRequest, "endDate", true);
-
-			endDate = endCalendar.getTime();
-		}
-		else if (range.equals("fromLastPublishDate")) {
-			long lastPublishDate = 0;
-
-			if (Validator.isNotNull(portletId) && (plid > 0)) {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-				PortletPreferences preferences =
-					PortletPreferencesFactoryUtil.getStrictPortletSetup(
-						layout, portletId);
-
-				lastPublishDate = GetterUtil.getLong(
-					preferences.getValue(
-						"last-publish-date", StringPool.BLANK));
-			}
-			else {
-				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-					groupId, privateLayout);
-
-				lastPublishDate = GetterUtil.getLong(
-					layoutSet.getSettingsProperty("last-publish-date"));
-			}
-
-			if (lastPublishDate > 0) {
-				endDate = new Date();
-
-				startDate = new Date(lastPublishDate);
-			}
-		}
-		else if (range.equals("last")) {
-			int rangeLast = ParamUtil.getInteger(portletRequest, "last");
-
-			Date now = new Date();
-
-			startDate = new Date(now.getTime() - (rangeLast * Time.HOUR));
-
-			endDate = now;
-		}
-
-		return new DateRange(startDate, endDate);
+		return ExportImportDateUtil.getDateRange(
+			portletRequest, groupId, privateLayout, plid, portletId,
+			defaultRange);
 	}
 
 	@Override

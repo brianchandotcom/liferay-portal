@@ -286,7 +286,7 @@
 		<execute macro="DMDocument#addPGViaMG">
 			<var name="mgDocumentDescription" value="${mgDocumentDescription}" />
 			<var name="mgDocumentFile" value="${mgDocumentFile}" />
-				<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
+			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
 			<var name="mgFolderName" value="${mgFolderName}" />
 		</execute>
 

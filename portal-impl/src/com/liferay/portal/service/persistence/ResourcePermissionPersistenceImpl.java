@@ -613,13 +613,11 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 			if (scopes.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < scopes.length; i++) {
-					query.append(_FINDER_COLUMN_SCOPE_SCOPE_2);
+				query.append(_FINDER_COLUMN_SCOPE_SCOPE_7);
 
-					if ((i + 1) < scopes.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(scopes));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -646,10 +644,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (scopes.length > 0) {
-					qPos.add(scopes);
-				}
 
 				if (!pagination) {
 					list = (List<ResourcePermission>)QueryUtil.list(q,
@@ -779,13 +773,11 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 			if (scopes.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < scopes.length; i++) {
-					query.append(_FINDER_COLUMN_SCOPE_SCOPE_2);
+				query.append(_FINDER_COLUMN_SCOPE_SCOPE_7);
 
-					if ((i + 1) < scopes.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(scopes));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -803,10 +795,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (scopes.length > 0) {
-					qPos.add(scopes);
-				}
 
 				count = (Long)q.uniqueResult();
 
@@ -828,6 +816,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	private static final String _FINDER_COLUMN_SCOPE_SCOPE_2 = "resourcePermission.scope = ?";
+	private static final String _FINDER_COLUMN_SCOPE_SCOPE_7 = "resourcePermission.scope IN (";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ROLEID = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED,
 			ResourcePermissionImpl.class,
@@ -3425,13 +3414,11 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 			if (roleIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < roleIds.length; i++) {
-					query.append(_FINDER_COLUMN_C_N_S_P_R_ROLEID_2);
+				query.append(_FINDER_COLUMN_C_N_S_P_R_ROLEID_7);
 
-					if ((i + 1) < roleIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(roleIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -3469,10 +3456,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 				if (bindPrimKey) {
 					qPos.add(primKey);
-				}
-
-				if (roleIds.length > 0) {
-					qPos.add(roleIds);
 				}
 
 				if (!pagination) {
@@ -3915,13 +3898,11 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 			if (roleIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < roleIds.length; i++) {
-					query.append(_FINDER_COLUMN_C_N_S_P_R_ROLEID_2);
+				query.append(_FINDER_COLUMN_C_N_S_P_R_ROLEID_7);
 
-					if ((i + 1) < roleIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(roleIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -3952,10 +3933,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 					qPos.add(primKey);
 				}
 
-				if (roleIds.length > 0) {
-					qPos.add(roleIds);
-				}
-
 				count = (Long)q.uniqueResult();
 
 				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_N_S_P_R,
@@ -3984,6 +3961,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_2 = "resourcePermission.primKey = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_PRIMKEY_3 = "(resourcePermission.primKey IS NULL OR resourcePermission.primKey = '') AND ";
 	private static final String _FINDER_COLUMN_C_N_S_P_R_ROLEID_2 = "resourcePermission.roleId = ?";
+	private static final String _FINDER_COLUMN_C_N_S_P_R_ROLEID_7 = "resourcePermission.roleId IN (";
 
 	public ResourcePermissionPersistenceImpl() {
 		setModelClass(ResourcePermission.class);

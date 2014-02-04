@@ -3390,13 +3390,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < categoryIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_C_CATEGORYID_2);
+			query.append(_FINDER_COLUMN_G_C_CATEGORYID_7);
 
-				if ((i + 1) < categoryIds.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(categoryIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 		}
@@ -3448,10 +3446,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-
-			if (categoryIds.length > 0) {
-				qPos.add(categoryIds);
-			}
 
 			return (List<MBThread>)QueryUtil.list(q, getDialect(), start, end);
 		}
@@ -3574,13 +3568,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < categoryIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_C_CATEGORYID_2);
+				query.append(_FINDER_COLUMN_G_C_CATEGORYID_7);
 
-					if ((i + 1) < categoryIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(categoryIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -3609,10 +3601,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				if (categoryIds.length > 0) {
-					qPos.add(categoryIds);
-				}
 
 				if (!pagination) {
 					list = (List<MBThread>)QueryUtil.list(q, getDialect(),
@@ -3756,13 +3744,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < categoryIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_C_CATEGORYID_2);
+				query.append(_FINDER_COLUMN_G_C_CATEGORYID_7);
 
-					if ((i + 1) < categoryIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(categoryIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -3782,10 +3768,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				if (categoryIds.length > 0) {
-					qPos.add(categoryIds);
-				}
 
 				count = (Long)q.uniqueResult();
 
@@ -3892,13 +3874,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < categoryIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_C_CATEGORYID_2);
+			query.append(_FINDER_COLUMN_G_C_CATEGORYID_7);
 
-				if ((i + 1) < categoryIds.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(categoryIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 		}
@@ -3924,10 +3904,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			qPos.add(groupId);
 
-			if (categoryIds.length > 0) {
-				qPos.add(categoryIds);
-			}
-
 			Long count = (Long)q.uniqueResult();
 
 			return count.intValue();
@@ -3942,6 +3918,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 	private static final String _FINDER_COLUMN_G_C_GROUPID_2 = "mbThread.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_CATEGORYID_2 = "mbThread.categoryId = ?";
+	private static final String _FINDER_COLUMN_G_C_CATEGORYID_7 = "mbThread.categoryId IN (";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NOTC = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC",
@@ -8788,13 +8765,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < categoryIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_C_S_CATEGORYID_5);
+			query.append(_FINDER_COLUMN_G_C_S_CATEGORYID_7);
 
-				if ((i + 1) < categoryIds.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(categoryIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -8850,10 +8825,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-
-			if (categoryIds.length > 0) {
-				qPos.add(categoryIds);
-			}
 
 			qPos.add(status);
 
@@ -8984,13 +8955,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < categoryIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_C_S_CATEGORYID_5);
+				query.append(_FINDER_COLUMN_G_C_S_CATEGORYID_7);
 
-					if ((i + 1) < categoryIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(categoryIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -9023,10 +8992,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				if (categoryIds.length > 0) {
-					qPos.add(categoryIds);
-				}
 
 				qPos.add(status);
 
@@ -9179,13 +9144,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < categoryIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_C_S_CATEGORYID_5);
+				query.append(_FINDER_COLUMN_G_C_S_CATEGORYID_7);
 
-					if ((i + 1) < categoryIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(categoryIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -9209,10 +9172,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				if (categoryIds.length > 0) {
-					qPos.add(categoryIds);
-				}
 
 				qPos.add(status);
 
@@ -9327,13 +9286,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < categoryIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_C_S_CATEGORYID_5);
+			query.append(_FINDER_COLUMN_G_C_S_CATEGORYID_7);
 
-				if ((i + 1) < categoryIds.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(categoryIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -9363,10 +9320,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			qPos.add(groupId);
 
-			if (categoryIds.length > 0) {
-				qPos.add(categoryIds);
-			}
-
 			qPos.add(status);
 
 			Long count = (Long)q.uniqueResult();
@@ -9383,8 +9336,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 	private static final String _FINDER_COLUMN_G_C_S_GROUPID_2 = "mbThread.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_S_CATEGORYID_2 = "mbThread.categoryId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_S_CATEGORYID_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_C_S_CATEGORYID_2) + ")";
+	private static final String _FINDER_COLUMN_G_C_S_CATEGORYID_7 = "mbThread.categoryId IN (";
 	private static final String _FINDER_COLUMN_G_C_S_STATUS_2 = "mbThread.status = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_NOTS = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
@@ -10280,13 +10232,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < categoryIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_C_NOTS_CATEGORYID_5);
+			query.append(_FINDER_COLUMN_G_C_NOTS_CATEGORYID_7);
 
-				if ((i + 1) < categoryIds.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(categoryIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -10342,10 +10292,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-
-			if (categoryIds.length > 0) {
-				qPos.add(categoryIds);
-			}
 
 			qPos.add(status);
 
@@ -10476,13 +10422,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < categoryIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_C_NOTS_CATEGORYID_5);
+				query.append(_FINDER_COLUMN_G_C_NOTS_CATEGORYID_7);
 
-					if ((i + 1) < categoryIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(categoryIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -10515,10 +10459,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				if (categoryIds.length > 0) {
-					qPos.add(categoryIds);
-				}
 
 				qPos.add(status);
 
@@ -10671,13 +10611,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < categoryIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_C_NOTS_CATEGORYID_5);
+				query.append(_FINDER_COLUMN_G_C_NOTS_CATEGORYID_7);
 
-					if ((i + 1) < categoryIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(categoryIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -10701,10 +10639,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				if (categoryIds.length > 0) {
-					qPos.add(categoryIds);
-				}
 
 				qPos.add(status);
 
@@ -10819,13 +10753,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < categoryIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_C_NOTS_CATEGORYID_5);
+			query.append(_FINDER_COLUMN_G_C_NOTS_CATEGORYID_7);
 
-				if ((i + 1) < categoryIds.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(categoryIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -10855,10 +10787,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			qPos.add(groupId);
 
-			if (categoryIds.length > 0) {
-				qPos.add(categoryIds);
-			}
-
 			qPos.add(status);
 
 			Long count = (Long)q.uniqueResult();
@@ -10875,8 +10803,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 	private static final String _FINDER_COLUMN_G_C_NOTS_GROUPID_2 = "mbThread.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_NOTS_CATEGORYID_2 = "mbThread.categoryId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_NOTS_CATEGORYID_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_C_NOTS_CATEGORYID_2) + ")";
+	private static final String _FINDER_COLUMN_G_C_NOTS_CATEGORYID_7 = "mbThread.categoryId IN (";
 	private static final String _FINDER_COLUMN_G_C_NOTS_STATUS_2 = "mbThread.status != ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NOTC_S = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,

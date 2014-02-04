@@ -6378,13 +6378,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		if (groupIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < groupIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_CPK_GROUPID_5);
+			query.append(_FINDER_COLUMN_G_CPK_GROUPID_7);
 
-				if ((i + 1) < groupIds.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(groupIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -6438,10 +6436,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			}
 
 			QueryPos qPos = QueryPos.getInstance(q);
-
-			if (groupIds.length > 0) {
-				qPos.add(groupIds);
-			}
 
 			qPos.add(classPK);
 
@@ -6563,13 +6557,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			if (groupIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < groupIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_CPK_GROUPID_5);
+				query.append(_FINDER_COLUMN_G_CPK_GROUPID_7);
 
-					if ((i + 1) < groupIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -6600,10 +6592,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (groupIds.length > 0) {
-					qPos.add(groupIds);
-				}
 
 				qPos.add(classPK);
 
@@ -6745,13 +6733,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			if (groupIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < groupIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_CPK_GROUPID_5);
+				query.append(_FINDER_COLUMN_G_CPK_GROUPID_7);
 
-					if ((i + 1) < groupIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -6773,10 +6759,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (groupIds.length > 0) {
-					qPos.add(groupIds);
-				}
 
 				qPos.add(classPK);
 
@@ -6883,13 +6865,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		if (groupIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < groupIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_CPK_GROUPID_5);
+			query.append(_FINDER_COLUMN_G_CPK_GROUPID_7);
 
-				if ((i + 1) < groupIds.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(groupIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -6917,10 +6897,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			if (groupIds.length > 0) {
-				qPos.add(groupIds);
-			}
-
 			qPos.add(classPK);
 
 			Long count = (Long)q.uniqueResult();
@@ -6936,8 +6912,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	private static final String _FINDER_COLUMN_G_CPK_GROUPID_2 = "ddmTemplate.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_CPK_GROUPID_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_CPK_GROUPID_2) + ")";
+	private static final String _FINDER_COLUMN_G_CPK_GROUPID_7 = "ddmTemplate.groupId IN (";
 	private static final String _FINDER_COLUMN_G_CPK_CLASSPK_2 = "ddmTemplate.classPK = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,

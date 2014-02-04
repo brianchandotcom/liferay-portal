@@ -8087,13 +8087,11 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if (classNameIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < classNameIds.length; i++) {
-					query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_2);
+				query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_7);
 
-					if ((i + 1) < classNameIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(classNameIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -8122,10 +8120,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(userId);
-
-				if (classNameIds.length > 0) {
-					qPos.add(classNameIds);
-				}
 
 				if (!pagination) {
 					list = (List<MBMessage>)QueryUtil.list(q, getDialect(),
@@ -8269,13 +8263,11 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if (classNameIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < classNameIds.length; i++) {
-					query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_2);
+				query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_7);
 
-					if ((i + 1) < classNameIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(classNameIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -8295,10 +8287,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(userId);
-
-				if (classNameIds.length > 0) {
-					qPos.add(classNameIds);
-				}
 
 				count = (Long)q.uniqueResult();
 
@@ -8321,6 +8309,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	private static final String _FINDER_COLUMN_U_C_USERID_2 = "mbMessage.userId = ? AND ";
 	private static final String _FINDER_COLUMN_U_C_CLASSNAMEID_2 = "mbMessage.classNameId = ?";
+	private static final String _FINDER_COLUMN_U_C_CLASSNAMEID_7 = "mbMessage.classNameId IN (";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
@@ -15040,13 +15029,11 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if (classNameIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < classNameIds.length; i++) {
-					query.append(_FINDER_COLUMN_U_C_S_CLASSNAMEID_5);
+				query.append(_FINDER_COLUMN_U_C_S_CLASSNAMEID_7);
 
-					if ((i + 1) < classNameIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(classNameIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -15079,10 +15066,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(userId);
-
-				if (classNameIds.length > 0) {
-					qPos.add(classNameIds);
-				}
 
 				qPos.add(status);
 
@@ -15235,13 +15218,11 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			if (classNameIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < classNameIds.length; i++) {
-					query.append(_FINDER_COLUMN_U_C_S_CLASSNAMEID_5);
+				query.append(_FINDER_COLUMN_U_C_S_CLASSNAMEID_7);
 
-					if ((i + 1) < classNameIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(classNameIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -15266,10 +15247,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				qPos.add(userId);
 
-				if (classNameIds.length > 0) {
-					qPos.add(classNameIds);
-				}
-
 				qPos.add(status);
 
 				count = (Long)q.uniqueResult();
@@ -15293,8 +15270,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	private static final String _FINDER_COLUMN_U_C_S_USERID_2 = "mbMessage.userId = ? AND ";
 	private static final String _FINDER_COLUMN_U_C_S_CLASSNAMEID_2 = "mbMessage.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_S_CLASSNAMEID_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_U_C_S_CLASSNAMEID_2) + ")";
+	private static final String _FINDER_COLUMN_U_C_S_CLASSNAMEID_7 = "mbMessage.classNameId IN (";
 	private static final String _FINDER_COLUMN_U_C_S_STATUS_2 = "mbMessage.status = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_S = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,

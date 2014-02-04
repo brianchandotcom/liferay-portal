@@ -4261,8 +4261,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 			qPos.add(groupId);
 
-			if (types.length > 0) {
-				qPos.add(types);
+			for (String type : types) {
+				if ((type != null) && !type.isEmpty()) {
+					qPos.add(type);
+				}
 			}
 
 			return (List<CalEvent>)QueryUtil.list(q, getDialect(), start, end);
@@ -4429,8 +4431,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				qPos.add(groupId);
 
-				if (types.length > 0) {
-					qPos.add(types);
+				for (String type : types) {
+					if ((type != null) && !type.isEmpty()) {
+						qPos.add(type);
+					}
 				}
 
 				if (!pagination) {
@@ -4623,8 +4627,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				qPos.add(groupId);
 
-				if (types.length > 0) {
-					qPos.add(types);
+				for (String type : types) {
+					if ((type != null) && !type.isEmpty()) {
+						qPos.add(type);
+					}
 				}
 
 				count = (Long)q.uniqueResult();
@@ -4788,8 +4794,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 			qPos.add(groupId);
 
-			if (types.length > 0) {
-				qPos.add(types);
+			for (String type : types) {
+				if ((type != null) && !type.isEmpty()) {
+					qPos.add(type);
+				}
 			}
 
 			Long count = (Long)q.uniqueResult();
@@ -6767,8 +6775,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 			qPos.add(groupId);
 
-			if (types.length > 0) {
-				qPos.add(types);
+			for (String type : types) {
+				if ((type != null) && !type.isEmpty()) {
+					qPos.add(type);
+				}
 			}
 
 			qPos.add(repeating);
@@ -6949,8 +6959,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				qPos.add(groupId);
 
-				if (types.length > 0) {
-					qPos.add(types);
+				for (String type : types) {
+					if ((type != null) && !type.isEmpty()) {
+						qPos.add(type);
+					}
 				}
 
 				qPos.add(repeating);
@@ -7159,8 +7171,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				qPos.add(groupId);
 
-				if (types.length > 0) {
-					qPos.add(types);
+				for (String type : types) {
+					if ((type != null) && !type.isEmpty()) {
+						qPos.add(type);
+					}
 				}
 
 				qPos.add(repeating);
@@ -7336,8 +7350,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 			qPos.add(groupId);
 
-			if (types.length > 0) {
-				qPos.add(types);
+			for (String type : types) {
+				if ((type != null) && !type.isEmpty()) {
+					qPos.add(type);
+				}
 			}
 
 			qPos.add(repeating);

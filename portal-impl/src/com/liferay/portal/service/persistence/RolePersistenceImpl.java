@@ -6669,13 +6669,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (types.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < types.length; i++) {
-				query.append(_FINDER_COLUMN_C_T_TYPE_2_SQL);
+			query.append(_FINDER_COLUMN_C_T_TYPE_7_SQL);
 
-				if ((i + 1) < types.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(types));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 		}
@@ -6726,10 +6724,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
-
-			if (types.length > 0) {
-				qPos.add(types);
-			}
 
 			return (List<Role>)QueryUtil.list(q, getDialect(), start, end);
 		}
@@ -6849,13 +6843,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			if (types.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < types.length; i++) {
-					query.append(_FINDER_COLUMN_C_T_TYPE_2);
+				query.append(_FINDER_COLUMN_C_T_TYPE_7);
 
-					if ((i + 1) < types.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(types));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -6884,10 +6876,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(companyId);
-
-				if (types.length > 0) {
-					qPos.add(types);
-				}
 
 				if (!pagination) {
 					list = (List<Role>)QueryUtil.list(q, getDialect(), start,
@@ -7027,13 +7015,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			if (types.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < types.length; i++) {
-					query.append(_FINDER_COLUMN_C_T_TYPE_2);
+				query.append(_FINDER_COLUMN_C_T_TYPE_7);
 
-					if ((i + 1) < types.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(types));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -7053,10 +7039,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(companyId);
-
-				if (types.length > 0) {
-					qPos.add(types);
-				}
 
 				count = (Long)q.uniqueResult();
 
@@ -7162,13 +7144,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (types.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < types.length; i++) {
-				query.append(_FINDER_COLUMN_C_T_TYPE_2_SQL);
+			query.append(_FINDER_COLUMN_C_T_TYPE_7_SQL);
 
-				if ((i + 1) < types.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(types));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 		}
@@ -7193,10 +7173,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			qPos.add(companyId);
 
-			if (types.length > 0) {
-				qPos.add(types);
-			}
-
 			Long count = (Long)q.uniqueResult();
 
 			return count.intValue();
@@ -7211,7 +7187,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 	private static final String _FINDER_COLUMN_C_T_COMPANYID_2 = "role.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_T_TYPE_2 = "role.type = ?";
+	private static final String _FINDER_COLUMN_C_T_TYPE_7 = "role.type IN (";
 	private static final String _FINDER_COLUMN_C_T_TYPE_2_SQL = "role.type_ = ?";
+	private static final String _FINDER_COLUMN_C_T_TYPE_7_SQL = "role.type_ IN (";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_T_S = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
 			RoleModelImpl.FINDER_CACHE_ENABLED, RoleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_S",

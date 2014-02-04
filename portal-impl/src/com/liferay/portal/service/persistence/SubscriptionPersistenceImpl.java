@@ -1847,13 +1847,11 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			if (classPKs.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < classPKs.length; i++) {
-					query.append(_FINDER_COLUMN_C_U_C_C_CLASSPK_2);
+				query.append(_FINDER_COLUMN_C_U_C_C_CLASSPK_7);
 
-					if ((i + 1) < classPKs.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(classPKs));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -1886,10 +1884,6 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 				qPos.add(userId);
 
 				qPos.add(classNameId);
-
-				if (classPKs.length > 0) {
-					qPos.add(classPKs);
-				}
 
 				if (!pagination) {
 					list = (List<Subscription>)QueryUtil.list(q, getDialect(),
@@ -2228,13 +2222,11 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			if (classPKs.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < classPKs.length; i++) {
-					query.append(_FINDER_COLUMN_C_U_C_C_CLASSPK_2);
+				query.append(_FINDER_COLUMN_C_U_C_C_CLASSPK_7);
 
-					if ((i + 1) < classPKs.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(classPKs));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -2259,10 +2251,6 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 				qPos.add(classNameId);
 
-				if (classPKs.length > 0) {
-					qPos.add(classPKs);
-				}
-
 				count = (Long)q.uniqueResult();
 
 				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_U_C_C,
@@ -2286,6 +2274,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	private static final String _FINDER_COLUMN_C_U_C_C_USERID_2 = "subscription.userId = ? AND ";
 	private static final String _FINDER_COLUMN_C_U_C_C_CLASSNAMEID_2 = "subscription.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_U_C_C_CLASSPK_2 = "subscription.classPK = ?";
+	private static final String _FINDER_COLUMN_C_U_C_C_CLASSPK_7 = "subscription.classPK IN (";
 
 	public SubscriptionPersistenceImpl() {
 		setModelClass(Subscription.class);

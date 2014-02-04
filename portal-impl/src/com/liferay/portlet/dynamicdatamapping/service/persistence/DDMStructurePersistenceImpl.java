@@ -2270,13 +2270,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		if (groupIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < groupIds.length; i++) {
-				query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+			query.append(_FINDER_COLUMN_GROUPID_GROUPID_7);
 
-				if ((i + 1) < groupIds.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(groupIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 		}
@@ -2326,10 +2324,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 
 			QueryPos qPos = QueryPos.getInstance(q);
-
-			if (groupIds.length > 0) {
-				qPos.add(groupIds);
-			}
 
 			return (List<DDMStructure>)QueryUtil.list(q, getDialect(), start,
 				end);
@@ -2444,13 +2438,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			if (groupIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < groupIds.length; i++) {
-					query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+				query.append(_FINDER_COLUMN_GROUPID_GROUPID_7);
 
-					if ((i + 1) < groupIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -2477,10 +2469,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (groupIds.length > 0) {
-					qPos.add(groupIds);
-				}
 
 				if (!pagination) {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -2610,13 +2598,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			if (groupIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < groupIds.length; i++) {
-					query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+				query.append(_FINDER_COLUMN_GROUPID_GROUPID_7);
 
-					if ((i + 1) < groupIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 			}
@@ -2634,10 +2620,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (groupIds.length > 0) {
-					qPos.add(groupIds);
-				}
 
 				count = (Long)q.uniqueResult();
 
@@ -2734,13 +2716,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		if (groupIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < groupIds.length; i++) {
-				query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+			query.append(_FINDER_COLUMN_GROUPID_GROUPID_7);
 
-				if ((i + 1) < groupIds.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(groupIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 		}
@@ -2764,10 +2744,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			if (groupIds.length > 0) {
-				qPos.add(groupIds);
-			}
-
 			Long count = (Long)q.uniqueResult();
 
 			return count.intValue();
@@ -2781,6 +2757,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "ddmStructure.groupId = ?";
+	private static final String _FINDER_COLUMN_GROUPID_GROUPID_7 = "ddmStructure.groupId IN (";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PARENTSTRUCTUREID =
 		new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,
@@ -6092,13 +6069,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		if (groupIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < groupIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_C_GROUPID_5);
+			query.append(_FINDER_COLUMN_G_C_GROUPID_7);
 
-				if ((i + 1) < groupIds.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(groupIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -6152,10 +6127,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			}
 
 			QueryPos qPos = QueryPos.getInstance(q);
-
-			if (groupIds.length > 0) {
-				qPos.add(groupIds);
-			}
 
 			qPos.add(classNameId);
 
@@ -6278,13 +6249,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			if (groupIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < groupIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_C_GROUPID_5);
+				query.append(_FINDER_COLUMN_G_C_GROUPID_7);
 
-					if ((i + 1) < groupIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -6315,10 +6284,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (groupIds.length > 0) {
-					qPos.add(groupIds);
-				}
 
 				qPos.add(classNameId);
 
@@ -6462,13 +6427,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			if (groupIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < groupIds.length; i++) {
-					query.append(_FINDER_COLUMN_G_C_GROUPID_5);
+				query.append(_FINDER_COLUMN_G_C_GROUPID_7);
 
-					if ((i + 1) < groupIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -6490,10 +6453,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (groupIds.length > 0) {
-					qPos.add(groupIds);
-				}
 
 				qPos.add(classNameId);
 
@@ -6600,13 +6559,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		if (groupIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			for (int i = 0; i < groupIds.length; i++) {
-				query.append(_FINDER_COLUMN_G_C_GROUPID_5);
+			query.append(_FINDER_COLUMN_G_C_GROUPID_7);
 
-				if ((i + 1) < groupIds.length) {
-					query.append(WHERE_OR);
-				}
-			}
+			query.append(StringUtil.merge(groupIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
 
 			query.append(StringPool.CLOSE_PARENTHESIS);
 
@@ -6634,10 +6591,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			if (groupIds.length > 0) {
-				qPos.add(groupIds);
-			}
-
 			qPos.add(classNameId);
 
 			Long count = (Long)q.uniqueResult();
@@ -6653,8 +6606,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	private static final String _FINDER_COLUMN_G_C_GROUPID_2 = "ddmStructure.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_GROUPID_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_G_C_GROUPID_2) + ")";
+	private static final String _FINDER_COLUMN_G_C_GROUPID_7 = "ddmStructure.groupId IN (";
 	private static final String _FINDER_COLUMN_G_C_CLASSNAMEID_2 = "ddmStructure.classNameId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C = new FinderPath(DDMStructureModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureModelImpl.FINDER_CACHE_ENABLED, DDMStructureImpl.class,

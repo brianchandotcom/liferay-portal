@@ -9,80 +9,121 @@
 </thead>
 <tbody>
 <tr>
-		<td>PAGE_NAME</td>
-		<td></td>
-		<td>BasePortletConfiguration</td>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>BasePortletConfiguration</td>
 </tr>
 <tr>
-		<td></td>
-		<td></td>
-		<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-		<td>CONFIGURATION_IFRAME</td>
-		<td>//iframe[@class='dialog-iframe-node ']</td>
-		<td></td>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
 </tr>
 <tr>
-		<td></td>
-		<td></td>
-		<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>
 <!--NAVIGATION-->
 <tr>
-		<td>NAVIGATION_SETUP</td>
-		<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Setup')]</td>
-		<td></td>
+	<td>NAVIGATION_SETUP</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Setup')]</td>
+	<td></td>
 </tr>
 <tr>
-		<td>NAVIGATION_PERMISSIONS</td>
-		<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Permissions')]</td>
-		<td></td>
+	<td>NAVIGATION_PERMISSIONS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
 </tr>
 <tr>
-		<td>NAVIGATION_COMMUNICATION</td>
-		<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Communications')]</td>
-		<td></td>
+	<td>NAVIGATION_COMMUNICATION</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Communications')]</td>
+	<td></td>
 </tr>
 <tr>
-		<td>NAVIGATION_SHARING</td>
-		<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Sharing')]</td>
-		<td></td>
+	<td>NAVIGATION_SHARING</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Sharing')]</td>
+	<td></td>
 </tr>
 <tr>
-		<td>NAVIGATION_SCOPE</td>
-		<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Scope')]</td>
-		<td></td>
+	<td>NAVIGATION_SCOPE</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Scope')]</td>
+	<td></td>
 </tr>
 <tr>
-		<td>NAVIGATION_DISPLAY_SETTINGS</td>
-		<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Display Settings')]</td>
-		<td></td>
+	<td>NAVIGATION_DISPLAY_SETTINGS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Display Settings')]</td>
+	<td></td>
 </tr>
 <tr>
-		<td>NAVIGATION_EMAIL_FROM</td>
-		<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Email From')]</td>
-		<td></td>
+	<td>NAVIGATION_EMAIL_FROM</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Email From')]</td>
+	<td></td>
 </tr>
 <tr>
-		<td>NAVIGATION_ADDED_EMAIL</td>
-		<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Added Email')]</td>
-		<td></td>
+	<td>NAVIGATION_ADDED_EMAIL</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Added Email')]</td>
+	<td></td>
 </tr>
 <tr>
-		<td>NAVIGATION_UPDATED_EMAIL</td>
-		<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Updated Email')]</td>
-		<td></td>
+	<td>NAVIGATION_UPDATED_EMAIL</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Updated Email')]</td>
+	<td></td>
 </tr>
 <tr>
-		<td>NAVIGATION_RSS</td>
-		<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'RSS')]</td>
-		<td></td>
+	<td>NAVIGATION_RSS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'RSS')]</td>
+	<td></td>
 </tr>
 <tr>
-		<td></td>
-		<td></td>
-		<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION_DISPLAY_SETTINGS-->
+<tr>
+	<td>NAVIGATION_DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT</td>
+	<td>//select[@id='_86_displayStyle']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_PRINT_CHECKBOX</td>
+	<td>//input[@id='_86_enablePrintCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_FLAGS_CHECKBOX</td>
+	<td>//input[@id='_86_enableFlagsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX</td>
+	<td>//input[@id='_86_enableRelatedAssetsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_RATINGS_CHECKBOX</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX</td>
+	<td>//input[@id='_86_enableCommentsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENT_RATINGS_CHECKBOX</td>
+	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX</td>
+	<td>//input[@id='_86_enableSocialBookmarksCheckbox']</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

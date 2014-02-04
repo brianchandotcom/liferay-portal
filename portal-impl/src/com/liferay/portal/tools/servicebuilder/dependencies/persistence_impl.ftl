@@ -1725,6 +1725,16 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 }
 
+<#function bindParameter finderColsList>
+	<#list finderColsList as finderCol>
+		<#if !finderCol.hasArrayableOperator() || finderCol.type == "String">
+			<#return true>
+		</#if>
+	</#list>
+
+	<#return false>
+</#function>
+
 <#macro finderQPos
 	_arrayable = false
 >

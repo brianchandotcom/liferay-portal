@@ -147,7 +147,9 @@ public int countBy${finder.name}(
 
 				Query q = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				<#if bindParameter(finderColsList)>
+					QueryPos qPos = QueryPos.getInstance(q);
+				</#if>
 
 				<@finderQPos
 					_arrayable=true
@@ -364,7 +366,9 @@ public int countBy${finder.name}(
 
 					Query q = session.createQuery(sql);
 
-					QueryPos qPos = QueryPos.getInstance(q);
+					<#if bindParameter(finderColsList)>
+						QueryPos qPos = QueryPos.getInstance(q);
+					</#if>
 
 					<@finderQPos
 						_arrayable=true
@@ -410,7 +414,9 @@ public int countBy${finder.name}(
 
 					q.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 
-					QueryPos qPos = QueryPos.getInstance(q);
+					<#if bindParameter(finderColsList)>
+						QueryPos qPos = QueryPos.getInstance(q);
+					</#if>
 
 					<@finderQPos
 						_arrayable=true

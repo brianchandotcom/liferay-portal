@@ -154,7 +154,7 @@ public class ComboServlet extends HttpServlet {
 			bytesArray = _bytesArrayPortalCache.get(modulePathsString);
 		}
 
-		if (bytesArray == null) {
+		if (bytesArray == null) { //Not in cache or rtl
 			ServletContext servletContext = getServletContext();
 
 			String rootPath = ServletContextUtil.getRootPath(servletContext);
@@ -176,10 +176,6 @@ public class ComboServlet extends HttpServlet {
 				byte[] bytes = new byte[0];
 
 				if (Validator.isNotNull(modulePath)) {
-					modulePath = StringUtil.replaceFirst(
-						modulePath, PortalUtil.getPathContext(),
-						StringPool.BLANK);
-
 					URL url = getResourceURL(
 						servletContext, rootPath, modulePath);
 

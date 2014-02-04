@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -85,7 +85,7 @@ public class ComboServlet extends HttpServlet {
 	}
 
 	protected void doService(
-			HttpServletRequest request, HttpServletResponse response)
+		HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		Set<String> modulePathsSet = new LinkedHashSet<String>();
@@ -154,11 +154,7 @@ public class ComboServlet extends HttpServlet {
 			bytesArray = _bytesArrayPortalCache.get(modulePathsString);
 		}
 
-		if (bytesArray == null) { //Not in cache or rtl
-			ServletContext servletContext = getServletContext();
-
-			String rootPath = ServletContextUtil.getRootPath(servletContext);
-
+		if (bytesArray == null) {
 			bytesArray = new byte[modulePaths.length][];
 
 			for (int i = 0; i < modulePaths.length; i++) {
@@ -176,8 +172,7 @@ public class ComboServlet extends HttpServlet {
 				byte[] bytes = new byte[0];
 
 				if (Validator.isNotNull(modulePath)) {
-					URL url = getResourceURL(
-						servletContext, rootPath, modulePath);
+					URL url = getResourceURL(modulePath);
 
 					if (url == null) {
 						response.setHeader(
@@ -217,6 +212,13 @@ public class ComboServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response,
 			URL resourceURL, String resourcePath, String minifierType)
 		throws IOException {
+
+		int colonPosition = resourcePath.indexOf(":");
+
+		if (colonPosition > 0) {
+			resourcePath = resourcePath.substring(
+				0, colonPosition) + resourcePath.substring(colonPosition + 1);
+		}
 
 		String fileContentKey = resourcePath.concat(StringPool.QUESTION).concat(
 			minifierType);
@@ -316,26 +318,44 @@ public class ComboServlet extends HttpServlet {
 		return fileContentBag._fileContent;
 	}
 
-	protected URL getResourceURL(
-			ServletContext servletContext, String rootPath, String path)
-		throws Exception {
+	protected URL getResourceURL(String modulePathString) throws Exception {
+		ModulePath modulePath = new ModulePath(modulePathString);
 
-		URL url = servletContext.getResource(path);
+		ServletContext servletContext = getServletContextFromPath(
+			modulePath.getModuleContextPath());
+
+		URL url = servletContext.getResource(modulePath.getResourcePath());
 
 		if (url == null) {
-			return null;
+			throw new ServletException(
+				"Resource " + modulePath.getResourcePath() + " not found in " +
+				modulePath.getModuleContextPath());
 		}
 
-		String filePath = ServletContextUtil.getResourcePath(url);
+		return url;
+	}
 
-		int pos = filePath.indexOf(
-			rootPath.concat(StringPool.SLASH).concat(_JAVASCRIPT_DIR));
+	protected ServletContext getServletContextFromPath(String moduleContextPath)
+		throws ServletException {
 
-		if (pos == 0) {
-			return url;
+		if (Validator.isNull(moduleContextPath)) {
+			return getServletContext();
 		}
 
-		return null;
+		if (moduleContextPath.startsWith(StringPool.SLASH)) {
+			moduleContextPath = moduleContextPath.substring(1);
+		}
+
+		ServletContext moduleServletContext = ServletContextPool.get(
+			moduleContextPath);
+
+		if (moduleServletContext != null) {
+			return moduleServletContext;
+		}
+
+		throw new ServletException(
+			"ServletContext " + moduleContextPath + " " +
+				"not found in portal");
 	}
 
 	protected boolean validateModuleExtension(String moduleName)
@@ -366,8 +386,6 @@ public class ComboServlet extends HttpServlet {
 	private static final FileContentBag _EMPTY_FILE_CONTENT_BAG =
 		new FileContentBag(new byte[0], 0);
 
-	private static final String _JAVASCRIPT_DIR = "html";
-
 	private static final String _JAVASCRIPT_MINIFIED_SUFFIX = "-min.js";
 
 	private static Log _log = LogFactoryUtil.getLog(ComboServlet.class);
@@ -391,5 +409,38 @@ public class ComboServlet extends HttpServlet {
 		private long _lastModified;
 
 	}
+
+	private static class ModulePath {
+
+		public String getResourcePath() {
+			return _resourcePath;
+		}
+
+		public String getModuleContextPath() {
+			return _moduleContextPath;
+		}
+
+		private ModulePath(String modulePath) {
+			int colonPosition = modulePath.indexOf(":");
+
+			if (colonPosition > 0) {
+				String moduleContextPath = modulePath.substring(
+					0, colonPosition);
+
+				String resourcePath = modulePath.substring(colonPosition + 1);
+
+				_moduleContextPath = moduleContextPath;
+				_resourcePath = resourcePath;
+			}
+			else {
+				_moduleContextPath = StringPool.BLANK;
+				_resourcePath = modulePath;
+			}
+		}
+
+		private String _resourcePath;
+		private String _moduleContextPath;
+	}
+
 
 }

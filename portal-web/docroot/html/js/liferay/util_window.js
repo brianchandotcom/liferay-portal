@@ -159,7 +159,7 @@ AUI.add(
 
 										var modalUtil = event.win.Liferay.Util;
 
-										modalUtil.Window._opener = openingWindow;
+										modalUtil.Window._opener = modal._opener;
 
 										modalUtil.Window._name = id;
 									}
@@ -226,6 +226,13 @@ AUI.add(
 						if (!config.zIndex && modal.hasPlugin('zindex')) {
 							delete modalConfig.zIndex;
 						}
+
+						var openingWindow = config.openingWindow;
+
+						modal._opener = openingWindow;
+						modal._refreshWindow = config.refreshWindow;
+
+						instance._map[id]._opener = openingWindow;
 
 						modal.setAttrs(modalConfig);
 					}

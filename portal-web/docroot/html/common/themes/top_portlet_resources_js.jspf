@@ -78,6 +78,10 @@
 				portletResourceStaticURLs.add(headerPortletJavaScript);
 
 				sb.append("&");
+				if ((curPortlet.getContextPath() != null) && (curPortlet.getContextPath() != PortalUtil.getPathContext())) {
+					sb.append(curPortlet.getContextPath());
+					sb.append(':');
+				}
 				sb.append(HtmlUtil.escape(headerPortletJavaScript));
 			}
 			else {

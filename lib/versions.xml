@@ -435,6 +435,18 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>lib/development/jserrorcollector.jar</file-name>
+		<version>c7d2d9161321e9aa09bbbf566bce2922d169b9dd</version>
+		<project-name>JSErrorCollector</project-name>
+		<project-url>https://github.com/mguillem/JSErrorCollector</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/development/jsp-api.jar</file-name>
 		<version>2.1</version>
 		<project-name>JavaServer Pages</project-name>
@@ -2354,18 +2366,6 @@
 		<comments>
 			See the Ant target "build-ruby-gems-jar" in portal-impl/build.xml.
 		</comments>
-	</library>
-	<library>
-		<file-name>lib/portal/jserrorcollector.jar</file-name>
-		<version>c7d2d9161321e9aa09bbbf566bce2922d169b9dd</version>
-		<project-name>JSErrorCollector</project-name>
-		<project-url>https://github.com/mguillem/JSErrorCollector</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-			</license>
-		</licenses>
 	</library>
 	<library>
 		<file-name>lib/portal/json-java.jar</file-name>

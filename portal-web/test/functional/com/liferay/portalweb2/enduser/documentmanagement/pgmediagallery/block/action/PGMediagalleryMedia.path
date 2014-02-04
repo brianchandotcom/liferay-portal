@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>MEDIA_CAPTION</td>
-	<td>//h4[@class='image-viewer-caption' and contains(.,'{key_mgDocumentTitle} - {key_mgDocumentDescription}')]</td>
+	<td>//h4[@class='image-viewer-caption']</td>
 	<td></td>
 </tr>
 <tr>

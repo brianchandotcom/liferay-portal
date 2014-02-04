@@ -2808,8 +2808,8 @@
 		<project-url>http://www.unidata.ucar.edu/packages/netcdf-java</project-url>
 		<licenses>
 			<license>
-				<license-name>LGPL 2.1</license-name>
-				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+				<license-name>Netcdf License</license-name>
+				<license-url>http://www.unidata.ucar.edu/software/netcdf/copyright.html</license-url>
 			</license>
 		</licenses>
 	</library>

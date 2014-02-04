@@ -341,7 +341,7 @@
 <!--ENTRY_ICON_DOCUMENT-->
 <tr>
 	<td>ENTRY_ICON_DOCUMENT_THUMBNAIL</td>
-	<td>//div[contains(.,'${key_dmDocumentTitle}') and a[@data-folder='false']]/div[@class='entry-thumbnail']</td>
+	<td>//div[contains(.,'${key_dmDocumentTitle}') and a[@data-folder='false']]//div[@class='entry-thumbnail']</td>
 	<td></td>
 </tr>
 <tr>
@@ -361,7 +361,7 @@
 </tr>
 <tr>
 	<td>ENTRY_ICON_DOCUMENT_TITLE</td>
-	<td>//a[@data-folder='false']//span[@class='entry-title']/span[contains(.,'${key_dmDocumentTitle}')]</td>
+	<td>//div[contains(.,'${key_dmDocumentTitle}') and a[@data-folder='false']]//span[@class='entry-title']/span</td>
 	<td></td>
 </tr>
 <tr>

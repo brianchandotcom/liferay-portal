@@ -1818,8 +1818,8 @@
 		<project-url>http://www.caucho.com/hessian</project-url>
 		<licenses>
 			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+				<license-name>Apache License 1.1</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-1.1</license-url>
 			</license>
 		</licenses>
 	</library>

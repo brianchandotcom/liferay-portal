@@ -177,9 +177,6 @@ public class AssetPublisherDisplayContext {
 				"ddmStructureFieldValue", getDDMStructureFieldValue());
 		}
 
-		AssetPublisherUtil.processAssetEntryQuery(
-			themeDisplay.getUser(), _portletPreferences, assetEntryQuery);
-
 		assetEntryQuery.setAllCategoryIds(getAllAssetCategoryIds());
 
 		if (hasLayoutGroup(groupIds)) {
@@ -222,6 +219,10 @@ public class AssetPublisherDisplayContext {
 		assetEntryQuery.setOrderByCol2(getOrderByColumn2());
 		assetEntryQuery.setOrderByType1(getOrderByType1());
 		assetEntryQuery.setOrderByType2(getOrderByType2());
+
+
+		AssetPublisherUtil.processAssetEntryQuery(
+			themeDisplay.getUser(), _portletPreferences, assetEntryQuery);
 
 		return assetEntryQuery;
 	}

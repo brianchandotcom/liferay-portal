@@ -280,6 +280,13 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						</div>
 					</c:if>
 
+					<c:if test="<%= enableRatings %>">
+						<liferay-ui:ratings
+							className="<%= BlogsEntry.class.getName() %>"
+							classPK="<%= entry.getEntryId() %>"
+						/>
+					</c:if>
+
 					<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("bottom") %>'>
 						<liferay-ui:social-bookmarks
 							contentId="<%= String.valueOf(entry.getEntryId()) %>"
@@ -288,13 +295,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							title="<%= entry.getTitle() %>"
 							types="<%= socialBookmarksTypes %>"
 							url="<%= PortalUtil.getCanonicalURL(bookmarkURL.toString(), themeDisplay, layout) %>"
-						/>
-					</c:if>
-
-					<c:if test="<%= enableRatings %>">
-						<liferay-ui:ratings
-							className="<%= BlogsEntry.class.getName() %>"
-							classPK="<%= entry.getEntryId() %>"
 						/>
 					</c:if>
 				</c:if>

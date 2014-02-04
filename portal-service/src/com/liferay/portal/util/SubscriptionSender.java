@@ -341,6 +341,9 @@ public class SubscriptionSender implements Serializable {
 		_notificationClassNameId = notificationClassNameId;
 	}
 
+	/**
+	 * @see com.liferay.portal.model.UserNotificationConstants
+	 */
 	public void setNotificationType(int notificationType) {
 		_notificationType = notificationType;
 	}

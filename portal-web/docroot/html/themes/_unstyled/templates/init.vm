@@ -321,7 +321,12 @@
 #set ($show_site_name = $getterUtil.getBoolean($layout.layoutSet.getSettingsProperty("showSiteName"), $show_site_name_default))
 
 #set($site_logo = $company_logo)
-#set ($logo_description = $htmlUtil.escape($site_name))
+
+#set ($logo_description = "")
+
+#if (!$show_site_name)
+	#set ($logo_description = $htmlUtil.escape($site_name))
+#end
 
 ## ---------- Navigation ---------- ##
 

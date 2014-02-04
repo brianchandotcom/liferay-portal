@@ -323,7 +323,12 @@
 <#assign show_site_name = getterUtil.getBoolean(layout.layoutSet.getSettingsProperty("showSiteName"), show_site_name_default) />
 
 <#assign site_logo = company_logo />
-<#assign logo_description = htmlUtil.escape(site_name) />
+
+<#assign logo_description = "" />
+
+<#if !$show_site_name>
+	<#assign logo_description = htmlUtil.escape(site_name) />
+</#if>
 
 <#-- ---------- Navigation ---------- -->
 

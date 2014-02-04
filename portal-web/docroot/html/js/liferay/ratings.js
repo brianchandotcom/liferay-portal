@@ -200,7 +200,11 @@ AUI.add(
 									function(event) {
 										handle.detach();
 
-										Ratings._registerRating(item.config);
+										var config = item.config;
+
+										config.initialFocus = (event.type === 'focus');
+
+										Ratings._registerRating(config);
 									}
 								);
 							}
@@ -225,6 +229,12 @@ AUI.add(
 			{
 				EXTENDS: Ratings,
 
+				ATTRS: {
+					initialFocus: {
+						validator: Lang.isBoolean
+					}
+				},
+
 				prototype: {
 					_renderRatings: function() {
 						var instance = this;
@@ -242,6 +252,10 @@ AUI.add(
 									srcNode: '#' + namespace + 'ratingStarContent'
 								}
 							).render();
+
+							if (instance.get('initialFocus')) {
+								instance.ratings.get('elements').item(0).focus();
+							}
 
 							instance._bindRatings();
 						}
@@ -306,6 +320,12 @@ AUI.add(
 			{
 				EXTENDS: Ratings,
 
+				ATTRS: {
+					initialFocus: {
+						validator: Lang.isBoolean
+					}
+				},
+
 				prototype: {
 					_renderRatings: function() {
 						var instance = this;
@@ -331,6 +351,10 @@ AUI.add(
 									srcNode: '#' + namespace + 'ratingThumbContent'
 								}
 							).render();
+
+							if (instance.get('initialFocus')) {
+								A.one('#' + namespace + 'ratingThumb a').focus();
+							}
 
 							instance._bindRatings();
 

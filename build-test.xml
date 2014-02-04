@@ -734,6 +734,11 @@ create database lportal2 character set utf8;</echo>
 			file="${changelog.dir}/git-build-log.html"
 			todir="${basedir}"
 		/>
+
+		<copy
+			file="${changelog.dir}/git-build-log.html"
+			todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+		/>
 	</target>
 
 	<target name="generate-test-properties" depends="check-config">

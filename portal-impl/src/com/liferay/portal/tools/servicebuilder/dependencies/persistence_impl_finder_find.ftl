@@ -1214,7 +1214,9 @@ that may or may not be enforced with a unique index at the database level. Case
 
 						Query q = session.createQuery(sql);
 
-						QueryPos qPos = QueryPos.getInstance(q);
+						<#if bindParameter(finderColsList)>
+							QueryPos qPos = QueryPos.getInstance(q);
+						</#if>
 
 						<@finderQPos
 							_arrayable=true
@@ -1289,7 +1291,9 @@ that may or may not be enforced with a unique index at the database level. Case
 							q.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
 						}
 
-						QueryPos qPos = QueryPos.getInstance(q);
+						<#if bindParameter(finderColsList)>
+							QueryPos qPos = QueryPos.getInstance(q);
+						</#if>
 
 						<@finderQPos
 							_arrayable=true
@@ -1595,7 +1599,9 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					Query q = session.createQuery(sql);
 
-					QueryPos qPos = QueryPos.getInstance(q);
+					<#if bindParameter(finderColsList)>
+						QueryPos qPos = QueryPos.getInstance(q);
+					</#if>
 
 					<@finderQPos
 						_arrayable=true

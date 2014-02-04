@@ -28,17 +28,9 @@ String type = ParamUtil.getString(request, "type");
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 String urlTitle = ParamUtil.getString(request, "urlTitle");
 
-boolean show = true;
 boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT);
 
-List results = new ArrayList();
-
-int assetEntryIndex = 0;
-
 AssetEntry assetEntry = null;
-
-String className = StringPool.BLANK;
-long classPK = 0;
 
 try {
 	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);
@@ -47,16 +39,10 @@ try {
 	if (Validator.isNotNull(urlTitle)) {
 		assetRenderer = assetRendererFactory.getAssetRenderer(groupId, urlTitle);
 
-		className = assetRendererFactory.getClassName();
-		classPK = assetRenderer.getClassPK();
-
-		assetEntry = assetRendererFactory.getAssetEntry(className, classPK);
+		assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
 	}
 	else {
 		assetEntry = assetRendererFactory.getAssetEntry(assetEntryId);
-
-		className = PortalUtil.getClassName(assetEntry.getClassNameId());
-		classPK = assetEntry.getClassPK();
 
 		if (portletName.equals(PortletKeys.MY_WORKFLOW_INSTANCES) || portletName.equals(PortletKeys.MY_WORKFLOW_TASKS) || portletName.equals(PortletKeys.WORKFLOW_DEFINITIONS) || portletName.equals(PortletKeys.WORKFLOW_INSTANCES) || portletName.equals(PortletKeys.WORKFLOW_TASKS)) {
 			long assetEntryVersionId = ParamUtil.getLong(request, "assetEntryVersionId");
@@ -64,32 +50,23 @@ try {
 			assetRenderer = assetRendererFactory.getAssetRenderer(assetEntryVersionId, AssetRendererFactory.TYPE_LATEST);
 		}
 		else {
-			assetRenderer = assetRendererFactory.getAssetRenderer(classPK, AssetRendererFactory.TYPE_LATEST_APPROVED);
+			assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST_APPROVED);
 		}
 	}
 
-	if (!assetEntry.isVisible() &&
-		(assetRenderer.getAssetRendererType() == AssetRendererFactory.TYPE_LATEST_APPROVED)) {
-
+	if (!assetEntry.isVisible() && (assetRenderer.getAssetRendererType() == AssetRendererFactory.TYPE_LATEST_APPROVED)) {
 		throw new NoSuchModelException();
 	}
 
 	String title = assetRenderer.getTitle(locale);
-	String summary = StringPool.BLANK;
-	String viewURL = StringPool.BLANK;
-	String viewURLMessage = StringPool.BLANK;
 
-	request.setAttribute("view.jsp-results", results);
-
-	request.setAttribute("view.jsp-assetEntryIndex", new Integer(assetEntryIndex));
-
+	request.setAttribute("view.jsp-results", new ArrayList());
+	request.setAttribute("view.jsp-assetEntryIndex", new Integer(0));
 	request.setAttribute("view.jsp-assetEntry", assetEntry);
 	request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
 	request.setAttribute("view.jsp-assetRenderer", assetRenderer);
-
 	request.setAttribute("view.jsp-title", title);
-
-	request.setAttribute("view.jsp-show", new Boolean(show));
+	request.setAttribute("view.jsp-show", Boolean.TRUE);
 	request.setAttribute("view.jsp-print", new Boolean(print));
 %>
 

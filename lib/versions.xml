@@ -1584,8 +1584,8 @@
 	<library>
 		<file-name>lib/portal/crypt.jar</file-name>
 		<version></version>
-		<project-name>Unix Crypt</project-name>
-		<project-url>http://www.dynamic.net.au/christos/crypt</project-url>
+		<project-name>Manticore UFC Crypt</project-name>
+		<project-url>http://manticore.2y.net/Java/examples/crypt.zip</project-url>
 		<licenses>
 			<license>
 				<license-name>LGPL 2.1</license-name>

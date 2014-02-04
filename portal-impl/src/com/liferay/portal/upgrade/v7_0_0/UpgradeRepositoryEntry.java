@@ -12,29 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.upgrade;
+package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeRepositoryEntry;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeSchema;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeShopping;
+import com.liferay.portal.upgrade.v7_0_0.util.RepositoryEntryTable;
+
+import java.sql.SQLException;
 
 /**
- * @author Julio Camarero
+ * @author Sergio González
  */
-public class UpgradeProcess_7_0_0 extends UpgradeProcess {
-
-	@Override
-	public int getThreshold() {
-		return ReleaseInfo.RELEASE_7_0_0_BUILD_NUMBER;
-	}
+public class UpgradeRepositoryEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeSchema.class);
-		upgrade(UpgradeRepositoryEntry.class);
-		upgrade(UpgradeShopping.class);
+		try {
+			runSQL(
+				"alter_column_type RepositoryEntry mappedId varchar(200) null");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				RepositoryEntryTable.TABLE_NAME,
+				RepositoryEntryTable.TABLE_COLUMNS,
+				RepositoryEntryTable.TABLE_SQL_CREATE,
+				RepositoryEntryTable.TABLE_SQL_ADD_INDEXES);
+		}
 	}
 
 }

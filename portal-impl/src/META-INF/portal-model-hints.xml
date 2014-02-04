@@ -815,7 +815,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="repositoryId" type="long" />
-		<field name="mappedId" type="String" />
+		<field name="mappedId" type="String">
+			<hint name="max-length">200</hint>
+		</field>
 		<field name="manualCheckInRequired" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.ResourceAction">

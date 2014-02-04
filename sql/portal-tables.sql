@@ -1661,7 +1661,7 @@ create table RepositoryEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	repositoryId LONG,
-	mappedId VARCHAR(75) null,
+	mappedId VARCHAR(200) null,
 	manualCheckInRequired BOOLEAN
 );
 

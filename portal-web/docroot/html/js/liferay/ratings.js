@@ -200,13 +200,9 @@ AUI.add(
 									function(event) {
 										handle.detach();
 
-										var config = A.merge(
-											item.config,
-											{
-												initialFocus: event.type === 'focus' ? true : false
-											},
-											true
-										);
+										var config = item.config;
+
+										config.initialFocus = (event.type === 'focus');
 
 										Ratings._registerRating(config);
 									}
@@ -258,7 +254,7 @@ AUI.add(
 							).render();
 
 							if (instance.get('initialFocus')) {
-								A.one('#' + namespace + 'ratingStar a').focus();
+								instance.ratings.get('elements').item(0).focus();
 							}
 
 							instance._bindRatings();

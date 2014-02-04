@@ -176,8 +176,8 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" />
-		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="DISPLAY_TEMPLATE_FULL_CONTENT_TWITTER" />
-		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="DISPLAY_TEMPLATE_FULL_CONTENT_GOOGLE_PLUS" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="DISPLAY_ICON_TWITTER" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="DISPLAY_ICON_GOOGLE_PLUS" />
 	</command>
 
 	<command name="viewConfigureAPDisplayTemplateTableBookmarksPG">
@@ -303,6 +303,52 @@
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${assetContent}" />
+	</command>
+
+	<command name="viewCustomADTRichSummaryPG">
+		<var name='key_assetTitle' value="${assetTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${assetDescription}" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="DISPLAY_ICON_PRINT" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="DISPLAY_ICON_FLAG" />
+
+		<if>
+			<equals arg1="${pageStaging}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="DISPLAY_ICON_EDIT" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisher#assertElementPresent" locator-key1="DISPLAY_ICON_EDIT" />
+			</else>
+		</if>
+
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="DISPLAY_ICON_TWITTER" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="DISPLAY_ICON_GOOGLE_PLUS" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="YOUR_RATING" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="AVERAGE" />
+
+		<if>
+			<equals arg1="${pageStaging}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_COMMENTS_BE_THE_FIRST" />
+				<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_COMMENTS_SUBCRIBE_TO_COMMENTS" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_COMMENTS_BE_THE_FIRST" />
+				<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_COMMENTS_SUBCRIBE_TO_COMMENTS" />
+			</else>
+		</if>
+	</command>
+
+	<command name="viewDefaultWithAllDisplaySettingsCheckboxesPG">
+		<var name='key_assetTitle' value="${assetTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_EDIT" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${assetDescription}" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" />
 	</command>
 
 	<command name="viewEditLinkPG">

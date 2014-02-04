@@ -679,6 +679,38 @@
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="WIKI_PAGE_CHILD_PAGE_TITLE" value1="${wikiChildPageTitle}" />
 	</command>
 
+	<command name="viewCustomADTSocialPG" >
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_FRONTPAGE" value1="FrontPage" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="ADT_SOCIAL_WIKI_PAGE_TITLE" value1="FrontPage" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="ADT_SOCIAL_WIKI_PAGE_BODY" value1="${wikiPageContent}" />
+
+		<if>
+			<equals arg1="${pageStaging}" arg2="true" />
+			<then>
+				<execute action="PGWiki#assertElementNotPresent" locator-key1="ADD_CHILD_PAGE" />
+				<execute action="PGWiki#assertElementNotPresent" locator-key1="ADT_SOCIAL_EDIT_ICON" />
+				<execute action="PGWiki#assertElementNotPresent" locator-key1="COMMENTS_BE_THE_FIRST_LINK" />
+				<execute action="PGWiki#assertElementNotPresent" locator-key1="COMMENTS_SUBSCRIBE_TO_COMMENTS_LINK" />
+			</then>
+			<else>
+				<execute action="PGWiki#assertElementPresent" locator-key1="ADD_CHILD_PAGE" />
+				<execute action="PGWiki#assertElementPresent" locator-key1="ADT_SOCIAL_EDIT_ICON" />
+				<execute action="PGWiki#assertElementPresent" locator-key1="COMMENTS_BE_THE_FIRST_LINK" />
+				<execute action="PGWiki#assertElementPresent" locator-key1="COMMENTS_SUBSCRIBE_TO_COMMENTS_LINK" />
+			</else>
+		</if>
+
+		<execute action="PGWiki#assertElementPresent" locator-key1="ATTACHMENTS_BUTTON" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="ADT_SOCIAL_LAST_MODIFIED_MESSAGE" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="ADT_SOCIAL_DETAILS_ICON" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="ADT_SOCIAL_PRINT_ICON" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="ADT_SOCIAL_TWITTER" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="ADT_SOCIAL_GOOGLE_PLUS" />
+		<execute action="PGWiki#assertElementNotPresent" locator-key1="COMMENTS_DROP_DOWN" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="RATINGS_LABEL" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="RATINGS_AVERAGE" />
+	</command>
+
 	<command name="viewDefaultPGViaWD">
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="PORTLET_CONFIGURATION_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
 		<execute action="PGWikidisplay#assertTextNotPresent" value1="${wikiPageTitle}" />
@@ -699,6 +731,22 @@
 		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="FRONTPAGE_BODY" value1="${wikiFrontPageContent}" />
 		<execute action="CPWikiFrontpage#assertElementNotPresent" locator-key1="INFO_MESSAGE" />
 		<execute action="CPWikiFrontpage#assertTextNotPresent" value1="This page is empty. Edit it to add some text." />
+	</command>
+
+	<command name="viewFrontPageDefaultADTPG">
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_FRONTPAGE" value1="FrontPage" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="FrontPage" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="ADD_CHILD_PAGE" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="ATTACHMENTS_BUTTON" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="EDIT_BUTTON" value1="Edit" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="DETAILS_BUTTON" value1="Details" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="PRINT_BUTTON" value1="Print" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="COMMENTS_DROP_DOWN" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="COMMENTS_BE_THE_FIRST_LINK" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="COMMENTS_SUBSCRIBE_TO_COMMENTS_LINK" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="RATINGS_LABEL" />
+		<execute action="PGWiki#assertElementPresent" locator-key1="RATINGS_AVERAGE" />
 	</command>
 
 	<command name="viewFrontPageDefaultCP">

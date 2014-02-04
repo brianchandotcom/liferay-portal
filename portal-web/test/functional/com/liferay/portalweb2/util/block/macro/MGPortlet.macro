@@ -12,4 +12,24 @@
 		<execute action="PGMediagalleryConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGMediagalleryConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
+
+	<command name="viewCustomADTCarouselPG">
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="ADT_CAROUSEL_ITEM" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="ADT_CAROUSEL_PLAY_PAUSE" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="ADT_CAROUSEL_PREVIOUS_ARROW" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="ADT_CAROUSEL_NEXT_ARROW" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="ADT_CAROUSEL_MENU_INDEX" />
+	</command>
+
+	<command name="viewShowAllPG">
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="SEARCH_FIELD" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="SEARCH_BUTTON" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="FOLDER_MENU_PERMISSIONS" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="FOLDER_MENU_ADD_FOLDER" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="FOLDER_MENU_ADD_REPOSITORY" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="FOLDER_MENU_MULTIPLE_MEDIA" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="FOLDER_MENU_ADD_MEDIA" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="FOLDER_MENU_ADD_SHORTCUT" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="FOLDER_MENU_ACCESS_FROM_DESKTOP" />
+	</command>
 </definition>

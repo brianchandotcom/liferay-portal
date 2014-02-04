@@ -662,7 +662,7 @@
 				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
 			</then>
 			<else>
-				<execute action="SODocuments#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_HEADER_TITLE" value1="${dmDocumentTitle}" />
 			</else>
 		</if>
 	</command>

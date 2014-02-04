@@ -132,7 +132,17 @@
 		<execute action="CPSitememberships#assertClick" locator-key1="ADD_MEMBERS_MENULIST_USER" value1="User" />
 		<execute action="CPSitemembershipsAddmembers#type" locator-key1="SEARCH_FIELD" value1="${userScreenName}" />
 		<execute action="CPSitemembershipsAddmembers#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+
+		<if>
+			<isset var="userMiddleName" />
+			<then>
+				<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="USER_TABLE_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
+			</then>
+			<else>
+				<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+			</else>
+		</if>
+
 		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute action="CPSitemembershipsAddmembers#check" locator-key1="USER_TABLE_CHECKBOX" />
 		<execute action="CPSitemembershipsAddmembers#click" locator-key1="SAVE_BUTTON" />

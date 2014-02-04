@@ -54,7 +54,9 @@ if (assetEntryId > 0) {
 				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
 				if (Validator.isNull(assetRendererFactory)) {
-					_log.warn("No asset renderer factory found for class " + className);
+					if (_log.isWarnEnabled()) {
+						_log.warn("No asset renderer factory found for class " + className);
+					}
 
 					continue;
 				}

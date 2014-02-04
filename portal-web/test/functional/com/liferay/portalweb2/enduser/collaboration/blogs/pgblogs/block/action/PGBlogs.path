@@ -166,6 +166,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_CKE_EDIT_INLINE</td>
+	<td>//div[@class='entry-body']/div[contains(@class,'cke_editable') and contains(.,'${key_entryContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_DRAFT</td>
 	<td>//div[contains(@class,'entry') and contains(@class,'draft') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/div</td>
 	<td></td>

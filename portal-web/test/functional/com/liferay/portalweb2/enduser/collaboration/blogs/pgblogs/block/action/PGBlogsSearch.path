@@ -49,6 +49,11 @@
 	<td>//span[@class='entry-title' and contains(.,'${key_entryTitle}')]//..//span[@class='entry-description' and contains(.,'${key_entryContent}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SEARCH_RESULTS_ENTRY_COMMENT</td>
+	<td>//div[contains(@class,'entry-display-style search') and contains(.,'${key_entryTitle}')]/div[@class='entry-discussion' and contains(.,'${key_entryComment}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

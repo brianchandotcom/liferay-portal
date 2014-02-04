@@ -2067,11 +2067,11 @@
 		<file-name>lib/portal/java-diff.jar</file-name>
 		<version>1.0.5</version>
 		<project-name>Java Diff</project-name>
-		<project-url>http://www.incava.org/projects/java/java-diff</project-url>
+		<project-url>http://repo1.maven.org/maven2/org/incava/java-diff/1.1/</project-url>
 		<licenses>
 			<license>
-				<license-name>LGPL 2.1</license-name>
-				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+				<license-name>BSD Style License</license-name>
+				<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 			</license>
 		</licenses>
 	</library>

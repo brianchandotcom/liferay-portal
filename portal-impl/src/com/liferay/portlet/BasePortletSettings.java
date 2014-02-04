@@ -27,7 +27,7 @@ import javax.portlet.ReadOnlyException;
  * @author Raymond Augé
  * @author Jorge Ferrer
  */
-public abstract class PortletSettingsImpl implements PortletSettings {
+public abstract class BasePortletSettings implements PortletSettings {
 
 	@Override
 	public String getValue(String key, String def) {
@@ -91,7 +91,7 @@ public abstract class PortletSettingsImpl implements PortletSettings {
 		return normalizeValues(def);
 	}
 
-	protected PortletSettingsImpl() {
+	protected BasePortletSettings() {
 	}
 
 	protected String normalizeValue(String value) {

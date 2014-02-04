@@ -21,7 +21,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Jorge Ferrer
  */
-public class CompanyPortletSettings extends PortletSettingsImpl {
+public class CompanyPortletSettings extends BasePortletSettings {
 
 	public CompanyPortletSettings(PortletPreferences preferences) {
 		super._companyPreferences = preferences;

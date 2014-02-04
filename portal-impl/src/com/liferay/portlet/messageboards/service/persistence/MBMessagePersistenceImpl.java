@@ -8034,7 +8034,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public List<MBMessage> findByU_C(long userId, long[] classNameIds,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((classNameIds != null) && (classNameIds.length == 1)) {
+		if (classNameIds == null) {
+			classNameIds = new long[0];
+		}
+		else {
+			classNameIds = ArrayUtil.unique(classNameIds);
+		}
+
+		if (classNameIds.length == 1) {
 			return findByU_C(userId, classNameIds[0], start, end,
 				orderByComparator);
 		}
@@ -8077,7 +8084,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 			query.append(_FINDER_COLUMN_U_C_USERID_2);
 
-			if ((classNameIds == null) || (classNameIds.length > 0)) {
+			if (classNameIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < classNameIds.length; i++) {
@@ -8116,7 +8123,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				qPos.add(userId);
 
-				if (classNameIds != null) {
+				if (classNameIds.length > 0) {
 					qPos.add(classNameIds);
 				}
 
@@ -8238,6 +8245,13 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public int countByU_C(long userId, long[] classNameIds)
 		throws SystemException {
+		if (classNameIds == null) {
+			classNameIds = new long[0];
+		}
+		else {
+			classNameIds = ArrayUtil.unique(classNameIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				userId, StringUtil.merge(classNameIds)
 			};
@@ -8252,7 +8266,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 			query.append(_FINDER_COLUMN_U_C_USERID_2);
 
-			if ((classNameIds == null) || (classNameIds.length > 0)) {
+			if (classNameIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < classNameIds.length; i++) {
@@ -8282,7 +8296,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				qPos.add(userId);
 
-				if (classNameIds != null) {
+				if (classNameIds.length > 0) {
 					qPos.add(classNameIds);
 				}
 
@@ -14970,7 +14984,14 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public List<MBMessage> findByU_C_S(long userId, long[] classNameIds,
 		int status, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((classNameIds != null) && (classNameIds.length == 1)) {
+		if (classNameIds == null) {
+			classNameIds = new long[0];
+		}
+		else {
+			classNameIds = ArrayUtil.unique(classNameIds);
+		}
+
+		if (classNameIds.length == 1) {
 			return findByU_C_S(userId, classNameIds[0], status, start, end,
 				orderByComparator);
 		}
@@ -15016,7 +15037,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 			query.append(_FINDER_COLUMN_U_C_S_USERID_2);
 
-			if ((classNameIds == null) || (classNameIds.length > 0)) {
+			if (classNameIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < classNameIds.length; i++) {
@@ -15059,7 +15080,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				qPos.add(userId);
 
-				if (classNameIds != null) {
+				if (classNameIds.length > 0) {
 					qPos.add(classNameIds);
 				}
 
@@ -15190,6 +15211,13 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	@Override
 	public int countByU_C_S(long userId, long[] classNameIds, int status)
 		throws SystemException {
+		if (classNameIds == null) {
+			classNameIds = new long[0];
+		}
+		else {
+			classNameIds = ArrayUtil.unique(classNameIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				userId, StringUtil.merge(classNameIds), status
 			};
@@ -15204,7 +15232,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 			query.append(_FINDER_COLUMN_U_C_S_USERID_2);
 
-			if ((classNameIds == null) || (classNameIds.length > 0)) {
+			if (classNameIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < classNameIds.length; i++) {
@@ -15238,7 +15266,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				qPos.add(userId);
 
-				if (classNameIds != null) {
+				if (classNameIds.length > 0) {
 					qPos.add(classNameIds);
 				}
 

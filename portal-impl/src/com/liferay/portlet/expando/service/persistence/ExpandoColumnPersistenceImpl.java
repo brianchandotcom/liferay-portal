@@ -1034,7 +1034,14 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	public List<ExpandoColumn> findByT_N(long tableId, String[] names,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((names != null) && (names.length == 1)) {
+		if (names == null) {
+			names = new String[0];
+		}
+		else {
+			names = ArrayUtil.distinct(names);
+		}
+
+		if (names.length == 1) {
 			ExpandoColumn expandoColumn = fetchByT_N(tableId, names[0]);
 
 			if (expandoColumn == null) {
@@ -1086,7 +1093,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 			query.append(_FINDER_COLUMN_T_N_TABLEID_2);
 
-			if ((names == null) || (names.length > 0)) {
+			if (names.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < names.length; i++) {
@@ -1135,7 +1142,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 				qPos.add(tableId);
 
-				if (names != null) {
+				if (names.length > 0) {
 					qPos.add(names);
 				}
 
@@ -1429,6 +1436,13 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	@Override
 	public int countByT_N(long tableId, String[] names)
 		throws SystemException {
+		if (names == null) {
+			names = new String[0];
+		}
+		else {
+			names = ArrayUtil.distinct(names);
+		}
+
 		Object[] finderArgs = new Object[] { tableId, StringUtil.merge(names) };
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_T_N,
@@ -1441,7 +1455,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 			query.append(_FINDER_COLUMN_T_N_TABLEID_2);
 
-			if ((names == null) || (names.length > 0)) {
+			if (names.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < names.length; i++) {
@@ -1481,7 +1495,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 				qPos.add(tableId);
 
-				if (names != null) {
+				if (names.length > 0) {
 					qPos.add(names);
 				}
 
@@ -1588,13 +1602,20 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			return countByT_N(tableId, names);
 		}
 
+		if (names == null) {
+			names = new String[0];
+		}
+		else {
+			names = ArrayUtil.distinct(names);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_EXPANDOCOLUMN_WHERE);
 
 		query.append(_FINDER_COLUMN_T_N_TABLEID_2);
 
-		if ((names == null) || (names.length > 0)) {
+		if (names.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < names.length; i++) {
@@ -1639,7 +1660,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 			qPos.add(tableId);
 
-			if (names != null) {
+			if (names.length > 0) {
 				qPos.add(names);
 			}
 

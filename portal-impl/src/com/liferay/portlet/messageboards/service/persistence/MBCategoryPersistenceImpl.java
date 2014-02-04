@@ -3645,6 +3645,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				orderByComparator);
 		}
 
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -3656,7 +3663,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
-		if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+		if (parentCategoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -3718,7 +3725,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			qPos.add(groupId);
 
-			if (parentCategoryIds != null) {
+			if (parentCategoryIds.length > 0) {
 				qPos.add(parentCategoryIds);
 			}
 
@@ -3790,7 +3797,14 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	public List<MBCategory> findByG_P(long groupId, long[] parentCategoryIds,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((parentCategoryIds != null) && (parentCategoryIds.length == 1)) {
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
+		if (parentCategoryIds.length == 1) {
 			return findByG_P(groupId, parentCategoryIds[0], start, end,
 				orderByComparator);
 		}
@@ -3835,7 +3849,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
-			if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+			if (parentCategoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -3874,7 +3888,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 				qPos.add(groupId);
 
-				if (parentCategoryIds != null) {
+				if (parentCategoryIds.length > 0) {
 					qPos.add(parentCategoryIds);
 				}
 
@@ -3996,6 +4010,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public int countByG_P(long groupId, long[] parentCategoryIds)
 		throws SystemException {
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(parentCategoryIds)
 			};
@@ -4010,7 +4031,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
-			if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+			if (parentCategoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -4040,7 +4061,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 				qPos.add(groupId);
 
-				if (parentCategoryIds != null) {
+				if (parentCategoryIds.length > 0) {
 					qPos.add(parentCategoryIds);
 				}
 
@@ -4133,13 +4154,20 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			return countByG_P(groupId, parentCategoryIds);
 		}
 
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_MBCATEGORY_WHERE);
 
 		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
-		if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+		if (parentCategoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -4174,7 +4202,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			qPos.add(groupId);
 
-			if (parentCategoryIds != null) {
+			if (parentCategoryIds.length > 0) {
 				qPos.add(parentCategoryIds);
 			}
 
@@ -6528,6 +6556,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				orderByComparator);
 		}
 
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -6539,7 +6574,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		query.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
 
-		if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+		if (parentCategoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -6605,7 +6640,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			qPos.add(groupId);
 
-			if (parentCategoryIds != null) {
+			if (parentCategoryIds.length > 0) {
 				qPos.add(parentCategoryIds);
 			}
 
@@ -6682,7 +6717,14 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	public List<MBCategory> findByG_P_S(long groupId, long[] parentCategoryIds,
 		int status, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((parentCategoryIds != null) && (parentCategoryIds.length == 1)) {
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
+		if (parentCategoryIds.length == 1) {
 			return findByG_P_S(groupId, parentCategoryIds[0], status, start,
 				end, orderByComparator);
 		}
@@ -6728,7 +6770,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			query.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
 
-			if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+			if (parentCategoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -6771,7 +6813,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 				qPos.add(groupId);
 
-				if (parentCategoryIds != null) {
+				if (parentCategoryIds.length > 0) {
 					qPos.add(parentCategoryIds);
 				}
 
@@ -6902,6 +6944,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public int countByG_P_S(long groupId, long[] parentCategoryIds, int status)
 		throws SystemException {
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(parentCategoryIds), status
 			};
@@ -6916,7 +6965,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			query.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
 
-			if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+			if (parentCategoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -6950,7 +6999,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 				qPos.add(groupId);
 
-				if (parentCategoryIds != null) {
+				if (parentCategoryIds.length > 0) {
 					qPos.add(parentCategoryIds);
 				}
 
@@ -7051,13 +7100,20 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			return countByG_P_S(groupId, parentCategoryIds, status);
 		}
 
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_MBCATEGORY_WHERE);
 
 		query.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
 
-		if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+		if (parentCategoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -7096,7 +7152,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			qPos.add(groupId);
 
-			if (parentCategoryIds != null) {
+			if (parentCategoryIds.length > 0) {
 				qPos.add(parentCategoryIds);
 			}
 
@@ -7638,6 +7694,20 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				start, end, orderByComparator);
 		}
 
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -7647,7 +7717,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			query.append(_FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		if ((categoryIds == null) || (categoryIds.length > 0)) {
+		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < categoryIds.length; i++) {
@@ -7665,7 +7735,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		query.append(_FINDER_COLUMN_NOTC_G_P_GROUPID_2);
 
-		if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+		if (parentCategoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -7725,13 +7795,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			if (categoryIds != null) {
+			if (categoryIds.length > 0) {
 				qPos.add(categoryIds);
 			}
 
 			qPos.add(groupId);
 
-			if (parentCategoryIds != null) {
+			if (parentCategoryIds.length > 0) {
 				qPos.add(parentCategoryIds);
 			}
 
@@ -7807,8 +7877,21 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	public List<MBCategory> findByNotC_G_P(long[] categoryIds, long groupId,
 		long[] parentCategoryIds, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		if ((categoryIds != null) && (categoryIds.length == 1) &&
-				(parentCategoryIds != null) && (parentCategoryIds.length == 1)) {
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
+		if ((categoryIds.length == 1) && (parentCategoryIds.length == 1)) {
 			return findByNotC_G_P(categoryIds[0], groupId,
 				parentCategoryIds[0], start, end, orderByComparator);
 		}
@@ -7854,7 +7937,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			query.append(_SQL_SELECT_MBCATEGORY_WHERE);
 
-			if ((categoryIds == null) || (categoryIds.length > 0)) {
+			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
@@ -7872,7 +7955,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			query.append(_FINDER_COLUMN_NOTC_G_P_GROUPID_2);
 
-			if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+			if (parentCategoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -7909,13 +7992,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (categoryIds != null) {
+				if (categoryIds.length > 0) {
 					qPos.add(categoryIds);
 				}
 
 				qPos.add(groupId);
 
-				if (parentCategoryIds != null) {
+				if (parentCategoryIds.length > 0) {
 					qPos.add(parentCategoryIds);
 				}
 
@@ -8044,6 +8127,20 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public int countByNotC_G_P(long[] categoryIds, long groupId,
 		long[] parentCategoryIds) throws SystemException {
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				StringUtil.merge(categoryIds), groupId,
 				StringUtil.merge(parentCategoryIds)
@@ -8057,7 +8154,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			query.append(_SQL_COUNT_MBCATEGORY_WHERE);
 
-			if ((categoryIds == null) || (categoryIds.length > 0)) {
+			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
@@ -8075,7 +8172,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			query.append(_FINDER_COLUMN_NOTC_G_P_GROUPID_2);
 
-			if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+			if (parentCategoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -8103,13 +8200,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (categoryIds != null) {
+				if (categoryIds.length > 0) {
 					qPos.add(categoryIds);
 				}
 
 				qPos.add(groupId);
 
-				if (parentCategoryIds != null) {
+				if (parentCategoryIds.length > 0) {
 					qPos.add(parentCategoryIds);
 				}
 
@@ -8208,11 +8305,25 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			return countByNotC_G_P(categoryIds, groupId, parentCategoryIds);
 		}
 
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_MBCATEGORY_WHERE);
 
-		if ((categoryIds == null) || (categoryIds.length > 0)) {
+		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < categoryIds.length; i++) {
@@ -8230,7 +8341,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		query.append(_FINDER_COLUMN_NOTC_G_P_GROUPID_2);
 
-		if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+		if (parentCategoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -8263,13 +8374,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			if (categoryIds != null) {
+			if (categoryIds.length > 0) {
 				qPos.add(categoryIds);
 			}
 
 			qPos.add(groupId);
 
-			if (parentCategoryIds != null) {
+			if (parentCategoryIds.length > 0) {
 				qPos.add(parentCategoryIds);
 			}
 
@@ -8845,6 +8956,20 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				status, start, end, orderByComparator);
 		}
 
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -8854,7 +8979,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			query.append(_FILTER_SQL_SELECT_MBCATEGORY_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		if ((categoryIds == null) || (categoryIds.length > 0)) {
+		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < categoryIds.length; i++) {
@@ -8872,7 +8997,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		query.append(_FINDER_COLUMN_NOTC_G_P_S_GROUPID_2);
 
-		if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+		if (parentCategoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -8936,13 +9061,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			if (categoryIds != null) {
+			if (categoryIds.length > 0) {
 				qPos.add(categoryIds);
 			}
 
 			qPos.add(groupId);
 
-			if (parentCategoryIds != null) {
+			if (parentCategoryIds.length > 0) {
 				qPos.add(parentCategoryIds);
 			}
 
@@ -9024,8 +9149,21 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	public List<MBCategory> findByNotC_G_P_S(long[] categoryIds, long groupId,
 		long[] parentCategoryIds, int status, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		if ((categoryIds != null) && (categoryIds.length == 1) &&
-				(parentCategoryIds != null) && (parentCategoryIds.length == 1)) {
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
+		if ((categoryIds.length == 1) && (parentCategoryIds.length == 1)) {
 			return findByNotC_G_P_S(categoryIds[0], groupId,
 				parentCategoryIds[0], status, start, end, orderByComparator);
 		}
@@ -9072,7 +9210,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			query.append(_SQL_SELECT_MBCATEGORY_WHERE);
 
-			if ((categoryIds == null) || (categoryIds.length > 0)) {
+			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
@@ -9090,7 +9228,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			query.append(_FINDER_COLUMN_NOTC_G_P_S_GROUPID_2);
 
-			if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+			if (parentCategoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -9131,13 +9269,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (categoryIds != null) {
+				if (categoryIds.length > 0) {
 					qPos.add(categoryIds);
 				}
 
 				qPos.add(groupId);
 
-				if (parentCategoryIds != null) {
+				if (parentCategoryIds.length > 0) {
 					qPos.add(parentCategoryIds);
 				}
 
@@ -9278,6 +9416,20 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	@Override
 	public int countByNotC_G_P_S(long[] categoryIds, long groupId,
 		long[] parentCategoryIds, int status) throws SystemException {
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				StringUtil.merge(categoryIds), groupId,
 				StringUtil.merge(parentCategoryIds), status
@@ -9291,7 +9443,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			query.append(_SQL_COUNT_MBCATEGORY_WHERE);
 
-			if ((categoryIds == null) || (categoryIds.length > 0)) {
+			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
@@ -9309,7 +9461,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			query.append(_FINDER_COLUMN_NOTC_G_P_S_GROUPID_2);
 
-			if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+			if (parentCategoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -9341,13 +9493,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (categoryIds != null) {
+				if (categoryIds.length > 0) {
 					qPos.add(categoryIds);
 				}
 
 				qPos.add(groupId);
 
-				if (parentCategoryIds != null) {
+				if (parentCategoryIds.length > 0) {
 					qPos.add(parentCategoryIds);
 				}
 
@@ -9456,11 +9608,25 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				status);
 		}
 
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
+		if (parentCategoryIds == null) {
+			parentCategoryIds = new long[0];
+		}
+		else {
+			parentCategoryIds = ArrayUtil.unique(parentCategoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_MBCATEGORY_WHERE);
 
-		if ((categoryIds == null) || (categoryIds.length > 0)) {
+		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < categoryIds.length; i++) {
@@ -9478,7 +9644,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		query.append(_FINDER_COLUMN_NOTC_G_P_S_GROUPID_2);
 
-		if ((parentCategoryIds == null) || (parentCategoryIds.length > 0)) {
+		if (parentCategoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < parentCategoryIds.length; i++) {
@@ -9515,13 +9681,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			if (categoryIds != null) {
+			if (categoryIds.length > 0) {
 				qPos.add(categoryIds);
 			}
 
 			qPos.add(groupId);
 
-			if (parentCategoryIds != null) {
+			if (parentCategoryIds.length > 0) {
 				qPos.add(parentCategoryIds);
 			}
 

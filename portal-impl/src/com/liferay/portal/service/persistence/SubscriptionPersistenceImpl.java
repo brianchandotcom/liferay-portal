@@ -1776,7 +1776,14 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	public List<Subscription> findByC_U_C_C(long companyId, long userId,
 		long classNameId, long[] classPKs, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		if ((classPKs != null) && (classPKs.length == 1)) {
+		if (classPKs == null) {
+			classPKs = new long[0];
+		}
+		else {
+			classPKs = ArrayUtil.unique(classPKs);
+		}
+
+		if (classPKs.length == 1) {
 			Subscription subscription = fetchByC_U_C_C(companyId, userId,
 					classNameId, classPKs[0]);
 
@@ -1837,7 +1844,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 			query.append(_FINDER_COLUMN_C_U_C_C_CLASSNAMEID_2);
 
-			if ((classPKs == null) || (classPKs.length > 0)) {
+			if (classPKs.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < classPKs.length; i++) {
@@ -1880,7 +1887,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 				qPos.add(classNameId);
 
-				if (classPKs != null) {
+				if (classPKs.length > 0) {
 					qPos.add(classPKs);
 				}
 
@@ -2193,6 +2200,13 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	@Override
 	public int countByC_U_C_C(long companyId, long userId, long classNameId,
 		long[] classPKs) throws SystemException {
+		if (classPKs == null) {
+			classPKs = new long[0];
+		}
+		else {
+			classPKs = ArrayUtil.unique(classPKs);
+		}
+
 		Object[] finderArgs = new Object[] {
 				companyId, userId, classNameId, StringUtil.merge(classPKs)
 			};
@@ -2211,7 +2225,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 			query.append(_FINDER_COLUMN_C_U_C_C_CLASSNAMEID_2);
 
-			if ((classPKs == null) || (classPKs.length > 0)) {
+			if (classPKs.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < classPKs.length; i++) {
@@ -2245,7 +2259,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 				qPos.add(classNameId);
 
-				if (classPKs != null) {
+				if (classPKs.length > 0) {
 					qPos.add(classPKs);
 				}
 

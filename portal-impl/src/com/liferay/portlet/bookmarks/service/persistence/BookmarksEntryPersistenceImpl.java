@@ -3250,13 +3250,20 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			return findByG_F(groupId, folderIds, start, end, orderByComparator);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_SQL_SELECT_BOOKMARKSENTRY_WHERE);
 
 		query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -3297,7 +3304,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			qPos.add(groupId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -3370,7 +3377,14 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	public List<BookmarksEntry> findByG_F(long groupId, long[] folderIds,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((folderIds != null) && (folderIds.length == 1)) {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
+		if (folderIds.length == 1) {
 			return findByG_F(groupId, folderIds[0], start, end,
 				orderByComparator);
 		}
@@ -3413,7 +3427,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -3452,7 +3466,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 				qPos.add(groupId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -3574,6 +3588,13 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	@Override
 	public int countByG_F(long groupId, long[] folderIds)
 		throws SystemException {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		Object[] finderArgs = new Object[] { groupId, StringUtil.merge(folderIds) };
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_F,
@@ -3586,7 +3607,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -3616,7 +3637,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 				qPos.add(groupId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -3707,13 +3728,20 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			return countByG_F(groupId, folderIds);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_SQL_COUNT_BOOKMARKSENTRY_WHERE);
 
 		query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -3746,7 +3774,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			qPos.add(groupId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -8615,13 +8643,20 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 				orderByComparator);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_SQL_SELECT_BOOKMARKSENTRY_WHERE);
 
 		query.append(_FINDER_COLUMN_G_F_S_GROUPID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -8666,7 +8701,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			qPos.add(groupId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -8744,7 +8779,14 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	public List<BookmarksEntry> findByG_F_S(long groupId, long[] folderIds,
 		int status, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((folderIds != null) && (folderIds.length == 1)) {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
+		if (folderIds.length == 1) {
 			return findByG_F_S(groupId, folderIds[0], status, start, end,
 				orderByComparator);
 		}
@@ -8790,7 +8832,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			query.append(_FINDER_COLUMN_G_F_S_GROUPID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -8833,7 +8875,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 				qPos.add(groupId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -8964,6 +9006,13 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	@Override
 	public int countByG_F_S(long groupId, long[] folderIds, int status)
 		throws SystemException {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(folderIds), status
 			};
@@ -8978,7 +9027,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			query.append(_FINDER_COLUMN_G_F_S_GROUPID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -9012,7 +9061,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 				qPos.add(groupId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -9111,13 +9160,20 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			return countByG_F_S(groupId, folderIds, status);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_SQL_COUNT_BOOKMARKSENTRY_WHERE);
 
 		query.append(_FINDER_COLUMN_G_F_S_GROUPID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -9154,7 +9210,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			qPos.add(groupId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -9994,13 +10050,20 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 				orderByComparator);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_SQL_SELECT_BOOKMARKSENTRY_WHERE);
 
 		query.append(_FINDER_COLUMN_G_F_NOTS_GROUPID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -10045,7 +10108,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			qPos.add(groupId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -10123,7 +10186,14 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	public List<BookmarksEntry> findByG_F_NotS(long groupId, long[] folderIds,
 		int status, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((folderIds != null) && (folderIds.length == 1)) {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
+		if (folderIds.length == 1) {
 			return findByG_F_NotS(groupId, folderIds[0], status, start, end,
 				orderByComparator);
 		}
@@ -10169,7 +10239,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			query.append(_FINDER_COLUMN_G_F_NOTS_GROUPID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -10212,7 +10282,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 				qPos.add(groupId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -10343,6 +10413,13 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	@Override
 	public int countByG_F_NotS(long groupId, long[] folderIds, int status)
 		throws SystemException {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(folderIds), status
 			};
@@ -10357,7 +10434,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			query.append(_FINDER_COLUMN_G_F_NOTS_GROUPID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -10391,7 +10468,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 				qPos.add(groupId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -10490,13 +10567,20 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			return countByG_F_NotS(groupId, folderIds, status);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_SQL_COUNT_BOOKMARKSENTRY_WHERE);
 
 		query.append(_FINDER_COLUMN_G_F_NOTS_GROUPID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -10533,7 +10617,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			qPos.add(groupId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -11444,6 +11528,13 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 				end, orderByComparator);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_SQL_SELECT_BOOKMARKSENTRY_WHERE);
@@ -11452,7 +11543,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 		query.append(_FINDER_COLUMN_G_U_F_S_USERID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -11499,7 +11590,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			qPos.add(userId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -11582,7 +11673,14 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	public List<BookmarksEntry> findByG_U_F_S(long groupId, long userId,
 		long[] folderIds, int status, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		if ((folderIds != null) && (folderIds.length == 1)) {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
+		if (folderIds.length == 1) {
 			return findByG_U_F_S(groupId, userId, folderIds[0], status, start,
 				end, orderByComparator);
 		}
@@ -11631,7 +11729,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			query.append(_FINDER_COLUMN_G_U_F_S_USERID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -11676,7 +11774,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 				qPos.add(userId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -11814,6 +11912,13 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	@Override
 	public int countByG_U_F_S(long groupId, long userId, long[] folderIds,
 		int status) throws SystemException {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				groupId, userId, StringUtil.merge(folderIds), status
 			};
@@ -11830,7 +11935,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			query.append(_FINDER_COLUMN_G_U_F_S_USERID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -11866,7 +11971,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 				qPos.add(userId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -11971,6 +12076,13 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			return countByG_U_F_S(groupId, userId, folderIds, status);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_SQL_COUNT_BOOKMARKSENTRY_WHERE);
@@ -11979,7 +12091,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 		query.append(_FINDER_COLUMN_G_U_F_S_USERID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -12018,7 +12130,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			qPos.add(userId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 

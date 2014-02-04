@@ -6359,6 +6359,13 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			return findByG_CPK(groupIds, classPK, start, end, orderByComparator);
 		}
 
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else {
+			groupIds = ArrayUtil.unique(groupIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -6368,7 +6375,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			query.append(_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		if ((groupIds == null) || (groupIds.length > 0)) {
+		if (groupIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < groupIds.length; i++) {
@@ -6432,7 +6439,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			if (groupIds != null) {
+			if (groupIds.length > 0) {
 				qPos.add(groupIds);
 			}
 
@@ -6506,7 +6513,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	public List<DDMTemplate> findByG_CPK(long[] groupIds, long classPK,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((groupIds != null) && (groupIds.length == 1)) {
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else {
+			groupIds = ArrayUtil.unique(groupIds);
+		}
+
+		if (groupIds.length == 1) {
 			return findByG_CPK(groupIds[0], classPK, start, end,
 				orderByComparator);
 		}
@@ -6546,7 +6560,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
 
-			if ((groupIds == null) || (groupIds.length > 0)) {
+			if (groupIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < groupIds.length; i++) {
@@ -6587,7 +6601,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (groupIds != null) {
+				if (groupIds.length > 0) {
 					qPos.add(groupIds);
 				}
 
@@ -6711,6 +6725,13 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	@Override
 	public int countByG_CPK(long[] groupIds, long classPK)
 		throws SystemException {
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else {
+			groupIds = ArrayUtil.unique(groupIds);
+		}
+
 		Object[] finderArgs = new Object[] { StringUtil.merge(groupIds), classPK };
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_CPK,
@@ -6721,7 +6742,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			query.append(_SQL_COUNT_DDMTEMPLATE_WHERE);
 
-			if ((groupIds == null) || (groupIds.length > 0)) {
+			if (groupIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < groupIds.length; i++) {
@@ -6753,7 +6774,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (groupIds != null) {
+				if (groupIds.length > 0) {
 					qPos.add(groupIds);
 				}
 
@@ -6848,11 +6869,18 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			return countByG_CPK(groupIds, classPK);
 		}
 
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else {
+			groupIds = ArrayUtil.unique(groupIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE);
 
-		if ((groupIds == null) || (groupIds.length > 0)) {
+		if (groupIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < groupIds.length; i++) {
@@ -6889,7 +6917,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			if (groupIds != null) {
+			if (groupIds.length > 0) {
 				qPos.add(groupIds);
 			}
 

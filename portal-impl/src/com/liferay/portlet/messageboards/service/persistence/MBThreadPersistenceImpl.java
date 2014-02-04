@@ -3369,6 +3369,13 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			return findByG_C(groupId, categoryIds, start, end, orderByComparator);
 		}
 
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -3380,7 +3387,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_FINDER_COLUMN_G_C_GROUPID_2);
 
-		if ((categoryIds == null) || (categoryIds.length > 0)) {
+		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < categoryIds.length; i++) {
@@ -3442,7 +3449,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			qPos.add(groupId);
 
-			if (categoryIds != null) {
+			if (categoryIds.length > 0) {
 				qPos.add(categoryIds);
 			}
 
@@ -3514,7 +3521,14 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public List<MBThread> findByG_C(long groupId, long[] categoryIds,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((categoryIds != null) && (categoryIds.length == 1)) {
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
+		if (categoryIds.length == 1) {
 			return findByG_C(groupId, categoryIds[0], start, end,
 				orderByComparator);
 		}
@@ -3557,7 +3571,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			query.append(_FINDER_COLUMN_G_C_GROUPID_2);
 
-			if ((categoryIds == null) || (categoryIds.length > 0)) {
+			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
@@ -3596,7 +3610,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 				qPos.add(groupId);
 
-				if (categoryIds != null) {
+				if (categoryIds.length > 0) {
 					qPos.add(categoryIds);
 				}
 
@@ -3718,6 +3732,13 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	@Override
 	public int countByG_C(long groupId, long[] categoryIds)
 		throws SystemException {
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(categoryIds)
 			};
@@ -3732,7 +3753,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			query.append(_FINDER_COLUMN_G_C_GROUPID_2);
 
-			if ((categoryIds == null) || (categoryIds.length > 0)) {
+			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
@@ -3762,7 +3783,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 				qPos.add(groupId);
 
-				if (categoryIds != null) {
+				if (categoryIds.length > 0) {
 					qPos.add(categoryIds);
 				}
 
@@ -3855,13 +3876,20 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			return countByG_C(groupId, categoryIds);
 		}
 
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_MBTHREAD_WHERE);
 
 		query.append(_FINDER_COLUMN_G_C_GROUPID_2);
 
-		if ((categoryIds == null) || (categoryIds.length > 0)) {
+		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < categoryIds.length; i++) {
@@ -3896,7 +3924,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			qPos.add(groupId);
 
-			if (categoryIds != null) {
+			if (categoryIds.length > 0) {
 				qPos.add(categoryIds);
 			}
 
@@ -8739,6 +8767,13 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				orderByComparator);
 		}
 
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -8750,7 +8785,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_FINDER_COLUMN_G_C_S_GROUPID_2);
 
-		if ((categoryIds == null) || (categoryIds.length > 0)) {
+		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < categoryIds.length; i++) {
@@ -8816,7 +8851,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			qPos.add(groupId);
 
-			if (categoryIds != null) {
+			if (categoryIds.length > 0) {
 				qPos.add(categoryIds);
 			}
 
@@ -8893,7 +8928,14 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public List<MBThread> findByG_C_S(long groupId, long[] categoryIds,
 		int status, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((categoryIds != null) && (categoryIds.length == 1)) {
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
+		if (categoryIds.length == 1) {
 			return findByG_C_S(groupId, categoryIds[0], status, start, end,
 				orderByComparator);
 		}
@@ -8939,7 +8981,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			query.append(_FINDER_COLUMN_G_C_S_GROUPID_2);
 
-			if ((categoryIds == null) || (categoryIds.length > 0)) {
+			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
@@ -8982,7 +9024,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 				qPos.add(groupId);
 
-				if (categoryIds != null) {
+				if (categoryIds.length > 0) {
 					qPos.add(categoryIds);
 				}
 
@@ -9113,6 +9155,13 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	@Override
 	public int countByG_C_S(long groupId, long[] categoryIds, int status)
 		throws SystemException {
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(categoryIds), status
 			};
@@ -9127,7 +9176,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			query.append(_FINDER_COLUMN_G_C_S_GROUPID_2);
 
-			if ((categoryIds == null) || (categoryIds.length > 0)) {
+			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
@@ -9161,7 +9210,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 				qPos.add(groupId);
 
-				if (categoryIds != null) {
+				if (categoryIds.length > 0) {
 					qPos.add(categoryIds);
 				}
 
@@ -9262,13 +9311,20 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			return countByG_C_S(groupId, categoryIds, status);
 		}
 
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_MBTHREAD_WHERE);
 
 		query.append(_FINDER_COLUMN_G_C_S_GROUPID_2);
 
-		if ((categoryIds == null) || (categoryIds.length > 0)) {
+		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < categoryIds.length; i++) {
@@ -9307,7 +9363,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			qPos.add(groupId);
 
-			if (categoryIds != null) {
+			if (categoryIds.length > 0) {
 				qPos.add(categoryIds);
 			}
 
@@ -10203,6 +10259,13 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				orderByComparator);
 		}
 
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -10214,7 +10277,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_FINDER_COLUMN_G_C_NOTS_GROUPID_2);
 
-		if ((categoryIds == null) || (categoryIds.length > 0)) {
+		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < categoryIds.length; i++) {
@@ -10280,7 +10343,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			qPos.add(groupId);
 
-			if (categoryIds != null) {
+			if (categoryIds.length > 0) {
 				qPos.add(categoryIds);
 			}
 
@@ -10357,7 +10420,14 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public List<MBThread> findByG_C_NotS(long groupId, long[] categoryIds,
 		int status, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((categoryIds != null) && (categoryIds.length == 1)) {
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
+		if (categoryIds.length == 1) {
 			return findByG_C_NotS(groupId, categoryIds[0], status, start, end,
 				orderByComparator);
 		}
@@ -10403,7 +10473,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			query.append(_FINDER_COLUMN_G_C_NOTS_GROUPID_2);
 
-			if ((categoryIds == null) || (categoryIds.length > 0)) {
+			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
@@ -10446,7 +10516,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 				qPos.add(groupId);
 
-				if (categoryIds != null) {
+				if (categoryIds.length > 0) {
 					qPos.add(categoryIds);
 				}
 
@@ -10577,6 +10647,13 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	@Override
 	public int countByG_C_NotS(long groupId, long[] categoryIds, int status)
 		throws SystemException {
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(categoryIds), status
 			};
@@ -10591,7 +10668,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			query.append(_FINDER_COLUMN_G_C_NOTS_GROUPID_2);
 
-			if ((categoryIds == null) || (categoryIds.length > 0)) {
+			if (categoryIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
@@ -10625,7 +10702,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 				qPos.add(groupId);
 
-				if (categoryIds != null) {
+				if (categoryIds.length > 0) {
 					qPos.add(categoryIds);
 				}
 
@@ -10726,13 +10803,20 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			return countByG_C_NotS(groupId, categoryIds, status);
 		}
 
+		if (categoryIds == null) {
+			categoryIds = new long[0];
+		}
+		else {
+			categoryIds = ArrayUtil.unique(categoryIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_MBTHREAD_WHERE);
 
 		query.append(_FINDER_COLUMN_G_C_NOTS_GROUPID_2);
 
-		if ((categoryIds == null) || (categoryIds.length > 0)) {
+		if (categoryIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < categoryIds.length; i++) {
@@ -10771,7 +10855,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			qPos.add(groupId);
 
-			if (categoryIds != null) {
+			if (categoryIds.length > 0) {
 				qPos.add(categoryIds);
 			}
 

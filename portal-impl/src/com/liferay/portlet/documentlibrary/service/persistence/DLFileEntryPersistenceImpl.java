@@ -6162,6 +6162,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			return findByG_F(groupId, folderIds, start, end, orderByComparator);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -6173,7 +6180,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 		query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -6235,7 +6242,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			qPos.add(groupId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -6307,7 +6314,14 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public List<DLFileEntry> findByG_F(long groupId, long[] folderIds,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((folderIds != null) && (folderIds.length == 1)) {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
+		if (folderIds.length == 1) {
 			return findByG_F(groupId, folderIds[0], start, end,
 				orderByComparator);
 		}
@@ -6349,7 +6363,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -6388,7 +6402,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 				qPos.add(groupId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -6510,6 +6524,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public int countByG_F(long groupId, long[] folderIds)
 		throws SystemException {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		Object[] finderArgs = new Object[] { groupId, StringUtil.merge(folderIds) };
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_F,
@@ -6522,7 +6543,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -6552,7 +6573,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 				qPos.add(groupId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -6645,13 +6666,20 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			return countByG_F(groupId, folderIds);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_DLFILEENTRY_WHERE);
 
 		query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -6686,7 +6714,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			qPos.add(groupId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -7596,6 +7624,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				orderByComparator);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -7609,7 +7644,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 		query.append(_FINDER_COLUMN_G_U_F_USERID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -7673,7 +7708,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			qPos.add(userId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -7748,7 +7783,14 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public List<DLFileEntry> findByG_U_F(long groupId, long userId,
 		long[] folderIds, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		if ((folderIds != null) && (folderIds.length == 1)) {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
+		if (folderIds.length == 1) {
 			return findByG_U_F(groupId, userId, folderIds[0], start, end,
 				orderByComparator);
 		}
@@ -7795,7 +7837,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			query.append(_FINDER_COLUMN_G_U_F_USERID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -7836,7 +7878,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 				qPos.add(userId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -7965,6 +8007,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public int countByG_U_F(long groupId, long userId, long[] folderIds)
 		throws SystemException {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				groupId, userId, StringUtil.merge(folderIds)
 			};
@@ -7981,7 +8030,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			query.append(_FINDER_COLUMN_G_U_F_USERID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -8013,7 +8062,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 				qPos.add(userId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -8112,6 +8161,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			return countByG_U_F(groupId, userId, folderIds);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_DLFILEENTRY_WHERE);
@@ -8120,7 +8176,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 		query.append(_FINDER_COLUMN_G_U_F_USERID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -8157,7 +8213,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			qPos.add(userId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -9650,6 +9706,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				orderByComparator);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -9661,7 +9724,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 		query.append(_FINDER_COLUMN_G_F_F_GROUPID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -9727,7 +9790,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			qPos.add(groupId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -9804,7 +9867,14 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public List<DLFileEntry> findByG_F_F(long groupId, long[] folderIds,
 		long fileEntryTypeId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		if ((folderIds != null) && (folderIds.length == 1)) {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
+		if (folderIds.length == 1) {
 			return findByG_F_F(groupId, folderIds[0], fileEntryTypeId, start,
 				end, orderByComparator);
 		}
@@ -9849,7 +9919,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			query.append(_FINDER_COLUMN_G_F_F_GROUPID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -9892,7 +9962,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 				qPos.add(groupId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -10023,6 +10093,13 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	@Override
 	public int countByG_F_F(long groupId, long[] folderIds, long fileEntryTypeId)
 		throws SystemException {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(folderIds), fileEntryTypeId
 			};
@@ -10037,7 +10114,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			query.append(_FINDER_COLUMN_G_F_F_GROUPID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -10071,7 +10148,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 				qPos.add(groupId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -10172,13 +10249,20 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			return countByG_F_F(groupId, folderIds, fileEntryTypeId);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_DLFILEENTRY_WHERE);
 
 		query.append(_FINDER_COLUMN_G_F_F_GROUPID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -10217,7 +10301,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			qPos.add(groupId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 

@@ -3843,7 +3843,14 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByStructureId(String[] structureIds,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((structureIds != null) && (structureIds.length == 1)) {
+		if (structureIds == null) {
+			structureIds = new String[0];
+		}
+		else {
+			structureIds = ArrayUtil.distinct(structureIds);
+		}
+
+		if (structureIds.length == 1) {
 			return findByStructureId(structureIds[0], start, end,
 				orderByComparator);
 		}
@@ -3883,7 +3890,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			query.append(_SQL_SELECT_JOURNALARTICLE_WHERE);
 
-			if ((structureIds == null) || (structureIds.length > 0)) {
+			if (structureIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < structureIds.length; i++) {
@@ -3930,7 +3937,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (structureIds != null) {
+				if (structureIds.length > 0) {
 					qPos.add(structureIds);
 				}
 
@@ -4058,6 +4065,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public int countByStructureId(String[] structureIds)
 		throws SystemException {
+		if (structureIds == null) {
+			structureIds = new String[0];
+		}
+		else {
+			structureIds = ArrayUtil.distinct(structureIds);
+		}
+
 		Object[] finderArgs = new Object[] { StringUtil.merge(structureIds) };
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_STRUCTUREID,
@@ -4068,7 +4082,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			query.append(_SQL_COUNT_JOURNALARTICLE_WHERE);
 
-			if ((structureIds == null) || (structureIds.length > 0)) {
+			if (structureIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < structureIds.length; i++) {
@@ -4106,7 +4120,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (structureIds != null) {
+				if (structureIds.length > 0) {
 					qPos.add(structureIds);
 				}
 
@@ -8538,6 +8552,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			return findByG_F(groupId, folderIds, start, end, orderByComparator);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -8549,7 +8570,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -8611,7 +8632,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			qPos.add(groupId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -8684,7 +8705,14 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByG_F(long groupId, long[] folderIds,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((folderIds != null) && (folderIds.length == 1)) {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
+		if (folderIds.length == 1) {
 			return findByG_F(groupId, folderIds[0], start, end,
 				orderByComparator);
 		}
@@ -8727,7 +8755,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -8766,7 +8794,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 				qPos.add(groupId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -8888,6 +8916,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public int countByG_F(long groupId, long[] folderIds)
 		throws SystemException {
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		Object[] finderArgs = new Object[] { groupId, StringUtil.merge(folderIds) };
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_F,
@@ -8900,7 +8935,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-			if ((folderIds == null) || (folderIds.length > 0)) {
+			if (folderIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < folderIds.length; i++) {
@@ -8930,7 +8965,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 				qPos.add(groupId);
 
-				if (folderIds != null) {
+				if (folderIds.length > 0) {
 					qPos.add(folderIds);
 				}
 
@@ -9023,13 +9058,20 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			return countByG_F(groupId, folderIds);
 		}
 
+		if (folderIds == null) {
+			folderIds = new long[0];
+		}
+		else {
+			folderIds = ArrayUtil.unique(folderIds);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE);
 
 		query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-		if ((folderIds == null) || (folderIds.length > 0)) {
+		if (folderIds.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < folderIds.length; i++) {
@@ -9064,7 +9106,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			qPos.add(groupId);
 
-			if (folderIds != null) {
+			if (folderIds.length > 0) {
 				qPos.add(folderIds);
 			}
 
@@ -17690,7 +17732,14 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByR_I_S(long resourcePrimKey,
 		boolean indexable, int[] statuses, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		if ((statuses != null) && (statuses.length == 1)) {
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else {
+			statuses = ArrayUtil.unique(statuses);
+		}
+
+		if (statuses.length == 1) {
 			return findByR_I_S(resourcePrimKey, indexable, statuses[0], start,
 				end, orderByComparator);
 		}
@@ -17737,7 +17786,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			query.append(_FINDER_COLUMN_R_I_S_INDEXABLE_2);
 
-			if ((statuses == null) || (statuses.length > 0)) {
+			if (statuses.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < statuses.length; i++) {
@@ -17778,7 +17827,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 				qPos.add(indexable);
 
-				if (statuses != null) {
+				if (statuses.length > 0) {
 					qPos.add(statuses);
 				}
 
@@ -17907,6 +17956,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public int countByR_I_S(long resourcePrimKey, boolean indexable,
 		int[] statuses) throws SystemException {
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else {
+			statuses = ArrayUtil.unique(statuses);
+		}
+
 		Object[] finderArgs = new Object[] {
 				resourcePrimKey, indexable, StringUtil.merge(statuses)
 			};
@@ -17923,7 +17979,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			query.append(_FINDER_COLUMN_R_I_S_INDEXABLE_2);
 
-			if ((statuses == null) || (statuses.length > 0)) {
+			if (statuses.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < statuses.length; i++) {
@@ -17955,7 +18011,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 				qPos.add(indexable);
 
-				if (statuses != null) {
+				if (statuses.length > 0) {
 					qPos.add(statuses);
 				}
 
@@ -19852,6 +19908,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				orderByComparator);
 		}
 
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else {
+			statuses = ArrayUtil.unique(statuses);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -19865,7 +19928,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_F_ST_FOLDERID_2);
 
-		if ((statuses == null) || (statuses.length > 0)) {
+		if (statuses.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < statuses.length; i++) {
@@ -19929,7 +19992,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			qPos.add(folderId);
 
-			if (statuses != null) {
+			if (statuses.length > 0) {
 				qPos.add(statuses);
 			}
 
@@ -20005,7 +20068,14 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByG_F_ST(long groupId, long folderId,
 		int[] statuses, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((statuses != null) && (statuses.length == 1)) {
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else {
+			statuses = ArrayUtil.unique(statuses);
+		}
+
+		if (statuses.length == 1) {
 			return findByG_F_ST(groupId, folderId, statuses[0], start, end,
 				orderByComparator);
 		}
@@ -20052,7 +20122,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			query.append(_FINDER_COLUMN_G_F_ST_FOLDERID_2);
 
-			if ((statuses == null) || (statuses.length > 0)) {
+			if (statuses.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < statuses.length; i++) {
@@ -20093,7 +20163,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 				qPos.add(folderId);
 
-				if (statuses != null) {
+				if (statuses.length > 0) {
 					qPos.add(statuses);
 				}
 
@@ -20222,6 +20292,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public int countByG_F_ST(long groupId, long folderId, int[] statuses)
 		throws SystemException {
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else {
+			statuses = ArrayUtil.unique(statuses);
+		}
+
 		Object[] finderArgs = new Object[] {
 				groupId, folderId, StringUtil.merge(statuses)
 			};
@@ -20238,7 +20315,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			query.append(_FINDER_COLUMN_G_F_ST_FOLDERID_2);
 
-			if ((statuses == null) || (statuses.length > 0)) {
+			if (statuses.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < statuses.length; i++) {
@@ -20270,7 +20347,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 				qPos.add(folderId);
 
-				if (statuses != null) {
+				if (statuses.length > 0) {
 					qPos.add(statuses);
 				}
 
@@ -20369,6 +20446,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			return countByG_F_ST(groupId, folderId, statuses);
 		}
 
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else {
+			statuses = ArrayUtil.unique(statuses);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE);
@@ -20377,7 +20461,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		query.append(_FINDER_COLUMN_G_F_ST_FOLDERID_2);
 
-		if ((statuses == null) || (statuses.length > 0)) {
+		if (statuses.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < statuses.length; i++) {
@@ -20414,7 +20498,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			qPos.add(folderId);
 
-			if (statuses != null) {
+			if (statuses.length > 0) {
 				qPos.add(statuses);
 			}
 
@@ -25078,6 +25162,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				orderByComparator);
 		}
 
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else {
+			statuses = ArrayUtil.unique(statuses);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -25103,7 +25194,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_2);
 		}
 
-		if ((statuses == null) || (statuses.length > 0)) {
+		if (statuses.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < statuses.length; i++) {
@@ -25169,7 +25260,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				qPos.add(articleId);
 			}
 
-			if (statuses != null) {
+			if (statuses.length > 0) {
 				qPos.add(statuses);
 			}
 
@@ -25245,7 +25336,14 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public List<JournalArticle> findByG_A_ST(long groupId, String articleId,
 		int[] statuses, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		if ((statuses != null) && (statuses.length == 1)) {
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else {
+			statuses = ArrayUtil.unique(statuses);
+		}
+
+		if (statuses.length == 1) {
 			return findByG_A_ST(groupId, articleId, statuses[0], start, end,
 				orderByComparator);
 		}
@@ -25305,7 +25403,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_2);
 			}
 
-			if ((statuses == null) || (statuses.length > 0)) {
+			if (statuses.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < statuses.length; i++) {
@@ -25348,7 +25446,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 					qPos.add(articleId);
 				}
 
-				if (statuses != null) {
+				if (statuses.length > 0) {
 					qPos.add(statuses);
 				}
 
@@ -25491,6 +25589,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	@Override
 	public int countByG_A_ST(long groupId, String articleId, int[] statuses)
 		throws SystemException {
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else {
+			statuses = ArrayUtil.unique(statuses);
+		}
+
 		Object[] finderArgs = new Object[] {
 				groupId, articleId, StringUtil.merge(statuses)
 			};
@@ -25519,7 +25624,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_2);
 			}
 
-			if ((statuses == null) || (statuses.length > 0)) {
+			if (statuses.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < statuses.length; i++) {
@@ -25553,7 +25658,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 					qPos.add(articleId);
 				}
 
-				if (statuses != null) {
+				if (statuses.length > 0) {
 					qPos.add(statuses);
 				}
 
@@ -25666,6 +25771,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			return countByG_A_ST(groupId, articleId, statuses);
 		}
 
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else {
+			statuses = ArrayUtil.unique(statuses);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE);
@@ -25686,7 +25798,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_2);
 		}
 
-		if ((statuses == null) || (statuses.length > 0)) {
+		if (statuses.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < statuses.length; i++) {
@@ -25725,7 +25837,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				qPos.add(articleId);
 			}
 
-			if (statuses != null) {
+			if (statuses.length > 0) {
 				qPos.add(statuses);
 			}
 

@@ -6,7 +6,7 @@
 	</#if>
 
 	<#if finderCol.hasArrayableOperator()>
-		if ((${finderCol.names} == null) || (${finderCol.names}.length > 0)) {
+		if (${finderCol.names}.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < ${finderCol.names}.length; i++) {

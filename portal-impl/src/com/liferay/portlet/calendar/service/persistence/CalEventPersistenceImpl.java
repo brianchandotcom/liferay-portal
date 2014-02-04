@@ -4171,6 +4171,13 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			return findByG_T(groupId, types, start, end, orderByComparator);
 		}
 
+		if (types == null) {
+			types = new String[0];
+		}
+		else {
+			types = ArrayUtil.distinct(types);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -4182,7 +4189,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		query.append(_FINDER_COLUMN_G_T_GROUPID_2);
 
-		if ((types == null) || (types.length > 0)) {
+		if (types.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < types.length; i++) {
@@ -4254,7 +4261,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 			qPos.add(groupId);
 
-			if (types != null) {
+			if (types.length > 0) {
 				qPos.add(types);
 			}
 
@@ -4325,7 +4332,14 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public List<CalEvent> findByG_T(long groupId, String[] types, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		if ((types != null) && (types.length == 1)) {
+		if (types == null) {
+			types = new String[0];
+		}
+		else {
+			types = ArrayUtil.distinct(types);
+		}
+
+		if (types.length == 1) {
 			return findByG_T(groupId, types[0], start, end, orderByComparator);
 		}
 
@@ -4366,7 +4380,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 			query.append(_FINDER_COLUMN_G_T_GROUPID_2);
 
-			if ((types == null) || (types.length > 0)) {
+			if (types.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < types.length; i++) {
@@ -4415,7 +4429,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				qPos.add(groupId);
 
-				if (types != null) {
+				if (types.length > 0) {
 					qPos.add(types);
 				}
 
@@ -4550,6 +4564,13 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public int countByG_T(long groupId, String[] types)
 		throws SystemException {
+		if (types == null) {
+			types = new String[0];
+		}
+		else {
+			types = ArrayUtil.distinct(types);
+		}
+
 		Object[] finderArgs = new Object[] { groupId, StringUtil.merge(types) };
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T,
@@ -4562,7 +4583,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 			query.append(_FINDER_COLUMN_G_T_GROUPID_2);
 
-			if ((types == null) || (types.length > 0)) {
+			if (types.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < types.length; i++) {
@@ -4602,7 +4623,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				qPos.add(groupId);
 
-				if (types != null) {
+				if (types.length > 0) {
 					qPos.add(types);
 				}
 
@@ -4709,13 +4730,20 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			return countByG_T(groupId, types);
 		}
 
+		if (types == null) {
+			types = new String[0];
+		}
+		else {
+			types = ArrayUtil.distinct(types);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_CALEVENT_WHERE);
 
 		query.append(_FINDER_COLUMN_G_T_GROUPID_2);
 
-		if ((types == null) || (types.length > 0)) {
+		if (types.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < types.length; i++) {
@@ -4760,7 +4788,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 			qPos.add(groupId);
 
-			if (types != null) {
+			if (types.length > 0) {
 				qPos.add(types);
 			}
 
@@ -6645,6 +6673,13 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				orderByComparator);
 		}
 
+		if (types == null) {
+			types = new String[0];
+		}
+		else {
+			types = ArrayUtil.distinct(types);
+		}
+
 		StringBundler query = new StringBundler();
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -6656,7 +6691,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		query.append(_FINDER_COLUMN_G_T_R_GROUPID_2);
 
-		if ((types == null) || (types.length > 0)) {
+		if (types.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < types.length; i++) {
@@ -6732,7 +6767,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 			qPos.add(groupId);
 
-			if (types != null) {
+			if (types.length > 0) {
 				qPos.add(types);
 			}
 
@@ -6809,7 +6844,14 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public List<CalEvent> findByG_T_R(long groupId, String[] types,
 		boolean repeating, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		if ((types != null) && (types.length == 1)) {
+		if (types == null) {
+			types = new String[0];
+		}
+		else {
+			types = ArrayUtil.distinct(types);
+		}
+
+		if (types.length == 1) {
 			return findByG_T_R(groupId, types[0], repeating, start, end,
 				orderByComparator);
 		}
@@ -6854,7 +6896,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 			query.append(_FINDER_COLUMN_G_T_R_GROUPID_2);
 
-			if ((types == null) || (types.length > 0)) {
+			if (types.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < types.length; i++) {
@@ -6907,7 +6949,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				qPos.add(groupId);
 
-				if (types != null) {
+				if (types.length > 0) {
 					qPos.add(types);
 				}
 
@@ -7052,6 +7094,13 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	@Override
 	public int countByG_T_R(long groupId, String[] types, boolean repeating)
 		throws SystemException {
+		if (types == null) {
+			types = new String[0];
+		}
+		else {
+			types = ArrayUtil.distinct(types);
+		}
+
 		Object[] finderArgs = new Object[] {
 				groupId, StringUtil.merge(types), repeating
 			};
@@ -7066,7 +7115,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 			query.append(_FINDER_COLUMN_G_T_R_GROUPID_2);
 
-			if ((types == null) || (types.length > 0)) {
+			if (types.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < types.length; i++) {
@@ -7110,7 +7159,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 				qPos.add(groupId);
 
-				if (types != null) {
+				if (types.length > 0) {
 					qPos.add(types);
 				}
 
@@ -7225,13 +7274,20 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			return countByG_T_R(groupId, types, repeating);
 		}
 
+		if (types == null) {
+			types = new String[0];
+		}
+		else {
+			types = ArrayUtil.distinct(types);
+		}
+
 		StringBundler query = new StringBundler();
 
 		query.append(_FILTER_SQL_COUNT_CALEVENT_WHERE);
 
 		query.append(_FINDER_COLUMN_G_T_R_GROUPID_2);
 
-		if ((types == null) || (types.length > 0)) {
+		if (types.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < types.length; i++) {
@@ -7280,7 +7336,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 			qPos.add(groupId);
 
-			if (types != null) {
+			if (types.length > 0) {
 				qPos.add(types);
 			}
 

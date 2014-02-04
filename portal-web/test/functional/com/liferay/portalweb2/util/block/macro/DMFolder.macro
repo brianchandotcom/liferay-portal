@@ -117,7 +117,7 @@
 
 		<var name="key_mgFolderName" value="${mgFolderName}" />
 
-		<execute action="PGMediagallery#assertTextEquals" locator-key1="FOLDER_NAME" value1="${mgFolderNameEdit}" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_NAME" value1="${mgFolderNameEdit}" />
 	</command>
 
 	<command name="gotoPG">

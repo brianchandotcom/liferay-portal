@@ -278,9 +278,6 @@
 
 		<execute action="PGMediagalleryFolder#assertClick" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
 
-		<var name="key_mgDocumentDescription" value="${mgDocumentDescription}" />
-		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
-
 		<execute action="PGMediagalleryMedia#assertTextEquals" locator-key1="MEDIA_CAPTION" value1="${mgDocumentTitle} - ${mgDocumentDescription}" />
 		<execute action="PGMediagalleryMedia#click" locator-key1="ENTRY_EDIT_ICON" />
 

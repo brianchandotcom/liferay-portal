@@ -352,6 +352,17 @@
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContentEdit}" />
 	</command>
 
+	<command name="editInlineContentPG">
+		<var name="key_entryContent" value="${entryContent}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#click" locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE" value1="${entryContent}" />
+		<execute action="PGBlogs#type" locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE" value1="${entryContentEdit}" />
+		<execute action="PGBlogs#selectFrame" value1="relative=top" />
+		<execute action="PGBlogs#assertElementPresent" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContentEdit}" />
+	</command>
+
 	<command name="editNoPermissionPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 

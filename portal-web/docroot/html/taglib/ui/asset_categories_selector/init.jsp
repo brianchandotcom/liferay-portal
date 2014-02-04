@@ -16,6 +16,7 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.model.AssetCategoryConstants" %>
+<%@ page import="com.liferay.portlet.asset.model.AssetCategoryConstants" %><%@
+page import="com.liferay.taglib.util.AssetCategoryUtil" %>
 
 <portlet:defineObjects />

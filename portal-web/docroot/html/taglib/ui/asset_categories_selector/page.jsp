@@ -77,7 +77,7 @@ if (Validator.isNotNull(className)) {
 			curCategoryNames = StringPool.BLANK;
 		}
 
-		String[] categoryIdsTitles = _getCategoryIdsTitles(curCategoryIds, curCategoryNames, vocabulary.getVocabularyId(), themeDisplay);
+		String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(curCategoryIds, curCategoryNames, vocabulary.getVocabularyId(), themeDisplay);
 	%>
 
 		<span class="field-content">
@@ -129,7 +129,7 @@ else {
 		curCategoryIds = curCategoryIdsParam;
 	}
 
-	String[] categoryIdsTitles = _getCategoryIdsTitles(curCategoryIds, curCategoryNames, 0, themeDisplay);
+	String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(curCategoryIds, curCategoryNames, 0, themeDisplay);
 %>
 
 	<div class="lfr-tags-selector-content" id="<%= namespace + randomNamespace %>assetCategoriesSelector">
@@ -156,70 +156,4 @@ else {
 
 <%
 }
-%>
-
-<%!
-private long[] _filterCategoryIds(long vocabularyId, long[] categoryIds) throws PortalException, SystemException {
-	List<Long> filteredCategoryIds = new ArrayList<Long>();
-
-	for (long categoryId : categoryIds) {
-		AssetCategory category = AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
-
-		if (category == null) {
-			continue;
-		}
-
-		if (category.getVocabularyId() == vocabularyId) {
-			filteredCategoryIds.add(category.getCategoryId());
-		}
-	}
-
-	return ArrayUtil.toArray(filteredCategoryIds.toArray(new Long[filteredCategoryIds.size()]));
-}
-
-private String[] _getCategoryIdsTitles(String categoryIds, String categoryNames, long vocabularyId, ThemeDisplay themeDisplay) throws PortalException, SystemException {
-	if (Validator.isNotNull(categoryIds)) {
-		long[] categoryIdsArray = GetterUtil.getLongValues(StringUtil.split(categoryIds));
-
-		if (vocabularyId > 0) {
-			categoryIdsArray = _filterCategoryIds(vocabularyId, categoryIdsArray);
-		}
-
-		categoryIds = StringPool.BLANK;
-		categoryNames = StringPool.BLANK;
-
-		if (categoryIdsArray.length > 0) {
-			StringBundler categoryIdsSb = new StringBundler(categoryIdsArray.length * 2);
-			StringBundler categoryNamesSb = new StringBundler(categoryIdsArray.length * 2);
-
-			for (long categoryId : categoryIdsArray) {
-				AssetCategory category = AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
-
-				if (category == null) {
-					continue;
-				}
-
-				category = category.toEscapedModel();
-
-				categoryIdsSb.append(categoryId);
-				categoryIdsSb.append(StringPool.COMMA);
-
-				categoryNamesSb.append(category.getTitle(themeDisplay.getLocale()));
-				categoryNamesSb.append(_CATEGORY_SEPARATOR);
-			}
-
-			if (categoryIdsSb.index() > 0) {
-				categoryIdsSb.setIndex(categoryIdsSb.index() - 1);
-				categoryNamesSb.setIndex(categoryNamesSb.index() - 1);
-
-				categoryIds = categoryIdsSb.toString();
-				categoryNames = categoryNamesSb.toString();
-			}
-		}
-	}
-
-	return new String[] {categoryIds, categoryNames};
-}
-
-private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
 %>

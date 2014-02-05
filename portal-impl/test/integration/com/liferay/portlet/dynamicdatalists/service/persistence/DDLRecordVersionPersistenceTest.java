@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -177,6 +178,45 @@ public class DDLRecordVersionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDLRecordVersion.getStatusDate()),
 			Time.getShortTimestamp(newDDLRecordVersion.getStatusDate()));
+	}
+
+	@Test
+	public void testCountByRecordId() {
+		try {
+			_persistence.countByRecordId(ServiceTestUtil.nextLong());
+
+			_persistence.countByRecordId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByR_V() {
+		try {
+			_persistence.countByR_V(ServiceTestUtil.nextLong(), StringPool.BLANK);
+
+			_persistence.countByR_V(0L, StringPool.NULL);
+
+			_persistence.countByR_V(0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByR_S() {
+		try {
+			_persistence.countByR_S(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt());
+
+			_persistence.countByR_S(0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

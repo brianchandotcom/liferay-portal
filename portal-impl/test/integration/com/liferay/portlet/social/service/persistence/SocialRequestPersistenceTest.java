@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -168,6 +169,167 @@ public class SocialRequestPersistenceTest {
 			newSocialRequest.getReceiverUserId());
 		Assert.assertEquals(existingSocialRequest.getStatus(),
 			newSocialRequest.getStatus());
+	}
+
+	@Test
+	public void testCountByUuid() {
+		try {
+			_persistence.countByUuid(StringPool.BLANK);
+
+			_persistence.countByUuid(StringPool.NULL);
+
+			_persistence.countByUuid((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByUUID_G() {
+		try {
+			_persistence.countByUUID_G(StringPool.BLANK,
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByUUID_G(StringPool.NULL, 0L);
+
+			_persistence.countByUUID_G((String)null, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByUuid_C() {
+		try {
+			_persistence.countByUuid_C(StringPool.BLANK,
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+			_persistence.countByUuid_C((String)null, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByCompanyId() {
+		try {
+			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+
+			_persistence.countByCompanyId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByUserId() {
+		try {
+			_persistence.countByUserId(ServiceTestUtil.nextLong());
+
+			_persistence.countByUserId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByReceiverUserId() {
+		try {
+			_persistence.countByReceiverUserId(ServiceTestUtil.nextLong());
+
+			_persistence.countByReceiverUserId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByU_S() {
+		try {
+			_persistence.countByU_S(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt());
+
+			_persistence.countByU_S(0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_C() {
+		try {
+			_persistence.countByC_C(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByC_C(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByR_S() {
+		try {
+			_persistence.countByR_S(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt());
+
+			_persistence.countByR_S(0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByU_C_C_T_R() {
+		try {
+			_persistence.countByU_C_C_T_R(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt(), ServiceTestUtil.nextLong());
+
+			_persistence.countByU_C_C_T_R(0L, 0L, 0L, 0, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByU_C_C_T_S() {
+		try {
+			_persistence.countByU_C_C_T_S(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt(), ServiceTestUtil.nextInt());
+
+			_persistence.countByU_C_C_T_S(0L, 0L, 0L, 0, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_C_T_R_S() {
+		try {
+			_persistence.countByC_C_T_R_S(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+
+			_persistence.countByC_C_T_R_S(0L, 0L, 0, 0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

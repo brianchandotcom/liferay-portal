@@ -140,6 +140,43 @@ public class ExpandoRowPersistenceTest {
 	}
 
 	@Test
+	public void testCountByTableId() {
+		try {
+			_persistence.countByTableId(ServiceTestUtil.nextLong());
+
+			_persistence.countByTableId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByClassPK() {
+		try {
+			_persistence.countByClassPK(ServiceTestUtil.nextLong());
+
+			_persistence.countByClassPK(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByT_C() {
+		try {
+			_persistence.countByT_C(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByT_C(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ExpandoRow newExpandoRow = addExpandoRow();
 

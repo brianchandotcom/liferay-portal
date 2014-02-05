@@ -159,6 +159,31 @@ public class ShoppingCategoryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupId() {
+		try {
+			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+
+			_persistence.countByGroupId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_P() {
+		try {
+			_persistence.countByG_P(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByG_P(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ShoppingCategory newShoppingCategory = addShoppingCategory();
 

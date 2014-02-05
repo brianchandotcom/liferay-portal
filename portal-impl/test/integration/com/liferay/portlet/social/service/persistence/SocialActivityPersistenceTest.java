@@ -174,6 +174,159 @@ public class SocialActivityPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupId() {
+		try {
+			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+
+			_persistence.countByGroupId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByCompanyId() {
+		try {
+			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+
+			_persistence.countByCompanyId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByUserId() {
+		try {
+			_persistence.countByUserId(ServiceTestUtil.nextLong());
+
+			_persistence.countByUserId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByActivitySetId() {
+		try {
+			_persistence.countByActivitySetId(ServiceTestUtil.nextLong());
+
+			_persistence.countByActivitySetId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByMirrorActivityId() {
+		try {
+			_persistence.countByMirrorActivityId(ServiceTestUtil.nextLong());
+
+			_persistence.countByMirrorActivityId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByClassNameId() {
+		try {
+			_persistence.countByClassNameId(ServiceTestUtil.nextLong());
+
+			_persistence.countByClassNameId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByReceiverUserId() {
+		try {
+			_persistence.countByReceiverUserId(ServiceTestUtil.nextLong());
+
+			_persistence.countByReceiverUserId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_C() {
+		try {
+			_persistence.countByC_C(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByC_C(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByM_C_C() {
+		try {
+			_persistence.countByM_C_C(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
+
+			_persistence.countByM_C_C(0L, 0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_C_T() {
+		try {
+			_persistence.countByC_C_T(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
+
+			_persistence.countByC_C_T(0L, 0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_U_C_C_T_R() {
+		try {
+			_persistence.countByG_U_C_C_T_R(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt(),
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByG_U_C_C_T_R(0L, 0L, 0L, 0L, 0, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_U_CD_C_C_T_R() {
+		try {
+			_persistence.countByG_U_CD_C_C_T_R(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt(), ServiceTestUtil.nextLong());
+
+			_persistence.countByG_U_CD_C_C_T_R(0L, 0L, 0L, 0L, 0L, 0, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SocialActivity newSocialActivity = addSocialActivity();
 

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.impl.ResourceActionModelImpl;
@@ -135,6 +136,34 @@ public class ResourceActionPersistenceTest {
 			newResourceAction.getActionId());
 		Assert.assertEquals(existingResourceAction.getBitwiseValue(),
 			newResourceAction.getBitwiseValue());
+	}
+
+	@Test
+	public void testCountByName() {
+		try {
+			_persistence.countByName(StringPool.BLANK);
+
+			_persistence.countByName(StringPool.NULL);
+
+			_persistence.countByName((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByN_A() {
+		try {
+			_persistence.countByN_A(StringPool.BLANK, StringPool.BLANK);
+
+			_persistence.countByN_A(StringPool.NULL, StringPool.NULL);
+
+			_persistence.countByN_A((String)null, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

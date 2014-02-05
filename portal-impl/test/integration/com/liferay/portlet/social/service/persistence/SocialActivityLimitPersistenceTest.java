@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -152,6 +153,60 @@ public class SocialActivityLimitPersistenceTest {
 			newSocialActivityLimit.getActivityCounterName());
 		Assert.assertEquals(existingSocialActivityLimit.getValue(),
 			newSocialActivityLimit.getValue());
+	}
+
+	@Test
+	public void testCountByGroupId() {
+		try {
+			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+
+			_persistence.countByGroupId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByUserId() {
+		try {
+			_persistence.countByUserId(ServiceTestUtil.nextLong());
+
+			_persistence.countByUserId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_C() {
+		try {
+			_persistence.countByC_C(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByC_C(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_U_C_C_A_A() {
+		try {
+			_persistence.countByG_U_C_C_A_A(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt(),
+				StringPool.BLANK);
+
+			_persistence.countByG_U_C_C_A_A(0L, 0L, 0L, 0L, 0, StringPool.NULL);
+
+			_persistence.countByG_U_C_C_A_A(0L, 0L, 0L, 0L, 0, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

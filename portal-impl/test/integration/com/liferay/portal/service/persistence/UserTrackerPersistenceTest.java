@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -150,6 +151,44 @@ public class UserTrackerPersistenceTest {
 			newUserTracker.getRemoteHost());
 		Assert.assertEquals(existingUserTracker.getUserAgent(),
 			newUserTracker.getUserAgent());
+	}
+
+	@Test
+	public void testCountByCompanyId() {
+		try {
+			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+
+			_persistence.countByCompanyId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByUserId() {
+		try {
+			_persistence.countByUserId(ServiceTestUtil.nextLong());
+
+			_persistence.countByUserId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountBySessionId() {
+		try {
+			_persistence.countBySessionId(StringPool.BLANK);
+
+			_persistence.countBySessionId(StringPool.NULL);
+
+			_persistence.countBySessionId((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

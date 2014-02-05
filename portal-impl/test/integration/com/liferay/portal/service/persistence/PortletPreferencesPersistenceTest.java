@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
@@ -143,6 +144,119 @@ public class PortletPreferencesPersistenceTest {
 			newPortletPreferences.getPortletId());
 		Assert.assertEquals(existingPortletPreferences.getPreferences(),
 			newPortletPreferences.getPreferences());
+	}
+
+	@Test
+	public void testCountByPlid() {
+		try {
+			_persistence.countByPlid(ServiceTestUtil.nextLong());
+
+			_persistence.countByPlid(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByPortletId() {
+		try {
+			_persistence.countByPortletId(StringPool.BLANK);
+
+			_persistence.countByPortletId(StringPool.NULL);
+
+			_persistence.countByPortletId((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByO_P() {
+		try {
+			_persistence.countByO_P(ServiceTestUtil.nextInt(), StringPool.BLANK);
+
+			_persistence.countByO_P(0, StringPool.NULL);
+
+			_persistence.countByO_P(0, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByP_P() {
+		try {
+			_persistence.countByP_P(ServiceTestUtil.nextLong(), StringPool.BLANK);
+
+			_persistence.countByP_P(0L, StringPool.NULL);
+
+			_persistence.countByP_P(0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByO_O_P() {
+		try {
+			_persistence.countByO_O_P(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt(), ServiceTestUtil.nextLong());
+
+			_persistence.countByO_O_P(0L, 0, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByO_O_PI() {
+		try {
+			_persistence.countByO_O_PI(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt(), StringPool.BLANK);
+
+			_persistence.countByO_O_PI(0L, 0, StringPool.NULL);
+
+			_persistence.countByO_O_PI(0L, 0, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByO_P_P() {
+		try {
+			_persistence.countByO_P_P(ServiceTestUtil.nextInt(),
+				ServiceTestUtil.nextLong(), StringPool.BLANK);
+
+			_persistence.countByO_P_P(0, 0L, StringPool.NULL);
+
+			_persistence.countByO_P_P(0, 0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByO_O_P_P() {
+		try {
+			_persistence.countByO_O_P_P(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt(), ServiceTestUtil.nextLong(),
+				StringPool.BLANK);
+
+			_persistence.countByO_O_P_P(0L, 0, 0L, StringPool.NULL);
+
+			_persistence.countByO_O_P_P(0L, 0, 0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

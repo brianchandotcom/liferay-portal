@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -144,6 +145,86 @@ public class SocialActivityAchievementPersistenceTest {
 			newSocialActivityAchievement.getName());
 		Assert.assertEquals(existingSocialActivityAchievement.getFirstInGroup(),
 			newSocialActivityAchievement.getFirstInGroup());
+	}
+
+	@Test
+	public void testCountByGroupId() {
+		try {
+			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+
+			_persistence.countByGroupId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_U() {
+		try {
+			_persistence.countByG_U(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByG_U(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_N() {
+		try {
+			_persistence.countByG_N(ServiceTestUtil.nextLong(), StringPool.BLANK);
+
+			_persistence.countByG_N(0L, StringPool.NULL);
+
+			_persistence.countByG_N(0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_F() {
+		try {
+			_persistence.countByG_F(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.randomBoolean());
+
+			_persistence.countByG_F(0L, ServiceTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_U_N() {
+		try {
+			_persistence.countByG_U_N(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), StringPool.BLANK);
+
+			_persistence.countByG_U_N(0L, 0L, StringPool.NULL);
+
+			_persistence.countByG_U_N(0L, 0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_U_F() {
+		try {
+			_persistence.countByG_U_F(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.randomBoolean());
+
+			_persistence.countByG_U_F(0L, 0L, ServiceTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

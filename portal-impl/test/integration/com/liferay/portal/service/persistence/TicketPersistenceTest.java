@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Ticket;
@@ -155,6 +156,20 @@ public class TicketPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingTicket.getExpirationDate()),
 			Time.getShortTimestamp(newTicket.getExpirationDate()));
+	}
+
+	@Test
+	public void testCountByKey() {
+		try {
+			_persistence.countByKey(StringPool.BLANK);
+
+			_persistence.countByKey(StringPool.NULL);
+
+			_persistence.countByKey((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

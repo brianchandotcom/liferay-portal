@@ -133,6 +133,18 @@ public class BrowserTrackerPersistenceTest {
 	}
 
 	@Test
+	public void testCountByUserId() {
+		try {
+			_persistence.countByUserId(ServiceTestUtil.nextLong());
+
+			_persistence.countByUserId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BrowserTracker newBrowserTracker = addBrowserTracker();
 

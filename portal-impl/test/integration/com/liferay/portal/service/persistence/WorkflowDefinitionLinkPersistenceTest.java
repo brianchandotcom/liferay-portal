@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.model.impl.WorkflowDefinitionLinkModelImpl;
@@ -169,6 +170,47 @@ public class WorkflowDefinitionLinkPersistenceTest {
 			newWorkflowDefinitionLink.getWorkflowDefinitionName());
 		Assert.assertEquals(existingWorkflowDefinitionLink.getWorkflowDefinitionVersion(),
 			newWorkflowDefinitionLink.getWorkflowDefinitionVersion());
+	}
+
+	@Test
+	public void testCountByCompanyId() {
+		try {
+			_persistence.countByCompanyId(ServiceTestUtil.nextLong());
+
+			_persistence.countByCompanyId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_W_W() {
+		try {
+			_persistence.countByC_W_W(ServiceTestUtil.nextLong(),
+				StringPool.BLANK, ServiceTestUtil.nextInt());
+
+			_persistence.countByC_W_W(0L, StringPool.NULL, 0);
+
+			_persistence.countByC_W_W(0L, (String)null, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_C_C_C_T() {
+		try {
+			_persistence.countByG_C_C_C_T(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong());
+
+			_persistence.countByG_C_C_C_T(0L, 0L, 0L, 0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

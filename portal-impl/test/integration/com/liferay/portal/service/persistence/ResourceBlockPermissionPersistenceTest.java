@@ -137,6 +137,43 @@ public class ResourceBlockPermissionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByResourceBlockId() {
+		try {
+			_persistence.countByResourceBlockId(ServiceTestUtil.nextLong());
+
+			_persistence.countByResourceBlockId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByRoleId() {
+		try {
+			_persistence.countByRoleId(ServiceTestUtil.nextLong());
+
+			_persistence.countByRoleId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByR_R() {
+		try {
+			_persistence.countByR_R(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByR_R(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ResourceBlockPermission newResourceBlockPermission = addResourceBlockPermission();
 

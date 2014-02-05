@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -256,6 +257,69 @@ public class ShoppingItemPersistenceTest {
 			newShoppingItem.getLargeImageId());
 		Assert.assertEquals(existingShoppingItem.getLargeImageURL(),
 			newShoppingItem.getLargeImageURL());
+	}
+
+	@Test
+	public void testCountBySmallImageId() {
+		try {
+			_persistence.countBySmallImageId(ServiceTestUtil.nextLong());
+
+			_persistence.countBySmallImageId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByMediumImageId() {
+		try {
+			_persistence.countByMediumImageId(ServiceTestUtil.nextLong());
+
+			_persistence.countByMediumImageId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByLargeImageId() {
+		try {
+			_persistence.countByLargeImageId(ServiceTestUtil.nextLong());
+
+			_persistence.countByLargeImageId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_C() {
+		try {
+			_persistence.countByG_C(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByG_C(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_S() {
+		try {
+			_persistence.countByC_S(ServiceTestUtil.nextLong(), StringPool.BLANK);
+
+			_persistence.countByC_S(0L, StringPool.NULL);
+
+			_persistence.countByC_S(0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

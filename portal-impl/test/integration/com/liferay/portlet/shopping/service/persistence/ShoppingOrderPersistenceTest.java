@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -324,6 +325,61 @@ public class ShoppingOrderPersistenceTest {
 			newShoppingOrder.getSendOrderEmail());
 		Assert.assertEquals(existingShoppingOrder.getSendShippingEmail(),
 			newShoppingOrder.getSendShippingEmail());
+	}
+
+	@Test
+	public void testCountByGroupId() {
+		try {
+			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+
+			_persistence.countByGroupId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByNumber() {
+		try {
+			_persistence.countByNumber(StringPool.BLANK);
+
+			_persistence.countByNumber(StringPool.NULL);
+
+			_persistence.countByNumber((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByPPTxnId() {
+		try {
+			_persistence.countByPPTxnId(StringPool.BLANK);
+
+			_persistence.countByPPTxnId(StringPool.NULL);
+
+			_persistence.countByPPTxnId((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_U_PPPS() {
+		try {
+			_persistence.countByG_U_PPPS(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), StringPool.BLANK);
+
+			_persistence.countByG_U_PPPS(0L, 0L, StringPool.NULL);
+
+			_persistence.countByG_U_PPPS(0L, 0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

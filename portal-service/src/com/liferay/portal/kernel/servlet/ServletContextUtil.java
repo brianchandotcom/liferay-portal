@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.net.MalformedURLException;
@@ -112,12 +113,14 @@ public class ServletContextUtil {
 						_log.error("Resource URL for " + curPath + " is null");
 					}
 					else {
-						URLConnection urlConnection = url.openConnection();
-
-						if (urlConnection.getLastModified() > lastModified) {
-							lastModified = urlConnection.getLastModified();
-						}
-					}
+							long lm =  new File(url.toURI()).lastModified();
+							if (lm > lastModified) {
+								lastModified = lm;
+							}
+                    }
+				}
+				catch (URISyntaxException ioe) {
+					_log.error(ioe, ioe);
 				}
 				catch (IOException ioe) {
 					_log.error(ioe, ioe);

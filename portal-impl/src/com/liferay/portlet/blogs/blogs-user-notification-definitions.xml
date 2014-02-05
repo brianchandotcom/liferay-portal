@@ -3,7 +3,7 @@
 
 <user-notification-definitions>
 	<definition>
-		<notification-type>${com.liferay.portal.model.UserNotificationConstants.TYPE_ADD_ENTRY}</notification-type>
+		<notification-type>${com.liferay.portal.kernel.notifications.UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY}</notification-type>
 		<description>receive-a-notification-for-the-subscribed-blogs-when-the-user-adds-a-new-blog-entry</description>
 		<delivery-type>
 			<name>email</name>
@@ -19,7 +19,7 @@
 		</delivery-type>
 	</definition>
 	<definition>
-		<notification-type>${com.liferay.portal.model.UserNotificationConstants.TYPE_UPDATE_ENTRY}</notification-type>
+		<notification-type>${com.liferay.portal.kernel.notifications.UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY}</notification-type>
 		<description>receive-a-notification-for-the-subscribed-blogs-when-the-updates-a-blog-entry</description>
 		<delivery-type>
 			<name>email</name>

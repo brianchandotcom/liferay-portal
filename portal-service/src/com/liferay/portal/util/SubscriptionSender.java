@@ -342,7 +342,7 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	/**
-	 * @see com.liferay.portal.model.UserNotificationConstants
+	 * @see com.liferay.portal.kernel.notifications.UserNotificationDefinition
 	 */
 	public void setNotificationType(int notificationType) {
 		_notificationType = notificationType;

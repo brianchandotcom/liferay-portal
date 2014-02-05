@@ -17,13 +17,13 @@ package com.liferay.portlet.blogs.notifications;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.UserNotificationConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
@@ -73,10 +73,14 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 
 		String title = StringPool.BLANK;
 
-		if (notificationType == UserNotificationConstants.TYPE_ADD_ENTRY) {
+		if (notificationType ==
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
+
 			title = "x-wrote-a-new-blog-entry";
 		}
-		else if (notificationType == UserNotificationConstants.TYPE_UPDATE_ENTRY) {
+		else if (notificationType ==
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
+
 			title = "x-updated-a-blog-entry";
 		}
 

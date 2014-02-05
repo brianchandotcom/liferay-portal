@@ -450,6 +450,13 @@ create database lportal2 character set utf8;</echo>
 		</if>
 	</target>
 
+	<target name="copy-test-log-file">
+		<copy
+			file="portal-web/test-results/functional/report.html"
+			todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+		/>
+	</target>
+
 	<target name="evaluate-logs">
 		<if>
 			<available file="portal-web/test-ant-scripts/log" />

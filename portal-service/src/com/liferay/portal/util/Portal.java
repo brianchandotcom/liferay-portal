@@ -285,16 +285,19 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	/**
-	 * Returns the alternate URL of the page, to distinguish it from its
-	 * canonical URL.
-	 * 
-	 * The alternate URL lets search engines know that an equivalent
-	 * page is available for the given locale. For more information, see <a
-	 * href="https://support.google.com/webmasters/answer/189077?hl=en">https://support.google.com/webmasters/answer/189077?hl=en</a>.
+	 * Returns the alternate URL for the requested canonical URL in the given
+	 * locale.
 	 *
-	 * @param  canonicalURL the canonical URL previously obtained
+	 * <p>
+	 * The alternate URL lets search engines know that an equivalent page is
+	 * available for the given locale. For more information, see <a
+	 * href="https://support.google.com/webmasters/answer/189077?hl=en">https://support.google.com/webmasters/answer/189077?hl=en</a>.
+	 * </p>
+	 *
+	 * @param  canonicalURL the canonical URL being requested. For more
+	 *         information, see {@link #getCanonicalURL}.
 	 * @param  themeDisplay the theme display
-	 * @param  locale the locale of the alternate (translated) page
+	 * @param  locale the locale of the alternate URL being generated
 	 * @param  layout the page being requested
 	 * @return the alternate URL for the requested canonical URL in the given
 	 *         locale
@@ -561,12 +564,13 @@ public interface Portal {
 	public String getCustomSQLFunctionIsNull();
 
 	/**
-	 * Returns the date object for the specified month, day, and year.
+	 * Returns the date object for the specified month, day, and year, or
+	 * <code>null</code> if the date is invalid.
 	 *
 	 * @param  month the month (0-based, meaning 0 for January)
 	 * @param  day the day of the month
 	 * @param  year the year
-	 * @return the date object. <code>null</code> for invalid dates
+	 * @return the date object, or <code>null</code> if the date is invalid
 	 */
 	public Date getDate(int month, int day, int year);
 
@@ -582,8 +586,8 @@ public interface Portal {
 	 *         date.
 	 * @return the date object, or <code>null</code> if the date is invalid and
 	 *         no exception to throw was provided
-	 * @throws PortalException if the date was invalid and <code>pe</code> was
-	 *         not <code>null</code>
+	 * @throws PortalException if the date was invalid and <code>clazz</code>
+	 *         was not <code>null</code>
 	 */
 	public Date getDate(
 			int month, int day, int year,
@@ -604,8 +608,8 @@ public interface Portal {
 	 *         date.
 	 * @return the date object, or <code>null</code> if the date is invalid and
 	 *         no exception to throw was provided
-	 * @throws PortalException if the date was invalid and <code>clazz</code> was
-	 *         not <code>null</code>
+	 * @throws PortalException if the date was invalid and <code>clazz</code>
+	 *         was not <code>null</code>
 	 */
 	public Date getDate(
 			int month, int day, int year, int hour, int min,
@@ -627,8 +631,8 @@ public interface Portal {
 	 *         date.
 	 * @return the date object, or <code>null</code> if the date is invalid and
 	 *         no exception to throw was provided
-	 * @throws PortalException if the date was invalid and <code>clazz</code> was
-	 *         not <code>null</code>
+	 * @throws PortalException if the date was invalid and <code>clazz</code>
+	 *         was not <code>null</code>
 	 */
 	public Date getDate(
 			int month, int day, int year, int hour, int min, TimeZone timeZone,
@@ -648,8 +652,8 @@ public interface Portal {
 	 *         date.
 	 * @return the date object, or <code>null</code> if the date is invalid and
 	 *         no exception to throw was provided
-	 * @throws PortalException if the date was invalid and <code>clazz</code> was
-	 *         not <code>null</code>
+	 * @throws PortalException if the date was invalid and <code>clazz</code>
+	 *         was not <code>null</code>
 	 */
 	public Date getDate(
 			int month, int day, int year, TimeZone timeZone,

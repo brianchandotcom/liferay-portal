@@ -2717,7 +2717,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 			CacheRegistryUtil.clear(MBThreadFlagImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(MBThreadFlagImpl.class.getName());
+		EntityCacheUtil.clearCache(MBThreadFlagImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserTrackerPath;
 import com.liferay.portal.model.impl.UserTrackerPathImpl;
@@ -637,7 +638,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 			CacheRegistryUtil.clear(UserTrackerPathImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(UserTrackerPathImpl.class.getName());
+		EntityCacheUtil.clearCache(UserTrackerPathImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1196,10 +1197,22 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 			}
 		};
 
-	private static CacheModel<UserTrackerPath> _nullUserTrackerPathCacheModel = new CacheModel<UserTrackerPath>() {
-			@Override
-			public UserTrackerPath toEntityModel() {
-				return _nullUserTrackerPath;
-			}
-		};
+	private static CacheModel<UserTrackerPath> _nullUserTrackerPathCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<UserTrackerPath>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public UserTrackerPath toEntityModel() {
+			return _nullUserTrackerPath;
+		}
+	}
 }

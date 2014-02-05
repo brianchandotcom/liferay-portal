@@ -8627,7 +8627,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			CacheRegistryUtil.clear(DDMStructureImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(DDMStructureImpl.class.getName());
+		EntityCacheUtil.clearCache(DDMStructureImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

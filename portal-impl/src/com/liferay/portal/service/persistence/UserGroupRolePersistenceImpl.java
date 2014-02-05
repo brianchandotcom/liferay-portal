@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.impl.UserGroupRoleImpl;
@@ -2664,7 +2665,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 			CacheRegistryUtil.clear(UserGroupRoleImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(UserGroupRoleImpl.class.getName());
+		EntityCacheUtil.clearCache(UserGroupRoleImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -3287,10 +3288,22 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 			}
 		};
 
-	private static CacheModel<UserGroupRole> _nullUserGroupRoleCacheModel = new CacheModel<UserGroupRole>() {
-			@Override
-			public UserGroupRole toEntityModel() {
-				return _nullUserGroupRole;
-			}
-		};
+	private static CacheModel<UserGroupRole> _nullUserGroupRoleCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<UserGroupRole>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public UserGroupRole toEntityModel() {
+			return _nullUserGroupRole;
+		}
+	}
 }

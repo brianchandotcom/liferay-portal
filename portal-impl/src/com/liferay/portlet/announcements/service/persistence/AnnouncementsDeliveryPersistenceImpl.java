@@ -898,7 +898,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			CacheRegistryUtil.clear(AnnouncementsDeliveryImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(AnnouncementsDeliveryImpl.class.getName());
+		EntityCacheUtil.clearCache(AnnouncementsDeliveryImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

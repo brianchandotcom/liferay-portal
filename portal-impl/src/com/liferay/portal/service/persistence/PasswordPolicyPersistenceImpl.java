@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.impl.PasswordPolicyImpl;
@@ -3454,7 +3455,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 			CacheRegistryUtil.clear(PasswordPolicyImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(PasswordPolicyImpl.class.getName());
+		EntityCacheUtil.clearCache(PasswordPolicyImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -4199,10 +4200,22 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 			}
 		};
 
-	private static CacheModel<PasswordPolicy> _nullPasswordPolicyCacheModel = new CacheModel<PasswordPolicy>() {
-			@Override
-			public PasswordPolicy toEntityModel() {
-				return _nullPasswordPolicy;
-			}
-		};
+	private static CacheModel<PasswordPolicy> _nullPasswordPolicyCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<PasswordPolicy>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public PasswordPolicy toEntityModel() {
+			return _nullPasswordPolicy;
+		}
+	}
 }

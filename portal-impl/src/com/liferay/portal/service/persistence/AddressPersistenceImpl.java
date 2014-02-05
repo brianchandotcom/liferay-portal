@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.AddressImpl;
 import com.liferay.portal.model.impl.AddressModelImpl;
@@ -4515,7 +4516,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			CacheRegistryUtil.clear(AddressImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(AddressImpl.class.getName());
+		EntityCacheUtil.clearCache(AddressImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -5238,10 +5239,22 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			}
 		};
 
-	private static CacheModel<Address> _nullAddressCacheModel = new CacheModel<Address>() {
-			@Override
-			public Address toEntityModel() {
-				return _nullAddress;
-			}
-		};
+	private static CacheModel<Address> _nullAddressCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Address>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Address toEntityModel() {
+			return _nullAddress;
+		}
+	}
 }

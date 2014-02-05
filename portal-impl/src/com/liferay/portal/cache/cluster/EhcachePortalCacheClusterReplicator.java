@@ -124,7 +124,9 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 	public void notifyElementUpdated(Ehcache ehcache, Element element)
 		throws CacheException {
 
-		if (!_replicateUpdates) {
+		if (!_replicateUpdates ||
+			!ClusterReplicationThreadLocal.isReplicateUpdate()) {
+
 			return;
 		}
 

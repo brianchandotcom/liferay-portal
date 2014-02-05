@@ -17,6 +17,7 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.Ticket;
 
 import java.io.Externalizable;
@@ -33,7 +34,16 @@ import java.util.Date;
  * @see Ticket
  * @generated
  */
-public class TicketCacheModel implements CacheModel<Ticket>, Externalizable {
+public class TicketCacheModel implements CacheModel<Ticket>, Externalizable,
+	MVCCModel {
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(21);

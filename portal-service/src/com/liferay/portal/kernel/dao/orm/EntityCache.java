@@ -23,7 +23,7 @@ public interface EntityCache {
 
 	public void clearCache();
 
-	public void clearCache(String className);
+	public void clearCache(Class<?> clazz);
 
 	public void clearLocalCache();
 

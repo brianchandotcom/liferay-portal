@@ -9621,7 +9621,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			CacheRegistryUtil.clear(MBCategoryImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(MBCategoryImpl.class.getName());
+		EntityCacheUtil.clearCache(MBCategoryImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

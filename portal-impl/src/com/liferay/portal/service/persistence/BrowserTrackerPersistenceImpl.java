@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.BrowserTracker;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.BrowserTrackerImpl;
 import com.liferay.portal.model.impl.BrowserTrackerModelImpl;
@@ -345,7 +346,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 			CacheRegistryUtil.clear(BrowserTrackerImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(BrowserTrackerImpl.class.getName());
+		EntityCacheUtil.clearCache(BrowserTrackerImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -920,10 +921,22 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 			}
 		};
 
-	private static CacheModel<BrowserTracker> _nullBrowserTrackerCacheModel = new CacheModel<BrowserTracker>() {
-			@Override
-			public BrowserTracker toEntityModel() {
-				return _nullBrowserTracker;
-			}
-		};
+	private static CacheModel<BrowserTracker> _nullBrowserTrackerCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<BrowserTracker>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public BrowserTracker toEntityModel() {
+			return _nullBrowserTracker;
+		}
+	}
 }

@@ -2424,7 +2424,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			CacheRegistryUtil.clear(DLFileEntryMetadataImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(DLFileEntryMetadataImpl.class.getName());
+		EntityCacheUtil.clearCache(DLFileEntryMetadataImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

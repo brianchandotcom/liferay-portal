@@ -628,7 +628,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 			CacheRegistryUtil.clear(ShoppingOrderItemImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ShoppingOrderItemImpl.class.getName());
+		EntityCacheUtil.clearCache(ShoppingOrderItemImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

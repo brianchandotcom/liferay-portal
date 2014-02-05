@@ -16,6 +16,7 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.UserGroupRole;
 
 import java.io.Externalizable;
@@ -31,7 +32,15 @@ import java.io.ObjectOutput;
  * @generated
  */
 public class UserGroupRoleCacheModel implements CacheModel<UserGroupRole>,
-	Externalizable {
+	Externalizable, MVCCModel {
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.impl.ResourceBlockImpl;
@@ -1680,7 +1681,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			CacheRegistryUtil.clear(ResourceBlockImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ResourceBlockImpl.class.getName());
+		EntityCacheUtil.clearCache(ResourceBlockImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2320,10 +2321,22 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			}
 		};
 
-	private static CacheModel<ResourceBlock> _nullResourceBlockCacheModel = new CacheModel<ResourceBlock>() {
-			@Override
-			public ResourceBlock toEntityModel() {
-				return _nullResourceBlock;
-			}
-		};
+	private static CacheModel<ResourceBlock> _nullResourceBlockCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<ResourceBlock>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public ResourceBlock toEntityModel() {
+			return _nullResourceBlock;
+		}
+	}
 }

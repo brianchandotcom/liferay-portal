@@ -5941,7 +5941,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			CacheRegistryUtil.clear(DLFileShortcutImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(DLFileShortcutImpl.class.getName());
+		EntityCacheUtil.clearCache(DLFileShortcutImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

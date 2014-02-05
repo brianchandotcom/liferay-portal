@@ -2720,7 +2720,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			CacheRegistryUtil.clear(SCProductEntryImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(SCProductEntryImpl.class.getName());
+		EntityCacheUtil.clearCache(SCProductEntryImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

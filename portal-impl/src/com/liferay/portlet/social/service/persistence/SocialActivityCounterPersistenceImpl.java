@@ -2523,7 +2523,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			CacheRegistryUtil.clear(SocialActivityCounterImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(SocialActivityCounterImpl.class.getName());
+		EntityCacheUtil.clearCache(SocialActivityCounterImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

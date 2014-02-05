@@ -1895,7 +1895,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 			CacheRegistryUtil.clear(MBStatsUserImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(MBStatsUserImpl.class.getName());
+		EntityCacheUtil.clearCache(MBStatsUserImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

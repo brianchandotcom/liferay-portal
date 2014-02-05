@@ -11220,7 +11220,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			CacheRegistryUtil.clear(DDMTemplateImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(DDMTemplateImpl.class.getName());
+		EntityCacheUtil.clearCache(DDMTemplateImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

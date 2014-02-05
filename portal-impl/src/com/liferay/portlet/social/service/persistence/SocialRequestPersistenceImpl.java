@@ -6190,7 +6190,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			CacheRegistryUtil.clear(SocialRequestImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(SocialRequestImpl.class.getName());
+		EntityCacheUtil.clearCache(SocialRequestImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

@@ -2414,7 +2414,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 			CacheRegistryUtil.clear(SCFrameworkVersionImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(SCFrameworkVersionImpl.class.getName());
+		EntityCacheUtil.clearCache(SCFrameworkVersionImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

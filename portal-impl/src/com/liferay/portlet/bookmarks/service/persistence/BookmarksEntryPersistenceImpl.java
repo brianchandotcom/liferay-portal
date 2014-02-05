@@ -12111,7 +12111,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			CacheRegistryUtil.clear(BookmarksEntryImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(BookmarksEntryImpl.class.getName());
+		EntityCacheUtil.clearCache(BookmarksEntryImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

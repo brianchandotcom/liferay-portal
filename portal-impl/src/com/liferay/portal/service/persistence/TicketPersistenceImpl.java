@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Ticket;
 import com.liferay.portal.model.impl.TicketImpl;
@@ -383,7 +384,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 			CacheRegistryUtil.clear(TicketImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(TicketImpl.class.getName());
+		EntityCacheUtil.clearCache(TicketImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -962,10 +963,22 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 			}
 		};
 
-	private static CacheModel<Ticket> _nullTicketCacheModel = new CacheModel<Ticket>() {
-			@Override
-			public Ticket toEntityModel() {
-				return _nullTicket;
-			}
-		};
+	private static CacheModel<Ticket> _nullTicketCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Ticket>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Ticket toEntityModel() {
+			return _nullTicket;
+		}
+	}
 }

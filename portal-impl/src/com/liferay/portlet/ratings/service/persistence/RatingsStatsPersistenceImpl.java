@@ -367,7 +367,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 			CacheRegistryUtil.clear(RatingsStatsImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(RatingsStatsImpl.class.getName());
+		EntityCacheUtil.clearCache(RatingsStatsImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

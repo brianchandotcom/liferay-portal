@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
@@ -4445,7 +4446,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			CacheRegistryUtil.clear(PortletPreferencesImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(PortletPreferencesImpl.class.getName());
+		EntityCacheUtil.clearCache(PortletPreferencesImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -5197,10 +5198,22 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		};
 
 	private static CacheModel<PortletPreferences> _nullPortletPreferencesCacheModel =
-		new CacheModel<PortletPreferences>() {
-			@Override
-			public PortletPreferences toEntityModel() {
-				return _nullPortletPreferences;
-			}
-		};
+		new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<PortletPreferences>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public PortletPreferences toEntityModel() {
+			return _nullPortletPreferences;
+		}
+	}
 }

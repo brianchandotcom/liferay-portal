@@ -2370,7 +2370,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 			CacheRegistryUtil.clear(PollsQuestionImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(PollsQuestionImpl.class.getName());
+		EntityCacheUtil.clearCache(PollsQuestionImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

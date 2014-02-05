@@ -28529,7 +28529,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			CacheRegistryUtil.clear(JournalArticleImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(JournalArticleImpl.class.getName());
+		EntityCacheUtil.clearCache(JournalArticleImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

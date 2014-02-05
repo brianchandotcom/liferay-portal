@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LockImpl;
 import com.liferay.portal.model.impl.LockModelImpl;
@@ -2045,7 +2046,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			CacheRegistryUtil.clear(LockImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(LockImpl.class.getName());
+		EntityCacheUtil.clearCache(LockImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2676,10 +2677,21 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			}
 		};
 
-	private static CacheModel<Lock> _nullLockCacheModel = new CacheModel<Lock>() {
-			@Override
-			public Lock toEntityModel() {
-				return _nullLock;
-			}
-		};
+	private static CacheModel<Lock> _nullLockCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Lock>, MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Lock toEntityModel() {
+			return _nullLock;
+		}
+	}
 }

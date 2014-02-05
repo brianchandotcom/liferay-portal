@@ -1741,7 +1741,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			CacheRegistryUtil.clear(ExpandoColumnImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ExpandoColumnImpl.class.getName());
+		EntityCacheUtil.clearCache(ExpandoColumnImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

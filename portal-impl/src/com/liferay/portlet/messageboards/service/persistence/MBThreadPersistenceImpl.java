@@ -12770,7 +12770,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			CacheRegistryUtil.clear(MBThreadImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(MBThreadImpl.class.getName());
+		EntityCacheUtil.clearCache(MBThreadImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Country;
+import com.liferay.portal.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -31,7 +32,16 @@ import java.io.ObjectOutput;
  * @see Country
  * @generated
  */
-public class CountryCacheModel implements CacheModel<Country>, Externalizable {
+public class CountryCacheModel implements CacheModel<Country>, Externalizable,
+	MVCCModel {
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);

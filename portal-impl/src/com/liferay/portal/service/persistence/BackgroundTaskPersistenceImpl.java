@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.BackgroundTaskImpl;
 import com.liferay.portal.model.impl.BackgroundTaskModelImpl;
@@ -7197,7 +7198,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			CacheRegistryUtil.clear(BackgroundTaskImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(BackgroundTaskImpl.class.getName());
+		EntityCacheUtil.clearCache(BackgroundTaskImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -7950,10 +7951,22 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			}
 		};
 
-	private static CacheModel<BackgroundTask> _nullBackgroundTaskCacheModel = new CacheModel<BackgroundTask>() {
-			@Override
-			public BackgroundTask toEntityModel() {
-				return _nullBackgroundTask;
-			}
-		};
+	private static CacheModel<BackgroundTask> _nullBackgroundTaskCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<BackgroundTask>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public BackgroundTask toEntityModel() {
+			return _nullBackgroundTask;
+		}
+	}
 }

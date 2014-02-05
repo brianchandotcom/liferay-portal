@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PasswordTracker;
 import com.liferay.portal.model.impl.PasswordTrackerImpl;
@@ -628,7 +629,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 			CacheRegistryUtil.clear(PasswordTrackerImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(PasswordTrackerImpl.class.getName());
+		EntityCacheUtil.clearCache(PasswordTrackerImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1185,10 +1186,22 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 			}
 		};
 
-	private static CacheModel<PasswordTracker> _nullPasswordTrackerCacheModel = new CacheModel<PasswordTracker>() {
-			@Override
-			public PasswordTracker toEntityModel() {
-				return _nullPasswordTracker;
-			}
-		};
+	private static CacheModel<PasswordTracker> _nullPasswordTrackerCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<PasswordTracker>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public PasswordTracker toEntityModel() {
+			return _nullPasswordTracker;
+		}
+	}
 }

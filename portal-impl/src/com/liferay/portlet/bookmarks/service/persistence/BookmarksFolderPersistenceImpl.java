@@ -6936,7 +6936,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 			CacheRegistryUtil.clear(BookmarksFolderImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(BookmarksFolderImpl.class.getName());
+		EntityCacheUtil.clearCache(BookmarksFolderImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

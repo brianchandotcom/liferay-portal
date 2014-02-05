@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ClusterGroup;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.ClusterGroupImpl;
 import com.liferay.portal.model.impl.ClusterGroupModelImpl;
@@ -127,7 +128,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 			CacheRegistryUtil.clear(ClusterGroupImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ClusterGroupImpl.class.getName());
+		EntityCacheUtil.clearCache(ClusterGroupImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -651,10 +652,22 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 			}
 		};
 
-	private static CacheModel<ClusterGroup> _nullClusterGroupCacheModel = new CacheModel<ClusterGroup>() {
-			@Override
-			public ClusterGroup toEntityModel() {
-				return _nullClusterGroup;
-			}
-		};
+	private static CacheModel<ClusterGroup> _nullClusterGroupCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<ClusterGroup>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public ClusterGroup toEntityModel() {
+			return _nullClusterGroup;
+		}
+	}
 }

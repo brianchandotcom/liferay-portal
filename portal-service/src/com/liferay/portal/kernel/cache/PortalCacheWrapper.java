@@ -83,6 +83,10 @@ public class PortalCacheWrapper<K extends Serializable, V>
 		portalCache.removeAll();
 	}
 
+	public void setPortalCache(PortalCache<K, V> portalCache) {
+		this.portalCache = portalCache;
+	}
+
 	@Override
 	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
 		portalCache.unregisterCacheListener(cacheListener);

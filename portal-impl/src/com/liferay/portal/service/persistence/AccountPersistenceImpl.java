@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.AccountImpl;
 import com.liferay.portal.model.impl.AccountModelImpl;
@@ -129,7 +130,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 			CacheRegistryUtil.clear(AccountImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(AccountImpl.class.getName());
+		EntityCacheUtil.clearCache(AccountImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -666,10 +667,22 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 			}
 		};
 
-	private static CacheModel<Account> _nullAccountCacheModel = new CacheModel<Account>() {
-			@Override
-			public Account toEntityModel() {
-				return _nullAccount;
-			}
-		};
+	private static CacheModel<Account> _nullAccountCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Account>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Account toEntityModel() {
+			return _nullAccount;
+		}
+	}
 }

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ExportImportConfiguration;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.ExportImportConfigurationImpl;
 import com.liferay.portal.model.impl.ExportImportConfigurationModelImpl;
@@ -1663,7 +1664,7 @@ public class ExportImportConfigurationPersistenceImpl
 			CacheRegistryUtil.clear(ExportImportConfigurationImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ExportImportConfigurationImpl.class.getName());
+		EntityCacheUtil.clearCache(ExportImportConfigurationImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2280,10 +2281,22 @@ public class ExportImportConfigurationPersistenceImpl
 		};
 
 	private static CacheModel<ExportImportConfiguration> _nullExportImportConfigurationCacheModel =
-		new CacheModel<ExportImportConfiguration>() {
-			@Override
-			public ExportImportConfiguration toEntityModel() {
-				return _nullExportImportConfiguration;
-			}
-		};
+		new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<ExportImportConfiguration>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public ExportImportConfiguration toEntityModel() {
+			return _nullExportImportConfiguration;
+		}
+	}
 }

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.impl.ShardImpl;
@@ -622,7 +623,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 			CacheRegistryUtil.clear(ShardImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ShardImpl.class.getName());
+		EntityCacheUtil.clearCache(ShardImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1221,10 +1222,21 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 			}
 		};
 
-	private static CacheModel<Shard> _nullShardCacheModel = new CacheModel<Shard>() {
-			@Override
-			public Shard toEntityModel() {
-				return _nullShard;
-			}
-		};
+	private static CacheModel<Shard> _nullShardCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Shard>, MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Shard toEntityModel() {
+			return _nullShard;
+		}
+	}
 }

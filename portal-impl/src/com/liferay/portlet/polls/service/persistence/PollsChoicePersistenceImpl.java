@@ -2267,7 +2267,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			CacheRegistryUtil.clear(PollsChoiceImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(PollsChoiceImpl.class.getName());
+		EntityCacheUtil.clearCache(PollsChoiceImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

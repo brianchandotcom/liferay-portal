@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.model.impl.OrgLaborImpl;
@@ -628,7 +629,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 			CacheRegistryUtil.clear(OrgLaborImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(OrgLaborImpl.class.getName());
+		EntityCacheUtil.clearCache(OrgLaborImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1186,10 +1187,22 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 			}
 		};
 
-	private static CacheModel<OrgLabor> _nullOrgLaborCacheModel = new CacheModel<OrgLabor>() {
-			@Override
-			public OrgLabor toEntityModel() {
-				return _nullOrgLabor;
-			}
-		};
+	private static CacheModel<OrgLabor> _nullOrgLaborCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<OrgLabor>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public OrgLabor toEntityModel() {
+			return _nullOrgLabor;
+		}
+	}
 }

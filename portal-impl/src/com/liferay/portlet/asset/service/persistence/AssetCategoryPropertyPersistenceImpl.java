@@ -1976,7 +1976,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 			CacheRegistryUtil.clear(AssetCategoryPropertyImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(AssetCategoryPropertyImpl.class.getName());
+		EntityCacheUtil.clearCache(AssetCategoryPropertyImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

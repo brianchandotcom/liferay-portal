@@ -3091,7 +3091,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			CacheRegistryUtil.clear(DLFileEntryTypeImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(DLFileEntryTypeImpl.class.getName());
+		EntityCacheUtil.clearCache(DLFileEntryTypeImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.MembershipRequestImpl;
@@ -2223,7 +2224,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			CacheRegistryUtil.clear(MembershipRequestImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(MembershipRequestImpl.class.getName());
+		EntityCacheUtil.clearCache(MembershipRequestImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2841,10 +2842,22 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		};
 
 	private static CacheModel<MembershipRequest> _nullMembershipRequestCacheModel =
-		new CacheModel<MembershipRequest>() {
-			@Override
-			public MembershipRequest toEntityModel() {
-				return _nullMembershipRequest;
-			}
-		};
+		new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<MembershipRequest>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public MembershipRequest toEntityModel() {
+			return _nullMembershipRequest;
+		}
+	}
 }

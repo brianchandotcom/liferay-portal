@@ -2470,7 +2470,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			CacheRegistryUtil.clear(DLFileRankImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(DLFileRankImpl.class.getName());
+		EntityCacheUtil.clearCache(DLFileRankImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

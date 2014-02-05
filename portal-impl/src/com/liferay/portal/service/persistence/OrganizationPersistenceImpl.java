@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.impl.OrganizationImpl;
@@ -6569,7 +6570,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			CacheRegistryUtil.clear(OrganizationImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(OrganizationImpl.class.getName());
+		EntityCacheUtil.clearCache(OrganizationImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -7859,10 +7860,22 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			}
 		};
 
-	private static CacheModel<Organization> _nullOrganizationCacheModel = new CacheModel<Organization>() {
-			@Override
-			public Organization toEntityModel() {
-				return _nullOrganization;
-			}
-		};
+	private static CacheModel<Organization> _nullOrganizationCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Organization>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Organization toEntityModel() {
+			return _nullOrganization;
+		}
+	}
 }

@@ -27,8 +27,8 @@ public class EntityCacheUtil {
 		getEntityCache().clearCache();
 	}
 
-	public static void clearCache(String className) {
-		getEntityCache().clearCache(className);
+	public static void clearCache(Class<?> clazz) {
+		getEntityCache().clearCache(clazz);
 	}
 
 	public static void clearLocalCache() {

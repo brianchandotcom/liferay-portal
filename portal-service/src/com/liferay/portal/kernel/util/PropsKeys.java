@@ -1725,6 +1725,8 @@ public interface PropsKeys {
 
 	public static final String MULTI_VALUE_MAP = "multi.value.map.";
 
+	public static final String MVCC_ENTITY_CACHE_ENABLED = "mvcc.entity.cache.enabled";
+
 	public static final String MY_SITES_DIRECTORY_SITE_EXCLUDES = "my.sites.directory.site.excludes";
 
 	public static final String MY_SITES_DISPLAY_STYLE = "my.sites.display.style";

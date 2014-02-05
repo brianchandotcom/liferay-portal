@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.impl.PhoneImpl;
@@ -3903,7 +3904,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 			CacheRegistryUtil.clear(PhoneImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(PhoneImpl.class.getName());
+		EntityCacheUtil.clearCache(PhoneImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -4591,10 +4592,21 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 			}
 		};
 
-	private static CacheModel<Phone> _nullPhoneCacheModel = new CacheModel<Phone>() {
-			@Override
-			public Phone toEntityModel() {
-				return _nullPhone;
-			}
-		};
+	private static CacheModel<Phone> _nullPhoneCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Phone>, MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Phone toEntityModel() {
+			return _nullPhone;
+		}
+	}
 }

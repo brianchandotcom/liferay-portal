@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.ContactImpl;
 import com.liferay.portal.model.impl.ContactModelImpl;
@@ -1634,7 +1635,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			CacheRegistryUtil.clear(ContactImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ContactImpl.class.getName());
+		EntityCacheUtil.clearCache(ContactImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2246,10 +2247,22 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 			}
 		};
 
-	private static CacheModel<Contact> _nullContactCacheModel = new CacheModel<Contact>() {
-			@Override
-			public Contact toEntityModel() {
-				return _nullContact;
-			}
-		};
+	private static CacheModel<Contact> _nullContactCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Contact>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Contact toEntityModel() {
+			return _nullContact;
+		}
+	}
 }

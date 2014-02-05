@@ -1976,7 +1976,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 			CacheRegistryUtil.clear(ShoppingItemImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ShoppingItemImpl.class.getName());
+		EntityCacheUtil.clearCache(ShoppingItemImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

@@ -954,7 +954,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			CacheRegistryUtil.clear(ExpandoTableImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ExpandoTableImpl.class.getName());
+		EntityCacheUtil.clearCache(ExpandoTableImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

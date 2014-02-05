@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,16 @@ import java.util.Date;
  * @see Account
  * @generated
  */
-public class AccountCacheModel implements CacheModel<Account>, Externalizable {
+public class AccountCacheModel implements CacheModel<Account>, Externalizable,
+	MVCCModel {
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(35);

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.EmailAddress;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.EmailAddressImpl;
 import com.liferay.portal.model.impl.EmailAddressModelImpl;
@@ -3924,7 +3925,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 			CacheRegistryUtil.clear(EmailAddressImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(EmailAddressImpl.class.getName());
+		EntityCacheUtil.clearCache(EmailAddressImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -4624,10 +4625,22 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 			}
 		};
 
-	private static CacheModel<EmailAddress> _nullEmailAddressCacheModel = new CacheModel<EmailAddress>() {
-			@Override
-			public EmailAddress toEntityModel() {
-				return _nullEmailAddress;
-			}
-		};
+	private static CacheModel<EmailAddress> _nullEmailAddressCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<EmailAddress>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public EmailAddress toEntityModel() {
+			return _nullEmailAddress;
+		}
+	}
 }

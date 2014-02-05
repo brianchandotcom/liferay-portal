@@ -20903,7 +20903,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			CacheRegistryUtil.clear(WikiPageImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(WikiPageImpl.class.getName());
+		EntityCacheUtil.clearCache(WikiPageImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

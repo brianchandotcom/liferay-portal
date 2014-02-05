@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.impl.RepositoryImpl;
@@ -2315,7 +2316,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 			CacheRegistryUtil.clear(RepositoryImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(RepositoryImpl.class.getName());
+		EntityCacheUtil.clearCache(RepositoryImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -3027,10 +3028,22 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 			}
 		};
 
-	private static CacheModel<Repository> _nullRepositoryCacheModel = new CacheModel<Repository>() {
-			@Override
-			public Repository toEntityModel() {
-				return _nullRepository;
-			}
-		};
+	private static CacheModel<Repository> _nullRepositoryCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Repository>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Repository toEntityModel() {
+			return _nullRepository;
+		}
+	}
 }

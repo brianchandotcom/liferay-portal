@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.impl.SubscriptionImpl;
@@ -2331,7 +2332,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			CacheRegistryUtil.clear(SubscriptionImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(SubscriptionImpl.class.getName());
+		EntityCacheUtil.clearCache(SubscriptionImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -3015,10 +3016,22 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			}
 		};
 
-	private static CacheModel<Subscription> _nullSubscriptionCacheModel = new CacheModel<Subscription>() {
-			@Override
-			public Subscription toEntityModel() {
-				return _nullSubscription;
-			}
-		};
+	private static CacheModel<Subscription> _nullSubscriptionCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Subscription>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Subscription toEntityModel() {
+			return _nullSubscription;
+		}
+	}
 }

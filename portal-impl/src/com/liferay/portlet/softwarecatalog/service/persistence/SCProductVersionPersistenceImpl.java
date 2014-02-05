@@ -905,7 +905,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 			CacheRegistryUtil.clear(SCProductVersionImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(SCProductVersionImpl.class.getName());
+		EntityCacheUtil.clearCache(SCProductVersionImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

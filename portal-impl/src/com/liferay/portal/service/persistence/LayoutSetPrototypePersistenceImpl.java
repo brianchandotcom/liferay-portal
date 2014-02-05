@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutSetPrototypeImpl;
 import com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl;
@@ -3866,7 +3867,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			CacheRegistryUtil.clear(LayoutSetPrototypeImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(LayoutSetPrototypeImpl.class.getName());
+		EntityCacheUtil.clearCache(LayoutSetPrototypeImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -4513,10 +4514,22 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		};
 
 	private static CacheModel<LayoutSetPrototype> _nullLayoutSetPrototypeCacheModel =
-		new CacheModel<LayoutSetPrototype>() {
-			@Override
-			public LayoutSetPrototype toEntityModel() {
-				return _nullLayoutSetPrototype;
-			}
-		};
+		new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<LayoutSetPrototype>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public LayoutSetPrototype toEntityModel() {
+			return _nullLayoutSetPrototype;
+		}
+	}
 }

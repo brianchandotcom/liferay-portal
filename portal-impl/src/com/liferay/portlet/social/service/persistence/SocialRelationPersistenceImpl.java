@@ -5587,7 +5587,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			CacheRegistryUtil.clear(SocialRelationImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(SocialRelationImpl.class.getName());
+		EntityCacheUtil.clearCache(SocialRelationImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

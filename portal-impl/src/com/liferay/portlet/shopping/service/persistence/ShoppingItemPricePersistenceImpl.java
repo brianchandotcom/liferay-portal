@@ -626,7 +626,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 			CacheRegistryUtil.clear(ShoppingItemPriceImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ShoppingItemPriceImpl.class.getName());
+		EntityCacheUtil.clearCache(ShoppingItemPriceImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

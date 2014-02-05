@@ -302,9 +302,6 @@ public class EditPageAction extends PortletAction {
 
 		Layout layout = themeDisplay.getLayout();
 
-		String originalRedirect = ParamUtil.getString(
-			actionRequest, "originalRedirect");
-
 		PortletURLImpl portletURL = new StrutsActionPortletURL(
 			(PortletResponseImpl)actionResponse, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
@@ -312,7 +309,6 @@ public class EditPageAction extends PortletAction {
 		portletURL.setParameter("struts_action", "/wiki/edit_page");
 		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
 		portletURL.setParameter("redirect", redirect, false);
-		portletURL.setParameter("originalRedirect", originalRedirect, false);
 		portletURL.setParameter(
 			"groupId", String.valueOf(layout.getGroupId()), false);
 		portletURL.setParameter(

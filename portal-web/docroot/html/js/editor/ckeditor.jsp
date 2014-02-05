@@ -155,7 +155,7 @@ if (!inlineEdit) {
 
 		<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
 			onBlurCallback: function() {
-				<%= HtmlUtil.escapeJS(onBlurMethod) %>(CKEDITOR.instances['<%= name %>']);
+				window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'](CKEDITOR.instances['<%= name %>']);
 			},
 		</c:if>
 
@@ -165,7 +165,7 @@ if (!inlineEdit) {
 				var dirty = ckEditor.checkDirty();
 
 				if (dirty) {
-					<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getText());
+					window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](window['<%= name %>'].getText());
 
 					ckEditor.resetDirty();
 				}
@@ -174,7 +174,7 @@ if (!inlineEdit) {
 
 		<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
 			onFocusCallback: function() {
-				<%= HtmlUtil.escapeJS(onFocusMethod) %>(CKEDITOR.instances['<%= name %>']);
+				window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'](CKEDITOR.instances['<%= name %>']);
 			},
 		</c:if>
 
@@ -224,7 +224,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 		function initData() {
 			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && (inlineEditSaveURL != null)) %>">
 				ckEditor.setData(
-					<%= HtmlUtil.escapeJS(namespace + initMethod) %>(),
+					window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'](),
 					function() {
 						ckEditor.resetDirty();
 					}

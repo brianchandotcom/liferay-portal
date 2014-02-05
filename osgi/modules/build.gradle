@@ -3,6 +3,12 @@ project.ext {
 	propertiesFile = "${gradleDir}/gradle-wrapper.properties"
 }
 
+allprojects { 
+    repositories { 
+        mavenCentral()
+    }
+}
+
 task installGradleWrapper(type: Wrapper) {
 	project.gradleDir.mkdir()
 

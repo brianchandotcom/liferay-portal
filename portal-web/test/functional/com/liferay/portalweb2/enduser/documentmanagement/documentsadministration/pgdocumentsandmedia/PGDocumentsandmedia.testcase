@@ -1,6 +1,4 @@
 <definition component-name="portal-document-management">
-	<property name="shard.available.names" value="default,one,two" />
-
 	<var name="pageName" value="Documents and Media Page" />
 	<var name="portletName" value="Documents and Media" />
 

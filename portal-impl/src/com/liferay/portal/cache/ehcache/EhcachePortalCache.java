@@ -38,12 +38,12 @@ public class EhcachePortalCache<K extends Serializable, V>
 	implements PortalCache<K, V> {
 
 	public EhcachePortalCache(Ehcache ehcache) {
-		_ehcache = ehcache;
+		this.ehcache = ehcache;
 	}
 
 	@Override
 	public V get(K key) {
-		Element element = _ehcache.get(key);
+		Element element = ehcache.get(key);
 
 		if (element == null) {
 			return null;
@@ -55,14 +55,14 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	public String getName() {
-		return _ehcache.getName();
+		return ehcache.getName();
 	}
 
 	@Override
 	public void put(K key, V value) {
 		Element element = new Element(key, value);
 
-		_ehcache.put(element);
+		ehcache.put(element);
 	}
 
 	@Override
@@ -71,14 +71,14 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 		element.setTimeToLive(timeToLive);
 
-		_ehcache.put(element);
+		ehcache.put(element);
 	}
 
 	@Override
 	public void putQuiet(K key, V value) {
 		Element element = new Element(key, value);
 
-		_ehcache.putQuiet(element);
+		ehcache.putQuiet(element);
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 		element.setTimeToLive(timeToLive);
 
-		_ehcache.putQuiet(element);
+		ehcache.putQuiet(element);
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 			new RegistrationPair(cacheEventListener, notificationScope));
 
 		RegisteredEventListeners registeredEventListeners =
-			_ehcache.getCacheEventNotificationService();
+			ehcache.getCacheEventNotificationService();
 
 		registeredEventListeners.registerListener(
 			cacheEventListener, notificationScope);
@@ -123,16 +123,16 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	public void remove(K key) {
-		_ehcache.remove(key);
+		ehcache.remove(key);
 	}
 
 	@Override
 	public void removeAll() {
-		_ehcache.removeAll();
+		ehcache.removeAll();
 	}
 
 	public void setEhcache(Ehcache ehcache) {
-		_ehcache = ehcache;
+		this.ehcache = ehcache;
 
 		RegisteredEventListeners registeredEventListeners =
 			ehcache.getCacheEventNotificationService();
@@ -156,7 +156,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 		}
 
 		RegisteredEventListeners registeredEventListeners =
-			_ehcache.getCacheEventNotificationService();
+			ehcache.getCacheEventNotificationService();
 
 		registeredEventListeners.unregisterListener(
 			registrationPair._cacheEventListener);
@@ -165,7 +165,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 	@Override
 	public void unregisterCacheListeners() {
 		RegisteredEventListeners registeredEventListeners =
-			_ehcache.getCacheEventNotificationService();
+			ehcache.getCacheEventNotificationService();
 
 		for (RegistrationPair registrationPair :
 				_cacheEventListeners.values()) {
@@ -191,9 +191,10 @@ public class EhcachePortalCache<K extends Serializable, V>
 		}
 	}
 
+	protected Ehcache ehcache;
+
 	private Map<CacheListener<K, V>, RegistrationPair> _cacheEventListeners =
 		new ConcurrentHashMap<CacheListener<K, V>, RegistrationPair>();
-	private Ehcache _ehcache;
 
 	private static class RegistrationPair {
 

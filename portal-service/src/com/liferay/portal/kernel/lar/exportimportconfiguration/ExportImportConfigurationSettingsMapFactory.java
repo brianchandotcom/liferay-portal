@@ -74,7 +74,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 			HashMap<Long, Boolean> serializableLayoutIdMap =
 				new HashMap<Long, Boolean>(layoutIdMap);
 
-			settingsMap.put("layoutIds", serializableLayoutIdMap);
+			settingsMap.put("layoutIdMap", serializableLayoutIdMap);
 		}
 
 		if (parameterMap != null) {

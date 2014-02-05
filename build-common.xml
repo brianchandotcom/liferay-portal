@@ -925,6 +925,30 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</java>
 	</target>
 
+	<target name="verify-javadoc">
+		<java
+			classname="com.liferay.portal.tools.JavadocVerifier"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<arg line="--file ${file}" />
+		</java>
+	</target>
+
+	<target name="stub-javadoc">
+		<echo message="Run &quot;ant compile-test&quot; in portal-impl before using this target to generate @Override tags." />
+
+		<java
+			classname="com.liferay.portal.tools.JavadocStubber"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<arg line="--file ${file}" />
+		</java>
+	</target>
+
 	<target name="print-current-time">
 		<tstamp>
 			<format property="current.time" pattern="MMMM d, yyyy 'at' hh:mm aa" />

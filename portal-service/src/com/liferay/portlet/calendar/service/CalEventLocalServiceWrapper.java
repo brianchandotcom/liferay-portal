@@ -23,8 +23,11 @@ import com.liferay.portal.service.ServiceWrapper;
  *
  * @author Brian Wing Shun Chan
  * @see CalEventLocalService
+ * @deprecated As of 6.2.0, since the 6.1 calendar portlet was replaced by the
+new calendar plugin.
  * @generated
  */
+@Deprecated
 @ProviderType
 public class CalEventLocalServiceWrapper implements CalEventLocalService,
 	ServiceWrapper<CalEventLocalService> {

@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -1716,12 +1717,35 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	};
 
-	private static CacheModel<${entity.name}> _null${entity.name}CacheModel = new CacheModel<${entity.name}>() {
-		@Override
-		public ${entity.name} toEntityModel() {
-			return _null${entity.name};
+	private static CacheModel<${entity.name}> _null${entity.name}CacheModel =
+
+	<#if entity.isMvccEnabled()>
+		new NullCacheModel();
+
+		private static class NullCacheModel implements CacheModel<${entity.name}>, MVCCModel {
+
+			@Override
+			public long getMvccVersion() {
+				return 0;
+			}
+
+			@Override
+			public void setMvccVersion(long mvccVersion) {
+			}
+
+			@Override
+			public ${entity.name} toEntityModel() {
+				return _null${entity.name};
+			}
 		}
-	};
+	<#else>
+		new CacheModel<${entity.name}>() {
+			@Override
+			public ${entity.name} toEntityModel() {
+				return _null${entity.name};
+			}
+		};
+	</#if>
 
 }
 

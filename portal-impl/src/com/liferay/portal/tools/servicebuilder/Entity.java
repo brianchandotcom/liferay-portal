@@ -89,7 +89,7 @@ public class Entity {
 		this(
 			null, null, null, name, null, null, null, false, false, false, true,
 			null, null, null, null, null, true, false, false, false, false,
-			false, null, null, null, null, null, null, null, null, null);
+			false, null, null, null, null, null, null, null, null, null, null);
 	}
 
 	public Entity(
@@ -103,7 +103,8 @@ public class Entity {
 		List<EntityColumn> regularColList, List<EntityColumn> blobList,
 		List<EntityColumn> collectionList, List<EntityColumn> columnList,
 		EntityOrder order, List<EntityFinder> finderList,
-		List<Entity> referenceList, List<String> txRequiredList) {
+		List<Entity> referenceList, List<String> txRequiredList,
+		List<String> unresolvedReferences) {
 
 		_packagePath = packagePath;
 		_portletName = portletName;
@@ -138,6 +139,7 @@ public class Entity {
 		_finderList = finderList;
 		_referenceList = referenceList;
 		_txRequiredList = txRequiredList;
+		_unresolvedReferences = unresolvedReferences;
 
 		if (_finderList != null) {
 			Set<EntityColumn> finderColumns = new HashSet<EntityColumn>();
@@ -173,6 +175,10 @@ public class Entity {
 				}
 			}
 		}
+	}
+
+	public void addReference(Entity reference) {
+		_referenceList.add(reference);
 	}
 
 	@Override
@@ -428,6 +434,14 @@ public class Entity {
 		}
 
 		return finderList;
+	}
+
+	public List<String> getUnresolvedReferences() {
+		if (_unresolvedReferences == null) {
+			return new ArrayList<String>();
+		}
+
+		return _unresolvedReferences;
 	}
 
 	public String getVarName() {
@@ -739,6 +753,11 @@ public class Entity {
 		return _portalReference;
 	}
 
+	public boolean isResolved() {
+		return (_unresolvedReferences != null) &&
+					_unresolvedReferences.isEmpty();
+	}
+
 	public boolean isResourcedModel() {
 		String pkVarName = getPKVarName();
 
@@ -824,6 +843,10 @@ public class Entity {
 		_portalReference = portalReference;
 	}
 
+	public void setResolved() {
+		_unresolvedReferences = null;
+	}
+
 	public void setTransients(List<String> transients) {
 		_transients = transients;
 	}
@@ -871,6 +894,7 @@ public class Entity {
 	private boolean _trashEnabled;
 	private String _txManager;
 	private List<String> _txRequiredList;
+	private List<String> _unresolvedReferences;
 	private boolean _uuid;
 	private boolean _uuidAccessor;
 

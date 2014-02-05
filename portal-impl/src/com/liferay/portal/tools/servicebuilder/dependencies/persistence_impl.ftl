@@ -211,7 +211,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(${entity.name}Impl.class.getName());
+		EntityCacheUtil.clearCache(${entity.name}Impl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1265,7 +1265,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
 				}
 
-				EntityCacheUtil.clearCache(${entity.name}Impl.class.getName());
+				EntityCacheUtil.clearCache(${entity.name}Impl.class);
 				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 			}
@@ -1352,7 +1352,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
 				}
 
-				EntityCacheUtil.clearCache(${entity.name}Impl.class.getName());
+				EntityCacheUtil.clearCache(${entity.name}Impl.class);
 				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 			}
@@ -1489,7 +1489,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
 			}
 
-			EntityCacheUtil.clearCache(${entity.name}Impl.class.getName());
+			EntityCacheUtil.clearCache(${entity.name}Impl.class);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}

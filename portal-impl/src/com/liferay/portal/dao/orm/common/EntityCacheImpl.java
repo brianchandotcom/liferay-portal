@@ -72,10 +72,10 @@ public class EntityCacheImpl
 	}
 
 	@Override
-	public void clearCache(String className) {
+	public void clearCache(Class<?> clazz) {
 		clearLocalCache();
 
-		PortalCache<?, ?> portalCache = _getPortalCache(className, true);
+		PortalCache<?, ?> portalCache = _getPortalCache(clazz, true);
 
 		if (portalCache != null) {
 			portalCache.removeAll();
@@ -120,7 +120,7 @@ public class EntityCacheImpl
 
 		if (result == null) {
 			PortalCache<Serializable, Serializable> portalCache =
-				_getPortalCache(clazz.getName(), true);
+				_getPortalCache(clazz, true);
 
 			Serializable cacheKey = _encodeCacheKey(primaryKey);
 
@@ -181,7 +181,7 @@ public class EntityCacheImpl
 
 		if (result == null) {
 			PortalCache<Serializable, Serializable> portalCache =
-				_getPortalCache(clazz.getName(), true);
+				_getPortalCache(clazz, true);
 
 			Serializable cacheKey = _encodeCacheKey(primaryKey);
 
@@ -258,7 +258,7 @@ public class EntityCacheImpl
 		}
 
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
-			clazz.getName(), true);
+			clazz, true);
 
 		Serializable cacheKey = _encodeCacheKey(primaryKey);
 
@@ -299,7 +299,7 @@ public class EntityCacheImpl
 		}
 
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
-			clazz.getName(), true);
+			clazz, true);
 
 		Serializable cacheKey = _encodeCacheKey(primaryKey);
 
@@ -337,7 +337,9 @@ public class EntityCacheImpl
 	}
 
 	private PortalCache<Serializable, Serializable> _getPortalCache(
-		String className, boolean createIfAbsent) {
+		Class<?> clazz, boolean createIfAbsent) {
+
+		String className = clazz.getName();
 
 		PortalCache<Serializable, Serializable> portalCache = _portalCaches.get(
 			className);

@@ -19,7 +19,17 @@
 	<%
 	StringBuilder sb = new StringBuilder();
 
-	String portletComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=&themeId=" + themeDisplay.getThemeId());
+	long lastModifiedTimestamp = themeDisplay.getTheme().getTimestamp();
+
+	if (themeDisplay.isThemeJsFastLoad()) {
+		for (Portlet curPortlet : portlets) {
+			if ((curPortlet.getHeaderPortletCss() != null) && (curPortlet.getHeaderPortletCss().size() > 0))
+
+				lastModifiedTimestamp = Math.max(lastModifiedTimestamp, curPortlet.getTimestamp());
+		}
+	}
+
+	String portletComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=&themeId=" + themeDisplay.getThemeId(), lastModifiedTimestamp);
 
 	Set<String> portletResourceStaticURLs = (Set<String>)request.getAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS);
 

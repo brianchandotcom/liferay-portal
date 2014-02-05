@@ -383,7 +383,7 @@ public class PortalUtil {
 	public static Set<String> getAuthTokenIgnorePortlets() {
 		return getPortal().getAuthTokenIgnorePortlets();
 	}
-	
+
 	/**
 	 * Returns the base model instance for the resource permission.
 	 *
@@ -720,7 +720,7 @@ public class PortalUtil {
 	public static String getCustomSQLFunctionIsNull() {
 		return getPortal().getCustomSQLFunctionIsNull();
 	}
-	
+
 	/**
 	 * Returns the date object for the specified month, day, and year, or
 	 * <code>null</code> if the date is invalid.

@@ -89,7 +89,7 @@ public class UserIndexer extends BaseIndexer {
 			searchContext.getAttribute(Field.STATUS),
 			WorkflowConstants.STATUS_APPROVED);
 
-		if (status != WorkflowConstants.STATUS_ANY) {
+		if (status != WorkflowConstants.STATUS_APPROVED) {
 			contextQuery.addRequiredTerm(Field.STATUS, status);
 		}
 

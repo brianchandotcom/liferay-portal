@@ -19,8 +19,8 @@
 		<var name="adminName" value="Test Test" />
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
-		<var name="dmDocumentSize" value="21.5k" />
-		<var name="dmDocumentSizeRoundedUp" value="22k" />
+		<var name="dmDocumentSize" value="22k" />
+		<var name="dmDocumentSizeSO" value="21.5k" />
 		<var name="dmDocumentTitle" value="DM Folder Document Title" />
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />

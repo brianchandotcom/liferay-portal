@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portlet.PortletSettings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -221,6 +222,20 @@ public class LocalizationUtil {
 
 		return getLocalization().getPreferencesValues(
 			preferences, key, languageId, useDefault);
+	}
+
+	public static String[] getSettingsValues(
+		PortletSettings settings, String key, String languageId) {
+
+		return getLocalization().getSettingsValues(settings, key, languageId);
+	}
+
+	public static String[] getSettingsValues(
+		PortletSettings settings, String key, String languageId,
+		boolean useDefault) {
+
+		return getLocalization().getSettingsValues(
+			settings, key, languageId, useDefault);
 	}
 
 	public static String removeLocalization(

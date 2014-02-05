@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.PortletSettings;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -62,7 +63,10 @@ public class PortletDisplay implements Serializable {
 		_modeView = master.isModeView();
 		_namespace = master.getNamespace();
 		_portletName = master.getPortletName();
+		_portletCompanySettings = master.getPortletCompanySettings();
+		_portletInstanceSettings = master.getPortletInstanceSettings();
 		_portletSetup = master.getPortletSetup();
+		_portletSiteSettings = master.getPortletSiteSettings();
 		_resourcePK = master.getResourcePK();
 		_restoreCurrentView = master.isRestoreCurrentView();
 		_rootPortletId = master.getRootPortletId();
@@ -127,7 +131,10 @@ public class PortletDisplay implements Serializable {
 		slave.setModeView(_modeView);
 		slave.setNamespace(_namespace);
 		slave.setPortletName(_portletName);
+		slave.setPortletCompanySettings(_portletCompanySettings);
+		slave.setPortletInstanceSettings(_portletInstanceSettings);
 		slave.setPortletSetup(_portletSetup);
+		slave.setPortletSiteSettings(_portletSiteSettings);
 		slave.setResourcePK(_resourcePK);
 		slave.setRestoreCurrentView(_restoreCurrentView);
 		slave.setRootPortletId(_rootPortletId);
@@ -211,12 +218,24 @@ public class PortletDisplay implements Serializable {
 		return _namespace;
 	}
 
+	public PortletSettings getPortletCompanySettings() {
+		return _portletCompanySettings;
+	}
+
+	public PortletSettings getPortletInstanceSettings() {
+		return _portletInstanceSettings;
+	}
+
 	public String getPortletName() {
 		return _portletName;
 	}
 
 	public PortletPreferences getPortletSetup() {
 		return _portletSetup;
+	}
+
+	public PortletSettings getPortletSiteSettings() {
+		return _portletSiteSettings;
 	}
 
 	public String getResourcePK() {
@@ -475,7 +494,10 @@ public class PortletDisplay implements Serializable {
 		_modeView = false;
 		_namespace = StringPool.BLANK;
 		_portletName = StringPool.BLANK;
+		_portletCompanySettings = null;
+		_portletInstanceSettings = null;
 		_portletSetup = null;
+		_portletSiteSettings = null;
 		_resourcePK = StringPool.BLANK;
 		_restoreCurrentView = false;
 		_rootPortletId = StringPool.BLANK;
@@ -611,12 +633,28 @@ public class PortletDisplay implements Serializable {
 		_namespace = namespace;
 	}
 
+	public void setPortletCompanySettings(
+		PortletSettings portletCompanySettings) {
+
+		_portletCompanySettings = portletCompanySettings;
+	}
+
+	public void setPortletInstanceSettings(
+		PortletSettings portletInstanceSettings) {
+
+		_portletInstanceSettings = portletInstanceSettings;
+	}
+
 	public void setPortletName(String portletName) {
 		_portletName = portletName;
 	}
 
 	public void setPortletSetup(PortletPreferences portletSetup) {
 		_portletSetup = portletSetup;
+	}
+
+	public void setPortletSiteSettings(PortletSettings portletSiteSettings) {
+		_portletSiteSettings = portletSiteSettings;
 	}
 
 	public void setResourcePK(String resourcePK) {
@@ -816,8 +854,11 @@ public class PortletDisplay implements Serializable {
 	private boolean _modePrint;
 	private boolean _modeView;
 	private String _namespace = StringPool.BLANK;
+	private PortletSettings _portletCompanySettings;
+	private PortletSettings _portletInstanceSettings;
 	private String _portletName = StringPool.BLANK;
 	private PortletPreferences _portletSetup;
+	private PortletSettings _portletSiteSettings;
 	private String _resourcePK = StringPool.BLANK;
 	private boolean _restoreCurrentView;
 	private String _rootPortletId = StringPool.BLANK;

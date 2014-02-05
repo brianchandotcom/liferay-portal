@@ -18,11 +18,14 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
+import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import java.net.URL;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Raymond Augé
@@ -34,6 +37,21 @@ public class ThemeHelper {
 	public static final String TEMPLATE_EXTENSION_JSP = "jsp";
 
 	public static final String TEMPLATE_EXTENSION_VM = "vm";
+
+	public static String getPortletId(HttpServletRequest request) {
+		String portletId = null;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			portletId = portletDisplay.getId();
+		}
+
+		return portletId;
+	}
 
 	public static String getResourcePath(
 		ServletContext servletContext, Theme theme, String portletId,

@@ -33,13 +33,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.freemarker.FreeMarkerTaglibFactoryUtil;
 
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
-
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 
@@ -68,21 +66,6 @@ import org.apache.struts.tiles.ComponentContext;
  * @author Shuyang Zhou
  */
 public class ThemeUtil {
-
-	public static String getPortletId(HttpServletRequest request) {
-		String portletId = null;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay != null) {
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			portletId = portletDisplay.getId();
-		}
-
-		return portletId;
-	}
 
 	public static void include(
 			ServletContext servletContext, HttpServletRequest request,
@@ -213,7 +196,7 @@ public class ThemeUtil {
 			ServletContextPool.put(servletContextName, servletContext);
 		}
 
-		String portletId = getPortletId(request);
+		String portletId = ThemeHelper.getPortletId(request);
 
 		String resourcePath = theme.getResourcePath(
 			servletContext, portletId, path);
@@ -418,7 +401,7 @@ public class ThemeUtil {
 			ServletContextPool.put(servletContextName, servletContext);
 		}
 
-		String portletId = getPortletId(request);
+		String portletId = ThemeHelper.getPortletId(request);
 
 		String resourcePath = theme.getResourcePath(
 			servletContext, portletId, page);

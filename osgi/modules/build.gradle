@@ -4,9 +4,27 @@ project.ext {
 }
 
 allprojects { 
-    repositories { 
-        mavenCentral()
-    }
+	repositories { 
+		mavenCentral()
+	}
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'osgi'
+
+	ext.buildLibDir = new File("${projectDir}/build/libs")
+	ext.jarFile = "${buildLibDir}/${project.name}.jar"
+	ext.liferayProjectDir = "${rootDir}/../../"
+
+	dependencies {
+		compile files(["${liferayProjectDir}/portal-service/classes"])
+		compile files(["${liferayProjectDir}/util-java/classes"])
+
+		compile fileTree(dir:"${liferayProjectDir}/lib/development", includes: ['**/*.jar'])
+		compile fileTree(dir:"${liferayProjectDir}/lib/global", includes: ['**/*.jar'])
+		compile fileTree(dir:"${liferayProjectDir}/lib/portal", includes: ['**/*.jar'])
+	}
 }
 
 task installGradleWrapper(type: Wrapper) {

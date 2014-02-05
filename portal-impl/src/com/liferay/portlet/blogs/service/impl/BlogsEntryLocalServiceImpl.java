@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.UserNotificationConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -1444,6 +1445,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
+		subscriptionSender.setClassPK(entry.getEntryId());
 		subscriptionSender.setCompanyId(entry.getCompanyId());
 		subscriptionSender.setContextAttribute(
 			"[$BLOGS_ENTRY_CONTENT$]", entry.getContent(), false);
@@ -1458,6 +1460,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
 		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("blogs_entry", entry.getEntryId());
+
+		int notificationType = UserNotificationConstants.TYPE_ADD_ENTRY;
+
+		if (serviceContext.isCommandUpdate()) {
+			notificationType = UserNotificationConstants.TYPE_UPDATE_ENTRY;
+		}
+
+		subscriptionSender.setNotificationType(notificationType);
 		subscriptionSender.setPortletId(PortletKeys.BLOGS);
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());

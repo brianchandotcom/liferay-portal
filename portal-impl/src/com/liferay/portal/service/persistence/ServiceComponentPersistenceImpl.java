@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.model.impl.ServiceComponentImpl;
@@ -961,7 +962,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			CacheRegistryUtil.clear(ServiceComponentImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ServiceComponentImpl.class.getName());
+		EntityCacheUtil.clearCache(ServiceComponentImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1584,10 +1585,22 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			}
 		};
 
-	private static CacheModel<ServiceComponent> _nullServiceComponentCacheModel = new CacheModel<ServiceComponent>() {
-			@Override
-			public ServiceComponent toEntityModel() {
-				return _nullServiceComponent;
-			}
-		};
+	private static CacheModel<ServiceComponent> _nullServiceComponentCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<ServiceComponent>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public ServiceComponent toEntityModel() {
+			return _nullServiceComponent;
+		}
+	}
 }

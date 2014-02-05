@@ -825,7 +825,7 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 			CacheRegistryUtil.clear(DLSyncEventImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(DLSyncEventImpl.class.getName());
+		EntityCacheUtil.clearCache(DLSyncEventImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

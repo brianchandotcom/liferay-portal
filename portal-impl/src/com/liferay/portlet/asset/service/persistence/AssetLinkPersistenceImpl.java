@@ -2946,7 +2946,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			CacheRegistryUtil.clear(AssetLinkImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(AssetLinkImpl.class.getName());
+		EntityCacheUtil.clearCache(AssetLinkImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

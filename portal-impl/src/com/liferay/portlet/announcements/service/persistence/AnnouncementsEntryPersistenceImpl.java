@@ -4839,7 +4839,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			CacheRegistryUtil.clear(AnnouncementsEntryImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(AnnouncementsEntryImpl.class.getName());
+		EntityCacheUtil.clearCache(AnnouncementsEntryImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

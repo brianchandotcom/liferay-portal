@@ -1911,7 +1911,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			CacheRegistryUtil.clear(ShoppingCategoryImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ShoppingCategoryImpl.class.getName());
+		EntityCacheUtil.clearCache(ShoppingCategoryImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

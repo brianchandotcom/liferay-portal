@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.model.impl.WebsiteImpl;
@@ -3909,7 +3910,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			CacheRegistryUtil.clear(WebsiteImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(WebsiteImpl.class.getName());
+		EntityCacheUtil.clearCache(WebsiteImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -4600,10 +4601,22 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			}
 		};
 
-	private static CacheModel<Website> _nullWebsiteCacheModel = new CacheModel<Website>() {
-			@Override
-			public Website toEntityModel() {
-				return _nullWebsite;
-			}
-		};
+	private static CacheModel<Website> _nullWebsiteCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Website>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Website toEntityModel() {
+			return _nullWebsite;
+		}
+	}
 }

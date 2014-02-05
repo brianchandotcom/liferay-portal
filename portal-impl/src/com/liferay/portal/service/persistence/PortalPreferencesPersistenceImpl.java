@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PortalPreferences;
 import com.liferay.portal.model.impl.PortalPreferencesImpl;
@@ -378,7 +379,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			CacheRegistryUtil.clear(PortalPreferencesImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(PortalPreferencesImpl.class.getName());
+		EntityCacheUtil.clearCache(PortalPreferencesImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -967,10 +968,22 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		};
 
 	private static CacheModel<PortalPreferences> _nullPortalPreferencesCacheModel =
-		new CacheModel<PortalPreferences>() {
-			@Override
-			public PortalPreferences toEntityModel() {
-				return _nullPortalPreferences;
-			}
-		};
+		new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<PortalPreferences>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public PortalPreferences toEntityModel() {
+			return _nullPortalPreferences;
+		}
+	}
 }

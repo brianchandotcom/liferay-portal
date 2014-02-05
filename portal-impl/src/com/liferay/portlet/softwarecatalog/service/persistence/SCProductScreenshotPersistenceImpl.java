@@ -1332,7 +1332,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 			CacheRegistryUtil.clear(SCProductScreenshotImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(SCProductScreenshotImpl.class.getName());
+		EntityCacheUtil.clearCache(SCProductScreenshotImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

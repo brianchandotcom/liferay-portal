@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.model.impl.ResourceTypePermissionImpl;
@@ -1568,7 +1569,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			CacheRegistryUtil.clear(ResourceTypePermissionImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ResourceTypePermissionImpl.class.getName());
+		EntityCacheUtil.clearCache(ResourceTypePermissionImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2219,10 +2220,22 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		};
 
 	private static CacheModel<ResourceTypePermission> _nullResourceTypePermissionCacheModel =
-		new CacheModel<ResourceTypePermission>() {
-			@Override
-			public ResourceTypePermission toEntityModel() {
-				return _nullResourceTypePermission;
-			}
-		};
+		new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<ResourceTypePermission>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public ResourceTypePermission toEntityModel() {
+			return _nullResourceTypePermission;
+		}
+	}
 }

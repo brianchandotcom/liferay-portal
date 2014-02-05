@@ -1342,7 +1342,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			CacheRegistryUtil.clear(ShoppingCartImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ShoppingCartImpl.class.getName());
+		EntityCacheUtil.clearCache(ShoppingCartImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

@@ -10468,7 +10468,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			CacheRegistryUtil.clear(AssetCategoryImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(AssetCategoryImpl.class.getName());
+		EntityCacheUtil.clearCache(AssetCategoryImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -11627,7 +11627,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				CacheRegistryUtil.clear(AssetCategoryImpl.class.getName());
 			}
 
-			EntityCacheUtil.clearCache(AssetCategoryImpl.class.getName());
+			EntityCacheUtil.clearCache(AssetCategoryImpl.class);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
@@ -11736,7 +11736,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				CacheRegistryUtil.clear(AssetCategoryImpl.class.getName());
 			}
 
-			EntityCacheUtil.clearCache(AssetCategoryImpl.class.getName());
+			EntityCacheUtil.clearCache(AssetCategoryImpl.class);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
@@ -11882,7 +11882,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			CacheRegistryUtil.clear(AssetCategoryImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(AssetCategoryImpl.class.getName());
+		EntityCacheUtil.clearCache(AssetCategoryImpl.class);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}

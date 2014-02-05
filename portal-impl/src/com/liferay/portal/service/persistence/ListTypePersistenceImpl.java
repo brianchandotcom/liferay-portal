@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ListType;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.ListTypeImpl;
 import com.liferay.portal.model.impl.ListTypeModelImpl;
@@ -662,7 +663,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			CacheRegistryUtil.clear(ListTypeImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ListTypeImpl.class.getName());
+		EntityCacheUtil.clearCache(ListTypeImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1209,10 +1210,22 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			}
 		};
 
-	private static CacheModel<ListType> _nullListTypeCacheModel = new CacheModel<ListType>() {
-			@Override
-			public ListType toEntityModel() {
-				return _nullListType;
-			}
-		};
+	private static CacheModel<ListType> _nullListTypeCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<ListType>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public ListType toEntityModel() {
+			return _nullListType;
+		}
+	}
 }

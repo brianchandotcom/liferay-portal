@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.LayoutModelImpl;
@@ -8026,7 +8027,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			CacheRegistryUtil.clear(LayoutImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(LayoutImpl.class.getName());
+		EntityCacheUtil.clearCache(LayoutImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -9000,10 +9001,22 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			}
 		};
 
-	private static CacheModel<Layout> _nullLayoutCacheModel = new CacheModel<Layout>() {
-			@Override
-			public Layout toEntityModel() {
-				return _nullLayout;
-			}
-		};
+	private static CacheModel<Layout> _nullLayoutCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Layout>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Layout toEntityModel() {
+			return _nullLayout;
+		}
+	}
 }

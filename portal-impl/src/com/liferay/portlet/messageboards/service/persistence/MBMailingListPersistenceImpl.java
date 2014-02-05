@@ -2237,7 +2237,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			CacheRegistryUtil.clear(MBMailingListImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(MBMailingListImpl.class.getName());
+		EntityCacheUtil.clearCache(MBMailingListImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

@@ -4121,7 +4121,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			CacheRegistryUtil.clear(AssetVocabularyImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(AssetVocabularyImpl.class.getName());
+		EntityCacheUtil.clearCache(AssetVocabularyImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

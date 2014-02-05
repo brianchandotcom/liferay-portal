@@ -5622,7 +5622,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			CacheRegistryUtil.clear(DLFileVersionImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(DLFileVersionImpl.class.getName());
+		EntityCacheUtil.clearCache(DLFileVersionImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

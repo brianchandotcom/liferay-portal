@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.impl.ResourceActionImpl;
@@ -965,7 +966,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			CacheRegistryUtil.clear(ResourceActionImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ResourceActionImpl.class.getName());
+		EntityCacheUtil.clearCache(ResourceActionImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1571,10 +1572,22 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			}
 		};
 
-	private static CacheModel<ResourceAction> _nullResourceActionCacheModel = new CacheModel<ResourceAction>() {
-			@Override
-			public ResourceAction toEntityModel() {
-				return _nullResourceAction;
-			}
-		};
+	private static CacheModel<ResourceAction> _nullResourceActionCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<ResourceAction>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public ResourceAction toEntityModel() {
+			return _nullResourceAction;
+		}
+	}
 }

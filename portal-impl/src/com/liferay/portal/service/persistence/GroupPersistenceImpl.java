@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.model.impl.GroupModelImpl;
@@ -7248,7 +7249,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			CacheRegistryUtil.clear(GroupImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(GroupImpl.class.getName());
+		EntityCacheUtil.clearCache(GroupImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -9402,10 +9403,21 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			}
 		};
 
-	private static CacheModel<Group> _nullGroupCacheModel = new CacheModel<Group>() {
-			@Override
-			public Group toEntityModel() {
-				return _nullGroup;
-			}
-		};
+	private static CacheModel<Group> _nullGroupCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Group>, MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Group toEntityModel() {
+			return _nullGroup;
+		}
+	}
 }

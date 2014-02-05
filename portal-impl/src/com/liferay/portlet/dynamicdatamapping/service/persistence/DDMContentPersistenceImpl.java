@@ -2482,7 +2482,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 			CacheRegistryUtil.clear(DDMContentImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(DDMContentImpl.class.getName());
+		EntityCacheUtil.clearCache(DDMContentImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

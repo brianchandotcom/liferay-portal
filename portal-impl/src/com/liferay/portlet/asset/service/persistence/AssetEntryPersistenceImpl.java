@@ -3225,7 +3225,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			CacheRegistryUtil.clear(AssetEntryImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(AssetEntryImpl.class.getName());
+		EntityCacheUtil.clearCache(AssetEntryImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

@@ -873,7 +873,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			CacheRegistryUtil.clear(ShoppingCouponImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ShoppingCouponImpl.class.getName());
+		EntityCacheUtil.clearCache(ShoppingCouponImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

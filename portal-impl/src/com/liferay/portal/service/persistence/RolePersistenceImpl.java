@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.impl.RoleImpl;
@@ -8490,7 +8491,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			CacheRegistryUtil.clear(RoleImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(RoleImpl.class.getName());
+		EntityCacheUtil.clearCache(RoleImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -9836,10 +9837,21 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		};
 
-	private static CacheModel<Role> _nullRoleCacheModel = new CacheModel<Role>() {
-			@Override
-			public Role toEntityModel() {
-				return _nullRole;
-			}
-		};
+	private static CacheModel<Role> _nullRoleCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Role>, MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Role toEntityModel() {
+			return _nullRole;
+		}
+	}
 }

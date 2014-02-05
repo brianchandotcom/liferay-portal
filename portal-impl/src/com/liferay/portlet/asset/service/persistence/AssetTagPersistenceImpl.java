@@ -1260,7 +1260,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 			CacheRegistryUtil.clear(AssetTagImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(AssetTagImpl.class.getName());
+		EntityCacheUtil.clearCache(AssetTagImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

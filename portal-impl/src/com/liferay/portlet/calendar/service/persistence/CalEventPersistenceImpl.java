@@ -7443,7 +7443,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			CacheRegistryUtil.clear(CalEventImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(CalEventImpl.class.getName());
+		EntityCacheUtil.clearCache(CalEventImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

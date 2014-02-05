@@ -8956,7 +8956,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			CacheRegistryUtil.clear(DLFolderImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(DLFolderImpl.class.getName());
+		EntityCacheUtil.clearCache(DLFolderImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

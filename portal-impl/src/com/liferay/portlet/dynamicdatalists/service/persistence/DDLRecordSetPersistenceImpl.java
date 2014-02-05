@@ -2627,7 +2627,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 			CacheRegistryUtil.clear(DDLRecordSetImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(DDLRecordSetImpl.class.getName());
+		EntityCacheUtil.clearCache(DDLRecordSetImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

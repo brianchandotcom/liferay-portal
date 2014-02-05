@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.impl.UserNotificationDeliveryImpl;
@@ -985,7 +986,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 			CacheRegistryUtil.clear(UserNotificationDeliveryImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(UserNotificationDeliveryImpl.class.getName());
+		EntityCacheUtil.clearCache(UserNotificationDeliveryImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1622,10 +1623,22 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		};
 
 	private static CacheModel<UserNotificationDelivery> _nullUserNotificationDeliveryCacheModel =
-		new CacheModel<UserNotificationDelivery>() {
-			@Override
-			public UserNotificationDelivery toEntityModel() {
-				return _nullUserNotificationDelivery;
-			}
-		};
+		new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<UserNotificationDelivery>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public UserNotificationDelivery toEntityModel() {
+			return _nullUserNotificationDelivery;
+		}
+	}
 }

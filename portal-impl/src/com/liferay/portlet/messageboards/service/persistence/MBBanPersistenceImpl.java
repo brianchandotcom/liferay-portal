@@ -3188,7 +3188,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			CacheRegistryUtil.clear(MBBanImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(MBBanImpl.class.getName());
+		EntityCacheUtil.clearCache(MBBanImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

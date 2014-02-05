@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.impl.TeamImpl;
@@ -1248,7 +1249,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			CacheRegistryUtil.clear(TeamImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(TeamImpl.class.getName());
+		EntityCacheUtil.clearCache(TeamImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2418,10 +2419,21 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			}
 		};
 
-	private static CacheModel<Team> _nullTeamCacheModel = new CacheModel<Team>() {
-			@Override
-			public Team toEntityModel() {
-				return _nullTeam;
-			}
-		};
+	private static CacheModel<Team> _nullTeamCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<Team>, MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public Team toEntityModel() {
+			return _nullTeam;
+		}
+	}
 }

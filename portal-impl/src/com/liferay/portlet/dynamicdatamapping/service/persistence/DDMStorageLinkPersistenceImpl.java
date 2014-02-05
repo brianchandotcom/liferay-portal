@@ -1378,7 +1378,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 			CacheRegistryUtil.clear(DDMStorageLinkImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(DDMStorageLinkImpl.class.getName());
+		EntityCacheUtil.clearCache(DDMStorageLinkImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

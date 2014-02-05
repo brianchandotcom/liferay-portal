@@ -2428,7 +2428,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 			CacheRegistryUtil.clear(TrashEntryImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(TrashEntryImpl.class.getName());
+		EntityCacheUtil.clearCache(TrashEntryImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

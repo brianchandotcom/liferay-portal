@@ -3154,7 +3154,7 @@ public class SocialActivityAchievementPersistenceImpl
 			CacheRegistryUtil.clear(SocialActivityAchievementImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(SocialActivityAchievementImpl.class.getName());
+		EntityCacheUtil.clearCache(SocialActivityAchievementImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

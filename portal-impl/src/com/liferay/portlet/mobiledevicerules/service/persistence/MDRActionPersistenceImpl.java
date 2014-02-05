@@ -2004,7 +2004,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 			CacheRegistryUtil.clear(MDRActionImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(MDRActionImpl.class.getName());
+		EntityCacheUtil.clearCache(MDRActionImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

@@ -6070,7 +6070,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			CacheRegistryUtil.clear(SocialActivityImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(SocialActivityImpl.class.getName());
+		EntityCacheUtil.clearCache(SocialActivityImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

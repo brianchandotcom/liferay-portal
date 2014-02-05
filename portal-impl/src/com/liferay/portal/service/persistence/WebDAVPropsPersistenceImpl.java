@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.WebDAVProps;
 import com.liferay.portal.model.impl.WebDAVPropsImpl;
@@ -365,7 +366,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 			CacheRegistryUtil.clear(WebDAVPropsImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(WebDAVPropsImpl.class.getName());
+		EntityCacheUtil.clearCache(WebDAVPropsImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -952,10 +953,22 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 			}
 		};
 
-	private static CacheModel<WebDAVProps> _nullWebDAVPropsCacheModel = new CacheModel<WebDAVProps>() {
-			@Override
-			public WebDAVProps toEntityModel() {
-				return _nullWebDAVProps;
-			}
-		};
+	private static CacheModel<WebDAVProps> _nullWebDAVPropsCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<WebDAVProps>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public WebDAVProps toEntityModel() {
+			return _nullWebDAVProps;
+		}
+	}
 }

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutSetBranch;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutSetBranchImpl;
 import com.liferay.portal.model.impl.LayoutSetBranchModelImpl;
@@ -3191,7 +3192,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			CacheRegistryUtil.clear(LayoutSetBranchImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(LayoutSetBranchImpl.class.getName());
+		EntityCacheUtil.clearCache(LayoutSetBranchImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -3881,10 +3882,22 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			}
 		};
 
-	private static CacheModel<LayoutSetBranch> _nullLayoutSetBranchCacheModel = new CacheModel<LayoutSetBranch>() {
-			@Override
-			public LayoutSetBranch toEntityModel() {
-				return _nullLayoutSetBranch;
-			}
-		};
+	private static CacheModel<LayoutSetBranch> _nullLayoutSetBranchCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<LayoutSetBranch>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public LayoutSetBranch toEntityModel() {
+			return _nullLayoutSetBranch;
+		}
+	}
 }

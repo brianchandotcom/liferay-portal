@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ClassName;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
@@ -374,7 +375,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			CacheRegistryUtil.clear(ClassNameImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(ClassNameImpl.class.getName());
+		EntityCacheUtil.clearCache(ClassNameImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -945,10 +946,22 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			}
 		};
 
-	private static CacheModel<ClassName> _nullClassNameCacheModel = new CacheModel<ClassName>() {
-			@Override
-			public ClassName toEntityModel() {
-				return _nullClassName;
-			}
-		};
+	private static CacheModel<ClassName> _nullClassNameCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<ClassName>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public ClassName toEntityModel() {
+			return _nullClassName;
+		}
+	}
 }

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.impl.PortletItemImpl;
@@ -1629,7 +1630,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 			CacheRegistryUtil.clear(PortletItemImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(PortletItemImpl.class.getName());
+		EntityCacheUtil.clearCache(PortletItemImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2272,10 +2273,22 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 			}
 		};
 
-	private static CacheModel<PortletItem> _nullPortletItemCacheModel = new CacheModel<PortletItem>() {
-			@Override
-			public PortletItem toEntityModel() {
-				return _nullPortletItem;
-			}
-		};
+	private static CacheModel<PortletItem> _nullPortletItemCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<PortletItem>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public PortletItem toEntityModel() {
+			return _nullPortletItem;
+		}
+	}
 }

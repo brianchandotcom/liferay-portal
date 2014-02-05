@@ -7228,7 +7228,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			CacheRegistryUtil.clear(JournalFolderImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(JournalFolderImpl.class.getName());
+		EntityCacheUtil.clearCache(JournalFolderImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

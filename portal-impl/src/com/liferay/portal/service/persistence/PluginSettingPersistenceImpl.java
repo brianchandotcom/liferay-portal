@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PluginSetting;
 import com.liferay.portal.model.impl.PluginSettingImpl;
@@ -956,7 +957,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			CacheRegistryUtil.clear(PluginSettingImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(PluginSettingImpl.class.getName());
+		EntityCacheUtil.clearCache(PluginSettingImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1578,10 +1579,22 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			}
 		};
 
-	private static CacheModel<PluginSetting> _nullPluginSettingCacheModel = new CacheModel<PluginSetting>() {
-			@Override
-			public PluginSetting toEntityModel() {
-				return _nullPluginSetting;
-			}
-		};
+	private static CacheModel<PluginSetting> _nullPluginSettingCacheModel = new NullCacheModel();
+
+	private static class NullCacheModel implements CacheModel<PluginSetting>,
+		MVCCModel {
+		@Override
+		public long getMvccVersion() {
+			return 0;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
+		}
+
+		@Override
+		public PluginSetting toEntityModel() {
+			return _nullPluginSetting;
+		}
+	}
 }

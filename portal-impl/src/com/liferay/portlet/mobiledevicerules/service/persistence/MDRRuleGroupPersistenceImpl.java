@@ -2358,7 +2358,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			CacheRegistryUtil.clear(MDRRuleGroupImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(MDRRuleGroupImpl.class.getName());
+		EntityCacheUtil.clearCache(MDRRuleGroupImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

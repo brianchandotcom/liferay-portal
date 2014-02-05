@@ -2953,7 +2953,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			CacheRegistryUtil.clear(BlogsStatsUserImpl.class.getName());
 		}
 
-		EntityCacheUtil.clearCache(BlogsStatsUserImpl.class.getName());
+		EntityCacheUtil.clearCache(BlogsStatsUserImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);

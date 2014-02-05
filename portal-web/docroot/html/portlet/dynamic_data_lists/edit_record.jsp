@@ -172,7 +172,7 @@ if (translating) {
 									{
 										cache: false,
 										id: event.newVal,
-										title: '<%= UnicodeLanguageUtil.get(pageContext, "web-content-translation") %>',
+										title: '<%= UnicodeLanguageUtil.get(pageContext, "record-translation") %>',
 										uri: '<%= translateRecordURL %>' + '&<portlet:namespace />languageId=' + editingLocale
 									},
 									function(translationWindow) {

@@ -49,7 +49,17 @@ if (assetEntryId > 0) {
 
 				assetLinkEntry = assetLinkEntry.toEscapedModel();
 
-				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(assetLinkEntry.getClassNameId()));
+				String className = PortalUtil.getClassName(assetLinkEntry.getClassNameId());
+
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+				if (Validator.isNull(assetRendererFactory)) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("No asset renderer factory found for class " + className);
+					}
+
+					continue;
+				}
 
 				if (!assetRendererFactory.isActive(company.getCompanyId())) {
 					continue;
@@ -103,3 +113,7 @@ if (assetEntryId > 0) {
 		</ul>
 	</div>
 </c:if>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.taglib.ui.asset_links.page_jsp");
+%>

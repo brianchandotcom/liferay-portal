@@ -25,4 +25,8 @@ public class ExportImportConfigurationConstants {
 
 	public static final int TYPE_PUBLISH_LAYOUT_REMOTE = 2;
 
+	public static final int TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL = 3;
+
+	public static final int TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE = 4;
+
 }

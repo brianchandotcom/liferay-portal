@@ -115,6 +115,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public boolean hasPublicLayouts();
 
+	public boolean hasRemoteStagingGroup();
+
 	public boolean hasStagingGroup();
 
 	/**

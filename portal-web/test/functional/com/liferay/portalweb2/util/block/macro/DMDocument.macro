@@ -96,34 +96,23 @@
 		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_CHECKIN_BUTTON" value1="Checkin" />
 
 		<if>
-			<or>
-				<equals arg1="${revision}" arg2="Major" />
-				<isset var="changeLog" />
-			</or>
+			<equals arg1="${revision}" arg2="Major" />
 			<then>
-				<if>
-					<equals arg1="${revision}" arg2="Major" />
-					<then>
-						<execute action="PGDocumentsandmediaCheckin#click" locator-key1="MAJOR_REVISION" />
-					</then>
-					<elseif>
-						<equals arg1="${revision}" arg2="Minor" />
-						<then>
-							<execute action="PGDocumentsandmediaCheckin#click" locator-key1="MINOR_REVISION" />
-						</then>
-					</elseif>
-				</if>
+				<execute action="PGDocumentsandmediaCheckin#click" locator-key1="MAJOR_REVISION" />
+			</then>
+			<else>
+				<execute action="PGDocumentsandmediaCheckin#click" locator-key1="MINOR_REVISION" />
+			</else>
+		</if>
 
-				<if>
-					<isset var="changeLog" />
-					<then>
-						<execute action="PGDocumentsandmediaCheckin#type" locator-key1="CHANGE_LOG" value1="${changeLog}" />
-					</then>
-				</if>
-
-				<execute action="PGDocumentsandmediaCheckin#assertClick" locator-key1="SAVE_AND_CHECKIN_BUTTON" value1="Save and Checkin" />
+		<if>
+			<isset var="changeLog" />
+			<then>
+				<execute action="PGDocumentsandmediaCheckin#type" locator-key1="CHANGE_LOG" value1="${changeLog}" />
 			</then>
 		</if>
+
+		<execute action="PGDocumentsandmediaCheckin#assertClick" locator-key1="SAVE_AND_CHECKIN_BUTTON" value1="Save and Checkin" />
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -723,7 +712,7 @@
 				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_NUMBER" value1="Version ${dmDocumentVersionNumberEdit}" />
 				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_UPLOADER_NAME" value1="By: ${dmDocumentUploader}" />
 				<execute action="SODocuments#assertElementPresent" locator-key1="VERSION_HISTORY_DATE" />
-				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_SIZE" value1="Size: ${dmDocumentSizeSO2}" />
+				<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_SIZE" value1="Size: ${dmDocumentSizeSO}" />
 			</then>
 		</if>
 

@@ -2,9 +2,7 @@
 	<command name="tearDownDocumentViewPG">
 		<execute macro="SOUser#firstLoginPG" />
 
-		<execute macro="SOUserBar#dashboardPG">
-			<var name="userName" value="Test Test" />
-		</execute>
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
 
@@ -13,7 +11,7 @@
 	</command>
 
 	<command name="tearDownPG">
-		<execute macro="SOUser#firstLoginPG" />
+		<execute macro="SODocuments#tearDownDocumentViewPG" />
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
@@ -277,7 +275,7 @@
 						<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_NUMBER" value1="Version PWC" />
 						<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_UPLOADER_NAME" value1="By: ${dmDocumentUploader}" />
 						<execute action="SODocuments#assertElementPresent" locator-key1="VERSION_HISTORY_DATE" />
-						<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_SIZE" value1="Size: ${dmDocumentSize}" />
+						<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_SIZE" value1="Size: ${dmDocumentSizeSO}" />
 					</then>
 					<else>
 						<var name="versionNumber" value="${dmDocumentVersionNumber}" />
@@ -285,7 +283,7 @@
 						<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_NUMBER" value1="Version ${dmDocumentVersionNumber}" />
 						<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_UPLOADER_NAME" value1="By: ${dmDocumentUploader}" />
 						<execute action="SODocuments#assertElementPresent" locator-key1="VERSION_HISTORY_DATE" />
-						<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_SIZE" value1="Size: ${dmDocumentSize}" />
+						<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_SIZE" value1="Size: ${dmDocumentSizeSO}" />
 
 						<if>
 							<isset var="dmDocumentPreviousVersionNumber" />
@@ -295,7 +293,7 @@
 								<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_NUMBER" value1="Version ${dmDocumentPreviousVersionNumber}" />
 								<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_UPLOADER_NAME" value1="By: ${dmDocumentPreviousUploader}" />
 								<execute action="SODocuments#assertElementPresent" locator-key1="VERSION_HISTORY_DATE" />
-								<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_SIZE" value1="Size: ${dmDocumentPreviousSize}" />
+								<execute action="SODocuments#assertTextEquals" locator-key1="VERSION_HISTORY_SIZE" value1="Size: ${dmDocumentPreviousSizeSO}" />
 							</then>
 						</if>
 					</else>
@@ -324,7 +322,7 @@
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_UPLOADER" value1="Last Updated by ${dmDocumentUploader}" />
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_DETAILS_DATE" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSizeRoundedUp})" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSize})" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_URL" value1="Get URL or WebDAV URL." />
 	</command>
 </definition>

@@ -2297,6 +2297,16 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				</ant>
 			</else>
 		</if>
+
+		<if>
+			<isset property="env.JENKINS_HOME" />
+			<then>
+				<copy
+					file="portal-web/test-results/functional/report.html"
+					todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+				/>
+			</then>
+		</if>
 	</target>
 
 	<target name="run-simple-server" depends="generate-test-properties">

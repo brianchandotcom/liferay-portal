@@ -35,6 +35,11 @@ public class AtomEntryContent {
 		_type = type;
 	}
 
+	public AtomEntryContent(String text, Type type) {
+		_text = text;
+		_type = type;
+	}
+
 	public String getMimeType() {
 		return _mimeType;
 	}

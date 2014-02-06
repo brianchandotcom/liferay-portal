@@ -510,33 +510,28 @@
 		<var name="userTagEdit" value="tag2" />
 
 		<execute macro="SOProfile#addTag">
-			<var name="key_userTag" value="${userTag}" />
 			<var name="userTag" value="${userTag}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewTag">
-			<var name="key_userTag" value="${userTag}" />
 			<var name="userTag" value="${userTag}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#editTag">
-			<var name="key_userTag" value="${userTagEdit}" />
 			<var name="userTag" value="${userTagEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewTag">
-			<var name="key_userTag" value="${userTag}" />
 			<var name="userTag" value="${userTag}" />
 		</execute>
 
 		<execute macro="SOProfile#viewTag">
-			<var name="key_userTag" value="${userTagEdit}" />
 			<var name="userTag" value="${userTagEdit}" />
 		</execute>
 

@@ -343,6 +343,7 @@
 
 		<execute action="CPBlogsEdit#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="CPBlogsEdit#type" locator-key1="CONTENT_FIELD" value1="${entryContentEdit}" />
+
 		<execute action="CPBlogsEdit#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="CPBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -350,6 +351,15 @@
 
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContentEdit}" />
+	</command>
+
+	<command name="editContentInlinePG">
+		<var name="key_entryContent" value="${entryContent}" />
+
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE" value1="${entryContent}" />
+		<execute action="PGBlogs#type" locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE" value1="${entryContentEdit}" />
+		<execute action="PGBlogs#selectFrame" value1="relative=top" />
+		<execute action="PGBlogs#assertElementPresent" locator-key1="SUCCESS_MESSAGE" />
 	</command>
 
 	<command name="editNoPermissionPG">
@@ -372,11 +382,6 @@
 		<execute action="PGBlogsEdit#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<var name="key_entryTitle" value="${entryTitleEdit}" />
-
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitleEdit}" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContentEdit}" />
 	</command>
 
 	<command name="editTitleCP">

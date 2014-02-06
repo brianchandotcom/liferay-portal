@@ -57,6 +57,7 @@ import javax.portlet.PortletURL;
  * @author Raymond Augé
  * @author Zsigmond Rab
  * @author Hugo Huijser
+ * @author Brett Swaim
  */
 public class UserIndexer extends BaseIndexer {
 
@@ -89,9 +90,7 @@ public class UserIndexer extends BaseIndexer {
 			searchContext.getAttribute(Field.STATUS),
 			WorkflowConstants.STATUS_APPROVED);
 
-		if (status != WorkflowConstants.STATUS_ANY) {
-			contextQuery.addRequiredTerm(Field.STATUS, status);
-		}
+		contextQuery.addRequiredTerm(Field.STATUS, status);
 
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");

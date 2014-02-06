@@ -49,22 +49,6 @@ for (int i = 0; i < organizations.size(); i++) {
 
 			<%
 			for (Address address: organizationAddresses) {
-				String street1 = address.getStreet1();
-				String street2 = address.getStreet2();
-				String street3 = address.getStreet3();
-
-				String zipCode = address.getZip();
-				String city = address.getCity();
-
-				Region region = address.getRegion();
-
-				String regionName = region.getName();
-
-				Country country = address.getCountry();
-
-				String countryName = country.getName(locale);
-
-				String mailingName = LanguageUtil.get(pageContext, address.getType().getName());
 			%>
 
 				<li class="<%= address.isPrimary() ? "primary" : "" %>">
@@ -87,22 +71,6 @@ for (int i = 0; i < organizations.size(); i++) {
 
 			<%
 			for (Address address: personalAddresses) {
-				String street1 = address.getStreet1();
-				String street2 = address.getStreet2();
-				String street3 = address.getStreet3();
-
-				String zipCode = address.getZip();
-				String city = address.getCity();
-
-				Region region = address.getRegion();
-
-				String regionName = region.getName();
-
-				Country country = address.getCountry();
-
-				String countryName = country.getName(locale);
-
-				String mailingName = LanguageUtil.get(pageContext, address.getType().getName());
 			%>
 
 				<li class="<%= address.isPrimary() ? "primary" : "" %>">

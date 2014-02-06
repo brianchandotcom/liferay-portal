@@ -711,6 +711,8 @@ public class ServiceBuilder {
 					if (_isTargetEntity(entity)) {
 						System.out.println("Building " + entity.getName());
 
+						_resolveEntity(entity);
+
 						if (entity.hasActionableDynamicQuery()) {
 							_createActionableDynamicQuery(entity);
 
@@ -4681,6 +4683,7 @@ public class ServiceBuilder {
 		}
 
 		List<Entity> referenceList = new ArrayList<Entity>();
+		List<String> unresolvedReferences = new ArrayList<String>();
 
 		if (_build) {
 			if (Validator.isNotNull(_pluginName)) {
@@ -4720,7 +4723,12 @@ public class ServiceBuilder {
 			}
 
 			for (String referenceName : referenceSet) {
-				referenceList.add(getEntity(referenceName));
+				try {
+					referenceList.add(getEntity(referenceName));
+				}
+				catch (RuntimeException re) {
+					unresolvedReferences.add(referenceName);
+				}
 			}
 		}
 
@@ -4743,7 +4751,8 @@ public class ServiceBuilder {
 				sessionFactory, txManager, cacheEnabled, dynamicUpdateEnabled,
 				jsonEnabled, mvccEnabled, trashEnabled, deprecated, pkList,
 				regularColList, blobList, collectionList, columnList, order,
-				finderList, referenceList, txRequiredList));
+				finderList, referenceList, txRequiredList,
+				unresolvedReferences));
 	}
 
 	private String _processTemplate(String name, Map<String, Object> context)
@@ -4775,6 +4784,26 @@ public class ServiceBuilder {
 		StringUtil.readLines(classLoader.getResourceAsStream(fileName), lines);
 
 		return lines;
+	}
+
+	private void _resolveEntity(Entity entity) throws IOException {
+		if (entity.isResolved()) {
+			return;
+		}
+
+		for (String reference : entity.getUnresolvedReferences()) {
+			Entity entityReference = getEntity(reference);
+
+			if (entityReference == null) {
+				throw new RuntimeException(
+					"Cannot find forward defined " + reference + " in " +
+						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
+			}
+
+			entity.addReference(entity);
+		}
+
+		entity.setResolved();
 	}
 
 	private void _updateSQLFile(

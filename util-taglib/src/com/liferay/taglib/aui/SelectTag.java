@@ -116,7 +116,7 @@ public class SelectTag extends BaseSelectTag {
 			listTypeFieldName = "typeId";
 		}
 
-		String value = StringPool.BLANK;
+		String value = String.valueOf(getValue());
 
 		if (Validator.isNull(listType)) {
 			if (bean != null) {

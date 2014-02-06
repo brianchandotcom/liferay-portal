@@ -1,0 +1,89 @@
+allprojects {
+	repositories {
+		mavenCentral()
+	}
+}
+
+subprojects {
+	apply plugin: "java"
+	apply plugin: "osgi"
+
+	ext.buildLibDir = new File("${projectDir}/build/libs")
+	ext.jarFile = "${buildLibDir}/${project.name}.jar"
+	ext.liferayProjectDir = "${rootDir}/../../"
+
+	configurations {
+		bnd
+	}
+
+	dependencies {
+		bnd files(["${liferayProjectDir}/portal-service/classes"])
+		bnd files(["${liferayProjectDir}/util-java/classes"])
+
+		bnd fileTree(
+			dir:"${liferayProjectDir}/lib/portal",
+			includes: ["**/bnd.jar"]
+		)
+	}
+
+	dependencies {
+		compile files(["${liferayProjectDir}/portal-service/classes"])
+		compile files(["${liferayProjectDir}/util-java/classes"])
+
+		compile fileTree(
+			dir:"${liferayProjectDir}/lib/development",
+			includes: ["**/*.jar"]
+		)
+
+		compile fileTree(
+			dir:"${liferayProjectDir}/lib/global",
+			includes: ["**/*.jar"]
+		)
+
+		compile fileTree(
+			dir:"${liferayProjectDir}/lib/portal",
+			includes: ["**/*.jar"]
+		)
+	}
+
+	task baseline << {
+		ant.property(
+			name: "ant.project.name",
+			project.name
+		)
+
+		ant.property(
+			name: "sdk.dir",
+			liferayProjectDir
+		)
+
+		ant.manifestHelper(
+			projectDirPropertyName: "sdk.dir"
+		)
+
+		ant.taskdef(
+			classname: "com.liferay.util.ant.bnd.BaselineJarTask",
+			classpath: configurations.bnd.asPath,
+			name: "bnd"
+		)
+
+		ant.taskdef(
+			classname: "com.liferay.util.ant.ManifestHelperTask",
+			classpath: configurations.bnd.asPath,
+			name: "manifestHelper"
+		)
+
+		buildLibDir.mkdir()
+
+		ant.bnd(
+			bndRootFile: "${liferayProjectDir}/common.bnd",
+			file: "${project.name}.bnd",
+			outputPath: "${jarFile}",
+			sourcePath: "."
+		) {
+			classpath {
+				files(["build/classes/main"])
+			}
+		}
+	}
+}

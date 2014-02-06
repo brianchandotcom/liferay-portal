@@ -56,7 +56,7 @@ String socialBookmarkTypes = portletPreferences.getValue("socialBookmarksTypes",
 </liferay-portlet:renderURL>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
-<liferay-portlet:renderURL portletConfiguration="true" varImpl="configurationRenderURL" >
+<liferay-portlet:renderURL portletConfiguration="true" varImpl="configurationRenderURL">
 	<portlet:param name="tabs2" value="<%= tabs2 %>" />
 </liferay-portlet:renderURL>
 

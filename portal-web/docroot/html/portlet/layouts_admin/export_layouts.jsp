@@ -38,7 +38,14 @@ if (group.isStagingGroup() && !group.isStagedRemotely()) {
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
-String rootNodeName = ParamUtil.getString(request, "rootNodeName");
+String rootNodeName = StringPool.BLANK;
+
+if (privateLayout) {
+	rootNodeName = LanguageUtil.get(pageContext, "private-pages");
+}
+else {
+	rootNodeName = LanguageUtil.get(pageContext, "public-pages");
+}
 
 DateRange dateRange = ExportImportDateUtil.getDateRange(renderRequest, liveGroupId, privateLayout, 0, null, ExportImportDateUtil.RANGE_ALL);
 
@@ -72,6 +79,15 @@ portletURL.setParameter("liveGroupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 portletURL.setParameter("rootNodeName", rootNodeName);
 %>
+
+<portlet:renderURL var="backURL">
+	<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />
+</portlet:renderURL>
+
+<liferay-ui:header
+	backURL="<%= backURL %>"
+	title='<%= privateLayout ? LanguageUtil.get(pageContext, "export-private-pages") : LanguageUtil.get(pageContext, "export-public-pages") %>'
+/>
 
 <liferay-ui:tabs
 	names="new-export-process,current-and-previous"
@@ -570,7 +586,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 				<aui:button-row>
 					<aui:button type="submit" value="export" />
 
-					<aui:button href="<%= currentURL %>" type="cancel" />
+					<aui:button href="<%= backURL %>" type="cancel" />
 				</aui:button-row>
 			</aui:form>
 		</div>

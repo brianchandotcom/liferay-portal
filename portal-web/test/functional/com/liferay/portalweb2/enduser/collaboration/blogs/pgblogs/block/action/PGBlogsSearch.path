@@ -46,12 +46,17 @@
 </tr>
 <tr>
 	<td>SEARCH_RESULTS_ENTRY_DESCRIPTION</td>
-	<td>//span[@class='entry-title' and contains(.,'${key_entryTitle}')]//..//span[@class='entry-description' and contains(.,'${key_entryContent}')]</td>
+	<td>//span[@class='entry-title' and contains(.,'${key_entryTitle}')]//..//span[@class='entry-description']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_RESULTS_ENTRY_COMMENT</td>
-	<td>//div[contains(@class,'entry-display-style search') and contains(.,'${key_entryTitle}')]/div[@class='entry-discussion' and contains(.,'${key_entryComment}')]</td>
+	<td>//span[@class='entry-title' and contains(.,'${key_entryTitle}')]//..//..//..//div[@class='entry-discussion']/a/span[@class='body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS_HIGHLIGHTED</td>
+	<td>//span[@class='entry-title' and contains(.,'${key_entryTitle}')]//..//..//..//span[@class='highlight']</td>
 	<td></td>
 </tr>
 </tbody>

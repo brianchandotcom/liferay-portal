@@ -476,6 +476,15 @@
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG" >
+			<var name="entryContent" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitleEdit}" />
+		</execute>
 	</command>
 
 	<command name="EditBlogsEntryComment" priority="5">
@@ -604,9 +613,17 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#editInlineContentPG">
+		<execute macro="BlogsEntry#editContentInlinePG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryContentEdit" value="${entryContentEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG" >
+			<var name="entryContent" value="${entryContentEdit}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
@@ -814,7 +831,6 @@
 	<command name="SearchBlogsEntryComment" priority="5">
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entrySearchTerm" value="Blogs Entry Comment" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
 		<execute macro="Page#gotoPG">
@@ -838,7 +854,7 @@
 		<execute macro="BlogsEntryComment#searchPG">
 			<var name="entryComment" value="${entryComment}" />
 			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="${entrySearchTerm}" />
+			<var name="entrySearchTerm" value="Comment" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>

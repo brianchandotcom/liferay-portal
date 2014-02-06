@@ -117,16 +117,15 @@
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT" value1="${entryCommentEdit}" />
 	</command>
 
-	<command name="searchPG">
-		<var name="key_entryComment" value="${entryComment}" />
-		<var name="key_entryContent" value="${entryContent}" />
+	<command name="searchPG">>
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute action="PGBlogsSearch#type" locator-key1="SEARCH_FIELD" value1="${entrySearchTerm}" />
 		<execute action="PGBlogsSearch#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />
-		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_COMMENT" value1="${entryComment}" />
+		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_HIGHLIGHTED" value1="${entrySearchTerm}" />
+		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_COMMENT" value1="${entryComment}..." />
 	</command>
 
 	<command name="viewCP">

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
@@ -80,7 +79,6 @@ public class StagedModelDataHandlerUtil {
 				referenceElement = portletDataContext.addReferenceElement(
 					referrerPortlet,
 					portletDataContext.getExportDataRootElement(), stagedModel,
-					stagedModel.getModelClass(),
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
 				return referenceElement;
@@ -91,12 +89,18 @@ public class StagedModelDataHandlerUtil {
 
 		referenceElement = portletDataContext.addReferenceElement(
 			referrerPortlet, portletDataContext.getExportDataRootElement(),
-			stagedModel, stagedModel.getModelClass(),
-			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
+			stagedModel, PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
 
 		return referenceElement;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, , replaced by {@link
+	 *             #exportReferenceStagedModel(PortletDataContext,
+	 *             com.liferay.portal.model.StagedModel,
+	 *             com.liferay.portal.model.StagedModel, String)}
+	 */
+	@Deprecated
 	public static <T extends StagedModel, U extends StagedModel> Element
 		exportReferenceStagedModel(
 			PortletDataContext portletDataContext, T referrerStagedModel,
@@ -104,21 +108,38 @@ public class StagedModelDataHandlerUtil {
 			Class<?> stagedModelClass, String referenceType)
 		throws PortletDataException {
 
-		Element referrerStagedModelElement =
-			portletDataContext.getExportDataElement(
-				referrerStagedModel, referrerStagedModelClass);
-
 		return exportReferenceStagedModel(
-			portletDataContext, referrerStagedModel, referrerStagedModelElement,
-			stagedModel, stagedModelClass, referenceType);
+			portletDataContext, referrerStagedModel, stagedModel,
+			referenceType);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #exportReferenceStagedModel(PortletDataContext,
+	 *             com.liferay.portal.model.StagedModel,
+	 *             com.liferay.portal.model.StagedModel, String)}
+	 */
+	@Deprecated
 	public static <T extends StagedModel, U extends StagedModel> Element
 		exportReferenceStagedModel(
 			PortletDataContext portletDataContext, T referrerStagedModel,
 			Element referrerStagedModelElement, U stagedModel,
 			Class<?> stagedModelClass, String referenceType)
 		throws PortletDataException {
+
+		return exportReferenceStagedModel(
+			portletDataContext, referrerStagedModel, stagedModel,
+			referenceType);
+	}
+
+	public static <T extends StagedModel, U extends StagedModel> Element
+		exportReferenceStagedModel(
+			PortletDataContext portletDataContext, T referrerStagedModel,
+			U stagedModel, String referenceType)
+		throws PortletDataException {
+
+		Element referrerStagedModelElement =
+			portletDataContext.getExportDataElement(referrerStagedModel);
 
 		Element referenceElement = null;
 
@@ -131,8 +152,8 @@ public class StagedModelDataHandlerUtil {
 
 				referenceElement = portletDataContext.addReferenceElement(
 					referrerStagedModel, referrerStagedModelElement,
-					stagedModel, stagedModelClass,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+					stagedModel, PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
+					true);
 
 				return referenceElement;
 			}
@@ -142,21 +163,9 @@ public class StagedModelDataHandlerUtil {
 
 		referenceElement = portletDataContext.addReferenceElement(
 			referrerStagedModel, referrerStagedModelElement, stagedModel,
-			stagedModelClass, referenceType, false);
+			referenceType, false);
 
 		return referenceElement;
-	}
-
-	public static <T extends StagedModel, U extends StagedModel> Element
-		exportReferenceStagedModel(
-			PortletDataContext portletDataContext, T referrerStagedModel,
-			U stagedModel, String referenceType)
-		throws PortletDataException {
-
-		return exportReferenceStagedModel(
-			portletDataContext, referrerStagedModel,
-			referrerStagedModel.getModelClass(), stagedModel,
-			stagedModel.getModelClass(), referenceType);
 	}
 
 	public static <T extends StagedModel> void exportStagedModel(
@@ -350,12 +359,10 @@ public class StagedModelDataHandlerUtil {
 	private static <T extends StagedModel> StagedModelDataHandler<T>
 		_getStagedModelDataHandler(T stagedModel) {
 
-		ClassedModel classedModel = stagedModel;
-
 		StagedModelDataHandler<T> stagedModelDataHandler =
 			(StagedModelDataHandler<T>)
 				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-					classedModel.getModelClassName());
+					ExportImportClassUtil.getModelClassName(stagedModel));
 
 		return stagedModelDataHandler;
 	}

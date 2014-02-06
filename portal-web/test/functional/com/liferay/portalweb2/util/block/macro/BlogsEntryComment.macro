@@ -117,7 +117,7 @@
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT" value1="${entryCommentEdit}" />
 	</command>
 
-	<command name="searchPG">>
+	<command name="searchPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute action="PGBlogsSearch#type" locator-key1="SEARCH_FIELD" value1="${entrySearchTerm}" />

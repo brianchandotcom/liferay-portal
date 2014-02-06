@@ -356,7 +356,7 @@
 	<command name="editContentInlinePG">
 		<var name="key_entryContent" value="${entryContent}" />
 
-		<execute action="PGBlogs#click" locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE" value1="${entryContent}" />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE" value1="${entryContent}" />
 		<execute action="PGBlogs#type" locator-key1="ENTRY_CONTENT_CKE_EDIT_INLINE" value1="${entryContentEdit}" />
 		<execute action="PGBlogs#selectFrame" value1="relative=top" />
 		<execute action="PGBlogs#assertElementPresent" locator-key1="SUCCESS_MESSAGE" />

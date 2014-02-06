@@ -30,7 +30,9 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
@@ -68,14 +70,15 @@ public class DLFileShortcutStagedModelDataHandlerTest
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceTestUtil.randomString());
 
-		addDependentStagedModel(dependentStagedModelsMap, Folder.class, folder);
+		addDependentStagedModel(
+			dependentStagedModelsMap, DLFolder.class, folder);
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceTestUtil.randomString());
 
 		addDependentStagedModel(
-			dependentStagedModelsMap, FileEntry.class, fileEntry);
+			dependentStagedModelsMap, DLFileEntry.class, fileEntry);
 
 		return dependentStagedModelsMap;
 	}
@@ -87,12 +90,12 @@ public class DLFileShortcutStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> folderDependentStagedModels =
-			dependentStagedModelsMap.get(Folder.class.getSimpleName());
+			dependentStagedModelsMap.get(DLFolder.class.getSimpleName());
 
 		Folder folder = (Folder)folderDependentStagedModels.get(0);
 
 		List<StagedModel> fileEntryDependentStagedModels =
-			dependentStagedModelsMap.get(FileEntry.class.getSimpleName());
+			dependentStagedModelsMap.get(DLFileEntry.class.getSimpleName());
 
 		FileEntry fileEntry = (FileEntry)fileEntryDependentStagedModels.get(0);
 
@@ -153,7 +156,7 @@ public class DLFileShortcutStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> fileEntryDependentStagedModels =
-			dependentStagedModelsMap.get(FileEntry.class.getSimpleName());
+			dependentStagedModelsMap.get(DLFileEntry.class.getSimpleName());
 
 		Assert.assertEquals(1, fileEntryDependentStagedModels.size());
 
@@ -163,7 +166,7 @@ public class DLFileShortcutStagedModelDataHandlerTest
 			fileEntry.getUuid(), group.getGroupId());
 
 		List<StagedModel> folderDependentStagedModels =
-			dependentStagedModelsMap.get(Folder.class.getSimpleName());
+			dependentStagedModelsMap.get(DLFolder.class.getSimpleName());
 
 		Assert.assertEquals(1, folderDependentStagedModels.size());
 

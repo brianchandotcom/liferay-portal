@@ -27,6 +27,8 @@ import com.liferay.portal.service.persistence.RepositoryUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
@@ -99,13 +101,13 @@ public class MBMessageStagedModelDataHandlerTest
 
 		while (folder != null) {
 			addDependentStagedModel(
-				dependentStagedModelsMap, Folder.class, folder);
+				dependentStagedModelsMap, DLFolder.class, folder);
 
 			folder = folder.getParentFolder();
 		}
 
 		addDependentStagedModel(
-			dependentStagedModelsMap, FileEntry.class,
+			dependentStagedModelsMap, DLFileEntry.class,
 			attachmentsFileEntries.get(0));
 
 		Repository repository = RepositoryUtil.fetchByPrimaryKey(

@@ -30,6 +30,8 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.wiki.attachments.WikiAttachmentsTest;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -108,13 +110,13 @@ public class WikiPageStagedModelDataHandlerTest
 
 		while (folder != null) {
 			addDependentStagedModel(
-				dependentStagedModelsMap, Folder.class, folder);
+				dependentStagedModelsMap, DLFolder.class, folder);
 
 			folder = folder.getParentFolder();
 		}
 
 		addDependentStagedModel(
-			dependentStagedModelsMap, FileEntry.class,
+			dependentStagedModelsMap, DLFileEntry.class,
 			attachmentsFileEntries.get(0));
 
 		Repository repository = RepositoryUtil.fetchByPrimaryKey(

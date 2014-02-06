@@ -2300,7 +2300,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 		<copy
 			file="portal-web/test-results/functional/report.html"
-			todir="report.html"
+			tofile="report.html"
 		/>
 	</target>
 

@@ -127,6 +127,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (hasConfigurationPermiss
 					<liferay-portlet:param name="struts_action" value="/polls/edit_question" />
 					<liferay-portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 					<liferay-portlet:param name="referringPortletResource" value="<%= portletDisplay.getId() %>" />
+					<liferay-portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 					<liferay-portlet:param name="questionId" value="<%= String.valueOf(question.getQuestionId()) %>" />
 				</liferay-portlet:renderURL>
 

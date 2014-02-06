@@ -530,9 +530,9 @@ public class SubscriptionSender implements Serializable {
 						JSONFactoryUtil.createJSONObject();
 
 					notificationEventJSONObject.put("classPK", _classPK);
-					notificationEventJSONObject.put("userId", user.getUserId());
 					notificationEventJSONObject.put(
 						"notificationType", _notificationType);
+					notificationEventJSONObject.put("userId", user.getUserId());
 
 					NotificationEvent notificationEvent =
 						NotificationEventFactoryUtil.createNotificationEvent(

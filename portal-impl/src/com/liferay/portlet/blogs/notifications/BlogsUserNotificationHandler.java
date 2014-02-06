@@ -59,10 +59,10 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 
 		long classPK = jsonObject.getLong("classPK");
 
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.fetchBlogsEntry(
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.fetchBlogsEntry(
 			classPK);
 
-		if (blogsEntry == null) {
+		if (entry == null) {
 			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
 				userNotificationEvent.getUserNotificationEventId());
 
@@ -92,10 +92,10 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 				title,
 				HtmlUtil.escape(
 					PortalUtil.getUserName(
-						blogsEntry.getUserId(), StringPool.BLANK))));
+						entry.getUserId(), StringPool.BLANK))));
 		sb.append("</div><div class=\"body\">");
 		sb.append(
-			HtmlUtil.escape(StringUtil.shorten(blogsEntry.getTitle(), 50)));
+			HtmlUtil.escape(StringUtil.shorten(entry.getTitle(), 50)));
 		sb.append("</div>");
 
 		return sb.toString();

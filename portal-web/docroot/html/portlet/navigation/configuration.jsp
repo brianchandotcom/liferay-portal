@@ -76,16 +76,16 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 			<aui:fieldset column="<%= true %>">
 				<div id="<portlet:namespace />customDisplayOptions">
-					<aui:select label="header" name="preferences--headerType--">
-						<aui:option label="none" selected='<%= headerType.equals("none") %>' />
-						<aui:option label="portlet-title" selected='<%= headerType.equals("portlet-title") %>' />
-						<aui:option label="root-layout" selected='<%= headerType.equals("root-layout") %>' />
-						<aui:option label="breadcrumb" selected='<%= headerType.equals("breadcrumb") %>' />
+					<aui:select label="header" name="preferences--headerType--" value="<%= headerType %>">
+						<aui:option label="none" />
+						<aui:option label="portlet-title" />
+						<aui:option label="root-layout" />
+						<aui:option label="breadcrumb" />
 					</aui:select>
 
-					<aui:select label="root-layout" name="preferences--rootLayoutType--">
-						<aui:option label="parent-at-level" selected='<%= rootLayoutType.equals("absolute") %>' value="absolute" />
-						<aui:option label="relative-parent-up-by" selected='<%= rootLayoutType.equals("relative") %>' value="relative" />
+					<aui:select label="root-layout" name="preferences--rootLayoutType--" value="<%= rootLayoutType %>">
+						<aui:option label="parent-at-level" value="absolute" />
+						<aui:option label="relative-parent-up-by" value="relative" />
 					</aui:select>
 
 					<aui:select name="preferences--rootLayoutLevel--">
@@ -102,9 +102,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 					</aui:select>
 
-					<aui:select name="preferences--includedLayouts--">
-						<aui:option label="auto" selected='<%= includedLayouts.equals("auto") %>' />
-						<aui:option label="all" selected='<%= includedLayouts.equals("all") %>' />
+					<aui:select name="preferences--includedLayouts--" value="<%= includedLayouts %>">
+						<aui:option label="auto" />
+						<aui:option label="all" />
 					</aui:select>
 
 					<aui:select name="preferences--nestedChildren--">

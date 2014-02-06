@@ -35,10 +35,10 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 		<aui:input cssClass="lfr-input-text-container" name="preferences--proxyPort--" value="<%= proxyPort %>" />
 
-		<aui:select name="preferences--proxyAuthentication--">
-			<aui:option label="none" selected='<%= proxyAuthentication.equals("none") %>' />
-			<aui:option label="basic" selected='<%= proxyAuthentication.equals("basic") %>' />
-			<aui:option label="ntlm" selected='<%= proxyAuthentication.equals("ntlm") %>' />
+		<aui:select name="preferences--proxyAuthentication--" value="<%= proxyAuthentication %>">
+			<aui:option label="none" />
+			<aui:option label="basic" />
+			<aui:option label="ntlm" />
 		</aui:select>
 
 		<aui:input cssClass="lfr-input-text-container" name="preferences--proxyAuthenticationUsername--" value="<%= proxyAuthenticationUsername %>" />

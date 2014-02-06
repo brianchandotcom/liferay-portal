@@ -47,9 +47,9 @@ if (Validator.isNull(displayStyle)) {
 
 		</aui:select>
 
-		<aui:select label="display-position" name="preferences--socialBookmarksDisplayPosition--">
-			<aui:option label="top" selected='<%= displayPosition.equals("top") %>' />
-			<aui:option label="bottom" selected='<%= displayPosition.equals("bottom") %>' />
+		<aui:select label="display-position" name="preferences--socialBookmarksDisplayPosition--" value="<%= displayPosition %>">
+			<aui:option label="top" />
+			<aui:option label="bottom" />
 		</aui:select>
 
 		<c:if test="<%= Validator.isNotNull(types) %>">

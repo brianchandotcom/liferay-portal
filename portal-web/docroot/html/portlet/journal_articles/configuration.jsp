@@ -106,11 +106,11 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="journalArticlesDisplaySettings" persistState="<%= true %>" title="display-settings">
 			<aui:fieldset>
-				<aui:select label="display-url" name="preferences--pageUrl--">
-					<aui:option label="maximized" selected='<%= pageUrl.equals("maximized") %>' />
-					<aui:option label="normal" selected='<%= pageUrl.equals("normal") %>' />
-					<aui:option label="pop-up" selected='<%= pageUrl.equals("popUp") %>' value="popUp" />
-					<aui:option label="view-in-context" selected='<%= pageUrl.equals("viewInContext") %>' value="viewInContext" />
+				<aui:select label="display-url" name="preferences--pageUrl--" value="<%= pageUrl %>">
+					<aui:option label="maximized" />
+					<aui:option label="normal" />
+					<aui:option label="pop-up" />
+					<aui:option label="view-in-context" value="viewInContext" />
 				</aui:select>
 
 				<aui:select label="display-per-page" name="preferences--pageDelta--">
@@ -128,17 +128,17 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 				</aui:select>
 
 				<aui:field-wrapper label="order-by-column">
-					<aui:select inlineField="<%= true %>" label="" name="preferences--orderByCol--">
-						<aui:option label="display-date" selected='<%= orderByCol.equals("display-date") %>' />
-						<aui:option label="create-date" selected='<%= orderByCol.equals("create-date") %>' />
-						<aui:option label="modified-date" selected='<%= orderByCol.equals("modified-date") %>' />
-						<aui:option label="title" selected='<%= orderByCol.equals("title") %>' />
-						<aui:option label="id" selected='<%= orderByCol.equals("id") %>' />
+					<aui:select inlineField="<%= true %>" label="" name="preferences--orderByCol--" value="<%= orderByCol %>">
+						<aui:option label="display-date" />
+						<aui:option label="create-date" />
+						<aui:option label="modified-date" />
+						<aui:option label="title" />
+						<aui:option label="id" />
 					</aui:select>
 
-					<aui:select label="" name="preferences--orderByType--">
-						<aui:option label="ascending" selected='<%= orderByType.equals("asc") %>' value="asc" />
-						<aui:option label="descending" selected='<%= orderByType.equals("desc") %>' value="desc" />
+					<aui:select label="" name="preferences--orderByType--" value="<%= orderByType %>">
+						<aui:option label="ascending" value="asc" />
+						<aui:option label="descending" value="desc" />
 					</aui:select>
 				</aui:field-wrapper>
 			</aui:fieldset>

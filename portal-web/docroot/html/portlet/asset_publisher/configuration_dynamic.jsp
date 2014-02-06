@@ -370,17 +370,17 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
 							%>
 
-							<aui:select inlineField="<%= true %>" inlineLabel="left" label="order-by" name="preferences--orderByColumn1--">
-								<aui:option label="title" selected='<%= orderByColumn1.equals("title") %>' />
-								<aui:option label="create-date" selected='<%= orderByColumn1.equals("createDate") %>' value="createDate" />
-								<aui:option label="modified-date" selected='<%= orderByColumn1.equals("modifiedDate") %>' value="modifiedDate" />
-								<aui:option label="publish-date" selected='<%= orderByColumn1.equals("publishDate") %>' value="publishDate" />
-								<aui:option label="expiration-date" selected='<%= orderByColumn1.equals("expirationDate") %>' value="expirationDate" />
-								<aui:option label="priority" selected='<%= orderByColumn1.equals("priority") %>' value="priority" />
+							<aui:select inlineField="<%= true %>" inlineLabel="left" label="order-by" name="preferences--orderByColumn1--" value="<%= orderByColumn1 %>">
+								<aui:option label="title" />
+								<aui:option label="create-date" value="createDate" />
+								<aui:option label="modified-date" value="modifiedDate" />
+								<aui:option label="publish-date" value="publishDate" />
+								<aui:option label="expiration-date" value="expirationDate" />
+								<aui:option label="priority" value="priority" />
 
 								<c:if test="<%= !PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
-									<aui:option label="view-count" selected='<%= orderByColumn1.equals("viewCount") %>' value="viewCount" />
-									<aui:option label="ratings" selected='<%= orderByColumn1.equals("ratings") %>' value="ratings" />
+									<aui:option label="view-count" value="viewCount" />
+									<aui:option label="ratings" value="ratings" />
 								</c:if>
 							</aui:select>
 
@@ -388,9 +388,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							String orderByType1 = assetPublisherDisplayContext.getOrderByType1();
 							%>
 
-							<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType1--">
-								<aui:option label="ascending" selected='<%= orderByType1.equals("ASC") %>' value="ASC" />
-								<aui:option label="descending" selected='<%= orderByType1.equals("DESC") %>' value="DESC" />
+							<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType1--" value="<%= orderByType1 %>">
+								<aui:option label="ascending" value="ASC" />
+								<aui:option label="descending" value="DESC" />
 							</aui:select>
 						</span>
 

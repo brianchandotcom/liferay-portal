@@ -62,15 +62,15 @@ String htmlAttributes =
 						</c:choose>
 					</div>
 
-					<aui:select label="authentication-type" name="preferences--authType--">
-						<aui:option label="basic" selected='<%= authType.equals("basic") %>' />
-						<aui:option label="form" selected='<%= authType.equals("form") %>' />
+					<aui:select label="authentication-type" name="preferences--authType--" value="<%= authType %>">
+						<aui:option label="basic" />
+						<aui:option label="form" />
 					</aui:select>
 
 					<div id="<portlet:namespace />formAuthOptions">
-						<aui:select name="preferences--formMethod--">
-							<aui:option label="get" selected='<%= formMethod.equals("get") %>' />
-							<aui:option label="post" selected='<%= formMethod.equals("post") %>' />
+						<aui:select name="preferences--formMethod--" value="<%= formMethod %>">
+							<aui:option label="get" />
+							<aui:option label="post" />
 						</aui:select>
 
 						<aui:field-wrapper label="user-name">

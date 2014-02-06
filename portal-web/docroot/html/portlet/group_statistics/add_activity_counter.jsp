@@ -61,20 +61,20 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="group-statistics-add-counter-second-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--chartType" + index + "--" %>'>
-		<aui:option label="group-statistics-chart-type-area-diagram" selected='<%= chartType.equals("area") %>' value="area" />
-		<aui:option label="group-statistics-chart-type-column-diagram" selected='<%= chartType.equals("column") %>' value="column" />
-		<aui:option label="group-statistics-chart-type-activity-distribution" selected='<%= chartType.equals("pie") %>' value="pie" />
-		<aui:option label="group-statistics-chart-type-tag-cloud" selected='<%= chartType.equals("tag-cloud") %>' value="tag-cloud" />
+	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--chartType" + index + "--" %>' value="<%= chartType %>">
+		<aui:option label="group-statistics-chart-type-area-diagram" value="area" />
+		<aui:option label="group-statistics-chart-type-column-diagram" value="column" />
+		<aui:option label="group-statistics-chart-type-activity-distribution" value="pie" />
+		<aui:option label="group-statistics-chart-type-tag-cloud" value="tag-cloud" />
 	</aui:select>
 
 	<span class="field field-inline inline-text">
 		<liferay-ui:message key="group-statistics-add-counter-third-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--dataRange" + index + "--" %>'>
-		<aui:option label="group-statistics-data-range-this-year" selected='<%= dataRange.equals("year") %>' value="year" />
-		<aui:option label="group-statistics-data-range-last-12-months" selected='<%= dataRange.equals("12months") %>' value="12months" />
+	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--dataRange" + index + "--" %>' value="<%= dataRange %>">
+		<aui:option label="group-statistics-data-range-this-year" value="year" />
+		<aui:option label="group-statistics-data-range-last-12-months" value="12months" />
 	</aui:select>
 </div>
 

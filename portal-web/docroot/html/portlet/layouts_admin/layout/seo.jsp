@@ -74,14 +74,14 @@ if (selLayout != null) {
 		String siteMapChangeFrequency = layoutTypeSettings.getProperty("sitemap-changefreq", PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY);
 		%>
 
-		<aui:select label="change-frequency" name="TypeSettingsProperties--sitemap-changefreq--">
-			<aui:option label="always" selected='<%= siteMapChangeFrequency.equals("always") %>' />
-			<aui:option label="hourly" selected='<%= siteMapChangeFrequency.equals("hourly") %>' />
-			<aui:option label="daily" selected='<%= siteMapChangeFrequency.equals("daily") %>' />
-			<aui:option label="weekly" selected='<%= siteMapChangeFrequency.equals("weekly") %>' />
-			<aui:option label="monthly" selected='<%= siteMapChangeFrequency.equals("monthly") %>' />
-			<aui:option label="yearly" selected='<%= siteMapChangeFrequency.equals("yearly") %>' />
-			<aui:option label="never" selected='<%= siteMapChangeFrequency.equals("never") %>' />
+		<aui:select label="change-frequency" name="TypeSettingsProperties--sitemap-changefreq--" value="<%= siteMapChangeFrequency %>">
+			<aui:option label="always" />
+			<aui:option label="hourly" />
+			<aui:option label="daily" />
+			<aui:option label="weekly" />
+			<aui:option label="monthly" />
+			<aui:option label="yearly" />
+			<aui:option label="never" />
 		</aui:select>
 	</aui:fieldset>
 </c:if>

@@ -29,18 +29,18 @@ String redirect = ParamUtil.getString(request, "redirect");
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 			<aui:fieldset column="<%= true %>">
-				<aui:select name="preferences--sites--">
-					<aui:option label="<%= SitesDirectoryTag.SITES_TOP_LEVEL %>" selected="<%= sites.equals(SitesDirectoryTag.SITES_TOP_LEVEL) %>" />
-					<aui:option label="<%= SitesDirectoryTag.SITES_PARENT_LEVEL %>" selected="<%= sites.equals(SitesDirectoryTag.SITES_PARENT_LEVEL) %>" />
-					<aui:option label="<%= SitesDirectoryTag.SITES_SIBLINGS %>" selected="<%= sites.equals(SitesDirectoryTag.SITES_SIBLINGS) %>" />
-					<aui:option label="<%= SitesDirectoryTag.SITES_CHILDREN %>" selected="<%= sites.equals(SitesDirectoryTag.SITES_CHILDREN) %>" />
+				<aui:select name="preferences--sites--" value="<%= sites %>">
+					<aui:option label="<%= SitesDirectoryTag.SITES_TOP_LEVEL %>" />
+					<aui:option label="<%= SitesDirectoryTag.SITES_PARENT_LEVEL %>" />
+					<aui:option label="<%= SitesDirectoryTag.SITES_SIBLINGS %>" />
+					<aui:option label="<%= SitesDirectoryTag.SITES_CHILDREN %>" />
 				</aui:select>
 
-				<aui:select name="preferences--displayStyle--">
-					<aui:option label="icon" selected='<%= displayStyle.equals("icon") %>' />
-					<aui:option label="descriptive" selected='<%= displayStyle.equals("descriptive") %>' />
-					<aui:option label="list" selected='<%= displayStyle.equals("list") %>' />
-					<aui:option label="list-hierarchy" selected='<%= displayStyle.equals("list-hierarchy") %>' />
+				<aui:select name="preferences--displayStyle--" value="<%= displayStyle %>">
+					<aui:option label="icon" />
+					<aui:option label="descriptive" />
+					<aui:option label="list" />
+					<aui:option label="list-hierarchy" />
 				</aui:select>
 			</aui:fieldset>
 			<aui:button-row>

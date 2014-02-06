@@ -27,10 +27,10 @@ boolean companySecurityStrangersVerify = company.isStrangersVerify();
 %>
 
 <aui:fieldset>
-	<aui:select label="how-do-users-authenticate" name='<%= "settings--" + PropsKeys.COMPANY_SECURITY_AUTH_TYPE + "--" %>'>
-		<aui:option label="by-email-address" selected="<%= companySecurityAuthType.equals(CompanyConstants.AUTH_TYPE_EA) %>" value="<%= CompanyConstants.AUTH_TYPE_EA %>" />
-		<aui:option label="by-screen-name" selected="<%= companySecurityAuthType.equals(CompanyConstants.AUTH_TYPE_SN) %>" value="<%= CompanyConstants.AUTH_TYPE_SN %>" />
-		<aui:option label="by-user-id" selected="<%= companySecurityAuthType.equals(CompanyConstants.AUTH_TYPE_ID) %>" value="<%= CompanyConstants.AUTH_TYPE_ID %>" />
+	<aui:select label="how-do-users-authenticate" name='<%= "settings--" + PropsKeys.COMPANY_SECURITY_AUTH_TYPE + "--" %>' value="<%= companySecurityAuthType %>">
+		<aui:option label="by-email-address" value="<%= CompanyConstants.AUTH_TYPE_EA %>" />
+		<aui:option label="by-screen-name" value="<%= CompanyConstants.AUTH_TYPE_SN %>" />
+		<aui:option label="by-user-id" value="<%= CompanyConstants.AUTH_TYPE_ID %>" />
 	</aui:select>
 
 	<aui:input label="allow-users-to-automatically-login" name='<%= "settings--" + PropsKeys.COMPANY_SECURITY_AUTO_LOGIN + "--" %>' type="checkbox" value="<%= companySecurityAutoLogin %>" />

@@ -67,11 +67,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:select name="preferences--displayStyle--">
-			<aui:option label="icon" selected="<%= displayStyle == LanguageTag.LIST_ICON %>" value="<%= LanguageTag.LIST_ICON %>" />
-			<aui:option label="long-text" selected="<%= displayStyle == LanguageTag.LIST_LONG_TEXT %>" value="<%= LanguageTag.LIST_LONG_TEXT %>" />
-			<aui:option label="short-text" selected="<%= displayStyle == LanguageTag.LIST_SHORT_TEXT %>" value="<%= LanguageTag.LIST_SHORT_TEXT %>" />
-			<aui:option label="select-box" selected="<%= displayStyle == LanguageTag.SELECT_BOX %>" value="<%= LanguageTag.SELECT_BOX %>" />
+		<aui:select name="preferences--displayStyle--" value="<%= displayStyle %>">
+			<aui:option label="icon" value="<%= LanguageTag.LIST_ICON %>" />
+			<aui:option label="long-text" value="<%= LanguageTag.LIST_LONG_TEXT %>" />
+			<aui:option label="short-text" value="<%= LanguageTag.LIST_SHORT_TEXT %>" />
+			<aui:option label="select-box" value="<%= LanguageTag.SELECT_BOX %>" />
 		</aui:select>
 	</aui:fieldset>
 

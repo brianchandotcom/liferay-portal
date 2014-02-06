@@ -241,11 +241,11 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 		</c:when>
 		<c:otherwise>
 			<aui:fieldset>
-				<aui:select label="authentication-type" name="preferences--authType--">
+				<aui:select label="authentication-type" name="preferences--authType--" value="<%= authType %>">
 					<aui:option label="default" value="" />
-					<aui:option label="by-email-address" selected="<%= authType.equals(CompanyConstants.AUTH_TYPE_EA) %>" value="<%= CompanyConstants.AUTH_TYPE_EA %>" />
-					<aui:option label="by-screen-name" selected="<%= authType.equals(CompanyConstants.AUTH_TYPE_SN) %>" value="<%= CompanyConstants.AUTH_TYPE_SN %>" />
-					<aui:option label="by-user-id" selected="<%= authType.equals(CompanyConstants.AUTH_TYPE_ID) %>" value="<%= CompanyConstants.AUTH_TYPE_ID %>" />
+					<aui:option label="by-email-address" value="<%= CompanyConstants.AUTH_TYPE_EA %>" />
+					<aui:option label="by-screen-name" value="<%= CompanyConstants.AUTH_TYPE_SN %>" />
+					<aui:option label="by-user-id" value="<%= CompanyConstants.AUTH_TYPE_ID %>" />
 				</aui:select>
 			</aui:fieldset>
 		</c:otherwise>

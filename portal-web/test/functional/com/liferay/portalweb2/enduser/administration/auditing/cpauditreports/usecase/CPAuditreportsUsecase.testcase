@@ -34,10 +34,8 @@
 		</execute>
 
 		<execute macro="Audit#searchCP">
-			<var name="actionSearch" value="UserId" />
-			<var name="resourceAction" value="Login" />
+			<var name="searchTerm" value="${userId}" />
 			<var name="userId" value="${userId}" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -45,8 +43,8 @@
 		</execute>
 
 		<execute macro="Audit#searchCP">
-			<var name="actionSearch" value="UserName" />
-			<var name="userName" value="Test Test" />
+			<var name="searchTerm" value="${userName}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -54,10 +52,8 @@
 		</execute>
 
 		<execute macro="Audit#searchCP">
-			<var name="actionSearch" value="ResourceId" />
-			<var name="resourceAction" value="Login" />
 			<var name="resourceId" value="${resourceId}" />
-			<var name="userName" value="Test Test" />
+			<var name="searchTerm" value="${resourceId}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -65,8 +61,8 @@
 		</execute>
 
 		<execute macro="Audit#searchCP">
-			<var name="actionSearch" value="ResourceName" />
 			<var name="resourceName" value="${resourceName2}" />
+			<var name="searchTerm" value="${resourceName2}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -74,9 +70,8 @@
 		</execute>
 
 		<execute macro="Audit#searchCP">
-			<var name="actionSearch" value="Login" />
 			<var name="resourceAction" value="${resourceAction1}" />
-			<var name="userName" value="Test Test" />
+			<var name="searchTerm" value="${resourceAction1}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -115,19 +110,10 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
+		<execute macro="User#impersonateCP">
+			<var name="userScreenName" value="test1" />
+		</execute>
 
-		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="test1" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
-
-		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_MENULIST_IMPERSONATE_USER" value1="Impersonate User (Opens New Window)" />
-		<execute action="Home#selectWindow" locator1="title=Welcome - Liferay" />
-		<execute action="Dockbar#assertElementPresent" locator-key1="ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_ICON" />
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_ICON" />
-		<execute action="Dockbar#assertElementPresent" locator-key1="ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_MESSAGE" />
 		<execute action="Home#close" locator1="title=Welcome - Liferay" />
 		<execute action="Home#selectWindow" locator1="title=Users and Organizations - Liferay" />
 

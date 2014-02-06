@@ -567,6 +567,24 @@
 		</if>
 	</command>
 
+	<command name="impersonateCP">
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_MENULIST_IMPERSONATE_USER" value1="Impersonate User (Opens New Window)" />
+
+		<execute action="Home#selectWindow" locator1="title=Welcome - Liferay" />
+
+		<execute action="Dockbar#assertElementPresent" locator-key1="ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_ICON" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_ICON" />
+		<execute action="Dockbar#assertElementPresent" locator-key1="ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_MESSAGE" />
+	</command>
+
 	<command name="loginPG">
 		<execute macro="Page#openURL" />
 

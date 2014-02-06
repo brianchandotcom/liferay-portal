@@ -1,70 +1,41 @@
 <definition>
 	<command name="searchCP">
 		<if>
-			<equals arg1="${actionSearch}" arg2="Login" />
+			<equals arg1="${searchTerm}" arg2="${resourceAction}" />
 			<then>
-				<var name="key_resourceAction" value="${resourceAction}" />
-
-				<execute action="CPAuditreports#click" locator-key1="ADVANCED_SEARCH_ICON" />
-				<execute action="CPAuditreports#select" locator-key1="ADVANCED_SEARCH_MATCH_SELECT" value1="Any" />
-				<execute action="CPAuditreports#type" locator-key1="ADVANCED_SEARCH_RESOURCE_ACTION_FIELD" value1="${resourceAction}" />
-				<execute action="CPAuditreports#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-				<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_RESOURCE_ACTION_1" value1="${resourceAction}" />
+				<var name="reportFieldKey" value="RESOURCE_ACTION" />
 			</then>
 			<elseif>
-				<equals arg1="${actionSearch}" arg2="ResourceId" />
+				<equals arg1="${searchTerm}" arg2="${resourceId}" />
 				<then>
-					<var name="key_resourceAction" value="${resourceAction}" />
-					<var name="key_resourceId" value="${resourceId}" />
-					<var name="key_userName" value="${userName}" />
-
-					<execute action="CPAuditreports#copy" locator-key1="REPORTS_TABLE_RESOURCE_ID" value1="Resource ID" />
-					<execute action="CPAuditreports#click" locator-key1="ADVANCED_SEARCH_ICON" />
-					<execute action="CPAuditreports#select" locator-key1="ADVANCED_SEARCH_MATCH_SELECT" value1="Any" />
-					<execute action="CPAuditreports#paste" locator-key1="ADVANCED_SEARCH_RESOURCE_ID_FIELD" />
-					<execute action="CPAuditreports#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-					<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_RESOURCE_ID_1" value1="${resourceId}" />
+					<var name="reportFieldKey" value="RESOURCE_ID" />
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${actionSearch}" arg2="ResourceName" />
+				<equals arg1="${searchTerm}" arg2="${resourceName}" />
 				<then>
-					<var name="key_resourceName" value="${resourceName}" />
-
-					<execute action="CPAuditreports#click" locator-key1="ADVANCED_SEARCH_ICON" />
-					<execute action="CPAuditreports#select" locator-key1="ADVANCED_SEARCH_MATCH_SELECT" value1="Any" />
-					<execute action="CPAuditreports#type" locator-key1="ADVANCED_SEARCH_RESOURCE_NAME_FIELD" value1="${resourceName}" />
-					<execute action="CPAuditreports#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-					<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_RESOURCE_NAME_1" value1="${resourceName}" />
+					<var name="reportFieldKey" value="RESOURCE_NAME" />
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${actionSearch}" arg2="UserId" />
+				<equals arg1="${searchTerm}" arg2="${userId}" />
 				<then>
-					<var name="key_resourceAction" value="${resourceAction}" />
-					<var name="key_userId" value="${userId}" />
-					<var name="key_userName" value="${userName}" />
-
-					<execute action="CPAuditreports#copy" locator-key1="REPORTS_TABLE_USER_ID_1" />
-					<execute action="CPAuditreports#click" locator-key1="ADVANCED_SEARCH_ICON" />
-					<execute action="CPAuditreports#select" locator-key1="ADVANCED_SEARCH_MATCH_SELECT" value1="Any" />
-					<execute action="CPAuditreports#paste" locator-key1="ADVANCED_SEARCH_USER_ID_FIELD" />
-					<execute action="CPAuditreports#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-					<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_USER_ID_1" value1="${userId}" />
+					<var name="reportFieldKey" value="USER_ID" />
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${actionSearch}" arg2="UserName" />
+				<equals arg1="${searchTerm}" arg2="${userName}" />
 				<then>
-					<var name="key_userName" value="${userName}" />
-
-					<execute action="CPAuditreports#click" locator-key1="ADVANCED_SEARCH_ICON" />
-					<execute action="CPAuditreports#select" locator-key1="ADVANCED_SEARCH_MATCH_SELECT" value1="Any" />
-					<execute action="CPAuditreports#type" locator-key1="ADVANCED_SEARCH_USER_NAME_FIELD" value1="${userName}" />
-					<execute action="CPAuditreports#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-					<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_USER_NAME_1" value1="${userName}" />
+					<var name="reportFieldKey" value="USER_NAME" />
 				</then>
 			</elseif>
 		</if>
+
+		<execute action="CPAuditreports#click" locator-key1="ADVANCED_SEARCH_ICON" />
+		<execute action="CPAuditreports#select" locator-key1="ADVANCED_SEARCH_MATCH_SELECT" value1="Any" />
+		<execute action="CPAuditreports#type" locator-key1="ADVANCED_SEARCH_${reportFieldKey}_FIELD" value1="${searchTerm}" />
+
+		<execute action="CPAuditreports#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_${reportFieldKey}_1" value1="${searchTerm}" />
 	</command>
 </definition>

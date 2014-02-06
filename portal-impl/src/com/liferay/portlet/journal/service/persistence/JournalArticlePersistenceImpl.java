@@ -3847,7 +3847,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			structureIds = new String[0];
 		}
 		else {
-			structureIds = ArrayUtil.distinct(structureIds);
+			structureIds = ArrayUtil.distinct(structureIds,
+					nullSafeStringComparator);
 		}
 
 		if (structureIds.length == 1) {
@@ -4071,7 +4072,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			structureIds = new String[0];
 		}
 		else {
-			structureIds = ArrayUtil.distinct(structureIds);
+			structureIds = ArrayUtil.distinct(structureIds,
+					nullSafeStringComparator);
 		}
 
 		Object[] finderArgs = new Object[] { StringUtil.merge(structureIds) };

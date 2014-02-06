@@ -2119,7 +2119,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			taskExecutorClassNames = new String[0];
 		}
 		else {
-			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
+					nullSafeStringComparator);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -2360,7 +2361,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			taskExecutorClassNames = new String[0];
 		}
 		else {
-			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
+					nullSafeStringComparator);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -3527,7 +3529,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			taskExecutorClassNames = new String[0];
 		}
 		else {
-			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
+					nullSafeStringComparator);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -3769,7 +3772,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			taskExecutorClassNames = new String[0];
 		}
 		else {
-			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
+					nullSafeStringComparator);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -5127,7 +5131,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			taskExecutorClassNames = new String[0];
 		}
 		else {
-			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
+					nullSafeStringComparator);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -5384,7 +5389,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			taskExecutorClassNames = new String[0];
 		}
 		else {
-			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
+					nullSafeStringComparator);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -6080,7 +6086,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			taskExecutorClassNames = new String[0];
 		}
 		else {
-			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
+					nullSafeStringComparator);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -6337,7 +6344,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			taskExecutorClassNames = new String[0];
 		}
 		else {
-			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames);
+			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
+					nullSafeStringComparator);
 		}
 
 		Object[] finderArgs = new Object[] {

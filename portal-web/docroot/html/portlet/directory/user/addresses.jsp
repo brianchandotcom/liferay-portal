@@ -76,6 +76,8 @@ for (int i = 0; i < organizations.size(); i++) {
 			%>
 
 				<li class="<%= address.isPrimary() ? "primary" : "" %>">
+					<%@ include file="/html/portlet/directory/common/addresses_address_init.jspf" %>
+
 					<%@ include file="/html/portlet/directory/common/addresses_address.jspf" %>
 				</li>
 

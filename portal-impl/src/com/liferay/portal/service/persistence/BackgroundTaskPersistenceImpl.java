@@ -2120,7 +2120,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		}
 		else {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
-					_stringComparator);
+					NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -2362,7 +2362,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		}
 		else {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
-					_stringComparator);
+					NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -3530,7 +3530,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		}
 		else {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
-					_stringComparator);
+					NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -3773,7 +3773,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		}
 		else {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
-					_stringComparator);
+					NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -5132,7 +5132,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		}
 		else {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
-					_stringComparator);
+					NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -5390,7 +5390,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		}
 		else {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
-					_stringComparator);
+					NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -6087,7 +6087,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		}
 		else {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
-					_stringComparator);
+					NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (taskExecutorClassNames.length == 1) {
@@ -6345,7 +6345,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		}
 		else {
 			taskExecutorClassNames = ArrayUtil.distinct(taskExecutorClassNames,
-					_stringComparator);
+					NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {

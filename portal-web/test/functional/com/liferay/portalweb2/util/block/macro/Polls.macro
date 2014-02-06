@@ -1,0 +1,30 @@
+<definition>
+	<command name="addQuestionPG">
+		<execute action="PGPollsdisplay#click" locator-key1="ADD_QUESTION" value1="Add Question" />
+
+		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
+
+		<execute action="PGPollsdisplayPollsquestion#type" locator-key1="TITLE_FIELD" value1="${pollsQuestionTitle}" />
+		<execute action="PGPollsdisplayPollsquestion#type" locator-key1="POLLS_QUESTION_FIELD" value1="${pollsQuestion}" />
+		<execute action="PGPollsdisplayPollsquestion#type" locator-key1="CHOICE_A_FIELD" value1="${pollsQuestionChoiceA}" />
+		<execute action="PGPollsdisplayPollsquestion#type" locator-key1="CHOICE_B_FIELD" value1="${pollsQuestionChoiceB}" />
+		<execute action="PGPollsdisplayPollsquestion#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="BasePortlet#selectFrame" value1="relative-top" />
+	</command>
+
+	<command name="viewQuestionPG">
+		<var name="key_pollsQuestion" value="${pollsQuestion}" />
+
+		<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION" value1="${pollsQuestion}" />
+
+		<var name="key_pollsQuestionChoice" value="${pollsQuestionChoiceA}" />
+
+		<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoiceA}" />
+
+		<var name="key_pollsQuestionChoice" value="${pollsQuestionChoiceB}" />
+
+		<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoiceB}" />
+		<execute action="PGPollsdisplay#assertTextEquals" locator-key1="VOTE_BUTTON" value1="Vote" />
+	</command>
+</definition>

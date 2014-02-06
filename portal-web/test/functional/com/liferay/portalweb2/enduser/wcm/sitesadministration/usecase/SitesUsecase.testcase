@@ -1,0 +1,214 @@
+<definition component-name="portal-wcm">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
+	<command name="WebContentAdministrationSitesTemplatePermissionPersistence" priority="5">
+		<var name="password" value="test" />
+		<var name="pollsQuestion" value="What is the most important issue for this election?" />
+		<var name="pollsQuestionChoiceA" value="The Economy" />
+		<var name="pollsQuestionChoiceB" value="The National Debt" />
+		<var name="pollsQuestionTitle" value="Election Poll" />
+		<var name="portlet1Name" value="Polls Display" />
+		<var name="portlet2Name" value="Message Boards" />
+		<var name="portlet3Name" value="Asset Publisher" />
+		<var name="portlet4Name" value="User Statistics" />
+		<var name="portlet5Name" value="Upcoming Events" />
+		<var name='roleList' value="Guest,Owner,Power User,Site Member,User" />
+		<var name="siteGuestViewURL" value="http://localhost:8080/web/site-name/home" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageName" value="Home" />
+		<var name="sitePageURL" value="http://localhost:8080/web/site-name/home" />
+		<var name="siteURL" value="true" />
+		<var name="threadBody" value="This is the message boards thread." />
+		<var name="threadSubject" value="Thread" />
+		<var name="userEmailAddress" value="test@liferay.com" />
+		<var name="userName" value="Test Test" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCommunityCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoConfigurationPG" >
+			<var name="portletName" value="${portlet1Name}" />
+		</execute>
+
+		<execute macro="PermissionsInline#assertDefaultPG">
+			<var name="roleList" value="${roleList}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoConfigurationPG" >
+			<var name="portletName" value="${portlet2Name}" />
+		</execute>
+
+		<execute macro="PermissionsInline#assertDefaultPG">
+			<var name="roleList" value="${roleList}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portlet3Name}" />
+		</execute>
+
+		<var name="key_portletName" value="${portlet3Name}" />
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet3Name}" />
+
+		<execute action="Dockbar#assertTextEquals" locator-key1="PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template. This page has been changed since the last update from the site template. No further updates from the site template will be applied. Click Reset to overwrite the changes and receive updates from the site template." />
+		<execute action="Dockbar#assertClick" locator-key1="RESET_CHANGES_BUTTON" value1="Reset Changes" />
+
+		<execute macro="Page#openURL">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="BasePortlet#assertTextNotPresent" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet3Name}" />
+
+		<execute macro="PermissionsInline#gotoConfigurationPG" >
+			<var name="portletName" value="${portlet1Name}" />
+		</execute>
+
+		<execute macro="PermissionsInline#assertDefaultPG">
+			<var name="roleList" value="${roleList}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Polls#addQuestionPG">
+			<var name="pollsQuestion" value="${pollsQuestion}" />
+			<var name="pollsQuestionChoiceA" value="${pollsQuestionChoiceA}" />
+			<var name="pollsQuestionChoiceB" value="${pollsQuestionChoiceB}" />
+			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
+		</execute>
+
+		<execute macro="Polls#viewQuestionPG">
+			<var name="pollsQuestion" value="${pollsQuestion}" />
+			<var name="pollsQuestionChoiceA" value="${pollsQuestionChoiceA}" />
+			<var name="pollsQuestionChoiceB" value="${pollsQuestionChoiceB}" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoConfigurationPG" >
+			<var name="portletName" value="${portlet2Name}" />
+		</execute>
+
+		<execute macro="PermissionsInline#assertDefaultPG">
+			<var name="roleList" value="${roleList}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="postCount" value="1" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute action="Home#open" locator1="${siteGuestViewURL}" />
+
+		<var name="key_portletName" value="${portlet2Name}" />
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet2Name}" />
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="postCount" value="1" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<var name="key_portletName" value="${portlet1Name}" />
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="INFO_MESSSAGE" value1="Please sign in to vote." />
+
+		<execute action="PGSearch#assertElementPresent" locator-key1="SEARCH_FIELD" />
+
+		<var name="key_portletName" value="${portlet4Name}" />
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet4Name}" />
+
+		<var name="key_portletName" value="${portlet5Name}" />
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet5Name}" />
+
+		<execute action="Dockbar#assertClick" locator-key1="USER_SIGN_IN" value1="Sign In" />
+
+		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
+		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
+
+		<execute macro="PermissionsInline#gotoConfigurationPG" >
+			<var name="portletName" value="${portlet1Name}" />
+		</execute>
+
+		<execute macro="PermissionsInline#removeViewPermissionFromAllRoles">
+			<var name="roleList" value="${roleList}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoConfigurationPG" >
+			<var name="portletName" value="${portlet2Name}" />
+		</execute>
+
+		<execute macro="PermissionsInline#removeViewPermissionFromAllRoles">
+			<var name="roleList" value="${roleList}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute action="Home#open" locator1="${siteGuestViewURL}" />
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="ERROR_MESSAGE_1_COLUMN_1" value1="You do not have the roles required to access this portlet." />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="ERROR_MESSAGE_1_COLUMN_2" value1="You do not have the roles required to access this portlet." />
+	</command>
+</definition>

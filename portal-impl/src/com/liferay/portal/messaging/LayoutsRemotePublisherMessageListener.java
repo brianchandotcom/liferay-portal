@@ -14,6 +14,7 @@
 
 package com.liferay.portal.messaging;
 
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageStatusMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageStatus;
@@ -96,7 +97,7 @@ public class LayoutsRemotePublisherMessageListener
 
 		String range = MapUtil.getString(parameterMap, "range");
 
-		if (range.equals("fromLastPublishDate")) {
+		if (range.equals(ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE)) {
 			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				sourceGroupId, privateLayout);
 
@@ -109,7 +110,7 @@ public class LayoutsRemotePublisherMessageListener
 				startDate = new Date(lastPublishDate);
 			}
 		}
-		else if (range.equals("last")) {
+		else if (range.equals(ExportImportDateUtil.RANGE_LAST)) {
 			int last = MapUtil.getInteger(parameterMap, "last");
 
 			if (last > 0) {

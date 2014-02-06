@@ -284,7 +284,7 @@
 </tr>
 <tr>
 	<td>PROFILE_INFO_PROJECTS_TITLE</td>
-	<td>//div[@data-title='Projects']/div/h3</td>
+	<td>//div[@data-title='Projects']/h3</td>
 	<td></td>
 </tr>
 <tr>

@@ -1038,7 +1038,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			names = new String[0];
 		}
 		else {
-			names = ArrayUtil.distinct(names, _stringComparator);
+			names = ArrayUtil.distinct(names, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (names.length == 1) {
@@ -1442,7 +1442,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			names = new String[0];
 		}
 		else {
-			names = ArrayUtil.distinct(names, _stringComparator);
+			names = ArrayUtil.distinct(names, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] { tableId, StringUtil.merge(names) };
@@ -1610,7 +1610,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			names = new String[0];
 		}
 		else {
-			names = ArrayUtil.distinct(names, _stringComparator);
+			names = ArrayUtil.distinct(names, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		StringBundler query = new StringBundler();

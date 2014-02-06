@@ -4175,7 +4175,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			types = new String[0];
 		}
 		else {
-			types = ArrayUtil.distinct(types, _stringComparator);
+			types = ArrayUtil.distinct(types, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		StringBundler query = new StringBundler();
@@ -4338,7 +4338,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			types = new String[0];
 		}
 		else {
-			types = ArrayUtil.distinct(types, _stringComparator);
+			types = ArrayUtil.distinct(types, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (types.length == 1) {
@@ -4572,7 +4572,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			types = new String[0];
 		}
 		else {
-			types = ArrayUtil.distinct(types, _stringComparator);
+			types = ArrayUtil.distinct(types, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] { groupId, StringUtil.merge(types) };
@@ -4740,7 +4740,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			types = new String[0];
 		}
 		else {
-			types = ArrayUtil.distinct(types, _stringComparator);
+			types = ArrayUtil.distinct(types, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		StringBundler query = new StringBundler();
@@ -6685,7 +6685,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			types = new String[0];
 		}
 		else {
-			types = ArrayUtil.distinct(types, _stringComparator);
+			types = ArrayUtil.distinct(types, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		StringBundler query = new StringBundler();
@@ -6858,7 +6858,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			types = new String[0];
 		}
 		else {
-			types = ArrayUtil.distinct(types, _stringComparator);
+			types = ArrayUtil.distinct(types, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		if (types.length == 1) {
@@ -7110,7 +7110,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			types = new String[0];
 		}
 		else {
-			types = ArrayUtil.distinct(types, _stringComparator);
+			types = ArrayUtil.distinct(types, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		Object[] finderArgs = new Object[] {
@@ -7292,7 +7292,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			types = new String[0];
 		}
 		else {
-			types = ArrayUtil.distinct(types, _stringComparator);
+			types = ArrayUtil.distinct(types, NULL_SAFE_STRING_COMPARATOR);
 		}
 
 		StringBundler query = new StringBundler();

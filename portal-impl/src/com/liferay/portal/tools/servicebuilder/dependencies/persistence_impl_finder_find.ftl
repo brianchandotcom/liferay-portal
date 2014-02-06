@@ -1186,7 +1186,7 @@ that may or may not be enforced with a unique index at the database level. Case
 						else {
 							${finderCol.names} =
 								<#if finderCol.type == "String">
-									ArrayUtil.distinct(${finderCol.names}, _stringComparator);
+									ArrayUtil.distinct(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
 								<#else>
 									ArrayUtil.unique(${finderCol.names});
 								</#if>
@@ -1462,7 +1462,7 @@ that may or may not be enforced with a unique index at the database level. Case
 					else {
 						${finderCol.names} =
 							<#if finderCol.type == "String">
-								ArrayUtil.distinct(${finderCol.names}, _stringComparator);
+								ArrayUtil.distinct(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
 							<#else>
 								ArrayUtil.unique(${finderCol.names});
 							</#if>

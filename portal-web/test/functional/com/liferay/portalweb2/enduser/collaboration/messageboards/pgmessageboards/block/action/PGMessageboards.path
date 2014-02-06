@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_CATEGORY</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[1]/a/span[@class='category-title']</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[1]/a/span[@class='category-title'] | //div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[1]/a/strong[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

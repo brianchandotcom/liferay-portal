@@ -712,6 +712,8 @@ public class BookmarksFolderLocalServiceImpl
 			fromFolder.getGroupId(), fromFolder.getFolderId());
 
 		for (BookmarksEntry entry : entries) {
+			entry.resetOriginalValues();
+
 			entry.setFolderId(toFolderId);
 
 			bookmarksEntryPersistence.update(entry);

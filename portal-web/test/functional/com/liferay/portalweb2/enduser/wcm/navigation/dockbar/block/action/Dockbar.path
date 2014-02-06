@@ -367,6 +367,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_ICON</td>
+	<td>//li[@id='_145_userAvatar']/a/span[@class='nav-item-label']/b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_MESSAGE</td>
+	<td>//div[@class="alert alert-info"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADMIN_SITE_ADMINISTRATION_USERS</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Users')]</td>
 	<td></td>

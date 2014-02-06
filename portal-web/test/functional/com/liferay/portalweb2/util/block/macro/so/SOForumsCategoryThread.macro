@@ -15,7 +15,7 @@
 			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
 				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
-				<execute action="Dockbar#assertClick" locator-key1="EDIT_CONTROLS" value1="Edit Controls" />
+				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
 			</then>
 		</if>
 
@@ -63,7 +63,7 @@
 			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
 				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
-				<execute action="Dockbar#assertClick" locator-key1="EDIT_CONTROLS" value1="Edit Controls" />
+				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
 			</then>
 		</if>
 
@@ -126,7 +126,7 @@
 			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
 				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
-				<execute action="Dockbar#assertClick" locator-key1="EDIT_CONTROLS" value1="Edit Controls" />
+				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
 			</then>
 		</if>
 
@@ -154,7 +154,7 @@
 			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
 				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
-				<execute action="Dockbar#assertClick" locator-key1="EDIT_CONTROLS" value1="Edit Controls" />
+				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
 			</then>
 		</if>
 
@@ -189,7 +189,7 @@
 			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
 				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
-				<execute action="Dockbar#assertClick" locator-key1="EDIT_CONTROLS" value1="Edit Controls" />
+				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
 			</then>
 		</if>
 

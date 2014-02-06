@@ -30,6 +30,10 @@ public class LayoutDescription implements Serializable {
 		_depth = depth;
 	}
 
+	public int getDepth() {
+		return _depth;
+	}
+
 	public String getDisplayName() {
 		StringBundler sb = new StringBundler(_depth + 1);
 
@@ -40,6 +44,10 @@ public class LayoutDescription implements Serializable {
 		sb.append(HtmlUtil.escape(_name));
 
 		return sb.toString();
+	}
+
+	public String getName() {
+		return _name;
 	}
 
 	public long getPlid() {

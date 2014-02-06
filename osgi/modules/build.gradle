@@ -91,6 +91,21 @@ subprojects {
 			}
 		}
 	}
+
+	task deploy (dependsOn: 'jar') << {
+		copy {
+			from jarFile
+			into deployDir
+		}
+	}
+
+	jar {
+		actions = []
+
+		doLast {
+			tasks.baseline.execute()
+		}
+	}
 }
 
 task installGradleWrapper(type: Wrapper) {

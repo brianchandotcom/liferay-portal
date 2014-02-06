@@ -41,7 +41,7 @@ if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 	<c:choose>
 		<c:when test="<%= !questions.isEmpty() %>">
 			<aui:fieldset>
-				<aui:select label="question" name="preferences--questionId--">
+				<aui:select label="title" name="preferences--questionId--">
 					<aui:option value="" />
 
 					<%

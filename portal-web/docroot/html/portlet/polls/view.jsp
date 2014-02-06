@@ -25,7 +25,7 @@
 
 	List<String> headerNames = new ArrayList<String>();
 
-	headerNames.add("question");
+	headerNames.add("title");
 	headerNames.add("num-of-votes");
 	headerNames.add("last-vote-date");
 	headerNames.add("expiration-date");
@@ -106,7 +106,7 @@
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
-					<aui:button href="<%= editQuestionURL %>" value="add-question" />
+					<aui:button href="<%= editQuestionURL %>" value="add-poll" />
 				</c:if>
 
 				<c:if test="<%= showPermissionsButton %>">

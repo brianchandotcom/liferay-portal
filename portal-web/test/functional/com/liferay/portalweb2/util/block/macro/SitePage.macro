@@ -68,8 +68,7 @@
 
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
 
-		<var name="key_pageTemplateName" value="${pageTemplateName}" />
-		<var name="key_pageType" value="${pageType}" />
+		<var name="key_pageType" value="${pageTemplateName}" />
 
 		<if>
 			<isset var="pageTemplateName" />

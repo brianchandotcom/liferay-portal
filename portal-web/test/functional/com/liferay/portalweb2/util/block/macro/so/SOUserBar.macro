@@ -166,7 +166,15 @@
 			<then>
 				<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 				<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_COUNT" />
-				<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_ENTRY" />
+
+				<if>
+					<condition action="SOUserBar#isElementPresent" locator-key1="NOTIFICATION_MENU_ENTRY" />
+					<then>
+						<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_ENTRY" />
+					</then>
+				</if>
+
+				<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 			</then>
 		</while>
 	</command>

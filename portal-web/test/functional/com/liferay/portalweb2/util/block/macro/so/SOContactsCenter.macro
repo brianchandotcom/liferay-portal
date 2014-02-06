@@ -171,6 +171,7 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
 		<execute action="SOContactscenter#assertClick" locator-key1="MESSAGE_BUTTON" value1="Message" />
 
+		<execute action="SOMessagesAdd#selectFrame" locator-key1="NEW_MESSAGE_IFRAME" />
 		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD" value1="${recipientName} &lt;${recipientScreenName}&gt;," />
 
 		<if>
@@ -193,6 +194,8 @@
 		</if>
 
 		<execute action="SOMessagesAdd#click" locator-key1="SEND_BUTTON" />
+
+		<execute action="SOMessages#selectFrame" value1="relative=top" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
 

@@ -906,12 +906,7 @@
 	</command>
 
 	<command name="StagingLocalLiveLock" priority="5">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryContent2" value="Blogs Entry Content 2" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="entryTitle2" value="Blogs Entry Title 2" />
 		<var name="pageName" value="Staging Test Page" />
-		<var name="portletName" value="Blogs" />
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -930,12 +925,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -954,8 +949,8 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewNoEditLinkPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -976,13 +971,13 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewEditLinkPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent2}" />
-			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryContent" value="Blogs Entry Content 2" />
+			<var name="entryTitle" value="Blogs Entry Title 2" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -993,8 +988,8 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent2}" />
-			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryContent" value="Blogs Entry Content 2" />
+			<var name="entryTitle" value="Blogs Entry Title 2" />
 		</execute>
 	</command>
 

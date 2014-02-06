@@ -116,7 +116,7 @@ if (layout != null) {
 		Liferay.once(
 			'initNavigation',
 			function() {
-				var touchDevice = A.UA.touch;
+				var TOUCH = A.UA.touch;
 
 				new Liferay.Navigation(
 					{
@@ -131,10 +131,10 @@ if (layout != null) {
 							%>
 
 								{
-									deletable: !touchDevice && <%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.DELETE) %>,
+									deletable: !TOUCH && <%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.DELETE) %>,
 									id: <%= curLayout.getLayoutId() %>,
 									sortable: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroup, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSortable(curLayout) %>,
-									updateable: !touchDevice && <%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.UPDATE) %>
+									updateable: !TOUCH && <%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.UPDATE) %>
 								},
 
 							<%

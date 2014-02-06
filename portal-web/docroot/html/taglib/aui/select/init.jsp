@@ -58,6 +58,7 @@ boolean showRequiredLabel = GetterUtil.getBoolean(String.valueOf(request.getAttr
 java.lang.String suffix = GetterUtil.getString((java.lang.String)request.getAttribute("aui:select:suffix"));
 java.lang.String title = GetterUtil.getString((java.lang.String)request.getAttribute("aui:select:title"));
 boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:select:useNamespace")), true);
+java.lang.Object value = (java.lang.Object)request.getAttribute("aui:select:value");
 
 _updateOptions(_options, "bean", bean);
 _updateOptions(_options, "changesContext", changesContext);
@@ -85,6 +86,7 @@ _updateOptions(_options, "showRequiredLabel", showRequiredLabel);
 _updateOptions(_options, "suffix", suffix);
 _updateOptions(_options, "title", title);
 _updateOptions(_options, "useNamespace", useNamespace);
+_updateOptions(_options, "value", value);
 %>
 
 <%@ include file="/html/taglib/aui/select/init-ext.jspf" %>

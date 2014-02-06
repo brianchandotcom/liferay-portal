@@ -27,6 +27,8 @@ long questionId = BeanParamUtil.getLong(question, request, "questionId");
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+
 if (question != null) {
 	if (question.getExpirationDate() != null) {
 		neverExpire = false;
@@ -70,11 +72,13 @@ if (choiceName > 0) {
 	<aui:input name="choicesCount" type="hidden" value="<%= choicesCount %>" />
 	<aui:input name="choiceName" type="hidden" value="" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= (question == null) %>"
-		title='<%= (question == null) ? "new-question" : question.getTitle(locale) %>'
-	/>
+	<c:if test="<%= showHeader %>">
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			localizeTitle="<%= (question == null) %>"
+			title='<%= (question == null) ? "new-poll" : question.getTitle(locale) %>'
+		/>
+	</c:if>
 
 	<liferay-ui:error exception="<%= QuestionChoiceException.class %>" message="please-enter-valid-choices" />
 	<liferay-ui:error exception="<%= QuestionDescriptionException.class %>" message="please-enter-a-valid-description" />

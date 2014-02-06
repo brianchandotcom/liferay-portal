@@ -122,13 +122,16 @@ import net.fortuna.ical4j.model.property.Version;
 import net.fortuna.ical4j.model.property.XProperty;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Bruno Farache
- * @author Samuel Kong
- * @author Ganesh Ram
- * @author Brett Swaim
- * @author Mate Thurzo
+ * @author     Brian Wing Shun Chan
+ * @author     Bruno Farache
+ * @author     Samuel Kong
+ * @author     Ganesh Ram
+ * @author     Brett Swaim
+ * @author     Mate Thurzo
+ * @deprecated As of 6.2.0, since the 6.1 calendar portlet was replaced by the
+ *             new calendar plugin.
  */
+@Deprecated
 public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)

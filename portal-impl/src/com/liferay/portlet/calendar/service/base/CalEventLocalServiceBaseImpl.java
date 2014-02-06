@@ -73,8 +73,11 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.calendar.service.impl.CalEventLocalServiceImpl
  * @see com.liferay.portlet.calendar.service.CalEventLocalServiceUtil
+ * @deprecated As of 6.2.0, since the 6.1 calendar portlet was replaced by the
+            new calendar plugin.
  * @generated
  */
+@Deprecated
 public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	implements CalEventLocalService, IdentifiableBean {
 	/*

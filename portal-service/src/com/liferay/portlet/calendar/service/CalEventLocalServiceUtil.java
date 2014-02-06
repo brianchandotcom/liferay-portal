@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see CalEventLocalService
  * @see com.liferay.portlet.calendar.service.base.CalEventLocalServiceBaseImpl
  * @see com.liferay.portlet.calendar.service.impl.CalEventLocalServiceImpl
+ * @deprecated As of 6.2.0, since the 6.1 calendar portlet was replaced by the
+new calendar plugin.
  * @generated
  */
+@Deprecated
 @ProviderType
 public class CalEventLocalServiceUtil {
 	/*

@@ -717,14 +717,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			try {
 				if (exportReferencedContent) {
 					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, entityStagedModel, entityElement,
-						fileEntry, FileEntry.class,
+						portletDataContext, entityStagedModel, fileEntry,
 						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 				}
 				else {
 					portletDataContext.addReferenceElement(
 						entityStagedModel, entityElement, fileEntry,
-						FileEntry.class,
 						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 				}
 
@@ -1083,7 +1081,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		List<Element> referenceElements =
 			portletDataContext.getReferenceElements(
-				entityStagedModel, FileEntry.class);
+				entityStagedModel, DLFileEntry.class);
 
 		for (Element referenceElement : referenceElements) {
 			long classPK = GetterUtil.getLong(
@@ -1091,7 +1089,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			Element referenceDataElement =
 				portletDataContext.getReferenceDataElement(
-					entityStagedModel, FileEntry.class, classPK);
+					entityStagedModel, DLFileEntry.class, classPK);
 
 			String path = null;
 
@@ -1115,7 +1113,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			}
 
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, entityStagedModel, FileEntry.class,
+				portletDataContext, entityStagedModel, DLFileEntry.class,
 				classPK);
 
 			String uuid = referenceElement.attributeValue("uuid");
@@ -1635,7 +1633,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				uuid = assetCategory.getUuid();
 
 				portletDataContext.addReferenceElement(
-					portlet, rootElement, assetCategory, AssetCategory.class,
+					portlet, rootElement, assetCategory,
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 			}
 		}
@@ -1649,7 +1647,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 				portletDataContext.addReferenceElement(
 					portlet, rootElement, assetVocabulary,
-					AssetVocabulary.class,
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 			}
 		}
@@ -1661,7 +1658,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				uuid = ddmStructure.getUuid();
 
 				portletDataContext.addReferenceElement(
-					portlet, rootElement, ddmStructure, DDMStructure.class,
+					portlet, rootElement, ddmStructure,
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 			}
 		}
@@ -1675,7 +1672,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 				portletDataContext.addReferenceElement(
 					portlet, rootElement, dlFileEntryType,
-					DLFileEntryType.class,
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 			}
 		}
@@ -1687,7 +1683,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				uuid = organization.getUuid();
 
 				portletDataContext.addReferenceElement(
-					portlet, rootElement, organization, Organization.class,
+					portlet, rootElement, organization,
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 			}
 		}

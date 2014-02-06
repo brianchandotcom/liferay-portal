@@ -91,8 +91,8 @@ public class WikiPageStagedModelDataHandler
 		if (page.isHead()) {
 			for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, page, WikiPage.class, fileEntry,
-					FileEntry.class, PortletDataContext.REFERENCE_TYPE_WEAK);
+					portletDataContext, page, fileEntry,
+					PortletDataContext.REFERENCE_TYPE_WEAK);
 			}
 		}
 

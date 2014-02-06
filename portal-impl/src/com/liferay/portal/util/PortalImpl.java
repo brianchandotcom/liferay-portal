@@ -2517,25 +2517,16 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public int[] getGroupFriendlyURLIndex(String requestURI) {
-		int x = 0;
-		int y = 0;
+		if (requestURI.startsWith(
+				_PRIVATE_GROUP_SERVLET_MAPPING + StringPool.SLASH) ||
+			requestURI.startsWith(
+				_PRIVATE_USER_SERVLET_MAPPING + StringPool.SLASH) ||
+			requestURI.startsWith(
+				_PUBLIC_GROUP_SERVLET_MAPPING + StringPool.SLASH)) {
 
-		if (requestURI.startsWith(_PRIVATE_GROUP_SERVLET_MAPPING) ||
-			requestURI.startsWith(_PRIVATE_USER_SERVLET_MAPPING) ||
-			requestURI.startsWith(_PUBLIC_GROUP_SERVLET_MAPPING)) {
+			int x = requestURI.indexOf(StringPool.SLASH, 1);
 
-			x = requestURI.indexOf(StringPool.SLASH, 1);
-
-			if (x == -1) {
-
-				// /web
-
-				requestURI += StringPool.SLASH;
-
-				x = requestURI.indexOf(CharPool.SLASH, 1);
-			}
-
-			y = requestURI.indexOf(CharPool.SLASH, x + 1);
+			int y = requestURI.indexOf(CharPool.SLASH, x + 1);
 
 			if (y == -1) {
 

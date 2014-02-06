@@ -48,40 +48,39 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CONFIGURATION_PERMISSIONS-->
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_DISPLAY_TEMPLATE_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_ADD_PORTLET_DISPLAY_TEMPLATE']</td>
+	<td>//input[contains(@id,'${key_roleName}') and contains (@id,'ADD_PORTLET_DISPLAY_TEMPLATE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_ENTRY</td>
-	<td>//input[@id='${key_roleName}_ACTION_ADD_ENTRY']</td>
+	<td>//input[contains(@id,'${key_roleName}') and contains (@id,'ADD_ENTRY')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_ADD_TO_PAGE']</td>
+	<td>//input[contains(@id,'${key_roleName}') and contains (@id,'ADD_TO_PAGE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_CONFIGURATION']</td>
+	<td>//input[contains(@id,'${key_roleName}') and contains (@id,'CONFIGURATION')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_VIEW']</td>
+	<td>//input[contains(@id,'${key_roleName}') and contains (@id,'VIEW')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_PERMISSIONS']</td>
+	<td>//input[contains(@id,'${key_roleName}') and contains (@id,'PERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[contains(@id,'${key_roleName}') and contains (@id,'ACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>

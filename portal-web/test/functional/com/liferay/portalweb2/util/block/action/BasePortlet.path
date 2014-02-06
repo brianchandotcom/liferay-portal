@@ -29,8 +29,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SPECIFIC_PORTLET_TITLE</td>
+	<td>//h1[@class='portlet-title']/span[contains(.,'${key_portletName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_ICON</td>
 	<td>//div[contains(@class,'portlet-options')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPECIFIC_PORTLET_OPTIONS_ICON</td>
+	<td>//h1/span[contains(.,'${key_portletName}')]/../../menu/div[contains(@class,'portlet-options')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,6 +71,16 @@
 <tr>
 	<td>INFO_MESSSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_1_COLUMN_1</td>
+	<td>xpath=(//div[contains(@id,'column-1')]/div[contains(@class,'alert') and contains(@class,'alert-error')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_1_COLUMN_2</td>
+	<td>xpath=(//div[contains(@id,'column-2')]/div[contains(@class,'alert') and contains(@class,'alert-error')])[1]</td>
 	<td></td>
 </tr>
 <tr>

@@ -233,6 +233,7 @@
 
 		.tree-node-content {
 			height: 33px;
+			white-space: nowrap;
 
 			.tree-hitarea {
 				margin-left: 5px;

@@ -68,7 +68,7 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--RESULTS_TABLE-->
+<!--POLLS_RESULTS_TABLE-->
 <tr>
 	<td>POLLS_RESULTS_TABLE_TITLE</td>
 	<td>//form[contains(@id,'INSTANCE') and contains(.,'${key_pollsQuestion}')]//td[contains(.,'Votes')]</td>

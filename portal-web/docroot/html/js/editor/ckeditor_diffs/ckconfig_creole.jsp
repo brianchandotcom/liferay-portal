@@ -66,7 +66,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.disableObjectResizing = true;
 
-	config.extraPlugins = 'creole,lfrpopup,wikilink';
+	config.extraPlugins = 'a11yhelpbtn,creole,lfrpopup,wikilink';
 
 	config.filebrowserWindowFeatures = 'title=<%= LanguageUtil.get(locale, "browse") %>';
 
@@ -127,7 +127,8 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 		['Table', '-', 'HorizontalRule', 'SpecialChar' ],
 		['Find','Replace','-','SelectAll','RemoveFormat'],
-		['Source']
+		['Source'],
+		['A11YBtn']
 	];
 
 	config.toolbar_phone = [

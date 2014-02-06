@@ -264,14 +264,6 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portal.googleapps">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.portal.googleapps.GHelperUtil">
-		<priority value="INFO" />
-	</category>
-
 	<category name="com.liferay.portal.image.HookFactory">
 		<priority value="ERROR" />
 	</category>

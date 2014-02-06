@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.NullSafeStringComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ModelListener;
@@ -45,6 +45,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -516,6 +517,9 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	protected static final Object[] FINDER_ARGS_EMPTY = new Object[0];
 
+	protected static final Comparator<String> NULL_SAFE_STRING_COMPARATOR =
+		new NullSafeStringComparator();
+
 	protected static final String ORDER_BY_ASC = " ASC";
 
 	protected static final String ORDER_BY_ASC_HAS_NEXT = " ASC, ";
@@ -547,7 +551,5 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	private Dialect _dialect;
 	private Class<T> _modelClass;
 	private SessionFactory _sessionFactory;
-	protected StringComparator _stringComparator = new StringComparator(
-		true, true);
 
 }

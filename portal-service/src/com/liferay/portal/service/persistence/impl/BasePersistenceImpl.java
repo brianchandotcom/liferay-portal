@@ -44,6 +44,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -536,6 +537,31 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	protected static final String WHERE_LESSER_THAN_HAS_NEXT = " <= ? AND ";
 
 	protected static final String WHERE_OR = " OR ";
+
+	protected static final Comparator<String> nullSafeStringComparator =
+		new Comparator<String>() {
+
+		@Override
+		public int compare(String s1, String s2) {
+			if (s1 == null) {
+				if (s2 == null) {
+					return 0;
+				}
+				else {
+					return 1;
+				}
+			}
+			else {
+				if (s2 == null) {
+					return -1;
+				}
+				else {
+					return s1.compareTo(s2);
+				}
+			}
+		}
+
+	};
 
 	protected ModelListener<T>[] listeners = new ModelListener[0];
 

@@ -15,7 +15,7 @@
 </@>
 
 <@aui.script>
-	function ${portletNamespace}${namespacedFieldName}InitEditor() {
+	window['${portletNamespace}${namespacedFieldName}InitEditor'] = function() {
 		return "${unicodeFormatter.toString(fieldValue)}";
 	}
 
@@ -27,7 +27,7 @@
 
 			var field = A.one('#${portletNamespace}${namespacedFieldName}');
 
-			field.val(window.${portletNamespace}${namespacedFieldName}Editor.getHTML());
+			field.val(window['${portletNamespace}${namespacedFieldName}Editor'].getHTML());
 
 			var form = field.get('form');
 
@@ -54,7 +54,7 @@
 		form.on(
 			'submit',
 			function(event) {
-				field.val(window.${portletNamespace}${namespacedFieldName}Editor.getHTML());
+				field.val(window['${portletNamespace}${namespacedFieldName}Editor'].getHTML());
 			}
 		);
 	}

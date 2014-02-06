@@ -37,7 +37,7 @@ if (classPK > 0) {
 	%>
 
 		<li class="<%= address.isPrimary() ? "primary" : "" %>">
-			<%@ include file="/html/portlet/directory/user/addresses_address.jspf" %>
+			<%@ include file="/html/portlet/directory/common/addresses_address.jspf" %>
 		</li>
 
 	<%

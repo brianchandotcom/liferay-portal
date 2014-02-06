@@ -59,15 +59,15 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * ThemeDisplay is an information context object that holds data commonly
- * referred to for various kinds of frontend information. Among them the current
- * page (layout), information about the theme, as well as general portal
- * configuration and URLs.
+ * Provides general configuration methods for the portal, providing access to
+ * the portal's pages, sites, themes, locales, URLs, and more. This class is an
+ * information context object that holds data commonly referred to for various
+ * kinds of front end information.
  *
  * <p>
- * Liferay makes the ThemeDisplay available as request attribute as well as in
- * various scripting and templating scopes. A typical way to obtain ThemeDisplay
- * is, from a request:
+ * Liferay makes the <code>ThemeDisplay</code> available as a request attribute
+ * and in various scripting and templating scopes. A typical way to obtain
+ * <code>ThemeDisplay</code> is from a request:
  * </p>
  *
  * <p>

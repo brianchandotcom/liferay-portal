@@ -163,7 +163,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (hasConfigurationPermiss
 				</liferay-portlet:renderURL>
 
 				<%
-				String taglibEditQuestionURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "editQuestion', title: '" + LanguageUtil.get(pageContext, "new-poll") + "', uri:'" + HtmlUtil.escapeURL(editQuestionURL.toString()) + "'});";
+				String taglibEditQuestionURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "editQuestion', title: '" + UnicodeLanguageUtil.get(pageContext, "new-poll") + "', uri:'" + HtmlUtil.escapeURL(editQuestionURL.toString()) + "'});";
 				%>
 
 				<liferay-ui:icon

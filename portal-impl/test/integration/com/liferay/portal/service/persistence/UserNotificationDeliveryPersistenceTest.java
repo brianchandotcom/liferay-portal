@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl;
@@ -151,6 +152,34 @@ public class UserNotificationDeliveryPersistenceTest {
 			newUserNotificationDelivery.getDeliveryType());
 		Assert.assertEquals(existingUserNotificationDelivery.getDeliver(),
 			newUserNotificationDelivery.getDeliver());
+	}
+
+	@Test
+	public void testCountByUserId() {
+		try {
+			_persistence.countByUserId(ServiceTestUtil.nextLong());
+
+			_persistence.countByUserId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByU_P_C_N_D() {
+		try {
+			_persistence.countByU_P_C_N_D(ServiceTestUtil.nextLong(),
+				StringPool.BLANK, ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt(), ServiceTestUtil.nextInt());
+
+			_persistence.countByU_P_C_N_D(0L, StringPool.NULL, 0L, 0, 0);
+
+			_persistence.countByU_P_C_N_D(0L, (String)null, 0L, 0, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.model.impl.ServiceComponentModelImpl;
@@ -139,6 +140,35 @@ public class ServiceComponentPersistenceTest {
 			newServiceComponent.getBuildDate());
 		Assert.assertEquals(existingServiceComponent.getData(),
 			newServiceComponent.getData());
+	}
+
+	@Test
+	public void testCountByBuildNamespace() {
+		try {
+			_persistence.countByBuildNamespace(StringPool.BLANK);
+
+			_persistence.countByBuildNamespace(StringPool.NULL);
+
+			_persistence.countByBuildNamespace((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByBNS_BNU() {
+		try {
+			_persistence.countByBNS_BNU(StringPool.BLANK,
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByBNS_BNU(StringPool.NULL, 0L);
+
+			_persistence.countByBNS_BNU((String)null, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

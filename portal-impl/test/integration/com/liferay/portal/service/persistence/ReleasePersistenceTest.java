@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Release;
@@ -158,6 +159,20 @@ public class ReleasePersistenceTest {
 		Assert.assertEquals(existingRelease.getState(), newRelease.getState());
 		Assert.assertEquals(existingRelease.getTestString(),
 			newRelease.getTestString());
+	}
+
+	@Test
+	public void testCountByServletContextName() {
+		try {
+			_persistence.countByServletContextName(StringPool.BLANK);
+
+			_persistence.countByServletContextName(StringPool.NULL);
+
+			_persistence.countByServletContextName((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

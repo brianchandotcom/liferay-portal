@@ -146,6 +146,55 @@ public class SCProductScreenshotPersistenceTest {
 	}
 
 	@Test
+	public void testCountByProductEntryId() {
+		try {
+			_persistence.countByProductEntryId(ServiceTestUtil.nextLong());
+
+			_persistence.countByProductEntryId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByThumbnailId() {
+		try {
+			_persistence.countByThumbnailId(ServiceTestUtil.nextLong());
+
+			_persistence.countByThumbnailId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByFullImageId() {
+		try {
+			_persistence.countByFullImageId(ServiceTestUtil.nextLong());
+
+			_persistence.countByFullImageId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByP_P() {
+		try {
+			_persistence.countByP_P(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt());
+
+			_persistence.countByP_P(0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SCProductScreenshot newSCProductScreenshot = addSCProductScreenshot();
 

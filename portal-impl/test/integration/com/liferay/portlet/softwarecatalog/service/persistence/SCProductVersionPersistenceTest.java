@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -167,6 +168,32 @@ public class SCProductVersionPersistenceTest {
 			newSCProductVersion.getDirectDownloadURL());
 		Assert.assertEquals(existingSCProductVersion.getRepoStoreArtifact(),
 			newSCProductVersion.getRepoStoreArtifact());
+	}
+
+	@Test
+	public void testCountByProductEntryId() {
+		try {
+			_persistence.countByProductEntryId(ServiceTestUtil.nextLong());
+
+			_persistence.countByProductEntryId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByDirectDownloadURL() {
+		try {
+			_persistence.countByDirectDownloadURL(StringPool.BLANK);
+
+			_persistence.countByDirectDownloadURL(StringPool.NULL);
+
+			_persistence.countByDirectDownloadURL((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

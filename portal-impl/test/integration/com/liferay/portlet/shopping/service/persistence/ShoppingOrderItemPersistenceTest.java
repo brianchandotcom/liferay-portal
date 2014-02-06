@@ -159,6 +159,18 @@ public class ShoppingOrderItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByOrderId() {
+		try {
+			_persistence.countByOrderId(ServiceTestUtil.nextLong());
+
+			_persistence.countByOrderId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ShoppingOrderItem newShoppingOrderItem = addShoppingOrderItem();
 

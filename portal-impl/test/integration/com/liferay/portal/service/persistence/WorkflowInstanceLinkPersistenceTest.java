@@ -162,6 +162,20 @@ public class WorkflowInstanceLinkPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_C_C() {
+		try {
+			_persistence.countByG_C_C_C(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong());
+
+			_persistence.countByG_C_C_C(0L, 0L, 0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		WorkflowInstanceLink newWorkflowInstanceLink = addWorkflowInstanceLink();
 

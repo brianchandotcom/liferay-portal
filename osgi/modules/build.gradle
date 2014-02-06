@@ -14,6 +14,7 @@ subprojects {
 	apply plugin: "osgi"
 
 	ext.buildLibDir = new File("${projectDir}/build/libs")
+	ext.deployDir = portalLibDir
 	ext.jarFile = "${buildLibDir}/${project.name}.jar"
 	ext.liferayProjectDir = "${rootDir}/../../"
 

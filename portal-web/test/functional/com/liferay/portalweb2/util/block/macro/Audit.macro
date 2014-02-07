@@ -1,0 +1,41 @@
+<definition>
+	<command name="searchCP">
+		<if>
+			<equals arg1="${searchTerm}" arg2="${resourceAction}" />
+			<then>
+				<var name="reportFieldKey" value="RESOURCE_ACTION" />
+			</then>
+			<elseif>
+				<equals arg1="${searchTerm}" arg2="${resourceId}" />
+				<then>
+					<var name="reportFieldKey" value="RESOURCE_ID" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchTerm}" arg2="${resourceName}" />
+				<then>
+					<var name="reportFieldKey" value="RESOURCE_NAME" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchTerm}" arg2="${userId}" />
+				<then>
+					<var name="reportFieldKey" value="USER_ID" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchTerm}" arg2="${userName}" />
+				<then>
+					<var name="reportFieldKey" value="USER_NAME" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="CPAuditreports#click" locator-key1="ADVANCED_SEARCH_ICON" />
+		<execute action="CPAuditreports#select" locator-key1="ADVANCED_SEARCH_MATCH_SELECT" value1="Any" />
+		<execute action="CPAuditreports#type" locator-key1="ADVANCED_SEARCH_${reportFieldKey}_FIELD" value1="${searchTerm}" />
+
+		<execute action="CPAuditreports#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_${reportFieldKey}_1" value1="${searchTerm}" />
+	</command>
+</definition>

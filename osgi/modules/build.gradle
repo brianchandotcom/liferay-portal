@@ -4,110 +4,24 @@ allprojects {
 	}
 }
 
-project.ext {
+ext{
 	gradleDir = new File("../../tools/gradle")
-	propertiesFile = "${gradleDir}/gradle-wrapper.properties"
+	wrapTasks = ["build","clean", "compileJava", "jar"]
 }
 
-subprojects {
-	apply plugin: "java"
-	apply plugin: "osgi"
+def wrapTask(String task) {
+	def newTasks = rootProject.subprojects.each { project ->
+		def taskName = "$task${project.name}"
 
-	ext.buildLibDir = new File("${projectDir}/build/libs")
-	ext.deployDir = portalLibDir
-	ext.jarFile = "${buildLibDir}/${project.name}.jar"
-	ext.liferayProjectDir = "${rootDir}/../../"
-
-	configurations {
-		bnd
-	}
-
-	dependencies {
-		bnd files(["${liferayProjectDir}/portal-service/classes"])
-		bnd files(["${liferayProjectDir}/util-java/classes"])
-
-		bnd fileTree(
-			dir:"${liferayProjectDir}/lib/portal",
-			includes: ["**/bnd.jar"]
-		)
-	}
-
-	dependencies {
-		compile files(["${liferayProjectDir}/portal-service/classes"])
-		compile files(["${liferayProjectDir}/util-java/classes"])
-
-		compile fileTree(
-			dir:"${liferayProjectDir}/lib/development",
-			includes: ["**/*.jar"]
-		)
-
-		compile fileTree(
-			dir:"${liferayProjectDir}/lib/global",
-			includes: ["**/*.jar"]
-		)
-
-		compile fileTree(
-			dir:"${liferayProjectDir}/lib/portal",
-			includes: ["**/*.jar"]
-		)
-	}
-
-	jar {
-		actions = []
-
-		doLast {
-			tasks.baseline.execute()
-		}
-	}
-
-	task baseline << {
-		ant.property(
-			name: "ant.project.name",
-			project.name
-		)
-
-		ant.property(
-			name: "sdk.dir",
-			liferayProjectDir
-		)
-
-		ant.manifestHelper(
-			projectDirPropertyName: "sdk.dir"
-		)
-
-		ant.taskdef(
-			classname: "com.liferay.util.ant.bnd.BaselineJarTask",
-			classpath: configurations.bnd.asPath,
-			name: "bnd"
-		)
-
-		ant.taskdef(
-			classname: "com.liferay.util.ant.ManifestHelperTask",
-			classpath: configurations.bnd.asPath,
-			name: "manifestHelper"
-		)
-
-		buildLibDir.mkdir()
-
-		ant.bnd(
-			bndRootFile: "${liferayProjectDir}/common.bnd",
-			file: "${project.name}.bnd",
-			outputPath: "${jarFile}",
-			sourcePath: "."
-		) {
-			classpath {
-				files(["build/classes/main"])
-			}
-		}
-	}
-
-	task deploy (dependsOn: 'jar') << {
-		copy {
-			from jarFile
-			into deployDir
+		tasks.create(name: taskName, type: GradleBuild) {
+			dir = "${project.name}"
+			tasks = [ task ]
 		}
 	}
 }
+
+wrapTasks.each { wrapTask(it) }
+
 
 task installGradleWrapper(type: Wrapper) {
 	project.gradleDir.mkdir()

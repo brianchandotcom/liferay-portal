@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserNotificationDelivery;
+import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
@@ -74,6 +75,14 @@ public abstract class BaseUserNotificationHandler
 		UserNotificationDefinition userNotificationDefinition =
 			UserNotificationManagerUtil.fetchUserNotificationDefinition(
 				_portletId, classNameId, notificationType);
+
+		if (userNotificationDefinition == null) {
+			if (deliveryType == UserNotificationDeliveryConstants.TYPE_EMAIL) {
+				return true;
+			}
+
+			return false;
+		}
 
 		UserNotificationDeliveryType userNotificationDeliveryType =
 			userNotificationDefinition.getUserNotificationDeliveryType(

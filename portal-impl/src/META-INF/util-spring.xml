@@ -138,11 +138,6 @@
 			<bean class="com.liferay.portal.format.PhoneNumberFormatImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.googleapps.GoogleAppsFactoryUtil" class="com.liferay.portal.kernel.googleapps.GoogleAppsFactoryUtil">
-		<property name="googleAppsFactory">
-			<bean class="com.liferay.portal.googleapps.GoogleAppsFactoryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.image.GhostscriptUtil" class="com.liferay.portal.kernel.image.GhostscriptUtil">
 		<property name="ghostscript">
 			<bean class="com.liferay.portal.image.GhostscriptImpl" />

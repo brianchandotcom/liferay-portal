@@ -28,6 +28,28 @@ import java.util.Map;
 public abstract class BaseIndexSearcher
 	implements IndexSearcher, QuerySuggester {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #search(SearchContext,
+	 *             Query)}
+	 */
+	@Deprecated
+	@Override
+	public Hits search(
+			String searchEngineId, long companyId, Query query, Sort[] sorts,
+			int start, int end)
+		throws SearchException {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+		searchContext.setSearchEngineId(searchEngineId);
+		searchContext.setSorts(sorts);
+		searchContext.setStart(start);
+
+		return search(searchContext, query);
+	}
+
 	public void setQuerySuggester(QuerySuggester querySuggester) {
 		_querySuggester = querySuggester;
 	}

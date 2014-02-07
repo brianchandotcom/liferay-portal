@@ -167,7 +167,6 @@
 		</execute>
 	</command>
 
-
 	<command name="AddCalendarEventRepeating" priority="5">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
@@ -387,8 +386,8 @@
 		<var name="eventFontColorRGB" value="(104, 142, 217)" />
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
-		<var name="siteCalendarColor" value="668CD9" />
 		<var name="site" value="Liferay" />
+		<var name="siteCalendarColor" value="668CD9" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -405,8 +404,8 @@
 
 		<execute macro="Calendar#changeColorPG">
 			<var name="calendarType" value="${calendarType}" />
-			<var name="siteCalendarColor" value="${siteCalendarColor}" />
 			<var name="site" value="${site}" />
+			<var name="siteCalendarColor" value="${siteCalendarColor}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

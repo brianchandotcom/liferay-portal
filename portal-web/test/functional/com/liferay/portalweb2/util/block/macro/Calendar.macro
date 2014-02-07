@@ -62,7 +62,7 @@
 			</then>
 			<elseif>
 				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
-					<then>
+				<then>
 					<var name="key_site" value="${site}" />
 
 					<execute action="PGCalendar#assertElementPresent" locator-key1="CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT" />
@@ -141,6 +141,7 @@
 				</then>
 			</elseif>
 		</if>
+
 		<var name="key_calendarName" value="${calendarName}" />
 
 		<execute action="PGCalendarCalendarSettings#selectFrame" locator-key1="CALENDAR_SETTING_IFRAME" />

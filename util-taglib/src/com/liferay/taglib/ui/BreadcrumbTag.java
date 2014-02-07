@@ -98,6 +98,53 @@ public class BreadcrumbTag extends IncludeTag {
 		_showPortletBreadcrumb = showPortletBreadcrumb;
 	}
 
+	protected void buildGroupsBreadcrumb(
+			LayoutSet layoutSet, PortletURL portletURL,
+			ThemeDisplay themeDisplay, boolean includeParentGroups,
+			StringBundler sb)
+		throws Exception {
+
+		Group group = layoutSet.getGroup();
+
+		if (group.isControlPanel()) {
+			return;
+		}
+
+		if (includeParentGroups) {
+			LayoutSet parentLayoutSet = getParentLayoutSet(layoutSet);
+
+			if (parentLayoutSet != null) {
+				buildGroupsBreadcrumb(
+					parentLayoutSet, portletURL, themeDisplay, true, sb);
+			}
+		}
+
+		int layoutsPageCount = 0;
+
+		if (layoutSet.isPrivateLayout()) {
+			layoutsPageCount = group.getPrivateLayoutsPageCount();
+		}
+		else {
+			layoutsPageCount = group.getPublicLayoutsPageCount();
+		}
+
+		if ((layoutsPageCount > 0) && !group.isGuest()) {
+			String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
+				layoutSet, themeDisplay);
+
+			if (themeDisplay.isAddSessionIdToURL()) {
+				layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(
+					layoutSetFriendlyURL, themeDisplay.getSessionId());
+			}
+
+			sb.append("<li><a href=\"");
+			sb.append(layoutSetFriendlyURL);
+			sb.append("\">");
+			sb.append(HtmlUtil.escape(group.getDescriptiveName()));
+			sb.append("</a><span class=\"divider\">/</span></li>");
+		}
+	}
+
 	protected void buildGuestGroupBreadcrumb(
 			ThemeDisplay themeDisplay, StringBundler sb)
 		throws Exception {
@@ -187,76 +234,6 @@ public class BreadcrumbTag extends IncludeTag {
 		sb.append(StringPool.GREATER_THAN);
 		sb.append(HtmlUtil.escape(layoutName));
 		sb.append("</a><span class=\"divider\">/</span></li>");
-	}
-
-	protected void buildParentGroupsBreadcrumb(
-			LayoutSet layoutSet, PortletURL portletURL,
-			ThemeDisplay themeDisplay, StringBundler sb)
-		throws Exception {
-
-		Group group = layoutSet.getGroup();
-
-		if (group.isControlPanel()) {
-			return;
-		}
-
-		if (group.isSite()) {
-			Group parentSite = group.getParentGroup();
-
-			if (parentSite != null) {
-				LayoutSet parentLayoutSet =
-					LayoutSetLocalServiceUtil.getLayoutSet(
-						parentSite.getGroupId(), layoutSet.isPrivateLayout());
-
-				buildParentGroupsBreadcrumb(
-					parentLayoutSet, portletURL, themeDisplay, sb);
-			}
-		}
-		else if (group.isUser()) {
-			User groupUser = UserLocalServiceUtil.getUser(group.getClassPK());
-
-			List<Organization> organizations =
-				OrganizationLocalServiceUtil.getUserOrganizations(
-					groupUser.getUserId());
-
-			if (!organizations.isEmpty()) {
-				Organization organization = organizations.get(0);
-
-				Group parentGroup = organization.getGroup();
-
-				LayoutSet parentLayoutSet =
-					LayoutSetLocalServiceUtil.getLayoutSet(
-						parentGroup.getGroupId(), layoutSet.isPrivateLayout());
-
-				buildParentGroupsBreadcrumb(
-					parentLayoutSet, portletURL, themeDisplay, sb);
-			}
-		}
-
-		int layoutsPageCount = 0;
-
-		if (layoutSet.isPrivateLayout()) {
-			layoutsPageCount = group.getPrivateLayoutsPageCount();
-		}
-		else {
-			layoutsPageCount = group.getPublicLayoutsPageCount();
-		}
-
-		if ((layoutsPageCount > 0) && !group.isGuest()) {
-			String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
-				layoutSet, themeDisplay);
-
-			if (themeDisplay.isAddSessionIdToURL()) {
-				layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(
-					layoutSetFriendlyURL, themeDisplay.getSessionId());
-			}
-
-			sb.append("<li><a href=\"");
-			sb.append(layoutSetFriendlyURL);
-			sb.append("\">");
-			sb.append(HtmlUtil.escape(group.getDescriptiveName()));
-			sb.append("</a><span class=\"divider\">/</span></li>");
-		}
 	}
 
 	protected void buildPortletBreadcrumb(
@@ -396,8 +373,19 @@ public class BreadcrumbTag extends IncludeTag {
 			}
 
 			if (_showParentGroups) {
-				buildParentGroupsBreadcrumb(
-					_selLayout.getLayoutSet(), _portletURL, themeDisplay, sb);
+				LayoutSet parentLayoutSet = getParentLayoutSet(
+					_selLayout.getLayoutSet());
+
+				if (parentLayoutSet != null) {
+					buildGroupsBreadcrumb(
+						parentLayoutSet, _portletURL, themeDisplay, true, sb);
+				}
+			}
+
+			if (_showCurrentGroup) {
+				buildGroupsBreadcrumb(
+					_selLayout.getLayoutSet(), _portletURL, themeDisplay, false,
+					sb);
 			}
 
 			if (_showLayout && !group.isLayoutPrototype()) {
@@ -470,6 +458,41 @@ public class BreadcrumbTag extends IncludeTag {
 	@Override
 	protected String getPage() {
 		return _PAGE;
+	}
+
+	protected LayoutSet getParentLayoutSet(LayoutSet layoutSet)
+		throws Exception {
+
+		Group group = layoutSet.getGroup();
+
+		LayoutSet parentLayoutSet = null;
+
+		if (group.isSite()) {
+			Group parentSite = group.getParentGroup();
+
+			if (parentSite != null) {
+				parentLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					parentSite.getGroupId(), layoutSet.isPrivateLayout());
+			}
+		}
+		else if (group.isUser()) {
+			User groupUser = UserLocalServiceUtil.getUser(group.getClassPK());
+
+			List<Organization> organizations =
+				OrganizationLocalServiceUtil.getUserOrganizations(
+					groupUser.getUserId());
+
+			if (!organizations.isEmpty()) {
+				Organization organization = organizations.get(0);
+
+				Group parentGroup = organization.getGroup();
+
+				parentLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					parentGroup.getGroupId(), layoutSet.isPrivateLayout());
+			}
+		}
+
+		return parentLayoutSet;
 	}
 
 	protected void initShowParentGroups(HttpServletRequest request) {

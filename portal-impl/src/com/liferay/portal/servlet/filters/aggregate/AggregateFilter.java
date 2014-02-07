@@ -125,8 +125,19 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 						importX + _CSS_IMPORT_BEGIN.length(), importY);
 				}
 
-				String importContent = aggregateContext.getContent(
-					importFileName);
+				String importContent = null;
+
+				if (Validator.isUrl(importFileName)) {
+					URL url = new URL(importFileName);
+
+					URLConnection urlConnection = url.openConnection();
+
+					importContent = StringUtil.read(
+						urlConnection.getInputStream());
+				}
+				else {
+					importContent = aggregateContext.getContent(importFileName);
+				}
 
 				if (importContent == null) {
 					if (_log.isWarnEnabled()) {

@@ -22,6 +22,10 @@ import java.util.Map;
  */
 public class UserNotificationDefinition {
 
+	public static final int NOTIFICATION_TYPE_ADD_ENTRY = 0;
+
+	public static final int NOTIFICATION_TYPE_UPDATE_ENTRY = 1;
+
 	public UserNotificationDefinition(
 		String portletId, long classNameId, int notificationType,
 		String description) {

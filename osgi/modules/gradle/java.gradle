@@ -57,6 +57,12 @@ subprojects {
 			liferayProjectDir
 		)
 
+		ant.taskdef(
+			classname: "com.liferay.util.ant.ManifestHelperTask",
+			classpath: configurations.bnd.asPath,
+			name: "manifestHelper"
+		)
+
 		ant.manifestHelper(
 			projectDirPropertyName: "sdk.dir"
 		)
@@ -67,17 +73,11 @@ subprojects {
 			name: "bnd"
 		)
 
-		ant.taskdef(
-			classname: "com.liferay.util.ant.ManifestHelperTask",
-			classpath: configurations.bnd.asPath,
-			name: "manifestHelper"
-		)
-
 		buildLibDir.mkdir()
 
 		ant.bnd(
 			bndRootFile: "${liferayProjectDir}/common.bnd",
-			file: "${project.name}.bnd",
+			file: "bnd.bnd",
 			outputPath: "${jarFile}",
 			sourcePath: "."
 		) {

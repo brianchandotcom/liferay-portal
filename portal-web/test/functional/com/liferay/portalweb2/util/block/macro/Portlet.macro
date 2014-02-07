@@ -175,14 +175,14 @@
 
 		<if>
 			<isset var="portletName" />
-				<then>
-					<var name="key_portletName" value="${portletName}" />
+			<then>
+				<var name="key_portletName" value="${portletName}" />
 
-					<execute action="BasePortlet#assertClick" locator-key1="SPECIFIC_PORTLET_OPTIONS_ICON" value1="Options" />
-				</then>
-				<else>
-					<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
-				</else>
+				<execute action="BasePortlet#assertClick" locator-key1="SPECIFIC_PORTLET_OPTIONS_ICON" value1="Options" />
+			</then>
+			<else>
+				<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
+			</else>
 		</if>
 
 		<if>

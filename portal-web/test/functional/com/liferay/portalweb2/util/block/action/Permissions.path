@@ -48,6 +48,7 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CONFIGURATION_PERMISSIONS-->
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_DISPLAY_TEMPLATE_CHECKBOX</td>
 	<td>//input[contains(@id,'${key_roleName}') and contains (@id,'ADD_PORTLET_DISPLAY_TEMPLATE')]</td>

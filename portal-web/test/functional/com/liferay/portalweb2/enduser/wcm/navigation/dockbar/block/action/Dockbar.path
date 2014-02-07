@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESET_CHANGES_BUTTON</td>
+	<td>//button[contains(.,'Reset Changes')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

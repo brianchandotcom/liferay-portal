@@ -1,4 +1,58 @@
 <definition>
+	<command name="assertDefaultPG">
+		<for list="${roleList}" param="roleName" >
+			<var name="roleName" value="${roleName}" />
+
+			<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+			<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+			<if>
+				<or>
+					<equals arg1="${roleName}" arg2="Guest" />
+					<equals arg1="${roleName}" arg2="Site Member" />
+				</or>
+				<then>
+					<execute action="Permissions#assertNotChecked" locator-key1="CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX" />
+				</then>
+				<else>
+					<execute action="Permissions#assertChecked" locator-key1="CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX" />
+				</else>
+			</if>
+
+			<if>
+				<or>
+					<equals arg1="${roleName}" arg2="Guest" />
+					<equals arg1="${roleName}" arg2="Power User" />
+					<equals arg1="${roleName}" arg2="Site Member" />
+					<equals arg1="${roleName}" arg2="User" />
+				</or>
+				<then>
+					<execute action="Permissions#assertNotChecked" locator-key1="CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
+					<execute action="Permissions#assertNotChecked" locator-key1="CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
+					<execute action="Permissions#assertNotChecked" locator-key1="CONFIGURATION_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
+				</then>
+				<else>
+					<execute action="Permissions#assertChecked" locator-key1="CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
+					<execute action="Permissions#assertChecked" locator-key1="CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
+					<execute action="Permissions#assertChecked" locator-key1="CONFIGURATION_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
+				</else>
+			</if>
+
+			<if>
+				<or>
+					<equals arg1="${roleName}" arg2="Power User" />
+					<equals arg1="${roleName}" arg2="User" />
+				</or>
+				<then>
+					<execute action="Permissions#assertNotChecked" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+				</then>
+				<else>
+					<execute action="Permissions#assertChecked" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+				</else>
+			</if>
+		</for>
+	</command>
+
 	<command name="gotoBlogsConfiguration">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -108,6 +162,20 @@
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${webContentTitle}" />
+	</command>
+
+	<command name="removeViewPermissionFromAllRoles">
+		<for list="${roleList}" param="roleName" >
+			<var name="roleName" value="${roleName}" />
+
+			<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+			<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+			<execute action="Permissions#uncheck" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+		</for>
+
+		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="viewPermissionsRemoved">

@@ -188,7 +188,7 @@
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
 		<execute action="SOMessages#assertTextNotPresent" value1="${senderName} sent you a message." />
 
 		<execute macro="User#logoutAndLoginPG">

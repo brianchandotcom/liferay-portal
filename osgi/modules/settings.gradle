@@ -1,0 +1,3 @@
+include 'liferay-registry'
+
+rootProject.name = 'osgi-modules'

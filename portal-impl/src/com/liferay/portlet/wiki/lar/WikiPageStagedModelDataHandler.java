@@ -237,6 +237,12 @@ public class WikiPageStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(page, importedPage);
+
+		Map<Long, Long> pageIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				WikiPage.class + ".pageId");
+
+		pageIds.put(page.getPageId(), importedPage.getPageId());
 	}
 
 	@Override

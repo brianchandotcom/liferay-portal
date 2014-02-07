@@ -18,7 +18,6 @@ import com.liferay.portal.NoSuchCountryException;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -106,9 +105,6 @@ import javax.portlet.PortletURL;
  * @author Raymond Augé
  */
 public abstract class BaseIndexer implements Indexer {
-
-	public static final int INDEX_FILTER_SEARCH_LIMIT = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.INDEX_FILTER_SEARCH_LIMIT));
 
 	public BaseIndexer() {
 		_document = new DocumentImpl();
@@ -487,48 +483,22 @@ public abstract class BaseIndexer implements Indexer {
 	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
 		try {
-			searchContext.setSearchEngineId(getSearchEngineId());
-
-			BooleanQuery fullQuery = getFullQuery(searchContext);
-
-			QueryConfig queryConfig = searchContext.getQueryConfig();
-
-			fullQuery.setQueryConfig(queryConfig);
+			Hits hits = null;
 
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
-			int end = searchContext.getEnd();
-			int start = searchContext.getStart();
+			boolean permissionChecking = isPermissionChecking(
+				searchContext, permissionChecker);
 
-			if (isFilterSearch() && (permissionChecker != null)) {
-				searchContext.setEnd(end + INDEX_FILTER_SEARCH_LIMIT);
-				searchContext.setStart(0);
+			if (permissionChecking) {
+				SearchResultPermissionFilter searchResultPermissionFilter =
+					new IndexerSearchResultPermissionFilter(permissionChecker);
 
-				String[] selectedFieldNames =
-					queryConfig.getSelectedFieldNames();
-
-				if (selectedFieldNames != null) {
-					Set<String> selectedFieldNameSet = SetUtil.fromArray(
-						selectedFieldNames);
-
-					selectedFieldNameSet.addAll(
-						_PERMISSION_SELECTED_FIELD_NAMES);
-
-					selectedFieldNames = selectedFieldNameSet.toArray(
-						new String[selectedFieldNameSet.size()]);
-
-					queryConfig.setSelectedFieldNames(selectedFieldNames);
-				}
+				hits = searchResultPermissionFilter.search(searchContext);
 			}
-
-			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
-
-			searchContext.setEnd(end);
-			searchContext.setStart(start);
-
-			if (isFilterSearch() && (permissionChecker != null)) {
-				hits = filterSearch(hits, permissionChecker, searchContext);
+			else {
+				hits = doSearch(searchContext);
 			}
 
 			processHits(searchContext, hits);
@@ -1352,87 +1322,18 @@ public abstract class BaseIndexer implements Indexer {
 		throws Exception {
 	}
 
-	protected Hits filterSearch(
-		Hits hits, PermissionChecker permissionChecker,
-		SearchContext searchContext) {
+	protected Hits doSearch(SearchContext searchContext)
+		throws SearchException {
 
-		List<Document> docs = new ArrayList<Document>();
-		List<Float> scores = new ArrayList<Float>();
+		searchContext.setSearchEngineId(getSearchEngineId());
 
-		int start = searchContext.getStart();
-		int end = searchContext.getEnd();
+		BooleanQuery fullQuery = getFullQuery(searchContext);
 
-		String paginationType = GetterUtil.getString(
-			searchContext.getAttribute("paginationType"), "more");
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		boolean hasMore = false;
+		fullQuery.setQueryConfig(queryConfig);
 
-		Document[] documents = hits.getDocs();
-
-		int excludeDocsSize = 0;
-
-		for (int i = 0; i < documents.length; i++) {
-			try {
-				Document document = documents[i];
-
-				String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
-				long entryClassPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					entryClassName);
-
-				if ((indexer.isFilterSearch() &&
-					 indexer.hasPermission(
-						 permissionChecker, entryClassName, entryClassPK,
-						 ActionKeys.VIEW)) ||
-					!indexer.isFilterSearch() ||
-					!indexer.isPermissionAware()) {
-
-					docs.add(document);
-					scores.add(hits.score(i));
-				}
-				else {
-					excludeDocsSize++;
-				}
-			}
-			catch (Exception e) {
-				excludeDocsSize++;
-			}
-
-			if (paginationType.equals("more") && (end > 0) &&
-				(end < documents.length) && (docs.size() >= end)) {
-
-				hasMore = true;
-
-				break;
-			}
-		}
-
-		int length = docs.size();
-
-		if (hasMore) {
-			length = documents.length - excludeDocsSize;
-		}
-
-		hits.setLength(length);
-
-		if ((start != QueryUtil.ALL_POS) && (end != QueryUtil.ALL_POS)) {
-			if (end > length) {
-				end = length;
-			}
-
-			docs = docs.subList(start, end);
-		}
-
-		hits.setDocs(docs.toArray(new Document[docs.size()]));
-		hits.setScores(scores.toArray(new Float[scores.size()]));
-
-		hits.setSearchTime(
-			(float)(System.currentTimeMillis() - hits.getStart()) /
-				Time.SECOND);
-
-		return hits;
+		return SearchEngineUtil.search(searchContext, fullQuery);
 	}
 
 	protected Document getBaseModelDocument(
@@ -1627,6 +1528,12 @@ public abstract class BaseIndexer implements Indexer {
 		return null;
 	}
 
+	protected boolean isPermissionChecking(
+		SearchContext searchContext, PermissionChecker permissionChecker) {
+
+		return isFilterSearch() && (permissionChecker != null);
+	}
+
 	protected Document newDocument() {
 		return (Document)_document.clone();
 	}
@@ -1738,5 +1645,89 @@ public abstract class BaseIndexer implements Indexer {
 	private boolean _permissionAware;
 	private String _searchEngineId;
 	private boolean _stagingAware = true;
+
+	private class IndexerSearchResultPermissionFilter
+		extends SearchResultPermissionFilter {
+
+		public IndexerSearchResultPermissionFilter(
+			PermissionChecker permissionChecker) {
+
+			_permissionChecker = permissionChecker;
+		}
+
+		@Override
+		protected void filterResults(Hits hits) {
+			List<Document> docs = new ArrayList<Document>();
+			List<Float> scores = new ArrayList<Float>();
+
+			Document[] documents = hits.getDocs();
+
+			int excludeDocsSize = 0;
+
+			for (int i = 0; i < documents.length; i++) {
+				try {
+					Document document = documents[i];
+
+					String entryClassName = document.get(
+						Field.ENTRY_CLASS_NAME);
+					long entryClassPK = GetterUtil.getLong(
+						document.get(Field.ENTRY_CLASS_PK));
+
+					Indexer indexer = IndexerRegistryUtil.getIndexer(
+						entryClassName);
+
+					if ((indexer.isFilterSearch() &&
+						 indexer.hasPermission(
+							 _permissionChecker, entryClassName, entryClassPK,
+							 ActionKeys.VIEW)) ||
+						!indexer.isFilterSearch() ||
+						!indexer.isPermissionAware()) {
+
+						docs.add(document);
+						scores.add(hits.score(i));
+					}
+					else {
+						excludeDocsSize++;
+					}
+				}
+				catch (Exception e) {
+					excludeDocsSize++;
+				}
+			}
+
+			hits.setDocs(docs.toArray(new Document[docs.size()]));
+			hits.setScores(scores.toArray(new Float[scores.size()]));
+			hits.setSearchTime(
+				(float)(System.currentTimeMillis() - hits.getStart()) /
+					Time.SECOND);
+			hits.setLength(hits.getLength() - excludeDocsSize);
+		}
+
+		@Override
+		protected Hits getResults(SearchContext searchContext)
+			throws SearchException {
+
+			QueryConfig queryConfig = searchContext.getQueryConfig();
+
+			String[] selectedFieldNames = queryConfig.getSelectedFieldNames();
+
+			if (selectedFieldNames != null) {
+				Set<String> selectedFieldNameSet = SetUtil.fromArray(
+					selectedFieldNames);
+
+				selectedFieldNameSet.addAll(_PERMISSION_SELECTED_FIELD_NAMES);
+
+				selectedFieldNames = selectedFieldNameSet.toArray(
+					new String[selectedFieldNameSet.size()]);
+
+				queryConfig.setSelectedFieldNames(selectedFieldNames);
+			}
+
+			return doSearch(searchContext);
+		}
+
+		private PermissionChecker _permissionChecker;
+
+	}
 
 }

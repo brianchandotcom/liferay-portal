@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/amazon_rankings/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 String isbnsString = StringUtil.merge(isbns, StringPool.SPACE);
 
 isbns = StringUtil.split(ParamUtil.getString(request, "isbns", isbnsString), CharPool.SPACE);
@@ -27,10 +25,11 @@ isbnsString = StringUtil.merge(isbns, StringPool.SPACE);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
+<liferay-portlet:renderURL portletConfiguration="true" varImpl="configurationRenderURL" />
 
 <aui:form action="<%= configurationURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
 	<liferay-ui:error exception="<%= ValidatorException.class %>">
 

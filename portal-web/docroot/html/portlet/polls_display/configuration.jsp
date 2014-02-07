@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/polls_display/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 questionId = ParamUtil.getLong(request, "questionId", questionId);
 
 List<PollsQuestion> questions = PollsQuestionLocalServiceUtil.getQuestions(scopeGroupId);
@@ -31,10 +29,11 @@ if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
+<liferay-portlet:renderURL portletConfiguration="true" varImpl="configurationRenderURL" />
 
 <aui:form action="<%= configurationURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
 	<liferay-ui:error exception="<%= NoSuchQuestionException.class %>" message="the-question-could-not-be-found" />
 

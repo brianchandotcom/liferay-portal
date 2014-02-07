@@ -220,6 +220,7 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
 import java.sql.Connection;
@@ -245,7 +246,9 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -562,6 +565,19 @@ public class PortalImpl implements Portal {
 		titleListMergeable.add(title);
 	}
 
+	@Override
+	public boolean addPortalInetSocketAddressEventListener(
+		PortalInetSocketAddressEventListener
+			portalInetSocketAddressEventListener) {
+
+		return _portalInetSocketAddressEventListeners.add(
+			portalInetSocketAddressEventListener);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public void addPortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
@@ -3891,8 +3907,53 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public PortalInetSocketAddressEventListener[]
+		getPortalInetSocketAddressEventListeners() {
+
+		return _portalInetSocketAddressEventListeners.toArray(
+			new PortalInetSocketAddressEventListener[
+				_portalInetSocketAddressEventListeners.size()]);
+	}
+
+	@Override
 	public String getPortalLibDir() {
 		return PropsValues.LIFERAY_LIB_PORTAL_DIR;
+	}
+
+	@Override
+	public InetAddress getPortalLocalAddress(boolean secure) {
+		InetSocketAddress localInetSocketAddress = null;
+
+		if (secure) {
+			localInetSocketAddress = _securePortalLocalAddress.get();
+		}
+		else {
+			localInetSocketAddress = _portalLocalAddress.get();
+		}
+
+		if (localInetSocketAddress == null) {
+			return null;
+		}
+
+		return localInetSocketAddress.getAddress();
+	}
+
+	@Override
+	public int getPortalLocalPort(boolean secure) {
+		InetSocketAddress localInetSocketAddress = null;
+
+		if (secure) {
+			localInetSocketAddress = _securePortalLocalAddress.get();
+		}
+		else {
+			localInetSocketAddress = _portalLocalAddress.get();
+		}
+
+		if (localInetSocketAddress == null) {
+			return -1;
+		}
+
+		return localInetSocketAddress.getPort();
 	}
 
 	/**
@@ -3904,6 +3965,11 @@ public class PortalImpl implements Portal {
 		return _portalPort.get();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the more general {@link
+	 *             #getPortalServerPort(boolean)}
+	 */
+	@Deprecated
 	@Override
 	public int getPortalPort(boolean secure) {
 		if (secure) {
@@ -3917,6 +3983,42 @@ public class PortalImpl implements Portal {
 	@Override
 	public Properties getPortalProperties() {
 		return PropsUtil.getProperties();
+	}
+
+	@Override
+	public InetAddress getPortalServerAddress(boolean secure) {
+		InetSocketAddress serverInetSocketAddress = null;
+
+		if (secure) {
+			serverInetSocketAddress = _securePortalServerAddress.get();
+		}
+		else {
+			serverInetSocketAddress = _portalServerAddress.get();
+		}
+
+		if (serverInetSocketAddress == null) {
+			return null;
+		}
+
+		return serverInetSocketAddress.getAddress();
+	}
+
+	@Override
+	public int getPortalServerPort(boolean secure) {
+		InetSocketAddress serverInetSocketAddress = null;
+
+		if (secure) {
+			serverInetSocketAddress = _securePortalServerAddress.get();
+		}
+		else {
+			serverInetSocketAddress = _portalServerAddress.get();
+		}
+
+		if (serverInetSocketAddress == null) {
+			return -1;
+		}
+
+		return serverInetSocketAddress.getPort();
 	}
 
 	@Override
@@ -6505,6 +6607,19 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public boolean removePortalInetSocketAddressEventListener(
+		PortalInetSocketAddressEventListener
+			portalInetSocketAddressEventListener) {
+
+		return _portalInetSocketAddressEventListeners.remove(
+			portalInetSocketAddressEventListener);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
+	@Override
 	public void removePortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
 
@@ -6765,6 +6880,84 @@ public class PortalImpl implements Portal {
 		request.setAttribute(WebKeys.PAGE_TITLE, titleListMergeable);
 	}
 
+	@Override
+	public void setPortalAddresses(HttpServletRequest request) {
+		boolean secure = request.isSecure();
+
+		if ((secure && (_securePortalLocalAddress.get() != null) &&
+			 (_securePortalServerAddress.get() != null)) ||
+			(!secure && (_portalLocalAddress.get() != null) &&
+			 (_portalServerAddress.get() != null))) {
+
+			return;
+		}
+
+		String localAddress = request.getLocalAddr();
+		int localPort = request.getLocalPort();
+		String serverAddress = request.getServerName();
+		int serverPort = request.getServerPort();
+
+		InetAddress localInetAddress = null;
+		InetAddress serverInetAddress = null;
+
+		try {
+			localInetAddress = InetAddress.getByName(localAddress);
+			serverInetAddress = InetAddress.getByName(serverAddress);
+		}
+		catch (UnknownHostException uhe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to resolve portal host", uhe);
+			}
+
+			return;
+		}
+
+		InetSocketAddress localInetSocketAddress = new InetSocketAddress(
+			localInetAddress, localPort);
+		InetSocketAddress serverInetSocketAddress = new InetSocketAddress(
+			serverInetAddress, serverPort);
+
+		if (secure) {
+			if (StringUtil.equalsIgnoreCase(
+					Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)) {
+
+				if (_securePortalLocalAddress.compareAndSet(
+						null, localInetSocketAddress)) {
+
+					notifyPortalInetSocketAddressEventListeners(
+						localInetSocketAddress, true);
+				}
+
+				if (_securePortalServerAddress.compareAndSet(
+						null, serverInetSocketAddress)) {
+
+					notifyPortalInetSocketAddressEventListeners(
+						serverInetSocketAddress, false);
+				}
+			}
+		}
+		else {
+			if (_portalLocalAddress.compareAndSet(
+					null, localInetSocketAddress)) {
+
+				notifyPortalInetSocketAddressEventListeners(
+					localInetSocketAddress, true);
+			}
+
+			if (_portalServerAddress.compareAndSet(
+					null, serverInetSocketAddress)) {
+
+				notifyPortalInetSocketAddressEventListeners(
+					serverInetSocketAddress, false);
+			}
+		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by the more general {@link
+	 *             #setPortalAddresses(HttpServletRequest)}
+	 */
+	@Deprecated
 	@Override
 	public void setPortalPort(HttpServletRequest request) {
 		if (request.isSecure()) {
@@ -7785,6 +7978,24 @@ public class PortalImpl implements Portal {
 		return false;
 	}
 
+	protected void notifyPortalInetSocketAddressEventListeners(
+		InetSocketAddress inetSocketAddress, boolean local) {
+
+		for (PortalInetSocketAddressEventListener
+				portalInetSocketAddressEventListener :
+					_portalInetSocketAddressEventListeners) {
+
+			if (local) {
+				portalInetSocketAddressEventListener.
+					portalLocalAddressConfigured(inetSocketAddress);
+			}
+			else {
+				portalInetSocketAddressEventListener.
+					portalServerAddressConfigured(inetSocketAddress);
+			}
+		}
+	}
+
 	protected void notifyPortalPortEventListeners(int portalPort) {
 		for (PortalPortEventListener portalPortEventListener :
 				_portalPortEventListeners) {
@@ -7899,11 +8110,22 @@ public class PortalImpl implements Portal {
 	private String _pathProxy;
 	private Map<String, Long> _plidToPortletIdMap =
 		new ConcurrentHashMap<String, Long>();
+	private Set<PortalInetSocketAddressEventListener>
+		_portalInetSocketAddressEventListeners =
+			new CopyOnWriteArraySet<PortalInetSocketAddressEventListener>();
+	private final AtomicReference<InetSocketAddress> _portalLocalAddress =
+		new AtomicReference<InetSocketAddress>();
 	private final AtomicInteger _portalPort = new AtomicInteger(-1);
 	private List<PortalPortEventListener> _portalPortEventListeners =
 		new ArrayList<PortalPortEventListener>();
+	private final AtomicReference<InetSocketAddress> _portalServerAddress =
+		new AtomicReference<InetSocketAddress>();
 	private Set<String> _reservedParams;
+	private final AtomicReference<InetSocketAddress>
+		_securePortalLocalAddress = new AtomicReference<InetSocketAddress>();
 	private final AtomicInteger _securePortalPort = new AtomicInteger(-1);
+	private final AtomicReference<InetSocketAddress>
+		_securePortalServerAddress = new AtomicReference<InetSocketAddress>();
 	private final String _servletContextName;
 	private String[] _sortedSystemGroups;
 	private String[] _sortedSystemOrganizationRoles;

@@ -144,7 +144,7 @@ public class SPIAgentResponse extends SPIAgentSerializable {
 				sb.append(content.substring(0, index));
 				sb.append("<div class=\"alert alert-info\"><strong>");
 				sb.append("This portlet is from SPI ");
-				sb.append(PortalUtil.getPortalPort(false));
+				sb.append(PortalUtil.getPortalLocalPort(false));
 				sb.append("</strong></div>");
 				sb.append(content.substring(index));
 

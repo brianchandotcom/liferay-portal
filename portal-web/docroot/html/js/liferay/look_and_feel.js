@@ -583,60 +583,53 @@ AUI.add(
 
 				Liferay.Util.enableTextareaTabs(customCSS.getDOM());
 
-				if (!Browser.isSafari()) {
-					refreshText = Liferay.Language.get('update-the-styles-on-this-page');
+				refreshText = Liferay.Language.get('update-the-styles-on-this-page');
 
-					var refreshLink = A.Node.create('<a href="javascript:;">' + refreshText + '</a>');
+				var refreshLink = A.Node.create('<a href="javascript:;">' + refreshText + '</a>');
 
-					var customStyleBlock = A.one('#lfr-custom-css-block-' + portletId);
+				var customStyleBlock = A.one('#lfr-custom-css-block-' + portletId);
 
-					if (!customStyleBlock) {
+				if (!customStyleBlock) {
 
-						// Do not modify. This is a workaround for an IE bug.
+					// Do not modify. This is a workaround for an IE bug.
 
-						var styleEl = document.createElement(STYLE);
+					var styleEl = document.createElement(STYLE);
 
-						styleEl.id = 'lfr-custom-css-block-' + portletId;
-						styleEl.className = 'lfr-custom-css-block';
-						styleEl.setAttribute(TYPE, 'text/css');
+					styleEl.id = 'lfr-custom-css-block-' + portletId;
+					styleEl.className = 'lfr-custom-css-block';
+					styleEl.setAttribute(TYPE, 'text/css');
 
-						document.getElementsByTagName(HEAD)[0].appendChild(styleEl);
-					}
-					else {
-						styleEl = customStyleBlock.getDOM();
-					}
-
-					var refreshStyles = function() {
-						var customStyles = customCSS.val();
-
-						customStyles = customStyles.replace(/<script[^>]*>([\u0001-\uFFFF]*?)<\/script>/gim, EMPTY);
-						customStyles = customStyles.replace(/<\/?[^>]+>/gi, EMPTY);
-
-						if (styleEl.styleSheet) { // for IE only
-							if (customStyles == EMPTY) {
-
-								// Do not modify. This is a workaround for an IE bug.
-
-								customStyles = '<!---->';
-							}
-
-							styleEl.styleSheet.cssText = customStyles;
-						}
-						else {
-							A.one(styleEl).html(customStyles);
-						}
-					};
-
-					refreshLink.detach(CLICK);
-					refreshLink.on(CLICK, refreshStyles);
-
-					customNote.empty().append(refreshLink);
+					document.getElementsByTagName(HEAD)[0].appendChild(styleEl);
 				}
 				else {
-					refreshText = Liferay.Language.get('please-press-the-save-button-to-view-your-changes');
-
-					customNote.empty().text(refreshText);
+					styleEl = customStyleBlock.getDOM();
 				}
+
+				var refreshStyles = function() {
+					var customStyles = customCSS.val();
+
+					customStyles = customStyles.replace(/<script[^>]*>([\u0001-\uFFFF]*?)<\/script>/gim, EMPTY);
+					customStyles = customStyles.replace(/<\/?[^>]+>/gi, EMPTY);
+
+					if (styleEl.styleSheet) { // for IE only
+						if (customStyles == EMPTY) {
+
+							// Do not modify. This is a workaround for an IE bug.
+
+							customStyles = '<!---->';
+						}
+
+						styleEl.styleSheet.cssText = customStyles;
+					}
+					else {
+						A.one(styleEl).html(customStyles);
+					}
+				};
+
+				refreshLink.detach(CLICK);
+				refreshLink.on(CLICK, refreshStyles);
+
+				customNote.empty().append(refreshLink);
 
 				var insertContainer = A.one('#lfr-add-rule-container');
 				var addIdLink = A.one('#lfr-add-id');
@@ -651,7 +644,7 @@ AUI.add(
 					var updateOnTypeHolder = A.Node.create('<span class="field"><span class="field-content"></span></span>');
 					var updateOnTypeLabel = A.Node.create('<label>' + Liferay.Language.get('update-my-styles-as-i-type') + ' </label>');
 
-					updateOnType = A.Node.create('<input id="lfr-update-on-type" type=CHECKBOX />');
+					updateOnType = A.Node.create('<input checked="checked" id="lfr-update-on-type" type="' + CHECKBOX + '" />');
 
 					updateOnTypeLabel.appendChild(updateOnType);
 					updateOnTypeHolder.get(FIRST_CHILD).appendChild(updateOnTypeLabel);
@@ -665,7 +658,11 @@ AUI.add(
 					insertContainer.appendChild(addClassLink);
 					insertContainer.appendChild(updateOnTypeHolder);
 
-					insertContainer.after(customNote);
+					customNote.hide();
+
+					insertContainer.placeAfter(customNote);
+
+					customCSS.on(KEYUP, refreshStyles);
 				}
 
 				updateOnType.on(

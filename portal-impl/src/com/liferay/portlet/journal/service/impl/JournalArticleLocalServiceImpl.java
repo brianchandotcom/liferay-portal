@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -6421,6 +6422,7 @@ public class JournalArticleLocalServiceImpl
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setBody(body);
+		subscriptionSender.setClassPK(article.getId());
 		subscriptionSender.setCompanyId(article.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
@@ -6430,6 +6432,17 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("journal_article", article.getId());
+
+		int notificationType =
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
+
+		if (serviceContext.isCommandUpdate()) {
+			notificationType =
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
+		}
+
+		subscriptionSender.setNotificationType(notificationType);
+
 		subscriptionSender.setPortletId(PortletKeys.JOURNAL);
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(article.getGroupId());

@@ -117,6 +117,8 @@
 		<staged-model-data-handler-class>com.liferay.portlet.journal.lar.JournalFeedStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.journal.lar.JournalFolderStagedModelDataHandler</staged-model-data-handler-class>
 		<template-handler>com.liferay.portlet.journal.template.JournalTemplateHandler</template-handler>
+		<user-notification-definitions>com/liferay/portlet/journal/journal-user-notification-definitions.xml</user-notification-definitions>
+		<user-notification-handler-class>com.liferay.portlet.journal.notifications.JournalUserNotificationHandler</user-notification-handler-class>
 		<webdav-storage-token>journal</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.journal.webdav.JournalWebDAVStorageImpl</webdav-storage-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>

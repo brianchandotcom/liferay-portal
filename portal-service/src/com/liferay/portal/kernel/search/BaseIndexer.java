@@ -106,9 +106,6 @@ import javax.portlet.PortletURL;
  */
 public abstract class BaseIndexer implements Indexer {
 
-	public static final int INDEX_FILTER_SEARCH_LIMIT = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.INDEX_FILTER_SEARCH_LIMIT));
-
 	public BaseIndexer() {
 		_document = new DocumentImpl();
 	}

@@ -19,18 +19,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLET_NAME</td>
-	<td>//header[@class='portlet-topper']/h1/span[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OPTIONS</td>
-	<td>//header[@class='portlet-topper']/menu/div/a[contains(.,'Options')]</td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BREADCRUMB_ENTRY</td>
 	<td>//div[@class='portlet-body']/ul</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_PAGE</td>
+	<td>//div[@class='portlet-body']/ul/li/a[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 </tbody>

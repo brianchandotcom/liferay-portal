@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -66,15 +65,8 @@ public class ServletAggregateContext extends BaseAggregateContext {
 		try {
 			String fullPath = getFullPath(StringPool.BLANK);
 
-			URL resourceURL = null;
-
-			if (Validator.isUrl(path)) {
-				resourceURL = new URL(path);
-			}
-			else {
-				resourceURL = _servletContext.getResource(
-					fullPath.concat(path));
-			}
+			URL resourceURL = _servletContext.getResource(
+				fullPath.concat(path));
 
 			if (resourceURL == null) {
 				return null;

@@ -1,3 +1,5 @@
+@import "compass";
+
 .portlet-asset-category-admin {
 	.form-search {
 		float: left;
@@ -41,6 +43,10 @@
 		li.vocabulary-category, li.vocabulary-item {
 			font-weight: bold;
 			list-style: none;
+
+			a {
+				@include ellipsis;
+			}
 		}
 	}
 

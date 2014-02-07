@@ -4800,7 +4800,7 @@ public class ServiceBuilder {
 						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
 			}
 
-			entity.addReference(entity);
+			entity.addReference(referenceEntity);
 		}
 
 		entity.setResolved();

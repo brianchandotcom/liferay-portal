@@ -53,12 +53,13 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventAllDayCommentToMyCalendars" priority="5">
-		<var name="calendarType" value="My Calendars" />
+	<command name="AddCalendarEventAllDayCommentToCurrentSiteCalendars" priority="5">
+		<var name="calendarName" value="Liferay" />
+		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event All Day Comment" />
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
-		<var name="user" value="Test Test" />
+		<var name="site" value="Liferay" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -66,7 +67,7 @@
 
 		<execute macro="Calendar#enableCommentsPG">
 			<var name="calendarType" value="${calendarType}" />
-			<var name="user" value="${user}" />
+			<var name="site" value="${site}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -74,11 +75,12 @@
 		</execute>
 
 		<execute macro="CalendarEvent#addPG">
+			<var name="calendarName" value="${calendarName}" />
 			<var name="eventComment" value="${eventComment}" />
 			<var name="eventCommentEnabled" value="true" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="user" value="${user}" />
+			<var name="site" value="${site}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -89,7 +91,7 @@
 			<var name="eventComment" value="${eventComment}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="user" value="${user}" />
+			<var name="site" value="${site}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -119,20 +121,22 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRegularCommentToMyCalendars" priority="5">
-		<var name="calendarType" value="My Calendars" />
+	<command name="AddCalendarEventRegularCommentToCurrentSiteCalendars" priority="5">
+		<var name="calendarName" value="Liferay" />
+		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Regular Comment" />
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
-		<var name="user" value="Test Test" />
+		<var name="site" value="Liferay" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Calendar#enableCommentsPG">
+			<var name="calendarName" value="${calendarName}" />
 			<var name="calendarType" value="${calendarType}" />
-			<var name="user" value="${user}" />
+			<var name="site" value="${site}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -144,7 +148,7 @@
 			<var name="eventCommentEnabled" value="true" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="user" value="${user}" />
+			<var name="site" value="${site}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -155,7 +159,7 @@
 			<var name="eventComment" value="${eventComment}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="user" value="${user}" />
+			<var name="site" value="${site}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -185,20 +189,22 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeatingCommentToMyCalendars" priority="5">
-		<var name="calendarType" value="My Calendars" />
+	<command name="AddCalendarEventRepeatingCommentToCurrentSiteCalendars" priority="5">
+		<var name="calendarName" value="Liferay" />
+		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Repeating Comment" />
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
-		<var name="user" value="Test Test" />
+		<var name="site" value="Liferay" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Calendar#enableCommentsPG">
+			<var name="calendarName" value="${calendarName}" />
 			<var name="calendarType" value="${calendarType}" />
-			<var name="user" value="${user}" />
+			<var name="site" value="${site}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -210,7 +216,7 @@
 			<var name="eventCommentEnabled" value="true" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="user" value="${user}" />
+			<var name="site" value="${site}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -221,7 +227,7 @@
 			<var name="eventComment" value="${eventComment}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="user" value="${user}" />
+			<var name="site" value="${site}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -374,14 +380,14 @@
 		</execute>
 	</command>
 
-	<command name="ChangeColorCalendarMyCalendarsEventRegular" priority="5">
-		<var name="calendarType" value="My Calendars" />
+	<command name="ChangeColorCalendarSiteCalendarsEventRegular" priority="5">
+		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventBackgroundColorRGB" value="(208, 219, 240)" />
 		<var name="eventFontColorRGB" value="(104, 142, 217)" />
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
-		<var name="myCalendarColor" value="668CD9" />
-		<var name="user" value="Test Test" />
+		<var name="site" value="Liferay" />
+		<var name="siteCalendarColor" value="668CD9" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -398,8 +404,8 @@
 
 		<execute macro="Calendar#changeColorPG">
 			<var name="calendarType" value="${calendarType}" />
-			<var name="myCalendarColor" value="${myCalendarColor}" />
-			<var name="user" value="${user}" />
+			<var name="site" value="${site}" />
+			<var name="siteCalendarColor" value="${siteCalendarColor}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -407,7 +413,7 @@
 		</execute>
 
 		<execute macro="Calendar#viewColorPG">
-			<var name="myCalendarColor" value="${myCalendarColor}" />
+			<var name="myCalendarColor" value="${siteCalendarColor}" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewColorPG">

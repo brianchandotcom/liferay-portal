@@ -60,6 +60,19 @@
 
 				<execute action="PGCalendar#click" locator-key1="MY_CALENDARS_CALENDAR_MENULIST_COLOR_PICKER" />
 			</then>
+			<elseif>
+				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
+				<then>
+					<var name="key_site" value="${site}" />
+
+					<execute action="PGCalendar#assertElementPresent" locator-key1="CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT" />
+					<execute action="PGCalendar#click" locator-key1="CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
+
+					<var name="key_color" value="${siteCalendarColor}" />
+
+					<execute action="PGCalendar#click" locator-key1="CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_COLOR_PICKER" />
+				</then>
+			</elseif>
 		</if>
 	</command>
 
@@ -112,21 +125,27 @@
 			<elseif>
 				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
 				<then>
-					<execute action="PGCalendar#click" locator-key1="CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
+					<var name="key_site" value="${site}" />
+
+					<execute action="PGCalendar#click" locator-key1="CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
 					<execute action="PGCalendar#assertClick" locator-key1="CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_CALENDAR_SETTINGS" value1="Calendar Settings" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${calendarType}" arg2="Other Calendars" />
 				<then>
+					<var name="key_calendarName" value="${calendarName}" />
+
 					<execute action="PGCalendar#click" locator-key1="OTHER_CALENDARS_CALENDAR_MENULIST_ARROW" />
 					<execute action="PGCalendar#assertClick" locator-key1="OTHER_CALENDARS_CALENDAR_MENULIST_CALENDAR_SETTINGS" value1="Calendar Settings" />
 				</then>
 			</elseif>
 		</if>
 
+		<var name="key_calendarName" value="${calendarName}" />
+
 		<execute action="PGCalendarCalendarSettings#selectFrame" locator-key1="CALENDAR_SETTING_IFRAME" />
-		<execute action="PGCalendarCalendarSettings#assertTextEquals" locator-key1="HEADER_TITLE" value1="${user}" />
+		<execute action="PGCalendarCalendarSettings#assertTextEquals" locator-key1="HEADER_TITLE" value1="${calendarName}" />
 		<execute action="PGCalendarCalendarSettings#check" locator-key1="ENABLE_COMMENTS_CHECKBOX" />
 		<execute action="PGCalendarCalendarSettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGCalendarCalendarSettings#selectFrame" value1="relative=top" />

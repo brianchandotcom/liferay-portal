@@ -1,0 +1,82 @@
+<definition>
+	<command name="viewPG">
+		<var name="key_pageName" value="${pageName}" />
+
+		<if>
+			<isset var="present" />
+			<then>
+				<execute action="PGBreadcrumb#assertTextEquals" locator-key1="PORTLET_PAGE" value1="${pageName}" />
+			</then>
+			<else>
+				<execute action="PGBreadcrumb#assertElementNotPresent" locator-key1="PORTLET_PAGE" value1="${pageName}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="viewPreview">
+		<var name="key_pageName" value="${pageName}" />
+		
+		<if>
+			<isset var="present" />
+			<then>
+				<execute action="PGBreadcrumbConfiguration#assertTextEquals" locator-key1="PORTLET_PREVIEW_PAGE" value1="${pageName}" />
+			</then>
+			<else>
+				<execute action="PGBreadcrumbConfiguration#assertElementNotPresent" locator-key1="PORTLET_PREVIEW_PAGE" value1="${pageName}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="configurationSave">
+		<execute action="PGBreadcrumbConfiguration#assertClick" locator-key1="PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
+		<execute action="PGBreadcrumbConfiguration#assertTextEquals" locator-key1="PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="configureBreadcrumb">
+		<if>
+			<isset var="checkContent" />
+			<then>
+			    <for list="${checkContent}" param="checkContentName">
+					<var name="key_checkContentName" value="${checkContentName}" />
+
+			        <execute action="PGBreadcrumbConfiguration#check" locator-key1="SHOW_SPECIFIC_CHECKBOX" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="uncheckContent" />
+			<then>
+				<for list="${uncheckContent}" param="uncheckContentName">
+					<var name="key_checkContentName" value="${uncheckContentName}" />
+
+			        <execute action="PGBreadcrumbConfiguration#uncheck" locator-key1="SHOW_SPECIFIC_CHECKBOX" />
+				</for>
+			</then>
+		</if>
+	</command>
+
+	<command name="viewConfigurationBreadcrumb">
+		<if>
+			<isset var="checkContent" />
+			<then>
+				<for list="${checkContent}" param="checkContentName">
+			        <var name="key_checkContentName" value="${checkContentName}" />
+
+			        <execute action="PGBreadcrumbConfiguration#assertChecked" locator-key1="SHOW_SPECIFIC_CHECKBOX" />
+			    </for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="uncheckContent" />
+			<then>
+			    <for list="${uncheckContent}" param="uncheckContentName">
+					<var name="key_checkContentName" value="${uncheckContentName}" />
+
+			        <execute action="PGBreadcrumbConfiguration#assertNotChecked" locator-key1="SHOW_SPECIFIC_CHECKBOX" />
+				</for>
+			</then>
+		</if>
+	</command>
+</definition>

@@ -86,4 +86,12 @@ subprojects {
 			}
 		}
 	}
+
+	jar {
+		actions = []
+
+		doLast {
+			tasks.baseline.execute()
+		}
+	}
 }

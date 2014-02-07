@@ -234,7 +234,7 @@
 		<execute action="SOProfileAddExpertise#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="SOProfile#selectFrame" value1="relative=top" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_TITLE" value1="Expertise Title:" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_DATES" value1="01 Jan 2012 - Current"  />
 
 		<if>
@@ -301,6 +301,9 @@
 		<execute action="SOProfileAddTag#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="SOProfile#selectFrame" value1="relative=top" />
+
+		<var name="key_userTag" value="${userTag}" />
+
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_TITLE" value1="Tags" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_CONTENT" value1="${userTag}" />
 	</command>
@@ -611,7 +614,7 @@
 		<execute action="SOProfileAddExpertise#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="SOProfile#selectFrame" value1="relative=top" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_TITLE" value1="Expertise Title:" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_DATES" value1="01 Feb 2012 - Current"  />
 
 		<if>
@@ -722,6 +725,9 @@
 		<execute action="SOProfileAddTag#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="SOProfile#selectFrame" value1="relative=top" />
+
+		<var name="key_userTag" value="${userTag}" />
+
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_TITLE" value1="Tags" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_CONTENT" value1="${userTag}" />
 	</command>
@@ -942,7 +948,7 @@
 	</command>
 
 	<command name="viewProjects">
-		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_TITLE" value1="Expertise Title:" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_DATES" value1="01 Jan 2012 - Current"  />
 
 		<if>
@@ -954,7 +960,7 @@
 	</command>
 
 	<command name="viewProjectsEdit">
-		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_TITLE" value1="Expertise Title:" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_TITLE" value1="${userProjectTitle}:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_DATES" value1="01 Feb 2012 - Current"  />
 
 		<if>
@@ -977,6 +983,8 @@
 	</command>
 
 	<command name="viewTag">
+		<var name="key_userTag" value="${userTag}" />
+
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_TITLE" value1="Tags" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_CONTENT" value1="${userTag}" />
 	</command>

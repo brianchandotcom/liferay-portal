@@ -323,6 +323,8 @@
 		<staged-model-data-handler-class>com.liferay.portlet.bookmarks.lar.BookmarksFolderStagedModelDataHandler</staged-model-data-handler-class>
 		<social-activity-interpreter-class>com.liferay.portlet.bookmarks.social.BookmarksEntryActivityInterpreter</social-activity-interpreter-class>
 		<social-activity-interpreter-class>com.liferay.portlet.bookmarks.social.BookmarksFolderActivityInterpreter</social-activity-interpreter-class>
+		<user-notification-definitions>com/liferay/portlet/bookmarks/bookmarks-user-notification-definitions.xml</user-notification-definitions>
+		<user-notification-handler-class>com.liferay.portlet.bookmarks.notifications.BookmarksUserNotificationHandler</user-notification-handler-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>9.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.bookmarks.asset.BookmarksEntryAssetRendererFactory</asset-renderer-factory>

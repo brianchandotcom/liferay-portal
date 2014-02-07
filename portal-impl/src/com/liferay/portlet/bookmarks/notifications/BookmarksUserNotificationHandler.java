@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.notifications;
+package com.liferay.portlet.bookmarks.notifications;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,20 +32,21 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
-public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
+public class BookmarksUserNotificationHandler
+	extends BaseUserNotificationHandler {
 
-	public BlogsUserNotificationHandler() {
-		setPortletId(PortletKeys.BLOGS);
+	public BookmarksUserNotificationHandler() {
+		setPortletId(PortletKeys.BOOKMARKS);
 	}
 
 	@Override
@@ -59,7 +60,8 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 
 		long classPK = jsonObject.getLong("classPK");
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.fetchBlogsEntry(classPK);
+		BookmarksEntry entry =
+			BookmarksEntryLocalServiceUtil.fetchBookmarksEntry(classPK);
 
 		if (entry == null) {
 			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
@@ -75,12 +77,12 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 		if (notificationType ==
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
 
-			title = "x-added-a-new-blog-entry";
+			title = "x-added-a-new-bookmark";
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
-			title = "x-updated-a-blog-entry";
+			title = "x-updated-a-bookmark";
 		}
 
 		StringBundler sb = new StringBundler(5);
@@ -93,7 +95,7 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 					PortalUtil.getUserName(
 						entry.getUserId(), StringPool.BLANK))));
 		sb.append("</div><div class=\"body\">");
-		sb.append(HtmlUtil.escape(StringUtil.shorten(entry.getTitle(), 50)));
+		sb.append(HtmlUtil.escape(StringUtil.shorten(entry.getName(), 50)));
 		sb.append("</div>");
 
 		return sb.toString();
@@ -110,7 +112,8 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 
 		long classPK = jsonObject.getLong("classPK");
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.fetchBlogsEntry(classPK);
+		BookmarksEntry entry =
+			BookmarksEntryLocalServiceUtil.fetchBookmarksEntry(classPK);
 
 		if (entry == null) {
 			return null;
@@ -123,16 +126,17 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 		Group group = user.getGroup();
 
 		long portletPlid = PortalUtil.getPlidFromPortletId(
-			group.getGroupId(), true, PortletKeys.BLOGS);
+			group.getGroupId(), true, PortletKeys.BOOKMARKS);
 
 		PortletURL portletURL = null;
 
 		if (portletPlid != 0) {
 			portletURL = PortletURLFactoryUtil.create(
-				serviceContext.getLiferayPortletRequest(), PortletKeys.BLOGS,
-				portletPlid, PortletRequest.RENDER_PHASE);
+				serviceContext.getLiferayPortletRequest(),
+				PortletKeys.BOOKMARKS, portletPlid,
+				PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter("struts_action", "/blogs/view_entry");
+			portletURL.setParameter("struts_action", "/bookmarks/view_entry");
 			portletURL.setParameter(
 				"entryId", String.valueOf(entry.getEntryId()));
 		}
@@ -141,9 +145,9 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 				serviceContext.getLiferayPortletResponse();
 
 			portletURL = liferayPortletResponse.createRenderURL(
-				PortletKeys.BLOGS);
+				PortletKeys.BOOKMARKS);
 
-			portletURL.setParameter("struts_action", "/blogs/view_entry");
+			portletURL.setParameter("struts_action", "/bookmarks/view_entry");
 			portletURL.setParameter(
 				"entryId", String.valueOf(entry.getEntryId()));
 			portletURL.setWindowState(WindowState.MAXIMIZED);

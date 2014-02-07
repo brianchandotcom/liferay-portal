@@ -856,6 +856,14 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedFieldsMap) {
 	}
 
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> getLocalizedPersistentFieldsMap() {
+		return null;
+	}
+
+	public void setLocalizedPersistentFieldsMap(
+		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedPersistentFieldsMap) {
+	}
+
 	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> getLocalizedTransientFieldsMap() {
 		return null;
 	}
@@ -1080,6 +1088,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 		setLocalizedFieldsMap(null);
 
+		setLocalizedPersistentFieldsMap(null);
+
 		setLocalizedTransientFieldsMap(null);
 
 		ddmStructureModelImpl._columnBitmask = 0;
@@ -1180,6 +1190,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureCacheModel._document = getDocument();
 
 		ddmStructureCacheModel._localizedFieldsMap = getLocalizedFieldsMap();
+
+		ddmStructureCacheModel._localizedPersistentFieldsMap = getLocalizedPersistentFieldsMap();
 
 		ddmStructureCacheModel._localizedTransientFieldsMap = getLocalizedTransientFieldsMap();
 

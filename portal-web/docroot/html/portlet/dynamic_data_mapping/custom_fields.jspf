@@ -437,7 +437,6 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 						},
 
 						showLabel: {
-							readOnly: true,
 							value: false
 						},
 
@@ -458,18 +457,19 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 						},
 
 						getPropertyModel: function() {
-							return [
-								{
-									attributeName: 'type',
-									editor: false,
-									name: '<%= UnicodeLanguageUtil.get(pageContext, "type") %>'
-								},
+							var instance = this;
+
+							var model = DDMSeparatorField.superclass.getPropertyModel.apply(instance, arguments);
+
+							model.push(
 								{
 									attributeName: 'style',
 									editor: new A.TextAreaCellEditor(),
 									name: '<%= UnicodeLanguageUtil.get(pageContext, "style") %>'
 								}
-							];
+							);
+
+							return model;
 						},
 
 						_uiSetStyle: function(val) {

@@ -1024,10 +1024,26 @@ public class DDMStructureWrapper implements DDMStructure,
 
 	@Override
 	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> getFieldsMap(
+		boolean includeTransientFields)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructure.getFieldsMap(includeTransientFields);
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> getFieldsMap(
 		java.lang.String locale)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmStructure.getFieldsMap(locale);
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> getFieldsMap(
+		java.lang.String locale, boolean includeTransientFields)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructure.getFieldsMap(locale, includeTransientFields);
 	}
 
 	@Override
@@ -1059,8 +1075,21 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> getLocalizedPersistentFieldsMap() {
+		return _ddmStructure.getLocalizedPersistentFieldsMap();
+	}
+
+	@Override
 	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> getLocalizedTransientFieldsMap() {
 		return _ddmStructure.getLocalizedTransientFieldsMap();
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> getPersistentFieldsMap(
+		java.lang.String locale)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructure.getPersistentFieldsMap(locale);
 	}
 
 	@Override
@@ -1122,6 +1151,13 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
+	public boolean isFieldTransient(java.lang.String fieldName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructure.isFieldTransient(fieldName);
+	}
+
+	@Override
 	public void setDocument(com.liferay.portal.kernel.xml.Document document) {
 		_ddmStructure.setDocument(document);
 	}
@@ -1130,6 +1166,12 @@ public class DDMStructureWrapper implements DDMStructure,
 	public void setLocalizedFieldsMap(
 		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedFieldsMap) {
 		_ddmStructure.setLocalizedFieldsMap(localizedFieldsMap);
+	}
+
+	@Override
+	public void setLocalizedPersistentFieldsMap(
+		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedPersistentFieldsMap) {
+		_ddmStructure.setLocalizedPersistentFieldsMap(localizedPersistentFieldsMap);
 	}
 
 	@Override

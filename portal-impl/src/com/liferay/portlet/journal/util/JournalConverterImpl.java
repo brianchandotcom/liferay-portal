@@ -84,6 +84,7 @@ public class JournalConverterImpl implements JournalConverter {
 		_ddmTypesToJournalTypes.put("checkbox", "boolean");
 		_ddmTypesToJournalTypes.put("ddm-documentlibrary", "document_library");
 		_ddmTypesToJournalTypes.put("ddm-link-to-page", "link_to_layout");
+		_ddmTypesToJournalTypes.put("ddm-separator", "selection_break");
 		_ddmTypesToJournalTypes.put("ddm-text-html", "text_area");
 		_ddmTypesToJournalTypes.put("select", "list");
 		_ddmTypesToJournalTypes.put("text", "text");
@@ -99,6 +100,7 @@ public class JournalConverterImpl implements JournalConverter {
 		_journalTypesToDDMTypes.put("link_to_layout", "ddm-link-to-page");
 		_journalTypesToDDMTypes.put("list", "select");
 		_journalTypesToDDMTypes.put("multi-list", "select");
+		_journalTypesToDDMTypes.put("selection_break", "ddm-separator");
 		_journalTypesToDDMTypes.put("text", "text");
 		_journalTypesToDDMTypes.put("text_area", "ddm-text-html");
 		_journalTypesToDDMTypes.put("text_box", "textarea");
@@ -225,23 +227,26 @@ public class JournalConverterImpl implements JournalConverter {
 			return;
 		}
 
-		Field ddmField = getField(
-			dynamicElementElement, ddmStructure, defaultLocale);
+		if (!ddmStructure.isFieldTransient(name)) {
+			Field ddmField = getField(
+				dynamicElementElement, ddmStructure, defaultLocale);
 
-		String fieldName = ddmField.getName();
+			String fieldName = ddmField.getName();
 
-		Field existingDDMField = ddmFields.get(fieldName);
+			Field existingDDMField = ddmFields.get(fieldName);
 
-		if (existingDDMField != null) {
-			for (Locale locale : ddmField.getAvailableLocales()) {
-				existingDDMField.addValues(locale, ddmField.getValues(locale));
+			if (existingDDMField != null) {
+				for (Locale locale : ddmField.getAvailableLocales()) {
+					existingDDMField.addValues(
+						locale, ddmField.getValues(locale));
+				}
+			}
+			else {
+				ddmFields.put(ddmField);
 			}
 		}
-		else {
-			ddmFields.put(ddmField);
-		}
 
-		updateFieldsDisplay(ddmFields, fieldName);
+		updateFieldsDisplay(ddmFields, name);
 
 		List<Element> childrenDynamicElementElements =
 			dynamicElementElement.elements("dynamic-element");
@@ -268,10 +273,6 @@ public class JournalConverterImpl implements JournalConverter {
 			Fields ddmFields, String fieldName, String parentFieldName,
 			int parentOffset)
 		throws Exception {
-
-		if (!ddmFields.contains(fieldName)) {
-			return 0;
-		}
 
 		Field fieldsDisplayField = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
@@ -496,53 +497,6 @@ public class JournalConverterImpl implements JournalConverter {
 
 	protected void updateContentDynamicElement(
 			Element dynamicElementElement, DDMStructure ddmStructure,
-			Field ddmField, DDMFieldsCounter ddmFieldsCounter)
-		throws Exception {
-
-		String fieldName = ddmField.getName();
-
-		String fieldType = ddmStructure.getFieldType(fieldName);
-		String indexType = ddmStructure.getFieldProperty(
-			fieldName, "indexType");
-
-		String type = _ddmTypesToJournalTypes.get(fieldType);
-
-		if (type == null) {
-			type = fieldType;
-		}
-
-		dynamicElementElement.addAttribute("type", type);
-
-		dynamicElementElement.addAttribute("index-type", indexType);
-
-		for (Locale locale : ddmField.getAvailableLocales()) {
-			Element dynamicContentElement = dynamicElementElement.addElement(
-				"dynamic-content");
-
-			dynamicContentElement.addAttribute(
-				"language-id", LocaleUtil.toLanguageId(locale));
-
-			int count = ddmFieldsCounter.get(fieldName);
-
-			Serializable fieldValue = ddmField.getValue(locale, count);
-
-			if (fieldValue instanceof Date) {
-				Date valueDate = (Date)fieldValue;
-
-				fieldValue = valueDate.getTime();
-			}
-
-			String valueString = String.valueOf(fieldValue);
-
-			updateDynamicContentValue(
-				dynamicContentElement, fieldType, valueString.trim());
-		}
-
-		ddmFieldsCounter.incrementKey(fieldName);
-	}
-
-	protected void updateContentDynamicElement(
-			Element dynamicElementElement, DDMStructure ddmStructure,
 			Fields ddmFields, DDMFieldsCounter ddmFieldsCounter)
 		throws Exception {
 
@@ -571,8 +525,58 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		updateContentDynamicElement(
-			dynamicElementElement, ddmStructure, ddmFields.get(fieldName),
+			dynamicElementElement, ddmStructure, ddmFields, fieldName,
 			ddmFieldsCounter);
+	}
+
+	protected void updateContentDynamicElement(
+			Element dynamicElementElement, DDMStructure ddmStructure,
+			Fields ddmFields, String fieldName,
+			DDMFieldsCounter ddmFieldsCounter)
+		throws Exception {
+
+		String fieldType = ddmStructure.getFieldType(fieldName);
+		String indexType = ddmStructure.getFieldProperty(
+			fieldName, "indexType");
+
+		String type = _ddmTypesToJournalTypes.get(fieldType);
+
+		if (type == null) {
+			type = fieldType;
+		}
+
+		dynamicElementElement.addAttribute("type", type);
+
+		dynamicElementElement.addAttribute("index-type", indexType);
+
+		if (!ddmStructure.isFieldTransient(fieldName)) {
+			Field ddmField = ddmFields.get(fieldName);
+
+			for (Locale locale : ddmField.getAvailableLocales()) {
+				Element dynamicContentElement =
+					dynamicElementElement.addElement("dynamic-content");
+
+				dynamicContentElement.addAttribute(
+					"language-id", LocaleUtil.toLanguageId(locale));
+
+				int count = ddmFieldsCounter.get(fieldName);
+
+				Serializable fieldValue = ddmField.getValue(locale, count);
+
+				if (fieldValue instanceof Date) {
+					Date valueDate = (Date)fieldValue;
+
+					fieldValue = valueDate.getTime();
+				}
+
+				String valueString = String.valueOf(fieldValue);
+
+				updateDynamicContentValue(
+					dynamicContentElement, fieldType, valueString.trim());
+			}
+		}
+
+		ddmFieldsCounter.incrementKey(fieldName);
 	}
 
 	protected void updateDDMXSDDynamicElement(
@@ -780,13 +784,6 @@ public class JournalConverterImpl implements JournalConverter {
 		if (type.equals("multi-list")) {
 			element.addAttribute("multiple", "true");
 		}
-		else if (type.equals("selection_break")) {
-			Element parentElement = element.getParent();
-
-			parentElement.remove(element);
-
-			return;
-		}
 		else {
 			Element parentElement = element.getParent();
 
@@ -818,13 +815,16 @@ public class JournalConverterImpl implements JournalConverter {
 
 		element.remove(element.attribute("type"));
 
-		String dataType = _ddmDataTypes.get(type);
+		if (!type.equals("selection_break")) {
+			String dataType = _ddmDataTypes.get(type);
 
-		if (dataType == null) {
-			dataType = "string";
+			if (dataType == null) {
+				dataType = "string";
+			}
+
+			element.addAttribute("dataType", dataType);
 		}
 
-		element.addAttribute("dataType", dataType);
 		element.addAttribute("indexType", indexType);
 
 		String required = "false";

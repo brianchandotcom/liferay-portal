@@ -130,7 +130,7 @@ public class DDMXSDImpl implements DDMXSD {
 
 			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
-			if ((fieldsDisplayField != null) && fields.contains(name)) {
+			if (fieldsDisplayField != null) {
 				String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
 					fieldsDisplayField);
 
@@ -154,7 +154,7 @@ public class DDMXSDImpl implements DDMXSD {
 			fieldStructure.put("fieldNamespace", StringUtil.randomId());
 			fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
 
-			if ((fields != null) && fields.contains(name)) {
+			if (fields != null) {
 				ddmFieldsCounter.incrementKey(name);
 				ddmFieldsCounter.incrementKey(DDMImpl.FIELDS_DISPLAY_NAME);
 			}

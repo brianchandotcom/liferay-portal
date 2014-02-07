@@ -1,0 +1,470 @@
+<definition component-name="portal-wcm">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
+	<command name="BreadcrumbConfiguration" priority="3">
+		<var name="siteChildPageName" value="Child PageName" />
+		<var name="siteName" value="SiteName" />
+		<var name="sitePagePrivacy" value="Public" />
+		<var name="sitePageURL" value="http://localhost:8080/web/sitename/child-pagename" />
+		<var name="siteParentPageName" value="Parent PageName" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${siteParentPageName}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addChildCP">
+			<var name="siteChildPageName" value="${siteChildPageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${siteParentPageName}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+		</execute>
+
+		<execute macro="SitePage#viewChildPG">
+			<var name="pageAccess" value="${sitePagePrivacy}" />
+			<var name="pageName" value="${siteParentPageName}" />
+            <var name="childPageCount" value="1" />
+			<var name="siteChildPageName" value="${siteChildPageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${siteParentPageName}" />
+			<var name="sitePageURL" value="${sitePageURL}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Breadcrumb" />
+		</execute>
+
+        <execute macro="Portlet#gotoPortletOptions">
+            <var name="portletOption" value="Configuration" />
+        </execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteChildPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewConfigurationBreadcrumb">
+			<var name="checkContent" value="CurrentGroup,CurrentPortlet,Layout,ParentGroups,PortletBreadcrumb" />
+			<var name="uncheckContent" value="GuestGroup" />
+		</execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="checkContent" value="GuestGroup" />
+			<var name="uncheckContent" value="Layout" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteChildPageName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteParentPageName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="Liferay" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#configurationSave" />
+
+		<execute macro="SitePage#viewChildPG">
+			<var name="pageAccess" value="${sitePagePrivacy}" />
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="childPageCount" value="1" />
+			<var name="siteChildPageName" value="${siteChildPageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${siteParentPageName}" />
+			<var name="sitePageURL" value="${sitePageURL}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteChildPageName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteParentPageName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="Liferay" />
+			<var name="present" value="" />
+		</execute>
+
+        <execute macro="Portlet#gotoPortletOptions">
+            <var name="portletOption" value="Configuration" />
+        </execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="uncheckContent" value="ParentGroups" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteParentPageName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#configurationSave" />
+
+		<execute macro="SitePage#viewChildPG">
+			<var name="pageAccess" value="${sitePagePrivacy}" />
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="childPageCount" value="1" />
+			<var name="siteChildPageName" value="${siteChildPageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${siteParentPageName}" />
+			<var name="sitePageURL" value="${sitePageURL}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteChildPageName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteParentPageName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="Liferay" />
+			<var name="present" value="" />
+		</execute>
+
+        <execute macro="Portlet#gotoPortletOptions">
+            <var name="portletOption" value="Configuration" />
+        </execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="uncheckContent" value="GuestGroup" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteChildPageName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteParentPageName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="Liferay" />
+		</execute>
+
+		<execute macro="Breadcrumb#configurationSave" />
+
+		<execute macro="SitePage#viewChildPG">
+			<var name="pageAccess" value="${sitePagePrivacy}" />
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="childPageCount" value="1" />
+			<var name="siteChildPageName" value="${siteChildPageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${siteParentPageName}" />
+			<var name="sitePageURL" value="${sitePageURL}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteChildPageName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteParentPageName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="Liferay" />
+		</execute>
+
+        <execute macro="Portlet#gotoPortletOptions">
+            <var name="portletOption" value="Configuration" />
+        </execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="checkContent" value="CurrentGroup,CurrentPortlet,GuestGroup,Layout,ParentGroups,PortletBreadcrumb" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteChildPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="Liferay" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#configurationSave" />
+
+		<execute macro="SitePage#viewChildPG">
+			<var name="pageAccess" value="${sitePagePrivacy}" />
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="childPageCount" value="1" />
+			<var name="siteChildPageName" value="${siteChildPageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${siteParentPageName}" />
+			<var name="sitePageURL" value="${sitePageURL}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteChildPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="Liferay" />
+			<var name="present" value="" />
+		</execute>
+
+        <execute macro="Portlet#gotoPortletOptions">
+            <var name="portletOption" value="Configuration" />
+        </execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="uncheckContent" value="CurrentGroup,CurrentPortlet,PortletBreadcrumb" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteChildPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="Liferay" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#configurationSave" />
+
+		<execute macro="SitePage#viewChildPG">
+			<var name="pageAccess" value="${sitePagePrivacy}" />
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="childPageCount" value="1" />
+			<var name="siteChildPageName" value="${siteChildPageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${siteParentPageName}" />
+			<var name="sitePageURL" value="${sitePageURL}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteChildPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="Liferay" />
+			<var name="present" value="" />
+		</execute>
+
+        <execute macro="Portlet#gotoPortletOptions">
+            <var name="portletOption" value="Configuration" />
+        </execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="checkContent" value="CurrentGroup,CurrentPortlet,PortletBreadcrumb" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteChildPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="Liferay" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#configurationSave" />
+
+		<execute macro="SitePage#viewChildPG">
+			<var name="pageAccess" value="${sitePagePrivacy}" />
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="childPageCount" value="1" />
+			<var name="siteChildPageName" value="${siteChildPageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${siteParentPageName}" />
+			<var name="sitePageURL" value="${sitePageURL}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteChildPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="Liferay" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="SitePage#viewChildPG">
+			<var name="pageAccess" value="${sitePagePrivacy}" />
+			<var name="pageName" value="${siteParentPageName}" />
+			<var name="childPageCount" value="1" />
+			<var name="siteChildPageName" value="${siteChildPageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${siteParentPageName}" />
+			<var name="sitePageURL" value="${sitePageURL}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+        <execute macro="Portlet#gotoPortletOptions">
+            <var name="portletOption" value="Configuration" />
+        </execute>
+        
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="checkContent" value="CurrentGroup,CurrentPortlet,GuestGroup,Layout,ParentGroups,PortletBreadcrumb" />
+			<var name="uncheckContent" value="CurrentGroup" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="pageName" value="${siteChildPageName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="checkContent" value="CurrentGroup" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteChildPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#configurationSave" />
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="uncheckContent" value="CurrentGroup" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteChildPageName}" />
+		</execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="checkContent" value="CurrentGroup" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPreview">
+			<var name="pageName" value="${siteChildPageName}" />
+			<var name="present" value="" />
+		</execute>
+
+		<execute macro="Breadcrumb#configurationSave" />
+	</command>
+</definition>

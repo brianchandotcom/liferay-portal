@@ -10,7 +10,7 @@ subprojects {
 
 	ext.buildLibDir = new File("${projectDir}/build/libs")
 	ext.jarFile = "${buildLibDir}/${project.name}.jar"
-	ext.liferayProjectDir = "${rootDir}/../../"
+	ext.liferayProjectDir = "${rootDir}/../../.."
 
 	configurations {
 		bnd

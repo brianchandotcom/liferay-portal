@@ -278,7 +278,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 			);
 		}
 		else if (dataValue === 'export') {
-			<portlet:renderURL var="exportPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:renderURL var="exportPagesURL">
 				<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -287,13 +287,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 			</portlet:renderURL>
 
-			Liferay.Util.openWindow(
-				{
-					id: '<portlet:namespace />exportDialog',
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "export") %>',
-					uri: '<%= exportPagesURL.toString() %>'
-				}
-			);
+			location.href = '<%= exportPagesURL %>';
 		}
 	};
 

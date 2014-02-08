@@ -44,7 +44,7 @@ import javax.servlet.ServletContext;
  */
 public class ServletContextUtil {
 
-	public static final String PATH_WEB_XML = "/WEB-INF/web.xml";
+	public static final String PATH_WEB_INF = "/WEB-INF";
 
 	public static final String URI_ATTRIBUTE =
 		ServletContextUtil.class.getName().concat(".rootURI");
@@ -161,11 +161,11 @@ public class ServletContextUtil {
 		}
 
 		try {
-			URL rootURL = servletContext.getResource(PATH_WEB_XML);
+			URL rootURL = servletContext.getResource(PATH_WEB_INF);
 
 			String path = rootURL.getPath();
 
-			int index = path.indexOf(PATH_WEB_XML);
+			int index = path.indexOf(PATH_WEB_INF);
 
 			if (index < 0) {
 				throw new MalformedURLException("Invalid URL " + rootURL);

@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>CPKnowledgebaseadmin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPKnowledgebaseadmin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPKnowledgebaseadmin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ARTICLE</td>
+	<td>//button[contains(.,'Add Article')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>CPKnowledgebaseadminAddarticle</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPKnowledgebaseadminAddarticle</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPKnowledgebaseadmin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SECTIONS_SELECT_LIST</td>
+	<td>//select[@id='_1_WAR_knowledgebaseportlet_sections']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

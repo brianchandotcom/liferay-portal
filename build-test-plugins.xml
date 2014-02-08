@@ -46,12 +46,25 @@ security-manager-enabled=true</echo>
 			</then>
 		</if>
 
-		<if>
-			<isset property="plugin.portlets.properties" />
-			<then>
-				<echo file="${lp.plugins.dir}/${plugin.types}/${portlet.plugins.includes}/docroot/WEB-INF/src/portlet-ext.properties">${plugin.portlets.properties}</echo>
-			</then>
-		</if>
+		<for list="${plugins.includes}" param="plugin">
+			<sequential>
+				<if>
+					<isset property="portlet.properties.@{plugin}" />
+					<then>
+						<propertycopy
+							from="portlet.properties.@{plugin}"
+							name="portlet.properties"
+							override="true"
+						/>
+
+						<echo file="${lp.plugins.dir}/${plugin.types}/@{plugin}/docroot/WEB-INF/src/portlet-ext.properties">${portlet.properties}</echo>
+					</then>
+					<else>
+						<delete file="${lp.plugins.dir}/${plugin.types}/@{plugin}/docroot/WEB-INF/src/portlet-ext.properties" />
+					</else>
+				</if>
+			</sequential>
+		</for>
 
 		<if>
 			<matches pattern="http" string="${test.build.plugins.war.zip.url}" />

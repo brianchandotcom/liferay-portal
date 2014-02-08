@@ -1,0 +1,22 @@
+<definition component-name="portal-tools">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="AssertKnowledgeBasePortletPropertiesApplied" priority="5">
+		<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
+
+		<property
+			name="portlet.properties.knowledge-base-portlet"
+			value="admin.kb.article.sections=Application Server,Authentication,Content Management,Database,Development,Plugins,Portlets,Security,Server Configuration,User Interface$${line.separator}admin.kb.article.default.sections="
+		/>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base (Admin)" />
+		</execute>
+
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_ARTICLE" value1="Add Article" />
+
+		<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="SECTIONS_SELECT_LIST" value1="Application Server Authentication Content Management Database Development Plugins Portlets Security Server Configuration User Interface" />
+	</command>
+</definition>

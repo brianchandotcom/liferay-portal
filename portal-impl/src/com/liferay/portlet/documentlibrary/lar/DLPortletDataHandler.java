@@ -44,6 +44,7 @@ import com.liferay.portal.service.persistence.RepositoryExportActionableDynamicQ
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -80,8 +81,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(DLFileEntryType.class),
 			new StagedModelType(DLFileRank.class),
 			new StagedModelType(DLFileShortcut.class),
-			new StagedModelType(FileEntry.class),
-			new StagedModelType(Folder.class),
+			new StagedModelType(DLFileEntryConstants.getClassName()),
+			new StagedModelType(DLFolderConstants.getClassName()),
 			new StagedModelType(Repository.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
@@ -89,14 +90,14 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				Repository.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "folders", true, false, null,
-				Folder.class.getName()),
+				DLFolderConstants.getClassName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "documents", true, false,
 				new PortletDataHandlerControl[] {
 					new PortletDataHandlerBoolean(
 						NAMESPACE, "previews-and-thumbnails")
 				},
-				FileEntry.class.getName()),
+				DLFileEntryConstants.getClassName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "document-types", true, false, null,
 				DLFileEntryType.class.getName()),
@@ -408,7 +409,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 			@Override
 			protected StagedModelType getStagedModelType() {
-				return new StagedModelType(FileEntry.class);
+				return new StagedModelType(DLFileEntryConstants.getClassName());
 			}
 
 			@Override
@@ -476,7 +477,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 			@Override
 			protected StagedModelType getStagedModelType() {
-				return new StagedModelType(Folder.class);
+				return new StagedModelType(DLFolderConstants.getClassName());
 			}
 
 			@Override

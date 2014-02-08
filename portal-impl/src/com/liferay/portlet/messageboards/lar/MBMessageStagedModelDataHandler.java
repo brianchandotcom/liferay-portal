@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -114,8 +115,8 @@ public class MBMessageStagedModelDataHandler
 		if (hasAttachmentsFileEntries) {
 			for (FileEntry fileEntry : message.getAttachmentsFileEntries()) {
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, message, MBMessage.class, fileEntry,
-					FileEntry.class, PortletDataContext.REFERENCE_TYPE_WEAK);
+					portletDataContext, message, fileEntry,
+					PortletDataContext.REFERENCE_TYPE_WEAK);
 			}
 
 			long folderId = message.getAttachmentsFolderId();
@@ -298,7 +299,7 @@ public class MBMessageStagedModelDataHandler
 
 		List<Element> attachmentElements =
 			portletDataContext.getReferenceDataElements(
-				messageElement, FileEntry.class,
+				messageElement, DLFileEntry.class,
 				PortletDataContext.REFERENCE_TYPE_WEAK);
 
 		for (Element attachmentElement : attachmentElements) {

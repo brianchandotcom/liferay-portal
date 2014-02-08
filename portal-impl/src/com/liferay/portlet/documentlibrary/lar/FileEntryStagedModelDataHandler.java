@@ -49,6 +49,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -125,7 +126,7 @@ public class FileEntryStagedModelDataHandler
 		throws Exception {
 
 		Element fileEntryElement = portletDataContext.getExportDataElement(
-			fileEntry, FileEntry.class);
+			fileEntry);
 
 		String fileEntryPath = ExportImportPathUtil.getModelPath(fileEntry);
 
@@ -134,8 +135,8 @@ public class FileEntryStagedModelDataHandler
 				fileEntry.getRepositoryId());
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, fileEntry, FileEntry.class, repository,
-				Repository.class, PortletDataContext.REFERENCE_TYPE_STRONG);
+				portletDataContext, fileEntry, repository,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
 
 			portletDataContext.addClassedModel(
 				fileEntryElement, fileEntryPath, fileEntry);
@@ -158,8 +159,7 @@ public class FileEntryStagedModelDataHandler
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, fileEntry, FileEntry.class,
-				fileEntry.getFolder(), Folder.class,
+				portletDataContext, fileEntry, fileEntry.getFolder(),
 				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
 
@@ -253,7 +253,7 @@ public class FileEntryStagedModelDataHandler
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, fileEntry, Folder.class,
+				portletDataContext, fileEntry, DLFolder.class,
 				fileEntry.getFolderId());
 		}
 
@@ -540,8 +540,8 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, fileEntry, FileEntry.class, dlFileEntryType,
-			DLFileEntryType.class, PortletDataContext.REFERENCE_TYPE_STRONG);
+			portletDataContext, fileEntry, dlFileEntryType,
+			PortletDataContext.REFERENCE_TYPE_STRONG);
 
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 

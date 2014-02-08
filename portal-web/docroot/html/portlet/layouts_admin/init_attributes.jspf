@@ -155,8 +155,6 @@ if (selGroup.isLayoutSetPrototype()) {
 
 LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout);
 
-LayoutLister layoutLister = new LayoutLister();
-
 String pagesName = null;
 
 if (liveGroup.isLayoutPrototype() || liveGroup.isLayoutSetPrototype() || liveGroup.isUserGroup()) {
@@ -181,11 +179,9 @@ else {
 
 String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, locale);
 
-LayoutView layoutView = layoutLister.getLayoutView(groupId, privateLayout, rootNodeName, locale);
+List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(groupId, privateLayout, rootNodeName, locale);
 
-List layoutList = layoutView.getList();
-
-request.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutList);
+request.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutDescriptions);
 %>
 
 <liferay-portlet:renderURL varImpl="redirectURL">

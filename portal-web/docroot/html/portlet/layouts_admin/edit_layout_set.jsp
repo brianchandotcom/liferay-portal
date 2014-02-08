@@ -261,7 +261,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 			window.open('<%= viewPagesURL %>').focus();
 		}
 		else if (dataValue === 'import') {
-			<portlet:renderURL var="importPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:renderURL var="importPagesURL">
 				<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -269,13 +269,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 			</portlet:renderURL>
 
-			Liferay.Util.openWindow(
-				{
-					id: '<portlet:namespace />importDialog',
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "import") %>',
-					uri: '<%= importPagesURL.toString() %>'
-				}
-			);
+			location.href = '<%= importPagesURL %>';
 		}
 		else if (dataValue === 'export') {
 			<portlet:renderURL var="exportPagesURL">

@@ -18,10 +18,20 @@
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
+boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 boolean validate = ParamUtil.getBoolean(request, "validate", true);
 
 String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, ExportImportHelper.TEMP_FOLDER_NAME);
 %>
+
+<portlet:renderURL var="backURL">
+	<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />
+</portlet:renderURL>
+
+<liferay-ui:header
+	backURL="<%= backURL %>"
+	title='<%= privateLayout ? LanguageUtil.get(pageContext, "import-private-pages") : LanguageUtil.get(pageContext, "import-public-pages") %>'
+/>
 
 <liferay-ui:tabs
 	names="new-import-process,current-and-previous"

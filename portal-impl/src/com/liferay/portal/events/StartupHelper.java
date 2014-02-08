@@ -48,6 +48,10 @@ public class StartupHelper {
 		return _upgraded;
 	}
 
+	public boolean isUpgrading() {
+		return _upgrading;
+	}
+
 	public boolean isVerified() {
 		return _verified;
 	}
@@ -58,6 +62,10 @@ public class StartupHelper {
 
 	public void setStartupFinished(boolean startupFinished) {
 		_startupFinished = startupFinished;
+	}
+
+	public void setUpgrading(boolean upgrading) {
+		_upgrading = upgrading;
 	}
 
 	public void updateIndexes() {
@@ -168,6 +176,7 @@ public class StartupHelper {
 	private boolean _dropIndexes;
 	private boolean _startupFinished;
 	private boolean _upgraded;
+	private boolean _upgrading;
 	private boolean _verified;
 
 }

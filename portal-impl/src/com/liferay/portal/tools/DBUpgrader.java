@@ -134,6 +134,8 @@ public class DBUpgrader {
 			_disableTransactions();
 		}
 
+		StartupHelperUtil.setUpgrading(true);
+
 		try {
 			StartupHelperUtil.upgradeProcess(buildNumber);
 		}
@@ -143,6 +145,8 @@ public class DBUpgrader {
 			throw e;
 		}
 		finally {
+			StartupHelperUtil.setUpgrading(false);
+
 			if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
 				_enableTransactions();
 			}

@@ -39,6 +39,10 @@ public class StartupHelperUtil {
 		return getStartupHelper().isUpgraded();
 	}
 
+	public static boolean isUpgrading() {
+		return getStartupHelper().isUpgrading();
+	}
+
 	public static boolean isVerified() {
 		return getStartupHelper().isVerified();
 	}
@@ -49,6 +53,10 @@ public class StartupHelperUtil {
 
 	public static void setStartupFinished(boolean startupFinished) {
 		getStartupHelper().setStartupFinished(startupFinished);
+	}
+
+	public static void setUpgrading(boolean upgrading) {
+		getStartupHelper().setUpgrading(upgrading);
 	}
 
 	public static void updateIndexes() {

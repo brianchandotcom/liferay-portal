@@ -1,11 +1,4 @@
 <definition>
-	<command name="removePG">
-		<execute action="PGDocumentsandmedia#click" locator-key1="OPTIONS" value1="Options" />
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="OPTIONS_MENULIST_REMOVE" value1="Remove" />
-		<execute action="PGDocumentsandmedia#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to remove this component?" />
-		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="PORTLET_TITLE" value1="Documents and Media" />
-	</command>
-
 	<command name="viewDefaultPG">
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Documents and Media" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />

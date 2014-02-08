@@ -19,7 +19,7 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="DMDocument#tearDownPG">
+		<execute macro="DMDocument#tearDownCP">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -304,21 +304,21 @@
 		</execute>
 
 		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocument" value="Duplicate" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 	</command>
 
 	<command name="AddFolderDocuments" priority="5">
-		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocument1File" value="Document_1.doc" />
 		<var name="dmDocument1Title" value="DM Document 1 Title" />
 		<var name="dmDocument2File" value="Document_2.doc" />
 		<var name="dmDocument2Title" value="DM Document 2 Title" />
 		<var name="dmDocument3File" value="Document_3.doc" />
 		<var name="dmDocument3Title" value="DM Document 3 Title" />
+		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 
@@ -444,21 +444,21 @@
 		</execute>
 
 		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocument" value="Duplicate" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 	</command>
 
 	<command name="AddFolderImages" priority="5">
-		<var name="dmDocumentDescription" value="DM Image Description" />
 		<var name="dmDocument1File" value="Document_1.jpg" />
-		<var name="dmDocument2File" value="Document_2.jpg" />
-		<var name="dmDocument3File" value="Document_3.jpg" />
 		<var name="dmDocument1Title" value="DM Image 1 Title" />
+		<var name="dmDocument2File" value="Document_2.jpg" />
 		<var name="dmDocument2Title" value="DM Image 2 Title" />
+		<var name="dmDocument3File" value="Document_3.jpg" />
 		<var name="dmDocument3Title" value="DM Image 3 Title" />
+		<var name="dmDocumentDescription" value="DM Image Description" />
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 
@@ -705,7 +705,9 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
-		<execute macro="DMDocument#deletePGActions" />
+		<execute macro="DMDocument#deleteViaActionsPG">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
 	</command>
 
 	<command name="DeleteSubFolderImageActions" priority="5">
@@ -745,7 +747,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
-		<execute macro="DMDocument#deletePGActions">
+		<execute macro="DMDocument#deleteViaActionsPG">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 	</command>
@@ -920,6 +922,14 @@
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitleEdit}" />
@@ -968,6 +978,14 @@
 
 		<execute macro="DMDocument#editPG">
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
 		<execute macro="DMDocument#viewPG">
@@ -1134,9 +1152,11 @@
 	</command>
 
 	<command name="RemovePortlet" priority="5" >
-		<execute macro="DMPortlet#removePG" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
-		<execute macro="Portlet#addPG">
+		<execute macro="Portlet#deletePG">
 			<var name="portletName" value="${portletName}" />
 		</execute>
 	</command>

@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
+	<td>//form[@id='_20_undoForm']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_MESSAGE</td>
 	<td>//div[contains(@class,'entries-empty') and contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
@@ -51,11 +56,6 @@
 <tr>
 	<td>OPTIONS</td>
 	<td>//a[@title='Options']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RECYCLE_BIN_SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(@class,'taglib-trash-undo')]/form</td>
 	<td></td>
 </tr>
 <tr>
@@ -162,26 +162,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOOLBAR_SEARCH_FIELD</td>
-	<td>//input[contains(@class,'search-query')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_SEARCH_BUTTON</td>
-	<td>//button[contains(.,'Search')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--DISPLAY_STYLE_MENULIST-->
-<tr>
-	<td>DISPLAY_STYLE_MENULIST</td>
-	<td>//div[contains(@id,'displayStyleButtons')]//a</td>
-	<td></td>
-</tr>
 <tr>
 	<td>DISPLAY_STYLE_MENULIST_ICON</td>
 	<td>//a[@role='menuitem' and contains(.,'Icon')]</td>
@@ -221,27 +206,27 @@
 <!--ACTIONS_MENULIST-->
 <tr>
 	<td>ACTIONS_MENULIST_CANCEL_CHECKOUT</td>
-	<td>//ul[@class='dropdown-menu ']/li[contains(.,'Cancel Checkout')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Cancel Checkout')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_CHECKIN</td>
-	<td>//ul[@class='dropdown-menu ']/li[contains(.,'Checkin')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Checkin')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_CHECKOUT</td>
-	<td>//ul[@class='dropdown-menu ']/li[@id='jgww_' and contains(.,'Checkout')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li[3]/a[contains(.,'Checkout')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_MOVE</td>
-	<td>//ul[@class='dropdown-menu ']/li[contains(.,'Move')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//li[@id='_20_actionsButtonContainer']/ul/li[5]/a/span[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li[@id='_20_moveToTrashAction']/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -565,35 +550,40 @@
 	<td>//div[contains(@class,'document-entries-pagination')]/ul/li[contains(.,'Next')]/a</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--OPTIONS_MENULIST-->
 <tr>
 	<td>OPTIONS_MENULIST_LOOK_AND_FEEL</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li[contains(.,'Look and Feel')]/a/span[2]</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'Look and Feel')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_MENULIST_CONFIGURATION</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li[contains(.,'Configuration')]/a/span[2]</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'Configuration')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li[contains(.,'Export / Import')]/a/span[2]</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'Export / Import')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_MENULIST_MAXIMIZE</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li[contains(.,'Maximize')]/a/span[2]</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'Maximize')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_MENULIST_MINIMIZE</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li[contains(.,'Minimize')]/a/span[2]</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'Minimize')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_MENULIST_REMOVE</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li[contains(.,'Remove')]/a/span[2]</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'Remove')]</td>
 	<td></td>
 </tr>
 </tbody>

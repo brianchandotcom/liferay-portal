@@ -10,7 +10,7 @@ subprojects {
 
 	ext.buildLibDir = new File("${projectDir}/build/libs")
 	ext.jarFile = "${buildLibDir}/${project.name}.jar"
-	ext.liferayProjectDir = "${rootDir}/../../"
+	ext.liferayProjectDir = "${rootDir}/../../.."
 
 	configurations {
 		bnd
@@ -57,6 +57,12 @@ subprojects {
 			liferayProjectDir
 		)
 
+		ant.taskdef(
+			classname: "com.liferay.util.ant.ManifestHelperTask",
+			classpath: configurations.bnd.asPath,
+			name: "manifestHelper"
+		)
+
 		ant.manifestHelper(
 			projectDirPropertyName: "sdk.dir"
 		)
@@ -67,23 +73,25 @@ subprojects {
 			name: "bnd"
 		)
 
-		ant.taskdef(
-			classname: "com.liferay.util.ant.ManifestHelperTask",
-			classpath: configurations.bnd.asPath,
-			name: "manifestHelper"
-		)
-
 		buildLibDir.mkdir()
 
 		ant.bnd(
 			bndRootFile: "${liferayProjectDir}/common.bnd",
-			file: "${project.name}.bnd",
+			file: "bnd.bnd",
 			outputPath: "${jarFile}",
 			sourcePath: "."
 		) {
 			classpath {
 				files(["build/classes/main"])
 			}
+		}
+	}
+
+	jar {
+		actions = []
+
+		doLast {
+			tasks.baseline.execute()
 		}
 	}
 }

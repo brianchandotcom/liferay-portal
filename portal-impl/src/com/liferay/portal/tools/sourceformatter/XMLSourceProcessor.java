@@ -663,7 +663,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 						processErrorMessage(
 							fileName,
-							"sort: " + fileName + " " + referencePackagePath);
+							"sort: " + fileName + " " + entityName + " " +
+								referenceEntity);
 					}
 				}
 

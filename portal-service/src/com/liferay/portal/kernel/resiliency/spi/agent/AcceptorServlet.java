@@ -39,7 +39,7 @@ public class AcceptorServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		PortalUtil.setPortalPort(request);
+		PortalUtil.setPortalAddresses(request);
 
 		ServletContext servletContext = getServletContext();
 

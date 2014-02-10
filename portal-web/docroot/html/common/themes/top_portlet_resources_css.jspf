@@ -37,6 +37,10 @@
 		request.setAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS, portletResourceStaticURLs);
 	}
 
+	StringBuilder sb = new StringBuilder(portletComboPath);
+
+	boolean hasComboScript = false;
+
 	for (Portlet curPortlet : portlets) {
 		for (String headerPortalCss : curPortlet.getHeaderPortalCss()) {
 			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortalCss) && !portletResourceStaticURLs.contains(headerPortalCss)) {
@@ -44,6 +48,8 @@
 
 				sb.append("&");
 				sb.append(HtmlUtil.escape(headerPortalCss));
+
+				hasComboScript = true;
 			}
 			else {
 				if (!HttpUtil.hasProtocol(headerPortalCss)) {
@@ -70,16 +76,14 @@
 		}
 	}
 
-	if (themeDisplay.isThemeJsFastLoad() && (sb.length() > 0)) {
-		sb.insert(0, portletComboPath);
-	%>
-
+	if (themeDisplay.isThemeJsFastLoad() && hasComboScript) {
+		%>
 		<link href="<%= sb.toString() %>" rel="stylesheet" type="text/css" />
-
-	<%
-		sb.delete(0, sb.length());
-
+		<%
 	}
+
+	sb = new StringBuilder(portletComboPath);
+	hasComboScript = false;
 
 	for (Portlet curPortlet : portlets) {
 		for (String headerPortletCss : curPortlet.getHeaderPortletCss()) {
@@ -92,6 +96,8 @@
 					sb.append(':');
 				}
 				sb.append(HtmlUtil.escape(headerPortletCss));
+
+				hasComboScript = true;
 			}
 			else {
 				if (!HttpUtil.hasProtocol(headerPortletCss)) {
@@ -118,15 +124,10 @@
 		}
 	}
 
-	if (themeDisplay.isThemeJsFastLoad() && (sb.length() > 0)) {
-		sb.insert(0, portletComboPath);
-	%>
-
+	if (themeDisplay.isThemeJsFastLoad() && hasComboScript) {
+		%>
 		<link href="<%= sb.toString() %>" rel="stylesheet" type="text/css" />
-
-	<%
-		sb.delete(0, sb.length());
-
+		<%
 	}
 	%>
 

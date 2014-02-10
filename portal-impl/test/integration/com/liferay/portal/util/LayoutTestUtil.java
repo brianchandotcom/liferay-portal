@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.CustomizedPages;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
@@ -47,6 +48,11 @@ import javax.portlet.PortletPreferences;
  * @author Mate Thurzo
  */
 public class LayoutTestUtil {
+
+	public static Layout addLayout(Group group) throws Exception {
+		return LayoutTestUtil.addLayout(
+			group.getGroupId(), ServiceTestUtil.randomString(), false);
+	}
 
 	public static Layout addLayout(
 			long groupId, boolean privateLayout, Map<Locale, String> nameMap,

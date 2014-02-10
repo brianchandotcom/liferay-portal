@@ -85,7 +85,7 @@ public class ComboServlet extends HttpServlet {
 	}
 
 	protected void doService(
-		HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		Set<String> modulePathsSet = new LinkedHashSet<String>();
@@ -441,6 +441,5 @@ public class ComboServlet extends HttpServlet {
 		private String _resourcePath;
 		private String _moduleContextPath;
 	}
-
 
 }

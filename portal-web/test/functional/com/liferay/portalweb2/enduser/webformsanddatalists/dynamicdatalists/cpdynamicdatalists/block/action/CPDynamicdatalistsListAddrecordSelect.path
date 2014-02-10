@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SELECT_DOCUMENT_IFRAME</td>
-	<td>//iframe[@id='_167_selectDocumentLibrary_iframe_']</td>
+	<td>//iframe[contains(@id,'_selectDocumentLibrary_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>

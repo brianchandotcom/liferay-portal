@@ -20,17 +20,27 @@
 </tr>
 <tr>
 	<td>FIELD_1</td>
-	<td>//div[contains(@class,'lfr-forms-field-wrapper field-wrapper-content')][1]</td>
+	<td>//div[contains(@class,'field-wrapper')][1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELD_2</td>
-	<td>//div[contains(@class,'lfr-forms-field-wrapper field-wrapper-content')][2]</td>
+	<td>//div[contains(@class,'field-wrapper')][2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELD_3</td>
-	<td>//div[contains(@class,'lfr-forms-field-wrapper field-wrapper-content')][3]</td>
+	<td>//div[contains(@class,'field-wrapper')][3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_BUTTON</td>
+	<td>//button[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 </tbody>

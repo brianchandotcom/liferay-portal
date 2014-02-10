@@ -5,19 +5,6 @@
 		<execute action="CPDynamicdatalistsAddlist#type" locator-key1="NAME_FIELD" value1="${listName}" />
 		<execute action="CPDynamicdatalistsAddlist#type" locator-key1="DESCRIPTION_FIELD" value1="${listDescription}" />
 		<execute action="CPDynamicdatalistsAddlist#assertClick" locator-key1="DATA_DEFINITION_SELECT_LINK" value1="Select" />
-
-		<execute action="CPDynamicdatalistsAddlistDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="CPDynamicdatalistsAddlistDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
-		<execute action="CPDynamicdatalistsAddlistDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalistsAddlistDatadefinitions#assertTextEquals" locator-key1="DATA_DEFINITION_TABLE_NAME_1" value1="${dataDefinitionName}" />
-		<execute action="CPDynamicdatalistsAddlistDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_CHOOSE_BUTTON_1" value1="Choose" />
-
-		<execute action="CPDynamicdatalists#selectFrameTop" />
-
-		<execute action="CPDynamicdatalistsAddlist#assertTextEquals" locator-key1="DATA_DEFINITION_NAME" value1="${dataDefinitionName}" />
-		<execute action="CPDynamicdatalistsAddlist#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addPG">
@@ -26,15 +13,6 @@
 		<execute action="PGDynamicdatalistsAddlist#type" locator-key1="NAME_FIELD" value1="${listName}" />
 		<execute action="PGDynamicdatalistsAddlist#type" locator-key1="DESCRIPTION_FIELD" value1="${listDescription}" />
 		<execute action="PGDynamicdatalistsAddlist#assertClick" locator-key1="DATA_DEFINITION_SELECT_LINK" value1="Select" />
-
-		<execute action="PGDynamicdatalistsAddlistDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="PGDynamicdatalistsAddlistDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
-		<execute action="PGDynamicdatalistsAddlistDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="PGDynamicdatalistsAddlistDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_CHOOSE_BUTTON_1" value1="Choose" />
-
-		<execute action="PGDynamicdatalistsAddlist#selectFrameTop" />
-		<execute action="PGDynamicdatalistsAddlist#assertTextEquals" locator-key1="DATA_DEFINITION_NAME" value1="${dataDefinitionName}" />
-		<execute action="PGDynamicdatalistsAddlist#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="deleteCP">
@@ -96,6 +74,44 @@
 		<execute action="PGDynamicdatalistsConfiguration#assertTextEquals" locator-key1="LIST_TABLE_DESCRIPTION_1" value1="${listDescriptionEdit}" />
 
 		<execute action="PGDynamicdatalists#selectFrameTop" />
+	</command>
+
+	<command name="saveCmd">
+		<execute action="CPDynamicdatalistsAddlist#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="saveCP">
+		<execute macro="List#saveCmd" />
+
+		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="savePG">
+		<execute macro="List#saveCmd" />
+	</command>
+
+	<command name="selectDataDefinitionCmd">
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#assertTextEquals" locator-key1="DATA_DEFINITION_TABLE_NAME_1" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_CHOOSE_BUTTON_1" value1="Choose" />
+
+		<execute action="CPDynamicdatalists#selectFrameTop" />
+
+		<execute action="CPDynamicdatalistsAddlist#assertTextEquals" locator-key1="DATA_DEFINITION_NAME" value1="${dataDefinitionName}" />
+	</command>
+
+	<command name="selectDataDefinitionCP">
+		<execute macro="List#selectDataDefinitionCmd">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+	</command>
+
+	<command name="selectDataDefinitionPG">
+		<execute macro="List#selectDataDefinitionCmd">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
 	</command>
 
 	<command name="selectPG">

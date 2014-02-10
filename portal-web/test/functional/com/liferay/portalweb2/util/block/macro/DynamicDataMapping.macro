@@ -1,6 +1,6 @@
 <definition>
 	<command name="addField">
-		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
 
@@ -27,7 +27,7 @@
 	</command>
 
 	<command name="addFieldFormTemplateSpecific">
-		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
 
@@ -67,7 +67,7 @@
 	</command>
 
 	<command name="deleteField">
-		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
@@ -80,7 +80,7 @@
 	</command>
 
 	<command name="editField">
-		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
@@ -113,7 +113,7 @@
 	</command>
 
 	<command name="editFieldOptions">
-		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
@@ -141,6 +141,7 @@
 
 		<execute macro="DynamicDataMapping#viewFieldOptionsCmd">
 			<var name="field" value="${field}" />
+			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
 			<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
 		</execute>
@@ -152,7 +153,7 @@
 	</command>
 
 	<command name="editFieldPredefinedValue">
-		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
@@ -207,6 +208,7 @@
 		<execute macro="DynamicDataMapping#viewFieldPredefinedValueCmd">
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
 		</execute>
 
@@ -217,7 +219,7 @@
 	</command>
 
 	<command name="editFieldShowLabel">
-		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
@@ -250,8 +252,38 @@
 		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="editFieldStyle">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_STYLE" />
+		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldStyle}" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_STYLE" value1="${fieldStyle}" />
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="editFieldText">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_TEXT" />
+		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldText}" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_TEXT" value1="${fieldText}" />
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="editFieldTip">
-		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
@@ -268,8 +300,17 @@
 		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="selectDynamicDataMappingFrame">
+		<if>
+			<condition action="Dynamicdatamapping#isElementPresent" locator-key1="IFRAME" />
+			<then>
+				<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+			</then>
+		</if>
+	</command>
+
 	<command name="viewCanAddField">
-		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<var name="key_field" value="${field}" />
 
@@ -279,7 +320,7 @@
 	</command>
 
 	<command name="viewCannotAddField">
-		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<var name="key_field" value="${field}" />
 
@@ -289,7 +330,7 @@
 	</command>
 
 	<command name="viewField">
-		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
@@ -346,6 +387,7 @@
 			<then>
 				<execute macro="DynamicDataMapping#viewFieldOptionsCmd">
 					<var name="field" value="${field}" />
+					<var name="fieldName" value="${fieldName}" />
 					<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
 					<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
 				</execute>
@@ -356,7 +398,7 @@
 	</command>
 
 	<command name="viewFieldFormTemplateSpecific">
-		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
@@ -385,6 +427,7 @@
 
 	<command name="viewFieldOptionsCmd">
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
 
 		<for list="${fieldOptionsNames}" param="fieldOptionsName">
 			<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_OPTIONS" value1="${fieldOptionsName}" />
@@ -433,6 +476,7 @@
 
 	<command name="viewFieldPredefinedValueCmd">
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_PREDEFINED_VALUE" value1="${fieldPredefinedValue}" />
 

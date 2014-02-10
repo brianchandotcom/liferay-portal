@@ -38,6 +38,38 @@
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="addFormTemplatePG">
+		<execute action="PGDynamicdatalists#click" locator-key1="TOOLBAR_ADD_FORM_TEMPLATE" />
+
+		<execute action="PGDynamicdatalistsAddformtemplate#type" locator-key1="NAME_FIELD" value1="${dataDefinitionFormTemplateName}" />
+	</command>
+
+	<command name="copyCP">
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+
+		<var name="key_dataDefinitionTemplateName" value="${dataDefinitionTemplateName}" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_MENULIST_COPY" value1="Copy" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesCopy#type" locator-key1="NAME_FIELD" value1="${dataDefinitionTemplateCopyName}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesCopy#assertClick" locator-key1="COPY_BUTTON" value1="Copy" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesCopy#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog." />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesCopy#assertClick" locator-key1="CLOSE_BUTTON" value1="Close" />
+
+		<var name="key_dataDefinitionTemplateName" value="${dataDefinitionTemplateCopyName}" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_NAME" value1="${dataDefinitionTemplateCopyName}" />
+
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="deleteTemplateCP">
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
@@ -82,9 +114,9 @@
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionDisplayTemplateName}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_TABLE_ACTIONS_1" value1="Actions" />
+		<var name="key_dataDefinitionTemplateName" value="${dataDefinitionDisplayTemplateName}" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#type" locator-key1="NAME_FIELD" value1="${dataDefinitionDisplayTemplateNameEdit}" />
@@ -134,6 +166,23 @@
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="editFormTemplatePG">
+		<execute action="PGDynamicdatalists#click" locator-key1="TOOLBAR_EDIT_FORM_TEMPLATE" />
+
+		<execute action="PGDynamicdatalistsAddformtemplate#type" locator-key1="NAME_FIELD" value1="${dataDefinitionFormTemplateNameEdit}" />
+	</command>
+
+	<command name="gotoManageTemplatesCmd">
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+
+		<var name="key_dataDefinitionName" value="${dataDefinitionName}" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+	</command>
+
 	<command name="saveAndContinueFormTemplateCP">
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
 
@@ -154,6 +203,10 @@
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="saveFormTemplatePG">
+		<execute action="PGDynamicdatalistsAddformtemplate#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="tearDownTemplateCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -162,13 +215,22 @@
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="Data Definition" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
 
 		<if>
-			<condition action="CPDynamicdatalistsDatadefinitions#isElementPresent" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" />
+			<not>
+				<isset var="dataDefinitionName" />
+			</not>
 			<then>
-				<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+				<var name="dataDefinitionName" value="Data Definition" />
+			</then>
+		</if>
+
+		<var name="key_dataDefinitionName" value="${dataDefinitionName}" />
+
+		<if>
+			<condition action="CPDynamicdatalistsDatadefinitions#isElementPresent" locator-key1="DATA_DEFINITION_TABLE_ACTIONS" />
+			<then>
+				<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS" value1="Actions" />
 				<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 				<if>
 					<condition action="CPDynamicdatalistsDatadefinitionsManagetemplates#isElementPresent" locator-key1="TEMPLATE_TABLE_ACTIONS_1" />
@@ -183,37 +245,54 @@
 		</if>
 	</command>
 
+	<command name="viewDefaultNoTemplatesCP">
+		<execute macro="DataDefinitionTemplate#gotoManageTemplatesCmd">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no templates." />
+
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="viewDisplayTemplateCP">
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute macro="DataDefinitionTemplate#gotoManageTemplatesCmd">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
 
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+		<var name="key_dataDefinitionTemplateName" value="${dataDefinitionTemplateName}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_TABLE_NAME_1" value1="${dataDefinitionDisplayTemplateNameEdit}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_TABLE_NAME" value1="${dataDefinitionTemplateName}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dataDefinitionDisplayTemplateNameEdit}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#assertTextEquals" locator-key1="NAME_FIELD" value1="${dataDefinitionDisplayTemplateNameEdit}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dataDefinitionTemplateName} (${dataDefinitionName})" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#assertTextEquals" locator-key1="NAME_FIELD" value1="${dataDefinitionTemplateName}" />
 
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewFormTemplateCP">
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute macro="DataDefinitionTemplate#gotoManageTemplatesCmd">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
 
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+		<var name="key_dataDefinitionTemplateName" value="${dataDefinitionTemplateName}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_TABLE_NAME_1" value1="${dataDefinitionFormTemplateName}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_TABLE_NAME" value1="${dataDefinitionTemplateName}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dataDefinitionFormTemplateName} (${dataDefinitionName})" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dataDefinitionTemplateName} (${dataDefinitionName})" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#assertTextEquals" locator-key1="NAME_FIELD" value1="${dataDefinitionTemplateName}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#assertTextEquals" locator-key1="NAME_FIELD" value1="${dataDefinitionFormTemplateName}" />
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewNoTemplateCP">
+		<execute macro="DataDefinitionTemplate#gotoManageTemplatesCmd">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<var name="key_dataDefinitionTemplateName" value="${dataDefinitionTemplateName}" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertElementNotPresent" locator-key1="TEMPLATE_TABLE_NAME" />
 
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>

@@ -6,9 +6,15 @@
 	<tear-down>
 		<execute macro="DataDefinitionTemplate#tearDownTemplateCP" />
 
+		<execute macro="DataDefinitionTemplate#tearDownTemplateCP">
+			<var name="dataDefinitionName" value="Data Definition Clone With Form Template" />
+		</execute>
+
 		<execute macro="List#tearDownCP" />
 
 		<execute macro="DataDefinition#tearDownCP" />
+
+		<execute macro="DMDocument#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
@@ -194,6 +200,380 @@
 
 		<execute macro="DataDefinition#deleteCP">
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+	</command>
+
+	<command name="FormTemplate" priority="5">
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionFormTemplateName" value="Data Definition Form Template Name" />
+		<var name="dataDefinitionName" value="Employee Profile Data Definition" />
+		<var name="listDescription" value="Liferay Employee Profiles" />
+		<var name="listName" value="Employees" />
+		<var name="pageName" value="Dynamic Data Lists Page" />
+		<var name="portletName" value="Dynamic Data List Display" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="List#addPG">
+			<var name="listDescription" value="${listDescription}" />
+			<var name="listName" value="${listName}" />
+		</execute>
+
+		<execute macro="DataDefinition#addPG">
+			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Boolean" />
+			<var name="fieldFieldLabel" value="Employee" />
+			<var name="fieldName" value="Employee" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Date" />
+			<var name="fieldFieldLabel" value="Start Date" />
+			<var name="fieldName" value="Start_Date" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Decimal" />
+			<var name="fieldFieldLabel" value="Salary" />
+			<var name="fieldName" value="Salary" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Profile Picture" />
+			<var name="fieldName" value="Profile_Picture" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Resume" />
+			<var name="fieldName" value="Resume" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Integer" />
+			<var name="fieldFieldLabel" value="Age" />
+			<var name="fieldName" value="Age" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Number" />
+			<var name="fieldFieldLabel" value="Weekly Hours" />
+			<var name="fieldName" value="Weekly_Hours" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Radio" />
+			<var name="fieldFieldLabel" value="Department" />
+			<var name="fieldName" value="Department" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldOptions">
+			<var name="field" value="Radio" />
+			<var name="fieldFieldLabel" value="Department" />
+			<var name="fieldName" value="Department" />
+			<var name="fieldOptionsNames" value="Core Engineer,QA Engineer,Support Engineer" />
+			<var name="fieldOptionsValues" value="1,2,3" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="Years Worked" />
+			<var name="fieldName" value="Years_Worked" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldOptions">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="Years Worked" />
+			<var name="fieldName" value="Years_Worked" />
+			<var name="fieldOptionsNames" value="1-2,3-5,5+" />
+			<var name="fieldOptionsValues" value="1,2,3" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Name" />
+			<var name="fieldName" value="Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Description" />
+			<var name="fieldName" value="Description" />
+		</execute>
+
+		<execute macro="DataDefinition#savePG" />
+
+		<execute macro="List#selectDataDefinitionPG">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="List#savePG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DataDefinitionTemplate#addFormTemplatePG">
+			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionFormTemplateName}" />
+		</execute>
+
+		<for list="Employee,Start Date,Salary,Profile Picture,Resume,Age,Weekly Hours,Department,Years Worked,Name,Description" param="fieldFieldLabel">
+			<execute macro="DynamicDataMapping#viewCannotAddField">
+				<var name="field" value="${fieldFieldLabel}" />
+			</execute>
+
+			<execute macro="DynamicDataMapping#deleteField">
+				<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			</execute>
+
+			<execute macro="DynamicDataMapping#viewCanAddField">
+				<var name="field" value="${fieldFieldLabel}" />
+			</execute>
+		</for>
+
+		<for list="Employee,Start Date,Salary,Profile Picture,Resume,Age,Weekly Hours,Department,Years Worked,Name,Description" param="fieldFieldLabel">
+			<execute macro="DynamicDataMapping#addFieldFormTemplateSpecific">
+				<var name="field" value="${fieldFieldLabel}" />
+			</execute>
+
+			<execute macro="DynamicDataMapping#viewCannotAddField">
+				<var name="field" value="${fieldFieldLabel}" />
+			</execute>
+		</for>
+
+		<execute macro="DynamicDataMapping#addFieldFormTemplateSpecific">
+			<var name="field" value="Separator" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addFieldFormTemplateSpecific">
+			<var name="field" value="Paragraph" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldStyle">
+			<var name="fieldFieldLabel" value="Paragraph" />
+			<var name="fieldStyle" value="" />
+		</execute>
+
+		<execute macro="DataDefinitionTemplate#saveFormTemplatePG" />
+
+		<execute macro="ListRecord#addPG">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Boolean" />
+			<var name="fieldFieldLabel" value="Employee" />
+			<var name="fieldName" value="Employee" />
+			<var name="recordFieldData" value="true" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Date" />
+			<var name="fieldFieldLabel" value="Start Date" />
+			<var name="fieldName" value="Start_Date" />
+			<var name="recordFieldData" value="04/01/2015" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Decimal" />
+			<var name="fieldFieldLabel" value="Salary" />
+			<var name="fieldName" value="Salary" />
+			<var name="recordFieldData" value="35000" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="document" value="Document_1.txt" />
+			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Resume" />
+			<var name="fieldName" value="Resume" />
+			<var name="recordFieldData" value="Document Title" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Integer" />
+			<var name="fieldFieldLabel" value="Age" />
+			<var name="fieldName" value="Age" />
+			<var name="recordFieldData" value="30" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Number" />
+			<var name="fieldFieldLabel" value="Weekly Hours" />
+			<var name="fieldName" value="Weekly_Hours" />
+			<var name="recordFieldData" value="40" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Radio" />
+			<var name="fieldFieldLabel" value="Department" />
+			<var name="fieldName" value="Department" />
+			<var name="recordFieldData" value="QA Engineer" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="Years Worked" />
+			<var name="fieldName" value="Years_Worked" />
+			<var name="recordFieldData" value="5+" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Name" />
+			<var name="fieldName" value="Name" />
+			<var name="recordFieldData" value="Joe Engineer" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Description" />
+			<var name="fieldName" value="Description" />
+			<var name="recordFieldData" value="Joe Engineer works in QA" />
+		</execute>
+
+		<execute macro="ListRecord#viewFieldFormTemplateSpecific">
+			<var name="field" value="Separator" />
+		</execute>
+
+		<execute macro="ListRecord#viewFieldFormTemplateSpecific">
+			<var name="field" value="Paragraph" />
+			<var name="fieldText" value="Paragraph" />
+		</execute>
+
+		<execute macro="ListRecord#publishPG" />
+
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[1]" value1="Employee" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[2]" value1="Age" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[3]" value1="Department" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[4]" value1="Description" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[5]" value1="Start Date" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[6]" value1="Salary" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[7]" value1="Profile Picture" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[8]" value1="Name" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[9]" value1="Resume" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[10]" value1="Weekly Hours" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[11]" value1="Years Worked" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[12]" value1="Status" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[13]" value1="Modified Date" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[14]" value1="Author" />
+
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[1]/a" value1="true" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[2]/a" value1="30" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[3]/a" value1="QA Engineer" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[4]/a" value1="Joe Engineer works in QA" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[5]/a" value1="4/1/15" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[6]/a" value1="35000.0" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[7]" value1="" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[8]/a" value1="Joe Engineer" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[9]/a" value1="Document Title" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[10]/a" value1="40" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[11]/a" value1="5+" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[12]/span/span/span/strong" value1="Approved" />
+		<execute action="PGDynamicdatalists#assertElementPresent" locator1="//tbody[@class='table-data']/tr/td[13]/a" value1="Modified Date" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//tbody[@class='table-data']/tr/td[14]/a" value1="Test Test" />
+
+		<execute macro="DataDefinitionTemplate#editFormTemplatePG">
+			<var name="dataDefinitionFormTemplateNameEdit" value="Template Rev" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editField">
+			<var name="fieldFieldLabel" value="Salary" />
+			<var name="fieldFieldLabelEdit" value="Pay" />
+			<var name="fieldFieldNameEdit" value="Pay" />
+		</execute>
+
+		<execute macro="DataDefinitionTemplate#saveFormTemplatePG" />
+
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[6]" value1="Pay" />
+
+		<execute macro="DataDefinitionTemplate#editFormTemplatePG">
+			<var name="dataDefinitionFormTemplateNameEdit" value="Template Rev" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldPredefinedValue">
+			<var name="field" value="Number" />
+			<var name="fieldFieldLabel" value="Weekly Hours" />
+			<var name="fieldName" value="Weekly_Hours" />
+			<var name="fieldPredefinedValue" value="40" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldStyle">
+			<var name="fieldFieldLabel" value="Paragraph" />
+			<var name="fieldStyle" value="1" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldText">
+			<var name="fieldFieldLabel" value="Paragraph" />
+			<var name="fieldText" value="HR Department only" />
+		</execute>
+
+		<execute macro="DataDefinitionTemplate#saveFormTemplatePG" />
+
+		<execute macro="ListRecord#addPG">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="ListRecord#viewFieldPredefinedValue">
+			<var name="field" value="Number" />
+			<var name="fieldFieldLabel" value="Weekly Hours" />
+			<var name="fieldName" value="Weekly_Hours" />
+			<var name="fieldPredefinedValue" value="40" />
+		</execute>
+
+		<execute macro="ListRecord#viewFieldFormTemplateSpecific">
+			<var name="field" value="Paragraph" />
+			<var name="fieldText" value="HR Department only" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#copyCP">
+			<var name="dataDefinitionCopyName" value="Data Definition Clone With No Templates" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinitionTemplate#viewDefaultNoTemplatesCP">
+			<var name="dataDefinitionName" value="Data Definition Clone With No Templates" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#copyCP">
+			<var name="copyFormTemplates" value="true" />
+			<var name="dataDefinitionCopyName" value="Data Definition Clone With Form Template" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinitionTemplate#viewFormTemplateCP">
+			<var name="dataDefinitionFormTemplateName" value="Template Rev" />
+			<var name="dataDefinitionName" value="Data Definition Clone With Form Template" />
 		</execute>
 	</command>
 </definition>

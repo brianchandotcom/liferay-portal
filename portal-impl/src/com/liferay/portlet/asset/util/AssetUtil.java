@@ -375,6 +375,11 @@ public class AssetUtil {
 		return addPortletURL;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getAddPortletURL(
+	 *             LiferayPortletRequest, LiferayPortletResponse, long, String,
+	 *             long, long[], String[], String))}
+	 */
 	public static PortletURL getAddPortletURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, String className,
@@ -480,6 +485,11 @@ public class AssetUtil {
 		return addPortletURLs;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getAddPortletURLs(
+	 *             LiferayPortletRequest, LiferayPortletResponse, long, long[],
+	 *             long[], long[], String[], String)}
+	 */
 	public static Map<String, PortletURL> getAddPortletURLs(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long[] classNameIds,

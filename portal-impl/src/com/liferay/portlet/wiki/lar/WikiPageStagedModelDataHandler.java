@@ -138,6 +138,8 @@ public class WikiPageStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			page);
 
+		serviceContext.setUuid(page.getUuid());
+
 		Map<Long, Long> nodeIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				WikiNode.class);
@@ -151,8 +153,6 @@ public class WikiPageStagedModelDataHandler
 			nodeId, page.getTitle());
 
 		if (existingPage == null) {
-			serviceContext.setUuid(page.getUuid());
-
 			importedPage = WikiPageLocalServiceUtil.addPage(
 				userId, nodeId, page.getTitle(), page.getVersion(),
 				page.getContent(), page.getSummary(), page.isMinorEdit(),

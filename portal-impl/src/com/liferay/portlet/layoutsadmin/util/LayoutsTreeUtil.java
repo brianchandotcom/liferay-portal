@@ -46,6 +46,7 @@ import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +64,7 @@ public class LayoutsTreeUtil {
 			HttpServletRequest request, long groupId)
 		throws Exception {
 
-		List<LayoutTreeNode> layoutTreeNodes = new ArrayList<LayoutTreeNode>();
+		LayoutTreeNodes layoutTreeNodes = new LayoutTreeNodes();
 
 		layoutTreeNodes.addAll(
 			_getLayoutTreeNodes(
@@ -91,7 +92,7 @@ public class LayoutsTreeUtil {
 			long parentLayoutId, long[] expandedLayoutIds, boolean incomplete)
 		throws Exception {
 
-		List<LayoutTreeNode> layoutTreeNodes = _getLayoutTreeNodes(
+		LayoutTreeNodes layoutTreeNodes = _getLayoutTreeNodes(
 			request, groupId, privateLayout, parentLayoutId, incomplete,
 			expandedLayoutIds);
 
@@ -133,7 +134,7 @@ public class LayoutsTreeUtil {
 		return _paginateLayouts(request, parentLayoutId, layouts);
 	}
 
-	private static List<LayoutTreeNode> _getLayoutTreeNodes(
+	private static LayoutTreeNodes _getLayoutTreeNodes(
 			HttpServletRequest request, long groupId, boolean privateLayout,
 			long parentLayoutId, boolean incomplete, long[] expandedLayoutIds)
 		throws Exception {
@@ -142,17 +143,19 @@ public class LayoutsTreeUtil {
 
 		List<Layout> ancestorLayouts = _getAncestorLayouts(request);
 
-		List<Layout> layouts = _getLayouts(
-			request, groupId, privateLayout, parentLayoutId, incomplete);
+		List<Layout> layouts = LayoutServiceUtil.getLayouts(
+			groupId, privateLayout, parentLayoutId, incomplete,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		for (Layout layout : layouts) {
+		for (Layout layout :
+				_paginateLayouts(request, parentLayoutId, layouts)) {
+
 			LayoutTreeNode layoutTreeNode = new LayoutTreeNode(layout);
 
 			if (_isExpandableLayout(
 					request, ancestorLayouts, expandedLayoutIds, layout)) {
 
-				List<LayoutTreeNode> childLayoutTreeNodes =
-					new ArrayList<LayoutTreeNode>();
+				LayoutTreeNodes childLayoutTreeNodes = null;
 
 				if (layout instanceof VirtualLayout) {
 					VirtualLayout virtualLayout = (VirtualLayout)layout;
@@ -175,7 +178,7 @@ public class LayoutsTreeUtil {
 			layoutTreeNodes.add(layoutTreeNode);
 		}
 
-		return layoutTreeNodes;
+		return new LayoutTreeNodes(layoutTreeNodes, layouts.size());
 	}
 
 	private static int _getLoadedLayoutsCount(
@@ -233,7 +236,7 @@ public class LayoutsTreeUtil {
 	private static boolean _isPaginationEnabled(HttpServletRequest request) {
 		boolean paginate = ParamUtil.getBoolean(request, "paginate", true);
 
-		if (paginate ||
+		if (paginate &&
 			(PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN > -1)) {
 
 			return true;
@@ -246,6 +249,10 @@ public class LayoutsTreeUtil {
 			HttpServletRequest request, long parentLayoutId,
 			List<Layout> layouts)
 		throws Exception {
+
+		if (!_isPaginationEnabled(request)) {
+			return layouts;
+		}
 
 		int start = ParamUtil.getInteger(request, "start");
 
@@ -269,7 +276,7 @@ public class LayoutsTreeUtil {
 
 	private static String _toJSON(
 			HttpServletRequest request, long groupId,
-			List<LayoutTreeNode> layoutTreeNodes)
+			LayoutTreeNodes layoutTreeNodes)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -369,7 +376,7 @@ public class LayoutsTreeUtil {
 		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject();
 
 		responseJSONObject.put("layouts", jsonArray);
-		responseJSONObject.put("total", layoutTreeNodes.size());
+		responseJSONObject.put("total", layoutTreeNodes.getTotal());
 
 		return responseJSONObject.toString();
 	}
@@ -384,19 +391,54 @@ public class LayoutsTreeUtil {
 			return _layout;
 		}
 
-		public List<LayoutTreeNode> getChildLayoutTreeNodes() {
+		public LayoutTreeNodes getChildLayoutTreeNodes() {
 			return _childLayoutTreeNodes;
 		}
 
 		public void setChildLayoutTreeNodes(
-			List<LayoutTreeNode> childLayoutTreeNodes) {
+			LayoutTreeNodes childLayoutTreeNodes) {
 
 			_childLayoutTreeNodes = childLayoutTreeNodes;
 		}
 
-		private List<LayoutTreeNode> _childLayoutTreeNodes =
-			new ArrayList<LayoutTreeNode>();
+		private LayoutTreeNodes _childLayoutTreeNodes = new LayoutTreeNodes();
 		private Layout _layout;
+
+	}
+
+	private static class LayoutTreeNodes implements Iterable<LayoutTreeNode> {
+
+		public LayoutTreeNodes() {
+		}
+
+		public LayoutTreeNodes(
+			List<LayoutTreeNode> layoutTreeNodes, int total) {
+
+			_layoutTreeNodeList = layoutTreeNodes;
+			_total = total;
+		}
+
+		public void addAll(LayoutTreeNodes layoutTreeNodes) {
+			_layoutTreeNodeList.addAll(layoutTreeNodes.getLayoutTreeNodeList());
+			_total += layoutTreeNodes.getTotal();
+		}
+
+		public int getTotal() {
+			return _total;
+		}
+
+		public List<LayoutTreeNode> getLayoutTreeNodeList() {
+			return _layoutTreeNodeList;
+		}
+
+		@Override
+		public Iterator<LayoutTreeNode> iterator() {
+			return _layoutTreeNodeList.iterator();
+		}
+
+		private List<LayoutTreeNode> _layoutTreeNodeList =
+			new ArrayList<LayoutTreeNode>();
+		private int _total;
 
 	}
 

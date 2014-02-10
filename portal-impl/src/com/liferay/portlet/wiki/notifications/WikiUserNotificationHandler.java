@@ -110,7 +110,7 @@ public class WikiUserNotificationHandler extends BaseUserNotificationHandler {
 
 		long classPK = jsonObject.getLong("classPK");
 
-		WikiPage page = WikiPageLocalServiceUtil.getWikiPage(classPK);
+		WikiPage page = WikiPageLocalServiceUtil.fetchWikiPage(classPK);
 
 		if (page == null) {
 			return null;

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.portlet.mobiledevicerules">
+<service-builder package-path="com.liferay.portlet.mobiledevicerules" auto-import-default-references="false">
 	<author>Edward C. Han</author>
 	<namespace>MDR</namespace>
 	<entity name="MDRAction" local-service="true" remote-service="true" uuid="true">
@@ -41,6 +41,8 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
+		<reference package-path="com.liferay.portal" entity="User" />
+		<reference package-path="com.liferay.portlet.mobiledevicerules" entity="MDRRuleGroupInstance" />
 	</entity>
 	<entity name="MDRRule" local-service="true" remote-service="true" uuid="true">
 
@@ -77,6 +79,8 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
+		<reference package-path="com.liferay.portal" entity="User" />
+		<reference package-path="com.liferay.portlet.mobiledevicerules" entity="MDRRuleGroup" />
 	</entity>
 	<entity name="MDRRuleGroup" local-service="true" remote-service="true" uuid="true">
 
@@ -111,6 +115,9 @@
 
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
+		<reference package-path="com.liferay.portal" entity="User" />
+		<reference package-path="com.liferay.portlet.mobiledevicerules" entity="MDRRule" />
+		<reference package-path="com.liferay.portlet.mobiledevicerules" entity="MDRRuleGroupInstance" />
 	</entity>
 	<entity name="MDRRuleGroupInstance" local-service="true" remote-service="true" uuid="true">
 
@@ -162,9 +169,13 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Layout" />
 		<reference package-path="com.liferay.portal" entity="LayoutSet" />
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
+		<reference package-path="com.liferay.portal" entity="User" />
+		<reference package-path="com.liferay.portlet.mobiledevicerules" entity="MDRAction" />
+		<reference package-path="com.liferay.portlet.mobiledevicerules" entity="MDRRuleGroup" />
 	</entity>
 	<exceptions>
 		<exception>ActionType</exception>

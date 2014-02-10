@@ -29,14 +29,34 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NO_ENTRY_MESSAGE</td>
+	<td>//div[contains(@class,'portlet-body') and contains(.,'There are no blogs.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--ENTRY-->
 <tr>
+	<td>ENTRY_TITLE</td>
+	<td>//span[@class='entry-title']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_AUTHOR</td>
 	<td>//span[@class='user-name' and contains(.,'${key_entryAuthor}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_ABSTRACT_DESCRIPTION</td>
+	<td>//div[@class='abstract']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_READ_MORE</td>
+	<td>//div[@class='comments']/a[contains(.,'Read More')]</td>
 	<td></td>
 </tr>
 <tr>

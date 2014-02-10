@@ -131,6 +131,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_SCHEDULED_STATUS</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'scheduled')]/div/h3</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_TITLE</td>
 	<td>//div[@class='entry-title' and contains(.,'${key_entryTitle}')]/h2/a</td>
 	<td></td>
@@ -228,6 +233,11 @@
 <tr>
 	<td>ENTRY_EDIT_3</td>
 	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Edit'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DRAFT_EDIT</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'draft') and contains(.,'${key_entryTitle}')]//div[contains(@class,'edit-actions')]//span/a/span[.='Edit']</td>
 	<td></td>
 </tr>
 <tr>

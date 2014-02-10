@@ -3,11 +3,31 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var CSS_ICON_STAR = 'icon-star';
+
+		var CSS_ICON_STAR_EMPTY = 'icon-star-empty';
+
 		var EMPTY_FN = Lang.emptyFn;
 
 		var EVENT_INTERACTIONS_RENDER = ['focus', 'mousemove'];
 
 		var TPL_LABEL_SCORE = '{desc} ({totalEntries} {voteLabel})';
+
+		var SELECTOR_RATING_ELEMENT = '.rating-element';
+
+		var STR_INITIAL_FOCUS = 'initialFocus';
+
+		var STR_NAMESPACE = 'namespace';
+
+		var STR_RESPONSE_DATA = 'responseData';
+
+		var STR_SIZE = 'size';
+
+		var STR_STARS = 'stars';
+
+		var STR_YOUR_SCORE = 'yourScore';
+
+		var STR_URI = 'uri';
 
 		var buffer = [];
 
@@ -118,17 +138,15 @@ AUI.add(
 					_showScoreTooltip: function(event) {
 						var instance = this;
 
-						var ratingScore = instance.ratingScore;
-
 						var message = '';
 
-						var stars = ratingScore.get('selectedIndex') + 1;
+						var stars = instance._ratingScoreNode.all('.icon-star').size();
 
 						if (stars == 1) {
 							message = Liferay.Language.get('star');
 						}
 						else {
-							message = Liferay.Language.get('stars');
+							message = Liferay.Language.get(STR_STARS);
 						}
 
 						Liferay.Portal.ToolTip.show(event.currentTarget, stars + ' ' + message);
@@ -137,17 +155,15 @@ AUI.add(
 					_updateAverageScoreText: function(averageScore) {
 						var instance = this;
 
-						var ratingScore = instance.ratingScore;
+						var firstNode = instance._ratingScoreNode.one(SELECTOR_RATING_ELEMENT);
 
-						var firstImage = ratingScore.get('boundingBox').one('img.rating-element');
-
-						if (firstImage) {
+						if (firstNode) {
 							var averageRatingText = Lang.sub(
 								Liferay.Language.get('the-average-rating-is-x-stars-out-of-x'),
-								[averageScore, instance.get('size')]
+								[averageScore, instance.get(STR_SIZE)]
 							);
 
-							firstImage.attr('alt', averageRatingText);
+							firstNode.attr('title', averageRatingText);
 						}
 					}
 				},
@@ -179,7 +195,7 @@ AUI.add(
 
 					var ratings = Liferay.Ratings.StarRating;
 
-					if (config.type != 'stars') {
+					if (config.type != STR_STARS) {
 						ratings = Liferay.Ratings.ThumbRating;
 					}
 
@@ -239,10 +255,12 @@ AUI.add(
 					_renderRatings: function() {
 						var instance = this;
 
-						var namespace = instance.get('namespace');
+						var namespace = instance.get(STR_NAMESPACE);
+
+						instance._ratingScoreNode = A.one('#' + namespace + 'ratingScoreContent');
 
 						if (themeDisplay.isSignedIn()) {
-							var yourScore = instance.get('yourScore');
+							var yourScore = instance.get(STR_YOUR_SCORE);
 
 							instance.ratings = new A.StarRating(
 								{
@@ -253,41 +271,20 @@ AUI.add(
 								}
 							).render();
 
-							if (instance.get('initialFocus')) {
+							if (instance.get(STR_INITIAL_FOCUS)) {
 								instance.ratings.get('elements').item(0).focus();
 							}
 
 							instance._bindRatings();
 						}
 
-						var description = Liferay.Language.get('average');
-						var totalEntries = instance.get('totalEntries');
-						var averageScore = instance.get('averageScore');
-						var size = instance.get('size');
-
-						var label = instance._getLabel(description, totalEntries, averageScore);
-
-						var ratingScore = new A.StarRating(
-							{
-								boundingBox: '#' + namespace + 'ratingScore',
-								canReset: false,
-								defaultSelected: averageScore,
-								disabled: true,
-								label: label,
-								size: size,
-								srcNode: '#' + namespace + 'ratingScoreContent'
-							}
-						);
-
-						ratingScore.get('boundingBox').on('mouseenter', instance._showScoreTooltip, instance);
-
-						instance.ratingScore = ratingScore.render();
+						instance._ratingScoreNode.on('mouseenter', instance._showScoreTooltip, instance);
 					},
 
 					_itemSelect: function(event) {
 						var instance = this;
 
-						var uri = instance.get('uri');
+						var uri = instance.get(STR_URI);
 						var score = instance.ratings.get('selectedIndex') + 1;
 
 						instance._sendVoteRequest(uri, score, instance._saveCallback);
@@ -298,17 +295,27 @@ AUI.add(
 
 						var xhr = event.currentTarget;
 
-						var json = xhr.get('responseData');
+						var json = xhr.get(STR_RESPONSE_DATA);
 						var description = Liferay.Language.get('average');
 
 						var label = instance._getLabel(description, json.totalEntries, json.averageScore);
 
-						var averageIndex = json.averageScore - 1;
+						var averageIndex = json.averageScore;
 
-						var ratingScore = instance.ratingScore;
+						var ratingScore = instance._ratingScoreNode;
 
-						ratingScore.set('label', label);
-						ratingScore.select(averageIndex);
+						ratingScore.one('.rating-label').html(label);
+
+						ratingScore.all(SELECTOR_RATING_ELEMENT).each(
+							function(item, index, collection) {
+								if (index < averageIndex) {
+									item.replaceClass(CSS_ICON_STAR_EMPTY, CSS_ICON_STAR);
+								}
+								else {
+									item.replaceClass(CSS_ICON_STAR, CSS_ICON_STAR_EMPTY);
+								}
+							}
+						)
 
 						instance._updateAverageScoreText(json.averageScore);
 					}
@@ -335,14 +342,14 @@ AUI.add(
 
 							var totalEntries = instance.get('totalEntries');
 							var averageScore = instance.get('averageScore');
-							var size = instance.get('size');
-							var yourScore = instance.get('yourScore');
+							var size = instance.get(STR_SIZE);
+							var yourScore = instance.get(STR_YOUR_SCORE);
 
 							var label = instance._getLabel(description, totalEntries, averageScore);
 
 							var yourScoreIndex = instance._convertToIndex(yourScore);
 
-							var namespace = instance.get('namespace');
+							var namespace = instance.get(STR_NAMESPACE);
 
 							instance.ratings = new A.ThumbRating(
 								{
@@ -352,7 +359,7 @@ AUI.add(
 								}
 							).render();
 
-							if (instance.get('initialFocus')) {
+							if (instance.get(STR_INITIAL_FOCUS)) {
 								A.one('#' + namespace + 'ratingThumb a').focus();
 							}
 
@@ -365,7 +372,7 @@ AUI.add(
 					_itemSelect: function(event) {
 						var instance = this;
 
-						var uri = instance.get('uri');
+						var uri = instance.get(STR_URI);
 						var value = instance.ratings.get('value');
 
 						var score = Liferay.Ratings._thumbScoreMap[value];
@@ -378,7 +385,7 @@ AUI.add(
 
 						var xhr = event.currentTarget;
 
-						var json = xhr.get('responseData');
+						var json = xhr.get(STR_RESPONSE_DATA);
 						var score = Math.round(json.totalEntries * json.averageScore);
 
 						var description = instance._fixScore(score);

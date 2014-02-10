@@ -41,7 +41,7 @@
 			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
 			displayStyle="<%= displayStyle %>"
 			displayStyleGroupId="<%= displayStyleGroupId %>"
-			refreshURL="<%= portletURL.toString() %>"
+			refreshURL="<%= configurationRenderURL %>"
 			showEmptyOption="<%= true %>"
 		/>
 	</div>

@@ -118,22 +118,6 @@ public class LayoutsTreeUtil {
 		return ancestorLayouts;
 	}
 
-	private static List<Layout> _getLayouts(
-			HttpServletRequest request, long groupId, boolean privateLayout,
-			long parentLayoutId, boolean incomplete)
-		throws Exception {
-
-		List<Layout> layouts = LayoutServiceUtil.getLayouts(
-			groupId, privateLayout, parentLayoutId, incomplete,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		if (!_isPaginationEnabled(request)) {
-			return layouts;
-		}
-
-		return _paginateLayouts(request, parentLayoutId, layouts);
-	}
-
 	private static LayoutTreeNodes _getLayoutTreeNodes(
 			HttpServletRequest request, long groupId, boolean privateLayout,
 			long parentLayoutId, boolean incomplete, long[] expandedLayoutIds)

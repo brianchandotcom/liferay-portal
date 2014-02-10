@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelHintsConstants;
 import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
-import com.liferay.portal.tools.sass.SassExecutor;
+import com.liferay.portal.tools.sass.SassExecutorUtil;
 import com.liferay.portal.tools.sass.SassFileCache;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
@@ -143,12 +143,11 @@ public class SassToCssBuilder {
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			runtime.availableProcessors());
 
-		try {
-			SassExecutor sassExecutor = new SassExecutor(
-				docrootDirName, portalCommonDirName);
+		SassExecutorUtil.init(docrootDirName, portalCommonDirName);
 
+		try {
 			SassFileCache fileCache = new SassFileCache(
-				executorService, sassExecutor, docrootDirName, fileNames);
+				executorService, docrootDirName, fileNames);
 
 			fileCache.processAll();
 		}

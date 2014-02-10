@@ -30,11 +30,10 @@ import java.util.concurrent.Future;
 public class SassFileCache {
 
 	public SassFileCache(
-		ExecutorService executorService, SassExecutor sassExecutor,
-		String docrootDirName, List<String> fileNames) {
+		ExecutorService executorService, String docrootDirName,
+		List<String> fileNames) {
 
 		_executorService = executorService;
-		_sassExecutor = sassExecutor;
 
 		for (String fileName : fileNames) {
 			submit(docrootDirName, fileName);
@@ -60,7 +59,7 @@ public class SassFileCache {
 			return sassFile;
 		}
 
-		sassFile = new SassFile(this, _sassExecutor, docrootDirName, fileName);
+		sassFile = new SassFile(this, docrootDirName, fileName);
 
 		_sassFileCache.put(fileName, sassFile);
 		_futures.add(_executorService.submit(sassFile));
@@ -73,7 +72,6 @@ public class SassFileCache {
 	private ExecutorService _executorService;
 	private ConcurrentLinkedQueue<Future<SassFile>> _futures =
 		new ConcurrentLinkedQueue<Future<SassFile>>();
-	private SassExecutor _sassExecutor;
 	private Map<String, SassFile> _sassFileCache =
 		new ConcurrentHashMap<String, SassFile>();
 

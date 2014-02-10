@@ -26,13 +26,11 @@ import com.liferay.portal.tools.SassToCssBuilder;
  */
 public class SassString implements SassFragment {
 
-	public SassString(
-			SassExecutor sassExecutor, String fileName, String sassContent)
-		throws Exception {
+	public SassString(String fileName, String sassContent) throws Exception {
 
 		sassContent = SassToCssBuilder.parseStaticTokens(sassContent);
 
-		String cssContent = sassExecutor.parse(fileName, sassContent);
+		String cssContent = SassExecutorUtil.parse(fileName, sassContent);
 
 		if (fileName.contains("_rtl")) {
 			_ltrContent = StringPool.BLANK;

@@ -36,11 +36,9 @@ import java.util.concurrent.Callable;
 public class SassFile implements Callable<SassFile>, SassFragment {
 
 	public SassFile(
-		SassFileCache sassFileCache, SassExecutor sassExecutor,
-		String docrootDirName, String fileName) {
+		SassFileCache sassFileCache, String docrootDirName, String fileName) {
 
 		_sassFileCache = sassFileCache;
-		_sassExecutor = sassExecutor;
 		_docrootDirName = docrootDirName;
 		_fileName = fileName;
 
@@ -287,7 +285,7 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 			return;
 		}
 
-		_fragments.add(new SassString(_sassExecutor, fileName, sassContent));
+		_fragments.add(new SassString(fileName, sassContent));
 	}
 
 	private String _fixRelativePath(String fileName) {
@@ -333,7 +331,6 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 	private List<SassFragment> _fragments = new ArrayList<SassFragment>();
 	private String _ltrContent;
 	private String _rtlContent;
-	private SassExecutor _sassExecutor;
 	private SassFileCache _sassFileCache;
 
 }

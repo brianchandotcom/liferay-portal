@@ -48,14 +48,16 @@ public class AggregateUtil {
 		"[$TOKEN_2$]", "[$TOKEN_3$]", "[$ABSOLUTE_1$]", "[$ABSOLUTE_2$]",
 		"[$ABSOLUTE_3$]", "[$ABSOLUTE_4$]", "[$ABSOLUTE_5$]", "[$ABSOLUTE_6$]",
 		"[$ABSOLUTE_7$]", "[$ABSOLUTE_8$]", "[$ABSOLUTE_9$]", "[$ABSOLUTE_10$]",
-		"[$RELATIVE_1$]", "[$RELATIVE_2$]", "[$RELATIVE_3$]"
+		"[$ABSOLUTE_11$]", "[$ABSOLUTE_12$]", "[$RELATIVE_1$]",
+		"[$RELATIVE_2$]", "[$RELATIVE_3$]"
 	};
 
 	private static final String[] _CSS_PATH_TYPES = new String[] {
 		"url('')", "url(\"\")", "url()", "url('@theme_image_path@",
 		"url(\"@", "url(@", "url('http://", "url(\"http://", "url(http://",
 		"url('https://", "url(\"https://", "url(https://", "url('/", "url(\"/",
-		"url(/", "url(data:", "url('", "url(\"", "url("
+		"url(/", "url('data:", "url(\"data:", "url(data:", "url('", "url(\"",
+		"url("
 	};
 
 }

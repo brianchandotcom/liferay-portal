@@ -17,6 +17,18 @@
 <c:if test="<%= (portlets != null) && !portlets.isEmpty() %>">
 
 	<%
+	long lastModifiedTimestamp = themeDisplay.getTheme().getTimestamp();
+
+	if (themeDisplay.isThemeJsFastLoad()) {
+		for (Portlet curPortlet : portlets) {
+			if (curPortlet.hasFooterPortletCss()) {
+				lastModifiedTimestamp = Math.max(lastModifiedTimestamp, curPortlet.getTimestamp());
+			}
+		}
+	}
+
+	String portletComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=&themeId=" + themeDisplay.getThemeId(), lastModifiedTimestamp);
+
 	Set<String> portletResourceStaticURLs = (Set<String>)request.getAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS);
 
 	if (portletResourceStaticURLs == null) {
@@ -25,54 +37,98 @@
 		request.setAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS, portletResourceStaticURLs);
 	}
 
+	StringBuilder sb = new StringBuilder(portletComboPath);
+
+	boolean hasComboScript = false;
+
 	for (Portlet curPortlet : portlets) {
 		for (String footerPortalCss : curPortlet.getFooterPortalCss()) {
-			if (!HttpUtil.hasProtocol(footerPortalCss)) {
-				Portlet curRootPortlet = curPortlet.getRootPortlet();
-
-				footerPortalCss = PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + footerPortalCss, curRootPortlet.getTimestamp());
-			}
-
-			if (!footerPortalCss.contains(Http.PROTOCOL_DELIMITER)) {
-				String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-				footerPortalCss = cdnBaseURL.concat(footerPortalCss);
-			}
-
-			if (!portletResourceStaticURLs.contains(footerPortalCss)) {
+			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(footerPortalCss) && !portletResourceStaticURLs.contains(footerPortalCss)) {
 				portletResourceStaticURLs.add(footerPortalCss);
-	%>
 
-				<link href="<%= HtmlUtil.escape(footerPortalCss) %>" rel="stylesheet" type="text/css" />
+				sb.append("&");
+				sb.append(HtmlUtil.escape(footerPortalCss));
 
-	<%
+				hasComboScript = true;
+			}
+			else {
+				if (!HttpUtil.hasProtocol(footerPortalCss)) {
+					Portlet curRootPortlet = curPortlet.getRootPortlet();
+
+					footerPortalCss = PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + footerPortalCss, curRootPortlet.getTimestamp());
+				}
+
+				if (!footerPortalCss.contains(Http.PROTOCOL_DELIMITER)) {
+					String cdnBaseURL = themeDisplay.getCDNBaseURL();
+
+					footerPortalCss = cdnBaseURL.concat(footerPortalCss);
+				}
+
+				if (!portletResourceStaticURLs.contains(footerPortalCss)) {
+					portletResourceStaticURLs.add(footerPortalCss);
+		%>
+
+					<link href="<%= HtmlUtil.escape(footerPortalCss) %>" rel="stylesheet" type="text/css" />
+
+		<%
+				}
 			}
 		}
 	}
 
+	if (themeDisplay.isThemeJsFastLoad() && hasComboScript) {
+		%>
+		<link href="<%= sb.toString() %>" rel="stylesheet" type="text/css" />
+		<%
+	}
+
+	sb = new StringBuilder(portletComboPath);
+	hasComboScript = false;
+
 	for (Portlet curPortlet : portlets) {
 		for (String footerPortletCss : curPortlet.getFooterPortletCss()) {
-			if (!HttpUtil.hasProtocol(footerPortletCss)) {
-				Portlet curRootPortlet = curPortlet.getRootPortlet();
-
-				footerPortletCss = PortalUtil.getStaticResourceURL(request, curPortlet.getStaticResourcePath() + footerPortletCss, curRootPortlet.getTimestamp());
-			}
-
-			if (!footerPortletCss.contains(Http.PROTOCOL_DELIMITER)) {
-				String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-				footerPortletCss = cdnBaseURL.concat(footerPortletCss);
-			}
-
-			if (!portletResourceStaticURLs.contains(footerPortletCss)) {
+			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(footerPortletCss) && !portletResourceStaticURLs.contains(footerPortletCss)) {
 				portletResourceStaticURLs.add(footerPortletCss);
-	%>
 
-				<link href="<%= HtmlUtil.escape(footerPortletCss) %>" rel="stylesheet" type="text/css" />
+				sb.append("&");
+				if ((curPortlet.getContextPath() != null) && (curPortlet.getContextPath() != PortalUtil.getPathContext())) {
+					sb.append(curPortlet.getContextPath());
+					sb.append(':');
+				}
+				sb.append(HtmlUtil.escape(footerPortletCss));
 
-	<%
+				hasComboScript = true;
+			}
+			else {
+
+				if (!HttpUtil.hasProtocol(footerPortletCss)) {
+					Portlet curRootPortlet = curPortlet.getRootPortlet();
+
+					footerPortletCss = PortalUtil.getStaticResourceURL(request, curPortlet.getStaticResourcePath() + footerPortletCss, curRootPortlet.getTimestamp());
+				}
+
+				if (!footerPortletCss.contains(Http.PROTOCOL_DELIMITER)) {
+					String cdnBaseURL = themeDisplay.getCDNBaseURL();
+
+					footerPortletCss = cdnBaseURL.concat(footerPortletCss);
+				}
+
+				if (!portletResourceStaticURLs.contains(footerPortletCss)) {
+					portletResourceStaticURLs.add(footerPortletCss);
+		%>
+
+					<link href="<%= HtmlUtil.escape(footerPortletCss) %>" rel="stylesheet" type="text/css" />
+
+		<%
+				}
 			}
 		}
+	}
+
+	if (themeDisplay.isThemeJsFastLoad() && hasComboScript) {
+		%>
+		<link href="<%= sb.toString() %>" rel="stylesheet" type="text/css" />
+		<%
 	}
 	%>
 

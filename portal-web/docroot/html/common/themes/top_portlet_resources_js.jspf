@@ -17,8 +17,6 @@
 <c:if test="<%= (portlets != null) && !portlets.isEmpty() %>">
 
 	<%
-	StringBuilder sb = new StringBuilder();
-
 	long lastModifiedTimestamp = themeDisplay.getTheme().getTimestamp();
 
 	if (themeDisplay.isThemeJsFastLoad()) {
@@ -39,6 +37,10 @@
 		request.setAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS, portletResourceStaticURLs);
 	}
 
+	StringBuilder sb = new StringBuilder(portletComboPath);
+
+	boolean hasComboScript = false;
+
 	for (Portlet curPortlet : portlets) {
 		for (String headerPortalJavaScript : curPortlet.getHeaderPortalJavaScript()) {
 			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortalJavaScript) && !portletResourceStaticURLs.contains(headerPortalJavaScript) && !themeDisplay.isIncludedJs(headerPortalJavaScript)) {
@@ -46,6 +48,8 @@
 
 				sb.append("&");
 				sb.append(HtmlUtil.escape(headerPortalJavaScript));
+
+				hasComboScript = true;
 			}
 			else {
 				if (!HttpUtil.hasProtocol(headerPortalJavaScript)) {
@@ -62,7 +66,7 @@
 
 				if (!portletResourceStaticURLs.contains(headerPortalJavaScript) && !themeDisplay.isIncludedJs(headerPortalJavaScript)) {
 					portletResourceStaticURLs.add(headerPortalJavaScript);
-		%>
+			%>
 
 					<script src="<%= HtmlUtil.escape(headerPortalJavaScript) %>" type="text/javascript"></script>
 
@@ -72,15 +76,14 @@
 		}
 	}
 
-	if (themeDisplay.isThemeJsFastLoad() && (sb.length() > 0)) {
-		sb.insert(0, portletComboPath);
-	%>
-
+	if (themeDisplay.isThemeJsFastLoad() && hasComboScript) {
+		%>
 		<script src="<%= sb.toString() %> " type="text/javascript"></script>
-
-	<%
-		sb.delete(0, sb.length());
+		<%
 	}
+
+	sb = new StringBuilder(portletComboPath);
+	hasComboScript = false;
 
 	for (Portlet curPortlet : portlets) {
 		for (String headerPortletJavaScript : curPortlet.getHeaderPortletJavaScript()) {
@@ -93,6 +96,8 @@
 					sb.append(':');
 				}
 				sb.append(HtmlUtil.escape(headerPortletJavaScript));
+
+				hasComboScript = true;
 			}
 			else {
 				if (!HttpUtil.hasProtocol(headerPortletJavaScript)) {
@@ -119,14 +124,10 @@
 		}
 	}
 
-	if (themeDisplay.isThemeJsFastLoad() && (sb.length() > 0)) {
-		sb.insert(0, portletComboPath);
-	%>
-
+	if (themeDisplay.isThemeJsFastLoad() && hasComboScript) {
+		%>
 		<script src="<%= sb.toString() %> " type="text/javascript"></script>
-
-	<%
-		sb.delete(0, sb.length());
+		<%
 	}
 	%>
 

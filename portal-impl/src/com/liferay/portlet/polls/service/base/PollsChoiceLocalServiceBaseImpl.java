@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
@@ -40,7 +39,6 @@ import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.service.PollsChoiceLocalService;
 import com.liferay.portlet.polls.service.persistence.PollsChoicePersistence;
 import com.liferay.portlet.polls.service.persistence.PollsQuestionPersistence;
-import com.liferay.portlet.polls.service.persistence.PollsVotePersistence;
 
 import java.io.Serializable;
 
@@ -403,120 +401,6 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the polls question local service.
-	 *
-	 * @return the polls question local service
-	 */
-	public com.liferay.portlet.polls.service.PollsQuestionLocalService getPollsQuestionLocalService() {
-		return pollsQuestionLocalService;
-	}
-
-	/**
-	 * Sets the polls question local service.
-	 *
-	 * @param pollsQuestionLocalService the polls question local service
-	 */
-	public void setPollsQuestionLocalService(
-		com.liferay.portlet.polls.service.PollsQuestionLocalService pollsQuestionLocalService) {
-		this.pollsQuestionLocalService = pollsQuestionLocalService;
-	}
-
-	/**
-	 * Returns the polls question remote service.
-	 *
-	 * @return the polls question remote service
-	 */
-	public com.liferay.portlet.polls.service.PollsQuestionService getPollsQuestionService() {
-		return pollsQuestionService;
-	}
-
-	/**
-	 * Sets the polls question remote service.
-	 *
-	 * @param pollsQuestionService the polls question remote service
-	 */
-	public void setPollsQuestionService(
-		com.liferay.portlet.polls.service.PollsQuestionService pollsQuestionService) {
-		this.pollsQuestionService = pollsQuestionService;
-	}
-
-	/**
-	 * Returns the polls question persistence.
-	 *
-	 * @return the polls question persistence
-	 */
-	public PollsQuestionPersistence getPollsQuestionPersistence() {
-		return pollsQuestionPersistence;
-	}
-
-	/**
-	 * Sets the polls question persistence.
-	 *
-	 * @param pollsQuestionPersistence the polls question persistence
-	 */
-	public void setPollsQuestionPersistence(
-		PollsQuestionPersistence pollsQuestionPersistence) {
-		this.pollsQuestionPersistence = pollsQuestionPersistence;
-	}
-
-	/**
-	 * Returns the polls vote local service.
-	 *
-	 * @return the polls vote local service
-	 */
-	public com.liferay.portlet.polls.service.PollsVoteLocalService getPollsVoteLocalService() {
-		return pollsVoteLocalService;
-	}
-
-	/**
-	 * Sets the polls vote local service.
-	 *
-	 * @param pollsVoteLocalService the polls vote local service
-	 */
-	public void setPollsVoteLocalService(
-		com.liferay.portlet.polls.service.PollsVoteLocalService pollsVoteLocalService) {
-		this.pollsVoteLocalService = pollsVoteLocalService;
-	}
-
-	/**
-	 * Returns the polls vote remote service.
-	 *
-	 * @return the polls vote remote service
-	 */
-	public com.liferay.portlet.polls.service.PollsVoteService getPollsVoteService() {
-		return pollsVoteService;
-	}
-
-	/**
-	 * Sets the polls vote remote service.
-	 *
-	 * @param pollsVoteService the polls vote remote service
-	 */
-	public void setPollsVoteService(
-		com.liferay.portlet.polls.service.PollsVoteService pollsVoteService) {
-		this.pollsVoteService = pollsVoteService;
-	}
-
-	/**
-	 * Returns the polls vote persistence.
-	 *
-	 * @return the polls vote persistence
-	 */
-	public PollsVotePersistence getPollsVotePersistence() {
-		return pollsVotePersistence;
-	}
-
-	/**
-	 * Sets the polls vote persistence.
-	 *
-	 * @param pollsVotePersistence the polls vote persistence
-	 */
-	public void setPollsVotePersistence(
-		PollsVotePersistence pollsVotePersistence) {
-		this.pollsVotePersistence = pollsVotePersistence;
-	}
-
-	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -533,82 +417,6 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	public void setCounterLocalService(
 		com.liferay.counter.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name remote service.
-	 *
-	 * @return the class name remote service
-	 */
-	public com.liferay.portal.service.ClassNameService getClassNameService() {
-		return classNameService;
-	}
-
-	/**
-	 * Sets the class name remote service.
-	 *
-	 * @param classNameService the class name remote service
-	 */
-	public void setClassNameService(
-		com.liferay.portal.service.ClassNameService classNameService) {
-		this.classNameService = classNameService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.service.ResourceLocalService getResourceLocalService() {
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.service.ResourceLocalService resourceLocalService) {
-		this.resourceLocalService = resourceLocalService;
 	}
 
 	/**
@@ -685,6 +493,63 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 		this.userFinder = userFinder;
 	}
 
+	/**
+	 * Returns the polls question local service.
+	 *
+	 * @return the polls question local service
+	 */
+	public com.liferay.portlet.polls.service.PollsQuestionLocalService getPollsQuestionLocalService() {
+		return pollsQuestionLocalService;
+	}
+
+	/**
+	 * Sets the polls question local service.
+	 *
+	 * @param pollsQuestionLocalService the polls question local service
+	 */
+	public void setPollsQuestionLocalService(
+		com.liferay.portlet.polls.service.PollsQuestionLocalService pollsQuestionLocalService) {
+		this.pollsQuestionLocalService = pollsQuestionLocalService;
+	}
+
+	/**
+	 * Returns the polls question remote service.
+	 *
+	 * @return the polls question remote service
+	 */
+	public com.liferay.portlet.polls.service.PollsQuestionService getPollsQuestionService() {
+		return pollsQuestionService;
+	}
+
+	/**
+	 * Sets the polls question remote service.
+	 *
+	 * @param pollsQuestionService the polls question remote service
+	 */
+	public void setPollsQuestionService(
+		com.liferay.portlet.polls.service.PollsQuestionService pollsQuestionService) {
+		this.pollsQuestionService = pollsQuestionService;
+	}
+
+	/**
+	 * Returns the polls question persistence.
+	 *
+	 * @return the polls question persistence
+	 */
+	public PollsQuestionPersistence getPollsQuestionPersistence() {
+		return pollsQuestionPersistence;
+	}
+
+	/**
+	 * Sets the polls question persistence.
+	 *
+	 * @param pollsQuestionPersistence the polls question persistence
+	 */
+	public void setPollsQuestionPersistence(
+		PollsQuestionPersistence pollsQuestionPersistence) {
+		this.pollsQuestionPersistence = pollsQuestionPersistence;
+	}
+
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.portlet.polls.model.PollsChoice",
 			pollsChoiceLocalService);
@@ -753,28 +618,8 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	protected com.liferay.portlet.polls.service.PollsChoiceService pollsChoiceService;
 	@BeanReference(type = PollsChoicePersistence.class)
 	protected PollsChoicePersistence pollsChoicePersistence;
-	@BeanReference(type = com.liferay.portlet.polls.service.PollsQuestionLocalService.class)
-	protected com.liferay.portlet.polls.service.PollsQuestionLocalService pollsQuestionLocalService;
-	@BeanReference(type = com.liferay.portlet.polls.service.PollsQuestionService.class)
-	protected com.liferay.portlet.polls.service.PollsQuestionService pollsQuestionService;
-	@BeanReference(type = PollsQuestionPersistence.class)
-	protected PollsQuestionPersistence pollsQuestionPersistence;
-	@BeanReference(type = com.liferay.portlet.polls.service.PollsVoteLocalService.class)
-	protected com.liferay.portlet.polls.service.PollsVoteLocalService pollsVoteLocalService;
-	@BeanReference(type = com.liferay.portlet.polls.service.PollsVoteService.class)
-	protected com.liferay.portlet.polls.service.PollsVoteService pollsVoteService;
-	@BeanReference(type = PollsVotePersistence.class)
-	protected PollsVotePersistence pollsVotePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
-	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
-	protected com.liferay.portal.service.ClassNameService classNameService;
-	@BeanReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
-	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserService.class)
@@ -783,6 +628,12 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+	@BeanReference(type = com.liferay.portlet.polls.service.PollsQuestionLocalService.class)
+	protected com.liferay.portlet.polls.service.PollsQuestionLocalService pollsQuestionLocalService;
+	@BeanReference(type = com.liferay.portlet.polls.service.PollsQuestionService.class)
+	protected com.liferay.portlet.polls.service.PollsQuestionService pollsQuestionService;
+	@BeanReference(type = PollsQuestionPersistence.class)
+	protected PollsQuestionPersistence pollsQuestionPersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private String _beanIdentifier;

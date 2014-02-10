@@ -1159,6 +1159,22 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*/
 	public boolean hasAddPortletPermission(long userId);
 
+	public boolean hasFooterPortalCss();
+
+	public boolean hasFooterPortalJavaScript();
+
+	public boolean hasFooterPortletCss();
+
+	public boolean hasFooterPortletJavaScript();
+
+	public boolean hasHeaderPortalCss();
+
+	public boolean hasHeaderPortalJavaScript();
+
+	public boolean hasHeaderPortletCss();
+
+	public boolean hasHeaderPortletJavaScript();
+
 	/**
 	* Returns <code>true</code> if the portlet supports more than one mime
 	* type.

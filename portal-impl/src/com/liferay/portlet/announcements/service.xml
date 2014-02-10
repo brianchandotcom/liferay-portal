@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.portlet.announcements">
+<service-builder package-path="com.liferay.portlet.announcements" auto-import-default-references="false">
 	<namespace>Announcements</namespace>
 	<entity name="AnnouncementsDelivery" local-service="true" remote-service="true">
 
@@ -30,6 +30,10 @@
 			<finder-column name="userId" />
 			<finder-column name="type" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
 	<entity name="AnnouncementsEntry" uuid="true" local-service="true" remote-service="true">
 
@@ -86,9 +90,13 @@
 		<reference package-path="com.liferay.portal" entity="Company" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Organization" />
+		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="Role" />
 		<reference package-path="com.liferay.portal" entity="Team" />
+		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portal" entity="UserGroup" />
+		<reference package-path="com.liferay.portlet.announcements" entity="AnnouncementsDelivery" />
+		<reference package-path="com.liferay.portlet.announcements" entity="AnnouncementsFlag" />
 	</entity>
 	<entity name="AnnouncementsFlag" local-service="true" remote-service="true">
 

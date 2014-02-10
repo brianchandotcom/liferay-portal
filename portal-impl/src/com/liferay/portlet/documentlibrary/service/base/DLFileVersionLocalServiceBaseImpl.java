@@ -31,26 +31,15 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.service.persistence.ClassNamePersistence;
-import com.liferay.portal.service.persistence.UserFinder;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
-import com.liferay.portlet.documentlibrary.service.persistence.DLContentPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersistence;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeFinder;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypePersistence;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankFinder;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankPersistence;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileShortcutPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
-import com.liferay.portlet.documentlibrary.service.persistence.DLSyncEventPersistence;
 
 import java.io.Serializable;
 
@@ -357,98 +346,79 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the d l app local service.
+	 * Returns the document library file version local service.
 	 *
-	 * @return the d l app local service
+	 * @return the document library file version local service
 	 */
-	public com.liferay.portlet.documentlibrary.service.DLAppLocalService getDLAppLocalService() {
-		return dlAppLocalService;
+	public com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService getDLFileVersionLocalService() {
+		return dlFileVersionLocalService;
 	}
 
 	/**
-	 * Sets the d l app local service.
+	 * Sets the document library file version local service.
 	 *
-	 * @param dlAppLocalService the d l app local service
+	 * @param dlFileVersionLocalService the document library file version local service
 	 */
-	public void setDLAppLocalService(
-		com.liferay.portlet.documentlibrary.service.DLAppLocalService dlAppLocalService) {
-		this.dlAppLocalService = dlAppLocalService;
+	public void setDLFileVersionLocalService(
+		com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService dlFileVersionLocalService) {
+		this.dlFileVersionLocalService = dlFileVersionLocalService;
 	}
 
 	/**
-	 * Returns the d l app remote service.
+	 * Returns the document library file version remote service.
 	 *
-	 * @return the d l app remote service
+	 * @return the document library file version remote service
 	 */
-	public com.liferay.portlet.documentlibrary.service.DLAppService getDLAppService() {
-		return dlAppService;
+	public com.liferay.portlet.documentlibrary.service.DLFileVersionService getDLFileVersionService() {
+		return dlFileVersionService;
 	}
 
 	/**
-	 * Sets the d l app remote service.
+	 * Sets the document library file version remote service.
 	 *
-	 * @param dlAppService the d l app remote service
+	 * @param dlFileVersionService the document library file version remote service
 	 */
-	public void setDLAppService(
-		com.liferay.portlet.documentlibrary.service.DLAppService dlAppService) {
-		this.dlAppService = dlAppService;
+	public void setDLFileVersionService(
+		com.liferay.portlet.documentlibrary.service.DLFileVersionService dlFileVersionService) {
+		this.dlFileVersionService = dlFileVersionService;
 	}
 
 	/**
-	 * Returns the d l app helper local service.
+	 * Returns the document library file version persistence.
 	 *
-	 * @return the d l app helper local service
+	 * @return the document library file version persistence
 	 */
-	public com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService getDLAppHelperLocalService() {
-		return dlAppHelperLocalService;
+	public DLFileVersionPersistence getDLFileVersionPersistence() {
+		return dlFileVersionPersistence;
 	}
 
 	/**
-	 * Sets the d l app helper local service.
+	 * Sets the document library file version persistence.
 	 *
-	 * @param dlAppHelperLocalService the d l app helper local service
+	 * @param dlFileVersionPersistence the document library file version persistence
 	 */
-	public void setDLAppHelperLocalService(
-		com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService dlAppHelperLocalService) {
-		this.dlAppHelperLocalService = dlAppHelperLocalService;
+	public void setDLFileVersionPersistence(
+		DLFileVersionPersistence dlFileVersionPersistence) {
+		this.dlFileVersionPersistence = dlFileVersionPersistence;
 	}
 
 	/**
-	 * Returns the document library content local service.
+	 * Returns the counter local service.
 	 *
-	 * @return the document library content local service
+	 * @return the counter local service
 	 */
-	public com.liferay.portlet.documentlibrary.service.DLContentLocalService getDLContentLocalService() {
-		return dlContentLocalService;
+	public com.liferay.counter.service.CounterLocalService getCounterLocalService() {
+		return counterLocalService;
 	}
 
 	/**
-	 * Sets the document library content local service.
+	 * Sets the counter local service.
 	 *
-	 * @param dlContentLocalService the document library content local service
+	 * @param counterLocalService the counter local service
 	 */
-	public void setDLContentLocalService(
-		com.liferay.portlet.documentlibrary.service.DLContentLocalService dlContentLocalService) {
-		this.dlContentLocalService = dlContentLocalService;
-	}
-
-	/**
-	 * Returns the document library content persistence.
-	 *
-	 * @return the document library content persistence
-	 */
-	public DLContentPersistence getDLContentPersistence() {
-		return dlContentPersistence;
-	}
-
-	/**
-	 * Sets the document library content persistence.
-	 *
-	 * @param dlContentPersistence the document library content persistence
-	 */
-	public void setDLContentPersistence(
-		DLContentPersistence dlContentPersistence) {
-		this.dlContentPersistence = dlContentPersistence;
+	public void setCounterLocalService(
+		com.liferay.counter.service.CounterLocalService counterLocalService) {
+		this.counterLocalService = counterLocalService;
 	}
 
 	/**
@@ -527,290 +497,6 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the document library file entry metadata local service.
-	 *
-	 * @return the document library file entry metadata local service
-	 */
-	public com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService getDLFileEntryMetadataLocalService() {
-		return dlFileEntryMetadataLocalService;
-	}
-
-	/**
-	 * Sets the document library file entry metadata local service.
-	 *
-	 * @param dlFileEntryMetadataLocalService the document library file entry metadata local service
-	 */
-	public void setDLFileEntryMetadataLocalService(
-		com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
-		this.dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
-	}
-
-	/**
-	 * Returns the document library file entry metadata persistence.
-	 *
-	 * @return the document library file entry metadata persistence
-	 */
-	public DLFileEntryMetadataPersistence getDLFileEntryMetadataPersistence() {
-		return dlFileEntryMetadataPersistence;
-	}
-
-	/**
-	 * Sets the document library file entry metadata persistence.
-	 *
-	 * @param dlFileEntryMetadataPersistence the document library file entry metadata persistence
-	 */
-	public void setDLFileEntryMetadataPersistence(
-		DLFileEntryMetadataPersistence dlFileEntryMetadataPersistence) {
-		this.dlFileEntryMetadataPersistence = dlFileEntryMetadataPersistence;
-	}
-
-	/**
-	 * Returns the document library file entry type local service.
-	 *
-	 * @return the document library file entry type local service
-	 */
-	public com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService getDLFileEntryTypeLocalService() {
-		return dlFileEntryTypeLocalService;
-	}
-
-	/**
-	 * Sets the document library file entry type local service.
-	 *
-	 * @param dlFileEntryTypeLocalService the document library file entry type local service
-	 */
-	public void setDLFileEntryTypeLocalService(
-		com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
-		this.dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
-	}
-
-	/**
-	 * Returns the document library file entry type remote service.
-	 *
-	 * @return the document library file entry type remote service
-	 */
-	public com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService getDLFileEntryTypeService() {
-		return dlFileEntryTypeService;
-	}
-
-	/**
-	 * Sets the document library file entry type remote service.
-	 *
-	 * @param dlFileEntryTypeService the document library file entry type remote service
-	 */
-	public void setDLFileEntryTypeService(
-		com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService dlFileEntryTypeService) {
-		this.dlFileEntryTypeService = dlFileEntryTypeService;
-	}
-
-	/**
-	 * Returns the document library file entry type persistence.
-	 *
-	 * @return the document library file entry type persistence
-	 */
-	public DLFileEntryTypePersistence getDLFileEntryTypePersistence() {
-		return dlFileEntryTypePersistence;
-	}
-
-	/**
-	 * Sets the document library file entry type persistence.
-	 *
-	 * @param dlFileEntryTypePersistence the document library file entry type persistence
-	 */
-	public void setDLFileEntryTypePersistence(
-		DLFileEntryTypePersistence dlFileEntryTypePersistence) {
-		this.dlFileEntryTypePersistence = dlFileEntryTypePersistence;
-	}
-
-	/**
-	 * Returns the document library file entry type finder.
-	 *
-	 * @return the document library file entry type finder
-	 */
-	public DLFileEntryTypeFinder getDLFileEntryTypeFinder() {
-		return dlFileEntryTypeFinder;
-	}
-
-	/**
-	 * Sets the document library file entry type finder.
-	 *
-	 * @param dlFileEntryTypeFinder the document library file entry type finder
-	 */
-	public void setDLFileEntryTypeFinder(
-		DLFileEntryTypeFinder dlFileEntryTypeFinder) {
-		this.dlFileEntryTypeFinder = dlFileEntryTypeFinder;
-	}
-
-	/**
-	 * Returns the document library file rank local service.
-	 *
-	 * @return the document library file rank local service
-	 */
-	public com.liferay.portlet.documentlibrary.service.DLFileRankLocalService getDLFileRankLocalService() {
-		return dlFileRankLocalService;
-	}
-
-	/**
-	 * Sets the document library file rank local service.
-	 *
-	 * @param dlFileRankLocalService the document library file rank local service
-	 */
-	public void setDLFileRankLocalService(
-		com.liferay.portlet.documentlibrary.service.DLFileRankLocalService dlFileRankLocalService) {
-		this.dlFileRankLocalService = dlFileRankLocalService;
-	}
-
-	/**
-	 * Returns the document library file rank persistence.
-	 *
-	 * @return the document library file rank persistence
-	 */
-	public DLFileRankPersistence getDLFileRankPersistence() {
-		return dlFileRankPersistence;
-	}
-
-	/**
-	 * Sets the document library file rank persistence.
-	 *
-	 * @param dlFileRankPersistence the document library file rank persistence
-	 */
-	public void setDLFileRankPersistence(
-		DLFileRankPersistence dlFileRankPersistence) {
-		this.dlFileRankPersistence = dlFileRankPersistence;
-	}
-
-	/**
-	 * Returns the document library file rank finder.
-	 *
-	 * @return the document library file rank finder
-	 */
-	public DLFileRankFinder getDLFileRankFinder() {
-		return dlFileRankFinder;
-	}
-
-	/**
-	 * Sets the document library file rank finder.
-	 *
-	 * @param dlFileRankFinder the document library file rank finder
-	 */
-	public void setDLFileRankFinder(DLFileRankFinder dlFileRankFinder) {
-		this.dlFileRankFinder = dlFileRankFinder;
-	}
-
-	/**
-	 * Returns the document library file shortcut local service.
-	 *
-	 * @return the document library file shortcut local service
-	 */
-	public com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalService getDLFileShortcutLocalService() {
-		return dlFileShortcutLocalService;
-	}
-
-	/**
-	 * Sets the document library file shortcut local service.
-	 *
-	 * @param dlFileShortcutLocalService the document library file shortcut local service
-	 */
-	public void setDLFileShortcutLocalService(
-		com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalService dlFileShortcutLocalService) {
-		this.dlFileShortcutLocalService = dlFileShortcutLocalService;
-	}
-
-	/**
-	 * Returns the document library file shortcut remote service.
-	 *
-	 * @return the document library file shortcut remote service
-	 */
-	public com.liferay.portlet.documentlibrary.service.DLFileShortcutService getDLFileShortcutService() {
-		return dlFileShortcutService;
-	}
-
-	/**
-	 * Sets the document library file shortcut remote service.
-	 *
-	 * @param dlFileShortcutService the document library file shortcut remote service
-	 */
-	public void setDLFileShortcutService(
-		com.liferay.portlet.documentlibrary.service.DLFileShortcutService dlFileShortcutService) {
-		this.dlFileShortcutService = dlFileShortcutService;
-	}
-
-	/**
-	 * Returns the document library file shortcut persistence.
-	 *
-	 * @return the document library file shortcut persistence
-	 */
-	public DLFileShortcutPersistence getDLFileShortcutPersistence() {
-		return dlFileShortcutPersistence;
-	}
-
-	/**
-	 * Sets the document library file shortcut persistence.
-	 *
-	 * @param dlFileShortcutPersistence the document library file shortcut persistence
-	 */
-	public void setDLFileShortcutPersistence(
-		DLFileShortcutPersistence dlFileShortcutPersistence) {
-		this.dlFileShortcutPersistence = dlFileShortcutPersistence;
-	}
-
-	/**
-	 * Returns the document library file version local service.
-	 *
-	 * @return the document library file version local service
-	 */
-	public com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService getDLFileVersionLocalService() {
-		return dlFileVersionLocalService;
-	}
-
-	/**
-	 * Sets the document library file version local service.
-	 *
-	 * @param dlFileVersionLocalService the document library file version local service
-	 */
-	public void setDLFileVersionLocalService(
-		com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService dlFileVersionLocalService) {
-		this.dlFileVersionLocalService = dlFileVersionLocalService;
-	}
-
-	/**
-	 * Returns the document library file version remote service.
-	 *
-	 * @return the document library file version remote service
-	 */
-	public com.liferay.portlet.documentlibrary.service.DLFileVersionService getDLFileVersionService() {
-		return dlFileVersionService;
-	}
-
-	/**
-	 * Sets the document library file version remote service.
-	 *
-	 * @param dlFileVersionService the document library file version remote service
-	 */
-	public void setDLFileVersionService(
-		com.liferay.portlet.documentlibrary.service.DLFileVersionService dlFileVersionService) {
-		this.dlFileVersionService = dlFileVersionService;
-	}
-
-	/**
-	 * Returns the document library file version persistence.
-	 *
-	 * @return the document library file version persistence
-	 */
-	public DLFileVersionPersistence getDLFileVersionPersistence() {
-		return dlFileVersionPersistence;
-	}
-
-	/**
-	 * Sets the document library file version persistence.
-	 *
-	 * @param dlFileVersionPersistence the document library file version persistence
-	 */
-	public void setDLFileVersionPersistence(
-		DLFileVersionPersistence dlFileVersionPersistence) {
-		this.dlFileVersionPersistence = dlFileVersionPersistence;
-	}
-
-	/**
 	 * Returns the document library folder local service.
 	 *
 	 * @return the document library folder local service
@@ -884,213 +570,6 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 		this.dlFolderFinder = dlFolderFinder;
 	}
 
-	/**
-	 * Returns the d l sync event local service.
-	 *
-	 * @return the d l sync event local service
-	 */
-	public com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService getDLSyncEventLocalService() {
-		return dlSyncEventLocalService;
-	}
-
-	/**
-	 * Sets the d l sync event local service.
-	 *
-	 * @param dlSyncEventLocalService the d l sync event local service
-	 */
-	public void setDLSyncEventLocalService(
-		com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService dlSyncEventLocalService) {
-		this.dlSyncEventLocalService = dlSyncEventLocalService;
-	}
-
-	/**
-	 * Returns the d l sync event persistence.
-	 *
-	 * @return the d l sync event persistence
-	 */
-	public DLSyncEventPersistence getDLSyncEventPersistence() {
-		return dlSyncEventPersistence;
-	}
-
-	/**
-	 * Sets the d l sync event persistence.
-	 *
-	 * @param dlSyncEventPersistence the d l sync event persistence
-	 */
-	public void setDLSyncEventPersistence(
-		DLSyncEventPersistence dlSyncEventPersistence) {
-		this.dlSyncEventPersistence = dlSyncEventPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.service.CounterLocalService getCounterLocalService() {
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.service.CounterLocalService counterLocalService) {
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name remote service.
-	 *
-	 * @return the class name remote service
-	 */
-	public com.liferay.portal.service.ClassNameService getClassNameService() {
-		return classNameService;
-	}
-
-	/**
-	 * Sets the class name remote service.
-	 *
-	 * @param classNameService the class name remote service
-	 */
-	public void setClassNameService(
-		com.liferay.portal.service.ClassNameService classNameService) {
-		this.classNameService = classNameService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.service.ResourceLocalService getResourceLocalService() {
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.service.ResourceLocalService resourceLocalService) {
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.service.UserLocalService getUserLocalService() {
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.service.UserLocalService userLocalService) {
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	/**
-	 * Returns the user finder.
-	 *
-	 * @return the user finder
-	 */
-	public UserFinder getUserFinder() {
-		return userFinder;
-	}
-
-	/**
-	 * Sets the user finder.
-	 *
-	 * @param userFinder the user finder
-	 */
-	public void setUserFinder(UserFinder userFinder) {
-		this.userFinder = userFinder;
-	}
-
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.portlet.documentlibrary.model.DLFileVersion",
 			dlFileVersionLocalService);
@@ -1153,16 +632,14 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLAppLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLAppLocalService dlAppLocalService;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLAppService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLAppService dlAppService;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService dlAppHelperLocalService;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLContentLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLContentLocalService dlContentLocalService;
-	@BeanReference(type = DLContentPersistence.class)
-	protected DLContentPersistence dlContentPersistence;
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService.class)
+	protected com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService dlFileVersionLocalService;
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileVersionService.class)
+	protected com.liferay.portlet.documentlibrary.service.DLFileVersionService dlFileVersionService;
+	@BeanReference(type = DLFileVersionPersistence.class)
+	protected DLFileVersionPersistence dlFileVersionPersistence;
+	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService dlFileEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryService.class)
@@ -1171,36 +648,6 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	protected DLFileEntryPersistence dlFileEntryPersistence;
 	@BeanReference(type = DLFileEntryFinder.class)
 	protected DLFileEntryFinder dlFileEntryFinder;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService;
-	@BeanReference(type = DLFileEntryMetadataPersistence.class)
-	protected DLFileEntryMetadataPersistence dlFileEntryMetadataPersistence;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService dlFileEntryTypeLocalService;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService dlFileEntryTypeService;
-	@BeanReference(type = DLFileEntryTypePersistence.class)
-	protected DLFileEntryTypePersistence dlFileEntryTypePersistence;
-	@BeanReference(type = DLFileEntryTypeFinder.class)
-	protected DLFileEntryTypeFinder dlFileEntryTypeFinder;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileRankLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFileRankLocalService dlFileRankLocalService;
-	@BeanReference(type = DLFileRankPersistence.class)
-	protected DLFileRankPersistence dlFileRankPersistence;
-	@BeanReference(type = DLFileRankFinder.class)
-	protected DLFileRankFinder dlFileRankFinder;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalService dlFileShortcutLocalService;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileShortcutService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFileShortcutService dlFileShortcutService;
-	@BeanReference(type = DLFileShortcutPersistence.class)
-	protected DLFileShortcutPersistence dlFileShortcutPersistence;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService dlFileVersionLocalService;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileVersionService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFileVersionService dlFileVersionService;
-	@BeanReference(type = DLFileVersionPersistence.class)
-	protected DLFileVersionPersistence dlFileVersionPersistence;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFolderLocalService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLFolderLocalService dlFolderLocalService;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFolderService.class)
@@ -1209,28 +656,6 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = DLFolderFinder.class)
 	protected DLFolderFinder dlFolderFinder;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService dlSyncEventLocalService;
-	@BeanReference(type = DLSyncEventPersistence.class)
-	protected DLSyncEventPersistence dlSyncEventPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
-	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
-	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
-	protected com.liferay.portal.service.ClassNameService classNameService;
-	@BeanReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
-	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
-	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-	@BeanReference(type = UserFinder.class)
-	protected UserFinder userFinder;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private String _beanIdentifier;

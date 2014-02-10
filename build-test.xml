@@ -15,6 +15,8 @@
 	<propertycopy from="app.server.${app.server.type}.stop.executable" name="app.server.stop.executable" />
 	<propertycopy from="app.server.${app.server.type}.stop.executable.arg.line" name="app.server.stop.executable.arg.line" />
 
+	<propertycopy from="browser.${browser.type}.version" name="browser.version" />
+
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
@@ -58,6 +60,19 @@
 
 	<macrodef name="record-env-browser">
 		<sequential>
+			<propertyregex
+				input="${browser.version}"
+				override="true"
+				property="browser.major.version"
+				regexp="(\d+\.\d+).*"
+				replace="\1"
+			/>
+
+			<propertycopy
+				from="env.key.browser.${browser.type}.${browser.major.version}"
+				name="env.key.browser"
+				override="true"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -255,23 +270,23 @@ create database lportal2 character set utf8;</echo>
 
 		<if>
 			<not>
-				<isset property="browser" />
+				<isset property="browser.type" />
 			</not>
 			<then>
-				<property name="browser" value="firefox" />
+				<property name="browser.type" value="firefox" />
 			</then>
 		</if>
 
 		<if>
 			<not>
 				<or>
-					<equals arg1="${browser}" arg2="firefox" />
-					<equals arg1="${browser}" arg2="googlechrome" />
-					<equals arg1="${browser}" arg2="ie" />
+					<equals arg1="${browser.type}" arg2="firefox" />
+					<equals arg1="${browser.type}" arg2="googlechrome" />
+					<equals arg1="${browser.type}" arg2="ie" />
 				</or>
 			</not>
 			<then>
-				<fail>Please set "browser" to one of the following:${line.separator}firefox, googlechrome, ie</fail>
+				<fail>Please set "browser.type" to one of the following:${line.separator}firefox, googlechrome, ie</fail>
 			</then>
 		</if>
 
@@ -1514,44 +1529,26 @@ tck.url=true</echo>
 		</if>
 
 		<if>
-			<isset property="test.browser" />
+			<equals arg1="${browser.type}" arg2="firefox" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					browser.type=*${test.browser}
+					browser.type=*chrome
 				</echo>
 			</then>
-			<else>
-				<property name="test.browser" value="chrome" />
-			</else>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${test.browser}" arg2="chrome" />
-				<equals arg1="${test.browser}" arg2="firefox" />
-			</or>
-			<then>
-				<property name="browser.type" value="firefox" />
-
-				<propertycopy name="browser.version" from="browser.firefox.version" silent="true" />
-			</then>
 			<elseif>
-				<equals arg1="${test.browser}" arg2="googlechrome" />
+				<equals arg1="${browser.type}" arg2="googlechrome" />
 				<then>
-					<property name="browser.type" value="googlechrome" />
-
-					<propertycopy name="browser.version" from="browser.googlechrome.version" silent="true" />
+					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+						browser.type=*googlechrome
+					</echo>
 				</then>
 			</elseif>
 			<elseif>
-				<or>
-					<equals arg1="${test.browser}" arg2="iehta" />
-					<equals arg1="${test.browser}" arg2="iexplore" />
-				</or>
+				<equals arg1="${browser.type}" arg2="ie" />
 				<then>
-					<property name="browser.type" value="ie" />
-
-					<propertycopy name="browser.version" from="browser.ie.version" silent="true" />
+					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+						browser.type=*iehta
+					</echo>
 				</then>
 			</elseif>
 		</if>
@@ -2433,17 +2430,14 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<antcall target="prepare-selenium" />
 
 		<if>
-			<equals arg1="${test.browser}" arg2="googlechrome" />
+			<equals arg1="${browser.type}" arg2="googlechrome" />
 			<then>
 				<antcall target="start-chrome-driver" />
 			</then>
 		</if>
 
 		<if>
-			<or>
-				<equals arg1="${test.browser}" arg2="iehta" />
-				<equals arg1="${test.browser}" arg2="iexplore" />
-			</or>
+			<equals arg1="${browser.type}" arg2="ie" />
 			<then>
 				<antcall target="start-ie-driver" />
 			</then>
@@ -2529,17 +2523,14 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<antcall target="clean-up-sikuli-temp-files" />
 
 		<if>
-			<equals arg1="${test.browser}" arg2="googlechrome" />
+			<equals arg1="${browser.type}" arg2="googlechrome" />
 			<then>
 				<antcall target="stop-chrome-driver" />
 			</then>
 		</if>
 
 		<if>
-			<or>
-				<equals arg1="${test.browser}" arg2="iehta" />
-				<equals arg1="${test.browser}" arg2="iexplore" />
-			</or>
+			<equals arg1="${browser.type}" arg2="ie" />
 			<then>
 				<antcall target="stop-ie-driver" />
 			</then>

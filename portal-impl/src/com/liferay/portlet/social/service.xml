@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.portlet.social">
+<service-builder package-path="com.liferay.portlet.social" auto-import-default-references="false">
 	<namespace>Social</namespace>
 	<entity name="SocialActivity" local-service="true" remote-service="true" dynamic-update-enabled="true">
 
@@ -94,9 +94,16 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Layout" />
+		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivityCounter" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivityInterpreter" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivityLimit" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivitySet" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivitySetting" />
 	</entity>
 	<entity name="SocialActivityAchievement" local-service="true" remote-service="false">
 
@@ -150,6 +157,8 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="User" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivityCounter" />
 	</entity>
 	<entity name="SocialActivityCounter" local-service="true" remote-service="false">
 
@@ -212,11 +221,21 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Lock" />
+		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivityLimit" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivitySetting" />
 	</entity>
-	<entity name="SocialActivityInterpreter" local-service="true" remote-service="false" tx-manager="none" />
+	<entity name="SocialActivityInterpreter" local-service="true" remote-service="false" tx-manager="none">
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivitySet" />
+	</entity>
 	<entity name="SocialActivityLimit" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
@@ -264,6 +283,7 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
 	<entity name="SocialActivitySet" local-service="true" remote-service="false">
 
@@ -326,6 +346,10 @@
 			<finder-column name="classPK" />
 			<finder-column name="type" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 	</entity>
 	<entity name="SocialActivitySetting" local-service="true" remote-service="true">
 
@@ -375,6 +399,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 	</entity>
 	<entity name="SocialRelation" uuid="true" local-service="true" remote-service="false">
@@ -429,6 +454,11 @@
 			<finder-column name="userId2" />
 			<finder-column name="type" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="ClassName" />
+		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
 	<entity name="SocialRequest" uuid="true" local-service="true" remote-service="true">
 
@@ -506,6 +536,12 @@
 			<finder-column name="receiverUserId" />
 			<finder-column name="status" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="ClassName" />
+		<reference package-path="com.liferay.portal" entity="User" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialRequestInterpreter" />
 	</entity>
 	<entity name="SocialRequestInterpreter" local-service="true" remote-service="false" tx-manager="none" />
 	<exceptions>

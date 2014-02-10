@@ -11,8 +11,6 @@ AUI.add(
 
 		var EVENT_INTERACTIONS_RENDER = ['focus', 'mousemove'];
 
-		var TPL_LABEL_SCORE = '{desc} ({totalEntries} {voteLabel})';
-
 		var SELECTOR_RATING_ELEMENT = '.rating-element';
 
 		var STR_INITIAL_FOCUS = 'initialFocus';
@@ -23,11 +21,11 @@ AUI.add(
 
 		var STR_SIZE = 'size';
 
-		var STR_STARS = 'stars';
+		var STR_URI = 'uri';
 
 		var STR_YOUR_SCORE = 'yourScore';
 
-		var STR_URI = 'uri';
+		var TPL_LABEL_SCORE = '{desc} ({totalEntries} {voteLabel})';
 
 		var buffer = [];
 
@@ -146,7 +144,7 @@ AUI.add(
 							message = Liferay.Language.get('star');
 						}
 						else {
-							message = Liferay.Language.get(STR_STARS);
+							message = Liferay.Language.get('stars');
 						}
 
 						Liferay.Portal.ToolTip.show(event.currentTarget, stars + ' ' + message);
@@ -195,7 +193,7 @@ AUI.add(
 
 					var ratings = Liferay.Ratings.StarRating;
 
-					if (config.type != STR_STARS) {
+					if (config.type != 'stars') {
 						ratings = Liferay.Ratings.ThumbRating;
 					}
 
@@ -296,6 +294,7 @@ AUI.add(
 						var xhr = event.currentTarget;
 
 						var json = xhr.get(STR_RESPONSE_DATA);
+
 						var description = Liferay.Language.get('average');
 
 						var label = instance._getLabel(description, json.totalEntries, json.averageScore);
@@ -308,14 +307,17 @@ AUI.add(
 
 						ratingScore.all(SELECTOR_RATING_ELEMENT).each(
 							function(item, index, collection) {
+								var fromCssClass = CSS_ICON_STAR;
+								var toCssClass = CSS_ICON_STAR_EMPTY;
+
 								if (index < averageIndex) {
-									item.replaceClass(CSS_ICON_STAR_EMPTY, CSS_ICON_STAR);
+									fromCssClass = CSS_ICON_STAR_EMPTY;
+									toCssClass = CSS_ICON_STAR;
 								}
-								else {
-									item.replaceClass(CSS_ICON_STAR, CSS_ICON_STAR_EMPTY);
-								}
+
+								item.replaceClass(fromCssClass, toCssClass);
 							}
-						)
+						);
 
 						instance._updateAverageScoreText(json.averageScore);
 					}
@@ -386,6 +388,7 @@ AUI.add(
 						var xhr = event.currentTarget;
 
 						var json = xhr.get(STR_RESPONSE_DATA);
+
 						var score = Math.round(json.totalEntries * json.averageScore);
 
 						var description = instance._fixScore(score);

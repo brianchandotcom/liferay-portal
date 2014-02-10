@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.notifications;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -75,10 +76,14 @@ public class DocumentLibraryUserNotificationHandler
 
 		String title = StringPool.BLANK;
 
-		if (notificationType == 0) {
+		if (notificationType ==
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
+
 			title = "x-wrote-a-new-file-entry";
 		}
-		else if (notificationType == 1) {
+		else if (notificationType ==
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
+
 			title = "x-updated-a-file-entry";
 		}
 

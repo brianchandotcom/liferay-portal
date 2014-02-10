@@ -28,6 +28,95 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="ViewBlogsEntryAsPublishedViaAP" priority="3">
+		<var name="assetTitle" value="Blogs Entry Title" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="pageName2" value="Asset Publisher Page" />
+		<var name="portletName2" value="Asset Publisher" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryViaAPPG">
+			<var name="assetTitle" value="${assetTitle}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#editContentPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="saveAsDraft" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewDraftPG">
+			<var name="entryContent" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewNoEntryViaAPPG">
+			<var name="assetTitle" value="${assetTitle}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publishDraftPG">
+			<var name="entryContent" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryViaAPPG">
+			<var name="assetTitle" value="${assetTitle}" />
+			<var name="entryContent" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
 	<command name="ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope" priority="4">
 		<var name="entryAuthor" value="Test Test" />
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -112,10 +201,95 @@
 		</execute>
 	</command>
 
+	<command name="ViewBlogsEntryWithFutureDisplayDateViaBlogsAggregator" priority="3">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryContentAbstract" value="Blogs Entry Abstract Description" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="pageName2" value="Blogs Aggregator Page" />
+		<var name="password" value="test" />
+		<var name="portletName2" value="Blogs Aggregator" />
+		<var name="userEmailAddress" value="test@liferay.com" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addFutureDatePG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContentAbstract" value="${entryContentAbstract}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryScheduledPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewNoEntryViaBlogsAggregatorPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewNoEntryAsGuestPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewNoEntryAsGuestViaBlogsAggregatorPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute action="Dockbar#pause" locator1="120000" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryAsGuestViaBlogsAggregatorPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="User#loginPG">
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryViaBlogsAggregatorPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
 	<command name="ViewParentOrganizationViaSelectOrganizationInBlogsConfiguration" priority="4">
 		<var name="orgName1" value="Organization1 Name" />
 		<var name="orgName2" value="Organization2 Name" />
-		<var name="orgName3" value="Organization3 Name" />x
+		<var name="orgName3" value="Organization3 Name" />
 		<var name="orgNameList" value="Organization1 Name,Organization2 Name,Organization3 Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="parentOrg" value="true" />

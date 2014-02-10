@@ -139,11 +139,11 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbCategoryPersistence.filterFindByNotC_G_P(
-				groupId, excludedCategoryId, parentCategoryId, start, end);
+				excludedCategoryId, groupId, parentCategoryId, start, end);
 		}
 
 		return mbCategoryPersistence.filterFindByNotC_G_P_S(
-			groupId, excludedCategoryId, parentCategoryId, status, start, end);
+			excludedCategoryId, groupId, parentCategoryId, status, start, end);
 	}
 
 	@Override
@@ -216,11 +216,11 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbCategoryPersistence.filterCountByNotC_G_P(
-				groupId, excludedCategoryId, parentCategoryId);
+				excludedCategoryId, groupId, parentCategoryId);
 		}
 
 		return mbCategoryPersistence.filterCountByNotC_G_P_S(
-			groupId, excludedCategoryId, parentCategoryId, status);
+			excludedCategoryId, groupId, parentCategoryId, status);
 	}
 
 	@Override

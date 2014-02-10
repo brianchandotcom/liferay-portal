@@ -23,9 +23,9 @@
 
 	if (themeDisplay.isThemeJsFastLoad()) {
 		for (Portlet curPortlet : portlets) {
-			if ((curPortlet.getHeaderPortletCss() != null) && (curPortlet.getHeaderPortletCss().size() > 0))
-
+			if ((curPortlet.getHeaderPortletCss() != null) && (curPortlet.getHeaderPortletCss().size() > 0)) {
 				lastModifiedTimestamp = Math.max(lastModifiedTimestamp, curPortlet.getTimestamp());
+			}
 		}
 	}
 

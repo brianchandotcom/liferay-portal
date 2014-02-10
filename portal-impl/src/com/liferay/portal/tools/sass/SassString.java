@@ -19,7 +19,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
 import com.liferay.portal.tools.SassToCssBuilder;
-public class SassString extends BaseSassFragment {
+
+/**
+ * @author Minhchau Dang
+ * @author Shuyang Zhou
+ */
+public class SassString implements SassFragment {
 
 	public SassString(
 			SassExecutor sassExecutor, String fileName, String sassContent)
@@ -40,12 +45,12 @@ public class SassString extends BaseSassFragment {
 	}
 
 	@Override
-	protected String doGetLtrContent() throws Exception {
+	public String getLtrContent() {
 		return _ltrContent;
 	}
 
 	@Override
-	protected String doGetRtlContent() throws Exception {
+	public String getRtlContent() {
 		return _rtlContent;
 	}
 

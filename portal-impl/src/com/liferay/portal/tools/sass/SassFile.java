@@ -33,7 +33,7 @@ import java.util.concurrent.Callable;
 /**
  * @author Minhchau Dang
  */
-public class SassFile extends BaseSassFragment implements Callable<SassFile> {
+public class SassFile implements Callable<SassFile>, SassFragment {
 
 	public SassFile(
 		SassFileCache sassFileCache, SassExecutor sassExecutor,
@@ -169,6 +169,36 @@ public class SassFile extends BaseSassFragment implements Callable<SassFile> {
 	}
 
 	@Override
+	public String getLtrContent() throws Exception {
+		if (_ltrContent != null) {
+			return _ltrContent;
+		}
+
+		_ltrContent = doGetLtrContent();
+
+		if (_ltrContent == null) {
+			_ltrContent = StringPool.BLANK;
+		}
+
+		return _ltrContent;
+	}
+
+	@Override
+	public String getRtlContent() throws Exception {
+		if (_rtlContent != null) {
+			return _rtlContent;
+		}
+
+		_rtlContent = doGetRtlContent();
+
+		if (_rtlContent == null) {
+			_rtlContent = StringPool.BLANK;
+		}
+
+		return _rtlContent;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(5);
 
@@ -206,7 +236,6 @@ public class SassFile extends BaseSassFragment implements Callable<SassFile> {
 		}
 	}
 
-	@Override
 	protected String doGetLtrContent() throws Exception {
 		StringBundler sb = new StringBundler();
 
@@ -228,7 +257,6 @@ public class SassFile extends BaseSassFragment implements Callable<SassFile> {
 		return sb.toString();
 	}
 
-	@Override
 	protected String doGetRtlContent() throws Exception {
 		StringBundler sb = new StringBundler();
 
@@ -303,6 +331,8 @@ public class SassFile extends BaseSassFragment implements Callable<SassFile> {
 	private long _elapsedTime;
 	private String _fileName;
 	private List<SassFragment> _fragments = new ArrayList<SassFragment>();
+	private String _ltrContent;
+	private String _rtlContent;
 	private SassExecutor _sassExecutor;
 	private SassFileCache _sassFileCache;
 

@@ -135,8 +135,6 @@ public class WikiUserNotificationHandler extends BaseUserNotificationHandler {
 			portletURL.setParameter("struts_action", "/wiki/view");
 			portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
 			portletURL.setParameter("title", page.getTitle());
-			portletURL.setParameter(
-				"version", String.valueOf(page.getVersion()));
 		}
 		else {
 			LiferayPortletResponse liferayPortletResponse =
@@ -148,8 +146,6 @@ public class WikiUserNotificationHandler extends BaseUserNotificationHandler {
 			portletURL.setParameter("struts_action", "/wiki/view");
 			portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
 			portletURL.setParameter("title", page.getTitle());
-			portletURL.setParameter(
-				"version", String.valueOf(page.getVersion()));
 			portletURL.setWindowState(WindowState.MAXIMIZED);
 		}
 

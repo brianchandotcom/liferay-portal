@@ -17,11 +17,11 @@
 <%@ include file="/html/portlet/group_statistics/init.jsp" %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
-<liferay-portlet:renderURL portletConfiguration="true" varImpl="configurationRenderURL" />
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="groupStatisticsDisplayActivityCounterNamesPanel" persistState="<%= true %>" title="counters">
 		<div id="<portlet:namespace />displayActivityCounterNames">

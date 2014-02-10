@@ -24,12 +24,12 @@ isbns = StringUtil.split(ParamUtil.getString(request, "isbns", isbnsString), Cha
 isbnsString = StringUtil.merge(isbns, StringPool.SPACE);
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
-<liferay-portlet:renderURL portletConfiguration="true" varImpl="configurationRenderURL" />
+<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationURL %>" method="post" name="fm">
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-ui:error exception="<%= ValidatorException.class %>">
 

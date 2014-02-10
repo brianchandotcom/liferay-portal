@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.portlet.softwarecatalog">
+<service-builder package-path="com.liferay.portlet.softwarecatalog" auto-import-default-references="false">
 	<namespace>SC</namespace>
 	<entity name="SCFrameworkVersion" local-service="true" remote-service="true">
 
@@ -50,6 +50,13 @@
 			<finder-column name="groupId" />
 			<finder-column name="active" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="Resource" />
+		<reference package-path="com.liferay.portal" entity="User" />
+		<reference package-path="com.liferay.portlet.softwarecatalog" entity="SCProductVersion" />
 	</entity>
 	<entity name="SCLicense" local-service="true" remote-service="true">
 
@@ -84,6 +91,10 @@
 			<finder-column name="active" />
 			<finder-column name="recommended" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portlet.softwarecatalog" entity="SCProductEntry" />
 	</entity>
 	<entity name="SCProductEntry" local-service="true" remote-service="true">
 
@@ -147,9 +158,15 @@
 
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Image" />
+		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="Subscription" />
+		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
+		<reference package-path="com.liferay.portlet.softwarecatalog" entity="SCLicense" />
+		<reference package-path="com.liferay.portlet.softwarecatalog" entity="SCProductScreenshot" />
+		<reference package-path="com.liferay.portlet.softwarecatalog" entity="SCProductVersion" />
+
 	</entity>
 	<entity name="SCProductScreenshot" local-service="true" remote-service="false">
 
@@ -240,6 +257,12 @@
 		<finder name="DirectDownloadURL" return-type="SCProductVersion">
 			<finder-column name="directDownloadURL" case-sensitive="false" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="User" />
+		<reference package-path="com.liferay.portlet.softwarecatalog" entity="SCFrameworkVersion" />
+		<reference package-path="com.liferay.portlet.softwarecatalog" entity="SCProductEntry" />
 	</entity>
 	<exceptions>
 		<exception>DuplicateProductEntryModuleId</exception>

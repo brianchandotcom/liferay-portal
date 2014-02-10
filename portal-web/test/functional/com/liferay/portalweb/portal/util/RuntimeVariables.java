@@ -182,10 +182,20 @@ public class RuntimeVariables {
 		_instance._setValue(key, value);
 	}
 
-	public static boolean variableExists(
-		String name, Map<String, String> context) {
+	public static boolean variableIsset(
+		String varName, Map<String, String> context) {
 
-		return context.containsKey(name);
+		if (!context.containsKey(varName)) {
+			return false;
+		}
+
+		String varValue = context.get(varName);
+
+		if (varValue.contains("${") && varValue.contains("}")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private RuntimeVariables() {

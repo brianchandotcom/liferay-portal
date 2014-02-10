@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.notifications;
+package com.liferay.portlet.wiki.notifications;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,20 +32,20 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
-public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
+public class WikiUserNotificationHandler extends BaseUserNotificationHandler {
 
-	public BlogsUserNotificationHandler() {
-		setPortletId(PortletKeys.BLOGS);
+	public WikiUserNotificationHandler() {
+		setPortletId(PortletKeys.WIKI);
 	}
 
 	@Override
@@ -59,9 +59,9 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 
 		long classPK = jsonObject.getLong("classPK");
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.fetchBlogsEntry(classPK);
+		WikiPage page = WikiPageLocalServiceUtil.fetchWikiPage(classPK);
 
-		if (entry == null) {
+		if (page == null) {
 			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
 				userNotificationEvent.getUserNotificationEventId());
 
@@ -75,12 +75,12 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 		if (notificationType ==
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
 
-			title = "x-added-a-new-blog-entry";
+			title = "x-added-a-new-wiki-page";
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
-			title = "x-updated-a-blog-entry";
+			title = "x-updated-a-wiki-page";
 		}
 
 		StringBundler sb = new StringBundler(5);
@@ -91,9 +91,9 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 				title,
 				HtmlUtil.escape(
 					PortalUtil.getUserName(
-						entry.getUserId(), StringPool.BLANK))));
+						page.getUserId(), StringPool.BLANK))));
 		sb.append("</div><div class=\"body\">");
-		sb.append(HtmlUtil.escape(StringUtil.shorten(entry.getTitle(), 50)));
+		sb.append(HtmlUtil.escape(StringUtil.shorten(page.getTitle(), 50)));
 		sb.append("</div>");
 
 		return sb.toString();
@@ -110,9 +110,9 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 
 		long classPK = jsonObject.getLong("classPK");
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.fetchBlogsEntry(classPK);
+		WikiPage page = WikiPageLocalServiceUtil.fetchWikiPage(classPK);
 
-		if (entry == null) {
+		if (page == null) {
 			return null;
 		}
 
@@ -123,29 +123,29 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 		Group group = user.getGroup();
 
 		long portletPlid = PortalUtil.getPlidFromPortletId(
-			group.getGroupId(), true, PortletKeys.BLOGS);
+			group.getGroupId(), true, PortletKeys.WIKI);
 
 		PortletURL portletURL = null;
 
 		if (portletPlid != 0) {
 			portletURL = PortletURLFactoryUtil.create(
-				serviceContext.getLiferayPortletRequest(), PortletKeys.BLOGS,
+				serviceContext.getLiferayPortletRequest(), PortletKeys.WIKI,
 				portletPlid, PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter("struts_action", "/blogs/view_entry");
-			portletURL.setParameter(
-				"entryId", String.valueOf(entry.getEntryId()));
+			portletURL.setParameter("struts_action", "/wiki/view");
+			portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
+			portletURL.setParameter("title", page.getTitle());
 		}
 		else {
 			LiferayPortletResponse liferayPortletResponse =
 				serviceContext.getLiferayPortletResponse();
 
 			portletURL = liferayPortletResponse.createRenderURL(
-				PortletKeys.BLOGS);
+				PortletKeys.WIKI);
 
-			portletURL.setParameter("struts_action", "/blogs/view_entry");
-			portletURL.setParameter(
-				"entryId", String.valueOf(entry.getEntryId()));
+			portletURL.setParameter("struts_action", "/wiki/view");
+			portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
+			portletURL.setParameter("title", page.getTitle());
 			portletURL.setWindowState(WindowState.MAXIMIZED);
 		}
 

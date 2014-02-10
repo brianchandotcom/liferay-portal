@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki.notifications;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -71,10 +72,14 @@ public class WikiUserNotificationHandler extends BaseUserNotificationHandler {
 
 		String title = StringPool.BLANK;
 
-		if (notificationType == 0) {
+		if (notificationType ==
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
+
 			title = "x-wrote-a-new-wiki-page";
 		}
-		else if (notificationType == 1) {
+		else if (notificationType ==
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
+
 			title = "x-updated-a-wiki-page";
 		}
 

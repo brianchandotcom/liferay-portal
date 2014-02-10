@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -101,7 +100,7 @@ public class DLFolderAssetRenderer
 
 	@Override
 	public String getSummary(Locale locale) {
-		return HtmlUtil.stripHtml(_folder.getDescription());
+		return _folder.getDescription();
 	}
 
 	@Override

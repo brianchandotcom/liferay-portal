@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -144,7 +143,7 @@ public class DLFileEntryAssetRenderer
 
 	@Override
 	public String getSummary(Locale locale) {
-		return HtmlUtil.stripHtml(_fileEntry.getDescription());
+		return _fileEntry.getDescription();
 	}
 
 	@Override

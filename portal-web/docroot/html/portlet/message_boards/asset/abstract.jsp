@@ -29,4 +29,4 @@ if (message.isFormatBBCode()) {
 }
 %>
 
-<%= summary %>
+<%= HtmlUtil.escape(summary) %>

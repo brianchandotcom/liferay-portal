@@ -147,7 +147,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 										</div>
 
 										<div class="add-content-description">
-											<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 120)) %>
+											<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getSummary(locale), 120)) %>
 										</div>
 									</div>
 								</c:when>

@@ -223,7 +223,7 @@
 			</liferay-util:include>
 		</c:when>
 		<c:otherwise>
-			<%= trashRenderer.getSummary(locale) %>
+			<%= HtmlUtil.escape(trashRenderer.getSummary(locale)) %>
 		</c:otherwise>
 	</c:choose>
 

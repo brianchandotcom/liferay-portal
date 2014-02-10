@@ -92,7 +92,7 @@ public class MBMessageAssetRenderer
 
 	@Override
 	public String getSummary(Locale locale) {
-		return HtmlUtil.extractText(_message.getBody());
+		return _message.getBody();
 	}
 
 	@Override

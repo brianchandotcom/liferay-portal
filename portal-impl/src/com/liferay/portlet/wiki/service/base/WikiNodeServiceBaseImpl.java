@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.BaseServiceImpl;
-import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.SubscriptionPersistence;
@@ -41,7 +40,6 @@ import com.liferay.portlet.wiki.service.WikiNodeService;
 import com.liferay.portlet.wiki.service.persistence.WikiNodePersistence;
 import com.liferay.portlet.wiki.service.persistence.WikiPageFinder;
 import com.liferay.portlet.wiki.service.persistence.WikiPagePersistence;
-import com.liferay.portlet.wiki.service.persistence.WikiPageResourcePersistence;
 
 import javax.sql.DataSource;
 
@@ -122,118 +120,6 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the wiki page local service.
-	 *
-	 * @return the wiki page local service
-	 */
-	public com.liferay.portlet.wiki.service.WikiPageLocalService getWikiPageLocalService() {
-		return wikiPageLocalService;
-	}
-
-	/**
-	 * Sets the wiki page local service.
-	 *
-	 * @param wikiPageLocalService the wiki page local service
-	 */
-	public void setWikiPageLocalService(
-		com.liferay.portlet.wiki.service.WikiPageLocalService wikiPageLocalService) {
-		this.wikiPageLocalService = wikiPageLocalService;
-	}
-
-	/**
-	 * Returns the wiki page remote service.
-	 *
-	 * @return the wiki page remote service
-	 */
-	public com.liferay.portlet.wiki.service.WikiPageService getWikiPageService() {
-		return wikiPageService;
-	}
-
-	/**
-	 * Sets the wiki page remote service.
-	 *
-	 * @param wikiPageService the wiki page remote service
-	 */
-	public void setWikiPageService(
-		com.liferay.portlet.wiki.service.WikiPageService wikiPageService) {
-		this.wikiPageService = wikiPageService;
-	}
-
-	/**
-	 * Returns the wiki page persistence.
-	 *
-	 * @return the wiki page persistence
-	 */
-	public WikiPagePersistence getWikiPagePersistence() {
-		return wikiPagePersistence;
-	}
-
-	/**
-	 * Sets the wiki page persistence.
-	 *
-	 * @param wikiPagePersistence the wiki page persistence
-	 */
-	public void setWikiPagePersistence(WikiPagePersistence wikiPagePersistence) {
-		this.wikiPagePersistence = wikiPagePersistence;
-	}
-
-	/**
-	 * Returns the wiki page finder.
-	 *
-	 * @return the wiki page finder
-	 */
-	public WikiPageFinder getWikiPageFinder() {
-		return wikiPageFinder;
-	}
-
-	/**
-	 * Sets the wiki page finder.
-	 *
-	 * @param wikiPageFinder the wiki page finder
-	 */
-	public void setWikiPageFinder(WikiPageFinder wikiPageFinder) {
-		this.wikiPageFinder = wikiPageFinder;
-	}
-
-	/**
-	 * Returns the wiki page resource local service.
-	 *
-	 * @return the wiki page resource local service
-	 */
-	public com.liferay.portlet.wiki.service.WikiPageResourceLocalService getWikiPageResourceLocalService() {
-		return wikiPageResourceLocalService;
-	}
-
-	/**
-	 * Sets the wiki page resource local service.
-	 *
-	 * @param wikiPageResourceLocalService the wiki page resource local service
-	 */
-	public void setWikiPageResourceLocalService(
-		com.liferay.portlet.wiki.service.WikiPageResourceLocalService wikiPageResourceLocalService) {
-		this.wikiPageResourceLocalService = wikiPageResourceLocalService;
-	}
-
-	/**
-	 * Returns the wiki page resource persistence.
-	 *
-	 * @return the wiki page resource persistence
-	 */
-	public WikiPageResourcePersistence getWikiPageResourcePersistence() {
-		return wikiPageResourcePersistence;
-	}
-
-	/**
-	 * Sets the wiki page resource persistence.
-	 *
-	 * @param wikiPageResourcePersistence the wiki page resource persistence
-	 */
-	public void setWikiPageResourcePersistence(
-		WikiPageResourcePersistence wikiPageResourcePersistence) {
-		this.wikiPageResourcePersistence = wikiPageResourcePersistence;
-	}
-
-	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -250,63 +136,6 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	public void setCounterLocalService(
 		com.liferay.counter.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name remote service.
-	 *
-	 * @return the class name remote service
-	 */
-	public com.liferay.portal.service.ClassNameService getClassNameService() {
-		return classNameService;
-	}
-
-	/**
-	 * Sets the class name remote service.
-	 *
-	 * @param classNameService the class name remote service
-	 */
-	public void setClassNameService(
-		com.liferay.portal.service.ClassNameService classNameService) {
-		this.classNameService = classNameService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-		this.classNamePersistence = classNamePersistence;
 	}
 
 	/**
@@ -760,6 +589,80 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 		this.trashVersionPersistence = trashVersionPersistence;
 	}
 
+	/**
+	 * Returns the wiki page local service.
+	 *
+	 * @return the wiki page local service
+	 */
+	public com.liferay.portlet.wiki.service.WikiPageLocalService getWikiPageLocalService() {
+		return wikiPageLocalService;
+	}
+
+	/**
+	 * Sets the wiki page local service.
+	 *
+	 * @param wikiPageLocalService the wiki page local service
+	 */
+	public void setWikiPageLocalService(
+		com.liferay.portlet.wiki.service.WikiPageLocalService wikiPageLocalService) {
+		this.wikiPageLocalService = wikiPageLocalService;
+	}
+
+	/**
+	 * Returns the wiki page remote service.
+	 *
+	 * @return the wiki page remote service
+	 */
+	public com.liferay.portlet.wiki.service.WikiPageService getWikiPageService() {
+		return wikiPageService;
+	}
+
+	/**
+	 * Sets the wiki page remote service.
+	 *
+	 * @param wikiPageService the wiki page remote service
+	 */
+	public void setWikiPageService(
+		com.liferay.portlet.wiki.service.WikiPageService wikiPageService) {
+		this.wikiPageService = wikiPageService;
+	}
+
+	/**
+	 * Returns the wiki page persistence.
+	 *
+	 * @return the wiki page persistence
+	 */
+	public WikiPagePersistence getWikiPagePersistence() {
+		return wikiPagePersistence;
+	}
+
+	/**
+	 * Sets the wiki page persistence.
+	 *
+	 * @param wikiPagePersistence the wiki page persistence
+	 */
+	public void setWikiPagePersistence(WikiPagePersistence wikiPagePersistence) {
+		this.wikiPagePersistence = wikiPagePersistence;
+	}
+
+	/**
+	 * Returns the wiki page finder.
+	 *
+	 * @return the wiki page finder
+	 */
+	public WikiPageFinder getWikiPageFinder() {
+		return wikiPageFinder;
+	}
+
+	/**
+	 * Sets the wiki page finder.
+	 *
+	 * @param wikiPageFinder the wiki page finder
+	 */
+	public void setWikiPageFinder(WikiPageFinder wikiPageFinder) {
+		this.wikiPageFinder = wikiPageFinder;
+	}
+
 	public void afterPropertiesSet() {
 	}
 
@@ -824,26 +727,8 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portlet.wiki.service.WikiNodeService wikiNodeService;
 	@BeanReference(type = WikiNodePersistence.class)
 	protected WikiNodePersistence wikiNodePersistence;
-	@BeanReference(type = com.liferay.portlet.wiki.service.WikiPageLocalService.class)
-	protected com.liferay.portlet.wiki.service.WikiPageLocalService wikiPageLocalService;
-	@BeanReference(type = com.liferay.portlet.wiki.service.WikiPageService.class)
-	protected com.liferay.portlet.wiki.service.WikiPageService wikiPageService;
-	@BeanReference(type = WikiPagePersistence.class)
-	protected WikiPagePersistence wikiPagePersistence;
-	@BeanReference(type = WikiPageFinder.class)
-	protected WikiPageFinder wikiPageFinder;
-	@BeanReference(type = com.liferay.portlet.wiki.service.WikiPageResourceLocalService.class)
-	protected com.liferay.portlet.wiki.service.WikiPageResourceLocalService wikiPageResourceLocalService;
-	@BeanReference(type = WikiPageResourcePersistence.class)
-	protected WikiPageResourcePersistence wikiPageResourcePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
-	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
-	protected com.liferay.portal.service.ClassNameService classNameService;
-	@BeanReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
 	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)
 	protected com.liferay.portal.service.GroupLocalService groupLocalService;
 	@BeanReference(type = com.liferay.portal.service.GroupService.class)
@@ -892,5 +777,13 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portlet.trash.service.TrashVersionLocalService trashVersionLocalService;
 	@BeanReference(type = TrashVersionPersistence.class)
 	protected TrashVersionPersistence trashVersionPersistence;
+	@BeanReference(type = com.liferay.portlet.wiki.service.WikiPageLocalService.class)
+	protected com.liferay.portlet.wiki.service.WikiPageLocalService wikiPageLocalService;
+	@BeanReference(type = com.liferay.portlet.wiki.service.WikiPageService.class)
+	protected com.liferay.portlet.wiki.service.WikiPageService wikiPageService;
+	@BeanReference(type = WikiPagePersistence.class)
+	protected WikiPagePersistence wikiPagePersistence;
+	@BeanReference(type = WikiPageFinder.class)
+	protected WikiPageFinder wikiPageFinder;
 	private String _beanIdentifier;
 }

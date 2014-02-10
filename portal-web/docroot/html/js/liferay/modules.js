@@ -536,7 +536,7 @@
 						path: 'resize_rtl.js',
 						condition: {
 							test: function(A) {
-								return document.getElementsByTagName('html')[0].dir === 'rtl';
+								return document.documentElement.dir === 'rtl';
 							},
 							trigger: 'resize-base'
 						}

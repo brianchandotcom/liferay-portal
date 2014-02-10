@@ -53,7 +53,7 @@ public class PortletPreferencesTestUtil {
 		return addLayoutPortletPreferences(layout, portlet, null);
 	}
 
-	public static  PortletPreferences addLayoutPortletPreferences(
+	public static PortletPreferences addLayoutPortletPreferences(
 			Layout layout, Portlet portlet, String defaultPreferences)
 		throws Exception {
 
@@ -74,8 +74,9 @@ public class PortletPreferencesTestUtil {
 			portletPreferences.getPreferences());
 	}
 
-	public static javax.portlet.PortletPreferences fetchLayoutPreferences(
-			Layout layout, Portlet portlet)
+	public static javax.portlet.PortletPreferences
+			fetchLayoutJxPortletPreferences(
+				Layout layout, Portlet portlet)
 		throws Exception {
 
 		return PortletPreferencesLocalServiceUtil.fetchPreferences(

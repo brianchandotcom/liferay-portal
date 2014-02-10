@@ -146,7 +146,7 @@ public class PortletPreferencesLocalServiceTest {
 			PortletPreferencesTestUtil.toPortletPreferencesImpl(portletPreferences);
 
 		javax.portlet.PortletPreferences fetchedPortletPreferences =
-			PortletPreferencesTestUtil.fetchLayoutPreferences(
+			PortletPreferencesTestUtil.fetchLayoutJxPortletPreferences(
 				_layout, _portlet);
 
 		assertOwnedByLayout(_layout, portletPreferencesImpl);
@@ -203,7 +203,7 @@ public class PortletPreferencesLocalServiceTest {
 
 		PortletPreferencesImpl preferences =
 			(PortletPreferencesImpl)PortletPreferencesTestUtil.
-				fetchLayoutPreferences(layout, portlet);
+				fetchLayoutJxPortletPreferences(layout, portlet);
 
 		Assert.assertNull(
 			"Any portlet preferences was expected to be defined for " +

@@ -22,22 +22,14 @@ import com.liferay.portal.tools.SassToCssBuilder;
 public class SassString extends BaseSassFragment {
 
 	public SassString(
-		SassExecutor sassExecutor, String fileName, String sassContent) {
+			SassExecutor sassExecutor, String fileName, String sassContent)
+		throws Exception {
 
-		super(fileName);
+		sassContent = SassToCssBuilder.parseStaticTokens(sassContent);
 
-		_sassExecutor = sassExecutor;
-		_fileName = fileName;
-		_sassContent = sassContent;
-	}
+		String cssContent = sassExecutor.parse(fileName, sassContent);
 
-	@Override
-	public void doCall() throws Exception {
-		_sassContent = SassToCssBuilder.parseStaticTokens(_sassContent);
-
-		String cssContent = _sassExecutor.parse(_fileName, _sassContent);
-
-		if (_fileName.contains("_rtl")) {
+		if (fileName.contains("_rtl")) {
 			_ltrContent = StringPool.BLANK;
 			_rtlContent = cssContent;
 		}
@@ -59,10 +51,7 @@ public class SassString extends BaseSassFragment {
 
 	private static Log _log = LogFactoryUtil.getLog(SassString.class);
 
-	private String _fileName;
 	private String _ltrContent;
 	private String _rtlContent;
-	private String _sassContent;
-	private SassExecutor _sassExecutor;
 
 }

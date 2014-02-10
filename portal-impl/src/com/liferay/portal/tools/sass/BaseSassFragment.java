@@ -17,27 +17,7 @@ package com.liferay.portal.tools.sass;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-
-import java.util.concurrent.Callable;
-public abstract class BaseSassFragment
-	implements Callable<BaseSassFragment>, SassFragment {
-
-	public BaseSassFragment(String fileName) {
-		_fileName = fileName;
-	}
-
-	@Override
-	public BaseSassFragment call() throws Exception {
-		long start = System.currentTimeMillis();
-
-		doCall();
-
-		long end = System.currentTimeMillis();
-
-		_elapsedTime = (end - start);
-
-		return this;
-	}
+public abstract class BaseSassFragment implements SassFragment {
 
 	public String getLtrContent() throws Exception {
 		if (_ltrContent != null) {
@@ -67,24 +47,12 @@ public abstract class BaseSassFragment
 		return _rtlContent;
 	}
 
-	protected abstract void doCall() throws Exception;
-
 	protected abstract String doGetLtrContent() throws Exception;
 
 	protected abstract String doGetRtlContent() throws Exception;
 
-	protected long getElapsedTime() {
-		return _elapsedTime;
-	}
-
-	protected String getFileName() {
-		return _fileName;
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(BaseSassFragment.class);
 
-	private long _elapsedTime;
-	private String _fileName;
 	private String _ltrContent;
 	private String _rtlContent;
 

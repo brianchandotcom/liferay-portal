@@ -28,21 +28,21 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * @author Minhchau Dang
  */
-public class SassFile extends BaseSassFragment {
+public class SassFile extends BaseSassFragment implements Callable<SassFile> {
 
 	public SassFile(
 		SassFileCache sassFileCache, SassExecutor sassExecutor,
 		String docrootDirName, String fileName) {
 
-		super(fileName);
-
 		_sassFileCache = sassFileCache;
 		_sassExecutor = sassExecutor;
 		_docrootDirName = docrootDirName;
+		_fileName = fileName;
 
 		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
@@ -54,38 +54,14 @@ public class SassFile extends BaseSassFragment {
 		}
 	}
 
-	public void writeCacheFiles() throws Exception {
-		String ltrFileName = getFileName();
-		File ltrFile = new File(_docrootDirName, ltrFileName);
-		String ltrCacheFileName = SassToCssBuilder.getCacheFileName(
-			ltrFileName, StringPool.BLANK);
-		File ltrCacheFile = new File(_docrootDirName, ltrCacheFileName);
-
-		FileUtil.write(ltrCacheFile, getLtrContent());
-		ltrCacheFile.setLastModified(ltrFile.lastModified());
-
-		String rtlFileName = SassToCssBuilder.getRtlCustomFileName(ltrFileName);
-		File rtlFile = new File(_docrootDirName, rtlFileName);
-		String rtlCacheFileName = SassToCssBuilder.getCacheFileName(
-			rtlFileName, StringPool.BLANK);
-		File rtlCacheFile = new File(_docrootDirName, rtlCacheFileName);
-
-		FileUtil.write(rtlCacheFile, getRtlContent());
-
-		if (rtlFile.exists()) {
-			rtlCacheFile.setLastModified(rtlFile.lastModified());
-		}
-		else {
-			rtlCacheFile.setLastModified(ltrFile.lastModified());
-		}
-	}
-
 	@Override
-	protected void doCall() throws Exception {
-		File file = new File(_docrootDirName, getFileName());
+	public SassFile call() throws Exception {
+		long start = System.currentTimeMillis();
+
+		File file = new File(_docrootDirName, _fileName);
 
 		if (!file.exists()) {
-			return;
+			return this;
 		}
 
 		String content = FileUtil.read(file);
@@ -176,17 +152,57 @@ public class SassFile extends BaseSassFragment {
 			}
 		}
 
-		String fileName = getFileName();
-
-		_addSassString(fileName, sb.toString());
+		_addSassString(_fileName, sb.toString());
 
 		String rtlCustomFileName = SassToCssBuilder.getRtlCustomFileName(
-			fileName);
+			_fileName);
 
 		File rtlCustomFile = new File(_docrootDirName, rtlCustomFileName);
 
 		if (rtlCustomFile.exists()) {
 			_addSassString(rtlCustomFileName, FileUtil.read(rtlCustomFile));
+		}
+
+		_elapsedTime = System.currentTimeMillis() - start;
+
+		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("Parsed ");
+		sb.append(_fileName);
+		sb.append(" in ");
+		sb.append(_elapsedTime);
+		sb.append("ms");
+
+		return sb.toString();
+	}
+
+	public void writeCacheFiles() throws Exception {
+		File ltrFile = new File(_docrootDirName, _fileName);
+		String ltrCacheFileName = SassToCssBuilder.getCacheFileName(
+			_fileName, StringPool.BLANK);
+		File ltrCacheFile = new File(_docrootDirName, ltrCacheFileName);
+
+		FileUtil.write(ltrCacheFile, getLtrContent());
+		ltrCacheFile.setLastModified(ltrFile.lastModified());
+
+		String rtlFileName = SassToCssBuilder.getRtlCustomFileName(_fileName);
+		File rtlFile = new File(_docrootDirName, rtlFileName);
+		String rtlCacheFileName = SassToCssBuilder.getCacheFileName(
+			rtlFileName, StringPool.BLANK);
+		File rtlCacheFile = new File(_docrootDirName, rtlCacheFileName);
+
+		FileUtil.write(rtlCacheFile, getRtlContent());
+
+		if (rtlFile.exists()) {
+			rtlCacheFile.setLastModified(rtlFile.lastModified());
+		}
+		else {
+			rtlCacheFile.setLastModified(ltrFile.lastModified());
 		}
 	}
 
@@ -243,12 +259,7 @@ public class SassFile extends BaseSassFragment {
 			return;
 		}
 
-		SassString sassString = new SassString(
-			_sassExecutor, fileName, sassContent);
-
-		_fragments.add(sassString);
-
-		sassString.call();
+		_fragments.add(new SassString(_sassExecutor, fileName, sassContent));
 	}
 
 	private String _fixRelativePath(String fileName) {
@@ -289,6 +300,8 @@ public class SassFile extends BaseSassFragment {
 
 	private String _baseDir;
 	private String _docrootDirName;
+	private long _elapsedTime;
+	private String _fileName;
 	private List<SassFragment> _fragments = new ArrayList<SassFragment>();
 	private SassExecutor _sassExecutor;
 	private SassFileCache _sassFileCache;

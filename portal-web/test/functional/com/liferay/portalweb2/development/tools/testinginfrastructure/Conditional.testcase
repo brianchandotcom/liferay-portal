@@ -1,0 +1,213 @@
+<definition component-name="portal-tools">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="Condition" priority="5">
+		<var name="test" value="test" />
+
+		<if>
+			<condition action="Dockbar#isElementPresent" locator-key1="ADD" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<else>
+				<execute macro="TestUtils#fail" />
+			</else>
+		</if>
+
+		<if>
+			<condition action="Dockbar#isElementNotPresent" locator-key1="ADD" />
+			<then>
+				<execute macro="TestUtils#fail" />
+			</then>
+			<else>
+				<execute macro="TestUtils#pass" />
+			</else>
+		</if>
+
+		<if>
+			<condition action="Dockbar#isElementPresent" locator1="//a[@id='_145_addPanel']" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<else>
+				<execute macro="TestUtils#fail" />
+			</else>
+		</if>
+
+		<if>
+			<condition action="Dockbar#isElementNotPresent" locator1="//a[@id='_145_addPanel']" />
+			<then>
+				<execute macro="TestUtils#fail" />
+			</then>
+			<else>
+				<execute macro="TestUtils#pass" />
+			</else>
+		</if>
+	</command>
+
+	<command name="Contains" priority="5">
+		<var name="nonSubstring" value="abc" />
+		<var name="string" value="string" />
+		<var name="substring" value="str" />
+
+		<if>
+			<contains string="${string}" substring="${substring}" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<else>
+				<execute macro="TestUtils#fail" />
+			</else>
+		</if>
+
+		<if>
+			<contains string="${string}" substring="${nonSubstring}" />
+			<then>
+				<execute macro="TestUtils#fail" />
+			</then>
+			<else>
+				<execute macro="TestUtils#pass" />
+			</else>
+		</if>
+
+		<if>
+			<contains string="string" substring="str" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<else>
+				<execute macro="TestUtils#fail" />
+			</else>
+		</if>
+
+		<if>
+			<contains string="string" substring="abc" />
+			<then>
+				<execute macro="TestUtils#fail" />
+			</then>
+			<else>
+				<execute macro="TestUtils#pass" />
+			</else>
+		</if>
+	</command>
+
+	<command name="Equals" priority="5">
+		<var name="var1" value="value1" />
+		<var name="var2" value="value2" />
+		<var name="var3" value="value1" />
+
+		<if>
+			<equals arg1="${var1}" arg2="${var2}" />
+			<then>
+				<execute macro="TestUtils#fail" />
+			</then>
+			<else>
+				<execute macro="TestUtils#pass" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${var1}" arg2="${var3}" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<else>
+				<execute macro="TestUtils#fail" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="matching value" arg2="matching value" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<else>
+				<execute macro="TestUtils#fail" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="non-matching value" arg2="" />
+			<then>
+				<execute macro="TestUtils#fail" />
+			</then>
+			<else>
+				<execute macro="TestUtils#pass" />
+			</else>
+		</if>
+	</command>
+
+	<command name="Isset" priority="5">
+		<var name="validVar1" value="validVarValue" />
+
+		<if>
+			<isset var="validVar1" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<else>
+				<execute macro="TestUtils#fail" />
+			</else>
+		</if>
+
+		<var name="validVar2" value="${validVar1}" />
+
+		<if>
+			<isset var="validVar2" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<else>
+				<execute macro="TestUtils#fail" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="nonexistentVar1" />
+			<then>
+				<execute macro="TestUtils#fail" />
+			</then>
+			<else>
+				<execute macro="TestUtils#pass" />
+			</else>
+		</if>
+
+		<var name="nonexistentVar2" value="${nonexistentVar1}" />
+
+		<if>
+			<isset var="nonexistentVar2" />
+			<then>
+				<execute macro="TestUtils#fail" />
+			</then>
+			<else>
+				<execute macro="TestUtils#pass" />
+			</else>
+		</if>
+
+		<var name="invalidVar1" value="${invalidVar1}" />
+
+		<if>
+			<isset var="invalidVar1" />
+			<then>
+				<execute macro="TestUtils#fail" />
+			</then>
+			<else>
+				<execute macro="TestUtils#pass" />
+			</else>
+		</if>
+
+		<var name="invalidVar2" value="${invalidVar1}" />
+
+		<if>
+			<isset var="invalidVar2" />
+			<then>
+				<execute macro="TestUtils#fail" />
+			</then>
+			<else>
+				<execute macro="TestUtils#pass" />
+			</else>
+		</if>
+	</command>
+</definition>

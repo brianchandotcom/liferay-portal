@@ -229,6 +229,12 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 			for (Map.Entry<String, Theme> entry : _themes.entrySet()) {
 				theme = entry.getValue();
+
+				if (Validator.isNotNull(theme) &&
+					(theme.isWapTheme() == wapTheme)) {
+
+					break;
+				}
 			}
 		}
 

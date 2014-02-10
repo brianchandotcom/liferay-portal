@@ -79,7 +79,7 @@ public class DocumentLibraryUserNotificationHandler
 		if (notificationType ==
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
 
-			title = "x-wrote-a-new-document";
+			title = "x-added-a-new-document";
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
@@ -97,7 +97,8 @@ public class DocumentLibraryUserNotificationHandler
 					PortalUtil.getUserName(
 						fileEntry.getUserId(), StringPool.BLANK))));
 		sb.append("</div><div class=\"body\">");
-		sb.append(HtmlUtil.escape(StringUtil.shorten(fileEntry.getTitle(), 50)));
+		sb.append(
+			HtmlUtil.escape(StringUtil.shorten(fileEntry.getTitle(), 50)));
 		sb.append("</div>");
 
 		return sb.toString();

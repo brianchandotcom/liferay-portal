@@ -75,7 +75,7 @@ public class WikiUserNotificationHandler extends BaseUserNotificationHandler {
 		if (notificationType ==
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
 
-			title = "x-wrote-a-new-wiki-page";
+			title = "x-added-a-new-wiki-page";
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {

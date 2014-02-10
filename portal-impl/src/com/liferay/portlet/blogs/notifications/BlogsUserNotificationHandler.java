@@ -75,7 +75,7 @@ public class BlogsUserNotificationHandler extends BaseUserNotificationHandler {
 		if (notificationType ==
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
 
-			title = "x-wrote-a-new-blog-entry";
+			title = "x-added-a-new-blog-entry";
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {

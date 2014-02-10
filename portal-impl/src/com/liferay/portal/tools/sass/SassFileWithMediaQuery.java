@@ -16,13 +16,14 @@ package com.liferay.portal.tools.sass;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Minhchau Dang
+ * @author Shuyang Zhou
  */
-public class SassFileWithMediaQuery extends BaseSassFragment {
+public class SassFileWithMediaQuery implements SassFragment {
 
 	public SassFileWithMediaQuery(SassFile file, String mediaQuery) {
 		_file = file;
@@ -30,29 +31,29 @@ public class SassFileWithMediaQuery extends BaseSassFragment {
 	}
 
 	@Override
-	protected String doGetLtrContent() throws Exception {
-		StringBundler sb = new StringBundler();
+	public String getLtrContent() throws Exception {
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(_CSS_MEDIA_QUERY);
-		sb.append(CharPool.SPACE);
+		sb.append(StringPool.SPACE);
 		sb.append(_mediaQuery);
-		sb.append(CharPool.OPEN_CURLY_BRACE);
+		sb.append(StringPool.OPEN_CURLY_BRACE);
 		sb.append(_file.getLtrContent());
-		sb.append(CharPool.CLOSE_CURLY_BRACE);
+		sb.append(StringPool.CLOSE_CURLY_BRACE);
 
 		return sb.toString();
 	}
 
 	@Override
-	protected String doGetRtlContent() throws Exception {
-		StringBundler sb = new StringBundler();
+	public String getRtlContent() throws Exception {
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(_CSS_MEDIA_QUERY);
-		sb.append(CharPool.SPACE);
+		sb.append(StringPool.SPACE);
 		sb.append(_mediaQuery);
-		sb.append(CharPool.OPEN_CURLY_BRACE);
+		sb.append(StringPool.OPEN_CURLY_BRACE);
 		sb.append(_file.getRtlContent());
-		sb.append(CharPool.CLOSE_CURLY_BRACE);
+		sb.append(StringPool.CLOSE_CURLY_BRACE);
 
 		return sb.toString();
 	}

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelHintsConstants;
 import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
 import com.liferay.portal.tools.sass.SassExecutorUtil;
-import com.liferay.portal.tools.sass.SassFileCache;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PortalImpl;
@@ -36,8 +35,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -138,22 +135,13 @@ public class SassToCssBuilder {
 			_collectSassFiles(fileNames, dirName, docrootDirName);
 		}
 
-		Runtime runtime = Runtime.getRuntime();
-
-		ExecutorService executorService = Executors.newFixedThreadPool(
-			runtime.availableProcessors());
-
 		SassExecutorUtil.init(docrootDirName, portalCommonDirName);
 
-		try {
-			SassFileCache fileCache = new SassFileCache(
-				executorService, docrootDirName, fileNames);
+		for (String fileName : fileNames) {
+			SassExecutorUtil.execute(docrootDirName, fileName);
+		}
 
-			fileCache.processAll();
-		}
-		finally {
-			executorService.shutdownNow();
-		}
+		SassExecutorUtil.persist();
 	}
 
 	private void _collectSassFiles(

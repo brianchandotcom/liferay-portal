@@ -35,10 +35,7 @@ import java.util.concurrent.Callable;
  */
 public class SassFile implements Callable<SassFile>, SassFragment {
 
-	public SassFile(
-		SassFileCache sassFileCache, String docrootDirName, String fileName) {
-
-		_sassFileCache = sassFileCache;
+	public SassFile(String docrootDirName, String fileName) {
 		_docrootDirName = docrootDirName;
 		_fileName = fileName;
 
@@ -117,8 +114,6 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 						importX + _CSS_IMPORT_BEGIN.length(), importY);
 				}
 
-				SassFile importFile = null;
-
 				if (importFileName.length() > 0) {
 					if (importFileName.charAt(0) != CharPool.SLASH) {
 						importFileName = _baseDir.concat(importFileName);
@@ -126,25 +121,24 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 						importFileName = _fixRelativePath(importFileName);
 					}
 
-					importFile = _sassFileCache.submit(
+					SassFile importFile = SassExecutorUtil.execute(
 						_docrootDirName, importFileName);
+
+					if (Validator.isNotNull(mediaQuery)) {
+						_fragments.add(
+							new SassFileWithMediaQuery(importFile, mediaQuery));
+					}
+					else {
+						_fragments.add(importFile);
+					}
 				}
 
 				// LEP-7540
 
 				if (Validator.isNotNull(mediaQuery)) {
-					if (importFile != null) {
-						_fragments.add(
-							new SassFileWithMediaQuery(importFile, mediaQuery));
-					}
-
 					pos = mediaQueryImportY + 1;
 				}
 				else {
-					if (importFile != null) {
-						_fragments.add(importFile);
-					}
-
 					pos = importY + _CSS_IMPORT_END.length();
 				}
 			}
@@ -331,6 +325,5 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 	private List<SassFragment> _fragments = new ArrayList<SassFragment>();
 	private String _ltrContent;
 	private String _rtlContent;
-	private SassFileCache _sassFileCache;
 
 }

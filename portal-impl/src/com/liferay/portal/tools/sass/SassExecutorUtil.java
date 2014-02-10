@@ -20,6 +20,12 @@ import com.liferay.portal.scripting.ruby.RubyExecutor;
 
 import java.io.IOException;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 import org.jruby.RubyArray;
 import org.jruby.RubyException;
 import org.jruby.embed.ScriptingContainer;
@@ -32,8 +38,35 @@ import org.jruby.runtime.builtin.IRubyObject;
  */
 public class SassExecutorUtil {
 
+	public static SassFile execute(String docrootDirName, String fileName) {
+		SassFile sassFile = _sassFileCache.get(fileName);
+
+		if (sassFile != null) {
+			return sassFile;
+		}
+
+		sassFile = new SassFile(docrootDirName, fileName);
+
+		SassFile previousSassFile = _sassFileCache.putIfAbsent(
+			fileName, sassFile);
+
+		if (previousSassFile != null) {
+			sassFile = previousSassFile;
+		}
+		else {
+			_executorService.submit(sassFile);
+		}
+
+		return sassFile;
+	}
+
 	public static void init(String docrootDirName, String portalCommonDirName)
 		throws IOException {
+
+		Runtime runtime = Runtime.getRuntime();
+
+		_executorService = Executors.newFixedThreadPool(
+			runtime.availableProcessors());
 
 		_docrootDirName = docrootDirName;
 		_portalCommonDirName = portalCommonDirName;
@@ -99,11 +132,26 @@ public class SassExecutorUtil {
 		return content;
 	}
 
+	public static void persist() throws Exception {
+		_executorService.shutdown();
+
+		_executorService.awaitTermination(30, TimeUnit.MINUTES);
+
+		for (SassFile file : _sassFileCache.values()) {
+			file.writeCacheFiles();
+
+			System.out.println(file);
+		}
+	}
+
 	private static final String _TEP_DIR = SystemProperties.get(
 		SystemProperties.TMP_DIR);
 
 	private static String _docrootDirName;
+	private static ExecutorService _executorService;
 	private static String _portalCommonDirName;
+	private static ConcurrentMap<String, SassFile> _sassFileCache =
+		new ConcurrentHashMap<String, SassFile>();
 	private static ScriptingContainer _scriptingContainer;
 	private static Object _scriptObject;
 

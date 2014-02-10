@@ -43,9 +43,9 @@ public class SassFileCache {
 
 	public void processAll() throws Exception {
 		while (!_futures.isEmpty()) {
-			Future<TimedSassFragment> future = _futures.poll();
+			Future<BaseSassFragment> future = _futures.poll();
 
-			TimedSassFragment fragment = future.get();
+			BaseSassFragment fragment = future.get();
 
 			System.out.println(
 				"Parsed " + fragment.getFileName() + " in " +
@@ -75,8 +75,8 @@ public class SassFileCache {
 	private static Log _log = LogFactoryUtil.getLog(SassFileCache.class);
 
 	private ExecutorService _executorService;
-	private ConcurrentLinkedQueue<Future<TimedSassFragment>> _futures =
-		new ConcurrentLinkedQueue<Future<TimedSassFragment>>();
+	private ConcurrentLinkedQueue<Future<BaseSassFragment>> _futures =
+		new ConcurrentLinkedQueue<Future<BaseSassFragment>>();
 	private SassExecutor _sassExecutor;
 	private Map<String, SassFile> _sassFileCache =
 		new ConcurrentHashMap<String, SassFile>();

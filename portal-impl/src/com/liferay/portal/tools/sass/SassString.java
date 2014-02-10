@@ -19,12 +19,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
 import com.liferay.portal.tools.SassToCssBuilder;
-
-import java.util.concurrent.Callable;
-public class SassString extends BaseSassFragment implements Callable<Void> {
+public class SassString extends BaseSassFragment {
 
 	public SassString(
 		SassExecutor sassExecutor, String fileName, String sassContent) {
+
+		super(fileName);
 
 		_sassExecutor = sassExecutor;
 		_fileName = fileName;
@@ -32,7 +32,7 @@ public class SassString extends BaseSassFragment implements Callable<Void> {
 	}
 
 	@Override
-	public Void call() throws Exception {
+	public void doCall() throws Exception {
 		_sassContent = SassToCssBuilder.parseStaticTokens(_sassContent);
 
 		String cssContent = _sassExecutor.parse(_fileName, _sassContent);
@@ -45,8 +45,6 @@ public class SassString extends BaseSassFragment implements Callable<Void> {
 			_ltrContent = cssContent;
 			_rtlContent = RTLCSSUtil.getRtlCss(cssContent);
 		}
-
-		return null;
 	}
 
 	@Override

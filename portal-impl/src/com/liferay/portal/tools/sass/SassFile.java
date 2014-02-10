@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author Minhchau Dang
  */
-public class SassFile extends TimedSassFragment {
+public class SassFile extends BaseSassFragment {
 
 	public SassFile(
 		SassFileCache sassFileCache, SassExecutor sassExecutor,

@@ -59,7 +59,7 @@ public class PortletPreferencesLocalServiceTest {
 		_layout = LayoutTestUtil.addLayout(_group);
 
 		_portlet = PortletLocalServiceUtil.getPortletById(
-			TestPropsValues.getCompanyId(), String.valueOf(_MOCK_PORTLET_ID));
+			TestPropsValues.getCompanyId(), String.valueOf(_PORTLET_ID));
 	}
 
 	@Test
@@ -73,7 +73,7 @@ public class PortletPreferencesLocalServiceTest {
 		_portlet.setDefaultPreferences(preferencesAsXML);
 
 		PortletPreferences portletPreferences =
-			PortletPreferencesTestUtil.addPortletPreferencesOwnedByLayout
+			PortletPreferencesTestUtil.addLayoutPortletPreferences
 				(_layout, _portlet);
 
 		PortletPreferencesImpl portletPreferencesImpl =
@@ -96,7 +96,7 @@ public class PortletPreferencesLocalServiceTest {
 				_PREFERENCE_NAME, _PREFERENCE_VALUES_SINGLE);
 
 		PortletPreferences portletPreferences =
-			PortletPreferencesTestUtil.addPortletPreferencesOwnedByLayout(
+			PortletPreferencesTestUtil.addLayoutPortletPreferences(
 				_layout, _portlet, preferencesAsXml);
 
 		PortletPreferencesImpl portletPreferencesImpl =
@@ -119,7 +119,7 @@ public class PortletPreferencesLocalServiceTest {
 				_PREFERENCE_NAME, _PREFERENCE_VALUES_MULTIPLE);
 
 		PortletPreferences portletPreferences =
-			PortletPreferencesTestUtil.addPortletPreferencesOwnedByLayout(
+			PortletPreferencesTestUtil.addLayoutPortletPreferences(
 				_layout, _portlet, preferencesAsXML);
 
 		PortletPreferencesImpl portletPreferencesImpl =
@@ -138,7 +138,7 @@ public class PortletPreferencesLocalServiceTest {
 		assertNullLayoutPreferences(_layout, _portlet);
 
 		PortletPreferences portletPreferences =
-			PortletPreferencesTestUtil.addPortletPreferencesOwnedByLayout(
+			PortletPreferencesTestUtil.addLayoutPortletPreferences(
 				_layout, _portlet);
 
 		PortletPreferencesImpl portletPreferencesImpl =
@@ -270,7 +270,7 @@ public class PortletPreferencesLocalServiceTest {
 			portletPreferencesImpl, preferenceName, preferenceValues);
 	}
 
-	private static final int _MOCK_PORTLET_ID = 1000;
+	private static final int _PORTLET_ID = 1000;
 
 	private static final String _PREFERENCE_NAME = "testPreferenceName";
 

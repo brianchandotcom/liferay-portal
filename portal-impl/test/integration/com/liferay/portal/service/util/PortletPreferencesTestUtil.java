@@ -29,14 +29,14 @@ import com.liferay.portlet.PortletPreferencesImpl;
  */
 public class PortletPreferencesTestUtil {
 
-	public static PortletPreferences addPortletPreferencesOwnedByGroup(
+	public static PortletPreferences addGroupPortletPreferences(
 			Layout layout, Portlet portlet)
 		throws Exception {
 
-		return addPortletPreferencesOwnedByGroup(layout, portlet, null);
+		return addGroupPortletPreferences(layout, portlet, null);
 	}
 
-	public static PortletPreferences addPortletPreferencesOwnedByGroup(
+	public static PortletPreferences addGroupPortletPreferences(
 			Layout layout, Portlet portlet, String defaultPreferences)
 		throws Exception {
 
@@ -46,14 +46,14 @@ public class PortletPreferencesTestUtil {
 			portlet.getPortletId(), portlet, defaultPreferences);
 	}
 
-	public static PortletPreferences addPortletPreferencesOwnedByLayout(
+	public static PortletPreferences addLayoutPortletPreferences(
 			Layout layout, Portlet portlet)
 		throws Exception {
 
-		return addPortletPreferencesOwnedByLayout(layout, portlet, null);
+		return addLayoutPortletPreferences(layout, portlet, null);
 	}
 
-	public static  PortletPreferences addPortletPreferencesOwnedByLayout(
+	public static  PortletPreferences addLayoutPortletPreferences(
 			Layout layout, Portlet portlet, String defaultPreferences)
 		throws Exception {
 

@@ -23,7 +23,7 @@
 
 	if (themeDisplay.isThemeJsFastLoad()) {
 		for (Portlet curPortlet : portlets) {
-			if ((curPortlet.getFooterPortletCss() != null) && (curPortlet.getFooterPortletCss().size() > 0)) {
+			if (curPortlet.hasFooterPortletCss()) {
 				lastModifiedTimestamp = Math.max(lastModifiedTimestamp, curPortlet.getTimestamp());
 			}
 		}

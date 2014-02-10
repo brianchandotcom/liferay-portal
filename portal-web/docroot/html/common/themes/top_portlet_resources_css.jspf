@@ -17,13 +17,11 @@
 <c:if test="<%= (portlets != null) && !portlets.isEmpty() %>">
 
 	<%
-	StringBuilder sb = new StringBuilder();
-
 	long lastModifiedTimestamp = themeDisplay.getTheme().getTimestamp();
 
 	if (themeDisplay.isThemeJsFastLoad()) {
 		for (Portlet curPortlet : portlets) {
-			if ((curPortlet.getHeaderPortletCss() != null) && (curPortlet.getHeaderPortletCss().size() > 0)) {
+			if (curPortlet.hasHeaderPortletCss()) {
 				lastModifiedTimestamp = Math.max(lastModifiedTimestamp, curPortlet.getTimestamp());
 			}
 		}

@@ -1926,6 +1926,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
 
 			page = wikiPagePersistence.create(pageId);
+
+			page.setUuid(serviceContext.getUuid());
 		}
 
 		page.setResourcePrimKey(resourcePrimKey);

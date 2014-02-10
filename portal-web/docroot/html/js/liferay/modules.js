@@ -536,9 +536,7 @@
 						path: 'resize_rtl.js',
 						condition: {
 							test: function(A) {
-								var MAP_DIR = Liferay.Language.direction;
-
-								return (MAP_DIR && MAP_DIR[themeDisplay.getLanguageId()] === 'rtl');
+								return document.getElementsByTagName('html')[0].dir === 'rtl';
 							},
 							trigger: 'resize-base'
 						}

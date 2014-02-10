@@ -1,6 +1,6 @@
 <definition>
 	<command name="assertClick">
-		<case comparator="startsWith" locator-key1="TEMPLATE_TABLE_ACTIONS_">
+		<case comparator="startsWith" locator-key1="TEMPLATE_TABLE_ACTIONS">
 			<execute function="AssertClick#pauseAssertTextClickAt" />
 		</case>
 

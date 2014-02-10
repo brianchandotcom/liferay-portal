@@ -148,6 +148,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLBAR_EDIT_FORM_TEMPLATE</td>
+	<td>//span[contains(@class,'lfr-icon-action-edit-template')]/a[contains(.,'Edit Form Template')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLBAR_SELECT_LIST</td>
 	<td>//span[contains(@class,'lfr-icon-action-configuration')]/a[contains(.,'Select List')]</td>
 	<td></td>

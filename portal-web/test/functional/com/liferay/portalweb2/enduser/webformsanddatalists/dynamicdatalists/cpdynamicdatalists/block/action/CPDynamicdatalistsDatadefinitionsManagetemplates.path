@@ -86,38 +86,48 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_CHECKBOX_1</td>
-	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[1]/input[@name='_166_rowIds'])[1]</td>
+	<td>TEMPLATE_TABLE_CHECKBOX</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[1]/input[@name='_166_rowIds'])[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_ID_1</td>
-	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[2]/a)[1]</td>
+	<td>TEMPLATE_TABLE_ID</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_NAME</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[3]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_DESCRIPTION</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[4]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_MODE</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[5]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_LANGUAGE</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[6]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_MODIFIED_DATE</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[7]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_ACTIONS</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[8]/div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_NAME_1</td>
 	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[3]/a)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[4]/a)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_TABLE_MODE_1</td>
-	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[5]/a)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_TABLE_LANGUAGE_1</td>
-	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[6]/a)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_TABLE_MODIFIED_DATE_1</td>
-	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[7]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>

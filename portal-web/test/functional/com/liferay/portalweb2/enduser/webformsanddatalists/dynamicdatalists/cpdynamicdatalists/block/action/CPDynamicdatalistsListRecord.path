@@ -33,6 +33,16 @@
 	<td>//div[@class='lfr-ddm-container']/div[3]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>EDIT_BUTTON</td>
+	<td>//button[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PARAGRAPH_FIELD</td>
+	<td>//div[@class='lfr-ddm-container']/p[contains(.,'${key_fieldText}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NUMBER_FIELD</td>
 	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
 	<td></td>
@@ -111,6 +116,11 @@
 <tr>
 	<td>SELECT_SELECT</td>
 	<td>//div[@data-fieldname='${key_fieldName}']/div/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEPARATOR_FIELD</td>
+	<td>//div[@class='separator']</td>
 	<td></td>
 </tr>
 <tr>

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.sass;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -161,7 +159,7 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 	}
 
 	@Override
-	public String getLtrContent() throws Exception {
+	public String getLtrContent() {
 		if (_ltrContent != null) {
 			return _ltrContent;
 		}
@@ -176,7 +174,7 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 	}
 
 	@Override
-	public String getRtlContent() throws Exception {
+	public String getRtlContent() {
 		if (_rtlContent != null) {
 			return _rtlContent;
 		}
@@ -228,7 +226,7 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 		}
 	}
 
-	protected String doGetLtrContent() throws Exception {
+	protected String doGetLtrContent() {
 		StringBundler sb = new StringBundler();
 
 		for (SassFragment fragment : _fragments) {
@@ -249,7 +247,7 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 		return sb.toString();
 	}
 
-	protected String doGetRtlContent() throws Exception {
+	protected String doGetRtlContent() {
 		StringBundler sb = new StringBundler();
 
 		for (SassFragment fragment : _fragments) {
@@ -315,8 +313,6 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 	private static final String _CSS_IMPORT_BEGIN = "@import url(";
 
 	private static final String _CSS_IMPORT_END = ");";
-
-	private static Log _log = LogFactoryUtil.getLog(SassFile.class);
 
 	private String _baseDir;
 	private String _docrootDirName;

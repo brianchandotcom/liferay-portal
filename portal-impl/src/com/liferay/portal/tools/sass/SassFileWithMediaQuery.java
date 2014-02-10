@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.sass;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -31,7 +29,7 @@ public class SassFileWithMediaQuery implements SassFragment {
 	}
 
 	@Override
-	public String getLtrContent() throws Exception {
+	public String getLtrContent() {
 		StringBundler sb = new StringBundler(6);
 
 		sb.append(_CSS_MEDIA_QUERY);
@@ -45,7 +43,7 @@ public class SassFileWithMediaQuery implements SassFragment {
 	}
 
 	@Override
-	public String getRtlContent() throws Exception {
+	public String getRtlContent() {
 		StringBundler sb = new StringBundler(6);
 
 		sb.append(_CSS_MEDIA_QUERY);
@@ -59,9 +57,6 @@ public class SassFileWithMediaQuery implements SassFragment {
 	}
 
 	private static final String _CSS_MEDIA_QUERY = "@media";
-
-	private static Log _log = LogFactoryUtil.getLog(
-		SassFileWithMediaQuery.class);
 
 	private SassFile _file;
 	private String _mediaQuery;

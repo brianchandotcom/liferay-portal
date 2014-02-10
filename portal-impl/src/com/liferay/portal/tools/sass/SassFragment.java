@@ -16,11 +16,12 @@ package com.liferay.portal.tools.sass;
 
 /**
  * @author Minhchau Dang
+ * @author Shuyang Zhou
  */
 public interface SassFragment {
 
-	public String getLtrContent() throws Exception;
+	public String getLtrContent();
 
-	public String getRtlContent() throws Exception;
+	public String getRtlContent();
 
 }

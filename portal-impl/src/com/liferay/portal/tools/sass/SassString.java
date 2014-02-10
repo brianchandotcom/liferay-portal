@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.sass;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
 import com.liferay.portal.tools.SassToCssBuilder;
@@ -51,8 +49,6 @@ public class SassString implements SassFragment {
 	public String getRtlContent() {
 		return _rtlContent;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(SassString.class);
 
 	private String _ltrContent;
 	private String _rtlContent;

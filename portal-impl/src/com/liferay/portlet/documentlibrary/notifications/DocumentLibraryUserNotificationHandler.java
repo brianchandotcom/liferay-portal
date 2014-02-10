@@ -60,10 +60,10 @@ public class DocumentLibraryUserNotificationHandler
 
 		long classPK = jsonObject.getLong("classPK");
 
-		FileEntry file = null;
+		FileEntry fileEntry = null;
 
 		try {
-			file = DLAppLocalServiceUtil.getFileEntry(classPK);
+			fileEntry = DLAppLocalServiceUtil.getFileEntry(classPK);
 		}
 		catch (Exception e) {
 			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
@@ -95,9 +95,9 @@ public class DocumentLibraryUserNotificationHandler
 				title,
 				HtmlUtil.escape(
 					PortalUtil.getUserName(
-						file.getUserId(), StringPool.BLANK))));
+						fileEntry.getUserId(), StringPool.BLANK))));
 		sb.append("</div><div class=\"body\">");
-		sb.append(HtmlUtil.escape(StringUtil.shorten(file.getTitle(), 50)));
+		sb.append(HtmlUtil.escape(StringUtil.shorten(fileEntry.getTitle(), 50)));
 		sb.append("</div>");
 
 		return sb.toString();
@@ -114,10 +114,10 @@ public class DocumentLibraryUserNotificationHandler
 
 		long classPK = jsonObject.getLong("classPK");
 
-		FileEntry file = null;
+		FileEntry fileEntry = null;
 
 		try {
-			file = DLAppLocalServiceUtil.getFileEntry(classPK);
+			fileEntry = DLAppLocalServiceUtil.getFileEntry(classPK);
 		}
 		catch (Exception e) {
 			return null;
@@ -143,7 +143,7 @@ public class DocumentLibraryUserNotificationHandler
 			portletURL.setParameter(
 				"struts_action", "/document_library/view_file_entry");
 			portletURL.setParameter(
-				"fileEntryId", String.valueOf(file.getFileEntryId()));
+				"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 		}
 		else {
 			LiferayPortletResponse liferayPortletResponse =
@@ -155,7 +155,7 @@ public class DocumentLibraryUserNotificationHandler
 			portletURL.setParameter(
 				"struts_action", "/document_library/view_file_entry");
 			portletURL.setParameter(
-				"fileEntryId", String.valueOf(file.getFileEntryId()));
+				"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 			portletURL.setWindowState(WindowState.MAXIMIZED);
 		}
 

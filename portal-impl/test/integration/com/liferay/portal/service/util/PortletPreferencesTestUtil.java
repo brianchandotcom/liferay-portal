@@ -63,7 +63,7 @@ public class PortletPreferencesTestUtil {
 			portlet.getPortletId(), portlet, defaultPreferences);
 	}
 
-	public static PortletPreferencesImpl convert(
+	public static PortletPreferencesImpl toPortletPreferencesImpl(
 			PortletPreferences portletPreferences)
 		throws Exception {
 

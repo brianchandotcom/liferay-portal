@@ -1891,6 +1891,46 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 		return _portlet.hasAddPortletPermission(userId);
 	}
 
+	@Override
+	public boolean hasFooterPortalCss() {
+		return _portlet.hasFooterPortalCss();
+	}
+
+	@Override
+	public boolean hasFooterPortalJavaScript() {
+		return _portlet.hasFooterPortalJavaScript();
+	}
+
+	@Override
+	public boolean hasFooterPortletCss() {
+		return _portlet.hasFooterPortletCss();
+	}
+
+	@Override
+	public boolean hasFooterPortletJavaScript() {
+		return _portlet.hasFooterPortletJavaScript();
+	}
+
+	@Override
+	public boolean hasHeaderPortalCss() {
+		return _portlet.hasHeaderPortalCss();
+	}
+
+	@Override
+	public boolean hasHeaderPortalJavaScript() {
+		return _portlet.hasHeaderPortalJavaScript();
+	}
+
+	@Override
+	public boolean hasHeaderPortletCss() {
+		return _portlet.hasHeaderPortletCss();
+	}
+
+	@Override
+	public boolean hasHeaderPortletJavaScript() {
+		return _portlet.hasHeaderPortletJavaScript();
+	}
+
 	/**
 	* Returns <code>true</code> if the portlet supports more than one mime
 	* type.

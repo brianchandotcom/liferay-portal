@@ -1,3 +1,5 @@
 .separator {
 	margin: 15px auto;
+	display: block;
+	clear: both;
 }

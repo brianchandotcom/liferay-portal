@@ -79,12 +79,12 @@ public class DocumentLibraryUserNotificationHandler
 		if (notificationType ==
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
 
-			title = "x-wrote-a-new-file-entry";
+			title = "x-wrote-a-new-document";
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
-			title = "x-updated-a-file-entry";
+			title = "x-updated-a-document";
 		}
 
 		StringBundler sb = new StringBundler(5);

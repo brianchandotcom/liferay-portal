@@ -9,6 +9,9 @@ subprojects {
 	apply plugin: "java"
 	apply plugin: "osgi"
 
+	sourceCompatibility = 1.6
+	targetCompatibility = 1.6
+
 	ext.liferayProjectDir = "${rootDir}/../../.."
 
 	dependencies {

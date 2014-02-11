@@ -98,7 +98,10 @@ public class JournalUserNotificationHandler
 					PortalUtil.getUserName(
 						article.getUserId(), StringPool.BLANK))));
 		sb.append("</div><div class=\"body\">");
-		sb.append(HtmlUtil.escape(StringUtil.shorten(article.getTitle(), 50)));
+		sb.append(
+			HtmlUtil.escape(
+				StringUtil.shorten(
+					article.getTitle(serviceContext.getLocale()), 50)));
 		sb.append("</div>");
 
 		return sb.toString();

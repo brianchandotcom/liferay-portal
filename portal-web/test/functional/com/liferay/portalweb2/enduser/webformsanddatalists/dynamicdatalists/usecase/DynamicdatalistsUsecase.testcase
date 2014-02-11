@@ -356,6 +356,67 @@
 			</execute>
 		</for>
 
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Employee" />
+			<var name="fieldName" value="Employee" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Start Date" />
+			<var name="fieldName" value="Start_Date" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Salary" />
+			<var name="fieldName" value="Salary" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Profile Picture" />
+			<var name="fieldName" value="Profile_Picture" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Resume" />
+			<var name="fieldName" value="Resume" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Age" />
+			<var name="fieldName" value="Age" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Weekly Hours" />
+			<var name="fieldName" value="Weekly_Hours" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldEditable" value="false" />
+			<var name="fieldFieldLabel" value="Department" />
+			<var name="fieldName" value="Department" />
+			<var name="fieldOptionsNames" value="Core Engineer,QA Engineer,Support Engineer" />
+			<var name="fieldOptionsValues" value="1,2,3" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldEditable" value="false" />
+			<var name="fieldFieldLabel" value="Years Worked" />
+			<var name="fieldName" value="Years_Worked" />
+			<var name="fieldOptionsNames" value="1-2,3-5,5+" />
+			<var name="fieldOptionsValues" value="1,2,3" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Name" />
+			<var name="fieldName" value="Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Description" />
+			<var name="fieldName" value="Description" />
+		</execute>
+
 		<execute macro="DynamicDataMapping#addFieldFormTemplateSpecific">
 			<var name="field" value="Separator" />
 		</execute>
@@ -572,7 +633,7 @@
 		</execute>
 
 		<execute macro="DataDefinitionTemplate#viewFormTemplateCP">
-			<var name="dataDefinitionFormTemplateName" value="Template Rev" />
+			<var name="dataDefinitionTemplateName" value="Template Rev" />
 			<var name="dataDefinitionName" value="Data Definition Clone With Form Template" />
 		</execute>
 	</command>

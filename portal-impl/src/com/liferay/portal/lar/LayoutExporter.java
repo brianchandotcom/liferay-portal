@@ -535,6 +535,8 @@ public class LayoutExporter {
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
 
+		portletDataContext.setExportDataRootElement(rootElement);
+
 		exportAssetCategories(
 			portletDataContext, exportPortletDataAll, exportCategories,
 			group.isCompany());
@@ -579,47 +581,29 @@ public class LayoutExporter {
 			boolean exportCategories, boolean companyGroup)
 		throws Exception {
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("categories-hierarchy");
-
 		if (exportPortletDataAll || exportCategories || companyGroup) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Export categories");
 			}
-
-			Element assetVocabulariesElement = rootElement.addElement(
-				"vocabularies");
 
 			List<AssetVocabulary> assetVocabularies =
 				AssetVocabularyLocalServiceUtil.getGroupVocabularies(
 					portletDataContext.getGroupId());
 
 			for (AssetVocabulary assetVocabulary : assetVocabularies) {
-				_portletExporter.exportAssetVocabulary(
-					portletDataContext, assetVocabulariesElement,
-					assetVocabulary);
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, assetVocabulary);
 			}
-
-			Element categoriesElement = rootElement.addElement("categories");
 
 			List<AssetCategory> assetCategories =
 				AssetCategoryUtil.findByGroupId(
 					portletDataContext.getGroupId());
 
 			for (AssetCategory assetCategory : assetCategories) {
-				_portletExporter.exportAssetCategory(
-					portletDataContext, assetVocabulariesElement,
-					categoriesElement, assetCategory);
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, assetCategory);
 			}
 		}
-
-		_portletExporter.exportAssetCategories(portletDataContext, rootElement);
-
-		portletDataContext.addZipEntry(
-			ExportImportPathUtil.getRootPath(portletDataContext) +
-				"/categories-hierarchy.xml",
-			document.formattedString());
 	}
 
 	protected void exportLayout(

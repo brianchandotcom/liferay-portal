@@ -2180,6 +2180,46 @@ public class PortletImpl extends PortletBaseImpl {
 		return false;
 	}
 
+	@Override
+	public boolean hasFooterPortalCss() {
+		return _footerPortalCss.size() > 0;
+	}
+
+	@Override
+	public boolean hasFooterPortalJavaScript() {
+		return _footerPortalJavaScript.size() > 0;
+	}
+
+	@Override
+	public boolean hasFooterPortletCss() {
+		return _footerPortletCss.size() > 0;
+	}
+
+	@Override
+	public boolean hasFooterPortletJavaScript() {
+		return _footerPortletJavaScript.size() > 0;
+	}
+
+	@Override
+	public boolean hasHeaderPortalCss() {
+		return _headerPortalCss.size() > 0;
+	}
+
+	@Override
+	public boolean hasHeaderPortalJavaScript() {
+		return _headerPortalJavaScript.size() > 0;
+	}
+
+	@Override
+	public boolean hasHeaderPortletCss() {
+		return _headerPortletCss.size() > 0;
+	}
+
+	@Override
+	public boolean hasHeaderPortletJavaScript() {
+		return _headerPortletJavaScript.size() > 0;
+	}
+
 	/**
 	 * Returns <code>true</code> if the portlet supports more than one mime
 	 * type.

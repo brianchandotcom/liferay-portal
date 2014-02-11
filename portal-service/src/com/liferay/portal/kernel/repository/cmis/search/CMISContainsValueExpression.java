@@ -17,38 +17,37 @@ package com.liferay.portal.kernel.repository.cmis.search;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.List;
-
 /**
- * @author Mika Koivisto
+ * @author Ivan Zaera
  */
-public class CMISContainsExpression extends CMISJunction {
+public class CMISContainsValueExpression implements CMISCriterion {
+
+	public CMISContainsValueExpression(String value) {
+
+		_value = value;
+	}
 
 	@Override
 	public String toQueryFragment() {
-		if (isEmpty()) {
-			return StringPool.BLANK;
+		boolean multipleTerms = _value.contains(StringPool.SPACE);
+
+		StringBundler sb = new StringBundler(1 + (multipleTerms ? 4 : 0));
+
+		if (_value.contains(StringPool.SPACE)) {
+			sb.append(StringPool.BACK_SLASH);
+			sb.append(StringPool.APOSTROPHE);
 		}
 
-		List<CMISCriterion> cmisCriterions = list();
+		sb.append(_value);
 
-		StringBundler sb = new StringBundler(cmisCriterions.size() * 2 + 1);
-
-		sb.append("CONTAINS('");
-
-		for (int i = 0; i < cmisCriterions.size(); i++) {
-			CMISCriterion cmisCriterion = cmisCriterions.get(i);
-
-			if (i != 0) {
-				sb.append(" ");
-			}
-
-			sb.append(cmisCriterion.toQueryFragment());
+		if (_value.contains(StringPool.SPACE)) {
+			sb.append(StringPool.BACK_SLASH);
+			sb.append(StringPool.APOSTROPHE);
 		}
-
-		sb.append("')");
 
 		return sb.toString();
 	}
+
+	private String _value;
 
 }

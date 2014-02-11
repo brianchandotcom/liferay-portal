@@ -14,41 +14,20 @@
 
 package com.liferay.portal.kernel.repository.cmis.search;
 
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-
-import java.util.List;
-
 /**
  * @author Mika Koivisto
  */
-public class CMISContainsExpression extends CMISJunction {
+public class CMISContainsNotExpression implements CMISCriterion {
+
+	public CMISContainsNotExpression(CMISCriterion cmisCriterion) {
+		_cmisCriterion = cmisCriterion;
+	}
 
 	@Override
 	public String toQueryFragment() {
-		if (isEmpty()) {
-			return StringPool.BLANK;
-		}
-
-		List<CMISCriterion> cmisCriterions = list();
-
-		StringBundler sb = new StringBundler(cmisCriterions.size() * 2 + 1);
-
-		sb.append("CONTAINS('");
-
-		for (int i = 0; i < cmisCriterions.size(); i++) {
-			CMISCriterion cmisCriterion = cmisCriterions.get(i);
-
-			if (i != 0) {
-				sb.append(" ");
-			}
-
-			sb.append(cmisCriterion.toQueryFragment());
-		}
-
-		sb.append("')");
-
-		return sb.toString();
+		return "-".concat(_cmisCriterion.toQueryFragment());
 	}
+
+	private CMISCriterion _cmisCriterion;
 
 }

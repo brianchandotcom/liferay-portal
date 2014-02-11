@@ -133,9 +133,9 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			searchContext, searchQuery);
 
 		assertQueryEquals(
-			"(cmis:name LIKE 'test%' AND NOT(cmis:name = 'test.doc')) OR " +
+			"((cmis:name LIKE 'test%' AND NOT(cmis:name = 'test.doc')) OR " +
 				"(cmis:createdBy LIKE 'test%' AND NOT(cmis:createdBy = " +
-					"'test.doc'))",
+					"'test.doc')))",
 			cmisQuery);
 	}
 
@@ -157,8 +157,32 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			searchContext, searchQuery);
 
 		assertQueryEquals(
-			"(cmis:name = 'test') OR (cmis:createdBy = 'test') OR " +
-				"(CONTAINS('test'))",
+			"((cmis:name = 'test' OR cmis:createdBy = 'test') " +
+				"OR CONTAINS('test'))",
+			cmisQuery);
+	}
+
+	@Test
+	public void testContainsCombinedSupportedWildcardQuery() throws Exception {
+		SearchContext searchContext = getSearchContext();
+
+		searchContext.setKeywords("test*.jpg");
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setAttribute(
+			"capabilityQuery", CapabilityQuery.BOTHCOMBINED.value());
+
+		BooleanQuery searchQuery =
+			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
+
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+			searchContext, searchQuery);
+
+		assertQueryEquals(
+			"((cmis:name LIKE 'test%.jpg' " +
+				"OR cmis:createdBy LIKE 'test%.jpg') " +
+				"OR CONTAINS('(test AND .jpg)'))",
 			cmisQuery);
 	}
 
@@ -179,7 +203,114 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, searchQuery);
 
-		assertQueryEquals("(CONTAINS('test'))", cmisQuery);
+		assertQueryEquals("CONTAINS('test')", cmisQuery);
+	}
+
+	@Test
+	public void testContainsOnlySupportedQueryMultipleKeywords()
+		throws Exception {
+
+		SearchContext searchContext = getSearchContext();
+
+		searchContext.setKeywords("test multiple");
+
+		BooleanQuery searchQuery =
+			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setAttribute(
+			"capabilityQuery", CapabilityQuery.FULLTEXTONLY.value());
+
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+			searchContext, searchQuery);
+
+		assertQueryEquals("CONTAINS('(test OR multiple)')", cmisQuery);
+	}
+
+	@Test
+	public void testContainsOnlySupportedQueryWithConjunction()
+		throws Exception {
+
+		SearchContext searchContext = getSearchContext();
+
+		searchContext.setKeywords("+test +multiple");
+
+		BooleanQuery searchQuery =
+			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setAttribute(
+			"capabilityQuery", CapabilityQuery.FULLTEXTONLY.value());
+
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+			searchContext, searchQuery);
+
+		assertQueryEquals("CONTAINS('(test multiple)')", cmisQuery);
+	}
+
+	@Test
+	public void testContainsOnlySupportedQueryWithNegation() throws Exception {
+		SearchContext searchContext = getSearchContext();
+
+		searchContext.setKeywords("test -multiple");
+
+		BooleanQuery searchQuery =
+			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setAttribute(
+			"capabilityQuery", CapabilityQuery.FULLTEXTONLY.value());
+
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+			searchContext, searchQuery);
+
+		assertQueryEquals("CONTAINS('(-multiple OR test)')", cmisQuery);
+	}
+
+	@Test
+	public void testContainsOnlySupportedQueryWithNegationPhrase()
+		throws Exception {
+
+		SearchContext searchContext = getSearchContext();
+
+		searchContext.setKeywords("test -\"multiple words\"");
+
+		BooleanQuery searchQuery =
+			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setAttribute(
+			"capabilityQuery", CapabilityQuery.FULLTEXTONLY.value());
+
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+			searchContext, searchQuery);
+
+		assertQueryEquals(
+			"CONTAINS('(-\\'multiple words\\' OR test)')", cmisQuery);
+	}
+
+	@Test
+	public void testContainsOnlySupportedWithApostrophe() throws Exception {
+		SearchContext searchContext = getSearchContext();
+
+		searchContext.setKeywords("test's");
+
+		BooleanQuery searchQuery =
+			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setAttribute(
+			"capabilityQuery", CapabilityQuery.FULLTEXTONLY.value());
+
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+			searchContext, searchQuery);
+
+		assertQueryEquals("CONTAINS('test\\'s')", cmisQuery);
 	}
 
 	@Test
@@ -195,7 +326,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			searchContext, searchQuery);
 
 		assertQueryEquals(
-			"(cmis:name = 'test.jpg') OR (cmis:createdBy = 'test.jpg')",
+			"(cmis:name = 'test.jpg' OR cmis:createdBy = 'test.jpg')",
 			cmisQuery);
 	}
 
@@ -239,8 +370,8 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			searchContext, searchQuery);
 
 		assertQueryEquals(
-			"(IN_FOLDER('1000')) AND ((cmis:name = 'test') OR " +
-				"(cmis:createdBy = 'test') OR (CONTAINS('test')))",
+			"((IN_FOLDER('1000') AND (cmis:name = 'test' OR " +
+				"cmis:createdBy = 'test')) OR CONTAINS('test'))",
 			cmisQuery);
 	}
 
@@ -257,7 +388,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			searchContext, searchQuery);
 
 		assertQueryEquals(
-			"(cmis:name LIKE 'test%') OR (cmis:createdBy LIKE 'test%')",
+			"(cmis:name LIKE 'test%' OR cmis:createdBy LIKE 'test%')",
 			cmisQuery);
 	}
 
@@ -274,8 +405,8 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			searchContext, searchQuery);
 
 		assertQueryEquals(
-			"(cmis:name = 'My test document.jpg') OR " +
-				"(cmis:createdBy = 'My test document.jpg')",
+			"(cmis:name = 'My test document.jpg' OR " +
+				"cmis:createdBy = 'My test document.jpg')",
 			cmisQuery);
 	}
 
@@ -292,7 +423,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			searchContext, searchQuery);
 
 		assertQueryEquals(
-			"(cmis:name LIKE 'Test%') OR (cmis:createdBy LIKE 'Test%')",
+			"(cmis:name LIKE 'Test%' OR cmis:createdBy LIKE 'Test%')",
 			cmisQuery);
 	}
 
@@ -309,8 +440,8 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			searchContext, searchQuery);
 
 		assertQueryEquals(
-			"(cmis:name = 'test document') OR " +
-				"(cmis:createdBy = 'test document')",
+			"(cmis:name = 'test document' OR " +
+				"cmis:createdBy = 'test document')",
 			cmisQuery);
 	}
 
@@ -328,8 +459,8 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			searchContext, searchQuery);
 
 		assertQueryEquals(
-			"(cmis:creationDate >= 2009-10-11T00:00:00.000Z AND " +
-				"cmis:creationDate <= 2009-11-10T23:59:59.000Z)",
+			"cmis:creationDate >= 2009-10-11T00:00:00.000Z AND " +
+				"cmis:creationDate <= 2009-11-10T23:59:59.000Z",
 			cmisQuery);
 	}
 
@@ -373,8 +504,8 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			searchContext, searchQuery);
 
 		assertQueryEquals(
-			"(IN_TREE('1000')) AND ((cmis:name = 'test') OR " +
-				"(cmis:createdBy = 'test') OR (CONTAINS('test')))",
+			"((IN_TREE('1000') AND (cmis:name = 'test' OR " +
+				"cmis:createdBy = 'test')) OR CONTAINS('test'))",
 			cmisQuery);
 	}
 
@@ -408,7 +539,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			searchContext, searchQuery);
 
 		assertQueryEquals(
-			"(cmis:name LIKE 'test%.jpg') OR (cmis:createdBy LIKE 'test%.jpg')",
+			"(cmis:name LIKE 'test%.jpg' OR cmis:createdBy LIKE 'test%.jpg')",
 			cmisQuery);
 	}
 
@@ -455,10 +586,10 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		}
 	}
 
-	private static final String _QUERY_POSTFIX = ") ORDER BY HITS DESC";
+	private static final String _QUERY_POSTFIX = " ORDER BY HITS DESC";
 
 	private static final String _QUERY_PREFIX =
-		"SELECT cmis:objectId, SCORE() AS HITS FROM cmis:document WHERE (";
+		"SELECT cmis:objectId, SCORE() AS HITS FROM cmis:document WHERE ";
 
 	private BeanLocator _beanLocator;
 	private BeanLocator _mockBeanLocator;

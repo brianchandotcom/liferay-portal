@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,6 +31,7 @@ import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -73,6 +75,43 @@ public class ExportImportConfigurationHelper {
 		return addExportImportConfiguration(
 			portletRequest,
 			ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE);
+	}
+
+	public static void exportLayoutsByExportImportConfiguration(
+			long configurationId)
+		throws Exception {
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfiguration(configurationId);
+
+		Map<String, Serializable> configurationSettingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		Map<String, String[]> parameterMap =
+			(Map<String, String[]>)configurationSettingsMap.get("parameterMap");
+
+		String taskName = MapUtil.getString(parameterMap, "exportFileName");
+
+		long groupId = MapUtil.getLong(
+			configurationSettingsMap, "sourceGroupId");
+
+		boolean privateLayout = GetterUtil.getBoolean(
+			configurationSettingsMap.get("privateLayout"));
+
+		Map<Long, Boolean> layoutIdMap =
+			(Map<Long, Boolean>)configurationSettingsMap.get("layoutIdMap");
+
+		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
+
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
+			themeDisplay, configurationSettingsMap);
+
+		String fileName = MapUtil.getString(parameterMap, "exportFileName");
+
+		LayoutServiceUtil.exportLayoutsAsFileInBackground(
+			taskName, groupId, privateLayout, layoutIds, parameterMap,
+			dateRange.getStartDate(), dateRange.getEndDate(), fileName);
 	}
 
 	protected static ExportImportConfiguration addExportImportConfiguration(

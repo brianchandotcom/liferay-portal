@@ -85,7 +85,7 @@ public class PortletPreferencesTestUtil {
 			portlet.getPortletId());
 	}
 
-	public static String getPreferencesAsXMLString(
+	public static String getPortletPreferencesXML(
 		String name, String[] values) {
 
 		StringBundler sb = new StringBundler(7 + (values.length * 3));

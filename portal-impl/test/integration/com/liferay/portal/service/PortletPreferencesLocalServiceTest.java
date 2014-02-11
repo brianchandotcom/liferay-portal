@@ -67,7 +67,7 @@ public class PortletPreferencesLocalServiceTest {
 		assertNullLayoutPreferences(_layout, _portlet);
 
 		String preferencesAsXML =
-			PortletPreferencesTestUtil.getPreferencesAsXMLString(
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
 				_PREFERENCE_NAME, _PREFERENCE_VALUES_SINGLE);
 
 		_portlet.setDefaultPreferences(preferencesAsXML);
@@ -93,7 +93,7 @@ public class PortletPreferencesLocalServiceTest {
 		assertNullLayoutPreferences(_layout, _portlet);
 
 		String preferencesAsXml =
-			PortletPreferencesTestUtil.getPreferencesAsXMLString(
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
 				_PREFERENCE_NAME, _PREFERENCE_VALUES_SINGLE);
 
 		PortletPreferences portletPreferences =
@@ -116,7 +116,7 @@ public class PortletPreferencesLocalServiceTest {
 		assertNullLayoutPreferences(_layout, _portlet);
 
 		String preferencesAsXML =
-			PortletPreferencesTestUtil.getPreferencesAsXMLString(
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
 				_PREFERENCE_NAME, _PREFERENCE_VALUES_MULTIPLE);
 
 		PortletPreferences portletPreferences =

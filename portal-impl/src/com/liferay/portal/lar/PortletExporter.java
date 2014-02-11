@@ -1160,19 +1160,6 @@ public class PortletExporter {
 			document.formattedString());
 	}
 
-	protected String getAssetCategoryPath(
-		PortletDataContext portletDataContext, long assetCategoryId) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
-		sb.append("/categories/");
-		sb.append(assetCategoryId);
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
 	protected String getAssetLinkPath(
 		PortletDataContext portletDataContext, long assetLinkId) {
 
@@ -1194,19 +1181,6 @@ public class PortletExporter {
 		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
 		sb.append("/tags/");
 		sb.append(assetCategoryId);
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
-	protected String getAssetVocabulariesPath(
-		PortletDataContext portletDataContext, long assetVocabularyId) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
-		sb.append("/vocabularies/");
-		sb.append(assetVocabularyId);
 		sb.append(".xml");
 
 		return sb.toString();

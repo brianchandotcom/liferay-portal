@@ -31,7 +31,7 @@ portletURL.setParameter("assetOrder", String.valueOf(assetOrder));
 />
 
 <%
-ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL);
+ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL, "no-web-content-was-found-that-matched-the-specified-filters");
 %>
 
 <liferay-ui:search-form

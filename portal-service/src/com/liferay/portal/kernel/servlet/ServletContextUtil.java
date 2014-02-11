@@ -104,47 +104,41 @@ public class ServletContextUtil {
 				if (pathSet != null) {
 					pathQueue.addAll(pathSet);
 				}
+
+				continue;
 			}
-			else {
-				try {
-					URL url = servletContext.getResource(curPath);
 
-					if (url == null) {
-						_log.error("Resource URL for " + curPath + " is null");
+			try {
+				URL url = servletContext.getResource(curPath);
+
+				if (url == null) {
+					_log.error("Resource URL for " + curPath + " is null");
+
+					continue;
+				}
+
+				String protocol = url.getProtocol();
+
+				if (protocol.equals("file")) {
+					try {
+						File file = new File(url.toURI());
+
+						lastModified = Math.max(
+							file.lastModified(), lastModified);
+
+						continue;
 					}
-					else {
-						boolean urlIsFile = false;
-
-						String urlProtocol = url.getProtocol();
-
-						if (urlProtocol.equals("file")) {
-							try {
-								File file = new File(url.toURI());
-
-								urlIsFile = true;
-
-								if (file.lastModified() > lastModified) {
-									lastModified = file.lastModified();
-								}
-							}
-							catch (URISyntaxException e) {
-							}
-						}
-
-						if (!urlIsFile) {
-							URLConnection urlConnection = url.openConnection();
-
-							if (urlConnection.getLastModified() >
-									lastModified) {
-
-								lastModified = urlConnection.getLastModified();
-							}
-						}
+					catch (URISyntaxException urise) {
 					}
 				}
-				catch (IOException ioe) {
-					_log.error(ioe, ioe);
-				}
+
+				URLConnection urlConnection = url.openConnection();
+
+				lastModified = Math.max(
+					urlConnection.getLastModified(), lastModified);
+			}
+			catch (IOException ioe) {
+				_log.error(ioe, ioe);
 			}
 		}
 

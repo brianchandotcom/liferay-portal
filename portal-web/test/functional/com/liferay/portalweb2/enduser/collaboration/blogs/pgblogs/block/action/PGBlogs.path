@@ -126,16 +126,6 @@
 </tr>
 <!--ENTRY-->
 <tr>
-	<td>ENTRY_DRAFT_STATUS</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'draft')]/div/h3</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_SCHEDULED_STATUS</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'scheduled')]/div/h3</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_TITLE</td>
 	<td>//div[@class='entry-title' and contains(.,'${key_entryTitle}')]/h2/a</td>
 	<td></td>
@@ -173,11 +163,6 @@
 <tr>
 	<td>ENTRY_CONTENT_CKE_EDIT_INLINE</td>
 	<td>//div[@class='entry-body']/div[contains(@class,'cke_editable') and contains(.,'${key_entryContent}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_CONTENT_DRAFT</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'draft') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -236,11 +221,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_DRAFT_EDIT</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'draft') and contains(.,'${key_entryTitle}')]//div[contains(@class,'edit-actions')]//span/a/span[.='Edit']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_PERMISSIONS</td>
 	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span/a/span[.='Permissions']</td>
 	<td></td>
@@ -293,6 +273,53 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!--DRAFT_ENTRY-->
+<tr>
+	<td>DRAFT_ENTRY_STATUS</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'draft')]/div/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_ENTRY_TITLE</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'draft')]/div/div[@class='entry-title' and contains(.,'${key_entryTitle}')]/h2/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_ENTRY_CONTENT</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'draft') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_ENTRY_EDIT</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'draft') and contains(.,'${key_entryTitle}')]//div[contains(@class,'edit-actions')]//span/a/span[.='Edit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCHEDULED_ENTRY-->
+<tr>
+	<td>SCHEDULED_ENTRY_STATUS</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'scheduled')]/div/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULED_ENTRY_TITLE</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'scheduled')]/div/div[@class='entry-title' and contains(.,'${key_entryTitle}')]/h2/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULED_ENTRY_CONTENT</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'scheduled') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULED_ENTRY_EDIT</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'scheduled') and contains(.,'${key_entryTitle}')]//div[contains(@class,'edit-actions')]//span/a/span[.='Edit']</td>
 	<td></td>
 </tr>
 </tbody>

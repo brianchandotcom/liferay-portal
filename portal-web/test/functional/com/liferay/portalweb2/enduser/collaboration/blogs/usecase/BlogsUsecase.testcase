@@ -79,15 +79,6 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewDraftPG">
-			<var name="entryContent" value="${entryContentEdit}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName2}" />
 		</execute>
 
@@ -202,13 +193,11 @@
 	</command>
 
 	<command name="ViewBlogsEntryWithFutureDisplayDateViaBlogsAggregator" priority="3">
+		<var name="entryAbstractDescription" value="Blogs Entry Abstract Description" />
 		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryContentAbstract" value="Blogs Entry Abstract Description" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName2" value="Blogs Aggregator Page" />
-		<var name="password" value="test" />
 		<var name="portletName2" value="Blogs Aggregator" />
-		<var name="userEmailAddress" value="test@liferay.com" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName2}" />
@@ -226,13 +215,19 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addFutureDatePG">
+		<execute macro="BlogsEntry#addScheduledPG">
 			<var name="entryContent" value="${entryContent}" />
-			<var name="entryContentAbstract" value="${entryContentAbstract}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewEntryScheduledPG" />
+		<execute macro="BlogsEntry#gotoScheduledEditPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addAbstractDescriptionPG">
+			<var name="entryAbstractDescription" value="${entryAbstractDescription}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName2}" />
@@ -260,7 +255,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute action="Dockbar#pause" locator1="120000" />
+		<execute action="PGBlogs#pause" locator1="120000" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName2}" />
@@ -272,8 +267,8 @@
 		</execute>
 
 		<execute macro="User#loginPG">
-			<var name="password" value="${password}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -281,6 +276,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryViaBlogsAggregatorPG">
+			<var name="entryAbstractDescription" value="${entryAbstractDescription}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>

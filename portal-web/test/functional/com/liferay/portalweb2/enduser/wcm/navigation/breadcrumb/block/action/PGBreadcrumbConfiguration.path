@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>PGBreadcrumbConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGBreadcrumbConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGBreadcrumbConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_PREVIEW</td>
+	<td>//div[contains(@class,'portlet-preview')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREADCRUMB_PREVIEW_PAGE</td>
+	<td>//div[@class='preview']//ul[@class='breadcrumb']/li/a[contains(.,'${key_breadcrumbName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_SPECIFIC_CHECKBOX</td>
+	<td>//label[contains(.,'${key_checkSetupName}')]/input[2]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

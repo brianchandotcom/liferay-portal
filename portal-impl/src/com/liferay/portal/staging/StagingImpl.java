@@ -23,7 +23,6 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.MissingReferenceException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutBranchException;
-import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchLayoutRevisionException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.RemoteExportException;
@@ -956,40 +955,16 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @see LayoutRemoteStagingBackgroundTaskExecutor#getMissingRemoteParentLayouts(
-	 *      HttpPrincipal, Layout, long)
+	 * @deprecated As of 7.0.0, moved to {@link
+	 *             ExportImportHelperUtil#getMissingParentLayouts(Layout, long)}
 	 */
+	@Deprecated
 	@Override
 	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
 		throws PortalException, SystemException {
 
-		List<Layout> missingParentLayouts = new ArrayList<Layout>();
-
-		long parentLayoutId = layout.getParentLayoutId();
-
-		Layout parentLayout = null;
-
-		while (parentLayoutId > 0) {
-			parentLayout = LayoutLocalServiceUtil.getLayout(
-				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
-
-			try {
-				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-					parentLayout.getUuid(), liveGroupId,
-					parentLayout.isPrivateLayout());
-
-				// If one parent is found all others are assumed to exist
-
-				break;
-			}
-			catch (NoSuchLayoutException nsle) {
-				missingParentLayouts.add(parentLayout);
-
-				parentLayoutId = parentLayout.getParentLayoutId();
-			}
-		}
-
-		return missingParentLayouts;
+		return ExportImportHelperUtil.getMissingParentLayouts(
+			layout, liveGroupId);
 	}
 
 	@Override

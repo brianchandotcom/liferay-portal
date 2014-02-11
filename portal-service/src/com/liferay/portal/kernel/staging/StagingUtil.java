@@ -258,6 +258,12 @@ public class StagingUtil {
 		return getStaging().getLiveGroupId(groupId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, moved to {@link
+	 *             com.liferay.portal.kernel.lar.ExportImportHelperUtil#getMissingParentLayouts(
+	 *             Layout, long)}
+	 */
+	@Deprecated
 	public static List<Layout> getMissingParentLayouts(
 			Layout layout, long liveGroupId)
 		throws Exception {

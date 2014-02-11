@@ -173,6 +173,12 @@ public interface Staging {
 	public long getLiveGroupId(long groupId)
 		throws PortalException, SystemException;
 
+	/**
+	 * @deprecated As of 7.0.0, moved to {@link
+	 *             com.liferay.portal.kernel.lar.ExportImportHelperUtil#getMissingParentLayouts(
+	 *             Layout, long)}
+	 */
+	@Deprecated
 	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
 		throws Exception;
 

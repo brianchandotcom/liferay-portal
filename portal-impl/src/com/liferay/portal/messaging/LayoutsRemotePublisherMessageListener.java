@@ -14,17 +14,17 @@
 
 package com.liferay.portal.messaging;
 
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageStatusMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageStatus;
-import com.liferay.portal.kernel.messaging.sender.MessageSender;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -32,6 +32,7 @@ import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
@@ -46,6 +47,7 @@ import java.util.Map;
 
 /**
  * @author Bruno Farache
+ * @author Daniel Kocsis
  */
 public class LayoutsRemotePublisherMessageListener
 	extends BaseMessageStatusMessageListener {
@@ -53,43 +55,49 @@ public class LayoutsRemotePublisherMessageListener
 	public LayoutsRemotePublisherMessageListener() {
 	}
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public LayoutsRemotePublisherMessageListener(
-		SingleDestinationMessageSender statusSender,
-		MessageSender responseSender) {
-
-		super(statusSender, responseSender);
-	}
-
 	@Override
 	protected void doReceive(Message message, MessageStatus messageStatus)
 		throws Exception {
 
-		LayoutsRemotePublisherRequest publisherRequest =
-			(LayoutsRemotePublisherRequest)message.getPayload();
+		long exportImportConfigurationId = GetterUtil.getLong(
+			message.getPayload());
 
-		messageStatus.setPayload(publisherRequest);
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfiguration(exportImportConfigurationId);
 
-		long userId = publisherRequest.getUserId();
-		long sourceGroupId = publisherRequest.getSourceGroupId();
-		boolean privateLayout = publisherRequest.isPrivateLayout();
-		Map<Long, Boolean> layoutIdMap = publisherRequest.getLayoutIdMap();
-		Map<String, String[]> parameterMap = publisherRequest.getParameterMap();
-		String remoteAddress = publisherRequest.getRemoteAddress();
-		int remotePort = publisherRequest.getRemotePort();
-		String remotePathContext = publisherRequest.getRemotePathContext();
-		boolean secureConnection = publisherRequest.isSecureConnection();
-		long remoteGroupId = publisherRequest.getRemoteGroupId();
-		boolean remotePrivateLayout = publisherRequest.isRemotePrivateLayout();
-		Date startDate = publisherRequest.getStartDate();
-		Date endDate = publisherRequest.getEndDate();
+		messageStatus.setPayload(exportImportConfiguration);
+
+		Map<String, Serializable> configurationSettingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long userId = MapUtil.getLong(configurationSettingsMap, "userId");
+		long sourceGroupId = MapUtil.getLong(
+			configurationSettingsMap, "sourceGroupId");
+		boolean privateLayout = MapUtil.getBoolean(
+			configurationSettingsMap, "privateLayout");
+		Map<Long, Boolean> layoutIdMap =
+			(Map<Long, Boolean>)configurationSettingsMap.get("layoutIdMap");
+		Map<String, String[]> parameterMap =
+			(Map<String, String[]>)configurationSettingsMap.get("parameterMap");
+		String remoteAddress = MapUtil.getString(
+			configurationSettingsMap, "remoteAddress");
+		int remotePort = MapUtil.getInteger(
+			configurationSettingsMap, "remotePort");
+		String remotePathContext = MapUtil.getString(
+			configurationSettingsMap, "remotePathContext");
+		boolean secureConnection = MapUtil.getBoolean(
+			configurationSettingsMap, "secureConnection");
+		long remoteGroupId = MapUtil.getLong(
+			configurationSettingsMap, "remoteGroupId");
+		boolean remotePrivateLayout = MapUtil.getBoolean(
+			configurationSettingsMap, "remotePrivateLayout");
+		Date startDate = (Date)configurationSettingsMap.get("startDate");
+		Date endDate = (Date)configurationSettingsMap.get("endDate");
 
 		String range = MapUtil.getString(parameterMap, "range");
 
-		if (range.equals("fromLastPublishDate")) {
+		if (range.equals(ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE)) {
 			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				sourceGroupId, privateLayout);
 
@@ -102,16 +110,11 @@ public class LayoutsRemotePublisherMessageListener
 				startDate = new Date(lastPublishDate);
 			}
 		}
-		else if (range.equals("last")) {
+		else if (range.equals(ExportImportDateUtil.RANGE_LAST)) {
 			int last = MapUtil.getInteger(parameterMap, "last");
 
 			if (last > 0) {
-				Date scheduledFireTime =
-					publisherRequest.getScheduledFireTime();
-
-				if (scheduledFireTime == null) {
-					scheduledFireTime = new Date();
-				}
+				Date scheduledFireTime = new Date();
 
 				startDate = new Date(
 					scheduledFireTime.getTime() - (last * Time.HOUR));

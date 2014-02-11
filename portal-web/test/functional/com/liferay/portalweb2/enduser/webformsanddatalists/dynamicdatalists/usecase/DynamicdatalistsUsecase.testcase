@@ -54,6 +54,12 @@
 			<var name="listName" value="${listName}" />
 		</execute>
 
+		<execute macro="List#selectDataDefinitionCP">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="List#saveCP" />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
@@ -159,6 +165,12 @@
 			<var name="listDescription" value="${listName} Description" />
 			<var name="listName" value="${listName}" />
 		</execute>
+
+		<execute macro="List#selectDataDefinitionCP">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="List#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />

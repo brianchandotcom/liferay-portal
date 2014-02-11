@@ -63,52 +63,6 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testAddPortletPreferencesWithPortlet() throws Exception {
-	
-		assertNullLayoutJxPortletPreferences(_layout, _portlet);
-
-		String portletPreferencesAsXML =
-			PortletPreferencesTestUtil.getPortletPreferencesXML(
-				_NAME, _SINGLE_VALUE);
-
-		_portlet.setDefaultPreferences(portletPreferencesAsXML);
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesTestUtil.addLayoutPortletPreferences(
-				_layout, _portlet);
-
-		PortletPreferencesImpl portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(
-				portletPreferences);
-
-		assertOwner(_layout, portletPreferencesImpl);
-		assertValues(portletPreferences, _NAME, _SINGLE_VALUE);
-	}
-
-	@Test
-	public void testAddPortletPreferencesWithDefaultSingleXML()
-		throws Exception {
-
-		assertNullLayoutJxPortletPreferences(_layout, _portlet);
-
-		String portletPreferencesAsXML =
-			PortletPreferencesTestUtil.getPortletPreferencesXML(
-				_NAME, _SINGLE_VALUE);
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesTestUtil.addLayoutPortletPreferences(
-				_layout, _portlet, portletPreferencesAsXML);
-
-		PortletPreferencesImpl portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(
-				portletPreferences);
-
-		assertOwner(_layout, portletPreferencesImpl);
-		assertValues(
-			portletPreferences, _NAME, _SINGLE_VALUE);
-	}
-
-	@Test
 	public void testAddPortletPreferencesWithDefaultMultipleXML()
 		throws Exception {
 
@@ -131,9 +85,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testAddPortletPreferencesWithDefaultNullXML()
-		throws Exception {
-
+	public void testAddPortletPreferencesWithDefaultNullXML() throws Exception {
 		assertNullLayoutJxPortletPreferences(_layout, _portlet);
 
 		PortletPreferences portletPreferences =
@@ -151,8 +103,7 @@ public class PortletPreferencesLocalServiceTest {
 			PortletPreferencesTestUtil.fetchLayoutJxPortletPreferences(
 				_layout, _portlet);
 
-		assertOwner(
-			_layout, (PortletPreferencesImpl)jxPortletPreferences);
+		assertOwner(_layout, (PortletPreferencesImpl)jxPortletPreferences);
 		assertEmptyPortletPreferencesMap(jxPortletPreferences);
 	}
 
@@ -175,6 +126,51 @@ public class PortletPreferencesLocalServiceTest {
 
 		assertOwner(_layout, portletPreferencesImpl);
 		assertEmptyPortletPreferencesMap(portletPreferencesImpl);
+	}
+
+	@Test
+	public void testAddPortletPreferencesWithDefaultSingleXML()
+		throws Exception {
+
+		assertNullLayoutJxPortletPreferences(_layout, _portlet);
+
+		String portletPreferencesAsXML =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _SINGLE_VALUE);
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesTestUtil.addLayoutPortletPreferences(
+				_layout, _portlet, portletPreferencesAsXML);
+
+		PortletPreferencesImpl portletPreferencesImpl =
+			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+				portletPreferences);
+
+		assertOwner(_layout, portletPreferencesImpl);
+		assertValues(portletPreferences, _NAME, _SINGLE_VALUE);
+	}
+
+	@Test
+	public void testAddPortletPreferencesWithPortlet() throws Exception {
+
+		assertNullLayoutJxPortletPreferences(_layout, _portlet);
+
+		String portletPreferencesAsXML =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _SINGLE_VALUE);
+
+		_portlet.setDefaultPreferences(portletPreferencesAsXML);
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesTestUtil.addLayoutPortletPreferences(
+				_layout, _portlet);
+
+		PortletPreferencesImpl portletPreferencesImpl =
+			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+				portletPreferences);
+
+		assertOwner(_layout, portletPreferencesImpl);
+		assertValues(portletPreferences, _NAME, _SINGLE_VALUE);
 	}
 
 	protected void assertEmptyPortletPreferencesMap(
@@ -214,8 +210,8 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	protected void assertValues(
-			javax.portlet.PortletPreferences jxPortletPreferences,
-			String name, String[] values)
+			javax.portlet.PortletPreferences jxPortletPreferences, String name,
+			String[] values)
 		throws Exception {
 
 		PortletPreferencesImpl portletPreferencesImpl =
@@ -239,11 +235,11 @@ public class PortletPreferencesLocalServiceTest {
 		assertValues(portletPreferencesImpl, name, values);
 	}
 
-	private static final int _PORTLET_ID = 1000;
+	private static final String[] _MULTIPLE_VALUES = {"value1", "value2"};
 
 	private static final String _NAME = "name";
 
-	private static final String[] _MULTIPLE_VALUES = {"value1", "value2"};
+	private static final int _PORTLET_ID = 1000;
 
 	private static final String[] _SINGLE_VALUE = {"value"};
 

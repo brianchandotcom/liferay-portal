@@ -598,8 +598,16 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void sendActionDescriptionLogger(String description) {
+	}
+
+	@Override
 	public boolean sendActionLogger(String command, String[] params) {
 		return true;
+	}
+
+	@Override
+	public void sendDescriptionLogger(String description) {
 	}
 
 	@Override

@@ -113,6 +113,22 @@ public class Logger {
 		log("actionScreenShotLog", sb.toString(), "screenShot");
 	}
 
+	public void logActionDescription(Object[] arguments) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		String command = (String)arguments[0];
+
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+		sb.append("&nbsp;&nbsp;&nbsp;");
+		sb.append(_actionStepCount);
+		sb.append(". ");
+		sb.append(command);
+
+		_actionStepCount++;
+
+		log("descriptionLog", sb.toString(), "descriptionLog");
+	}
+
 	public void logError(
 		Method method, Object[] arguments, Throwable throwable) {
 
@@ -239,6 +255,25 @@ public class Logger {
 		log("actionCommandLog", sb.toString(), "selenium");
 	}
 
+	public void logMacroDescription(Object[] arguments) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		String command = (String)arguments[0];
+
+		_actionStepCount = 1;
+
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+		sb.append("<b>");
+		sb.append(_macroStepCount);
+		sb.append(". ");
+		sb.append(command);
+		sb.append("</b>");
+
+		_macroStepCount++;
+
+		log("descriptionLog", sb.toString(), "descriptionLog");
+	}
+
 	public void logTestCaseCommand(Object[] arguments) throws Exception {
 		StringBundler sb = new StringBundler();
 
@@ -260,6 +295,15 @@ public class Logger {
 		sb.append("</b>");
 
 		log("actionCommandLog", sb.toString(), "seleniumCommands");
+
+		sb = new StringBundler();
+
+		sb.append("<br />");
+		sb.append("<b>");
+		sb.append(tesCaseHeader);
+		sb.append("</b>");
+
+		log("descriptionLog", sb.toString(), "descriptionLog");
 	}
 
 	public void pauseLoggerCheck() throws Exception {
@@ -574,12 +618,14 @@ public class Logger {
 	private static final String _TEST_BASEDIR = TestPropsValues.TEST_BASEDIR;
 
 	private int _actionCount;
+	private int _actionStepCount = 1;
 	private int _errorCount;
 	private JavascriptExecutor _javascriptExecutor;
 	private LiferaySelenium _liferaySelenium;
 	private boolean _loggerStarted;
 	private int _screenshotCount;
 	private int _seleniumCount = 1;
+	private int _macroStepCount = 1;
 	private WebDriver _webDriver = new FirefoxDriver();
 	private Stack<String> _xPathIdStack = new Stack<String>();
 

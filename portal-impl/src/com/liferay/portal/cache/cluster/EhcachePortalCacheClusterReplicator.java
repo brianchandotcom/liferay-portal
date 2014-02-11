@@ -26,12 +26,12 @@ import java.util.Properties;
 import net.sf.ehcache.CacheException;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
-import net.sf.ehcache.distribution.CacheReplicator;
+import net.sf.ehcache.event.CacheEventListener;
 
 /**
  * @author Shuyang Zhou
  */
-public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
+public class EhcachePortalCacheClusterReplicator implements CacheEventListener {
 
 	public EhcachePortalCacheClusterReplicator(Properties properties) {
 		if (properties != null) {
@@ -49,27 +49,12 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 	}
 
 	@Override
-	public boolean alive() {
-		return true;
-	}
-
-	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}
 
 	@Override
 	public void dispose() {
-	}
-
-	@Override
-	public boolean isReplicateUpdatesViaCopy() {
-		return false;
-	}
-
-	@Override
-	public boolean notAlive() {
-		return false;
 	}
 
 	@Override

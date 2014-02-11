@@ -286,10 +286,15 @@
 		<execute macro="DataDefinition#saveCP" />
 
 		<execute macro="List#addCP">
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="listDescription" value="${listDescription}" />
 			<var name="listName" value="${listName}" />
 		</execute>
+
+		<execute macro="List#selectDataDefinitionCP">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="List#saveCP" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -614,10 +619,15 @@
 		<execute macro="DataDefinition#saveCP" />
 
 		<execute macro="List#addCP">
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="listDescription" value="${listDescription}" />
 			<var name="listName" value="${listName}" />
 		</execute>
+
+		<execute macro="List#selectDataDefinitionCP">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="List#saveCP" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />

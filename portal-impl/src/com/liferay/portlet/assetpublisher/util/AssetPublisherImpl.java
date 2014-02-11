@@ -266,8 +266,14 @@ public class AssetPublisherImpl implements AssetPublisher {
 		for (String customUserAttributeName : customUserAttributeNames) {
 			ExpandoBridge userCustomAttributes = user.getExpandoBridge();
 
-			Serializable userCustomFieldValue =
-				userCustomAttributes.getAttribute(customUserAttributeName);
+			Serializable userCustomFieldValue = null;
+
+			try {
+				userCustomFieldValue = userCustomAttributes.getAttribute(
+					customUserAttributeName);
+			}
+			catch (Exception e) {
+			}
 
 			if (userCustomFieldValue == null) {
 				continue;

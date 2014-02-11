@@ -64,82 +64,78 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testAddPortletPreferencesFromPortlet() throws Exception {
-		assertNullLayoutPreferences(_layout, _portlet);
+	public void testAddPortletPreferencesWithPortlet() throws Exception {
+	
+		assertNullLayoutJxPortletPreferences(_layout, _portlet);
 
-		String preferencesAsXML =
+		String portletPreferencesAsXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(
-				_PREFERENCE_NAME, _PREFERENCE_VALUES_SINGLE);
+				_NAME, _SINGLE_VALUE);
 
-		_portlet.setDefaultPreferences(preferencesAsXML);
+		_portlet.setDefaultPreferences(portletPreferencesAsXML);
 
 		PortletPreferences portletPreferences =
-			PortletPreferencesTestUtil.addLayoutPortletPreferences
-				(_layout, _portlet);
+			PortletPreferencesTestUtil.addLayoutPortletPreferences(
+				_layout, _portlet);
 
 		PortletPreferencesImpl portletPreferencesImpl =
 			PortletPreferencesTestUtil.toPortletPreferencesImpl(
 				portletPreferences);
 
-		assertOwnedByLayout(_layout, portletPreferencesImpl);
-
-		assertPortletPreferenceValues(
-			portletPreferences, _PREFERENCE_NAME, _PREFERENCE_VALUES_SINGLE);
+		assertOwner(_layout, portletPreferencesImpl);
+		assertValues(portletPreferences, _NAME, _SINGLE_VALUE);
 	}
 
 	@Test
 	public void testAddPortletPreferencesWithDefaultPreferences()
 		throws Exception {
 
-		assertNullLayoutPreferences(_layout, _portlet);
+		assertNullLayoutJxPortletPreferences(_layout, _portlet);
 
-		String preferencesAsXml =
+		String portletPreferencesAsXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(
-				_PREFERENCE_NAME, _PREFERENCE_VALUES_SINGLE);
+				_NAME, _SINGLE_VALUE);
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesTestUtil.addLayoutPortletPreferences(
-				_layout, _portlet, preferencesAsXml);
+				_layout, _portlet, portletPreferencesAsXML);
 
 		PortletPreferencesImpl portletPreferencesImpl =
 			PortletPreferencesTestUtil.toPortletPreferencesImpl(
 				portletPreferences);
 
-		assertOwnedByLayout(_layout, portletPreferencesImpl);
-
-		assertPortletPreferenceValues(
-			portletPreferences, _PREFERENCE_NAME, _PREFERENCE_VALUES_SINGLE);
+		assertOwner(_layout, portletPreferencesImpl);
+		assertValues(
+			portletPreferences, _NAME, _SINGLE_VALUE);
 	}
 
 	@Test
 	public void testAddPortletPreferencesWithMultipleDefaultPreferences()
 		throws Exception {
 
-		assertNullLayoutPreferences(_layout, _portlet);
+		assertNullLayoutJxPortletPreferences(_layout, _portlet);
 
-		String preferencesAsXML =
+		String portletPreferencesAsXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(
-				_PREFERENCE_NAME, _PREFERENCE_VALUES_MULTIPLE);
+				_NAME, _MULTIPLE_VALUES);
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesTestUtil.addLayoutPortletPreferences(
-				_layout, _portlet, preferencesAsXML);
+				_layout, _portlet, portletPreferencesAsXML);
 
 		PortletPreferencesImpl portletPreferencesImpl =
 			PortletPreferencesTestUtil.toPortletPreferencesImpl(
 				portletPreferences);
 
-		assertOwnedByLayout(_layout, portletPreferencesImpl);
-
-		assertPortletPreferenceValues(
-			portletPreferences, _PREFERENCE_NAME, _PREFERENCE_VALUES_MULTIPLE);
+		assertOwner(_layout, portletPreferencesImpl);
+		assertValues(portletPreferences, _NAME, _MULTIPLE_VALUES);
 	}
 
 	@Test
 	public void testAddPortletPreferencesWithoutDefaultPreferences()
 		throws Exception {
 
-		assertNullLayoutPreferences(_layout, _portlet);
+		assertNullLayoutJxPortletPreferences(_layout, _portlet);
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesTestUtil.addLayoutPortletPreferences(
@@ -149,25 +145,23 @@ public class PortletPreferencesLocalServiceTest {
 			PortletPreferencesTestUtil.toPortletPreferencesImpl(
 				portletPreferences);
 
-		javax.portlet.PortletPreferences fetchedPortletPreferences =
+		assertOwner(_layout, portletPreferencesImpl);
+		assertEmptyPortletPreferencesMap(portletPreferencesImpl);
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
 			PortletPreferencesTestUtil.fetchLayoutJxPortletPreferences(
 				_layout, _portlet);
 
-		assertOwnedByLayout(_layout, portletPreferencesImpl);
-
-		assertEmpty(portletPreferencesImpl);
-
-		assertOwnedByLayout(
-			_layout, (PortletPreferencesImpl)fetchedPortletPreferences);
-
-		assertEmpty(fetchedPortletPreferences);
+		assertOwner(
+			_layout, (PortletPreferencesImpl)jxPortletPreferences);
+		assertEmptyPortletPreferencesMap(jxPortletPreferences);
 	}
 
 	@Test
-	public void testAddPortletPreferencesWithoutDefaultPreferencesAndPortlet()
+	public void testAddPortletPreferencesWithoutDefaultPreferencesAndWithoutPortlet()
 		throws Exception {
 
-		assertNullLayoutPreferences(_layout, _portlet);
+		assertNullLayoutJxPortletPreferences(_layout, _portlet);
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesLocalServiceUtil.addPortletPreferences(
@@ -180,112 +174,79 @@ public class PortletPreferencesLocalServiceTest {
 			PortletPreferencesTestUtil.toPortletPreferencesImpl(
 				portletPreferences);
 
-		assertOwnedByLayout(_layout, portletPreferencesImpl);
-
-		assertEmpty(portletPreferencesImpl);
+		assertOwner(_layout, portletPreferencesImpl);
+		assertEmptyPortletPreferencesMap(portletPreferencesImpl);
 	}
 
-	protected void assertEmpty(
-			javax.portlet.PortletPreferences portletPreferences)
+	protected void assertEmptyPortletPreferencesMap(
+			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws Exception {
 
 		PortletPreferencesImpl portletPreferencesImpl =
-			(PortletPreferencesImpl)portletPreferences;
-
-		Assert.assertTrue(
-			"The portlet preferences defined by (ownerType: " +
-				portletPreferencesImpl.getOwnerType() + " ownerId: " +
-				portletPreferencesImpl.getOwnerId() + " and plid: " +
-				portletPreferencesImpl.getPlid() +
-				") has defined the preferences: "
-				+portletPreferencesImpl.getMap().keySet() +
-				" and was expected to be empty",
-			portletPreferencesImpl.getMap().isEmpty());
-	}
-
-	protected void assertNullLayoutPreferences(Layout layout, Portlet portlet)
-		throws Exception {
-
-		PortletPreferencesImpl preferences =
-			(PortletPreferencesImpl)PortletPreferencesTestUtil.
-				fetchLayoutJxPortletPreferences(layout, portlet);
-
-		Assert.assertNull(
-			"Any portlet preferences was expected to be defined for " +
-				"(layoutId: " + layout.getPlid() + " and portletId: " +
-				portlet.getPortletId() +
-				")",
-			preferences);
-	}
-
-	protected void assertOwnedByLayout(
-		Layout layout, PortletPreferencesImpl portletPreferences) {
-
-		Assert.assertEquals(
-			"The portlet preferences PLID is not the same as the layout PLID, ",
-			layout.getPlid(), portletPreferences.getPlid());
-
-		Assert.assertEquals(
-			"The portlet preferences owner type is not layout, ",
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			portletPreferences.getOwnerType());
-
-		Assert.assertEquals(
-			"The portlet preferences owner is not the default owner, ",
-			PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			portletPreferences.getOwnerId());
-	}
-
-	protected void assertPortletPreferenceValues(
-			javax.portlet.PortletPreferences portletPreferences,
-			String preferenceName, String[] preferenceValues)
-		throws Exception {
-
-		PortletPreferencesImpl portletPreferencesImpl =
-			(PortletPreferencesImpl)portletPreferences;
+			(PortletPreferencesImpl)jxPortletPreferences;
 
 		Map<String, String[]> portletPreferencesMap =
 			portletPreferencesImpl.getMap();
 
-		Assert.assertFalse(
-			"There are not portlet preferences defined for "+
-				"(ownerType: " + portletPreferencesImpl.getOwnerType() +
-				" ownerId: " + portletPreferencesImpl.getOwnerId() + " and " +
-				"plid: " + portletPreferencesImpl.getPlid() +
-				")",portletPreferencesMap.isEmpty());
-
-		Assert.assertArrayEquals(
-			"The value of the portlet preference " +
-				preferenceName + " defined for (ownerType: " +
-				portletPreferencesImpl.getOwnerType() + " ownerId: " +
-				portletPreferencesImpl.getOwnerId() + " and plid: " +
-				portletPreferencesImpl.getPlid() +
-				") is not the expected", preferenceValues,
-			portletPreferencesMap.get(preferenceName));
+		Assert.assertTrue(portletPreferencesMap.isEmpty());
 	}
 
-	protected void assertPortletPreferenceValues(
-			PortletPreferences portletPreferences, String preferenceName,
-			String[] preferenceValues)
+	protected void assertNullLayoutJxPortletPreferences(
+			Layout layout, Portlet portlet)
+		throws Exception {
+
+		PortletPreferencesImpl portletPreferencesImpl =
+			(PortletPreferencesImpl)PortletPreferencesTestUtil.
+				fetchLayoutJxPortletPreferences(layout, portlet);
+
+		Assert.assertNull(portletPreferencesImpl);
+	}
+
+	protected void assertOwner(
+		Layout layout, PortletPreferencesImpl portletPreferencesImpl) {
+
+		Assert.assertEquals(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			portletPreferencesImpl.getOwnerId());
+		Assert.assertEquals(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+			portletPreferencesImpl.getOwnerType());
+		Assert.assertEquals(layout.getPlid(), portletPreferencesImpl.getPlid());
+	}
+
+	protected void assertValues(
+			javax.portlet.PortletPreferences jxPortletPreferences,
+			String name, String[] values)
+		throws Exception {
+
+		PortletPreferencesImpl portletPreferencesImpl =
+			(PortletPreferencesImpl)jxPortletPreferences;
+
+		Map<String, String[]> portletPreferencesMap =
+			portletPreferencesImpl.getMap();
+
+		Assert.assertFalse(portletPreferencesMap.isEmpty());
+		Assert.assertArrayEquals(values, portletPreferencesMap.get(name));
+	}
+
+	protected void assertValues(
+			PortletPreferences portletPreferences, String name, String[] values)
 		throws Exception {
 
 		PortletPreferencesImpl portletPreferencesImpl =
 			PortletPreferencesTestUtil.toPortletPreferencesImpl(
 				portletPreferences);
 
-		assertPortletPreferenceValues(
-			portletPreferencesImpl, preferenceName, preferenceValues);
+		assertValues(portletPreferencesImpl, name, values);
 	}
 
 	private static final int _PORTLET_ID = 1000;
 
-	private static final String _PREFERENCE_NAME = "testPreferenceName";
+	private static final String _NAME = "name";
 
-	private static final String[] _PREFERENCE_VALUES_MULTIPLE =
-		{"testPreferenceValue1", "testPreferenceValue2"};
+	private static final String[] _MULTIPLE_VALUES = {"value1", "value2"};
 
-	private static final String[] _PREFERENCE_VALUES_SINGLE =
-		{"testPreferenceValue"};
+	private static final String[] _SINGLE_VALUE = {"value"};
 
 	private Group _group;
 	private Layout _layout;

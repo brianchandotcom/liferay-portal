@@ -30,12 +30,13 @@ import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.PortletPreferencesImpl;
+
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.Map;
 
 /**
  * @author Cristina González
@@ -90,7 +91,7 @@ public class PortletPreferencesLocalServiceTest {
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesTestUtil.addLayoutPortletPreferences(
-				_layout, _portlet);
+				_layout, _portlet, null);
 
 		PortletPreferencesImpl portletPreferencesImpl =
 			PortletPreferencesTestUtil.toPortletPreferencesImpl(

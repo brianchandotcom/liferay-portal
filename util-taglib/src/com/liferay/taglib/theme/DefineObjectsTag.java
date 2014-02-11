@@ -14,8 +14,13 @@
 
 package com.liferay.taglib.theme;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletSettings;
+import com.liferay.portlet.PortletSettingsFactoryUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -67,8 +72,42 @@ public class DefineObjectsTag extends TagSupport {
 		pageContext.setAttribute("timeZone", themeDisplay.getTimeZone());
 		pageContext.setAttribute("theme", themeDisplay.getTheme());
 		pageContext.setAttribute("colorScheme", themeDisplay.getColorScheme());
-		pageContext.setAttribute(
-			"portletDisplay", themeDisplay.getPortletDisplay());
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		pageContext.setAttribute("portletDisplay", portletDisplay);
+
+		String portletId = portletDisplay.getId();
+
+		try {
+			PortletSettings portletCompanyPortletSettings =
+				PortletSettingsFactoryUtil.getCompanyPortletSettings(
+					themeDisplay.getCompanyId(), portletId);
+
+			pageContext.setAttribute(
+				"portletCompanyPortletSettings", portletCompanyPortletSettings);
+
+			PortletSettings portletInstancePortletSettings =
+				PortletSettingsFactoryUtil.getPortletInstancePortletSettings(
+					themeDisplay.getLayout(), portletId);
+
+			pageContext.setAttribute(
+				"portletInstancePortletSettings",
+				portletInstancePortletSettings);
+
+			PortletSettings portletGroupPortletSettings =
+				PortletSettingsFactoryUtil.getGroupPortletSettings(
+					themeDisplay.getSiteGroupId(), portletId);
+
+			pageContext.setAttribute(
+				"portletGroupPortletSettings", portletGroupPortletSettings);
+		}
+		catch (SystemException se) {
+			throw new RuntimeException(se);
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
 
 		// Deprecated
 

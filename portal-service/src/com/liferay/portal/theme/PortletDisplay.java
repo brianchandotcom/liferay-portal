@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.PortletSettings;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -45,10 +46,12 @@ public class PortletDisplay implements Serializable {
 		_columnCount = master.getColumnCount();
 		_columnId = master.getColumnId();
 		_columnPos = master.getColumnPos();
+		_companyPortletSettings = master.getCompanyPortletSettings();
 		_content = master.getContent();
 		_controlPanelCategory = master.getControlPanelCategory();
 		_customCSSClassName = master.getCustomCSSClassName();
 		_description = master.getDescription();
+		_groupPortletSettings = master.getGroupPortletSettings();
 		_id = master.getId();
 		_instanceId = master.getInstanceId();
 		_modeAbout = master.isModeAbout();
@@ -62,6 +65,8 @@ public class PortletDisplay implements Serializable {
 		_modeView = master.isModeView();
 		_namespace = master.getNamespace();
 		_portletName = master.getPortletName();
+		_portletInstancePortletSettings =
+			master.getPortletInstancePortletSettings();
 		_portletSetup = master.getPortletSetup();
 		_resourcePK = master.getResourcePK();
 		_restoreCurrentView = master.isRestoreCurrentView();
@@ -110,10 +115,12 @@ public class PortletDisplay implements Serializable {
 		slave.setColumnCount(_columnCount);
 		slave.setColumnId(_columnId);
 		slave.setColumnPos(_columnPos);
+		slave.setCompanyPortletSettings(_companyPortletSettings);
 		slave.setContent(_content);
 		slave.setControlPanelCategory(_controlPanelCategory);
 		slave.setCustomCSSClassName(_customCSSClassName);
 		slave.setDescription(_description);
+		slave.setGroupPortletSettings(_groupPortletSettings);
 		slave.setId(_id);
 		slave.setInstanceId(_instanceId);
 		slave.setModeAbout(_modeAbout);
@@ -126,6 +133,8 @@ public class PortletDisplay implements Serializable {
 		slave.setModePrint(_modePrint);
 		slave.setModeView(_modeView);
 		slave.setNamespace(_namespace);
+		slave.setPortletInstancePortletSettings(
+			_portletInstancePortletSettings);
 		slave.setPortletName(_portletName);
 		slave.setPortletSetup(_portletSetup);
 		slave.setResourcePK(_resourcePK);
@@ -183,6 +192,10 @@ public class PortletDisplay implements Serializable {
 		return _columnPos;
 	}
 
+	public PortletSettings getCompanyPortletSettings() {
+		return _companyPortletSettings;
+	}
+
 	public StringBundler getContent() {
 		return _content;
 	}
@@ -199,6 +212,10 @@ public class PortletDisplay implements Serializable {
 		return _description;
 	}
 
+	public PortletSettings getGroupPortletSettings() {
+		return _groupPortletSettings;
+	}
+
 	public String getId() {
 		return _id;
 	}
@@ -209,6 +226,10 @@ public class PortletDisplay implements Serializable {
 
 	public String getNamespace() {
 		return _namespace;
+	}
+
+	public PortletSettings getPortletInstancePortletSettings() {
+		return _portletInstancePortletSettings;
 	}
 
 	public String getPortletName() {
@@ -458,10 +479,12 @@ public class PortletDisplay implements Serializable {
 		_columnCount = 0;
 		_columnId = StringPool.BLANK;
 		_columnPos = 0;
+		_companyPortletSettings = null;
 		_content.setIndex(0);
 		_controlPanelCategory = StringPool.BLANK;
 		_customCSSClassName = StringPool.BLANK;
 		_description = StringPool.BLANK;
+		_groupPortletSettings = null;
 		_id = StringPool.BLANK;
 		_instanceId = StringPool.BLANK;
 		_modeAbout = false;
@@ -474,6 +497,7 @@ public class PortletDisplay implements Serializable {
 		_modePrint = false;
 		_modeView = false;
 		_namespace = StringPool.BLANK;
+		_portletInstancePortletSettings = null;
 		_portletName = StringPool.BLANK;
 		_portletSetup = null;
 		_resourcePK = StringPool.BLANK;
@@ -540,6 +564,12 @@ public class PortletDisplay implements Serializable {
 		_columnPos = columnPos;
 	}
 
+	public void setCompanyPortletSettings(
+		PortletSettings companyPortletSettings) {
+
+		_companyPortletSettings = companyPortletSettings;
+	}
+
 	public void setContent(StringBundler content) {
 		if (content == null) {
 			_content = _blankStringBundler;
@@ -561,6 +591,10 @@ public class PortletDisplay implements Serializable {
 		description = HtmlUtil.escape(description);
 
 		_description = description;
+	}
+
+	public void setGroupPortletSettings(PortletSettings groupPortletSettings) {
+		_groupPortletSettings = groupPortletSettings;
 	}
 
 	public void setId(String id) {
@@ -609,6 +643,12 @@ public class PortletDisplay implements Serializable {
 
 	public void setNamespace(String namespace) {
 		_namespace = namespace;
+	}
+
+	public void setPortletInstancePortletSettings(
+		PortletSettings portletInstancePortletSettings) {
+
+		_portletInstancePortletSettings = portletInstancePortletSettings;
 	}
 
 	public void setPortletName(String portletName) {
@@ -800,10 +840,12 @@ public class PortletDisplay implements Serializable {
 	private int _columnCount;
 	private String _columnId = StringPool.BLANK;
 	private int _columnPos;
+	private PortletSettings _companyPortletSettings;
 	private StringBundler _content = _blankStringBundler;
 	private String _controlPanelCategory = StringPool.BLANK;
 	private String _customCSSClassName = StringPool.BLANK;
 	private String _description = StringPool.BLANK;
+	private PortletSettings _groupPortletSettings;
 	private String _id = StringPool.BLANK;
 	private String _instanceId = StringPool.BLANK;
 	private boolean _modeAbout;
@@ -816,6 +858,7 @@ public class PortletDisplay implements Serializable {
 	private boolean _modePrint;
 	private boolean _modeView;
 	private String _namespace = StringPool.BLANK;
+	private PortletSettings _portletInstancePortletSettings;
 	private String _portletName = StringPool.BLANK;
 	private PortletPreferences _portletSetup;
 	private String _resourcePK = StringPool.BLANK;

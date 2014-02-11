@@ -52,6 +52,12 @@ PortletPreferences portletPreferences = PortletPreferencesLocalServiceUtil.getSt
 
 PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletId);
 
+PortletSettings companyPortletSettings = PortletSettingsFactoryUtil.getCompanyPortletSettings(layout.getCompanyId(), portletId);
+PortletSettings portletInstancePortletSettings = PortletSettingsFactoryUtil.getPortletInstancePortletSettings(
+		layout, portletId);
+PortletSettings groupPortletSettings = PortletSettingsFactoryUtil.getGroupPortletSettings(
+		themeDisplay.getSiteGroupId(), portletId);
+
 Group group = null;
 boolean privateLayout = false;
 
@@ -333,7 +339,9 @@ portletDisplay.setActive(portlet.isActive());
 portletDisplay.setColumnCount(columnCount);
 portletDisplay.setColumnId(columnId);
 portletDisplay.setColumnPos(columnPos);
+portletDisplay.setCompanyPortletSettings(companyPortletSettings);
 portletDisplay.setControlPanelCategory(portlet.getControlPanelEntryCategory());
+portletDisplay.setGroupPortletSettings(groupPortletSettings);
 portletDisplay.setId(portletId);
 portletDisplay.setInstanceId(instanceId);
 portletDisplay.setModeAbout(modeAbout);
@@ -369,6 +377,7 @@ portletDisplay.setStateMax(stateMax);
 portletDisplay.setStateMin(stateMin);
 portletDisplay.setStateNormal(windowState.equals(WindowState.NORMAL));
 portletDisplay.setStatePopUp(themeDisplay.isStatePopUp());
+portletDisplay.setPortletInstancePortletSettings(portletInstancePortletSettings);
 portletDisplay.setPortletSetup(portletSetup);
 portletDisplay.setWebDAVEnabled(portlet.getWebDAVStorageInstance() != null);
 

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
-import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
@@ -139,6 +138,8 @@ public class WikiPageStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			page);
 
+		serviceContext.setUuid(page.getUuid());
+
 		Map<Long, Long> nodeIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				WikiNode.class);
@@ -148,22 +149,10 @@ public class WikiPageStagedModelDataHandler
 
 		WikiPage importedPage = null;
 
-		WikiPage existingPage =
-			WikiPageLocalServiceUtil.fetchWikiPageByUuidAndGroupId(
-				page.getUuid(), portletDataContext.getScopeGroupId());
+		WikiPage existingPage = WikiPageLocalServiceUtil.fetchPage(
+			nodeId, page.getTitle());
 
 		if (existingPage == null) {
-			try {
-				existingPage = WikiPageLocalServiceUtil.getPage(
-					nodeId, page.getTitle());
-			}
-			catch (NoSuchPageException nspe) {
-			}
-		}
-
-		if (existingPage == null) {
-			serviceContext.setUuid(page.getUuid());
-
 			importedPage = WikiPageLocalServiceUtil.addPage(
 				userId, nodeId, page.getTitle(), page.getVersion(),
 				page.getContent(), page.getSummary(), page.isMinorEdit(),
@@ -171,10 +160,25 @@ public class WikiPageStagedModelDataHandler
 				page.getRedirectTitle(), serviceContext);
 		}
 		else {
-			importedPage = WikiPageLocalServiceUtil.updatePage(
-				userId, nodeId, existingPage.getTitle(), 0, page.getContent(),
-				page.getSummary(), page.isMinorEdit(), page.getFormat(),
-				page.getParentTitle(), page.getRedirectTitle(), serviceContext);
+			existingPage =
+				WikiPageLocalServiceUtil.fetchWikiPageByUuidAndGroupId(
+					page.getUuid(), portletDataContext.getScopeGroupId());
+
+			if (existingPage == null) {
+				existingPage = WikiPageLocalServiceUtil.fetchPage(
+					nodeId, page.getTitle(), page.getVersion());
+			}
+
+			if (existingPage == null) {
+				importedPage = WikiPageLocalServiceUtil.updatePage(
+					userId, nodeId, page.getTitle(), 0.0, page.getContent(),
+					page.getSummary(), page.isMinorEdit(), page.getFormat(),
+					page.getParentTitle(), page.getRedirectTitle(),
+					serviceContext);
+			}
+			else {
+				importedPage = existingPage;
+			}
 		}
 
 		if (page.isHead()) {
@@ -237,6 +241,12 @@ public class WikiPageStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(page, importedPage);
+
+		Map<Long, Long> pageIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				WikiPage.class + ".pageId");
+
+		pageIds.put(page.getPageId(), importedPage.getPageId());
 	}
 
 	@Override

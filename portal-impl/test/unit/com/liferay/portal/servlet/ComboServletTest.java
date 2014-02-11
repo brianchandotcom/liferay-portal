@@ -96,6 +96,12 @@ public class ComboServletTest extends PowerMockito {
 		ServletContextPool.put("plugin-context", _pluginServletContext);
 	}
 
+	@Test(expected = ServletException.class)
+	public void testGetResourceFromNonExistingPluginContext() throws Exception {
+		_comboServlet.getResourceURL(
+			"non-existing-plugin-context:/js/javascript.js");
+	}
+
 	@Test
 	public void testGetResourceFromPluginContext() throws Exception {
 		String resource = "plugin-context:/js/javascript.js";

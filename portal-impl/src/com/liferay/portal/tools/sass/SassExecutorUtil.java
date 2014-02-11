@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.sass;
 
+import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.scripting.ruby.RubyExecutor;
@@ -66,7 +67,10 @@ public class SassExecutorUtil {
 		Runtime runtime = Runtime.getRuntime();
 
 		_executorService = Executors.newFixedThreadPool(
-			runtime.availableProcessors());
+			runtime.availableProcessors(),
+			new NamedThreadFactory(
+				"SassExecutor", Thread.NORM_PRIORITY,
+				SassExecutorUtil.class.getClassLoader()));
 
 		_docrootDirName = docrootDirName;
 		_portalCommonDirName = portalCommonDirName;
@@ -135,17 +139,25 @@ public class SassExecutorUtil {
 	public static void persist() throws Exception {
 		_executorService.shutdown();
 
-		_executorService.awaitTermination(30, TimeUnit.MINUTES);
+		if (!_executorService.awaitTermination(
+				_WAIT_MINTUES, TimeUnit.MINUTES)) {
 
-		for (SassFile file : _sassFileCache.values()) {
-			file.writeCacheFiles();
+			System.err.println(
+				"Abort Sass files processing after waited " + _WAIT_MINTUES +
+					" minutes");
+		}
 
-			System.out.println(file);
+		for (SassFile sassFile : _sassFileCache.values()) {
+			sassFile.writeCacheFiles();
+
+			System.out.println(sassFile);
 		}
 	}
 
 	private static final String _TEP_DIR = SystemProperties.get(
 		SystemProperties.TMP_DIR);
+
+	private static final int _WAIT_MINTUES = 30;
 
 	private static String _docrootDirName;
 	private static ExecutorService _executorService;

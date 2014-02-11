@@ -120,15 +120,16 @@ public class SassFile implements Callable<Void>, SassFragment {
 							_baseDir.concat(importFileName));
 					}
 
-					SassFile importFile = SassExecutorUtil.execute(
+					SassFile importSassFile = SassExecutorUtil.execute(
 						_docrootDirName, importFileName);
 
 					if (Validator.isNotNull(mediaQuery)) {
-						_fragments.add(
-							new SassFileWithMediaQuery(importFile, mediaQuery));
+						_sassFragments.add(
+							new SassFileWithMediaQuery(
+								importSassFile, mediaQuery));
 					}
 					else {
-						_fragments.add(importFile);
+						_sassFragments.add(importSassFile);
 					}
 				}
 
@@ -165,15 +166,15 @@ public class SassFile implements Callable<Void>, SassFragment {
 			return _ltrContent;
 		}
 
-		StringBundler sb = new StringBundler(_fragments.size());
+		StringBundler sb = new StringBundler(_sassFragments.size());
 
-		for (SassFragment fragment : _fragments) {
-			String ltrContent = fragment.getLtrContent();
+		for (SassFragment sassFragment : _sassFragments) {
+			String ltrContent = sassFragment.getLtrContent();
 
-			if (fragment instanceof SassFile) {
-				SassFile file = (SassFile)fragment;
+			if (sassFragment instanceof SassFile) {
+				SassFile sassFile = (SassFile)sassFragment;
 
-				String baseURL = _BASE_URL.concat(file._baseDir);
+				String baseURL = _BASE_URL.concat(sassFile._baseDir);
 
 				ltrContent = AggregateUtil.updateRelativeURLs(
 					ltrContent, baseURL);
@@ -193,15 +194,15 @@ public class SassFile implements Callable<Void>, SassFragment {
 			return _rtlContent;
 		}
 
-		StringBundler sb = new StringBundler(_fragments.size());
+		StringBundler sb = new StringBundler(_sassFragments.size());
 
-		for (SassFragment fragment : _fragments) {
-			String rtlContent = fragment.getRtlContent();
+		for (SassFragment sassFragment : _sassFragments) {
+			String rtlContent = sassFragment.getRtlContent();
 
-			if (fragment instanceof SassFile) {
-				SassFile file = (SassFile)fragment;
+			if (sassFragment instanceof SassFile) {
+				SassFile sassFile = (SassFile)sassFragment;
 
-				String baseURL = _BASE_URL.concat(file._baseDir);
+				String baseURL = _BASE_URL.concat(sassFile._baseDir);
 
 				rtlContent = AggregateUtil.updateRelativeURLs(
 					rtlContent, baseURL);
@@ -266,7 +267,7 @@ public class SassFile implements Callable<Void>, SassFragment {
 			return;
 		}
 
-		_fragments.add(new SassString(fileName, sassContent));
+		_sassFragments.add(new SassString(fileName, sassContent));
 	}
 
 	private String _fixRelativePath(String fileName) {
@@ -306,8 +307,8 @@ public class SassFile implements Callable<Void>, SassFragment {
 	private String _docrootDirName;
 	private long _elapsedTime;
 	private String _fileName;
-	private List<SassFragment> _fragments = new ArrayList<SassFragment>();
 	private String _ltrContent;
 	private String _rtlContent;
+	private List<SassFragment> _sassFragments = new ArrayList<SassFragment>();
 
 }

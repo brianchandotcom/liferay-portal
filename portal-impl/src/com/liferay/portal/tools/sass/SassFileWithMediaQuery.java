@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public class SassFileWithMediaQuery implements SassFragment {
 
-	public SassFileWithMediaQuery(SassFile file, String mediaQuery) {
-		_file = file;
+	public SassFileWithMediaQuery(SassFile sassfile, String mediaQuery) {
+		_sassFile = sassfile;
 		_mediaQuery = mediaQuery;
 	}
 
@@ -36,7 +36,7 @@ public class SassFileWithMediaQuery implements SassFragment {
 		sb.append(StringPool.SPACE);
 		sb.append(_mediaQuery);
 		sb.append(StringPool.OPEN_CURLY_BRACE);
-		sb.append(_file.getLtrContent());
+		sb.append(_sassFile.getLtrContent());
 		sb.append(StringPool.CLOSE_CURLY_BRACE);
 
 		return sb.toString();
@@ -50,7 +50,7 @@ public class SassFileWithMediaQuery implements SassFragment {
 		sb.append(StringPool.SPACE);
 		sb.append(_mediaQuery);
 		sb.append(StringPool.OPEN_CURLY_BRACE);
-		sb.append(_file.getRtlContent());
+		sb.append(_sassFile.getRtlContent());
 		sb.append(StringPool.CLOSE_CURLY_BRACE);
 
 		return sb.toString();
@@ -58,7 +58,7 @@ public class SassFileWithMediaQuery implements SassFragment {
 
 	private static final String _CSS_MEDIA_QUERY = "@media";
 
-	private SassFile _file;
 	private String _mediaQuery;
+	private SassFile _sassFile;
 
 }

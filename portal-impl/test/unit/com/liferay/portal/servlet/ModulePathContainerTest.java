@@ -16,9 +16,8 @@ package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.util.StringPool;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Carlos Sierra Andrés
@@ -63,7 +62,7 @@ public class ModulePathContainerTest {
 	}
 
 	@Test
-	public void testModulePathWithSlashPluginContext() {
+	public void testModulePathWithPluginContextWithInitialSlash() {
 		ComboServlet.ModulePathContainer modulePathContainer =
 			new ComboServlet.ModulePathContainer(
 				"/plugin-context:/js/javascript.js");

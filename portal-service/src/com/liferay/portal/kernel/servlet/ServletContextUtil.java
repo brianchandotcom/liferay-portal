@@ -113,14 +113,34 @@ public class ServletContextUtil {
 						_log.error("Resource URL for " + curPath + " is null");
 					}
 					else {
-							long lm =  new File(url.toURI()).lastModified();
-							if (lm > lastModified) {
-								lastModified = lm;
+						boolean urlIsFile = false;
+
+						String urlProtocol = url.getProtocol();
+
+						if (urlProtocol.equals("file")) {
+							try {
+								File file = new File(url.toURI());
+
+								urlIsFile = true;
+
+								if (file.lastModified() > lastModified) {
+									lastModified = file.lastModified();
+								}
 							}
-                    }
-				}
-				catch (URISyntaxException ioe) {
-					_log.error(ioe, ioe);
+							catch (URISyntaxException e) {
+							}
+						}
+
+						if (!urlIsFile) {
+							URLConnection urlConnection = url.openConnection();
+
+							if (urlConnection.getLastModified() >
+									lastModified) {
+
+								lastModified = urlConnection.getLastModified();
+							}
+						}
+					}
 				}
 				catch (IOException ioe) {
 					_log.error(ioe, ioe);

@@ -109,14 +109,15 @@ public abstract class BaseClusterExecutorImplTestCase
 	}
 
 	@Aspect
-	public static class SetBadPortalAddressAdvice {
+	public static class SetBadPortalInetSocketAddressAdvice {
 
 		public static final String BAD_ADDRESS = "bad address";
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"PORTAL_INSTANCE_HTTP_ADDRESS)")
-		public Object setPortalAddress(ProceedingJoinPoint proceedingJoinPoint)
+				"PORTAL_INSTANCE_HTTP_INET_SOCKET_ADDRESS)")
+		public Object setPortalInetSocketAddress(
+				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
 			String address = BAD_ADDRESS;
@@ -131,8 +132,8 @@ public abstract class BaseClusterExecutorImplTestCase
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"PORTAL_INSTANCE_HTTPS_ADDRESS)")
-		public Object setSecurePortalAddress(
+				"PORTAL_INSTANCE_HTTPS_INET_SOCKET_ADDRESS)")
+		public Object setSecurePortalInetSocketAddress(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
@@ -155,7 +156,7 @@ public abstract class BaseClusterExecutorImplTestCase
 	}
 
 	@Aspect
-	public static class SetPortalAddressAdvice {
+	public static class SetPortalInetSocketAddressAdvice {
 
 		public static final String PORTAL_ADDRESS = "127.0.0.1";
 		public static final int PORTAL_PORT = 80;
@@ -165,8 +166,9 @@ public abstract class BaseClusterExecutorImplTestCase
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"PORTAL_INSTANCE_HTTP_ADDRESS)")
-		public Object setPortalAddress(ProceedingJoinPoint proceedingJoinPoint)
+				"PORTAL_INSTANCE_HTTP_INET_SOCKET_ADDRESS)")
+		public Object setPortalInetSocketAddress(
+				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
 			return proceedingJoinPoint.proceed(
@@ -175,8 +177,8 @@ public abstract class BaseClusterExecutorImplTestCase
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"PORTAL_INSTANCE_HTTPS_ADDRESS)")
-		public Object setSecurePortalAddress(
+				"PORTAL_INSTANCE_HTTPS_INET_SOCKET_ADDRESS)")
+		public Object setSecurePortalInetSocketAddress(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 

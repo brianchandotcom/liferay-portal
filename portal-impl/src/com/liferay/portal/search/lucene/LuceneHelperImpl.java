@@ -827,10 +827,11 @@ public class LuceneHelperImpl implements LuceneHelper {
 				StringBundler sb = new StringBundler(6);
 
 				sb.append("Invalid cluster node InetSocketAddress ");
-				sb.append(". The address is set by the first request or ");
-				sb.append("configured in portal.properties by the properties ");
-				sb.append("\"portal.instance.http.address\" and ");
-				sb.append("\"portal.instance.https.address\".");
+				sb.append(". The InetSocketAddress is set by the first ");
+				sb.append("request or configured in portal.properties by the");
+				sb.append("properties ");
+				sb.append("\"portal.instance.http.inet.socket.address\" and ");
+				sb.append("\"portal.instance.https.inet.socket.address\".");
 
 				throw new Exception(sb.toString());
 			}

@@ -246,12 +246,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 	@AdviseWith(
 		adviceClasses = {
 			EnableClusterLinkAdvice.class, JChannelExceptionAdvice.class,
-			SetBadPortalAddressAdvice.class
+			SetBadPortalInetSocketAddressAdvice.class
 		}
 	)
 	@Test
 	public void testErrorLogAndExceptions() throws Exception {
-		SetBadPortalAddressAdvice.setPort(8080);
+		SetBadPortalInetSocketAddressAdvice.setPort(8080);
 
 		JDKLoggerTestUtil.configureJDKLogger(
 			ClusterBase.class.getName(), Level.FINE);
@@ -308,7 +308,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			logRecords.clear();
 
-			clusterExecutorImpl.portalLocalAddressConfigured(
+			clusterExecutorImpl.portalLocalInetSockAddressConfigured(
 				new InetSocketAddress(InetAddress.getLocalHost(), 80));
 
 			assertLogger(
@@ -966,7 +966,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			InetAddress inetAddress = InetAddress.getLocalHost();
 			int port = 8080;
 
-			clusterExecutorImpl2.portalLocalAddressConfigured(
+			clusterExecutorImpl2.portalLocalInetSockAddressConfigured(
 				new InetSocketAddress(inetAddress, port));
 
 			Assert.assertEquals(
@@ -991,7 +991,8 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
-			EnableClusterLinkAdvice.class, SetPortalAddressAdvice.class
+			EnableClusterLinkAdvice.class,
+			SetPortalInetSocketAddressAdvice.class
 		}
 
 	)
@@ -1007,21 +1008,21 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			Assert.assertEquals(
 				new InetSocketAddress(
 					InetAddress.getByName(
-						SetPortalAddressAdvice.PORTAL_ADDRESS),
-					SetPortalAddressAdvice.PORTAL_PORT),
+						SetPortalInetSocketAddressAdvice.PORTAL_ADDRESS),
+					SetPortalInetSocketAddressAdvice.PORTAL_PORT),
 				clusterNode.getPortalInetSocketAddress());
 
-			clusterExecutorImpl.portalLocalAddressConfigured(
+			clusterExecutorImpl.portalLocalInetSockAddressConfigured(
 				new InetSocketAddress(
 					InetAddress.getByName(
-						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-					SetPortalAddressAdvice.SECURE_PORTAL_PORT));
+						SetPortalInetSocketAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalInetSocketAddressAdvice.SECURE_PORTAL_PORT));
 
 			Assert.assertEquals(
 				new InetSocketAddress(
 					InetAddress.getByName(
-						SetPortalAddressAdvice.PORTAL_ADDRESS),
-					SetPortalAddressAdvice.PORTAL_PORT),
+						SetPortalInetSocketAddressAdvice.PORTAL_ADDRESS),
+					SetPortalInetSocketAddressAdvice.PORTAL_PORT),
 				clusterNode.getPortalInetSocketAddress());
 		}
 		finally {
@@ -1033,7 +1034,8 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
-			EnableClusterLinkAdvice.class, SetPortalAddressAdvice.class,
+			EnableClusterLinkAdvice.class,
+			SetPortalInetSocketAddressAdvice.class,
 			SetWebServerProtocolAdvice.class
 		}
 
@@ -1050,21 +1052,21 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			Assert.assertEquals(
 				new InetSocketAddress(
 					InetAddress.getByName(
-						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-					SetPortalAddressAdvice.SECURE_PORTAL_PORT),
+						SetPortalInetSocketAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalInetSocketAddressAdvice.SECURE_PORTAL_PORT),
 				clusterNode.getPortalInetSocketAddress());
 
-			clusterExecutorImpl.portalLocalAddressConfigured(
+			clusterExecutorImpl.portalLocalInetSockAddressConfigured(
 				new InetSocketAddress(
 					InetAddress.getByName(
-						SetPortalAddressAdvice.PORTAL_ADDRESS),
-					SetPortalAddressAdvice.PORTAL_PORT));
+						SetPortalInetSocketAddressAdvice.PORTAL_ADDRESS),
+					SetPortalInetSocketAddressAdvice.PORTAL_PORT));
 
 			Assert.assertEquals(
 				new InetSocketAddress(
 					InetAddress.getByName(
-						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-					SetPortalAddressAdvice.SECURE_PORTAL_PORT),
+						SetPortalInetSocketAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalInetSocketAddressAdvice.SECURE_PORTAL_PORT),
 				clusterNode.getPortalInetSocketAddress());
 		}
 		finally {
@@ -1076,7 +1078,8 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 	@AdviseWith(
 		adviceClasses = {
-			EnableClusterLinkAdvice.class, SetBadPortalAddressAdvice.class,
+			EnableClusterLinkAdvice.class,
+			SetBadPortalInetSocketAddressAdvice.class,
 			SetWebServerProtocolAdvice.class
 		}
 
@@ -1095,30 +1098,30 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			Assert.assertNull(clusterNode.getPortalInetSocketAddress());
 
-			clusterExecutorImpl.portalLocalAddressConfigured(
+			clusterExecutorImpl.portalLocalInetSockAddressConfigured(
 				new InetSocketAddress(
 					InetAddress.getByName(
-						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-					SetPortalAddressAdvice.SECURE_PORTAL_PORT));
+						SetPortalInetSocketAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalInetSocketAddressAdvice.SECURE_PORTAL_PORT));
 
 			Assert.assertEquals(
 				new InetSocketAddress(
 					InetAddress.getByName(
-						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-					SetPortalAddressAdvice.SECURE_PORTAL_PORT),
+						SetPortalInetSocketAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalInetSocketAddressAdvice.SECURE_PORTAL_PORT),
 				clusterNode.getPortalInetSocketAddress());
 
-			clusterExecutorImpl.portalLocalAddressConfigured(
+			clusterExecutorImpl.portalLocalInetSockAddressConfigured(
 				new InetSocketAddress(
 					InetAddress.getByName(
-						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-					SetPortalAddressAdvice.SECURE_PORTAL_PORT));
+						SetPortalInetSocketAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalInetSocketAddressAdvice.SECURE_PORTAL_PORT));
 
 			Assert.assertEquals(
 				new InetSocketAddress(
 					InetAddress.getByName(
-						SetPortalAddressAdvice.SECURE_PORTAL_ADDRESS),
-					SetPortalAddressAdvice.SECURE_PORTAL_PORT),
+						SetPortalInetSocketAddressAdvice.SECURE_PORTAL_ADDRESS),
+					SetPortalInetSocketAddressAdvice.SECURE_PORTAL_PORT),
 				clusterNode.getPortalInetSocketAddress());
 		}
 		finally {
@@ -1136,10 +1139,10 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		try {
 			clusterExecutorImpl = getClusterExecutorImpl(false, false);
 
-			clusterExecutorImpl.portalServerAddressConfigured(
+			clusterExecutorImpl.portalServerInetSocketAddressConfigured(
 				new InetSocketAddress(80));
 
-			clusterExecutorImpl.portalLocalAddressConfigured(
+			clusterExecutorImpl.portalLocalInetSockAddressConfigured(
 				new InetSocketAddress(80));
 		}
 		finally {

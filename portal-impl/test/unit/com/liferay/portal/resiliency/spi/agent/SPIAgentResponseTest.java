@@ -303,7 +303,7 @@ public class SPIAgentResponseTest {
 		mockHttpServletRequest.setLocalAddr("127.0.0.1");
 		mockHttpServletRequest.setLocalPort(1234);
 
-		PortalUtil.setPortalAddresses(mockHttpServletRequest);
+		PortalUtil.setPortalInetSocketAddresses(mockHttpServletRequest);
 
 		mockHttpServletRequest.setParameter(
 			"portalResiliencyPortletShowFooter", StringPool.TRUE);

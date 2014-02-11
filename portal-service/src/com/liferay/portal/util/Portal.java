@@ -135,7 +135,7 @@ public interface Portal {
 
 	/**
 	 * Adds the portal InetSocketAddress listener to the portal. The listener
-	 * will be notified whenever the portal address and port is set.
+	 * will be notified whenever the portal host and port is set.
 	 *
 	 * @param portalInetSocketAddressEventListener the portal event listener to
 	 *		  add
@@ -1405,7 +1405,7 @@ public interface Portal {
 	 */
 	public void setPageTitle(String title, HttpServletRequest request);
 
-	public void setPortalAddresses(HttpServletRequest request);
+	public void setPortalInetSocketAddresses(HttpServletRequest request);
 
 	/**
 	 * Sets the port obtained on the first request to the portal.

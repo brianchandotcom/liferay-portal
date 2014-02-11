@@ -2014,8 +2014,10 @@ public class PortalUtil {
 		getPortal().setPageTitle(title, request);
 	}
 
-	public static void setPortalAddresses(HttpServletRequest request) {
-		getPortal().setPortalAddresses(request);
+	public static void setPortalInetSocketAddresses(
+		HttpServletRequest request) {
+
+		getPortal().setPortalInetSocketAddresses(request);
 	}
 
 	/**

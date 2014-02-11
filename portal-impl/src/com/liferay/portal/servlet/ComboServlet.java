@@ -381,6 +381,37 @@ public class ComboServlet extends HttpServlet {
 		return validModuleExtension;
 	}
 
+	protected static class ModulePathContainer {
+
+		public String getModuleContextPath() {
+			return _moduleContextPath;
+		}
+
+		public String getResourcePath() {
+			return _resourcePath;
+		}
+
+		ModulePathContainer(String modulePathString) {
+			int index = modulePathString.indexOf(CharPool.COLON);
+
+			if (index > 0) {
+				String moduleContextPath = modulePathString.substring(0, index);
+
+				String resourcePath = modulePathString.substring(index + 1);
+
+				_moduleContextPath = moduleContextPath;
+				_resourcePath = resourcePath;
+			}
+			else {
+				_moduleContextPath = StringPool.BLANK;
+				_resourcePath = modulePathString;
+			}
+		}
+
+		private String _moduleContextPath;
+		private String _resourcePath;
+	}
+
 	private static final String _CSS_EXTENSION = "css";
 
 	private static final String _CSS_MINIFIED_SUFFIX = "-min.css";
@@ -411,37 +442,6 @@ public class ComboServlet extends HttpServlet {
 		private byte[] _fileContent;
 		private long _lastModified;
 
-	}
-
-	private static class ModulePathContainer {
-
-		public String getModuleContextPath() {
-			return _moduleContextPath;
-		}
-
-		public String getResourcePath() {
-			return _resourcePath;
-		}
-
-		private ModulePathContainer(String modulePathString) {
-			int index = modulePathString.indexOf(CharPool.COLON);
-
-			if (index > 0) {
-				String moduleContextPath = modulePathString.substring(0, index);
-
-				String resourcePath = modulePathString.substring(index + 1);
-
-				_moduleContextPath = moduleContextPath;
-				_resourcePath = resourcePath;
-			}
-			else {
-				_moduleContextPath = StringPool.BLANK;
-				_resourcePath = modulePathString;
-			}
-		}
-
-		private String _moduleContextPath;
-		private String _resourcePath;
 	}
 
 }

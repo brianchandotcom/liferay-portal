@@ -30,13 +30,12 @@ import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.PortletPreferencesImpl;
-
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Map;
 
 /**
  * @author Cristina González
@@ -87,7 +86,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testAddPortletPreferencesWithDefaultPreferences()
+	public void testAddPortletPreferencesWithDefaultSingleXML()
 		throws Exception {
 
 		assertNullLayoutJxPortletPreferences(_layout, _portlet);
@@ -110,7 +109,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testAddPortletPreferencesWithMultipleDefaultPreferences()
+	public void testAddPortletPreferencesWithDefaultMultipleXML()
 		throws Exception {
 
 		assertNullLayoutJxPortletPreferences(_layout, _portlet);
@@ -132,7 +131,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testAddPortletPreferencesWithoutDefaultPreferences()
+	public void testAddPortletPreferencesWithDefaultNullXML()
 		throws Exception {
 
 		assertNullLayoutJxPortletPreferences(_layout, _portlet);
@@ -158,7 +157,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testAddPortletPreferencesWithoutDefaultPreferencesAndWithoutPortlet()
+	public void testAddPortletPreferencesWithDefaultNullXMLAndNullPortlet()
 		throws Exception {
 
 		assertNullLayoutJxPortletPreferences(_layout, _portlet);

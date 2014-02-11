@@ -157,6 +157,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_CHILD_PAGE</td>
+	<td>//ul[contains(@class,'child-menu')]/li[contains(.,'${key_childPageName}')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_1_CHILD_PAGE_1</td>
 	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[1]/ul[contains(@class,'child-menu')]/li[1]/a</td>
 	<td></td>

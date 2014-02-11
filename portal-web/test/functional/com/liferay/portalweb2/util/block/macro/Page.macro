@@ -75,6 +75,18 @@
 		<execute action="Dockbar#assertClick" locator-key1="EDIT_SAVE_BUTTON" value1="Save" />
 	</command>
 
+	<command name="gotoChildPagePG">
+		<execute macro="Page#gotoPG" />
+
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="Home#mouseOver" locator-key1="PAGE" value1="${pageName}" />
+
+		<var name="key_childPageName" value="${childPageName}" />
+
+		<execute action="Home#assertClick" locator-key1="PAGE_CHILD_PAGE" value1="${childPageName}" />
+	</command>
+
 	<command name="gotoCmdCP">
 		<execute macro="Page#openURL" />
 

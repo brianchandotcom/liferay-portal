@@ -24,13 +24,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BREADCRUMB_ENTRY</td>
-	<td>//div[@class='portlet-body']/ul</td>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLET_PAGE</td>
-	<td>//div[@class='portlet-body']/ul/li/a[contains(.,'${key_pageName}')]</td>
+	<td>BREADCRUMB_ENTRY</td>
+	<td>//div[@class='portlet-content']//ul[@class='breadcrumb']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREADCRUMB_PAGE</td>
+	<td>//div/ul[@class='breadcrumb']/li/a[contains(.,'${key_breadcrumbName}')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -24,53 +24,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_PREVIEW</td>
 	<td>//div[contains(@class,'portlet-preview')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLET_PREVIEW_PAGE</td>
-	<td>//div[@class='portlet-body']/ul/li/a[contains(.,'${key_pageName}')]</td>
+	<td>BREADCRUMB_PREVIEW_PAGE</td>
+	<td>//div[@class='preview']//ul[@class='breadcrumb']/li/a[contains(.,'${key_breadcrumbName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SHOW_SPECIFIC_CHECKBOX</td>
-	<td>//label[@for='_86_show${key_checkContentName}Checkbox']/input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SHOW_CURRENT_SITE_CHECKBOX</td>
-	<td>//label[@for='_86_showCurrentGroupCheckbox']/input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SHOW_CURRENT_APPLICATION_CHECKBOX</td>
-	<td>//label[@for='_86_showCurrentPortletCheckbox']/input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SHOW_GUEST_SITE_CHECKBOX</td>
-	<td>//label[@for='_86_showGuestGroupCheckbox']/input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SHOW_PAGE_CHECKBOX</td>
-	<td>//label[@for='_86_showLayoutCheckbox']/input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SHOW_PARENT_SITES_CHECKBOX</td>
-	<td>//label[@for='_86_showParentGroupsCheckbox']/input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SHOW_APPLICATION_BREADCRUMB_CHECKBOX</td>
-	<td>//label[@for='_86_showPortletBreadcrumbCheckbox']/input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
+	<td>//label[contains(.,'${key_checkSetupName}')]/input[2]</td>
 	<td></td>
 </tr>
 </tbody>

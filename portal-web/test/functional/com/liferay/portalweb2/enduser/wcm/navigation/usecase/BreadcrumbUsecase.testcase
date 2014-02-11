@@ -8,18 +8,13 @@
 	</tear-down>
 
 	<command name="BreadcrumbConfiguration" priority="3">
-		<var name="siteChildPageName" value="Child PageName" />
-		<var name="siteName" value="SiteName" />
-		<var name="sitePagePrivacy" value="Public" />
-		<var name="sitePageURL" value="http://localhost:8080/web/sitename/child-pagename" />
-		<var name="siteParentPageName" value="Parent PageName" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -27,9 +22,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${siteParentPageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Parent Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -37,20 +32,16 @@
 		</execute>
 
 		<execute macro="SitePage#addChildCP">
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${siteParentPageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteChildPageName" value="Child Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Parent Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
-		<execute macro="SitePage#viewChildPG">
-			<var name="pageAccess" value="${sitePagePrivacy}" />
-			<var name="pageName" value="${siteParentPageName}" />
-            <var name="childPageCount" value="1" />
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${siteParentPageName}" />
-			<var name="sitePageURL" value="${sitePageURL}" />
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Child Page Name" />
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -58,413 +49,156 @@
 			<var name="portletName" value="Breadcrumb" />
 		</execute>
 
-        <execute macro="Portlet#gotoPortletOptions">
-            <var name="portletOption" value="Configuration" />
-        </execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteChildPageName}" />
-			<var name="present" value="" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="present" value="" />
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListVisible" value="Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewConfigurationBreadcrumb">
-			<var name="checkContent" value="CurrentGroup,CurrentPortlet,Layout,ParentGroups,PortletBreadcrumb" />
-			<var name="uncheckContent" value="GuestGroup" />
+		<execute macro="Breadcrumb#viewConfigurationCheckboxes">
+			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Page,Show Parent Sites,Show Application Breadcrumb" />
+			<var name="uncheckSetupName" value="Show Guest Site" />
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkContent" value="GuestGroup" />
-			<var name="uncheckContent" value="Layout" />
+			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Parent Sites,Show Application Breadcrumb" />
+			<var name="uncheckSetupName" value="Show Page" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteChildPageName}" />
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListNotVisible" value="Parent Page Name,Child Page Name" />
+			<var name="breadcrumbListVisible" value="Liferay,Site Name" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteParentPageName}" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="Liferay" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#configurationSave" />
-
-		<execute macro="SitePage#viewChildPG">
-			<var name="pageAccess" value="${sitePagePrivacy}" />
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="childPageCount" value="1" />
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${siteParentPageName}" />
-			<var name="sitePageURL" value="${sitePageURL}" />
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Child Page Name" />
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteChildPageName}" />
+			<var name="breadcrumbListNotVisible" value="Parent Page Name,Child Page Name" />
+			<var name="breadcrumbListVisible" value="Liferay,Site Name" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteParentPageName}" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
 		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="Liferay" />
-			<var name="present" value="" />
-		</execute>
-
-        <execute macro="Portlet#gotoPortletOptions">
-            <var name="portletOption" value="Configuration" />
-        </execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="uncheckContent" value="ParentGroups" />
+			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Application Breadcrumb" />
+			<var name="uncheckSetupName" value="Show Page,Show Parent Sites" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteParentPageName}" />
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListNotVisible" value="Parent Page Name,Child Page Name,Site Name" />
+			<var name="breadcrumbListVisible" value="Liferay" />
 		</execute>
 
-		<execute macro="Breadcrumb#configurationSave" />
-
-		<execute macro="SitePage#viewChildPG">
-			<var name="pageAccess" value="${sitePagePrivacy}" />
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="childPageCount" value="1" />
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${siteParentPageName}" />
-			<var name="sitePageURL" value="${sitePageURL}" />
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Child Page Name" />
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteChildPageName}" />
+			<var name="breadcrumbListNotVisible" value="Site Name,Parent Page Name,Child Page Name" />
+			<var name="breadcrumbListVisible" value="Liferay" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteParentPageName}" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
 		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="Liferay" />
-			<var name="present" value="" />
-		</execute>
-
-        <execute macro="Portlet#gotoPortletOptions">
-            <var name="portletOption" value="Configuration" />
-        </execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="uncheckContent" value="GuestGroup" />
+			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Application Breadcrumb" />
+			<var name="uncheckSetupName" value="Show Guest Site,Show Page,Show Parent Sites" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteChildPageName}" />
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListNotVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteParentPageName}" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="Liferay" />
-		</execute>
-
-		<execute macro="Breadcrumb#configurationSave" />
-
-		<execute macro="SitePage#viewChildPG">
-			<var name="pageAccess" value="${sitePagePrivacy}" />
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="childPageCount" value="1" />
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${siteParentPageName}" />
-			<var name="sitePageURL" value="${sitePageURL}" />
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Child Page Name" />
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteChildPageName}" />
+			<var name="breadcrumbListNotVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteParentPageName}" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
 		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="Liferay" />
-		</execute>
-
-        <execute macro="Portlet#gotoPortletOptions">
-            <var name="portletOption" value="Configuration" />
-        </execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkContent" value="CurrentGroup,CurrentPortlet,GuestGroup,Layout,ParentGroups,PortletBreadcrumb" />
+			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteChildPageName}" />
-			<var name="present" value="" />
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="Liferay" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#configurationSave" />
-
-		<execute macro="SitePage#viewChildPG">
-			<var name="pageAccess" value="${sitePagePrivacy}" />
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="childPageCount" value="1" />
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${siteParentPageName}" />
-			<var name="sitePageURL" value="${sitePageURL}" />
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Child Page Name" />
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteChildPageName}" />
-			<var name="present" value="" />
+			<var name="breadcrumbListVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="present" value="" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
 		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="Liferay" />
-			<var name="present" value="" />
-		</execute>
-
-        <execute macro="Portlet#gotoPortletOptions">
-            <var name="portletOption" value="Configuration" />
-        </execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="uncheckContent" value="CurrentGroup,CurrentPortlet,PortletBreadcrumb" />
+			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Application Breadcrumb" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteChildPageName}" />
-			<var name="present" value="" />
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="Liferay" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#configurationSave" />
-
-		<execute macro="SitePage#viewChildPG">
-			<var name="pageAccess" value="${sitePagePrivacy}" />
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="childPageCount" value="1" />
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${siteParentPageName}" />
-			<var name="sitePageURL" value="${sitePageURL}" />
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Child Page Name" />
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteChildPageName}" />
-			<var name="present" value="" />
+			<var name="breadcrumbListVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="Liferay" />
-			<var name="present" value="" />
-		</execute>
-
-        <execute macro="Portlet#gotoPortletOptions">
-            <var name="portletOption" value="Configuration" />
-        </execute>
-
-		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkContent" value="CurrentGroup,CurrentPortlet,PortletBreadcrumb" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteChildPageName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="Liferay" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#configurationSave" />
-
-		<execute macro="SitePage#viewChildPG">
-			<var name="pageAccess" value="${sitePagePrivacy}" />
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="childPageCount" value="1" />
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${siteParentPageName}" />
-			<var name="sitePageURL" value="${sitePageURL}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteChildPageName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="Liferay" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="SitePage#viewChildPG">
-			<var name="pageAccess" value="${sitePagePrivacy}" />
-			<var name="pageName" value="${siteParentPageName}" />
-			<var name="childPageCount" value="1" />
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${siteParentPageName}" />
-			<var name="sitePageURL" value="${sitePageURL}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-        <execute macro="Portlet#gotoPortletOptions">
-            <var name="portletOption" value="Configuration" />
-        </execute>
-        
-		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkContent" value="CurrentGroup,CurrentPortlet,GuestGroup,Layout,ParentGroups,PortletBreadcrumb" />
-			<var name="uncheckContent" value="CurrentGroup" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPG">
-			<var name="pageName" value="${siteChildPageName}" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkContent" value="CurrentGroup" />
+			<var name="uncheckSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteChildPageName}" />
-			<var name="present" value="" />
-		</execute>
-
-		<execute macro="Breadcrumb#configurationSave" />
-		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="uncheckContent" value="CurrentGroup" />
-		</execute>
-
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteChildPageName}" />
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListNotVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkContent" value="CurrentGroup" />
+			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
+			<var name="configureWithoutSave" value="true" />
 		</execute>
 
-		<execute macro="Breadcrumb#viewPreview">
-			<var name="pageName" value="${siteChildPageName}" />
-			<var name="present" value="" />
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
 		</execute>
-
-		<execute macro="Breadcrumb#configurationSave" />
 	</command>
 </definition>

@@ -36,6 +36,8 @@ if (group.isStagingGroup() && !group.isStagedRemotely()) {
 	liveGroupId = ParamUtil.getLong(request, "liveGroupId", liveGroup.getGroupId());
 }
 
+String exportNav = ParamUtil.getString(request, "exportNav", "custom");
+
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 String rootNodeName = StringPool.BLANK;
@@ -95,7 +97,14 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 	refresh="<%= false %>"
 >
 	<liferay-ui:section>
-		<div id="<portlet:namespace />exportImportOptions">
+		<aui:nav-bar>
+			<aui:nav id="exportNav">
+				<aui:nav-item data-value="custom" iconCssClass="icon-puzzle" label="custom" />
+				<aui:nav-item data-value="templates" iconCssClass="icon-archive" label="export-templates" />
+			</aui:nav>
+		</aui:nav-bar>
+
+		<div <%= exportNav.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportImportOptions">
 
 			<%
 			int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(liveGroupId, LayoutExportBackgroundTaskExecutor.class.getName(), false);
@@ -590,6 +599,15 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 				</aui:button-row>
 			</aui:form>
 		</div>
+
+		<div <%= exportNav.equals("templates") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportImportConfigurations">
+			<liferay-util:include page="/html/portlet/layouts_admin/export_configurations.jsp">
+				<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+				<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				<liferay-util:param name="rootNodeName" value="<%= rootNodeName %>" />
+			</liferay-util:include>
+		</div>
 	</liferay-ui:section>
 
 	<liferay-ui:section>
@@ -666,6 +684,31 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 			submitForm(form, form.attr('action'), false);
 		}
 	);
+
+	var clickHandler = function(event) {
+		var dataValue = event.target.ancestor('li').attr('data-value');
+
+		processDataValue(dataValue);
+	};
+
+	var processDataValue = function(dataValue) {
+		if (dataValue === 'custom') {
+			var exportImportOptions = A.one('#<portlet:namespace />exportImportOptions');
+			var exportImportConfigurations = A.one('#<portlet:namespace />exportImportConfigurations');
+
+			exportImportConfigurations.hide();
+			exportImportOptions.show();
+		}
+		else if (dataValue === 'templates') {
+			var exportImportOptions = A.one('#<portlet:namespace />exportImportOptions');
+			var exportImportConfigurations = A.one('#<portlet:namespace />exportImportConfigurations');
+
+			exportImportOptions.hide();
+			exportImportConfigurations.show();
+		}
+	};
+
+	A.one('#<portlet:namespace />exportNav').delegate('click', clickHandler, 'li a');
 </aui:script>
 
 <aui:script>

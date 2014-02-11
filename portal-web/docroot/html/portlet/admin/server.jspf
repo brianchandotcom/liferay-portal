@@ -811,7 +811,7 @@ serverURL.setParameter("tabs3", tabs3);
 									<aui:validator name="required" />
 								</aui:input>
 
-								<aui:input cssClass="lfr-textarea-container" label="custom-message" name='<%= "message" + GetterUtil.getString(ShutdownUtil.getMessage()) %>' type="textarea" />
+								<aui:input cssClass="lfr-textarea-container" label="custom-message" name="message" type="textarea" />
 							</aui:fieldset>
 
 							<aui:button onClick="<%= taglibShutdown %>" value="shutdown" />

@@ -1343,7 +1343,10 @@ public class StagingImpl implements Staging {
 
 		layouts.add(layout);
 
-		layouts.addAll(getMissingParentLayouts(layout, liveGroupId));
+		List<Layout> parentLayouts =
+			ExportImportHelperUtil.getMissingParentLayouts(layout, liveGroupId);
+
+		layouts.addAll(parentLayouts);
 
 		if (includeChildren) {
 			layouts.addAll(layout.getAllChildren());
@@ -1388,40 +1391,9 @@ public class StagingImpl implements Staging {
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws PortalException, SystemException {
 
-		List<Layout> layouts = new ArrayList<Layout>();
-
-		for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
-			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
-			boolean includeChildren = entry.getValue();
-
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-			if (!layouts.contains(layout)) {
-				layouts.add(layout);
-			}
-
-			List<Layout> parentLayouts = getMissingParentLayouts(
-				layout, targetGroupId);
-
-			for (Layout parentLayout : parentLayouts) {
-				if (!layouts.contains(parentLayout)) {
-					layouts.add(parentLayout);
-				}
-			}
-
-			if (includeChildren) {
-				for (Layout childLayout : layout.getAllChildren()) {
-					if (!layouts.contains(childLayout)) {
-						layouts.add(childLayout);
-					}
-				}
-			}
-		}
-
-		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layouts);
-
 		publishLayouts(
-			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
+			userId, sourceGroupId, targetGroupId, privateLayout,
+			ExportImportHelperUtil.getLayoutIds(layoutIdMap, targetGroupId),
 			parameterMap, startDate, endDate);
 	}
 

@@ -141,6 +141,7 @@
 
 		<execute macro="DynamicDataMapping#viewFieldOptionsCmd">
 			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
 			<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
@@ -387,6 +388,7 @@
 			<then>
 				<execute macro="DynamicDataMapping#viewFieldOptionsCmd">
 					<var name="field" value="${field}" />
+					<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 					<var name="fieldName" value="${fieldName}" />
 					<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
 					<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
@@ -433,23 +435,30 @@
 			<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_OPTIONS" value1="${fieldOptionsName}" />
 		</for>
 
-		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_OPTIONS" />
+		<if>
+			<not>
+				<equals arg1="${fieldEditable}" arg2="false" />
+			</not>
+			<then>
+				<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_OPTIONS" />
 
-		<var name="i" value="0" />
+				<var name="i" value="0" />
 
-		<for list="${fieldOptionsNames}" param="fieldOptionsName">
-			<var name="i" value="${i?increment()}" />
+				<for list="${fieldOptionsNames}" param="fieldOptionsName">
+					<var name="i" value="${i?increment()}" />
 
-			<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_OPTIONS_NAME_${i}" value1="${fieldOptionsName}" />
-		</for>
+					<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_OPTIONS_NAME_${i}" value1="${fieldOptionsName}" />
+				</for>
 
-		<var name="j" value="0" />
+				<var name="j" value="0" />
 
-		<for list="${fieldOptionsValues}" param="fieldOptionsValue">
-			<var name="j" value="${j?increment()}" />
+				<for list="${fieldOptionsValues}" param="fieldOptionsValue">
+					<var name="j" value="${j?increment()}" />
 
-			<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}" value1="${fieldOptionsValue}" />
-		</for>
+					<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}" value1="${fieldOptionsValue}" />
+				</for>
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Radio" />

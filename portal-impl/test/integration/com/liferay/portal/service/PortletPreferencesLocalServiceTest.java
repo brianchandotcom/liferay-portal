@@ -30,12 +30,13 @@ import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.PortletPreferencesImpl;
+
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.Map;
 
 /**
  * @author Cristina González
@@ -101,7 +102,8 @@ public class PortletPreferencesLocalServiceTest {
 				_layout, _portlet, preferencesAsXml);
 
 		PortletPreferencesImpl portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(portletPreferences);
+			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+				portletPreferences);
 
 		assertOwnedByLayout(_layout, portletPreferencesImpl);
 
@@ -124,7 +126,8 @@ public class PortletPreferencesLocalServiceTest {
 				_layout, _portlet, preferencesAsXML);
 
 		PortletPreferencesImpl portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(portletPreferences);
+			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+				portletPreferences);
 
 		assertOwnedByLayout(_layout, portletPreferencesImpl);
 
@@ -143,7 +146,8 @@ public class PortletPreferencesLocalServiceTest {
 				_layout, _portlet);
 
 		PortletPreferencesImpl portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(portletPreferences);
+			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+				portletPreferences);
 
 		javax.portlet.PortletPreferences fetchedPortletPreferences =
 			PortletPreferencesTestUtil.fetchLayoutJxPortletPreferences(
@@ -173,7 +177,8 @@ public class PortletPreferencesLocalServiceTest {
 				_portlet.getPortletId(), null, null);
 
 		PortletPreferencesImpl portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(portletPreferences);
+			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+				portletPreferences);
 
 		assertOwnedByLayout(_layout, portletPreferencesImpl);
 
@@ -265,7 +270,8 @@ public class PortletPreferencesLocalServiceTest {
 		throws Exception {
 
 		PortletPreferencesImpl portletPreferencesImpl =
-			PortletPreferencesTestUtil.toPortletPreferencesImpl(portletPreferences);
+			PortletPreferencesTestUtil.toPortletPreferencesImpl(
+				portletPreferences);
 
 		assertPortletPreferenceValues(
 			portletPreferencesImpl, preferenceName, preferenceValues);

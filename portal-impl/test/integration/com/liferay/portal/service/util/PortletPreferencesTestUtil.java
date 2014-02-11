@@ -63,17 +63,6 @@ public class PortletPreferencesTestUtil {
 			portlet.getPortletId(), portlet, defaultPreferences);
 	}
 
-	public static PortletPreferencesImpl toPortletPreferencesImpl(
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return (PortletPreferencesImpl)PortletPreferencesFactoryUtil.fromXML(
-			TestPropsValues.getCompanyId(), portletPreferences.getOwnerId(),
-			portletPreferences.getOwnerType(), portletPreferences.getPlid(),
-			portletPreferences.getPortletId(),
-			portletPreferences.getPreferences());
-	}
-
 	public static javax.portlet.PortletPreferences
 			fetchLayoutJxPortletPreferences(
 				Layout layout, Portlet portlet)
@@ -106,6 +95,17 @@ public class PortletPreferencesTestUtil {
 		sb.append("</portlet-preferences>");
 
 		return sb.toString();
+	}
+
+	public static PortletPreferencesImpl toPortletPreferencesImpl(
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		return (PortletPreferencesImpl)PortletPreferencesFactoryUtil.fromXML(
+			TestPropsValues.getCompanyId(), portletPreferences.getOwnerId(),
+			portletPreferences.getOwnerType(), portletPreferences.getPlid(),
+			portletPreferences.getPortletId(),
+			portletPreferences.getPreferences());
 	}
 
 }

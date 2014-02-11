@@ -680,8 +680,8 @@ public class LiferaySeleniumHelper {
 		}
 
 		File file = new File(
-			liferaySelenium.getProjectDir() + "portal-web\\test-results\\" +
-				"functional\\" + _screenshotFileName + "\\" +
+			liferaySelenium.getProjectDir() + "portal-web/test-results/" +
+				"functional/" + _screenshotFileName + "/" +
 				_screenshotFileName + _screenshotCount + ".jpg");
 
 		file.mkdirs();

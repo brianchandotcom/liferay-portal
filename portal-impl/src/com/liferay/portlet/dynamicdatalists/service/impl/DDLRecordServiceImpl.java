@@ -24,7 +24,6 @@ import com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordSetPermi
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.Serializable;
-
 import java.util.Locale;
 import java.util.Map;
 
@@ -63,6 +62,17 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		return ddlRecordLocalService.addRecord(
 			getGuestOrUserId(), groupId, recordSetId, displayIndex, fieldsMap,
 			serviceContext);
+	}
+
+	public void deleteRecord(long recordId)
+		throws PortalException, SystemException {
+
+		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
+
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), record.getRecordSetId(), ActionKeys.DELETE);
+
+		ddlRecordLocalService.deleteRecord(record);
 	}
 
 	@Override

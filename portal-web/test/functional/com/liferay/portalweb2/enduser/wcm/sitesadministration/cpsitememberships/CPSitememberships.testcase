@@ -693,4 +693,338 @@
 		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
 		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
 	</command>
+
+	<command name="WebContentAdministrationSiteMembershipsPagination" priority="3">
+		<var name="adminFirstName" value="Test" />
+		<var name="adminLastName" value="Test" />
+		<var name="adminScreenName" value="test" />
+		<var name="siteName" value="Site Name" />
+		<var name="usersEmailsFirstPageList" value="userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn10@liferay.com" />
+		<var name="usersEmailsList" value="userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com,userfn10@liferay.com" />
+		<var name="usersEmailsSecondPageList" value="userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com" />
+		<var name="usersEmailsThirdPageList" value="userfn9@liferay.com" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addMultipleCP">
+			<var name="usersEmailsList" value="${usersEmailsList}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#addAllMembersCP" />
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#viewMemberListCP">
+			<var name="usersEmailsList" value="${usersEmailsSecondPageList}" />
+		</execute>
+
+		<execute macro="Site#viewMemberCP">
+			<var name="userFirstName" value="${adminFirstName}" />
+			<var name="userLastName" value="${adminLastName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute action="CPSitememberships#assertClick" locator-key1="NAVIGATION_USERS" value1="Users" />
+		<execute action="CPSitememberships#assertClick" locator-key1="USER_PAGE_NAVIGATION_ITEMS_PER_PAGE" value1="20 Items per Page" />
+		<execute action="CPSitememberships#click" locator-key1="USER_ITEMS_PER_PAGE_MENULIST_FIVE_ITEMS_PER_PAGE" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 1 of 3" />
+		<execute action="CPSitememberships#assertClick" locator-key1="USER_PAGE_NAVIGATION_NEXT_BUTTON" value1="Next" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 2 of 3" />
+
+		<execute macro="Site#assertMemberListNotVisibleCP">
+			<var name="usersEmailsList" value="${usersEmailsFirstPageList}" />
+		</execute>
+
+		<execute macro="Site#viewMemberListCP">
+			<var name="usersEmailsList" value="${usersEmailsSecondPageList}" />
+		</execute>
+
+		<execute macro="Site#assertMemberListNotVisibleCP">
+			<var name="usersEmailsList" value="${usersEmailsThirdPageList}" />
+		</execute>
+
+		<execute action="CPSitememberships#click" locator-key1="USER_PAGE_NAVIGATION_FIRST_BUTTON" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 1 of 3" />
+
+		<execute macro="Site#viewMemberListCP">
+			<var name="usersEmailsList" value="${usersEmailsFirstPageList}" />
+		</execute>
+
+		<execute macro="Site#assertMemberListNotVisibleCP">
+			<var name="usersEmailsList" value="${usersEmailsSecondPageList}" />
+		</execute>
+
+		<execute macro="Site#assertMemberListNotVisibleCP">
+			<var name="usersEmailsList" value="${usersEmailsThirdPageList}" />
+		</execute>
+
+		<execute macro="Site#viewMemberCP">
+			<var name="userFirstName" value="${adminFirstName}" />
+			<var name="userLastName" value="${adminLastName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute action="CPSitememberships#click" locator-key1="USER_PAGE_NAVIGATION_LAST_BUTTON" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 3 of 3" />
+
+		<execute macro="Site#assertMemberListNotVisibleCP">
+			<var name="usersEmailsList" value="${usersEmailsFirstPageList}" />
+		</execute>
+
+		<execute macro="Site#assertMemberListNotVisibleCP">
+			<var name="usersEmailsList" value="${usersEmailsSecondPageList}" />
+		</execute>
+
+		<execute macro="Site#viewMemberListCP">
+			<var name="usersEmailsList" value="${usersEmailsThirdPageList}" />
+		</execute>
+
+		<execute action="CPSitememberships#assertClick" locator-key1="USER_PAGE_NAVIGATION_PREVIOUS_BUTTON" value1="Previous" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_PAGE_NAVIGATION_PAGE_NUMBER" value1="Page 2 of 3" />
+
+		<execute macro="Site#assertMemberListNotVisibleCP">
+			<var name="usersEmailsList" value="${usersEmailsFirstPageList}" />
+		</execute>
+
+		<execute macro="Site#viewMemberListCP">
+			<var name="usersEmailsList" value="${usersEmailsSecondPageList}" />
+		</execute>
+
+		<execute macro="Site#assertMemberListNotVisibleCP">
+			<var name="usersEmailsList" value="${usersEmailsThirdPageList}" />
+		</execute>
+	</command>
+
+	<command name="WebContentAdministrationSiteMembershipsSearch" priority="4">
+		<var name="siteName" value="Liferay" />
+		<var name="user1EmailAddress" value="4568@liferay.com" />
+		<var name="user1FirstName" value="userfnTest1" />
+		<var name="user1LastName" value="One" />
+		<var name="user1ScreenName" value="user1" />
+		<var name="user2EmailAddress" value="5670@liferay.com" />
+		<var name="user2FirstName" value="userfnTest2" />
+		<var name="user2LastName" value="Two" />
+		<var name="user2ScreenName" value="screen2" />
+		<var name="user3EmailAddress" value="9758@liferay.com" />
+		<var name="user3FirstName" value="userfnTest3" />
+		<var name="user3LastName" value="Three" />
+		<var name="user3ScreenName" value="member3" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${user1EmailAddress}" />
+			<var name="userFirstName" value="${user1FirstName}" />
+			<var name="userLastName" value="${user1LastName}" />
+			<var name="userScreenName" value="${user1ScreenName}" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${user2EmailAddress}" />
+			<var name="userFirstName" value="${user2FirstName}" />
+			<var name="userLastName" value="${user2LastName}" />
+			<var name="userScreenName" value="${user2ScreenName}" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${user3EmailAddress}" />
+			<var name="userFirstName" value="${user3FirstName}" />
+			<var name="userLastName" value="${user3LastName}" />
+			<var name="userScreenName" value="${user3ScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#addAllMembersCP" />
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userFirstName" value="${user1FirstName}" />
+			<var name="userFirstNameSearchValue" value="${user1FirstName}" />
+			<var name="userLastName" value="${user1LastName}" />
+			<var name="userScreenName" value="${user1ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userFirstName" value="${user2FirstName}" />
+			<var name="userFirstNameSearchValue" value="${user2FirstName}" />
+			<var name="userLastName" value="${user2LastName}" />
+			<var name="userScreenName" value="${user2ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userFirstName" value="${user3FirstName}" />
+			<var name="userFirstNameSearchValue" value="${user3FirstName}" />
+			<var name="userLastName" value="${user3LastName}" />
+			<var name="userScreenName" value="${user3ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userFirstName" value="${user1FirstName}" />
+			<var name="userFirstNameSearchValue" value="Test" />
+			<var name="userLastName" value="${user1LastName}" />
+			<var name="userScreenName" value="${user1ScreenName}" />
+		</execute>
+
+		<execute macro="Site#viewMemberCP">
+			<var name="userFirstName" value="${user2FirstName}" />
+			<var name="userLastName" value="${user2LastName}" />
+			<var name="userScreenName" value="${user2ScreenName}" />
+		</execute>
+
+		<execute macro="Site#viewMemberCP">
+			<var name="userFirstName" value="${user3FirstName}" />
+			<var name="userLastName" value="${user3LastName}" />
+			<var name="userScreenName" value="${user3ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userFirstName" value="${user1FirstName}" />
+			<var name="userLastName" value="${user1LastName}" />
+			<var name="userScreenName" value="${user1ScreenName}" />
+			<var name="userScreenNameSearchValue" value="${user1ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userFirstName" value="${user2FirstName}" />
+			<var name="userLastName" value="${user2LastName}" />
+			<var name="userScreenName" value="${user2ScreenName}" />
+			<var name="userScreenNameSearchValue" value="screen" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userFirstName" value="${user3FirstName}" />
+			<var name="userLastName" value="${user3LastName}" />
+			<var name="userScreenName" value="${user3ScreenName}" />
+			<var name="userScreenNameSearchValue" value="member" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userEmailAddress" value="${user1EmailAddress}" />
+			<var name="userEmailAddressSearchValue" value="4" />
+			<var name="userFirstName" value="${user1FirstName}" />
+			<var name="userLastName" value="${user1LastName}" />
+			<var name="userScreenName" value="${user1ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userEmailAddress" value="${user1EmailAddress}" />
+			<var name="userEmailAddressSearchValue" value="5" />
+			<var name="userFirstName" value="${user1FirstName}" />
+			<var name="userLastName" value="${user1LastName}" />
+			<var name="userScreenName" value="${user1ScreenName}" />
+		</execute>
+
+		<execute macro="Site#viewMemberCP">
+			<var name="userFirstName" value="${user2FirstName}" />
+			<var name="userLastName" value="${user2LastName}" />
+			<var name="userScreenName" value="${user2ScreenName}" />
+		</execute>
+
+		<execute macro="Site#viewMemberCP">
+			<var name="userFirstName" value="${user3FirstName}" />
+			<var name="userLastName" value="${user3LastName}" />
+			<var name="userScreenName" value="${user3ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userEmailAddress" value="${user1EmailAddress}" />
+			<var name="userEmailAddressSearchValue" value="6" />
+			<var name="userFirstName" value="${user1FirstName}" />
+			<var name="userLastName" value="${user1LastName}" />
+			<var name="userScreenName" value="${user1ScreenName}" />
+		</execute>
+
+		<execute macro="Site#viewMemberCP">
+			<var name="userFirstName" value="${user2FirstName}" />
+			<var name="userLastName" value="${user2LastName}" />
+			<var name="userScreenName" value="${user2ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userEmailAddress" value="${user2EmailAddress}" />
+			<var name="userEmailAddressSearchValue" value="7" />
+			<var name="userFirstName" value="${user2FirstName}" />
+			<var name="userLastName" value="${user2LastName}" />
+			<var name="userScreenName" value="${user2ScreenName}" />
+		</execute>
+
+		<execute macro="Site#viewMemberCP">
+			<var name="userFirstName" value="${user3FirstName}" />
+			<var name="userLastName" value="${user3LastName}" />
+			<var name="userScreenName" value="${user3ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userEmailAddress" value="${user1EmailAddress}" />
+			<var name="userEmailAddressSearchValue" value="8" />
+			<var name="userFirstName" value="${user1FirstName}" />
+			<var name="userLastName" value="${user1LastName}" />
+			<var name="userScreenName" value="${user1ScreenName}" />
+		</execute>
+
+		<execute macro="Site#viewMemberCP">
+			<var name="userFirstName" value="${user3FirstName}" />
+			<var name="userLastName" value="${user3LastName}" />
+			<var name="userScreenName" value="${user3ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userEmailAddress" value="${user2EmailAddress}" />
+			<var name="userEmailAddressSearchValue" value="0" />
+			<var name="userFirstName" value="${user2FirstName}" />
+			<var name="userLastName" value="${user2LastName}" />
+			<var name="userScreenName" value="${user2ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userEmailAddress" value="${user1EmailAddress}" />
+			<var name="userEmailAddressSearchValue" value="9" />
+			<var name="userFirstName" value="${user3FirstName}" />
+			<var name="userLastName" value="${user3LastName}" />
+			<var name="userScreenName" value="${user3ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userFirstName" value="${user1FirstName}" />
+			<var name="userLastName" value="${user1LastName}" />
+			<var name="userLastNameSearchValue" value="${user1LastName}" />
+			<var name="userScreenName" value="${user1ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userFirstName" value="${user2FirstName}" />
+			<var name="userLastName" value="${user2LastName}" />
+			<var name="userLastNameSearchValue" value="${user2LastName}" />
+			<var name="userScreenName" value="${user2ScreenName}" />
+		</execute>
+
+		<execute macro="Site#searchMemberCP">
+			<var name="userFirstName" value="${user3FirstName}" />
+			<var name="userLastName" value="${user3LastName}" />
+			<var name="userLastNameSearchValue" value="${user3LastName}" />
+			<var name="userScreenName" value="${user3ScreenName}" />
+		</execute>
+	</command>
 </definition>

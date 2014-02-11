@@ -79,6 +79,20 @@
 		</if>
 	</command>
 
+	<command name="addMultipleCP">
+		<for list="${usersEmailsList}" param="userEmail" >
+			<var name="userEmailAddress" value="${userEmail}" />
+			<var name="userName" value="${userEmail?replace('@liferay.com', '')}" />
+
+			<execute macro="User#addCP">
+				<var name="userEmailAddress" value="${userEmailAddress}" />
+				<var name="userFirstName" value="${userName}" />
+				<var name="userLastName" value="${userName}" />
+				<var name="userScreenName" value="${userName}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="addReservedEmailAddressCP">
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD" value1="Add" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD_USER" value1="User" />

@@ -125,12 +125,12 @@
 <!--USER_SEARCH-->
 <tr>
 	<td>USER_SEARCH_FIELD</td>
-	<td>//input[@id='_174_keywords_users']</td>
+	<td>//button[contains(.,'Search')]/../input[contains(@name,'_174_keywords')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEARCH_BUTTON</td>
-	<td>//span[@class='form-search']/div/button[contains(.,'Search')]</td>
+	<td>//input[contains(@name,'_174_keywords')]/../button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -161,7 +161,7 @@
 </tr>
 <tr>
 	<td>USER_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[4]/div/a[contains(@title,'Actions')]</td>
+	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]//a[contains(@title,'Actions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -185,15 +185,62 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ORGANIZATION-->
+<!--USER_PAGE_NAVIGATION-->
+<tr>
+	<td>USER_PAGE_NAVIGATION_PAGE_NUMBER</td>
+	<td>//div[contains(@class,'current-page-menu')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_PAGE_NAVIGATION_ITEMS_PER_PAGE</td>
+	<td>//span[contains(.,'Items per Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_PAGE_NAVIGATION_FIRST_BUTTON</td>
+	<td>//a[contains(.,'First')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_PAGE_NAVIGATION_PREVIOUS_BUTTON</td>
+	<td>//a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_PAGE_NAVIGATION_NEXT_BUTTON</td>
+	<td>//a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_PAGE_NAVIGATION_LAST_BUTTON</td>
+	<td>//a[contains(.,'Last')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_ITEMS_PER_PAGE_MENULIST-->
+<tr>
+	<td>USER_ITEMS_PER_PAGE_MENULIST_FIVE_ITEMS_PER_PAGE</td>
+	<td>//a[contains(@id,'5')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATION_SEARCH-->
 <tr>
 	<td>ORGANIZATION_SEARCH_FIELD</td>
-	<td>//input[@id='_174_keywords_organizations']</td>
+	<td>//button[contains(.,'Search')]/../input[contains(@name,'_174_keywords')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_SEARCH_BUTTON</td>
-	<td>//input[@id='_174_keywords_organizations']/..//button[contains(.,'Search')]</td>
+	<td>//input[contains(@name,'_174_keywords')]/../button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -217,15 +264,15 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--USER_GROUP-->
+<!--USER_GROUP_SEARCH-->
 <tr>
 	<td>USER_GROUP_SEARCH_FIELD</td>
-	<td>//input[@id='_174_keywords_user_groups']</td>
+	<td>//button[contains(.,'Search')]/../input[contains(@name,'_174_keywords')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_GROUP_SEARCH_BUTTON</td>
-	<td>//input[@id='_174_keywords_user_groups']/../following-sibling::button[contains(.,'Search')]</td>
+	<td>//input[contains(@name,'_174_keywords')]/../button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -105,7 +105,7 @@
 }
 
 .dockbar-split .dockbar .navbar-inner .container .nav-collapse > .nav {
-	 > li > a {
+	> li > a {
 		@include text-shadow(none);
 
 		@include respond-to(phone) {
@@ -299,7 +299,7 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 }
 
 .lfr-api-service-search .field-input {
-	@include box-sizing("border-box");
+	@include box-sizing(border-box);
 }
 
 @include keyframes(progress-bar-stripes) {

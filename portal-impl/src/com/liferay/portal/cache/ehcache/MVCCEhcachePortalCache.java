@@ -15,7 +15,6 @@
 package com.liferay.portal.cache.ehcache;
 
 import com.liferay.portal.cache.cluster.ClusterReplicationThreadLocal;
-import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 import com.liferay.portal.model.MVCCModel;
 
@@ -29,40 +28,6 @@ import net.sf.ehcache.Element;
  */
 public class MVCCEhcachePortalCache<K extends Serializable, V extends MVCCModel>
 	extends PortalCacheWrapper<K, V> {
-
-	public static <K extends Serializable>
-		PortalCache<K, ?> createMVCCEhcachePortalCache(
-			PortalCache<K, ?> portalCache) {
-
-		if (portalCache instanceof EhcachePortalCache) {
-			return new MVCCEhcachePortalCache<K, MVCCModel>(
-				(EhcachePortalCache<K, MVCCModel>)portalCache);
-		}
-
-		PortalCache<K, ?> currentPortalCache = portalCache;
-
-		while (currentPortalCache instanceof PortalCacheWrapper) {
-			PortalCacheWrapper<K, MVCCModel> portalCacheWrapper =
-				(PortalCacheWrapper<K, MVCCModel>)currentPortalCache;
-
-			PortalCache<K, MVCCModel> nextPortalCache =
-				portalCacheWrapper.getWrappedPortalCache();
-
-			if (nextPortalCache instanceof EhcachePortalCache) {
-				nextPortalCache = new MVCCEhcachePortalCache<K, MVCCModel>(
-					(EhcachePortalCache<K, MVCCModel>)nextPortalCache);
-
-				portalCacheWrapper.setPortalCache(nextPortalCache);
-
-				break;
-			}
-			else {
-				currentPortalCache = nextPortalCache;
-			}
-		}
-
-		return portalCache;
-	}
 
 	public MVCCEhcachePortalCache(EhcachePortalCache<K, V> ehcachePortalCache) {
 		super(ehcachePortalCache);

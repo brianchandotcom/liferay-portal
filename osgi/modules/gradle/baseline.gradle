@@ -52,7 +52,7 @@ task baseline << {
 		sourcePath: "."
 	) {
 		classpath {
-			files(["build/classes/main"])
+			pathelement(location: "build/classes/main")
 		}
 	}
 

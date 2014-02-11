@@ -68,32 +68,32 @@ public class LayoutsRemotePublisherMessageListener
 
 		messageStatus.setPayload(exportImportConfiguration);
 
-		Map<String, Serializable> configurationContextMap =
+		Map<String, Serializable> configurationSettingsMap =
 			exportImportConfiguration.getSettingsMap();
 
-		long userId = MapUtil.getLong(configurationContextMap, "userId");
+		long userId = MapUtil.getLong(configurationSettingsMap, "userId");
 		long sourceGroupId = MapUtil.getLong(
-			configurationContextMap, "sourceGroupId");
+			configurationSettingsMap, "sourceGroupId");
 		boolean privateLayout = MapUtil.getBoolean(
-			configurationContextMap, "privateLayout");
+			configurationSettingsMap, "privateLayout");
 		Map<Long, Boolean> layoutIdMap =
-			(Map<Long, Boolean>)configurationContextMap.get("layoutIdMap");
+			(Map<Long, Boolean>)configurationSettingsMap.get("layoutIdMap");
 		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)configurationContextMap.get("parameterMap");
+			(Map<String, String[]>)configurationSettingsMap.get("parameterMap");
 		String remoteAddress = MapUtil.getString(
-			configurationContextMap, "remoteAddress");
+			configurationSettingsMap, "remoteAddress");
 		int remotePort = MapUtil.getInteger(
-			configurationContextMap, "remotePort");
+			configurationSettingsMap, "remotePort");
 		String remotePathContext = MapUtil.getString(
-			configurationContextMap, "remotePathContext");
+			configurationSettingsMap, "remotePathContext");
 		boolean secureConnection = MapUtil.getBoolean(
-			configurationContextMap, "secureConnection");
+			configurationSettingsMap, "secureConnection");
 		long remoteGroupId = MapUtil.getLong(
-			configurationContextMap, "remoteGroupId");
+			configurationSettingsMap, "remoteGroupId");
 		boolean remotePrivateLayout = MapUtil.getBoolean(
-			configurationContextMap, "remotePrivateLayout");
-		Date startDate = (Date)configurationContextMap.get("startDate");
-		Date endDate = (Date)configurationContextMap.get("endDate");
+			configurationSettingsMap, "remotePrivateLayout");
+		Date startDate = (Date)configurationSettingsMap.get("startDate");
+		Date endDate = (Date)configurationSettingsMap.get("endDate");
 
 		String range = MapUtil.getString(parameterMap, "range");
 

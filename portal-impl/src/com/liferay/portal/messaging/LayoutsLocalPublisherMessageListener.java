@@ -67,22 +67,22 @@ public class LayoutsLocalPublisherMessageListener
 
 		messageStatus.setPayload(exportImportConfiguration);
 
-		Map<String, Serializable> configurationContextMap =
+		Map<String, Serializable> configurationSettingsMap =
 			exportImportConfiguration.getSettingsMap();
 
-		long userId = MapUtil.getLong(configurationContextMap, "userId");
+		long userId = MapUtil.getLong(configurationSettingsMap, "userId");
 		long sourceGroupId = MapUtil.getLong(
-			configurationContextMap, "sourceGroupId");
+			configurationSettingsMap, "sourceGroupId");
 		long targetGroupId = MapUtil.getLong(
-			configurationContextMap, "targetGroupId");
+			configurationSettingsMap, "targetGroupId");
 		boolean privateLayout = MapUtil.getBoolean(
-			configurationContextMap, "privateLayout");
+			configurationSettingsMap, "privateLayout");
 		Map<Long, Boolean> layoutIdMap =
-			(Map<Long, Boolean>)configurationContextMap.get("layoutIdMap");
+			(Map<Long, Boolean>)configurationSettingsMap.get("layoutIdMap");
 		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)configurationContextMap.get("parameterMap");
-		Date startDate = (Date)configurationContextMap.get("startDate");
-		Date endDate = (Date)configurationContextMap.get("endDate");
+			(Map<String, String[]>)configurationSettingsMap.get("parameterMap");
+		Date startDate = (Date)configurationSettingsMap.get("startDate");
+		Date endDate = (Date)configurationSettingsMap.get("endDate");
 
 		String range = MapUtil.getString(parameterMap, "range");
 

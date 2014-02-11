@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -1194,7 +1193,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		Trigger trigger = new CronTrigger(
 			jobName, groupName, schedulerStartDate, schedulerEndDate, cronText);
 
-		Map<String, Serializable> configurationContextMap =
+		Map<String, Serializable> configurationSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				getUserId(), sourceGroupId, targetGroupId, privateLayout,
 				layoutIdMap, parameterMap, startDate, endDate);
@@ -1204,7 +1203,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				getUserId(), sourceGroupId, jobName, description,
 				ExportImportConfigurationConstants.
 					TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL,
-				configurationContextMap, new ServiceContext());
+				configurationSettingsMap, new ServiceContext());
 
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,
@@ -1261,7 +1260,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		Trigger trigger = new CronTrigger(
 			jobName, groupName, schedulerStartDate, schedulerEndDate, cronText);
 
-		Map<String, Serializable> configurationContextMap =
+		Map<String, Serializable> configurationSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				getUserId(), sourceGroupId, privateLayout, layoutIdMap,
 				parameterMap, remoteAddress, remotePort, remotePathContext,
@@ -1273,7 +1272,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				getUserId(), sourceGroupId, jobName, description,
 				ExportImportConfigurationConstants.
 					TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE,
-				configurationContextMap, new ServiceContext());
+				configurationSettingsMap, new ServiceContext());
 
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,

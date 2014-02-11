@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.SassToCssBuilder;
 import com.liferay.portal.util.AggregateUtil;
@@ -30,8 +31,9 @@ import java.util.concurrent.Callable;
 
 /**
  * @author Minhchau Dang
+ * @author Shuyang Zhou
  */
-public class SassFile implements Callable<SassFile>, SassFragment {
+public class SassFile implements Callable<Void>, SassFragment {
 
 	public SassFile(String docrootDirName, String fileName) {
 		_docrootDirName = docrootDirName;
@@ -48,13 +50,13 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 	}
 
 	@Override
-	public SassFile call() throws Exception {
+	public Void call() throws Exception {
 		long start = System.currentTimeMillis();
 
 		File file = new File(_docrootDirName, _fileName);
 
 		if (!file.exists()) {
-			return this;
+			return null;
 		}
 
 		String content = FileUtil.read(file);
@@ -112,11 +114,10 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 						importX + _CSS_IMPORT_BEGIN.length(), importY);
 				}
 
-				if (importFileName.length() > 0) {
+				if (!importFileName.isEmpty()) {
 					if (importFileName.charAt(0) != CharPool.SLASH) {
-						importFileName = _baseDir.concat(importFileName);
-
-						importFileName = _fixRelativePath(importFileName);
+						importFileName = _fixRelativePath(
+							_baseDir.concat(importFileName));
 					}
 
 					SassFile importFile = SassExecutorUtil.execute(
@@ -155,7 +156,7 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 
 		_elapsedTime = System.currentTimeMillis() - start;
 
-		return this;
+		return null;
 	}
 
 	@Override
@@ -164,11 +165,24 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 			return _ltrContent;
 		}
 
-		_ltrContent = doGetLtrContent();
+		StringBundler sb = new StringBundler(_fragments.size());
 
-		if (_ltrContent == null) {
-			_ltrContent = StringPool.BLANK;
+		for (SassFragment fragment : _fragments) {
+			String ltrContent = fragment.getLtrContent();
+
+			if (fragment instanceof SassFile) {
+				SassFile file = (SassFile)fragment;
+
+				String baseURL = _BASE_URL.concat(file._baseDir);
+
+				ltrContent = AggregateUtil.updateRelativeURLs(
+					ltrContent, baseURL);
+			}
+
+			sb.append(ltrContent);
 		}
+
+		_ltrContent = sb.toString();
 
 		return _ltrContent;
 	}
@@ -179,11 +193,24 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 			return _rtlContent;
 		}
 
-		_rtlContent = doGetRtlContent();
+		StringBundler sb = new StringBundler(_fragments.size());
 
-		if (_rtlContent == null) {
-			_rtlContent = StringPool.BLANK;
+		for (SassFragment fragment : _fragments) {
+			String rtlContent = fragment.getRtlContent();
+
+			if (fragment instanceof SassFile) {
+				SassFile file = (SassFile)fragment;
+
+				String baseURL = _BASE_URL.concat(file._baseDir);
+
+				rtlContent = AggregateUtil.updateRelativeURLs(
+					rtlContent, baseURL);
+			}
+
+			sb.append(rtlContent);
 		}
+
+		_rtlContent = sb.toString();
 
 		return _rtlContent;
 	}
@@ -202,21 +229,25 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 	}
 
 	public void writeCacheFiles() throws Exception {
-		File ltrFile = new File(_docrootDirName, _fileName);
-		String ltrCacheFileName = SassToCssBuilder.getCacheFileName(
-			_fileName, StringPool.BLANK);
-		File ltrCacheFile = new File(_docrootDirName, ltrCacheFileName);
+		File ltrCacheFile = new File(
+			_docrootDirName,
+			SassToCssBuilder.getCacheFileName(_fileName, StringPool.BLANK));
 
 		FileUtil.write(ltrCacheFile, getLtrContent());
+
+		File ltrFile = new File(_docrootDirName, _fileName);
+
 		ltrCacheFile.setLastModified(ltrFile.lastModified());
 
 		String rtlFileName = SassToCssBuilder.getRtlCustomFileName(_fileName);
-		File rtlFile = new File(_docrootDirName, rtlFileName);
-		String rtlCacheFileName = SassToCssBuilder.getCacheFileName(
-			rtlFileName, StringPool.BLANK);
-		File rtlCacheFile = new File(_docrootDirName, rtlCacheFileName);
+
+		File rtlCacheFile = new File(
+			_docrootDirName,
+			SassToCssBuilder.getCacheFileName(rtlFileName, StringPool.BLANK));
 
 		FileUtil.write(rtlCacheFile, getRtlContent());
+
+		File rtlFile = new File(_docrootDirName, rtlFileName);
 
 		if (rtlFile.exists()) {
 			rtlCacheFile.setLastModified(rtlFile.lastModified());
@@ -224,48 +255,6 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 		else {
 			rtlCacheFile.setLastModified(ltrFile.lastModified());
 		}
-	}
-
-	protected String doGetLtrContent() {
-		StringBundler sb = new StringBundler();
-
-		for (SassFragment fragment : _fragments) {
-			String ltrContent = fragment.getLtrContent();
-
-			if (fragment instanceof SassFile) {
-				SassFile file = (SassFile)fragment;
-
-				String baseURL = _BASE_URL.concat(file._baseDir);
-
-				ltrContent = AggregateUtil.updateRelativeURLs(
-					ltrContent, baseURL);
-			}
-
-			sb.append(ltrContent);
-		}
-
-		return sb.toString();
-	}
-
-	protected String doGetRtlContent() {
-		StringBundler sb = new StringBundler();
-
-		for (SassFragment fragment : _fragments) {
-			String rtlContent = fragment.getRtlContent();
-
-			if (fragment instanceof SassFile) {
-				SassFile file = (SassFile)fragment;
-
-				String baseURL = _BASE_URL.concat(file._baseDir);
-
-				rtlContent = AggregateUtil.updateRelativeURLs(
-					rtlContent, baseURL);
-			}
-
-			sb.append(rtlContent);
-		}
-
-		return sb.toString();
 	}
 
 	private void _addSassString(String fileName, String sassContent)
@@ -281,27 +270,26 @@ public class SassFile implements Callable<SassFile>, SassFragment {
 	}
 
 	private String _fixRelativePath(String fileName) {
-		int x = fileName.indexOf("/./");
+		String[] paths = StringUtil.split(fileName, CharPool.SLASH);
 
-		while (x != -1) {
-			fileName = fileName.substring(0, x) + fileName.substring(x + 2);
+		StringBundler sb = new StringBundler(paths.length * 2);
 
-			x = fileName.indexOf("/./");
-		}
-
-		int y = fileName.indexOf("/../");
-
-		while (y != -1) {
-			x = fileName.lastIndexOf(CharPool.SLASH, y - 1);
-
-			if (x != -1) {
-				fileName = fileName.substring(0, x) + fileName.substring(y + 3);
+		for (String path : paths) {
+			if (path.isEmpty() || path.equals(StringPool.PERIOD)) {
+				continue;
 			}
 
-			y = fileName.indexOf("/../");
+			if (path.equals(StringPool.DOUBLE_PERIOD) && (sb.length() >= 2)) {
+				sb.setIndex(sb.index() - 2);
+
+				continue;
+			}
+
+			sb.append(StringPool.SLASH);
+			sb.append(path);
 		}
 
-		return fileName;
+		return sb.toString();
 	}
 
 	private static final String _BASE_URL = "@base_url@";

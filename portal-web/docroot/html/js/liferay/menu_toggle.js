@@ -12,6 +12,7 @@ AUI.add(
 						validator: Lang.isBoolean,
 						value: false
 					},
+
 					toggleTouch: {
 						validator: Lang.isBoolean,
 						value: false
@@ -24,11 +25,14 @@ AUI.add(
 
 				prototype: {
 					initializer: function(config) {
-						var instance = this,
-							triggerId = config.trigger;
+						var instance = this;
+
+						var triggerId = config.trigger;
 
 						instance._handleId = triggerId + 'Handle';
+
 						instance._triggerNode = A.one(triggerId);
+
 						instance._content = A.all(config.content);
 
 						A.Event.defineOutside('touchend');
@@ -39,18 +43,13 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						if (instance._triggerNode != null) {
+						if (instance._triggerNode) {
 							instance._triggerNode.on(
-								'gesturemovestart',
+								['gesturemovestart', 'keypress'],
 								function(event) {
-									var currentTarget = event.currentTarget;
-
-									currentTarget.once(
-										'gesturemoveend',
-										function(event) {
-											instance._toggleMenu(event, currentTarget);
-										}
-									);
+									if ((event.type == "gesturemovestart") || event.isKeyInSet('ENTER', 'SPACE')) {
+										instance._toggleMenu(event, event.currentTarget);
+									}
 								}
 							);
 						}
@@ -59,7 +58,7 @@ AUI.add(
 					_getEventOutside: function(event) {
 						var eventOutside = event._event.type;
 
-						if (eventOutside === 'MSPointerUp') {
+						if (eventOutside == 'MSPointerUp') {
 							eventOutside = 'mouseup';
 						}
 
@@ -88,9 +87,7 @@ AUI.add(
 					},
 
 					_isTouch: function(event) {
-						var eventType = event._event.type;
-
-						if ((eventType === 'touchend') && Liferay.Util.isTablet()) {
+						if ((event._event.type == 'touchend') && Liferay.Util.isTablet()) {
 							return true;
 						}
 						else {
@@ -104,7 +101,7 @@ AUI.add(
 						A.each(
 							instance._content,
 							function(item, index, collection) {
-								if (item != null) {
+								if (item) {
 									item.toggleClass('open', force);
 								}
 							}
@@ -112,9 +109,10 @@ AUI.add(
 					},
 
 					_toggleMenu: function(event, target) {
-						var instance = this,
-							toggle = instance.get('toggle'),
-							toggleTouch = instance.get('toggleTouch');
+						var instance = this;
+
+						var toggle = instance.get('toggle');
+						var toggleTouch = instance.get('toggleTouch');
 
 						instance._toggleContent();
 

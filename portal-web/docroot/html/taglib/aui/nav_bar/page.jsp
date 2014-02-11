@@ -28,7 +28,7 @@
 			</span>
 
 			<aui:script use="aui-base,event-outside,liferay-menu-toggle">
-				var test = new Liferay.MenuToggle(
+				var toggleMenu = new Liferay.MenuToggle(
 					{
 						content: [
 							'#<%= id %>bodyContent .nav-collapse',

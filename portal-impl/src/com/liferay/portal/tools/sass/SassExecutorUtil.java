@@ -64,11 +64,8 @@ public class SassExecutorUtil {
 	public static void init(String docrootDirName, String portalCommonDirName)
 		throws IOException {
 
-		Runtime runtime = Runtime.getRuntime();
-
 		_executorService = Executors.newFixedThreadPool(
-			runtime.availableProcessors(),
-			new NamedThreadFactory(
+			2, new NamedThreadFactory(
 				"SassExecutor", Thread.NORM_PRIORITY,
 				SassExecutorUtil.class.getClassLoader()));
 

@@ -1,4 +1,6 @@
 <nav class="$nav_css_class navbar site-navigation" id="navigation" role="navigation">
+	<h1 class="hide-accessible">#language ("navigation")</h1>
+
 	<div class="navbar-inner">
 		<div class="collapse nav-collapse">
 			<ul aria-label="#language ("site-pages")" class="nav nav-collapse" role="menubar">

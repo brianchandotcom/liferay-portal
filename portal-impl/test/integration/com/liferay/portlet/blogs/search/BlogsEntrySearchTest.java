@@ -24,6 +24,7 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
 import org.junit.Ignore;
@@ -126,6 +127,12 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
+		BlogsEntryLocalServiceUtil.moveEntryToTrash(
+			TestPropsValues.getUserId(), primaryKey);
 	}
 
 }

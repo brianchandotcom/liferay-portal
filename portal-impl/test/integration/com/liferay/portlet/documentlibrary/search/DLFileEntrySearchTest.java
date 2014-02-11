@@ -250,6 +250,11 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
+		DLAppServiceUtil.moveFileEntryToTrash(primaryKey);
+	}
+
+	@Override
 	protected void moveParentBaseModelToTrash(long primaryKey)
 		throws Exception {
 

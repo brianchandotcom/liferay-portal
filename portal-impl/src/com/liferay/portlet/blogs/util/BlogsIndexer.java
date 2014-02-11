@@ -81,6 +81,13 @@ public class BlogsIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public boolean isVisible(long classPK, int status) throws Exception {
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
+
+		return isVisible(entry.getStatus(), status);
+	}
+
+	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {

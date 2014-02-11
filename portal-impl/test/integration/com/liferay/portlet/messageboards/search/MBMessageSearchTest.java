@@ -168,6 +168,13 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
+		MBMessage message =  MBMessageLocalServiceUtil.getMessage(primaryKey);
+
+		MBThreadServiceUtil.moveThreadToTrash(message.getThreadId());
+	}
+
+	@Override
 	protected void moveParentBaseModelToTrash(long primaryKey)
 		throws Exception {
 

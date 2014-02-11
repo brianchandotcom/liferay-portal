@@ -377,6 +377,18 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
+	public boolean isVisible(long classPK, int status) throws Exception {
+		return true;
+	}
+
+	@Override
+	public boolean isVisibleRelatedEntry(long classPK, int status)
+		throws Exception {
+
+		return true;
+	}
+
+	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
@@ -1371,6 +1383,10 @@ public abstract class BaseIndexer implements Indexer {
 
 		int excludeDocsSize = 0;
 
+		int status = GetterUtil.getInteger(
+			searchContext.getAttribute(Field.STATUS),
+			WorkflowConstants.STATUS_APPROVED);
+
 		for (int i = 0; i < documents.length; i++) {
 			try {
 				Document document = documents[i];
@@ -1385,7 +1401,8 @@ public abstract class BaseIndexer implements Indexer {
 				if ((indexer.isFilterSearch() &&
 					 indexer.hasPermission(
 						 permissionChecker, entryClassName, entryClassPK,
-						 ActionKeys.VIEW)) ||
+						 ActionKeys.VIEW) &&
+					 indexer.isVisibleRelatedEntry(entryClassPK, status)) ||
 					!indexer.isFilterSearch() ||
 					!indexer.isPermissionAware()) {
 
@@ -1625,6 +1642,16 @@ public abstract class BaseIndexer implements Indexer {
 		}
 
 		return null;
+	}
+
+	protected boolean isVisible(int entryStatus, int queryStatus) {
+		if (((queryStatus != WorkflowConstants.STATUS_ANY) &&
+			 (entryStatus == queryStatus)) ||
+			(entryStatus != WorkflowConstants.STATUS_IN_TRASH)) {
+				return true;
+		}
+
+		return false;
 	}
 
 	protected Document newDocument() {

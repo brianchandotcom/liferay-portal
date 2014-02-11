@@ -108,6 +108,14 @@ public class JournalArticleIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public boolean isVisible(long classPK, int status) throws Exception {
+		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
+			classPK);
+
+		return isVisible(article.getStatus(), status);
+	}
+
+	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {

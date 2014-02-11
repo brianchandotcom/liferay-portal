@@ -210,6 +210,24 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	@include border-bottom-right-radius(8px);
 }
 
+.input-localized {
+	.lfr-input-localized-state {
+		@include border-radius(3px);
+	}
+
+	.lfr-input-localized .lfr-input-localized-state {
+		@include box-shadow(0 0 3px #DDD);
+
+		&.lfr-input-localized-state-error {
+			@include box-shadow(0 0 3px #FF0047);
+		}
+	}
+
+	.palette-item-selected .lfr-input-localized-state {
+		@include box-shadow(0 0 3px #27C1F2);
+	}
+}
+
 .lfr-add-panel {
 	.add-content-button {
 		.lfr-actions {

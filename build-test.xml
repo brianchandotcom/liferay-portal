@@ -148,12 +148,12 @@
 
 		<if>
 			<not>
-				<equals arg1="${database}" arg2="hsql" />
+				<equals arg1="${database.type}" arg2="hsql" />
 			</not>
 			<then>
 				<if>
 					<and>
-						<equals arg1="${database}" arg2="mysql" />
+						<equals arg1="${database.type}" arg2="mysql" />
 						<equals arg1="${database.sharding}" arg2="true" />
 					</and>
 					<then>
@@ -293,33 +293,33 @@ create database lportal2 character set utf8;</echo>
 
 		<if>
 			<not>
-				<isset property="database" />
+				<isset property="database.type" />
 			</not>
 			<then>
-				<property name="database" value="mysql" />
+				<property name="database.type" value="mysql" />
 			</then>
 		</if>
 
 		<if>
 			<not>
 				<or>
-					<equals arg1="${database}" arg2="db2-9.7" />
-					<equals arg1="${database}" arg2="db2-10.1" />
-					<equals arg1="${database}" arg2="hsql" />
-					<equals arg1="${database}" arg2="mysql" />
-					<equals arg1="${database}" arg2="oracle-10" />
-					<equals arg1="${database}" arg2="oracle-11" />
-					<equals arg1="${database}" arg2="postgresql-8.4" />
-					<equals arg1="${database}" arg2="postgresql-9.0" />
-					<equals arg1="${database}" arg2="postgresql-9.2" />
-					<equals arg1="${database}" arg2="sql-server-2005" />
-					<equals arg1="${database}" arg2="sql-server-2008" />
-					<equals arg1="${database}" arg2="sql-server-2012" />
-					<equals arg1="${database}" arg2="sybase" />
+					<equals arg1="${database.type}" arg2="db2-9.7" />
+					<equals arg1="${database.type}" arg2="db2-10.1" />
+					<equals arg1="${database.type}" arg2="hsql" />
+					<equals arg1="${database.type}" arg2="mysql" />
+					<equals arg1="${database.type}" arg2="oracle-10" />
+					<equals arg1="${database.type}" arg2="oracle-11" />
+					<equals arg1="${database.type}" arg2="postgresql-8.4" />
+					<equals arg1="${database.type}" arg2="postgresql-9.0" />
+					<equals arg1="${database.type}" arg2="postgresql-9.2" />
+					<equals arg1="${database.type}" arg2="sql-server-2005" />
+					<equals arg1="${database.type}" arg2="sql-server-2008" />
+					<equals arg1="${database.type}" arg2="sql-server-2012" />
+					<equals arg1="${database.type}" arg2="sybase" />
 				</or>
 			</not>
 			<then>
-				<fail>Please set "database" to one of the following:${line.separator}db2-9.7, db2-10.1, hsql, mysql, oracle-10, oracle-11, postgresql-8.4, postgresql-9.0, postgresql-9.2, sql-server-2005, sql-server-2008, sql-server-2012, sybase</fail>
+				<fail>Please set "database.type" to one of the following:${line.separator}db2-9.7, db2-10.1, hsql, mysql, oracle-10, oracle-11, postgresql-8.4, postgresql-9.0, postgresql-9.2, sql-server-2005, sql-server-2008, sql-server-2012, sybase</fail>
 			</then>
 		</if>
 	</target>
@@ -393,8 +393,8 @@ create database lportal2 character set utf8;</echo>
 	<target name="copy-optional-jars">
 		<if>
 			<or>
-				<equals arg1="${database}" arg2="db2-9.7" />
-				<equals arg1="${database}" arg2="db2-10.1" />
+				<equals arg1="${database.type}" arg2="db2-9.7" />
+				<equals arg1="${database.type}" arg2="db2-10.1" />
 			</or>
 			<then>
 				<delete includeemptydirs="true" failonerror="false">
@@ -413,7 +413,7 @@ create database lportal2 character set utf8;</echo>
 			</then>
 			<elseif>
 				<and>
-					<equals arg1="${database}" arg2="mysql" />
+					<equals arg1="${database.type}" arg2="mysql" />
 					<not>
 						<available file="${app.server.lib.global.dir}/${jdbc.mysql.driver}" />
 					</not>
@@ -428,7 +428,7 @@ create database lportal2 character set utf8;</echo>
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${database}" arg2="oracle-10" />
+				<equals arg1="${database.type}" arg2="oracle-10" />
 				<then>
 					<delete includeemptydirs="true" failonerror="false">
 						<fileset
@@ -446,7 +446,7 @@ create database lportal2 character set utf8;</echo>
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${database}" arg2="oracle-11" />
+				<equals arg1="${database.type}" arg2="oracle-11" />
 				<then>
 					<delete includeemptydirs="true" failonerror="false">
 						<fileset
@@ -780,7 +780,7 @@ create database lportal2 character set utf8;</echo>
 
 		<echoproperties destfile="${basedir}/test.run.properties">
 			<propertyset>
-				<propertyref prefix="database.${database}" />
+				<propertyref prefix="database.${database.type}" />
 				<propertyref prefix="${test.simple.class.name}." />
 			</propertyset>
 		</echoproperties>
@@ -788,7 +788,7 @@ create database lportal2 character set utf8;</echo>
 		<replaceregexp
 			file="${basedir}/test.run.properties"
 			flags="g"
-			match="database\.${database}"
+			match="database\.${database.type}"
 			replace="database"
 		/>
 
@@ -945,7 +945,7 @@ axis.servlet.hosts.allowed=
 tunnel.servlet.hosts.allowed=</echo>
 
 		<if>
-			<contains string="${database}" substring="db2" />
+			<contains string="${database.type}" substring="db2" />
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
@@ -954,7 +954,7 @@ custom.sql.function.isnull=CAST(? AS VARCHAR(32672)) IS NULL
 custom.sql.function.isnotnull=CAST(? AS VARCHAR(32672)) IS NOT NULL</echo>
 			</then>
 			<elseif>
-				<contains string="${database}" substring="oracle" />
+				<contains string="${database.type}" substring="oracle" />
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
 
@@ -965,7 +965,7 @@ jdbc.default.numHelperThreads=1</echo>
 				</then>
 			</elseif>
 			<elseif>
-				<contains string="${database}" substring="sybase" />
+				<contains string="${database.type}" substring="sybase" />
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
 
@@ -987,7 +987,7 @@ ${custom.properties}</echo>
 
 		<if>
 			<and>
-				<equals arg1="${database}" arg2="mysql" />
+				<equals arg1="${database.type}" arg2="mysql" />
 				<equals arg1="${database.sharding}" arg2="true" />
 			</and>
 			<then>
@@ -1929,7 +1929,7 @@ jdbc.default.password=${database.password}
 		</echo>
 
 		<if>
-			<contains string="${database}" substring="db2" />
+			<contains string="${database.type}" substring="db2" />
 			<then>
 				<echo file="portal-impl/test/portal-test-ext.properties" append="true">
 
@@ -1938,7 +1938,7 @@ custom.sql.function.isnull=CAST(? AS VARCHAR(32672)) IS NULL
 custom.sql.function.isnotnull=CAST(? AS VARCHAR(32672)) IS NOT NULL</echo>
 			</then>
 			<elseif>
-				<contains string="${database}" substring="oracle" />
+				<contains string="${database.type}" substring="oracle" />
 				<then>
 					<echo file="portal-impl/test/portal-test-ext.properties" append="true">
 
@@ -1949,7 +1949,7 @@ jdbc.default.numHelperThreads=1</echo>
 				</then>
 			</elseif>
 			<elseif>
-				<contains string="${database}" substring="sybase" />
+				<contains string="${database.type}" substring="sybase" />
 				<then>
 					<echo file="portal-impl/test/portal-test-ext.properties" append="true">
 
@@ -2018,7 +2018,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 	<target name="rebuild-database" depends="generate-test-properties,build-sql-file">
 		<if>
-			<equals arg1="${database}" arg2="sybase" />
+			<equals arg1="${database.type}" arg2="sybase" />
 			<then>
 				<parallel>
 					<daemons>
@@ -2054,7 +2054,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				</if>
 
 				<if>
-					<equals arg1="${database}" arg2="hsql" />
+					<equals arg1="${database.type}" arg2="hsql" />
 					<then>
 						<delete dir="${liferay.home}/data" includeemptydirs="true" />
 
@@ -2122,20 +2122,20 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 	<target name="rebuild-legacy-database">
 		<antcall target="rebuild-database">
-			<param name="database" value="${database}" />
+			<param name="database.type" value="${database.type}" />
 			<param name="sql.dir" value="sql/create-bare/" />
-			<param name="sql.file" value="create-bare-${database}.sql" />
+			<param name="sql.file" value="create-bare-${database.type}.sql" />
 		</antcall>
 
 		<unzip
 			dest="${liferay.home}"
-			src="${portal.legacy.dir}/${portal.version}/data-archive/data-archive-${database}.zip"
+			src="${portal.legacy.dir}/${portal.version}/data-archive/data-archive-${database.type}.zip"
 		/>
 
 		<if>
-			<equals arg1="${database}" arg2="mysql" />
+			<equals arg1="${database.type}" arg2="mysql" />
 			<then>
-				<exec executable="mysql" input="${liferay.home}/${database}.sql">
+				<exec executable="mysql" input="${liferay.home}/${database.type}.sql">
 					<arg value="--database=lportal" />
 					<arg value="--password=${database.mysql.password}" />
 					<arg value="--user=${database.mysql.username}" />
@@ -2256,7 +2256,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<and>
 				<equals arg1="${test.class}" arg2="PortalWebTestSuite" />
 				<not>
-					<equals arg1="${database}" arg2="hsql" />
+					<equals arg1="${database.type}" arg2="hsql" />
 				</not>
 			</and>
 			<then>

@@ -243,28 +243,29 @@ create database lportal2 character set utf8;</echo>
 	<target name="check-config">
 		<if>
 			<not>
-				<isset property="app.server" />
+				<isset property="app.server.type" />
 			</not>
 			<then>
-				<property name="app.server" value="tomcat" />
+				<property name="app.server.type" value="tomcat" />
 			</then>
 		</if>
 
 		<if>
 			<not>
 				<or>
-					<equals arg1="${app.server}" arg2="glassfish" />
-					<equals arg1="${app.server}" arg2="jboss" />
-					<equals arg1="${app.server}" arg2="jonas" />
-					<equals arg1="${app.server}" arg2="resin" />
-					<equals arg1="${app.server}" arg2="tomcat" />
-					<equals arg1="${app.server}" arg2="weblogic" />
-					<equals arg1="${app.server}" arg2="websphere-7.0" />
-					<equals arg1="${app.server}" arg2="websphere-8.0" />
+					<equals arg1="${app.server.type}" arg2="geronimo" />
+					<equals arg1="${app.server.type}" arg2="glassfish" />
+					<equals arg1="${app.server.type}" arg2="jboss" />
+					<equals arg1="${app.server.type}" arg2="jetty" />
+					<equals arg1="${app.server.type}" arg2="jonas" />
+					<equals arg1="${app.server.type}" arg2="resin" />
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<equals arg1="${app.server.type}" arg2="weblogic" />
+					<equals arg1="${app.server.type}" arg2="websphere" />
 				</or>
 			</not>
 			<then>
-				<fail>Please set "app.server" to one of the following:${line.separator}glassfish, jboss, jonas, resin, tomcat, weblogic, websphere-7.0, websphere-8.0</fail>
+				<fail>Please set "app.server.type" to one of the following:${line.separator}geronimo, glassfish, jboss, jetty, jonas, resin, tomcat, weblogic, websphere</fail>
 			</then>
 		</if>
 

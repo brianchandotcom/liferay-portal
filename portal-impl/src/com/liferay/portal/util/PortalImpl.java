@@ -7503,19 +7503,17 @@ public class PortalImpl implements Portal {
 					virtualHostname, themeDisplay.getServerPort(),
 					themeDisplay.isSecure());
 
-				if (canonicalURL || virtualHostname.contains(portalDomain)) {
-					String path = StringPool.BLANK;
+				String path = StringPool.BLANK;
 
-					if (themeDisplay.isWidget()) {
-						path = PropsValues.WIDGET_SERVLET_MAPPING;
-					}
-
-					if (themeDisplay.isI18n() && !canonicalURL) {
-						path = themeDisplay.getI18nPath();
-					}
-
-					return virtualHostname.concat(_pathContext).concat(path);
+				if (themeDisplay.isWidget()) {
+					path = PropsValues.WIDGET_SERVLET_MAPPING;
 				}
+
+				if (themeDisplay.isI18n() && !canonicalURL) {
+					path = themeDisplay.getI18nPath();
+				}
+
+				return virtualHostname.concat(_pathContext).concat(path);
 			}
 			else {
 				LayoutSet curLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(

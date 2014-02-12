@@ -6,7 +6,7 @@ allprojects {
 
 ext {
 	gradleDir = new File("../../tools/gradle")
-	wrapTasks = ["build", "clean", "compileJava", "jar"]
+	wrapTasks = ["build", "clean", "compileJava", "deploy", "jar"]
 }
 
 def wrapTask(String task) {

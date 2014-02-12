@@ -5,17 +5,6 @@
 
 	<import file="../../build-common-java.xml" />
 
-	<macrodef name="gradle-task-executor">
-		<attribute name="gradleTask" />
-		<attribute name="gradleTaskArgs" default="" />
-
-		<sequential>
-			<exec append="true" dir="." executable="../../tools/gradle/gradlew">
-				<arg line="@{gradleTask} @{gradleTaskArgs}" />
-			</exec>
-		</sequential>
-	</macrodef>
-
 	<target name="clean">
 		<gradle-task-executor gradleTask="clean" />
 	</target>
@@ -27,7 +16,7 @@
 	<target name="deploy">
 		<gradle-task-executor
 			gradleTask="deploy"
-			gradleTaskArgs="-PglobalLibDir=${app.server.lib.global.dir} -PportalLibDir=${app.server.lib.portal.dir}"
+			gradleTaskArgs="-Dorg.gradle.project.globalLibDir=${app.server.lib.global.dir} -Dorg.gradle.project.portalLibDir=${app.server.lib.portal.dir} -Dorg.gradle.project.osgiLibDir=${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi"
 		/>
 	</target>
 

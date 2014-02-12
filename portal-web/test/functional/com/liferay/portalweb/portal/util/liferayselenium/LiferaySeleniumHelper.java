@@ -670,19 +670,11 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String fileName)
 		throws Exception {
 
-		if (_screenshotFileName.equals(fileName)) {
-			_screenshotCount++;
-		}
-		else {
-			_screenshotCount = 0;
-
-			_screenshotFileName = fileName;
-		}
+		_screenshotCount++;
 
 		File file = new File(
 			liferaySelenium.getProjectDir() + "portal-web/test-results/" +
-				"functional/" + _screenshotFileName + "/" +
-					_screenshotFileName + _screenshotCount + ".jpg");
+				"functional/screenshots/" + _screenshotCount + ".jpg");
 
 		file.mkdirs();
 
@@ -1062,6 +1054,5 @@ public class LiferaySeleniumHelper {
 	}
 
 	private static int _screenshotCount = 0;
-	private static String _screenshotFileName = "";
 
 }

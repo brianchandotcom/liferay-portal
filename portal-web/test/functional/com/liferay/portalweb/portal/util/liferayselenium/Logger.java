@@ -203,24 +203,11 @@ public class Logger {
 
 		String fileName = (String)arguments[0];
 
-		if (_screenshotFileName.equals(fileName)) {
-			_screenshotCount++;
-		}
-		else {
-			_screenshotCount = 0;
-
-			_screenshotFileName = fileName;
-		}
-
-		_screenshotFileName = fileName;
+		_screenshotCount++;
 
 		sb.append("<img alt=\"");
-		sb.append(_screenshotFileName);
 		sb.append(_screenshotCount);
-		sb.append("\" height=\"750\" src=\"");
-		sb.append(_screenshotFileName);
-		sb.append("/");
-		sb.append(_screenshotFileName);
+		sb.append("\" height=\"750\" src=\"screenshots/");
 		sb.append(_screenshotCount);
 		sb.append(".jpg\" width=\"1050\" />");
 
@@ -594,7 +581,6 @@ public class Logger {
 	private LiferaySelenium _liferaySelenium;
 	private boolean _loggerStarted;
 	private int _screenshotCount;
-	private String _screenshotFileName = "";
 	private int _seleniumCount = 1;
 	private WebDriver _webDriver = new FirefoxDriver();
 	private Stack<String> _xPathIdStack = new Stack<String>();

@@ -2295,10 +2295,31 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</else>
 		</if>
 
-		<copy
-			file="portal-web/test-results/functional/report.html"
-			tofile="report.html"
-		/>
+		<if>
+			<isset property="env.JENKINS_HOME" />
+			<then>
+				<if>
+					<equals arg1="${test.save.screenshot}" arg2="true" />
+					<then>
+						<copy todir="screenshots">
+							<fileset
+								dir="portal-web/test-results/functional/screenshots"
+							/>
+						</copy>
+					</then>
+				</if>
+
+				<if>
+					<equals arg1="${test.selenium.logger.enabled}" arg2="true" />
+					<then>
+						<copy
+							file="portal-web/test-results/functional/report.html"
+							tofile="report.html"
+						/>
+					</then>
+				</if>
+			</then>
+		</if>
 	</target>
 
 	<target name="run-simple-server" depends="generate-test-properties">

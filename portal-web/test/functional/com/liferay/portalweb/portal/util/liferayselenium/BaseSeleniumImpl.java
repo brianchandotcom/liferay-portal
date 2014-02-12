@@ -498,10 +498,6 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void sendDescriptionLogger(String description) {
-	}
-
-	@Override
 	public void sendEmail(String to, String subject, String body)
 		throws Exception {
 
@@ -515,6 +511,10 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void sendLogger(String id, String status) {
+	}
+
+	@Override
+	public void sendMacroDescriptionLogger(String description) {
 	}
 
 	@Override

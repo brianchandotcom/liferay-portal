@@ -118,8 +118,9 @@ public class Logger {
 
 		String command = (String)arguments[0];
 
-		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-		sb.append("&nbsp;&nbsp;&nbsp;");
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
 		sb.append(_actionStepCount);
 		sb.append(". ");
 		sb.append(command);
@@ -214,6 +215,25 @@ public class Logger {
 		BaseTestCase.fail(sb.toString());
 	}
 
+	public void logMacroDescription(Object[] arguments) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		String command = (String)arguments[0];
+
+		_actionStepCount = 1;
+
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+		sb.append("<b>");
+		sb.append(_macroStepCount);
+		sb.append(". ");
+		sb.append(command);
+		sb.append("</b>");
+
+		_macroStepCount++;
+
+		log("descriptionLog", sb.toString(), "descriptionLog");
+	}
+
 	public void logScreenShots(Object[] arguments) throws Exception {
 		StringBundler sb = new StringBundler();
 
@@ -253,25 +273,6 @@ public class Logger {
 		}
 
 		log("actionCommandLog", sb.toString(), "selenium");
-	}
-
-	public void logMacroDescription(Object[] arguments) throws Exception {
-		StringBundler sb = new StringBundler();
-
-		String command = (String)arguments[0];
-
-		_actionStepCount = 1;
-
-		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-		sb.append("<b>");
-		sb.append(_macroStepCount);
-		sb.append(". ");
-		sb.append(command);
-		sb.append("</b>");
-
-		_macroStepCount++;
-
-		log("descriptionLog", sb.toString(), "descriptionLog");
 	}
 
 	public void logTestCaseCommand(Object[] arguments) throws Exception {
@@ -623,9 +624,9 @@ public class Logger {
 	private JavascriptExecutor _javascriptExecutor;
 	private LiferaySelenium _liferaySelenium;
 	private boolean _loggerStarted;
+	private int _macroStepCount = 1;
 	private int _screenshotCount;
 	private int _seleniumCount = 1;
-	private int _macroStepCount = 1;
 	private WebDriver _webDriver = new FirefoxDriver();
 	private Stack<String> _xPathIdStack = new Stack<String>();
 

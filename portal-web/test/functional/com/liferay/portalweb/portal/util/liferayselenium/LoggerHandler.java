@@ -51,7 +51,7 @@ public class LoggerHandler implements InvocationHandler {
 			else if (methodName.equals("sendActionLogger")) {
 				_logger.logActionCommand(arguments);
 			}
-			else if (methodName.equals("sendDescriptionLogger")) {
+			else if (methodName.equals("sendMacroDescriptionLogger")) {
 				_logger.logMacroDescription(arguments);
 			}
 			else if (methodName.equals("sendLogger")) {

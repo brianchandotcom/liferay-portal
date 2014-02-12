@@ -180,14 +180,14 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean sendActionLogger(String command, String[] params);
 
-	public void sendDescriptionLogger(String description);
-
 	public void sendEmail(String to, String subject, String body)
 		throws Exception;
 
 	public void sendKeys(String locator, String value);
 
 	public void sendLogger(String id, String status);
+
+	public void sendMacroDescriptionLogger(String description);
 
 	public void sendTestCaseCommandLogger(String command);
 

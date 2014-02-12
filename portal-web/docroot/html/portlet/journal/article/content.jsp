@@ -74,13 +74,11 @@ else if (!ddmTemplates.isEmpty()) {
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageId");
 
-String content = null;
+String content = ParamUtil.getString(request, "articleContent");
 
 boolean preselectCurrentLayout = false;
 
 if (article != null) {
-	content = ParamUtil.getString(request, "content");
-
 	if (Validator.isNull(content)) {
 		content = article.getContent();
 	}
@@ -93,8 +91,6 @@ if (article != null) {
 	}
 }
 else {
-	content = ParamUtil.getString(request, "content");
-
 	UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
 
 	long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);

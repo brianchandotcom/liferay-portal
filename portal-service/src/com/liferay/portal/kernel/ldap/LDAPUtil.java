@@ -25,6 +25,7 @@ import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.Properties;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.naming.NamingException;
@@ -226,23 +227,31 @@ public class LDAPUtil {
 
 		// Cannot have two filter types in a sequence
 
-		if (Pattern.matches(".*[~<>]*=[~<>]*=.*", filter)) {
+		Matcher matcher = _pattern1.matcher(filter);
+
+		if (matcher.matches()) {
 			return false;
 		}
 
 		// Cannot have a filter type after an opening parenthesis
 
-		if (Pattern.matches("\\([~<>]*=.*", filter)) {
+		matcher = _pattern2.matcher(filter);
+
+		if (matcher.matches()) {
 			return false;
 		}
 
 		// Cannot have an attribute without a filter type or extensible
 
-		if (Pattern.matches("\\([^~<>=]*\\)", filter)) {
+		matcher = _pattern3.matcher(filter);
+
+		if (matcher.matches()) {
 			return false;
 		}
 
-		if (Pattern.matches(".*[^~<>=]*[~<>]*=\\)", filter)) {
+		matcher = _pattern4.matcher(filter);
+
+		if (matcher.matches()) {
 			return false;
 		}
 
@@ -285,5 +294,10 @@ public class LDAPUtil {
 			throw new LDAPFilterException("Invalid filter " + filter);
 		}
 	}
+
+	private static Pattern _pattern1 = Pattern.compile(".*[~<>]*=[~<>]*=.*");
+	private static Pattern _pattern2 = Pattern.compile("\\([~<>]*=.*");
+	private static Pattern _pattern3 = Pattern.compile("\\([^~<>=]*\\)");
+	private static Pattern _pattern4 = Pattern.compile(".*[^~<>=]*[~<>]*=\\)");
 
 }

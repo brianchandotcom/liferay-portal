@@ -10,4 +10,9 @@
 			content: '\0000a0';
 		}
 	}
+
+	.control-group.field-wrapper > span {
+		bottom: 4px;
+		position: relative;
+	}
 }

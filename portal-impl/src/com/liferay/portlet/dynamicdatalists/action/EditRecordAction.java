@@ -141,7 +141,7 @@ public class EditRecordAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecord.class.getName(), actionRequest);
 
-		DDLRecordLocalServiceUtil.revertRecordVersion(
+		DDLRecordServiceUtil.revertRecordVersion(
 			themeDisplay.getUserId(), recordId, version, serviceContext);
 	}
 

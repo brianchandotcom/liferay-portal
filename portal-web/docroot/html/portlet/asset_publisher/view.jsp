@@ -69,7 +69,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && assetPublisherD
 
 Group scopeGroup = themeDisplay.getScopeGroup();
 
-Map<String, PortletURL> addPortletURLs = null;
+boolean hasAddPortletURLs = false;
 %>
 
 <c:if test="<%= assetPublisherDisplayContext.isShowAddContentButton() && (scopeGroup != null) && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
@@ -77,11 +77,14 @@ Map<String, PortletURL> addPortletURLs = null;
 	<%
 	boolean defaultAssetPublisher = AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), portletResource);
 
-	addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), null);
-
 	long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 
 	for (long groupId : groupIds) {
+		Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, groupId, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), null);
+
+		if ((addPortletURLs != null) && !addPortletURLs.isEmpty()) {
+			hasAddPortletURLs = true;
+		}
 	%>
 
 		<div class="lfr-meta-actions add-asset-selector">

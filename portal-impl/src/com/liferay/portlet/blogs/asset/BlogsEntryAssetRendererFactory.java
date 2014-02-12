@@ -23,7 +23,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -85,17 +84,6 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!BlogsPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY)) {
-
-			return null;
-		}
-
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
 			PortletKeys.BLOGS);
 
@@ -120,6 +108,15 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 		}
 
 		return liferayPortletURL;
+	}
+
+	@Override
+	public boolean hasAddPermission(
+			PermissionChecker permissionChecker, long groupId, long classTypeId)
+		throws Exception {
+
+		return BlogsPermission.contains(
+			permissionChecker, groupId, ActionKeys.ADD_ENTRY);
 	}
 
 	@Override

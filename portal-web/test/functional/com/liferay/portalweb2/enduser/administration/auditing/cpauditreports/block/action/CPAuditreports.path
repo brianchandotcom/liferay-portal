@@ -51,7 +51,7 @@
 <!--REPORTS_TABLE -->
 <tr>
 	<td>REPORTS_TABLE_USER_ID</td>
-	<td>//tbody[@class='table-data']/tr[contains(.,'${key_userName}') and contains(.,'${key_resourceAction}')]/td[1]</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_resourceAction}') and contains(.,'${key_resourceName}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>REPORTS_TABLE_USER_NAME</td>
-	<td>//tbody[@class='table-data']/tr[contains(.,'${key_userName}') and contains(.,'${key_resourceAction}')]/td[2]</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_resourceAction}') and contains(.,'${key_resourceName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>REPORTS_TABLE_RESOURCE_ID</td>
-	<td>//tbody[@class='table-data']/tr[contains(.,'${key_userName}') and contains(.,'${key_resourceAction}')]/td[3]</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_resourceAction}') and contains(.,'${key_resourceName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,7 +81,7 @@
 </tr>
 <tr>
 	<td>REPORTS_TABLE_RESOURCE_NAME</td>
-	<td>//tbody[@class='table-data']/tr[contains(.,'${key_userName}') and contains(.,'${key_resourceName}')]/td[4]</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_resourceAction}') and contains(.,'${key_resourceName}')]/td[4]</td>
 	<td></td>
 </tr>
 <tr>
@@ -91,7 +91,7 @@
 </tr>
 <tr>
 	<td>REPORTS_TABLE_RESOURCE_ACTION</td>
-	<td>//tbody[@class='table-data']/tr[contains(.,'${key_userName}') and contains(.,'${key_resourceAction}')]/td[5]</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_resourceAction}') and contains(.,'${key_resourceName}')]/td[5]</td>
 	<td></td>
 </tr>
 <tr>

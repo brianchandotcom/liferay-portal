@@ -277,7 +277,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		long classPK = ExportImportClassedModelUtil.getClassPK(classedModel);
 
-		addAssetCategories(clazz, classPK);
 		addAssetLinks(clazz, classPK);
 		addAssetTags(clazz, classPK);
 		addExpando(element, path, classedModel, clazz);

@@ -538,19 +538,6 @@ public class PortletImporter {
 		zipReader.close();
 	}
 
-	protected String getAssetCategoryPath(
-		PortletDataContext portletDataContext, long assetCategoryId) {
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
-		sb.append("/categories/");
-		sb.append(assetCategoryId);
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
 	protected UserIdStrategy getUserIdStrategy(
 		User user, String userIdStrategy) {
 

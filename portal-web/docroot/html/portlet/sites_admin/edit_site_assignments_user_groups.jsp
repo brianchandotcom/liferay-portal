@@ -185,7 +185,7 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 			</liferay-ui:panel>
 		</c:when>
 		<c:when test='<%= !tabs1.equals("summary") %>'>
-			<c:if test="<%= total > userGroupSearch.getDelta() %>">
+			<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP && (userGroupSearch.getDelta() > 10) %>">
 				<%= formButton %>
 			</c:if>
 

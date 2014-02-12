@@ -260,7 +260,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 			</liferay-ui:panel>
 		</c:when>
 		<c:when test='<%= !tabs1.equals("summary") %>'>
-			<c:if test="<%= total > searchContainer.getDelta() %>">
+			<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP && (searchContainer.getDelta() > 10) %>">
 				<%= formButton %>
 			</c:if>
 

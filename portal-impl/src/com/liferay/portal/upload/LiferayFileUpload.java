@@ -48,7 +48,7 @@ public class LiferayFileUpload extends ServletFileUpload {
 	}
 
 	@Override
-	public List<LiferayFileItem> parseRequest(HttpServletRequest request)
+	public List<FileItem> parseRequest(HttpServletRequest request)
 		throws FileUploadException {
 
 		_session.removeAttribute(LiferayFileUpload.FILE_NAME);

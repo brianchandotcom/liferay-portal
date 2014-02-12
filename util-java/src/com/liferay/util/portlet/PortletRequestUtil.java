@@ -46,7 +46,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowStateException;
 
-import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.portlet.PortletFileUpload;
 
@@ -56,7 +56,7 @@ import org.apache.commons.fileupload.portlet.PortletFileUpload;
  */
 public class PortletRequestUtil {
 
-	public static List<DiskFileItem> testMultipartWithCommonsFileUpload(
+	public static void testMultipartWithCommonsFileUpload(
 			ActionRequest actionRequest)
 		throws Exception {
 
@@ -79,24 +79,22 @@ public class PortletRequestUtil {
 		PortletFileUpload portletFileUpload = new PortletFileUpload(
 			diskFileItemFactory);
 
-		List<DiskFileItem> diskFileItems = portletFileUpload.parseRequest(
-			actionRequest);
+		List<org.apache.commons.fileupload.FileItem> fileItemsList =
+			portletFileUpload.parseRequest(actionRequest);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Apache commons upload was able to parse " +
-					diskFileItems.size() + " items");
+					fileItemsList.size() + " items");
 		}
 
-		for (int i = 0; i < diskFileItems.size(); i++) {
-			DiskFileItem diskFileItem = diskFileItems.get(i);
+		for (int i = 0; i < fileItemsList.size(); i++) {
+			FileItem fileItem = fileItemsList.get(i);
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Item " + i + " " + diskFileItem);
+				_log.info("Item " + i + " " + fileItem);
 			}
 		}
-
-		return diskFileItems;
 	}
 
 	public static int testMultipartWithPortletInputStream(

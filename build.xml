@@ -84,6 +84,7 @@
 		<ant dir="portal-pacl" target="clean" inheritAll="false" />
 
 		<ant dir="osgi/bootstrap" target="clean" inheritAll="false" />
+		<ant dir="osgi/modules" target="clean" inheritAll="false" />
 
 		<ant dir="portal-web" target="clean" inheritAll="false" />
 

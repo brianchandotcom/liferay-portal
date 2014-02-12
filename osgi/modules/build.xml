@@ -5,17 +5,6 @@
 
 	<import file="../../build-common-java.xml" />
 
-	<macrodef name="gradle-task-executor">
-		<attribute name="gradleTask" />
-		<attribute name="gradleTaskArgs" default="" />
-
-		<sequential>
-			<exec append="true" dir="." executable="../../tools/gradle/gradlew">
-				<arg line="@{gradleTask} @{gradleTaskArgs}" />
-			</exec>
-		</sequential>
-	</macrodef>
-
 	<target name="clean">
 		<gradle-task-executor gradleTask="clean" />
 	</target>

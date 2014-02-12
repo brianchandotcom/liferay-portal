@@ -68,8 +68,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 	/**
 	 * @see DynamicCSSUtil#propagateQueryString(String, String)
 	 */
-	public static String aggregateCss(
-			AggregateContext aggregateContext, String content)
+	public static String aggregateCss(ServletPaths servletPaths, String content)
 		throws IOException {
 
 		StringBundler sb = new StringBundler();
@@ -136,46 +135,44 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 						urlConnection.getInputStream());
 				}
 				else {
-					importContent = aggregateContext.getContent(importFileName);
-				}
+					ServletPaths importFileServletPaths = servletPaths.down(
+						importFileName);
 
-				if (importContent == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"File " +
-								aggregateContext.getFullPath(importFileName) +
-									" does not exist");
+					importContent = importFileServletPaths.getContent();
+
+					if (importContent == null) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"File " +
+									importFileServletPaths.getResourcePath() +
+										" does not exist");
+						}
+
+						importContent = StringPool.BLANK;
 					}
 
-					importContent = StringPool.BLANK;
+					String importDirName = StringPool.BLANK;
+
+					int slashPos = importFileName.lastIndexOf(CharPool.SLASH);
+
+					if (slashPos != -1) {
+						importDirName = importFileName.substring(
+							0, slashPos + 1);
+					}
+
+					ServletPaths importDirServletPaths = servletPaths.down(
+						importDirName);
+
+					importContent = aggregateCss(
+						importDirServletPaths, importContent);
+
+					// LEP-7540
+
+					importContent = AggregateUtil.updateRelativeURLs(
+						importContent,
+						_BASE_URL.concat(
+							importDirServletPaths.getResourcePath()));
 				}
-
-				String importDirName = StringPool.BLANK;
-
-				int slashPos = importFileName.lastIndexOf(CharPool.SLASH);
-
-				if (slashPos != -1) {
-					importDirName = importFileName.substring(0, slashPos + 1);
-				}
-
-				aggregateContext.pushPath(importDirName);
-
-				importContent = aggregateCss(aggregateContext, importContent);
-
-				if (Validator.isNotNull(importDirName)) {
-					aggregateContext.popPath();
-				}
-
-				// LEP-7540
-
-				String baseURL = _BASE_URL;
-
-				baseURL = baseURL.concat(
-					aggregateContext.getResourcePath(StringPool.BLANK));
-				baseURL = baseURL.concat(importDirName);
-
-				importContent = AggregateUtil.updateRelativeURLs(
-					importContent, baseURL);
 
 				if (Validator.isNotNull(mediaQuery)) {
 					sb.append(_CSS_MEDIA_QUERY);
@@ -199,12 +196,14 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 	}
 
 	public static String aggregateJavaScript(
-		AggregateContext aggregateContext, String[] fileNames) {
+		ServletPaths servletPaths, String[] fileNames) {
 
 		StringBundler sb = new StringBundler(fileNames.length * 2);
 
 		for (String fileName : fileNames) {
-			String content = aggregateContext.getContent(fileName);
+			ServletPaths fileServletPaths = servletPaths.down(fileName);
+
+			String content = fileServletPaths.getContent();
 
 			if (Validator.isNull(content)) {
 				continue;
@@ -305,12 +304,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			content = StringPool.BLANK;
 		}
 		else {
-			AggregateContext aggregateContext = new ServletAggregateContext(
-				_servletContext, StringPool.SLASH);
-
-			aggregateContext.pushPath(bundleDirName);
-
-			content = aggregateJavaScript(aggregateContext, fileNames);
+			content = aggregateJavaScript(
+				new ServletPaths(_servletContext, bundleDirName), fileNames);
 		}
 
 		response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
@@ -496,7 +491,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		String content = StringUtil.read(urlConnection.getInputStream());
 
 		content = aggregateCss(
-			new ServletAggregateContext(_servletContext, resourcePath),
+			new ServletPaths(
+				_servletContext, ServletPaths.getParentPath(resourcePath)),
 			content);
 
 		return getCssContent(request, response, resourcePath, content);

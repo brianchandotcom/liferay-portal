@@ -225,12 +225,18 @@ public class InputTag extends BaseInputTag {
 
 		String forLabel = id;
 
-		if (type.equals("assetTags")) {
+		if (Validator.equals(type,"assetTags")) {
 			forLabel += "assetTagNames";
 		}
 
-		if (Validator.equals(getType(), "checkbox")) {
+		if (Validator.equals(type, "checkbox")) {
 			forLabel = forLabel.concat("Checkbox");
+		}
+
+		String languageId = getLanguageId();
+
+		if (Validator.isNotNull(languageId)) {
+			forLabel = forLabel + StringPool.UNDERLINE + languageId;
 		}
 
 		_inputName = getName();
@@ -306,6 +312,12 @@ public class InputTag extends BaseInputTag {
 
 			if (Validator.equals(getType(), "checkbox")) {
 				inputName = inputName.concat("Checkbox");
+			}
+
+			String languageId = getLanguageId();
+
+			if (Validator.isNotNull(languageId)) {
+				inputName = inputName + StringPool.UNDERLINE + languageId;
 			}
 
 			validatorTagsMap.put(inputName, validatorTags);

@@ -37,7 +37,7 @@
 <tr>
 	<td>ADD</td>
 	<td>//a[@id='_145_addPanel']</td>
-	<td></td>
+	<td>add button</td>
 </tr>
 <tr>
 	<td>ADD_STAGING</td>
@@ -100,12 +100,12 @@
 <tr>
 	<td>ADD_APPLICATION_LINK</td>
 	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Applications')]</td>
-	<td></td>
+	<td>add applciation link</td>
 </tr>
 <tr>
 	<td>ADD_APPLICATION_SEARCH_FIELD</td>
 	<td>//input[@id='_145_searchApplication']</td>
-	<td></td>
+	<td>application search field</td>
 </tr>
 <tr>
 	<td>ADD_APPLICATION_COLLAPSED_CATEGORY</td>
@@ -121,17 +121,17 @@
 <tr>
 	<td>ADD_PAGE_LINK</td>
 	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Page')]</td>
-	<td></td>
+	<td>add page link</td>
 </tr>
 <tr>
 	<td>ADD_PAGE_NAME_FIELD</td>
 	<td>//input[@id='_145_addLayoutName']</td>
-	<td></td>
+	<td>adding new page name field</td>
 </tr>
 <tr>
 	<td>ADD_PAGE_BUTTON</td>
 	<td>//button[contains(.,'Add Page')]</td>
-	<td></td>
+	<td>add page button</td>
 </tr>
 <tr>
 	<td></td>
@@ -349,12 +349,12 @@
 <tr>
 	<td>ADMIN</td>
 	<td>//li[@id='_145_adminLinks']/a</td>
-	<td></td>
+	<td>admin tab</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'Site Administration')]</td>
-	<td></td>
+	<td>site administration under admin</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_PAGES</td>
@@ -364,7 +364,7 @@
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_CONTENT</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Content')]</td>
-	<td></td>
+	<td>site administration content under admin</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_ICON</td>

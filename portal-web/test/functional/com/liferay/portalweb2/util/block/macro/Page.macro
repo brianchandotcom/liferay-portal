@@ -13,6 +13,8 @@
 	</command>
 
 	<command name="addPG">
+		<description message="Add a page to Liferay Portal called ${pageName}." />
+
 		<execute macro="Page#openURL" />
 
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
@@ -128,6 +130,8 @@
 	</command>
 
 	<command name="gotoConfigurationCP">
+		<description message="Navigate to Site Administration > Configuration > ${portletName}." />
+
 		<execute macro="Page#gotoCmdCP">
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONFIGURATION" />
 			<var name="portletCategoryName" value="Configuration" />
@@ -136,6 +140,8 @@
 	</command>
 
 	<command name="gotoContentCP">
+		<description message="Navigate to Site Administration > Content > ${portletName}." />
+
 		<execute macro="Page#gotoCmdCP">
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONTENT" />
 			<var name="portletCategoryName" value="Content" />
@@ -144,6 +150,8 @@
 	</command>
 
 	<command name="gotoCP">
+		<description message="Navigate to Control Panel > ${portletName}." />
+
 		<execute macro="Page#openURL" />
 
 		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
@@ -160,6 +168,8 @@
 	</command>
 
 	<command name="gotoMyAccount">
+		<description message="Navigate to My Account > ${portletName}." />
+
 		<execute macro="Page#openURL" />
 
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
@@ -170,6 +180,8 @@
 	</command>
 
 	<command name="gotoMyDashboard">
+		<description message="Navigate to My Dashboard." />
+
 		<execute macro="Page#openURL" />
 
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
@@ -177,6 +189,8 @@
 	</command>
 
 	<command name="gotoMyProfile">
+		<description message="Navigate to My Profile." />
+
 		<execute macro="Page#openURL" />
 
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
@@ -184,6 +198,8 @@
 	</command>
 
 	<command name="gotoPagesCP">
+		<description message="Navigate to Site Administration > Pages > ${portletName}." />
+
 		<execute macro="Page#gotoCmdCP">
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_PAGES" />
 			<var name="portletCategoryName" value="Pages" />
@@ -192,6 +208,8 @@
 	</command>
 
 	<command name="gotoPG">
+		<description message="Navigate to the page named ${pageName}." />
+
 		<execute macro="Page#openURL" />
 
 		<if>
@@ -222,6 +240,8 @@
 	</command>
 
 	<command name="gotoUsersCP">
+		<description message="Navigate to Site Administration > Users > ${portletName}." />
+
 		<execute macro="Page#gotoCmdCP">
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_USERS" />
 			<var name="portletCategoryName" value="Users" />
@@ -300,6 +320,8 @@
 	</command>
 
 	<command name="tearDownPG">
+		<description message="Delete all pages excluding the Welcome Page." />
+
 		<execute macro="Page#openURL" />
 
 		<while>

@@ -96,7 +96,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 			if ((displayScopeFacet && fieldName.equals("groupId")) ||
 				(displayAssetCategoriesFacet &&
-				 fieldName.equals("assetCategoryTitles")) ||
+				 fieldName.equals("assetCategoryIds")) ||
 				(displayAssetTagsFacet && fieldName.equals("assetTagNames")) ||
 				(displayAssetTypeFacet && fieldName.equals("entryClassName")) ||
 				(displayFolderFacet && fieldName.equals("folderId")) ||

@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -104,41 +104,43 @@ public class ServletContextUtil {
 				if (pathSet != null) {
 					pathQueue.addAll(pathSet);
 				}
-
-				continue;
 			}
+			else {
+				try {
+					URL url = servletContext.getResource(curPath);
 
-			try {
-				URL url = servletContext.getResource(curPath);
-
-				if (url == null) {
-					_log.error("Resource URL for " + curPath + " is null");
-
-					continue;
-				}
-
-				String protocol = url.getProtocol();
-
-				if (protocol.equals("file")) {
-					try {
-						File file = new File(url.toURI());
-
-						lastModified = Math.max(
-							file.lastModified(), lastModified);
-
-						continue;
+					if (url == null) {
+						_log.error("Resource URL for " + curPath + " is null");
 					}
-					catch (URISyntaxException urise) {
+					else {
+						URLConnection urlConnection = null;
+
+						try {
+							urlConnection = url.openConnection();
+
+							if (urlConnection.getLastModified() >
+									lastModified) {
+
+								lastModified = urlConnection.getLastModified();
+							}
+						}
+						finally {
+							if (urlConnection != null) {
+								try {
+									InputStream inputStream =
+										urlConnection.getInputStream();
+
+									inputStream.close();
+								}
+								catch (IOException ioe) {
+								}
+							}
+						}
 					}
 				}
-
-				URLConnection urlConnection = url.openConnection();
-
-				lastModified = Math.max(
-					urlConnection.getLastModified(), lastModified);
-			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+				catch (IOException ioe) {
+					_log.error(ioe, ioe);
+				}
 			}
 		}
 

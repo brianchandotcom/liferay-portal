@@ -109,10 +109,17 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 	@Override
 	public boolean isVisible(long classPK, int status) throws Exception {
-		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
-			classPK);
+		List <JournalArticle> articles =
+			JournalArticleLocalServiceUtil.getArticlesByResourcePrimKey(
+				classPK);
 
-		return isVisible(article.getStatus(), status);
+		for (JournalArticle article : articles) {
+			if (isVisible(article.getStatus(), status)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

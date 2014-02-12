@@ -47,14 +47,6 @@ if (type.equals("assetCategories") || baseType.equals(Date.class.getName())) {
 	showForLabel = false;
 }
 
-if (type.equals("assetTags")) {
-	forLabel += "assetTagNames";
-}
-
-if (checkboxField) {
-	forLabel += "Checkbox";
-}
-
 if (choiceField && Validator.isNull(inlineLabel)) {
 	inlineLabel = "right";
 }

@@ -37,6 +37,8 @@ AUI.add(
 
 		var TPL_ELEMENT = '<{nodeName}{attributeList}></{nodeName}>';
 
+		var UNLOCALIZABLE_FIELD_ATTRS = ['indexType', 'name', 'required', 'repeatable', 'showLabel'];
+
 		var XML_ATTRIBUTES_FIELD_ATTRS = {
 			dataType: 1,
 			indexType: 1,
@@ -261,11 +263,7 @@ AUI.add(
 					_afterEditingLocaleChange: function(event) {
 						var instance = this;
 
-						var editingField = instance.editingField;
-
-						if (editingField) {
-							editingField.set('readOnlyAttributes', instance._getReadOnlyFieldAttributes(editingField));
-						}
+						instance._syncFieldsReadOnlyAttributes();
 
 						instance._updateFieldsLocalizationMap(event.prevVal);
 
@@ -474,12 +472,16 @@ AUI.add(
 
 						var readOnlyAttributes = field.get('readOnlyAttributes');
 
-						if (editingLocale === translationManager.get('defaultLocale')) {
-							AArray.removeItem(readOnlyAttributes, 'name');
-						}
-						else if (AArray.indexOf(readOnlyAttributes, 'name') === -1) {
-							readOnlyAttributes.push('name');
-						}
+						AArray.each(
+							UNLOCALIZABLE_FIELD_ATTRS,
+							function(item) {
+								if (editingLocale === translationManager.get('defaultLocale')) {
+									AArray.removeItem(readOnlyAttributes, item);
+								} else if (AArray.indexOf(readOnlyAttributes, item) === -1) {
+									readOnlyAttributes.push(item);
+								}
+							}
+						);
 
 						return readOnlyAttributes;
 					},
@@ -609,6 +611,21 @@ AUI.add(
 								}
 
 								instance._syncFieldsLocaleUI(locale, field.get('fields'));
+							}
+						);
+					},
+
+					_syncFieldsReadOnlyAttributes: function(fields) {
+						var instance = this;
+
+						fields = fields || instance.get('fields');
+
+						fields.each(
+							function(field) {
+								field.set('readOnlyAttributes', 
+									instance._getReadOnlyFieldAttributes(field));
+
+								instance._syncFieldsReadOnlyAttributes(field.get('fields'));
 							}
 						);
 					},

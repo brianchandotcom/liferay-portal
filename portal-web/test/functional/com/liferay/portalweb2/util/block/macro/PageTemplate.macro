@@ -84,4 +84,10 @@
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_3" value1="Wiki" />
 		<execute action="CPPagetemplates#assertElementNotPresent" locator-key1="PAGE_TEMPLATE_TABLE_NAME_4" />
 	</command>
+
+	<command name="viewDefaultPortletPG">
+		<execute action="PGBlogs#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Blogs" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="PORTLET2_TITLE" value1="Tag Cloud" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="PORTLET3_TITLE" value1="Recent Bloggers" />
+	</command>
 </definition>

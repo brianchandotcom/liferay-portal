@@ -430,6 +430,17 @@ $dockbarOpenGradientStart: #0EA6F9;
 		word-wrap: break-word;
 	}
 
+	ul.icons-container {
+		list-style: none;
+		margin-left: 0;
+		margin-right: 0;
+
+		li.edit-icon-actions {
+			float: left;
+			margin-right: 10px;
+		}
+	}
+
 	.portlet-icons {
 		float: none;
 	}

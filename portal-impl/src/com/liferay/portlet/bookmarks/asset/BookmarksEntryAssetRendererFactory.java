@@ -109,7 +109,7 @@ public class BookmarksEntryAssetRendererFactory
 
 	@Override
 	public boolean hasAddPermission(
-			PermissionChecker permissionChecker, long groupId, long typeId)
+			PermissionChecker permissionChecker, long groupId, long classTypeId)
 		throws Exception {
 
 		return BookmarksPermission.contains(

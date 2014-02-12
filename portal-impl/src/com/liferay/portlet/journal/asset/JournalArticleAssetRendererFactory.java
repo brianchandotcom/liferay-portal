@@ -219,12 +219,12 @@ public class JournalArticleAssetRendererFactory
 
 	@Override
 	public boolean hasAddPermission(
-			PermissionChecker permissionChecker, long groupId, long typeId)
+			PermissionChecker permissionChecker, long groupId, long classTypeId)
 		throws Exception {
 
-		if ((typeId > 0) &&
+		if ((classTypeId > 0) &&
 			!DDMStructurePermission.contains(
-				permissionChecker, typeId, ActionKeys.VIEW)) {
+				permissionChecker, classTypeId, ActionKeys.VIEW)) {
 
 			return false;
 		}

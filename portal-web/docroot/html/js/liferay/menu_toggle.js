@@ -47,7 +47,7 @@ AUI.add(
 							instance._triggerNode.on(
 								['gesturemovestart', 'keypress'],
 								function(event) {
-									if ((event.type == "gesturemovestart") || event.isKeyInSet('ENTER', 'SPACE')) {
+									if ((event.type == 'gesturemovestart') || event.isKeyInSet('ENTER', 'SPACE')) {
 										instance._toggleMenu(event, event.currentTarget);
 									}
 								}
@@ -87,7 +87,7 @@ AUI.add(
 					},
 
 					_isTouch: function(event) {
-						if ((event._event.type == 'touchend') && Liferay.Util.isTablet()) {
+						if ((event._event.type === 'touchend') && Liferay.Util.isTablet()) {
 							return true;
 						}
 						else {

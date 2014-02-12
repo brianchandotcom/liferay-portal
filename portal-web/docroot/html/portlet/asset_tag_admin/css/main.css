@@ -36,6 +36,15 @@
 				top: 2px;
 			}
 		}
+
+		span.lfr-token {
+			width: 100%;
+			word-wrap: break-word;
+
+			.lfr-token-text {
+				display: block;
+			}
+		}
 	}
 
 	.header-title, .tree-node-content .tree-label {

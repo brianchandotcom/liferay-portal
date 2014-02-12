@@ -176,6 +176,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void selectAndWait(String selectLocator, String optionLocator);
 
+	public void sendActionDescriptionLogger(String description);
+
 	public boolean sendActionLogger(String command, String[] params);
 
 	public void sendEmail(String to, String subject, String body)
@@ -184,6 +186,8 @@ public interface LiferaySelenium extends Selenium {
 	public void sendKeys(String locator, String value);
 
 	public void sendLogger(String id, String status);
+
+	public void sendMacroDescriptionLogger(String description);
 
 	public void sendTestCaseCommandLogger(String command);
 

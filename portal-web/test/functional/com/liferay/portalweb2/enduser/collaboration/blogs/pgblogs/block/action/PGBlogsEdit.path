@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_AS_DRAFT_BUTTON</td>
+	<td>//button[@id='_33_saveButton' and contains(.,'Save as Draft ')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[@id='_33_publishButton']</td>
 	<td></td>

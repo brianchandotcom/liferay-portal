@@ -49,6 +49,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_DATE_DATE_INPUT</td>
+	<td>//input[@id='_33_displayDate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_DATE_HOUR</td>
+	<td>//input[@id='_33_displayDateHour']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_DATE_MINUTE</td>
+	<td>//input[@id='_33_displayDateMinute']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_DATE_MERIDIAN</td>
+	<td>//input[@id='_33_displayDateAmPm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_TIME_INPUT</td>
+	<td>//input[@id='_33_displayDateTime']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_FIELD</td>
 	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td></td>

@@ -20,12 +20,10 @@
 		<var name="resourceAction3" value="Impersonate" />
 		<var name="resourceAction4" value="Add" />
 		<var name="resourceAction5" value="Assign" />
-		<var name="resourceId" value="10201" />
 		<var name="resourceName1" value="Role" />
 		<var name="resourceName2" value="User" />
 		<var name="resourceName3" value="User Group" />
 		<var name="roleName" value="Role1" />
-		<var name="userId" value="10201" />
 		<var name="userName" value="Test Test" />
 		<var name="userScreenName" value="test1" />
 
@@ -34,8 +32,8 @@
 		</execute>
 
 		<execute macro="Audit#searchCP">
-			<var name="searchTerm" value="${userId}" />
-			<var name="userId" value="${userId}" />
+			<var name="searchTerm" value="10201" />
+			<var name="userId" value="10201" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -52,8 +50,8 @@
 		</execute>
 
 		<execute macro="Audit#searchCP">
-			<var name="resourceId" value="${resourceId}" />
-			<var name="searchTerm" value="${resourceId}" />
+			<var name="resourceId" value="10201" />
+			<var name="searchTerm" value="10201" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -91,7 +89,7 @@
 		</execute>
 
 		<var name="key_resourceAction" value="${resourceAction2}" />
-		<var name="key_userName" value="${userName}" />
+		<var name="key_resourceName" value="${resourceName2}" />
 
 		<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction2}" />
 
@@ -122,7 +120,7 @@
 		</execute>
 
 		<var name="key_resourceAction" value="${resourceAction3}" />
-		<var name="key_userName" value="${userName}" />
+		<var name="key_resourceName" value="${resourceName2}" />
 
 		<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction3}" />
 
@@ -159,34 +157,37 @@
 			<var name="portletName" value="Audit Reports" />
 		</execute>
 
+		<var name="key_resourceAction" value="${resourceAction4}" />
 		<var name="key_resourceName" value="${resourceName1}" />
-		<var name="key_userName" value="${userName}" />
 
 		<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_RESOURCE_NAME" value1="${resourceName1}" />
 
 		<var name="key_resourceAction" value="${resourceAction4}" />
-		<var name="key_userName" value="${userName}" />
+		<var name="key_resourceName" value="${resourceName1}" />
 
 		<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction4}" />
 
+		<var name="key_resourceAction" value="${resourceAction5}" />
 		<var name="key_resourceName" value="${resourceName2}" />
-		<var name="key_userName" value="${userName}" />
 
 		<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_RESOURCE_NAME" value1="${resourceName2}" />
 
 		<var name="key_resourceAction" value="${resourceAction5}" />
-		<var name="key_userName" value="${userName}" />
+		<var name="key_resourceName" value="${resourceName2}" />
 
 		<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction5}" />
 
+		<var name="key_resourceAction" value="${resourceAction4}" />
 		<var name="key_resourceName" value="${resourceName3}" />
-		<var name="key_userName" value="${userName}" />
 
 		<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_RESOURCE_NAME" value1="${resourceName3}" />
 
 		<var name="key_resourceAction" value="${resourceAction4}" />
-		<var name="key_userName" value="${userName}" />
+		<var name="key_resourceName" value="${resourceName3}" />
 
 		<execute action="CPAuditreports#assertTextEquals" locator-key1="REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction4}" />
+
+		<execute action="CPAuditreports#assertTextEquals" locator1="xpath=(//tr[contains(.,'${resourceAction5}') and contains(.,'${resourceName2}')]/td[4])[2]" value1="${resourceName2}" />
+		<execute action="CPAuditreports#assertTextEquals" locator1="xpath=(//tr[contains(.,'${resourceAction5}') and contains(.,'${resourceName2}')]/td[5])[2]" value1="${resourceAction5}" />
 	</command>
 </definition>

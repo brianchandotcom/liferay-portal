@@ -536,6 +536,8 @@
 				color: #036;
 				display: block;
 				font-size: 14px;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 
 			.article-image {

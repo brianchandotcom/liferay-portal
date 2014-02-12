@@ -36,6 +36,7 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 
 		<liferay-ui:icon
 			image="view"
+			message="view[action]"
 			url="<%= viewEntryURL %>"
 		/>
 	</c:if>

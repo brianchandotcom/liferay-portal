@@ -299,7 +299,7 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public String getViewInContextMessage() {
-		return "view";
+		return "view[action]";
 	}
 
 	@Override

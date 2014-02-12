@@ -49,6 +49,7 @@ if (hasUpdatePermission) {
 
 		<liferay-ui:icon
 			image="view"
+			message="view[action]"
 			url="<%= viewRecordURL %>"
 		/>
 	</c:if>

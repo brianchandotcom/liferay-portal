@@ -24,7 +24,7 @@
 
 		<liferay-ui:icon
 			image="view"
-			message="view"
+			message="view[action]"
 			url="<%= viewFileEntryURL %>"
 		/>
 	</c:if>

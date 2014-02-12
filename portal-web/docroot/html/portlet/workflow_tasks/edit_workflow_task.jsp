@@ -193,7 +193,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 					<div class="task-content-actions">
 						<liferay-ui:icon-list>
 							<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
-								<liferay-ui:icon image="view" method="get" target='<%= assetRenderer.isPreviewInContext() ? "_blank" : StringPool.BLANK %>' url="<%= viewFullContentURLString %>" />
+								<liferay-ui:icon image="view" message="view[action]" method="get" target='<%= assetRenderer.isPreviewInContext() ? "_blank" : StringPool.BLANK %>' url="<%= viewFullContentURLString %>" />
 							</c:if>
 
 							<c:if test="<%= editPortletURL != null %>">

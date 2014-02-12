@@ -39,6 +39,7 @@ DDLRecordSet selRecordSet = (DDLRecordSet)request.getAttribute("record_set_actio
 
 		<liferay-ui:icon
 			image="view"
+			message="view[action]"
 			url="<%= viewRecordSetURL %>"
 		/>
 	</c:if>

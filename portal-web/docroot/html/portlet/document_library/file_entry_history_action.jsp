@@ -52,6 +52,7 @@ FileVersion fileVersion = (FileVersion)objArray[1];
 
 	<liferay-ui:icon
 		image="view"
+		message="view[action]"
 		url="<%= viewFileVersionURL %>"
 	/>
 

@@ -35,6 +35,7 @@ long formDDMTemplateId = GetterUtil.getLong((String)row.getParameter("formDDMTem
 
 	<liferay-ui:icon
 		image="view"
+		message="view[action]"
 		url="<%= viewRecordVersionURL %>"
 	/>
 

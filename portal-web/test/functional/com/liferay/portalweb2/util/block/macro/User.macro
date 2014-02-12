@@ -231,6 +231,234 @@
 		</if>
 	</command>
 
+	<command name="advancedSearchViaFriendsDirectoryPG">
+		<execute action="PGFriendsdirectory#click" locator-key1="BASIC_SEARCH_ADVANCED" />
+
+		<if>
+			<equals arg1="${searchField}" arg2="First Name" />
+			<then>
+				<execute action="PGFriendsdirectory#type" locator-key1="ADVANCED_SEARCH_FIRST_NAME_FIELD" value1="${searchTerm}" />
+			</then>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Middle Name" />
+				<then>
+					<execute action="PGFriendsdirectory#type" locator-key1="ADVANCED_SEARCH_MIDDLE_NAME_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Last Name" />
+				<then>
+					<execute action="PGFriendsdirectory#type" locator-key1="ADVANCED_SEARCH_LAST_NAME_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Screen Name" />
+				<then>
+					<execute action="PGFriendsdirectory#type" locator-key1="ADVANCED_SEARCH_SCREEN_NAME_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Email Address" />
+				<then>
+					<execute action="PGFriendsdirectory#type" locator-key1="ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="PGFriendsdirectory#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<if>
+			<equals arg1="${searchNoResults}" arg2="true" />
+			<then>
+				<execute action="PGFriendsdirectory#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />
+
+				<var name="key_userScreenName" value="${userScreenName}" />
+
+				<execute action="PGFriendsdirectory#assertElementNotPresent" locator-key1="USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+				<execute action="PGFriendsdirectory#assertElementNotPresent" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName}" />
+				<execute action="PGFriendsdirectory#assertElementNotPresent" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+			</then>
+			<else>
+				<var name="key_userScreenName" value="${userScreenName}" />
+
+				<execute action="PGFriendsdirectory#assertTextEquals" locator-key1="USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+				<execute action="PGFriendsdirectory#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName}" />
+				<execute action="PGFriendsdirectory#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="advancedSearchViaMySitesDirectoryPG" >
+		<execute action="PGMysitesdirectory#click" locator-key1="BASIC_SEARCH_ADVANCED" />
+
+		<if>
+			<equals arg1="${searchField}" arg2="First Name" />
+			<then>
+				<execute action="PGMysitesdirectory#type" locator-key1="ADVANCED_SEARCH_FIRST_NAME_FIELD" value1="${searchTerm}" />
+			</then>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Middle Name" />
+				<then>
+					<execute action="PGMysitesdirectory#type" locator-key1="ADVANCED_SEARCH_MIDDLE_NAME_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Last Name" />
+				<then>
+					<execute action="PGMysitesdirectory#type" locator-key1="ADVANCED_SEARCH_LAST_NAME_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Screen Name" />
+				<then>
+					<execute action="PGMysitesdirectory#type" locator-key1="ADVANCED_SEARCH_SCREEN_NAME_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Email Address" />
+				<then>
+					<execute action="PGMysitesdirectory#type" locator-key1="ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="PGMysitesdirectory#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<if>
+			<equals arg1="${searchNoResults}" arg2="true" />
+			<then>
+				<execute action="PGMysitesdirectory#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />
+
+				<var name="key_userScreenName" value="${userScreenName}" />
+
+				<execute action="PGMysitesdirectory#assertElementNotPresent" locator-key1="USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+				<execute action="PGMysitesdirectory#assertElementNotPresent" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName}" />
+				<execute action="PGMysitesdirectory#assertElementNotPresent" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+			</then>
+			<else>
+				<var name="key_userScreenName" value="${userScreenName}" />
+
+				<execute action="PGMysitesdirectory#assertTextEquals" locator-key1="USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+				<execute action="PGMysitesdirectory#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName}" />
+				<execute action="PGMysitesdirectory#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="advancedSearchViaPortalDirectoryPG" >
+		<execute action="PGPortaldirectory#click" locator-key1="BASIC_SEARCH_ADVANCED" />
+
+		<if>
+			<equals arg1="${searchField}" arg2="First Name" />
+			<then>
+				<execute action="PGPortaldirectory#type" locator-key1="ADVANCED_SEARCH_FIRST_NAME_FIELD" value1="${searchTerm}" />
+			</then>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Middle Name" />
+				<then>
+					<execute action="PGPortaldirectory#type" locator-key1="ADVANCED_SEARCH_MIDDLE_NAME_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Last Name" />
+				<then>
+					<execute action="PGPortaldirectory#type" locator-key1="ADVANCED_SEARCH_LAST_NAME_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Screen Name" />
+				<then>
+					<execute action="PGPortaldirectory#type" locator-key1="ADVANCED_SEARCH_SCREEN_NAME_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Email Address" />
+				<then>
+					<execute action="PGPortaldirectory#type" locator-key1="ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="PGPortaldirectory#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<if>
+			<equals arg1="${searchNoResults}" arg2="true" />
+			<then>
+				<execute action="PGPortaldirectory#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />
+
+				<var name="key_userScreenName" value="${userScreenName}" />
+
+				<execute action="PGPortaldirectory#assertElementNotPresent" locator-key1="USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+				<execute action="PGPortaldirectory#assertElementNotPresent" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName}" />
+				<execute action="PGPortaldirectory#assertElementNotPresent" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+			</then>
+			<else>
+				<var name="key_userScreenName" value="${userScreenName}" />
+
+				<execute action="PGPortaldirectory#assertTextEquals" locator-key1="USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+				<execute action="PGPortaldirectory#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName}" />
+				<execute action="PGPortaldirectory#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="advancedSearchViaSiteMembersDirectoryPG" >
+		<execute action="PGSitemembersdirectory#click" locator-key1="BASIC_SEARCH_ADVANCED" />
+
+		<if>
+			<equals arg1="${searchField}" arg2="First Name" />
+			<then>
+				<execute action="PGSitemembersdirectory#type" locator-key1="ADVANCED_SEARCH_FIRST_NAME_FIELD" value1="${searchTerm}" />
+			</then>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Middle Name" />
+				<then>
+					<execute action="PGSitemembersdirectory#type" locator-key1="ADVANCED_SEARCH_MIDDLE_NAME_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Last Name" />
+				<then>
+					<execute action="PGSitemembersdirectory#type" locator-key1="ADVANCED_SEARCH_LAST_NAME_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Screen Name" />
+				<then>
+					<execute action="PGSitemembersdirectory#type" locator-key1="ADVANCED_SEARCH_SCREEN_NAME_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Email Address" />
+				<then>
+					<execute action="PGSitemembersdirectory#type" locator-key1="ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="PGSitemembersdirectory#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<if>
+			<equals arg1="${searchNoResults}" arg2="true" />
+			<then>
+				<execute action="PGSitemembersdirectory#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />
+
+				<var name="key_userScreenName" value="${userScreenName}" />
+
+				<execute action="PGSitemembersdirectory#assertElementNotPresent" locator-key1="USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+				<execute action="PGSitemembersdirectory#assertElementNotPresent" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName}" />
+				<execute action="PGSitemembersdirectory#assertElementNotPresent" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+			</then>
+			<else>
+				<var name="key_userScreenName" value="${userScreenName}" />
+
+				<execute action="PGSitemembersdirectory#assertTextEquals" locator-key1="USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+				<execute action="PGSitemembersdirectory#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName}" />
+				<execute action="PGSitemembersdirectory#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="assignSiteRoleCP">
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
 

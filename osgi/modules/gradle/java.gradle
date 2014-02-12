@@ -40,4 +40,22 @@ subprojects {
 			tasks.baseline.execute()
 		}
 	}
+
+	task deploy(dependsOn: jar) << {
+		if (project.hasProperty('deployDir') && (project.deployDir != null)) {
+			def buildLibDir = new File("${projectDir}/build/libs")
+
+			logger.info "COPY ${buildLibDir}/${project.name}.jar TO " + project.deployDir
+
+			copy {
+				from "${buildLibDir}/${project.name}.jar"
+				into project.deployDir
+			}
+		}
+		else {
+			logger.quiet "[NOTE] Skipping deploy because ${project.name}'s 'deployDir' property is not set."
+			logger.quiet "[NOTE] First, see if it's build.gradle file contains the property 'project.ext.deployDir'."
+			logger.quiet "[NOTE] Second, make sure to execute the deploy from 'ant'."
+		}
+	}
 }

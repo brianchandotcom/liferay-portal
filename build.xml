@@ -224,6 +224,7 @@
 		<ant dir="portal-impl" target="compile" inheritAll="false" />
 		<ant dir="portal-pacl" target="compile" inheritAll="false" />
 
+		<ant dir="osgi/modules" target="deploy" inheritAll="false" />
 		<ant dir="osgi/bootstrap" target="deploy" inheritAll="false" />
 	</target>
 

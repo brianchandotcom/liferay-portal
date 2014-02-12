@@ -65,6 +65,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -819,22 +820,23 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 			ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
 
-			int port = clusterNode.getPort();
+			InetSocketAddress inetSocketAddress =
+				clusterNode.getPortalInetSocketAddress();
 
-			if (port <= 0) {
+			if (inetSocketAddress == null) {
 				StringBundler sb = new StringBundler(6);
 
-				sb.append("Invalid cluster node port ");
-				sb.append(port);
-				sb.append(". The port is set by the first request or ");
-				sb.append("configured in portal.properties by the properties ");
-				sb.append("\"portal.instance.http.port\" and ");
-				sb.append("\"portal.instance.https.port\".");
+				sb.append("Invalid cluster node InetSocketAddress ");
+				sb.append(". The InetSocketAddress is set by the first ");
+				sb.append("request or configured in portal.properties by the");
+				sb.append("properties ");
+				sb.append("\"portal.instance.http.inet.socket.address\" and ");
+				sb.append("\"portal.instance.https.inet.socket.address\".");
 
 				throw new Exception(sb.toString());
 			}
 
-			InetAddress inetAddress = clusterNode.getInetAddress();
+			InetAddress inetAddress = inetSocketAddress.getAddress();
 
 			String fileName = PortalUtil.getPathContext();
 
@@ -845,7 +847,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 			fileName = fileName.concat("lucene/dump");
 
 			URL url = new URL(
-				_protocol, inetAddress.getHostAddress(), port, fileName);
+				_protocol, inetAddress.getHostAddress(),
+				inetSocketAddress.getPort(), fileName);
 
 			String transientToken = (String)clusterNodeResponse.getResult();
 
@@ -1106,7 +1109,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 				ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
 
-				if (clusterNode.getPort() > 0) {
+				if (clusterNode.getPortalInetSocketAddress() != null) {
 					try {
 						long remoteLastGeneration =
 							(Long)clusterNodeResponse.getResult();
@@ -1128,12 +1131,10 @@ public class LuceneHelperImpl implements LuceneHelper {
 						continue;
 					}
 				}
-				else {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Cluster node " + clusterNode +
-								" has invalid port");
-					}
+				else if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Cluster node " + clusterNode +
+							" has invalid InetSocketAddress");
 				}
 			}
 			while ((bootupAddress == null) && (_clusterNodeAddressesCount > 1));

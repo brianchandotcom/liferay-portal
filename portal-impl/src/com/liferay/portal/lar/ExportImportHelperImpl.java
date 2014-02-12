@@ -1155,7 +1155,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
 		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
 
-		int portalPort = PortalUtil.getPortalPort(false);
+		int portalPort = PortalUtil.getPortalServerPort(false);
 
 		if (portalPort != -1) {
 			if (Validator.isNotNull(company.getVirtualHostname())) {
@@ -1174,7 +1174,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			}
 		}
 
-		int securePortalPort = PortalUtil.getPortalPort(true);
+		int securePortalPort = PortalUtil.getPortalServerPort(true);
 
 		String companySecurePortalURL = StringPool.BLANK;
 		String privateLayoutSetSecurePortalURL = StringPool.BLANK;
@@ -1876,7 +1876,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		boolean secure = HttpUtil.isSecure(url);
 
-		int portalPort = PortalUtil.getPortalPort(secure);
+		int portalPort = PortalUtil.getPortalServerPort(secure);
 
 		if (portalPort == -1) {
 			return url;

@@ -180,14 +180,6 @@ public class LayoutExporter {
 		return portlets;
 	}
 
-	public static List<Portlet> getPortletDataHandlerPortlets(
-			long groupId, boolean privateLayout)
-		throws Exception {
-
-		return getPortletDataHandlerPortlets(
-			LayoutLocalServiceUtil.getLayouts(groupId, privateLayout));
-	}
-
 	public byte[] exportLayouts(
 			long groupId, boolean privateLayout, long[] layoutIds,
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Tokenizer;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -45,23 +47,36 @@ public class PerFieldAnalyzer extends Analyzer implements Tokenizer {
 		Analyzer defaultAnalyzer, Map<String, Analyzer> analyzerMap) {
 
 		_analyzer = defaultAnalyzer;
-		_analyzers = analyzerMap;
+
+		for (Map.Entry<String, Analyzer> entry : analyzerMap.entrySet()) {
+			addAnalyzer(entry.getKey(), entry.getValue());
+		}
 	}
 
 	public void addAnalyzer(String fieldName, Analyzer analyzer) {
-		_analyzers.put(fieldName, analyzer);
+		_analyzers.put(
+			fieldName,
+			new ObjectValuePair<Pattern, Analyzer>(
+				Pattern.compile(fieldName), analyzer));
 	}
 
 	public Analyzer getAnalyzer(String fieldName) {
-		Analyzer analyzer = _analyzers.get(fieldName);
+		ObjectValuePair<Pattern, Analyzer> objectValuePair = _analyzers.get(
+			fieldName);
 
-		if (analyzer != null) {
-			return analyzer;
+		if (objectValuePair != null) {
+			return objectValuePair.getValue();
 		}
 
-		for (String key : _analyzers.keySet()) {
-			if (Pattern.matches(key, fieldName)) {
-				return _analyzers.get(key);
+		for (ObjectValuePair<Pattern, Analyzer> curObjectValuePair :
+				_analyzers.values()) {
+
+			Pattern pattern = curObjectValuePair.getKey();
+
+			Matcher matcher = pattern.matcher(fieldName);
+
+			if (matcher.matches()) {
+				return curObjectValuePair.getValue();
 			}
 		}
 
@@ -148,6 +163,7 @@ public class PerFieldAnalyzer extends Analyzer implements Tokenizer {
 	private static Log _log = LogFactoryUtil.getLog(PerFieldAnalyzer.class);
 
 	private Analyzer _analyzer;
-	private Map<String, Analyzer> _analyzers = new HashMap<String, Analyzer>();
+	private Map<String, ObjectValuePair<Pattern, Analyzer>> _analyzers =
+		new HashMap<String, ObjectValuePair<Pattern, Analyzer>>();
 
 }

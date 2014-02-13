@@ -424,9 +424,7 @@
 		.entry-title {
 			@include ellipsis;
 
-			overflow: hidden;
 			position: relative;
-			white-space: nowrap;
 		}
 	}
 
@@ -535,6 +533,9 @@
 			.article-name {
 				color: #036;
 				display: block;
+
+				@include ellipsis;
+
 				font-size: 14px;
 			}
 

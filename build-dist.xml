@@ -1169,18 +1169,48 @@ release was successful.</echo>
 				<or>
 					<equals arg1="${app.server.jboss.major.version}" arg2="6" />
 					<equals arg1="${app.server.jboss.major.version}" arg2="7" />
+					<equals arg1="${app.server.jboss.major.version}" arg2="8" />
 				</or>
 				<then>
-					<unzip
-						dest="${app.server.parent.dir}"
-						src="${app.server.parent.dir}/${app.server.jboss.zip.name}"
-					>
-						<mapper
-							type="glob"
-							from="jboss-as-${app.server.jboss.version}.Final/*"
-							to="jboss-${app.server.jboss.version}/*"
-						/>
-					</unzip>
+					<if>
+						<equals arg1="${app.server.jboss.major.version}" arg2="6" />
+						<then>
+							<unzip
+								dest="${app.server.parent.dir}"
+								src="${app.server.parent.dir}/${app.server.jboss.zip.name}"
+							/>
+						</then>
+						<elseif>
+							<equals arg1="${app.server.jboss.major.version}" arg2="7" />
+							<then>
+								<unzip
+									dest="${app.server.parent.dir}"
+									src="${app.server.parent.dir}/${app.server.jboss.zip.name}"
+								>
+									<mapper
+										type="glob"
+										from="jboss-as-${app.server.jboss.version}.Final/*"
+										to="jboss-${app.server.jboss.version}/*"
+									/>
+								</unzip>
+							</then>
+						</elseif>
+						<elseif>
+							<equals arg1="${app.server.jboss.major.version}" arg2="8" />
+							<then>
+								<unzip
+									dest="${app.server.parent.dir}"
+									src="${app.server.parent.dir}/${app.server.jboss.zip.name}"
+								>
+									<mapper
+										type="glob"
+										from="wildfly-${app.server.jboss.version}.Final/*"
+										to="jboss-wildfly-${app.server.jboss.version}/*"
+									/>
+								</unzip>
+							</then>
+						</elseif>
+					</if>
 
 					<if>
 						<equals arg1="${app.server.jboss.major.version}" arg2="7" />
@@ -1193,35 +1223,43 @@ release was successful.</echo>
 						</then>
 					</if>
 
-					<echo file="${app.server.jboss.dir}/modules/ibm/jdk/main/module.xml"><![CDATA[<?xml version="1.0"?>
+					<if>
+						<equals arg1="${app.server.jboss.major.version}" arg2="7" />
+						<then>
+							<echo file="${app.server.jboss.dir}/modules/ibm/jdk/main/module.xml"><![CDATA[<?xml version="1.0"?>
 
-						<module xmlns="urn:jboss:module:1.1" name="ibm.jdk">
-							<dependencies>
-								<system export="true">
-									<paths>
-										<path name="com/ibm" />
-										<path name="com/ibm/crypto/provider" />
-										<path name="com/ibm/jvm" />
-										<path name="com/ibm/jvm/io" />
-										<path name="com/ibm/jvm/util" />
-										<path name="com/ibm/match" />
-										<path name="com/ibm/misc" />
-										<path name="com/ibm/net" />
-										<path name="com/ibm/nio" />
-										<path name="com/ibm/nio/ch" />
-										<path name="com/ibm/security/auth" />
-										<path name="com/ibm/security/bootstrap" />
-										<path name="com/ibm/security/auth/module" />
-										<path name="com/ibm/security/util" />
-										<path name="META-INF/services" />
-									</paths>
-								</system>
-							</dependencies>
-						</module>]]>
-					</echo>
+								<module xmlns="urn:jboss:module:1.1" name="ibm.jdk">
+									<dependencies>
+										<system export="true">
+											<paths>
+												<path name="com/ibm" />
+												<path name="com/ibm/crypto/provider" />
+												<path name="com/ibm/jvm" />
+												<path name="com/ibm/jvm/io" />
+												<path name="com/ibm/jvm/util" />
+												<path name="com/ibm/match" />
+												<path name="com/ibm/misc" />
+												<path name="com/ibm/net" />
+												<path name="com/ibm/nio" />
+												<path name="com/ibm/nio/ch" />
+												<path name="com/ibm/security/auth" />
+												<path name="com/ibm/security/bootstrap" />
+												<path name="com/ibm/security/auth/module" />
+												<path name="com/ibm/security/util" />
+												<path name="META-INF/services" />
+											</paths>
+										</system>
+									</dependencies>
+								</module>]]>
+							</echo>
+						</then>
+					</if>
 
 					<if>
-						<equals arg1="${app.server.jboss.major.version}" arg2="6" />
+						<or>
+							<equals arg1="${app.server.jboss.major.version}" arg2="6" />
+							<equals arg1="${app.server.jboss.major.version}" arg2="8" />
+						</or>
 						<then>
 							<property name="app.server.jboss.module.file" value="${app.server.jboss.dir}/modules/system/layers/base/sun/jdk/main/module.xml" />
 						</then>
@@ -1244,10 +1282,24 @@ release was successful.</echo>
 						</replacevalue>
 					</replace>
 
-					<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
-						<replacetoken><![CDATA[enable-welcome-root="true"]]></replacetoken>
-						<replacevalue><![CDATA[enable-welcome-root="false"]]></replacevalue>
-					</replace>
+					<if>
+						<or>
+							<equals arg1="${app.server.jboss.major.version}" arg2="6" />
+							<equals arg1="${app.server.jboss.major.version}" arg2="7" />
+						</or>
+						<then>
+							<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
+								<replacetoken><![CDATA[enable-welcome-root="true"]]></replacetoken>
+								<replacevalue><![CDATA[enable-welcome-root="false"]]></replacevalue>
+							</replace>
+						</then>
+						<else>
+							<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
+								<replacetoken><![CDATA[<location name="/" handler="welcome-content"/>]]></replacetoken>
+								<replacevalue></replacevalue>
+							</replace>
+						</else>
+					</if>
 
 					<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
 						<replacetoken><![CDATA[</extensions>]]></replacetoken>
@@ -1355,17 +1407,33 @@ release was successful.</echo>
 						</else>
 					</if>
 
-					<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
-						<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">]]></replacetoken>
-						<replacevalue>
-							<![CDATA[
-								<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">
-									<configuration>
-										<jsp-configuration development="true" />
-									</configuration>
-							]]>
-						</replacevalue>
-					</replace>
+					<if>
+						<or>
+							<equals arg1="${app.server.jboss.major.version}" arg2="6" />
+							<equals arg1="${app.server.jboss.major.version}" arg2="7" />
+						</or>
+						<then>
+							<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
+								<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">]]></replacetoken>
+								<replacevalue>
+									<![CDATA[
+										<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">
+											<configuration>
+												<jsp-configuration development="true" />
+											</configuration>
+									]]>
+								</replacevalue>
+							</replace>
+						</then>
+						<else>
+							<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
+								<replacetoken><![CDATA[<jsp-config/>]]></replacetoken>
+								<replacevalue>
+									<![CDATA[<jsp-config development="true" />]]>
+								</replacevalue>
+							</replace>
+						</else>
+					</if>
 				</then>
 			</elseif>
 			<else>

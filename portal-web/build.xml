@@ -423,6 +423,7 @@
 		<java
 			classname="com.liferay.portal.tools.SassToCssBuilder"
 			classpathref="project.classpath"
+			failonerror="true"
 			fork="true"
 			newenvironment="true"
 		>

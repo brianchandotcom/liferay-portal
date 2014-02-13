@@ -1671,7 +1671,7 @@ public abstract class BaseIndexer implements Indexer {
 	private boolean _stagingAware = true;
 
 	private class IndexerSearchResultPermissionFilter
-		extends SearchResultPermissionFilter {
+		extends BaseSearchResultPermissionFilter {
 
 		public IndexerSearchResultPermissionFilter(
 			PermissionChecker permissionChecker) {

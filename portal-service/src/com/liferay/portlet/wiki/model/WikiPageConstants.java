@@ -16,6 +16,7 @@ package com.liferay.portlet.wiki.model;
 
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Alexander Chow
@@ -26,6 +27,10 @@ public class WikiPageConstants {
 
 	public static final String DEFAULT_FORMAT = PropsUtil.get(
 		PropsKeys.WIKI_FORMATS_DEFAULT);
+
+	public static final String[] ESCAPED_CHARS = new String[] {
+		"<PLUS>", "<QUESTION>", "<SLASH>"
+	};
 
 	public static final String[] FORMATS = PropsUtil.getArray(
 		PropsKeys.WIKI_FORMATS);
@@ -38,6 +43,10 @@ public class WikiPageConstants {
 	public static final String NEW = "New";
 
 	public static final String REVERTED = "Reverted";
+
+	public static final String[] UNESCAPED_CHARS = new String[] {
+		StringPool.PLUS, StringPool.QUESTION, StringPool.SLASH
+	};
 
 	public static final double VERSION_DEFAULT = 1.0;
 

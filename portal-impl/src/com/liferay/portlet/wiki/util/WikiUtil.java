@@ -55,6 +55,7 @@ import com.liferay.portlet.wiki.WikiFormatException;
 import com.liferay.portlet.wiki.engines.WikiEngine;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.model.WikiPageConstants;
 import com.liferay.portlet.wiki.model.WikiPageDisplay;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
@@ -120,6 +121,19 @@ public class WikiUtil {
 		return DiffHtmlUtil.diff(
 			new UnsyncStringReader(sourceContent),
 			new UnsyncStringReader(targetContent));
+	}
+
+	public static String escapeName(String name, boolean escape) {
+		if (escape) {
+			return StringUtil.replace(
+				name, WikiPageConstants.UNESCAPED_CHARS,
+				WikiPageConstants.ESCAPED_CHARS);
+		}
+		else {
+			return StringUtil.replace(
+				name, WikiPageConstants.ESCAPED_CHARS,
+				WikiPageConstants.UNESCAPED_CHARS);
+		}
 	}
 
 	public static List<WikiPage> filterOrphans(List<WikiPage> pages)

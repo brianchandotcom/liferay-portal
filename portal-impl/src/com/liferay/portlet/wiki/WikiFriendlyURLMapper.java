@@ -17,8 +17,8 @@ package com.liferay.portlet.wiki;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.wiki.util.WikiUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,12 +61,7 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 		String value = routeParameters.get(name);
 
-		if (escape) {
-			value = StringUtil.replace(value, _UNESCAPED_CHARS, _ESCAPED_CHARS);
-		}
-		else {
-			value = StringUtil.replace(value, _ESCAPED_CHARS, _UNESCAPED_CHARS);
-		}
+		value = WikiUtil.escapeName(value, escape);
 
 		routeParameters.put(name, value);
 	}
@@ -81,13 +76,5 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 		super.populateParams(parameterMap, namespace, routeParameters);
 	}
-
-	private static final String[] _ESCAPED_CHARS = new String[] {
-		"<PLUS>", "<QUESTION>", "<SLASH>"
-	};
-
-	private static final String[] _UNESCAPED_CHARS = new String[] {
-		StringPool.PLUS, StringPool.QUESTION, StringPool.SLASH
-	};
 
 }

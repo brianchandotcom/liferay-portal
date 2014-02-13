@@ -91,6 +91,7 @@ import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -103,6 +104,7 @@ import java.util.regex.Pattern;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -2300,7 +2302,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		if (Validator.isNotNull(layoutFullURL)) {
 			return layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
 				node.getNodeId() + StringPool.SLASH +
-					HttpUtil.encodeURL(_escapeName(pageTitle));
+					HttpUtil.encodeURL(WikiUtil.escapeName(pageTitle, true));
 		}
 		else {
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(
@@ -2610,17 +2612,5 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		validate(nodeId, content, format);
 	}
-
-	private static String _escapeName(String name) {
-		return StringUtil.replace(name, _UNESCAPED_CHARS, _ESCAPED_CHARS);
-	}
-
-	private static final String[] _ESCAPED_CHARS = new String[] {
-		"<PLUS>", "<QUESTION>", "<SLASH>"
-	};
-
-	private static final String[] _UNESCAPED_CHARS = new String[] {
-		StringPool.PLUS, StringPool.QUESTION, StringPool.SLASH
-	};
 
 }

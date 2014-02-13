@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb2.util.block.action;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 import java.util.HashMap;
@@ -28,6 +29,60 @@ public class BaseAction {
 
 	public BaseAction(LiferaySelenium liferaySelenium) {
 		this.liferaySelenium = liferaySelenium;
+	}
+
+	protected String getDescription(
+		String description, String locator, String locatorKey,
+		Map<String, String> variables, String value) throws Exception {
+
+		if (locator != null) {
+			String regex = ".*(\\$\\{locator1}).*";
+			Pattern pattern = Pattern.compile(regex);
+			Matcher matcher = pattern.matcher(description);
+
+			while (matcher.find()) {
+				description = StringUtil.replace(
+					description, matcher.group(1), "<b>" + locator + "</b>");
+			}
+
+			String valueRegex = ".*(\\$\\{value1}).*";
+			Pattern pattern2 = Pattern.compile(valueRegex);
+			Matcher matcher2 = pattern2.matcher(description);
+
+			while (matcher2.find()) {
+				description = StringUtil.replace(
+					description, matcher2.group(1), "<b>" + value + "</b>");
+			}
+
+			return description;
+		}
+
+		if (locatorKey != null) {
+			String locatorValue = pathsDescription.get(locatorKey);
+
+			String valueRegex = ".*(\\$\\{value1}).*";
+			Pattern pattern2 = Pattern.compile(valueRegex);
+			Matcher matcher2 = pattern2.matcher(description);
+
+			while (matcher2.find()) {
+				description = StringUtil.replace(
+					description, matcher2.group(1), "<b>" + value + "</b>");
+			}
+
+			String regex = ".*(\\$\\{locator1}).*";
+			Pattern pattern = Pattern.compile(regex);
+			Matcher matcher = pattern.matcher(description);
+
+			while (matcher.find()) {
+				description = StringUtil.replace(
+					description, matcher.group(1),
+					"<b>" + locatorValue + "</b>");
+			}
+
+			return description;
+		}
+
+		return description;
 	}
 
 	protected String getLocator(
@@ -76,5 +131,7 @@ public class BaseAction {
 
 	protected LiferaySelenium liferaySelenium;
 	protected Map<String, String> paths = new HashMap<String, String>();
+	protected Map<String, String> pathsDescription =
+		new HashMap<String, String>();
 
 }

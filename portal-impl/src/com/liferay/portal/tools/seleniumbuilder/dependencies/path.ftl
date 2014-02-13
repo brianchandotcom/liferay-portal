@@ -51,4 +51,20 @@ public class ${seleniumBuilderContext.getPathSimpleClassName(pathName)} {
 		return paths;
 	}
 
+	public static Map<String, String> getPathsDescription() {
+		Map<String, String> pathsDescription = new HashMap<String, String>();
+
+		<#list trElements as trElement>
+			<#assign tdElements = trElement.elements("td")>
+
+			<#if (tdElements[2].getText() != pathName) && (tdElements[2].getText() != "")>
+				pathsDescription.put("${tdElements[0].getText()}", "${seleniumBuilderFileUtil.escapeJava(tdElements[2].getText())}");
+			<#elseif tdElements[2].getText() = "">
+				pathsDescription.put("${tdElements[0].getText()}", "${seleniumBuilderFileUtil.escapeJava(tdElements[0].getText())}");
+			</#if>
+		</#list>
+
+		return pathsDescription;
+	}
+
 }

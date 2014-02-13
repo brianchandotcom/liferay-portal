@@ -56,12 +56,151 @@ public class ${actionSimpleClassName} extends
 		super(liferaySelenium);
 
 		paths = ${seleniumBuilderContext.getPathSimpleClassName(actionName)}.getPaths();
+		pathsDescription = ${seleniumBuilderContext.getPathSimpleClassName(actionName)}.getPathsDescription();
 	}
 
 	<#if seleniumBuilderContext.getActionRootElement(actionName)??>
 		<#assign rootElement = seleniumBuilderContext.getActionRootElement(actionName)>
 
 		<#assign commandElements = rootElement.elements("command")>
+
+		<#list commandElements as commandElement>
+			<#assign commandName = commandElement.attributeValue("name")>
+
+			<#assign functionName = seleniumBuilderFileUtil.getObjectName(commandName)>
+
+			public ${seleniumBuilderContext.getFunctionReturnType(functionName)} ${commandName}Description(
+
+			<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+				String locator${i}, String locatorKey${i}, String value${i}
+
+				<#if i_has_next>
+					,
+				</#if>
+			</#list>
+
+			, Map<String,String> environmentScopeVariables) throws Exception {
+				<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+					String content${i} = getLocator(locator${i}, locatorKey${i}, environmentScopeVariables);
+				</#list>
+
+				<#if commandElement.element("case")??>
+						<#assign caseElements = commandElement.elements("case")>
+						<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(commandElement, "function")>
+
+						<#list childElementAttributeValues as childElementAttributeValue>
+							${childElementAttributeValue}Function ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Function = new ${childElementAttributeValue}Function(liferaySelenium);
+						</#list>
+							<#list caseElements as caseElement>
+								if (
+									<#if caseElement.attributes()?has_content>
+										<#if caseElement.attributeValue("comparator")??>
+											<#if caseElement.attributeValue("comparator") = "contains">
+												<#assign caseComparator = "contains">
+											<#elseif caseElement.attributeValue("comparator") = "endsWith">
+												<#assign caseComparator = "endsWith">
+											<#elseif caseElement.attributeValue("comparator") = "startsWith">
+												<#assign caseComparator = "startsWith">
+											<#else>
+												<#assign caseComparator = "equals">
+											</#if>
+										<#else>
+											<#assign caseComparator = "equals">
+										</#if>
+
+										<#if caseElement.attributeValue("locator1")??>
+											<#assign caseLocator1 = caseElement.attributeValue("locator1")>
+
+											content1.${caseComparator}("${caseLocator1}")
+										<#elseif caseElement.attributeValue("locator-key1")??>
+											<#assign caseLocatorKey1 = caseElement.attributeValue("locator-key1")>
+
+											locatorKey1.${caseComparator}("${caseLocatorKey1}")
+										<#else>
+											false
+										</#if>
+									<#else>
+										false
+									</#if>
+								) {
+									<#if caseElement.element("description")??>
+										<#assign descriptionElement = caseElement.element("description")>
+
+										<#assign message = descriptionElement.attributeValue("message")>
+
+										<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+											locator${i} = getDescription("${seleniumBuilderFileUtil.escapeJava(message)}", locator${i}, locatorKey${i}, environmentScopeVariables, value${i});
+										</#list>
+
+										<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+											liferaySelenium.sendActionDescriptionLogger(locator${i});
+										</#list>
+									</#if>
+								}
+
+								<#if caseElement_has_next>
+									else
+								</#if>
+							</#list>
+						else {
+							<#if commandElement.element("default")??>
+								<#assign defaultElement = commandElement.element("default")>
+
+								<#if defaultElement.element("description")??>
+									<#assign descriptionElement = defaultElement.element("description")>
+
+									<#assign message = descriptionElement.attributeValue("message")>
+
+									<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+										locator${i} = getDescription("${seleniumBuilderFileUtil.escapeJava(message)}", locator${i}, locatorKey${i}, environmentScopeVariables, value${i});
+									</#list>
+
+									<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+										liferaySelenium.sendActionDescriptionLogger(locator${i});
+									</#list>
+								</#if>
+							</#if>
+						}
+
+				<#elseif commandElement.element("default")??>
+					<#assign defaultElement = commandElement.element("default")>
+
+					<#if defaultElement.element("description")??>
+						<#assign descriptionElement = defaultElement.element("description")>
+
+						<#assign message = descriptionElement.attributeValue("message")>
+
+						<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+							locator${i} = getDescription("${seleniumBuilderFileUtil.escapeJava(message)}", locator${i}, locatorKey${i}, environmentScopeVariables, value${i});
+						</#list>
+
+						<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+							liferaySelenium.sendActionDescriptionLogger(locator${i});
+						</#list>
+					</#if>
+				</#if>
+
+				<#if commandName?starts_with("is")>
+						return
+				</#if>
+				<#if actionName != "BaseLiferay">
+					super.${seleniumBuilderFileUtil.getVariableName(functionName)}Description(
+
+						<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+							locator${i}, locatorKey${i}, value${i}
+
+							<#if i_has_next>
+								,
+							</#if>
+						</#list>
+
+						, environmentScopeVariables);
+				<#elseif (commandName?starts_with("is")) && (actionName = "BaseLiferay")>
+					true;
+				</#if>
+			}
+		</#list>
+
 
 		<#list commandElements as commandElement>
 			<#assign commandName = commandElement.attributeValue("name")>

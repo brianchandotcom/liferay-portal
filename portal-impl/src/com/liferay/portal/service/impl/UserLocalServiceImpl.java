@@ -4832,12 +4832,39 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User updateStatus(long userId, int status)
 		throws PortalException, SystemException {
 
+		return updateStatus(userId, status, new ServiceContext());
+	}
+
+	/**
+	 * Updates the user's workflow status.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  status the user's new workflow status
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         unencrypted password (with the <code>passwordUnencrypted</code>
+	 *         attribute), used by LDAP listener.
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public User updateStatus(
+			long userId, int status, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
 			(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
 
 			validateCompanyMaxUsers(user.getCompanyId());
+		}
+
+		String passwordUnencrypted = (String)serviceContext.getAttribute(
+				"passwordUnencrypted");
+
+		if (Validator.isNotNull(passwordUnencrypted)) {
+			user.setPasswordUnencrypted(passwordUnencrypted);
 		}
 
 		user.setStatus(status);

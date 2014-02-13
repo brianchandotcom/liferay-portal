@@ -50,7 +50,7 @@ public abstract class BaseSearchResultPermissionFilter
 		long startTime = 0;
 		int totalExcludedDocs = 0;
 
-		List<Document> documents = new ArrayList<Document>();;
+		List<Document> documents = new ArrayList<Document>();
 		List<Float> scores = new ArrayList<Float>();
 
 		while (true) {
@@ -128,8 +128,8 @@ public abstract class BaseSearchResultPermissionFilter
 		documents = documents.subList(start, end);
 		scores = scores.subList(start, end);
 
-		hits.setDocs(documents.toArray(new Document[0]));
-		hits.setScores(scores.toArray(new Float[0]));
+		hits.setDocs(documents.toArray(new Document[documents.size()]));
+		hits.setScores(scores.toArray(new Float[scores.size()]));
 		hits.setLength(totalHits);
 		hits.setSearchTime(
 			(float)(System.currentTimeMillis() - startTime) / Time.SECOND);

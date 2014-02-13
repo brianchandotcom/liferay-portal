@@ -500,11 +500,9 @@ public abstract class BaseIndexer implements Indexer {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
-			boolean isUseSearchResultPermissionFilter =
-				isUseSearchResultPermissionFilter(
-					searchContext, permissionChecker);
+			if ((permissionChecker != null) &&
+				isUseSearchResultPermissionFilter(searchContext)) {
 
-			if (isUseSearchResultPermissionFilter) {
 				SearchResultPermissionFilter searchResultPermissionFilter =
 					new IndexerSearchResultPermissionFilter(permissionChecker);
 
@@ -1542,9 +1540,9 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected boolean isUseSearchResultPermissionFilter(
-		SearchContext searchContext, PermissionChecker permissionChecker) {
+		SearchContext searchContext) {
 
-		return isFilterSearch() && (permissionChecker != null);
+		return isFilterSearch();
 	}
 
 	protected boolean isVisible(int entryStatus, int queryStatus) {
@@ -1689,18 +1687,18 @@ public abstract class BaseIndexer implements Indexer {
 			int excludeDocsSize = 0;
 
 			for (int i = 0; i < documents.length; i++) {
+				Document document = documents[i];
+
+				String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
+
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					entryClassName);
+
+				long entryClassPK = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
 				try {
-					Document document = documents[i];
-
-					String entryClassName = document.get(
-						Field.ENTRY_CLASS_NAME);
-					long entryClassPK = GetterUtil.getLong(
-						document.get(Field.ENTRY_CLASS_PK));
-
-					Indexer indexer = IndexerRegistryUtil.getIndexer(
-						entryClassName);
-
-					if ((indexer.isFilterSearch() &&
+					if ((indexer == null) || (indexer.isFilterSearch() &&
 						 indexer.hasPermission(
 							 _permissionChecker, entryClassName, entryClassPK,
 							 ActionKeys.VIEW)) ||

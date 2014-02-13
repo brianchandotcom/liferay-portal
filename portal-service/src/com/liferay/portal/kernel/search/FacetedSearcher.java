@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -267,11 +266,7 @@ public class FacetedSearcher extends BaseIndexer {
 
 	@Override
 	protected boolean isUseSearchResultPermissionFilter(
-		SearchContext searchContext, PermissionChecker permissionChecker) {
-
-		if (permissionChecker == null) {
-			return false;
-		}
+		SearchContext searchContext) {
 
 		if (searchContext.getEntryClassNames() == null) {
 			return super.isFilterSearch();

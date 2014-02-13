@@ -8,6 +8,10 @@ AUI.add(
 		var MenuToggle = A.Component.create(
 			{
 				ATTRS: {
+					content: {
+						validator: '_validateContent'
+					},
+
 					toggle: {
 						validator: Lang.isBoolean,
 						value: false
@@ -16,6 +20,10 @@ AUI.add(
 					toggleTouch: {
 						validator: Lang.isBoolean,
 						value: false
+					},
+
+					trigger: {
+						validator: Lang.isString
 					}
 				},
 
@@ -27,13 +35,13 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						var triggerId = config.trigger;
+						var triggerId = instance.get('trigger');
 
 						instance._handleId = triggerId + 'Handle';
 
 						instance._triggerNode = A.one(triggerId);
 
-						instance._content = A.all(config.content);
+						instance._content = A.all(instance.get('content'));
 
 						A.Event.defineOutside('touchend');
 
@@ -45,7 +53,7 @@ AUI.add(
 
 						if (instance._triggerNode) {
 							instance._triggerNode.on(
-								['gesturemovestart', 'keypress'],
+								['gesturemovestart', 'keyup'],
 								function(event) {
 									if ((event.type == 'gesturemovestart') || event.isKeyInSet('ENTER', 'SPACE')) {
 										instance._toggleMenu(event, event.currentTarget);
@@ -154,6 +162,12 @@ AUI.add(
 
 							Liferay.Store(data);
 						}
+					},
+
+					_validateContent: function(value) {
+						var instance = this;
+
+						return Lang.isString(value) || Lang.isArray(value);
 					}
 				}
 			}

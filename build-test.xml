@@ -21,6 +21,7 @@
 
 	<propertycopy from="database.${database.type}.${database.version}.host" name="database.host" />
 	<propertycopy from="database.${database.type}.${database.version}.password" name="database.password" />
+	<propertycopy from="database.${database.type}.${database.version}.schema" name="database.schema" />
 	<propertycopy from="database.${database.type}.${database.version}.username" name="database.username" />
 	<propertycopy from="database.${database.type}.${database.version}.url" name="database.url" />
 

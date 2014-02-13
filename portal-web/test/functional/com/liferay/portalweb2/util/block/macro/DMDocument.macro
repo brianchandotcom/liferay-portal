@@ -102,11 +102,7 @@
 		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_CHECKIN_BUTTON" value1="Checkin" />
 
 		<if>
-			<or>
-				<equals arg1="${revision}" arg2="Major" />
-				<equals arg1="${revision}" arg2="Minor" />
-				<isset var="changeLog" />
-			</or>
+			<condition action="PGDocumentsandmediaCheckin#isElementPresent" locator-key1="MAJOR_REVISION" />
 			<then>
 				<if>
 					<equals arg1="${revision}" arg2="Major" />
@@ -131,8 +127,6 @@
 				<execute action="PGDocumentsandmediaCheckin#assertClick" locator-key1="SAVE_AND_CHECKIN_BUTTON" value1="Save and Checkin" />
 			</then>
 		</if>
-
-		<execute action="PGDocumentsandmediaCheckin#assertClick" locator-key1="SAVE_AND_CHECKIN_BUTTON" value1="Save and Checkin" />
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>

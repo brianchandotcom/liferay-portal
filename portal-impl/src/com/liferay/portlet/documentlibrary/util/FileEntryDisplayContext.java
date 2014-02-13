@@ -54,8 +54,8 @@ public class FileEntryDisplayContext {
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException, SystemException {
 
-		return hasUpdatePermission() && isCheckedOut() &&
-			(isLockedByMe() || hasOverrideCheckoutPermission());
+		return (hasUpdatePermission() && isCheckedOut() && isLockedByMe()) ||
+			(isCheckedOut() && hasOverrideCheckoutPermission());
 	}
 
 	public boolean isCheckinButtonVisible()

@@ -778,7 +778,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 	<macrodef name="gradle-execute">
 		<attribute name="gradleTask" />
-		<attribute name="gradleTaskArgs" default="" />
+		<attribute name="gradleTaskArgs" default="-Dorg.gradle.project.globalLibDir=${app.server.lib.global.dir} -Dorg.gradle.project.portalLibDir=${app.server.lib.portal.dir} -Dorg.gradle.project.osgiLibDir=${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi" />
 		<attribute name="gradleModuleDir" default="" />
 
 		<sequential>

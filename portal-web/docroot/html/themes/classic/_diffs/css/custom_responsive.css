@@ -57,7 +57,7 @@
 						border-width: 0;
 						font-size: 24px;
 
-						&:hover, &.nav-account-controls-btn.open, &.nav-add-controls-btn.open {
+						&:hover, &.nav-account-controls-btn.open, &.nav-add-controls-btn.open, &.nav-navigation-btn:focus {
 							background-color: #5BBAE8;
 						}
 

@@ -66,7 +66,7 @@ AUI.add(
 
 							eventHandle.detach();
 
-							if (themeDisplay.isSignedIn() && !A.UA.touch) {
+							if (!A.UA.touch) {
 								instance._initInteraction(target, type);
 							}
 						}
@@ -313,6 +313,8 @@ AUI.add(
 
 				var navigation = A.one(Liferay.Data.NAV_SELECTOR);
 
+				btnNavigation.setData('menuItem', navigation);
+
 				var handle;
 
 				if (btnNavigation && navigation) {
@@ -373,16 +375,14 @@ AUI.add(
 				}
 
 				if (BODY.hasClass('dockbar-split')) {
-					if (navAccountControls) {
-						navAccountControls.plug(Liferay.DockbarKeyboardInteraction);
-					}
+					dockBar.plug(Liferay.DockbarKeyboardInteraction);
 
-					if (navAddControls) {
+					if (themeDisplay.isSignedIn() && navAddControls) {
 						navAddControls.plug(
 							A.Plugin.NodeFocusManager,
 							{
 								circular: true,
-								descendants: 'li a',
+								descendants: '.dropdown-menu li:visible a',
 								keys: {
 									next: 'down:39,40',
 									previous: 'down:37,38'
@@ -395,6 +395,8 @@ AUI.add(
 							function(event) {
 								var instance = this;
 
+								instance.refresh();
+
 								if (!event.newVal) {
 									instance.set('activeDescendant', 0);
 								}
@@ -402,7 +404,7 @@ AUI.add(
 						);
 					}
 				}
-				else if (navAddControls) {
+				else if (themeDisplay.isSignedIn() && navAddControls) {
 					var brand = dockBar.one('.brand');
 
 					if (brand) {

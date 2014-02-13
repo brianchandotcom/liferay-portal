@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -61,54 +60,6 @@ public class FacetedSearcher extends BaseIndexer {
 		IndexerPostProcessor indexerPostProcessor) {
 
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Hits search(SearchContext searchContext) throws SearchException {
-		try {
-			searchContext.setSearchEngineId(getSearchEngineId());
-
-			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			contextQuery.addRequiredTerm(
-				Field.COMPANY_ID, searchContext.getCompanyId());
-
-			BooleanQuery fullQuery = createFullQuery(
-				contextQuery, searchContext);
-
-			fullQuery.setQueryConfig(searchContext.getQueryConfig());
-
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
-			int end = searchContext.getEnd();
-			int start = searchContext.getStart();
-
-			if (isFilterSearch(searchContext) && (permissionChecker != null)) {
-				searchContext.setEnd(end + INDEX_FILTER_SEARCH_LIMIT);
-				searchContext.setStart(0);
-			}
-
-			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
-
-			searchContext.setEnd(end);
-			searchContext.setStart(start);
-
-			if (isFilterSearch(searchContext) && (permissionChecker != null)) {
-				hits = filterSearch(hits, permissionChecker, searchContext);
-			}
-
-			processHits(searchContext, hits);
-
-			return hits;
-		}
-		catch (SearchException se) {
-			throw se;
-		}
-		catch (Exception e) {
-			throw new SearchException(e);
-		}
 	}
 
 	@Override
@@ -285,11 +236,43 @@ public class FacetedSearcher extends BaseIndexer {
 	}
 
 	@Override
+	protected Hits doSearch(SearchContext searchContext)
+		throws SearchException {
+
+		try {
+			searchContext.setSearchEngineId(getSearchEngineId());
+
+			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
+
+			contextQuery.addRequiredTerm(
+				Field.COMPANY_ID, searchContext.getCompanyId());
+
+			BooleanQuery fullQuery = createFullQuery(
+				contextQuery, searchContext);
+
+			fullQuery.setQueryConfig(searchContext.getQueryConfig());
+
+			return SearchEngineUtil.search(searchContext, fullQuery);
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
+		}
+	}
+
+	@Override
 	protected String getPortletId(SearchContext searchContext) {
 		return null;
 	}
 
-	protected boolean isFilterSearch(SearchContext searchContext) {
+	@Override
+	protected boolean isPermissionChecking(
+		SearchContext searchContext, PermissionChecker permissionChecker) {
+
+		if (permissionChecker == null) {
+			return false;
+		}
+
 		if (searchContext.getEntryClassNames() == null) {
 			return super.isFilterSearch();
 		}

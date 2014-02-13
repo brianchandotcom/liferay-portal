@@ -499,23 +499,20 @@ public abstract class BaseIndexer implements Indexer {
 	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
 		try {
-			searchContext.setSearchEngineId(getSearchEngineId());
-
-			BooleanQuery fullQuery = getFullQuery(searchContext);
-
-			QueryConfig queryConfig = searchContext.getQueryConfig();
-
-			fullQuery.setQueryConfig(queryConfig);
-
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
+
+			boolean permissionChecking = isPermissionChecking(
+				searchContext, permissionChecker);
 
 			int end = searchContext.getEnd();
 			int start = searchContext.getStart();
 
-			if (isFilterSearch() && (permissionChecker != null)) {
+			if (permissionChecking) {
 				searchContext.setEnd(end + INDEX_FILTER_SEARCH_LIMIT);
 				searchContext.setStart(0);
+
+				QueryConfig queryConfig = searchContext.getQueryConfig();
 
 				String[] selectedFieldNames =
 					queryConfig.getSelectedFieldNames();
@@ -534,12 +531,12 @@ public abstract class BaseIndexer implements Indexer {
 				}
 			}
 
-			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
+			Hits hits = doSearch(searchContext);
 
 			searchContext.setEnd(end);
 			searchContext.setStart(start);
 
-			if (isFilterSearch() && (permissionChecker != null)) {
+			if (permissionChecking) {
 				hits = filterSearch(hits, permissionChecker, searchContext);
 			}
 
@@ -1364,6 +1361,20 @@ public abstract class BaseIndexer implements Indexer {
 		throws Exception {
 	}
 
+	protected Hits doSearch(SearchContext searchContext)
+		throws SearchException {
+
+		searchContext.setSearchEngineId(getSearchEngineId());
+
+		BooleanQuery fullQuery = getFullQuery(searchContext);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		fullQuery.setQueryConfig(queryConfig);
+
+		return SearchEngineUtil.search(searchContext, fullQuery);
+	}
+
 	protected Hits filterSearch(
 		Hits hits, PermissionChecker permissionChecker,
 		SearchContext searchContext) {
@@ -1641,6 +1652,12 @@ public abstract class BaseIndexer implements Indexer {
 		}
 
 		return null;
+	}
+
+	protected boolean isPermissionChecking(
+		SearchContext searchContext, PermissionChecker permissionChecker) {
+
+		return isFilterSearch() && (permissionChecker != null);
 	}
 
 	protected boolean isVisible(int entryStatus, int queryStatus) {

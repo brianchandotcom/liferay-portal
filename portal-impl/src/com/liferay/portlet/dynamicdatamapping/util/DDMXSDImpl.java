@@ -115,6 +115,10 @@ public class DDMXSDImpl implements DDMXSD {
 		Map<String, Object> freeMarkerContext = getFreeMarkerContext(
 			pageContext, portletNamespace, namespace, element, locale);
 
+		if (fields != null) {
+			freeMarkerContext.put("fields", fields);
+		}
+
 		Map<String, Object> fieldStructure =
 			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
 
@@ -125,27 +129,24 @@ public class DDMXSDImpl implements DDMXSD {
 
 		String name = element.attributeValue("name");
 
-		if (fields != null) {
-			freeMarkerContext.put("fields", fields);
+		boolean isFieldDisplayable = isFieldDisplayable(fields, name);
 
+		if (isFieldDisplayable) {
 			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
-			if (fieldsDisplayField != null) {
-				String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
+			String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
 					fieldsDisplayField);
 
-				Map<String, Object> parentFieldStructure =
-					(Map<String, Object>)freeMarkerContext.get(
-						"parentFieldStructure");
+			Map<String, Object> parentFieldStructure =
+				(Map<String, Object>)freeMarkerContext.get(
+					"parentFieldStructure");
 
-				String parentFieldName = (String)parentFieldStructure.get(
-					"name");
+			String parentFieldName = (String)parentFieldStructure.get("name");
 
-				int offset = ddmFieldsCounter.get(DDMImpl.FIELDS_DISPLAY_NAME);
+			int offset = ddmFieldsCounter.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
-				fieldRepetition = countFieldRepetition(
-					fieldsDisplayValues, parentFieldName, offset);
-			}
+			fieldRepetition = countFieldRepetition(
+				fieldsDisplayValues, parentFieldName, offset);
 		}
 
 		StringBundler sb = new StringBundler(fieldRepetition);
@@ -154,7 +155,7 @@ public class DDMXSDImpl implements DDMXSD {
 			fieldStructure.put("fieldNamespace", StringUtil.randomId());
 			fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
 
-			if (fields != null) {
+			if (isFieldDisplayable) {
 				ddmFieldsCounter.incrementKey(name);
 				ddmFieldsCounter.incrementKey(DDMImpl.FIELDS_DISPLAY_NAME);
 			}
@@ -745,6 +746,21 @@ public class DDMXSDImpl implements DDMXSD {
 		}
 
 		return jsonArray;
+	}
+
+	protected boolean isFieldDisplayable(Fields fields, String fieldName)
+		throws Exception {
+
+		if (fields == null) {
+			return false;
+		}
+
+		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+		String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
+			fieldsDisplayField);
+
+		return ArrayUtil.contains(fieldsDisplayValues, fieldName);
 	}
 
 	protected String processFTL(

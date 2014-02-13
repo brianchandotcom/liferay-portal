@@ -619,7 +619,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		throws Exception {
 
 		Field field = ReflectionUtil.getDeclaredField(
-			ClusterLinkImpl.class, "_transportChannels");
+			ClusterLinkImpl.class, "_transportJChannels");
 
 		return (List<JChannel>)field.get(clusterLinkImpl);
 	}

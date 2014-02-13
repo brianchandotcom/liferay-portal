@@ -266,7 +266,7 @@ public class FacetedSearcher extends BaseIndexer {
 	}
 
 	@Override
-	protected boolean isPermissionChecking(
+	protected boolean isUseSearchResultPermissionFilter(
 		SearchContext searchContext, PermissionChecker permissionChecker) {
 
 		if (permissionChecker == null) {

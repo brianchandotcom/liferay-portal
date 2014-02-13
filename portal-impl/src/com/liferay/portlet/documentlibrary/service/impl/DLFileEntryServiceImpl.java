@@ -81,6 +81,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		try {
 			if (!hasFileEntryLock(fileEntryId) &&
 				!_hasOverrideCheckoutPermission(fileEntryId)) {
+
 				throw new PrincipalException();
 			}
 		}
@@ -99,6 +100,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		try {
 			if (!hasFileEntryLock(fileEntryId) &&
 				!_hasOverrideCheckoutPermission(fileEntryId)) {
+
 				throw new PrincipalException();
 			}
 		}
@@ -129,6 +131,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		try {
 			if (!hasFileEntryLock(fileEntryId) &&
 				!_hasOverrideCheckoutPermission(fileEntryId)) {
+
 				throw new PrincipalException();
 			}
 		}

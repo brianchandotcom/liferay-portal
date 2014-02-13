@@ -587,13 +587,22 @@ public class SeleniumBuilderFileUtil {
 		}
 
 		for (Element element : elements) {
-			List<Element> childElements = element.elements();
+			List<Element> descriptionChildElements = element.elements(
+				"description");
 
 			String elementName = element.getName();
 
-			if (childElements.size() > 1) {
+			if (descriptionChildElements.size() > 1) {
 				throwValidationException(
-					2000, fileName, childElements.get(1), elementName);
+					2000, fileName, descriptionChildElements.get(1),
+					elementName);
+			}
+
+			List<Element> executeChildElements = element.elements("execute");
+
+			if (executeChildElements.size() > 1) {
+				throwValidationException(
+					2000, fileName, executeChildElements.get(1), elementName);
 			}
 
 			if (elementName.equals("case")) {
@@ -669,8 +678,23 @@ public class SeleniumBuilderFileUtil {
 				}
 
 				validateBlockElement(
-					fileName, element, new String[] {"execute"},
+					fileName, element, new String[] {"description", "execute"},
 					new String[] {"function"}, new String[0], new String[0]);
+			}
+			else if (elementName.equals("description")) {
+				List<Attribute> attributes = element.attributes();
+
+				for (Attribute attribute : attributes) {
+					String attributeName = attribute.getName();
+
+					if (!attributeName.equals("message")) {
+						throwValidationException(
+							1005, fileName, element, attributeName);
+					}
+				}
+
+				validateSimpleElement(
+					fileName, element, new String[] {"message"});
 			}
 			else {
 				throwValidationException(1002, fileName, element, elementName);
@@ -738,9 +762,11 @@ public class SeleniumBuilderFileUtil {
 				throwValidationException(1002, fileName, element, elementName);
 			}
 
-			if (elementName.equals("echo") || elementName.equals("fail")) {
-				validateSimpleElement(
-					fileName, element, new String[] {"message"});
+			if (elementName.equals("description") ||
+				elementName.equals("echo") ||
+				elementName.equals("fail")) {
+					validateSimpleElement(
+						fileName, element, new String[] {"message"});
 			}
 			else if (elementName.equals("execute")) {
 				validateExecuteElement(
@@ -1276,7 +1302,8 @@ public class SeleniumBuilderFileUtil {
 				validateBlockElement(
 					fileName, element,
 					new String[] {
-						"echo", "execute", "fail", "for", "if", "var", "while"
+						"description", "echo", "execute", "fail", "for", "if",
+						"var", "while",
 					},
 					new String[] {"action", "macro"}, new String[] {"var"},
 					new String[] {
@@ -1537,8 +1564,8 @@ public class SeleniumBuilderFileUtil {
 				validateBlockElement(
 					fileName, element,
 					new String[] {
-						"echo", "execute", "fail", "for", "if", "property",
-						"var", "while"
+						"description", "echo", "execute", "fail", "for", "if",
+						"property", "var", "while"
 					},
 					new String[] {"action", "macro", "test-case"},
 					new String[] {"var"},
@@ -1567,7 +1594,8 @@ public class SeleniumBuilderFileUtil {
 				validateBlockElement(
 					fileName, element,
 					new String[] {
-						"echo", "execute", "fail", "if", "var", "while"
+						"description", "echo", "execute", "fail", "if", "var",
+						"while"
 					},
 					new String[] {"action", "macro", "test-case"},
 					new String[] {"var"},
@@ -1755,9 +1783,9 @@ public class SeleniumBuilderFileUtil {
 	private static List<String> _reservedTags = ListUtil.fromArray(
 		new String[] {
 			"and", "case", "command", "condition", "contains", "default",
-			"definition", "echo", "else", "elseif", "equals", "execute", "fail",
-			"for", "if", "isset", "not", "or", "property", "set-up", "td",
-			"tear-down", "then", "tr", "while", "var"
+			"definition", "description", "echo", "else", "elseif", "equals",
+			"execute", "fail", "for", "if", "isset", "not", "or", "property",
+			"set-up", "td", "tear-down", "then", "tr", "while", "var"
 		});
 
 	private String _baseDir;

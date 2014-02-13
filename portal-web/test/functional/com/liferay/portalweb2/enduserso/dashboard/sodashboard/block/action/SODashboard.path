@@ -127,6 +127,11 @@
 </tr>
 <!--ANNOUNCEMENTS-->
 <tr>
+	<td>ANNOUNCEMENTS_PORTLET_TITLE</td>
+	<td>//h1[@class='portlet-title'][contains(.,'Announcement')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANNOUNCEMENTS_ADD_ENTRY_BUTTON</td>
 	<td>//button[contains(.,'Add Entry')]</td>
 	<td></td>
@@ -187,11 +192,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANNOUNCEMENTS_NO_ANNOUNCEMENTS</td>
+	<td>//div[@class='no-announcements']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--UPCOMING_TASKS-->
+<tr>
+	<td>TASK_PORTLET_TITLE</td>
+	<td>//h1[@class='portlet-title'][contains(.,'Upcoming Tasks')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>TASK_DESCRIPTION_NORMAL</td>
 	<td>//li[@class='tasks-title normal']/a</td>
@@ -234,6 +249,11 @@
 </tr>
 <!--EVENTS_DISPLAY-->
 <tr>
+	<td>EVENTS_PORTLET_TITLE</td>
+	<td>//h1[@class='portlet-title'][contains(.,'Events')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE</td>
 	<td>//div[@class='today-events']//span[@class='event-name']/a</td>
 	<td></td>
@@ -261,6 +281,11 @@
 <tr>
 	<td>EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME</td>
 	<td>//div[@class='upcoming-events']//span[@class='event-time']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_NO_EVENTS_MESSAGE</td>
+	<td>//section[@id='portlet_1_WAR_eventsdisplayportlet']//div[@class='portlet-body']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_BUTTON</td>
-	<td>//a[@class='permission-tasks']</td>
+	<td>//a[@data-title='Permissions']</td>
 	<td></td>
 </tr>
 <tr>

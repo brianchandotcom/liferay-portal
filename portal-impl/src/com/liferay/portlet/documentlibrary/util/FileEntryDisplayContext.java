@@ -39,17 +39,23 @@ public class FileEntryDisplayContext {
 		HttpServletRequest request, FileEntry fileEntry,
 		FileVersion fileVersion) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		_fileEntry = fileEntry;
 		_fileVersion = fileVersion;
 		_request = request;
-		_initDependencies(request);
+
+		_permissionChecker = themeDisplay.getPermissionChecker();
+		_portletDisplay = themeDisplay.getPortletDisplay();
+		_scopeGroupId = themeDisplay.getScopeGroupId();
 	}
 
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException, SystemException {
 
-		return hasUpdatePermission() && isCheckedOut() && (isLockedByMe() ||
-			hasOverrideCheckoutPermission());
+		return hasUpdatePermission() && isCheckedOut() &&
+			(isLockedByMe() || hasOverrideCheckoutPermission());
 	}
 
 	public boolean isCheckinButtonVisible()
@@ -107,15 +113,6 @@ public class FileEntryDisplayContext {
 		throws PortalException, SystemException {
 
 		return hasPermissionsPermission();
-	}
-
-	private void _initDependencies(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		_permissionChecker = themeDisplay.getPermissionChecker();
-		_portletDisplay = themeDisplay.getPortletDisplay();
-		_scopeGroupId = themeDisplay.getScopeGroupId();
 	}
 
 	private boolean hasDeletePermission()

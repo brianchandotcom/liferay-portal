@@ -395,25 +395,25 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ENTRIES_FOLDER-->
+<!--ENTRY_ICON_FOLDER-->
 <tr>
-	<td>ENTRIES_FOLDER</td>
-	<td>//a[@data-folder='true']/div[@class='entry-thumbnail']</td>
+	<td>ENTRY_ICON_FOLDER_THUMBNAIL</td>
+	<td>//div[contains(.,'${key_dmFolderName}') and a[@data-folder='true']]//div[@class='entry-thumbnail']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRIES_FOLDER_NAME</td>
-	<td>//a[@data-folder='true']/span[@class='entry-title']/span[contains(.,'${dmFolderName}')]</td>
+	<td>ENTRY_ICON_FOLDER_TITLE</td>
+	<td>//div[contains(.,'${key_dmFolderName}') and a[@data-folder='true']]//span[@class='entry-title']/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRIES_FOLDER_SELECT</td>
-	<td>//input[@id='_20_rowIdsFolderCheckbox']</td>
+	<td>ENTRY_ICON_FOLDER_CHECKBOX</td>
+	<td>//div[contains(.,'${key_dmFolderName}') and a[@data-folder='true']]//input[@id='_20_rowIdsFolderCheckbox']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRIES_FOLDER_ACTIONS</td>
-	<td>//div/span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a/i</td>
+	<td>ENTRY_ICON_FOLDER_ACTIONS</td>
+	<td>//div[contains(.,'${key_dmFolderName}') and a[@data-folder='true']]//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a/i</td>
 	<td></td>
 </tr>
 <tr>

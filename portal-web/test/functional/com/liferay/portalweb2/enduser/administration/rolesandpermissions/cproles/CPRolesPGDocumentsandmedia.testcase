@@ -333,7 +333,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER_ACTIONS" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_FOLDER_ACTIONS" />
 		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="FOLDER_MENULIST_DELETE" value1="Delete" />
 
 		<execute macro="User#logoutAndLoginPG">
@@ -342,6 +344,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoDMFolderPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -378,6 +381,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoDMFolderPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -396,7 +400,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER_ACTIONS" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_FOLDER_ACTIONS" />
 		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="FOLDER_MENULIST_DELETE" value1="Delete" />
 	</command>
 
@@ -437,7 +443,7 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRIES_FOLDER_NAME" value1="${dmFolderName}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_FOLDER_TITLE" value1="${dmFolderName}" />
 
 		<execute action="PGDocumentsandmediaFolder#assertTextEquals" locator-key1="BREADCRUMB_FOLDER" value1="${dmFolderName}" />
 
@@ -447,6 +453,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoDMFolderPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -470,6 +477,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoDMFolderPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -487,7 +495,7 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRIES_FOLDER_NAME" value1="${dmFolderName}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_FOLDER_TITLE" value1="${dmFolderName}" />
 
 		<execute action="PGDocumentsandmediaFolder#assertTextEquals" locator-key1="BREADCRUMB_FOLDER" value1="${dmFolderName}" />
 	</command>

@@ -1,0 +1,32 @@
+<definition>
+	<command name="addPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<if>
+			<condition action="PGDocumentsandmediaDocument#isElementPresent" locator-key1="COMMENTS_BE_THE_FIRST" />
+			<then>
+				<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
+			</then>
+			<else>
+				<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_ADD_COMMENT" value1="Add Comment" />
+			</else>
+		</if>
+
+		<execute action="PGDocumentsandmediaDocument#type" locator-key1="COMMENTS_COMMENT_FIELD" value1="${commentBody}" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+	</command>
+
+	<command name="viewPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<var name="key_commentBody" value="${commentBody}" />
+
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${commentBody}" />
+	</command>
+</definition>

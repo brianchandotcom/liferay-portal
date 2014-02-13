@@ -6,7 +6,14 @@
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_FOLDER" value1="Folder" />
 
 		<execute action="CPDocumentsandmediaAddfolder#type" locator-key1="NAME_FIELD" value1="${dmFolderName}" />
-		<execute action="CPDocumentsandmediaAddfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${dmFolderDescription}" />
+
+		<if>
+			<isset var="dmFolderDescription" />
+			<then>
+				<execute action="CPDocumentsandmediaAddfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${dmFolderDescription}" />
+			</then>
+		</if>
+
 		<execute action="CPDocumentsandmediaAddfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
@@ -62,12 +69,12 @@
 	<command name="deletePG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_FOLDER_NAME" value1="${dmFolderName}" />
-		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRIES_FOLDER_SELECT" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_ICON_FOLDER_TITLE" value1="${dmFolderName}" />
+		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRY_ICON_FOLDER_CHECKBOX" />
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
-		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="ENTRIES_FOLDER" />
+		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="ENTRY_ICON_FOLDER_THUMBNAIL" />
 	</command>
 
 	<command name="editCP">
@@ -94,8 +101,8 @@
 	<command name="editPG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_FOLDER_NAME" value1="${dmFolderName}" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_ICON_FOLDER_TITLE" value1="${dmFolderName}" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_FOLDER_ACTIONS" />
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FOLDER_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="PGDocumentsandmediaEditfolder#type" locator-key1="NAME_FIELD" value1="${dmFolderNameEdit}" />
@@ -103,7 +110,7 @@
 		<execute action="PGDocumentsandmediaEditfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_FOLDER_NAME" value1="${dmFolderNameEdit}" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRY_ICON_FOLDER_TITLE" value1="${dmFolderNameEdit}" />
 	</command>
 
 	<command name="editPGViaMG">
@@ -120,10 +127,16 @@
 		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_NAME" value1="${mgFolderNameEdit}" />
 	</command>
 
+	<command name="gotoCP">
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_FOLDER" value1="${dmFolderName}" />
+	</command>
+
 	<command name="gotoPG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRIES_FOLDER_NAME" value1="${dmFolderName}" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_FOLDER_TITLE" value1="${dmFolderName}" />
 	</command>
 
 	<command name="gotoPGViaMG">
@@ -234,25 +247,6 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
-	<command name="tearDownPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<while>
-			<condition action="PGDocumentsandmedia#isElementPresent" locator-key1="ENTRIES_FOLDER" />
-			<then>
-				<execute action="PGDocumentsandmedia#check" locator-key1="TOOLBAR_SELECT_ALL_CHECKBOX" />
-				<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
-				<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
-				<execute action="PGDocumentsandmedia#assertClick" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
-
-				<execute macro="RecycleBin#emptyCP" />
-			</then>
-		</while>
-	</command>
-
 	<command name="tearDownPGViaMG" >
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -294,7 +288,9 @@
 	</command>
 
 	<command name="viewPG">
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_FOLDER_THUMBNAIL" />
 
 		<execute action="PGDocumentsandmediaFolder#assertTextEquals" locator-key1="BREADCRUMB_FOLDER" value1="${dmFolderName}" />
 	</command>

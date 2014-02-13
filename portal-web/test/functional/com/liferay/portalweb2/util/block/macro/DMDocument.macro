@@ -10,6 +10,12 @@
 			<then>
 				<execute action="CPDocumentsandmediaAdddocument#uploadTempFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
 			</then>
+			<elseif>
+				<equals arg1="${nullFile}" arg2="true" />
+				<then>
+					<execute action="CPDocumentsandmediaAdddocument#assertElementPresent" locator-key1="FILE_FIELD" />
+				</then>
+			</elseif>
 			<else>
 				<execute action="CPDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
 			</else>

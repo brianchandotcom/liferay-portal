@@ -264,7 +264,9 @@
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_FOLDER_THUMBNAIL" />
 
 		<execute macro="SODocuments#viewPGDisplayView">
 			<var name=" dmDocumentUploader" value="${dmDocumentUploader}" />
@@ -327,7 +329,9 @@
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_FOLDER_THUMBNAIL" />
 
 		<execute macro="SODocuments#viewPGDisplayView">
 			<var name=" dmDocumentUploader" value="${dmDocumentUploader}" />
@@ -378,7 +382,9 @@
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_FOLDER_THUMBNAIL" />
 
 		<execute macro="SODocuments#viewPGDisplayView">
 			<var name="workflow" value="Checkedout" />
@@ -632,7 +638,9 @@
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_FOLDER_THUMBNAIL" />
 
 		<execute macro="SODocuments#viewPGDisplayView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescriptionEdit}" />
@@ -705,7 +713,9 @@
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_FOLDER_THUMBNAIL" />
 
 		<execute macro="SODocuments#viewPGDisplayView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescriptionEdit}" />
@@ -754,7 +764,9 @@
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_FOLDER_THUMBNAIL" />
 
 		<execute macro="SODocuments#viewPGDisplayView">
 			<var name="workflow" value="Draft" />

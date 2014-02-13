@@ -202,17 +202,22 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENTS_POST_REPLY_BODY</td>
-	<td>//div[@class='taglib-discussion']/form/div/div/div[3]/div</td>
+	<td>COMMENTS_BODY</td>
+	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//div[@class='lfr-discussion-message']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENTS_REPLY</td>
+	<td>COMMENTS_COMMENT_FIELD</td>
+	<td>//textarea[contains(@id,'postReplyBody')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_REPLY_BUTTON</td>
 	<td>//div[@class='taglib-discussion']/form/fieldset/div/div[2]/div[2]/button[contains(.,'Reply')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENTS_CANCEL</td>
+	<td>COMMENTS_CANCEL_BUTTON</td>
 	<td>//div[@class='taglib-discussion']/form/fieldset/div/div[2]/div[2]/button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>

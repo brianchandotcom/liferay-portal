@@ -23,7 +23,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#tearDownPG">
+		<execute macro="DMFolder#tearDownCP">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 

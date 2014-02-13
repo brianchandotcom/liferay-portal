@@ -174,6 +174,10 @@ public class FileEntryDisplayContext {
 		return _fileEntry.isCheckedOut();
 	}
 
+	private boolean isCheckedOutByOther() {
+		return (isCheckedOut() && !isLockedByMe());
+	}
+
 	private boolean isDLFileEntry() {
 		return (_fileEntry.getModel() instanceof DLFileEntry);
 	}
@@ -188,10 +192,6 @@ public class FileEntryDisplayContext {
 
 	private boolean isLockedByMe() {
 		return _fileEntry.hasLock();
-	}
-
-	private boolean isCheckedOutByOther() {
-		return (isCheckedOut() && !isLockedByMe());
 	}
 
 	private boolean isOfficeDoc() {

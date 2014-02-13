@@ -61,7 +61,12 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 		String value = routeParameters.get(name);
 
-		value = WikiUtil.escapeName(value, escape);
+		if (escape) {
+			value = WikiUtil.escapeName(value);
+		}
+		else {
+			value = WikiUtil.unescapeName(value);
+		}
 
 		routeParameters.put(name, value);
 	}

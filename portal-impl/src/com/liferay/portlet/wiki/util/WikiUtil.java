@@ -123,17 +123,10 @@ public class WikiUtil {
 			new UnsyncStringReader(targetContent));
 	}
 
-	public static String escapeName(String name, boolean escape) {
-		if (escape) {
-			return StringUtil.replace(
-				name, WikiPageConstants.UNESCAPED_CHARS,
-				WikiPageConstants.ESCAPED_CHARS);
-		}
-		else {
-			return StringUtil.replace(
-				name, WikiPageConstants.ESCAPED_CHARS,
-				WikiPageConstants.UNESCAPED_CHARS);
-		}
+	public static String escapeName(String name) {
+		return StringUtil.replace(
+			name, WikiPageConstants.UNESCAPED_CHARS,
+			WikiPageConstants.ESCAPED_CHARS);
 	}
 
 	public static List<WikiPage> filterOrphans(List<WikiPage> pages)
@@ -559,6 +552,12 @@ public class WikiUtil {
 		content = content.replaceAll("</div>", "</div>\n");
 
 		return content;
+	}
+
+	public static String unescapeName(String name) {
+		return StringUtil.replace(
+			name, WikiPageConstants.ESCAPED_CHARS,
+			WikiPageConstants.UNESCAPED_CHARS);
 	}
 
 	public static boolean validate(long nodeId, String content, String format)

@@ -4,6 +4,8 @@ allprojects {
 	}
 }
 
+apply plugin: "java"
+
 ext {
 	gradleDir = new File("../../tools/gradle")
 	wrapTasks = ["build", "clean", "compileJava", "deploy", "jar"]

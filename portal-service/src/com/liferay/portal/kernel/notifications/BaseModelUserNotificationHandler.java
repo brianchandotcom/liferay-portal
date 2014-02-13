@@ -17,24 +17,17 @@ package com.liferay.portal.kernel.notifications;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.AuditedModel;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortletURLFactoryUtil;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
 
 /**
  * @author Brian Wing Shun Chan
@@ -96,44 +89,7 @@ public abstract class BaseModelUserNotificationHandler<T extends AuditedModel>
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		long classPK = jsonObject.getLong("classPK");
-
-		T baseModel = fetchBaseModel(classPK);
-
-		if (baseModel == null) {
-			return null;
-		}
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		User user = themeDisplay.getUser();
-
-		Group group = user.getGroup();
-
-		long portletPlid = PortalUtil.getPlidFromPortletId(
-			group.getGroupId(), true, getPortletId());
-
-		PortletURL portletURL = null;
-
-		if (portletPlid != 0) {
-			portletURL = PortletURLFactoryUtil.create(
-				serviceContext.getLiferayPortletRequest(), getPortletId(),
-				portletPlid, PortletRequest.RENDER_PHASE);
-
-			setLinkParameters(portletURL, baseModel);
-		}
-		else {
-			LiferayPortletResponse liferayPortletResponse =
-				serviceContext.getLiferayPortletResponse();
-
-			portletURL = liferayPortletResponse.createRenderURL(getPortletId());
-
-			setLinkParameters(portletURL, baseModel);
-
-			portletURL.setWindowState(WindowState.MAXIMIZED);
-		}
-
-		return portletURL.toString();
+		return jsonObject.getString("entryURL");
 	}
 
 	protected abstract String getTitle(int notificationType);

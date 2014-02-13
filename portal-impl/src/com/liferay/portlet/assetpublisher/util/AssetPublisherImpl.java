@@ -924,7 +924,15 @@ public class AssetPublisherImpl implements AssetPublisher {
 				return siteGroupId;
 			}
 
-			return GetterUtil.getLong(scopeIdSuffix);
+			long scopeGroupId = GetterUtil.getLong(scopeIdSuffix);
+
+			Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
+
+			if (scopeGroup == null) {
+				throw new PrincipalException();
+			}
+
+			return scopeGroupId;
 		}
 		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_UUID_PREFIX)) {
 			String layoutUuid = scopeId.substring(

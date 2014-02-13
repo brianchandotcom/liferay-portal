@@ -206,8 +206,6 @@
 				<fail message="Invalid var portletOption. Must be (Look and Feel|Configuration|Export / Import)." />
 			</else>
 		</if>
-
-		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
 	</command>
 
 	<command name="viewDuplicatePG">

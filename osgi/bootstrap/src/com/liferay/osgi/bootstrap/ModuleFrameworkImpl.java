@@ -48,6 +48,8 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.impl.RegistryImpl;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -389,6 +391,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_framework.start();
 
+		RegistryUtil.setRegistry(
+			new RegistryImpl(_framework.getBundleContext()));
+
 		_setupInitialBundles();
 	}
 
@@ -435,6 +440,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		if (_framework == null) {
 			return;
 		}
+
+		RegistryUtil.setRegistry(null);
 
 		_framework.stop();
 

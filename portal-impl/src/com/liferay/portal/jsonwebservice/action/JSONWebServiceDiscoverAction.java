@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -40,6 +41,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.liferay.portal.kernel.util.Validator;
 import jodd.util.Wildcard;
 
 /**
@@ -50,7 +52,9 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 	public JSONWebServiceDiscoverAction(HttpServletRequest request) {
 		_basePath = request.getServletPath();
 		_baseURL = request.getRequestURL().toString();
-		_contextPath = request.getContextPath();
+
+		_contextPath = ParamUtil.getString(
+			request, "contextPath", request.getContextPath());
 
 		String discover = request.getParameter("discover");
 

@@ -20,13 +20,15 @@
 			<form>
 				<input id="actionCommandLogButton" name="log" onchange="radioCheck()" type="radio">
 					<label for="actionCommandLogButton">Command Log</label>
+				</input>
 
 				<input id="descriptionLogButton" name="log" onchange="radioCheck()" type="radio">
 					<label for="descriptionLogButton" id="description">Description</label>
+				</input>
 
 				<input checked="checked" id="xmlLogButton" name="log" onchange="radioCheck()" type="radio">
 					<label for="xmlLogButton">XML Log</label>
-
+				</input>
 			</form>
 		</div>
 
@@ -34,11 +36,11 @@
 			<form>
 				<input id="enableActionScreenShotButton" name="log" onchange="radioCheck()" type="radio">
 					<label for="enableActionScreenShotButton">Enable Screenshots </label>
-
+				</input>
 
 				<input checked="checked" id="disableActionScreenShotButton" name="log" onchange="radioCheck()" type="radio">
 					<label for="disableActionScreenShotButton">Disable Screenshots </label>
-
+				</input>
 			</form>
 		</div>
 
@@ -46,11 +48,11 @@
 			<form>
 				<input id="errorLogSizeButton" name="log" onchange="errorLogSizeCheck()" type="checkbox">
 					<label for="errorLogSizeButton" id="errorLogSize">&nbsp;Increase Error Log Size</label>
-
+				</input>
 
 				<input id="pauseButton" name="log" onchange="pauseButtonCheck()" type="checkbox">
 					<label for="pauseButton" id="pause">&nbsp;&nbsp;Pause&nbsp;&nbsp;&nbsp;</label>
-
+				</input>
 			</form>
 		</div>
 

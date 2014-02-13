@@ -22,6 +22,10 @@
 					<label for="actionCommandLogButton">Command Log</label>
 				</input>
 
+				<input id="descriptionLogButton" name="log" onchange="radioCheck()" type="radio">
+					<label for="descriptionLogButton" id="description">Description</label>
+				</input>
+
 				<input checked="checked" id="xmlLogButton" name="log" onchange="radioCheck()" type="radio">
 					<label for="xmlLogButton">XML Log</label>
 				</input>
@@ -53,6 +57,9 @@
 		</div>
 
 		<div id="actionCommandLog" style="display: none;">
+		</div>
+
+		<div id="descriptionLog" style="display: none;">
 		</div>
 
 		<div id="pageObjectXMLLog" style="display: block;">

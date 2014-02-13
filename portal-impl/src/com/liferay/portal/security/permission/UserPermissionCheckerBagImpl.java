@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author László Csontos
@@ -33,16 +34,16 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 	}
 
 	public UserPermissionCheckerBagImpl(long userId) {
-		_userGroups = Collections.<Group>emptyList();
+		_userGroups = Collections.<Group>emptySet();
 		_userId = userId;
 		_userOrgs = Collections.<Organization>emptyList();
-		_userOrgGroups = Collections.<Group>emptyList();
+		_userOrgGroups = Collections.<Group>emptySet();
 		_userUserGroupGroups = Collections.<Group>emptyList();
 	}
 
 	public UserPermissionCheckerBagImpl(
-		long userId, List<Group> userGroups, List<Organization> userOrgs,
-		List<Group> userOrgGroups, List<Group> userUserGroupGroups) {
+		long userId, Set<Group> userGroups, List<Organization> userOrgs,
+		Set<Group> userOrgGroups, List<Group> userUserGroupGroups) {
 
 		_userGroups = userGroups;
 		_userId = userId;
@@ -98,7 +99,7 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 	}
 
 	@Override
-	public List<Group> getUserGroups() {
+	public Set<Group> getUserGroups() {
 		return _userGroups;
 	}
 
@@ -108,7 +109,7 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 	}
 
 	@Override
-	public List<Group> getUserOrgGroups() {
+	public Set<Group> getUserOrgGroups() {
 		return _userOrgGroups;
 	}
 
@@ -123,9 +124,9 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 	}
 
 	private List<Group> _groups;
-	private final List<Group> _userGroups;
+	private final Set<Group> _userGroups;
 	private final long _userId;
-	private final List<Group> _userOrgGroups;
+	private final Set<Group> _userOrgGroups;
 	private final List<Organization> _userOrgs;
 	private final List<Group> _userUserGroupGroups;
 

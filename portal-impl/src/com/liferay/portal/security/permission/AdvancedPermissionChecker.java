@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,6 +53,7 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -351,13 +353,13 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				PermissionCacheUtil.getUserBag(userId);
 
 			if (userPermissionCheckerBag == null) {
-				List<Group> userGroups = GroupLocalServiceUtil.getUserGroups(
-					userId, true);
+				Set<Group> userGroups = SetUtil.fromList(
+					GroupLocalServiceUtil.getUserGroups(userId, true));
 
 				List<Organization> userOrgs = getUserOrgs(userId);
 
-				List<Group> userOrgGroups =
-					GroupLocalServiceUtil.getOrganizationsGroups(userOrgs);
+				Set<Group> userOrgGroups = SetUtil.fromList(
+					GroupLocalServiceUtil.getOrganizationsGroups(userOrgs));
 
 				List<UserGroup> userUserGroups =
 					UserGroupLocalServiceUtil.getUserUserGroups(userId);
@@ -375,7 +377,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			List<Group> groups = userPermissionCheckerBag.getGroups();
 
-			List<Role> roles = new UniqueList<Role>();
+			Set<Role> roles = new HashSet<Role>();
 
 			if (!groups.isEmpty()) {
 				List<Role> userRelatedRoles =
@@ -413,7 +415,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			}
 
 			if (group != null) {
-				List<Group> userOrgGroups =
+				Set<Group> userOrgGroups =
 					userPermissionCheckerBag.getUserOrgGroups();
 
 				if (group.isOrganization() && userOrgGroups.contains(group)) {
@@ -423,7 +425,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					roles.add(organizationUserRole);
 				}
 
-				List<Group> userGroups =
+				Set<Group> userGroups =
 					userPermissionCheckerBag.getUserGroups();
 
 				if ((group.isSite() &&
@@ -445,7 +447,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				}
 			}
 
-			bag = new PermissionCheckerBagImpl(userPermissionCheckerBag, roles);
+			bag = new PermissionCheckerBagImpl(
+				userPermissionCheckerBag, ListUtil.fromCollection(roles));
 
 			return bag;
 		}
@@ -711,7 +714,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 	}
 
-	protected void addTeamRoles(long userId, Group group, List<Role> roles)
+	protected void addTeamRoles(long userId, Group group, Set<Role> roles)
 		throws Exception {
 
 		List<Team> userTeams = TeamLocalServiceUtil.getUserTeams(

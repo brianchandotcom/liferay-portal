@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -50,18 +51,18 @@ public class PermissionCheckerBagImpl
 		this(userId, Collections.<Role>emptyList());
 	}
 
-	public PermissionCheckerBagImpl(
-		long userId, List<Group> userGroups, List<Organization> userOrgs,
-		List<Group> userOrgGroups, List<Group> userUserGroupGroups,
-		List<Role> roles) {
-
-		super(userId, userGroups, userOrgs, userOrgGroups, userUserGroupGroups);
+	public PermissionCheckerBagImpl(long userId, List<Role> roles) {
+		super(userId);
 
 		_roles = roles;
 	}
 
-	public PermissionCheckerBagImpl(long userId, List<Role> roles) {
-		super(userId);
+	public PermissionCheckerBagImpl(
+		long userId, Set<Group> userGroups, List<Organization> userOrgs,
+		Set<Group> userOrgGroups, List<Group> userUserGroupGroups,
+		List<Role> roles) {
+
+		super(userId, userGroups, userOrgs, userOrgGroups, userUserGroupGroups);
 
 		_roles = roles;
 	}
@@ -172,7 +173,7 @@ public class PermissionCheckerBagImpl
 			}
 		}
 
-		List<Group> userGroups = getUserGroups();
+		Set<Group> userGroups = getUserGroups();
 
 		if (userGroups.contains(group)) {
 			return true;

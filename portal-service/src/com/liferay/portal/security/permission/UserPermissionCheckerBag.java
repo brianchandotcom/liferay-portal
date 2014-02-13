@@ -20,6 +20,7 @@ import com.liferay.portal.model.Organization;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author László Csontos
@@ -28,11 +29,11 @@ public interface UserPermissionCheckerBag extends Serializable {
 
 	public List<Group> getGroups();
 
-	public List<Group> getUserGroups();
+	public Set<Group> getUserGroups();
 
 	public long getUserId();
 
-	public List<Group> getUserOrgGroups();
+	public Set<Group> getUserOrgGroups();
 
 	public List<Organization> getUserOrgs();
 

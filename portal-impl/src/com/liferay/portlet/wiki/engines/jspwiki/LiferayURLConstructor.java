@@ -20,8 +20,8 @@ import com.ecyrd.jspwiki.url.URLConstructor;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.wiki.util.WikiUtil;
 
 import java.util.Properties;
 
@@ -77,7 +77,7 @@ public class LiferayURLConstructor implements URLConstructor {
 		else if (context.equals(WikiContext.VIEW)) {
 			path =
 				"[$BEGIN_PAGE_TITLE$]" +
-					_escapeName(JSPWikiEngine.decodeJSPWikiName(name)) +
+					WikiUtil.escapeName(JSPWikiEngine.decodeJSPWikiName(name)) +
 						"[$END_PAGE_TITLE$]";
 		}
 		else if (context.equals(WikiContext.ATTACH)) {
@@ -107,17 +107,5 @@ public class LiferayURLConstructor implements URLConstructor {
 
 		return "Wiki.jsp";
 	}
-
-	private static String _escapeName(String name) {
-		return StringUtil.replace(name, _UNESCAPED_CHARS, _ESCAPED_CHARS);
-	}
-
-	private static final String[] _ESCAPED_CHARS = new String[] {
-		"<PLUS>", "<QUESTION>", "<SLASH>"
-	};
-
-	private static final String[] _UNESCAPED_CHARS = new String[] {
-		StringPool.PLUS, StringPool.QUESTION, StringPool.SLASH
-	};
 
 }

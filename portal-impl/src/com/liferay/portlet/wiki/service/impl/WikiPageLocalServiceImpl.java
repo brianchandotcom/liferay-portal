@@ -2300,7 +2300,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		if (Validator.isNotNull(layoutFullURL)) {
 			return layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
 				node.getNodeId() + StringPool.SLASH +
-					HttpUtil.encodeURL(page.getTitle());
+					HttpUtil.encodeURL(WikiUtil.escapeName(page.getTitle()));
 		}
 		else {
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(

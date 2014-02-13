@@ -52,11 +52,11 @@ if (entry.getPriority() > 0) {
 				<%= HtmlUtil.escape(entry.getTitle()) %>
 			</c:when>
 		</c:choose>
-
-		<c:if test='<%= !tabs1.equals("preview") %>'>
-			<%@ include file="/html/portlet/announcements/entry_action.jspf" %>
-		</c:if>
 	</h3>
+
+	<c:if test='<%= !tabs1.equals("preview") %>'>
+		<%@ include file="/html/portlet/announcements/entry_action.jspf" %>
+	</c:if>
 
 	<%
 	boolean showScopeName = false;

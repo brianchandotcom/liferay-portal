@@ -37,12 +37,14 @@
 			}
 		}
 
-		span.lfr-token {
-			width: 100%;
-			word-wrap: break-word;
+		.lfr-token {
+			max-width: 100%;
+			white-space: nowrap;
 
 			.lfr-token-text {
-				display: block;
+				@include ellipsis;
+
+				max-width: 95%;
 			}
 		}
 	}

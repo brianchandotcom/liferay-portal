@@ -25,6 +25,8 @@
 	<propertycopy from="database.${database.type}.${database.version}.username" name="database.username" />
 	<propertycopy from="database.${database.type}.${database.version}.url" name="database.url" />
 
+	<propertycopy from="jdk.${jdk.type}.version" name="jdk.version" />
+
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
@@ -104,6 +106,11 @@
 
 	<macrodef name="record-env-jdk">
 		<sequential>
+			<propertycopy
+				from="env.key.jdk.${jdk.type}.${jdk.version}"
+				name="env.key.jdk"
+				override="true"
+			/>
 		</sequential>
 	</macrodef>
 

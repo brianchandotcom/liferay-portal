@@ -55,7 +55,6 @@ import com.liferay.portlet.wiki.WikiFormatException;
 import com.liferay.portlet.wiki.engines.WikiEngine;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.model.WikiPageConstants;
 import com.liferay.portlet.wiki.model.WikiPageDisplay;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
@@ -124,9 +123,7 @@ public class WikiUtil {
 	}
 
 	public static String escapeName(String name) {
-		return StringUtil.replace(
-			name, WikiPageConstants.UNESCAPED_CHARS,
-			WikiPageConstants.ESCAPED_CHARS);
+		return StringUtil.replace(name, _UNESCAPED_CHARS, _ESCAPED_CHARS);
 	}
 
 	public static List<WikiPage> filterOrphans(List<WikiPage> pages)
@@ -555,9 +552,7 @@ public class WikiUtil {
 	}
 
 	public static String unescapeName(String name) {
-		return StringUtil.replace(
-			name, WikiPageConstants.ESCAPED_CHARS,
-			WikiPageConstants.UNESCAPED_CHARS);
+		return StringUtil.replace(name, _ESCAPED_CHARS, _UNESCAPED_CHARS);
 	}
 
 	public static boolean validate(long nodeId, String content, String format)
@@ -744,6 +739,14 @@ public class WikiUtil {
 
 		return _getEngine(format).validate(nodeId, content);
 	}
+
+	private static final String[] _ESCAPED_CHARS = new String[] {
+		"<PLUS>", "<QUESTION>", "<SLASH>"
+	};
+
+	private static final String[] _UNESCAPED_CHARS = new String[] {
+		StringPool.PLUS, StringPool.QUESTION, StringPool.SLASH
+	};
 
 	private static Log _log = LogFactoryUtil.getLog(WikiUtil.class);
 

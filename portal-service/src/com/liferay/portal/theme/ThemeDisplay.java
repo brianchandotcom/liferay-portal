@@ -320,7 +320,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * Returns the current internationalization language's code
+	 * Returns the current internationalization language's code.
 	 *
 	 * <p>
 	 * For example:

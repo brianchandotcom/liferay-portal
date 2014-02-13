@@ -25,7 +25,9 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletPreferences;
 
@@ -49,9 +51,7 @@ public class PortletSettingsFactoryImpl implements PortletSettingsFactory {
 		CompanyPortletSettings companyPortletSettings =
 			new CompanyPortletSettings(companyPortletPreferences);
 
-		Properties portalProperties = PropsUtil.getProperties(portletId, false);
-
-		companyPortletSettings.setPortalProperties(portalProperties);
+		companyPortletSettings.setPortalProperties(getProperties(portletId));
 
 		return companyPortletSettings;
 	}
@@ -80,9 +80,7 @@ public class PortletSettingsFactoryImpl implements PortletSettingsFactory {
 		groupPortletSettings.setCompanyPortletPreferences(
 			companyPortletPreferences);
 
-		Properties portalProperties = PropsUtil.getProperties(portletId, false);
-
-		groupPortletSettings.setPortalProperties(portalProperties);
+		groupPortletSettings.setPortalProperties(getProperties(portletId));
 
 		return groupPortletSettings;
 	}
@@ -127,11 +125,27 @@ public class PortletSettingsFactoryImpl implements PortletSettingsFactory {
 		portletInstancePortletSettings.setGroupPortletPreferences(
 			groupPortletPreferences);
 
-		Properties portalProperties = PropsUtil.getProperties(portletId, false);
-
-		portletInstancePortletSettings.setPortalProperties(portalProperties);
+		portletInstancePortletSettings.setPortalProperties(
+			getProperties(portletId));
 
 		return portletInstancePortletSettings;
 	}
+
+	protected Properties getProperties(String portletId) {
+		Properties portalProperties = _propertiesMap.get(portletId);
+
+		if (portalProperties != null) {
+			return portalProperties;
+		}
+
+		portalProperties = PropsUtil.getProperties(portletId, false);
+
+		_propertiesMap.put(portletId, portalProperties);
+
+		return portalProperties;
+	}
+
+	private Map<String, Properties> _propertiesMap =
+		new ConcurrentHashMap<String, Properties>();
 
 }

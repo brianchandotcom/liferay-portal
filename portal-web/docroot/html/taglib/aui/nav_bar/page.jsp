@@ -30,10 +30,7 @@
 			<aui:script use="aui-base,event-outside,liferay-menu-toggle">
 				var toggleMenu = new Liferay.MenuToggle(
 					{
-						content: [
-							'#<%= id %>bodyContent .nav-collapse',
-							'#<%= id %>ResponsiveButton .btn-navbar'
-						],
+						content: '#<%= id %>bodyContent .nav-collapse, #<%= id %>ResponsiveButton .btn-navbar',
 						toggleTouch: true,
 						trigger: '#<%= id %>ResponsiveButton .btn-navbar'
 					}

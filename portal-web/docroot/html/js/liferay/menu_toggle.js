@@ -1,9 +1,9 @@
 AUI.add(
 	'liferay-menu-toggle',
 	function(A) {
-		var	NAME = 'menutoggle';
-
 		var Lang = A.Lang;
+
+		var	NAME = 'menutoggle';
 
 		var MenuToggle = A.Component.create(
 			{
@@ -78,42 +78,21 @@ AUI.add(
 					_isContent: function(target) {
 						var instance = this;
 
-						var isContent = false;
-
-						A.some(
-							instance._content,
+						return instance._content.some(
 							function(item, index, collection) {
-								if (item.contains(target)) {
-									isContent = true;
-
-									return isContent;
-								}
+								return item.contains(target);
 							}
 						);
-
-						return isContent;
 					},
 
-					_isTouch: function(event) {
-						if ((event._event.type === 'touchend') && Liferay.Util.isTablet()) {
-							return true;
-						}
-						else {
-							return false;
-						}
+					_isTouchEvent: function(event) {
+						return (event._event.type === 'touchend' && Liferay.Util.isTablet());
 					},
 
 					_toggleContent: function(force) {
 						var instance = this;
 
-						A.each(
-							instance._content,
-							function(item, index, collection) {
-								if (item) {
-									item.toggleClass('open', force);
-								}
-							}
-						);
+						instance._content.toggleClass('open', force);
 					},
 
 					_toggleMenu: function(event, target) {
@@ -122,23 +101,25 @@ AUI.add(
 						var toggle = instance.get('toggle');
 						var toggleTouch = instance.get('toggleTouch');
 
+						var handleId = instance._handleId;
+
 						instance._toggleContent();
 
 						var menuOpen = instance._content.item(0).hasClass('open');
 
 						if (!toggle) {
-							var handle = Liferay.Data[instance._handleId];
+							var handle = Liferay.Data[handleId];
 
 							if (menuOpen && !handle) {
 								handle = target.on(
 									instance._getEventOutside(event),
 									function(event) {
 										if (toggleTouch) {
-											toggleTouch = instance._isTouch(event);
+											toggleTouch = instance._isTouchEvent(event);
 										}
 
-										if (!instance._isContent(event.target) && !toggleTouch) {
-											Liferay.Data[instance._handleId] = null;
+										if (!toggleTouch && !instance._isContent(event.target)) {
+											Liferay.Data[handleId] = null;
 
 											handle.detach();
 
@@ -153,12 +134,12 @@ AUI.add(
 								handle = null;
 							}
 
-							Liferay.Data[instance._handleId] = handle;
+							Liferay.Data[handleId] = handle;
 						}
 						else {
 							var data = {};
 
-							data[instance._handleId] = menuOpen ? 'open' : 'closed';
+							data[handleId] = menuOpen ? 'open' : 'closed';
 
 							Liferay.Store(data);
 						}
@@ -167,7 +148,7 @@ AUI.add(
 					_validateContent: function(value) {
 						var instance = this;
 
-						return Lang.isString(value) || Lang.isArray(value);
+						return Lang.isString(value) || Lang.isArray(value) || A.instanceOf(value, A.Node);
 					}
 				}
 			}
@@ -177,6 +158,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-node','event-move','event-outside','liferay-store']
+		requires: ['aui-node', 'event-move', 'event-outside', 'liferay-store']
 	}
 );

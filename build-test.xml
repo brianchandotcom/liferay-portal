@@ -1582,20 +1582,6 @@ tck.url=true</echo>
 		</if>
 
 		<if>
-			<equals arg1="${test.selenium.implementation}" arg2="selenium" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/selenium/${os.type}/${browser.type}/${browser.version}/
-				</echo>
-			</then>
-			<else>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/webdriver/${os.type}/${browser.type}/${browser.version}/
-				</echo>
-			</else>
-		</if>
-
-		<if>
 			<equals arg1="${test.selenium.unit.enabled}" arg2="true" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">

@@ -273,6 +273,10 @@ public class SubscriptionSender implements Serializable {
 		this.bulk = bulk;
 	}
 
+	public void setClassName(String className) {
+		_className = className;
+	}
+
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
 	}
@@ -303,6 +307,14 @@ public class SubscriptionSender implements Serializable {
 
 	public void setContextUserPrefix(String contextUserPrefix) {
 		_contextUserPrefix = contextUserPrefix;
+	}
+
+	public void setEntryTitle(String entryTitle) {
+		this._entryTitle = entryTitle;
+	}
+
+	public void setEntryURL(String entryURL) {
+		_entryURL = entryURL;
 	}
 
 	public void setFrom(String fromAddress, String fromName) {
@@ -529,7 +541,10 @@ public class SubscriptionSender implements Serializable {
 					JSONObject notificationEventJSONObject =
 						JSONFactoryUtil.createJSONObject();
 
+					notificationEventJSONObject.put("className", _className);
 					notificationEventJSONObject.put("classPK", _classPK);
+					notificationEventJSONObject.put("entryTitle", _entryTitle);
+					notificationEventJSONObject.put("entryURL", _entryURL);
 					notificationEventJSONObject.put(
 						"notificationType", _notificationType);
 					notificationEventJSONObject.put("userId", user.getUserId());
@@ -780,10 +795,13 @@ public class SubscriptionSender implements Serializable {
 
 	private List<InternetAddress> _bulkAddresses;
 	private transient ClassLoader _classLoader;
+	private String _className;
 	private long _classPK;
 	private Map<String, EscapableObject<String>> _context =
 		new HashMap<String, EscapableObject<String>>();
 	private String _contextUserPrefix;
+	private String _entryTitle;
+	private String _entryURL;
 	private boolean _initialized;
 	private Object[] _mailIdIds;
 	private String _mailIdPopPortletPrefix;

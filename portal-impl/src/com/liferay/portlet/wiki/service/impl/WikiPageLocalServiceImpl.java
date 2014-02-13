@@ -2461,6 +2461,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			pageContent = WikiUtil.processContent(pageContent);
 		}
 
+		String pageTitle = page.getTitle();
+		String pageURL = getPageURL(node, page, serviceContext);
+
 		String fromName = WikiUtil.getEmailFromName(
 			preferences, page.getCompanyId());
 		String fromAddress = WikiUtil.getEmailFromAddress(
@@ -2488,6 +2491,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setBody(body);
+		subscriptionSender.setClassName(page.getModelClassName());
 		subscriptionSender.setClassPK(page.getPageId());
 		subscriptionSender.setCompanyId(page.getCompanyId());
 		subscriptionSender.setContextAttributes(
@@ -2495,14 +2499,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			getDiffsURL(node, page, previousVersionPage, serviceContext),
 			"[$NODE_NAME$]", node.getName(), "[$PAGE_DATE_UPDATE$]",
 			page.getModifiedDate(), "[$PAGE_ID$]", page.getPageId(),
-			"[$PAGE_SUMMARY$]", page.getSummary(), "[$PAGE_TITLE$]",
-			page.getTitle(), "[$PAGE_URL$]",
-			getPageURL(node, page, serviceContext));
+			"[$PAGE_SUMMARY$]", page.getSummary(), "[$PAGE_TITLE$]", pageTitle,
+			"[$PAGE_URL$]", pageURL);
 		subscriptionSender.setContextAttribute(
 			"[$PAGE_CONTENT$]", pageContent, false);
 		subscriptionSender.setContextAttribute(
 			"[$PAGE_DIFFS$]", replaceStyles(pageDiffs), false);
 		subscriptionSender.setContextUserPrefix("PAGE");
+		subscriptionSender.setEntryTitle(pageTitle);
+		subscriptionSender.setEntryURL(pageURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId(

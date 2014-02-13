@@ -2012,6 +2012,9 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
+		String entryTitle = fileVersion.getTitle();
+		String entryURL = null;
+
 		String fromName = DLUtil.getEmailFromName(
 			preferences, fileVersion.getCompanyId());
 		String fromAddress = DLUtil.getEmailFromAddress(
@@ -2059,14 +2062,17 @@ public class DLAppHelperLocalServiceImpl
 				dlFileEntry.getFileEntryTypeId());
 
 		subscriptionSender.setClassPK(fileVersion.getFileEntryId());
+		subscriptionSender.setClassName(DLFileEntryConstants.getClassName());
 		subscriptionSender.setCompanyId(fileVersion.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$DOCUMENT_STATUS_BY_USER_NAME$]",
-			fileVersion.getStatusByUserName(), "[$DOCUMENT_TITLE$]",
-			fileVersion.getTitle(), "[$DOCUMENT_TYPE$]",
+			fileVersion.getStatusByUserName(), "[$DOCUMENT_TITLE$]", entryTitle,
+			"[$DOCUMENT_TYPE$]",
 			dlFileEntryType.getName(serviceContext.getLocale()),
 			"[$FOLDER_NAME$]", folderName);
 		subscriptionSender.setContextUserPrefix("DOCUMENT");
+		subscriptionSender.setEntryTitle(entryTitle);
+		subscriptionSender.setEntryURL(entryURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);

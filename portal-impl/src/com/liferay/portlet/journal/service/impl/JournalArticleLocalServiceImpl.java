@@ -6370,6 +6370,7 @@ public class JournalArticleLocalServiceImpl
 			return;
 		}
 
+		String articleTitle = article.getTitle(serviceContext.getLanguageId());
 		String articleURL = PortalUtil.getControlPanelFullURL(
 			serviceContext.getScopeGroupId(), PortletKeys.JOURNAL, null);
 
@@ -6422,13 +6423,16 @@ public class JournalArticleLocalServiceImpl
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setBody(body);
+		subscriptionSender.setClassName(article.getModelClassName());
 		subscriptionSender.setClassPK(article.getId());
 		subscriptionSender.setCompanyId(article.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
-			article.getTitle(serviceContext.getLanguageId()), "[$ARTICLE_URL$]",
-			articleURL, "[$ARTICLE_VERSION$]", article.getVersion());
+			articleTitle, "[$ARTICLE_URL$]", articleURL, "[$ARTICLE_VERSION$]",
+			article.getVersion());
 		subscriptionSender.setContextUserPrefix("ARTICLE");
+		subscriptionSender.setEntryTitle(articleTitle);
+		subscriptionSender.setEntryURL(articleURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("journal_article", article.getId());

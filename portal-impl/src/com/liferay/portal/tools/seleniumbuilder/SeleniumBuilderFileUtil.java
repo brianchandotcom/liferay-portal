@@ -681,21 +681,6 @@ public class SeleniumBuilderFileUtil {
 					fileName, element, new String[] {"description", "execute"},
 					new String[] {"function"}, new String[0], new String[0]);
 			}
-			else if (elementName.equals("description")) {
-				List<Attribute> attributes = element.attributes();
-
-				for (Attribute attribute : attributes) {
-					String attributeName = attribute.getName();
-
-					if (!attributeName.equals("message")) {
-						throwValidationException(
-							1005, fileName, element, attributeName);
-					}
-				}
-
-				validateSimpleElement(
-					fileName, element, new String[] {"message"});
-			}
 			else {
 				throwValidationException(1002, fileName, element, elementName);
 			}
@@ -763,10 +748,10 @@ public class SeleniumBuilderFileUtil {
 			}
 
 			if (elementName.equals("description") ||
-				elementName.equals("echo") ||
-				elementName.equals("fail")) {
-					validateSimpleElement(
-						fileName, element, new String[] {"message"});
+				elementName.equals("echo") || elementName.equals("fail")) {
+
+				validateSimpleElement(
+					fileName, element, new String[] {"message"});
 			}
 			else if (elementName.equals("execute")) {
 				validateExecuteElement(

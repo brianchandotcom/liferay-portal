@@ -1,1 +1,1 @@
-include 'portal-registry-api'
+include 'portal-registry-api', 'portal-registry-impl'

@@ -61,73 +61,35 @@ public class PermissionCacheUtil {
 
 	public static void clearLocalCache() {
 		if (_localCacheAvailable) {
-			Map<String, Object> localCache = _localCache.get();
+			Map<Serializable, Object> localCache = _localCache.get();
 
 			localCache.clear();
 		}
 	}
 
 	public static PermissionCheckerBag getBag(long userId, long groupId) {
-		PermissionCheckerBag bag = null;
-
 		BagKey bagKey = new BagKey(userId, groupId);
 
-		if (_localCacheAvailable) {
-			Map<String, Object> localCache = _localCache.get();
-
-			bag = (PermissionCheckerBag)localCache.get(bagKey);
-		}
-
-		if (bag == null) {
-			bag = _permissionCheckerBagPortalCache.get(bagKey);
-		}
-
-		return bag;
+		return doGet(bagKey, _permissionCheckerBagPortalCache);
 	}
 
 	public static Boolean getPermission(
 		long userId, boolean signedIn, long groupId, String name,
 		String primKey, String actionId) {
 
-		Boolean value = null;
-
 		PermissionKey permissionKey = new PermissionKey(
 			userId, signedIn, groupId, name, primKey, actionId);
 
-		if (_localCacheAvailable) {
-			Map<String, Object> localCache = _localCache.get();
-
-			value = (Boolean)localCache.get(permissionKey);
-		}
-
-		if (value == null) {
-			value = _permissionPortalCache.get(permissionKey);
-		}
-
-		return value;
+		return doGet(permissionKey, _permissionPortalCache);
 	}
 
 	public static ResourceBlockIdsBag getResourceBlockIdsBag(
 		long companyId, long groupId, long userId, String name) {
 
-		ResourceBlockIdsBag resourceBlockIdsBag = null;
-
 		ResourceBlockIdsBagKey resourceBlockIdsBagKey =
 			new ResourceBlockIdsBagKey(companyId, groupId, userId, name);
 
-		if (_localCacheAvailable) {
-			Map<String, Object> localCache = _localCache.get();
-
-			resourceBlockIdsBag = (ResourceBlockIdsBag)localCache.get(
-				resourceBlockIdsBagKey);
-		}
-
-		if (resourceBlockIdsBag == null) {
-			resourceBlockIdsBag = _resourceBlockIdsBagCache.get(
-				resourceBlockIdsBagKey);
-		}
-
-		return resourceBlockIdsBag;
+		return doGet(resourceBlockIdsBagKey, _resourceBlockIdsBagCache);
 	}
 
 	public static PermissionCheckerBag putBag(
@@ -139,13 +101,7 @@ public class PermissionCacheUtil {
 
 		BagKey bagKey = new BagKey(userId, groupId);
 
-		if (_localCacheAvailable) {
-			Map<Serializable, Object> localCache = _localCache.get();
-
-			localCache.put(bagKey, bag);
-		}
-
-		_permissionCheckerBagPortalCache.put(bagKey, bag);
+		doPut(bagKey, bag, _permissionCheckerBagPortalCache);
 
 		return bag;
 	}
@@ -157,13 +113,7 @@ public class PermissionCacheUtil {
 		PermissionKey permissionKey = new PermissionKey(
 			userId, signedIn, groupId, name, primKey, actionId);
 
-		if (_localCacheAvailable) {
-			Map<Serializable, Object> localCache = _localCache.get();
-
-			localCache.put(permissionKey, value);
-		}
-
-		_permissionPortalCache.put(permissionKey, value);
+		doPut(permissionKey, value, _permissionPortalCache);
 	}
 
 	public static ResourceBlockIdsBag putResourceBlockIdsBag(
@@ -177,16 +127,41 @@ public class PermissionCacheUtil {
 		ResourceBlockIdsBagKey resourceBlockIdsBagKey =
 			new ResourceBlockIdsBagKey(companyId, groupId, userId, name);
 
-		if (_localCacheAvailable) {
-			Map<Serializable, Object> localCache = _localCache.get();
-
-			localCache.put(resourceBlockIdsBagKey, resourceBlockIdsBag);
-		}
-
-		_resourceBlockIdsBagCache.put(
-			resourceBlockIdsBagKey, resourceBlockIdsBag);
+		doPut(
+			resourceBlockIdsBagKey, resourceBlockIdsBag,
+			_resourceBlockIdsBagCache);
 
 		return resourceBlockIdsBag;
+	}
+
+	protected static <K extends Serializable, V, C extends PortalCache<K, V>>
+		V doGet(K key, C portalCache) {
+
+		V value = null;
+
+		if (_localCacheAvailable) {
+			Map<K, V> localCache = _localCache.get();
+
+			value = localCache.get(key);
+		}
+
+		if (value == null) {
+			value = portalCache.get(key);
+		}
+
+		return value;
+	}
+
+	protected static <K extends Serializable, V, C extends PortalCache<K, V>>
+		void doPut(K key, V value, C portalCache) {
+
+		if (_localCacheAvailable) {
+			Map<K, V> localCache = _localCache.get();
+
+			localCache.put(key, value);
+		}
+
+		portalCache.put(key, value);
 	}
 
 	private static ThreadLocal<LRUMap> _localCache;

@@ -20,7 +20,9 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * @author Daniel Kocsis
@@ -30,11 +32,11 @@ public class ExportImportConfigurationSettingsMapFactory {
 	public static Map<String, Serializable> buildSettingsMap(
 		long userId, long groupId, boolean privateLayout,
 		Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-		Date startDate, Date endDate) {
+		Date startDate, Date endDate, Locale locale, TimeZone timeZone) {
 
 		return buildSettingsMap(
 			userId, groupId, 0, privateLayout, layoutIdMap, parameterMap,
-			startDate, endDate);
+			startDate, endDate, locale, timeZone);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
@@ -42,11 +44,12 @@ public class ExportImportConfigurationSettingsMapFactory {
 		Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection, long remoteGroupId,
-		boolean remotePrivateLayout, Date startDate, Date endDate) {
+		boolean remotePrivateLayout, Date startDate, Date endDate,
+		Locale locale, TimeZone timeZone) {
 
 		Map<String, Serializable> settingsMap = buildSettingsMap(
 			userId, sourceGroupId, privateLayout, layoutIdMap, parameterMap,
-			startDate, endDate);
+			startDate, endDate, locale, timeZone);
 
 		settingsMap.put("remoteAddress", remoteAddress);
 		settingsMap.put("remoteGroupId", remoteGroupId);
@@ -61,7 +64,8 @@ public class ExportImportConfigurationSettingsMapFactory {
 	public static Map<String, Serializable> buildSettingsMap(
 		long userId, long sourceGroupId, long targetGroupId,
 		boolean privateLayout, Map<Long, Boolean> layoutIdMap,
-		Map<String, String[]> parameterMap, Date startDate, Date endDate) {
+		Map<String, String[]> parameterMap, Date startDate, Date endDate,
+		Locale locale, TimeZone timeZone) {
 
 		Map<String, Serializable> settingsMap =
 			new HashMap<String, Serializable>();
@@ -76,6 +80,8 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 			settingsMap.put("layoutIdMap", serializableLayoutIdMap);
 		}
+
+		settingsMap.put("locale", locale);
 
 		if (parameterMap != null) {
 			HashMap<String, String[]> serializableParameterMap =
@@ -95,6 +101,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 			settingsMap.put("targetGroupId", targetGroupId);
 		}
 
+		settingsMap.put("timezone", timeZone);
 		settingsMap.put("userId", userId);
 
 		return settingsMap;

@@ -2250,7 +2250,8 @@ public class StagingImpl implements Staging {
 							themeDisplay.getUserId(), sourceGroupId,
 							targetGroupId, privateLayout, layoutIdMap,
 							parameterMap, dateRange.getStartDate(),
-							dateRange.getEndDate());
+							dateRange.getEndDate(), themeDisplay.getLocale(),
+							themeDisplay.getTimeZone());
 
 				ExportImportConfiguration exportImportConfiguration =
 					ExportImportConfigurationLocalServiceUtil.
@@ -2404,7 +2405,9 @@ public class StagingImpl implements Staging {
 							layoutIdMap, parameterMap, remoteAddress,
 							remotePort, remotePathContext, secureConnection,
 							remoteGroupId, remotePrivateLayout,
-							dateRange.getStartDate(), dateRange.getEndDate());
+							dateRange.getStartDate(), dateRange.getEndDate(),
+							themeDisplay.getLocale(),
+							themeDisplay.getTimeZone());
 
 				ExportImportConfiguration exportImportConfiguration =
 					ExportImportConfigurationLocalServiceUtil.

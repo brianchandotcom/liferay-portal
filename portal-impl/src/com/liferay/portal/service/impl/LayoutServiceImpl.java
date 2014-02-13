@@ -1195,7 +1195,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				getUserId(), sourceGroupId, targetGroupId, privateLayout,
-				layoutIdMap, parameterMap, startDate, endDate);
+				layoutIdMap, parameterMap, startDate, endDate, null, null);
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.addExportImportConfiguration(
@@ -1263,7 +1263,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				getUserId(), sourceGroupId, privateLayout, layoutIdMap,
 				parameterMap, remoteAddress, remotePort, remotePathContext,
 				secureConnection, remoteGroupId, remotePrivateLayout, startDate,
-				endDate);
+				endDate, null, null);
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.addExportImportConfiguration(

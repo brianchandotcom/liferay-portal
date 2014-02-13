@@ -430,12 +430,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 		word-wrap: break-word;
 	}
 
-	ul.icons-container {
+	.edit-actions {
 		list-style: none;
 		margin-left: 0;
 		margin-right: 0;
 
-		li.edit-icon-actions {
+		li {
 			float: left;
 			margin-right: 10px;
 		}

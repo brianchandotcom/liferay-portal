@@ -74,9 +74,9 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 			</c:if>
 
 			<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-				<ul class="icons-container lfr-meta-actions">
+				<ul class="edit-actions entry icons-container lfr-meta-actions">
 					<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-						<li class="edit-icon-actions">
+						<li class="edit-entry">
 							<portlet:renderURL var="editEntryURL">
 								<portlet:param name="struts_action" value="/blogs/edit_entry" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -93,7 +93,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</c:if>
 
 					<c:if test="<%= showEditEntryPermissions && BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) %>">
-						<li class="edit-icon-actions">
+						<li class="edit-entry-permissions">
 							<liferay-security:permissionsURL
 								modelResource="<%= BlogsEntry.class.getName() %>"
 								modelResourceDescription="<%= entry.getTitle() %>"
@@ -113,7 +113,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</c:if>
 
 					<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
-						<li class="edit-icon-actions">
+						<li class="delete-entry">
 							<portlet:renderURL var="viewURL">
 								<portlet:param name="struts_action" value="/blogs/view" />
 							</portlet:renderURL>

@@ -33,6 +33,7 @@ import org.apache.commons.collections.map.LRUMap;
  * @author Michael Young
  * @author Shuyang Zhou
  * @author Connor McKay
+ * @author László Csontos
  */
 public class PermissionCacheUtil {
 
@@ -44,6 +45,9 @@ public class PermissionCacheUtil {
 
 	public static final String RESOURCE_BLOCK_IDS_BAG_CACHE_NAME =
 		PermissionCacheUtil.class.getName() + "_RESOURCE_BLOCK_IDS_BAG";
+
+	public static final String USER_PERMISSION_CHECKER_BAG_PORTAL_CACHE =
+		PermissionCacheUtil.class.getName() + "_USER_PERMISSION_CHECKER";
 
 	public static void clearCache() {
 		if (ExportImportThreadLocal.isImportInProcess() ||
@@ -57,6 +61,7 @@ public class PermissionCacheUtil {
 		_permissionCheckerBagPortalCache.removeAll();
 		_permissionPortalCache.removeAll();
 		_resourceBlockIdsBagCache.removeAll();
+		_userPermissionCheckerBagPortalCache.removeAll();
 	}
 
 	public static void clearLocalCache() {
@@ -90,6 +95,10 @@ public class PermissionCacheUtil {
 			new ResourceBlockIdsBagKey(companyId, groupId, userId, name);
 
 		return doGet(resourceBlockIdsBagKey, _resourceBlockIdsBagCache);
+	}
+
+	public static UserPermissionCheckerBag getUserBag(long userId) {
+		return doGet(userId, _userPermissionCheckerBagPortalCache);
 	}
 
 	public static void putBag(
@@ -128,6 +137,14 @@ public class PermissionCacheUtil {
 		doPut(
 			resourceBlockIdsBagKey, resourceBlockIdsBag,
 			_resourceBlockIdsBagCache);
+	}
+
+	public static void putUserBag(
+		long userId, UserPermissionCheckerBag userPermissionCheckerBag) {
+
+		doPut(
+			userId, userPermissionCheckerBag,
+			_userPermissionCheckerBagPortalCache);
 	}
 
 	protected static <K extends Serializable, V, C extends PortalCache<K, V>>
@@ -173,6 +190,10 @@ public class PermissionCacheUtil {
 	private static PortalCache<ResourceBlockIdsBagKey, ResourceBlockIdsBag>
 		_resourceBlockIdsBagCache = MultiVMPoolUtil.getCache(
 			RESOURCE_BLOCK_IDS_BAG_CACHE_NAME,
+			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
+	private static PortalCache<Long, UserPermissionCheckerBag>
+		_userPermissionCheckerBagPortalCache = MultiVMPoolUtil.getCache(
+			USER_PERMISSION_CHECKER_BAG_PORTAL_CACHE,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 
 	private static class BagKey implements Serializable {

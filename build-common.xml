@@ -53,6 +53,7 @@
 
 	<path id="project.classpath">
 		<pathelement path="${classpath}" />
+		<pathelement path="${project.dir}/osgi/modules/portal-registry/portal-registry-api/build/classes/main" />
 		<path refid="lib.classpath" />
 	</path>
 
@@ -60,6 +61,7 @@
 		<pathelement path="test-classes/${test.type}" />
 		<pathelement path="${classpath}" />
 		<pathelement path="${imported.classpath}" />
+		<pathelement path="${project.dir}/osgi/modules/portal-registry/portal-registry-api/build/classes/main" />
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" excludes="ant.jar" />
@@ -68,6 +70,7 @@
 
 	<path id="web.classpath">
 		<pathelement location="${project.dir}/portal-service/classes" />
+		<pathelement path="${project.dir}/osgi/modules/portal-registry/portal-registry-api/build/classes/main" />
 		<fileset dir="${project.dir}/lib/development" includes="jsp-api.jar,mail.jar,servlet-api.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="bnd.jar" />

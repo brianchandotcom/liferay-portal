@@ -1436,6 +1436,8 @@ public class Creole10Parser]]></replacevalue>
 				<antelope:endswith string="${app.server.portal.dir}" with="/portal-web/docroot" />
 			</and>
 			<then>
+				<gradle-execute gradleTask=":portal-registry-api:compileJava" gradleModuleDir="/portal-registry" />
+
 				<javac
 					classpathref="project.classpath"
 					compiler="${javac.compiler}"

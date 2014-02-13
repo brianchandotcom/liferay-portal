@@ -100,6 +100,11 @@
 </tr>
 <!--CONTACTS_LIST-->
 <tr>
+	<td>CONTACTS_LIST_ALL_CHECKBOX</td>
+	<td>//input[contains(@id,'contactsportlet_checkAllCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTACTS_LIST_FILTER</td>
 	<td>//select[contains(@id,'contactsportlet_filterBy')]</td>
 	<td></td>
@@ -167,6 +172,11 @@
 	<td></td>
 </tr>
 <!--CONTACTS_LINK-->
+<tr>
+	<td>CONTACTS_LINK_TITLE</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
 <tr>
 	<td>CONTACTS_LINK_CONNECTIONS</td>
 	<td>//div[contains(@class,'contacts-count connections')]/div/a</td>

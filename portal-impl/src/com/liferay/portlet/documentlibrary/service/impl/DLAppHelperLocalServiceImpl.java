@@ -20,10 +20,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -40,14 +43,18 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
@@ -83,6 +90,10 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 /**
  * Provides the local service helper for the document library application.
@@ -1559,6 +1570,21 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	protected void _setPortletURLWindowState(
+		PortletURL portletURL, WindowState windowState) {
+
+		try {
+			portletURL.setWindowState(windowState);
+		}
+		catch (WindowStateException wse) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to set notification's URL window state to " +
+					windowState, wse);
+			}
+		}
+	}
+
 	protected FileEntry doMoveFileEntryFromTrash(
 			long userId, FileEntry fileEntry, long newFolderId,
 			ServiceContext serviceContext)
@@ -1940,6 +1966,45 @@ public class DLAppHelperLocalServiceImpl
 		return dlFileVersionStatusOVPs;
 	}
 
+	protected String getEntryURL(
+			FileVersion fileVersion, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		User user = themeDisplay.getUser();
+
+		Group group = user.getGroup();
+
+		long portletPlid = PortalUtil.getPlidFromPortletId(
+			group.getGroupId(), true, PortletKeys.DOCUMENT_LIBRARY);
+
+		PortletURL portletURL = null;
+
+		if (portletPlid != 0) {
+			portletURL = PortletURLFactoryUtil.create(
+				serviceContext.getLiferayPortletRequest(),
+				PortletKeys.DOCUMENT_LIBRARY, portletPlid,
+				PortletRequest.RENDER_PHASE);
+		}
+		else {
+			LiferayPortletResponse liferayPortletResponse =
+				serviceContext.getLiferayPortletResponse();
+
+			portletURL = liferayPortletResponse.createRenderURL(
+				PortletKeys.DOCUMENT_LIBRARY);
+		}
+
+		_setPortletURLWindowState(portletURL, WindowState.NORMAL);
+
+		portletURL.setParameter(
+				"struts_action", "/document_library/view_file_entry");
+			portletURL.setParameter(
+				"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
+
+		return portletURL.toString();
+	}
+
 	protected long getFileEntryTypeId(FileEntry fileEntry) {
 		if (fileEntry instanceof LiferayFileEntry) {
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
@@ -2013,7 +2078,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		String entryTitle = fileVersion.getTitle();
-		String entryURL = null;
+		String entryURL = getEntryURL(fileVersion, serviceContext);
 
 		String fromName = DLUtil.getEmailFromName(
 			preferences, fileVersion.getCompanyId());
@@ -2182,5 +2247,8 @@ public class DLAppHelperLocalServiceImpl
 			}
 		);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DLAppHelperLocalServiceImpl.class);
 
 }

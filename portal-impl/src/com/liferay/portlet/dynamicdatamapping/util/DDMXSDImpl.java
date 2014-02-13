@@ -57,12 +57,15 @@ import com.liferay.util.freemarker.FreeMarkerTaglibFactoryUtil;
 
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
+
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 
 import java.io.IOException;
 import java.io.Writer;
+
 import java.net.URL;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -76,8 +79,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
-
-import jodd.util.ArraysUtil;
 
 /**
  * @author Bruno Basto
@@ -114,6 +115,10 @@ public class DDMXSDImpl implements DDMXSD {
 		Map<String, Object> freeMarkerContext = getFreeMarkerContext(
 			pageContext, portletNamespace, namespace, element, locale);
 
+		if (fields != null) {
+			freeMarkerContext.put("fields", fields);
+		}
+
 		Map<String, Object> fieldStructure =
 			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
 
@@ -124,31 +129,24 @@ public class DDMXSDImpl implements DDMXSD {
 
 		String name = element.attributeValue("name");
 
+		boolean isFieldDisplayable = isFieldDisplayable(fields, name);
 
-
-		boolean hasFieldDisplayName = _hasFieldDisplayName(fields, name);
-
-		if (fields != null) {
-			freeMarkerContext.put("fields", fields);
-
+		if (isFieldDisplayable) {
 			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
-			if (hasFieldDisplayName) {
-				String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
+			String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
 					fieldsDisplayField);
 
-				Map<String, Object> parentFieldStructure =
-					(Map<String, Object>)freeMarkerContext.get(
-						"parentFieldStructure");
+			Map<String, Object> parentFieldStructure =
+				(Map<String, Object>)freeMarkerContext.get(
+					"parentFieldStructure");
 
-				String parentFieldName = (String)parentFieldStructure.get(
-					"name");
+			String parentFieldName = (String)parentFieldStructure.get("name");
 
-				int offset = ddmFieldsCounter.get(DDMImpl.FIELDS_DISPLAY_NAME);
+			int offset = ddmFieldsCounter.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
-				fieldRepetition = countFieldRepetition(
-					fieldsDisplayValues, parentFieldName, offset);
-			}
+			fieldRepetition = countFieldRepetition(
+				fieldsDisplayValues, parentFieldName, offset);
 		}
 
 		StringBundler sb = new StringBundler(fieldRepetition);
@@ -157,7 +155,7 @@ public class DDMXSDImpl implements DDMXSD {
 			fieldStructure.put("fieldNamespace", StringUtil.randomId());
 			fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
 
-			if (hasFieldDisplayName) {
+			if (isFieldDisplayable) {
 				ddmFieldsCounter.incrementKey(name);
 				ddmFieldsCounter.incrementKey(DDMImpl.FIELDS_DISPLAY_NAME);
 			}
@@ -750,6 +748,21 @@ public class DDMXSDImpl implements DDMXSD {
 		return jsonArray;
 	}
 
+	protected boolean isFieldDisplayable(Fields fields, String fieldName)
+		throws Exception {
+
+		if (fields == null) {
+			return false;
+		}
+
+		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+		String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
+			fieldsDisplayField);
+
+		return ArrayUtil.contains(fieldsDisplayValues, fieldName);
+	}
+
 	protected String processFTL(
 			PageContext pageContext, Element element, String mode,
 			boolean readOnly, Map<String, Object> freeMarkerContext)
@@ -904,28 +917,6 @@ public class DDMXSDImpl implements DDMXSD {
 		}
 
 		jsonObject.put(attributeName, attributeValue);
-	}
-
-
-	private boolean _hasFieldDisplayName(Fields fields, String name)
-		throws Exception {
-
-		boolean hasFieldDisplayName = false;
-
-		if(fields != null) {
-
-			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
-
-			String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
-				fieldsDisplayField);
-
-			if(fieldsDisplayValues != null) {
-				hasFieldDisplayName = ArraysUtil.contains(fieldsDisplayValues,
-					name);
-			}
-		}
-
-		return hasFieldDisplayName;
 	}
 
 	private static final String _DEFAULT_NAMESPACE = "alloy";

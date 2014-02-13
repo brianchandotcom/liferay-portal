@@ -76,13 +76,11 @@ public class ShardUtil {
 	}
 
 	public static boolean isEnabled() {
-		Shard shard = getShard();
-
-		if (shard != null) {
-			return shard.isEnabled();
+		if (_shard == null) {
+			return false;
 		}
 
-		return false;
+		return _shard.isEnabled();
 	}
 
 	public static String popCompanyService() {

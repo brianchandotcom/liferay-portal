@@ -73,7 +73,7 @@ public class FileEntryDisplayContext {
 	public boolean isDeleteButtonVisible()
 		throws PortalException, SystemException {
 
-		return hasDeletePermission() && !isLockedByOther() &&
+		return hasDeletePermission() && !isCheckedOutByOther() &&
 			(!isDLFileEntry() || !isTrashEnabled());
 	}
 
@@ -86,20 +86,20 @@ public class FileEntryDisplayContext {
 	public boolean isEditButtonVisible()
 		throws PortalException, SystemException {
 
-		return hasUpdatePermission() && !isLockedByOther();
+		return hasUpdatePermission() && !isCheckedOutByOther();
 	}
 
 	public boolean isMoveButtonVisible()
 		throws PortalException, SystemException {
 
-		return hasUpdatePermission() && !isLockedByOther();
+		return hasUpdatePermission() && !isCheckedOutByOther();
 	}
 
 	public boolean isMoveToTheRecycleBinButtonVisible()
 		throws PortalException, SystemException {
 
-		return hasDeletePermission() && !isLockedByOther() && isDLFileEntry() &&
-			isTrashEnabled();
+		return hasDeletePermission() && !isCheckedOutByOther() &&
+			isDLFileEntry() && isTrashEnabled();
 	}
 
 	public boolean isOpenInMsOfficeButtonVisible()
@@ -190,7 +190,7 @@ public class FileEntryDisplayContext {
 		return _fileEntry.hasLock();
 	}
 
-	private boolean isLockedByOther() {
+	private boolean isCheckedOutByOther() {
 		return (isCheckedOut() && !isLockedByMe());
 	}
 

@@ -70,6 +70,8 @@ public class SassExecutorUtil {
 				"SassExecutor", Thread.NORM_PRIORITY,
 				SassExecutorUtil.class.getClassLoader()));
 
+		_mainThread = Thread.currentThread();
+
 		_docrootDirName = docrootDirName;
 		_portalCommonDirName = portalCommonDirName;
 
@@ -130,6 +132,10 @@ public class SassExecutorUtil {
 			else {
 				e.printStackTrace();
 			}
+
+			_exception = new Exception("Unable to parse " + fileName, e);
+
+			_mainThread.interrupt();
 		}
 
 		return content;
@@ -138,12 +144,21 @@ public class SassExecutorUtil {
 	public static void persist() throws Exception {
 		_executorService.shutdown();
 
-		if (!_executorService.awaitTermination(
-				_WAIT_MINTUES, TimeUnit.MINUTES)) {
+		try {
+			if (!_executorService.awaitTermination(
+					_WAIT_MINTUES, TimeUnit.MINUTES)) {
 
-			System.err.println(
-				"Abort processing Sass files after waiting " + _WAIT_MINTUES +
-					" minutes");
+				System.err.println(
+					"Abort processing Sass files after waiting " +
+						_WAIT_MINTUES + " minutes");
+			}
+		}
+		catch (InterruptedException ie) {
+			if (_exception == null) {
+				throw ie;
+			}
+
+			throw _exception;
 		}
 
 		for (SassFile sassFile : _sassFileCache.values()) {
@@ -159,7 +174,9 @@ public class SassExecutorUtil {
 	private static final int _WAIT_MINTUES = 30;
 
 	private static String _docrootDirName;
+	private static Exception _exception;
 	private static ExecutorService _executorService;
+	private static Thread _mainThread;
 	private static String _portalCommonDirName;
 	private static ConcurrentMap<String, SassFile> _sassFileCache =
 		new ConcurrentHashMap<String, SassFile>();

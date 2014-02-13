@@ -1884,6 +1884,44 @@ public class UserServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.model.User updateStatus(
+		HttpPrincipal httpPrincipal, long userId, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(UserServiceUtil.class,
+					"updateStatus", _updateStatusParameterTypes49);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					status, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.model.User)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.model.User updateUser(
 		HttpPrincipal httpPrincipal, long userId, java.lang.String oldPassword,
 		java.lang.String newPassword1, java.lang.String newPassword2,
@@ -1915,7 +1953,7 @@ public class UserServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class,
-					"updateUser", _updateUserParameterTypes49);
+					"updateUser", _updateUserParameterTypes50);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					oldPassword, newPassword1, newPassword2, passwordReset,
@@ -1986,7 +2024,7 @@ public class UserServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class,
-					"updateUser", _updateUserParameterTypes50);
+					"updateUser", _updateUserParameterTypes51);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					oldPassword, newPassword1, newPassword2, passwordReset,
@@ -2051,7 +2089,7 @@ public class UserServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class,
-					"updateUser", _updateUserParameterTypes51);
+					"updateUser", _updateUserParameterTypes52);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					oldPassword, newPassword1, newPassword2, passwordReset,
@@ -2285,7 +2323,11 @@ public class UserServiceHttp {
 	private static final Class<?>[] _updateStatusParameterTypes48 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _updateUserParameterTypes49 = new Class[] {
+	private static final Class<?>[] _updateStatusParameterTypes49 = new Class[] {
+			long.class, int.class,
+			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateUserParameterTypes50 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
@@ -2306,7 +2348,7 @@ public class UserServiceHttp {
 			java.util.List.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateUserParameterTypes50 = new Class[] {
+	private static final Class<?>[] _updateUserParameterTypes51 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
@@ -2326,7 +2368,7 @@ public class UserServiceHttp {
 			java.util.List.class, java.util.List.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateUserParameterTypes51 = new Class[] {
+	private static final Class<?>[] _updateUserParameterTypes52 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,

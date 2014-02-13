@@ -61,7 +61,6 @@ public class MBCategoryLocalServiceTest {
 	}
 
 	@Test
-	@Transactional
 	public void testGetCategoriesCountWithExcludedCategories()
 		throws Exception {
 
@@ -93,7 +92,6 @@ public class MBCategoryLocalServiceTest {
 	}
 
 	@Test
-	@Transactional
 	public void testGetCategoriesCountWithExcludedCategory() throws Exception {
 		int initialCategoriesCount =
 			MBCategoryLocalServiceUtil.getCategoriesCount(
@@ -119,7 +117,6 @@ public class MBCategoryLocalServiceTest {
 	}
 
 	@Test
-	@Transactional
 	public void testGetCategoriesCountWithStatusApprovedAndExcludedCategories()
 		throws Exception {
 
@@ -158,7 +155,6 @@ public class MBCategoryLocalServiceTest {
 	}
 
 	@Test
-	@Transactional
 	public void testGetCategoriesCountWithStatusApprovedAndExcludedCategory()
 		throws Exception {
 
@@ -192,7 +188,6 @@ public class MBCategoryLocalServiceTest {
 	}
 
 	@Test
-	@Transactional
 	public void testGetCategoriesWithExcludedCategories() throws Exception {
 		List<MBCategory> initialCategories =
 			MBCategoryLocalServiceUtil.getCategories(_groupId);
@@ -230,7 +225,6 @@ public class MBCategoryLocalServiceTest {
 	}
 
 	@Test
-	@Transactional
 	public void testGetCategoriesWithExcludedCategory() throws Exception {
 		List<MBCategory> initialCategories =
 			MBCategoryLocalServiceUtil.getCategories(_groupId);
@@ -262,7 +256,6 @@ public class MBCategoryLocalServiceTest {
 	}
 
 	@Test
-	@Transactional
 	public void testGetCategoriesWithStatusApprovedAndExcludedCategories()
 		throws Exception {
 
@@ -311,7 +304,6 @@ public class MBCategoryLocalServiceTest {
 	}
 
 	@Test
-	@Transactional
 	public void testGetCategoriesWithStatusApprovedAndExcludedCategory()
 		throws Exception {
 

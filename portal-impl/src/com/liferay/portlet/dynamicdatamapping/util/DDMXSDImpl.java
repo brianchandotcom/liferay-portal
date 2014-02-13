@@ -57,15 +57,12 @@ import com.liferay.util.freemarker.FreeMarkerTaglibFactoryUtil;
 
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
-
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 
 import java.io.IOException;
 import java.io.Writer;
-
 import java.net.URL;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -79,6 +76,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
+
+import jodd.util.ArraysUtil;
 
 /**
  * @author Bruno Basto
@@ -125,12 +124,16 @@ public class DDMXSDImpl implements DDMXSD {
 
 		String name = element.attributeValue("name");
 
+
+
+		boolean hasFieldDisplayName = _hasFieldDisplayName(fields, name);
+
 		if (fields != null) {
 			freeMarkerContext.put("fields", fields);
 
 			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
-			if (fieldsDisplayField != null) {
+			if (hasFieldDisplayName) {
 				String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
 					fieldsDisplayField);
 
@@ -154,7 +157,7 @@ public class DDMXSDImpl implements DDMXSD {
 			fieldStructure.put("fieldNamespace", StringUtil.randomId());
 			fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
 
-			if (fields != null) {
+			if (hasFieldDisplayName) {
 				ddmFieldsCounter.incrementKey(name);
 				ddmFieldsCounter.incrementKey(DDMImpl.FIELDS_DISPLAY_NAME);
 			}
@@ -901,6 +904,28 @@ public class DDMXSDImpl implements DDMXSD {
 		}
 
 		jsonObject.put(attributeName, attributeValue);
+	}
+
+
+	private boolean _hasFieldDisplayName(Fields fields, String name)
+		throws Exception {
+
+		boolean hasFieldDisplayName = false;
+
+		if(fields != null) {
+
+			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+			String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
+				fieldsDisplayField);
+
+			if(fieldsDisplayValues != null) {
+				hasFieldDisplayName = ArraysUtil.contains(fieldsDisplayValues,
+					name);
+			}
+		}
+
+		return hasFieldDisplayName;
 	}
 
 	private static final String _DEFAULT_NAMESPACE = "alloy";

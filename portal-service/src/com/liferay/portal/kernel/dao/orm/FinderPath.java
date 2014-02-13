@@ -74,12 +74,11 @@ public class FinderPath {
 		_initLocalCacheKeyPrefix();
 	}
 
-	public Serializable encodeCacheKey(
-		boolean shardEnabled, Object[] arguments) {
+	public Serializable encodeCacheKey(Object[] arguments) {
 
 		StringBundler sb = null;
 
-		if (shardEnabled) {
+		if (ShardUtil.isEnabled()) {
 			sb = new StringBundler(arguments.length * 2 + 3);
 
 			sb.append(ShardUtil.getCurrentShardName());
@@ -99,12 +98,11 @@ public class FinderPath {
 		return _getCacheKey(sb);
 	}
 
-	public Serializable encodeLocalCacheKey(
-		boolean shardEnabled, Object[] arguments) {
+	public Serializable encodeLocalCacheKey(Object[] arguments) {
 
 		StringBundler sb = null;
 
-		if (shardEnabled) {
+		if (ShardUtil.isEnabled()) {
 			sb = new StringBundler(arguments.length * 2 + 3);
 
 			sb.append(ShardUtil.getCurrentShardName());

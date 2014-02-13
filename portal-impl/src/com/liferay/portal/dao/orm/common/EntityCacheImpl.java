@@ -15,7 +15,6 @@
 package com.liferay.portal.dao.orm.common;
 
 import com.liferay.portal.cache.ehcache.MVCCEhcachePortalCacheFactory;
-import com.liferay.portal.dao.shard.advice.ShardAdvice;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -47,16 +46,12 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.collections.map.LRUMap;
 
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
 @DoPrivileged
-public class EntityCacheImpl
-	implements BeanFactoryAware, CacheRegistryItem, EntityCache {
+public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 
 	public static final String CACHE_NAME = EntityCache.class.getName();
 
@@ -308,19 +303,12 @@ public class EntityCacheImpl
 		portalCache.remove(cacheKey);
 	}
 
-	@Override
-	public void setBeanFactory(BeanFactory beanFactory) {
-		if (beanFactory.containsBean(ShardAdvice.class.getName())) {
-			_shardEnabled = true;
-		}
-	}
-
 	public void setMultiVMPool(MultiVMPool multiVMPool) {
 		_multiVMPool = multiVMPool;
 	}
 
 	private Serializable _encodeCacheKey(Serializable primaryKey) {
-		if (_shardEnabled) {
+		if (ShardUtil.isEnabled()) {
 			return new CacheKey(ShardUtil.getCurrentShardName(), primaryKey);
 		}
 
@@ -330,7 +318,7 @@ public class EntityCacheImpl
 	private Serializable _encodeLocalCacheKey(
 		Class<?> clazz, Serializable primaryKey) {
 
-		if (_shardEnabled) {
+		if (ShardUtil.isEnabled()) {
 			return new ShardLocalCacheKey(
 				ShardUtil.getCurrentShardName(), clazz.getName(), primaryKey);
 		}
@@ -411,7 +399,6 @@ public class EntityCacheImpl
 		_portalCaches =
 			new ConcurrentHashMap
 				<String, PortalCache<Serializable, Serializable>>();
-	private boolean _shardEnabled;
 
 	private static class CacheKey implements Externalizable {
 

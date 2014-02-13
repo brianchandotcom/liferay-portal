@@ -160,14 +160,13 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				defaultUserId, Collections.<Group>emptyList(),
 				Collections.<Organization>emptyList(),
 				Collections.<Group>emptyList(), Collections.<Group>emptyList(),
-				Collections.<Group>emptyList(), roles);
+				roles);
 		}
 		finally {
 			if (bag == null) {
 				bag = new PermissionCheckerBagImpl(
 					defaultUserId, Collections.<Group>emptyList(),
 					Collections.<Organization>emptyList(),
-					Collections.<Group>emptyList(),
 					Collections.<Group>emptyList(),
 					Collections.<Group>emptyList(),
 					Collections.<Role>emptyList());
@@ -445,7 +444,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			bag = new PermissionCheckerBagImpl(
 				userId, userGroups, userOrgs, userOrgGroups,
-				userUserGroupGroups, groups, roles);
+				userUserGroupGroups, roles);
 
 			return bag;
 		}
@@ -454,7 +453,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				bag = new PermissionCheckerBagImpl(
 					userId, Collections.<Group>emptyList(),
 					Collections.<Organization>emptyList(),
-					Collections.<Group>emptyList(),
 					Collections.<Group>emptyList(),
 					Collections.<Group>emptyList(),
 					Collections.<Role>emptyList());

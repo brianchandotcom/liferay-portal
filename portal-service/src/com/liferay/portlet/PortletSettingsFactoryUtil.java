@@ -28,6 +28,10 @@ import com.liferay.portal.model.Layout;
 @ProviderType
 public class PortletSettingsFactoryUtil {
 
+	public static void clearCache() {
+		getPortletSettingsFactory().clearCache();
+	}
+
 	public static PortletSettings getCompanyPortletSettings(
 			long companyId, String portletId)
 		throws SystemException {

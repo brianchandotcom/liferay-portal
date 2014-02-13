@@ -2297,12 +2297,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		String layoutFullURL = getLayoutURL(
 			node.getGroupId(), PortletKeys.WIKI, serviceContext);
 
-		String pageTitle = page.getTitle();
-
 		if (Validator.isNotNull(layoutFullURL)) {
 			return layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
 				node.getNodeId() + StringPool.SLASH +
-					HttpUtil.encodeURL(WikiUtil.escapeName(pageTitle));
+					HttpUtil.encodeURL(WikiUtil.escapeName(page.getTitle()));
 		}
 		else {
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(
@@ -2315,7 +2313,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			portletURL.setParameter(
 				"struts_action", "/wiki_admin/view_page_activities");
 			portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-			portletURL.setParameter("title", pageTitle);
+			portletURL.setParameter("title", page.getTitle());
 
 			return portletURL.toString();
 		}

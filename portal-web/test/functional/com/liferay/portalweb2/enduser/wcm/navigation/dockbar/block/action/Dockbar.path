@@ -100,7 +100,7 @@
 <tr>
 	<td>ADD_APPLICATION_LINK</td>
 	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Applications')]</td>
-	<td>add applciation link</td>
+	<td>add application link</td>
 </tr>
 <tr>
 	<td>ADD_APPLICATION_SEARCH_FIELD</td>
@@ -126,7 +126,7 @@
 <tr>
 	<td>ADD_PAGE_NAME_FIELD</td>
 	<td>//input[@id='_145_addLayoutName']</td>
-	<td>adding new page name field</td>
+	<td>new page name field</td>
 </tr>
 <tr>
 	<td>ADD_PAGE_BUTTON</td>
@@ -349,22 +349,22 @@
 <tr>
 	<td>ADMIN</td>
 	<td>//li[@id='_145_adminLinks']/a</td>
-	<td>admin tab</td>
+	<td>admin drop down link</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'Site Administration')]</td>
-	<td>site administration under admin</td>
+	<td>site administration navigation link</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_PAGES</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Pages')]</td>
-	<td></td>
+	<td>pages navigation link</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_CONTENT</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Content')]</td>
-	<td>site administration content under admin</td>
+	<td>content navigation link</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_ICON</td>
@@ -379,12 +379,12 @@
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_USERS</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Users')]</td>
-	<td></td>
+	<td>users navigation link</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_CONFIGURATION</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Configuration')]</td>
-	<td></td>
+	<td>configuration navigation link</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_CATEGORY</td>
@@ -394,7 +394,7 @@
 <tr>
 	<td>ADMIN_CONTROL_PANEL</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'Control Panel')]</td>
-	<td></td>
+	<td>control panel navigation link</td>
 </tr>
 <tr>
 	<td></td>

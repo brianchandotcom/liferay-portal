@@ -85,6 +85,19 @@
 
 	<macrodef name="record-env-database">
 		<sequential>
+			<propertyregex
+				input="${database.version}"
+				override="true"
+				property="database.major.version"
+				regexp="(\d+\.?\d+?).*"
+				replace="\1"
+			/>
+
+			<propertycopy
+				from="env.key.database.${database.type}.${database.major.version}"
+				name="env.key.database"
+				override="true"
+			/>
 		</sequential>
 	</macrodef>
 

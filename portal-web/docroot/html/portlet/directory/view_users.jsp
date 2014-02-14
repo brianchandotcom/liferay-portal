@@ -76,7 +76,7 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 	</c:if>
 
 	<aui:nav-bar>
-		<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/directory/user_search.jsp" searchContainer="<%= userSearchContainer %>" />
+		<aui:nav-bar-search cssClass="navbar-search-advanced" file="/html/portlet/directory/user_search.jsp" searchContainer="<%= userSearchContainer %>" />
 	</aui:nav-bar>
 
 	<%

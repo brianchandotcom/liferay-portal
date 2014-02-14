@@ -35,6 +35,11 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 %>
 
 <c:if test="<%= showToolbar %>">
+
+	<%
+	request.setAttribute("searchContainer", searchContainer);
+	%>
+
 	<liferay-util:include page="/html/portlet/dynamic_data_mapping/template_toolbar.jsp">
 		<liferay-util:param name="redirect" value="<%= currentURL %>" />
 		<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />

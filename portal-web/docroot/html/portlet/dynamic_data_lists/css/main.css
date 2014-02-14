@@ -11,3 +11,7 @@
 		}
 	}
 }
+
+.portlet-dynamic-data-lists .control-group.field-wrapper .btn {
+	margin-top: -7px;
+}

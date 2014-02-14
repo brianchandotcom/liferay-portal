@@ -219,7 +219,15 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 				browseRequest.setFacetSpec(facet.getFieldName(), facetSpec);
 			}
 
-			browseRequest.setCount(PropsValues.INDEX_SEARCH_LIMIT);
+			int end = searchContext.getEnd();
+
+			if ((end == QueryUtil.ALL_POS) ||
+				(end > PropsValues.INDEX_SEARCH_LIMIT)) {
+
+				end = PropsValues.INDEX_SEARCH_LIMIT;
+			}
+
+			browseRequest.setCount(end);
 			browseRequest.setOffset(0);
 			browseRequest.setQuery(
 				(org.apache.lucene.search.Query)QueryTranslatorUtil.translate(

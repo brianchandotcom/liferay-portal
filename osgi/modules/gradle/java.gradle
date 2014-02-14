@@ -8,10 +8,19 @@ subprojects {
 	apply from: "../../gradle/baseline.gradle"
 	apply plugin: "java"
 
-	ext.liferayProjectDir = "${rootDir}/../../.."
+	ant.property(
+		name: "ant.project.name",
+		project.name
+	)
 
-	sourceCompatibility = 1.6
-	targetCompatibility = 1.6
+	ant.property(
+		name: "sdk.dir",
+		liferayProjectDir
+	)
+
+	ext.liferayProjectDir = "${rootDir}/../../.."
+	ext.sourceCompatibility = 1.6
+	ext.targetCompatibility = 1.6
 
 	dependencies {
 		compile files(["${liferayProjectDir}/portal-service/classes"])

@@ -15,16 +15,6 @@ dependencies {
 }
 
 task baseline << {
-	ant.property(
-		name: "ant.project.name",
-		project.name
-	)
-
-	ant.property(
-		name: "sdk.dir",
-		liferayProjectDir
-	)
-
 	ant.taskdef(
 		classname: "com.liferay.util.ant.bnd.BaselineJarTask",
 		classpath: configurations.bnd.asPath,

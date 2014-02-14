@@ -12,29 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.util.comparator;
+
+import com.liferay.portal.model.Portlet;
+
+import java.util.Comparator;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface PredicateFilter<T> {
+public class PortletNameComparator implements Comparator<Portlet> {
 
-	public static PredicateFilter ALL = new PredicateFilter<Object>() {
+	@Override
+	public int compare(Portlet portlet, Portlet portlet2) {
+		String portletName = portlet.getPortletName();
+		String portletName2 = portlet2.getPortletName();
 
-		@Override
-		public boolean filter(Object o) {
-			return true;
+		if (portletName == null) {
+			if (portletName2 == null) {
+				return 0;
+			}
+
+			return -1;
 		}
-	};
 
-	public static PredicateFilter NONE = new PredicateFilter<Object>() {
-
-		@Override
-		public boolean filter(Object o) {
-			return false;
-		}
-	};
-
-	public boolean filter(T t);
+		return portletName.compareTo(portletName2);
+	}
 
 }

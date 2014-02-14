@@ -27,49 +27,47 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)row.getObject();
 %>
 
-<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
-	<portlet:renderURL var="exportRedirectURL">
-		<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
-		<portlet:param name="tabs2" value="current-and-previous" />
-		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-		<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
-	</portlet:renderURL>
+<portlet:renderURL var="exportRedirectURL">
+	<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+	<portlet:param name="tabs2" value="current-and-previous" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+	<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
+</portlet:renderURL>
 
-	<portlet:actionURL var="exportByExportImportConfigurationURL">
-		<portlet:param name="struts_action" value="/layouts_admin/edit_export_import_configuration" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-		<portlet:param name="redirect" value="<%= exportRedirectURL %>" />
-		<portlet:param name="configurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
-	</portlet:actionURL>
+<portlet:actionURL var="exportByExportImportConfigurationURL">
+	<portlet:param name="struts_action" value="/layouts_admin/edit_export_configuration" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+	<portlet:param name="redirect" value="<%= exportRedirectURL %>" />
+	<portlet:param name="configurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
+</portlet:actionURL>
 
-	<liferay-ui:icon
-		image="submit"
-		message="export"
-		url="<%= exportByExportImportConfigurationURL %>"
-	/>
+<liferay-ui:icon
+	image="submit"
+	message="export"
+	url="<%= exportByExportImportConfigurationURL %>"
+/>
 
-	<portlet:renderURL var="deleteRedirectURL">
-		<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
-		<portlet:param name="tabs2" value="new-export-process" />
-		<portlet:param name="exportNav" value="templates" />
-		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-		<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
-	</portlet:renderURL>
+<portlet:renderURL var="deleteRedirectURL">
+	<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+	<portlet:param name="tabs2" value="new-export-process" />
+	<portlet:param name="exportNav" value="export-configurations" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+	<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
+</portlet:renderURL>
 
-	<portlet:actionURL var="deleteExportImportConfigurationURL">
-		<portlet:param name="struts_action" value="/layouts_admin/edit_export_import_configuration" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-		<portlet:param name="redirect" value="<%= deleteRedirectURL %>" />
-		<portlet:param name="configurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
-	</portlet:actionURL>
+<portlet:actionURL var="deleteExportConfigurationURL">
+	<portlet:param name="struts_action" value="/layouts_admin/edit_export_configuration" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+	<portlet:param name="redirect" value="<%= deleteRedirectURL %>" />
+	<portlet:param name="configurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
+</portlet:actionURL>
 
-	<liferay-ui:icon
-		image="delete"
-		message="delete"
-		url="<%= deleteExportImportConfigurationURL %>"
-	/>
-</c:if>
+<liferay-ui:icon
+	image="delete"
+	message="delete"
+	url="<%= deleteExportConfigurationURL %>"
+/>

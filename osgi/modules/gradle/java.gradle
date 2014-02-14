@@ -107,6 +107,26 @@ task baseline << {
 	)
 
 	ant.property(
+		name: "baseline.jar.bnddir.name",
+		".bnd"
+	)
+
+	ant.property(
+		name: "baseline.jar.report.level",
+		"diff"
+	)
+
+	ant.property(
+		name: "baseline.jar.report.only.dirty.packages",
+		true
+	)
+
+	ant.property(
+		name: "baseline.jar.reports.dir.name",
+		"baseline-reports"
+	)
+
+	ant.property(
 		name: "sdk.dir",
 		liferayProjectDir
 	)

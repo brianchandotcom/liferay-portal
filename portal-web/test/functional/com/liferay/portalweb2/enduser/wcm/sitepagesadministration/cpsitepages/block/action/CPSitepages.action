@@ -23,6 +23,10 @@
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
 		</case>
+
+		<case locator-key1="INCOMPLETE_STAGING_PAGE_VARIATION_INFO_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 
 	<command name="click">

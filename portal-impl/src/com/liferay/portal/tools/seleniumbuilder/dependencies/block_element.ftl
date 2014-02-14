@@ -23,7 +23,17 @@
 
 	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending");
 
-	<#if name == "echo">
+	<#if name =="description">
+		<#assign variableContext = variableContextStack.peek()>
+
+		<#assign message = element.attributeValue("message")>
+
+		${selenium}.sendMacroDescriptionLogger(RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(message)}", ${variableContext}));
+
+		<#assign lineNumber = element.attributeValue("line-number")>
+
+		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
+	<#elseif name == "echo">
 		<#assign variableContext = variableContextStack.peek()>
 
 		<#assign message = element.attributeValue("message")>

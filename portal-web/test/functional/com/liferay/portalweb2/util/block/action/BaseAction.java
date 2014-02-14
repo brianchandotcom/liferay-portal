@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb2.util.block.action;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 import java.util.HashMap;
@@ -30,16 +31,53 @@ public class BaseAction {
 		this.liferaySelenium = liferaySelenium;
 	}
 
+	protected String getDescription(
+			String description, String paramCount, String locator,
+			String locatorKey, String value, Map<String, String> variables)
+		throws Exception {
+
+		Pattern pattern = Pattern.compile(
+			".*(\\$\\{locator" + paramCount + "}).*");
+
+		Matcher matcher = pattern.matcher(description);
+
+		if ((locatorKey != null) && pathDescriptions.containsKey(locatorKey)) {
+			while (matcher.find()) {
+				description = StringUtil.replace(
+					description, matcher.group(1),
+					"<b>" + pathDescriptions.get(locatorKey) + "</b>");
+			}
+		}
+
+		if (locator != null) {
+			while (matcher.find()) {
+				description = StringUtil.replace(
+					description, matcher.group(1), "<b>" + locator + "</b>");
+			}
+		}
+
+		pattern = Pattern.compile(".*(\\$\\{value" + paramCount + "}).*");
+
+		matcher = pattern.matcher(description);
+
+		while (matcher.find()) {
+			description = StringUtil.replace(
+				description, matcher.group(1), "<b>" + value + "</b>");
+		}
+
+		return description;
+	}
+
 	protected String getLocator(
-		String locator, String locatorKey, Map<String, String> variables)
-			throws Exception {
+			String locator, String locatorKey, Map<String, String> variables)
+		throws Exception {
 
 		if (locator != null) {
 			return locator;
 		}
 
-		if (paths.containsKey(locatorKey)) {
-			String locatorValue = paths.get(locatorKey);
+		if (pathLocators.containsKey(locatorKey)) {
+			String locatorValue = pathLocators.get(locatorKey);
 
 			if (locatorValue.contains("${") && locatorValue.contains("}")) {
 				String regex = "\\$\\{[^}]*?\\}";
@@ -63,7 +101,7 @@ public class BaseAction {
 					else {
 						throw new Exception(
 							"Variable \"" + variableKey + "\" found in \"" +
-								paths.get(locatorKey) + "\" is not set");
+								pathLocators.get(locatorKey) + "\" is not set");
 					}
 				}
 			}
@@ -75,6 +113,8 @@ public class BaseAction {
 	}
 
 	protected LiferaySelenium liferaySelenium;
-	protected Map<String, String> paths = new HashMap<String, String>();
+	protected Map<String, String> pathDescriptions =
+		new HashMap<String, String>();
+	protected Map<String, String> pathLocators = new HashMap<String, String>();
 
 }

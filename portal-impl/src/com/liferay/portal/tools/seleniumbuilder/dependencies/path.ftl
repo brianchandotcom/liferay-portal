@@ -28,13 +28,35 @@ import java.util.Map;
 </#list>
 
 public class ${seleniumBuilderContext.getPathSimpleClassName(pathName)} {
-	public static Map<String, String> getPaths() {
-		Map<String, String> paths = new HashMap<String, String>();
 
-		paths.put("TOP", "relative=top");
+	public static Map<String, String> getPathDescriptions() {
+		Map<String, String> pathDescriptions = new HashMap<String, String>();
+
+		<#list trElements as trElement>
+			<#assign tdElements = trElement.elements("td")>
+
+			<#if
+				(tdElements[0].getText() != "") &&
+				(tdElements[0].getText() != "EXTEND_ACTION_PATH")
+			>
+				<#if (tdElements[2].getText() != pathName) && (tdElements[2].getText() != "")>
+					pathDescriptions.put("${tdElements[0].getText()}", "${seleniumBuilderFileUtil.escapeJava(tdElements[2].getText())}");
+				<#elseif tdElements[2].getText() = "">
+					pathDescriptions.put("${tdElements[0].getText()}", "${seleniumBuilderFileUtil.escapeJava(tdElements[0].getText())}");
+				</#if>
+			</#if>
+		</#list>
+
+		return pathDescriptions;
+	}
+
+	public static Map<String, String> getPathLocators() {
+		Map<String, String> pathLocators = new HashMap<String, String>();
+
+		pathLocators.put("TOP", "relative=top");
 
 		<#if extendedPath != "">
-			paths.putAll(${seleniumBuilderContext.getPathSimpleClassName(extendedPath)}.getPaths());
+			pathLocators.putAll(${seleniumBuilderContext.getPathSimpleClassName(extendedPath)}.getPathLocators());
 		</#if>
 
 		<#list trElements as trElement>
@@ -44,11 +66,11 @@ public class ${seleniumBuilderContext.getPathSimpleClassName(pathName)} {
 				(tdElements[0].getText() != "") &&
 				(tdElements[0].getText() != "EXTEND_ACTION_PATH")
 			>
-				paths.put("${tdElements[0].getText()}", "${seleniumBuilderFileUtil.escapeJava(tdElements[1].getText())}");
+				pathLocators.put("${tdElements[0].getText()}", "${seleniumBuilderFileUtil.escapeJava(tdElements[1].getText())}");
 			</#if>
 		</#list>
 
-		return paths;
+		return pathLocators;
 	}
 
 }

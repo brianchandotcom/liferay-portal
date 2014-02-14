@@ -96,26 +96,26 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 	param="tabs2"
 	refresh="<%= false %>"
 >
+
+	<%
+	int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(liveGroupId, LayoutExportBackgroundTaskExecutor.class.getName(), false);
+	%>
+
+	<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
+		<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
+			<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
+		</liferay-util:include>
+	</div>
+
 	<liferay-ui:section>
 		<aui:nav-bar>
 			<aui:nav id="exportNav">
 				<aui:nav-item data-value="custom" iconCssClass="icon-puzzle" label="custom" />
-				<aui:nav-item data-value="templates" iconCssClass="icon-archive" label="export-templates" />
+				<aui:nav-item data-value="export-configurations" iconCssClass="icon-archive" label="export-templates" />
 			</aui:nav>
 		</aui:nav-bar>
 
-		<div <%= exportNav.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportImportOptions">
-
-			<%
-			int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(liveGroupId, LayoutExportBackgroundTaskExecutor.class.getName(), false);
-			%>
-
-			<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
-				<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
-					<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
-				</liferay-util:include>
-			</div>
-
+		<div <%= exportNav.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportOptions">
 			<portlet:actionURL var="exportPagesURL">
 				<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 				<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
@@ -600,8 +600,8 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 			</aui:form>
 		</div>
 
-		<div <%= exportNav.equals("templates") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportImportConfigurations">
-			<liferay-util:include page="/html/portlet/layouts_admin/export_configurations.jsp">
+		<div <%= exportNav.equals("export-configurations") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportConfigurations">
+			<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_configurations.jsp">
 				<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 				<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -692,19 +692,16 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 	};
 
 	var processDataValue = function(dataValue) {
+		var exportOptions = A.one('#<portlet:namespace />exportOptions');
+		var exportConfigurations = A.one('#<portlet:namespace />exportConfigurations');
+
 		if (dataValue === 'custom') {
-			var exportImportOptions = A.one('#<portlet:namespace />exportImportOptions');
-			var exportImportConfigurations = A.one('#<portlet:namespace />exportImportConfigurations');
-
-			exportImportConfigurations.hide();
-			exportImportOptions.show();
+			exportConfigurations.hide();
+			exportOptions.show();
 		}
-		else if (dataValue === 'templates') {
-			var exportImportOptions = A.one('#<portlet:namespace />exportImportOptions');
-			var exportImportConfigurations = A.one('#<portlet:namespace />exportImportConfigurations');
-
-			exportImportOptions.hide();
-			exportImportConfigurations.show();
+		else if (dataValue === 'export-configurations') {
+			exportOptions.hide();
+			exportConfigurations.show();
 		}
 	};
 

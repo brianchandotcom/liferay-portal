@@ -49,12 +49,12 @@ public class FileEntryDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		_companyId = themeDisplay.getCompanyId();
+		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
+		_folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 		_permissionChecker = themeDisplay.getPermissionChecker();
 		_portletDisplay = themeDisplay.getPortletDisplay();
 		_scopeGroupId = themeDisplay.getScopeGroupId();
-		_companyId = themeDisplay.getCompanyId();
-		_folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
-		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 	}
 
 	public String getPublishButtonLabel() throws SystemException {

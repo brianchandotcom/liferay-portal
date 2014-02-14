@@ -71,7 +71,9 @@ catch (Exception e) {
 					%>
 
 						<li>
-							<%= messageListItemJSONArray.getString("type") %>:
+							<%= messageListItemJSONArray.getString("type") %>
+
+							<%= messageListItemJSONArray.getString("site") %>:
 
 							<strong><%= HtmlUtil.escape(messageListItemJSONArray.getString("name")) %></strong>
 

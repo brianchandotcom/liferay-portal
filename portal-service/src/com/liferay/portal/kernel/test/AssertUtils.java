@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.sql.Blob;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -62,6 +63,14 @@ public class AssertUtils {
 		double[] expectedArray, double[] actualArray) {
 
 		Assert.assertArrayEquals(expectedArray, actualArray, 0);
+	}
+
+	public static void assertEquals(List<?> expectedList, List<?> actualList) {
+		Assert.assertEquals(
+			"The lists are different sizes", expectedList.size(),
+			actualList.size());
+
+		Assert.assertTrue(expectedList.containsAll(actualList));
 	}
 
 	public static void assertEquals(

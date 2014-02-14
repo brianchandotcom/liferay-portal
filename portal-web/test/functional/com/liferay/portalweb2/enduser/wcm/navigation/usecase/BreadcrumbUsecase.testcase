@@ -53,6 +53,8 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
+		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
+
 		<execute macro="Breadcrumb#viewConfigurationPreview">
 			<var name="breadcrumbListVisible" value="Site Name,Parent Page Name,Child Page Name" />
 		</execute>
@@ -88,6 +90,8 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
+		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
+
 		<execute macro="Breadcrumb#configureBreadcrumb">
 			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Application Breadcrumb" />
 			<var name="uncheckSetupName" value="Show Page,Show Parent Sites" />
@@ -114,6 +118,8 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
+		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
+
 		<execute macro="Breadcrumb#configureBreadcrumb">
 			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Application Breadcrumb" />
 			<var name="uncheckSetupName" value="Show Guest Site,Show Page,Show Parent Sites" />
@@ -138,6 +144,8 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
+		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
+
 		<execute macro="Breadcrumb#configureBreadcrumb">
 			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
 		</execute>
@@ -161,6 +169,8 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
+		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
+
 		<execute macro="Breadcrumb#configureBreadcrumb">
 			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Application Breadcrumb" />
 		</execute>
@@ -183,6 +193,8 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
+
+		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
 			<var name="uncheckSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />

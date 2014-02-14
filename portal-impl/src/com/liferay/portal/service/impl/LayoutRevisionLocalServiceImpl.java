@@ -35,6 +35,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutRevisionLocalServiceBaseImpl;
 import com.liferay.portal.util.comparator.LayoutRevisionCreateDateComparator;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -517,7 +518,14 @@ public class LayoutRevisionLocalServiceImpl
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			layoutRevision.setHead(true);
+		}
+		else {
+			layoutRevision.setHead(false);
+		}
 
+		layoutRevisionPersistence.update(layoutRevision);
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
 			List<LayoutRevision> layoutRevisions =
 				layoutRevisionPersistence.findByL_P(
 					layoutRevision.getLayoutSetBranchId(),
@@ -534,8 +542,6 @@ public class LayoutRevisionLocalServiceImpl
 			}
 		}
 		else {
-			layoutRevision.setHead(false);
-
 			List<LayoutRevision> layoutRevisions =
 				layoutRevisionPersistence.findByL_P_S(
 					layoutRevision.getLayoutSetBranchId(),
@@ -554,8 +560,6 @@ public class LayoutRevisionLocalServiceImpl
 				}
 			}
 		}
-
-		layoutRevisionPersistence.update(layoutRevision);
 
 		return layoutRevision;
 	}
@@ -613,7 +617,8 @@ public class LayoutRevisionLocalServiceImpl
 		long parentLayoutRevisionId =
 			layoutRevision.getParentLayoutRevisionId();
 
-		boolean fork = false;
+		List<LayoutRevision> parentLayoutRevisions =
+			new ArrayList<LayoutRevision>();
 
 		while (parentLayoutRevisionId !=
 					LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) {
@@ -626,23 +631,28 @@ public class LayoutRevisionLocalServiceImpl
 				break;
 			}
 
+			parentLayoutRevisions.add(parentLayoutRevision);
+
 			parentLayoutRevisionId =
 				parentLayoutRevision.getParentLayoutRevisionId();
-
-			if (parentLayoutRevision.getChildren().size() > 1) {
-				fork = true;
-			}
-
-			if (!fork) {
-				layoutRevisionLocalService.deleteLayoutRevision(
-					parentLayoutRevision);
-			}
 		}
 
 		layoutRevision.setParentLayoutRevisionId(parentLayoutRevisionId);
 		layoutRevision.setMajor(true);
 
 		layoutRevisionPersistence.update(layoutRevision);
+
+		for (LayoutRevision parentLayoutRevision : parentLayoutRevisions) {
+			List<LayoutRevision> childrenLayoutRevisions =
+				parentLayoutRevision.getChildren();
+
+			if (!childrenLayoutRevisions.isEmpty()) {
+				break;
+			}
+
+			layoutRevisionLocalService.deleteLayoutRevision(
+				parentLayoutRevision);
+		}
 
 		return layoutRevision;
 	}

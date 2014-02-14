@@ -1,33 +1,18 @@
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
 package com.liferay.portal.repository.cmis.search;
-
-import static org.mockito.Matchers.eq;
-
-import java.lang.reflect.Field;
-
-import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
-import org.powermock.api.mockito.PowerMockito;
 
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
@@ -47,6 +32,24 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+
+import java.lang.reflect.Field;
+
+import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+
+import org.powermock.api.mockito.PowerMockito;
+
+import static org.mockito.Matchers.eq;
 
 /**
  * @author Mika Koivisto
@@ -287,9 +290,8 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		Assert.assertEquals(_QUERY_PREFIX + where + _QUERY_POSTFIX, query);
 	}
 
-	protected String buildTestFolderQuery(
-		SearchSubfolders searchSubfolders)
-		throws SystemException, SearchException {
+	protected String buildTestFolderQuery(SearchSubfolders searchSubfolders)
+		throws SearchException, SystemException {
 
 		setExpectations();
 
@@ -325,18 +327,6 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		resetServiceOf(RepositoryEntryLocalServiceUtil.class);
 	}
 
-	private void resetServiceOf(Class<?> serviceUtilClass) {
-		try {
-			Field field = serviceUtilClass.getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(serviceUtilClass, null);
-		}
-		catch (Exception ignored) {
-		}
-	}
-
 	protected void setExpectations() throws SystemException {
 		when(
 			_repositoryEntry.getMappedId()
@@ -350,31 +340,45 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			_repositoryEntry
 		);
 
-		when(_beanLocatorProxy.locate(
-			RepositoryEntryLocalService.class.getName())
+		when(
+			_beanLocatorProxy.locate(
+				RepositoryEntryLocalService.class.getName())
 		).thenReturn(
 			_repositoryEntryLocalService
 		);
 
-		when(_beanLocatorProxy.locate(
-			DLAppService.class.getName())
+		when(
+			_beanLocatorProxy.locate(DLAppService.class.getName())
 		).thenReturn(
 			_dlAppService
 		);
 	}
+
+	private void resetServiceOf(Class<?> serviceUtilClass) {
+		try {
+			Field field = serviceUtilClass.getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(serviceUtilClass, null);
+		}
+		catch (Exception ignored) {
+		}
+	}
+
+	private static final BeanLocator _DEFAULT_BEAN_LOCATOR =
+		PortalBeanLocatorUtil.getBeanLocator();
 
 	private static final String _QUERY_POSTFIX = ") ORDER BY HITS DESC";
 
 	private static final String _QUERY_PREFIX =
 		"SELECT cmis:objectId, SCORE() AS HITS FROM cmis:document WHERE (";
 
-	private static final BeanLocator _DEFAULT_BEAN_LOCATOR =
-		PortalBeanLocatorUtil.getBeanLocator();
-
-	@Spy  private BeanLocator _beanLocatorProxy = _DEFAULT_BEAN_LOCATOR;
 	@Mock private DLAppService _dlAppService;
 	@Mock private RepositoryEntry _repositoryEntry;
 	@Mock private RepositoryEntryLocalService _repositoryEntryLocalService;
 
+	@Spy  private BeanLocator _beanLocatorProxy = _DEFAULT_BEAN_LOCATOR;
 	private static enum SearchSubfolders { YES, NO };
+
 }

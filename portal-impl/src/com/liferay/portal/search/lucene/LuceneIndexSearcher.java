@@ -82,9 +82,7 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.SortField;
-import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.search.highlight.Formatter;
 import org.apache.lucene.search.highlight.TokenGroup;
 
@@ -234,15 +232,13 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 			BrowseResult browseResult = boboBrowser.browse(browseRequest);
 
-			BrowseHit[] browseHits = browseResult.getHits();
-
 			long endTime = System.currentTimeMillis();
 
 			float searchTime = (float)(endTime - startTime) / Time.SECOND;
 
 			hits = toHits(
-				indexSearcher, new HitDocs(browseHits), query, startTime,
-				searchTime, searchContext.getStart(), searchContext.getEnd());
+				indexSearcher, browseResult, query, startTime, searchTime,
+				searchContext.getStart(), searchContext.getEnd());
 
 			Map<String, FacetAccessible> facetMap = browseResult.getFacetMap();
 
@@ -269,16 +265,13 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 				BrowseResult browseResult = boboBrowser.browse(browseRequest);
 
-				BrowseHit[] browseHits = browseResult.getHits();
-
 				long endTime = System.currentTimeMillis();
 
 				float searchTime = (float)(endTime - startTime) / Time.SECOND;
 
 				hits = toHits(
-					indexSearcher, new HitDocs(browseHits), query, startTime,
-					searchTime, searchContext.getStart(),
-					searchContext.getEnd());
+					indexSearcher, browseResult, query, startTime, searchTime,
+					searchContext.getStart(), searchContext.getEnd());
 
 				Map<String, FacetAccessible> facetMap =
 					browseResult.getFacetMap();
@@ -485,11 +478,13 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected Hits toHits(
-			IndexSearcher indexSearcher, HitDocs hitDocs, Query query,
+			IndexSearcher indexSearcher, BrowseResult browseResult, Query query,
 			long startTime, float searchTime, int start, int end)
 		throws IOException, ParseException {
 
-		int total = hitDocs.getTotalHits();
+		int total = browseResult.getNumHits();
+
+		BrowseHit[] browseHits = browseResult.getHits();
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
 			start = 0;
@@ -544,7 +539,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 		}
 
 		for (int i = start; i < start + subsetTotal; i++) {
-			int docId = hitDocs.getDocId(i);
+			int docId = browseHits[i].getDocid();
 
 			org.apache.lucene.document.Document document = indexSearcher.doc(
 				docId, fieldSelector);
@@ -567,7 +562,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 			subsetDocs.add(subsetDocument);
 
-			Float subsetScore = hitDocs.getScore(i);
+			Float subsetScore = browseHits[i].getScore();
 
 			if (scoredFieldNamesCount > 0) {
 				subsetScore = subsetScore / scoredFieldNamesCount;
@@ -617,54 +612,6 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);
 		}
-	}
-
-	private class HitDocs {
-
-		public HitDocs(BrowseHit[] browseHits) {
-			_browseHits = browseHits;
-		}
-
-		public int getDocId(int i) {
-			if (_topFieldDocs != null) {
-				ScoreDoc scoreDoc = _topFieldDocs.scoreDocs[i];
-
-				return scoreDoc.doc;
-			}
-			else if (_browseHits != null) {
-				return _browseHits[i].getDocid();
-			}
-
-			throw new IllegalStateException();
-		}
-
-		public float getScore(int i) {
-			if (_topFieldDocs != null) {
-				ScoreDoc scoreDoc = _topFieldDocs.scoreDocs[i];
-
-				return scoreDoc.score;
-			}
-			else if (_browseHits != null) {
-				return _browseHits[i].getScore();
-			}
-
-			throw new IllegalStateException();
-		}
-
-		public int getTotalHits() {
-			if (_topFieldDocs != null) {
-				return _topFieldDocs.totalHits;
-			}
-			else if (_browseHits != null) {
-				return _browseHits.length;
-			}
-
-			throw new IllegalStateException();
-		}
-
-		private BrowseHit[] _browseHits;
-		private TopFieldDocs _topFieldDocs;
-
 	}
 
 	private class TermCollectingFormatter implements Formatter {

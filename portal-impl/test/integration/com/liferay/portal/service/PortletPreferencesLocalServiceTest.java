@@ -430,16 +430,17 @@ public class PortletPreferencesLocalServiceTest {
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 
-		List<PortletPreferences> portletPreferences =
+		List<PortletPreferences> portletPreferencesList =
 			PortletPreferencesLocalServiceUtil.getPortletPreferences(
 				_layout.getCompanyId(), _layout.getGroupId(),
 				_layout.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,
 				_portlet.getPortletId(), false);
 
-		Assert.assertEquals(1, portletPreferences.size());
+		Assert.assertEquals(1, portletPreferencesList.size());
 
-		Assert.assertEquals(
-			_layout.getPlid(), portletPreferences.get(0).getPlid());
+		PortletPreferences portletPreferences = portletPreferencesList.get(0);
+
+		Assert.assertEquals(_layout.getPlid(), portletPreferences.getPlid());
 	}
 
 	@Test
@@ -524,16 +525,16 @@ public class PortletPreferencesLocalServiceTest {
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 
-		List<PortletPreferences> listPortletPreferences =
+		List<PortletPreferences> portletPreferencesList =
 			PortletPreferencesLocalServiceUtil.getPortletPreferences(
 				PortletKeys.PREFS_OWNER_TYPE_GROUP, _layout.getPlid(),
 				_portlet.getPortletId());
 
-		Assert.assertEquals(1, listPortletPreferences.size());
+		Assert.assertEquals(1, portletPreferencesList.size());
 
 		PortletPreferencesImpl portletPreferenesImpl =
 			PortletPreferencesTestUtil.toPortletPreferencesImpl(
-				listPortletPreferences.get(0));
+				portletPreferencesList.get(0));
 
 		assertOwner(_layout.getGroup(), portletPreferenesImpl);
 	}
@@ -550,17 +551,19 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
 			layout, _portlet);
 
-		List<PortletPreferences> portletPreferences =
+		List<PortletPreferences> portletPreferencesList =
 			PortletPreferencesLocalServiceUtil.getPortletPreferences(
 				_layout.getCompanyId(), _layout.getGroupId(),
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _portlet.getPortletId(),
 				false);
 
-		Assert.assertEquals(2, portletPreferences.size());
+		Assert.assertEquals(2, portletPreferencesList.size());
+
+		PortletPreferences portletPreferences = portletPreferencesList.get(0);
 
 		Assert.assertEquals(
-			_portlet.getPortletId(), portletPreferences.get(0).getPortletId());
+			_portlet.getPortletId(), portletPreferences.getPortletId());
 	}
 
 	@Test
@@ -577,16 +580,16 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
 			layout, _portlet);
 
-		List<PortletPreferences> listPortletPreferences =
+		List<PortletPreferences> portletPreferencesList =
 			PortletPreferencesLocalServiceUtil.getPortletPreferences(
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 				_portlet.getPortletId());
 
-		Assert.assertEquals(1, listPortletPreferences.size());
+		Assert.assertEquals(1, portletPreferencesList.size());
 
 		PortletPreferencesImpl portletPreferenesImpl =
 			PortletPreferencesTestUtil.toPortletPreferencesImpl(
-				listPortletPreferences.get(0));
+				portletPreferencesList.get(0));
 
 		assertOwner(_layout, portletPreferenesImpl);
 	}
@@ -660,18 +663,18 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
 			layout, _portlet);
 
-		List<PortletPreferences> listPortletPreferences =
+		List<PortletPreferences> portletPreferencesList =
 			PortletPreferencesLocalServiceUtil.getPortletPreferences(
 				_layout.getPlid(), _portlet.getPortletId());
 
-		Assert.assertEquals(1, listPortletPreferences.size());
+		Assert.assertEquals(1, portletPreferencesList.size());
+
+		PortletPreferences portletPreferences = portletPreferencesList.get(0);
+
+		Assert.assertEquals(_layout.getPlid(), portletPreferences.getPlid());
 
 		Assert.assertEquals(
-			_layout.getPlid(), listPortletPreferences.get(0).getPlid());
-
-		Assert.assertEquals(
-			_portlet.getPortletId(),
-			listPortletPreferences.get(0).getPortletId());
+			_portlet.getPortletId(), portletPreferences.getPortletId());
 	}
 
 	protected void assertEmptyPortletPreferencesMap(

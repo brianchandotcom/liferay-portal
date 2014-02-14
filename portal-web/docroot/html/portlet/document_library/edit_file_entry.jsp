@@ -42,7 +42,6 @@ if (repositoryId <= 0) {
 }
 
 long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
-String extension = BeanParamUtil.getString(fileEntry, request, "extension");
 
 Folder folder = null;
 
@@ -94,7 +93,6 @@ else if (fileEntry != null) {
 
 boolean approved = false;
 boolean checkedOut = false;
-boolean draft = false;
 boolean hasLock = false;
 boolean pending = false;
 
@@ -103,7 +101,6 @@ Lock lock = null;
 if (fileEntry != null) {
 	approved = fileVersion.isApproved();
 	checkedOut = fileEntry.isCheckedOut();
-	draft = fileVersion.isDraft();
 	hasLock = fileEntry.hasLock();
 	lock = fileEntry.getLock();
 	pending = fileVersion.isPending();

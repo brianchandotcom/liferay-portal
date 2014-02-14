@@ -18,7 +18,10 @@
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
 
 		<if>
-			<condition action="PGDocumentsandmedia#isElementPresent" locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL_GENERIC" />
+			<or>
+				<condition action="PGDocumentsandmedia#isElementPresent" locator-key1="ENTRY_ICON_FOLDER_THUMBNAIL_GENERIC" />
+				<condition action="PGDocumentsandmedia#isElementPresent" locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL_GENERIC" />
+			</or>
 			<then>
 				<execute action="PGDocumentsandmedia#check" locator-key1="TOOLBAR_SELECT_ALL_CHECKBOX" />
 				<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />

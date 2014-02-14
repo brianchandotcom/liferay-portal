@@ -402,6 +402,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_ICON_FOLDER_THUMBNAIL_GENERIC</td>
+	<td>//a[@data-folder='true']/div[@class='entry-thumbnail']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_ICON_FOLDER_TITLE</td>
 	<td>//div[contains(.,'${key_dmFolderName}') and a[@data-folder='true']]//span[@class='entry-title']/span</td>
 	<td></td>

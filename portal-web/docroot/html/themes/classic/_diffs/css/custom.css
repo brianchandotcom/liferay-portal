@@ -37,11 +37,25 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	#skip-to-content:focus {
-		clip: rect(auto auto auto auto);
-		margin-top: 35px;
-		right: 5px;
-		z-index: 200;
+	#nav-access {
+		a {
+			@include box-shadow(rgba(0, 0, 0, .1) 1px 1px 1px);
+
+			background: #009AE5;
+			background: rgba(0, 154, 229, .9);
+			border: 1px solid #FFF;
+			color: #FFF;
+			left: 0;
+			outline: none;
+			padding: 8px;
+			position: absolute;
+			right: 0;
+			text-align: center;
+
+			&:focus {
+				top: 100em;
+			}
+		}
 	}
 
 	#sign-in {

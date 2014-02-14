@@ -72,8 +72,8 @@
 	</macrodef>
 
 	<macrodef name="prepare-test-cluster-properties">
-		<attribute name="app.server.parent.dir" default="${app.server.parent.dir}" />
-		<attribute name="cluster.node.id" default="1" />
+		<attribute default="${app.server.parent.dir}" name="app.server.parent.dir" />
+		<attribute default="1" name="cluster.node.id" />
 
 		<sequential>
 			<if>

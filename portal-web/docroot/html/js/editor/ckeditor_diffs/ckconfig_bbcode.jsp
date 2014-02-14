@@ -16,13 +16,16 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ContentTypes" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.LocaleUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
-<%@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="com.liferay.portlet.messageboards.model.MBThreadConstants" %>
+
+<%@ page import="java.util.Locale" %>
 
 <%
 String contentsLanguageId = ParamUtil.getString(request, "contentsLanguageId");
@@ -88,7 +91,13 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.contentsCss = ['<%= HtmlUtil.escapeJS(cssPath) %>/aui.css', '<%= HtmlUtil.escapeJS(cssPath) %>/main.css'];
 
-	config.contentsLangDirection = '<%= PortalUtil.isRightToLeft(request) ? "rtl" : "ltr" %>';
+	<%
+	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
+
+	String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
+	%>
+
+	config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>';
 
 	config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.replace("iw_", "he_")) %>';
 

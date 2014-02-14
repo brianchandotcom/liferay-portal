@@ -415,6 +415,15 @@
 							'aui-node'
 						]
 					},
+					'liferay-menu-toggle': {
+						path: 'menu_toggle.js',
+						requires: [
+							'aui-node',
+							'event-move',
+							'event-outside',
+							'liferay-store'
+						]
+					},
 					'liferay-message': {
 						path: 'message.js',
 						requires: [

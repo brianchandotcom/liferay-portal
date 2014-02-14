@@ -61,67 +61,13 @@ if (Validator.isNull(title)) {
 		</c:if>
 
 		<c:if test="<%= dropdown %>">
-			<aui:script use="aui-base,event-move,event-outside,liferay-store">
-				A.Event.defineOutside('touchend');
-
-				var container = A.one('#<%= id %>');
-
-				container.one('a').on(
-					'gesturemovestart',
-					function(event) {
-						var currentTarget = event.currentTarget;
-
-						currentTarget.once(
-							'gesturemoveend',
-							function(event) {
-								container.toggleClass('open');
-
-								var menuOpen = container.hasClass('open');
-
-								<c:choose>
-									<c:when test="<%= !toggle %>">
-										var handle = Liferay.Data['<%= id %>Handle'];
-
-										if (menuOpen && !handle) {
-											var eventOutside = event._event.type;
-
-											if (eventOutside === 'MSPointerUp') {
-												eventOutside = 'mouseup';
-											}
-
-											eventOutside = eventOutside + 'outside';
-
-											handle = currentTarget.on(
-												eventOutside,
-												function(event) {
-													if (!event.target.ancestor('#<%= id %>')) {
-														Liferay.Data['<%= id %>Handle'] = null;
-
-														handle.detach();
-
-														container.removeClass('open');
-													}
-												}
-											);
-										}
-										else if (handle) {
-											handle.detach();
-
-											handle = null;
-										}
-
-										Liferay.Data['<%= id %>Handle'] = handle;
-									</c:when>
-									<c:otherwise>
-										var data = {};
-
-										data['<%= id %>'] = menuOpen ? 'open' : 'closed';
-
-										Liferay.Store(data);
-									</c:otherwise>
-								</c:choose>
-							}
-						);
+			<aui:script use="aui-base,event-move,event-outside,liferay-menu-toggle,liferay-store">
+				var toggleMenu = new Liferay.MenuToggle(
+					{
+						content: '#<%= id %>',
+						toggle: <%= toggle %>,
+						toggleTouch: true,
+						trigger: '#<%= id %> a'
 					}
 				);
 			</aui:script>

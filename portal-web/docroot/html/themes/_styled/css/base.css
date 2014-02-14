@@ -169,7 +169,9 @@ body.html-editor {
 
 /* ---------- Miscellaneous ---------- */
 
-#skip-to-content {
-	clip: rect(0 0 0 0);
+#nav-access {
 	position: absolute;
+	top: -100em;
+	width: 100%;
+	z-index: 1000;
 }

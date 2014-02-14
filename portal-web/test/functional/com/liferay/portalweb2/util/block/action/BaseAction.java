@@ -32,69 +32,52 @@ public class BaseAction {
 	}
 
 	protected String getDescription(
-		String description, String locator, String locatorKey,
-		Map<String, String> variables, String value) throws Exception {
+			String description, String paramCount, String locator,
+			String locatorKey, String value, Map<String, String> variables)
+		throws Exception {
+
+		Pattern pattern = Pattern.compile(
+			".*(\\$\\{locator" + paramCount + "}).*");
+
+		Matcher matcher = pattern.matcher(description);
+
+		if ((locatorKey != null) && pathDescriptions.containsKey(locatorKey)) {
+			while (matcher.find()) {
+				description = StringUtil.replace(
+					description, matcher.group(1),
+					"<b>" + pathDescriptions.get(locatorKey) + "</b>");
+			}
+		}
 
 		if (locator != null) {
-			String regex = ".*(\\$\\{locator1}).*";
-			Pattern pattern = Pattern.compile(regex);
-			Matcher matcher = pattern.matcher(description);
-
 			while (matcher.find()) {
 				description = StringUtil.replace(
 					description, matcher.group(1), "<b>" + locator + "</b>");
 			}
-
-			String valueRegex = ".*(\\$\\{value1}).*";
-			Pattern pattern2 = Pattern.compile(valueRegex);
-			Matcher matcher2 = pattern2.matcher(description);
-
-			while (matcher2.find()) {
-				description = StringUtil.replace(
-					description, matcher2.group(1), "<b>" + value + "</b>");
-			}
-
-			return description;
 		}
 
-		if (locatorKey != null) {
-			String locatorValue = pathsDescription.get(locatorKey);
+		pattern = Pattern.compile(".*(\\$\\{value" + paramCount + "}).*");
 
-			String valueRegex = ".*(\\$\\{value1}).*";
-			Pattern pattern2 = Pattern.compile(valueRegex);
-			Matcher matcher2 = pattern2.matcher(description);
+		matcher = pattern.matcher(description);
 
-			while (matcher2.find()) {
-				description = StringUtil.replace(
-					description, matcher2.group(1), "<b>" + value + "</b>");
-			}
-
-			String regex = ".*(\\$\\{locator1}).*";
-			Pattern pattern = Pattern.compile(regex);
-			Matcher matcher = pattern.matcher(description);
-
-			while (matcher.find()) {
-				description = StringUtil.replace(
-					description, matcher.group(1),
-					"<b>" + locatorValue + "</b>");
-			}
-
-			return description;
+		while (matcher.find()) {
+			description = StringUtil.replace(
+				description, matcher.group(1), "<b>" + value + "</b>");
 		}
 
 		return description;
 	}
 
 	protected String getLocator(
-		String locator, String locatorKey, Map<String, String> variables)
-			throws Exception {
+			String locator, String locatorKey, Map<String, String> variables)
+		throws Exception {
 
 		if (locator != null) {
 			return locator;
 		}
 
-		if (paths.containsKey(locatorKey)) {
-			String locatorValue = paths.get(locatorKey);
+		if (pathLocators.containsKey(locatorKey)) {
+			String locatorValue = pathLocators.get(locatorKey);
 
 			if (locatorValue.contains("${") && locatorValue.contains("}")) {
 				String regex = "\\$\\{[^}]*?\\}";
@@ -118,7 +101,7 @@ public class BaseAction {
 					else {
 						throw new Exception(
 							"Variable \"" + variableKey + "\" found in \"" +
-								paths.get(locatorKey) + "\" is not set");
+								pathLocators.get(locatorKey) + "\" is not set");
 					}
 				}
 			}
@@ -130,8 +113,8 @@ public class BaseAction {
 	}
 
 	protected LiferaySelenium liferaySelenium;
-	protected Map<String, String> paths = new HashMap<String, String>();
-	protected Map<String, String> pathsDescription =
+	protected Map<String, String> pathDescriptions =
 		new HashMap<String, String>();
+	protected Map<String, String> pathLocators = new HashMap<String, String>();
 
 }

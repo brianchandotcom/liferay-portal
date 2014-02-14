@@ -36,6 +36,17 @@
 				top: 2px;
 			}
 		}
+
+		.lfr-token {
+			max-width: 100%;
+			white-space: nowrap;
+
+			.lfr-token-text {
+				@include ellipsis;
+
+				max-width: 95%;
+			}
+		}
 	}
 
 	.header-title, .tree-node-content .tree-label {

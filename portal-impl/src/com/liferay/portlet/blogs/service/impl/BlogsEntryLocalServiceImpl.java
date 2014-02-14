@@ -1423,6 +1423,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
+		String entryTitle = entry.getTitle();
+		String entryURL = getEntryURL(entry, serviceContext);
+
 		String fromName = BlogsUtil.getEmailFromName(
 			preferences, entry.getCompanyId());
 		String fromAddress = BlogsUtil.getEmailFromAddress(
@@ -1446,15 +1449,18 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setClassPK(entry.getEntryId());
+		subscriptionSender.setClassName(entry.getModelClassName());
 		subscriptionSender.setCompanyId(entry.getCompanyId());
 		subscriptionSender.setContextAttribute(
 			"[$BLOGS_ENTRY_CONTENT$]", entry.getContent(), false);
 		subscriptionSender.setContextAttributes(
 			"[$BLOGS_ENTRY_DESCRIPTION$]", entry.getDescription(),
 			"[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]", entry.getStatusByUserName(),
-			"[$BLOGS_ENTRY_TITLE$]", entry.getTitle(), "[$BLOGS_ENTRY_URL$]",
-			getEntryURL(entry, serviceContext));
+			"[$BLOGS_ENTRY_TITLE$]", entryTitle, "[$BLOGS_ENTRY_URL$]",
+			entryURL);
 		subscriptionSender.setContextUserPrefix("BLOGS_ENTRY");
+		subscriptionSender.setEntryTitle(entryTitle);
+		subscriptionSender.setEntryURL(entryURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);

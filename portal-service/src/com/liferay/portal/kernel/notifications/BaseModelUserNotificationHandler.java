@@ -14,37 +14,25 @@
 
 package com.liferay.portal.kernel.notifications;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.AuditedModel;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortletURLFactoryUtil;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Sergio González
  */
-public abstract class BaseModelUserNotificationHandler<T extends AuditedModel>
+public abstract class BaseModelUserNotificationHandler
 	extends BaseUserNotificationHandler {
-
-	protected abstract T fetchBaseModel(long classPK)
-		throws SystemException;
 
 	@Override
 	protected String getBody(
@@ -55,33 +43,45 @@ public abstract class BaseModelUserNotificationHandler<T extends AuditedModel>
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
+		String entryTitle = jsonObject.getString("entryTitle");
+
+		String className = jsonObject.getString("className");
 		long classPK = jsonObject.getLong("classPK");
 
-		T baseModel = fetchBaseModel(classPK);
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
 
-		if (baseModel == null) {
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		AssetRenderer assetRenderer = null;
+
+		try {
+			assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+		}
+		catch (Exception e) {
+		}
+
+		if (assetRenderer == null) {
 			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
 				userNotificationEvent.getUserNotificationEventId());
 
 			return null;
 		}
 
+		int notificationType = jsonObject.getInt("notificationType");
+
+		String title = getTitle(
+			notificationType, assetRenderer, serviceContext);
+
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("<div class=\"title\">");
-
-		int notificationType = jsonObject.getInt("notificationType");
-
-		String title = getTitle(notificationType);
-
-		sb.append(
-			serviceContext.translate(
-				title, HtmlUtil.escape(getUserName(baseModel))));
-
+		sb.append(title);
 		sb.append("</div><div class=\"body\">");
-		sb.append(
-			HtmlUtil.escape(
-				StringUtil.shorten(getTitle(baseModel, serviceContext)), 50));
+		sb.append(HtmlUtil.escape(StringUtil.shorten(entryTitle), 50));
 		sb.append("</div>");
 
 		return sb.toString();
@@ -96,56 +96,37 @@ public abstract class BaseModelUserNotificationHandler<T extends AuditedModel>
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		long classPK = jsonObject.getLong("classPK");
-
-		T baseModel = fetchBaseModel(classPK);
-
-		if (baseModel == null) {
-			return null;
-		}
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		User user = themeDisplay.getUser();
-
-		Group group = user.getGroup();
-
-		long portletPlid = PortalUtil.getPlidFromPortletId(
-			group.getGroupId(), true, getPortletId());
-
-		PortletURL portletURL = null;
-
-		if (portletPlid != 0) {
-			portletURL = PortletURLFactoryUtil.create(
-				serviceContext.getLiferayPortletRequest(), getPortletId(),
-				portletPlid, PortletRequest.RENDER_PHASE);
-
-			setLinkParameters(portletURL, baseModel);
-		}
-		else {
-			LiferayPortletResponse liferayPortletResponse =
-				serviceContext.getLiferayPortletResponse();
-
-			portletURL = liferayPortletResponse.createRenderURL(getPortletId());
-
-			setLinkParameters(portletURL, baseModel);
-
-			portletURL.setWindowState(WindowState.MAXIMIZED);
-		}
-
-		return portletURL.toString();
+		return jsonObject.getString("entryURL");
 	}
 
-	protected abstract String getTitle(int notificationType);
+	protected String getTitle(
+		int notificationType, AssetRenderer assetRenderer,
+		ServiceContext serviceContext) {
 
-	protected abstract String getTitle(
-		T baseModel, ServiceContext serviceContext);
+		String message = StringPool.BLANK;
 
-	protected String getUserName(T baseModel) {
-		return PortalUtil.getUserName(baseModel.getUserId(), StringPool.BLANK);
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				assetRenderer.getClassName());
+
+		String typeName = assetRendererFactory.getTypeName(
+			serviceContext.getLocale(), true);
+
+		if (notificationType ==
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
+
+			message = "x-added-a-new-x";
+		}
+		else if (notificationType ==
+					UserNotificationDefinition.
+						NOTIFICATION_TYPE_UPDATE_ENTRY) {
+
+			message = "x-updated-a-x";
+		}
+
+		return serviceContext.translate(
+			message, HtmlUtil.escape(assetRenderer.getUserName()),
+			HtmlUtil.escape(typeName));
 	}
-
-	protected abstract void setLinkParameters(
-		PortletURL portletURL, T baseModel);
 
 }

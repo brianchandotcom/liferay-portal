@@ -410,6 +410,12 @@ catch (NoSuchFolderException nsfe) {
 						<liferay-ui:message key="the-document-type" />
 					</dd>
 					<dt>
+						[$DOCUMENT_URL$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-document-url" />
+					</dd>
+					<dt>
 						[$DOCUMENT_USER_ADDRESS$]
 					</dt>
 					<dd>

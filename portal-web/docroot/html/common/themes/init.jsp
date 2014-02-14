@@ -19,8 +19,14 @@
 <%@ page import="com.liferay.portal.kernel.monitoring.RequestStatus" %><%@
 page import="com.liferay.portal.kernel.monitoring.statistics.DataSample" %><%@
 page import="com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal" %><%@
+page import="com.liferay.portal.kernel.util.JavascriptPortletResourceFilter" %><%@
+page import="com.liferay.portal.kernel.util.PredicateFilter" %><%@
+page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.monitoring.statistics.portal.PortalRequestDataSample" %><%@
 page import="com.liferay.portal.security.ldap.LDAPSettingsUtil" %><%@
+page import="com.liferay.portal.servlet.ComboServletURLGenerator" %><%@
+page import="com.liferay.portal.servlet.PortletResourcesAccessor" %><%@
+page import="com.liferay.portal.servlet.PortletResourcesURLGenerator" %><%@
 page import="com.liferay.taglib.aui.ScriptTag" %>
 
 <%@ page import="org.apache.struts.taglib.tiles.ComponentConstants" %><%@

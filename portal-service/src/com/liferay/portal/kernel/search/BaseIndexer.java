@@ -502,7 +502,7 @@ public abstract class BaseIndexer implements Indexer {
 
 				SearchResultPermissionFilter searchResultPermissionFilter =
 					new DefaultSearchResultPermissionFilter(
-						this, permissionChecker);
+						this, permissionChecker, searchContext);
 
 				hits = searchResultPermissionFilter.search(searchContext);
 			}

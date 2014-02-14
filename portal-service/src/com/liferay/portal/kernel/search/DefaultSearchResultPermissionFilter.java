@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -32,10 +33,12 @@ public class DefaultSearchResultPermissionFilter
 	extends BaseSearchResultPermissionFilter {
 
 	public DefaultSearchResultPermissionFilter(
-		BaseIndexer baseIndexer, PermissionChecker permissionChecker) {
+		BaseIndexer baseIndexer, PermissionChecker permissionChecker,
+		SearchContext searchContext) {
 
 		_baseIndexer = baseIndexer;
 		_permissionChecker = permissionChecker;
+		_searchContext = searchContext;
 	}
 
 	@Override
@@ -46,6 +49,10 @@ public class DefaultSearchResultPermissionFilter
 		Document[] documents = hits.getDocs();
 
 		int excludeDocsSize = 0;
+
+		int status = GetterUtil.getInteger(
+			_searchContext.getAttribute(Field.STATUS),
+			WorkflowConstants.STATUS_APPROVED);
 
 		for (int i = 0; i < documents.length; i++) {
 			Document document = documents[i];
@@ -61,7 +68,8 @@ public class DefaultSearchResultPermissionFilter
 				if ((indexer == null) || (indexer.isFilterSearch() &&
 					 indexer.hasPermission(
 						 _permissionChecker, entryClassName, entryClassPK,
-						 ActionKeys.VIEW)) ||
+						 ActionKeys.VIEW) &&
+					 indexer.isVisibleRelatedEntry(entryClassPK, status)) ||
 					!indexer.isFilterSearch() ||
 					!indexer.isPermissionAware()) {
 
@@ -111,5 +119,6 @@ public class DefaultSearchResultPermissionFilter
 
 	private BaseIndexer _baseIndexer;
 	private PermissionChecker _permissionChecker;
+	private SearchContext _searchContext;
 
 }

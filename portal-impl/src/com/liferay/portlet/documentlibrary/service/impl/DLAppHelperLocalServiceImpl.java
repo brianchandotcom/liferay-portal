@@ -2113,7 +2113,7 @@ public class DLAppHelperLocalServiceImpl
 			fileVersion.getStatusByUserName(), "[$DOCUMENT_TITLE$]", entryTitle,
 			"[$DOCUMENT_TYPE$]",
 			dlFileEntryType.getName(serviceContext.getLocale()),
-			"[$FOLDER_NAME$]", folderName);
+			"[$DOCUMENT_URL$]", entryURL, "[$FOLDER_NAME$]", folderName);
 		subscriptionSender.setContextUserPrefix("DOCUMENT");
 		subscriptionSender.setEntryTitle(entryTitle);
 		subscriptionSender.setEntryURL(entryURL);

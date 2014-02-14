@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -39,13 +40,17 @@ public class DefaultSearchResultPermissionFilter
 	}
 
 	@Override
-	protected void filterHits(Hits hits) {
+	protected void filterHits(Hits hits, SearchContext searchContext) {
 		List<Document> docs = new ArrayList<Document>();
 		List<Float> scores = new ArrayList<Float>();
 
 		Document[] documents = hits.getDocs();
 
 		int excludeDocsSize = 0;
+
+		int status = GetterUtil.getInteger(
+			searchContext.getAttribute(Field.STATUS),
+			WorkflowConstants.STATUS_APPROVED);
 
 		for (int i = 0; i < documents.length; i++) {
 			Document document = documents[i];
@@ -61,7 +66,8 @@ public class DefaultSearchResultPermissionFilter
 				if ((indexer == null) || (indexer.isFilterSearch() &&
 					 indexer.hasPermission(
 						 _permissionChecker, entryClassName, entryClassPK,
-						 ActionKeys.VIEW)) ||
+						 ActionKeys.VIEW) &&
+					 indexer.isVisibleRelatedEntry(entryClassPK, status)) ||
 					!indexer.isFilterSearch() ||
 					!indexer.isPermissionAware()) {
 

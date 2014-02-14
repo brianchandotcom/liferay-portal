@@ -85,22 +85,21 @@ public class ExportImportConfigurationHelper {
 			ExportImportConfigurationLocalServiceUtil.
 				getExportImportConfiguration(configurationId);
 
-		Map<String, Serializable> configurationSettingsMap =
+		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
 		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)configurationSettingsMap.get("parameterMap");
+			(Map<String, String[]>)settingsMap.get("parameterMap");
 
 		String taskName = MapUtil.getString(parameterMap, "exportFileName");
 
-		long groupId = MapUtil.getLong(
-			configurationSettingsMap, "sourceGroupId");
+		long groupId = MapUtil.getLong(settingsMap, "sourceGroupId");
 
 		boolean privateLayout = GetterUtil.getBoolean(
-			configurationSettingsMap.get("privateLayout"));
+			settingsMap.get("privateLayout"));
 
-		Map<Long, Boolean> layoutIdMap =
-			(Map<Long, Boolean>)configurationSettingsMap.get("layoutIdMap");
+		Map<Long, Boolean> layoutIdMap = (Map<Long, Boolean>)settingsMap.get(
+			"layoutIdMap");
 
 		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
 

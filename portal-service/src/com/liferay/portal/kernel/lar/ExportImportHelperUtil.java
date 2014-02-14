@@ -143,6 +143,19 @@ public class ExportImportHelperUtil {
 		return getExportImportHelper().getLayoutIds(layouts);
 	}
 
+	public static long[] getLayoutIds(Map<Long, Boolean> layoutIdMap)
+		throws PortalException, SystemException {
+
+		return getExportImportHelper().getLayoutIds(layoutIdMap);
+	}
+
+	public static long[] getLayoutIds(
+			Map<Long, Boolean> layoutIdMap, long targetGroupId)
+		throws PortalException, SystemException {
+
+		return getExportImportHelper().getLayoutIds(layoutIdMap, targetGroupId);
+	}
+
 	public static ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
@@ -159,6 +172,14 @@ public class ExportImportHelperUtil {
 
 		return getExportImportHelper().getManifestSummary(
 			userId, groupId, parameterMap, fileEntry);
+	}
+
+	public static List<Layout> getMissingParentLayouts(
+			Layout layout, long liveGroupId)
+		throws PortalException, SystemException {
+
+		return getExportImportHelper().getMissingParentLayouts(
+			layout, liveGroupId);
 	}
 
 	public static long getModelDeletionCount(

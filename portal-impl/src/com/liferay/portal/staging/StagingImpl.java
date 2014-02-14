@@ -23,7 +23,6 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.MissingReferenceException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutBranchException;
-import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchLayoutRevisionException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.RemoteExportException;
@@ -956,40 +955,16 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @see LayoutRemoteStagingBackgroundTaskExecutor#getMissingRemoteParentLayouts(
-	 *      HttpPrincipal, Layout, long)
+	 * @deprecated As of 7.0.0, moved to {@link
+	 *             ExportImportHelperUtil#getMissingParentLayouts(Layout, long)}
 	 */
+	@Deprecated
 	@Override
 	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
 		throws PortalException, SystemException {
 
-		List<Layout> missingParentLayouts = new ArrayList<Layout>();
-
-		long parentLayoutId = layout.getParentLayoutId();
-
-		Layout parentLayout = null;
-
-		while (parentLayoutId > 0) {
-			parentLayout = LayoutLocalServiceUtil.getLayout(
-				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
-
-			try {
-				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-					parentLayout.getUuid(), liveGroupId,
-					parentLayout.isPrivateLayout());
-
-				// If one parent is found all others are assumed to exist
-
-				break;
-			}
-			catch (NoSuchLayoutException nsle) {
-				missingParentLayouts.add(parentLayout);
-
-				parentLayoutId = parentLayout.getParentLayoutId();
-			}
-		}
-
-		return missingParentLayouts;
+		return ExportImportHelperUtil.getMissingParentLayouts(
+			layout, liveGroupId);
 	}
 
 	@Override
@@ -1368,7 +1343,10 @@ public class StagingImpl implements Staging {
 
 		layouts.add(layout);
 
-		layouts.addAll(getMissingParentLayouts(layout, liveGroupId));
+		List<Layout> parentLayouts =
+			ExportImportHelperUtil.getMissingParentLayouts(layout, liveGroupId);
+
+		layouts.addAll(parentLayouts);
 
 		if (includeChildren) {
 			layouts.addAll(layout.getAllChildren());
@@ -1413,40 +1391,9 @@ public class StagingImpl implements Staging {
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws PortalException, SystemException {
 
-		List<Layout> layouts = new ArrayList<Layout>();
-
-		for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
-			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
-			boolean includeChildren = entry.getValue();
-
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-			if (!layouts.contains(layout)) {
-				layouts.add(layout);
-			}
-
-			List<Layout> parentLayouts = getMissingParentLayouts(
-				layout, targetGroupId);
-
-			for (Layout parentLayout : parentLayouts) {
-				if (!layouts.contains(parentLayout)) {
-					layouts.add(parentLayout);
-				}
-			}
-
-			if (includeChildren) {
-				for (Layout childLayout : layout.getAllChildren()) {
-					if (!layouts.contains(childLayout)) {
-						layouts.add(childLayout);
-					}
-				}
-			}
-		}
-
-		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layouts);
-
 		publishLayouts(
-			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
+			userId, sourceGroupId, targetGroupId, privateLayout,
+			ExportImportHelperUtil.getLayoutIds(layoutIdMap, targetGroupId),
 			parameterMap, startDate, endDate);
 	}
 
@@ -2303,7 +2250,8 @@ public class StagingImpl implements Staging {
 							themeDisplay.getUserId(), sourceGroupId,
 							targetGroupId, privateLayout, layoutIdMap,
 							parameterMap, dateRange.getStartDate(),
-							dateRange.getEndDate());
+							dateRange.getEndDate(), themeDisplay.getLocale(),
+							themeDisplay.getTimeZone());
 
 				ExportImportConfiguration exportImportConfiguration =
 					ExportImportConfigurationLocalServiceUtil.
@@ -2457,7 +2405,9 @@ public class StagingImpl implements Staging {
 							layoutIdMap, parameterMap, remoteAddress,
 							remotePort, remotePathContext, secureConnection,
 							remoteGroupId, remotePrivateLayout,
-							dateRange.getStartDate(), dateRange.getEndDate());
+							dateRange.getStartDate(), dateRange.getEndDate(),
+							themeDisplay.getLocale(),
+							themeDisplay.getTimeZone());
 
 				ExportImportConfiguration exportImportConfiguration =
 					ExportImportConfigurationLocalServiceUtil.

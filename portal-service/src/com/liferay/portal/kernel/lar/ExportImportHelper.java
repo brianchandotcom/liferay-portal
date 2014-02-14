@@ -131,6 +131,13 @@ public interface ExportImportHelper {
 
 	public long[] getLayoutIds(List<Layout> layouts);
 
+	public long[] getLayoutIds(Map<Long, Boolean> layoutIdMap)
+		throws PortalException, SystemException;
+
+	public long[] getLayoutIds(
+			Map<Long, Boolean> layoutIdMap, long targetGroupId)
+		throws PortalException, SystemException;
+
 	public ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
@@ -140,6 +147,9 @@ public interface ExportImportHelper {
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			FileEntry fileEntry)
 		throws Exception;
+
+	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
+		throws PortalException, SystemException;
 
 	public long getModelDeletionCount(
 			final PortletDataContext portletDataContext,

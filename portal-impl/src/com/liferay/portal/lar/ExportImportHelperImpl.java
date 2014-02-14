@@ -15,6 +15,7 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.LARFileException;
+import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -72,6 +73,7 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.LayoutSet;
@@ -120,6 +122,7 @@ import java.io.StringReader;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -475,6 +478,58 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	@Override
+	public long[] getLayoutIds(Map<Long, Boolean> layoutIdMap)
+		throws PortalException, SystemException {
+
+		return getLayoutIds(layoutIdMap, GroupConstants.DEFAULT_LIVE_GROUP_ID);
+	}
+
+	@Override
+	public long[] getLayoutIds(
+			Map<Long, Boolean> layoutIdMap, long targetGroupId)
+		throws PortalException, SystemException {
+
+		if (MapUtil.isEmpty(layoutIdMap)) {
+			return new long[0];
+		}
+
+		List<Layout> layouts = new ArrayList<Layout>();
+
+		for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
+			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
+			boolean includeChildren = entry.getValue();
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+			if (!layouts.contains(layout)) {
+				layouts.add(layout);
+			}
+
+			List<Layout> parentLayouts = Collections.EMPTY_LIST;
+
+			if (targetGroupId != GroupConstants.DEFAULT_LIVE_GROUP_ID) {
+				parentLayouts = getMissingParentLayouts(layout, targetGroupId);
+			}
+
+			for (Layout parentLayout : parentLayouts) {
+				if (!layouts.contains(parentLayout)) {
+					layouts.add(parentLayout);
+				}
+			}
+
+			if (includeChildren) {
+				for (Layout childLayout : layout.getAllChildren()) {
+					if (!layouts.contains(childLayout)) {
+						layouts.add(childLayout);
+					}
+				}
+			}
+		}
+
+		return getLayoutIds(layouts);
+	}
+
+	@Override
 	public ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
@@ -539,6 +594,43 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return manifestSummary;
+	}
+
+	/**
+	 * @see com.liferay.portal.lar.backgroundtask.LayoutRemoteStagingBackgroundTaskExecutor#getMissingRemoteParentLayouts(
+	 *      com.liferay.portal.security.auth.HttpPrincipal, Layout, long)
+	 */
+	@Override
+	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
+		throws PortalException, SystemException {
+
+		List<Layout> missingParentLayouts = new ArrayList<Layout>();
+
+		long parentLayoutId = layout.getParentLayoutId();
+
+		Layout parentLayout = null;
+
+		while (parentLayoutId > 0) {
+			parentLayout = LayoutLocalServiceUtil.getLayout(
+				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
+
+			try {
+				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+					parentLayout.getUuid(), liveGroupId,
+					parentLayout.isPrivateLayout());
+
+				// If one parent is found all others are assumed to exist
+
+				break;
+			}
+			catch (NoSuchLayoutException nsle) {
+				missingParentLayouts.add(parentLayout);
+
+				parentLayoutId = parentLayout.getParentLayoutId();
+			}
+		}
+
+		return missingParentLayouts;
 	}
 
 	@Override

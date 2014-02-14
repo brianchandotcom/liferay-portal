@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,6 +31,7 @@ import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -75,6 +77,42 @@ public class ExportImportConfigurationHelper {
 			ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE);
 	}
 
+	public static void exportLayoutsByExportImportConfiguration(
+			long configurationId)
+		throws Exception {
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfiguration(configurationId);
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		Map<String, String[]> parameterMap =
+			(Map<String, String[]>)settingsMap.get("parameterMap");
+
+		String taskName = MapUtil.getString(parameterMap, "exportFileName");
+
+		long groupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+
+		boolean privateLayout = GetterUtil.getBoolean(
+			settingsMap.get("privateLayout"));
+
+		Map<Long, Boolean> layoutIdMap = (Map<Long, Boolean>)settingsMap.get(
+			"layoutIdMap");
+
+		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
+
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
+			exportImportConfiguration);
+
+		String fileName = MapUtil.getString(parameterMap, "exportFileName");
+
+		LayoutServiceUtil.exportLayoutsAsFileInBackground(
+			taskName, groupId, privateLayout, layoutIds, parameterMap,
+			dateRange.getStartDate(), dateRange.getEndDate(), fileName);
+	}
+
 	protected static ExportImportConfiguration addExportImportConfiguration(
 			PortletRequest portletRequest, int type)
 		throws Exception {
@@ -89,7 +127,7 @@ public class ExportImportConfigurationHelper {
 			portletRequest, "exportImportConfigurationDescription");
 
 		Map<String, Serializable> settingsMap = buildSettingsMap(
-			portletRequest, themeDisplay.getUserId(), groupId, type);
+			themeDisplay, portletRequest, groupId, type);
 
 		return ExportImportConfigurationLocalServiceUtil.
 			addExportImportConfiguration(
@@ -100,7 +138,8 @@ public class ExportImportConfigurationHelper {
 	}
 
 	protected static Map<String, Serializable> buildSettingsMap(
-			PortletRequest portletRequest, long userId, long groupId, int type)
+			ThemeDisplay themeDisplay, PortletRequest portletRequest,
+			long groupId, int type)
 		throws Exception {
 
 		boolean privateLayout = true;
@@ -127,9 +166,10 @@ public class ExportImportConfigurationHelper {
 
 		if (type == ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) {
 			return ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				userId, groupId, privateLayout, null,
+				themeDisplay.getUserId(), groupId, privateLayout, null,
 				portletRequest.getParameterMap(), dateRange.getStartDate(),
-				dateRange.getEndDate());
+				dateRange.getEndDate(), themeDisplay.getLocale(),
+				themeDisplay.getTimeZone());
 		}
 
 		String scope = ParamUtil.getString(portletRequest, "scope");
@@ -153,9 +193,10 @@ public class ExportImportConfigurationHelper {
 
 		if (liveGroup != null) {
 			return ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				userId, stagingGroup.getGroupId(), liveGroup.getGroupId(),
-				privateLayout, layoutIdMap, parameterMap,
-				dateRange.getStartDate(), dateRange.getEndDate());
+				themeDisplay.getUserId(), stagingGroup.getGroupId(),
+				liveGroup.getGroupId(), privateLayout, layoutIdMap,
+				parameterMap, dateRange.getStartDate(), dateRange.getEndDate(),
+				themeDisplay.getLocale(), themeDisplay.getTimeZone());
 		}
 
 		if (liveGroup == null) {
@@ -197,10 +238,11 @@ public class ExportImportConfigurationHelper {
 			remoteGroupId);
 
 		return ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-			userId, groupId, privateLayout, layoutIdMap, parameterMap,
-			remoteAddress, remotePort, remotePathContext, secureConnection,
-			remoteGroupId, remotePrivateLayout, dateRange.getStartDate(),
-			dateRange.getEndDate());
+			themeDisplay.getUserId(), groupId, privateLayout, layoutIdMap,
+			parameterMap, remoteAddress, remotePort, remotePathContext,
+			secureConnection, remoteGroupId, remotePrivateLayout,
+			dateRange.getStartDate(), dateRange.getEndDate(),
+			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 	}
 
 }

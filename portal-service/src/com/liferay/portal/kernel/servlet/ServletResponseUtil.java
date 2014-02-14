@@ -180,7 +180,8 @@ public class ServletResponseUtil {
 		throws IOException {
 
 		sendFile(
-			request, response, fileName, inputStream, 0, contentType, null);
+			request, response, fileName, inputStream, contentLength,
+			contentType, null);
 	}
 
 	public static void sendFile(

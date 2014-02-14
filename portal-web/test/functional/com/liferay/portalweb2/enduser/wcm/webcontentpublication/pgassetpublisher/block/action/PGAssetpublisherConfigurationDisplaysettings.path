@@ -59,7 +59,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NUMBER_OF_ITEMS_TO_DISPLAY_SELECT</td>
+	<td>PAGINATION_TYPE_SELECT</td>
 	<td>//select[@id='_86_paginationType']</td>
 	<td></td>
 </tr>
@@ -111,6 +111,32 @@
 <tr>
 	<td>ENABLE_SOCIAL_BOOKMARKS_CHECKBOX</td>
 	<td>//input[@id='_86_enableSocialBookmarksCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SHOW_METADATA-->
+<tr>
+	<td>SHOW_METADATA_CURRENT_FIELD_SELECT</td>
+	<td>//select[@id='_86_currentMetadataFields']/option[contains(.,'${key_metadataField}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_METADATA_MOVE_AVAILABLE_TO_CURRENT_BUTTON</td>
+	<td>//button[@title='Move selected items from Available to Current.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_METADATA_MOVE_CURRENT_TO_AVAILABLE_BUTTON</td>
+	<td>//button[@title='Move selected items from Current to Available.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_METADATA_AVAILABLE_FIELD_SELECT</td>
+	<td>//select[@id='_86_availableMetadataFields']/option[contains(.,'${key_metadataField}')]</td>
 	<td></td>
 </tr>
 </tbody>

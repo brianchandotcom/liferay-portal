@@ -30,7 +30,12 @@
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_147_description']</td>
+	<td>//span[@id='_147_descriptionBoundingBox']/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_NAME</td>
+	<td>//td[@data-value='${key_localizationName}']</td>
 	<td></td>
 </tr>
 <tr>

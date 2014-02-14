@@ -34,6 +34,11 @@
 
 		.nav-display-style-buttons {
 			margin-left: 15px;
+
+			.display-style-buttons-container .dropdown-toggle .caret {
+				border-bottom-color: #333;
+				border-top-color: #333;
+			}
 		}
 	}
 

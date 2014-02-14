@@ -17,127 +17,22 @@
 <c:if test="<%= (portlets != null) && !portlets.isEmpty() %>">
 
 	<%
-	long lastModifiedTimestamp = theme.getTimestamp();
+		PredicateFilter<String> resourcePredicateFilter = new JavascriptPortletResourceFilter(themeDisplay);
+		PortletResourcesAccessor[] portletResourcesAccessors = new PortletResourcesAccessor[] {PortletResourcesAccessor.footerPortalJavaScript, PortletResourcesAccessor.footerPortletJavaScript};
+		List<String> resourceUrls = new ArrayList<String>();
+		boolean resourceFastLoad = themeDisplay.isThemeJsFastLoad();
+	%>
 
-	if (themeDisplay.isThemeJsFastLoad()) {
-		for (Portlet curPortlet : portlets) {
-			if (curPortlet.hasFooterPortletJavaScript()) {
-				lastModifiedTimestamp = Math.max(lastModifiedTimestamp, curPortlet.getTimestamp());
-			}
+	<%@ include file="/html/common/themes/portlet_resources.jspf" %>
+
+	<%
+		for (String url : resourceUrls) {
+	%>
+
+		<script src="<%= url %>" type="text/javascript"></script>
+
+	<%
 		}
-	}
-
-	Set<String> portletResourceStaticURLs = (Set<String>)request.getAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS);
-
-	if (portletResourceStaticURLs == null) {
-		portletResourceStaticURLs = new LinkedHashSet<String>();
-
-		request.setAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS, portletResourceStaticURLs);
-	}
-
-	String comboURL = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo", "minifierType=", lastModifiedTimestamp);
-
-	StringBundler comboURLSB = new StringBundler(comboURL);
-
-	boolean hasComboScript = false;
-
-	for (Portlet curPortlet : portlets) {
-		for (String footerPortalJavaScript : curPortlet.getFooterPortalJavaScript()) {
-			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(footerPortalJavaScript) && !portletResourceStaticURLs.contains(footerPortalJavaScript) && !themeDisplay.isIncludedJs(footerPortalJavaScript)) {
-				portletResourceStaticURLs.add(footerPortalJavaScript);
-
-				comboURLSB.append(StringPool.AMPERSAND);
-				comboURLSB.append(HtmlUtil.escape(footerPortalJavaScript));
-
-				hasComboScript = true;
-			}
-			else {
-				if (!HttpUtil.hasProtocol(footerPortalJavaScript)) {
-					Portlet curRootPortlet = curPortlet.getRootPortlet();
-
-					footerPortalJavaScript = PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + footerPortalJavaScript, curRootPortlet.getTimestamp());
-				}
-
-				if (!footerPortalJavaScript.contains(Http.PROTOCOL_DELIMITER)) {
-					String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-					footerPortalJavaScript = cdnBaseURL.concat(footerPortalJavaScript);
-				}
-
-				if (!portletResourceStaticURLs.contains(footerPortalJavaScript) && !themeDisplay.isIncludedJs(footerPortalJavaScript)) {
-					portletResourceStaticURLs.add(footerPortalJavaScript);
-	%>
-
-					<script src="<%= HtmlUtil.escape(footerPortalJavaScript) %>" type="text/javascript"></script>
-
-	<%
-				}
-			}
-		}
-	}
-
-	if (hasComboScript) {
-	%>
-
-		<script src="<%= comboURLSB.toString() %>" type="text/javascript"></script>
-
-	<%
-	}
-
-	comboURLSB = new StringBundler(comboURL);
-
-	hasComboScript = false;
-
-	for (Portlet curPortlet : portlets) {
-		for (String footerPortletJavaScript : curPortlet.getFooterPortletJavaScript()) {
-			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(footerPortletJavaScript) && !portletResourceStaticURLs.contains(footerPortletJavaScript)) {
-				portletResourceStaticURLs.add(footerPortletJavaScript);
-
-				comboURLSB.append(StringPool.AMPERSAND);
-
-				String curPortletContextPath = curPortlet.getContextPath();
-
-				if ((curPortletContextPath != null) && !curPortletContextPath.equals(PortalUtil.getPathContext())) {
-					comboURLSB.append(curPortletContextPath);
-					comboURLSB.append(StringPool.COLON);
-				}
-
-				comboURLSB.append(HtmlUtil.escape(footerPortletJavaScript));
-
-				hasComboScript = true;
-			}
-			else {
-				if (!HttpUtil.hasProtocol(footerPortletJavaScript)) {
-					Portlet curRootPortlet = curPortlet.getRootPortlet();
-
-					footerPortletJavaScript = PortalUtil.getStaticResourceURL(request, curPortlet.getStaticResourcePath() + footerPortletJavaScript, curRootPortlet.getTimestamp());
-				}
-
-				if (!footerPortletJavaScript.contains(Http.PROTOCOL_DELIMITER)) {
-					String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-					footerPortletJavaScript = cdnBaseURL.concat(footerPortletJavaScript);
-				}
-
-				if (!portletResourceStaticURLs.contains(footerPortletJavaScript)) {
-					portletResourceStaticURLs.add(footerPortletJavaScript);
-	%>
-
-					<script src="<%= HtmlUtil.escape(footerPortletJavaScript) %>" type="text/javascript"></script>
-
-	<%
-				}
-			}
-		}
-	}
-
-	if (hasComboScript) {
-	%>
-
-		<script src="<%= comboURLSB.toString() %>" type="text/javascript"></script>
-
-	<%
-	}
 	%>
 
 </c:if>

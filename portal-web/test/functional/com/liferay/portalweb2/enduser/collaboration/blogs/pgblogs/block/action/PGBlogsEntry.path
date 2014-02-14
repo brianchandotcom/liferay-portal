@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ENTRY_STATUS</td>
-	<td>//span[@class='taglib-workflow-status']//strong[contains(@class,'workflow-value')]</td>
+	<td>//div[@class='entry-content']/h3</td>
 	<td></td>
 </tr>
 <tr>

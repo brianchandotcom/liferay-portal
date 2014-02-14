@@ -14,8 +14,11 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.dao.search.DisplayTerms;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseNavBarSearchTag;
@@ -41,7 +44,14 @@ public class NavBarSearchTag extends BaseNavBarSearchTag {
 		if (navBarTag != null) {
 			StringBundler sb = navBarTag.getResponsiveButtonsSB();
 
-			sb.append("<a class=\"btn btn-navbar\" id=\"");
+			sb.append("<a class=\"btn btn-navbar");
+
+			if (_hasSearchResults()) {
+				sb.append(StringPool.SPACE);
+				sb.append("hide");
+			}
+
+			sb.append("\" id=\"");
 			sb.append(_getNamespacedId());
 			sb.append("NavbarBtn\" data-navId=\"");
 			sb.append(_getNamespacedId());
@@ -64,6 +74,7 @@ public class NavBarSearchTag extends BaseNavBarSearchTag {
 		super.setAttributes(request);
 
 		setNamespacedAttribute(request, "id", _getNamespacedId());
+		setNamespacedAttribute(request, "searchResults", _hasSearchResults());
 	}
 
 	private String _getNamespacedId() {
@@ -88,6 +99,22 @@ public class NavBarSearchTag extends BaseNavBarSearchTag {
 		}
 
 		return _namespacedId;
+	}
+
+	private boolean _hasSearchResults() {
+		SearchContainer searchContainer = getSearchContainer();
+
+		if (searchContainer != null) {
+			DisplayTerms displayTerms = (DisplayTerms)searchContainer.getDisplayTerms();
+
+			boolean searchResults = displayTerms.isAdvancedSearch();
+
+			String keywords = displayTerms.getKeywords();
+
+			return (searchResults || !keywords.equals(StringPool.BLANK));
+		}
+
+		return false;
 	}
 
 	private String _namespacedId;

@@ -63,7 +63,7 @@ portletURL.setParameter("target", target);
 		<c:if test='<%= !type.equals("parent-sites") || (types.length > 1) %>'>
 			<aui:nav-bar>
 				<c:if test="<%= types.length > 1 %>">
-					<aui:nav>
+					<aui:nav searchContainer="<%= searchContainer %>">
 
 						<%
 						for (String curType : types) {
@@ -80,7 +80,7 @@ portletURL.setParameter("target", target);
 				</c:if>
 
 				<c:if test='<%= !type.equals("parent-sites") %>'>
-					<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/users_admin/group_search.jsp" searchContainer="<%= searchContainer %>" />
+					<aui:nav-bar-search cssClass="navbar-search-advanced" file="/html/portlet/users_admin/group_search.jsp" searchContainer="<%= searchContainer %>" />
 				</c:if>
 			</aui:nav-bar>
 		</c:if>

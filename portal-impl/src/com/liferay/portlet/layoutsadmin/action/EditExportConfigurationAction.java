@@ -43,7 +43,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Levente Hudák
  */
-public class EditExportImportConfigurationAction extends PortletAction {
+public class EditExportConfigurationAction extends PortletAction {
 
 	@Override
 	public void processAction(
@@ -129,6 +129,6 @@ public class EditExportImportConfigurationAction extends PortletAction {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		EditExportImportConfigurationAction.class);
+		EditExportConfigurationAction.class);
 
 }

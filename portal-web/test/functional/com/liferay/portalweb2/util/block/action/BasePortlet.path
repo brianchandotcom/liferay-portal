@@ -20,8 +20,8 @@
 </tr>
 <tr>
 	<td>TITLE</td>
-	<td>//h1[@class='portlet-title']/span[2]</td>
-	<td></td>
+	<td>//h1[@class='portlet-title']/span[1]</td>
+	<td>portlet header</td>
 </tr>
 <tr>
 	<td>SPECIFIC_TITLE</td>

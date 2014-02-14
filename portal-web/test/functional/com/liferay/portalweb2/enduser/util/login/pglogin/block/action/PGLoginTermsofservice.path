@@ -21,7 +21,7 @@
 <tr>
 	<td>I_AGREE_BUTTON</td>
 	<td>//button[contains(.,'I Agree')]</td>
-	<td></td>
+	<td>i agree button</td>
 </tr>
 <tr>
 	<td>I_DISAGREE_BUTTON</td>

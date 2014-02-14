@@ -567,6 +567,8 @@
 	</command>
 
 	<command name="firstLoginPG">
+		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}, if not logged in as ${userEmailAddress} log out first." />
+
 		<execute macro="Page#openURL" />
 
 		<if>
@@ -600,6 +602,8 @@
 	</command>
 
 	<command name="loginPG">
+		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}." />
+
 		<execute macro="Page#openURL" />
 
 		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
@@ -643,6 +647,8 @@
 	</command>
 
 	<command name="loginUserPG">
+		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}." />
+
 		<execute macro="Page#openURL" />
 
 		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
@@ -665,6 +671,8 @@
 	</command>
 
 	<command name="logoutPG">
+		<description message="Log out of Liferay Portal." />
+
 		<execute macro="Page#openURL" />
 
 		<if>
@@ -677,6 +685,8 @@
 	</command>
 
 	<command name="logoutUserPG">
+		<description message="Log out of Liferay Portal." />
+
 		<execute macro="Page#openURL" />
 
 		<if>

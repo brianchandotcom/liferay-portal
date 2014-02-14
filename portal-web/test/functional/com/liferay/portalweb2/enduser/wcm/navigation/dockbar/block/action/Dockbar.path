@@ -37,7 +37,7 @@
 <tr>
 	<td>ADD</td>
 	<td>//a[@id='_145_addPanel']</td>
-	<td></td>
+	<td>add button</td>
 </tr>
 <tr>
 	<td>ADD_STAGING</td>
@@ -100,12 +100,12 @@
 <tr>
 	<td>ADD_APPLICATION_LINK</td>
 	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Applications')]</td>
-	<td></td>
+	<td>add application link</td>
 </tr>
 <tr>
 	<td>ADD_APPLICATION_SEARCH_FIELD</td>
 	<td>//input[@id='_145_searchApplication']</td>
-	<td></td>
+	<td>application search field</td>
 </tr>
 <tr>
 	<td>ADD_APPLICATION_COLLAPSED_CATEGORY</td>
@@ -121,17 +121,17 @@
 <tr>
 	<td>ADD_PAGE_LINK</td>
 	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Page')]</td>
-	<td></td>
+	<td>add page link</td>
 </tr>
 <tr>
 	<td>ADD_PAGE_NAME_FIELD</td>
 	<td>//input[@id='_145_addLayoutName']</td>
-	<td></td>
+	<td>new page name field</td>
 </tr>
 <tr>
 	<td>ADD_PAGE_BUTTON</td>
 	<td>//button[contains(.,'Add Page')]</td>
-	<td></td>
+	<td>add page button</td>
 </tr>
 <tr>
 	<td></td>
@@ -349,22 +349,22 @@
 <tr>
 	<td>ADMIN</td>
 	<td>//li[@id='_145_adminLinks']/a</td>
-	<td></td>
+	<td>admin drop down link</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'Site Administration')]</td>
-	<td></td>
+	<td>site administration navigation link</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_PAGES</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Pages')]</td>
-	<td></td>
+	<td>pages navigation link</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_CONTENT</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Content')]</td>
-	<td></td>
+	<td>content navigation link</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_ICON</td>
@@ -379,12 +379,12 @@
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_USERS</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Users')]</td>
-	<td></td>
+	<td>users navigation link</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_CONFIGURATION</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Configuration')]</td>
-	<td></td>
+	<td>configuration navigation link</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_CATEGORY</td>
@@ -394,7 +394,7 @@
 <tr>
 	<td>ADMIN_CONTROL_PANEL</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'Control Panel')]</td>
-	<td></td>
+	<td>control panel navigation link</td>
 </tr>
 <tr>
 	<td></td>

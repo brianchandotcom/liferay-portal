@@ -345,11 +345,46 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ROLES_REGULAR_ROLE_IFRAME_TITLE</td>
+	<td>//tr[contains(@class,'lfr-role-regular')]/td[contains(.,'${key_roleName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--PERSONAL_SITE-->
+<tr>
+	<td>PERSONAL_SITE_LABEL</td>
+	<td>//div[contains(@id,'personalSite')]/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERSONAL_SITE_PUBLIC_PAGES_LABEL</td>
+	<td>//div[contains(@id,'personalSite')]//label[contains(@for,'publicLayoutSetPrototypeId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERSONAL_SITE_PUBLIC_PAGES</td>
+	<td>//div[contains(@id,'personalSite')]//select[contains(@id,'publicLayoutSetPrototypeId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERSONAL_SITE_PRIVATE_PAGES_LABEL</td>
+	<td>//div[contains(@id,'personalSite')]//label[contains(@for,'privateLayoutSetPrototypeId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERSONAL_SITE_PRIVATE_PAGES</td>
+	<td>//div[contains(@id,'personalSite')]//select[contains(@id,'privateLayoutSetPrototypeId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CATEGORIZATION-->
 <!--ADDRESSES-->
 <!--PHONE_NUMBERS-->

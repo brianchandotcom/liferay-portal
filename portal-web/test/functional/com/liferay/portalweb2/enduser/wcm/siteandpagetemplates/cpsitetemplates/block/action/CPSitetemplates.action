@@ -12,4 +12,10 @@
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
+
+	<command name="close">
+		<case locator1="home - Liferay">
+			<execute function="Close#closeWindow" />
+		</case>
+	</command>
 </definition>

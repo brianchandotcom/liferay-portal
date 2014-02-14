@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -122,9 +123,13 @@ public abstract class BaseSearchResultPermissionFilter
 		Hits hits, List<Document> documents, List<Float> scores, int start,
 		int end, int size, long startTime) {
 
-		if (documents.size() < end) {
-			end = documents.size();
-		}
+		int total = documents.size();
+
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			start, end, total);
+
+		start = startAndEnd[0];
+		end = startAndEnd[1];
 
 		documents = documents.subList(start, end);
 		scores = scores.subList(start, end);

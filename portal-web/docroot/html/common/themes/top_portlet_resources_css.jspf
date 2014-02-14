@@ -16,128 +16,23 @@
 
 <c:if test="<%= (portlets != null) && !portlets.isEmpty() %>">
 
-	<%
-	long lastModifiedTimestamp = theme.getTimestamp();
+<%
+	PredicateFilter<String> resourcePredicateFilter = PredicateFilter.ALL;
+	PortletResourcesAccessor[] portletResourcesAccessors = new PortletResourcesAccessor[] {PortletResourcesAccessor.headerPortalCss, PortletResourcesAccessor.headerPortletCss};
+	List<String> resourceUrls = new ArrayList<String>();
+	boolean resourceFastLoad = themeDisplay.isThemeCssFastLoad();
+%>
 
-	if (themeDisplay.isThemeJsFastLoad()) {
-		for (Portlet curPortlet : portlets) {
-			if (curPortlet.hasHeaderPortletCss()) {
-				lastModifiedTimestamp = Math.max(lastModifiedTimestamp, curPortlet.getTimestamp());
-			}
-		}
+<%@ include file="/html/common/themes/portlet_resources.jspf" %>
+
+<%
+	for (String url : resourceUrls) {
+%>
+
+		<link href="<%= url %>" rel="stylesheet" type="text/css" />
+
+<%
 	}
-
-	Set<String> portletResourceStaticURLs = (Set<String>)request.getAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS);
-
-	if (portletResourceStaticURLs == null) {
-		portletResourceStaticURLs = new LinkedHashSet<String>();
-
-		request.setAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS, portletResourceStaticURLs);
-	}
-
-	String comboURL = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo", "minifierType=&themeId=" + themeDisplay.getThemeId(), lastModifiedTimestamp);
-
-	StringBundler comboURLSB = new StringBundler(comboURL);
-
-	boolean hasComboScript = false;
-
-	for (Portlet curPortlet : portlets) {
-		for (String headerPortalCss : curPortlet.getHeaderPortalCss()) {
-			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortalCss) && !portletResourceStaticURLs.contains(headerPortalCss)) {
-				portletResourceStaticURLs.add(headerPortalCss);
-
-				comboURLSB.append(StringPool.AMPERSAND);
-				comboURLSB.append(HtmlUtil.escape(headerPortalCss));
-
-				hasComboScript = true;
-			}
-			else {
-				if (!HttpUtil.hasProtocol(headerPortalCss)) {
-					Portlet curRootPortlet = curPortlet.getRootPortlet();
-
-					headerPortalCss = PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + headerPortalCss, curRootPortlet.getTimestamp());
-				}
-
-				if (!headerPortalCss.contains(Http.PROTOCOL_DELIMITER)) {
-					String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-					headerPortalCss = cdnBaseURL.concat(headerPortalCss);
-				}
-
-				if (!portletResourceStaticURLs.contains(headerPortalCss)) {
-					portletResourceStaticURLs.add(headerPortalCss);
-	%>
-
-					<link href="<%= HtmlUtil.escape(headerPortalCss) %>" rel="stylesheet" type="text/css" />
-
-	<%
-				}
-			}
-		}
-	}
-
-	if (hasComboScript) {
-	%>
-
-		<link href="<%= comboURLSB.toString() %>" rel="stylesheet" type="text/css" />
-
-	<%
-	}
-
-	comboURLSB = new StringBundler(comboURL);
-
-	hasComboScript = false;
-
-	for (Portlet curPortlet : portlets) {
-		for (String headerPortletCss : curPortlet.getHeaderPortletCss()) {
-			if (themeDisplay.isThemeJsFastLoad() && !HttpUtil.hasProtocol(headerPortletCss) && !portletResourceStaticURLs.contains(headerPortletCss)) {
-				portletResourceStaticURLs.add(headerPortletCss);
-
-				comboURLSB.append(StringPool.AMPERSAND);
-
-				String curPortletContextPath = curPortlet.getContextPath();
-
-				if ((curPortletContextPath != null) && !curPortletContextPath.equals(PortalUtil.getPathContext())) {
-					comboURLSB.append(curPortletContextPath);
-					comboURLSB.append(StringPool.COLON);
-				}
-
-				comboURLSB.append(HtmlUtil.escape(headerPortletCss));
-
-				hasComboScript = true;
-			}
-			else {
-				if (!HttpUtil.hasProtocol(headerPortletCss)) {
-					Portlet curRootPortlet = curPortlet.getRootPortlet();
-
-					headerPortletCss = PortalUtil.getStaticResourceURL(request, curPortlet.getStaticResourcePath() + headerPortletCss, curRootPortlet.getTimestamp());
-				}
-
-				if (!headerPortletCss.contains(Http.PROTOCOL_DELIMITER)) {
-					String cdnBaseURL = themeDisplay.getCDNBaseURL();
-
-					headerPortletCss = cdnBaseURL.concat(headerPortletCss);
-				}
-
-				if (!portletResourceStaticURLs.contains(headerPortletCss)) {
-					portletResourceStaticURLs.add(headerPortletCss);
-	%>
-
-					<link href="<%= HtmlUtil.escape(headerPortletCss) %>" rel="stylesheet" type="text/css" />
-
-	<%
-				}
-			}
-		}
-	}
-
-	if (hasComboScript) {
-	%>
-
-		<link href="<%= comboURLSB.toString() %>" rel="stylesheet" type="text/css" />
-
-	<%
-	}
-	%>
+%>
 
 </c:if>

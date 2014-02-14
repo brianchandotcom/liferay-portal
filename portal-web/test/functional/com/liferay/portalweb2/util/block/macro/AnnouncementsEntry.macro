@@ -133,7 +133,7 @@
 		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TYPE" value1="${announcementType}" />
 	</command>
 
-	<command name="viewTitleViaEntriesPG">
+	<command name="viewViaEntriesPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />

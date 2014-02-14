@@ -27,6 +27,8 @@ import com.liferay.portal.model.Layout;
 @ProviderType
 public interface PortletSettingsFactory {
 
+	public void clearCache();
+
 	public PortletSettings getCompanyPortletSettings(
 			long companyId, String portletId)
 		throws SystemException;

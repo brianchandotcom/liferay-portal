@@ -39,6 +39,11 @@ import javax.portlet.PortletPreferences;
 public class PortletSettingsFactoryImpl implements PortletSettingsFactory {
 
 	@Override
+	public void clearCache() {
+		_propertiesMap.clear();
+	}
+
+	@Override
 	public PortletSettings getCompanyPortletSettings(
 			long companyId, String portletId)
 		throws SystemException {

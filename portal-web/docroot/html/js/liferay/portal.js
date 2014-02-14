@@ -118,7 +118,7 @@
 					{
 						cssClass: 'tooltip-help',
 						opacity: 1,
-						trigger: obj,
+						stickDuration: 300,
 						visible: false,
 						zIndex: Liferay.zIndex.TOOLTIP
 					}
@@ -134,9 +134,16 @@
 			}
 
 			cached.set(BODY_CONTENT, text);
+			cached.set(TRIGGER, obj);
 
-			cached.set(TRIGGER, obj).show();
+			cached.get(TRIGGER).detach('hover');
+
+			cached.get(TRIGGER).on('hover', 
+				A.bind(cached._onBoundingBoxMouseenter, cached),
+				A.bind(cached._onBoundingBoxMouseleave, cached));
+
+			cached.show();
 		},
-		['aui-tooltip-delegate']
+		['aui-tooltip-base']
 	);
 })(AUI(), Liferay);

@@ -1,0 +1,7 @@
+Bundle-Version: 1.0.0
+Include-Resource: build/classes/main
+Test-Cases: ${classes;CONCRETE;EXTENDS;junit.framework.TestCase},${classes;ANNOTATION;org.junit.Test}
+
+-runbundles: \
+	${workspace}/osgi/modules/portal-registry/portal-registry-api/build/libs/portal-registry-api.jar;version=file,\
+	${workspace}/osgi/modules/portal-registry/portal-registry-impl/build/libs/portal-registry-impl.jar;version=file

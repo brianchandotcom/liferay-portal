@@ -33,16 +33,14 @@ public class DefaultSearchResultPermissionFilter
 	extends BaseSearchResultPermissionFilter {
 
 	public DefaultSearchResultPermissionFilter(
-		BaseIndexer baseIndexer, PermissionChecker permissionChecker,
-		SearchContext searchContext) {
+		BaseIndexer baseIndexer, PermissionChecker permissionChecker) {
 
 		_baseIndexer = baseIndexer;
 		_permissionChecker = permissionChecker;
-		_searchContext = searchContext;
 	}
 
 	@Override
-	protected void filterHits(Hits hits) {
+	protected void filterHits(Hits hits, SearchContext searchContext) {
 		List<Document> docs = new ArrayList<Document>();
 		List<Float> scores = new ArrayList<Float>();
 
@@ -51,7 +49,7 @@ public class DefaultSearchResultPermissionFilter
 		int excludeDocsSize = 0;
 
 		int status = GetterUtil.getInteger(
-			_searchContext.getAttribute(Field.STATUS),
+			searchContext.getAttribute(Field.STATUS),
 			WorkflowConstants.STATUS_APPROVED);
 
 		for (int i = 0; i < documents.length; i++) {
@@ -119,6 +117,5 @@ public class DefaultSearchResultPermissionFilter
 
 	private BaseIndexer _baseIndexer;
 	private PermissionChecker _permissionChecker;
-	private SearchContext _searchContext;
 
 }

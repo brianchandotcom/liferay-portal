@@ -38,7 +38,7 @@ public abstract class BaseSearchResultPermissionFilter
 		if ((end == QueryUtil.ALL_POS) && (start == QueryUtil.ALL_POS)) {
 			Hits hits = getHits(searchContext);
 
-			filterHits(hits);
+			filterHits(hits, searchContext);
 
 			return hits;
 		}
@@ -75,7 +75,7 @@ public abstract class BaseSearchResultPermissionFilter
 
 			Document[] oldDocs = hits.getDocs();
 
-			filterHits(hits);
+			filterHits(hits, searchContext);
 
 			Document[] newDocs = hits.getDocs();
 
@@ -114,7 +114,7 @@ public abstract class BaseSearchResultPermissionFilter
 		}
 	}
 
-	protected abstract void filterHits(Hits hits);
+	protected abstract void filterHits(Hits hits, SearchContext searchContext);
 
 	protected abstract Hits getHits(SearchContext searchContext)
 		throws SearchException;
@@ -123,10 +123,8 @@ public abstract class BaseSearchResultPermissionFilter
 		Hits hits, List<Document> documents, List<Float> scores, int start,
 		int end, int size, long startTime) {
 
-		int total = documents.size();
-
 		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
-			start, end, total);
+			start, end, documents.size());
 
 		start = startAndEnd[0];
 		end = startAndEnd[1];

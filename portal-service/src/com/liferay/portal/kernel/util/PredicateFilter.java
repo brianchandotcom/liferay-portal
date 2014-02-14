@@ -19,6 +19,22 @@ package com.liferay.portal.kernel.util;
  */
 public interface PredicateFilter<T> {
 
+	public static PredicateFilter ALL = new PredicateFilter<Object>() {
+
+		@Override
+		public boolean filter(Object o) {
+			return true;
+		}
+	};
+
+	public static PredicateFilter NONE = new PredicateFilter<Object>() {
+
+		@Override
+		public boolean filter(Object o) {
+			return false;
+		}
+	};
+
 	public boolean filter(T t);
 
 }

@@ -14,27 +14,23 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.theme.ThemeDisplay;
+
 /**
  * @author Carlos Sierra Andrés
  */
-public interface PredicateFilter<T> {
+public class JavascriptPortletResourceFilter
+	implements PredicateFilter<String> {
 
-	public static PredicateFilter ALL = new PredicateFilter<Object>() {
+	public JavascriptPortletResourceFilter(ThemeDisplay themeDisplay) {
+		_themeDisplay = themeDisplay;
+	}
 
-		@Override
-		public boolean filter(Object o) {
-			return true;
-		}
-	};
+	@Override
+	public boolean filter(String resource) {
+		return !_themeDisplay.isIncludedJs(resource);
+	}
 
-	public static PredicateFilter NONE = new PredicateFilter<Object>() {
-
-		@Override
-		public boolean filter(Object o) {
-			return false;
-		}
-	};
-
-	public boolean filter(T t);
+	private ThemeDisplay _themeDisplay;
 
 }

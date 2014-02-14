@@ -42,7 +42,6 @@ if (repositoryId <= 0) {
 }
 
 long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
-String extension = BeanParamUtil.getString(fileEntry, request, "extension");
 
 Folder folder = null;
 
@@ -94,7 +93,6 @@ else if (fileEntry != null) {
 
 boolean approved = false;
 boolean checkedOut = false;
-boolean draft = false;
 boolean hasLock = false;
 boolean pending = false;
 
@@ -103,17 +101,12 @@ Lock lock = null;
 if (fileEntry != null) {
 	approved = fileVersion.isApproved();
 	checkedOut = fileEntry.isCheckedOut();
-	draft = fileVersion.isDraft();
 	hasLock = fileEntry.hasLock();
 	lock = fileEntry.getLock();
 	pending = fileVersion.isPending();
 }
 
-boolean saveAsDraft = false;
-
-if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
-	saveAsDraft = true;
-}
+FileEntryDisplayContext fileEntryDisplayContext = new FileEntryDisplayContext(request, fileEntry, fileVersion);
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
@@ -174,7 +167,7 @@ if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 	<liferay-portlet:param name="uploadExceptionRedirect" value="<%= uploadExceptionRedirect %>" />
 </liferay-portlet:actionURL>
 
-<aui:form action="<%= editFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(" + saveAsDraft + ");" %>'>
+<aui:form action="<%= editFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(" + fileEntryDisplayContext.isSaveAsDraft() + ");" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
@@ -443,44 +436,24 @@ if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 		</c:if>
 
 		<aui:button-row>
-
-			<%
-			String saveButtonLabel = "save";
-
-			if ((fileVersion == null) || draft || approved) {
-				saveButtonLabel = "save-as-draft";
-			}
-			%>
-
-			<c:if test="<%= PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED %>">
-				<aui:button disabled="<%= checkedOut && !hasLock %>" name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveFileEntry(true);" %>' value="<%= saveButtonLabel %>" />
+			<c:if test="<%= fileEntryDisplayContext.isSaveButtonVisible() %>">
+				<aui:button disabled="<%= fileEntryDisplayContext.isSaveButtonDisabled() %>" name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveFileEntry(true);" %>' value="<%= fileEntryDisplayContext.getSaveButtonLabel() %>" />
 			</c:if>
 
-			<%
-			String publishButtonLabel = "publish";
+			<c:if test="<%= fileEntryDisplayContext.isPublishButtonVisible() %>">
+				<aui:button disabled="<%= fileEntryDisplayContext.isPublishButtonDisabled() %>" name="publishButton" type="submit" value="<%= fileEntryDisplayContext.getPublishButtonLabel() %>" />
+			</c:if>
 
-			if (DLUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, folderId, fileEntryTypeId)) {
-				publishButtonLabel = "submit-for-publication";
-			}
+			<c:if test="<%= fileEntryDisplayContext.isCheckoutDocumentButtonVisible() %>">
+				<aui:button disabled="<%= fileEntryDisplayContext.isCheckoutDocumentDisabled() %>" onClick='<%= renderResponse.getNamespace() + "checkOut();" %>' value="checkout[document]" />
+			</c:if>
 
-			if (saveAsDraft) {
-				publishButtonLabel = "save";
-			}
-			%>
+			<c:if test="<%= fileEntryDisplayContext.isCheckinButtonVisible() %>">
+				<aui:button disabled="<%= fileEntryDisplayContext.isCheckinButtonDisabled() %>" onClick='<%= renderResponse.getNamespace() + "checkIn();" %>' value="save-and-checkin" />
+			</c:if>
 
-			<aui:button disabled="<%= checkedOut && !hasLock || (pending && PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
-
-			<c:if test="<%= (fileEntry != null) && ((checkedOut && hasLock) || !checkedOut) %>">
-				<c:choose>
-					<c:when test="<%= !hasLock %>">
-						<aui:button onClick='<%= renderResponse.getNamespace() + "checkOut();" %>' value="checkout[document]" />
-					</c:when>
-					<c:otherwise>
-						<aui:button onClick='<%= renderResponse.getNamespace() + "checkIn();" %>' value="save-and-checkin" />
-
-						<aui:button onClick='<%= renderResponse.getNamespace() + "cancelCheckOut();" %>' value="cancel-checkout[document]" />
-					</c:otherwise>
-				</c:choose>
+			<c:if test="<%= fileEntryDisplayContext.isCancelCheckoutDocumentButtonVisible() %>">
+				<aui:button disabled="<%= fileEntryDisplayContext.isCancelCheckoutDocumentButtonDisabled() %>" onClick='<%= renderResponse.getNamespace() + "cancelCheckOut();" %>' value="cancel-checkout[document]" />
 			</c:if>
 
 			<aui:button href="<%= redirect %>" type="cancel" />

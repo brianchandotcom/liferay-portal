@@ -34,16 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLET2_TITLE</td>
-	<td>//section[contains(@id,'portlet_148')]//h1[@class='portlet-title']/span[contains(@class,'portlet-title-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PORTLET3_TITLE</td>
-	<td>//section[contains(@id,'portlet_114')]//h1[@class='portlet-title']/span[contains(@class,'portlet-title-text')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>OPTIONS</td>
 	<td>//a[@title='Options']</td>
 	<td></td>

@@ -314,7 +314,7 @@
 			<var name="teamName" value="${teamName}" />
 		</execute>
 
-		<execute macro="Team#viewDeleteCP">
+		<execute macro="Team#viewDefaultCP">
 			<var name="teamName" value="${teamName}" />
 		</execute>
 	</command>

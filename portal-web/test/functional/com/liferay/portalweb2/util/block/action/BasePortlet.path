@@ -24,6 +24,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TITLE_1</td>
+	<td>xpath=(//h1[@class='portlet-title']/span[2])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_2</td>
+	<td>xpath=(//h1[@class='portlet-title']/span[2])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_3</td>
+	<td>xpath=(//h1[@class='portlet-title']/span[2])[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SPECIFIC_TITLE</td>
 	<td>//h1[@class='portlet-title']//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletTitleName}')]</td>
 	<td></td>

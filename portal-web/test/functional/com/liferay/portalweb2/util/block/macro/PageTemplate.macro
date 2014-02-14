@@ -86,8 +86,17 @@
 	</command>
 
 	<command name="viewDefaultPortletPG">
-		<execute action="PGBlogs#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Blogs" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="PORTLET2_TITLE" value1="Tag Cloud" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="PORTLET3_TITLE" value1="Recent Bloggers" />
+		<if>
+			<equals arg1="${pageTemplateName}" arg2="Blog" />
+			<then>
+				<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />
+				<execute action="Home#assertElementPresent" locator-key1="PORTLET_2" />
+				<execute action="Home#assertElementPresent" locator-key1="PORTLET_3" />
+
+				<execute action="PGBlogs#assertTextEquals" locator-key1="TITLE_1" value1="Blogs" />
+				<execute action="PGBlogs#assertTextEquals" locator-key1="TITLE_2" value1="Tag Cloud" />
+				<execute action="PGBlogs#assertTextEquals" locator-key1="TITLE_3" value1="Recent Bloggers" />
+			</then>
+		</if>
 	</command>
 </definition>

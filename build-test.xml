@@ -27,6 +27,8 @@
 
 	<propertycopy from="java.jdk.${java.jdk.type}.version" name="java.jdk.version" />
 
+	<propertycopy from="operating.system.${operating.system.type}.version" name="operating.system.version" />
+
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
@@ -114,8 +116,13 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="record-env-os">
+	<macrodef name="record-env-operating-system">
 		<sequential>
+			<propertycopy
+				from="env.key.operating.system.${operating.system.type}.${operating.system.version}"
+				name="env.key.operating.system"
+				override="true"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -265,7 +272,7 @@ create database lportal2 character set utf8;</echo>
 		<record-env-browser />
 		<record-env-database />
 		<record-env-java-jdk />
-		<record-env-os />
+		<record-env-operating-system />
 	</target>
 
 	<target name="check-config">
@@ -1586,20 +1593,6 @@ tck.url=true</echo>
 					testing.class.method=true
 				</echo>
 			</then>
-		</if>
-
-		<if>
-			<equals arg1="${test.selenium.implementation}" arg2="selenium" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/selenium/${os.type}/${browser.type}/${browser.version}/
-				</echo>
-			</then>
-			<else>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/webdriver/${os.type}/${browser.type}/${browser.version}/
-				</echo>
-			</else>
 		</if>
 
 		<if>

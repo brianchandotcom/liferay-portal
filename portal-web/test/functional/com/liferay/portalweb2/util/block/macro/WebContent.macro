@@ -81,7 +81,108 @@
 		<execute action="CPWebcontent#assertClick" locator-key1="ADD_MENULIST_STRUCTURE_NAME" value1="${structureName}" />
 
 		<execute action="CPWebcontentAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
-		<execute action="CPWebcontentAddwebcontent#type" locator1="//input[contains(@id,'_15_text') and @type='text']" value1="${webContentText}" />
+
+		<if>
+			<isset var="webContentBoolean" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#check" locator-key1="BOOLEAN_FIELD" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentDate" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#type" locator-key1="DATE_FIELD" value1="${webContentDate}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentDecimal" />
+			<then>
+				<var name="key_fieldName" value="Decimal" />
+
+				<execute action="CPWebcontentAddwebcontent#type" locator-key1="DECIMAL_FIELD" value1="${webContentDecimal}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentDocumentsAndMedia" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="DOCUMENTS_AND_MEDIA_FIELD_BUTTON" value1="${webContentDocumentsAndMedia}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentHTML" />
+			<then>
+				<var name="key_fieldName" value="HTML" />
+
+				<execute action="CPWebcontentAddwebcontent#type" locator-key1="HTML_FIELD" value1="${webContentHTML}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentImage" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#type" locator-key1="IMAGE_FIELD" value1="${webContentImage}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentInteger" />
+			<then>
+				<var name="key_fieldName" value="Integer" />
+
+				<execute action="CPWebcontentAddwebcontent#type" locator-key1="INTEGER_FIELD" value1="${webContentInteger}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentLinkToPage" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#type" locator-key1="LINK_TO_PAGE_FIELD" value1="${webContentLinkToPage}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentNumber" />
+			<then>
+				<var name="key_fieldName" value="Number" />
+
+				<execute action="CPWebcontentAddwebcontent#type" locator-key1="NUMBER_FIELD" value1="${webContentNumber}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentRadio" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#select" locator-key1="RADIO_FIELD" value1="${webContentRadio}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentSelect" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#select" locator-key1="SELECT_FIELD" value1="${webContentSelect}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentText" />
+			<then>
+				<var name="key_fieldName" value="Text" />
+
+				<execute action="CPWebcontentAddwebcontent#type" locator-key1="TEXT_FIELD" value1="${webContentText}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentTextBox" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#type" locator-key1="TEXT_BOX_FIELD" value1="${webContentTextBox}" />
+			</then>
+		</if>
+
 		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -197,8 +298,33 @@
 		<execute action="CPWebcontentEditwebcontent#assertClick" locator-key1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="${localizedLanguage}" />
 
 		<execute action="CPWebcontentEditwebcontentAddtranslation#selectFrame" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME" />
-		<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="TITLE_FIELD" value1="${localizedTitle}" />
-		<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="CONTENT_FIELD" value1="${localizedContent}" />
+
+		<if>
+			<isset var="localizedTitle" />
+			<then>
+				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="TITLE_FIELD" value1="${localizedTitle}" />
+				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="CONTENT_FIELD" value1="${localizedContent}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="localizedInteger" />
+			<then>
+				<var name="key_fieldName" value="Integer" />
+
+				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="INTEGER_FIELD" value1="${localizedInteger}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="localizedNumber" />
+			<then>
+				<var name="key_fieldName" value="Number" />
+
+				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="NUMBER_FIELD" value1="${localizedNumber}" />
+			</then>
+		</if>
+
 		<execute action="CPWebcontentEditwebcontentAddtranslation#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPWebcontentEditwebcontent#selectFrame" value1="relative=top" />

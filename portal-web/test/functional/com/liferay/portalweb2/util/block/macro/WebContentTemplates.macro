@@ -31,7 +31,17 @@
 				<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" />
 				<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
 				<execute action="CPWebcontentTemplatesAddtemplate#assertTextEquals" locator-key1="STRUCTURE" value1="${structureName}" />
-				<execute action="CPWebcontentTemplatesAddtemplate#click" locator-key1="SCRIPT_FIELDS_1" />
+
+				<if>
+					<equals arg1="${templateLanguage}" arg2="ftl" />
+					<then>
+						<for list="${templateFieldNames}" param="templateFieldName">
+							<execute macro="WebContentTemplates#addField">
+								<var name="fieldName" value="${templateFieldName}" />
+							</execute>
+						</for>
+					</then>
+				</if>
 			</then>
 		</if>
 
@@ -69,6 +79,14 @@
 		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" />
 		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
 		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="addField">
+		<var name="fieldNameLabel" value="${fieldName?replace(' ', '_')}" />
+		<var name="fieldNameLabel" value="${fieldNameLabel?lowercase()}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="CPWebcontentTemplatesAddtemplate#assertClick" locator-key1="PALETTE_FIELD" value1="${fieldName}" />
 	</command>
 
 	<command name="addNullCP">

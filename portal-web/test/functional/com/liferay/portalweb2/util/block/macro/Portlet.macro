@@ -173,12 +173,11 @@
 	</command>
 
 	<command name="gotoPortletOptions">
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
 
 		<if>
-			<isset var="portletName" />
+			<isset var="specificPortletName" />
 			<then>
-				<var name="key_portletName" value="${portletName}" />
+				<var name="key_portletName" value="${specificPortletName}" />
 
 				<execute action="BasePortlet#assertClick" locator-key1="SPECIFIC_PORTLET_OPTIONS_ICON" value1="Options" />
 			</then>

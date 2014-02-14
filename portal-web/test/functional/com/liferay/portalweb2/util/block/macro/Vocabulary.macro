@@ -24,9 +24,36 @@
 		<execute action="CPVocabulariesAdd#type" locator-key1="NAME_FIELD" value1="${vocabularyName}" />
 
 		<if>
+			<isset var="vocabularyDescription" />
+			<then>
+				<execute action="CPVocabulariesAdd#type" locator-key1="DESCRIPTION_FIELD" value1="${localizationName}" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${allowMultipleCategories}" arg2="False" />
 			<then>
 				<execute action="CPVocabulariesAdd#uncheck" locator-key1="ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="localizationNameKey" />
+			<then>
+				<var name="key_localizationName" value="${localizationNameKey}" />
+
+				<execute action="CPVocabulariesAdd#click" locator-key1="LOCALIZATION_NAME" />
+				<execute action="CPVocabulariesAdd#type" locator-key1="NAME_FIELD" value1="${localizationName}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="localization2NameKey" />
+			<then>
+				<var name="key_localizationName" value="${localization2NameKey}" />
+
+				<execute action="CPVocabulariesAdd#click" locator-key1="LOCALIZATION_NAME" />
+				<execute action="CPVocabulariesAdd#type" locator-key1="NAME_FIELD" value1="${localization2Name}" />
 			</then>
 		</if>
 
@@ -129,7 +156,8 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
-		<execute action="CPVocabulariesEdit#click" locator-key1="EDIT_ICON" />
+		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_EDIT_ICON" />
+
 		<execute action="CPVocabulariesEdit#type" locator-key1="NAME_FIELD" value1="${vocabularyNameEdit}" />
 		<execute action="CPVocabulariesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />

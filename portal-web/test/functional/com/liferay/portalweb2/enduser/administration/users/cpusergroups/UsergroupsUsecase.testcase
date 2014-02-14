@@ -109,51 +109,19 @@
 	</command>
 
 	<command name="UserGroupSiteOwnerPermissions" priority="5">
-		<var name="permissionDefinitionKey1" value="CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL" />
-		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BOOKMARKS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
-		<var name="permissionDefinitionValue1" value="Go to Control Panel" />
-		<var name="permissionDefinitionValue2" value="Access in Site Administration" />
-		<var name="permissionNavigationKey1" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
-		<var name="permissionNavigationKey2" value="SITE_ADMIN_CONTENT_BOOKMARKS" />
-		<var name="permissionNavigationValue1" value="General Permissions" />
-		<var name="permissionNavigationValue2" value="Bookmarks" />
-		<var name="roleName1" value="Authenticated" />
-		<var name="roleName2" value="Test UserGroup Role" />
 		<var name="roleType" value="Regular" />
 		<var name="siteName" value="Site Name" />
-		<var name="siteScopeName" value="Site Name" />
-		<var name="userEmailAddress1" value="userea1@liferay.com" />
-		<var name="userEmailAddress2" value="userea2@liferay.com" />
-		<var name="userEmailAddress3" value="userea3@liferay.com" />
-		<var name="userEmailAddress4" value="userea4@liferay.com" />
-		<var name="userEmailAddress5" value="userea5@liferay.com" />
-		<var name="userFirstName1" value="userfn1" />
-		<var name="userFirstName2" value="userfn2" />
-		<var name="userFirstName3" value="userfn3" />
-		<var name="userFirstName4" value="userfn4" />
-		<var name="userFirstName5" value="userfn5" />
-		<var name="userGroupName" value="UG UserGroup Name" />
-		<var name="userLastName1" value="userln1" />
-		<var name="userLastName2" value="userln2" />
-		<var name="userLastName3" value="userln3" />
-		<var name="userLastName4" value="userln4" />
-		<var name="userLastName5" value="userln5" />
-		<var name="userScreenName1" value="usersn1" />
-		<var name="userScreenName2" value="usersn2" />
-		<var name="userScreenName3" value="usersn3" />
-		<var name="userScreenName4" value="usersn4" />
-		<var name="userScreenName5" value="usersn5" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey1}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue1}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey1}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue1}" />
-			<var name="roleName" value="${roleName1}" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL" />
+			<var name="permissionDefinitionValue" value="Go to Control Panel" />
+			<var name="permissionNavigationKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
+			<var name="permissionNavigationValue" value="General Permissions" />
+			<var name="roleName" value="Authenticated" />
 			<var name="roleUser" value="User" />
 		</execute>
 
@@ -162,10 +130,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress1}" />
-			<var name="userFirstName" value="${userFirstName1}" />
-			<var name="userLastName" value="${userLastName1}" />
-			<var name="userScreenName" value="${userScreenName1}" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -173,8 +141,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="${userEmailAddress1}" />
-			<var name="userScreenName" value="${userScreenName1}" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -182,10 +150,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress2}" />
-			<var name="userFirstName" value="${userFirstName2}" />
-			<var name="userLastName" value="${userLastName2}" />
-			<var name="userScreenName" value="${userScreenName2}" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -193,8 +161,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="${userEmailAddress2}" />
-			<var name="userScreenName" value="${userScreenName2}" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -202,10 +170,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress3}" />
-			<var name="userFirstName" value="${userFirstName3}" />
-			<var name="userLastName" value="${userLastName3}" />
-			<var name="userScreenName" value="${userScreenName3}" />
+			<var name="userEmailAddress" value="userea3@liferay.com" />
+			<var name="userFirstName" value="userfn3" />
+			<var name="userLastName" value="userln3" />
+			<var name="userScreenName" value="usersn3" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -213,8 +181,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="${userEmailAddress3}" />
-			<var name="userScreenName" value="${userScreenName3}" />
+			<var name="userEmailAddress" value="userea3@liferay.com" />
+			<var name="userScreenName" value="usersn3" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -222,10 +190,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress4}" />
-			<var name="userFirstName" value="${userFirstName4}" />
-			<var name="userLastName" value="${userLastName4}" />
-			<var name="userScreenName" value="${userScreenName4}" />
+			<var name="userEmailAddress" value="userea4@liferay.com" />
+			<var name="userFirstName" value="userfn4" />
+			<var name="userLastName" value="userln4" />
+			<var name="userScreenName" value="usersn4" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -233,8 +201,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="${userEmailAddress4}" />
-			<var name="userScreenName" value="${userScreenName4}" />
+			<var name="userEmailAddress" value="userea4@liferay.com" />
+			<var name="userScreenName" value="usersn4" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -242,10 +210,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress5}" />
-			<var name="userFirstName" value="${userFirstName5}" />
-			<var name="userLastName" value="${userLastName5}" />
-			<var name="userScreenName" value="${userScreenName5}" />
+			<var name="userEmailAddress" value="userea5@liferay.com" />
+			<var name="userFirstName" value="userfn5" />
+			<var name="userLastName" value="userln5" />
+			<var name="userScreenName" value="usersn5" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -253,8 +221,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="${userEmailAddress5}" />
-			<var name="userScreenName" value="${userScreenName5}" />
+			<var name="userEmailAddress" value="userea5@liferay.com" />
+			<var name="userScreenName" value="usersn5" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -262,7 +230,7 @@
 		</execute>
 
 		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -270,7 +238,7 @@
 		</execute>
 
 		<execute macro="UserGroup#assignAllMembersCP">
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -278,43 +246,43 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
 			<var name="portletName" value="Site Memberships" />
-			<var name="siteScopeName" value="${siteScopeName}" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#addAllMembersCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
 			<var name="portletName" value="Site Memberships" />
-			<var name="siteScopeName" value="${siteScopeName}" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#addMemberUserGroupCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="siteName" value="Site Name" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
 			<var name="portletName" value="Site Memberships" />
-			<var name="siteScopeName" value="${siteScopeName}" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#assignSiteRolesSiteOwnerUserGroupsCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="siteName" value="Site Name" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
-			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userEmailAddress" value="userea3@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoCP" />
@@ -326,10 +294,10 @@
 		<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_USERS" value1="Users" />
 		<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_USERS_SITE_MEMBERSHIPS" value1="Site Memberships" />
 
-		<var name="key_userScreenName" value="${userScreenName3}" />
+		<var name="key_userScreenName" value="usersn3" />
 
-		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_NAME" value1="${userFirstName3} ${userLastName3}" />
-		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName3}" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_NAME" value1="userfn3 userln3" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="usersn3" />
 		<execute action="CPSitememberships#assertClick" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_MENULIST_ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
 
@@ -342,18 +310,18 @@
 
 		<execute macro="Page#gotoUsersCP">
 			<var name="portletName" value="Site Memberships" />
-			<var name="siteScopeName" value="${siteScopeName}" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#removeSiteRolesSiteOwnerUserGroupsCP">
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
-			<var name="userEmailAddress" value="${userEmailAddress5}" />
+			<var name="userEmailAddress" value="userea5@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoCP" />
@@ -374,7 +342,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName2}" />
+			<var name="roleName" value="Test UserGroup Role" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -382,12 +350,12 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue2}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey2}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue2}" />
-			<var name="roleName" value="${roleName2}" />
-			<var name="roleUser" value="${roleName2}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BOOKMARKS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+			<var name="permissionDefinitionValue" value="Access in Site Administration" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BOOKMARKS" />
+			<var name="permissionNavigationValue" value="Bookmarks" />
+			<var name="roleName" value="Test UserGroup Role" />
+			<var name="roleUser" value="Test UserGroup Role" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -395,8 +363,8 @@
 		</execute>
 
 		<execute macro="Role#assignMembersUserGroupsCP">
-			<var name="roleName" value="${roleName2}" />
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="roleName" value="Test UserGroup Role" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -424,7 +392,7 @@
 		</execute>
 
 		<execute macro="UserGroup#removeMemberCP">
-			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupName" value="UG UserGroup Name" />
 			<var name="userScreenName" value="test" />
 		</execute>
 	</command>

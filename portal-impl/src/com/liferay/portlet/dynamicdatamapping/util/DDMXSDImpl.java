@@ -616,15 +616,19 @@ public class DDMXSDImpl implements DDMXSD {
 		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
 			document);
 
-		String languageId = LocaleUtil.toLanguageId(locale);
+		String editingLanguageId = LocaleUtil.toLanguageId(locale);
 
-		if (!ArrayUtil.contains(availableLanguageIds, languageId)) {
-			languageId = defaultLanguageId;
+		String structureLanguageId;
+
+		if (ArrayUtil.contains(availableLanguageIds, editingLanguageId)) {
+			structureLanguageId = editingLanguageId;
+		} else {
+			structureLanguageId = defaultLanguageId;
 		}
 
 		Element metadataElement =
 			(Element)dynamicElementElement.selectSingleNode(
-				"meta-data[@locale='" + languageId + "']");
+				"meta-data[@locale='" + structureLanguageId + "']");
 
 		fieldContext = new HashMap<String, Object>();
 
@@ -647,6 +651,13 @@ public class DDMXSDImpl implements DDMXSD {
 
 		if (!checkRequired) {
 			fieldContext.put("required", Boolean.FALSE.toString());
+		}
+
+		boolean localizable = GetterUtil.getBoolean(
+				dynamicElementElement.attributeValue("localizable"), true);
+
+		if (!localizable && !editingLanguageId.equals(defaultLanguageId)) {
+			fieldContext.put("disabled", Boolean.TRUE.toString());
 		}
 
 		fieldsContext.put(name, fieldContext);

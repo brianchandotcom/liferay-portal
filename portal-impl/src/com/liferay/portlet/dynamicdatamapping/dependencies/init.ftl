@@ -93,6 +93,14 @@
 	<#assign required = true>
 </#if>
 
+<#-- Disabled -->
+
+<#assign disabled = false>
+
+<#if fieldStructure.disabled?? && (fieldStructure.disabled == "true")>
+	<#assign disabled = true>
+</#if>
+
 <#-- Util -->
 
 <#function escape value="">
@@ -146,5 +154,5 @@
 </#function>
 
 <#function getFileJSONObject fieldValue>
-	<#return jsonFactoryUtil.createJSONObject(fieldValue)>>
+	<#return jsonFactoryUtil.createJSONObject(fieldValue)>
 </#function>

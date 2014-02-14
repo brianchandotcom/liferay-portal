@@ -25,7 +25,7 @@ import com.liferay.portal.model.StagedModel;
 import java.io.Serializable;
 
 /**
- * Provides a set of utility methods for generating path for the entities being
+ * Provides utility methods for generating a path for the entities being
  * serialized with the portal's export/import framework.
  *
  * @author Mate Thurzo
@@ -36,12 +36,12 @@ import java.io.Serializable;
 public class ExportImportPathUtil {
 
 	/**
-	 * A company prefix being used when generating paths
+	 * The company prefix used when generating paths.
 	 */
 	public static final String PATH_PREFIX_COMPANY = "company";
 
 	/**
-	 * A group prefix being used when generating paths
+	 * The group prefix used when generating paths.
 	 */
 	public static final String PATH_PREFIX_GROUP = "group";
 
@@ -52,15 +52,29 @@ public class ExportImportPathUtil {
 	public static final String PATH_PREFIX_LAYOUT = "layout";
 
 	/**
-	 * A portlet prefix being used when generating paths
+	 * The portlet prefix used when generating paths.
 	 */
 	public static final String PATH_PREFIX_PORTLET = "portlet";
 
 	/**
-	 * Returns an expando specific path for a previously generated entity path.
+	 * Returns an expando-specific path for the entity path. The entity path
+	 * must include an XML file.
+	 *
+	 * <p>
+	 * For example, if you had the entity path of <code>C:/entity.xml</code>,
+	 * the returned expando-specific path would be the following:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * C:/entity-expando.xml
+	 * </code>
+	 * </pre>
+	 * </p>
 	 *
 	 * @param  path the previously generated entity path
-	 * @return the expando specific entity path
+	 * @return an expando-specific path for the entity path
 	 */
 	public static String getExpandoPath(String path) {
 		if (!Validator.isFilePath(path, false)) {
@@ -98,12 +112,23 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * Returns a model path for a specific class name and class primary key
-	 * pair, using a specific group's ID. These parameters will be generated
-	 * into the path.
+	 * Returns a model path with the group ID, class name, and class PK
+	 * parameters generated into the path.
+	 *
+	 * <p>
+	 * For example, a model path would resemble the following:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * /group/"groupId"/"className"/"classPK".xml
+	 * </code>
+	 * </pre>
+	 * </p>
 	 *
 	 * @param  groupId the group ID of the entity's group
-	 * @param  className the class name of the entity
+	 * @param  className the entity's class name
 	 * @param  classPK the primary key of the entity
 	 * @return a model path generated based on the given parameters
 	 */
@@ -115,17 +140,28 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * Returns a model path for a specific class name and class primary key
-	 * pair, where the group ID will be queried from the
-	 * <code>portletDataContext</code> parameter. This method is using the
-	 * <code>_sourceGroupId</code> attribute from the context.
+	 * Returns a model path with the group ID, class name and class PK, where
+	 * the group ID is queried from the portlet data context. This method is
+	 * using the source group ID from the context.
+	 *
+	 * <p>
+	 * For example, a model path would resemble the following:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * /group/"queried groupId"/"className"/"classPK".xml
+	 * </code>
+	 * </pre>
+	 * </p>
 	 *
 	 * @param  portletDataContext the context of the current export/import
 	 *         process
-	 * @param  className the class name of the entity
+	 * @param  className the entity's class name
 	 * @param  classPK the primary key of the entity
 	 * @return a model path generated based on the given parameters
-	 * @see    PortletDataContext.getSourceGroupId()
+	 * @see    PortletDataContext#getSourceGroupId()
 	 */
 	public static String getModelPath(
 		PortletDataContext portletDataContext, String className, long classPK) {
@@ -134,15 +170,27 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * Returns a path for an object related to an entity. The dependent object's
-	 * file name is being appended to the generated prefix.
+	 * Returns a model path for the entity's dependent object. The dependent
+	 * object's file name is appended to the generated prefix.
+	 *
+	 * <p>
+	 * For example, a model path would resemble the following:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * /group/"queried groupId"/"className"/"classPK"/"dependentFileName"
+	 * </code>
+	 * </pre>
+	 * </p>
 	 *
 	 * @param  portletDataContext the context of the current export/import
 	 *         process
-	 * @param  className the class name of the related entity
+	 * @param  className the related entity's class name
 	 * @param  classPK the primary key of the related entity
-	 * @param  dependentFileName the the dependent object's file name
-	 * @return a path for an object related to a specific entity
+	 * @param  dependentFileName the dependent object's file name
+	 * @return a model path for the entity's dependent object
 	 */
 	public static String getModelPath(
 		PortletDataContext portletDataContext, String className, long classPK,
@@ -154,12 +202,23 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * Returns a model path for a specific staged model. All the necessary
-	 * information, such as the group ID, needed to generate the path will be
-	 * queried from the staged model parameter.
+	 * Returns a model path for the staged model. The group ID, class name, and
+	 * class PK are queried from the staged model to generate the path.
+	 *
+	 * <p>
+	 * For example, a model path would resemble the following:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * /group/"queried groupId"/"queried className"/"queried classPK".xml
+	 * </code>
+	 * </pre>
+	 * </p>
 	 *
 	 * @param  stagedModel the staged model the path is needed for
-	 * @return a model path generated based on the staged model parameter
+	 * @return a model path for the staged model
 	 * @see    StagedModel
 	 */
 	public static String getModelPath(StagedModel stagedModel) {
@@ -167,15 +226,30 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * Returns a path for a file related to a specific model. This method is
-	 * useful for example when generating path for an image related to the web
-	 * content. The staged model's attributes are being used to generate the
-	 * first part of the path then the <code>dependentFileName</code> will be
-	 * attached to the end of the path.
+	 * Returns a model path for the staged model's dependent object.
+	 *
+	 * <p>
+	 * This method is useful, for example, when generating the path for an image
+	 * related to the web content. The staged model's attributes are used to
+	 * generate the first part of the path; then the dependent object's file
+	 * name is attached to the end of the path.
+	 * </p>
+	 *
+	 * <p>
+	 * For example, a model path would resemble the following:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * /group/"queried groupId"/"queried className"/"queried classPK"/"dependentFileName"
+	 * </code>
+	 * </pre>
+	 * </p>
 	 *
 	 * @param  stagedModel the staged model the path is needed for
 	 * @param  dependentFileName the dependent object's file name
-	 * @return a path for the dependent object
+	 * @return a model path for the staged model's dependent object
 	 */
 	public static String getModelPath(
 		StagedModel stagedModel, String dependentFileName) {
@@ -200,12 +274,24 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * Returns a portlet path for a specific portlet ID.
+	 * Returns a portlet path for the portlet ID.
+	 *
+	 * <p>
+	 * For example, a portlet path would resemble the following:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * /group/"queried groupId"/portlet/"portletId"
+	 * </code>
+	 * </pre>
+	 * </p>
 	 *
 	 * @param  portletDataContext the context of the current export/import
 	 *         process
-	 * @param  portletId the portlet ID the path is being generated
-	 * @return a portlet path for the specific portlet ID
+	 * @param  portletId the portlet ID the path is being generated for
+	 * @return a portlet path for the portlet ID
 	 */
 	public static String getPortletPath(
 		PortletDataContext portletDataContext, String portletId) {
@@ -222,14 +308,26 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * A helper method used to generate a fragment of the path. The fragment is
-	 * being generated with the scope group ID from the portlet data context.
+	 * Returns a root path, or fragment of the model path. The fragment is
+	 * generated with the scope group ID from the portlet data context.
+	 *
+	 * <p>
+	 * For example, a root path would resemble the following:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * /group/"queried groupId"
+	 * </code>
+	 * </pre>
+	 * </p>
 	 *
 	 * @param  portletDataContext the context of the current export/import
 	 *         process
-	 * @return a path fragment
-	 * @see    PortletDataContext.getScopeGroupId()
-	 * @see    getSourceRootPath(PortletDataContext)
+	 * @return a root path, or fragment of the model path
+	 * @see    PortletDataContext#getScopeGroupId()
+	 * @see    #getSourceRootPath(PortletDataContext)
 	 */
 	public static String getRootPath(PortletDataContext portletDataContext) {
 		return getRootPath(
@@ -274,16 +372,27 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * A helper method used to generate a fragment of the path pair to the
-	 * <code>getRootPath</code> method. The fragment is being generated with the
-	 * source group ID from the portlet data context. This method is useful
-	 * during the import process.
+	 * Returns a source root path, or fragment of the model path to the {@link
+	 * #getRootPath(PortletDataContext)} method. The fragment is generated with
+	 * the source group ID from the portlet data context. This helper method is
+	 * useful during the import process.
+	 *
+	 * <p>
+	 * For example, a source root path would resemble the following:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * /group/"queried groupId"
+	 * </code>
+	 * </pre>
+	 * </p>
 	 *
 	 * @param  portletDataContext the context of the current export/import
 	 *         process
 	 * @return a path fragment
-	 * @see    PortletDataContext.getSourceGroupId()
-	 * @see    getRootPath(PortletDataContext)
+	 * @see    PortletDataContext#getSourceGroupId()
 	 */
 	public static String getSourceRootPath(
 		PortletDataContext portletDataContext) {

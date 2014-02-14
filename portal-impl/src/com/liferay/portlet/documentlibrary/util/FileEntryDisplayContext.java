@@ -64,7 +64,7 @@ public class FileEntryDisplayContext {
 			publishButtonLabel = "submit-for-publication";
 		}
 
-		if (_isSaveAsDraft()) {
+		if (isSaveAsDraft()) {
 			publishButtonLabel = "save";
 		}
 
@@ -207,6 +207,16 @@ public class FileEntryDisplayContext {
 		return true;
 	}
 
+	public boolean isSaveAsDraft() {
+		if ((_isCheckedOut() || _isPending()) &&
+			!_isDLFileEntryDraftsEnabled()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isSaveButtonDisabled() {
 		return _isCheckedOut() && !_isLockedByMe();
 	}
@@ -332,16 +342,6 @@ public class FileEntryDisplayContext {
 
 	private boolean _isPending() {
 		return _fileVersion.isPending();
-	}
-
-	private boolean _isSaveAsDraft() {
-		if ((_isCheckedOut() || _isPending()) &&
-			!_isDLFileEntryDraftsEnabled()) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isTrashEnabled() throws PortalException, SystemException {

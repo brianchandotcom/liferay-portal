@@ -2453,20 +2453,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</then>
 		</if>
 
-		<if>
-			<or>
-				<isset property="hook.plugins.includes" />
-				<isset property="portlet.plugins.includes" />
-				<isset property="web.plugins.includes" />
-			</or>
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-					<property name="plugin.types" value="hooks" />
-					<property name="plugins.includes" value="portal-compat-hook" />
-				</ant>
-			</then>
-		</if>
-
 		<antcall target="prepare-selenium" />
 
 		<if>

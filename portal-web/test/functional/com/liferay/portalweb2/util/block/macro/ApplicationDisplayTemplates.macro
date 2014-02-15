@@ -123,7 +123,7 @@
 			</then>
 		</if>
 
-		<execute action="PGADTConfiguration#assertClick" locator-key1="MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
+		<execute action="PGADTConfiguration#click" locator-key1="MANAGE_DISPLAY_TEMPLATES_LINK" />
 
 		<execute action="PGApplicationdisplaytemplates#selectFrameTop" value1="relative=top" />
 		<execute action="PGApplicationdisplaytemplates#selectFrame" locator-key1="ADT_IFRAME" />

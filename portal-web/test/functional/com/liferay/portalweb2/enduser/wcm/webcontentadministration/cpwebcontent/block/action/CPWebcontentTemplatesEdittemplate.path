@@ -77,11 +77,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='_166_richEditor']/div/div/div[3]/div[7]/div/span[@class='ace_string']</td>
-	<td>&quot;/root/dynamic-element[@name='text']&quot;</td>
-</tr>
-<tr>
 	<td>SCRIPT_FIELDS_1</td>
 	<td>//div[@id='_166_paletteData']/div[2]/ul/li/span</td>
 	<td></td>

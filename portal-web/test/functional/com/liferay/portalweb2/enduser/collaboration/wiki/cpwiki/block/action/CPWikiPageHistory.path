@@ -13,7 +13,7 @@
 <tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
-	<td>Your request completed succesfully.</td>
+	<td>Success Message</td>
 </tr>
 <tr>
 	<td>CONFIRMATION</td>

@@ -52,7 +52,7 @@
 <tr>
 	<td>CURRENT_TITLE_FIELD</td>
 	<td>//div[@class='control-group field-wrapper']//input[@value='(None)']</td>
-	<td>${key_wikiPageTitle}</td>
+	<td></td>
 </tr>
 <tr>
 	<td>NEW_TITLE_LABEL</td>

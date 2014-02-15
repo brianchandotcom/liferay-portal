@@ -62,7 +62,7 @@
 <tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
-	<td>There are no results.</td>
+	<td>Info Message</td>
 </tr>
 <!---->
 <!--ADVANCED_SEARCH-->

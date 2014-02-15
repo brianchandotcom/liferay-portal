@@ -75,7 +75,7 @@ public class ServiceMethodProcessCallable
 				}
 			}
 
-			return (Serializable)_methodHandler.invoke(false);
+			return (Serializable)_methodHandler.invoke();
 		}
 		catch (Exception e) {
 			throw new ProcessException(e);

@@ -24,8 +24,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class PortalClassInvoker {
 
-	public static Object invoke(
-			boolean newInstance, MethodKey methodKey, Object... arguments)
+	public static Object invoke(MethodKey methodKey, Object... arguments)
 		throws Exception {
 
 		Thread currentThread = Thread.currentThread();
@@ -39,7 +38,7 @@ public class PortalClassInvoker {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, arguments);
 
-			return methodHandler.invoke(newInstance);
+			return methodHandler.invoke();
 		}
 		catch (InvocationTargetException ite) {
 			Throwable cause = ite.getCause();

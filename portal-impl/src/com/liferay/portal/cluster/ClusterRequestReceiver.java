@@ -235,7 +235,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			try {
 				ClusterInvokeThreadLocal.setEnabled(false);
 
-				returnValue = methodHandler.invoke(true);
+				returnValue = methodHandler.invoke();
 			}
 			catch (Exception e) {
 				exception = e;

@@ -33,7 +33,7 @@ public class MethodHandlerProcessCallable<T extends Serializable>
 	@Override
 	public T call() throws ProcessException {
 		try {
-			return (T)_methodHandler.invoke(false);
+			return (T)_methodHandler.invoke();
 		}
 		catch (Exception e) {
 			throw new ProcessException(e);

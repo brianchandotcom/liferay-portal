@@ -28,7 +28,7 @@ public class DocumentConversionUtil {
 		throws Exception {
 
 		Object returnObj = PortalClassInvoker.invoke(
-			false, _convertMethodKey, id, inputStream, sourceExtension,
+			_convertMethodKey, id, inputStream, sourceExtension,
 			targetExtension);
 
 		if (returnObj != null) {
@@ -41,7 +41,7 @@ public class DocumentConversionUtil {
 
 	public static String[] getConversions(String extension) throws Exception {
 		Object returnObj = PortalClassInvoker.invoke(
-			false, _getConversionsMethodKey, extension);
+			_getConversionsMethodKey, extension);
 
 		if (returnObj != null) {
 			return (String[])returnObj;

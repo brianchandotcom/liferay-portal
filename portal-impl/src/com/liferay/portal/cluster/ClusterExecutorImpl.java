@@ -566,7 +566,7 @@ public class ClusterExecutorImpl
 		}
 		else {
 			try {
-				returnValue = methodHandler.invoke(true);
+				returnValue = methodHandler.invoke();
 			}
 			catch (Exception e) {
 				exception = e;

@@ -44,7 +44,7 @@ public class PortletActionInvoker {
 			});
 
 		PortalClassInvoker.invoke(
-			true, methodKey, null, null, portletConfig, actionRequest,
+			methodKey, null, null, portletConfig, actionRequest,
 			actionResponse);
 	}
 

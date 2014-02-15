@@ -35,7 +35,7 @@ public class CMISRepositoryUtil {
 
 		try {
 			PortalClassInvoker.invoke(
-				false, _checkRepositoryMethodKey, repositoryId, parameters,
+				_checkRepositoryMethodKey, repositoryId, parameters,
 				typeSettingsProperties, typeSettingsKey);
 		}
 		catch (Exception e) {
@@ -50,7 +50,7 @@ public class CMISRepositoryUtil {
 
 		try {
 			Object returnObj = PortalClassInvoker.invoke(
-				false, _createSessionMethodKey, parameters);
+				_createSessionMethodKey, parameters);
 
 			if (returnObj != null) {
 				session = (Session)returnObj;
@@ -73,7 +73,7 @@ public class CMISRepositoryUtil {
 
 		try {
 			Object returnObj = PortalClassInvoker.invoke(
-				false, _getTypeSettingsValueMethodKey, typeSettingsProperties,
+				_getTypeSettingsValueMethodKey, typeSettingsProperties,
 				typeSettingsKey);
 
 			if (returnObj != null) {

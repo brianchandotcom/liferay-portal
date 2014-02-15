@@ -72,7 +72,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			}
 
 			try {
-				return new LocalFuture<T>((T)methodHandler.invoke(true));
+				return new LocalFuture<T>((T)methodHandler.invoke());
 			}
 			catch (Exception e) {
 				throw new SystemException(e);

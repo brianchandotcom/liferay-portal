@@ -155,11 +155,12 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_FOLLOWING" value1="You are following 0 people." />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_CONTACTS" value1="View my 0 contacts." />
 
+		<var name="siteName" value="Liferay" />
+
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
-		<var name="siteName" value="Liferay" />
 
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
 	</command>
@@ -187,11 +188,12 @@
 		<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_PORTLET_TITLE" value1="Events" />
 		<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
 
+		<var name="siteName" value="Liferay" />
+
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
-		<var name="siteName" value="Liferay" />
 
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
 	</command>
@@ -200,11 +202,12 @@
 		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_CONTENT_FIELD" value1="Update your status..." />
 		<execute action="SOMicroblogs#assertTextEquals" locator-key1="INFO_MESSAGE" value1="You do not have any microblog entries." />
 
+		<var name="siteName" value="Liferay" />
+
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
-		<var name="siteName" value="Liferay" />
 
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
 	</command>
@@ -221,11 +224,12 @@
 		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="BASIC_SEARCH_FIELD" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 
+		<var name="siteName" value="Liferay" />
+
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
-		<var name="siteName" value="Liferay" />
 
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
 	</command>
@@ -237,11 +241,12 @@
 		<execute action="SOMessages#assertTextEquals" locator-key1="DELETE_BUTTON" value1="Delete" />
 		<execute action="SOMessages#assertTextEquals" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
 
+		<var name="siteName" value="Liferay" />
+
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
-		<var name="siteName" value="Liferay" />
 
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
 	</command>
@@ -253,11 +258,12 @@
 		<execute action="SOTasks#assertTextEquals" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
 		<execute action="SOTasks#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No tasks were found." />
 
+		<var name="siteName" value="Liferay" />
+
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
 
 		<var name="key_siteName" value="${siteName}" />
-		<var name="siteName" value="Liferay" />
 
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
 	</command>

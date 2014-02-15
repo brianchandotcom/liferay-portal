@@ -16,6 +16,10 @@
 
 		<execute macro="ApplicationDisplayTemplates#tearDownCP" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs ADT Test Page" />
+		</execute>
+
 		<execute macro="ApplicationDisplayTemplates#tearDownADTviaPortletPG">
 			<var name="defaultADT" value="${defaultADT}" />
 		</execute>

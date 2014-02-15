@@ -74,10 +74,6 @@
 	</command>
 
 	<command name="tearDownADTviaPortletPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<if>
 			<condition action="BasePortlet#isElementPresent" locator-key1="OPTIONS_ICON" />
 			<then>

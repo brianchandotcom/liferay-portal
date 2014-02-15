@@ -1,6 +1,4 @@
 <definition component-name="portal-wcm">
-	<var name="pageName" value="Blogs ADT Test Page" />
-
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
@@ -9,52 +7,46 @@
 		<execute macro="BlogsEntry#tearDownCP" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs ADT Test Page" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#tearDownPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs ADT Test Page" />
+			<var name="siteName" value="Liferay" />
 		</execute>
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
 	<command name="AddPG" priority="5">
-		<var name="adtFile" value="portlet_display_template_basic.ftl" />
-		<var name="adtType" value="Blogs" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="portletName" value="Blogs" />
-		<var name="siteName" value="Liferay" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs ADT Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs ADT Test Page" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="${adtFile}" />
-			<var name="adtType" value="${adtType}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="adtFile" value="portlet_display_template_basic.ftl" />
+			<var name="adtType" value="Blogs" />
+			<var name="siteName" value="Liferay" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs ADT Test Page" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
-			<var name="adtType" value="${adtType}" />
+			<var name="adtType" value="Blogs" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#viewADTviaPortletPG">
-			<var name="adtType" value="${adtType}" />
+			<var name="adtType" value="Blogs" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#tearDownADTviaPortletPG">
@@ -63,54 +55,52 @@
 	</command>
 
 	<command name="AddPGviaBlogs" priority="5">
-		<var name="adtFile" value="portlet_display_template_basic.ftl" />
-		<var name="adtType" value="Blogs" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="portletName" value="Blogs" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs ADT Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs ADT Test Page" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs ADT Test Page" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="${adtFile}" />
-			<var name="adtType" value="${adtType}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="adtFile" value="portlet_display_template_basic" />
+			<var name="adtType" value="Blogs" />
+			<var name="siteName" value="Liferay" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs ADT Test Page" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
-			<var name="adtType" value="${adtType}" />
+			<var name="adtType" value="Blogs" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs ADT Test Page" />
 		</execute>
 
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_EDIT_1" value1="Edit" />
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_PERMISSIONS_1" value1="Permissions" />
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_RECYCLE_BIN_1" value1="Move to the Recycle Bin" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs ADT Test Page" />
+		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#tearDownADTviaPortletPG">
 			<var name="defaultADT" value="Full Content" />

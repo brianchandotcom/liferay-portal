@@ -21,12 +21,12 @@
 <tr>
 	<td>EMAIL_ADDRESS_FIELD</td>
 	<td>//input[@id='_58_login']</td>
-	<td></td>
+	<td>Email Address Field</td>
 </tr>
 <tr>
 	<td>PASSWORD_FIELD</td>
 	<td>//input[@id='_58_password']</td>
-	<td></td>
+	<td>Password Field</td>
 </tr>
 <tr>
 	<td>REMEMBER_ME_CHECKBOX</td>
@@ -36,7 +36,7 @@
 <tr>
 	<td>SIGN_IN_BUTTON</td>
 	<td>//form[contains(@class,'sign-in-form')]/div/button</td>
-	<td></td>
+	<td>Sign In Button</td>
 </tr>
 <tr>
 	<td>ERROR_MESSAGE_1</td>

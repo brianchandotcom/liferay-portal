@@ -150,17 +150,17 @@
 <tr>
 	<td>ACTIVITIES_DATE_1</td>
 	<td>xpath=(//div[@class='task-activity task-type-1']/div[@class='task-activity-date'])[1]</td>
-	<td>Task initially assigned to the Administrator role.</td>
+	<td></td>
 </tr>
 <tr>
 	<td>ACTIVITIES_TEXT_1_LINE_A</td>
 	<td>xpath=(//div[@class='task-activity task-type-1']/div[2])[1]</td>
-	<td>Task initially assigned to the Administrator role.</td>
+	<td></td>
 </tr>
 <tr>
 	<td>ACTIVITIES_TEXT_1_LINE_B</td>
 	<td>xpath=(//div[@class='task-activity task-type-1']/div[3])[1]</td>
-	<td>Task initially assigned to the Administrator role.</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>

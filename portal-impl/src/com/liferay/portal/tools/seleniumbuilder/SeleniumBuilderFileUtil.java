@@ -515,6 +515,11 @@ public class SeleniumBuilderFileUtil {
 				prefix + "Invalid " + string1 + " attribute value " + string2 +
 					" in " + suffix);
 		}
+		else if (errorCode == 1017) {
+			throw new IllegalArgumentException(
+				prefix + "Description '" + string1 +
+					"' must end with a '.' in " + suffix);
+		}
 		else if (errorCode == 2000) {
 			throw new IllegalArgumentException(
 				prefix + "Too many child elements in the " + string1 +
@@ -532,6 +537,11 @@ public class SeleniumBuilderFileUtil {
 		else if (errorCode == 2003) {
 			throw new IllegalArgumentException(
 				prefix + "Illegal XPath " + string1 + " in " + suffix);
+		}
+		else if (errorCode == 2004) {
+			throw new IllegalArgumentException(
+				prefix + "Description '" + string1 +
+					"' must title convention in " + suffix);
 		}
 		else {
 			throw new IllegalArgumentException(prefix + suffix);
@@ -745,9 +755,18 @@ public class SeleniumBuilderFileUtil {
 				throwValidationException(1002, fileName, element, elementName);
 			}
 
-			if (elementName.equals("description") ||
-				elementName.equals("echo") || elementName.equals("fail")) {
+			if (elementName.equals("description")) {
+				validateSimpleElement(
+					fileName, element, new String[] {"message"});
 
+				String message = element.attributeValue("message");
+
+				if (!message.endsWith(".")) {
+					throwValidationException(
+						1017, fileName, commandElement, message);
+				}
+			}
+			else if (elementName.equals("echo") || elementName.equals("fail")) {
 				validateSimpleElement(
 					fileName, element, new String[] {"message"});
 			}
@@ -1375,30 +1394,79 @@ public class SeleniumBuilderFileUtil {
 			throwValidationException(1002, fileName, element, elementName);
 		}
 
-		Element element = elements.get(1);
+		Element locatorElement = elements.get(1);
 
-		String text = element.getText();
+		String locator = locatorElement.getText();
 
-		text = text.replace("${","");
-		text = text.replace("}","");
-		text = text.replace("/-/","/");
+		locator = locator.replace("${","");
+		locator = locator.replace("}","");
+		locator = locator.replace("/-/","/");
 
-		if (text.endsWith("/")) {
-			text = text.substring(0, text.length() - 1);
+		if (locator.endsWith("/")) {
+			locator = locator.substring(0, locator.length() - 1);
 		}
 
-		if (!text.equals("") && !text.startsWith("link=") &&
-			!text.contains(".png")) {
+		if (!locator.equals("") && !locator.startsWith("link=") &&
+			!locator.contains(".png")) {
 
 			try {
 				XPathFactory xPathFactory = XPathFactory.newInstance();
 
 				XPath xPath = xPathFactory.newXPath();
 
-				xPath.compile(text);
+				xPath.compile(locator);
 			}
 			catch (Exception e) {
-				throwValidationException(2003, fileName, text);
+				throwValidationException(2003, fileName, locator);
+			}
+		}
+
+		Element keyElement = elements.get(0);
+		Element descriptionElement = elements.get(2);
+
+		String key = keyElement.getText();
+		String description = descriptionElement.getText();
+
+		if (!description.equals("") && !key.equals("") &&
+			!key.equals("PAGE_NAME") && !key.equals("EXTEND_ACTION_PATH")) {
+
+			if (description.endsWith(".")) {
+				throwValidationException(2004, fileName, description);
+			}
+
+			Pattern statementPattern = Pattern.compile("[A-Z0-9].*");
+
+			Matcher statmentMatcher = statementPattern.matcher(description);
+
+			if (!statmentMatcher.find()) {
+				throwValidationException(2004, fileName, description);
+			}
+
+			Pattern wordPattern1 = Pattern.compile("[A-Za-z0-9\\-]+");
+
+			Matcher wordMatcher1 = wordPattern1.matcher(description);
+
+			while (wordMatcher1.find()) {
+				String word = wordMatcher1.group();
+
+				if (word.equals("a") || word.equals("and") ||
+					word.equals("as") || word.equals("at") ||
+					word.equals("by") || word.equals("for") ||
+					word.equals("from") || word.equals("in") ||
+					word.equals("of") || word.equals("the") ||
+					word.equals("to")) {
+
+					continue;
+				}
+
+				Pattern wordPattern2 = Pattern.compile(
+					"[A-Z0-9][A-Za-z0-9\\-]*");
+
+				Matcher wordMatcher2 = wordPattern2.matcher(word);
+
+				if (!wordMatcher2.find()) {
+					throwValidationException(2004, fileName, description);
+				}
 			}
 		}
 	}

@@ -63,7 +63,7 @@
 <tr>
 	<td>WIKI_PAGE_ADD_PAGE</td>
 	<td>//div[@id='apiServiceWikiPageServiceImplPanelContent']/div/ul/li/a[contains(.,'add-page')]</td>
-	<td>add-page</td>
+	<td>Wiki Add Page</td>
 </tr>
 </tbody>
 </table>

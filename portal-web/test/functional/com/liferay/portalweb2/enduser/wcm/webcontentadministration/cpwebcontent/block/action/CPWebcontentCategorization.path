@@ -31,7 +31,7 @@
 <tr>
 	<td>CATEGORY</td>
 	<td>//div[contains(@class,'categoriesselector')]/ul/li/span[contains(.,'${key_categoryName}')]</td>
-	<td>asdf</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>

@@ -82,7 +82,7 @@
 <tr>
 	<td>CATEGORY_TABLE_CHOOSE_BUTTON</td>
 	<td>//button[@data-name='MB Category2 Name' and contains(.,'Choose')]</td>
-	<td>${key_categoryName}</td>
+	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_CHOOSE_BUTTON_1</td>

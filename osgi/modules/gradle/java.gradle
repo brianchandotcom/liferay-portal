@@ -41,14 +41,11 @@ subprojects {
 		}
 	}
 
-	task clean << {
-	}
-
 	task deploy(dependsOn: jar) << {
 		if (project.hasProperty('deployDir') && (project.deployDir != null)) {
 			def buildLibDir = new File("${projectDir}/build/libs")
 
-			logger.info "Copying ${buildLibDir}/${project.name}.jar to " + project.deployDir + "."
+			logger.quiet "Copying ${buildLibDir}/${project.name}.jar to " + project.deployDir + "."
 
 			copy {
 				from "${buildLibDir}/${project.name}.jar"

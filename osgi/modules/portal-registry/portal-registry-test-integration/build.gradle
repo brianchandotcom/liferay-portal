@@ -1,0 +1,9 @@
+evaluationDependsOn(':portal-registry-impl')
+
+dependencies {
+	compile fileTree(dir: liferayProjectDir + '/osgi/lib/common/core', include: '*.jar')
+	compile project(':portal-registry-api')
+	compile project(':portal-registry-impl')
+}
+
+test.finalizedBy(bndIntegrationTest)

@@ -8,10 +8,39 @@ subprojects {
 	apply from: "../../gradle/baseline.gradle"
 	apply plugin: "java"
 
-	ext.liferayProjectDir = "${rootDir}/../../.."
+	ant.property(
+		name: "ant.project.name",
+		project.name
+	)
 
-	sourceCompatibility = 1.6
-	targetCompatibility = 1.6
+	ant.property(
+		name: "baseline.jar.bnddir.name",
+		".bnd"
+	)
+
+	ant.property(
+		name: "baseline.jar.report.level",
+		"diff"
+	)
+
+	ant.property(
+		name: "baseline.jar.report.only.dirty.packages",
+		true
+	)
+
+	ant.property(
+		name: "baseline.jar.reports.dir.name",
+		"baseline-reports"
+	)
+
+	ant.property(
+		name: "sdk.dir",
+		liferayProjectDir
+	)
+
+	ext.liferayProjectDir = "${rootDir}/../../.."
+	ext.sourceCompatibility = 1.6
+	ext.targetCompatibility = 1.6
 
 	dependencies {
 		compile files(["${liferayProjectDir}/portal-service/classes"])
@@ -41,14 +70,11 @@ subprojects {
 		}
 	}
 
-	task clean << {
-	}
-
 	task deploy(dependsOn: jar) << {
 		if (project.hasProperty('deployDir') && (project.deployDir != null)) {
 			def buildLibDir = new File("${projectDir}/build/libs")
 
-			logger.info "Copying ${buildLibDir}/${project.name}.jar to " + project.deployDir + "."
+			logger.quiet "Copying ${buildLibDir}/${project.name}.jar to " + project.deployDir + "."
 
 			copy {
 				from "${buildLibDir}/${project.name}.jar"

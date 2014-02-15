@@ -53,6 +53,7 @@
 
 	<path id="project.classpath">
 		<pathelement path="${classpath}" />
+		<pathelement path="${project.dir}/osgi/modules/portal-registry/portal-registry-api/build/classes/main" />
 		<path refid="lib.classpath" />
 	</path>
 
@@ -60,6 +61,7 @@
 		<pathelement path="test-classes/${test.type}" />
 		<pathelement path="${classpath}" />
 		<pathelement path="${imported.classpath}" />
+		<pathelement path="${project.dir}/osgi/modules/portal-registry/portal-registry-api/build/classes/main" />
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" excludes="ant.jar" />
@@ -68,6 +70,7 @@
 
 	<path id="web.classpath">
 		<pathelement location="${project.dir}/portal-service/classes" />
+		<pathelement path="${project.dir}/osgi/modules/portal-registry/portal-registry-api/build/classes/main" />
 		<fileset dir="${project.dir}/lib/development" includes="jsp-api.jar,mail.jar,servlet-api.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="bnd.jar" />
@@ -775,7 +778,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 	<macrodef name="gradle-execute">
 		<attribute name="gradleTask" />
-		<attribute name="gradleTaskArgs" default="" />
+		<attribute name="gradleTaskArgs" default="-Dorg.gradle.project.globalLibDir=${app.server.lib.global.dir} -Dorg.gradle.project.portalLibDir=${app.server.lib.portal.dir} -Dorg.gradle.project.osgiLibDir=${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi" />
 		<attribute name="gradleModuleDir" default="" />
 
 		<sequential>
@@ -783,12 +786,12 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<os family="unix" />
 				<then>
 					<exec append="true" dir="${project.dir}/osgi/modules@{gradleModuleDir}" executable="${project.dir}/tools/gradle/gradlew">
-						<arg line="@{gradleTask} @{gradleTaskArgs}" />
+						<arg line="-q @{gradleTask} @{gradleTaskArgs}" />
 					</exec>
 				</then>
 				<else>
 					<exec append="true" dir="${project.dir}/osgi/modules@{gradleModuleDir}" executable="${project.dir}/tools/gradle/gradlew.bat">
-						<arg line="@{gradleTask} @{gradleTaskArgs}" />
+						<arg line="-q @{gradleTask} @{gradleTaskArgs}" />
 					</exec>
 				</else>
 			</if>

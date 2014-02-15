@@ -261,24 +261,6 @@ public class BaselineJarTask extends BaseBndTask {
 		for (String fileName : _classpath.list()) {
 			_classpathFiles.add(new File(fileName.replace('\\', '/')));
 		}
-
-		_bndDir = new File(rootDir, getBndDirName());
-
-		if (!rootDir.canWrite()) {
-			return;
-		}
-
-		if (!_bndDir.exists() && !_bndDir.mkdir()) {
-			return;
-		}
-
-		File buildFile = new File(_bndDir, "build.bnd");
-
-		if (buildFile.exists() || !_bndDir.canWrite()) {
-			return;
-		}
-
-		buildFile.createNewFile();
 	}
 
 	protected void doDiff(Diff diff, StringBuffer sb) {
@@ -502,7 +484,6 @@ public class BaselineJarTask extends BaseBndTask {
 	private static final String _BASELINE_REPORTS_DIR = "baseline-reports";
 
 	private String _baselineResportsDirName;
-	private File _bndDir;
 	private Path _classpath;
 	private List<File> _classpathFiles = new ArrayList<File>();
 	private DiffPluginImpl _diffPluginImpl = new DiffPluginImpl();

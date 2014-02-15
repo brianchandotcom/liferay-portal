@@ -15,16 +15,6 @@ dependencies {
 }
 
 task baseline << {
-	ant.property(
-		name: "ant.project.name",
-		project.name
-	)
-
-	ant.property(
-		name: "sdk.dir",
-		liferayProjectDir
-	)
-
 	ant.taskdef(
 		classname: "com.liferay.util.ant.bnd.BaselineJarTask",
 		classpath: configurations.bnd.asPath,
@@ -56,4 +46,27 @@ task baseline << {
 		}
 	}
 
+}
+
+task bndIntegrationTest << {
+	ant.taskdef(
+		classname: "com.liferay.util.ant.bnd.TestTask",
+		classpath: configurations.bnd.asPath,
+		name: "bndTest"
+	)
+
+	ant.taskdef(
+		classname: "com.liferay.util.ant.ManifestHelperTask",
+		classpath: configurations.bnd.asPath,
+		name: "manifestHelper"
+	)
+
+	ant.manifestHelper(
+		projectDirPropertyName: "sdk.dir"
+	)
+
+	ant.bndTest(
+		bndRootFile: "${liferayProjectDir}/common.bnd",
+		runfiles: "bnd.bnd"
+	)
 }

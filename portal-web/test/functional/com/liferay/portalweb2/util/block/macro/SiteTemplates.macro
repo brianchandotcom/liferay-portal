@@ -5,7 +5,7 @@
 		<execute action="CPSitetemplatesAdd#type" locator-key1="NAME_FIELD" value1="${siteTemplateName}" />
 
 		<if>
-			<equals arg1="${siteTemplateActive}" arg2="false" />
+			<equals arg1="${siteTemplateActive}" arg2="No" />
 			<then>
 				<execute action="CPSitetemplatesAdd#uncheck" locator-key1="ACTIVE_CHECKBOX" />
 			</then>
@@ -52,7 +52,7 @@
 		<execute action="CPSitetemplateSettings#type" locator-key1="NAME_FIELD" value1="${siteTemplateName} Edit" />
 
 		<if>
-			<equals arg1="${siteTemplateActiveEdit}" arg2="false" />
+			<equals arg1="${siteTemplateActiveEdit}" arg2="No" />
 			<then>
 				<execute action="CPSitetemplateSettings#uncheck" locator-key1="ACTIVE_CHECKBOX" />
 			</then>

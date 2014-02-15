@@ -191,6 +191,15 @@
 		</if>
 	</command>
 
+	<command name="selectSitePagesVariationNameCP">
+		<execute action="CPSitepages#click" locator-key1="STAGING_SITE_PAGES_VARIATION_BUTTON" />
+
+		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
+
+		<execute action="CPSitepages#click" locator-key1="STAGING_SITE_PAGES_VARIATION_MENULIST_VARIATION_NAME" value1="${sitePagesVariationName}" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="selectSitePageTypeRadioCP">
 		<var name="key_pageType" value="${sitePageType}" />
 
@@ -288,6 +297,15 @@
 	<command name="viewFriendlyURLCP">
 		<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="DETAILS_FRIENDLY_BASE_URL" value1="http://localhost:8080/web${siteFriendlyURL}" />
+	</command>
+
+	<command name="viewIncompletePageViaStagingPageVariationCP">
+		<var name="key_sitePageName" value="${pageName}" />
+
+		<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK" value1="${pageName}" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="INCOMPLETE_STAGING_PAGE_VARIATION_INFO_MESSAGE" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="INCOMPLETE_STAGING_PAGE_VARIATION_ENABLE_BUTTON" value1="Enable in ${sitePagesVariationName}" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="INCOMPLETE_STAGING_PAGE_VARIATION_DELETE_BUTTON" value1="Delete in All Pages Variations" />
 	</command>
 
 	<command name="viewPageTemplatePG">

@@ -185,7 +185,7 @@
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
 
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
 		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
@@ -256,7 +256,7 @@
 	</command>
 
 	<command name="copyCP">
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="CPWebcontent#check" locator-key1="ENTRY_DESCRIPTIVE_CHECKBOX" />
 		<execute action="CPWebcontent#click" locator-key1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
@@ -294,7 +294,7 @@
 	</command>
 
 	<command name="editCP">
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
@@ -317,7 +317,7 @@
 	</command>
 
 	<command name="editNullCP">
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
@@ -359,7 +359,7 @@
 	</command>
 
 	<command name="expireCP">
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="CPWebcontent#check" locator-key1="ENTRY_DESCRIPTIVE_CHECKBOX" />
 		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
@@ -367,7 +367,7 @@
 	</command>
 
 	<command name="moveToRecycleBinCP">
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
@@ -378,7 +378,7 @@
 	</command>
 
 	<command name="previewCPwithStructureTemplateXSL">
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
@@ -394,7 +394,7 @@
 	</command>
 
 	<command name="searchNoPGViaWCS">
-		<var name='key_webContentSearchResultsName' value="${webContentSearchResultsName}" />
+		<var name="key_webContentSearchResultsName" value="${webContentSearchResultsName}" />
 
 		<execute action="PGWebcontentsearch#type" locator-key1="SEARCH_FIELD" value1="${webContentSearchTerm}" />
 		<execute action="PGWebcontentsearch#click" locator-key1="SEARCH_ICON" />
@@ -411,7 +411,7 @@
 	</command>
 
 	<command name="searchPGViaWCS">
-		<var name='key_webContentSearchResultsName' value="${webContentSearchResultsName}" />
+		<var name="key_webContentSearchResultsName" value="${webContentSearchResultsName}" />
 
 		<execute action="PGWebcontentsearch#type" locator-key1="SEARCH_FIELD" value1="${webContentSearchTerm}" />
 		<execute action="PGWebcontentsearch#click" locator-key1="SEARCH_ICON" />
@@ -446,7 +446,7 @@
 	</command>
 
 	<command name="viewCP">
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
@@ -501,7 +501,7 @@
 	</command>
 
 	<command name="viewCPDraft">
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
@@ -533,7 +533,7 @@
 	</command>
 
 	<command name="viewDefaultCP">
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
@@ -577,18 +577,18 @@
 
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="PGWebcontentdisplayConfiguration#assertElementNotPresent" locator-key1="WEB_CONTENT_TABLE_TITLE" />
 	</command>
 
 	<command name="viewTranslationCmdCP">
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="AVAILABLE_TRANSLATIONS_LABEL" value1="Available Translations:" />
 
-		<var name='key_localizedLanguage' value="${localizedLanguage}" />
+		<var name="key_localizedLanguage" value="${localizedLanguage}" />
 
 		<execute action="CPWebcontentEditwebcontent#assertClick" locator-key1="AVAILABLE_TRANSLATIONS_LINK" value1="${localizedLanguage}" />
 
@@ -601,7 +601,7 @@
 	</command>
 
 	<command name="viewWithWorkflowCP">
-		<var name='key_webContentTitle' value="${webContentTitle}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />

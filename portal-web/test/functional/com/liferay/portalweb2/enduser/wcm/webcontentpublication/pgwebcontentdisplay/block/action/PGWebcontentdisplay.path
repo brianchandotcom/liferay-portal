@@ -60,6 +60,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WEB_CONTENT_MESSAGE_WORKFLOW_UNAPPROVED_MESSAGE</td>
+	<td>//div[@class='portlet-body']/div[contains(@class,'alert-block')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_ALERT_MESSAGE</td>
+	<td>//div[contains(@class,'alert-error')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

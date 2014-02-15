@@ -116,6 +116,16 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${checkEnablePropagationCheckbox}" arg2="true" />
+			<then>
+				<execute action="CPUsersandorganizationsOrganizationEdit#assertChecked" locator-key1="ENABLE_PROPAGATION_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="CPUsersandorganizationsOrganizationEdit#uncheck" locator-key1="ENABLE_PROPAGATION_CHECKBOX" />
+			</else>
+		</if>
+
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 

@@ -47,12 +47,12 @@ public class MethodHandler implements Serializable {
 		return _methodKey;
 	}
 
-	public Object invoke(boolean newInstance) throws Exception {
+	public Object invoke() throws Exception {
 		Method method = _methodKey.getMethod();
 
 		Object targetObject = null;
 
-		if (newInstance && !Modifier.isStatic(method.getModifiers())) {
+		if (!Modifier.isStatic(method.getModifiers())) {
 			Class<?> targetClass = _methodKey.getDeclaringClass();
 
 			targetObject = targetClass.newInstance();

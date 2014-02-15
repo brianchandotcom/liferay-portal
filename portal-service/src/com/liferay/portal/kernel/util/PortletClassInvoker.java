@@ -27,8 +27,7 @@ import javax.servlet.ServletContext;
 public class PortletClassInvoker {
 
 	public static Object invoke(
-			boolean newInstance, String portletId, MethodKey methodKey,
-			Object... arguments)
+			String portletId, MethodKey methodKey, Object... arguments)
 		throws Exception {
 
 		portletId = _getRootPortletId(portletId);
@@ -54,7 +53,7 @@ public class PortletClassInvoker {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, arguments);
 
-			return methodHandler.invoke(newInstance);
+			return methodHandler.invoke();
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

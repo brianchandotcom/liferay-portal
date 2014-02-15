@@ -74,7 +74,7 @@ public class ClusterableInvokerUtil {
 			}
 		}
 
-		return methodHandler.invoke(false);
+		return methodHandler.invoke();
 	}
 
 	private static MethodKey _invokeMethodKey = new MethodKey(

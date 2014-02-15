@@ -76,7 +76,7 @@ public class TunnelServlet extends HttpServlet {
 					return;
 				}
 
-				returnObj = methodHandler.invoke(true);
+				returnObj = methodHandler.invoke();
 			}
 		}
 		catch (InvocationTargetException ite) {

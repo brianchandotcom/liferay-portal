@@ -1,1 +1,4 @@
 .gradle
+
+/portal-registry/portal-registry-api/build
+/portal-registry/portal-registry-impl/build

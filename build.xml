@@ -73,6 +73,8 @@
 	<target name="clean">
 		<ant dir="classes" target="clean" inheritAll="false" />
 
+		<ant dir="osgi/modules" target="clean" inheritAll="false" />
+
 		<ant dir="portal-service" target="clean" inheritAll="false" />
 
 		<ant dir="util-bridges" target="clean" inheritAll="false" />
@@ -84,7 +86,6 @@
 		<ant dir="portal-pacl" target="clean" inheritAll="false" />
 
 		<ant dir="osgi/bootstrap" target="clean" inheritAll="false" />
-		<ant dir="osgi/modules" target="clean" inheritAll="false" />
 
 		<ant dir="portal-web" target="clean" inheritAll="false" />
 
@@ -266,6 +267,8 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 				</fail>
 			</then>
 		</if>
+
+		<ant dir="osgi/modules" target="deploy" inheritAll="false" />
 
 		<ant dir="portal-service" target="deploy" inheritAll="false" />
 
@@ -680,6 +683,8 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 	</target>
 
 	<target name="jar">
+		<ant dir="osgi/modules" target="jar" inheritAll="false" />
+
 		<ant dir="portal-service" target="jar" inheritAll="false" />
 
 		<ant dir="util-bridges" target="jar" inheritAll="false" />

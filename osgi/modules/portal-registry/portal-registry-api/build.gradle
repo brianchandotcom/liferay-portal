@@ -1,0 +1,2 @@
+project.ext.deployDir = project.hasProperty('globalLibDir') ? project.globalLibDir : null
+

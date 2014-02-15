@@ -142,6 +142,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANNOUNCEMENTS_ENTRY_SECTION</td>
+	<td>//div[@class='unread-entries-container']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANNOUNCEMENTS_ENTRY_ACTION</td>
 	<td>//div[@class='entry-action']</td>
 	<td></td>
@@ -178,17 +183,17 @@
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN</td>
-	<td>//div[contains(@class,'read-entries')]/div/span</td>
+	<td>//div[contains(@class,'header toggler-header')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_COLLAPSED</td>
-	<td>//div[contains(@class,'content-collapsed')]</td>
+	<td>//div[contains(@class,'toggler-header-collapsed')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANNOUNCEMENTS_ENTRY_EXPANDED</td>
-	<td>//div[contains(@class,'content-expanded')]</td>
+	<td>//div[contains(@class,'toggler-header-expanded')]</td>
 	<td></td>
 </tr>
 <tr>

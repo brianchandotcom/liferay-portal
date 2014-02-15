@@ -90,19 +90,12 @@
 				</if>
 
 				<execute action="SOSiteHome#assertElementPresent" locator-key1="ANNOUNCEMENTS_OPTIONS" />
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="ANNOUNCEMENTS_CLOSE" />
 				<execute action="SOSiteHome#assertElementPresent" locator-key1="ACTIVITIES_OPTIONS" />
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="ACTIVITIES_CLOSE" />
 				<execute action="SOSiteHome#assertElementPresent" locator-key1="WELCOME_OPTIONS" />
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="WELCOME_CLOSE" />
 				<execute action="SOSiteHome#assertElementPresent" locator-key1="BOOKMARKS_OPTIONS" />
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="BOOKMARKS_CLOSE" />
 				<execute action="SOSiteHome#assertElementPresent" locator-key1="RSS_OPTIONS" />
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="RSS_CLOSE" />
 				<execute action="SOSiteHome#assertElementPresent" locator-key1="RECENT_DOWNLOADS_OPTIONS" />
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="RECENT_DOWNLOADS_CLOSE" />
 				<execute action="SOSiteHome#assertElementPresent" locator-key1="EVENTS_DISPLAY_OPTIONS" />
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="EVENTS_DISPLAY_CLOSE" />
 				<execute action="SOSiteHome#click" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
 
 				<execute action="SOMembers#type" locator-key1="MEMBERS_LIST_SEARCH" value1="${userEmailAddress}" />

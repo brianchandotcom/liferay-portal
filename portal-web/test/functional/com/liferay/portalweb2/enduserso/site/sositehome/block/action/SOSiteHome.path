@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
@@ -101,12 +101,12 @@
 </tr>
 <!--ANNOUNCEMENTS-->
 <tr>
-	<td>ANNOUNCEMENTS_OPTIONS</td>
+	<td>ANOUNCEMENTS_PORTLET_TITLE</td>
 	<td>//header[contains(.,'Announcements')]//h1</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ANNOUNCEMENTS_CLOSE</td>
+	<td>ANNOUNCEMENTS_OPTIONS</td>
 	<td>//header[contains(.,'Announcements')]//menu//a</td>
 	<td></td>
 </tr>
@@ -177,12 +177,12 @@
 </tr>
 <!--ACTIVITIES-->
 <tr>
-	<td>ACTIVITIES_OPTIONS</td>
+	<td>ACTIVITIES_PORTLET_TITLE</td>
 	<td>//header[contains(.,'Activities')]//h1</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIVITIES_CLOSE</td>
+	<td>ACTIVITIES_OPTIONS</td>
 	<td>//header[contains(.,'Activities')]//menu//a</td>
 	<td></td>
 </tr>
@@ -193,12 +193,12 @@
 </tr>
 <!--WELCOME-->
 <tr>
-	<td>WELCOME_OPTIONS</td>
+	<td>WELCOME_PORTLET_TITLE</td>
 	<td>//header[contains(.,'Welcome')]//h1</td>
 	<td></td>
 </tr>
 <tr>
-	<td>WELCOME_CLOSE</td>
+	<td>WELCOME_OPTIONS</td>
 	<td>//header[contains(.,'Welcome')]//menu//a</td>
 	<td></td>
 </tr>
@@ -209,12 +209,12 @@
 </tr>
 <!--BOOKMARKS-->
 <tr>
-	<td>BOOKMARKS_OPTIONS</td>
+	<td>BOOKMARKS_PORTLET_TITLE</td>
 	<td>//header[contains(.,'Bookmarks')]//h1</td>
 	<td></td>
 </tr>
 <tr>
-	<td>BOOKMARKS_CLOSE</td>
+	<td>BOOKMARKS_OPTIONS</td>
 	<td>//header[contains(.,'Bookmarks')]//menu//a</td>
 	<td></td>
 </tr>
@@ -265,7 +265,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_MENULIST_DELETE</td>
+	<td>ACTIONS_MENULIST_SUBSCRIBE</td>
 	<td>//ul[contains(@class,'dropdown-menu')]/li[3]/a[contains(.,'Subscribe')]</td>
 	<td></td>
 </tr>
@@ -322,12 +322,12 @@
 </tr>
 <!--RSS-->
 <tr>
-	<td>RSS_OPTIONS</td>
+	<td>RSS_PORTLET_TITLE</td>
 	<td>//header[contains(.,'RSS')]//h1</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RSS_CLOSE</td>
+	<td>RSS_OPTIONS</td>
 	<td>//header[contains(.,'RSS')]//menu//a</td>
 	<td></td>
 </tr>
@@ -388,12 +388,12 @@
 </tr>
 <!--RECENT_DOWNLOADS-->
 <tr>
-	<td>RECENT_DOWNLOADS_OPTIONS</td>
+	<td>RECENT_DOWNLOADS_PORTLET_TITLE</td>
 	<td>//header[contains(.,'Recent Downloads')]//h1</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RECENT_DOWNLOADS_CLOSE</td>
+	<td>RECENT_DOWNLOADS_OPTIONS</td>
 	<td>//header[contains(.,'Recent Downloads')]//menu//a</td>
 	<td></td>
 </tr>
@@ -404,12 +404,12 @@
 </tr>
 <!--EVENTS_DISPLAY-->
 <tr>
-	<td>EVENTS_DISPLAY_OPTIONS</td>
+	<td>EVENTS_DISPLAY_PORTLET_TITLE</td>
 	<td>//header[contains(.,'Events')]//h1</td>
 	<td></td>
 </tr>
 <tr>
-	<td>EVENTS_DISPLAY_CLOSE</td>
+	<td>EVENTS_DISPLAY_OPTIONS</td>
 	<td>//header[contains(.,'Events')]//menu//a</td>
 	<td></td>
 </tr>

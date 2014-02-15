@@ -1,0 +1,133 @@
+<definition>
+	<command name="addPG">
+		<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
+
+		<execute action="SODashboardAddAnnouncementsEntry#selectFrame" locator-key1="ADD_ENTRY_IFRAME" />
+		<execute action="SODashboardAddAnnouncementsEntry#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="SODashboardAddAnnouncementsEntry#selectFrameTop" />
+		<execute action="SODashboardAddAnnouncementsEntry#selectFrame" locator-key1="ADD_ENTRY_IFRAME" />
+		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="URL_FIELD" value1="${entryURL}" />
+		<execute action="SODashboardAddAnnouncementsEntry#click" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="SODashboardAddAnnouncementsEntry#selectFrameTop" />
+
+		<execute action="SODashboard#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" />
+	</command>
+
+	<command name="deletePG">
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="SODashboard#click" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
+		<execute action="SODashboard#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
+		<execute action="SODashboard#assertTextNotPresent" value1="{entryTitle}" />
+		<execute action="SODashboard#assertTextNotPresent" value1="{entryContent}" />
+	</command>
+
+	<command name="editPG">
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="SODashboard#click" locator-key1="ANNOUNCEMENTS_ENTRY_EDIT_LINK" />
+
+		<execute action="SODashboardAddAnnouncementsEntry#selectFrame" locator-key1="ADD_ENTRY_IFRAME" />
+		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="TITLE_FIELD" value1="${entryTitleEdit}" />
+		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute action="SODashboardAddAnnouncementsEntry#selectFrameTop" />
+		<execute action="SODashboardAddAnnouncementsEntry#selectFrame" locator-key1="ADD_ENTRY_IFRAME" />
+		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="URL_FIELD" value1="${entryURL}" />
+		<execute action="SODashboardAddAnnouncementsEntry#click" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="SODashboardAddAnnouncementsEntry#selectFrameTop" />
+
+		<execute action="SODashboard#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" />
+	</command>
+
+	<command name="markAsReadPG">
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Read" />
+		<execute action="SODashboard#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_COLLAPSED" />
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="ANNOUNCEMENTS_ENTRY_EXPANDED" />
+		<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
+		<execute action="SODashboard#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_EXPANDED" />
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="ANNOUNCEMENTS_ENTRY_COLLAPSED" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Unread" />
+		<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
+		<execute action="SODashboard#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_COLLAPSED" />
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="ANNOUNCEMENTS_ENTRY_EXPANDED" />
+	</command>
+
+	<command name="markAsUnreadPG">
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
+		<execute action="SODashboard#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_EXPANDED" />
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="ANNOUNCEMENTS_ENTRY_COLLAPSED" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Unread" />
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="ANNOUNCEMENTS_ENTRY_EXPANDED" />
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="ANNOUNCEMENTS_ENTRY_COLLAPSED" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Read" />
+	</command>
+
+	<command name="tearDownPG">
+		<execute macro="SOUser#firstLoginPG" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#pause" value1="1000" />
+		<execute action="SODashboard#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_SECTION" />
+
+		<while>
+			<condition action="SODashboard#isElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
+			<then>
+				<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete" />
+				<execute action="SODashboard#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
+			</then>
+		</while>
+	</command>
+
+	<command name="viewNotificationPG">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${entryAuthor} sent a new announcement." />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${entryContent}" />
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${entryAuthor} sent a new announcement." />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+	</command>
+
+	<command name="viewPG">
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="SODashboardManageAnnouncementsEntry#selectFrame" locator-key1="MANAGE_ENTRY_IFRAME" />
+		<execute action="SODashboardManageAnnouncementsEntry#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
+		<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
+		<execute action="SODashboardManageAnnouncementsEntry#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_MODIFIED_DATE" />
+		<execute action="SODashboardManageAnnouncementsEntry#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_DISPLAY_DATE" />
+		<execute action="SODashboardManageAnnouncementsEntry#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" />
+		<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
+		<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
+		<execute action="SODashboardManageAnnouncementsEntry#selectFrameTop" />
+	</command>
+</definition>

@@ -150,7 +150,7 @@
 		</execute>
 
 		<execute action="Dockbar#click" locator-key1="EDIT" />
-		<execute action="Dockbar#click" locator-key1="EDIT_NAVBAR_PERMISSIONS" />
+		<execute action="Dockbar#click" locator-key1="EDIT_PERMISSIONS" />
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 	</command>

@@ -272,10 +272,10 @@ public class ServiceTrackerCollection<S> implements Collection<S> {
 		return _services.toArray(services);
 	}
 
-	private static Filter _getFilter(String filterName) {
+	private static Filter _getFilter(String filterString) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		return registry.getFilter(filterName);
+		return registry.getFilter(filterString);
 	}
 
 	private Filter _getFilter(Filter filter, Class<S> clazz) {

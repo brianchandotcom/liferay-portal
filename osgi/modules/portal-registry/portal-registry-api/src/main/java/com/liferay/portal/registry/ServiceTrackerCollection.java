@@ -102,33 +102,33 @@ public class ServiceTrackerCollection<S> implements Collection<S> {
 		this(clazz, (Filter)null, serviceTrackerCustomizer, properties);
 	}
 
-	public ServiceTrackerCollection(Class<S> clazz, String filterName) {
+	public ServiceTrackerCollection(Class<S> clazz, String filterString) {
 		this(
-			clazz, _getFilter(filterName), null, new HashMap<String, Object>());
+			clazz, _getFilter(filterString), null, new HashMap<String, Object>());
 	}
 
 	public ServiceTrackerCollection(
-		Class<S> clazz, String filterName, Map<String, Object> properties) {
+		Class<S> clazz, String filterString, Map<String, Object> properties) {
 
-		this(clazz, _getFilter(filterName), null, properties);
+		this(clazz, _getFilter(filterString), null, properties);
 	}
 
 	public ServiceTrackerCollection(
-		Class<S> clazz, String filterName,
+		Class<S> clazz, String filterString,
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer) {
 
 		this(
-			clazz, _getFilter(filterName), serviceTrackerCustomizer,
+			clazz, _getFilter(filterString), serviceTrackerCustomizer,
 			new HashMap<String, Object>());
 	}
 
 	public ServiceTrackerCollection(
-		Class<S> clazz, String filterName,
+		Class<S> clazz, String filterString,
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
 		Map<String, Object> properties) {
 
 		this(
-			clazz, _getFilter(filterName), serviceTrackerCustomizer,
+			clazz, _getFilter(filterString), serviceTrackerCustomizer,
 			properties);
 	}
 

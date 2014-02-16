@@ -12,19 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.registry;
-
-import java.util.Map;
+package com.liferay.registry;
 
 /**
  * @author Raymond Augé
  */
-public interface ServiceRegistration<T> {
+public interface ServiceReference<S> extends Comparable<Object> {
 
-	public ServiceReference<T> getReference();
+	@Override
+	public int compareTo(Object serviceReference);
 
-	public void setProperties(Map<String, Object> properties);
+	public Object getProperty(String key);
 
-	public void unregister();
+	public String[] getPropertyKeys();
 
 }

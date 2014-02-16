@@ -12,28 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.registry;
-
-import java.util.Map;
+package com.liferay.registry;
 
 /**
  * @author Raymond Augé
  */
-public interface Filter {
+public interface ServiceTrackerCustomizer<S, T> {
 
-	@Override
-	public boolean equals(Object obj);
+	public T addingService(ServiceReference<S> serviceReference);
 
-	@Override
-	public int hashCode();
+	public void modifiedService(
+		ServiceReference<S> serviceReference, T service);
 
-	public boolean matches(Map<String, Object> properties);
-
-	public boolean matches(ServiceReference<?> serviceReference);
-
-	public boolean matchesCase(Map<String, Object> properties);
-
-	@Override
-	public String toString();
+	public void removedService(ServiceReference<S> serviceReference, T service);
 
 }

@@ -12,18 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.registry;
+package com.liferay.registry;
 
 /**
  * @author Raymond Augé
  */
-public interface ServiceTrackerCustomizer<S, T> {
+public class RegistryUtil {
 
-	public T addingService(ServiceReference<S> serviceReference);
+	public static Registry getRegistry() {
+		if (_registry != null) {
+			return _registry.getRegistry();
+		}
 
-	public void modifiedService(
-		ServiceReference<S> serviceReference, T service);
+		throw new NullPointerException("A registry instance was never set");
+	}
 
-	public void removedService(ServiceReference<S> serviceReference, T service);
+	public static void setRegistry(Registry registry) {
+		if (_registry != null) {
+			registry = _registry.setRegistry(registry);
+		}
+		else if (registry != null) {
+			registry = registry.setRegistry(registry);
+		}
+
+		_registry = registry;
+	}
+
+	private static Registry _registry;
 
 }

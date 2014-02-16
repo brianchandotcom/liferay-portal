@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.registry;
+package com.liferay.registry;
 
 import java.util.SortedMap;
 

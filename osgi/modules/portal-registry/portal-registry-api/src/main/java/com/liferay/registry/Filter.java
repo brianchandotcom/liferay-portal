@@ -12,18 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.registry;
+package com.liferay.registry;
+
+import java.util.Map;
 
 /**
  * @author Raymond Augé
  */
-public interface ServiceReference<S> extends Comparable<Object> {
+public interface Filter {
 
 	@Override
-	public int compareTo(Object serviceReference);
+	public boolean equals(Object obj);
 
-	public Object getProperty(String key);
+	@Override
+	public int hashCode();
 
-	public String[] getPropertyKeys();
+	public boolean matches(Map<String, Object> properties);
+
+	public boolean matches(ServiceReference<?> serviceReference);
+
+	public boolean matchesCase(Map<String, Object> properties);
+
+	@Override
+	public String toString();
 
 }

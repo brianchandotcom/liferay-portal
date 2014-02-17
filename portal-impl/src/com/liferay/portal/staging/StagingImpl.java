@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -682,24 +683,27 @@ public class StagingImpl implements Staging {
 		else if (e instanceof FileSizeException ||
 				 e instanceof LARFileSizeException) {
 
-			long fileMaxSize = PropsValues.DL_FILE_MAX_SIZE;
+			double fileMaxSize = PropsValues.DL_FILE_MAX_SIZE;
 
 			try {
-				fileMaxSize = PrefsPropsUtil.getLong(
+				fileMaxSize = PrefsPropsUtil.getDouble(
 					PropsKeys.DL_FILE_MAX_SIZE);
 
 				if (fileMaxSize == 0) {
-					fileMaxSize = PrefsPropsUtil.getLong(
+					fileMaxSize = PrefsPropsUtil.getDouble(
 						PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 				}
 			}
 			catch (Exception ex) {
 			}
 
+			fileMaxSize /= TextFormatter.BITS_IN_A_BYTE;
+
 			errorMessage = LanguageUtil.format(
 				locale,
 				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
-				fileMaxSize/1024, false);
+				TextFormatter.formatStorageSize(fileMaxSize, locale), false);
+
 			errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 		}
 		else if (e instanceof LARTypeException) {

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -849,20 +850,21 @@ public class EditFileEntryAction extends PortletAction {
 					errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
 				}
 				else if (e instanceof FileSizeException) {
-					long fileMaxSize = PrefsPropsUtil.getLong(
+					double fileMaxSize = PrefsPropsUtil.getDouble(
 						PropsKeys.DL_FILE_MAX_SIZE);
 
 					if (fileMaxSize == 0) {
-						fileMaxSize = PrefsPropsUtil.getLong(
+						fileMaxSize = PrefsPropsUtil.getDouble(
 							PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 					}
 
-					fileMaxSize /= 1024;
+					fileMaxSize /= TextFormatter.BITS_IN_A_BYTE;
 
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-file-size-no-larger" +
 							"-than-x",
-						fileMaxSize);
+						TextFormatter.formatStorageSize(
+							fileMaxSize, themeDisplay.getLocale()));
 
 					errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 				}

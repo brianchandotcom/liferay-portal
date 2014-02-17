@@ -202,13 +202,13 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 	</liferay-ui:error>
 
 	<%
-	long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+	double fileMaxSize = PrefsPropsUtil.getDouble(PropsKeys.DL_FILE_MAX_SIZE);
 
 	if (fileMaxSize == 0) {
-		fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+		fileMaxSize = PrefsPropsUtil.getDouble(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 	}
 
-	fileMaxSize /= 1024;
+	fileMaxSize /= TextFormatter.BITS_IN_A_BYTE;
 	%>
 
 	<liferay-ui:error exception="<%= FileSizeException.class %>">
@@ -229,7 +229,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 		<aui:field-wrapper>
 			<c:if test="<%= fileMaxSize != 0 %>">
 				<div class="alert alert-info">
-					<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x-k", String.valueOf(fileMaxSize), false) %>
+					<%= LanguageUtil.format(pageContext, "upload-documents-no-larger-than-x", TextFormatter.formatStorageSize(fileMaxSize, locale), false) %>
 				</div>
 			</c:if>
 		</aui:field-wrapper>

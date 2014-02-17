@@ -93,8 +93,6 @@ public class HtmlImplTest {
 			_htmlImpl.stripBetween(
 				"works across <honk>\r\n a number of </honk> lines", "honk"));
 		Assert.assertEquals(
-			"test-test-test", _htmlImpl.stripBetween("test-test-test", "test"));
-		Assert.assertEquals(
 			"multiple occurrences, multiple indeed",
 			_htmlImpl.stripBetween(
 				"multiple <a>many</a>occurrences, multiple <a>HONK</a>indeed",

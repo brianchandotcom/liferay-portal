@@ -32,7 +32,14 @@ if (Validator.isNotNull(strutsAction) && !strutsAction.equals("/login/login")) {
 	String signInURL = themeDisplay.getURLSignIn();
 
 	if (portletName.equals(PortletKeys.FAST_LOGIN)) {
-		signInURL = HttpUtil.addParameter(signInURL, "windowState", LiferayWindowState.POP_UP.toString());
+		PortletURL fastLoginURL = PortletURLFactoryUtil.create(request, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+		fastLoginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
+		fastLoginURL.setParameter("struts_action", "/login/login");
+		fastLoginURL.setPortletMode(PortletMode.VIEW);
+		fastLoginURL.setWindowState(LiferayWindowState.POP_UP);
+
+		signInURL = fastLoginURL.toString();
 	}
 	%>
 

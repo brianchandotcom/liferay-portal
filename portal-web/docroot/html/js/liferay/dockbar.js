@@ -395,8 +395,6 @@ AUI.add(
 							function(event) {
 								var instance = this;
 
-								instance.refresh();
-
 								if (!event.newVal) {
 									instance.set('activeDescendant', 0);
 								}

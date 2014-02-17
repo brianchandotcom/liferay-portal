@@ -19,6 +19,8 @@
 <%
 String exportNav = ParamUtil.getString(request, "exportNav", "custom");
 
+boolean newTemplate = ParamUtil.getBoolean(request, "newTemplate", false);
+
 long groupId = ParamUtil.getLong(request, "groupId");
 
 Group group = null;
@@ -75,11 +77,17 @@ if (selectedLayouts.isEmpty()) {
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/layouts_admin/export_layouts");
-portletURL.setParameter("tabs2", "current-and-previous");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("liveGroupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 portletURL.setParameter("rootNodeName", rootNodeName);
+
+if (newTemplate) {
+	portletURL.setParameter("tabs2", "new-export-process");
+}
+else {
+	portletURL.setParameter("tabs2", "current-and-previous");
+}
 %>
 
 <portlet:renderURL var="backURL">
@@ -92,7 +100,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 />
 
 <liferay-ui:tabs
-	names="new-export-process,current-and-previous"
+	names='<%= newTemplate ? StringPool.BLANK : "new-export-process,current-and-previous" %>'
 	param="tabs2"
 	refresh="<%= false %>"
 >
@@ -108,40 +116,51 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 	</div>
 
 	<liferay-ui:section>
-		<aui:nav-bar>
-			<aui:nav id="exportNav">
-				<aui:nav-item
-					data-value="custom"
-					iconCssClass="icon-puzzle"
-					label="custom"
-				/>
+		<div <%= !newTemplate ? StringPool.BLANK : "class=\"hide\"" %>>
+			<aui:nav-bar>
+				<aui:nav id="exportNav">
+					<aui:nav-item
+						data-value="custom"
+						iconCssClass="icon-puzzle"
+						label="custom"
+					/>
 
-				<aui:nav-item
-					data-value="export-configurations"
-					iconCssClass="icon-archive"
-					label="export-templates"
-				/>
-			</aui:nav>
-		</aui:nav-bar>
+					<aui:nav-item
+						data-value="export-configurations"
+						iconCssClass="icon-archive"
+						label="export-templates"
+					/>
+				</aui:nav>
+			</aui:nav-bar>
+		</div>
 
 		<div <%= exportNav.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportOptions">
 			<portlet:actionURL var="exportPagesURL">
-				<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+				<portlet:param name="struts_action" value='<%= newTemplate ? "/layouts_admin/edit_export_configuration" : "/layouts_admin/export_layouts" %>'/>
 				<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
 			</portlet:actionURL>
 
 			<aui:form action='<%= exportPagesURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
-				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EXPORT %>" />
+				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= newTemplate ? Constants.ADD : Constants.EXPORT %>" />
 				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 				<div class="export-dialog-tree">
-					<aui:input cssClass="file-selector" label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" showRequiredLabel="<%= false %>" size="50" value='<%= HtmlUtil.escape(StringUtil.replace(rootNodeName, " ", "_")) + "-" + Time.getShortTimestamp() + ".lar" %>'>
-						<aui:validator name="maxLength">75</aui:validator>
-						<aui:validator name="required" />
-					</aui:input>
+					<c:choose>
+						<c:when test="<%= newTemplate %>">
+							<aui:fieldset cssClass="options-group" label="new-export-template">
+								<aui:model-context bean="<%= new ExportImportConfigurationImpl() %>" model="<%= ExportImportConfiguration.class %>" />
 
+								<aui:input label="name" name="name" showRequiredLabel="<%= false %>">
+									<aui:validator name="required" />
+								</aui:input>
+								<aui:input label="description" name="description" showRequiredLabel="<%= false %>">
+									<aui:validator name="required" />
+								</aui:input>
+							</aui:fieldset>
+						</c:when>
+					</c:choose>
 					<aui:input name="layoutIds" type="hidden" />
 
 					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
@@ -602,9 +621,29 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 				</div>
 
 				<aui:button-row>
-					<aui:button type="submit" value="export" />
+					<c:choose>
+						<c:when test="<%= newTemplate %>">
+							<aui:button type="submit" value="save" />
 
-					<aui:button href="<%= backURL %>" type="cancel" />
+							<portlet:renderURL var="cancelURL">
+								<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+								<portlet:param name="exportNav" value="export-configurations" />
+								<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+								<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+								<portlet:param name="newTemplate" value="<%= String.valueOf(false) %>" />
+								<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+								<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
+							</portlet:renderURL>
+
+							<aui:button href="<%= cancelURL %>" type="cancel" />
+						</c:when>
+						<c:otherwise>
+							<aui:button type="submit" value="export" />
+
+							<aui:button href="<%= backURL %>" type="cancel" />
+						</c:otherwise>
+					</c:choose>
 				</aui:button-row>
 			</aui:form>
 		</div>
@@ -620,11 +659,13 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 	</liferay-ui:section>
 
 	<liferay-ui:section>
-		<div class="process-list" id="<portlet:namespace />exportProcesses">
-			<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_processes.jsp">
-				<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-			</liferay-util:include>
-		</div>
+		<c:if test="<%= !newTemplate %>">
+			<div class="process-list" id="<portlet:namespace />exportProcesses">
+				<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_processes.jsp">
+					<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+				</liferay-util:include>
+			</div>
+		</c:if>
 	</liferay-ui:section>
 </liferay-ui:tabs>
 

@@ -9,8 +9,6 @@ AUI.add(
 
 		var NAME = 'liferaynavigationinteraction';
 
-		var TRIGGER_SELECTOR = '.nav-navigation-btn:visible';
-
 		var NavigationInteraction = A.Component.create(
 			{
 				EXTENDS: A.Plugin.Base,
@@ -33,6 +31,8 @@ AUI.add(
 
 						instance._directChildLi = hostULId + '> li';
 						instance._hostULId = hostULId;
+
+						instance._triggerNode = A.one('.nav-navigation-btn');
 
 						Liferay.on(
 							['hideNavigationMenu', 'showNavigationMenu'],
@@ -261,7 +261,7 @@ AUI.add(
 					_isTriggerVisible: function() {
 						var instance = this;
 
-						return A.one(TRIGGER_SELECTOR) !== null;
+						return instance._triggerNode.test(':visible');
 					},
 
 					_onMouseToggle: function(event) {

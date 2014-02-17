@@ -84,12 +84,14 @@ AUI.add(
 
 						var focusManager = instance._host.focusManager;
 
-						if (event.direction === 'down' || event.direction === 'right') {
+						var direction = event.direction;
+
+						if (direction === 'down' || direction === 'right') {
 							var active = focusManager.get(ACTIVE_DESCENDANT);
 
 							focusItem = focusManager.get('descendants').item(active + 1);
 						}
-						else if (event.direction === 'up' || event.direction === 'left') {
+						else if (direction === 'up' || direction === 'left') {
 							focusItem = instance._menuItems.last();
 						}
 

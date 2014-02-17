@@ -2,19 +2,7 @@ package com.liferay.portal.util;
 
 import org.junit.Assert;
 import org.junit.Test;
-
 public class HtmlImplTest {
-
-	@Test
-	public void testEscapeTrivialValues() {
-		_assertUnchangedEscape("");
-		_assertUnchangedEscape(" ");
-		Assert.assertNull(_htmlImpl.escape(null));
-		_assertUnchangedEscape("text");
-		_assertUnchangedEscape("CAPITAL lowercase Text");
-		_assertUnchangedEscape("  no trimming performed ");
-		_assertUnchangedEscape(";");
-	}
 
 	@Test
 	public void testEscapeHtmlEncoding() {
@@ -29,6 +17,17 @@ public class HtmlImplTest {
 		Assert.assertEquals(
 			"I&#039;m quoting: &#034;this is a quote&#034;",
 			_htmlImpl.escape("I'm quoting: \"this is a quote\""));
+	}
+
+	@Test
+	public void testEscapeTrivialValues() {
+		_assertUnchangedEscape("");
+		_assertUnchangedEscape(" ");
+		Assert.assertNull(_htmlImpl.escape(null));
+		_assertUnchangedEscape("text");
+		_assertUnchangedEscape("CAPITAL lowercase Text");
+		_assertUnchangedEscape("  no trimming performed ");
+		_assertUnchangedEscape(";");
 	}
 
 	@Test
@@ -89,8 +88,7 @@ public class HtmlImplTest {
 		Assert.assertEquals(
 			"self-closing <test /> is unhandled",
 			_htmlImpl.stripBetween(
-				"self-closing <test /> is unhandled",
-				"test"));
+				"self-closing <test /> is unhandled", "test"));
 	}
 
 	@Test
@@ -110,10 +108,10 @@ public class HtmlImplTest {
 			"test", _htmlImpl.stripComments("te<!-- --><!-- -->st"));
 	}
 
-	private HtmlImpl _htmlImpl = new HtmlImpl();
-
 	private void _assertUnchangedEscape(String input) {
 		Assert.assertEquals(input, _htmlImpl.escape(input));
 	}
+
+	private HtmlImpl _htmlImpl = new HtmlImpl();
 
 }

@@ -34,6 +34,13 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 public abstract class BaseModelUserNotificationHandler
 	extends BaseUserNotificationHandler {
 
+	protected AssetRenderer getAssetRenderer(JSONObject jsonObject) {
+		String className = jsonObject.getString("className");
+		long classPK = jsonObject.getLong("classPK");
+
+		return getAssetRenderer(className, classPK);
+	}
+
 	protected AssetRenderer getAssetRenderer(String className, long classPK) {
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -63,11 +70,7 @@ public abstract class BaseModelUserNotificationHandler
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		String className = jsonObject.getString("className");
-
-		long classPK = jsonObject.getLong("classPK");
-
-		AssetRenderer assetRenderer = getAssetRenderer(className, classPK);
+		AssetRenderer assetRenderer = getAssetRenderer(jsonObject);
 
 		if (assetRenderer == null) {
 			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
@@ -79,7 +82,7 @@ public abstract class BaseModelUserNotificationHandler
 		int notificationType = jsonObject.getInt("notificationType");
 
 		String title = getTitle(
-			notificationType, assetRenderer, serviceContext);
+			notificationType, assetRenderer, jsonObject, serviceContext);
 
 		StringBundler sb = new StringBundler(5);
 
@@ -110,7 +113,7 @@ public abstract class BaseModelUserNotificationHandler
 
 	protected String getTitle(
 		int notificationType, AssetRenderer assetRenderer,
-		ServiceContext serviceContext) {
+		JSONObject jsonObject, ServiceContext serviceContext) {
 
 		String message = StringPool.BLANK;
 

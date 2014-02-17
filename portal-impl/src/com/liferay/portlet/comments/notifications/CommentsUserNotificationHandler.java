@@ -14,17 +14,13 @@
 
 package com.liferay.portlet.comments.notifications;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
@@ -43,31 +39,44 @@ public class CommentsUserNotificationHandler
 	}
 
 	@Override
-	protected String getBody(
-			UserNotificationEvent userNotificationEvent,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			userNotificationEvent.getPayload());
-
+	protected AssetRenderer getAssetRenderer(JSONObject jsonObject) {
 		long classPK = jsonObject.getLong("classPK");
 
-		MBMessage message = MBMessageLocalServiceUtil.fetchMBMessage(classPK);
+		MBMessage message = null;
+
+		try {
+			message = MBMessageLocalServiceUtil.fetchMBMessage(classPK);
+		}
+		catch (SystemException se) {
+		}
 
 		if (message == null) {
-			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
-				userNotificationEvent.getUserNotificationEventId());
-
 			return null;
 		}
 
-		int notificationType = jsonObject.getInt("notificationType");
+		return getAssetRenderer(message.getClassName(), message.getClassPK());
+	}
+
+	@Override
+	protected String getTitle(
+		int notificationType, AssetRenderer assetRenderer,
+		JSONObject jsonObject, ServiceContext serviceContext) {
+
+		long classPK = jsonObject.getLong("classPK");
+
+		MBMessage message = null;
+
+		try {
+			message = MBMessageLocalServiceUtil.fetchMBMessage(classPK);
+		}
+		catch (SystemException se) {
+		}
+
+		if (message == null) {
+			return null;
+		}
 
 		String title = StringPool.BLANK;
-
-		AssetRenderer assetRenderer = getAssetRenderer(
-			message.getClassName(), message.getClassPK());
 
 		if (notificationType ==
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
@@ -107,18 +116,7 @@ public class CommentsUserNotificationHandler
 						message.getUserId(), StringPool.BLANK)));
 		}
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<div class=\"title\">");
-		sb.append(title);
-		sb.append("</div><div class=\"body\">");
-
-		String entryTitle = jsonObject.getString("entryTitle");
-
-		sb.append(HtmlUtil.escape(StringUtil.shorten(entryTitle, 50)));
-		sb.append("</div>");
-
-		return sb.toString();
+		return title;
 	}
 
 }

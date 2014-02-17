@@ -215,13 +215,13 @@ public class TextFormatter {
 
 		size = size / _STORAGE_SIZE_DENOMINATOR;
 
-		if (size > _STORAGE_SIZE_DENOMINATOR) {
+		if (size >= _STORAGE_SIZE_DENOMINATOR) {
 			suffix = _STORAGE_SIZE_SUFFIX_MB;
 
 			size = size / _STORAGE_SIZE_DENOMINATOR;
 		}
 
-		if (size > _STORAGE_SIZE_DENOMINATOR) {
+		if (size >= _STORAGE_SIZE_DENOMINATOR) {
 			suffix = _STORAGE_SIZE_SUFFIX_GB;
 
 			size = size / _STORAGE_SIZE_DENOMINATOR;

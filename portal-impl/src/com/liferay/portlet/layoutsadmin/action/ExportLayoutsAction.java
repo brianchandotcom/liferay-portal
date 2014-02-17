@@ -15,6 +15,7 @@
 package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -24,6 +25,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
@@ -69,8 +72,8 @@ public class ExportLayoutsAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			String fileName = ParamUtil.getString(
-				actionRequest, "exportFileName");
+			String fileName = LanguageUtil.get(
+				actionRequest.getLocale(), "public-pages");
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			boolean privateLayout = ParamUtil.getBoolean(
 				actionRequest, "privateLayout");
@@ -78,6 +81,13 @@ public class ExportLayoutsAction extends PortletAction {
 			DateRange dateRange = ExportImportDateUtil.getDateRange(
 				actionRequest, groupId, privateLayout, 0, null,
 				ExportImportDateUtil.RANGE_ALL);
+
+			if (privateLayout) {
+				fileName = LanguageUtil.get(
+					actionRequest.getLocale(), "private-pages");
+			}
+
+			fileName = fileName + StringPool.DASH + Time.getShortTimestamp();
 
 			if (Validator.isNotNull(cmd)) {
 				LayoutServiceUtil.exportLayoutsAsFileInBackground(

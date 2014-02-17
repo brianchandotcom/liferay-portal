@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -85,13 +87,17 @@ public class ExportImportConfigurationHelper {
 			ExportImportConfigurationLocalServiceUtil.
 				getExportImportConfiguration(exportImportConfigurationId);
 
+		String fileName =
+			exportImportConfiguration.getName() + StringPool.DASH +
+			Time.getShortTimestamp();
+
+		fileName = fileName.replace(StringPool.SPACE, StringPool.UNDERLINE);
+
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
-
-		String taskName = MapUtil.getString(parameterMap, "exportFileName");
 
 		long groupId = MapUtil.getLong(settingsMap, "sourceGroupId");
 		boolean privateLayout = GetterUtil.getBoolean(
@@ -105,10 +111,8 @@ public class ExportImportConfigurationHelper {
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			exportImportConfiguration);
 
-		String fileName = MapUtil.getString(parameterMap, "exportFileName");
-
 		LayoutServiceUtil.exportLayoutsAsFileInBackground(
-			taskName, groupId, privateLayout, layoutIds, parameterMap,
+			fileName, groupId, privateLayout, layoutIds, parameterMap,
 			dateRange.getStartDate(), dateRange.getEndDate(), fileName);
 	}
 
@@ -121,9 +125,9 @@ public class ExportImportConfigurationHelper {
 
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 		String exportImportConfigurationName = ParamUtil.getString(
-			portletRequest, "exportImportConfigurationName");
+			portletRequest, "name");
 		String exportImportConfigurationDescription = ParamUtil.getString(
-			portletRequest, "exportImportConfigurationDescription");
+			portletRequest, "description");
 
 		Map<String, Serializable> settingsMap = buildSettingsMap(
 			themeDisplay, portletRequest, groupId, type);

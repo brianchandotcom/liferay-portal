@@ -971,6 +971,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			workflowServiceContext = new ServiceContext();
 		}
 
+		workflowServiceContext.setAttribute("passwordUnencrypted",password1);
 		workflowServiceContext.setAttribute("autoPassword", autoPassword);
 		workflowServiceContext.setAttribute("sendEmail", sendEmail);
 
@@ -1598,7 +1599,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         a password should be generated (with the
 	 *         <code>autoPassword</code> attribute) and whether the confirmation
 	 *         email should be sent (with the <code>sendEmail</code> attribute)
-	 *         for the user.
+	 *         for the user. It also receives the user's custom password at
+	 *         <code>passwordUnencrypted</code> if custom password is configured
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1637,6 +1639,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				password = PwdToolkitUtil.generate(passwordPolicy);
 			}
 
+			serviceContext.setAttribute("passwordUnencrypted", password);
+
 			user.setPassword(PasswordEncryptorUtil.encrypt(password));
 			user.setPasswordUnencrypted(password);
 			user.setPasswordEncrypted(true);
@@ -1649,11 +1653,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (user.hasCompanyMx()) {
-			String mailPassword = password;
-
-			if (Validator.isNull(mailPassword)) {
-				mailPassword = user.getPasswordUnencrypted();
-			}
+			String mailPassword = (String)serviceContext.getAttribute(
+				"passwordUnencrypted");
 
 			mailService.addUser(
 				user.getCompanyId(), user.getUserId(), mailPassword,
@@ -4323,6 +4324,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			workflowServiceContext = new ServiceContext();
 		}
 
+		workflowServiceContext.setAttribute("passwordUnencrypted",password1);
 		workflowServiceContext.setAttribute("autoPassword", autoPassword);
 		workflowServiceContext.setAttribute("sendEmail", sendEmail);
 

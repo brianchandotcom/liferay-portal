@@ -188,7 +188,7 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 				String[] useArray = StringUtil.split(use);
 
 				for (int i = 0; i < useArray.length; i++) {
-					_useSet.add(useArray[i]);
+					_useSet.add(StringUtil.trim(useArray[i]));
 				}
 			}
 		}
@@ -205,7 +205,7 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 				String[] useArray = StringUtil.split(use);
 
 				for (int i = 0; i < useArray.length; i++) {
-					_useSet.add(useArray[i]);
+					_useSet.add(StringUtil.trim(useArray[i]));
 				}
 			}
 		}

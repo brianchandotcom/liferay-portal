@@ -35,6 +35,8 @@ public class PortletKeys {
 
 	public static final String ASSET_BROWSER = "172";
 
+	public static final String ASSET_CATEGORIES_ADMIN = "147";
+
 	public static final String ASSET_CATEGORIES_NAVIGATION = "122";
 
 	public static final String ASSET_PUBLISHER = "101";

@@ -70,11 +70,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 
 import java.io.File;
 
@@ -181,14 +178,6 @@ public class LayoutExporter {
 		}
 
 		return portlets;
-	}
-
-	public static List<Portlet> getPortletDataHandlerPortlets(
-			long groupId, boolean privateLayout)
-		throws Exception {
-
-		return getPortletDataHandlerPortlets(
-			LayoutLocalServiceUtil.getLayouts(groupId, privateLayout));
 	}
 
 	public byte[] exportLayouts(
@@ -478,9 +467,21 @@ public class LayoutExporter {
 				portletDataContext, portlets, layoutIds, portletIds, layout);
 		}
 
-		long previousScopeGroupId = portletDataContext.getScopeGroupId();
-
 		Element portletsElement = rootElement.addElement("portlets");
+
+		Layout dummyLayout = new LayoutImpl();
+
+		dummyLayout.setCompanyId(companyId);
+		dummyLayout.setGroupId(groupId);
+
+		if (exportPortletDataAll || exportCategories || group.isCompany()) {
+			_portletExporter.exportPortlet(
+				portletDataContext, layoutCache,
+				PortletKeys.ASSET_CATEGORIES_ADMIN, dummyLayout,
+				portletsElement, false, false, true, false, false);
+		}
+
+		long previousScopeGroupId = portletDataContext.getScopeGroupId();
 
 		for (Map.Entry<String, Object[]> portletIdsEntry :
 				portletIds.entrySet()) {
@@ -510,10 +511,7 @@ public class LayoutExporter {
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
 			if (layout == null) {
-				layout = new LayoutImpl();
-
-				layout.setGroupId(groupId);
-				layout.setCompanyId(companyId);
+				layout = dummyLayout;
 			}
 
 			portletDataContext.setPlid(plid);
@@ -533,12 +531,7 @@ public class LayoutExporter {
 				exportPortletControls[3]);
 		}
 
-		portletDataContext.setExportDataRootElement(rootElement);
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
-
-		exportAssetCategories(
-			portletDataContext, exportPortletDataAll, exportCategories,
-			group.isCompany());
 
 		_portletExporter.exportAssetLinks(portletDataContext);
 		_portletExporter.exportAssetTags(portletDataContext);
@@ -573,36 +566,6 @@ public class LayoutExporter {
 			"/manifest.xml", document.formattedString());
 
 		return zipWriter.getFile();
-	}
-
-	protected void exportAssetCategories(
-			PortletDataContext portletDataContext, boolean exportPortletDataAll,
-			boolean exportCategories, boolean companyGroup)
-		throws Exception {
-
-		if (exportPortletDataAll || exportCategories || companyGroup) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Export categories");
-			}
-
-			List<AssetVocabulary> assetVocabularies =
-				AssetVocabularyLocalServiceUtil.getGroupVocabularies(
-					portletDataContext.getGroupId());
-
-			for (AssetVocabulary assetVocabulary : assetVocabularies) {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, assetVocabulary);
-			}
-
-			List<AssetCategory> assetCategories =
-				AssetCategoryUtil.findByGroupId(
-					portletDataContext.getGroupId());
-
-			for (AssetCategory assetCategory : assetCategories) {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, assetCategory);
-			}
-		}
 	}
 
 	protected void exportLayout(

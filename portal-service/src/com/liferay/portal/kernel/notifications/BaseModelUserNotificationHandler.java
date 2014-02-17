@@ -34,17 +34,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 public abstract class BaseModelUserNotificationHandler
 	extends BaseUserNotificationHandler {
 
-	@Override
-	protected String getBody(
-			UserNotificationEvent userNotificationEvent,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			userNotificationEvent.getPayload());
-
-		String className = jsonObject.getString("className");
-
+	protected AssetRenderer getAssetRenderer(String className, long classPK) {
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
@@ -56,12 +46,28 @@ public abstract class BaseModelUserNotificationHandler
 		AssetRenderer assetRenderer = null;
 
 		try {
-			long classPK = jsonObject.getLong("classPK");
-
 			assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 		}
 		catch (Exception e) {
 		}
+
+		return assetRenderer;
+	}
+
+	@Override
+	protected String getBody(
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			userNotificationEvent.getPayload());
+
+		String className = jsonObject.getString("className");
+
+		long classPK = jsonObject.getLong("classPK");
+
+		AssetRenderer assetRenderer = getAssetRenderer(className, classPK);
 
 		if (assetRenderer == null) {
 			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(

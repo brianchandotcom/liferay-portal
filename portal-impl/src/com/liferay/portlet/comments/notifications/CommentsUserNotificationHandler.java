@@ -14,11 +14,9 @@
 
 package com.liferay.portlet.comments.notifications;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
+import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -29,34 +27,19 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 public class CommentsUserNotificationHandler
-	extends BaseUserNotificationHandler {
+	extends BaseModelUserNotificationHandler {
 
 	public CommentsUserNotificationHandler() {
 		setPortletId(PortletKeys.COMMENTS);
-	}
-
-	protected AssetRenderer getAssetRenderer(MBMessage message)
-		throws PortalException, SystemException {
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				message.getClassName());
-
-		if (assetRendererFactory == null) {
-			return null;
-		}
-
-		return assetRendererFactory.getAssetRenderer(message.getClassPK());
 	}
 
 	@Override
@@ -83,7 +66,8 @@ public class CommentsUserNotificationHandler
 
 		String title = StringPool.BLANK;
 
-		AssetRenderer assetRenderer = getAssetRenderer(message);
+		AssetRenderer assetRenderer = getAssetRenderer(
+			message.getClassName(), message.getClassPK());
 
 		if (notificationType ==
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
@@ -135,18 +119,6 @@ public class CommentsUserNotificationHandler
 		sb.append("</div>");
 
 		return sb.toString();
-	}
-
-	@Override
-	protected String getLink(
-			UserNotificationEvent userNotificationEvent,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			userNotificationEvent.getPayload());
-
-		return jsonObject.getString("entryURL");
 	}
 
 }

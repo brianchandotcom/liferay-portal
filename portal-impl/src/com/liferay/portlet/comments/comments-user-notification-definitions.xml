@@ -4,7 +4,7 @@
 <user-notification-definitions>
 	<definition>
 		<notification-type>${com.liferay.portal.kernel.notifications.UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY}</notification-type>
-		<description>receive-a-notification-when-someone-adds-a-new-blog-entry-you-are-subscribed-to</description>
+		<description>receive-a-notification-when-someone-adds-a-new-comment-you-are-subscribed-to</description>
 		<delivery-type>
 			<name>email</name>
 			<type>${com.liferay.portal.model.UserNotificationDeliveryConstants.TYPE_EMAIL}</type>
@@ -20,7 +20,7 @@
 	</definition>
 	<definition>
 		<notification-type>${com.liferay.portal.kernel.notifications.UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY}</notification-type>
-		<description>receive-a-notification-when-someone-updates-a-blog-entry-you-are-subscribed-to</description>
+		<description>receive-a-notification-when-someone-updates-a-comment-you-are-subscribed-to</description>
 		<delivery-type>
 			<name>email</name>
 			<type>${com.liferay.portal.model.UserNotificationDeliveryConstants.TYPE_EMAIL}</type>

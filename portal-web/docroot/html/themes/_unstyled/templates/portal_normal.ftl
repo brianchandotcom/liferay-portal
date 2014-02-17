@@ -17,9 +17,7 @@
 <nav id="nav-access">
 	<h1 class="hide-accessible"><@liferay.language key="navigation" /></h1>
 
-	<ul>
-		<li><a href="#main-content" id="skip-to-content">#language ("skip-to-content")</a></li>
-	</ul>
+	<@liferay.quickAccess />
 </nav>
 
 ${theme.include(body_top_include)}

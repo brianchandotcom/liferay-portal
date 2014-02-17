@@ -17,9 +17,7 @@
 <nav id="nav-access">
 	<h1 class="hide-accessible">Quick Access Navigation</h1>
 
-	<ul>
-		<li><a href="#main-content" id="skip-to-content">#language ("skip-to-content")</a></li>
-	</ul>
+	#quickAccess()
 </nav>
 
 $theme.include($body_top_include)

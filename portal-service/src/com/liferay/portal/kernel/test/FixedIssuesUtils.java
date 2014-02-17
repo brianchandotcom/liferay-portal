@@ -21,19 +21,19 @@ import org.junit.Assume;
 /**
  * @author Zsolt Balogh
  */
-public class AssumeUtils {
+public class FixedIssuesUtils {
 
 	public static void assumeFixIsAvailable(String fix) {
 		Assume.assumeTrue(ArrayUtil.contains(_instance._fixedIssues, fix));
 	}
 
-	private AssumeUtils() {
+	private FixedIssuesUtils() {
 		String property = System.getProperty("fixed.issues", "");
 
 		_fixedIssues = property.split(",");
 	}
 
-	private static AssumeUtils _instance = new AssumeUtils();
+	private static FixedIssuesUtils _instance = new FixedIssuesUtils();
 
 	private String[] _fixedIssues;
 

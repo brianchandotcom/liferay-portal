@@ -106,6 +106,12 @@ if (fileEntry != null) {
 	pending = fileVersion.isPending();
 }
 
+boolean saveAsDraft = false;
+
+if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
+	saveAsDraft = true;
+}
+
 FileEntryDisplayContext fileEntryDisplayContext = new FileEntryDisplayContext(request, fileEntry, fileVersion);
 %>
 
@@ -167,7 +173,7 @@ FileEntryDisplayContext fileEntryDisplayContext = new FileEntryDisplayContext(re
 	<liferay-portlet:param name="uploadExceptionRedirect" value="<%= uploadExceptionRedirect %>" />
 </liferay-portlet:actionURL>
 
-<aui:form action="<%= editFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(" + fileEntryDisplayContext.isSaveAsDraft() + ");" %>'>
+<aui:form action="<%= editFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(" + saveAsDraft + ");" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />

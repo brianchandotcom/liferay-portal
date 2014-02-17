@@ -10,15 +10,23 @@ ext {
 }
 
 def wrapTask(String task) {
-	def newTasks = rootProject.subprojects.each {
+	def newTasks = []
+
+	rootProject.subprojects.each {
 		project ->
 			def taskName = "$task${project.name}"
 
-			tasks.create(name: taskName, type: GradleBuild) {
-				dir = "${project.name}"
-				tasks = [ task ]
+			def taskWrapper = tasks.create(
+				name: taskName,
+				type: GradleBuild) {
+					dir = "${project.name}"
+					tasks = [ task ]
 			}
+
+			newTasks.add(taskWrapper)
 	}
+
+	newTasks
 }
 
 task installGradleWrapper(type: Wrapper) {
@@ -30,5 +38,12 @@ task installGradleWrapper(type: Wrapper) {
 }
 
 wrapTasks.each {
-	wrapTask(it)
+	def wrappedTasks = wrapTask(it)
+
+	tasks.create(it) << {
+		wrappedTasks.each { 
+			wrappedTask ->
+				wrappedTask.execute()
+		}
+	}
 }

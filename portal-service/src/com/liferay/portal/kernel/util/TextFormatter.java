@@ -31,6 +31,8 @@ public class TextFormatter {
 
 	public static final int B = 1;
 
+	public static final double BITS_IN_A_BYTE = 8.0;
+
 	// Web Search --> web_search
 
 	public static final int C = 2;

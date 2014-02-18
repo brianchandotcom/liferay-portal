@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -36,6 +37,7 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.InvokerPortlet;
@@ -1011,6 +1013,15 @@ public class PortalUtil {
 
 		return getPortal().getNewPortletTitle(
 			portletTitle, oldScopeName, newScopeName);
+	}
+
+	public static OrderByComparator getOrderByComparator(
+			HttpServletRequest request, Class<? extends BaseModelImpl<?>> clazz,
+			String portletKey, Object... defaultOrderByColumns)
+		throws SystemException {
+
+		return getPortal().getOrderByComparator(
+			request, clazz, portletKey, defaultOrderByColumns);
 	}
 
 	public static HttpServletRequest getOriginalServletRequest(

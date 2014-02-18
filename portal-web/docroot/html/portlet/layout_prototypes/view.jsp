@@ -20,11 +20,6 @@
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/layout_prototypes/view");
-
-OrderByComparator obc = PortalUtil.getOrderByComparator(request, LayoutPrototypeModelImpl.class, PortletKeys.LAYOUT_PROTOTYPE, "name", true);
-
-String orderByCol = obc.getOrderByFields()[0];
-String orderByType = obc.isAscending() ? Constants.ASC : Constants.DESC;
 %>
 
 <liferay-ui:error exception="<%= RequiredLayoutPrototypeException.class %>" message="you-cannot-delete-page-templates-that-are-used-by-a-page" />
@@ -35,6 +30,13 @@ String orderByType = obc.isAscending() ? Constants.ASC : Constants.DESC;
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+
+	<%
+	OrderByComparator obc = PortalUtil.getOrderByComparator(request, LayoutPrototypeModelImpl.class, PortletKeys.LAYOUT_PROTOTYPE, "name", true);
+
+	String orderByCol = obc.getOrderByFields()[0];
+	String orderByType = obc.isAscending() ? Constants.ASC : Constants.DESC;
+	%>
 
 	<liferay-ui:search-container
 		emptyResultsMessage="no-page-templates-were-found"

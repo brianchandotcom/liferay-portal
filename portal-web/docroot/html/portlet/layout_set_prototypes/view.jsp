@@ -20,11 +20,6 @@
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/layout_set_prototypes/view");
-
-OrderByComparator obc = PortalUtil.getOrderByComparator(request, LayoutSetPrototypeModelImpl.class, PortletKeys.LAYOUT_SET_PROTOTYPE, "name", true);
-
-String orderByCol = obc.getOrderByFields()[0];
-String orderByType = obc.isAscending() ? Constants.ASC : Constants.DESC;
 %>
 
 <liferay-ui:error exception="<%= RequiredLayoutSetPrototypeException.class %>" message="you-cannot-delete-site-templates-that-are-used-by-a-site" />
@@ -35,6 +30,13 @@ String orderByType = obc.isAscending() ? Constants.ASC : Constants.DESC;
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+
+	<%
+	OrderByComparator obc = PortalUtil.getOrderByComparator(request, LayoutSetPrototypeModelImpl.class, PortletKeys.LAYOUT_SET_PROTOTYPE, "name", true);
+
+	String orderByCol = obc.getOrderByFields()[0];
+	String orderByType = obc.isAscending() ? Constants.ASC : Constants.DESC;
+	%>
 
 	<liferay-ui:search-container
 		emptyResultsMessage="no-site-templates-were-found"

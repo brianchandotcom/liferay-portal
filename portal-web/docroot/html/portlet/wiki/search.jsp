@@ -75,11 +75,6 @@ portletURL.setParameter("keywords", keywords);
 		searchContext.setIncludeDiscussions(true);
 		searchContext.setKeywords(keywords);
 		searchContext.setNodeIds(nodeIds);
-
-		QueryConfig queryConfig = new QueryConfig();
-
-		searchContext.setQueryConfig(queryConfig);
-
 		searchContext.setStart(searchContainer.getStart());
 
 		Hits hits = indexer.search(searchContext);
@@ -128,7 +123,6 @@ portletURL.setParameter("keywords", keywords);
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : HtmlUtil.escape(wikiPage.getSummary()) %>"
 				fileEntryTuples="<%= searchResult.getFileEntryTuples() %>"
-				highlightEnabled="<%= queryConfig.isHighlightEnabled() %>"
 				mbMessages="<%= searchResult.getMBMessages() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
 				title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : wikiPage.getTitle() %>"

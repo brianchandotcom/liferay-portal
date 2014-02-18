@@ -36,7 +36,7 @@
 			%>
 
 				<li>
-					<a href="<%= quickAccessEntry.getURL() %>" id="<%= quickAccessEntry.getId() %>"><%= HtmlUtil.escape(quickAccessEntry.getLabel()) %></a>
+					<a href="<%= quickAccessEntry.getURL() %>" id="<%= quickAccessEntry.getId() %>"><%= quickAccessEntry.getContent() %></a>
 				</li>
 
 			<%

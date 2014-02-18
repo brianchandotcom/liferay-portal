@@ -1068,13 +1068,16 @@ public class PortletURLImpl
 			sb.append(StringPool.AMPERSAND);
 		}
 
+		Map<String, String[]> params = new LinkedHashMap<String, String[]>();
+		params.putAll(_params);
+
 		if (_copyCurrentRenderParameters) {
-			mergeRenderParameters();
+			mergeRenderParameters(params);
 		}
 
 		int previousSbIndex = sb.index();
 
-		for (Map.Entry<String, String[]> entry : _params.entrySet()) {
+		for (Map.Entry<String, String[]> entry : params.entrySet()) {
 			String name = entry.getKey();
 			String[] values = entry.getValue();
 
@@ -1235,15 +1238,18 @@ public class PortletURLImpl
 			}
 		}
 
+		Map<String, String[]> params = new LinkedHashMap<String, String[]>();
+		params.putAll(_params);
+
 		if (_copyCurrentRenderParameters) {
-			mergeRenderParameters();
+			mergeRenderParameters(params);
 		}
 
 		StringBundler parameterSb = new StringBundler();
 
 		int previousSbIndex = sb.index();
 
-		for (Map.Entry<String, String[]> entry : _params.entrySet()) {
+		for (Map.Entry<String, String[]> entry : params.entrySet()) {
 			String name = entry.getKey();
 			String[] values = entry.getValue();
 
@@ -1329,7 +1335,7 @@ public class PortletURLImpl
 		}
 	}
 
-	protected void mergeRenderParameters() {
+	protected void mergeRenderParameters(Map<String, String[]> params) {
 		String namespace = getNamespace();
 
 		Layout layout = getLayout();
@@ -1352,18 +1358,18 @@ public class PortletURLImpl
 			}
 
 			String[] oldValues = entry.getValue();
-			String[] newValues = _params.get(name);
+			String[] newValues = params.get(name);
 
 			if (newValues == null) {
-				_params.put(name, oldValues);
+				params.put(name, oldValues);
 			}
 			else if (isBlankValue(newValues)) {
-				_params.remove(name);
+				params.remove(name);
 			}
 			else {
 				newValues = ArrayUtil.append(newValues, oldValues);
 
-				_params.put(name, newValues);
+				params.put(name, newValues);
 			}
 		}
 	}

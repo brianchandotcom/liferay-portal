@@ -463,7 +463,8 @@ public class EditUserAction extends PortletAction {
 					status = WorkflowConstants.STATUS_INACTIVE;
 				}
 
-				UserServiceUtil.updateStatus(deleteUserId, status);
+				UserServiceUtil.updateStatus(
+					deleteUserId, status, new ServiceContext());
 			}
 			else {
 				UserServiceUtil.deleteUser(deleteUserId);

@@ -1305,7 +1305,8 @@ public interface UserLocalService extends BaseLocalService,
 	a password should be generated (with the
 	<code>autoPassword</code> attribute) and whether the confirmation
 	email should be sent (with the <code>sendEmail</code> attribute)
-	for the user.
+	for the user. It also receives the user's custom password at
+	<code>passwordUnencrypted</code> if custom password is configured
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
@@ -2898,10 +2899,31 @@ public interface UserLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @param status the user's new workflow status
 	* @return the user
+	* @throws PortalException if a user with the primary key could not be
+	found
+	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, int,
+	ServiceContext)}
+	*/
+	@Deprecated
+	public com.liferay.portal.model.User updateStatus(long userId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Updates the user's workflow status.
+	*
+	* @param userId the primary key of the user
+	* @param status the user's new workflow status
+	* @param serviceContext the service context to be applied. Can set the
+	unencrypted password (with the <code>passwordUnencrypted</code>
+	attribute), used by LDAP listener.
+	* @return the user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.User updateStatus(long userId, int status)
+	public com.liferay.portal.model.User updateStatus(long userId, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

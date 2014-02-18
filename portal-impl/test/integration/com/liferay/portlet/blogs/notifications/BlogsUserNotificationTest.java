@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.model.UserNotificationEvent;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
@@ -36,6 +38,7 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseMailTestCase;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -69,15 +72,19 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_group = GroupTestUtil.addGroup();
+
 		_user = TestPropsValues.getUser();
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			_user.getUserId(), group.getGroupId());
+			_user.getUserId(), _group.getGroupId());
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		super.tearDown();
+
+		GroupLocalServiceUtil.deleteGroup(_group);
 
 		for (UserNotificationEvent userNotificationEvent :
 				_userNotificationEvents) {
@@ -234,11 +241,11 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 	protected BlogsEntry addBlogsEntry() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
+			_group.getGroupId());
 
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(group.getGroupId());
+		serviceContext.setScopeGroupId(_group.getGroupId());
 
 		return BlogsTestUtil.addEntry(
 			_user.getUserId(), ServiceTestUtil.randomString(), true,
@@ -376,6 +383,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		return userNotificationEventsClassPKs;
 	}
 
+	private Group _group;
 	private User _user;
 	private List<UserNotificationEvent> _userNotificationEvents;
 

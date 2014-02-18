@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.Jdk14LogFactoryImpl;
 import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.mail.MockMailServiceImpl;
 
 import java.util.logging.Level;
@@ -37,8 +35,6 @@ public class BaseMailTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		group = GroupTestUtil.addGroup();
-
 		logFactory = LogFactoryUtil.getLogFactory();
 
 		LogFactoryUtil.setLogFactory(new Jdk14LogFactoryImpl());
@@ -52,8 +48,6 @@ public class BaseMailTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(group);
-
 		LogFactoryUtil.setLogFactory(logFactory);
 
 		MailServiceUtil mailServiceUtil = new MailServiceUtil();
@@ -61,7 +55,6 @@ public class BaseMailTestCase {
 		mailServiceUtil.setService(mailService);
 	}
 
-	protected Group group;
 	protected LogFactory logFactory;
 	protected MailService mailService;
 

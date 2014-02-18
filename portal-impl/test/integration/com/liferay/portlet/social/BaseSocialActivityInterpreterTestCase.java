@@ -17,7 +17,6 @@ package com.liferay.portlet.social;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -86,7 +85,6 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testActivityInterpreter() throws Exception {
 		addActivities();
 

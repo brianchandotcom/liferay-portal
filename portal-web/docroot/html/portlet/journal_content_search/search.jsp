@@ -64,10 +64,6 @@
 				searchContext.setGroupIds(null);
 				searchContext.setKeywords(keywords);
 
-				QueryConfig queryConfig = new QueryConfig();
-
-				searchContext.setQueryConfig(queryConfig);
-
 				Hits hits = indexer.search(searchContext);
 
 				String[] queryTerms = hits.getQueryTerms();
@@ -91,7 +87,7 @@
 
 					PortletURL summaryURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-					Summary summary = indexer.getSummary(doc, locale, StringPool.BLANK, summaryURL, queryConfig.isHighlightEnabled());
+					Summary summary = indexer.getSummary(doc, locale, StringPool.BLANK, summaryURL, PropsValues.INDEX_SEARCH_HIGHLIGHT_ENABLED);
 
 					ResultRow row = new ResultRow(new Object[] {queryTerms, doc, summary}, i, i);
 

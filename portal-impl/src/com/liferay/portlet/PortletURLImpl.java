@@ -626,6 +626,8 @@ public class PortletURLImpl
 	@Override
 	public void setPlid(long plid) {
 		_plid = plid;
+		_layout = null;
+		_layoutFriendlyURL = null;
 
 		clearCache();
 	}
@@ -633,6 +635,7 @@ public class PortletURLImpl
 	@Override
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
+		_portlet = null;
 
 		clearCache();
 	}

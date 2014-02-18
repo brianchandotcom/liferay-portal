@@ -8,7 +8,6 @@
 	</tear-down>
 
 	<command name="BreadcrumbConfiguration" priority="3">
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -53,7 +52,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">
 			<var name="breadcrumbListVisible" value="Site Name,Parent Page Name,Child Page Name" />
@@ -74,6 +73,8 @@
 			<var name="breadcrumbListVisible" value="Liferay,Site Name" />
 		</execute>
 
+		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
@@ -90,7 +91,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
 			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Application Breadcrumb" />
@@ -101,6 +102,8 @@
 			<var name="breadcrumbListNotVisible" value="Parent Page Name,Child Page Name,Site Name" />
 			<var name="breadcrumbListVisible" value="Liferay" />
 		</execute>
+
+		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
@@ -118,7 +121,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
 			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Application Breadcrumb" />
@@ -129,6 +132,8 @@
 			<var name="breadcrumbListNotVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 
+		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
@@ -144,7 +149,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
 			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
@@ -154,6 +159,8 @@
 			<var name="breadcrumbListVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 
+		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
@@ -169,7 +176,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
 			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Application Breadcrumb" />
@@ -179,6 +186,8 @@
 			<var name="breadcrumbListVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 
+		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
@@ -194,7 +203,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
 			<var name="uncheckSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
@@ -212,5 +221,7 @@
 		<execute macro="Breadcrumb#viewConfigurationPreview">
 			<var name="breadcrumbListVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
 		</execute>
+
+		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
 	</command>
 </definition>

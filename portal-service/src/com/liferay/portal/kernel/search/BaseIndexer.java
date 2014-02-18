@@ -140,6 +140,11 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
+	public int getDatabaseCount() throws Exception {
+		return 0;
+	}
+
+	@Override
 	public Document getDocument(Object obj) throws SearchException {
 		try {
 			Document document = doGetDocument(obj);

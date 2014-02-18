@@ -39,6 +39,8 @@ public interface Indexer {
 
 	public String[] getClassNames();
 
+	public int getDatabaseCount() throws Exception;
+
 	public Document getDocument(Object obj) throws SearchException;
 
 	public BooleanQuery getFacetQuery(

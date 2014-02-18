@@ -32,6 +32,11 @@ public class FileEntryDisplayModel {
 		PermissionChecker permissionChecker, FileEntry fileEntry,
 		FileVersion fileVersion) {
 
+		if ((fileEntry != null) && (fileVersion == null)) {
+			throw new IllegalArgumentException(
+				"File version cannot be null if file entry is not null");
+		}
+
 		_permissionChecker = permissionChecker;
 		_fileEntry = fileEntry;
 		_fileVersion = fileVersion;

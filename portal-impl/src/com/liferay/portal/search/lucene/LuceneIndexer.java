@@ -124,15 +124,13 @@ public class LuceneIndexer implements Runnable {
 				Set<String> searchEngineIds = new HashSet<String>();
 
 				for (Indexer indexer : indexers) {
-					searchEngineIds.add(indexer.getSearchEngineId());
-				}
+					String searchEngineId = indexer.getSearchEngineId();
 
-				for (String searchEngineId : searchEngineIds) {
-					SearchEngineUtil.deletePortletDocuments(
-						searchEngineId, _companyId, portlet.getPortletId());
-				}
+					if (searchEngineIds.add(searchEngineId)) {
+						SearchEngineUtil.deletePortletDocuments(
+							searchEngineId, _companyId, portlet.getPortletId());
+					}
 
-				for (Indexer indexer : indexers) {
 					reindex(indexer);
 				}
 			}

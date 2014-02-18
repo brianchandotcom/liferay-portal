@@ -1,5 +1,7 @@
 <definition>
 	<command name="configureBreadcrumb">
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
 		<if>
 			<isset var="checkSetupName" />
 			<then>
@@ -32,9 +34,13 @@
 				<execute action="PGBreadcrumbConfiguration#assertTextEquals" locator-key1="PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 			</else>
 		</if>
+
+		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewConfigurationCheckboxes">
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
 		<if>
 			<isset var="checkSetupName" />
 			<then>
@@ -56,9 +62,13 @@
 				</for>
 			</then>
 		</if>
+
+		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewConfigurationPreview">
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
 		<if>
 			<isset var="breadcrumbListVisible" />
 			<then>
@@ -80,6 +90,8 @@
 				</for>
 			</then>
 		</if>
+
+		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewPG">

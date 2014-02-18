@@ -66,8 +66,6 @@
 
 				QueryConfig queryConfig = new QueryConfig();
 
-				queryConfig.setHighlightEnabled(true);
-
 				searchContext.setQueryConfig(queryConfig);
 
 				Hits hits = indexer.search(searchContext);
@@ -95,7 +93,7 @@
 
 					Summary summary = indexer.getSummary(doc, locale, StringPool.BLANK, summaryURL);
 
-					ResultRow row = new ResultRow(new Object[] {queryTerms, doc, summary}, i, i);
+					ResultRow row = new ResultRow(new Object[] {queryTerms, doc, queryConfig.isHighlightEnabled(), summary}, i, i);
 
 					// Position
 
@@ -107,7 +105,9 @@
 
 					String title = HtmlUtil.escape(summary.getTitle());
 
-					title = StringUtil.highlight(title, queryTerms);
+					if (queryConfig.isHighlightEnabled()) {
+						title = StringUtil.highlight(title, queryTerms);
+					}
 
 					row.addText(title);
 

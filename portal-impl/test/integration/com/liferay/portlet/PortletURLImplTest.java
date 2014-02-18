@@ -614,6 +614,16 @@ public class PortletURLImplTest {
 			portletURL.setParameter(publicRenderParameter.getIdentifier(), "0");
 
 			addExpectedURLPart(tagPRPName, "0", false, false, expectedURLParts);
+
+			portletURL.removePublicRenderParameter(
+				publicRenderParameter.getIdentifier());
+
+			String tagPRPNameRemove =
+				PortletQNameUtil.getRemovePublicRenderParameterName(
+					tagPRPQName);
+
+			addExpectedURLPart(
+				tagPRPNameRemove, "1", false, false, expectedURLParts);
 		}
 
 		portletURL.setPortletId(PORTLET_WIKI_ID);

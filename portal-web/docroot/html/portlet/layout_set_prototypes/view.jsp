@@ -35,7 +35,6 @@ portletURL.setParameter("struts_action", "/layout_set_prototypes/view");
 	OrderByComparator obc = PortalUtil.getOrderByComparator(request, LayoutSetPrototypeModelImpl.class, PortletKeys.LAYOUT_SET_PROTOTYPE, "name", true);
 
 	String orderByCol = obc.getOrderByFields()[0];
-	String orderByType = obc.isAscending() ? OrderByComparatorFactory.ORDER_BY_TYPE_ASC : OrderByComparatorFactory.ORDER_BY_TYPE_DESC;
 	%>
 
 	<liferay-ui:search-container
@@ -43,7 +42,7 @@ portletURL.setParameter("struts_action", "/layout_set_prototypes/view");
 		headerNames="name"
 		iteratorURL="<%= portletURL %>"
 		orderByCol="<%= orderByCol %>"
-		orderByType="<%= orderByType %>"
+		orderByType="<%= obc.getOrderByType() %>"
 		total="<%= LayoutSetPrototypeLocalServiceUtil.searchCount(company.getCompanyId(), null) %>"
 	>
 		<aui:input name="deleteLayoutSetPrototypesIds" type="hidden" />

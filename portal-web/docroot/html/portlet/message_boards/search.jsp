@@ -78,6 +78,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		<%
 		Hits hits = null;
+
+		QueryConfig queryConfig = new QueryConfig();
 		%>
 
 		<liferay-ui:search-container-results>
@@ -92,10 +94,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setIncludeAttachments(true);
 			searchContext.setKeywords(keywords);
-
-			QueryConfig queryConfig = new QueryConfig();
-
-			queryConfig.setHighlightEnabled(true);
 
 			searchContext.setQueryConfig(queryConfig);
 
@@ -138,6 +136,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : StringPool.BLANK %>"
 				fileEntryTuples="<%= searchResult.getFileEntryTuples() %>"
+				highlightEnabled="<%= queryConfig.isHighlightEnabled() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
 				title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : HtmlUtil.escape(message.getSubject()) %>"
 				url="<%= rowURL %>"

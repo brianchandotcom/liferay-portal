@@ -60,7 +60,7 @@ public class FileEntryDisplayContext {
 		_portletDisplay = themeDisplay.getPortletDisplay();
 		_scopeGroupId = themeDisplay.getScopeGroupId();
 
-		_fileEntryChecker = new FileEntryChecker(
+		_fileEntryDisplayModel = new FileEntryDisplayModel(
 			_permissionChecker, fileEntry, fileVersion);
 	}
 
@@ -81,10 +81,10 @@ public class FileEntryDisplayContext {
 	public String getSaveButtonLabel() {
 		String saveButtonLabel = "save";
 
-		FileVersion fileVersion = _fileEntryChecker.getFileVersion();
+		FileVersion fileVersion = _fileEntryDisplayModel.getFileVersion();
 
-		if ((fileVersion == null) || _fileEntryChecker.isDraft() ||
-			_fileEntryChecker.isApproved()) {
+		if ((fileVersion == null) || _fileEntryDisplayModel.isDraft() ||
+			_fileEntryDisplayModel.isApproved()) {
 
 			saveButtonLabel = "save-as-draft";
 		}
@@ -99,10 +99,11 @@ public class FileEntryDisplayContext {
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException, SystemException {
 
-		if ((_fileEntryChecker.hasUpdatePermission() &&
-			 _fileEntryChecker.isCheckedOut() && _isFileEntryLockedByMe()) ||
-			(_fileEntryChecker.isCheckedOut() &&
-			 _fileEntryChecker.hasOverrideCheckoutPermission())) {
+		if ((_fileEntryDisplayModel.hasUpdatePermission() &&
+			 _fileEntryDisplayModel.isCheckedOut() &&
+			 _isFileEntryLockedByMe()) ||
+			(_fileEntryDisplayModel.isCheckedOut() &&
+			 _fileEntryDisplayModel.hasOverrideCheckoutPermission())) {
 
 			return true;
 		}
@@ -117,7 +118,7 @@ public class FileEntryDisplayContext {
 	public boolean isCheckinButtonVisible()
 		throws PortalException, SystemException {
 
-		if (_fileEntryChecker.hasUpdatePermission() &&
+		if (_fileEntryDisplayModel.hasUpdatePermission() &&
 			_isFileEntryLockedByMe()) {
 
 			return true;
@@ -129,9 +130,9 @@ public class FileEntryDisplayContext {
 	public boolean isCheckoutDocumentButtonVisible()
 		throws PortalException, SystemException {
 
-		if (_fileEntryChecker.hasUpdatePermission() &&
-			_fileEntryChecker.isSupportsLocking() &&
-			!_fileEntryChecker.isCheckedOut()) {
+		if (_fileEntryDisplayModel.hasUpdatePermission() &&
+			_fileEntryDisplayModel.isSupportsLocking() &&
+			!_fileEntryDisplayModel.isCheckedOut()) {
 
 			return true;
 		}
@@ -146,9 +147,9 @@ public class FileEntryDisplayContext {
 	public boolean isDeleteButtonVisible()
 		throws PortalException, SystemException {
 
-		if (_fileEntryChecker.hasDeletePermission() &&
+		if (_fileEntryDisplayModel.hasDeletePermission() &&
 			!_isFileEntryCheckedOutByOther() &&
-			(!_fileEntryChecker.isDLFileEntry() || !_isTrashEnabled())) {
+			(!_fileEntryDisplayModel.isDLFileEntry() || !_isTrashEnabled())) {
 
 			return true;
 		}
@@ -159,13 +160,13 @@ public class FileEntryDisplayContext {
 	public boolean isDownloadButtonVisible()
 		throws PortalException, SystemException {
 
-		return _fileEntryChecker.hasViewPermission();
+		return _fileEntryDisplayModel.hasViewPermission();
 	}
 
 	public boolean isEditButtonVisible()
 		throws PortalException, SystemException {
 
-		if (_fileEntryChecker.hasUpdatePermission() &&
+		if (_fileEntryDisplayModel.hasUpdatePermission() &&
 			!_isFileEntryCheckedOutByOther()) {
 
 			return true;
@@ -177,7 +178,7 @@ public class FileEntryDisplayContext {
 	public boolean isMoveButtonVisible()
 		throws PortalException, SystemException {
 
-		if (_fileEntryChecker.hasUpdatePermission() &&
+		if (_fileEntryDisplayModel.hasUpdatePermission() &&
 			!_isFileEntryCheckedOutByOther()) {
 
 			return true;
@@ -189,9 +190,9 @@ public class FileEntryDisplayContext {
 	public boolean isMoveToTheRecycleBinButtonVisible()
 		throws PortalException, SystemException {
 
-		if (_fileEntryChecker.hasDeletePermission() &&
+		if (_fileEntryDisplayModel.hasDeletePermission() &&
 			!_isFileEntryCheckedOutByOther() &&
-			_fileEntryChecker.isDLFileEntry() && _isTrashEnabled()) {
+			_fileEntryDisplayModel.isDLFileEntry() && _isTrashEnabled()) {
 
 			return true;
 		}
@@ -202,8 +203,8 @@ public class FileEntryDisplayContext {
 	public boolean isOpenInMsOfficeButtonVisible()
 		throws PortalException, SystemException {
 
-		if (_fileEntryChecker.hasViewPermission() &&
-			_fileEntryChecker.isOfficeDoc() && _isWebDAVEnabled() &&
+		if (_fileEntryDisplayModel.hasViewPermission() &&
+			_fileEntryDisplayModel.isOfficeDoc() && _isWebDAVEnabled() &&
 			_isIEOnWin32()) {
 
 			return true;
@@ -215,12 +216,13 @@ public class FileEntryDisplayContext {
 	public boolean isPermissionsButtonVisible()
 		throws PortalException, SystemException {
 
-		return _fileEntryChecker.hasPermissionsPermission();
+		return _fileEntryDisplayModel.hasPermissionsPermission();
 	}
 
 	public boolean isPublishButtonDisabled() {
-		if ((_fileEntryChecker.isCheckedOut() && !_isFileEntryLockedByMe()) ||
-			(_fileEntryChecker.isPending() &&
+		if ((_fileEntryDisplayModel.isCheckedOut() &&
+			 !_isFileEntryLockedByMe()) ||
+			(_fileEntryDisplayModel.isPending() &&
 			 _isDLFileEntryDraftsEnabled())) {
 
 			return true;
@@ -234,7 +236,13 @@ public class FileEntryDisplayContext {
 	}
 
 	public boolean isSaveButtonDisabled() {
-		return _fileEntryChecker.isCheckedOut() && !_isFileEntryLockedByMe();
+		if (_fileEntryDisplayModel.isCheckedOut() &&
+			!_isFileEntryLockedByMe()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSaveButtonVisible() {
@@ -258,7 +266,9 @@ public class FileEntryDisplayContext {
 	}
 
 	private boolean _isFileEntryCheckedOutByOther() {
-		if (_fileEntryChecker.isCheckedOut() && !_isFileEntryLockedByMe()) {
+		if (_fileEntryDisplayModel.isCheckedOut() &&
+			!_isFileEntryLockedByMe()) {
+
 			return true;
 		}
 
@@ -266,7 +276,7 @@ public class FileEntryDisplayContext {
 	}
 
 	private boolean _isFileEntryLockedByMe() {
-		if (_fileEntryChecker.hasLock()) {
+		if (_fileEntryDisplayModel.hasLock()) {
 			return true;
 		}
 
@@ -274,8 +284,9 @@ public class FileEntryDisplayContext {
 	}
 
 	private boolean _isFileEntrySaveAsDraft() {
-		if ((_fileEntryChecker.isCheckedOut() ||
-			 _fileEntryChecker.isPending()) && !_isDLFileEntryDraftsEnabled()) {
+		if ((_fileEntryDisplayModel.isCheckedOut() ||
+			 _fileEntryDisplayModel.isPending()) &&
+			!_isDLFileEntryDraftsEnabled()) {
 
 			return true;
 		}
@@ -304,7 +315,7 @@ public class FileEntryDisplayContext {
 	}
 
 	private long _companyId;
-	private FileEntryChecker _fileEntryChecker;
+	private FileEntryDisplayModel _fileEntryDisplayModel;
 	private long _fileEntryTypeId;
 	private long _folderId;
 	private Boolean _ieOnWin32;

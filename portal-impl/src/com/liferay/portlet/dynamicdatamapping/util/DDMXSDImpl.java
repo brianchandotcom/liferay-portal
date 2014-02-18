@@ -757,15 +757,14 @@ public class DDMXSDImpl implements DDMXSD {
 
 		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
-		if (fieldsDisplayField != null) {
-			String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
-				fieldsDisplayField);
-
-			return ArrayUtil.contains(fieldsDisplayValues, fieldName);
-		}
-		else {
+		if (fieldsDisplayField == null) {
 			return false;
 		}
+		
+		String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
+			fieldsDisplayField);
+
+		return ArrayUtil.contains(fieldsDisplayValues, fieldName);
 	}
 
 	protected String processFTL(

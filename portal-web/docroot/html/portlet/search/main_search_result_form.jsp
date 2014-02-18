@@ -119,6 +119,8 @@ viewURL = _checkViewURL(themeDisplay, viewURL, currentURL, inheritRedirect);
 String[] queryTerms = (String[])request.getAttribute("search.jsp-queryTerms");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL");
+
+boolean highlightEnabled = (Boolean)request.getAttribute("search.jsp-highlightEnabled");
 %>
 
 <span class="asset-entry">
@@ -132,11 +134,29 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 				<img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" />
 			</c:if>
 
-			<%= StringUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms) %>
+			<%
+			entryTitle = HtmlUtil.escape(entryTitle);
+
+			if (highlightEnabled) {
+			%>
+
+				<%= StringUtil.highlight(entryTitle, queryTerms) %>
+
+			<%
+			}
+			else {
+			%>
+
+				<%= entryTitle %>
+
+			<%
+			}
+			%>
+
 		</a>
 
 		<c:if test="<%= Validator.isNotNull(downloadURL) %>">
-			<liferay-ui:icon image="../arrows/01_down" label="<%= false %>" message='<%= LanguageUtil.format(pageContext, "download-x", HtmlUtil.escape(entryTitle), false) %>' url="<%= downloadURL %>" />
+			<liferay-ui:icon image="../arrows/01_down" label="<%= false %>" message='<%= LanguageUtil.format(pageContext, "download-x", entryTitle, false) %>' url="<%= downloadURL %>" />
 		</c:if>
 	</span>
 
@@ -149,7 +169,26 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 		<div class="asset-entry-content">
 			<c:if test="<%= Validator.isNotNull(entrySummary) %>">
 				<span class="asset-entry-summary">
-					<%= StringUtil.highlight(HtmlUtil.escape(entrySummary), queryTerms) %>
+
+					<%
+					entrySummary = HtmlUtil.escape(entrySummary);
+
+					if (highlightEnabled) {
+					%>
+
+						<%= StringUtil.highlight(entrySummary, queryTerms) %>
+
+					<%
+					}
+					else {
+					%>
+
+						<%= entrySummary %>
+
+					<%
+					}
+					%>
+
 				</span>
 			</c:if>
 

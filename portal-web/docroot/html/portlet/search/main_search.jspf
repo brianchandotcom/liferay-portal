@@ -28,7 +28,6 @@ QueryConfig queryConfig = new QueryConfig();
 
 queryConfig.setCollatedSpellCheckResultEnabled(collatedSpellCheckResultEnabled);
 queryConfig.setCollatedSpellCheckResultScoresThreshold(collatedSpellCheckResultDisplayThreshold);
-queryConfig.setHighlightEnabled(true);
 queryConfig.setQueryIndexingEnabled(queryIndexingEnabled);
 queryConfig.setQueryIndexingThreshold(queryIndexingThreshold);
 queryConfig.setQuerySuggestionEnabled(querySuggestionsEnabled);
@@ -65,6 +64,7 @@ Hits hits = indexer.search(searchContext);
 
 String[] queryTerms = hits.getQueryTerms();
 
+request.setAttribute("search.jsp-highlightEnabled", queryConfig.isHighlightEnabled());
 request.setAttribute("search.jsp-queryTerms", queryTerms);
 
 boolean showMenu = advancedConfiguration || displayScopeFacet || displayAssetTypeFacet || displayAssetTagsFacet || displayAssetCategoriesFacet || displayFolderFacet || displayUserFacet || displayModifiedRangeFacet;

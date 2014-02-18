@@ -81,12 +81,12 @@ public class RatingsEntryStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(entry.getUserUuid());
 
-		Map<Long, Long> relatedEntityIds =
+		Map<Long, Long> relatedClassPKs =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				entry.getClassName());
 
 		long newClassPK = MapUtil.getLong(
-			relatedEntityIds, entry.getClassPK(), entry.getClassPK());
+			relatedClassPKs, entry.getClassPK(), entry.getClassPK());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			entry);

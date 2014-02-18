@@ -25,8 +25,16 @@ public class QuickAccessEntry {
 		return _data;
 	}
 
+	public String getId() {
+		return _id;
+	}
+
 	public String getLabel() {
 		return _label;
+	}
+
+	public String getOnClick() {
+		return _onClick;
 	}
 
 	public String getURL() {
@@ -37,9 +45,19 @@ public class QuickAccessEntry {
 		_data = data;
 	}
 
+	public void setId(String id) {
+		_id = id;
+	}
+
 	public void setLabel(String label) {
 		_label = label;
 	}
+
+	public void setOnClick(String onClick) {
+		_onClick = onClick;
+	}
+
+	private String _id;
 
 	public void setURL(String url) {
 		_url = url;
@@ -47,6 +65,7 @@ public class QuickAccessEntry {
 
 	private String _data;
 	private String _label;
+	private String _onClick;
 	private String _url;
 
 }

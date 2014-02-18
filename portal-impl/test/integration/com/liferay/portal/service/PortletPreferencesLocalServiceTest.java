@@ -14,7 +14,9 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.Group;
@@ -22,6 +24,8 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.PortletPreferencesIds;
+import com.liferay.portal.service.impl.PortletPreferencesLocalServiceImpl;
+import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.service.util.PortletPreferencesTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -31,14 +35,14 @@ import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.PortletPreferencesImpl;
-
-import java.util.List;
-import java.util.Map;
-
+import com.liferay.portlet.StrictPortletPreferencesImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Cristina González
@@ -811,6 +815,21 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
+	public void testGetNotStrictPortletPreferences() throws Exception {
+		MockStrictPortletPreferencesLocalServiceImpl mockService =
+			getMockStrictPortletPreferencesService(false);
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			mockService.getStrictPreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				_portlet.getPortletId());
+
+		assertEmptyPortletPreferencesMap(jxPortletPreferences);
+	}
+
+	@Test
 	public void testGetPortletPreferencesByPlid() throws Exception {
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
 			_layout, _portlet);
@@ -859,6 +878,62 @@ public class PortletPreferencesLocalServiceTest {
 			_portlet.getPortletId(), portletPreferences.getPortletId());
 	}
 
+	@Test
+	public void testGetStrictPreferences() throws Exception {
+		MockStrictPortletPreferencesLocalServiceImpl mockService =
+			getMockStrictPortletPreferencesService(true);
+
+		javax.portlet.PortletPreferences portletPreferences =
+			mockService.getStrictPreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				_portlet.getPortletId());
+
+		assertStrictPortletPreferences(portletPreferences);
+	}
+
+	@Test
+	public void testGetStrictPreferencesByPortletPreferencesIds()
+		throws Exception {
+
+		MockStrictPortletPreferencesLocalServiceImpl mockService =
+			getMockStrictPortletPreferencesService(true);
+
+		PortletPreferencesIds portletPreferencesIds =
+			new PortletPreferencesIds(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				_portlet.getPortletId());
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			mockService.getStrictPreferences(portletPreferencesIds);
+
+		assertStrictPortletPreferences(jxPortletPreferences);
+	}
+
+	@Test
+	public void testGetStrictPreferencesWithDefaultSingleXML()
+		throws Exception {
+
+		MockStrictPortletPreferencesLocalServiceImpl mockService =
+			getMockStrictPortletPreferencesService(true);
+
+		String portletPreferencesXML =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _SINGLE_VALUE);
+
+		javax.portlet.PortletPreferences portletPreferences =
+			mockService.getStrictPreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				_portlet.getPortletId(), portletPreferencesXML);
+
+		assertStrictPortletPreferences(portletPreferences);
+	}
+
 	protected void assertEmptyPortletPreferencesMap(
 			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws Exception {
@@ -905,6 +980,39 @@ public class PortletPreferencesLocalServiceTest {
 		Assert.assertEquals(layout.getPlid(), portletPreferencesImpl.getPlid());
 	}
 
+	protected void assertStrictPortletPreferences(
+		javax.portlet.PortletPreferences portletPreferences) {
+
+		StrictPortletPreferencesImpl strictPortletPreferences =
+			(StrictPortletPreferencesImpl)portletPreferences;
+
+		Map<String, String[]> strictPortletPreferencesMap =
+			strictPortletPreferences.getMap();
+
+		Assert.assertTrue(strictPortletPreferencesMap.isEmpty());
+	}
+
+	protected MockStrictPortletPreferencesLocalServiceImpl
+	getMockStrictPortletPreferencesService(boolean strict) {
+
+		MockStrictPortletPreferencesLocalServiceImpl mockservice = new
+			MockStrictPortletPreferencesLocalServiceImpl(strict);
+
+		mockservice.setPortletPreferencesPersistence(
+			(PortletPreferencesPersistence)PortalBeanLocatorUtil.locate(
+				PortletPreferencesPersistence.class.getName()));
+
+		mockservice.setPortletLocalService(
+			(PortletLocalService)PortalBeanLocatorUtil.locate(
+				PortletLocalService.class.getName()));
+
+		mockservice.setPortletPreferencesLocalService(
+			(PortletPreferencesLocalService)PortalBeanLocatorUtil.locate(
+				PortletPreferencesLocalService.class.getName()));
+
+		return mockservice;
+	}
+
 	protected void assertValues(
 			javax.portlet.PortletPreferences jxPortletPreferences, String name,
 			String[] values)
@@ -942,5 +1050,36 @@ public class PortletPreferencesLocalServiceTest {
 	private Group _group;
 	private Layout _layout;
 	private Portlet _portlet;
+
+	private class MockStrictPortletPreferencesLocalServiceImpl
+		extends PortletPreferencesLocalServiceImpl {
+
+		public MockStrictPortletPreferencesLocalServiceImpl(boolean strict) {
+			this.strict = strict;
+		}
+
+		@Override
+		public javax.portlet.PortletPreferences getStrictPreferences(
+				long companyId, long ownerId, int ownerType, long plid,
+				String portletId)
+			throws SystemException {
+
+			return getPreferences(
+				companyId, ownerId, ownerType, plid, portletId, null, strict);
+		}
+
+		protected javax.portlet.PortletPreferences getStrictPreferences(
+				long companyId, long ownerId, int ownerType, long plid,
+				String portletId, String defaultPreferences)
+			throws SystemException {
+
+			return getPreferences(
+				companyId, ownerId, ownerType, plid, portletId,
+				defaultPreferences, strict);
+		}
+
+		private boolean strict;
+
+	}
 
 }

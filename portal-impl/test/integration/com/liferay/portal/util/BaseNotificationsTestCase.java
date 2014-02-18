@@ -39,11 +39,11 @@ public class BaseNotificationsTestCase {
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
 
-		_logFactory = LogFactoryUtil.getLogFactory();
+		logFactory = LogFactoryUtil.getLogFactory();
 
 		LogFactoryUtil.setLogFactory(new Jdk14LogFactoryImpl());
 
-		_mailService = MailServiceUtil.getService();
+		mailService = MailServiceUtil.getService();
 
 		MailServiceUtil mailServiceUtil = new MailServiceUtil();
 
@@ -54,19 +54,19 @@ public class BaseNotificationsTestCase {
 	public void tearDown() throws Exception {
 		GroupLocalServiceUtil.deleteGroup(group);
 
-		LogFactoryUtil.setLogFactory(_logFactory);
+		LogFactoryUtil.setLogFactory(logFactory);
 
 		MailServiceUtil mailServiceUtil = new MailServiceUtil();
 
-		mailServiceUtil.setService(_mailService);
+		mailServiceUtil.setService(mailService);
 	}
 
 	protected Group group;
+	protected LogFactory logFactory;
+	protected MailService mailService;
 
-	private LogFactory _logFactory;
-	private MailService _mailService;
-
-	private static class LoggerMockMailServiceImpl extends MockMailServiceImpl {
+	protected static class LoggerMockMailServiceImpl
+		extends MockMailServiceImpl {
 
 		public LoggerMockMailServiceImpl() {
 			_logger.setLevel(Level.INFO);

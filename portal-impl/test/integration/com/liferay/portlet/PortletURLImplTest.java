@@ -619,6 +619,60 @@ public class PortletURLImplTest {
 	}
 
 	@Test
+	public void testSetPortletIdWithEscapeXMLContainerRuntimeOption()
+		throws Exception {
+
+		List<String[]> expectedURLParts = new ArrayList<String[]>();
+
+		PortletApp customPortletApp = PortletLocalServiceUtil.getPortletApp(
+			"testing_servlet_context");
+
+		Map<String, String[]> containerRuntimeOptions =
+			customPortletApp.getContainerRuntimeOptions();
+
+		containerRuntimeOptions.put(
+			LiferayPortletConfig.RUNTIME_OPTION_ESCAPE_XML,
+			new String[]{"true"});
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			PortalUtil.getCompanyId(_request), PORTLET_DDM_ID);
+
+		PortletApp portletAppBackup = portlet.getPortletApp();
+
+		portlet.setPortletApp(customPortletApp);
+
+		try {
+			PortletURLImpl portletURL = new PortletURLImpl(
+				_request, "0", _targetLayout.getPlid(),
+				PortletRequest.RENDER_PHASE);
+
+			addExpectedURLPart(
+				"http://domain2.net/destination-layout?", expectedURLParts);
+
+			addExpectedURLPart(
+				"p_p_lifecycle", "0", false, true, expectedURLParts);
+
+			addExpectedURLPart(
+				"p_p_id", PORTLET_DDM_ID, false, true, expectedURLParts);
+
+			portletURL.setParameter("test&name", "test&value");
+			addExpectedURLPart(
+				"test&name", "test&value", false, true, PORTLET_DDM_ID,
+				expectedURLParts);
+
+			expectedURLParts.remove(AMPERSAND_ESCAPED);
+
+			portletURL.setPortletId(PORTLET_DDM_ID);
+
+			compareURLsPartiallyOrdered(
+				expectedURLParts, portletURL.generateToString());
+		}
+		finally {
+			portlet.setPortletApp(portletAppBackup);
+		}
+	}
+
+	@Test
 	public void testSetPortletIdWithPublicRenderParameters() throws Exception {
 		List<String[]> expectedURLParts = new ArrayList<String[]>();
 

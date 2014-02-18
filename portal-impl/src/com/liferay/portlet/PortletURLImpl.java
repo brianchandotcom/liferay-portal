@@ -108,15 +108,6 @@ public class PortletURLImpl
 
 		Portlet portlet = getPortlet();
 
-		if (portlet != null) {
-			PortletApp portletApp = portlet.getPortletApp();
-
-			_escapeXml = MapUtil.getBoolean(
-				portletApp.getContainerRuntimeOptions(),
-				LiferayPortletConfig.RUNTIME_OPTION_ESCAPE_XML,
-				PropsValues.PORTLET_URL_ESCAPE_XML);
-		}
-
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
 		if ((layout != null) && (layout.getPlid() == _plid) &&
@@ -373,7 +364,28 @@ public class PortletURLImpl
 
 	@Override
 	public boolean isEscapeXml() {
-		return _escapeXml;
+		if (_escapeXml != null) {
+			return _escapeXml.booleanValue();
+		}
+
+		Portlet portlet = getPortlet();
+
+		if (portlet == null) {
+			return PropsValues.PORTLET_URL_ESCAPE_XML;
+		}
+
+		if (_portletAppEscapeXML != null) {
+			return _portletAppEscapeXML.booleanValue();
+		}
+
+		PortletApp portletApp = portlet.getPortletApp();
+
+		_portletAppEscapeXML = MapUtil.getBoolean(
+			portletApp.getContainerRuntimeOptions(),
+			LiferayPortletConfig.RUNTIME_OPTION_ESCAPE_XML,
+			PropsValues.PORTLET_URL_ESCAPE_XML);
+
+		return _portletAppEscapeXML;
 	}
 
 	@Override
@@ -491,7 +503,7 @@ public class PortletURLImpl
 
 	@Override
 	public void setEscapeXml(boolean escapeXml) {
-		_escapeXml = escapeXml;
+		_escapeXml = Boolean.valueOf(escapeXml);
 
 		clearCache();
 	}
@@ -600,6 +612,7 @@ public class PortletURLImpl
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
 		_portlet = null;
+		_portletAppEscapeXML = null;
 
 		clearCache();
 	}
@@ -711,14 +724,14 @@ public class PortletURLImpl
 
 	@Override
 	public void write(Writer writer) throws IOException {
-		write(writer, _escapeXml);
+		write(writer, isEscapeXml());
 	}
 
 	@Override
 	public void write(Writer writer, boolean escapeXml) throws IOException {
 		String toString = toString();
 
-		if (escapeXml && !_escapeXml) {
+		if (escapeXml && !isEscapeXml()) {
 			toString = HtmlUtil.escape(toString);
 		}
 
@@ -1154,7 +1167,7 @@ public class PortletURLImpl
 				result, _request.getSession().getId());
 		}
 
-		if (_escapeXml) {
+		if (isEscapeXml()) {
 			result = HtmlUtil.escape(result);
 		}
 
@@ -1493,7 +1506,7 @@ public class PortletURLImpl
 	private long _doAsUserId;
 	private String _doAsUserLanguageId;
 	private boolean _encrypt;
-	private boolean _escapeXml = PropsValues.PORTLET_URL_ESCAPE_XML;
+	private Boolean _escapeXml;
 	private Layout _layout;
 	private String _layoutFriendlyURL;
 	private String _lifecycle;
@@ -1502,6 +1515,7 @@ public class PortletURLImpl
 	private Map<String, String[]> _params;
 	private long _plid;
 	private Portlet _portlet;
+	private Boolean _portletAppEscapeXML;
 	private String _portletId;
 	private String _portletModeString;
 	private PortletRequest _portletRequest;

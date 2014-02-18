@@ -138,8 +138,6 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 
 		QueryConfig queryConfig = new QueryConfig();
 
-		queryConfig.setHighlightEnabled(true);
-
 		searchContext.setQueryConfig(queryConfig);
 
 		searchContext.setStart(searchContainer.getStart());
@@ -196,6 +194,7 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 						containerName="<%= DLUtil.getAbsolutePath(renderRequest, fileEntry.getFolderId()) %>"
 						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 						description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : fileEntry.getDescription() %>"
+						highlightEnabled="<%= queryConfig.isHighlightEnabled() %>"
 						mbMessages="<%= searchResult.getMBMessages() %>"
 						queryTerms="<%= hits.getQueryTerms() %>"
 						thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, null, themeDisplay) %>"
@@ -228,6 +227,7 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 						containerName="<%= DLUtil.getAbsolutePath(renderRequest, folder.getParentFolderId()) %>"
 						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 						description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : folder.getDescription() %>"
+						highlightEnabled="<%= queryConfig.isHighlightEnabled() %>"
 						queryTerms="<%= hits.getQueryTerms() %>"
 						thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
 						title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : folder.getName() %>"

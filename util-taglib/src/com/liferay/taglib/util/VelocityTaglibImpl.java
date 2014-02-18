@@ -978,6 +978,17 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
+	public void quickAccess(String contentId) throws Exception {
+		QuickAccessTag quickAccessTag = new QuickAccessTag();
+
+		quickAccessTag.setContentId(contentId);
+
+		setUp(quickAccessTag);
+
+		quickAccessTag.runTag();
+	}
+
+	@Override
 	public void ratings(
 			String className, long classPK, int numberOfStars, String type,
 			String url)

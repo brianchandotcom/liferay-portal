@@ -19,5 +19,6 @@
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.QuickAccessEntry" %>
 
 <%
+String contentId = (String) request.getAttribute("liferay-ui:quick-access:contentId");
 List<QuickAccessEntry> quickAccessEntries = (List<QuickAccessEntry>) request.getAttribute("liferay-ui:quick-access:quickAccessEntries");
 %>

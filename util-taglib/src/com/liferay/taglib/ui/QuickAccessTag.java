@@ -26,6 +26,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class QuickAccessTag extends IncludeTag {
 
+	public void setContentId(String contentId) {
+		_contentId = contentId;
+	}
+
 	@Override
 	protected String getPage() {
 		return _PAGE;
@@ -39,9 +43,12 @@ public class QuickAccessTag extends IncludeTag {
 
 		request.setAttribute(
 			"liferay-ui:quick-access:quickAccessEntries", quickAccessEntries);
+		request.setAttribute("liferay-ui:quick-access:contentId", _contentId);
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/quick_access/page.jsp";
+
+	private String _contentId;
 
 	private String _contentId;
 

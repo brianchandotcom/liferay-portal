@@ -16,57 +16,62 @@
 
 <%@ include file="/html/taglib/ui/quick_access/init.jsp" %>
 
-<%
-String randomId = StringUtil.randomId();
-%>
+<c:if test="<%= ((quickAccessEntries != null) && !quickAccessEntries.isEmpty()) || Validator.isNotNull(contentId) %>">
 
-<nav class="quick-access-nav" id="<%= randomId %>">
-	<h1 class="hide-accessible"><liferay-ui:message key="navigation" /></h1>
+	<%
+	String randomId = StringUtil.randomId();
+	%>
 
-	<ul>
-		<li><a href="#main-content"><liferay-ui:message key="skip-to-content" /></a></li>
+	<nav class="quick-access-nav" id="<%= randomId %>">
+		<h1 class="hide-accessible"><liferay-ui:message key="navigation" /></h1>
 
-		<%
-		if ((quickAccessEntries != null) && !quickAccessEntries.isEmpty()) {
-			for (QuickAccessEntry quickAccessEntry : quickAccessEntries) {
-		%>
+		<ul>
+			<c:if test="<%= Validator.isNotNull(contentId) %>">
+				<li><a href="<%= contentId %>"><liferay-ui:message key="skip-to-content" /></a></li>
+			</c:if>
 
-			<li>
-				<a href="<%= quickAccessEntry.getURL() %>" id="<%= quickAccessEntry.getId() %>"><%= HtmlUtil.escape(quickAccessEntry.getLabel()) %></a>
-			</li>
-
-		<%
-			}
-		}
-		%>
-
-	</ul>
-</nav>
-
-<c:if test="<%= (quickAccessEntries != null) && !quickAccessEntries.isEmpty() %>">
-	<aui:script use="node-base">
-		A.one('#<%= randomId %>').delegate(
-			'click',
-			function(event) {
-
-				<%
+			<%
+			if ((quickAccessEntries != null) && !quickAccessEntries.isEmpty()) {
 				for (QuickAccessEntry quickAccessEntry : quickAccessEntries) {
-					String onClick = quickAccessEntry.getOnClick();
+			%>
 
-					if (Validator.isNotNull(onClick)) {
-				%>
+				<li>
+					<a href="<%= quickAccessEntry.getURL() %>" id="<%= quickAccessEntry.getId() %>"><%= HtmlUtil.escape(quickAccessEntry.getLabel()) %></a>
+				</li>
 
-						if (event.currentTarget.getAttribute('id') === '<%= quickAccessEntry.getId() %>') {
-							<%= onClick %>
-						}
-
-				<%
-					}
+			<%
 				}
-				%>
+			}
+			%>
 
-			},
-			'li a'
-		);
-	</aui:script>
+		</ul>
+	</nav>
+
+	<c:if test="<%= (quickAccessEntries != null) && !quickAccessEntries.isEmpty() %>">
+		<aui:script use="node-base">
+			A.one('#<%= randomId %>').delegate(
+				'click',
+				function(event) {
+
+					<%
+					for (QuickAccessEntry quickAccessEntry : quickAccessEntries) {
+						String onClick = quickAccessEntry.getOnClick();
+
+						if (Validator.isNotNull(onClick)) {
+					%>
+
+							if (event.currentTarget.getAttribute('id') === '<%= quickAccessEntry.getId() %>') {
+								<%= onClick %>
+							}
+
+					<%
+						}
+					}
+					%>
+
+				},
+				'li a'
+			);
+		</aui:script>
+	</c:if>
 </c:if>

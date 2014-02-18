@@ -117,8 +117,10 @@ img, .png {
 </#if>
 </#macro>
 
-<#macro quickAcess>
-	${theme.quickAcess()}
+<#macro quickAcess
+	content_id
+>
+	${theme.quickAcess(content_id)}
 </#macro>
 
 <#macro breadcrumbs

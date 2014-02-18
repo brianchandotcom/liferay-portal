@@ -542,6 +542,10 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
+	public void quickAccess(String contentId) throws Exception {
+	}
+
+	@Override
 	public void ratings(
 			String className, long classPK, int numberOfStars, String type,
 			String url)

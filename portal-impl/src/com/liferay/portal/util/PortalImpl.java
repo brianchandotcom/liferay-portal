@@ -3680,6 +3680,16 @@ public class PortalImpl implements Portal {
 			return null;
 		}
 
+		String orderByCol = ParamUtil.getString(
+			request, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM);
+		String orderByType = ParamUtil.getString(
+			request, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM);
+
+		if (Validator.isNull(orderByCol) || Validator.isNull(orderByType)) {
+			return OrderByComparatorFactoryUtil.create(
+				tableName, defaultOrderByColumns);
+		}
+
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
@@ -3688,21 +3698,8 @@ public class PortalImpl implements Portal {
 		String orderByColKey = modelKey + "-order-by-col";
 		String orderByTypeKey = modelKey + "-order-by-type";
 
-		String orderByCol = ParamUtil.getString(
-			request, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM);
-		String orderByType = ParamUtil.getString(
-			request, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM);
-
-		if (Validator.isNotNull(orderByCol) &&
-			Validator.isNotNull(orderByType)) {
-
-			portalPreferences.setValue(portletKey, orderByColKey, orderByCol);
-			portalPreferences.setValue(portletKey, orderByTypeKey, orderByType);
-		}
-		else {
-			return OrderByComparatorFactoryUtil.create(
-				tableName, defaultOrderByColumns);
-		}
+		portalPreferences.setValue(portletKey, orderByColKey, orderByCol);
+		portalPreferences.setValue(portletKey, orderByTypeKey, orderByType);
 
 		return OrderByComparatorFactoryUtil.create(
 			tableName, orderByCol, orderByType.equals(Constants.ASC));

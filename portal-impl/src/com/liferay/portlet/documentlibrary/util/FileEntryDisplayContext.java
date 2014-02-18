@@ -36,15 +36,6 @@ import javax.servlet.http.HttpServletRequest;
 public class FileEntryDisplayContext {
 
 	public FileEntryDisplayContext(
-			HttpServletRequest request, FileEntry fileEntry)
-		throws PortalException, SystemException {
-
-		this(
-			request, fileEntry,
-			(fileEntry == null) ? null : fileEntry.getLatestFileVersion());
-	}
-
-	public FileEntryDisplayContext(
 		HttpServletRequest request, FileEntry fileEntry,
 		FileVersion fileVersion) {
 

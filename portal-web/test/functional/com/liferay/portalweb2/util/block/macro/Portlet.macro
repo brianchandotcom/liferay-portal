@@ -95,6 +95,8 @@
 	</command>
 
 	<command name="addPGCmd">
+		<description message="Add a ${portletName} portlet." />
+
 		<if>
 			<equals arg1="${portletName}" arg2="Where are the Liferay members?" />
 			<then>

@@ -35,7 +35,7 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 	OrderByComparator obc = PortalUtil.getOrderByComparator(request, LayoutPrototypeModelImpl.class, PortletKeys.LAYOUT_PROTOTYPE, "name", true);
 
 	String orderByCol = obc.getOrderByFields()[0];
-	String orderByType = obc.isAscending() ? Constants.ASC : Constants.DESC;
+	String orderByType = obc.isAscending() ? OrderByComparatorFactory.ORDER_BY_TYPE_ASC : OrderByComparatorFactory.ORDER_BY_TYPE_DESC;
 	%>
 
 	<liferay-ui:search-container

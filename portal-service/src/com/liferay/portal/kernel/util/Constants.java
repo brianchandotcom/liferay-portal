@@ -31,8 +31,6 @@ public interface Constants {
 
 	public static final String APPROVE = "approve";
 
-	public static final String ASC = "asc";
-
 	public static final String ASSIGN = "assign";
 
 	public static final String CANCEL = "cancel";
@@ -58,8 +56,6 @@ public interface Constants {
 	public static final String DELETE_TRANSLATION = "delete_translation";
 
 	public static final String DELETE_VERSIONS = "delete_versions";
-
-	public static final String DESC = "desc";
 
 	public static final String EDIT = "edit";
 

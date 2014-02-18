@@ -3702,7 +3702,8 @@ public class PortalImpl implements Portal {
 		portalPreferences.setValue(portletKey, orderByTypeKey, orderByType);
 
 		return OrderByComparatorFactoryUtil.create(
-			tableName, orderByCol, orderByType.equals(Constants.ASC));
+			tableName, orderByCol,
+			orderByType.equals(OrderByComparator.ORDER_BY_TYPE_ASC));
 	}
 
 	@Override

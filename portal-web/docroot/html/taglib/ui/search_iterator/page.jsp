@@ -123,15 +123,15 @@ List<String> primaryKeys = new ArrayList<String>();
 					if (orderCurrentHeader) {
 						cssClass += " table-sorted";
 
-						if (HtmlUtil.escapeAttribute(orderByType).equals(Constants.DESC)) {
+						if (HtmlUtil.escapeAttribute(orderByType).equals(OrderByComparatorFactory.ORDER_BY_TYPE_DESC)) {
 							cssClass += " table-sorted-desc";
 						}
 
 						if (orderByType.equals(Constants.ASC)) {
-							orderByType = Constants.DESC;
+							orderByType = OrderByComparatorFactory.ORDER_BY_TYPE_DESC;
 						}
 						else {
-							orderByType = Constants.ASC;
+							orderByType = OrderByComparatorFactory.ORDER_BY_TYPE_ASC;
 						}
 					}
 				%>

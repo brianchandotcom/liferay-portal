@@ -85,8 +85,8 @@ public class MBMessageStagedModelDataHandler
 	}
 
 	protected MBMessage addDiscussionMessage(
-			long userId, long threadId, long parentMessageId, MBMessage message,
-			PortletDataContext portletDataContext,
+			PortletDataContext portletDataContext, long userId, long threadId,
+			long parentMessageId, MBMessage message,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -261,8 +261,8 @@ public class MBMessageStagedModelDataHandler
 
 					if (message.isDiscussion()) {
 						importedMessage = addDiscussionMessage(
-							userId, threadId, parentMessageId, message,
-							portletDataContext, serviceContext);
+							portletDataContext, userId, threadId,
+							parentMessageId, message, serviceContext);
 					}
 					else {
 						importedMessage = MBMessageLocalServiceUtil.addMessage(
@@ -302,8 +302,8 @@ public class MBMessageStagedModelDataHandler
 			else {
 				if (message.isDiscussion()) {
 					importedMessage = addDiscussionMessage(
-						userId, threadId, parentMessageId, message,
-						portletDataContext, serviceContext);
+						portletDataContext, userId, threadId, parentMessageId,
+						message, serviceContext);
 				}
 				else {
 					importedMessage = MBMessageLocalServiceUtil.addMessage(

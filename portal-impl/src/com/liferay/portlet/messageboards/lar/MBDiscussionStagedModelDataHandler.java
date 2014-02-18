@@ -96,11 +96,11 @@ public class MBDiscussionStagedModelDataHandler
 
 		String className = discussion.getClassName();
 
-		Map<Long, Long> relatedEntityIds =
+		Map<Long, Long> relatedClassPKs =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(className);
 
 		long newClassPK = MapUtil.getLong(
-			relatedEntityIds, discussion.getClassPK(), discussion.getClassPK());
+			relatedClassPKs, discussion.getClassPK(), discussion.getClassPK());
 
 		MBDiscussion existingDiscussion =
 			MBDiscussionLocalServiceUtil.fetchDiscussion(

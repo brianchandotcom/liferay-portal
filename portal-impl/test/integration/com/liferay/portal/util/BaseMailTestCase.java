@@ -33,7 +33,7 @@ import org.junit.Before;
 /**
  * @author Roberto Díaz
  */
-public class BaseNotificationsTestCase {
+public class BaseMailTestCase {
 
 	@Before
 	public void setUp() throws Exception {

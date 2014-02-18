@@ -39,8 +39,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public abstract class BaseSubscriptionTestCase
-	extends BaseNotificationsTestCase {
+public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 
 	@Test
 	public void testSubscriptionBaseModelWhenInContainerModel()

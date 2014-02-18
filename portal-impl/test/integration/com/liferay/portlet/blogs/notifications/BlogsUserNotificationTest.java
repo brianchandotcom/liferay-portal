@@ -35,7 +35,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.util.BaseNotificationsTestCase;
+import com.liferay.portal.util.BaseMailTestCase;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -63,7 +63,7 @@ import org.junit.runner.RunWith;
 })
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class BlogsUserNotificationTest extends BaseNotificationsTestCase {
+public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 	@Before
 	public void setUp() throws Exception {

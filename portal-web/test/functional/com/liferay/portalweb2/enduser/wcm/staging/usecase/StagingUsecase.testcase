@@ -46,7 +46,15 @@
 		<echo message="override" />
 	</command>
 
+	<command name="AddEventRepeatDaily" priority="4">
+		<echo message="override" />
+	</command>
+
 	<command name="AddPageVariation" priority="5">
+		<echo message="override" />
+	</command>
+
+	<command name="AddSitePagesVariation" priority="5">
 		<echo message="override" />
 	</command>
 
@@ -54,7 +62,19 @@
 		<echo message="override" />
 	</command>
 
+	<command name="AssertNoEditLink" priority="4">
+		<echo message="override" />
+	</command>
+
+	<command name="BlogsOrganizationWorkflowStaging" priority="4">
+		<echo message="override" />
+	</command>
+
 	<command name="DeactivateStaging" priority="5">
+		<echo message="override" />
+	</command>
+
+	<command name="DeleteDMDocument" priority="4">
 		<echo message="override" />
 	</command>
 
@@ -1646,6 +1666,8 @@
 	</command>
 
 	<command name="StagingOnlyApprovedPublishToLive" priority="5">
+		<property name="web.plugins.includes" value="kaleo-web" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="${siteName}" />

@@ -139,19 +139,6 @@
 							'liferay-autocomplete-input'
 						]
 					},
-					'liferay-autocomplete-input-caretoffset': {
-						condition: {
-							name: 'liferay-autocomplete-input-caretoffset',
-							test: function(A) {
-								return !(A.UA.ie && A.UA.ie < 9);
-							},
-							trigger: 'liferay-autocomplete-input'
-						},
-						path: 'autocomplete_input_caretoffset.js',
-						requires: [
-							'liferay-autocomplete-input'
-						]
-					},
 					'liferay-autocomplete-input-caretindex-sel': {
 						condition: {
 							name: 'liferay-autocomplete-input-caretindex-sel',
@@ -161,6 +148,19 @@
 							trigger: 'liferay-autocomplete-input'
 						},
 						path: 'autocomplete_input_caretindex_sel.js',
+						requires: [
+							'liferay-autocomplete-input'
+						]
+					},
+					'liferay-autocomplete-input-caretoffset': {
+						condition: {
+							name: 'liferay-autocomplete-input-caretoffset',
+							test: function(A) {
+								return !(A.UA.ie && A.UA.ie < 9);
+							},
+							trigger: 'liferay-autocomplete-input'
+						},
+						path: 'autocomplete_input_caretoffset.js',
 						requires: [
 							'liferay-autocomplete-input'
 						]

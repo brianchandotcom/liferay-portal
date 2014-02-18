@@ -95,6 +95,8 @@ AUI.add(
 						if (instance._inputMirror) {
 							instance._inputMirror.remove();
 						}
+
+						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					_acResultFormatter: function(query, results) {
@@ -212,8 +214,10 @@ AUI.add(
 
 						var inputNode = instance.get(STR_INPUT_NODE);
 
-						inputNode.on('key', A.bind(instance._onKeyUp, instance), 'up:' +
-							KEY_ARROW_DOWN + ',' + KEY_ARROW_LEFT + ',' + KEY_ARROW_RIGHT + ',' + KEY_ARROW_UP);
+						instance._eventHandles = [
+							inputNode.on('key', A.bind(instance._onKeyUp, instance), 'up:' +
+								KEY_ARROW_DOWN + ',' + KEY_ARROW_LEFT + ',' + KEY_ARROW_RIGHT + ',' + KEY_ARROW_UP)
+						];
 					},
 
 					_getACConfig: function() {

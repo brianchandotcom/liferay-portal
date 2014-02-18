@@ -14,30 +14,18 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.mail.service.MailService;
-import com.liferay.mail.service.MailServiceUtil;
-import com.liferay.portal.kernel.log.Jdk14LogFactoryImpl;
-import com.liferay.portal.kernel.log.LogFactory;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.test.mail.MockMailServiceImpl;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import java.util.logging.Logger;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -51,33 +39,8 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public abstract class BaseSubscriptionTestCase {
-
-	@Before
-	public void setUp() throws Exception {
-		group = GroupTestUtil.addGroup();
-
-		_logFactory = LogFactoryUtil.getLogFactory();
-
-		LogFactoryUtil.setLogFactory(new Jdk14LogFactoryImpl());
-
-		_mailService = MailServiceUtil.getService();
-
-		MailServiceUtil mailServiceUtil = new MailServiceUtil();
-
-		mailServiceUtil.setService(new LoggerMockMailServiceImpl());
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(group);
-
-		LogFactoryUtil.setLogFactory(_logFactory);
-
-		MailServiceUtil mailServiceUtil = new MailServiceUtil();
-
-		mailServiceUtil.setService(_mailService);
-	}
+public abstract class BaseSubscriptionTestCase
+	extends BaseNotificationsTestCase {
 
 	@Test
 	public void testSubscriptionBaseModelWhenInContainerModel()
@@ -260,26 +223,5 @@ public abstract class BaseSubscriptionTestCase {
 	protected abstract long updateEntry(long baseModelId) throws Exception;
 
 	protected static final long DEFAULT_PARENT_CONTAINER_MODEL_ID = 0;
-
-	protected Group group;
-
-	private LogFactory _logFactory;
-	private MailService _mailService;
-
-	private static class LoggerMockMailServiceImpl extends MockMailServiceImpl {
-
-		public LoggerMockMailServiceImpl() {
-			_logger.setLevel(Level.INFO);
-		}
-
-		@Override
-		public void sendEmail(MailMessage mailMessage) {
-			_logger.info("Sending email");
-		}
-
-		private Logger _logger = Logger.getLogger(
-			LoggerMockMailServiceImpl.class.getName());
-
-	}
 
 }

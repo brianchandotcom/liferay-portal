@@ -16,18 +16,50 @@
 
 <%@ include file="/html/taglib/ui/quick_access/init.jsp" %>
 
-<c:if test="<%= (quickAccessEntries != null) && !quickAccessEntries.isEmpty() %>">
-	<ul>
+<%
+String randomId = StringUtil.randomId();
+%>
 
-		<%
+<ul id="<%= randomId %>">
+	<li><a href="#main-content"><liferay-ui:message key="skip-to-content" /></a></li>
+
+	<%
+	if ((quickAccessEntries != null) && !quickAccessEntries.isEmpty()) {
 		for (QuickAccessEntry quickAccessEntry : quickAccessEntries) {
-		%>
+	%>
 
-			<li><a href="<%= quickAccessEntry.getURL() %>"><%= HtmlUtil.escape(quickAccessEntry.getLabel()) %></a></li>
+		<li>
+			<a href="<%= quickAccessEntry.getURL() %>" id="<%= quickAccessEntry.getId() %>"><%= HtmlUtil.escape(quickAccessEntry.getLabel()) %></a>
+		</li>
 
-		<%
+	<%
 		}
-		%>
+	}
+	%>
+</ul>
 
-	</ul>
+<c:if test="<%= (quickAccessEntries != null) && !quickAccessEntries.isEmpty() %>">
+	<aui:script use="node-base">
+		A.one('#<%= randomId %>').delegate(
+			'click',
+			function(event) {
+
+				<%
+				for (QuickAccessEntry quickAccessEntry : quickAccessEntries) {
+					String onClick = quickAccessEntry.getOnClick();
+
+					if (Validator.isNotNull(onClick)) {
+				%>
+						if (event.currentTarget.getAttribute('id') === '<%= quickAccessEntry.getId() %>') {
+							<%= onClick %>
+						}
+				<%
+					}
+				}
+				%>
+
+			},
+			'li a'
+		);
+	</aui:script>
 </c:if>

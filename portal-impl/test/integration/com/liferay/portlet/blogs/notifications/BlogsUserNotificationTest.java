@@ -20,14 +20,13 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.model.UserNotificationEvent;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
@@ -36,7 +35,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
+import com.liferay.portal.util.BaseNotificationsTestCase;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -46,6 +45,8 @@ import com.liferay.portlet.blogs.util.BlogsTestUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -62,20 +63,22 @@ import org.junit.runner.RunWith;
 })
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class BlogsUserNotificationTest {
+public class BlogsUserNotificationTest extends BaseNotificationsTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		super.setUp();
 
 		_user = TestPropsValues.getUser();
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			_user.getUserId(), _group.getGroupId());
+			_user.getUserId(), group.getGroupId());
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		super.tearDown();
+
 		for (UserNotificationEvent userNotificationEvent :
 				_userNotificationEvents) {
 
@@ -86,8 +89,6 @@ public class BlogsUserNotificationTest {
 		UserNotificationDeliveryLocalServiceUtil.
 			deleteUserNotificationDeliveries(_user.getUserId());
 
-		GroupLocalServiceUtil.deleteGroup(_group);
-
 		activateAllUserNotificationDeliveries();
 	}
 
@@ -96,6 +97,9 @@ public class BlogsUserNotificationTest {
 		int initialUserNotificationEventsCount =
 			UserNotificationEventLocalServiceUtil.
 				getUserNotificationEventsCount(_user.getUserId());
+
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
 		BlogsEntry entry = addBlogsEntry();
 
@@ -111,6 +115,13 @@ public class BlogsUserNotificationTest {
 			"More than 1 userNotificationEvent was created",
 			(1 + initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
+
+		Assert.assertEquals(1, logRecords.size());
+
+		LogRecord logRecord = logRecords.get(0);
+
+		Assert.assertEquals(
+			"No mail has been sent", "Sending email", logRecord.getMessage());
 	}
 
 	@Test
@@ -118,6 +129,9 @@ public class BlogsUserNotificationTest {
 		int initialUserNotificationEventsCount =
 			UserNotificationEventLocalServiceUtil.
 				getUserNotificationEventsCount(_user.getUserId());
+
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
 		deactivateWebsiteUserNotificationDelivery();
 
@@ -135,6 +149,13 @@ public class BlogsUserNotificationTest {
 			"A userNotificationEvent was created",
 			(initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
+
+		Assert.assertEquals(1, logRecords.size());
+
+		LogRecord logRecord = logRecords.get(0);
+
+		Assert.assertEquals(
+			"No mail has been sent", "Sending email", logRecord.getMessage());
 	}
 
 	@Test
@@ -142,6 +163,9 @@ public class BlogsUserNotificationTest {
 		int initialUserNotificationEventsCount =
 			UserNotificationEventLocalServiceUtil.
 				getUserNotificationEventsCount(_user.getUserId());
+
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
 		deactivateMailUserNotificationDelivery();
 
@@ -159,11 +183,16 @@ public class BlogsUserNotificationTest {
 			"More than 1 userNotificationEvent was created",
 			(1 + initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
+
+		Assert.assertEquals("An email has been sent", 0, logRecords.size());
 	}
 
 	@Test
 	public void testBlogUserNotificationWhenDeactivatingAllUserNotifications()
 		throws Exception {
+
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
 		int initialUserNotificationEventsCount =
 			UserNotificationEventLocalServiceUtil.
@@ -185,6 +214,8 @@ public class BlogsUserNotificationTest {
 			"A userNotificationEvent was created",
 			(initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
+
+		Assert.assertEquals("An email has been sent", 0, logRecords.size());
 	}
 
 	protected void activateAllUserNotificationDeliveries() throws Exception {
@@ -203,11 +234,11 @@ public class BlogsUserNotificationTest {
 
 	protected BlogsEntry addBlogsEntry() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+			group.getGroupId());
 
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		serviceContext.setScopeGroupId(group.getGroupId());
 
 		return BlogsTestUtil.addEntry(
 			_user.getUserId(), ServiceTestUtil.randomString(), true,
@@ -345,7 +376,6 @@ public class BlogsUserNotificationTest {
 		return userNotificationEventsClassPKs;
 	}
 
-	private Group _group;
 	private User _user;
 	private List<UserNotificationEvent> _userNotificationEvents;
 

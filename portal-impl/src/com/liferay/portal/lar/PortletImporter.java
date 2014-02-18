@@ -419,7 +419,7 @@ public class PortletImporter {
 		portletDataContext.setSourceUserPersonalSiteGroupId(
 			sourceUserPersonalSiteGroupId);
 
-		// Read asset categories, asset tags and locks entries to make them
+		// Read asset tags, expando tables, locks and permissions to make them
 		// available to the data handlers through the context
 
 		Element portletElement = null;

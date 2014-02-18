@@ -127,7 +127,7 @@ public class MBMessageStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_PARENT);
 
 			// Ratings belong to discussion messages can't be exported
-			// automatically because of the special className
+			// automatically because of the special className / classPK pair
 
 			List<RatingsEntry> ratingsEntries =
 				RatingsEntryLocalServiceUtil.getEntries(

@@ -441,8 +441,8 @@ public class LayoutImporter {
 				groupId, privateLayout, settings);
 		}
 
-		// Read asset tags, comments, locks, permissions, and ratings entries to
-		// make them available to the data handlers through the context
+		// Read asset tags, expando tables, locks, and permissions to make them
+		// available to the data handlers through the context
 
 		Element portletsElement = _rootElement.element("portlets");
 

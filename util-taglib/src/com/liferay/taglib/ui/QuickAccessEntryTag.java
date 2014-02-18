@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport;
 import com.liferay.portal.kernel.servlet.taglib.ui.QuickAccessEntry;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -50,7 +51,7 @@ public class QuickAccessEntryTag extends BaseBodyTagSupport implements BodyTag {
 	}
 
 	public void setLabel(String label) {
-		_label = label;
+		_label = LanguageUtil.get(pageContext, label);
 	}
 
 	public void setOnClick(String onClick) {

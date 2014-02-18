@@ -1196,7 +1196,9 @@ public class UserServiceWrapper implements UserService,
 	*
 	* @param userId the primary key of the user
 	* @param status the user's new workflow status
-	* @param serviceContext the service context to be applied
+	* @param serviceContext the service context to be applied. You can specify
+	an unencrypted custom password (used by an LDAP listener) for the
+	user via attribute <code>passwordUnencrypted</code>.
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be
 	found, if the current user was updating her own status to

@@ -276,6 +276,12 @@ public class PortletURLImplTest {
 
 		compareURLsPartiallyOrdered(
 			expectedURLParts, portletURL.generateToString());
+
+		String url1 = portletURL.generateToString();
+		portletURL.clearCache();
+		String url2 = portletURL.generateToString();
+
+		Assert.assertEquals("Both URLs should be the same", url1, url2);
 	}
 
 	@Test

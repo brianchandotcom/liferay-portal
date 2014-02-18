@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
 import com.liferay.portal.tools.SassToCssBuilder;
 import com.liferay.portal.util.AggregateUtil;
 
@@ -241,6 +242,10 @@ public class SassFile implements Callable<Void>, SassFragment {
 		ltrCacheFile.setLastModified(ltrFile.lastModified());
 
 		String rtlFileName = SassToCssBuilder.getRtlCustomFileName(_fileName);
+
+		if (RTLCSSUtil.isExcludedPath(_fileName)) {
+			return;
+		}
 
 		File rtlCacheFile = new File(
 			_docrootDirName,

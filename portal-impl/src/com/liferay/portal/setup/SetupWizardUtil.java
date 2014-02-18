@@ -465,7 +465,8 @@ public class SetupWizardUtil {
 				if (testUser != null) {
 					UserLocalServiceUtil.updateStatus(
 						testUser.getUserId(),
-						WorkflowConstants.STATUS_INACTIVE);
+						WorkflowConstants.STATUS_INACTIVE,
+						new ServiceContext());
 				}
 			}
 		}

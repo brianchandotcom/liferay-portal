@@ -124,6 +124,8 @@ public class PortletURLImplTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setPathMain("/c");
+
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 
 		PermissionChecker permissionChecker =
@@ -534,6 +536,101 @@ public class PortletURLImplTest {
 		testResourceURL(false, true);
 		testResourceURL(true, false);
 		testResourceURL(true, true);
+	}
+
+	@Test
+	public void testSetPlid() throws Exception {
+		List<String[]> expectedURLParts = new ArrayList<String[]>();
+
+		PortletURLImpl portletURL = new PortletURLImpl(
+			_request, PORTLET_WIKI_ID, _targetLayout.getPlid(),
+			PortletRequest.RENDER_PHASE);
+
+		addExpectedURLPart(
+			"http://domain2.net/destination-layout?", expectedURLParts);
+
+		addExpectedURLPart(
+			"p_p_id", PORTLET_WIKI_ID, false, false, expectedURLParts);
+
+		addExpectedURLPart(
+			"p_p_lifecycle", "0", false, false, expectedURLParts);
+
+		expectedURLParts.remove(AMPERSAND);
+
+		compareURLsPartiallyOrdered(
+			expectedURLParts, portletURL.generateToString());
+
+		expectedURLParts.clear();
+
+		portletURL.setPlid(_sourceLayout.getPlid());
+
+		addExpectedURLPart(
+			"http://domain1.net/source-layout?", expectedURLParts);
+
+		addExpectedURLPart(
+			"p_p_auth", AuthTokenUtil.getToken(_request,
+			_sourceLayout.getPlid(), PORTLET_WIKI_ID), false, false, null,
+			expectedURLParts);
+
+		addExpectedURLPart(
+			"p_p_id", PORTLET_WIKI_ID, false, false, expectedURLParts);
+
+		addExpectedURLPart(
+			"p_p_lifecycle", "0", false, false, expectedURLParts);
+
+		expectedURLParts.remove(AMPERSAND);
+
+		compareURLsPartiallyOrdered(
+			expectedURLParts, portletURL.generateToString());
+	}
+
+	@Test
+	public void testSetPortletId() throws Exception {
+		List<String[]> expectedURLParts = new ArrayList<String[]>();
+
+		PortletURLImpl portletURL = new PortletURLImpl(
+			_request, "0", _targetLayout.getPlid(),
+			PortletRequest.RENDER_PHASE);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			PORTLET_WIKI_ID);
+
+		Set<PublicRenderParameter> publicRenderParameters =
+			portlet.getPublicRenderParameters();
+
+		Assert.assertTrue(
+			"Portlet " + PORTLET_WIKI_ID +
+				" should have at least one public render parameter!",
+			publicRenderParameters.size() > 0);
+
+		for (PublicRenderParameter publicRenderParameter :
+				publicRenderParameters) {
+
+			QName tagPRPQName = publicRenderParameter.getQName();
+
+			String tagPRPName = PortletQNameUtil.getPublicRenderParameterName(
+				tagPRPQName);
+
+			portletURL.setParameter(publicRenderParameter.getIdentifier(), "0");
+
+			addExpectedURLPart(tagPRPName, "0", false, false, expectedURLParts);
+		}
+
+		portletURL.setPortletId(PORTLET_WIKI_ID);
+
+		addExpectedURLPart(
+			"http://domain2.net/destination-layout?", expectedURLParts);
+
+		addExpectedURLPart(
+			"p_p_id", PORTLET_WIKI_ID, false, false, expectedURLParts);
+
+		addExpectedURLPart(
+			"p_p_lifecycle", "0", false, false, expectedURLParts);
+
+		expectedURLParts.remove(AMPERSAND);
+
+		compareURLsPartiallyOrdered(
+			expectedURLParts, portletURL.generateToString());
 	}
 
 	@Test

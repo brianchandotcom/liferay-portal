@@ -585,7 +585,41 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testSetPortletId() throws Exception {
+	public void testSetPortletIdWithAutopropagatedParameters()
+		throws Exception {
+
+		List<String[]> expectedURLParts = new ArrayList<String[]>();
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			PORTLET_DDM_ID);
+
+		Set<String> autopropagatedParameters =
+			portlet.getAutopropagatedParameters();
+
+		Assert.assertTrue(
+			"Portlet " + PORTLET_DDM_ID +
+				" should have at least two autopropagated parameters!",
+			autopropagatedParameters.size() > 1);
+
+		for (String autopropagatedParameter : autopropagatedParameters) {
+			_request.setParameter(autopropagatedParameter, "0");
+		}
+
+		PortletURLImpl portletURL = new PortletURLImpl(
+			_request, "0", _targetLayout.getPlid(),
+			PortletRequest.RENDER_PHASE);
+
+		preparePortletURL(
+			PORTLET_DDM_ID, portletURL, expectedURLParts, false, false);
+
+		portletURL.setPortletId(PORTLET_DDM_ID);
+
+		compareURLsPartiallyOrdered(
+			expectedURLParts, portletURL.generateToString());
+	}
+
+	@Test
+	public void testSetPortletIdWithPublicRenderParameters() throws Exception {
 		List<String[]> expectedURLParts = new ArrayList<String[]>();
 
 		PortletURLImpl portletURL = new PortletURLImpl(

@@ -34,16 +34,16 @@ import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
-
-import java.util.List;
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Cristina González
@@ -897,7 +897,7 @@ public class PortletPreferencesLocalServiceTest {
 				_portlet.getPortletId(), portletPreferencesXML);
 
 		assertValues(jxPortletPreferences, _NAME, _SINGLE_VALUE);
-		assertOwner(_layout, (PortletPreferencesImpl)jxPortletPreferences);
+		assertOwner(_layout, (PortletPreferencesImpl) jxPortletPreferences);
 	}
 
 	@Test
@@ -925,7 +925,7 @@ public class PortletPreferencesLocalServiceTest {
 				_portlet.getPortletId(), portletPreferencesXMLMultiple);
 
 		assertValues(jxPortletPreferences, _NAME, _SINGLE_VALUE);
-		assertOwner(_layout, (PortletPreferencesImpl)jxPortletPreferences);
+		assertOwner(_layout, (PortletPreferencesImpl) jxPortletPreferences);
 	}
 
 	@Test
@@ -943,7 +943,7 @@ public class PortletPreferencesLocalServiceTest {
 				_portlet.getPortletId());
 
 		assertEmptyPortletPreferencesMap(jxPortletPreferences);
-		assertOwner(_layout, (PortletPreferencesImpl)jxPortletPreferences);
+		assertOwner(_layout, (PortletPreferencesImpl) jxPortletPreferences);
 	}
 
 	@Test
@@ -967,7 +967,7 @@ public class PortletPreferencesLocalServiceTest {
 				portletPreferencesIds);
 
 		assertValues(jxPortletPreferences, _NAME, _SINGLE_VALUE);
-		assertOwner(_layout, (PortletPreferencesImpl)jxPortletPreferences);
+		assertOwner(_layout, (PortletPreferencesImpl) jxPortletPreferences);
 	}
 
 	@Test
@@ -1024,6 +1024,96 @@ public class PortletPreferencesLocalServiceTest {
 				_portlet.getPortletId(), portletPreferencesXML);
 
 		assertStrictPortletPreferences(portletPreferences);
+	}
+
+	@Test
+	public void testUpdatePreferences() throws Exception {
+		assertNullLayoutJxPortletPreferences(_layout, _portlet);
+
+		String portletPreferencesXML =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _SINGLE_VALUE);
+
+		PortletPreferencesTestUtil.addLayoutPortletPreferences(
+			_layout, _portlet, portletPreferencesXML);
+
+		String multiplePreferencesAsXML =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _MULTIPLE_VALUES);
+
+		PortletPreferencesLocalServiceUtil.updatePreferences(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+			_portlet.getPortletId(), multiplePreferencesAsXML);
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			PortletPreferencesLocalServiceUtil.getPreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				_portlet.getPortletId());
+
+		assertValues(jxPortletPreferences, _NAME, _MULTIPLE_VALUES);
+	}
+
+	@Test
+	public void testUpdatePreferencesAutoAdd() throws Exception {
+		assertNullLayoutJxPortletPreferences(_layout, _portlet);
+
+		String portletPreferencesXML =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _SINGLE_VALUE);
+
+		PortletPreferencesLocalServiceUtil.updatePreferences(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+			_portlet.getPortletId(), portletPreferencesXML);
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			PortletPreferencesLocalServiceUtil.getPreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				_portlet.getPortletId());
+
+		assertValues(jxPortletPreferences, _NAME, _SINGLE_VALUE);
+	}
+
+	@Test
+	public void testUpdatePreferencesByJxPortletPreferences() throws Exception {
+		assertNullLayoutJxPortletPreferences(_layout, _portlet);
+
+		String portletPreferencesXMLSingle =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _SINGLE_VALUE);
+
+		PortletPreferencesTestUtil.addLayoutPortletPreferences(
+			_layout, _portlet, portletPreferencesXMLSingle);
+
+		String portletPreferencesXMLMultiple =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _MULTIPLE_VALUES);
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			PortletPreferencesFactoryUtil.fromXML(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				_portlet.getPortletId(), portletPreferencesXMLMultiple);
+
+		PortletPreferencesLocalServiceUtil.updatePreferences(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+			_portlet.getPortletId(), jxPortletPreferences);
+
+		javax.portlet.PortletPreferences currentJxPortletPreferences =
+			PortletPreferencesLocalServiceUtil.getPreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				_portlet.getPortletId());
+
+		assertValues(currentJxPortletPreferences, _NAME, _MULTIPLE_VALUES);
 	}
 
 	protected void assertEmptyPortletPreferencesMap(

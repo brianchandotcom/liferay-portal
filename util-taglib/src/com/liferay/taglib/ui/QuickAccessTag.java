@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.QuickAccessEntry;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class QuickAccessTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		List<QuickAccessEntry> quickAccessEntries =
 			(List<QuickAccessEntry>)request.getAttribute(
-				QuickAccessEntry.ATTRIBUTE_NAME);
+				WebKeys.PORTLET_QUICK_ACCESS_ENTRIES);
 
 		request.setAttribute(
 			"liferay-ui:quick-access:quickAccessEntries", quickAccessEntries);
@@ -47,8 +48,6 @@ public class QuickAccessTag extends IncludeTag {
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/quick_access/page.jsp";
-
-	private String _contentId;
 
 	private String _contentId;
 

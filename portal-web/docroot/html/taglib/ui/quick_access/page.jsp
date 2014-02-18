@@ -17,12 +17,7 @@
 <%@ include file="/html/taglib/ui/quick_access/init.jsp" %>
 
 <c:if test="<%= ((quickAccessEntries != null) && !quickAccessEntries.isEmpty()) || Validator.isNotNull(contentId) %>">
-
-	<%
-	String randomId = StringUtil.randomId();
-	%>
-
-	<nav class="quick-access-nav" id="<%= randomId %>">
+	<nav class="quick-access-nav" id="quickAccessNav">
 		<h1 class="hide-accessible"><liferay-ui:message key="navigation" /></h1>
 
 		<ul>
@@ -48,8 +43,8 @@
 	</nav>
 
 	<c:if test="<%= (quickAccessEntries != null) && !quickAccessEntries.isEmpty() %>">
-		<aui:script use="node-base">
-			A.one('#<%= randomId %>').delegate(
+		<aui:script use="aui-base">
+			A.one('#quickAccessNav').delegate(
 				'click',
 				function(event) {
 

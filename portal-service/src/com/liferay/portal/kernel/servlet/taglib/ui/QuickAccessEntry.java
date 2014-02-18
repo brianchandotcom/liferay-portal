@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class QuickAccessEntry {
 
-	public static final String ATTRIBUTE_NAME = "QUICK_ACCESS";
-
 	public String getContent() {
 		if (Validator.isNotNull(_label)) {
 			return _label;

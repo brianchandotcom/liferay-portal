@@ -369,7 +369,7 @@ AUI.add(
 						var tabHtml = Lang.sub(
 							tabTPL,
 							{
-								pageTitle: Lang.String.escapeHTML(data.title),
+								pageTitle: data.title,
 								url: data.url
 							}
 						);

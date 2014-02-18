@@ -72,8 +72,6 @@ public class ExportLayoutsAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			String fileName = LanguageUtil.get(
-				actionRequest.getLocale(), "public-pages");
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			boolean privateLayout = ParamUtil.getBoolean(
 				actionRequest, "privateLayout");
@@ -81,6 +79,9 @@ public class ExportLayoutsAction extends PortletAction {
 			DateRange dateRange = ExportImportDateUtil.getDateRange(
 				actionRequest, groupId, privateLayout, 0, null,
 				ExportImportDateUtil.RANGE_ALL);
+
+			String fileName = LanguageUtil.get(
+				actionRequest.getLocale(), "public-pages");
 
 			if (privateLayout) {
 				fileName = LanguageUtil.get(

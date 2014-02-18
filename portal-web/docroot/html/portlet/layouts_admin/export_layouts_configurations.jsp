@@ -34,7 +34,7 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 	<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 </portlet:renderURL>
 
-<aui:button onClick='<%= renderResponse.getNamespace() + "createNewTemplate();" %>' value="new" />
+<aui:button href="<%= addExportConfigurationURL %>" value="new" />
 
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
@@ -91,9 +91,3 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
-
-<aui:script>
-function <portlet:namespace />createNewTemplate() {
-	location.href = '<%= exportPagesURL %>';
-}
-</aui:script>

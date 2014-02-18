@@ -88,6 +88,12 @@ if (addExportConfiguration) {
 else {
 	portletURL.setParameter("tabs2", "current-and-previous");
 }
+
+String tabs2Names = StringPool.BLANK;
+
+if (!addExportConfiguration) {
+	tabs2Names = "new-export-process,current-and-previous";
+}
 %>
 
 <portlet:renderURL var="backURL">
@@ -100,7 +106,7 @@ else {
 />
 
 <liferay-ui:tabs
-	names='<%= addConfiguration ? StringPool.BLANK : "new-export-process,current-and-previous" %>'
+	names="<%= tabs2Names %>"
 	param="tabs2"
 	refresh="<%= false %>"
 >
@@ -135,32 +141,37 @@ else {
 		</div>
 
 		<div <%= exportNav.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportOptions">
-			<portlet:actionURL var="exportPagesURL">
-				<portlet:param name="struts_action" value='<%= newTemplate ? "/layouts_admin/edit_export_configuration" : "/layouts_admin/export_layouts" %>'/>
+			<portlet:actionURL var="addExportConfigurationURL">
+				<portlet:param name="struts_action" value="/layouts_admin/edit_export_configuration" />
 				<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
 			</portlet:actionURL>
 
-			<aui:form action='<%= exportPagesURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
+			<portlet:actionURL var="exportPagesURL">
+				<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+				<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
+			</portlet:actionURL>
+
+			<aui:form action='<%= (addExportConfiguration ? addExportConfigurationURL : exportPagesURL) + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= addExportConfiguration ? Constants.ADD : Constants.EXPORT %>" />
 				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 				<div class="export-dialog-tree">
-					<c:choose>
-						<c:when test="<%= addExportConfiguration %>">
-							<aui:fieldset cssClass="options-group" label="new-export-template">
-								<aui:model-context bean="<%= new ExportImportConfigurationImpl() %>" model="<%= ExportImportConfiguration.class %>" />
+					<c:if test="<%= addExportConfiguration %>">
+						<aui:model-context model="<%= ExportImportConfiguration.class %>" />
 
-								<aui:input label="name" name="name" showRequiredLabel="<%= false %>">
-									<aui:validator name="required" />
-								</aui:input>
-								<aui:input label="description" name="description" showRequiredLabel="<%= false %>">
-									<aui:validator name="required" />
-								</aui:input>
-							</aui:fieldset>
-						</c:when>
-					</c:choose>
+						<aui:fieldset cssClass="options-group" label="new-export-template">
+							<aui:input label="name" name="name" showRequiredLabel="<%= false %>">
+								<aui:validator name="required" />
+							</aui:input>
+
+							<aui:input label="description" name="description" showRequiredLabel="<%= false %>" />
+						</aui:fieldset>
+					</c:if>
+
 					<aui:input name="layoutIds" type="hidden" />
 
 					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
@@ -658,15 +669,15 @@ else {
 		</div>
 	</liferay-ui:section>
 
-	<liferay-ui:section>
-		<c:if test="<%= !addExportConfiguration %>">
+	<c:if test="<%= !addExportConfiguration %>">
+		<liferay-ui:section>
 			<div class="process-list" id="<portlet:namespace />exportProcesses">
 				<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_processes.jsp">
 					<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 				</liferay-util:include>
 			</div>
-		</c:if>
-	</liferay-ui:section>
+		</liferay-ui:section>
+	</c:if>
 </liferay-ui:tabs>
 
 <aui:script use="liferay-export-import">

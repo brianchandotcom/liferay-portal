@@ -89,7 +89,7 @@ public class ExportImportConfigurationHelper {
 
 		String fileName =
 			exportImportConfiguration.getName() + StringPool.DASH +
-			Time.getShortTimestamp();
+				Time.getShortTimestamp();
 
 		fileName = fileName.replace(StringPool.SPACE, StringPool.UNDERLINE);
 

@@ -134,29 +134,18 @@ boolean highlightEnabled = (Boolean)request.getAttribute("search.jsp-highlightEn
 				<img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" />
 			</c:if>
 
-			<%
-			entryTitle = HtmlUtil.escape(entryTitle);
-
-			if (highlightEnabled) {
-			%>
-
-				<%= StringUtil.highlight(entryTitle, queryTerms) %>
-
-			<%
-			}
-			else {
-			%>
-
-				<%= entryTitle %>
-
-			<%
-			}
-			%>
-
+			<c:choose>
+				<c:when test="<%= highlightEnabled %>">
+					<%= StringUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms) %>
+				</c:when>
+				<c:otherwise>
+					<%= HtmlUtil.escape(entryTitle) %>
+				</c:otherwise>
+			</c:choose>
 		</a>
 
 		<c:if test="<%= Validator.isNotNull(downloadURL) %>">
-			<liferay-ui:icon image="../arrows/01_down" label="<%= false %>" message='<%= LanguageUtil.format(pageContext, "download-x", entryTitle, false) %>' url="<%= downloadURL %>" />
+			<liferay-ui:icon image="../arrows/01_down" label="<%= false %>" message='<%= LanguageUtil.format(pageContext, "download-x", HtmlUtil.escape(entryTitle), false) %>' url="<%= downloadURL %>" />
 		</c:if>
 	</span>
 
@@ -169,26 +158,14 @@ boolean highlightEnabled = (Boolean)request.getAttribute("search.jsp-highlightEn
 		<div class="asset-entry-content">
 			<c:if test="<%= Validator.isNotNull(entrySummary) %>">
 				<span class="asset-entry-summary">
-
-					<%
-					entrySummary = HtmlUtil.escape(entrySummary);
-
-					if (highlightEnabled) {
-					%>
-
-						<%= StringUtil.highlight(entrySummary, queryTerms) %>
-
-					<%
-					}
-					else {
-					%>
-
-						<%= entrySummary %>
-
-					<%
-					}
-					%>
-
+					<c:choose>
+						<c:when test="<%= highlightEnabled %>">
+							<%= StringUtil.highlight(HtmlUtil.escape(entrySummary), queryTerms) %>
+						</c:when>
+						<c:otherwise>
+							<%= HtmlUtil.escape(entrySummary) %>
+						</c:otherwise>
+					</c:choose>
 				</span>
 			</c:if>
 

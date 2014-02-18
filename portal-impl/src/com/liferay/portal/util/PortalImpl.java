@@ -3680,13 +3680,13 @@ public class PortalImpl implements Portal {
 			return null;
 		}
 
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
 		String modelKey = TextFormatter.format(modelName, TextFormatter.P);
 
 		String orderByColKey = modelKey + "-order-by-col";
 		String orderByTypeKey = modelKey + "-order-by-type";
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
 		String orderByCol = ParamUtil.getString(
 			request, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM);

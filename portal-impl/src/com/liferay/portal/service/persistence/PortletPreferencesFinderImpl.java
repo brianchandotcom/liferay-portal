@@ -86,7 +86,12 @@ public class PortletPreferencesFinderImpl
 				sql = StringUtil.replace(sql, _OWNER_ID_SQL, StringPool.BLANK);
 			}
 
-			if (!excludeDefaultPreferences) {
+			if (excludeDefaultPreferences) {
+				sql = StringUtil.replace(
+					sql, "[$PORTLET_PREFERENCES_PREFERENCES_DEFAULT$]",
+					PortletConstants.DEFAULT_PREFERENCES);
+			}
+			else {
 				sql = StringUtil.replace(
 					sql, _PREFERENCES_SQL, StringPool.BLANK);
 			}

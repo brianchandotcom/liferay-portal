@@ -20,23 +20,27 @@
 String randomId = StringUtil.randomId();
 %>
 
-<ul id="<%= randomId %>">
-	<li><a href="#main-content"><liferay-ui:message key="skip-to-content" /></a></li>
+<nav id="<%= randomId %>" class="quick-access-nav">
+	<h1 class="hide-accessible"><liferay-ui:message key="navigation" /></h1>
 
-	<%
-	if ((quickAccessEntries != null) && !quickAccessEntries.isEmpty()) {
-		for (QuickAccessEntry quickAccessEntry : quickAccessEntries) {
-	%>
+	<ul>
+		<li><a href="#main-content"><liferay-ui:message key="skip-to-content" /></a></li>
 
-		<li>
-			<a href="<%= quickAccessEntry.getURL() %>" id="<%= quickAccessEntry.getId() %>"><%= HtmlUtil.escape(quickAccessEntry.getLabel()) %></a>
-		</li>
+		<%
+		if ((quickAccessEntries != null) && !quickAccessEntries.isEmpty()) {
+			for (QuickAccessEntry quickAccessEntry : quickAccessEntries) {
+		%>
 
-	<%
+			<li>
+				<a href="<%= quickAccessEntry.getURL() %>" id="<%= quickAccessEntry.getId() %>"><%= HtmlUtil.escape(quickAccessEntry.getLabel()) %></a>
+			</li>
+
+		<%
+			}
 		}
-	}
-	%>
-</ul>
+		%>
+	</ul>
+</nav>
 
 <c:if test="<%= (quickAccessEntries != null) && !quickAccessEntries.isEmpty() %>">
 	<aui:script use="node-base">

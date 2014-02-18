@@ -68,8 +68,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		QueryConfig queryConfig = new QueryConfig();
 
-		queryConfig.setHighlightEnabled(true);
-
 		searchContext.setQueryConfig(queryConfig);
 
 		searchContext.setStart(searchContainer.getStart());
@@ -110,6 +108,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			<liferay-ui:app-view-search-entry
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : entry.getDescription() %>"
+				highlightEnabled="<%= queryConfig.isHighlightEnabled() %>"
 				mbMessages="<%= searchResult.getMBMessages() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
 				thumbnailSrc="<%= Validator.isNotNull(entry.getEntryImageURL(themeDisplay)) ? entry.getEntryImageURL(themeDisplay) : StringPool.BLANK %>"

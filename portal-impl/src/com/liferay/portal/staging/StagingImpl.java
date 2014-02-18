@@ -544,12 +544,6 @@ public class StagingImpl implements Staging {
 			JSONObject errorMessageJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
-			errorMessageJSONObject.put(
-				"site",
-				LanguageUtil.format(
-					locale, "in-site-x", missingReference.getGroupIdString(),
-					false));
-
 			String className = missingReference.getClassName();
 			Map<String, String> referrers = missingReference.getReferrers();
 
@@ -598,6 +592,10 @@ public class StagingImpl implements Staging {
 			}
 
 			errorMessageJSONObject.put("name", missingReferenceDisplayName);
+			errorMessageJSONObject.put(
+				"site",
+				LanguageUtil.format(
+					locale, "in-site-x", missingReference.getGroupId(), false));
 			errorMessageJSONObject.put(
 				"type",
 				ResourceActionsUtil.getModelResource(

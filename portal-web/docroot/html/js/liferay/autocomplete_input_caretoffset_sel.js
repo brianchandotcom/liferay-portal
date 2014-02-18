@@ -1,0 +1,35 @@
+AUI.add(
+	'liferay-autocomplete-input-caretoffset-sel',
+	function(A) {
+		var Lang = A.Lang;
+		var AutcompleteInputCaretOffset = function(){};
+
+		AutcompleteInputCaretOffset.prototype = {
+			_getCaretOffset: function(node) {
+				var instance = this;
+
+				node = node || instance.get('inputNode');
+
+				node.focus();
+
+				var doc = A.getDoc().getDOMNode();
+
+				var range = doc.selection.createRange();
+
+				var xy = node.getXY();
+
+				return {
+					x: range.boundingLeft - xy[0],
+					y: Lang.toInt(range.boundingTop) - xy[1] + node.get('scrollTop')
+						+ doc.documentElement.scrollTop
+				};
+			}
+		};
+
+		A.Base.mix(Liferay.AutoCompleteInput, [AutcompleteInputCaretOffset]);
+	},
+	'',
+	{
+		requires: ['liferay-autocomplete-input']
+	}
+);

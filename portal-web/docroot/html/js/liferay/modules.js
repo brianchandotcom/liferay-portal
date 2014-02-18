@@ -8,6 +8,14 @@
 
 	var PATH_JAVASCRIPT = LiferayAUI.getJavaScriptRootPath();
 
+	var hasInputSelection = function() {
+		var input = document.createElement('input');
+
+		var res = ((typeof input.selectionStart === 'number') && (typeof input.selectionEnd === 'number'));
+
+		return res;
+	}();
+
 	window.YUI_config = {
 		base: PATH_JAVASCRIPT + '/aui/',
 		combine: COMBINE,
@@ -106,6 +114,68 @@
 							'base',
 							'liferay-undo-manager',
 							'sortable'
+						]
+					},
+					'liferay-autocomplete-input': {
+						path: 'autocomplete_input.js',
+						requires: [
+							'aui-base',
+							'autocomplete',
+							'autocomplete',
+							'autocomplete-filters',
+							'autocomplete-highlighters'
+						]
+					},
+					'liferay-autocomplete-input-caretindex': {
+						condition: {
+							name: 'liferay-autocomplete-input-caretindex',
+							test: function() {
+								return hasInputSelection;
+							},
+							trigger: 'liferay-autocomplete-input'
+						},
+						path: 'autocomplete_input_caretindex.js',
+						requires: [
+							'liferay-autocomplete-input'
+						]
+					},
+					'liferay-autocomplete-input-caretoffset': {
+						condition: {
+							name: 'liferay-autocomplete-input-caretoffset',
+							test: function(A) {
+								return !(A.UA.ie && A.UA.ie < 9);
+							},
+							trigger: 'liferay-autocomplete-input'
+						},
+						path: 'autocomplete_input_caretoffset.js',
+						requires: [
+							'liferay-autocomplete-input'
+						]
+					},
+					'liferay-autocomplete-input-caretindex-sel': {
+						condition: {
+							name: 'liferay-autocomplete-input-caretindex-sel',
+							test: function() {
+								return !hasInputSelection;
+							},
+							trigger: 'liferay-autocomplete-input'
+						},
+						path: 'autocomplete_input_caretindex_sel.js',
+						requires: [
+							'liferay-autocomplete-input'
+						]
+					},
+					'liferay-autocomplete-input-caretoffset-sel': {
+						condition: {
+							name: 'liferay-autocomplete-input-caretoffset-sel',
+							test: function(A) {
+								return (A.UA.ie && A.UA.ie < 9);
+							},
+							trigger: 'liferay-autocomplete-input'
+						},
+						path: 'autocomplete_input_caretoffset_sel.js',
+						requires: [
+							'liferay-autocomplete-input'
 						]
 					},
 					'liferay-browser-selectors': {

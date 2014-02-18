@@ -25,6 +25,7 @@ String containerType = GetterUtil.getString(request.getAttribute("liferay-ui:app
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:app-view-search-entry:cssClass"));
 String description = (String)request.getAttribute("liferay-ui:app-view-search-entry:description");
 List<Tuple> fileEntryTuples = (List<Tuple>)request.getAttribute("liferay-ui:app-view-search-entry:fileEntryTuples");
+boolean highlightEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-search-entry:highlightEnabled"));
 boolean locked = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-search-entry:locked"));
 List<MBMessage> mbMessages = (List<MBMessage>)request.getAttribute("liferay-ui:app-view-search-entry:mbMessages");
 String[] queryTerms = (String[])request.getAttribute("liferay-ui:app-view-search-entry:queryTerms");
@@ -52,7 +53,16 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 
 		<div class="entry-metadata">
 			<span class="entry-title">
-				<%= StringUtil.highlight(HtmlUtil.escape(title), queryTerms) %>
+
+				<%
+				title = HtmlUtil.escape(title);
+
+				if (highlightEnabled) {
+					title = StringUtil.highlight(title, queryTerms);
+				}
+				%>
+
+				<%= title %>
 
 				<c:if test="<%= (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
 					<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
@@ -104,7 +114,16 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 			</c:if>
 
 			<span class="entry-description">
-				<%= StringUtil.highlight(HtmlUtil.escape(description), queryTerms) %>
+
+				<%
+				description = HtmlUtil.escape(description);
+
+				if (highlightEnabled) {
+					description = StringUtil.highlight(description, queryTerms);
+				}
+				%>
+
+				<%= description %>
 			</span>
 		</div>
 	</a>
@@ -132,7 +151,16 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 						</span>
 
 						<span class="body">
-							<%= StringUtil.highlight((Validator.isNotNull(summary.getContent())) ? summary.getContent() : fileEntry.getTitle(), queryTerms) %>
+
+							<%
+							String body = (Validator.isNotNull(summary.getContent()) ? summary.getContent() : fileEntry.getTitle());
+
+							if (highlightEnabled) {
+								body = StringUtil.highlight(body, queryTerms);
+							}
+							%>
+
+							<%= body %>
 						</span>
 				</aui:a>
 			</div>
@@ -165,7 +193,12 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 					</span>
 
 					<span class="body">
-						<%= StringUtil.highlight(mbMessage.getSubject(), queryTerms) %>
+						<c:when test="<%= highlightEnabled %>">
+							<%= StringUtil.highlight(mbMessage.getSubject(), queryTerms) %>
+						</c:when>
+						<c:otherwise>
+							<%= mbMessage.getSubject() %>
+						</c:otherwise>
 					</span>
 				</aui:a>
 			</div>

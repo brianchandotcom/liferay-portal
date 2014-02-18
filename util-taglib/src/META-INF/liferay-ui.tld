@@ -304,6 +304,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>highlightEnabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>locked</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

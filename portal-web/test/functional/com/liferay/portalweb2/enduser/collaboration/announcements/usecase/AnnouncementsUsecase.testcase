@@ -1,0 +1,165 @@
+<definition component-name="portal-collaboration">
+	<var name="pageName" value="Announcements Page" />
+	<var name="portletName" value="Announcements" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="AnnouncementsEntry#tearDownPG" />
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
+	<command name="ViewAnnouncementsEntryWithDistributedScope" priority="5">
+		<var name="announcementType" value="General" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AnnouncementsEntry#addPG">
+			<var name="distributionScope" value="General" />
+			<var name="entryContent" value="Announcements Entry Content" />
+			<var name="entryTitle" value="Announcements Entry Title" />
+			<var name="entryURL" value="http://www.google.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="General" />
+			<var name="entryContent" value="Announcements Entry Content" />
+			<var name="entryTitle" value="Announcements Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCP">
+			<var name="siteName" value="Community Site Name" />
+			<var name="siteType" value="Community" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Community Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="General" />
+			<var name="entryContent" value="Announcements Entry Content" />
+			<var name="entryTitle" value="Announcements Entry Title" />
+		</execute>
+
+		<execute macro="AnnouncementsEntry#addPG">
+			<var name="distributionScope" value="Liferay" />
+			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
+			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
+			<var name="entryURL" value="http://www.yahoo.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Community Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="Liferay" />
+			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
+			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="Liferay" />
+		</execute>
+
+		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="Liferay" />
+			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
+			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="Liferay" />
+		</execute>
+
+		<execute macro="AnnouncementsEntry#viewViaEntriesPG">
+			<var name="distributionScope" value="General" />
+			<var name="entryContent" value="Announcements Entry Content" />
+			<var name="entryTitle" value="Announcements Entry Title" />
+		</execute>
+
+		<execute macro="AnnouncementsEntry#viewNoPG">
+			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+</definition>

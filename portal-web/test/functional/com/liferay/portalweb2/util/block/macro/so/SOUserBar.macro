@@ -2,6 +2,7 @@
 	<command name="addSOSite">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#pause" value1="1000" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_ADD_SITE_BUTTON" />
 
 		<execute action="SOUserBarAddSite#pause" value1="1000" />

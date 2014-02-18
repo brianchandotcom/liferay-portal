@@ -177,7 +177,7 @@
 </tr>
 <tr>
 	<td>GO_TO_SITE_NAME</td>
-	<td>//ul[@class='site-list']//span/a[.='${key_siteName}']</td>
+	<td>//ul[@class='site-list']//span[contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

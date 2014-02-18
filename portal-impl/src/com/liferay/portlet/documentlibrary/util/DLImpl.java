@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -838,7 +839,7 @@ public class DLImpl implements DL {
 
 		boolean orderByAsc = true;
 
-		if (orderByType.equals("desc")) {
+		if (orderByType.equals(Constants.DESC)) {
 			orderByAsc = false;
 		}
 

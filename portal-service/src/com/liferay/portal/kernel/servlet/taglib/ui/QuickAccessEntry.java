@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.util.Validator;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -38,6 +40,10 @@ public class QuickAccessEntry {
 	}
 
 	public String getURL() {
+		if (Validator.isNull(_url)) {
+			return "javascript:;";
+		}
+
 		return _url;
 	}
 

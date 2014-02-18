@@ -69,8 +69,10 @@ img, .png {
 #end
 #end
 
-#macro (quickAccess)
+#macro (quickAccess $content_id)
 	#set ($quickAccess_tag = $theme.getQuickAccessTag())
+
+	$quickAccess_tag.setContentId($content_id)
 
 	$quickAccess_tag.runTag()
 #end

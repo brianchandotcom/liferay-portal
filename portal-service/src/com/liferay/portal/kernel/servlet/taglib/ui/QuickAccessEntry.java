@@ -57,13 +57,12 @@ public class QuickAccessEntry {
 		_onClick = onClick;
 	}
 
-	private String _id;
-
 	public void setURL(String url) {
 		_url = url;
 	}
 
 	private String _data;
+	private String _id;
 	private String _label;
 	private String _onClick;
 	private String _url;

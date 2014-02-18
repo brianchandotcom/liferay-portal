@@ -348,6 +348,8 @@ public interface VelocityTaglib {
 
 	public void quickAccess() throws Exception;
 
+	public void quickAccess(String contentId) throws Exception;
+
 	public void ratings(
 			String className, long classPK, int numberOfStars, String type,
 			String url)

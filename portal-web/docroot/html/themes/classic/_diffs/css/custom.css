@@ -37,7 +37,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	#nav-access {
+	.quick-access-nav {
 		a {
 			@include box-shadow(rgba(0, 0, 0, .1) 1px 1px 1px);
 

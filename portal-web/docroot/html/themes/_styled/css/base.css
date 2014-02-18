@@ -169,7 +169,7 @@ body.html-editor {
 
 /* ---------- Miscellaneous ---------- */
 
-#nav-access {
+.quick-access-nav {
 	position: absolute;
 	top: -100em;
 	width: 100%;

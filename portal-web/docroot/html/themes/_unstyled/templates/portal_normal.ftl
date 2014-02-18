@@ -14,11 +14,7 @@
 
 <body class="${css_class}">
 
-<nav id="nav-access">
-	<h1 class="hide-accessible"><@liferay.language key="navigation" /></h1>
-
-	<@liferay.quickAccess />
-</nav>
+<@liferay.quickAccess />
 
 ${theme.include(body_top_include)}
 

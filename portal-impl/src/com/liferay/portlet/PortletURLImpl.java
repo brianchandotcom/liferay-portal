@@ -109,21 +109,6 @@ public class PortletURLImpl
 		Portlet portlet = getPortlet();
 
 		if (portlet != null) {
-			Set<String> autopropagatedParameters =
-				portlet.getAutopropagatedParameters();
-
-			for (String autopropagatedParameter : autopropagatedParameters) {
-				if (PortalUtil.isReservedParameter(autopropagatedParameter)) {
-					continue;
-				}
-
-				String value = request.getParameter(autopropagatedParameter);
-
-				if (value != null) {
-					setParameter(autopropagatedParameter, value);
-				}
-			}
-
 			PortletApp portletApp = portlet.getPortletApp();
 
 			_escapeXml = MapUtil.getBoolean(
@@ -1077,6 +1062,8 @@ public class PortletURLImpl
 			mergeRenderParameters(params);
 		}
 
+		mergeAutopropagatedParameters(params);
+
 		int previousSbIndex = sb.index();
 
 		for (Map.Entry<String, String[]> entry : params.entrySet()) {
@@ -1247,6 +1234,8 @@ public class PortletURLImpl
 			mergeRenderParameters(params);
 		}
 
+		mergeAutopropagatedParameters(params);
+
 		StringBundler parameterSb = new StringBundler();
 
 		int previousSbIndex = sb.index();
@@ -1334,6 +1323,38 @@ public class PortletURLImpl
 		}
 		else {
 			return false;
+		}
+	}
+
+	protected void mergeAutopropagatedParameters(Map<String, String[]> params) {
+		Portlet portlet = getPortlet();
+
+		Set<String> autopropagatedParameters =
+			portlet.getAutopropagatedParameters();
+
+		for (String autopropagatedParameter : autopropagatedParameters) {
+			if (PortalUtil.isReservedParameter(autopropagatedParameter)) {
+				continue;
+			}
+
+			String value = _request.getParameter(autopropagatedParameter);
+
+			if (value == null) {
+				continue;
+			}
+
+			String[] originalValue = new String[]{value};
+			String[] updatedValue = params.get(autopropagatedParameter);
+
+			if (updatedValue == null) {
+				params.put(autopropagatedParameter, originalValue);
+			}
+			else if (PropsValues.PORTLET_URL_APPEND_PARAMETERS) {
+				String[] newValues = ArrayUtil.append(
+					originalValue, updatedValue);
+
+				params.put(autopropagatedParameter, newValues);
+			}
 		}
 	}
 

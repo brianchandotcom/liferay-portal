@@ -54,7 +54,7 @@ import org.junit.runner.RunWith;
 public abstract class BaseSubscriptionTestCase {
 
 	@Before
-	public void setUpClass() throws Exception {
+	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
 
 		_logFactory = LogFactoryUtil.getLogFactory();
@@ -69,7 +69,7 @@ public abstract class BaseSubscriptionTestCase {
 	}
 
 	@After
-	public void tearDownClass() throws Exception {
+	public void tearDown() throws Exception {
 		GroupLocalServiceUtil.deleteGroup(group);
 
 		LogFactoryUtil.setLogFactory(_logFactory);

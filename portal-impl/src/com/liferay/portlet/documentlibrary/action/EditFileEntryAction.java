@@ -681,11 +681,20 @@ public class EditFileEntryAction extends PortletAction {
 				"please-enter-a-file-with-a-valid-file-name");
 		}
 		else if (e instanceof FileSizeException) {
-			long maxSizeMB = PrefsPropsUtil.getLong(
-				PropsKeys.DL_FILE_MAX_SIZE) / 1024 / 1024;
+			long fileMaxSize = PrefsPropsUtil.getLong(
+				PropsKeys.DL_FILE_MAX_SIZE);
+
+			if (fileMaxSize == 0) {
+				fileMaxSize = PrefsPropsUtil.getLong(
+					PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+			}
+
+			fileMaxSize /= 1024;
 
 			errorMessage = themeDisplay.translate(
-				"file-size-is-larger-than-x-megabytes", maxSizeMB);
+				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
+				TextFormatter.formatStorageSize(
+					fileMaxSize, themeDisplay.getLocale()));
 		}
 		else if (e instanceof InvalidFileEntryTypeException) {
 			errorMessage = themeDisplay.translate(

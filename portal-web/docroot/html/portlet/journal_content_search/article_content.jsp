@@ -23,9 +23,14 @@ Object[] objArray = (Object[])row.getObject();
 
 String[] queryTerms = (String[])objArray[0];
 Document doc = (Document)objArray[1];
-Summary summary = (Summary)objArray[2];
+boolean highlightEnabled = (Boolean)objArray[2];
+Summary summary = (Summary)objArray[3];
 
-String content = StringUtil.highlight(summary.getContent(), queryTerms);
+String content = HtmlUtil.escape(summary.getContent());
+
+if (highlightEnabled) {
+	content = StringUtil.highlight(summary.getContent(), queryTerms);
+}
 
 long articleGroupId = GetterUtil.getLong(doc.get(Field.GROUP_ID));
 String articleId = doc.get("articleId");

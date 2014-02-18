@@ -62,7 +62,7 @@ public class UserWorkflowHandler extends BaseWorkflowHandler {
 		User user = UserLocalServiceUtil.getUser(userId);
 
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
-				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
+			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
 		if (((user.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
 			 (user.getStatus() == WorkflowConstants.STATUS_PENDING)) &&
@@ -72,7 +72,7 @@ public class UserWorkflowHandler extends BaseWorkflowHandler {
 		}
 
 		return UserLocalServiceUtil.updateStatus(
-				userId, status, serviceContext);
+			userId, status, serviceContext);
 	}
 
 	@Override

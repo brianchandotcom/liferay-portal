@@ -194,7 +194,6 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 
 				QueryConfig queryConfig = new QueryConfig();
 
-				queryConfig.setHighlightEnabled(true);
 				queryConfig.setSearchSubfolders(true);
 
 				searchContext.setQueryConfig(queryConfig);
@@ -253,6 +252,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, fileEntry.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 								description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : fileEntry.getDescription() %>"
+								highlightEnabled="<%= queryConfig.isHighlightEnabled() %>"
 								locked="<%= fileEntry.isCheckedOut() %>"
 								mbMessages="<%= searchResult.getMBMessages() %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
@@ -297,6 +297,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, curFolder.getParentFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 								description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : curFolder.getDescription() %>"
+								highlightEnabled="<%= queryConfig.isHighlightEnabled() %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
 								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 								rowCheckerName="<%= Folder.class.getSimpleName() %>"

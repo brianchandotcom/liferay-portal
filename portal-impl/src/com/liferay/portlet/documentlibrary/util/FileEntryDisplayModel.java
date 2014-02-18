@@ -142,6 +142,14 @@ public class FileEntryDisplayModel {
 		return _draft;
 	}
 
+	public boolean isFileEntryLockedByMe() {
+		if (hasLock()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isOfficeDoc() {
 		if (_officeDoc == null) {
 			_officeDoc = DLUtil.isOfficeExtension(_fileVersion.getExtension());

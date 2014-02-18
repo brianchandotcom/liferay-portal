@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.PropsValues;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
@@ -62,6 +63,16 @@ public class RTLCSSUtil {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	public static boolean isExcludedPath(String filePath) {
+		for (String pathRegexp : PropsValues.RTL_CSS_EXCLUDED_PATHS_REGEXP) {
+			if (filePath.matches(pathRegexp)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(RTLCSSUtil.class);

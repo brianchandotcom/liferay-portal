@@ -24,6 +24,11 @@
    <td></td>
 </tr>
 <tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_TRANSLATION_IFRAME</td>
 	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'_15_toLanguageId=')]</td>
 	<td></td>

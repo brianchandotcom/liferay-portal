@@ -1,31 +1,31 @@
 <html>
 <head>
-<title>PGCategoriesNavigationPortlet</title>
+<title>PGCategoriesnavigation</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGCategoriesNavigationPortlet</td></tr>
+<tr><td rowspan="1" colspan="3">PGCategoriesnavigation</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGCategoriesNavigationPortlet</td>
+	<td>PGCategoriesnavigation</td>
 </tr>
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>VOCABULARY_NAME</td>
-	<td>//div[@class='accordion-toggle']//span[contains(.,'${vocabularyName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_NAME</td>
-	<td>//div[@class='accordion-inner']//a[contains(.,'${categoryName}')]</td>
+	<td>//ul[contains(@class,'lfr-asset-category-list')]/li/div/span/span/a[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOCABULARY_NAME</td>
+	<td>//div[contains(@class,'asset-categories-navigation')]//span[contains(.,'${key_vocabularyName}')]</td>
 	<td></td>
 </tr>
 <tr>

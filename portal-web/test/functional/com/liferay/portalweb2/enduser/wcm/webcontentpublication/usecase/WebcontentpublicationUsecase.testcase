@@ -16,7 +16,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="${portletName}" />
 		</execute>
-
 	</set-up>
 
 	<tear-down>
@@ -299,7 +298,7 @@
 		<execute macro="AssetPublisherPortlet#configurePaginationPG">
 			<var name="paginationNumber" value="3" />
 			<var name="paginationType" value="Regular" />
-			<var name="specificPortletName" value="Asset Publisher Portlet" />
+			<var name="portletName" value="Asset Publisher Portlet" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -699,7 +698,7 @@
 		<var name="webContentSiteContent" value="WC WebContent Site Content" />
 		<var name="webContentSiteTitle" value="WC WebContent Site Title" />
 
- 		<execute macro="Page#gotoContentCP">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
@@ -744,7 +743,7 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${sitePageName}" />
 			<var name="sitePagePrivacy" value="Public" />
-		</execute> 
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />
@@ -752,21 +751,16 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-<!--  		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Asset Publisher" />
-		</execute> -->
-
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
 			<var name="globalSite" value="Global" />
 			<var name="otherSiteName" value="Liferay" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteNameHidden" value="${siteName}" />
 		</execute>
- 
+
 		<execute macro="AssetPublisherPortlet#configureToggleSiteScope">
-			<var name="otherSiteName" value="Liferay" />
-			<var name="scopeGlobal" value="true" />
-			<var name="siteName" value="${siteName}" />
+			<var name="removeSite1Scope" value="Liferay" />
+			<var name="removeSite2Scope" value="${siteName}" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
@@ -782,9 +776,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureToggleSiteScope">
-			<var name="globalSite" value="Global" />
-			<var name="scopeLiferay" value="true" />
-			<var name="siteName" value="${siteName}" />
+			<var name="removeSite1Scope" value="Global" />
+			<var name="removeSite2Scope" value="${siteName}" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
@@ -800,9 +793,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureToggleSiteScope">
-			<var name="globalSite" value="Global" />
-			<var name="otherSiteName" value="Liferay" />
-			<var name="scopeSite" value="true" />
+			<var name="removeSite1Scope" value="Global" />
+			<var name="removeSite2Scope" value="Liferay" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">

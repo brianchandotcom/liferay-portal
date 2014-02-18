@@ -333,8 +333,8 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="PGCategoriesnavigation#assertTextEquals" locator-key1="VOCABULARY" value1="${vocabularyName}" />
-		<execute action="PGCategoriesnavigation#assertClick" locator-key1="CATEGORY" value1="${categoryName}" />
+		<execute action="PGCategoriesnavigation#assertTextEquals" locator-key1="VOCABULARY_NAME" value1="${vocabularyName}" />
+		<execute action="PGCategoriesnavigation#assertClick" locator-key1="CATEGORY_NAME" value1="${categoryName}" />
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="CATEGORIES_FILTER_CATEGORY" value1="${categoryName}" />
 	</command>
@@ -356,8 +356,8 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute action="PGCategoriesnavigation#assertTextEquals" locator-key1="VOCABULARY" value1="${vocabularyName}" />
-		<execute action="PGCategoriesnavigation#assertClick" locator-key1="CATEGORY" value1="${categoryName}" />
+		<execute action="PGCategoriesnavigation#assertTextEquals" locator-key1="VOCABULARY_NAME" value1="${vocabularyName}" />
+		<execute action="PGCategoriesnavigation#assertClick" locator-key1="CATEGORY_NAME" value1="${categoryName}" />
 
 		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="CATEGORIES_FILTER_CATEGORY" value1="${categoryName}" />
 	</command>

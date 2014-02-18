@@ -121,7 +121,7 @@
 <!--SHOW_METADATA-->
 <tr>
 	<td>SHOW_METADATA_CURRENT_FIELD_SELECT</td>
-	<td>//select[@id='_86_currentMetadataFields']/option[contains(.,'${key_metadataField}')]</td>
+	<td>//select[@id='_86_currentMetadataFields']</td>
 	<td></td>
 </tr>
 <tr>
@@ -136,7 +136,7 @@
 </tr>
 <tr>
 	<td>SHOW_METADATA_AVAILABLE_FIELD_SELECT</td>
-	<td>//select[@id='_86_availableMetadataFields']/option[contains(.,'${key_metadataField}')]</td>
+	<td>//select[@id='_86_availableMetadataFields']</td>
 	<td></td>
 </tr>
 </tbody>

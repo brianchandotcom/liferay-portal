@@ -175,9 +175,9 @@
 	<command name="gotoPortletOptions">
 
 		<if>
-			<isset var="specificPortletName" />
+			<isset var="portletName" />
 			<then>
-				<var name="key_portletName" value="${specificPortletName}" />
+				<var name="key_portletName" value="${portletName}" />
 
 				<execute action="BasePortlet#assertClick" locator-key1="SPECIFIC_PORTLET_OPTIONS_ICON" value1="Options" />
 			</then>

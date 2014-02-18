@@ -6,7 +6,7 @@
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT_GLOBAL" value1="Global" />
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT" value1="Select" />
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
-		<execute action="PGAssetpublisherConfiguration#selectFrame" />
+		<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
 
 		<execute action="PGAssetpublisherConfigurationSites#selectFrame" locator-key1="SITES_IFRAME" />
 
@@ -74,8 +74,6 @@
 
 	<command name="configureAssetDisplayOrderPG">
 		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
-
-		<!-- <execute macro="PGAssetpublisherConfiguration#configureShowOrderingAndGrouping" /> -->
 
 		<execute action="PGAssetpublisherConfiguration#select" locator-key1="ORDERING_AND_GROUPING_ORDER_BY_SELECT" value1="${fieldNameOrder}" />
 		<execute action="PGAssetpublisherConfiguration#select" locator-key1="ORDERING_AND_GROUPING_ORDER_DIRECTION" value1="${sortOrder}" />
@@ -209,9 +207,7 @@
 		<if>
 			<equals arg1="${addMetadata}" arg2="true" />
 			<then>
-				<var name="key_metadataField" value="${metadataField}" />
-
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#assertClick" locator-key1="SHOW_METADATA_AVAILABLE_FIELD_SELECT" value1="${metadataField}" />
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#addSelection" locator-key1="SHOW_METADATA_AVAILABLE_FIELD_SELECT" value1="${metadataField}" />
 				<execute action="PGAssetpublisherConfigurationDisplaysettings#click" locator-key1="SHOW_METADATA_MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
 				<execute action="PGAssetpublisherConfigurationDisplaysettings#assertTextEquals" locator-key1="SHOW_METADATA_CURRENT_FIELD_SELECT" value1="${metadataField}" />
 			</then>
@@ -220,9 +216,7 @@
 		<if>
 			<equals arg1="${removeMetadata}" arg2="true" />
 			<then>
-				<var name="key_metadataField" value="${metadataField}" />
-
-				<execute action="PGAssetpublisherConfigurationDisplaysettings#assertClick" locator-key1="SHOW_METADATA_CURRENT_FIELD_SELECT" />
+				<execute action="PGAssetpublisherConfigurationDisplaysettings#addSelection" locator-key1="SHOW_METADATA_CURRENT_FIELD_SELECT" value1="${metadataField}" />
 				<execute action="PGAssetpublisherConfigurationDisplaysettings#click" locator-key1="SHOW_METADATA_MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
 				<execute action="PGAssetpublisherConfigurationDisplaysettings#assertTextEquals" locator-key1="SHOW_METADATA_AVAILABLE_FIELD_SELECT" value1="${metadataField}" />
 			</then>
@@ -256,45 +250,13 @@
 	</command>
 
 	<command name="configureToggleSiteScope">
+		<var name="key_siteName" value="${removeSite1Scope}" />
 
-		<if>
-			<equals arg1="${scopeGlobal}" arg2="true" />
-			<then>
-				<var name="key_siteName" value="${siteName}" />
+		<execute action="PGAssetpublisherConfiguration#click" locator-key1="SOURCE_SCOPE_DELETE" />
 
-				<execute action="PGAssetpublisherConfiguration#click" locator-key1="SOURCE_SCOPE_DELETE" />
+		<var name="key_siteName" value="${removeSite2Scope}" />
 
-				<var name="key_siteName" value="${otherSiteName}" />
-
-				<execute action="PGAssetpublisherConfiguration#click" locator-key1="SOURCE_SCOPE_DELETE" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${scopeLiferay}" arg2="true" />
-			<then>
-				<var name="key_siteName" value="${siteName}" />
-
-				<execute action="PGAssetpublisherConfiguration#click" locator-key1="SOURCE_SCOPE_DELETE" />
-
-				<var name="key_siteName" value="${globalSite}" />
-
-				<execute action="PGAssetpublisherConfiguration#click" locator-key1="SOURCE_SCOPE_DELETE" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${scopeSite}" arg2="true" />
-			<then>
-				<var name="key_siteName" value="${otherSiteName}" />
-
-				<execute action="PGAssetpublisherConfiguration#click" locator-key1="SOURCE_SCOPE_DELETE" />
-
-				<var name="key_siteName" value="${globalSite}" />
-
-				<execute action="PGAssetpublisherConfiguration#click" locator-key1="SOURCE_SCOPE_DELETE" />
-			</then>
-		</if>
+		<execute action="PGAssetpublisherConfiguration#click" locator-key1="SOURCE_SCOPE_DELETE" />
 
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />

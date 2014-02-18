@@ -14,21 +14,21 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 
-		<case locator-key1="METADATA_VOCABULARY">
+		<case locator-key1="METADATA_CATEGORY">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 
-		<case locator-key1="METADATA_CATEGORY">
+		<case locator-key1="METADATA_VOCABULARY">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
 
 	<command name="assertTextNotEquals">
-		<case locator-key1="ASSET_ABSTRACT_TITLE">
+		<case locator-key1="ASSET_ABSTRACT_SUMMARY">
 			<execute function="AssertTextNotEquals#assertNotPartialText" />
 		</case>
 
-		<case locator-key1="ASSET_ABSTRACT_SUMMARY">
+		<case locator-key1="ASSET_ABSTRACT_TITLE">
 			<execute function="AssertTextNotEquals#assertNotPartialText" />
 		</case>
 	</command>

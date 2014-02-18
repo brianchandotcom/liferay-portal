@@ -760,7 +760,7 @@ public class DDMXSDImpl implements DDMXSD {
 		if (fieldsDisplayField == null) {
 			return false;
 		}
-		
+
 		String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
 			fieldsDisplayField);
 

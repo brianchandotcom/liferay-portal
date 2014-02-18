@@ -63,6 +63,11 @@ public interface Indexer {
 			PortletURL portletURL)
 		throws SearchException;
 
+	public Summary getSummary(
+			Document document, Locale locale, String snippet,
+			PortletURL portletURL, boolean highlight)
+		throws SearchException;
+
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, String entryClassName,
 			long entryClassPK, String actionId)

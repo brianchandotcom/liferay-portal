@@ -35,6 +35,17 @@ public class Summary {
 		_portletURL = portletURL;
 	}
 
+	public Summary(
+		Locale locale, String title, String content, PortletURL portletURL,
+		boolean highlight) {
+
+		_highlight = highlight;
+		_title = title;
+		_content = content;
+		_locale = locale;
+		_portletURL = portletURL;
+	}
+
 	public Summary(String title, String content, PortletURL portletURL) {
 		_title = title;
 		_content = content;
@@ -43,6 +54,22 @@ public class Summary {
 
 	public String getContent() {
 		return _content;
+	}
+
+	public String getHighlightedContent(String[] queryTerms) {
+		if (_highlight) {
+			return StringUtil.highlight(_content, queryTerms);
+		}
+
+		return _content;
+	}
+
+	public String getHighlightedTitle(String[] queryTerms) {
+		if (_highlight) {
+			return StringUtil.highlight(_title, queryTerms);
+		}
+
+		return _title;
 	}
 
 	public Locale getLocale() {
@@ -61,6 +88,10 @@ public class Summary {
 		return _title;
 	}
 
+	public boolean isHighlight() {
+		return _highlight;
+	}
+
 	public void setContent(String content) {
 		_content = content;
 
@@ -69,6 +100,10 @@ public class Summary {
 
 			_content = StringUtil.shorten(_content, _maxContentLength);
 		}
+	}
+
+	public void setHighlight(boolean highlight) {
+		_highlight = highlight;
 	}
 
 	public void setLocale(Locale locale) {
@@ -90,6 +125,7 @@ public class Summary {
 	}
 
 	private String _content;
+	private boolean _highlight;
 	private Locale _locale;
 	private int _maxContentLength;
 	private PortletURL _portletURL;

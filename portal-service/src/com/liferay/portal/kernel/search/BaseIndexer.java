@@ -320,9 +320,18 @@ public abstract class BaseIndexer implements Indexer {
 			PortletURL portletURL)
 		throws SearchException {
 
+		return getSummary(document, locale, snippet, portletURL, false);
+	}
+
+	@Override
+	public Summary getSummary(
+			Document document, Locale locale, String snippet,
+			PortletURL portletURL, boolean highlight)
+		throws SearchException {
+
 		try {
 			Summary summary = doGetSummary(
-				document, locale, snippet, portletURL);
+				document, locale, snippet, portletURL, highlight);
 
 			for (IndexerPostProcessor indexerPostProcessor :
 					_indexerPostProcessors) {
@@ -1319,6 +1328,18 @@ public abstract class BaseIndexer implements Indexer {
 			Document document, Locale locale, String snippet,
 			PortletURL portletURL)
 		throws Exception;
+
+	protected Summary doGetSummary(
+			Document document, Locale locale, String snippet,
+			PortletURL portletURL, boolean highlight)
+		throws Exception {
+
+		Summary summary = doGetSummary(document, locale, snippet, portletURL);
+
+		summary.setHighlight(highlight);
+
+		return summary;
+	}
 
 	protected abstract void doReindex(Object obj) throws Exception;
 

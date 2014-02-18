@@ -107,6 +107,16 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
+	public Summary getSummary(
+			Document document, Locale locale, String snippet,
+			PortletURL portletURL, boolean highlight)
+		throws SearchException {
+
+		return _indexer.getSummary(
+			document, locale, snippet, portletURL, highlight);
+	}
+
+	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, String entryClassName,
 			long entryClassPK, String actionId)

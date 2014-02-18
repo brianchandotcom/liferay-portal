@@ -62,7 +62,7 @@
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="notes" required="false" showLabel="true" type="textarea" width="100">
+			<dynamic-element dataType="string" indexType="text" name="notes" required="false" showLabel="true" type="textarea" width="100">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Notes]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -100,7 +100,7 @@
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="description" required="false" showLabel="true" type="textarea" width="100">
+			<dynamic-element dataType="string" indexType="text" name="description" required="false" showLabel="true" type="textarea" width="100">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Description]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -141,7 +141,7 @@
 		<name><![CDATA[Inventory]]></name>
 		<description><![CDATA[Inventory]]></description>
 		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
-			<dynamic-element dataType="string" indexType="keyword" name="description" required="false" showLabel="true" type="textarea" width="100">
+			<dynamic-element dataType="string" indexType="text" name="description" required="false" showLabel="true" type="textarea" width="100">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Description]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -206,13 +206,13 @@
 					<entry name="tip"><![CDATA[Upload documents no larger than 3,000k.]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="comments" required="false" showLabel="true" type="textarea" width="100">
+			<dynamic-element dataType="string" indexType="text" name="comments" required="false" showLabel="true" type="textarea" width="100">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Comments]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="description" required="false" showLabel="true" type="textarea" width="100">
+			<dynamic-element dataType="string" indexType="text" name="description" required="false" showLabel="true" type="textarea" width="100">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Description]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -302,7 +302,7 @@
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="description" required="false" showLabel="true" type="textarea" width="100">
+			<dynamic-element dataType="string" indexType="text" name="description" required="false" showLabel="true" type="textarea" width="100">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Description]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -320,7 +320,7 @@
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="minutes" required="false" showLabel="true" type="textarea" width="100">
+			<dynamic-element dataType="string" indexType="text" name="minutes" required="false" showLabel="true" type="textarea" width="100">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Minutes]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -351,13 +351,13 @@
 					<entry name="tip"><![CDATA[Upload documents no larger than 3,000k.]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="comments" required="false" showLabel="true" type="textarea" width="100">
+			<dynamic-element dataType="string" indexType="text" name="comments" required="false" showLabel="true" type="textarea" width="100">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Comments]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" indexType="keyword" name="description" required="false" showLabel="true" type="textarea" width="100">
+			<dynamic-element dataType="string" indexType="text" name="description" required="false" showLabel="true" type="textarea" width="100">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Description]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>

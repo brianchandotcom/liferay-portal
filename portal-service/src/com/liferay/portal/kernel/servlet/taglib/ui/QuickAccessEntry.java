@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -22,6 +23,14 @@ import com.liferay.portal.kernel.util.Validator;
 public class QuickAccessEntry {
 
 	public static final String ATTRIBUTE_NAME = "QUICK_ACCESS";
+
+	public String getContent() {
+		if (Validator.isNotNull(_label)) {
+			return _label;
+		}
+
+		return _body.toString();
+	}
 
 	public String getData() {
 		return _data;
@@ -47,6 +56,10 @@ public class QuickAccessEntry {
 		return _url;
 	}
 
+	public void setBody(StringBundler body) {
+		_body = body;
+	}
+
 	public void setData(String data) {
 		_data = data;
 	}
@@ -67,6 +80,7 @@ public class QuickAccessEntry {
 		_url = url;
 	}
 
+	private StringBundler _body;
 	private String _data;
 	private String _id;
 	private String _label;

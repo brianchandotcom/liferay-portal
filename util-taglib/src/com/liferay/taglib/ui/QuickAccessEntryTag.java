@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport;
 import com.liferay.portal.kernel.servlet.taglib.ui.QuickAccessEntry;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class QuickAccessEntryTag extends BaseBodyTagSupport implements BodyTag {
 		finally {
 			if (!ServerDetector.isResin()) {
 				_label = null;
+				_onClick = null;
 				_url = null;
 			}
 		}
@@ -48,6 +50,10 @@ public class QuickAccessEntryTag extends BaseBodyTagSupport implements BodyTag {
 
 	public void setLabel(String label) {
 		_label = label;
+	}
+
+	public void setOnClick(String onClick) {
+		_onClick = onClick;
 	}
 
 	public void setUrl(String url) {
@@ -79,7 +85,9 @@ public class QuickAccessEntryTag extends BaseBodyTagSupport implements BodyTag {
 
 		QuickAccessEntry quickAccessEntry = new QuickAccessEntry();
 
+		quickAccessEntry.setId(StringUtil.randomId());
 		quickAccessEntry.setLabel(_label);
+		quickAccessEntry.setOnClick(_onClick);
 		quickAccessEntry.setURL(_url);
 
 		quickAccessEntries.add(quickAccessEntry);
@@ -94,6 +102,7 @@ public class QuickAccessEntryTag extends BaseBodyTagSupport implements BodyTag {
 		"/html/taglib/ui/quick_access_entry/start.jsp";
 
 	private String _label;
+	private String _onClick;
 	private String _url;
 
 }

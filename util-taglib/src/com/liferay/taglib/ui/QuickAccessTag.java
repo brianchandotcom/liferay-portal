@@ -14,8 +14,6 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.QuickAccessEntry;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -45,6 +43,6 @@ public class QuickAccessTag extends IncludeTag {
 
 	private static final String _PAGE = "/html/taglib/ui/quick_access/page.jsp";
 
-	private static Log _log = LogFactoryUtil.getLog(QuickAccessTag.class);
+	private String _contentId;
 
 }

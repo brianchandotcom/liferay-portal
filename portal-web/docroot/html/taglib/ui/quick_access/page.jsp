@@ -20,7 +20,7 @@
 String randomId = StringUtil.randomId();
 %>
 
-<nav id="<%= randomId %>" class="quick-access-nav">
+<nav class="quick-access-nav" id="<%= randomId %>">
 	<h1 class="hide-accessible"><liferay-ui:message key="navigation" /></h1>
 
 	<ul>
@@ -39,6 +39,7 @@ String randomId = StringUtil.randomId();
 			}
 		}
 		%>
+
 	</ul>
 </nav>
 
@@ -54,9 +55,11 @@ String randomId = StringUtil.randomId();
 
 					if (Validator.isNotNull(onClick)) {
 				%>
+
 						if (event.currentTarget.getAttribute('id') === '<%= quickAccessEntry.getId() %>') {
 							<%= onClick %>
 						}
+
 				<%
 					}
 				}

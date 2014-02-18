@@ -412,28 +412,7 @@ public class PortletURLImpl
 			throw new IllegalArgumentException();
 		}
 
-		Portlet portlet = getPortlet();
-
-		if (portlet == null) {
-			return;
-		}
-
-		PublicRenderParameter publicRenderParameter =
-			portlet.getPublicRenderParameter(name);
-
-		if (publicRenderParameter == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Public parameter " + name + "does not exist");
-			}
-
-			return;
-		}
-
-		QName qName = publicRenderParameter.getQName();
-
-		_removePublicRenderParameters.put(
-			PortletQNameUtil.getRemovePublicRenderParameterName(qName),
-			new String[] {"1"});
+		_removePublicRenderParameters.put(name, new String[] {"1"});
 	}
 
 	@Override
@@ -1066,7 +1045,24 @@ public class PortletURLImpl
 				sb.append(StringPool.AMPERSAND);
 			}
 
-			sb.append(HttpUtil.encodeURL(entry.getKey()));
+			String name = entry.getKey();
+
+			PublicRenderParameter publicRenderParameter =
+				getPortlet().getPublicRenderParameter(name);
+
+			if (publicRenderParameter == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Public parameter " + name + "does not exist");
+				}
+
+				continue;
+			}
+
+			String removePrpName =
+				PortletQNameUtil.getRemovePublicRenderParameterName(
+					publicRenderParameter.getQName());
+
+			sb.append(HttpUtil.encodeURL(removePrpName));
 			sb.append(StringPool.EQUAL);
 			sb.append(processValue(key, entry.getValue()[0]));
 			sb.append(StringPool.AMPERSAND);

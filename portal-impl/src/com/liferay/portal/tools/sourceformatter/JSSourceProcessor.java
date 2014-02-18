@@ -98,13 +98,7 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "debugger " + fileName);
 		}
 
-		if (isAutoFix() && (newContent != null) &&
-			!content.equals(newContent)) {
-
-			fileUtil.write(file, newContent);
-
-			sourceFormatterHelper.printError(fileName, file);
-		}
+		compareAndAutoFixContent(file, fileName, content, newContent);
 
 		return newContent;
 	}

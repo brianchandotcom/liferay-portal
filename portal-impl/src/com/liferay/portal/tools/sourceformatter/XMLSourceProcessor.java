@@ -366,13 +366,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			newContent = formatXML(newContent);
 
-			if (isAutoFix() && (newContent != null) &&
-				!content.equals(newContent)) {
-
-				fileUtil.write(file, newContent);
-
-				sourceFormatterHelper.printError(fileName, file);
-			}
+			compareAndAutoFixContent(file, fileName, content, newContent);
 		}
 	}
 

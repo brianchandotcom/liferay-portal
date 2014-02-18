@@ -14,27 +14,36 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import org.junit.Assert;
-import org.junit.Test;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
+ * @author André de Oliveira
  * @author Hugo Huijser
  */
-public class SourceFormatterTest {
+public class SourceMismatchException extends PortalException {
 
-	@Test
-	public void testSourceFormatter() throws Exception {
-		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
-			false, true, false, false);
+	public SourceMismatchException(
+		String fileName, String originalSource, String formattedSource) {
 
-		try {
-			sourceFormatter.format();
-		}
-		catch (SourceMismatchException sme) {
-			Assert.assertEquals(
-				sme.getFileName(), sme.getFormattedSource(),
-				sme.getOriginalSource());
-		}
+		_fileName = fileName;
+		_originalSource = originalSource;
+		_formattedSource = formattedSource;
 	}
+
+	String getFileName() {
+		return _fileName;
+	}
+
+	String getFormattedSource() {
+		return _formattedSource;
+	}
+
+	String getOriginalSource() {
+		return _originalSource;
+	}
+
+	private String _fileName;
+	private String _formattedSource;
+	private String _originalSource;
 
 }

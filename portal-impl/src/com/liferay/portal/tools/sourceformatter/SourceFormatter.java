@@ -79,12 +79,7 @@ public class SourceFormatter {
 						XMLSourceProcessor.class.newInstance());
 
 					for (SourceProcessor sourceProcessor : sourceProcessors) {
-						sourceProcessor.format(
-							_useProperties, _printErrors, _autoFix,
-							_mainReleaseVersion);
-
-						_errorMessages.addAll(
-							sourceProcessor.getErrorMessages());
+						_runSourceProcessor(sourceProcessor);
 					}
 				}
 				catch (Exception e) {
@@ -102,11 +97,7 @@ public class SourceFormatter {
 					SourceProcessor sourceProcessor =
 						JSPSourceProcessor.class.newInstance();
 
-					sourceProcessor.format(
-						_useProperties, _printErrors, _autoFix,
-						_mainReleaseVersion);
-
-					_errorMessages.addAll(sourceProcessor.getErrorMessages());
+					_runSourceProcessor(sourceProcessor);
 				}
 				catch (Exception e) {
 					e.printStackTrace();
@@ -121,8 +112,14 @@ public class SourceFormatter {
 		thread1.join();
 		thread2.join();
 
-		if (_throwException && !_errorMessages.isEmpty()) {
-			throw new Exception(StringUtil.merge(_errorMessages, "\n"));
+		if (_throwException) {
+			if (!_errorMessages.isEmpty()) {
+				throw new Exception(StringUtil.merge(_errorMessages, "\n"));
+			}
+
+			if (_firstSourceMismatchException != null) {
+				throw _firstSourceMismatchException;
+			}
 		}
 	}
 
@@ -148,6 +145,20 @@ public class SourceFormatter {
 		return _mainReleaseVersion;
 	}
 
+	private void _runSourceProcessor(SourceProcessor sourceProcessor)
+		throws Exception {
+
+		sourceProcessor.format(
+			_useProperties, _printErrors, _autoFix, _mainReleaseVersion);
+
+		_errorMessages.addAll(sourceProcessor.getErrorMessages());
+
+		if (_firstSourceMismatchException == null) {
+			_firstSourceMismatchException =
+				sourceProcessor.getFirstSourceMismatchException();
+		}
+	}
+
 	private void _setVersion() throws Exception {
 		String releaseInfoVersion = ReleaseInfo.getVersion();
 
@@ -171,6 +182,7 @@ public class SourceFormatter {
 
 	private boolean _autoFix;
 	private List<String> _errorMessages = new UniqueList<String>();
+	private SourceMismatchException _firstSourceMismatchException;
 	private String _mainReleaseVersion;
 	private boolean _printErrors;
 	private boolean _throwException;

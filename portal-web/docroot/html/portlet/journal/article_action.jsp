@@ -117,7 +117,7 @@ else {
 				/>
 			</c:if>
 
-			<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE) %>">
+			<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, article.getFolderId(), ActionKeys.ADD_ARTICLE) %>">
 				<portlet:renderURL var="copyURL">
 					<portlet:param name="struts_action" value="/journal/copy_article" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />

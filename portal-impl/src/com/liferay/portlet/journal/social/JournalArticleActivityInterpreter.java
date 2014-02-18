@@ -23,7 +23,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
-import com.liferay.portlet.journal.service.permission.JournalPermission;
+import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
@@ -114,19 +114,18 @@ public class JournalArticleActivityInterpreter
 
 		int activityType = activity.getType();
 
-		if ((activityType == JournalActivityKeys.ADD_ARTICLE) &&
-			!JournalPermission.contains(
-				permissionChecker, activity.getGroupId(),
-				ActionKeys.ADD_ARTICLE)) {
+		if (activityType == JournalActivityKeys.ADD_ARTICLE) {
+			JournalArticle article =
+				JournalArticleLocalServiceUtil.getLatestArticle(
+					activity.getClassPK());
 
-			return false;
+			return JournalFolderPermission.contains(
+				permissionChecker, article.getGroupId(), article.getFolderId(),
+				ActionKeys.ADD_ARTICLE);
 		}
-		else if ((activityType == JournalActivityKeys.UPDATE_ARTICLE) &&
-				 !JournalArticlePermission.contains(
-					 permissionChecker, activity.getClassPK(),
-					 ActionKeys.UPDATE)) {
-
-			return false;
+		else if (activityType == JournalActivityKeys.UPDATE_ARTICLE) {
+			return JournalArticlePermission.contains(
+				permissionChecker, activity.getClassPK(), ActionKeys.UPDATE);
 		}
 
 		return JournalArticlePermission.contains(

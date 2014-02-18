@@ -29,6 +29,7 @@ import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.base.JournalArticleServiceBaseImpl;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
+import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import java.io.File;
@@ -152,8 +153,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			String articleURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		JournalPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.ADD_ARTICLE);
+		JournalFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.ADD_ARTICLE);
 
 		return journalArticleLocalService.addArticle(
 			getUserId(), groupId, folderId, classNameId, classPK, articleId,
@@ -263,8 +264,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		JournalPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.ADD_ARTICLE);
+		JournalFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.ADD_ARTICLE);
 
 		return journalArticleLocalService.addArticle(
 			getUserId(), groupId, folderId, classNameId, classPK, articleId,
@@ -300,8 +301,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			boolean autoArticleId, double version)
 		throws PortalException, SystemException {
 
-		JournalPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.ADD_ARTICLE);
+		JournalArticle article = journalArticleLocalService.getArticle(
+			groupId, oldArticleId);
+
+		JournalFolderPermission.check(
+			getPermissionChecker(), groupId, article.getFolderId(),
+			ActionKeys.ADD_ARTICLE);
 
 		return journalArticleLocalService.copyArticle(
 			getUserId(), groupId, oldArticleId, newArticleId, autoArticleId,

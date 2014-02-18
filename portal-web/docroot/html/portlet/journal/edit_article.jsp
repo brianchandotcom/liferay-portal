@@ -243,7 +243,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 							hasSavePermission = JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE);
 						}
 						else {
-							hasSavePermission = JournalPermission.contains(permissionChecker, groupId, ActionKeys.ADD_ARTICLE);
+							hasSavePermission = JournalFolderPermission.contains(permissionChecker, groupId, folderId, ActionKeys.ADD_ARTICLE);
 						}
 
 						String saveButtonLabel = "save";

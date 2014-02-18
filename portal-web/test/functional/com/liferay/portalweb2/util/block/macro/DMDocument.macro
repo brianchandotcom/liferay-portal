@@ -763,14 +763,7 @@
 	<command name="viewPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<if>
-			<condition action="PGDocumentsandmedia#isElementPresent" locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL" />
-			<then>
-				<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-			</then>
-		</if>
-
-		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_THUMBNAIL" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<execute macro="DMDocument#viewDocumentTitleCmdPG">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />

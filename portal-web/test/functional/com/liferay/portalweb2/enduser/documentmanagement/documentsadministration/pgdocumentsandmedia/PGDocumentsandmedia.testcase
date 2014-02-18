@@ -980,6 +980,18 @@
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmSubFolderName}" />
+		</execute>
+
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitleEdit}" />

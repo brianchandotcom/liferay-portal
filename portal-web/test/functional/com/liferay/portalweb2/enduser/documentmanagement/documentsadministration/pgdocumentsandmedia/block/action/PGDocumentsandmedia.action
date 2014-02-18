@@ -40,4 +40,14 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
+
+	<command name="isElementPresent">
+		<case locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL">
+			<execute function="IsElementPresent#isVisible" />
+		</case>
+
+		<case locator-key1="ENTRY_ICON_DOCUMENT_THUMBNAIL_GENERIC">
+			<execute function="IsElementPresent#isVisible" />
+		</case>
+	</command>
 </definition>

@@ -202,13 +202,13 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 	</liferay-ui:error>
 
 	<%
-	double fileMaxSize = PrefsPropsUtil.getDouble(PropsKeys.DL_FILE_MAX_SIZE);
+	long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
 
 	if (fileMaxSize == 0) {
-		fileMaxSize = PrefsPropsUtil.getDouble(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+		fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 	}
 
-	fileMaxSize /= TextFormatter.BITS_IN_A_BYTE;
+	fileMaxSize /= 1024;
 	%>
 
 	<liferay-ui:error exception="<%= FileSizeException.class %>">

@@ -51,13 +51,13 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 	<liferay-ui:error exception="<%= FileSizeException.class %>">
 
 		<%
-		double fileMaxSize = PrefsPropsUtil.getDouble(PropsKeys.DL_FILE_MAX_SIZE);
+		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
 
 		if (fileMaxSize == 0) {
-			fileMaxSize = PrefsPropsUtil.getDouble(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+			fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 		}
 
-		fileMaxSize /= TextFormatter.BITS_IN_A_BYTE;
+		fileMaxSize /= 1024;
 		%>
 
 		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />

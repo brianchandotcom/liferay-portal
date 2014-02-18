@@ -850,15 +850,15 @@ public class EditFileEntryAction extends PortletAction {
 					errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
 				}
 				else if (e instanceof FileSizeException) {
-					double fileMaxSize = PrefsPropsUtil.getDouble(
+					long fileMaxSize = PrefsPropsUtil.getLong(
 						PropsKeys.DL_FILE_MAX_SIZE);
 
 					if (fileMaxSize == 0) {
-						fileMaxSize = PrefsPropsUtil.getDouble(
+						fileMaxSize = PrefsPropsUtil.getLong(
 							PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 					}
 
-					fileMaxSize /= TextFormatter.BITS_IN_A_BYTE;
+					fileMaxSize /= 1024;
 
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-file-size-no-larger" +

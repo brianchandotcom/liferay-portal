@@ -683,27 +683,25 @@ public class StagingImpl implements Staging {
 		else if (e instanceof FileSizeException ||
 				 e instanceof LARFileSizeException) {
 
-			double fileMaxSize = PropsValues.DL_FILE_MAX_SIZE;
+			long fileMaxSize = PropsValues.DL_FILE_MAX_SIZE;
 
 			try {
-				fileMaxSize = PrefsPropsUtil.getDouble(
+				fileMaxSize = PrefsPropsUtil.getLong(
 					PropsKeys.DL_FILE_MAX_SIZE);
 
 				if (fileMaxSize == 0) {
-					fileMaxSize = PrefsPropsUtil.getDouble(
+					fileMaxSize = PrefsPropsUtil.getLong(
 						PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 				}
 			}
 			catch (Exception ex) {
 			}
 
-			fileMaxSize /= TextFormatter.BITS_IN_A_BYTE;
-
 			errorMessage = LanguageUtil.format(
 				locale,
 				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
-				TextFormatter.formatStorageSize(fileMaxSize, locale), false);
-
+				TextFormatter.formatStorageSize(fileMaxSize/1024, locale),
+				false);
 			errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 		}
 		else if (e instanceof LARTypeException) {

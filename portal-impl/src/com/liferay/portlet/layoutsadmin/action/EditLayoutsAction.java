@@ -1139,6 +1139,10 @@ public class EditLayoutsAction extends PortletAction {
 				serviceContext);
 
 		if (layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
+			StagingUtil.setRecentLayoutRevisionId(
+				themeDisplay.getUser(), layoutRevision.getLayoutSetBranchId(),
+				layoutRevision.getPlid(), layoutRevision.getLayoutRevisionId());
+
 			return;
 		}
 

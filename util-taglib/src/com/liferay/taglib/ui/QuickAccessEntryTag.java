@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport;
 import com.liferay.portal.kernel.servlet.taglib.ui.QuickAccessEntry;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,13 +75,13 @@ public class QuickAccessEntryTag extends BaseBodyTagSupport implements BodyTag {
 
 		List<QuickAccessEntry> quickAccessEntries =
 			(List<QuickAccessEntry>)request.getAttribute(
-				QuickAccessEntry.ATTRIBUTE_NAME);
+				WebKeys.PORTLET_QUICK_ACCESS_ENTRIES);
 
 		if (quickAccessEntries == null) {
 			quickAccessEntries = new ArrayList<QuickAccessEntry>();
 
 			request.setAttribute(
-				QuickAccessEntry.ATTRIBUTE_NAME, quickAccessEntries);
+				WebKeys.PORTLET_QUICK_ACCESS_ENTRIES, quickAccessEntries);
 		}
 
 		QuickAccessEntry quickAccessEntry = new QuickAccessEntry();

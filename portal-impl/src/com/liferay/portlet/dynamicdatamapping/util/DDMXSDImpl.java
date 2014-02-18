@@ -757,6 +757,10 @@ public class DDMXSDImpl implements DDMXSD {
 
 		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
+		if (fieldsDisplayField == null) {
+			return false;
+		}
+
 		String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
 			fieldsDisplayField);
 

@@ -180,18 +180,18 @@ public class FileEntryDisplayContextHelper {
 	}
 
 	private void _setValuesForNullFileEntry() {
+		_approved = false;
+		_checkedOut = false;
+		_dlFileEntry = true;
+		_draft = false;
 		_hasDeletePermission = false;
+		_hasLock = false;
 		_hasOverrideCheckoutPermission = false;
 		_hasPermissionsPermission = true;
 		_hasUpdatePermission = true;
 		_hasViewPermission = false;
-		_hasLock = false;
 		_officeDoc = false;
 		_pending = false;
-		_draft = false;
-		_dlFileEntry = true;
-		_checkedOut = false;
-		_approved = false;
 		_supportsLocking = false;
 	}
 

@@ -75,8 +75,9 @@ public class FileEntryDisplayContext {
 		FileVersion fileVersion =
 			_fileEntryDisplayContextHelper.getFileVersion();
 
-		if ((fileVersion == null) || _fileEntryDisplayContextHelper.isDraft() ||
-			_fileEntryDisplayContextHelper.isApproved()) {
+		if ((fileVersion == null) ||
+			_fileEntryDisplayContextHelper.isApproved() ||
+			_fileEntryDisplayContextHelper.isDraft()) {
 
 			saveButtonLabel = "save-as-draft";
 		}
@@ -123,8 +124,8 @@ public class FileEntryDisplayContext {
 		throws PortalException, SystemException {
 
 		if (_fileEntryDisplayContextHelper.hasUpdatePermission() &&
-			_fileEntryDisplayContextHelper.isSupportsLocking() &&
-			!_fileEntryDisplayContextHelper.isCheckedOut()) {
+			!_fileEntryDisplayContextHelper.isCheckedOut() &&
+			_fileEntryDisplayContextHelper.isSupportsLocking()) {
 
 			return true;
 		}
@@ -184,8 +185,8 @@ public class FileEntryDisplayContext {
 		throws PortalException, SystemException {
 
 		if (_fileEntryDisplayContextHelper.hasDeletePermission() &&
-			!_isFileEntryCheckedOutByOther() &&
 			_fileEntryDisplayContextHelper.isDLFileEntry() &&
+			!_isFileEntryCheckedOutByOther() &&
 			_isTrashEnabled()) {
 
 			return true;

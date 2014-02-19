@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -27,12 +26,12 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -44,6 +43,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 
 import java.io.InputStream;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,11 +52,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alexander Chow
  */
-@ExecutionTestListeners(
-	listeners = {
-		MainServletExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class RepositoryTest {
 
@@ -65,14 +61,17 @@ public class RepositoryTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_group);
+	}
+
 	@Test
-	@Transactional
 	public void testAddAndDeleteFileEntries() throws Exception {
 		addAndDeleteFileEntries(false);
 	}
 
 	@Test
-	@Transactional
 	public void testAddAndDeleteFileEntriesInHiddenRepository()
 		throws Exception {
 
@@ -80,13 +79,11 @@ public class RepositoryTest {
 	}
 
 	@Test
-	@Transactional
 	public void testAddAndDeleteHiddenRepositories() throws Exception {
 		addAndDeleteRepositories(true);
 	}
 
 	@Test
-	@Transactional
 	public void testAddAndDeleteRepositories() throws Exception {
 		addAndDeleteRepositories(false);
 	}

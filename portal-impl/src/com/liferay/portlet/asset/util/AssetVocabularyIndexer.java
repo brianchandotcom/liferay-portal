@@ -30,9 +30,12 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyActionableDynamicQuery;
 
 import java.util.Locale;
@@ -50,6 +53,11 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 
 	public static final String PORTLET_ID = PortletKeys.ASSET_CATEGORIES_ADMIN;
 
+	public AssetVocabularyIndexer() {
+		setFilterSearch(true);
+		setPermissionAware(true);
+	}
+
 	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
@@ -58,6 +66,19 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 	@Override
 	public String getPortletId() {
 		return PORTLET_ID;
+	}
+
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, String entryClassName,
+			long entryClassPK, String actionId)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.getVocabulary(entryClassPK);
+
+		return AssetVocabularyPermission.contains(
+			permissionChecker, assetVocabulary, ActionKeys.VIEW);
 	}
 
 	@Override

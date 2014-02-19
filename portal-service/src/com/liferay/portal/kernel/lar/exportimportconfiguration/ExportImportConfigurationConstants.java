@@ -21,12 +21,26 @@ public class ExportImportConfigurationConstants {
 
 	public static final int TYPE_EXPORT_LAYOUT = 0;
 
+	public static final String TYPE_EXPORT_LAYOUT_LABEL = "export-layout";
+
 	public static final int TYPE_PUBLISH_LAYOUT_LOCAL = 1;
+
+	public static final String TYPE_PUBLISH_LAYOUT_LOCAL_LABEL =
+		"publish-layout-local";
 
 	public static final int TYPE_PUBLISH_LAYOUT_REMOTE = 2;
 
+	public static final String TYPE_PUBLISH_LAYOUT_REMOTE_LABEL =
+		"publish-layout-remote";
+
 	public static final int TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL = 3;
 
+	public static final String TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL_LABEL =
+		"scheduled-publish-layout-local";
+
 	public static final int TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE = 4;
+
+	public static final String TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE_LABEL =
+		"scheduled-publish-layout-remote";
 
 }

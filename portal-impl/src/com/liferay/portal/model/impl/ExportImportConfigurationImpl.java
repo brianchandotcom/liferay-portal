@@ -15,9 +15,12 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
 
 import java.io.Serializable;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -42,6 +45,45 @@ public class ExportImportConfigurationImpl
 			settings);
 
 		return _settingsMap;
+	}
+
+	public String getTypeName(Locale locale) {
+		switch (getType()) {
+			case ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT:
+				return LanguageUtil.get(
+					locale,
+					ExportImportConfigurationConstants.
+						TYPE_EXPORT_LAYOUT_LABEL);
+
+			case ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL:
+				return LanguageUtil.get(
+					locale,
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_LOCAL_LABEL);
+
+			case ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE:
+				return LanguageUtil.get(
+					locale,
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_REMOTE_LABEL);
+
+			case ExportImportConfigurationConstants.
+				TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL:
+					return LanguageUtil.get(
+						locale,
+						ExportImportConfigurationConstants.
+							TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL_LABEL);
+
+			case ExportImportConfigurationConstants.
+				TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE:
+					return LanguageUtil.get(
+						locale,
+						ExportImportConfigurationConstants.
+							TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE_LABEL);
+
+			default :
+				return LanguageUtil.get(locale, "undefined");
+		}
 	}
 
 	private Map<String, Serializable> _settingsMap;

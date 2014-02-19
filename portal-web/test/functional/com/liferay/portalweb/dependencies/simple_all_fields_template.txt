@@ -1,0 +1,25 @@
+#if ($getterUtil.getBoolean($Boolean.getData()))
+
+#end
+#set ($Date_DateObj = $dateUtil.newDate($getterUtil.getLong($Date.getData())))
+
+$dateUtil.getDate($Date_DateObj, "dd MMM yyyy - HH:mm:ss", $locale)
+$Decimal.getData()
+<a href="$Documents_and_Media.getData()">
+
+$languageUtil.format($locale, "download-x", "Documents and Media")
+
+</a>
+$HTML.getData()
+<img alt="Image" src="$Image.getData()" />
+$Integer.getData()
+<a href="$Link_to_Page.getFriendlyUrl()">
+
+Link to Page
+
+</a>
+$Number.getData()
+$Radio.getData()
+$Select.getData()
+$Text.getData()
+$Text_Box.getData()

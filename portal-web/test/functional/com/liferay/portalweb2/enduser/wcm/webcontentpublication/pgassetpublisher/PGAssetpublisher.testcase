@@ -281,7 +281,7 @@
 
 	<command name="ConfigureAPPortletEnableRatings" priority="4">
 		<var name="assetTitle" value="WC WebContent Title" />
-		<var name="enableRatings" value="True" />
+		<var name="enableRatings" value="true" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -392,7 +392,7 @@
 	</command>
 
 	<command name="ConfigureAPPortletSetAsDefault" priority="4">
-		<var name="setAsDefaultPage" value="True" />
+		<var name="setAsDefaultPage" value="true" />
 
 		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
 			<var name="setAsDefaultPage" value="${setAsDefaultPage}" />

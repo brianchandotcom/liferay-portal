@@ -13,7 +13,11 @@
 	<td></td>
 	<td>CPWebcontentTemplatesAddtemplate</td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <tr>
 	<td>TEMPLATES_IFRAME</td>
 	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'scopeTitle=Templates')]</td>
@@ -74,16 +78,36 @@
 	<td>//button[contains(., 'Cancel')]</td>
 	<td></td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PALETTE-->
+<tr>
+	<td>PALETTE_FIELD</td>
+	<td>//div[@class='palette-section' and contains(.,'Fields')]/ul/li/span[contains(.,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SCRIPT-->
 <tr>
 	<td>SCRIPT_CONTENT_FIELD</td>
-	<td>//div[@id='_166_richEditor']/div[2]/div[@class='ace_content']</td>
+	<td>//textarea[@class='ace_text-input']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCRIPT_FIELDS_1</td>
 	<td>//div[@id='_166_paletteData']/div[2]/ul/li/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCRIPT_FIELD</td>
+	<td>//div[@class='palette-section' and contains(.,'Fields')]/ul/li/span[contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

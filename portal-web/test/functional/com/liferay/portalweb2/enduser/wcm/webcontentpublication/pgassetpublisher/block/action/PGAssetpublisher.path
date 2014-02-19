@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_WRENCH_ICON</td>
-	<td>//a[@title='Options']</td>
+	<td>//section[contains(.,'Asset Publisher')]//a[contains(.,'Options')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,6 +61,17 @@
 <tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CATEGORIES_FILTER-->
+<tr>
+	<td>CATEGORIES_FILTER_CATEGORY</td>
+	<td>//section[contains(.,'Asset Publisher')]//div[@class='portlet-body']//span[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -180,6 +191,27 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_ORDER-->
+<tr>
+	<td>ASSET_ORDER_FIRST</td>
+	<td>//div[@class='portlet-body']/div[3]/h3/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ORDER_SECOND</td>
+	<td>//div[@class='portlet-body']/div[4]/h3/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ORDER_THIRD</td>
+	<td>//div[@class='portlet-body']/div[5]/h3/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -370,6 +402,103 @@
 <tr>
 	<td>DISPLAY_ICON_GOOGLE_PLUS</td>
 	<td>//li[@class='taglib-social-bookmark-plusone']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--METADATA-->
+<tr>
+	<td>METADATA_AUTHOR</td>
+	<td>//span[@class='metadata-entry metadata-author']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_VOCABULARY</td>
+	<td>//span[@class='metadata-entry metadata-categories']/span[contains(.,'${key_vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_CATEGORY</td>
+	<td>//span[@class='metadata-entry metadata-categories']/span/a[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_CREATE_DATE</td>
+	<td>//span[@class='metadata-entry metadata-create-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_EXPIRATION_DATE</td>
+	<td>//span[@class='metadata-entry metadata-expiration-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_MODIFIED_DATE</td>
+	<td>//span[@class='metadata-entry metadata-modified-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PRIORITY</td>
+	<td>//span[@class='metadata-entry metadata-priority']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PUBLISH_DATE</td>
+	<td>//span[@class='metadata-entry metadata-publish-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_TAGS</td>
+	<td>//span[@class='metadata-entry metadata-tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_VIEW_COUNT</td>
+	<td>//span[@class='metadata-entry metadata-view-count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGINATION-->
+<tr>
+	<td>PAGINATION_PAGE_BUTTON</td>
+	<td>//div[@class='lfr-pagination-page-selector']/div/a[contains(.,'Page ${key_pageNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_ITEMS_PER_PAGE</td>
+	<td>//div[@class='clearfix lfr-pagination']/div/div[contains(.,'${key_paginationNumber} Items per Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_TOTAL_ITEMS</td>
+	<td>//div[@class='clearfix lfr-pagination']/small[contains(.,'Showing ${key_pageMod} results.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_FIRST</td>
+	<td>//ul[@class='pager lfr-pagination-buttons']/li/a[contains(.,'First')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_PREVIOUS</td>
+	<td>//ul[@class='pager lfr-pagination-buttons']/li/a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_NEXT</td>
+	<td>//ul[@class='pager lfr-pagination-buttons']/li/a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_LAST</td>
+	<td>//a[contains(@class,'aui-paginator-link') and contains(@class,'aui-paginator-last-link')]</td>
 	<td></td>
 </tr>
 </tbody>

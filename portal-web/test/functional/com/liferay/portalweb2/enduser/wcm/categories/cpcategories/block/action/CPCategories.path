@@ -173,6 +173,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VOCABULARY_ENTRY_EDIT_ICON</td>
+	<td>//li[contains(.,'${key_vocabularyName}')]/a/span[contains(@class,'vocabulary-item-actions-trigger')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

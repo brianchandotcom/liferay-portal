@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//span[@id='_147_categoryDescriptionBoundingBox']/textarea</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VOCABULARY_SELECT</td>
 	<td>//select[@id='_147_vocabularyId']</td>
 	<td></td>

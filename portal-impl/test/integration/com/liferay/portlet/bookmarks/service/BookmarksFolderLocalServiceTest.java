@@ -128,20 +128,16 @@ public class BookmarksFolderLocalServiceTest {
 			SubscriptionLocalServiceUtil.getUserSubscriptions(
 				TestPropsValues.getUserId(), BookmarksFolder.class.getName());
 
-		boolean fail = true;
-
 		for (Subscription subscription : subscriptions) {
 			if (subscription.getClassName().equals(
 					BookmarksFolder.class.getName()) &&
 				(subscription.getClassPK() == expectedSubscriptionClassPK)) {
 
-				fail = false;
+				return;
 			}
 		}
 
-		if (fail) {
-			Assert.fail("No subscription exist for folder");
-		}
+		Assert.fail("Subscription does not exist");
 	}
 
 	protected void testUnsubscribeFolder(
@@ -169,7 +165,7 @@ public class BookmarksFolderLocalServiceTest {
 					BookmarksFolder.class.getName()) &&
 				(subscription.getClassPK() == expectedSubscriptionClassPK)) {
 
-				Assert.fail("A subscription exist for folder");
+				Assert.fail("Subscription exists");
 			}
 		}
 	}

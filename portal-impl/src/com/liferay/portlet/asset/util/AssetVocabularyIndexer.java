@@ -32,11 +32,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyActionableDynamicQuery;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -124,8 +122,13 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		AssetVocabulary assetVocabulary = (AssetVocabulary)obj;
 
-		deleteDocument(
-			assetVocabulary.getCompanyId(), assetVocabulary.getVocabularyId());
+		Document document = new DocumentImpl();
+
+		document.addUID(PORTLET_ID, assetVocabulary.getVocabularyId());
+
+		SearchEngineUtil.deleteDocument(
+			getSearchEngineId(), assetVocabulary.getCompanyId(),
+			document.get(Field.UID));
 	}
 
 	@Override
@@ -145,9 +148,8 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 
 	@Override
 	protected Summary doGetSummary(
-			Document document, Locale locale, String snippet,
-			PortletURL portletURL)
-		throws Exception {
+		Document document, Locale locale, String snippet,
+		PortletURL portletURL) {
 
 		return null;
 	}
@@ -158,14 +160,16 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 
 		Document document = getDocument(assetVocabulary);
 
-		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), assetVocabulary.getCompanyId(), document);
+		if (document != null) {
+			SearchEngineUtil.updateDocument(
+				getSearchEngineId(), assetVocabulary.getCompanyId(), document);
+		}
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		AssetVocabulary assetVocabulary =
-			AssetVocabularyServiceUtil.getVocabulary(classPK);
+			AssetVocabularyLocalServiceUtil.getVocabulary(classPK);
 
 		doReindex(assetVocabulary);
 	}
@@ -185,29 +189,25 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 	protected void reindexAssetVocabularies(long companyId)
 		throws PortalException, SystemException {
 
-		final List<Document> documents = new ArrayList<Document>();
-
 		ActionableDynamicQuery actionableDynamicQuery =
 			new AssetVocabularyActionableDynamicQuery() {
 
 			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
-
+			protected void performAction(Object object) throws PortalException {
 				AssetVocabulary assetVocabulary = (AssetVocabulary)object;
 
 					Document document = getDocument(assetVocabulary);
 
-					documents.add(document);
+				if (document != null) {
+					addDocument(document);
 				}
-			};
+			}
+		};
 
 		actionableDynamicQuery.setCompanyId(companyId);
+		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		actionableDynamicQuery.performActions();
-
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
 	}
 
 	private static final String VOCABULARY_ID = "vocabularyId";

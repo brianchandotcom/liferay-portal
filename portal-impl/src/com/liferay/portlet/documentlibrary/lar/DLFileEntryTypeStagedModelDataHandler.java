@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -109,6 +110,14 @@ public class DLFileEntryTypeStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
+		importMissingGroupReference(portletDataContext, referenceElement);
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		groupId = MapUtil.getLong(groupIds, groupId, groupId);
+
 		DLFileEntryType existingFileEntryType = null;
 
 		try {
@@ -135,22 +144,28 @@ public class DLFileEntryTypeStagedModelDataHandler
 		PortletDataContext portletDataContext, Element referenceElement) {
 
 		String uuid = referenceElement.attributeValue("uuid");
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
 		String fileEntryTypeKey = referenceElement.attributeValue(
 			"file-entry-type-key");
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		try {
-			DLFileEntryType existingFileEntryType =
-				fetchExistingFileEntryType(
-					uuid, portletDataContext.getScopeGroupId(),
-					fileEntryTypeKey, preloaded);
+		if (!validateMissingGroupReference(
+				portletDataContext, referenceElement)) {
 
-			if (existingFileEntryType == null) {
-				existingFileEntryType = fetchExistingFileEntryType(
-					uuid, portletDataContext.getCompanyGroupId(),
-					fileEntryTypeKey, preloaded);
-			}
+			return false;
+		}
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		groupId = MapUtil.getLong(groupIds, groupId, groupId);
+
+		try {
+			DLFileEntryType existingFileEntryType = fetchExistingFileEntryType(
+				uuid, groupId, fileEntryTypeKey, preloaded);
 
 			if (existingFileEntryType == null) {
 				return false;

@@ -77,7 +77,6 @@ public class MBAttachmentsTest {
 	@After
 	public void tearDown() throws Exception {
 		_category = null;
-		_group = null;
 		_message = null;
 	}
 

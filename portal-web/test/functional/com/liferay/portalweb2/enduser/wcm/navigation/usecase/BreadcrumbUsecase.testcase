@@ -8,7 +8,6 @@
 	</tear-down>
 
 	<command name="BreadcrumbConfiguration" priority="3">
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

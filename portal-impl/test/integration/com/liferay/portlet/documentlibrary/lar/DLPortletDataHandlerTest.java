@@ -42,7 +42,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
@@ -125,7 +124,10 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 		GroupLocalServiceUtil.deleteGroup(group);
 
-		Assert.assertEquals(0, DLFolderUtil.countByGroupId(group.getGroupId()));
+		int foldersCount = DLFolderLocalServiceUtil.getFoldersCount(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Assert.assertEquals(0, foldersCount);
 	}
 
 	protected void addRepositoryEntries() throws Exception {

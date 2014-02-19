@@ -113,7 +113,7 @@
 	</command>
 
 	<command name="editFieldIndexable">
-		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
@@ -124,6 +124,8 @@
 
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
 		<execute action="Dynamicdatamapping#click" locator-key1="NAME_FIELD" />
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editFieldOptions">

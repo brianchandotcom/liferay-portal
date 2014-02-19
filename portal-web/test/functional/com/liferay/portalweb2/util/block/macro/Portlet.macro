@@ -173,7 +173,6 @@
 	</command>
 
 	<command name="gotoPortletOptions">
-
 		<if>
 			<isset var="portletName" />
 			<then>

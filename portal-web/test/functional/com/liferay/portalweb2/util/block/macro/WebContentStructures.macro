@@ -88,16 +88,16 @@
 		<execute action="CPWebcontentStructures#selectFrame" locator-key1="STRUCTURES_IFRAME" />
 		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_TABLE_NAME" value1="${structureName}" />
 
-		<for list="${structureFieldNames}" param="structureFieldName">
-			<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
+		<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
 
+		<for list="${structureFieldNames}" param="structureFieldName">
 			<execute macro="DynamicDataMapping#editFieldIndexable">
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
 			</execute>
 		</for>
 
 		<execute action="CPWebcontentStructuresAddstructure#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPWebcontentStructuresAddstructure#selectFrame" />
+		<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
 
 		<execute action="CPWebcontentStructuresAddstructure#selectFrame" locator-key1="STRUCTURES_IFRAME" />
 		<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

@@ -31,6 +31,9 @@
 		border-bottom: 1px solid transparent;
 		cursor: pointer;
 		display: block;
+
+		@include ellipsis;
+
 		padding: 2px;
 
 		input {

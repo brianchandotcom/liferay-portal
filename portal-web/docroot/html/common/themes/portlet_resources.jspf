@@ -1,0 +1,55 @@
+<%--
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+List<String> staticPortletResourceURLStrings = new ArrayList<String>();
+%>
+
+<c:if test="<%= (portlets != null) && !portlets.isEmpty() %>">
+
+	<%
+	Set<String> portletResourceStaticURLs = (Set<String>)request.getAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS);
+
+	if (portletResourceStaticURLs == null) {
+		portletResourceStaticURLs = new LinkedHashSet<String>();
+
+		request.setAttribute(WebKeys.PORTLET_RESOURCE_STATIC_URLS, portletResourceStaticURLs);
+	}
+
+	if (staticPortletResourceFastLoad) {
+		ComboServletStaticURLGenerator comboServletStaticURLGenerator = new ComboServletStaticURLGenerator();
+
+		comboServletStaticURLGenerator.setPredicateFilter(predicateFilter);
+		comboServletStaticURLGenerator.setPortletResourceAccessors(portletResourceAccessors);
+		comboServletStaticURLGenerator.setTimestamp(theme.getTimestamp());
+		comboServletStaticURLGenerator.setURLPrefix(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo", "minifierType=&themeId=" + themeDisplay.getThemeId(), -1));
+		comboServletStaticURLGenerator.setVisitedURLs(portletResourceStaticURLs);
+
+		staticPortletResourceURLStrings.addAll(comboServletStaticURLGenerator.generate(portlets));
+	}
+	else {
+		PortletResourceStaticURLGenerator portletResourceStaticURLGenerator = new PortletResourceStaticURLGenerator();
+
+		portletResourceStaticURLGenerator.setRequest(request);
+		portletResourceStaticURLGenerator.setVisitedURLs(portletResourceStaticURLs);
+
+		for (Portlet curPortlet : portlets) {
+			staticPortletResourceURLStrings.addAll(portletResourceStaticURLGenerator.generate(curPortlet, portletResourceAccessors));
+		}
+	}
+	%>
+
+</c:if>

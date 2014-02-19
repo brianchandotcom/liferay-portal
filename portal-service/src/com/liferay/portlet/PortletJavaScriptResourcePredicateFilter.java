@@ -12,33 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portlet;
+
+import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.theme.ThemeDisplay;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface PredicateFilter<T> {
+public class PortletJavaScriptResourcePredicateFilter
+	implements PredicateFilter<String> {
 
-	@SuppressWarnings("rawtypes")
-	public static PredicateFilter ALL = new PredicateFilter<Object>() {
+	public PortletJavaScriptResourcePredicateFilter(ThemeDisplay themeDisplay) {
+		_themeDisplay = themeDisplay;
+	}
 
-		@Override
-		public boolean filter(Object object) {
-			return true;
-		}
+	@Override
+	public boolean filter(String resource) {
+		return !_themeDisplay.isIncludedJs(resource);
+	}
 
-	};
-
-	@SuppressWarnings("rawtypes")
-	public static PredicateFilter NONE = new PredicateFilter<Object>() {
-
-		@Override
-		public boolean filter(Object object) {
-			return false;
-		}
-
-	};
-
-	public boolean filter(T t);
+	private ThemeDisplay _themeDisplay;
 
 }

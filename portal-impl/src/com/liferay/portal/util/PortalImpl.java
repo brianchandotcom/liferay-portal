@@ -5207,7 +5207,9 @@ public class PortalImpl implements Portal {
 
 		// Timestamp
 
-		if ((parameterMap == null) || !parameterMap.containsKey("t")) {
+		if (((parameterMap == null) || !parameterMap.containsKey("t")) &&
+			 !(timestamp < 0)) {
+
 			if ((timestamp == 0) && uri.startsWith(StrutsUtil.TEXT_HTML_DIR)) {
 				ServletContext servletContext =
 					(ServletContext)request.getAttribute(WebKeys.CTX);

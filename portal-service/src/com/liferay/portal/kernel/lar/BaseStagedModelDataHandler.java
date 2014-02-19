@@ -122,24 +122,58 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		return new HashMap<String, String>();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #importMissingReference(PortletDataContext, Element)}
+	 */
+	@Deprecated
 	@Override
 	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, Element element)
+			PortletDataContext portletDataContext, Element referenceElement)
 		throws PortletDataException {
 
-		String uuid = element.attributeValue("uuid");
-		long classPK = GetterUtil.getLong(element.attributeValue("class-pk"));
-
-		importCompanyStagedModel(portletDataContext, uuid, classPK);
+		importMissingReference(portletDataContext, referenceElement);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #importMissingReference(PortletDataContext, String, long,
+	 *             long)}
+	 */
+	@Deprecated
 	@Override
 	public void importCompanyStagedModel(
 			PortletDataContext portletDataContext, String uuid, long classPK)
 		throws PortletDataException {
 
+		importMissingReference(
+			portletDataContext, uuid, portletDataContext.getCompanyGroupId(),
+			classPK);
+	}
+
+	@Override
+	public void importMissingReference(
+			PortletDataContext portletDataContext, Element referenceElement)
+		throws PortletDataException {
+
+		String uuid = referenceElement.attributeValue("uuid");
+		long liveGroupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
+		long classPK = GetterUtil.getLong(
+			referenceElement.attributeValue("class-pk"));
+
+		importMissingReference(portletDataContext, uuid, liveGroupId, classPK);
+	}
+
+	@Override
+	public void importMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long classPK)
+		throws PortletDataException {
+
 		try {
-			doImportCompanyStagedModel(portletDataContext, uuid, classPK);
+			doImportMissingReference(
+				portletDataContext, uuid, groupId, classPK);
 		}
 		catch (PortletDataException pde) {
 			throw pde;
@@ -239,8 +273,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws Exception;
 
-	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid, long classPK)
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long classPK)
 		throws Exception {
 
 		throw new UnsupportedOperationException();

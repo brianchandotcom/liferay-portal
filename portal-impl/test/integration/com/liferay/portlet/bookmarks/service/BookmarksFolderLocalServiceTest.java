@@ -148,6 +148,9 @@ public class BookmarksFolderLocalServiceTest {
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
 				TestPropsValues.getUserId());
 
+		BookmarksFolderLocalServiceUtil.subscribeFolder(
+			TestPropsValues.getUserId(), _group.getGroupId(), folderId);
+
 		BookmarksFolderLocalServiceUtil.unsubscribeFolder(
 			TestPropsValues.getUserId(), _group.getGroupId(), folderId);
 

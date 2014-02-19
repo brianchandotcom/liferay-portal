@@ -64,6 +64,7 @@ import org.junit.runner.RunWith;
 		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Transactional
 public class MBAttachmentsTest {
 
 	@Before
@@ -81,7 +82,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testDeleteAttachmentsWhenDeletingMessage() throws Exception {
 		int initialFileEntriesCount =
 			DLFileEntryLocalServiceUtil.getFileEntriesCount();
@@ -147,7 +147,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingMessage() throws Exception {
 		int initialFoldersCount = DLFolderLocalServiceUtil.getDLFoldersCount();
 
@@ -162,7 +161,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingMessageAttachment() throws Exception {
 		int initialFoldersCount = DLFolderLocalServiceUtil.getDLFoldersCount();
 
@@ -174,7 +172,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingMessageAttachments()
 		throws Exception {
 
@@ -217,7 +214,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingRootMessage() throws Exception {
 		int initialFoldersCount = DLFolderLocalServiceUtil.getDLFoldersCount();
 
@@ -228,7 +224,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenDeletingMessageWithAttachments()
 		throws Exception {
 
@@ -254,7 +249,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenDeletingMessageWithoutAttachments()
 		throws Exception {
 
@@ -276,7 +270,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenDeletingRootMessageWithAttachments()
 		throws Exception {
 
@@ -296,7 +289,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenDeletingRootMessageWithoutAttachments()
 		throws Exception {
 

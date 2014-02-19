@@ -142,14 +142,14 @@ public class AssetCategoryStagedModelDataHandler
 		portletDataContext.addZipEntry(categoryPath, category);
 	}
 
-	@Override
-	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid, long categoryId)
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long categoryId)
 		throws Exception {
 
 		AssetCategory existingCategory =
 			AssetCategoryLocalServiceUtil.fetchAssetCategoryByUuidAndGroupId(
-				uuid, portletDataContext.getCompanyGroupId());
+				uuid, groupId);
 
 		Map<Long, Long> categoryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

@@ -91,14 +91,14 @@ public class DDLRecordSetStagedModelDataHandler
 	}
 
 	@Override
-	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
 			long recordSetId)
 		throws Exception {
 
 		DDLRecordSet existingRecordSet =
 			DDLRecordSetLocalServiceUtil.fetchDDLRecordSetByUuidAndGroupId(
-				uuid, portletDataContext.getCompanyGroupId());
+				uuid, groupId);
 
 		Map<Long, Long> recordSetIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

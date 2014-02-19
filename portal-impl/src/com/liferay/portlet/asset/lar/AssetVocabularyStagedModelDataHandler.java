@@ -102,16 +102,14 @@ public class AssetVocabularyStagedModelDataHandler
 		portletDataContext.addZipEntry(vocabularyPath, vocabulary);
 	}
 
-	@Override
-	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
 			long vocabularyId)
 		throws Exception {
 
 		AssetVocabulary existingVocabulary =
 			AssetVocabularyLocalServiceUtil.
-				fetchAssetVocabularyByUuidAndGroupId(
-					uuid, portletDataContext.getCompanyGroupId());
+				fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
 
 		Map<Long, Long> vocabularyIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

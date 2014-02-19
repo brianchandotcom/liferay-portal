@@ -160,6 +160,8 @@ public class Field implements Serializable {
 
 	public static final String VIEW_COUNT = "viewCount";
 
+	public static final String VOCABULARY_ID = "vocabularyId";
+
 	public Field(String name, Map<Locale, String> localizedValues) {
 		_name = name;
 		_localizedValues = localizedValues;

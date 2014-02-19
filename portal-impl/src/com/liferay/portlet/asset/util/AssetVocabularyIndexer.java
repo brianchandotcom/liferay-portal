@@ -157,7 +157,8 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 			Field.DESCRIPTION, assetVocabulary.getDescriptionMap());
 		document.addText(Field.NAME, assetVocabulary.getName());
 		document.addLocalizedText(Field.TITLE, assetVocabulary.getTitleMap());
-		document.addKeyword(VOCABULARY_ID, assetVocabulary.getVocabularyId());
+		document.addKeyword(
+			Field.VOCABULARY_ID, assetVocabulary.getVocabularyId());
 
 		return document;
 	}
@@ -225,7 +226,5 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.performActions();
 	}
-
-	private static final String VOCABULARY_ID = "vocabularyId";
 
 }

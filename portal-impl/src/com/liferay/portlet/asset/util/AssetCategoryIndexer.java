@@ -87,7 +87,7 @@ public class AssetCategoryIndexer extends BaseIndexer {
 		addSearchEntryClassNames(searchQuery, searchContext);
 		addGroupIdTerm(searchQuery, searchContext, Field.GROUP_ID);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, true);
-		addVocabularyIdsTerm(searchQuery, searchContext, VOCABULARY_ID);
+		addVocabularyIdsTerm(searchQuery, searchContext, Field.VOCABULARY_ID);
 	}
 
 	protected void addGroupIdTerm(
@@ -158,7 +158,7 @@ public class AssetCategoryIndexer extends BaseIndexer {
 
 		for (long vocabularyId : vocabularyIds) {
 			vocabularyQuery.addTerm(
-				VOCABULARY_ID, String.valueOf(vocabularyId), false);
+				Field.VOCABULARY_ID, String.valueOf(vocabularyId), false);
 		}
 
 		BooleanClauseOccur booleanClauseOccur = BooleanClauseOccur.MUST;
@@ -185,7 +185,8 @@ public class AssetCategoryIndexer extends BaseIndexer {
 			Field.DESCRIPTION, assetCategory.getDescriptionMap());
 		document.addText(Field.NAME, assetCategory.getName());
 		document.addLocalizedText(Field.TITLE, assetCategory.getTitleMap());
-		document.addKeyword(VOCABULARY_ID, assetCategory.getVocabularyId());
+		document.addKeyword(
+			Field.VOCABULARY_ID, assetCategory.getVocabularyId());
 
 		return document;
 	}
@@ -254,7 +255,5 @@ public class AssetCategoryIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.performActions();
 	}
-
-	private static final String VOCABULARY_ID = "vocabularyId";
 
 }

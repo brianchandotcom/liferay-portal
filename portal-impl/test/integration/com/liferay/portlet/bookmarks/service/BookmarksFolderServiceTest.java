@@ -252,12 +252,14 @@ public class BookmarksFolderServiceTest {
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
-		testSubscribeFolder(folder.getFolderId());
+		testSubscribeFolder(folder.getFolderId(), folder.getFolderId());
 	}
 
 	@Test
 	public void testSubscribeRootFolder() throws Exception {
-		testSubscribeFolder(BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		testSubscribeFolder(
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_group.getGroupId());
 	}
 
 	@Test
@@ -265,13 +267,14 @@ public class BookmarksFolderServiceTest {
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
-		testUnsubscribeFolder(folder.getFolderId());
+		testUnsubscribeFolder(folder.getFolderId(), folder.getFolderId());
 	}
 
 	@Test
 	public void testUnsubscribeRootFolder() throws Exception {
 		testUnsubscribeFolder(
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_group.getGroupId());
 	}
 
 	@Test
@@ -416,7 +419,10 @@ public class BookmarksFolderServiceTest {
 		Assert.assertEquals(initialParentFolderId, folder.getParentFolderId());
 	}
 
-	protected void testSubscribeFolder(long folderId) throws Exception {
+	protected void testSubscribeFolder(
+			long folderId, long expectedSubscriptionClassPK)
+		throws Exception {
+
 		int initialUserSubscriptionsCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
 				TestPropsValues.getUserId());
@@ -433,18 +439,12 @@ public class BookmarksFolderServiceTest {
 			SubscriptionLocalServiceUtil.getUserSubscriptions(
 				TestPropsValues.getUserId(), BookmarksFolder.class.getName());
 
-		long subscriptionClassPK = folderId;
-
-		if (folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			subscriptionClassPK = _group.getGroupId();
-		}
-
 		boolean fail = true;
 
 		for (Subscription subscription : subscriptions) {
 			if (subscription.getClassName().equals(
 					BookmarksFolder.class.getName()) &&
-				(subscription.getClassPK() == subscriptionClassPK)) {
+				(subscription.getClassPK() == expectedSubscriptionClassPK)) {
 
 				fail = false;
 			}
@@ -455,12 +455,15 @@ public class BookmarksFolderServiceTest {
 		}
 	}
 
-	protected void testUnsubscribeFolder(long folderId) throws Exception {
+	protected void testUnsubscribeFolder(
+			long folderId, long expectedSubscriptionClassPK)
+		throws Exception {
+
 		int initialUserSubscriptionsCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
 				TestPropsValues.getUserId());
 
-		testSubscribeFolder(folderId);
+		testSubscribeFolder(folderId, expectedSubscriptionClassPK);
 
 		BookmarksFolderLocalServiceUtil.unsubscribeFolder(
 			TestPropsValues.getUserId(), _group.getGroupId(), folderId);
@@ -474,16 +477,10 @@ public class BookmarksFolderServiceTest {
 			SubscriptionLocalServiceUtil.getUserSubscriptions(
 				TestPropsValues.getUserId(), BookmarksFolder.class.getName());
 
-		long subscriptionClassPK = folderId;
-
-		if (folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			subscriptionClassPK = _group.getGroupId();
-		}
-
 		for (Subscription subscription : subscriptions) {
 			if (subscription.getClassName().equals(
 					BookmarksFolder.class.getName()) &&
-				(subscription.getClassPK() == subscriptionClassPK)) {
+				(subscription.getClassPK() == expectedSubscriptionClassPK)) {
 
 				Assert.fail("A susbcription exist for folder");
 			}

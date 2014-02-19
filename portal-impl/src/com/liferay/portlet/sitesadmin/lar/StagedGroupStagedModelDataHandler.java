@@ -16,6 +16,7 @@ package com.liferay.portlet.sitesadmin.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
@@ -46,6 +47,28 @@ public class StagedGroupStagedModelDataHandler
 	@Override
 	public String getDisplayName(StagedGroup stagedGroup) {
 		return stagedGroup.getName();
+	}
+
+	@Override
+	public void importMissingReference(
+			PortletDataContext portletDataContext, Element referenceElement)
+		throws PortletDataException {
+
+		Group existingGroup = fetchExistingGroup(
+			portletDataContext, referenceElement);
+
+		if (existingGroup == null) {
+			return;
+		}
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
+
+		groupIds.put(groupId, existingGroup.getGroupId());
 	}
 
 	@Override

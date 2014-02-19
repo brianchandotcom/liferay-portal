@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ImageLocalServiceUtil;
@@ -176,6 +177,14 @@ public class JournalArticleStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
+		importMissingGroupReference(portletDataContext, referenceElement);
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		groupId = MapUtil.getLong(groupIds, groupId, groupId);
+
 		JournalArticle existingArticle = null;
 
 		try {
@@ -209,20 +218,28 @@ public class JournalArticleStagedModelDataHandler
 
 		String articleResourceUuid = referenceElement.attributeValue(
 			"article-resource-uuid");
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
 		String articleArticleId = referenceElement.attributeValue("article-id");
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
+		if (!validateMissingGroupReference(
+				portletDataContext, referenceElement)) {
+
+			return false;
+		}
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		groupId = MapUtil.getLong(groupIds, groupId, groupId);
+
 		try {
 			JournalArticle existingArticle = fetchExistingArticle(
-				articleResourceUuid, portletDataContext.getScopeGroupId(),
-				articleArticleId, null, 0.0, preloaded);
-
-			if (existingArticle == null) {
-				existingArticle = fetchExistingArticle(
-					articleResourceUuid, portletDataContext.getCompanyGroupId(),
-					articleArticleId, null, 0.0, preloaded);
-			}
+				articleResourceUuid, groupId, articleArticleId, null, 0.0,
+				preloaded);
 
 			if (existingArticle == null) {
 				return false;

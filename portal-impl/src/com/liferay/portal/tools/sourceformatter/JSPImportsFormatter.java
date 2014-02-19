@@ -35,7 +35,7 @@ public class JSPImportsFormatter extends ImportsFormatter {
 		Matcher jspMatcher = _jspImportPattern.matcher(line);
 
 		if (jspMatcher.find()) {
-			return new ImportPackage(jspMatcher.group(1), line);
+			return new ImportPackage(jspMatcher.group(1), false, line);
 		}
 
 		return null;

@@ -36,6 +36,10 @@ public class ImportPackage implements Comparable<ImportPackage> {
 
 		ImportPackage importPackage = (ImportPackage)obj;
 
+		if (_static != importPackage._static) {
+			return false;
+		}
+
 		return _import.equals(importPackage._import);
 	}
 
@@ -52,12 +56,15 @@ public class ImportPackage implements Comparable<ImportPackage> {
 		return _import.hashCode();
 	}
 
-	protected ImportPackage(String importString, String line) {
+	protected ImportPackage(String importString, boolean isStatic, String line)
+	{
 		_import = importString;
+		_static = isStatic;
 		_line = line;
 	}
 
 	private String _import;
 	private String _line;
+	private boolean _static;
 
 }

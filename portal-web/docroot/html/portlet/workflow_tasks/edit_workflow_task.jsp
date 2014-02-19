@@ -212,7 +212,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 									<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && showEditURL %>">
 
 										<%
-										String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + LanguageUtil.format(pageContext, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false) + "', uri:'" + HtmlUtil.escapeURL(editPortletURLString) + "'});";
+										String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + HtmlUtil.escapeJS(editPortletURLString) + "'});";
 										%>
 
 										<liferay-ui:icon image="edit" url="<%= taglibEditURL %>" />

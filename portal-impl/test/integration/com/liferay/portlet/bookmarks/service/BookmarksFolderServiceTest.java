@@ -26,20 +26,16 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Subscription;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
-import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
 import java.util.List;
@@ -51,7 +47,6 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Roberto Díaz
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -99,25 +94,6 @@ public class BookmarksFolderServiceTest {
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		BookmarksFolderServiceUtil.getFolder(folder.getFolderId());
-	}
-
-	@Test
-	public void testMoveFolder() throws Exception {
-		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			_group.getGroupId(), ServiceTestUtil.randomString());
-
-		long initialParentFolderId = folder.getParentFolderId();
-
-		BookmarksFolder destinationFolder = BookmarksTestUtil.addFolder(
-			_group.getGroupId(), ServiceTestUtil.randomString());
-
-		folder = BookmarksFolderLocalServiceUtil.moveFolder(
-			folder.getFolderId(), destinationFolder.getFolderId());
-
-		Assert.assertNotEquals(
-			initialParentFolderId, folder.getParentFolderId());
-		Assert.assertEquals(
-			destinationFolder.getFolderId(), folder.getParentFolderId());
 	}
 
 	@Test
@@ -245,102 +221,6 @@ public class BookmarksFolderServiceTest {
 		Document[] documents = hits.getDocs();
 
 		Assert.assertEquals(2, documents.length);
-	}
-
-	@Test
-	public void testSubscribeFolder() throws Exception {
-		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			_group.getGroupId(), ServiceTestUtil.randomString());
-
-		testSubscribeFolder(folder.getFolderId(), folder.getFolderId());
-	}
-
-	@Test
-	public void testSubscribeRootFolder() throws Exception {
-		testSubscribeFolder(
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			_group.getGroupId());
-	}
-
-	@Test
-	public void testUnsubscribeFolder() throws Exception {
-		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			_group.getGroupId(), ServiceTestUtil.randomString());
-
-		testUnsubscribeFolder(folder.getFolderId(), folder.getFolderId());
-	}
-
-	@Test
-	public void testUnsubscribeRootFolder() throws Exception {
-		testUnsubscribeFolder(
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			_group.getGroupId());
-	}
-
-	protected void testSubscribeFolder(
-			long folderId, long expectedSubscriptionClassPK)
-		throws Exception {
-
-		int initialUserSubscriptionsCount =
-			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
-
-		BookmarksFolderLocalServiceUtil.subscribeFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(), folderId);
-
-		Assert.assertEquals(
-			initialUserSubscriptionsCount + 1,
-			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId()));
-
-		List<Subscription> subscriptions =
-			SubscriptionLocalServiceUtil.getUserSubscriptions(
-				TestPropsValues.getUserId(), BookmarksFolder.class.getName());
-
-		boolean fail = true;
-
-		for (Subscription subscription : subscriptions) {
-			if (subscription.getClassName().equals(
-					BookmarksFolder.class.getName()) &&
-				(subscription.getClassPK() == expectedSubscriptionClassPK)) {
-
-				fail = false;
-			}
-		}
-
-		if (fail) {
-			Assert.fail("No subscription exist for folder");
-		}
-	}
-
-	protected void testUnsubscribeFolder(
-			long folderId, long expectedSubscriptionClassPK)
-		throws Exception {
-
-		int initialUserSubscriptionsCount =
-			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
-
-		BookmarksFolderLocalServiceUtil.unsubscribeFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(), folderId);
-
-		Assert.assertEquals(
-			initialUserSubscriptionsCount,
-			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId()));
-
-		List<Subscription> subscriptions =
-			SubscriptionLocalServiceUtil.getUserSubscriptions(
-				TestPropsValues.getUserId(), BookmarksFolder.class.getName());
-
-		for (Subscription subscription : subscriptions) {
-			if (subscription.getClassName().equals(
-					BookmarksFolder.class.getName()) &&
-				(subscription.getClassPK() == expectedSubscriptionClassPK)) {
-
-				Assert.fail("A subscription exist for folder");
-			}
-		}
 	}
 
 	private Group _group;

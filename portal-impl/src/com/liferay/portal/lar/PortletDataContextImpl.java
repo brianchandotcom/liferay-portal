@@ -1466,6 +1466,25 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		newPrimaryKeysMap.put(classPK, newClassPK);
 
+		// Group mapping
+
+		if (classedModel instanceof StagedGroupedModel &&
+			newClassedModel instanceof StagedGroupedModel) {
+
+			Map<Long, Long> groupIds = (Map<Long, Long>)getNewPrimaryKeysMap(
+				Group.class);
+
+			StagedGroupedModel stagedGroupedModel =
+				(StagedGroupedModel)classedModel;
+
+			StagedGroupedModel newStagedGroupedModel =
+				(StagedGroupedModel)newClassedModel;
+
+			groupIds.put(
+				stagedGroupedModel.getGroupId(),
+				newStagedGroupedModel.getGroupId());
+		}
+
 		importLocks(clazz, String.valueOf(classPK), String.valueOf(newClassPK));
 		importPermissions(clazz, classPK, newClassPK);
 	}

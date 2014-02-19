@@ -99,6 +99,8 @@ if (!cmd.equals(Constants.ADD)) {
 }
 %>
 
+<liferay-ui:trash-undo />
+
 <portlet:renderURL var="backURL">
 	<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />
 </portlet:renderURL>

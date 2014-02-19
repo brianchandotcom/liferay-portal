@@ -21,7 +21,6 @@ import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -38,11 +37,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Daniel Kocsis
  */
-@ExecutionTestListeners(
-	listeners = {
-		MainServletExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class PortletDisplayTemplatePortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {

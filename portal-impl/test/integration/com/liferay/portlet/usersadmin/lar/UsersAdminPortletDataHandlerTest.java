@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.OrganizationTestUtil;
 import com.liferay.portal.util.PortletKeys;
 
@@ -28,11 +27,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Zsolt Berentey
  */
-@ExecutionTestListeners(
-	listeners = {
-		MainServletExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class UsersAdminPortletDataHandlerTest
 		extends BasePortletDataHandlerTestCase {

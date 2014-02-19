@@ -32,11 +32,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryActionableDynamicQuery;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -151,8 +149,13 @@ public class AssetCategoryIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		AssetCategory assetCategory = (AssetCategory)obj;
 
-		deleteDocument(
-			assetCategory.getCompanyId(), assetCategory.getCategoryId());
+		Document document = new DocumentImpl();
+
+		document.addUID(PORTLET_ID, assetCategory.getCategoryId());
+
+		SearchEngineUtil.deleteDocument(
+			getSearchEngineId(), assetCategory.getCompanyId(),
+			document.get(Field.UID));
 	}
 
 	@Override
@@ -185,13 +188,15 @@ public class AssetCategoryIndexer extends BaseIndexer {
 
 		Document document = getDocument(assetCategory);
 
-		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), assetCategory.getCompanyId(), document);
+		if (document != null) {
+			SearchEngineUtil.updateDocument(
+				getSearchEngineId(), assetCategory.getCompanyId(), document);
+		}
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		AssetCategory assetCategory = AssetCategoryServiceUtil.getCategory(
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(
 			classPK);
 
 		doReindex(assetCategory);
@@ -212,30 +217,26 @@ public class AssetCategoryIndexer extends BaseIndexer {
 	protected void reindexAssetCategories(long companyId)
 		throws PortalException, SystemException {
 
-		final List<Document> documents = new ArrayList<Document>();
-
 		ActionableDynamicQuery actionableDynamicQuery =
 			new AssetCategoryActionableDynamicQuery() {
 
 			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
-
+			protected void performAction(Object object) throws PortalException {
 				AssetCategory assetCategory = (AssetCategory)object;
 
 				Document document = getDocument(assetCategory);
 
-				documents.add(document);
+				if (document != null) {
+					addDocument(document);
+				}
 			}
 
 		};
 
 		actionableDynamicQuery.setCompanyId(companyId);
+		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		actionableDynamicQuery.performActions();
-
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
 	}
 
 	private static final String VOCABULARY_ID = "vocabularyId";

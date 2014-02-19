@@ -220,6 +220,11 @@
 	<command name="IPGeocoderPortletSmoke" priority="5">
 		<property name="portlet.plugins.includes" value="ip-geocoder-portlet" />
 
+		<property
+			name="portlet.properties.ip-geocoder-portlet"
+			value="maxmind.database.file=${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/GeoLiteCity.dat"
+		/>
+
 		<var name="appName" value="IP Geocoder" />
 
 		<execute macro="Page#gotoPG">

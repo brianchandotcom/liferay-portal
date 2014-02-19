@@ -280,8 +280,6 @@ public class WikiAttachmentsTest {
 		addWikiPage();
 
 		_trashWikiAttachments(false);
-
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -289,8 +287,6 @@ public class WikiAttachmentsTest {
 		addWikiPage();
 
 		_trashWikiAttachments(true);
-
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	protected void addWikiNode() throws Exception {

@@ -16,15 +16,7 @@
 
 <ul class="lfr-tree unstyled">
 	<li class="tree-item">
-
-		<c:choose>
-			<c:when test="<%= selGroup.isCompany() %>">
-				<aui:input helpMessage="publish-global-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
-			</c:when>
-			<c:otherwise>
-				<aui:input helpMessage="export-import-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
-			</c:otherwise>
-		</c:choose>
+		<aui:input helpMessage='<%= selGroup.isCompany() ? "publish-global-permissions-help" : "export-import-permissions-help" %>' label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
 
 		<ul id="<portlet:namespace />permissionsUl">
 			<li class="tree-item">

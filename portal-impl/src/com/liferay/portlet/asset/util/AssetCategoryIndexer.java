@@ -30,9 +30,12 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryActionableDynamicQuery;
 
 import java.util.Locale;
@@ -48,6 +51,11 @@ public class AssetCategoryIndexer extends BaseIndexer {
 
 	public static final String PORTLET_ID = PortletKeys.ASSET_CATEGORIES_ADMIN;
 
+	public AssetCategoryIndexer() {
+		setFilterSearch(true);
+		setPermissionAware(true);
+	}
+
 	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
@@ -56,6 +64,19 @@ public class AssetCategoryIndexer extends BaseIndexer {
 	@Override
 	public String getPortletId() {
 		return PORTLET_ID;
+	}
+
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, String entryClassName,
+			long entryClassPK, String actionId)
+		throws Exception {
+
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(
+			entryClassPK);
+
+		return AssetCategoryPermission.contains(
+			permissionChecker, assetCategory, ActionKeys.VIEW);
 	}
 
 	@Override

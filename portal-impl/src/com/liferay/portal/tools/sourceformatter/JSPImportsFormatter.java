@@ -16,7 +16,11 @@ package com.liferay.portal.tools.sourceformatter;
 
 import java.io.IOException;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
+ * @author Carlos Sierra Andrés
  * @author André de Oliveira
  */
 public class JSPImportsFormatter extends ImportsFormatter {
@@ -28,7 +32,16 @@ public class JSPImportsFormatter extends ImportsFormatter {
 	@Override
 	protected ImportPackage createImportPackage(String line) {
 
-		return ImportPackageFactoryUtil.create(line);
+		Matcher jspMatcher = _jspImportPattern.matcher(line);
+
+		if (jspMatcher.find()) {
+			return new ImportPackage(jspMatcher.group(1), line);
+		}
+
+		return null;
 	}
+
+	private static final Pattern _jspImportPattern = Pattern.compile(
+		"import=\"([^\\s\"]+)\"");
 
 }

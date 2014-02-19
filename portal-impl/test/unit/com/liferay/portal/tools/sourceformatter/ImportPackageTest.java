@@ -81,10 +81,13 @@ public class ImportPackageTest {
 
 	private ImportPackage _createImport(String string) {
 
-		return ImportPackageFactoryUtil.create(string);
+		return _javaImportsFormatter.createImportPackage(string);
 	}
 
 	private static final String _ARRAYS_IMPORT_STATEMENT =
 		"import java.util.Arrays";
+
+	private JavaImportsFormatter _javaImportsFormatter =
+		new JavaImportsFormatter();
 
 }

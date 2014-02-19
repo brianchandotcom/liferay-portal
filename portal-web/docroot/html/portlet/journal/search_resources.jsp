@@ -232,13 +232,6 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 						searchContext.setAttribute("params", params);
 						searchContext.setEnd(searchContainer.getEnd());
 						searchContext.setFolderIds(searchTerms.getFolderIds());
-
-						QueryConfig queryConfig = new QueryConfig();
-
-						queryConfig.setHighlightEnabled(true);
-
-						searchContext.setQueryConfig(queryConfig);
-
 						searchContext.setStart(searchContainer.getStart());
 
 						Hits hits = indexer.search(searchContext);

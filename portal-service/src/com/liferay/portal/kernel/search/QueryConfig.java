@@ -106,7 +106,8 @@ public class QueryConfig implements Serializable {
 
 	public boolean isHighlightEnabled() {
 		return GetterUtil.getBoolean(
-			_attributes.get(PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED), false);
+			_attributes.get(PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED),
+			_INDEX_SEARCH_HIGHLIGHT_ENABLED);
 	}
 
 	public boolean isHitsProcessingEnabled() {

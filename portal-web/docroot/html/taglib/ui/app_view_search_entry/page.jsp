@@ -25,6 +25,7 @@ String containerType = GetterUtil.getString(request.getAttribute("liferay-ui:app
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:app-view-search-entry:cssClass"));
 String description = (String)request.getAttribute("liferay-ui:app-view-search-entry:description");
 List<Tuple> fileEntryTuples = (List<Tuple>)request.getAttribute("liferay-ui:app-view-search-entry:fileEntryTuples");
+boolean highlightEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-search-entry:highlightEnabled"), PropsValues.INDEX_SEARCH_HIGHLIGHT_ENABLED);
 boolean locked = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-search-entry:locked"));
 List<MBMessage> mbMessages = (List<MBMessage>)request.getAttribute("liferay-ui:app-view-search-entry:mbMessages");
 String[] queryTerms = (String[])request.getAttribute("liferay-ui:app-view-search-entry:queryTerms");
@@ -52,7 +53,14 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 
 		<div class="entry-metadata">
 			<span class="entry-title">
-				<%= StringUtil.highlight(HtmlUtil.escape(title), queryTerms) %>
+				<c:choose>
+					<c:when test="<%= highlightEnabled %>">
+						<%= StringUtil.highlight(HtmlUtil.escape(title), queryTerms) %>
+					</c:when>
+					<c:otherwise>
+						<%= HtmlUtil.escape(title) %>
+					</c:otherwise>
+				</c:choose>
 
 				<c:if test="<%= (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
 					<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
@@ -104,7 +112,14 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 			</c:if>
 
 			<span class="entry-description">
-				<%= StringUtil.highlight(HtmlUtil.escape(description), queryTerms) %>
+				<c:choose>
+					<c:when test="<%= highlightEnabled %>">
+						<%= StringUtil.highlight(HtmlUtil.escape(description), queryTerms) %>
+					</c:when>
+					<c:otherwise>
+						<%= HtmlUtil.escape(description) %>
+					</c:otherwise>
+				</c:choose>
 			</span>
 		</div>
 	</a>
@@ -132,7 +147,19 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 						</span>
 
 						<span class="body">
-							<%= StringUtil.highlight((Validator.isNotNull(summary.getContent())) ? summary.getContent() : fileEntry.getTitle(), queryTerms) %>
+
+							<%
+							String body = (Validator.isNotNull(summary.getContent()) ? summary.getContent() : fileEntry.getTitle());
+							%>
+
+							<c:choose>
+								<c:when test="<%= highlightEnabled %>">
+									<%= StringUtil.highlight(body, queryTerms) %>
+								</c:when>
+								<c:otherwise>
+									<%= body %>
+								</c:otherwise>
+							</c:choose>
 						</span>
 				</aui:a>
 			</div>
@@ -165,7 +192,12 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 					</span>
 
 					<span class="body">
-						<%= StringUtil.highlight(mbMessage.getSubject(), queryTerms) %>
+						<c:when test="<%= highlightEnabled %>">
+							<%= StringUtil.highlight(mbMessage.getSubject(), queryTerms) %>
+						</c:when>
+						<c:otherwise>
+							<%= mbMessage.getSubject() %>
+						</c:otherwise>
 					</span>
 				</aui:a>
 			</div>

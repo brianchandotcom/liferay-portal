@@ -75,13 +75,6 @@ portletURL.setParameter("keywords", keywords);
 		searchContext.setIncludeDiscussions(true);
 		searchContext.setKeywords(keywords);
 		searchContext.setNodeIds(nodeIds);
-
-		QueryConfig queryConfig = new QueryConfig();
-
-		queryConfig.setHighlightEnabled(true);
-
-		searchContext.setQueryConfig(queryConfig);
-
 		searchContext.setStart(searchContainer.getStart());
 
 		Hits hits = indexer.search(searchContext);

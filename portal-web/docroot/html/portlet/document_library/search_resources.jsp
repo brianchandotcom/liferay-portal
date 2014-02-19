@@ -194,7 +194,6 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 
 				QueryConfig queryConfig = new QueryConfig();
 
-				queryConfig.setHighlightEnabled(true);
 				queryConfig.setSearchSubfolders(true);
 
 				searchContext.setQueryConfig(queryConfig);

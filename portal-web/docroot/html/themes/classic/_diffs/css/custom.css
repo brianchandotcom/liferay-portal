@@ -1,5 +1,6 @@
 @import "compass";
 @import "mixins";
+@import "variables";
 
 @import url(custom_common.css);
 @import url(color_schemes/common.css);
@@ -53,7 +54,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			text-align: center;
 
 			&:focus {
-				top: 100em;
+				top: $quickAccessNavOffset;
 			}
 		}
 	}

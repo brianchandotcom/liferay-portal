@@ -138,9 +138,11 @@
 
 			cached.get(TRIGGER).detach('hover');
 
-			cached.get(TRIGGER).on('hover', 
+			cached.get(TRIGGER).on(
+				'hover',
 				A.bind(cached._onBoundingBoxMouseenter, cached),
-				A.bind(cached._onBoundingBoxMouseleave, cached));
+				A.bind(cached._onBoundingBoxMouseleave, cached)
+			);
 
 			cached.show();
 		},

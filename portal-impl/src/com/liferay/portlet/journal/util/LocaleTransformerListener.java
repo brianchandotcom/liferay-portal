@@ -52,13 +52,24 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			_log.debug("onXml");
 		}
 
-		return replace(xml, languageId);
+		return filterByLanguage(xml, languageId);
 	}
 
-	protected void replace(Element root, String languageId) {
+	/**
+	 * Filters an XML element's children, removing elements with language-ids that are not languageId. If an element with
+	 * defaultLanguageId as it's language-id is found, it will be used as a fallback in the case no other element is left.
+	 * @param root Element that will have it's children filtered.
+	 * @param languageId The expected language-id of the children that must be kept.
+	 * @param defaultLanguageId The language-id that will be used as a fallback.
+	 */
+	protected void filterByLanguage(Element root, String languageId, String defaultLanguageId) {
 		List<Element> elements = root.elements();
 
 		int listIndex = elements.size() - 1;
+
+		Element defaultLanguageElement = null;
+
+		boolean foundValidChild = false;
 
 		while (listIndex >= 0) {
 			Element element = elements.get(listIndex);
@@ -67,17 +78,28 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 				"language-id", languageId);
 
 			if (!StringUtil.equalsIgnoreCase(tempLanguageId, languageId)) {
+				if (StringUtil.equalsIgnoreCase(tempLanguageId, defaultLanguageId)) {
+					defaultLanguageElement = element;
+				}
+
 				root.remove(element);
 			}
 			else {
-				replace(element, languageId);
+				foundValidChild = true;
+
+				filterByLanguage(element, languageId, defaultLanguageId);
 			}
 
 			listIndex--;
 		}
+
+		if (!foundValidChild && defaultLanguageElement != null) {
+			root.add(defaultLanguageElement);
+			filterByLanguage(defaultLanguageElement, languageId, defaultLanguageId);
+		}
 	}
 
-	protected String replace(String xml, String languageId) {
+	protected String filterByLanguage(String xml, String languageId) {
 		if (xml == null) {
 			return xml;
 		}
@@ -108,10 +130,10 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			}
 
 			if (!supportedLocale) {
-				replace(rootElement, defaultLocale);
+				filterByLanguage(rootElement, defaultLocale, defaultLanguageId);
 			}
 			else {
-				replace(rootElement, languageId);
+				filterByLanguage(rootElement, languageId, defaultLanguageId);
 			}
 
 			xml = DDMXMLUtil.formatXML(document);

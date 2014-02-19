@@ -308,8 +308,6 @@ public class MBAttachmentsTest {
 		addMessageAttachment();
 
 		_trashMBAttachments(false);
-
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -317,8 +315,6 @@ public class MBAttachmentsTest {
 		addMessageAttachment();
 
 		_trashMBAttachments(true);
-
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	protected void addCategory() throws Exception {

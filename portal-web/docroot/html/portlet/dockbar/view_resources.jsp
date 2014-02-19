@@ -132,7 +132,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 						<aui:nav-item cssClass='<%= navItemCssClass %>'
 							data="<%= data %>"
 							href=""
-							iconCssClass='<%= displayStyle.equals("icon") ? "" : "icon-file" %>'
+							iconCssClass='<%= displayStyle.equals("list") ? "icon-file" : StringPool.BLANK %>'
 							label='<%= displayStyle.equals("list") ? title : "" %>'
 						>
 							<c:choose>

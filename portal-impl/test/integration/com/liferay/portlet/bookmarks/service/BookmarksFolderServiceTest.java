@@ -256,7 +256,7 @@ public class BookmarksFolderServiceTest {
 	}
 
 	@Test
-	public void testSubscribeFolderWithDefaultFolder() throws Exception {
+	public void testSubscribeRootFolder() throws Exception {
 		testSubscribeFolder(BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
@@ -269,7 +269,7 @@ public class BookmarksFolderServiceTest {
 	}
 
 	@Test
-	public void testUnsubscribeFolderWithDefaultFolder() throws Exception {
+	public void testUnsubscribeRootFolder() throws Exception {
 		testUnsubscribeFolder(
 			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}

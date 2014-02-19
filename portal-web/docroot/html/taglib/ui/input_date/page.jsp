@@ -26,14 +26,11 @@ if (GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-date:di
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:cssClass"));
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-date:disabled"));
 String dayParam = namespace + request.getAttribute("liferay-ui:input-date:dayParam");
-String dayParamId = namespace + request.getAttribute("liferay-ui:input-date:dayParamId");
 int dayValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-date:dayValue"));
 String monthParam = namespace + request.getAttribute("liferay-ui:input-date:monthParam");
-String monthParamId = namespace + request.getAttribute("liferay-ui:input-date:monthParamId");
 int monthValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-date:monthValue"));
-String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:name"));
+String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:name"));
 String yearParam = namespace + request.getAttribute("liferay-ui:input-date:yearParam");
-String yearParamId = namespace + request.getAttribute("liferay-ui:input-date:yearParamId");
 int yearValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-date:yearValue"));
 
 Calendar calendar = CalendarFactoryUtil.getCalendar(yearValue, monthValue, dayValue);
@@ -62,26 +59,31 @@ else {
 }
 
 Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern, locale);
+
+String dayParamId = HtmlUtil.auiCompatibleId(dayParam);
+String monthParamId = HtmlUtil.auiCompatibleId(monthParam);
+String nameId = HtmlUtil.auiCompatibleId(name);
+String yearParamId = HtmlUtil.auiCompatibleId(yearParam);
 %>
 
 <span class="lfr-input-date <%= cssClass %>" id="<%= randomNamespace %>displayDate">
 	<c:choose>
 		<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
-			<input class="input-medium" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace + name %>" name="<%= namespace + name %>" type="date" value="<%= format.format(calendar.getTime()) %>" />
+			<input class="input-medium" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= HtmlUtil.escapeAttribute(name) %>" type="date" value="<%= format.format(calendar.getTime()) %>" />
 		</c:when>
 		<c:otherwise>
-			<input class="input-medium" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace + name %>" name="<%= namespace + name %>" placeholder="<%= StringUtil.toLowerCase(simpleDateFormatPattern) %>" type="text" value="<%= format.format(calendar.getTime()) %>" />
+			<input class="input-medium" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= HtmlUtil.escapeAttribute(name) %>" placeholder="<%= StringUtil.toLowerCase(simpleDateFormatPattern) %>" type="text" value="<%= format.format(calendar.getTime()) %>" />
 		</c:otherwise>
 	</c:choose>
 
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= dayParamId %>" name="<%= dayParam %>" type="hidden" value="<%= dayValue %>" />
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= monthParamId %>" name="<%= monthParam %>" type="hidden" value="<%= monthValue %>" />
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= yearParamId %>" name="<%= yearParam %>" type="hidden" value="<%= yearValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= dayParamId %>" name="<%= HtmlUtil.escapeAttribute(dayParam) %>" type="hidden" value="<%= dayValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= monthParamId %>" name="<%= HtmlUtil.escapeAttribute(monthParam) %>" type="hidden" value="<%= monthValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= yearParamId %>" name="<%= HtmlUtil.escapeAttribute(yearParam) %>" type="hidden" value="<%= yearValue %>" />
 </span>
 
 <aui:script use='<%= "aui-datepicker" + (BrowserSnifferUtil.isMobile(request) ? "-native" : StringPool.BLANK) %>'>
 	Liferay.component(
-		'<%= namespace + name %>DatePicker',
+		'<%= nameId %>DatePicker',
 		function() {
 			var datePicker = new A.DatePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>(
 				{
@@ -97,7 +99,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 
 							container.one('#<%= dayParamId %>').attr('disabled', newVal);
 							container.one('#<%= monthParamId %>').attr('disabled', newVal);
-							container.one('#<%= namespace + name %>').attr('disabled', newVal);
+							container.one('#<%= nameId %>').attr('disabled', newVal);
 							container.one('#<%= yearParamId %>').attr('disabled', newVal);
 						},
 						selectionChange: function(event) {
@@ -117,7 +119,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 					popover: {
 						zIndex: Liferay.zIndex.TOOLTIP
 					},
-					trigger: '#<%= namespace + name %>'
+					trigger: '#<%= nameId %>'
 				}
 			);
 
@@ -133,7 +135,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 		}
 	);
 
-	Liferay.component('<%= namespace + name %>DatePicker');
+	Liferay.component('<%= nameId %>DatePicker');
 </aui:script>
 
 <%!

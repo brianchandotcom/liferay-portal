@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
  */
 public class HtmlUtil {
 
+	public static String auiCompatibleId(String html) {
+		return getHtml().auiCompatibleId(html);
+	}
+
 	/**
 	 * Escapes the text so that it is safe to use in an HTML context.
 	 *

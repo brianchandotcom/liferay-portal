@@ -1,0 +1,14 @@
+<definition>
+	<command name="tearDownPG">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<if>
+			<condition action="SODashboard#isElementPresent" locator1="//div[@id='content']//li[contains(.,'Calendar')]/a/span" />
+			<then>
+				<execute action="SODashboard#click" locator1="//div[@id='content']//li[contains(.,'Calendar')]/a/span" />
+
+				<execute macro="CalendarEvent#tearDownPG" />
+			</then>
+		</if>
+	</command>
+</definition>

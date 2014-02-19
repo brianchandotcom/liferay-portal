@@ -413,6 +413,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MY_SITES_SITE_NAME</td>
+	<td>//span[@class='site-name']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

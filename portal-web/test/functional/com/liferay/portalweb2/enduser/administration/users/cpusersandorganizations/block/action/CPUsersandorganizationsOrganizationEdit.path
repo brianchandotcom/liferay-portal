@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_ORGANIZATION_IFRAME</td>
+	<td>//iframe[@id='_125_selectOrganization_iframe_']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>
@@ -51,6 +56,47 @@
 <tr>
 	<td>ENABLE_PROPAGATION_CHECKBOX</td>
 	<td>//label[contains(.,'Enable propagation')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT_ORGANIZATION_TABLE-->
+<tr>
+	<td>SELECT_ORGANIZATION_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_organizationName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ORGANIZATION_TABLE_PARENT_ORGANIZATION</td>
+	<td>//tr[contains(.,'${key_organizationName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ORGANIZATION_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_organizationName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ORGANIZATION_TABLE_CITY</td>
+	<td>//tr[contains(.,'${key_organizationName}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ORGANIZATION_TABLE_REGION</td>
+	<td>//tr[contains(.,'${key_organizationName}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ORGANIZATION_TABLE_COUNTRY</td>
+	<td>//tr[contains(.,'${key_organizationName}')]/td[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ORGANIZATION_TABLE_CHOOSE</td>
+	<td>//tr[contains(.,'${key_organizationName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -235,10 +281,109 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--PHONE_NUMBERS-->
+<tr>
+	<td>PHONE_NUMBERS_NUMBER_FIELD</td>
+	<td>//input[@id='_125_phoneNumber0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PHONE_NUMBERS_EXTENSION_FIELD</td>
+	<td>//input[@id='_125_phoneExtension0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PHONE_NUMBERS_TYPE_SELECT</td>
+	<td>//select[@id='_125_phoneTypeId0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PHONE_NUMBERS_PRIMARY_RADIO</td>
+	<td>//input[@id='_125_phonePrimary0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADDITIONAL_EMAIL_ADDRESSES-->
+<tr>
+	<td>ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD</td>
+	<td>//input[@id='_125_emailAddressAddress0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDITIONAL_EMAIL_ADDRESSES_TYPE_SELECT</td>
+	<td>//select[@id='_125_emailAddressTypeId0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDITIONAL_EMAIL_ADDRESSES_PRIMARY_RADIO</td>
+	<td>//input[@id='_125_emailAddressPrimary0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WEBSITES-->
+<tr>
+	<td>WEBSITES_URL_FIELD</td>
+	<td>//input[@id='_125_websiteUrl0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEBSITES_TYPE_SELECT</td>
+	<td>//select[@id='_125_websiteTypeId0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEBSITES_PRIMARY_RADIO</td>
+	<td>//input[@id='_125_websitePrimary0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SERVICES-->
+<tr>
+	<td>SERVICES_TYPE_SELECT</td>
+	<td>//select[@id='_125_orgLaborTypeId0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICES_MONDAY_OPEN_SELECT</td>
+	<td>//select[@id='_125_monOpen0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICES_MONDAY_CLOSE_SELECT</td>
+	<td>//select[@id='_125_monClose0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MISCELLANEOUS-->
 <tr>
 	<td>MISCELLANEOUS_COMMENTS</td>
 	<td>//a[@id='_125_commentsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MISCELLANEOUS_REMINDER_QUERIES</td>
+	<td>//a[@id='_125_reminderQueriesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MISCELLANEOUS_CUSTOM_FIELDS</td>
+	<td>//a[@id='_125_customFieldsLink']</td>
 	<td></td>
 </tr>
 <tr>
@@ -250,6 +395,58 @@
 <tr>
 	<td>COMMENTS_FIELD</td>
 	<td>//textarea[@id='_125_comments']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REMINDER_QUERIES-->
+<tr>
+	<td>REMINDER_QUERIES_DEFAULT_LANGUAGE_FIELD</td>
+	<td>//textarea[@id='_125_reminderQueries']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDER_QUERIES_LOCALIZED_LANGUAGE_SELECT</td>
+	<td>//select[@id='_125_reminderQueryLanguageId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDER_QUERIES_TEXT_FIELD</td>
+	<td>//textarea[@id='_125_reminderQueries_temp']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CATEGORIZATION-->
+<tr>
+	<td>CATEGORIZATION_TAG</td>
+	<td>//li/span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_TAGS_FIELD</td>
+	<td>//input[@title='Add Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_TAGS_ADD_BUTTON</td>
+	<td>//button[@title='Add Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_TAGS_SELECT_BUTTON</td>
+	<td>//button[@title='Select Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_TAGS_SUGGESTIONS_BUTTON</td>
+	<td>//button[@title='Suggestions']</td>
 	<td></td>
 </tr>
 </tbody>

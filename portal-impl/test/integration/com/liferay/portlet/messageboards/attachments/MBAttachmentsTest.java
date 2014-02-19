@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -64,6 +63,7 @@ import org.junit.runner.RunWith;
 		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Transactional
 public class MBAttachmentsTest {
 
 	@Before
@@ -76,12 +76,10 @@ public class MBAttachmentsTest {
 	@After
 	public void tearDown() throws Exception {
 		_category = null;
-		_group = null;
 		_message = null;
 	}
 
 	@Test
-	@Transactional
 	public void testDeleteAttachmentsWhenDeletingMessage() throws Exception {
 		int initialFileEntriesCount =
 			DLFileEntryLocalServiceUtil.getFileEntriesCount();
@@ -106,7 +104,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testDeleteAttachmentsWhenDeletingRootMessage()
 		throws Exception {
 
@@ -127,7 +124,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingAttachmentsToSameMessage()
 		throws Exception {
 
@@ -147,7 +143,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingMessage() throws Exception {
 		int initialFoldersCount = DLFolderLocalServiceUtil.getDLFoldersCount();
 
@@ -162,7 +157,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingMessageAttachment() throws Exception {
 		int initialFoldersCount = DLFolderLocalServiceUtil.getDLFoldersCount();
 
@@ -174,7 +168,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingMessageAttachments()
 		throws Exception {
 
@@ -217,7 +210,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingRootMessage() throws Exception {
 		int initialFoldersCount = DLFolderLocalServiceUtil.getDLFoldersCount();
 
@@ -228,7 +220,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenDeletingMessageWithAttachments()
 		throws Exception {
 
@@ -254,7 +245,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenDeletingMessageWithoutAttachments()
 		throws Exception {
 
@@ -276,7 +266,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenDeletingRootMessageWithAttachments()
 		throws Exception {
 
@@ -296,7 +285,6 @@ public class MBAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenDeletingRootMessageWithoutAttachments()
 		throws Exception {
 
@@ -318,8 +306,6 @@ public class MBAttachmentsTest {
 		addMessageAttachment();
 
 		_trashMBAttachments(false);
-
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -327,8 +313,6 @@ public class MBAttachmentsTest {
 		addMessageAttachment();
 
 		_trashMBAttachments(true);
-
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	protected void addCategory() throws Exception {

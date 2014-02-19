@@ -23,9 +23,23 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 %>
 
+<portlet:renderURL var="addExportConfigurationURL">
+	<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+	<portlet:param name="redirect" value="<%= String.valueOf(privateLayout) %>" />
+	<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
+</portlet:renderURL>
+
+<aui:button href="<%= addExportConfigurationURL %>" value="new" />
+
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 	<portlet:param name="tabs2" value="new-export-process" />
+	<portlet:param name="exportNav" value="export-configurations" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

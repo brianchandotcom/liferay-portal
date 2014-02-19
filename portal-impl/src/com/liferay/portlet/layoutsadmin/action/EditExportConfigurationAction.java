@@ -60,7 +60,11 @@ public class EditExportConfigurationAction extends PortletAction {
 			long exportImportConfigurationId = ParamUtil.getLong(
 				actionRequest, "exportImportConfigurationId");
 
-			if (cmd.equals(Constants.DELETE)) {
+			if (cmd.equals(Constants.ADD)) {
+				ExportImportConfigurationHelper.
+					addExportLayoutExportImportConfiguration(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
 				ExportImportConfigurationLocalServiceUtil.
 					deleteExportImportConfiguration(
 						exportImportConfigurationId);

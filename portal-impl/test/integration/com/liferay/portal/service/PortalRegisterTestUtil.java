@@ -27,7 +27,6 @@ import com.liferay.portlet.blogs.util.BlogsIndexer;
 import com.liferay.portlet.blogs.workflow.BlogsEntryWorkflowHandler;
 import com.liferay.portlet.bookmarks.asset.BookmarksEntryAssetRendererFactory;
 import com.liferay.portlet.bookmarks.asset.BookmarksFolderAssetRendererFactory;
-import com.liferay.portlet.bookmarks.trash.BookmarksFolderTrashHandler;
 import com.liferay.portlet.bookmarks.util.BookmarksEntryIndexer;
 import com.liferay.portlet.bookmarks.util.BookmarksFolderIndexer;
 import com.liferay.portlet.directory.asset.UserAssetRendererFactory;
@@ -114,7 +113,6 @@ public class PortalRegisterTestUtil {
 	}
 
 	protected static void registerTrashHandlers() {
-		TrashHandlerRegistryUtil.register(new BookmarksFolderTrashHandler());
 		TrashHandlerRegistryUtil.register(new BlogsEntryTrashHandler());
 		TrashHandlerRegistryUtil.register(new DLFileEntryTrashHandler());
 		TrashHandlerRegistryUtil.register(new DLFileShortcutTrashHandler());

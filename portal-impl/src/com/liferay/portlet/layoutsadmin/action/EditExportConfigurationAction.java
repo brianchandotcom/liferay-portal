@@ -15,16 +15,26 @@
 package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ExportImportConfiguration;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portal.service.ExportImportConfigurationServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.sites.action.ActionUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -56,6 +66,10 @@ public class EditExportConfigurationAction extends PortletAction {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		if (Validator.isNull(cmd)) {
+			return;
+		}
+
 		try {
 			long exportImportConfigurationId = ParamUtil.getLong(
 				actionRequest, "exportImportConfigurationId");
@@ -65,9 +79,10 @@ public class EditExportConfigurationAction extends PortletAction {
 					addExportLayoutExportImportConfiguration(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				ExportImportConfigurationLocalServiceUtil.
-					deleteExportImportConfiguration(
-						exportImportConfigurationId);
+				deleteExportImportConfiguration(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteExportImportConfiguration(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.EXPORT)) {
 				ExportImportConfigurationHelper.
@@ -132,6 +147,52 @@ public class EditExportConfigurationAction extends PortletAction {
 				"/html/portlet/layouts_admin/export_layouts_processes.jsp");
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
+	}
+
+	protected void deleteExportImportConfiguration(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws PortalException, SystemException {
+
+		long[] deleteExportImportConfigurationIds = null;
+
+		long exportImportConfigurationId = ParamUtil.getLong(
+			actionRequest, "exportImportConfigurationId");
+
+		if (exportImportConfigurationId > 0) {
+			deleteExportImportConfigurationIds =
+				new long[] {exportImportConfigurationId};
+		}
+		else {
+			deleteExportImportConfigurationIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "deleteExportImportConfigurationIds"), 0L);
+		}
+
+		List<TrashedModel> trashedModels = new ArrayList<TrashedModel>();
+
+		for (long deleteExportImportConfigurationId :
+				deleteExportImportConfigurationIds) {
+
+			if (moveToTrash) {
+				ExportImportConfiguration exportImportConfiguration =
+					ExportImportConfigurationServiceUtil.
+						moveExportImportConfigurationToTrash(
+							deleteExportImportConfigurationId);
+
+				trashedModels.add(exportImportConfiguration);
+			}
+			else {
+				ExportImportConfigurationServiceUtil.
+					deleteExportImportConfiguration(
+						deleteExportImportConfigurationId);
+			}
+		}
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+
+			hideDefaultSuccessMessage(actionRequest);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

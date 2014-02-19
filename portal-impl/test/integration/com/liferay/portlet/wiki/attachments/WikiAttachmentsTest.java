@@ -53,6 +53,7 @@ import org.junit.runner.RunWith;
 		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Transactional
 public class WikiAttachmentsTest {
 
 	@Before
@@ -70,7 +71,6 @@ public class WikiAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testDeleteAttachmentsWhenDeletingWikiNode() throws Exception {
 		int initialFileEntriesCount =
 			DLFileEntryLocalServiceUtil.getFileEntriesCount();
@@ -89,7 +89,6 @@ public class WikiAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testDeleteAttachmentsWhenDeletingWikiPage() throws Exception {
 		int initialFileEntriesCount =
 			DLFileEntryLocalServiceUtil.getFileEntriesCount();
@@ -109,7 +108,6 @@ public class WikiAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingAttachmentsToSameWikiPage()
 		throws Exception {
 
@@ -129,7 +127,6 @@ public class WikiAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingWikiNode() throws Exception {
 		int initialFoldersCount = DLFolderLocalServiceUtil.getDLFoldersCount();
 
@@ -140,7 +137,6 @@ public class WikiAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingWikiPage() throws Exception {
 		int initialFoldersCount = DLFolderLocalServiceUtil.getDLFoldersCount();
 
@@ -151,7 +147,6 @@ public class WikiAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingWikiPageAttachment()
 		throws Exception {
 
@@ -165,7 +160,6 @@ public class WikiAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenAddingWikiPageAttachments()
 		throws Exception {
 
@@ -208,7 +202,6 @@ public class WikiAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenDeletingWikiNodeWithAttachments()
 		throws Exception {
 
@@ -228,7 +221,6 @@ public class WikiAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenDeletingWikiNodeWithoutAttachments()
 		throws Exception {
 
@@ -246,7 +238,6 @@ public class WikiAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenDeletingWikiPageWithAttachments()
 		throws Exception {
 
@@ -267,7 +258,6 @@ public class WikiAttachmentsTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFoldersCountWhenDeletingWikiPageWithoutAttachments()
 		throws Exception {
 

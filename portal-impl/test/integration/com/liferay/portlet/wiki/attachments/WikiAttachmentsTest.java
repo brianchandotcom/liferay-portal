@@ -65,7 +65,6 @@ public class WikiAttachmentsTest {
 
 	@After
 	public void tearDown() {
-		_group = null;
 		_node = null;
 		_page = null;
 	}

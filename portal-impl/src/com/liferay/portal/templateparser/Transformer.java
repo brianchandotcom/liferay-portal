@@ -514,14 +514,6 @@ public class Transformer {
 				data = dynamicContentElement.getText();
 			}
 
-			List<Attribute> attributes = dynamicContentElement.attributes();
-
-			Map<String, String> fieldAttributes = new HashMap<String, String>();
-
-			for (Attribute attribute : attributes) {
-				fieldAttributes.put(attribute.getName(), attribute.getValue());
-			}
-
 			String name = dynamicElementElement.attributeValue(
 				"name", StringPool.BLANK);
 
@@ -533,9 +525,15 @@ public class Transformer {
 			String type = dynamicElementElement.attributeValue(
 				"type", StringPool.BLANK);
 
+			Map<String, String> attributes = new HashMap<String, String>();
+
+			for (Attribute attribute : dynamicContentElement.attributes()) {
+				attributes.put(attribute.getName(), attribute.getValue());
+			}
+
 			TemplateNode templateNode = new TemplateNode(
 				themeDisplay, name, StringUtil.stripCDATA(data), type,
-				fieldAttributes);
+				attributes);
 
 			if (dynamicElementElement.element("dynamic-element") != null) {
 				templateNode.appendChildren(

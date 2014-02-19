@@ -333,6 +333,54 @@ create database lportal2 character set utf8;</echo>
 		<record-env-java-jdk />
 		<record-env-liferay-portal />
 		<record-env-operating-system />
+
+		<property name="file.properties">
+			<![CDATA[
+				<property name="app.server.type" value="${app.server.type}" />
+				<property name="app.server.version" value="${app.server.version}" />
+				<property name="browser.type" value="${browser.type}" />
+				<property name="browser.version" value="${browser.version}" />
+				<property name="database.type" value="${database.type}" />
+				<property name="database.version" value="${database.version}" />
+				<property name="environment.id" value="${env.key.app.server}${env.key.browser}${env.key.database}${env.key.java.jdk}${env.key.liferay.portal}${env.key.operating.system}" />
+				<property name="java.jdk.type" value="${java.jdk.type}" />
+				<property name="java.jdk.version" value="${java.jdk.version}" />
+				<property name="operating.system.type" value="${operating.system.type}" />
+				<property name="operating.system.version" value="${operating.system.version}" />
+			]]>
+		</property>
+
+		<for param="file.name">
+			<path>
+				<fileset
+					dir="portal-web/test-results/functional"
+					includes="TEST-*.xml"
+				/>
+			</path>
+			<sequential>
+				<var name="file.name" value="@{file.name}" />
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="\s*\&lt;property[^\n^\r]*[\n\r]"
+					replace=""
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					match="(&lt;properties&gt;)"
+					replace="\1${file.properties}"
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="\&gt;[\n\s]*\&lt;"
+					replace="\&gt;${line.separator}\&lt;"
+				/>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="check-config">

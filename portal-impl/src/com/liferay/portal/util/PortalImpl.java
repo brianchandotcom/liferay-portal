@@ -3501,6 +3501,8 @@ public class PortalImpl implements Portal {
 
 		String requestURI = request.getRequestURI();
 
+		requestURI = StringUtil.toLowerCase(requestURI);
+
 		if (Validator.isNotNull(contextPath) &&
 			requestURI.contains(contextPath)) {
 
@@ -3511,6 +3513,8 @@ public class PortalImpl implements Portal {
 			requestURI, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 		String path = request.getPathInfo();
+
+		path = StringUtil.toLowerCase(path);
 
 		int x = path.indexOf(CharPool.SLASH, 1);
 

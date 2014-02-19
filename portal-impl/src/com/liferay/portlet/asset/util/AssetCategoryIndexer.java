@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortletKeys;
@@ -35,7 +36,7 @@ import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryActionableDynamicQuery;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -45,9 +46,7 @@ import javax.portlet.PortletURL;
  */
 public class AssetCategoryIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {
-		AssetCategory.class.getName()
-	};
+	public static final String[] CLASS_NAMES = {AssetCategory.class.getName()};
 
 	public static final String PORTLET_ID = PortletKeys.ASSET_CATEGORIES_ADMIN;
 
@@ -82,12 +81,12 @@ public class AssetCategoryIndexer extends BaseIndexer {
 
 		long[] groupIds = searchContext.getGroupIds();
 
-		if (Validator.isNull(groupIds)) {
+		if (ArrayUtil.isEmpty(groupIds)) {
 			return;
 		}
 
 		searchQuery.addRequiredTerm(Field.GROUP_ID, groupIds[0]);
-}
+	}
 
 	@Override
 	protected void addSearchLocalizedTerm(
@@ -131,7 +130,7 @@ public class AssetCategoryIndexer extends BaseIndexer {
 		long[] vocabularyIds = (long[])searchContext.getAttribute(
 			"vocabularyIds");
 
-		if (Validator.isNull(vocabularyIds)) {
+		if (ArrayUtil.isEmpty(vocabularyIds)) {
 			return;
 		}
 
@@ -146,11 +145,12 @@ public class AssetCategoryIndexer extends BaseIndexer {
 		BooleanClauseOccur booleanClauseOccur = BooleanClauseOccur.MUST;
 
 		searchQuery.add(vocabularyQuery, booleanClauseOccur);
-}
+	}
 
 	@Override
 	protected void doDelete(Object obj) throws Exception {
 		AssetCategory assetCategory = (AssetCategory)obj;
+
 		deleteDocument(
 			assetCategory.getCompanyId(), assetCategory.getCategoryId());
 	}
@@ -162,10 +162,10 @@ public class AssetCategoryIndexer extends BaseIndexer {
 		Document document = getBaseModelDocument(PORTLET_ID, assetCategory);
 
 		document.addKeyword(Field.CATEGORY_ID, assetCategory.getCategoryId());
-		document.addText(Field.NAME, assetCategory.getName());
-		document.addLocalizedText(Field.TITLE, assetCategory.getTitleMap());
 		document.addLocalizedText(
 			Field.DESCRIPTION, assetCategory.getDescriptionMap());
+		document.addText(Field.NAME, assetCategory.getName());
+		document.addLocalizedText(Field.TITLE, assetCategory.getTitleMap());
 		document.addKeyword(VOCABULARY_ID, assetCategory.getVocabularyId());
 
 		return document;
@@ -173,9 +173,8 @@ public class AssetCategoryIndexer extends BaseIndexer {
 
 	@Override
 	protected Summary doGetSummary(
-			Document document, Locale locale, String snippet,
-				PortletURL portletURL)
-		throws Exception {
+		Document document, Locale locale, String snippet,
+		PortletURL portletURL) {
 
 		return null;
 	}
@@ -213,25 +212,27 @@ public class AssetCategoryIndexer extends BaseIndexer {
 	protected void reindexAssetCategories(long companyId)
 		throws PortalException, SystemException {
 
-		final Collection<Document> documents = new ArrayList<Document>();
+		final List<Document> documents = new ArrayList<Document>();
 
-		ActionableDynamicQuery actionalbleDynamicQuery =
+		ActionableDynamicQuery actionableDynamicQuery =
 			new AssetCategoryActionableDynamicQuery() {
 
-				@Override
-				protected void performAction(Object object)
-					throws PortalException, SystemException {
+			@Override
+			protected void performAction(Object object)
+				throws PortalException, SystemException {
 
-					AssetCategory assetCategory = (AssetCategory)object;
+				AssetCategory assetCategory = (AssetCategory)object;
 
-					Document document = getDocument(assetCategory);
-					documents.add(document);
-				}
-			};
+				Document document = getDocument(assetCategory);
 
-		actionalbleDynamicQuery.setCompanyId(companyId);
+				documents.add(document);
+			}
 
-		actionalbleDynamicQuery.performActions();
+		};
+
+		actionableDynamicQuery.setCompanyId(companyId);
+
+		actionableDynamicQuery.performActions();
 
 		SearchEngineUtil.updateDocuments(
 			getSearchEngineId(), companyId, documents);

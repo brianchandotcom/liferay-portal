@@ -926,6 +926,11 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public long getRemoteLiveGroupId() {
+		return _group.getRemoteLiveGroupId();
+	}
+
+	@Override
 	public java.lang.String getScopeDescriptiveName(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException,

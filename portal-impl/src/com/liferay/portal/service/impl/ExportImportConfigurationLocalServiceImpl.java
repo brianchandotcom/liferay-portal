@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.ExportImportConfigurationLocalServiceBaseImpl;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.io.Serializable;
 
@@ -63,6 +65,10 @@ public class ExportImportConfigurationLocalServiceImpl
 		exportImportConfiguration.setName(name);
 		exportImportConfiguration.setDescription(description);
 		exportImportConfiguration.setType(type);
+		exportImportConfiguration.setStatus(WorkflowConstants.STATUS_APPROVED);
+		exportImportConfiguration.setStatusByUserId(userId);
+		exportImportConfiguration.setStatusByUserName(user.getScreenName());
+		exportImportConfiguration.setStatusDate(now);
 
 		if (settingsMap != null) {
 			String settings = JSONFactoryUtil.serialize(settingsMap);
@@ -72,6 +78,36 @@ public class ExportImportConfigurationLocalServiceImpl
 
 		return exportImportConfigurationPersistence.update(
 			exportImportConfiguration);
+	}
+
+	@Override
+	public ExportImportConfiguration deleteExportImportConfiguration(
+			ExportImportConfiguration exportImportConfiguration)
+		throws PortalException, SystemException {
+
+		// ExportImportConfiguration
+
+		exportImportConfigurationPersistence.remove(exportImportConfiguration);
+
+		// Trash
+
+		trashEntryLocalService.deleteEntry(
+			ExportImportConfiguration.class.getName(),
+			exportImportConfiguration.getExportImportConfigurationId());
+
+		return exportImportConfiguration;
+	}
+
+	@Override
+	public ExportImportConfiguration deleteExportImportConfiguration(
+			long configurationId)
+		throws PortalException, SystemException {
+
+		ExportImportConfiguration exportImportConfiguration =
+			exportImportConfigurationPersistence.findByPrimaryKey(
+				configurationId);
+
+		return deleteExportImportConfiguration(exportImportConfiguration);
 	}
 
 	@Override
@@ -93,7 +129,8 @@ public class ExportImportConfigurationLocalServiceImpl
 			long groupId, int type)
 		throws SystemException {
 
-		return exportImportConfigurationPersistence.findByG_T(groupId, type);
+		return exportImportConfigurationPersistence.findByG_T_S(
+			groupId, type, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
@@ -102,15 +139,60 @@ public class ExportImportConfigurationLocalServiceImpl
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		return exportImportConfigurationPersistence.findByG_T(
-			groupId, type, start, end, orderByComparator);
+		return exportImportConfigurationPersistence.findByG_T_S(
+			groupId, type, WorkflowConstants.STATUS_APPROVED, start, end,
+			orderByComparator);
 	}
 
 	@Override
 	public int getExportImportConfigurationsCount(long groupId, int type)
 		throws SystemException {
 
-		return exportImportConfigurationPersistence.countByG_T(groupId, type);
+		return exportImportConfigurationPersistence.countByG_T_S(
+			groupId, type, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public ExportImportConfiguration moveExportImportConfigurationToTrash(
+			long userId, ExportImportConfiguration exportImportConfiguration)
+		throws PortalException, SystemException {
+
+		int oldStatus = exportImportConfiguration.getStatus();
+
+		exportImportConfiguration = updateStatus(
+			userId, exportImportConfiguration,
+			WorkflowConstants.STATUS_IN_TRASH);
+
+		trashEntryLocalService.addTrashEntry(
+			userId, exportImportConfiguration.getGroupId(),
+			ExportImportConfiguration.class.getName(),
+			exportImportConfiguration.getExportImportConfigurationId(), null,
+			null, oldStatus, null, null);
+
+		return exportImportConfiguration;
+	}
+
+	@Override
+	public ExportImportConfiguration restoreExportImportConfigurationFromTrash(
+			long userId, long exportImportConfigurationId)
+		throws PortalException, SystemException {
+
+		ExportImportConfiguration exportImportConfiguration =
+			exportImportConfigurationPersistence.findByPrimaryKey(
+				exportImportConfigurationId);
+
+		TrashEntry trashEntry = trashEntryLocalService.getEntry(
+			ExportImportConfiguration.class.getName(),
+			exportImportConfigurationId);
+
+		exportImportConfiguration = updateStatus(
+			userId, exportImportConfiguration, trashEntry.getStatus());
+
+		trashEntryLocalService.deleteEntry(
+			ExportImportConfiguration.class.getName(),
+			exportImportConfiguration.getExportImportConfigurationId());
+
+		return exportImportConfiguration;
 	}
 
 	@Override
@@ -137,6 +219,25 @@ public class ExportImportConfigurationLocalServiceImpl
 
 		return exportImportConfigurationPersistence.update(
 			exportImportConfiguration);
+	}
+
+	public ExportImportConfiguration updateStatus(
+			long userId, ExportImportConfiguration exportImportConfiguration,
+			int status)
+		throws PortalException, SystemException {
+
+		// ExportImportConfiguration
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		exportImportConfiguration.setStatus(status);
+		exportImportConfiguration.setStatusByUserId(userId);
+		exportImportConfiguration.setStatusByUserName(user.getScreenName());
+		exportImportConfiguration.setStatusDate(new Date());
+
+		exportImportConfigurationPersistence.update(exportImportConfiguration);
+
+		return exportImportConfiguration;
 	}
 
 }

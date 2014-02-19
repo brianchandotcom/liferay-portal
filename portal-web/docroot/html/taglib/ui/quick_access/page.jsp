@@ -44,26 +44,32 @@
 
 	<c:if test="<%= (quickAccessEntries != null) && !quickAccessEntries.isEmpty() %>">
 		<aui:script use="aui-base">
+			var callbacks = {};
+
+			<%
+			for (QuickAccessEntry quickAccessEntry : quickAccessEntries) {
+				String onClick = quickAccessEntry.getOnClick();
+
+				if (Validator.isNotNull(onClick)) {
+			%>
+
+					callbacks['<%= quickAccessEntry.getId() %>'] = function() {
+						<%= onClick %>
+					};
+
+			<%
+				}
+			}
+			%>
+
 			A.one('#quickAccessNav').delegate(
 				'click',
 				function(event) {
+					var callbackFn = callbacks[event.currentTarget.getAttribute('id')];
 
-					<%
-					for (QuickAccessEntry quickAccessEntry : quickAccessEntries) {
-						String onClick = quickAccessEntry.getOnClick();
-
-						if (Validator.isNotNull(onClick)) {
-					%>
-
-							if (event.currentTarget.getAttribute('id') === '<%= quickAccessEntry.getId() %>') {
-								<%= onClick %>
-							}
-
-					<%
-						}
+					if (A.Lang.isFunction(callbackFn)) {
+						callbackFn();
 					}
-					%>
-
 				},
 				'li a'
 			);

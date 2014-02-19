@@ -115,16 +115,46 @@ List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGro
 </c:if>
 
 <aui:script use="liferay-search-container">
+	var Util = Liferay.Util;
+
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupsSearchContainer');
 
-	searchContainer.get('contentBox').delegate(
+	var searchContainerContentBox = searchContainer.get('contentBox');
+
+	searchContainerContentBox.delegate(
 		'click',
 		function(event) {
 			var link = event.currentTarget;
+
+			var rowId = link.attr('data-rowId');
+
 			var tr = link.ancestor('tr');
 
-			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+			var selectUserGroup = Util.getWindow('<portlet:namespace />selectUserGroup');
+
+			if (selectUserGroup) {
+				var selectButton = selectUserGroup.iframe.node.get('contentWindow.document').one('.selector-button[data-usergroupid="' + rowId + '"]');
+
+				Util.toggleDisabled(selectButton, false);
+			}
+
+			searchContainer.deleteRow(tr, rowId);
 		},
 		'.modify-link'
+	);
+
+	Liferay.on(
+		'<portlet:namespace />enableRemovedUserGroups',
+		function(event) {
+			event.selectors.each(
+				function(item, index, collection) {
+					var modifyLink = searchContainerContentBox.one('.modify-link[data-rowid="' + item.attr('data-usergroupid') + '"]');
+
+					if (!modifyLink) {
+						Util.toggleDisabled(item, false);
+					}
+				}
+			);
+		}
 	);
 </aui:script>

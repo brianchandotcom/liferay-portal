@@ -1775,6 +1775,33 @@
 
 	Liferay.provide(
 		Util,
+		'selectEntityHandler',
+		function(container, selectEventName, disableButton) {
+			var openingLiferay = Util.getOpener().Liferay;
+
+			A.one(container).delegate(
+				'click',
+				function(event) {
+					var currentTarget = event.currentTarget;
+
+					if (disableButton !== false) {
+						currentTarget.attr('disabled', true);
+					}
+
+					var result = Util.getAttributes(currentTarget, 'data-');
+
+					openingLiferay.fire(selectEventName, result);
+
+					Util.getWindow().hide();
+				},
+				'.selector-button'
+			);
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		Util,
 		'selectFolder',
 		function(folderData, namespace) {
 			A.byIdNS(namespace, folderData.idString).val(folderData.idValue);

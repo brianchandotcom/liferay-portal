@@ -110,17 +110,5 @@ portletURL.setParameter("eventName", eventName);
 </aui:form>
 
 <aui:script use="aui-base">
-	var Util = Liferay.Util;
-
-	A.one('#<portlet:namespace />selectRuleGroupFm').delegate(
-		'click',
-		function(event) {
-			var result = Util.getAttributes(event.currentTarget, 'data-');
-
-			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
-
-			Util.getWindow().hide();
-		},
-		'.selector-button'
-	);
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectRuleGroupFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

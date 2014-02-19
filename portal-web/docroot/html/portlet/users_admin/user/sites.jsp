@@ -107,10 +107,12 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 	</portlet:renderURL>
 
 	<aui:script use="liferay-search-container">
+		var Util = Liferay.Util;
+
 		A.one('#<portlet:namespace />selectSiteLink').on(
 			'click',
 			function(event) {
-				Liferay.Util.selectEntity(
+				Util.selectEntity(
 					{
 						dialog: {
 							constrain: true,
@@ -139,15 +141,42 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 
 		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />groupsSearchContainer');
 
-		searchContainer.get('contentBox').delegate(
+		var searchContainerContentBox = searchContainer.get('contentBox');
+
+		searchContainerContentBox.delegate(
 			'click',
 			function(event) {
 				var link = event.currentTarget;
-				var tr = link.ancestor('tr');
 
-				searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+				var tr = link.ancestor('tr');
+				var rowId = link.attr('data-rowId');
+
+				var selectGroup = Util.getWindow('<portlet:namespace />selectGroup');
+
+				if (selectGroup) {
+					var selectButton = selectGroup.iframe.node.get('contentWindow.document').one('.selector-button[data-groupid="' + rowId + '"]');
+
+					Util.toggleDisabled(selectButton, false);
+				}
+
+				searchContainer.deleteRow(tr, rowId);
 			},
 			'.modify-link'
+		);
+
+		Liferay.on(
+			'<portlet:namespace />enableRemovedSites',
+			function(event) {
+				event.selectors.each(
+					function(item, index, collection) {
+						var modifyLink = searchContainerContentBox.one('.modify-link[data-rowid="' + item.attr('data-groupid') + '"]');
+
+						if (!modifyLink) {
+							Util.toggleDisabled(item, false);
+						}
+					}
+				);
+			}
 		);
 	</aui:script>
 </c:if>

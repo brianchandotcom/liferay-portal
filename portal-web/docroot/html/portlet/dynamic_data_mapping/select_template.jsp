@@ -117,17 +117,5 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 </aui:script>
 
 <aui:script use="aui-base">
-	var Util = Liferay.Util;
-
-	A.one('#<portlet:namespace />selectTemplateFm').delegate(
-		'click',
-		function(event) {
-			var result = Util.getAttributes(event.currentTarget, 'data-');
-
-			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
-
-			Util.getWindow().hide();
-		},
-		'.selector-button'
-	);
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectTemplateFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

@@ -45,6 +45,20 @@ import org.junit.runner.RunWith;
 @Sync
 public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		GroupLocalServiceUtil.deleteGroup(group);
+	}
+
 	@Test
 	public void testSubscriptionBaseModelWhenInContainerModel()
 		throws Exception {
@@ -226,5 +240,7 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 	protected abstract long updateEntry(long baseModelId) throws Exception;
 
 	protected static final long DEFAULT_PARENT_CONTAINER_MODEL_ID = 0;
+
+	protected Group group;
 
 }

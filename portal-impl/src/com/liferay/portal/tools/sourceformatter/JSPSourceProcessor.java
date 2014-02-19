@@ -1252,7 +1252,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		imports = JSPImportsFormatter.format(imports);
+		imports = new JSPImportsFormatter().format(imports);
 
 		String beforeImports = content.substring(0, matcher.start());
 

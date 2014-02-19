@@ -206,7 +206,7 @@ public class JavaImportsFormatterTest {
 	private void _assertFormat(String message, String original, String expected)
 		throws Exception {
 
-		String formatted = JavaImportsFormatter.format(original);
+		String formatted = new JavaImportsFormatter().format(original);
 
 		Assert.assertEquals(message, expected, formatted);
 	}

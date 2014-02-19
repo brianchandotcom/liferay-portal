@@ -19,10 +19,16 @@ import java.io.IOException;
 /**
  * @author André de Oliveira
  */
-public class JavaImportsFormatter {
+public class JavaImportsFormatter extends ImportsFormatter {
 
-	public static String format(String imports) throws IOException {
-		return ImportsFormatter.format(imports, 7);
+	public String format(String imports) throws IOException {
+		return format(imports, 7);
+	}
+
+	@Override
+	protected ImportPackage createImportPackage(String line) {
+
+		return ImportPackageFactoryUtil.create(line);
 	}
 
 }

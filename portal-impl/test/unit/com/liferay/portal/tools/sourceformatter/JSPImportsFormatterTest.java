@@ -67,7 +67,7 @@ public class JSPImportsFormatterTest {
 	private void _assertFormat(String message, String original, String expected)
 		throws Exception {
 
-		String formatted = JSPImportsFormatter.format(original);
+		String formatted = new JSPImportsFormatter().format(original);
 
 		Assert.assertEquals(message, expected, formatted);
 	}

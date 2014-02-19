@@ -27,10 +27,9 @@ import java.util.List;
 /**
  * @author André de Oliveira
  */
-public class ImportsFormatter {
+public abstract class ImportsFormatter {
 
-	public static String format(String imports, int classStartPos)
-		throws IOException {
+	public String format(String imports, int classStartPos) throws IOException {
 
 		if (imports.contains("/*") || imports.contains("*/") ||
 			imports.contains("//")) {
@@ -46,7 +45,7 @@ public class ImportsFormatter {
 		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			ImportPackage importPackage = ImportPackageFactoryUtil.create(line);
+			ImportPackage importPackage = createImportPackage(line);
 
 			if ((importPackage != null) &&
 				!importPackages.contains(importPackage)) {
@@ -88,5 +87,7 @@ public class ImportsFormatter {
 
 		return sb.toString();
 	}
+
+	protected abstract ImportPackage createImportPackage(String line);
 
 }

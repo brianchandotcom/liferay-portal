@@ -168,7 +168,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		imports = JavaImportsFormatter.format(sb.toString());
+		imports = new JavaImportsFormatter().format(sb.toString());
 
 		content =
 			content.substring(0, matcher.start()) + imports +

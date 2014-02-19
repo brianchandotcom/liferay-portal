@@ -45,12 +45,32 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 	public Map<String, String> getReferenceAttributes(
 		PortletDataContext portletDataContext, T stagedModel);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #importMissingReference(PortletDataContext, Element)}
+	 */
+	@Deprecated
 	public void importCompanyStagedModel(
 			PortletDataContext portletDataContext, Element element)
 		throws PortletDataException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #importMissingReference(PortletDataContext, String, long,
+	 *             long)}
+	 */
+	@Deprecated
 	public void importCompanyStagedModel(
 			PortletDataContext portletDataContext, String uuid, long classPK)
+		throws PortletDataException;
+
+	public void importMissingReference(
+			PortletDataContext portletDataContext, Element referenceElement)
+		throws PortletDataException;
+
+	public void importMissingReference(
+			PortletDataContext portletDataContext, String uuid,
+			long liveGroupId, long classPK)
 		throws PortletDataException;
 
 	public void importStagedModel(

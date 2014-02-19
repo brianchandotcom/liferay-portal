@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.TypedModel;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -64,34 +63,23 @@ public class StagedModelDataHandlerUtil {
 			T stagedModel)
 		throws PortletDataException {
 
-		Element referenceElement = null;
-
 		Portlet referrerPortlet = PortletLocalServiceUtil.getPortletById(
 			referrerPortletId);
 
-		if (stagedModel instanceof StagedGroupedModel) {
-			StagedGroupedModel stagedGroupedModel =
-				(StagedGroupedModel)stagedModel;
+		if (!ExportImportHelperUtil.isReferenceWithinExportScope(
+				portletDataContext, stagedModel)) {
 
-			if (portletDataContext.isCompanyStagedGroupedModel(
-					stagedGroupedModel)) {
-
-				referenceElement = portletDataContext.addReferenceElement(
-					referrerPortlet,
-					portletDataContext.getExportDataRootElement(), stagedModel,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-
-				return referenceElement;
-			}
+			return portletDataContext.addReferenceElement(
+				referrerPortlet, portletDataContext.getExportDataRootElement(),
+				stagedModel, PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
+				true);
 		}
 
 		exportStagedModel(portletDataContext, stagedModel);
 
-		referenceElement = portletDataContext.addReferenceElement(
+		return portletDataContext.addReferenceElement(
 			referrerPortlet, portletDataContext.getExportDataRootElement(),
 			stagedModel, PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
-
-		return referenceElement;
 	}
 
 	/**
@@ -139,31 +127,19 @@ public class StagedModelDataHandlerUtil {
 		Element referrerStagedModelElement =
 			portletDataContext.getExportDataElement(referrerStagedModel);
 
-		Element referenceElement = null;
+		if (!ExportImportHelperUtil.isReferenceWithinExportScope(
+				portletDataContext, stagedModel)) {
 
-		if (stagedModel instanceof StagedGroupedModel) {
-			StagedGroupedModel stagedGroupedModel =
-				(StagedGroupedModel)stagedModel;
-
-			if (portletDataContext.isCompanyStagedGroupedModel(
-					stagedGroupedModel)) {
-
-				referenceElement = portletDataContext.addReferenceElement(
-					referrerStagedModel, referrerStagedModelElement,
-					stagedModel, PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-					true);
-
-				return referenceElement;
-			}
+			return portletDataContext.addReferenceElement(
+				referrerStagedModel, referrerStagedModelElement, stagedModel,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 		}
 
 		exportStagedModel(portletDataContext, stagedModel);
 
-		referenceElement = portletDataContext.addReferenceElement(
+		return portletDataContext.addReferenceElement(
 			referrerStagedModel, referrerStagedModelElement, stagedModel,
 			referenceType, false);
-
-		return referenceElement;
 	}
 
 	public static <T extends StagedModel> void exportStagedModel(

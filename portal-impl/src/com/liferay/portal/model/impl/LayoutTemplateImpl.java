@@ -14,12 +14,16 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.Plugin;
@@ -29,6 +33,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
@@ -110,12 +115,19 @@ public class LayoutTemplateImpl
 
 	@Override
 	public String getName() {
-		if (Validator.isNull(_name)) {
-			return _layoutTemplateId;
-		}
-		else {
+		return getName(LocaleUtil.getDefault());
+	}
+
+	@Override
+	public String getName(Locale locale) {
+		if (Validator.isNotNull(_name)) {
 			return _name;
 		}
+
+		String layoutTemplateId = StringUtil.replace(
+			_layoutTemplateId, CharPool.UNDERLINE, CharPool.DASH);
+
+		return LanguageUtil.get(locale, layoutTemplateId);
 	}
 
 	@Override

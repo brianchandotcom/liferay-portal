@@ -64,7 +64,6 @@ public class WikiAttachmentsTest {
 
 	@After
 	public void tearDown() {
-		_group = null;
 		_node = null;
 		_page = null;
 	}
@@ -290,8 +289,6 @@ public class WikiAttachmentsTest {
 		addWikiPage();
 
 		_trashWikiAttachments(false);
-
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -299,8 +296,6 @@ public class WikiAttachmentsTest {
 		addWikiPage();
 
 		_trashWikiAttachments(true);
-
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	protected void addWikiNode() throws Exception {

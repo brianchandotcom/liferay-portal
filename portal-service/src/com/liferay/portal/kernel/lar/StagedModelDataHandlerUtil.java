@@ -186,18 +186,15 @@ public class StagedModelDataHandlerUtil {
 			return;
 		}
 
-		long groupId = GetterUtil.getLong(
-			referenceElement.attributeValue("group-id"));
+		boolean missing = GetterUtil.getBoolean(
+			referenceElement.attributeValue("missing"));
 
-		if ((portletDataContext.getSourceCompanyGroupId() == groupId) &&
-			(portletDataContext.getGroupId() !=
-				portletDataContext.getCompanyGroupId())) {
-
+		if (missing) {
 			StagedModelDataHandler<?> stagedModelDataHandler =
 				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 					stagedModelClass.getName());
 
-			stagedModelDataHandler.importCompanyStagedModel(
+			stagedModelDataHandler.importMissingReference(
 				portletDataContext, referenceElement);
 
 			return;
@@ -233,18 +230,15 @@ public class StagedModelDataHandlerUtil {
 				continue;
 			}
 
-			long groupId = GetterUtil.getLong(
-				referenceElement.attributeValue("group-id"));
+			boolean missing = GetterUtil.getBoolean(
+				referenceElement.attributeValue("missing"));
 
-			if ((portletDataContext.getSourceCompanyGroupId() == groupId) &&
-				(portletDataContext.getGroupId() !=
-					portletDataContext.getCompanyGroupId())) {
-
+			if (missing) {
 				StagedModelDataHandler<?> stagedModelDataHandler =
 					StagedModelDataHandlerRegistryUtil.
 						getStagedModelDataHandler(stagedModelClass.getName());
 
-				stagedModelDataHandler.importCompanyStagedModel(
+				stagedModelDataHandler.importMissingReference(
 					portletDataContext, referenceElement);
 
 				continue;
@@ -253,8 +247,12 @@ public class StagedModelDataHandlerUtil {
 			long classPK = GetterUtil.getLong(
 				referenceElement.attributeValue("class-pk"));
 
+			long groupId = GetterUtil.getLong(
+				referenceElement.attributeValue("group-id"),
+				portletDataContext.getSourceGroupId());
+
 			String stagedModelPath = ExportImportPathUtil.getModelPath(
-				portletDataContext, stagedModelClass.getName(), classPK);
+				groupId, stagedModelClass.getName(), classPK);
 
 			StagedModel stagedModel =
 				(StagedModel)portletDataContext.getZipEntryAsObject(

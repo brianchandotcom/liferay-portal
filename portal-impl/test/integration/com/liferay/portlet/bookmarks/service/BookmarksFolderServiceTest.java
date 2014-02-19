@@ -480,7 +480,7 @@ public class BookmarksFolderServiceTest {
 					BookmarksFolder.class.getName()) &&
 				(subscription.getClassPK() == expectedSubscriptionClassPK)) {
 
-				Assert.fail("A susbcription exist for folder");
+				Assert.fail("A subscription exist for folder");
 			}
 		}
 	}

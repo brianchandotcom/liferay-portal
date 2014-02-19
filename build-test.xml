@@ -27,6 +27,8 @@
 
 	<propertycopy from="java.jdk.${java.jdk.type}.version" name="java.jdk.version" />
 
+	<propertycopy from="liferay.portal.${liferay.portal.branch}.bundle" name="liferay.portal.bundle" />
+
 	<propertycopy from="operating.system.${operating.system.type}.version" name="operating.system.version" />
 
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
@@ -111,6 +113,16 @@
 			<propertycopy
 				from="env.key.java.jdk.${java.jdk.type}.${java.jdk.version}"
 				name="env.key.java.jdk"
+				override="true"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="record-env-liferay-portal">
+		<sequential>
+			<propertycopy
+				from="env.key.liferay.portal.${liferay.portal.branch}.${liferay.portal.bundle}"
+				name="env.key.liferay.portal"
 				override="true"
 			/>
 		</sequential>
@@ -272,6 +284,7 @@ create database lportal2 character set utf8;</echo>
 		<record-env-browser />
 		<record-env-database />
 		<record-env-java-jdk />
+		<record-env-liferay-portal />
 		<record-env-operating-system />
 	</target>
 

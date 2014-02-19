@@ -80,6 +80,7 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
@@ -720,6 +721,53 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		return TempFileUtil.getTempFile(
 			groupId, userId, tempFileEntryNames[0], folderName);
+	}
+
+	@Override
+	public boolean isReferenceWithinExportScope(
+		PortletDataContext portletDataContext, StagedModel stagedModel) {
+
+		if (!(stagedModel instanceof StagedGroupedModel)) {
+			return true;
+		}
+
+		StagedGroupedModel stagedGroupedModel = (StagedGroupedModel)stagedModel;
+
+		if (portletDataContext.getGroupId() ==
+				stagedGroupedModel.getGroupId()) {
+
+			return true;
+		}
+
+		Group group = null;
+
+		try {
+			group = GroupLocalServiceUtil.getGroup(
+				stagedGroupedModel.getGroupId());
+		}
+		catch (Exception e) {
+			return false;
+		}
+
+		String className = group.getClassName();
+
+		if (className.equals(Layout.class.getName())) {
+			Layout scopeLayout = null;
+
+			try {
+				scopeLayout = LayoutLocalServiceUtil.getLayout(
+					group.getClassPK());
+			}
+			catch (Exception e) {
+				return false;
+			}
+
+			if (scopeLayout.getGroupId() == portletDataContext.getGroupId()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

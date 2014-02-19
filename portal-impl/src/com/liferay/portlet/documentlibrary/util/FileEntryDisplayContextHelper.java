@@ -147,7 +147,7 @@ public class FileEntryDisplayContextHelper {
 		return _draft;
 	}
 
-	public boolean isFileEntryLockedByMe() {
+	public boolean isLockedByMe() {
 		if (hasLock()) {
 			return true;
 		}

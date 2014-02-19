@@ -94,7 +94,7 @@ public class FileEntryDisplayContext {
 
 		if ((_fileEntryDisplayContextHelper.hasUpdatePermission() &&
 			 _fileEntryDisplayContextHelper.isCheckedOut() &&
-			 _fileEntryDisplayContextHelper.isFileEntryLockedByMe()) ||
+			 _fileEntryDisplayContextHelper.isLockedByMe()) ||
 			(_fileEntryDisplayContextHelper.isCheckedOut() &&
 			 _fileEntryDisplayContextHelper.hasOverrideCheckoutPermission())) {
 
@@ -112,7 +112,7 @@ public class FileEntryDisplayContext {
 		throws PortalException, SystemException {
 
 		if (_fileEntryDisplayContextHelper.hasUpdatePermission() &&
-			_fileEntryDisplayContextHelper.isFileEntryLockedByMe()) {
+			_fileEntryDisplayContextHelper.isLockedByMe()) {
 
 			return true;
 		}
@@ -216,7 +216,7 @@ public class FileEntryDisplayContext {
 
 	public boolean isPublishButtonDisabled() {
 		if ((_fileEntryDisplayContextHelper.isCheckedOut() &&
-			 !_fileEntryDisplayContextHelper.isFileEntryLockedByMe()) ||
+			 !_fileEntryDisplayContextHelper.isLockedByMe()) ||
 			(_fileEntryDisplayContextHelper.isPending() &&
 			 _isDLFileEntryDraftsEnabled())) {
 
@@ -232,7 +232,7 @@ public class FileEntryDisplayContext {
 
 	public boolean isSaveButtonDisabled() {
 		if (_fileEntryDisplayContextHelper.isCheckedOut() &&
-			!_fileEntryDisplayContextHelper.isFileEntryLockedByMe()) {
+			!_fileEntryDisplayContextHelper.isLockedByMe()) {
 
 			return true;
 		}
@@ -262,7 +262,7 @@ public class FileEntryDisplayContext {
 
 	private boolean _isFileEntryCheckedOutByOther() {
 		if (_fileEntryDisplayContextHelper.isCheckedOut() &&
-			!_fileEntryDisplayContextHelper.isFileEntryLockedByMe()) {
+			!_fileEntryDisplayContextHelper.isLockedByMe()) {
 
 			return true;
 		}

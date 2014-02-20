@@ -284,6 +284,11 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #releaseSearcher(long, IndexSearcher)}
+	 */
+	@Deprecated
 	@Override
 	public void cleanUp(IndexSearcher indexSearcher) {
 		if (indexSearcher == null) {
@@ -527,6 +532,11 @@ public class LuceneHelperImpl implements LuceneHelper {
 		return indexAccessor.aquireIndexSearcher();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *				#getSearcher(long)}
+	 */
+	@Deprecated
 	@Override
 	public IndexSearcher getSearcher(long companyId, boolean readOnly)
 		throws IOException {

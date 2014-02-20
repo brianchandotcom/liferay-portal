@@ -283,6 +283,11 @@ public class LuceneHelperUtil {
 		getLuceneHelper().addTerm(booleanQuery, field, values, like);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #releaseSearcher(long, IndexSearcher)}
+	 */
+	@Deprecated
 	public static void cleanUp(IndexSearcher indexSearcher) {
 		getLuceneHelper().cleanUp(indexSearcher);
 	}
@@ -339,6 +344,11 @@ public class LuceneHelperUtil {
 		return getLuceneHelper().getSearcher(companyId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *				#getSearcher(long)}
+	 */
+	@Deprecated
 	public static IndexSearcher getSearcher(long companyId, boolean readOnly)
 		throws IOException {
 

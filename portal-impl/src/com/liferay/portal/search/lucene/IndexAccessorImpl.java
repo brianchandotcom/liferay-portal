@@ -152,7 +152,13 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 	@Override
 	public void dumpIndex(OutputStream outputStream) throws IOException {
-		_dumpIndexDeletionPolicy.dump(outputStream, _indexWriter, _commitLock);
+		try {
+			_dumpIndexDeletionPolicy.dump(
+				outputStream, _indexWriter, _commitLock);
+		}
+		finally {
+			_indexSearcherManager.invalid();
+		}
 	}
 
 	@Override
@@ -285,7 +291,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 		try {
 			_indexWriter.deleteAll();
 
-			_indexWriter.commit();
+			_doCommit();
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -325,9 +331,9 @@ public class IndexAccessorImpl implements IndexAccessor {
 			}
 			finally {
 				_commitLock.unlock();
-			}
 
-			_indexSearcherManager.invalid();
+				_indexSearcherManager.invalid();
+			}
 		}
 
 		_batchCount = 0;

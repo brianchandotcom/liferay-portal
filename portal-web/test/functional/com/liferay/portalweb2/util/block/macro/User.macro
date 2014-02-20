@@ -488,7 +488,7 @@
 		<if>
 			<equals arg1="${userBasicSearch}" arg2="Basic" />
 			<then>
-				<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="user*" />
+				<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${userScreenName}" />
 				<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 
 				<var name="key_userScreenName" value="${userScreenName}" />
@@ -499,7 +499,7 @@
 
 				<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="user1*" />
 				<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-				<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />
+				<execute action="CPUsersandorganizations#assertTextPresent" locator-key1="INFO_MESSAGE" value1="No users were found." />
 			</then>
 			<elseif>
 				<equals arg1="${userBasicSearch}" arg2="Full Name" />

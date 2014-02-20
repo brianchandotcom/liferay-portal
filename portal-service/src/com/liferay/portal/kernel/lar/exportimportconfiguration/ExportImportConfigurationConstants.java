@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.lar.exportimportconfiguration;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Daniel Kocsis
  */
@@ -42,5 +44,26 @@ public class ExportImportConfigurationConstants {
 
 	public static final String TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE_LABEL =
 		"scheduled-publish-layout-remote";
+
+	public static String getTypeLabel(int type) {
+		if (type == TYPE_EXPORT_LAYOUT) {
+			return TYPE_EXPORT_LAYOUT_LABEL;
+		}
+		else if (type == TYPE_PUBLISH_LAYOUT_LOCAL) {
+			return TYPE_PUBLISH_LAYOUT_LOCAL_LABEL;
+		}
+		else if (type == TYPE_PUBLISH_LAYOUT_REMOTE) {
+			return TYPE_PUBLISH_LAYOUT_REMOTE_LABEL;
+		}
+		else if (type == TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL) {
+			return TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL_LABEL;
+		}
+		else if (type == TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE) {
+			return TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE_LABEL;
+		}
+		else {
+			return StringPool.BLANK;
+		}
+	}
 
 }

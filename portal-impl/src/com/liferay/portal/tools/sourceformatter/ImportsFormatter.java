@@ -58,21 +58,17 @@ public abstract class ImportsFormatter {
 
 		StringBundler sb = new StringBundler(3 * importPackages.size());
 
-		String temp = null;
+		ImportPackage temp = null;
 
-		for (int i = 0; i < importPackages.size(); i++) {
-			ImportPackage importPackage = importPackages.get(i);
-
-			String packageLevel = importPackage.getPackageLevel();
-
-			if ((i != 0) && !packageLevel.equals(temp)) {
+		for (ImportPackage importPackage : importPackages) {
+			if (!importPackage.isGroupedWith(temp)) {
 				sb.append("\n");
 			}
 
-			temp = packageLevel;
-
 			sb.append(importPackage.getLine());
 			sb.append("\n");
+
+			temp = importPackage;
 		}
 
 		return sb.toString();

@@ -68,6 +68,17 @@ public class ImportPackage implements Comparable<ImportPackage> {
 		return _import.hashCode();
 	}
 
+	public boolean isGroupedWith(ImportPackage previous) {
+
+		// First import is "grouped" (i.e., should not have a break before it)
+
+		if (previous == null) {
+			return true;
+		}
+
+		return getPackageLevel().equals(previous.getPackageLevel());
+	}
+
 	protected ImportPackage(String importString, boolean isStatic, String line)
 	{
 		_import = importString;

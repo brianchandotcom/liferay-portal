@@ -521,6 +521,13 @@ public class LuceneHelperImpl implements LuceneHelper {
 	}
 
 	@Override
+	public IndexSearcher getSearcher(long companyId) throws IOException {
+		IndexAccessor indexAccessor = getIndexAccessor(companyId);
+
+		return indexAccessor.aquireIndexSearcher();
+	}
+
+	@Override
 	public IndexSearcher getSearcher(long companyId, boolean readOnly)
 		throws IOException {
 
@@ -645,6 +652,15 @@ public class LuceneHelperImpl implements LuceneHelper {
 		long localLastGeneration = getLastGeneration(companyId);
 
 		_loadIndexFromCluster(indexAccessor, localLastGeneration);
+	}
+
+	@Override
+	public void releaseSearcher(long companyId, IndexSearcher indexSearcher)
+		throws IOException {
+
+		IndexAccessor indexAccessor = getIndexAccessor(companyId);
+
+		indexAccessor.releaseIndexSearcher(indexSearcher);
 	}
 
 	public void setAnalyzer(Analyzer analyzer) {

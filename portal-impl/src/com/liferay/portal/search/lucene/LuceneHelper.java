@@ -106,6 +106,8 @@ public interface LuceneHelper {
 
 	public Set<String> getQueryTerms(Query query);
 
+	public IndexSearcher getSearcher(long companyId) throws IOException;
+
 	public IndexSearcher getSearcher(long companyId, boolean readOnly)
 		throws IOException;
 
@@ -122,6 +124,9 @@ public interface LuceneHelper {
 		throws IOException;
 
 	public void loadIndexesFromCluster(long companyId) throws SystemException;
+
+	public void releaseSearcher(long companyId, IndexSearcher indexSearcher)
+		throws IOException;
 
 	public void shutdown();
 

@@ -335,6 +335,10 @@ public class LuceneHelperUtil {
 		return getLuceneHelper().getQueryTerms(query);
 	}
 
+	public static IndexSearcher getSearcher(long companyId) throws IOException {
+		return getLuceneHelper().getSearcher(companyId);
+	}
+
 	public static IndexSearcher getSearcher(long companyId, boolean readOnly)
 		throws IOException {
 
@@ -385,6 +389,13 @@ public class LuceneHelperUtil {
 		throws SystemException {
 
 		getLuceneHelper().loadIndexesFromCluster(companyId);
+	}
+
+	public static void releaseSearcher(
+			long companyId, IndexSearcher indexSearcher)
+		throws IOException {
+
+		getLuceneHelper().releaseSearcher(companyId, indexSearcher);
 	}
 
 	public static void shutdown() {

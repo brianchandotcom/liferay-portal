@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.lucene;
 
+import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
@@ -34,9 +35,12 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -56,6 +60,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.store.AlreadyClosedException;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.MMapDirectory;
@@ -106,12 +111,18 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	@Override
+	public IndexSearcher aquireIndexSearcher() {
+		return _indexSearcherManager.aquire();
+	}
+
+	@Override
 	public void close() {
 		if (SPIUtil.isSPI()) {
 			return;
 		}
 
 		try {
+			_indexSearcherManager.close();
 			_indexWriter.close();
 		}
 		catch (Exception e) {
@@ -227,6 +238,13 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	@Override
+	public void releaseIndexSearcher(IndexSearcher indexSearcher)
+		throws IOException {
+
+		_indexSearcherManager.release(indexSearcher);
+	}
+
+	@Override
 	public void updateDocument(Term term, Document document)
 		throws IOException {
 
@@ -273,6 +291,8 @@ public class IndexAccessorImpl implements IndexAccessor {
 			_indexWriter.deleteAll();
 
 			_indexWriter.commit();
+
+			_indexSearcherManager.maybeReopen();
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -309,6 +329,10 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 			try {
 				_indexWriter.commit();
+
+				if (_indexSearcherManager != null) {
+					_indexSearcherManager.maybeReopen();
+				}
 			}
 			finally {
 				_commitLock.unlock();
@@ -459,6 +483,9 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 				_doCommit();
 			}
+
+			_indexSearcherManager = new IndexSearcherManager(
+				_indexWriter, true);
 		}
 		catch (Exception e) {
 			_log.error(
@@ -495,8 +522,139 @@ public class IndexAccessorImpl implements IndexAccessor {
 	private long _companyId;
 	private DumpIndexDeletionPolicy _dumpIndexDeletionPolicy =
 		new DumpIndexDeletionPolicy();
+	private IndexSearcherManager _indexSearcherManager;
 	private IndexWriter _indexWriter;
 	private Map<String, Directory> _ramDirectories =
 		new ConcurrentHashMap<String, Directory>();
+
+	private class IndexSearcherManager {
+
+		public IndexSearcherManager(IndexWriter writer, boolean applyAllDeletes)
+			throws IOException {
+
+			IndexReader indexReader = IndexReader.open(writer, applyAllDeletes);
+
+			IndexSearcher indexSearcher = new IndexSearcher(
+				indexReader, _executorService);
+
+			_initIndexSearcher(indexSearcher);
+
+			_indexSearcherAtomicReference.set(indexSearcher);
+		}
+
+		public IndexSearcher aquire() {
+			int count = 10;
+
+			do {
+				IndexSearcher indexSearcher =
+					_indexSearcherAtomicReference.get();
+
+				if (indexSearcher == null) {
+					throw new AlreadyClosedException(
+						"This SearcherManager is closed");
+				}
+
+				IndexReader indexReader = indexSearcher.getIndexReader();
+
+				if (indexReader.tryIncRef()) {
+					return indexSearcher;
+				}
+
+				count--;
+			}
+			while (count > 0);
+
+			throw new IllegalStateException("Unable to get IndexSearcher.");
+		}
+
+		public void close() throws IOException {
+			IndexSearcher indexSearcher =
+				_indexSearcherAtomicReference.getAndSet(null);
+
+			if (indexSearcher == null) {
+				return;
+			}
+
+			release(indexSearcher);
+
+			PortalExecutorManagerUtil.shutdown(
+				_LUCENE_SEARCHER_MANAGER_THREAD_POOL);
+		}
+
+		public void maybeReopen() throws IOException {
+			IndexSearcher indexSearcher = _indexSearcherAtomicReference.get();
+
+			if (indexSearcher == null) {
+				throw new AlreadyClosedException(
+					"This SearcherManager is closed");
+			}
+
+			// Reopen IndexReader is costly
+
+			if (!_reopenLock.tryAcquire()) {
+				return;
+			}
+
+			try {
+				IndexReader indexReader = indexSearcher.getIndexReader();
+
+				IndexReader newIndexReader = IndexReader.openIfChanged(
+					indexReader);
+
+				if (newIndexReader == null) {
+					return;
+				}
+
+				IndexSearcher newIndexSearcher = new IndexSearcher(
+					newIndexReader, _executorService);
+
+				_initIndexSearcher(newIndexSearcher);
+
+				boolean success = false;
+
+				try {
+					success = _indexSearcherAtomicReference.compareAndSet(
+						indexSearcher, newIndexSearcher);
+				}
+				finally {
+					if (success) {
+						release(indexSearcher);
+					}
+					else {
+						release(newIndexSearcher);
+					}
+				}
+			}
+			finally {
+				_reopenLock.release();
+			}
+		}
+
+		public void release(IndexSearcher indexSearcher) throws IOException {
+			if (indexSearcher == null) {
+				return;
+			}
+
+			IndexReader indexReader = indexSearcher.getIndexReader();
+
+			indexReader.decRef();
+		}
+
+		private void _initIndexSearcher(IndexSearcher indexSearcher) {
+			indexSearcher.setDefaultFieldSortScoring(true, false);
+			indexSearcher.setSimilarity(new FieldWeightSimilarity());
+		}
+
+		private static final String _LUCENE_SEARCHER_MANAGER_THREAD_POOL =
+			"LUCENE_SEARCHER_MANAGER_THREAD_POOL";
+
+		private ExecutorService _executorService =
+			PortalExecutorManagerUtil.getPortalExecutor(
+				_LUCENE_SEARCHER_MANAGER_THREAD_POOL);
+		private AtomicReference<IndexSearcher> _indexSearcherAtomicReference =
+			new AtomicReference<IndexSearcher>();
+		private Semaphore _reopenLock = new Semaphore(1);
+
+	}
 
 }

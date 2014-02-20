@@ -22,6 +22,7 @@ import java.util.Collection;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
 
 /**
@@ -35,6 +36,8 @@ public interface IndexAccessor {
 	public void addDocument(Document document) throws IOException;
 
 	public void addDocuments(Collection<Document> documents) throws IOException;
+
+	public IndexSearcher aquireIndexSearcher();
 
 	public void close();
 
@@ -51,6 +54,9 @@ public interface IndexAccessor {
 	public Directory getLuceneDir();
 
 	public void loadIndex(InputStream inputStream) throws IOException;
+
+	public void releaseIndexSearcher(IndexSearcher indexSearcher)
+		throws IOException;
 
 	public void updateDocument(Term term, Document document) throws IOException;
 

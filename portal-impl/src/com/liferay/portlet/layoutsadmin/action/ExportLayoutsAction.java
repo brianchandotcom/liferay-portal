@@ -105,16 +105,13 @@ public class ExportLayoutsAction extends PortletAction {
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
-			if (e instanceof LARFileNameException) {
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
+			SessionErrors.add(actionRequest, e.getClass());
+
+			if (!(e instanceof LARFileNameException)) {
 				_log.error(e, e);
 
-				SessionErrors.add(actionRequest, e.getClass());
-
 				String pagesRedirect = ParamUtil.getString(
-						actionRequest, "pagesRedirect");
+					actionRequest, "pagesRedirect");
 
 				sendRedirect(actionRequest, actionResponse, pagesRedirect);
 			}

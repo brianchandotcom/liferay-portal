@@ -15,7 +15,6 @@
 package com.liferay.portal.tools.sourceformatter;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -23,7 +22,6 @@ import org.junit.Test;
  */
 public class JavaImportsFormatterTest {
 
-	@Ignore("Needs LPS-43888 fix")
 	@Test
 	public void testAlphabeticalOrderVersusImportStatic() throws Exception {
 		String original =
@@ -85,7 +83,6 @@ public class JavaImportsFormatterTest {
 			expected);
 	}
 
-	@Ignore("Needs LPS-43888 fix")
 	@Test
 	public void testMixedIntentsMultiplePackages() throws Exception {
 		String original =
@@ -116,7 +113,6 @@ public class JavaImportsFormatterTest {
 			original, expected);
 	}
 
-	@Ignore("Needs LPS-43888 fix")
 	@Test
 	public void testMixedIntentsSinglePackage() throws Exception {
 		String original =
@@ -138,7 +134,6 @@ public class JavaImportsFormatterTest {
 			"even when everything is in the same package", original, expected);
 	}
 
-	@Ignore("Needs LPS-43888 fix")
 	@Test
 	public void testMultipleStaticImports() throws Exception {
 		String original =
@@ -169,7 +164,6 @@ public class JavaImportsFormatterTest {
 		_assertFormat("multiple imports are sorted", original, expected);
 	}
 
-	@Ignore("Needs LPS-43888 fix")
 	@Test
 	public void testSortingOfStaticImports() throws Exception {
 		String original =

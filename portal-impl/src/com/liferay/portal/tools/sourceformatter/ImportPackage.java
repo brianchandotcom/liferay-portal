@@ -20,8 +20,13 @@ package com.liferay.portal.tools.sourceformatter;
 public class ImportPackage implements Comparable<ImportPackage> {
 
 	@Override
-	public int compareTo(ImportPackage importPackage) {
-		return _import.compareTo(importPackage._import);
+	public int compareTo(ImportPackage other) {
+
+		if (_static != other._static) {
+			return _static ? -1 : 1;
+		}
+
+		return _import.compareTo(other._import);
 	}
 
 	@Override
@@ -76,7 +81,8 @@ public class ImportPackage implements Comparable<ImportPackage> {
 			return true;
 		}
 
-		return getPackageLevel().equals(previous.getPackageLevel());
+		return (_static == previous._static) &&
+			getPackageLevel().equals(previous.getPackageLevel());
 	}
 
 	protected ImportPackage(String importString, boolean isStatic, String line)

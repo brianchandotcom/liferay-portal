@@ -33,16 +33,16 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera
  */
-public class FileEntryDisplayContext {
+public class DLActionsDisplayContext {
 
-	public FileEntryDisplayContext(
+	public DLActionsDisplayContext(
 			HttpServletRequest request, FileEntry fileEntry)
 		throws PortalException, SystemException {
 
 		this(request, fileEntry, fileEntry.getFileVersion());
 	}
 
-	public FileEntryDisplayContext(
+	public DLActionsDisplayContext(
 			HttpServletRequest request, FileEntry fileEntry,
 			FileVersion fileVersion)
 		throws PortalException, SystemException {
@@ -59,7 +59,7 @@ public class FileEntryDisplayContext {
 		_portletDisplay = themeDisplay.getPortletDisplay();
 		_scopeGroupId = themeDisplay.getScopeGroupId();
 
-		_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
+		_fileEntryDisplayContextHelper = new DLActionsDisplayContextHelper(
 			_permissionChecker, fileEntry, fileVersion);
 	}
 
@@ -322,7 +322,7 @@ public class FileEntryDisplayContext {
 	}
 
 	private long _companyId;
-	private FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
+	private DLActionsDisplayContextHelper _fileEntryDisplayContextHelper;
 	private long _fileEntryTypeId;
 	private long _folderId;
 	private Boolean _ieOnWin32;

@@ -97,7 +97,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryC
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
-FileEntryDisplayContext fileEntryDisplayContext = new FileEntryDisplayContext(request, fileEntry, fileVersion);
+DLActionsDisplayContext fileEntryDisplayContext = new DLActionsDisplayContext(request, fileEntry, fileVersion);
 %>
 
 <portlet:actionURL var="editFileEntry">

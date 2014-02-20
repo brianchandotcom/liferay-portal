@@ -155,10 +155,11 @@ String responseContentType = renderRequestImpl.getResponseContentType();
 
 String currentURL = PortalUtil.getCurrentURL(request);
 
+String portletResource = StringPool.BLANK;
 Portlet portletResourcePortlet = null;
 
 if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	String portletResource = ParamUtil.getString(request, "portletResource");
+	portletResource = ParamUtil.getString(request, "portletResource");
 
 	if (Validator.isNull(portletResource)) {
 		portletResource = ParamUtil.getString(renderRequestImpl, "portletResource");
@@ -347,6 +348,7 @@ portletDisplay.setModePrint(modePrint);
 portletDisplay.setModeView(portletMode.equals(PortletMode.VIEW));
 portletDisplay.setNamespace(PortalUtil.getPortletNamespace(portletId));
 portletDisplay.setPortletName(portletConfig.getPortletName());
+portletDisplay.setPortletResource(portletResource);
 portletDisplay.setResourcePK(portletPrimaryKey);
 portletDisplay.setRestoreCurrentView(portlet.isRestoreCurrentView());
 portletDisplay.setRootPortletId(rootPortletId);

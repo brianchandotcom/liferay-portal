@@ -53,7 +53,7 @@ AUI.add(
 								},
 								uploadStart: {
 									defaultFn: A.rbind('_defUploadStartFn', instance)
-								},
+								}
 							}
 						);
 

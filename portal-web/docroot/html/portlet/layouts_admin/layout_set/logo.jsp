@@ -36,8 +36,6 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 		if (fileMaxSize == 0) {
 			fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 		}
-
-		fileMaxSize /= 1024;
 		%>
 
 		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />

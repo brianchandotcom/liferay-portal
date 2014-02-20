@@ -700,8 +700,7 @@ public class StagingImpl implements Staging {
 			errorMessage = LanguageUtil.format(
 				locale,
 				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
-				TextFormatter.formatStorageSize(fileMaxSize/1024, locale),
-				false);
+				TextFormatter.formatStorageSize(fileMaxSize, locale), false);
 			errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 		}
 		else if (e instanceof LARTypeException) {

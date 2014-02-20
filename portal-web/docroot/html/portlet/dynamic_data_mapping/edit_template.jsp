@@ -105,7 +105,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
 
 		<%
-		long imageMaxSize = PrefsPropsUtil.getLong(PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE) / 1024;
+		long imageMaxSize = PrefsPropsUtil.getLong(PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE);
 		%>
 
 		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />

@@ -689,8 +689,6 @@ public class EditFileEntryAction extends PortletAction {
 					PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 			}
 
-			fileMaxSize /= 1024;
-
 			errorMessage = themeDisplay.translate(
 				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
 				TextFormatter.formatStorageSize(
@@ -866,8 +864,6 @@ public class EditFileEntryAction extends PortletAction {
 						fileMaxSize = PrefsPropsUtil.getLong(
 							PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 					}
-
-					fileMaxSize /= 1024;
 
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-file-size-no-larger" +

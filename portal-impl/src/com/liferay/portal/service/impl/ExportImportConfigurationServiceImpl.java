@@ -63,4 +63,22 @@ public class ExportImportConfigurationServiceImpl
 				getUserId(), exportImportConfiguration);
 	}
 
+	@Override
+	public ExportImportConfiguration restoreExportImportConfigurationFromTrash(
+			long userId, long exportImportConfigurationId)
+		throws PortalException, SystemException {
+
+		ExportImportConfiguration exportImportConfiguration =
+			exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfigurationId);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), exportImportConfiguration.getGroupId(),
+			ActionKeys.DELETE);
+
+		return exportImportConfigurationLocalService.
+			restoreExportImportConfigurationFromTrash(
+				getUserId(), exportImportConfigurationId);
+	}
+
 }

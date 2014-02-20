@@ -21,7 +21,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 Object[] objArray = (Object[])row.getObject();
 
-Locale snippetLocale = ((Summary)objArray[2]).getLocale();
+Locale snippetLocale = ((Summary)objArray[1]).getLocale();
 
 String languageId = LocaleUtil.toLanguageId(snippetLocale);
 %>

@@ -21,11 +21,10 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 Object[] objArray = (Object[])row.getObject();
 
-String[] queryTerms = (String[])objArray[0];
-Document doc = (Document)objArray[1];
-Summary summary = (Summary)objArray[2];
+Document doc = (Document)objArray[0];
+Summary summary = (Summary)objArray[1];
 
-String content = HtmlUtil.escape(summary.getHighlightedContent(queryTerms));
+String content = summary.getContent(true, PropsValues.INDEX_SEARCH_HIGHLIGHT_ENABLED);
 
 long articleGroupId = GetterUtil.getLong(doc.get(Field.GROUP_ID));
 String articleId = doc.get("articleId");

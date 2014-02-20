@@ -3,6 +3,10 @@
 		<case locator-key1="SOURCE_SCOPE_MENULIST_OTHER_SITE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
+		<case locator-key1="SOURCE_SCOPE_ASSET_TYPE_SELECT">
+			<execute function="AssertTextNotEquals#assertNotPartialText" />
+		</case>
 	</command>
 
 	<command name="assertElementNotPresent">

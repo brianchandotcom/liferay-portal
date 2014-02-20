@@ -444,7 +444,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingDemoLocalLive3" priority="5">
+	<command name="StagingDemoLocalLive3" known-issues="LPS-43693" priority="5">
 		<var name="pageName" value="Home" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="Community Site Name" />

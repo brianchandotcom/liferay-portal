@@ -1811,10 +1811,11 @@ public class SeleniumBuilderFileUtil {
 		});
 	private static List<String> _componentNames = ListUtil.fromArray(
 		new String[] {
-			"marketplace", "portal-administration", "portal-apis",
-			"portal-application-standards", "portal-authentication",
-			"portal-business-productivity", "portal-calendar",
-			"portal-collaboration", "portal-configuration", "portal-deployment",
+			"marketplace", "marketplace-known-issues", "portal-administration",
+			"portal-apis", "portal-application-standards",
+			"portal-authentication", "portal-business-productivity",
+			"portal-calendar", "portal-collaboration", "portal-configuration",
+			"portal-deployment", "portal-known-issues",
 			"portal-document-management", "portal-frameworks",
 			"portal-infrastructure", "portal-integrations", "portal-legacy",
 			"portal-opensocial", "portal-operations", "portal-permissions",
@@ -1825,8 +1826,9 @@ public class SeleniumBuilderFileUtil {
 			"portal-user-interface", "portal-util-misc", "portal-wcm",
 			"portal-web-forms-and-data-lists", "portal-workflow",
 			"social-office-administration", "social-office-dashboard",
-			"social-office-environment", "social-office-profile",
-			"social-office-site", "social-office-user-bar"
+			"social-office-environment", "social-office-known-issues",
+			"social-office-profile", "social-office-site",
+			"social-office-user-bar"
 		});
 	private static List<String> _methodNames = ListUtil.fromArray(
 		new String[] {

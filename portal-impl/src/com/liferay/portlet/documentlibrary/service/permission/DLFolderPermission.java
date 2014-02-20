@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.EntityPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -32,7 +33,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DLFolderPermission {
+public class DLFolderPermission implements EntityPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, DLFolder dlFolder,
@@ -143,6 +144,15 @@ public class DLFolderPermission {
 		Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
 
 		return folder.containsPermission(permissionChecker, actionId);
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long entryId,
+			String actionId)
+		throws PortalException, SystemException {
+
+		DLFolderPermission.check(permissionChecker, groupId, entryId, actionId);
 	}
 
 	private static boolean _hasPermission(

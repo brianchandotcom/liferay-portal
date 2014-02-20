@@ -262,6 +262,21 @@
 		</if>
 
 		<if>
+			<isset var="checkPageName" />
+			<then>
+				<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PAGES_CHANGE_LINK" value1="Change" />
+
+				<for list="${checkPageName}" param="pageName">
+					<var name="key_pageName" value="${pageName}" />
+
+					<execute action="PGStagingPublishtolivenow#click" locator-key1="PAGES_SPECIFIC_PAGE_NAME" />
+				</for>
+
+				<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PAGES_OK_BUTTON" value1="OK" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${contentDeletion}" arg2="true" />
 			<then>
 				<execute action="PGStagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
@@ -308,11 +323,11 @@
 				<execute action="PGStagingPublishtolivenow#click" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
 				<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" value1="Change" />
 
-				<var name="key_dateRangeName" value="${contentDateRange}" />
+				<var name="key_contentDateRange" value="${contentDateRange}" />
 
 				<execute action="PGStagingPublishtolivenow#click" locator-key1="DATE_RANGE_POPUP_RANGE_RADIO" />
 				<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="DATE_RANGE_POPUP_OK_BUTTON" value1="OK" />
-				<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="CHOOSE_CONTENT_DATE_RANGE_STATUS" value1="${contentDateRangeStatus}" />
+				<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="CHOOSE_CONTENT_DATE_RANGE_STATUS" value1="${contentDateRange}" />
 			</then>
 		</if>
 

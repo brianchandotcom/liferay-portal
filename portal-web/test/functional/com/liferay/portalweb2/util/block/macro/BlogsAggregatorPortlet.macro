@@ -1,4 +1,43 @@
 <definition>
+	<command name="configureSelectionMethod">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Blogs Aggregator" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<execute action="PGBlogsAggregatorConfiguration#select" locator-key1="SELECTION_METHOD_SELECT" value1="${selectionMethod}" />
+		<execute action="PGBlogsAggregatorConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGBlogsAggregatorConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+
+		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewBlogsEntryViaBAPortletPG">
+		<if>
+			<isset var="viewEntryTitle" />
+			<then>
+				<for list="${viewEntryTitle}" param="entryTitle">
+					<var name="key_entryTitle" value="${entryTitle}" />
+
+					<execute action="PGBlogsAggregator#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="viewNoEntryTitle" />
+			<then>
+				<for list="${viewNoEntryTitle}" param="entryTitle">
+					<var name="key_entryTitle" value="${entryTitle}" />
+
+					<execute action="PGBlogsAggregator#assertElementNotPresent" locator-key1="ENTRY_TITLE" />
+				</for>
+			</then>
+		</if>
+	</command>
+
 	<command name="viewParentOrganizationPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />

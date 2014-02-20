@@ -14,7 +14,11 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.search.util.SearchUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
@@ -23,6 +27,7 @@ import javax.portlet.PortletURL;
 /**
  * @author Brian Wing Shun Chan
  * @author Ryan Park
+ * @author Tibor Lipusz
  */
 public class Summary {
 
@@ -45,20 +50,8 @@ public class Summary {
 		return _content;
 	}
 
-	public String getHighlightedContent(String[] queryTerms) {
-		if (_highlight) {
-			return StringUtil.highlight(_content, queryTerms);
-		}
-
-		return _content;
-	}
-
-	public String getHighlightedTitle(String[] queryTerms) {
-		if (_highlight) {
-			return StringUtil.highlight(_title, queryTerms);
-		}
-
-		return _title;
+	public String getContent(boolean escape, boolean highlight) {
+		return _escapeAndHighlight(_content, escape, highlight);
 	}
 
 	public Locale getLocale() {
@@ -73,8 +66,16 @@ public class Summary {
 		return _portletURL;
 	}
 
+	public String[] getQueryTerms() {
+		return _queryTerms;
+	}
+
 	public String getTitle() {
 		return _title;
+	}
+
+	public String getTitle(boolean escape, boolean highlight) {
+		return _escapeAndHighlight(_title, escape, highlight);
 	}
 
 	public boolean isHighlight() {
@@ -109,15 +110,59 @@ public class Summary {
 		_portletURL = portletURL;
 	}
 
+	public void setQueryTerms(String[] queryTerms) {
+		if (ArrayUtil.isEmpty(queryTerms)) {
+			return;
+		}
+
+		_queryTerms = queryTerms;
+	}
+
 	public void setTitle(String title) {
 		_title = title;
 	}
+
+	private String _escapeAndHighlight(
+		String s, boolean escape, boolean highlight) {
+
+		if (Validator.isNull(s) || ArrayUtil.isEmpty(_queryTerms)) {
+			return s;
+		}
+
+		String result = s;
+
+		if (highlight) {
+			result = SearchUtil.highlight(
+				result, _queryTerms, ESCAPE_SAFE_HIGHLIGHT_1,
+				ESCAPE_SAFE_HIGHLIGHT_2);
+		}
+
+		if (escape) {
+			result = HtmlUtil.escape(result);
+		}
+
+		if (highlight) {
+			result = StringUtil.replace(
+				result, new String[] {
+					ESCAPE_SAFE_HIGHLIGHT_1, ESCAPE_SAFE_HIGHLIGHT_2},
+				new String[] {
+					SearchUtil.DEFAULT_HIGHLIGHT_1,
+					SearchUtil.DEFAULT_HIGHLIGHT_2});
+		}
+
+		return result;
+	}
+
+	private static final String ESCAPE_SAFE_HIGHLIGHT_1 = "[@HIGHLIGHT1@]";
+
+	private static final String ESCAPE_SAFE_HIGHLIGHT_2 = "[@HIGHLIGHT2@]";
 
 	private String _content;
 	private boolean _highlight;
 	private Locale _locale;
 	private int _maxContentLength;
 	private PortletURL _portletURL;
+	private String[] _queryTerms;
 	private String _title;
 
 }

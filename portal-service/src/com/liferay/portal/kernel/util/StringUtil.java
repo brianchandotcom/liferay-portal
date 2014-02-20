@@ -662,7 +662,8 @@ public class StringUtil {
 	@Deprecated
 	public static String highlight(String s, String[] queryTerms) {
 		return SearchUtil.highlight(
-			s, queryTerms, "<span class=\"highlight\">", "</span>");
+			s, queryTerms, SearchUtil.DEFAULT_HIGHLIGHT_1,
+			SearchUtil.DEFAULT_HIGHLIGHT_2);
 	}
 
 	/**

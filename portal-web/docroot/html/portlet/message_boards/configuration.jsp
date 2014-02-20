@@ -19,11 +19,11 @@
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2", "general");
 
-String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", MBUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", MBUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", MBUtil.getEmailFromName(groupPortletSettings));
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", MBUtil.getEmailFromAddress(groupPortletSettings));
 
-boolean emailMessageAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageAddedEnabled--", MBUtil.getEmailMessageAddedEnabled(portletPreferences));
-boolean emailMessageUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageUpdatedEnabled--", MBUtil.getEmailMessageUpdatedEnabled(portletPreferences));
+boolean emailMessageAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageAddedEnabled--", MBUtil.getEmailMessageAddedEnabled(groupPortletSettings));
+boolean emailMessageUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageUpdatedEnabled--", MBUtil.getEmailMessageUpdatedEnabled(groupPortletSettings));
 
 String emailParam = StringPool.BLANK;
 String defaultEmailSubject = StringPool.BLANK;
@@ -47,9 +47,9 @@ String emailSubjectParam = emailParam + "Subject";
 String emailBodyParam = emailParam + "Body";
 String emailSignatureParam = emailParam + "Signature";
 
-String emailSubject = PrefsParamUtil.getString(portletPreferences, request, emailSubjectParam, defaultEmailSubject);
-String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBodyParam, defaultEmailBody);
-String emailSignature = PrefsParamUtil.getString(portletPreferences, request, emailSignatureParam, defaultEmailSignature);
+String emailSubject = PortletSettingsParamUtil.getString(groupPortletSettings, request, emailSubjectParam, defaultEmailSubject);
+String emailBody = PortletSettingsParamUtil.getString(groupPortletSettings, request, emailBodyParam, defaultEmailBody);
+String emailSignature = PortletSettingsParamUtil.getString(groupPortletSettings, request, emailSignatureParam, defaultEmailSignature);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="portletURL">
@@ -94,7 +94,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 	<c:choose>
 		<c:when test='<%= tabs2.equals("general") %>'>
 			<aui:fieldset>
-				<aui:input name="preferences--allowAnonymousPosting--" type="checkbox" value="<%= MBUtil.isAllowAnonymousPosting(portletPreferences) %>" />
+				<aui:input name="preferences--allowAnonymousPosting--" type="checkbox" value="<%= MBUtil.isAllowAnonymousPosting(groupPortletSettings) %>" />
 
 				<aui:input helpMessage="message-boards-message-subscribe-by-default-help" label="subscribe-by-default" name="preferences--subscribeByDefault--" type="checkbox" value="<%= subscribeByDefault %>" />
 
@@ -134,7 +134,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 
 				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
 
-				<aui:input label="html-format" name="preferences--emailHtmlFormat--" type="checkbox" value="<%= MBUtil.getEmailHtmlFormat(portletPreferences) %>" />
+				<aui:input label="html-format" name="preferences--emailHtmlFormat--" type="checkbox" value="<%= MBUtil.getEmailHtmlFormat(groupPortletSettings) %>" />
 			</aui:fieldset>
 
 			<aui:fieldset cssClass="definition-of-terms">
@@ -394,7 +394,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 					</tr>
 
 					<%
-					priorities = LocalizationUtil.getPreferencesValues(portletPreferences, "priorities", defaultLanguageId);
+					priorities = LocalizationUtil.getPortletSettingsValues(groupPortletSettings, "priorities", defaultLanguageId);
 
 					for (int i = 0; i < 10; i++) {
 						String name = StringPool.BLANK;
@@ -478,7 +478,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 							continue;
 						}
 
-						String[] tempPriorities = LocalizationUtil.getPreferencesValues(portletPreferences, "priorities", LocaleUtil.toLanguageId(locales[i]));
+						String[] tempPriorities = LocalizationUtil.getPortletSettingsValues(groupPortletSettings, "priorities", LocaleUtil.toLanguageId(locales[i]));
 
 						for (int j = 0; j < 10; j++) {
 							String name = StringPool.BLANK;
@@ -631,7 +631,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 				</tr>
 				<tr>
 					<td>
-						<aui:input cssClass="lfr-textarea-container" label="" name='<%= "ranks_" + defaultLanguageId %>' type="textarea" value='<%= StringUtil.merge(LocalizationUtil.getPreferencesValues(portletPreferences, "ranks", defaultLanguageId), StringPool.NEW_LINE) %>' />
+						<aui:input cssClass="lfr-textarea-container" label="" name='<%= "ranks_" + defaultLanguageId %>' type="textarea" value='<%= StringUtil.merge(LocalizationUtil.getPortletSettingsValues(groupPortletSettings, "ranks", defaultLanguageId), StringPool.NEW_LINE) %>' />
 					</td>
 					<td>
 
@@ -642,7 +642,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 							}
 						%>
 
-							<aui:input name='<%= "ranks_" + LocaleUtil.toLanguageId(locales[i]) %>' type="hidden" value='<%= StringUtil.merge(LocalizationUtil.getPreferencesValues(portletPreferences, "ranks", LocaleUtil.toLanguageId(locales[i]), false), StringPool.NEW_LINE) %>' />
+							<aui:input name='<%= "ranks_" + LocaleUtil.toLanguageId(locales[i]) %>' type="hidden" value='<%= StringUtil.merge(LocalizationUtil.getPortletSettingsValues(groupPortletSettings, "ranks", LocaleUtil.toLanguageId(locales[i]), false), StringPool.NEW_LINE) %>' />
 
 						<%
 						}

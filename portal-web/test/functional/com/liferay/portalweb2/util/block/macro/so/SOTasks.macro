@@ -46,11 +46,13 @@
 						<equals arg1="${tagNumber}" arg2="${numberOfTags}" />
 					</not>
 					<then>
-						<var name="key_tagNumber" value="${tagNumber}" />
 						<var name="tagNumber" value="${tagNumber?increment()}" />
 
 						<execute action="SOTasksAdd#type" locator-key1="TASK_TAG_FIELD" value1="tag${tagNumber}" />
 						<execute action="SOTasksAdd#click" locator-key1="TASK_ADD_TAG_BUTTON" />
+
+						<var name="key_tagNumber" value="${tagNumber}" />
+
 						<execute action="SOTasksAdd#assertTextEquals" locator-key1="TASK_TAG" value1="tag${tagNumber}" />
 					</then>
 				</while>
@@ -553,8 +555,9 @@
 						<equals arg1="${tagNumber}" arg2="${numberOfTags}" />
 					</not>
 					<then>
-						<var name="key_tagNumber" value="${tagNumber}" />
 						<var name="tagNumber" value="${tagNumber?increment()}" />
+
+						<var name="key_tagNumber" value="${tagNumber}" />
 
 						<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_TAG" value1="tag${tagNumber}" />
 					</then>

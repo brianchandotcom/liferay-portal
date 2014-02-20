@@ -131,6 +131,7 @@ public class PortletDisplay implements Serializable {
 		slave.setModeView(_modeView);
 		slave.setNamespace(_namespace);
 		slave.setPortletName(_portletName);
+		slave.setPortletResource(_portletResource);
 		slave.setPortletSetup(_portletSetup);
 		slave.setResourcePK(_resourcePK);
 		slave.setRestoreCurrentView(_restoreCurrentView);
@@ -211,8 +212,14 @@ public class PortletDisplay implements Serializable {
 	public PortletSettings getGroupPortletSettings()
 		throws PortalException, SystemException {
 
+		String portletId = _id;
+
+		if (Validator.isNotNull(_portletResource)) {
+			portletId = _portletResource;
+		}
+
 		return PortletSettingsFactoryUtil.getGroupPortletSettings(
-			_themeDisplay.getSiteGroupId(), _id);
+			_themeDisplay.getSiteGroupId(), portletId);
 	}
 
 	public String getId() {
@@ -638,6 +645,10 @@ public class PortletDisplay implements Serializable {
 		_portletName = portletName;
 	}
 
+	public void setPortletResource(String portletResource) {
+		_portletResource = portletResource;
+	}
+
 	public void setPortletSetup(PortletPreferences portletSetup) {
 		_portletSetup = portletSetup;
 	}
@@ -840,6 +851,7 @@ public class PortletDisplay implements Serializable {
 	private boolean _modeView;
 	private String _namespace = StringPool.BLANK;
 	private String _portletName = StringPool.BLANK;
+	private String _portletResource = StringPool.BLANK;
 	private PortletPreferences _portletSetup;
 	private String _resourcePK = StringPool.BLANK;
 	private boolean _restoreCurrentView;

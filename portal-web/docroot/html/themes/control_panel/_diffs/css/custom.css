@@ -966,17 +966,17 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.panel-page-menu .portlet-borderless-container {
 		&:after {
-				background-color: #D1D1D1;
+			background-color: #D1D1D1;
 
-				@include background-image(linear-gradient(#FFF, #D1D1D1));
+			@include background-image(linear-gradient(#FFF, #D1D1D1));
 
-				content: '';
-				display: block;
-				height: 15px;
-				position: absolute;
-				right: -1px;
-				top: 0;
-				width: 1px;
+			content: '';
+			display: block;
+			height: 15px;
+			position: absolute;
+			right: -1px;
+			top: 0;
+			width: 1px;
 		}
 
 		.accordion .accordion-group {
@@ -1074,6 +1074,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Media queries ---------- */
 
 	@include respond-to(phone, tablet) {
+		.portlet-title {
+			display: inline-block;
+		}
+
 		ul.form-navigator.well {
 			.button-holder {
 				padding-bottom: 20px;

@@ -3,12 +3,25 @@
 		<execute action="SOBlogs#assertTextEquals" locator-key1="RECENT_BLOGS_ENTRY_TITLE" value1="${entryTitle}" />
 
 		<if>
-			<isset var="entryAuthorMiddleName" />
+			<not>
+				<and>
+					<isset var="entryAuthorFirstName" />
+					<isset var="entryAuthorLastName" />
+				</and>
+			</not>
 			<then>
-				<execute action="SOBlogs#assertTextEquals" locator-key1="RECENT_BLOGS_ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorMiddleName} ${entryAuthorLastName}" />
+				<execute action="SOBlogs#assertTextEquals" locator-key1="RECENT_BLOGS_ENTRY_AUTHOR" value1="By Test Test" />
 			</then>
 			<else>
-				<execute action="SOBlogs#assertTextEquals" locator-key1="RECENT_BLOGS_ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorLastName}" />
+				<if>
+					<isset var="entryAuthorMiddleName" />
+					<then>
+						<execute action="SOBlogs#assertTextEquals" locator-key1="RECENT_BLOGS_ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorMiddleName} ${entryAuthorLastName}" />
+					</then>
+					<else>
+						<execute action="SOBlogs#assertTextEquals" locator-key1="RECENT_BLOGS_ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorLastName}" />
+					</else>
+				</if>
 			</else>
 		</if>
 
@@ -19,12 +32,25 @@
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 
 		<if>
-			<isset var="entryAuthorMiddleName" />
+			<not>
+				<and>
+					<isset var="entryAuthorFirstName" />
+					<isset var="entryAuthorLastName" />
+				</and>
+			</not>
 			<then>
-				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorMiddleName} ${entryAuthorLastName}" />
+				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_AUTHOR" value1="By Test Test" />
 			</then>
 			<else>
-				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorLastName}" />
+				<if>
+					<isset var="entryAuthorMiddleName" />
+					<then>
+						<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorMiddleName} ${entryAuthorLastName}" />
+					</then>
+					<else>
+						<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorLastName}" />
+					</else>
+				</if>
 			</else>
 		</if>
 

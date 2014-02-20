@@ -416,6 +416,14 @@ public class JournalConverterImpl implements JournalConverter {
 			serializable = getDocumentLibraryValue(
 				dynamicContentElement.getText());
 		}
+		else if (DDMImpl.TYPE_DDM_IMAGE.equals(type)) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("alt", dynamicContentElement.attributeValue("alt"));
+			jsonObject.put("data", dynamicContentElement.getText());
+
+			serializable = jsonObject.toString();
+		}
 		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(type)) {
 			String[] values = StringUtil.split(
 				dynamicContentElement.getText(), CharPool.AT);
@@ -699,6 +707,21 @@ public class JournalConverterImpl implements JournalConverter {
 				false, true);
 
 			dynamicContentElement.addCDATA(fieldValue);
+		}
+		else if (DDMImpl.TYPE_DDM_IMAGE.equals(fieldType) &&
+				 Validator.isNotNull(fieldValue)) {
+
+			if (fieldValue.equals("delete")) {
+				dynamicContentElement.addCDATA(fieldValue);
+			}
+			else {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					fieldValue);
+
+				dynamicContentElement.addAttribute(
+					"alt", jsonObject.getString("alt"));
+				dynamicContentElement.addCDATA(jsonObject.getString("data"));
+			}
 		}
 		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(fieldType) &&
 				 Validator.isNotNull(fieldValue)) {

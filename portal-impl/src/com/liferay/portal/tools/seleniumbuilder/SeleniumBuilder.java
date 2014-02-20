@@ -253,7 +253,37 @@ public class SeleniumBuilder {
 					testCaseName + "TestCase#test" +
 						commandElement.attributeValue("name");
 
-				compontentTestCaseMethodNames.add(testCaseMethodName);
+				String knownIssues = commandElement.attributeValue(
+					"known-issues");
+
+				if (knownIssues != null) {
+					String knownIssuesComponent = "portal-known-issues";
+
+					if (componentName.startsWith("marketplace")) {
+						knownIssuesComponent = "marketplace-known-issues";
+					}
+					else if (componentName.startsWith("social-office")) {
+						knownIssuesComponent = "social-office-known-issues";
+					}
+
+					Set<String> knownIssuesTestCaseMethodNames =
+						new TreeSet<String>();
+
+					if (testCaseMethodNameMap.containsKey(
+							knownIssuesComponent)) {
+
+						knownIssuesTestCaseMethodNames =
+							testCaseMethodNameMap.get(knownIssuesComponent);
+					}
+
+					knownIssuesTestCaseMethodNames.add(testCaseMethodName);
+
+					testCaseMethodNameMap.put(
+						knownIssuesComponent, knownIssuesTestCaseMethodNames);
+				}
+				else {
+					compontentTestCaseMethodNames.add(testCaseMethodName);
+				}
 
 				testCaseMethodNames.add(testCaseMethodName);
 			}

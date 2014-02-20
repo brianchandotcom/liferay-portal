@@ -11,7 +11,21 @@
 		<div class="expand-line">
 			<h3 class="testCaseCommand">${testCaseName}#${testCaseCommand}
 				<#if testCaseCommandElement.attributeValue("depends")??>
-					[depends ~ ${testCaseCommandElement.attributeValue("depends")}]
+					[depends: ${testCaseCommandElement.attributeValue("depends")}]
+				</#if>
+
+				<#if testCaseCommandElement.attributeValue("known-issues")??>
+					<#assign knownIssues = testCaseCommandElement.attributeValue("known-issues")>
+
+					[Known Issues:
+						<#list knownIssues?split(",") as knownIssue>
+							<a href="http://issues.liferay.com/browse/${knownIssue}">${knownIssue}</a>
+
+							<#if knownIssue_has_next>
+								,
+							</#if>
+						</#list>
+					]
 				</#if>
 			</h3>
 		</div>

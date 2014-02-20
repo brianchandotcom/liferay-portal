@@ -29,11 +29,11 @@ FeedDisplayTerms displayTerms = (FeedDisplayTerms)searchContainer.getDisplayTerm
 	id="toggle_id_journal_feed_search"
 >
 	<aui:fieldset>
-		<aui:input label="id" name="<%= displayTerms.FEED_ID %>" size="20" type="text" value="<%= displayTerms.getFeedId() %>" />
+		<aui:input inlineField="<%= true %>" label="id" name="<%= displayTerms.FEED_ID %>" size="20" type="text" value="<%= displayTerms.getFeedId() %>" />
 
-		<aui:input name="<%= displayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= displayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
 
-		<aui:input name="<%= displayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= displayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>
 

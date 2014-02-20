@@ -28,9 +28,9 @@ FileEntryDisplayTerms displayTerms = (FileEntryDisplayTerms)searchContainer.getD
 	id="toggle_id_asset_search"
 >
 	<aui:fieldset>
-		<aui:input name="keywords" size="20" type="text" value="" />
+		<aui:input inlineField="<%= true %>" name="keywords" size="20" type="text" value="" />
 
-		<aui:select label="scope" name="<%= displayTerms.SELECTED_GROUP_ID %>" showEmptyOption="<%= false %>">
+		<aui:select inlineField="<%= true %>" label="scope" name="<%= displayTerms.SELECTED_GROUP_ID %>" showEmptyOption="<%= false %>">
 			<aui:option label="global" selected="<%= displayTerms.getSelectedGroupId() == themeDisplay.getCompanyGroupId() %>" value="<%= themeDisplay.getCompanyGroupId() %>" />
 			<aui:option label="<%= themeDisplay.getScopeGroupName() %>" selected="<%= displayTerms.getSelectedGroupId() == scopeGroupId %>" value="<%= scopeGroupId %>" />
 		</aui:select>

@@ -31,9 +31,9 @@ String type = displayTerms.getType();
 	id="toggle_id_directory_organization_search"
 >
 	<aui:fieldset>
-		<aui:input name="<%= displayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= displayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
 
-		<aui:select name="<%= displayTerms.TYPE %>">
+		<aui:select inlineField="<%= true %>" name="<%= displayTerms.TYPE %>">
 			<aui:option value=""></aui:option>
 
 			<%
@@ -48,15 +48,19 @@ String type = displayTerms.getType();
 
 		</aui:select>
 
-		<aui:input name="<%= displayTerms.STREET %>" size="20" type="text" value="<%= displayTerms.getStreet() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= displayTerms.STREET %>" size="20" type="text" value="<%= displayTerms.getStreet() %>" />
+	</aui:fieldset>
 
-		<aui:select label="country" name="<%= displayTerms.COUNTRY_ID %>" />
+	<aui:fieldset>
+		<aui:select inlineField="<%= true %>" label="country" name="<%= displayTerms.COUNTRY_ID %>" />
 
-		<aui:input name="<%= displayTerms.CITY %>" size="20" type="text" value="<%= displayTerms.getCity() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= displayTerms.CITY %>" size="20" type="text" value="<%= displayTerms.getCity() %>" />
 
-		<aui:select label="region" name="<%= displayTerms.REGION_ID %>" />
+		<aui:select inlineField="<%= true %>" label="region" name="<%= displayTerms.REGION_ID %>" />
+	</aui:fieldset>
 
-		<aui:input label="postal-code" name="<%= displayTerms.ZIP %>" size="20" type="text" value="<%= displayTerms.getZip() %>" />
+	<aui:fieldset>
+		<aui:input inlineField="<%= true %>" label="postal-code" name="<%= displayTerms.ZIP %>" size="20" type="text" value="<%= displayTerms.getZip() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>
 

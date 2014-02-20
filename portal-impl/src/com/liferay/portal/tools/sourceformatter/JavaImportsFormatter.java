@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import java.io.IOException;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,10 +22,6 @@ import java.util.regex.Pattern;
  * @author André de Oliveira
  */
 public class JavaImportsFormatter extends ImportsFormatter {
-
-	public String format(String imports) throws IOException {
-		return format(imports, 7);
-	}
 
 	@Override
 	protected ImportPackage createImportPackage(String line) {

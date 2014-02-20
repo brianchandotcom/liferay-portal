@@ -29,7 +29,7 @@ import java.util.List;
  */
 public abstract class ImportsFormatter {
 
-	public String format(String imports, int classStartPos) throws IOException {
+	public String format(String imports) throws IOException {
 
 		if (imports.contains("/*") || imports.contains("*/") ||
 			imports.contains("//")) {
@@ -63,7 +63,7 @@ public abstract class ImportsFormatter {
 		for (int i = 0; i < importPackages.size(); i++) {
 			ImportPackage importPackage = importPackages.get(i);
 
-			String s = importPackage.getLine();
+			String s = importPackage.getImport();
 
 			int pos = s.indexOf(".");
 
@@ -73,7 +73,7 @@ public abstract class ImportsFormatter {
 				pos = s.indexOf(".");
 			}
 
-			String packageLevel = s.substring(classStartPos, pos);
+			String packageLevel = s.substring(0, pos);
 
 			if ((i != 0) && !packageLevel.equals(temp)) {
 				sb.append("\n");
@@ -81,7 +81,7 @@ public abstract class ImportsFormatter {
 
 			temp = packageLevel;
 
-			sb.append(s);
+			sb.append(importPackage.getLine());
 			sb.append("\n");
 		}
 

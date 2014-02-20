@@ -37,13 +37,14 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
+
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Cristina González
@@ -329,6 +330,15 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
+	public void testFetchLayoutJxPortletPreferences() throws Exception {
+		PortletPreferencesImpl portletPreferencesImpl =
+			(PortletPreferencesImpl)PortletPreferencesTestUtil.
+				fetchLayoutJxPortletPreferences(_layout, _portlet);
+
+		Assert.assertNull(portletPreferencesImpl);
+	}
+
+	@Test
 	public void testFetchNonexistentPreferences() throws Exception {
 		String portletPreferencesXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(
@@ -350,15 +360,6 @@ public class PortletPreferencesLocalServiceTest {
 				_portlet.getPortletId());
 
 		Assert.assertNull(jxPortletPreferences);
-	}
-
-	@Test
-	public void testFetchLayoutJxPortletPreferences() throws Exception {
-		PortletPreferencesImpl portletPreferencesImpl =
-			(PortletPreferencesImpl)PortletPreferencesTestUtil.
-				fetchLayoutJxPortletPreferences(_layout, _portlet);
-
-		Assert.assertNull(portletPreferencesImpl);
 	}
 
 	@Test
@@ -888,7 +889,7 @@ public class PortletPreferencesLocalServiceTest {
 				_portlet.getPortletId(), portletPreferencesXML);
 
 		assertValues(jxPortletPreferences, _NAME, _SINGLE_VALUE);
-		assertOwner(_layout, (PortletPreferencesImpl) jxPortletPreferences);
+		assertOwner(_layout, (PortletPreferencesImpl)jxPortletPreferences);
 	}
 
 	@Test
@@ -914,7 +915,7 @@ public class PortletPreferencesLocalServiceTest {
 				_portlet.getPortletId(), portletPreferencesXMLMultiple);
 
 		assertValues(jxPortletPreferences, _NAME, _SINGLE_VALUE);
-		assertOwner(_layout, (PortletPreferencesImpl) jxPortletPreferences);
+		assertOwner(_layout, (PortletPreferencesImpl)jxPortletPreferences);
 	}
 
 	@Test
@@ -930,7 +931,7 @@ public class PortletPreferencesLocalServiceTest {
 				_portlet.getPortletId());
 
 		assertEmptyPortletPreferencesMap(jxPortletPreferences);
-		assertOwner(_layout, (PortletPreferencesImpl) jxPortletPreferences);
+		assertOwner(_layout, (PortletPreferencesImpl)jxPortletPreferences);
 	}
 
 	@Test
@@ -954,7 +955,7 @@ public class PortletPreferencesLocalServiceTest {
 				portletPreferencesIds);
 
 		assertValues(jxPortletPreferences, _NAME, _SINGLE_VALUE);
-		assertOwner(_layout, (PortletPreferencesImpl) jxPortletPreferences);
+		assertOwner(_layout, (PortletPreferencesImpl)jxPortletPreferences);
 	}
 
 	@Test

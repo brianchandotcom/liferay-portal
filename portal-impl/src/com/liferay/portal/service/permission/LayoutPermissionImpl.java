@@ -27,6 +27,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -45,7 +46,8 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
-public class LayoutPermissionImpl implements LayoutPermission {
+public class LayoutPermissionImpl
+	implements BaseModelPermissionChecker, LayoutPermission {
 
 	@Override
 	public void check(
@@ -79,6 +81,15 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		if (!contains(permissionChecker, plid, actionId)) {
 			throw new PrincipalException();
 		}
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException, SystemException {
+
+		check(permissionChecker, primaryKey, actionId);
 	}
 
 	@Override

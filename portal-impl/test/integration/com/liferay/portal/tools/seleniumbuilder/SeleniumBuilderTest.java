@@ -731,8 +731,8 @@ public class SeleniumBuilderTest {
 	public void testMacroAndElement1001_2() throws Exception {
 		test(
 			"MacroAndElement1001_2.macro",
-			"Error 1001: Missing (description|echo|execute|fail|for|if|var|" +
-				"while) child element in " + _DIR_NAME +
+			"Error 1001: Missing (description|echo|execute|fail|for|if|" +
+				"take-screenshot|var|while) child element in " + _DIR_NAME +
 				"/MacroAndElement1001_2.macro:8");
 	}
 
@@ -782,8 +782,8 @@ public class SeleniumBuilderTest {
 	public void testMacroCommandElement1001() throws Exception {
 		test(
 			"MacroCommandElement1001.macro",
-			"Error 1001: Missing (description|echo|execute|fail|for|if|var|" +
-				"while) child element in " + _DIR_NAME +
+			"Error 1001: Missing (description|echo|execute|fail|for|if|" +
+				"take-screenshot|var|while) child element in " + _DIR_NAME +
 				"/MacroCommandElement1001.macro:2");
 	}
 
@@ -1047,8 +1047,8 @@ public class SeleniumBuilderTest {
 	public void testMacroElseElement1001() throws Exception {
 		test(
 			"MacroElseElement1001.macro",
-			"Error 1001: Missing (description|echo|execute|fail|for|if|var|" +
-				"while) child element in " + _DIR_NAME +
+			"Error 1001: Missing (description|echo|execute|fail|for|if|" +
+				"take-screenshot|var|while) child element in " + _DIR_NAME +
 				"/MacroElseElement1001.macro:8");
 	}
 
@@ -1380,8 +1380,8 @@ public class SeleniumBuilderTest {
 	public void testMacroNotElement1001_2() throws Exception {
 		test(
 			"MacroNotElement1001_2.macro",
-			"Error 1001: Missing (description|echo|execute|fail|for|if|var|" +
-				"while) child element in " + _DIR_NAME +
+			"Error 1001: Missing (description|echo|execute|fail|for|if|" +
+				"take-screenshot|var|while) child element in " + _DIR_NAME +
 				"/MacroNotElement1001_2.macro:7");
 	}
 
@@ -1431,8 +1431,8 @@ public class SeleniumBuilderTest {
 	public void testMacroOrElement1001_2() throws Exception {
 		test(
 			"MacroOrElement1001_2.macro",
-			"Error 1001: Missing (description|echo|execute|fail|for|if|var|" +
-				"while) child element in " + _DIR_NAME +
+			"Error 1001: Missing (description|echo|execute|fail|for|if|" +
+				"take-screenshot|var|while) child element in " + _DIR_NAME +
 				"/MacroOrElement1001_2.macro:8");
 	}
 
@@ -1507,8 +1507,8 @@ public class SeleniumBuilderTest {
 	public void testMacroThenElement1001() throws Exception {
 		test(
 			"MacroThenElement1001.macro",
-			"Error 1001: Missing (description|echo|execute|fail|for|if|var|" +
-				"while) child element in " + _DIR_NAME +
+			"Error 1001: Missing (description|echo|execute|fail|for|if|" +
+				"take-screenshot|var|while) child element in " + _DIR_NAME +
 				"/MacroThenElement1001.macro:5");
 	}
 
@@ -1810,8 +1810,8 @@ public class SeleniumBuilderTest {
 		test(
 			"TestCaseActionComplexString1001.testcase",
 			"Error 1001: Missing (description|echo|execute|fail|for|if|" +
-				"property|var|while) child element in " + _DIR_NAME +
-				"/TestCaseActionComplexString1001.testcase:2");
+				"property|take-screenshot|var|while) child element in " +
+				_DIR_NAME + "/TestCaseActionComplexString1001.testcase:2");
 	}
 
 	@Test
@@ -1835,8 +1835,8 @@ public class SeleniumBuilderTest {
 		test(
 			"TestCaseCommandElement1001.testcase",
 			"Error 1001: Missing (description|echo|execute|fail|for|if|" +
-				"property|var|while) child element in " + _DIR_NAME +
-				"/TestCaseCommandElement1001.testcase:2");
+				"property|take-screenshot|var|while) child element in " +
+				_DIR_NAME + "/TestCaseCommandElement1001.testcase:2");
 	}
 
 	@Test
@@ -2051,8 +2051,8 @@ public class SeleniumBuilderTest {
 	public void testTestCaseSetUpElement1001() throws Exception {
 		test(
 			"TestCaseSetUpElement1001.testcase",
-			"Error 1001: Missing (description|echo|execute|fail|if|var|while)" +
-				" child element in " + _DIR_NAME +
+			"Error 1001: Missing (description|echo|execute|fail|if|" +
+				"take-screenshot|var|while) child element in " + _DIR_NAME +
 				"/TestCaseSetUpElement1001.testcase:2");
 	}
 
@@ -2100,8 +2100,8 @@ public class SeleniumBuilderTest {
 	public void testTestCaseTearDownElement1001() throws Exception {
 		test(
 			"TestCaseTearDownElement1001.testcase",
-			"Error 1001: Missing (description|echo|execute|fail|if|var|while)" +
-				" child element in " + _DIR_NAME +
+			"Error 1001: Missing (description|echo|execute|fail|if|" +
+				"take-screenshot|var|while) child element in " + _DIR_NAME +
 				"/TestCaseTearDownElement1001.testcase:6");
 	}
 

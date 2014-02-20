@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDelivery;
@@ -78,6 +79,11 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		BlogsEntryLocalServiceUtil.subscribe(
 			_user.getUserId(), _group.getGroupId());
+
+		setActiveAllUserNotificationDeliveries(true);
+
+		_logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 	}
 
 	@After
@@ -86,157 +92,329 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		GroupLocalServiceUtil.deleteGroup(_group);
 
-		for (UserNotificationEvent userNotificationEvent :
-				_userNotificationEvents) {
+		deleteUserNotificationEvents();
 
-			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
-				userNotificationEvent);
-		}
-
-		UserNotificationDeliveryLocalServiceUtil.
-			deleteUserNotificationDeliveries(_user.getUserId());
-
-		activateAllUserNotificationDeliveries();
+		deleteUserNotificationDeliveries();
 	}
 
 	@Test
-	public void testBlogUserNotification() throws Exception {
-		int initialUserNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(_user.getUserId());
-
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
-
-		BlogsEntry entry = addBlogsEntry();
-
-		long[] userNotificationEventsClassPKs = getUserNotificationClassPKs();
-
-		if (!ArrayUtil.contains(
-				userNotificationEventsClassPKs, entry.getEntryId())) {
-
-			Assert.fail("No userNotificationEvent exists for the blogs entry");
-		}
-
-		Assert.assertTrue(
-			"More than 1 userNotificationEvent was created",
-			(1 + initialUserNotificationEventsCount) ==
-				_userNotificationEvents.size());
-
-		Assert.assertEquals(1, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals(
-			"No mail has been sent", "Sending email", logRecord.getMessage());
-	}
-
-	@Test
-	public void testBlogUserNotificationEmailType() throws Exception {
-		int initialUserNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(_user.getUserId());
-
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
-
-		deactivateWebsiteUserNotificationDelivery();
-
-		BlogsEntry entry = addBlogsEntry();
-
-		long[] userNotificationEventsClassPKs = getUserNotificationClassPKs();
-
-		if (ArrayUtil.contains(
-				userNotificationEventsClassPKs, entry.getEntryId())) {
-
-			Assert.fail("A userNotificationEvent exists for the blogs entry");
-		}
-
-		Assert.assertTrue(
-			"A userNotificationEvent was created",
-			(initialUserNotificationEventsCount) ==
-				_userNotificationEvents.size());
-
-		Assert.assertEquals(1, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals(
-			"No mail has been sent", "Sending email", logRecord.getMessage());
-	}
-
-	@Test
-	public void testBlogUserNotificationWebsiteType() throws Exception {
-		int initialUserNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(_user.getUserId());
-
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
-
-		deactivateMailUserNotificationDelivery();
-
-		BlogsEntry entry = addBlogsEntry();
-
-		long[] userNotificationEventsClassPKs = getUserNotificationClassPKs();
-
-		if (!ArrayUtil.contains(
-				userNotificationEventsClassPKs, entry.getEntryId())) {
-
-			Assert.fail("No userNotificationEvent exists for the blogs entry");
-		}
-
-		Assert.assertTrue(
-			"More than 1 userNotificationEvent was created",
-			(1 + initialUserNotificationEventsCount) ==
-				_userNotificationEvents.size());
-
-		Assert.assertEquals("An email has been sent", 0, logRecords.size());
-	}
-
-	@Test
-	public void testBlogUserNotificationWhenDeactivatingAllUserNotifications()
+	public void testBlogUserNotificationInactiveMailNotificationsOnAdd()
 		throws Exception {
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
+		int initialUserNotificationEventsCount =
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(_user.getUserId());
+
+		setActiveUserNotificationDeliveryType(
+			UserNotificationDeliveryConstants.TYPE_EMAIL,
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, false);
+
+		BlogsEntry entry = addBlogsEntry();
+
+		Assert.assertEquals("An email has been sent", 0, _logRecords.size());
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
+
+		if (entryUserNotificationEventsJsonObjects.isEmpty()) {
+			Assert.fail("userNotification doesn't exists for this entry");
+		}
+
+		Assert.assertTrue(
+			"More than 1 userNotificationEvent exist",
+			(1 + initialUserNotificationEventsCount) ==
+				_userNotificationEvents.size());
+
+		Assert.assertEquals(1, entryUserNotificationEventsJsonObjects.size());
+
+		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
+			Assert.assertEquals(
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				jsonObject.getInt("notificationType"));
+		}
+	}
+
+	@Test
+	public void testBlogUserNotificationInactiveMailNotificationsOnUpdate()
+		throws Exception {
 
 		int initialUserNotificationEventsCount =
 			UserNotificationEventLocalServiceUtil.
 				getUserNotificationEventsCount(_user.getUserId());
 
-		deactivateAllUserNotificationDeliveries();
+		setActiveUserNotificationDeliveryType(
+			UserNotificationDeliveryConstants.TYPE_EMAIL,
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, false);
+
+		setActiveUserNotificationDeliveryType(
+			UserNotificationDeliveryConstants.TYPE_EMAIL,
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY, false);
 
 		BlogsEntry entry = addBlogsEntry();
 
-		long[] userNotificationEventsClassPKs = getUserNotificationClassPKs();
+		updateEntry(entry);
 
-		if (ArrayUtil.contains(
-				userNotificationEventsClassPKs, entry.getEntryId())) {
+		Assert.assertEquals("An email has been sent", 0, _logRecords.size());
 
-			Assert.fail("A userNotificationEvent exists for the blogs entry");
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
+
+		if (entryUserNotificationEventsJsonObjects.isEmpty()) {
+			Assert.fail("userNotification doesn't exists for this entry");
 		}
 
 		Assert.assertTrue(
-			"A userNotificationEvent was created",
+			(2 + initialUserNotificationEventsCount) ==
+				_userNotificationEvents.size());
+
+		Assert.assertEquals(2, entryUserNotificationEventsJsonObjects.size());
+
+		int[]notificationTypes = new int[0];
+
+		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
+			notificationTypes = ArrayUtil.append(
+				notificationTypes, jsonObject.getInt("notificationType"));
+		}
+
+		Assert.assertNotEquals(notificationTypes[0], notificationTypes[1]);
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				notificationTypes,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY));
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				notificationTypes,
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY));
+	}
+
+	@Test
+	public void testBlogUserNotificationInactiveNotificationsOnAdd()
+		throws Exception {
+
+		int initialUserNotificationEventsCount =
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(_user.getUserId());
+
+		setActiveAllUserNotificationDeliveries(false);
+
+		BlogsEntry entry = addBlogsEntry();
+
+		Assert.assertEquals("An email has been sent", 0, _logRecords.size());
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
+
+		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
+			Assert.fail("A userNotification exists for this entry");
+		}
+
+		Assert.assertTrue(
+			(initialUserNotificationEventsCount) ==
+				_userNotificationEvents.size());
+	}
+
+	@Test
+	public void testBlogUserNotificationInactiveNotificationsOnUpdate()
+		throws Exception {
+
+		int initialUserNotificationEventsCount =
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(_user.getUserId());
+
+		setActiveAllUserNotificationDeliveries(false);
+
+		BlogsEntry entry = addBlogsEntry();
+
+		updateEntry(entry);
+
+		Assert.assertEquals("An email has been sent", 0, _logRecords.size());
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
+
+		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
+			Assert.fail("A userNotification exists for this entry");
+		}
+
+		Assert.assertTrue(
 			(initialUserNotificationEventsCount) ==
 				_userNotificationEvents.size());
 
-		Assert.assertEquals("An email has been sent", 0, logRecords.size());
+		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
 	}
 
-	protected void activateAllUserNotificationDeliveries() throws Exception {
-		List<UserNotificationDelivery> userNotificationDeliveries =
-			addUserNotificationDeliveries();
+	@Test
+	public void testBlogUserNotificationInactiveWebsiteNotificationsOnAdd()
+		throws Exception {
 
-		for (UserNotificationDelivery userNotificationDelivery :
-				userNotificationDeliveries) {
+		int initialUserNotificationEventsCount =
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(_user.getUserId());
 
-			UserNotificationDeliveryLocalServiceUtil.
-				updateUserNotificationDelivery(
-					userNotificationDelivery.getUserNotificationDeliveryId(),
-					true);
+		setActiveUserNotificationDeliveryType(
+			UserNotificationDeliveryConstants.TYPE_WEBSITE,
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, false);
+
+		BlogsEntry entry = addBlogsEntry();
+
+		Assert.assertEquals(1, _logRecords.size());
+
+		LogRecord logRecord = _logRecords.get(0);
+
+		Assert.assertEquals(
+			"No mail has been sent", "Sending email", logRecord.getMessage());
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
+
+		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
+			Assert.fail("A userNotification exists for this entry");
 		}
+
+		Assert.assertTrue(
+			(initialUserNotificationEventsCount) ==
+				_userNotificationEvents.size());
+
+		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
+	}
+
+	@Test
+	public void testBlogUserNotificationInactiveWebsiteNotificationsOnUpdate()
+		throws Exception {
+
+		int initialUserNotificationEventsCount =
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(_user.getUserId());
+
+		setActiveUserNotificationDeliveryType(
+			UserNotificationDeliveryConstants.TYPE_WEBSITE,
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, false);
+
+		setActiveUserNotificationDeliveryType(
+			UserNotificationDeliveryConstants.TYPE_WEBSITE,
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY, false);
+
+		BlogsEntry entry = addBlogsEntry();
+
+		updateEntry(entry);
+
+		Assert.assertEquals(2, _logRecords.size());
+
+		LogRecord logRecord = _logRecords.get(0);
+
+		Assert.assertEquals(
+			"No mail has been sent", "Sending email", logRecord.getMessage());
+
+		logRecord = _logRecords.get(1);
+
+		Assert.assertEquals(
+			"No mail has been sent", "Sending email", logRecord.getMessage());
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
+
+		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
+			Assert.fail("A userNotification exists for this entry");
+		}
+
+		Assert.assertTrue(
+			(initialUserNotificationEventsCount) ==
+				_userNotificationEvents.size());
+
+		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
+	}
+
+	@Test
+	public void testBlogUserNotificationOnAdd() throws Exception {
+		int initialUserNotificationEventsCount =
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(_user.getUserId());
+
+		BlogsEntry entry = addBlogsEntry();
+
+		Assert.assertEquals(1, _logRecords.size());
+
+		LogRecord logRecord = _logRecords.get(0);
+
+		Assert.assertEquals(
+			"No mail has been sent", "Sending email", logRecord.getMessage());
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
+
+		if (entryUserNotificationEventsJsonObjects.isEmpty()) {
+			Assert.fail("userNotification doesn't exists for this entry");
+		}
+
+		Assert.assertTrue(
+			"More than 1 userNotificationEvent exist",
+			(1 + initialUserNotificationEventsCount) ==
+				_userNotificationEvents.size());
+
+		Assert.assertEquals(1, entryUserNotificationEventsJsonObjects.size());
+
+		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
+			Assert.assertEquals(
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				jsonObject.getInt("notificationType"));
+		}
+	}
+
+	@Test
+	public void testBlogUserNotificationOnUpdate() throws Exception {
+		int initialUserNotificationEventsCount =
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(_user.getUserId());
+
+		BlogsEntry entry = addBlogsEntry();
+
+		updateEntry(entry);
+
+		Assert.assertEquals(2, _logRecords.size());
+
+		LogRecord logRecord = _logRecords.get(0);
+
+		Assert.assertEquals(
+			"No mail has been sent", "Sending email", logRecord.getMessage());
+
+		logRecord = _logRecords.get(1);
+
+		Assert.assertEquals(
+			"No mail has been sent", "Sending email", logRecord.getMessage());
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(entry.getEntryId());
+
+		if (entryUserNotificationEventsJsonObjects.isEmpty()) {
+			Assert.fail("userNotification doesn't exists for this entry");
+		}
+
+		Assert.assertTrue(
+			(2 + initialUserNotificationEventsCount) ==
+				_userNotificationEvents.size());
+
+		Assert.assertEquals(2, entryUserNotificationEventsJsonObjects.size());
+
+		int[]notificationTypes = new int[0];
+
+		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
+			notificationTypes = ArrayUtil.append(
+				notificationTypes, jsonObject.getInt("notificationType"));
+		}
+
+		Assert.assertNotEquals(notificationTypes[0], notificationTypes[1]);
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				notificationTypes,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY));
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				notificationTypes,
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY));
 	}
 
 	protected BlogsEntry addBlogsEntry() throws Exception {
@@ -255,8 +433,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	protected List<UserNotificationDelivery> addUserNotificationDeliveries()
 		throws Exception {
 
-		List<UserNotificationDelivery> userNotificationDeliveries =
-			new ArrayList<UserNotificationDelivery>();
+		_userNotificationDeliveries = new ArrayList<UserNotificationDelivery>();
 
 		Map<String, List<UserNotificationDefinition>>
 			userNotificationDefinitionsMap =
@@ -289,7 +466,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 					UserNotificationDeliveryType userNotificationDeliveryType =
 						userNotificationDeliveryTypeEntry.getValue();
 
-					userNotificationDeliveries.add(
+					_userNotificationDeliveries.add(
 						UserNotificationDeliveryLocalServiceUtil.
 							getUserNotificationDelivery(
 								_user.getUserId(), portletId,
@@ -302,71 +479,37 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			}
 		}
 
-		if (userNotificationDeliveries.isEmpty()) {
+		if (_userNotificationDeliveries.isEmpty()) {
 			Assert.fail("userNotificationDeliveries could not be empty");
 		}
 
-		return userNotificationDeliveries;
+		return _userNotificationDeliveries;
 	}
 
-	protected void deactivateAllUserNotificationDeliveries() throws Exception {
-		deactivateMailUserNotificationDelivery();
-		deactivateWebsiteUserNotificationDelivery();
+	protected void deleteUserNotificationDeliveries() throws Exception {
+		UserNotificationDeliveryLocalServiceUtil.
+			deleteUserNotificationDeliveries(_user.getUserId());
 	}
 
-	protected void deactivateMailUserNotificationDelivery() throws Exception {
-		List<UserNotificationDelivery> userNotificationDeliveries =
-			addUserNotificationDeliveries();
+	protected void deleteUserNotificationEvents() throws Exception {
+		for (UserNotificationEvent userNotificationEvent :
+				_userNotificationEvents) {
 
-		if (userNotificationDeliveries.isEmpty()) {
-			Assert.fail("userNotificationDelivery could not be empty");
-		}
-
-		for (UserNotificationDelivery userNotificationDelivery :
-				userNotificationDeliveries) {
-
-			int deliveryType = userNotificationDelivery.getDeliveryType();
-
-			if (deliveryType == UserNotificationDeliveryConstants.TYPE_EMAIL) {
-				UserNotificationDeliveryLocalServiceUtil.
-					updateUserNotificationDelivery(
-						userNotificationDelivery.
-							getUserNotificationDeliveryId(),
-						false);
-			}
+			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
+				userNotificationEvent);
 		}
 	}
 
-	protected void deactivateWebsiteUserNotificationDelivery()
+	protected List<JSONObject> getEntryUserNotificationEventsJsonObjects(
+			long entryId)
 		throws Exception {
 
-		List<UserNotificationDelivery> userNotificationDeliveries =
-			addUserNotificationDeliveries();
-
-		for (UserNotificationDelivery userNotificationDelivery :
-				userNotificationDeliveries) {
-
-			int deliveryType = userNotificationDelivery.getDeliveryType();
-
-			if (deliveryType ==
-					UserNotificationDeliveryConstants.TYPE_WEBSITE) {
-
-				UserNotificationDeliveryLocalServiceUtil.
-					updateUserNotificationDelivery(
-						userNotificationDelivery.
-							getUserNotificationDeliveryId(),
-						false);
-			}
-		}
-	}
-
-	protected long[] getUserNotificationClassPKs() throws Exception {
 		_userNotificationEvents =
 			UserNotificationEventLocalServiceUtil.getUserNotificationEvents(
 				_user.getUserId());
 
-		long[] userNotificationEventsClassPKs =
-			new long[_userNotificationEvents.size()];
+		List<JSONObject> userNotificationEventJsonObjects =
+			new ArrayList<JSONObject>(_userNotificationEvents.size());
 
 		for (UserNotificationEvent userNotificationEvent :
 				_userNotificationEvents) {
@@ -376,15 +519,85 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 			long classPK = jsonObject.getLong("classPK");
 
-			userNotificationEventsClassPKs = ArrayUtil.append(
-				userNotificationEventsClassPKs, classPK);
+			if (classPK != entryId) {
+				continue;
+			}
+
+			userNotificationEventJsonObjects.add(jsonObject);
 		}
 
-		return userNotificationEventsClassPKs;
+		return userNotificationEventJsonObjects;
+	}
+
+	protected void setActiveAllUserNotificationDeliveries(boolean active)
+		throws Exception {
+
+		setActiveUserNotificationDeliveryType(
+			UserNotificationDeliveryConstants.TYPE_EMAIL,
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, active);
+
+		setActiveUserNotificationDeliveryType(
+			UserNotificationDeliveryConstants.TYPE_EMAIL,
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY, active);
+
+		setActiveUserNotificationDeliveryType(
+			UserNotificationDeliveryConstants.TYPE_WEBSITE,
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, active);
+
+		setActiveUserNotificationDeliveryType(
+			UserNotificationDeliveryConstants.TYPE_WEBSITE,
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY, active);
+	}
+
+	protected void setActiveUserNotificationDeliveryType(
+			int deliverType, int notificationType, boolean active)
+		throws Exception {
+
+		if (_userNotificationDeliveries.isEmpty()) {
+			addUserNotificationDeliveries();
+		}
+
+		for (UserNotificationDelivery userNotificationDelivery :
+				_userNotificationDeliveries) {
+
+			if ((userNotificationDelivery.getDeliveryType() == deliverType) &&
+				(userNotificationDelivery.getNotificationType() ==
+						notificationType)) {
+
+				UserNotificationDeliveryLocalServiceUtil.
+					updateUserNotificationDelivery(
+						userNotificationDelivery.
+							getUserNotificationDeliveryId(),
+						active);
+
+				return;
+			}
+		}
+
+		Assert.fail("UserNotification doesn't exist");
+	}
+
+	private void updateEntry(BlogsEntry entry) throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		serviceContext.setCommand(Constants.UPDATE);
+		serviceContext.setLayoutFullURL("http://localhost");
+		serviceContext.setScopeGroupId(_group.getGroupId());
+
+		BlogsEntryLocalServiceUtil.updateEntry(
+			entry.getUserId(), entry.getEntryId(),
+			ServiceTestUtil.randomString(), entry.getDescription(),
+			entry.getContent(), 1, 1, 2012, 12, 00, true, true, new String[0],
+			entry.getSmallImage(), entry.getSmallImageURL(), StringPool.BLANK,
+			null, serviceContext);
 	}
 
 	private Group _group;
+	private List<LogRecord> _logRecords;
 	private User _user;
-	private List<UserNotificationEvent> _userNotificationEvents;
+	private List<UserNotificationDelivery> _userNotificationDeliveries =
+		new ArrayList<UserNotificationDelivery>();
+	private List<UserNotificationEvent> _userNotificationEvents =
+		new ArrayList<UserNotificationEvent>();
 
 }

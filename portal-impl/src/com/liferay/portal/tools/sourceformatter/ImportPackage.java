@@ -39,13 +39,13 @@ public class ImportPackage implements Comparable<ImportPackage> {
 			return false;
 		}
 
-		ImportPackage importPackage = (ImportPackage)obj;
+		ImportPackage other = (ImportPackage)obj;
 
-		if (_static != importPackage._static) {
+		if (_static != other._static) {
 			return false;
 		}
 
-		return _import.equals(importPackage._import);
+		return _import.equals(other._import);
 	}
 
 	public String getLine() {

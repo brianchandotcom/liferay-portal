@@ -16,13 +16,12 @@ package com.liferay.portal.tools.sourceformatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * @author André de Oliveira
@@ -37,7 +36,7 @@ public abstract class ImportsFormatter {
 			return imports + "\n";
 		}
 
-		List<ImportPackage> importPackages = new ArrayList<ImportPackage>();
+		SortedSet<ImportPackage> importPackages = new TreeSet<ImportPackage>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(imports));
@@ -47,14 +46,10 @@ public abstract class ImportsFormatter {
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			ImportPackage importPackage = createImportPackage(line);
 
-			if ((importPackage != null) &&
-				!importPackages.contains(importPackage)) {
-
+			if (importPackage != null) {
 				importPackages.add(importPackage);
 			}
 		}
-
-		importPackages = ListUtil.sort(importPackages);
 
 		StringBundler sb = new StringBundler(3 * importPackages.size());
 

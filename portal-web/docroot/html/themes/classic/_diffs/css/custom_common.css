@@ -265,6 +265,7 @@
 
 	.dockbar {
 		&.navbar .navbar-inner {
+			border-bottom: 0;
 			min-height: 40px;
 		}
 

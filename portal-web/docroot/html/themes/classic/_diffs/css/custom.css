@@ -173,6 +173,23 @@ $dockbarOpenGradientStart: #0EA6F9;
 				a {
 					color: #FFF;
 				}
+
+				@include respond-to(phone, tablet) {
+					&.nav-account-controls .info-link-container {
+						float: right;
+
+						.info-link {
+							color: #FFF;
+							font-size: 26px;
+							margin-left: 0;
+							padding: 11px 18px 12px;
+
+							&:focus, &:hover {
+								background-color: #5BBAE8;
+							}
+						}
+					}
+				}
 			}
 		}
 
@@ -260,10 +277,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				background-color: #6DA4E4;
 				background-color: rgba(109, 168, 228, 0.9);
 				line-height: 20px;
-			}
-
-			.page-customization-bar-text {
-				height: 43px;
 			}
 
 			.staging-bar {

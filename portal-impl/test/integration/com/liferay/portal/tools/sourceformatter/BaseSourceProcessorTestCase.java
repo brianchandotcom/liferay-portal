@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
@@ -26,6 +25,8 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+
+import org.apache.commons.io.FileUtils;
 
 /**
  * @author Hugo Huijser
@@ -106,7 +107,8 @@ public class BaseSourceProcessorTestCase {
 			try {
 				File file = new File(_DIR_NAME + "/expected/" + fileName);
 
-				String expectedFormattedContent = FileUtil.read(file.getPath());
+				String expectedFormattedContent =
+					FileUtils.readFileToString(file, "UTF8");
 
 				Assert.assertEquals(
 					expectedFormattedContent, actualFormattedContent);

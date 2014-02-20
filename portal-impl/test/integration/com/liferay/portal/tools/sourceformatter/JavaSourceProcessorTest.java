@@ -14,15 +14,11 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Hugo Huijser
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test

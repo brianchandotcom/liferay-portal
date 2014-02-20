@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>PGKnowledgebasedisplay</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKnowledgebasedisplay</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGKnowledgebasedisplay</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//section[contains(.,'Knowledge Base (Display)')]//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ARTICLE_BUTTON</td>
+	<td>//button[contains(.,'Add Article')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_BUTTON</td>
+	<td>//button[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ARTICLE_TABLE-->
+<tr>
+	<td>ARTICLE_TABLE_PRIORITY</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_AUTHOR</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_CREATE_DATE</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_STATUS</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[6]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_VIEWS</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[7]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_ACTIONS_BUTTON</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[8]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -6,10 +6,10 @@
 
 	<var name="key_siteName" value="${siteName}" />
 	<var name="pageName" value="Wiki" />
-	<var name="pageType" value="Open Site" />
 	<var name="siteDescription" value="Open Site Description" />
 	<var name="siteName" value="Open Site Name" />
 	<var name="siteType" value="Open" />
+	<var name="soPage" value="true" />
 
 	<set-up>
 		<execute macro="SOUser#firstLoginPG" />
@@ -21,15 +21,13 @@
 		</execute>
 	</set-up>
 
-	<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
-	<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
-	<var name="wikiPageAttachmentName" value="Document_1.jpg" />
-	<var name="wikiPageAttachmentSize" value="12.9k" />
-	<var name="wikiPageContent" value="Wiki FrontPage Content" />
-	<var name="wikiPageContentEdit" value="Wiki FrontPage Content Edit" />
-
 	<command name="AddSOWikiFrontPage" priority="5">
-		<execute macro="SOSite#gotoPG" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
@@ -37,36 +35,56 @@
 	</command>
 
 	<command name="AddSOWikiFrontPageChildPage" priority="5">
-		<execute macro="SOSite#gotoPG" />
+		<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
+		<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="WikiPage#addChildPagePG">
 			<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
 			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 	</command>
 
 	<command name="AddSOWikiFrontPageDraft" priority="5">
-		<execute macro="SOSite#gotoPG" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="WikiPage#saveAsDraftFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="WikiPage#viewSaveAsDraftFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="WikiPage#addFrontPageDraftPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
@@ -74,13 +92,22 @@
 	</command>
 
 	<command name="EditSOWikiFrontPage" priority="5">
-		<execute macro="SOSite#gotoPG" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+		<var name="wikiPageContentEdit" value="Wiki FrontPage Content Edit" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="WikiPage#editFrontPagePG">
 			<var name="wikiPageContentEdit" value="${wikiPageContentEdit}" />

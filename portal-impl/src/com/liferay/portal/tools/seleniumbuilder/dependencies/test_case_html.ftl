@@ -32,18 +32,6 @@
 			</form>
 		</div>
 
-		<div class="options">
-			<form>
-				<input id="enableActionScreenShotButton" name="log" onchange="radioCheck()" type="radio">
-					<label for="enableActionScreenShotButton">Enable Screenshots </label>
-				</input>
-
-				<input checked="checked" id="disableActionScreenShotButton" name="log" onchange="radioCheck()" type="radio">
-					<label for="disableActionScreenShotButton">Disable Screenshots </label>
-				</input>
-			</form>
-		</div>
-
 		<div>
 			<form>
 				<input id="errorLogSizeButton" name="log" onchange="errorLogSizeCheck()" type="checkbox">
@@ -68,9 +56,6 @@
 
 				<#include "test_case_element_html.ftl">
 			</ul>
-		</div>
-
-		<div id="actionScreenShotLog" style="display: none;">
 		</div>
 
 		<div id="errorLog">

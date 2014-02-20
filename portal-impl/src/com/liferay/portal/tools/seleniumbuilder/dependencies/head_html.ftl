@@ -5,7 +5,6 @@
 				document.getElementById("errorLogSize").innerHTML = "Decrease Error Log Size";
 
 				actionCommandLog.style.height = "37%";
-				actionScreenShotLog.style.height= "37%";
 				descriptionLog.style.height = "37%";
 				errorLog.style.height = "50%";
 				pageObjectXMLLog.style.height = "37%";
@@ -14,7 +13,6 @@
 				document.getElementById("errorLogSize").innerHTML = "&nbsp;Increase Error Log Size";
 
 				actionCommandLog.style.height = "75%";
-				actionScreenShotLog.style.height= "75%";
 				descriptionLog.style.height = "75%";
 				errorLog.style.height = "12%";
 				pageObjectXMLLog.style.height = "75%";
@@ -33,55 +31,28 @@
 		function radioCheck () {
 			var actionCommandLogButtonChecked = document.getElementById("actionCommandLogButton").checked;
 			var descriptionLogButtonChecked = document.getElementById("descriptionLogButton").checked;
-			var disableActionScreenShotButtonChecked = document.getElementById("disableActionScreenShotButton").checked;
-			var enableActionScreenShotButtonChecked = document.getElementById("enableActionScreenShotButton").checked;
 			var xmlLogButtonChecked = document.getElementById("xmlLogButton").checked;
 
 			var actionCommandLog = document.getElementById("actionCommandLog");
-			var actionScreenShotLog = document.getElementById("actionScreenShotLog");
 			var descriptionLog = document.getElementById("descriptionLog");
 			var pageObjectXMLLog = document.getElementById("pageObjectXMLLog");
 
-			if ((actionCommandLogButtonChecked) && (disableActionScreenShotButtonChecked)) {
+			if (actionCommandLogButtonChecked) {
 				actionCommandLog.style.display = "block";
 				actionCommandLog.style.width = "99%";
 				descriptionLog.style.display ="none";
-				actionScreenShotLog.style.display = "none";
 				pageObjectXMLLog.style.display = "none";
 			}
-			else if ((actionCommandLogButtonChecked) && (enableActionScreenShotButtonChecked)) {
-				actionCommandLog.style.display = "block";
-				actionCommandLog.style.width = "46%";
-				descriptionLog.style.display ="none";
-				actionScreenShotLog.style.display = "block";
-				pageObjectXMLLog.style.display = "none";
-			}
-			else if ((descriptionLogButtonChecked) && (disableActionScreenShotButtonChecked)) {
+			else if (descriptionLogButtonChecked) {
 				actionCommandLog.style.display = "none";
-				actionScreenShotLog.style.display = "none";
 				descriptionLog.style.display ="block";
 				descriptionLog.style.width = "99%";
 				pageObjectXMLLog.style.display = "none";
 			}
-			else if ((descriptionLogButtonChecked) && (enableActionScreenShotButtonChecked)) {
+			else if (xmlLogButtonChecked) {
 				actionCommandLog.style.display = "none";
-				actionScreenShotLog.style.display = "block";
-				descriptionLog.style.display ="block";
-				descriptionLog.style.width = "46%";
-				pageObjectXMLLog.style.display = "none";
-			}
-			else if ((xmlLogButtonChecked) && (disableActionScreenShotButtonChecked)) {
-				actionCommandLog.style.display = "none";
-				actionScreenShotLog.style.display = "none";
 				descriptionLog.style.display ="none";
 				pageObjectXMLLog.style.width = "99%";
-				pageObjectXMLLog.style.display = "block";
-			}
-			else if ((xmlLogButtonChecked) && (enableActionScreenShotButtonChecked)) {
-				actionCommandLog.style.display = "none";
-				actionScreenShotLog.style.display = "block";
-				descriptionLog.style.display ="none";
-				pageObjectXMLLog.style.width = "46%";
 				pageObjectXMLLog.style.display = "block";
 			}
 		}
@@ -170,15 +141,6 @@
 			overflow: auto;
 			white-space: nowrap;
 			width: 99%;
-		}
-
-		#actionScreenShotLog {
-			border: 1px solid #CCC;
-			float: left;
-			height: 75%;
-			overflow: auto;
-			white-space: nowrap;
-			width: 53%;
 		}
 
 		#descriptionLog {

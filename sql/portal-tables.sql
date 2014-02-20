@@ -1590,6 +1590,7 @@ create table PortletPreferences (
 );
 
 create table RatingsEntry (
+	uuid_ VARCHAR(75) null,
 	entryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

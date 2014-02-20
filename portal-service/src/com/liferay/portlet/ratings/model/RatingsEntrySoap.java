@@ -31,6 +31,7 @@ public class RatingsEntrySoap implements Serializable {
 	public static RatingsEntrySoap toSoapModel(RatingsEntry model) {
 		RatingsEntrySoap soapModel = new RatingsEntrySoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setEntryId(model.getEntryId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -90,6 +91,14 @@ public class RatingsEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setEntryId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getEntryId() {
@@ -164,6 +173,7 @@ public class RatingsEntrySoap implements Serializable {
 		_score = score;
 	}
 
+	private String _uuid;
 	private long _entryId;
 	private long _companyId;
 	private long _userId;

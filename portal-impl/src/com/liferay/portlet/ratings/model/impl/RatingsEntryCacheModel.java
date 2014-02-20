@@ -38,9 +38,11 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{entryId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", entryId=");
 		sb.append(entryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -66,6 +68,13 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 	@Override
 	public RatingsEntry toEntityModel() {
 		RatingsEntryImpl ratingsEntryImpl = new RatingsEntryImpl();
+
+		if (uuid == null) {
+			ratingsEntryImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			ratingsEntryImpl.setUuid(uuid);
+		}
 
 		ratingsEntryImpl.setEntryId(entryId);
 		ratingsEntryImpl.setCompanyId(companyId);
@@ -103,6 +112,7 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
 		entryId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
@@ -117,6 +127,13 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(entryId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -135,6 +152,7 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		objectOutput.writeDouble(score);
 	}
 
+	public String uuid;
 	public long entryId;
 	public long companyId;
 	public long userId;

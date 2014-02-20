@@ -190,6 +190,20 @@ public class RatingsEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns the ratings entry with the matching UUID and company.
+	*
+	* @param uuid the ratings entry's UUID
+	* @param companyId the primary key of the company
+	* @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.ratings.model.RatingsEntry fetchRatingsEntryByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchRatingsEntryByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	* Returns the ratings entry with the primary key.
 	*
 	* @param entryId the primary key of the ratings entry
@@ -209,6 +223,22 @@ public class RatingsEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the ratings entry with the matching UUID and company.
+	*
+	* @param uuid the ratings entry's UUID
+	* @param companyId the primary key of the company
+	* @return the matching ratings entry
+	* @throws PortalException if a matching ratings entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.ratings.model.RatingsEntry getRatingsEntryByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRatingsEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**

@@ -22,3 +22,5 @@ alter table LayoutSet drop column logo;
 alter table LayoutSetBranch drop column logo;
 
 alter table Organization_ add logoId LONG;
+
+alter table RatingsEntry add uuid_ VARCHAR(75) null;

@@ -150,13 +150,17 @@ public class ExportImportConfigurationLocalServiceImpl
 
 	@Override
 	public ExportImportConfiguration moveExportImportConfigurationToTrash(
-			long userId, ExportImportConfiguration exportImportConfiguration)
+			long userId, long exportImportConfigurationId)
 		throws PortalException, SystemException {
+
+		ExportImportConfiguration exportImportConfiguration =
+			exportImportConfigurationPersistence.findByPrimaryKey(
+				exportImportConfigurationId);
 
 		int oldStatus = exportImportConfiguration.getStatus();
 
 		exportImportConfiguration = updateStatus(
-			userId, exportImportConfiguration,
+			userId, exportImportConfiguration.getExportImportConfigurationId(),
 			WorkflowConstants.STATUS_IN_TRASH);
 
 		trashEntryLocalService.addTrashEntry(
@@ -182,7 +186,8 @@ public class ExportImportConfigurationLocalServiceImpl
 			exportImportConfigurationId);
 
 		exportImportConfiguration = updateStatus(
-			userId, exportImportConfiguration, trashEntry.getStatus());
+			userId, exportImportConfiguration.getExportImportConfigurationId(),
+			trashEntry.getStatus());
 
 		trashEntryLocalService.deleteEntry(
 			ExportImportConfiguration.class.getName(),
@@ -219,11 +224,14 @@ public class ExportImportConfigurationLocalServiceImpl
 
 	@Override
 	public ExportImportConfiguration updateStatus(
-			long userId, ExportImportConfiguration exportImportConfiguration,
-			int status)
+			long userId, long exportImportConfigurationId, int status)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
+		ExportImportConfiguration exportImportConfiguration =
+			exportImportConfigurationPersistence.findByPrimaryKey(
+				exportImportConfigurationId);
 
 		exportImportConfiguration.setStatus(status);
 		exportImportConfiguration.setStatusByUserId(userId);

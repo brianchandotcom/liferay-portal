@@ -68,7 +68,6 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Team;
-import com.liferay.portal.model.impl.LockImpl;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
@@ -85,36 +84,18 @@ import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
-import com.liferay.portlet.blogs.model.impl.BlogsEntryImpl;
-import com.liferay.portlet.bookmarks.model.impl.BookmarksEntryImpl;
-import com.liferay.portlet.bookmarks.model.impl.BookmarksFolderImpl;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutImpl;
-import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
-import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
-import com.liferay.portlet.journal.model.impl.JournalFeedImpl;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.model.impl.MBBanImpl;
-import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
-import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
-import com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.persistence.MBDiscussionUtil;
 import com.liferay.portlet.messageboards.service.persistence.MBMessageUtil;
-import com.liferay.portlet.polls.model.impl.PollsChoiceImpl;
-import com.liferay.portlet.polls.model.impl.PollsQuestionImpl;
-import com.liferay.portlet.polls.model.impl.PollsVoteImpl;
 import com.liferay.portlet.ratings.model.RatingsEntry;
-import com.liferay.portlet.ratings.model.impl.RatingsEntryImpl;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
-import com.liferay.portlet.wiki.model.impl.WikiNodeImpl;
-import com.liferay.portlet.wiki.model.impl.WikiPageImpl;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -2516,26 +2497,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	protected void initXStream() {
 		_xStream = new XStream();
-
-		_xStream.alias("BlogsEntry", BlogsEntryImpl.class);
-		_xStream.alias("BookmarksFolder", BookmarksFolderImpl.class);
-		_xStream.alias("BookmarksEntry", BookmarksEntryImpl.class);
-		_xStream.alias("DLFolder", DLFolderImpl.class);
-		_xStream.alias("DLFileEntry", DLFileEntryImpl.class);
-		_xStream.alias("DLFileShortcut", DLFileShortcutImpl.class);
-		_xStream.alias("JournalArticle", JournalArticleImpl.class);
-		_xStream.alias("JournalFeed", JournalFeedImpl.class);
-		_xStream.alias("Lock", LockImpl.class);
-		_xStream.alias("MBBan", MBBanImpl.class);
-		_xStream.alias("MBCategory", MBCategoryImpl.class);
-		_xStream.alias("MBMessage", MBMessageImpl.class);
-		_xStream.alias("MBThreadFlag", MBThreadFlagImpl.class);
-		_xStream.alias("PollsQuestion", PollsQuestionImpl.class);
-		_xStream.alias("PollsChoice", PollsChoiceImpl.class);
-		_xStream.alias("PollsVote", PollsVoteImpl.class);
-		_xStream.alias("RatingsEntry", RatingsEntryImpl.class);
-		_xStream.alias("WikiNode", WikiNodeImpl.class);
-		_xStream.alias("WikiPage", WikiPageImpl.class);
 
 		_xStream.omitField(HashMap.class, "cache_bitmask");
 	}

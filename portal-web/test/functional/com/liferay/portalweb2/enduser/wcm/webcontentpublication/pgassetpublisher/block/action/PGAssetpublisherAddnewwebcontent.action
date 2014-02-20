@@ -5,13 +5,13 @@
 		</case>
 
 		<case locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
+			<execute function="AssertClick#assertTextClickAtCKEditor" />
 		</case>
 	</command>
 
 	<command name="type">
 		<case locator-key1="CONTENT_FIELD">
-			<execute function="Type#typeFrame" />
+			<execute function="Type#typeFrameWaitForCKEditor" />
 		</case>
 	</command>
 </definition>

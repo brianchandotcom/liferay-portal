@@ -19,6 +19,8 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="DataDefinitionTemplate#tearDownTemplateCP" />
+
 		<execute macro="List#tearDownCP" />
 
 		<execute macro="DataDefinition#tearDownCP" />
@@ -640,5 +642,231 @@
 		<execute macro="List#viewPG">
 			<var name="listName" value="${listName}" />
 		</execute>
+	</command>
+
+	<command name="ViewListRecordWithUploadedFreeMarkerDisplayTemplate" priority="5">
+		<property name="custom.properties" value="freemarker.engine.restricted.variables=$${line.separator}velocity.engine.restricted.variables=" />
+
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionDisplayTemplateName" value="Data Definition FreeMarker Display Template Name" />
+		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="displayTemplateLanguageSelect" value="FreeMarker (.ftl)" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Name" />
+		<var name="fieldName" value="Name" />
+		<var name="listDescription" value="List Description" />
+		<var name="listName" value="List Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#addCP">
+			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinitionTemplate#addDisplayTemplateCP">
+			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
+			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="displayTemplateLanguageSelect" value="FreeMarker (.ftl)" />
+			<var name="displayTemplateScriptFile" value="ddl_template_freemarker_1.ftl" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="List#addCP">
+			<var name="listDescription" value="${listDescription}" />
+			<var name="listName" value="${listName}" />
+		</execute>
+
+		<execute macro="List#selectDataDefinitionCP">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="List#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="ListRecord#addCP">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="listName" value="${listName}" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="recordFieldData" value="Name1" />
+		</execute>
+
+		<execute macro="ListRecord#publishCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="ListRecord#addCP">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="listName" value="${listName}" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="recordFieldData" value="Name2" />
+		</execute>
+
+		<execute macro="ListRecord#publishCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="List#selectPG">
+			<var name="listName" value="${listName}" />
+		</execute>
+
+		<execute macro="DataDefinitionTemplate#selectDisplayTemplatePG">
+			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[1]" value1="Name1" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[2]" value1="Name2" />
+	</command>
+
+	<command name="ViewListRecordWithUploadedVelocityDisplayTemplate" priority="5">
+		<property name="custom.properties" value="freemarker.engine.restricted.variables=$${line.separator}velocity.engine.restricted.variables=" />
+
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
+		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="displayTemplateLanguageSelect" value="FreeMarker (.ftl)" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Name" />
+		<var name="fieldName" value="Name" />
+		<var name="listDescription" value="List Description" />
+		<var name="listName" value="List Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#addCP">
+			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinitionTemplate#addDisplayTemplateCP">
+			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
+			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="displayTemplateLanguageSelect" value="Velocity (.vm)" />
+			<var name="displayTemplateScriptFile" value="ddl_template_velocity_1.vm" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="List#addCP">
+			<var name="listDescription" value="${listDescription}" />
+			<var name="listName" value="${listName}" />
+		</execute>
+
+		<execute macro="List#selectDataDefinitionCP">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="List#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="ListRecord#addCP">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="listName" value="${listName}" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="recordFieldData" value="Name1" />
+		</execute>
+
+		<execute macro="ListRecord#publishCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="ListRecord#addCP">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="listName" value="${listName}" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="recordFieldData" value="Name2" />
+		</execute>
+
+		<execute macro="ListRecord#publishCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="List#selectPG">
+			<var name="listName" value="${listName}" />
+		</execute>
+
+		<execute macro="DataDefinitionTemplate#selectDisplayTemplatePG">
+			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[1]" value1="Name1" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[2]" value1="Name2" />
 	</command>
 </definition>

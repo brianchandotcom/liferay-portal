@@ -122,13 +122,8 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		AssetVocabulary assetVocabulary = (AssetVocabulary)obj;
 
-		Document document = new DocumentImpl();
-
-		document.addUID(PORTLET_ID, assetVocabulary.getVocabularyId());
-
-		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), assetVocabulary.getCompanyId(),
-			document.get(Field.UID));
+		deleteDocument(
+			assetVocabulary.getCompanyId(), assetVocabulary.getVocabularyId());
 	}
 
 	@Override

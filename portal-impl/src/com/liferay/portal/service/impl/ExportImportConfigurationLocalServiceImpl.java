@@ -85,11 +85,7 @@ public class ExportImportConfigurationLocalServiceImpl
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException, SystemException {
 
-		// ExportImportConfiguration
-
 		exportImportConfigurationPersistence.remove(exportImportConfiguration);
-
-		// Trash
 
 		trashEntryLocalService.deleteEntry(
 			ExportImportConfiguration.class.getName(),
@@ -221,12 +217,11 @@ public class ExportImportConfigurationLocalServiceImpl
 			exportImportConfiguration);
 	}
 
+	@Override
 	public ExportImportConfiguration updateStatus(
 			long userId, ExportImportConfiguration exportImportConfiguration,
 			int status)
 		throws PortalException, SystemException {
-
-		// ExportImportConfiguration
 
 		User user = userPersistence.findByPrimaryKey(userId);
 

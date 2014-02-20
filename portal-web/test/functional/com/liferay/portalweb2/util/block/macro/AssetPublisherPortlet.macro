@@ -2,24 +2,63 @@
 	<command name="configureAddSiteScopes">
 		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
 
-		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT" value1="Select" />
-		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT_GLOBAL" value1="Global" />
-		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT" value1="Select" />
-		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
-		<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
+		<if>
+			<equals arg1="${addGlobalSite}" arg2="True"/>
+			<then>
+				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT" value1="Select" />
+				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT_GLOBAL" value1="Global" />
+			</then>
+		</if>
 
-		<execute action="PGAssetpublisherConfigurationSites#selectFrame" locator-key1="SITES_IFRAME" />
+		<if>
+			<equals arg1="${addOtherSite}" arg2="True"/>
+			<then>
+				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT" value1="Select" />
+				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
+				<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
 
-		<var name="key_siteName" value="${siteNameHidden}" />
+				<execute action="PGAssetpublisherConfigurationSites#selectFrame" locator-key1="SITES_IFRAME" />
 
-		<execute action="PGAssetpublisherConfigurationSites#assertElementPresent" locator-key1="SITES_TABLE_CHOOSE_BUTTON_DISABLED" />
+				<var name="key_siteName" value="${otherSiteName}" />
 
-		<var name="key_siteName" value="${otherSiteName}" />
+				<execute action="PGAssetpublisherConfigurationSites#assertClick" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
-		<execute action="PGAssetpublisherConfigurationSites#assertClick" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+				<execute action="PGAssetpublisherConfiguration#selectFrame" />
+				<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+			</then>
+		</if>
 
-		<execute action="PGAssetpublisherConfiguration#selectFrame" />
-		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+		<if>
+			<equals arg1="${addSite}" arg2="True"/>
+			<then>
+				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT" value1="Select" />
+				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
+				<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
+
+				<execute action="PGAssetpublisherConfigurationSites#selectFrame" locator-key1="SITES_IFRAME" />
+
+				<var name="key_siteName" value="${siteName}" />
+
+				<execute action="PGAssetpublisherConfigurationSites#assertClick" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+
+				<execute action="PGAssetpublisherConfiguration#selectFrame" />
+				<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT" value1="Select" />
+				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
+				<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
+
+				<execute action="PGAssetpublisherConfigurationSites#selectFrame" locator-key1="SITES_IFRAME" />
+
+				<var name="key_siteName" value="${siteNameHidden}" />
+
+				<execute action="PGAssetpublisherConfigurationSites#assertElementPresent" locator-key1="SITES_TABLE_CHOOSE_BUTTON_DISABLED" />
+
+				<execute action="PGAssetpublisherConfiguration#selectFrame" />
+				<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+			</else>
+		</if>
 
 		<var name="key_siteName" value="${siteName}" />
 
@@ -255,6 +294,8 @@
 	</command>
 
 	<command name="configureToggleSiteScope">
+		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
+
 		<var name="key_siteName" value="${removeSite1Scope}" />
 
 		<execute action="PGAssetpublisherConfiguration#click" locator-key1="SOURCE_SCOPE_DELETE" />

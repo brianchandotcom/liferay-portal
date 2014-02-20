@@ -4,4 +4,10 @@
 			<execute function="AssertElementNotPresent#assertNotVisible" />
 		</case>
 	</command>
+
+	<command name="type">
+		<case locator-key1="NAME_FIELD">
+			<execute function="Type#clickAtSendKeys" />
+		</case>
+	</command>
 </definition>

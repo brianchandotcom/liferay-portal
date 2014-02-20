@@ -1433,7 +1433,7 @@ public class SeleniumBuilderTest {
 			"MacroOrElement1001_2.macro",
 			"Error 1001: Missing (description|echo|execute|fail|for|if|" +
 				"take-screenshot|var|while) child element in " + _DIR_NAME +
-				"	/MacroOrElement1001_2.macro:8");
+				"/MacroOrElement1001_2.macro:8");
 	}
 
 	@Test

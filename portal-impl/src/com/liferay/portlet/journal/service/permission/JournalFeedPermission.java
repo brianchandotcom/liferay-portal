@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.model.JournalFeed;
@@ -26,7 +27,7 @@ import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 /**
  * @author Raymond Augé
  */
-public class JournalFeedPermission {
+public class JournalFeedPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, JournalFeed feed,
@@ -98,6 +99,15 @@ public class JournalFeedPermission {
 		JournalFeed feed = JournalFeedLocalServiceUtil.getFeed(groupId, feedId);
 
 		return contains(permissionChecker, feed, actionId);
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException, SystemException {
+
+		JournalFeedPermission.check(permissionChecker, primaryKey, actionId);
 	}
 
 }

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.polls.model.PollsQuestion;
@@ -26,7 +27,7 @@ import com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PollsQuestionPermission {
+public class PollsQuestionPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long questionId,
@@ -82,6 +83,15 @@ public class PollsQuestionPermission {
 		return permissionChecker.hasPermission(
 			question.getGroupId(), PollsQuestion.class.getName(),
 			question.getQuestionId(), actionId);
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException, SystemException {
+
+		PollsQuestionPermission.check(permissionChecker, primaryKey, actionId);
 	}
 
 }

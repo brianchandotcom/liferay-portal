@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -32,7 +33,7 @@ import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BookmarksEntryPermission {
+public class BookmarksEntryPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, BookmarksEntry entry,
@@ -119,6 +120,15 @@ public class BookmarksEntryPermission {
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(entryId);
 
 		return contains(permissionChecker, entry, actionId);
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException, SystemException {
+
+		BookmarksEntryPermission.check(permissionChecker, primaryKey, actionId);
 	}
 
 }

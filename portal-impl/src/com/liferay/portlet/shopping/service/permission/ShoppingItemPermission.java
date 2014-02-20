@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.shopping.model.ShoppingCategory;
@@ -28,7 +29,7 @@ import com.liferay.portlet.shopping.service.ShoppingItemLocalServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingItemPermission {
+public class ShoppingItemPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long itemId, String actionId)
@@ -96,6 +97,15 @@ public class ShoppingItemPermission {
 		return permissionChecker.hasPermission(
 			item.getGroupId(), ShoppingItem.class.getName(), item.getItemId(),
 			actionId);
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException, SystemException {
+
+		ShoppingItemPermission.check(permissionChecker, primaryKey, actionId);
 	}
 
 }

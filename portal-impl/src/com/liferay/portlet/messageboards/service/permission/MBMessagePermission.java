@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -34,7 +35,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBMessagePermission {
+public class MBMessagePermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long messageId,
@@ -147,6 +148,15 @@ public class MBMessagePermission {
 		return permissionChecker.hasPermission(
 			message.getGroupId(), MBMessage.class.getName(),
 			message.getMessageId(), actionId);
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException, SystemException {
+
+		MBMessagePermission.check(permissionChecker, primaryKey, actionId);
 	}
 
 }

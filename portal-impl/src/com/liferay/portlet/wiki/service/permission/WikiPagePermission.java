@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -32,7 +33,7 @@ import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiPagePermission {
+public class WikiPagePermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long resourcePrimKey,
@@ -193,6 +194,15 @@ public class WikiPagePermission {
 		}
 
 		return _hasPermission(permissionChecker, page, actionId);
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException, SystemException {
+
+		WikiPagePermission.check(permissionChecker, primaryKey, actionId);
 	}
 
 	private static boolean _hasPermission(

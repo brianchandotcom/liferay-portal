@@ -4,15 +4,12 @@
 	<property name="theme.plugins.includes" value="so-theme" />
 	<property name="web.plugins.includes" value="resources-importer-web" />
 
-	<var name="eventTitle" value="Calendar Event Title" />
-	<var name="eventTitleEdit" value="Calendar Event Title Edit" />
-	<var name="eventType" value="Regular" />
 	<var name="key_siteName" value="${siteName}" />
 	<var name="pageName" value="Calendar" />
 	<var name="siteDescription" value="Open Site Description" />
 	<var name="siteName" value="Open Site Name" />
 	<var name="siteType" value="Open" />
-	<var name="userName" value="Test Test" />
+	<var name="soPage" value="true" />
 
 	<set-up>
 		<execute macro="SOUser#firstLoginPG" />
@@ -25,10 +22,8 @@
 	</set-up>
 
 	<command name="AddCalendarEvent" priority="5">
-		<var name="calendarName" value="${siteName}" />
-		<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-		<var name="soPage" value="true" />
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="eventType" value="Regular" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -36,6 +31,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -61,14 +58,14 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewPG" />
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 	</command>
 
 	<command name="DeleteCalendarEvent" priority="5">
-		<var name="calendarName" value="${siteName}" />
-		<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-		<var name="soPage" value="true" />
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="eventType" value="Regular" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -76,6 +73,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -85,15 +84,15 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deletePG" />
+		<execute macro="CalendarEvent#deletePG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 	</command>
 
 	<command name="EditCalendarEvent" priority="5">
-		<var name="calendarName" value="${siteName}" />
-		<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventTitleEdit" value="${eventTitleEdit}" />
-		<var name="eventType" value="${eventType}" />
-		<var name="soPage" value="true" />
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="eventTitleEdit" value="Calendar Event Title Edit" />
+		<var name="eventType" value="Regular" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -101,6 +100,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -112,6 +113,8 @@
 
 		<execute macro="CalendarEvent#editPG">
 			<var name="endDateTimeEdit" value="11:59 PM" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitleEdit" value="${eventTitleEdit}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="startDateTimeEdit" value="11:00 PM" />

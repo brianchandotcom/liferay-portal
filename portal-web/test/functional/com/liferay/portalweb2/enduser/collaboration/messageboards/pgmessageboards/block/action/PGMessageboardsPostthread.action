@@ -1,7 +1,7 @@
 <definition>
 	<command name="assertClick">
 		<case locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
+			<execute function="AssertClick#pauseAssertTextClickAtAndWait" />
 		</case>
 	</command>
 

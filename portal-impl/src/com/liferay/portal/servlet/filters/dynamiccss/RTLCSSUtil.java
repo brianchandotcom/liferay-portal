@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.ScriptableObject;
@@ -66,8 +69,10 @@ public class RTLCSSUtil {
 	}
 
 	public static boolean isExcludedPath(String filePath) {
-		for (String pathRegexp : PropsValues.RTL_CSS_EXCLUDED_PATHS_REGEXP) {
-			if (filePath.matches(pathRegexp)) {
+		for (Pattern pattern : _RTL_CSS_EXCLUDED_PATHS_PATTERNS) {
+			Matcher matcher = pattern.matcher(filePath);
+
+			if (matcher.matches()) {
 				return true;
 			}
 		}
@@ -76,6 +81,21 @@ public class RTLCSSUtil {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(RTLCSSUtil.class);
+
+	private static Pattern[] _RTL_CSS_EXCLUDED_PATHS_PATTERNS;
+
+	static {
+		String[] rtlCssExcludedPathsRegexp =
+			PropsValues.RTL_CSS_EXCLUDED_PATHS_REGEXP;
+
+		_RTL_CSS_EXCLUDED_PATHS_PATTERNS =
+			new Pattern[rtlCssExcludedPathsRegexp.length];
+
+		for (int i = 0; i < rtlCssExcludedPathsRegexp.length; i++) {
+			_RTL_CSS_EXCLUDED_PATHS_PATTERNS[i] = Pattern.compile(
+				rtlCssExcludedPathsRegexp[i]);
+		}
+	}
 
 	private static String _jsScript;
 

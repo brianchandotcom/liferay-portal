@@ -95,13 +95,10 @@ import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 import com.liferay.portlet.expando.util.ExpandoConverterUtil;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.ratings.model.RatingsEntry;
 
 import java.io.File;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
@@ -422,9 +419,8 @@ public class PortletImporter {
 		portletDataContext.setSourceUserPersonalSiteGroupId(
 			sourceUserPersonalSiteGroupId);
 
-		// Read asset categories, asset tags, comments, locks, and ratings
-		// entries to make them available to the data handlers through the
-		// context
+		// Read asset tags, expando tables, locks and permissions to make them
+		// available to the data handlers through the context
 
 		Element portletElement = null;
 
@@ -452,10 +448,8 @@ public class PortletImporter {
 		}
 
 		readAssetTags(portletDataContext);
-		readComments(portletDataContext);
 		readExpandoTables(portletDataContext);
 		readLocks(portletDataContext);
-		readRatingsEntries(portletDataContext);
 
 		// Delete portlet data
 
@@ -966,48 +960,6 @@ public class PortletImporter {
 		}
 	}
 
-	protected void readComments(PortletDataContext portletDataContext)
-		throws Exception {
-
-		String xml = portletDataContext.getZipEntryAsString(
-			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
-				"/comments.xml");
-
-		if (xml == null) {
-			return;
-		}
-
-		Document document = SAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> assetElements = rootElement.elements("asset");
-
-		for (Element assetElement : assetElements) {
-			String path = assetElement.attributeValue("path");
-			String className = assetElement.attributeValue("class-name");
-			long classPK = GetterUtil.getLong(
-				assetElement.attributeValue("class-pk"));
-
-			List<String> zipFolderEntries =
-				portletDataContext.getZipFolderEntries(path);
-
-			List<MBMessage> mbMessages = new ArrayList<MBMessage>();
-
-			for (String zipFolderEntry : zipFolderEntries) {
-				MBMessage mbMessage =
-					(MBMessage)portletDataContext.getZipEntryAsObject(
-						zipFolderEntry);
-
-				if (mbMessage != null) {
-					mbMessages.add(mbMessage);
-				}
-			}
-
-			portletDataContext.addComments(className, classPK, mbMessages);
-		}
-	}
-
 	protected void readExpandoTables(PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -1109,49 +1061,6 @@ public class PortletImporter {
 			if (lock != null) {
 				portletDataContext.addLocks(className, key, lock);
 			}
-		}
-	}
-
-	protected void readRatingsEntries(PortletDataContext portletDataContext)
-		throws Exception {
-
-		String xml = portletDataContext.getZipEntryAsString(
-			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
-				"/ratings.xml");
-
-		if (xml == null) {
-			return;
-		}
-
-		Document document = SAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> assetElements = rootElement.elements("asset");
-
-		for (Element assetElement : assetElements) {
-			String path = assetElement.attributeValue("path");
-			String className = assetElement.attributeValue("class-name");
-			long classPK = GetterUtil.getLong(
-				assetElement.attributeValue("class-pk"));
-
-			List<String> zipFolderEntries =
-				portletDataContext.getZipFolderEntries(path);
-
-			List<RatingsEntry> ratingsEntries = new ArrayList<RatingsEntry>();
-
-			for (String zipFolderEntry : zipFolderEntries) {
-				RatingsEntry ratingsEntry =
-					(RatingsEntry)portletDataContext.getZipEntryAsObject(
-						zipFolderEntry);
-
-				if (ratingsEntry != null) {
-					ratingsEntries.add(ratingsEntry);
-				}
-			}
-
-			portletDataContext.addRatingsEntries(
-				className, classPK, ratingsEntries);
 		}
 	}
 

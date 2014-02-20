@@ -96,14 +96,6 @@ public class MBCategoryStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(category.getUserUuid());
 
-		Map<Long, Long> categoryIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				MBCategory.class);
-
-		long parentCategoryId = MapUtil.getLong(
-			categoryIds, category.getParentCategoryId(),
-			category.getParentCategoryId());
-
 		String emailAddress = null;
 		String inProtocol = null;
 		String inServerName = null;
@@ -124,19 +116,23 @@ public class MBCategoryStagedModelDataHandler
 
 		// Parent category
 
-		if ((parentCategoryId !=
+		if ((category.getParentCategoryId() !=
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-			(parentCategoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID) &&
-			(parentCategoryId == category.getParentCategoryId())) {
+			(category.getParentCategoryId() !=
+				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, category, MBCategory.class,
-				parentCategoryId);
-
-			parentCategoryId = MapUtil.getLong(
-				categoryIds, category.getParentCategoryId(),
 				category.getParentCategoryId());
 		}
+
+		Map<Long, Long> categoryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				MBCategory.class);
+
+		long parentCategoryId = MapUtil.getLong(
+			categoryIds, category.getParentCategoryId(),
+			category.getParentCategoryId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			category);

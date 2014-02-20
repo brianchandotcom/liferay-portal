@@ -139,9 +139,21 @@ public interface PortletDataContext extends Serializable {
 			String namespace)
 		throws PortalException, SystemException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             BaseStagedModelDataHandler#exportComments(PortletDataContext,
+	 *             StagedModel)}
+	 */
+	@Deprecated
 	public void addComments(Class<?> clazz, long classPK)
 		throws SystemException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             BaseStagedModelDataHandler#exportComments(PortletDataContext,
+	 *             StagedModel)}
+	 */
+	@Deprecated
 	public void addComments(
 		String className, long classPK, List<MBMessage> messages);
 
@@ -177,9 +189,21 @@ public interface PortletDataContext extends Serializable {
 
 	public boolean addPrimaryKey(Class<?> clazz, String primaryKey);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             BaseStagedModelDataHandler#exportRatings(PortletDataContext,
+	 *             StagedModel)}
+	 */
+	@Deprecated
 	public void addRatingsEntries(Class<?> clazz, long classPK)
 		throws SystemException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             BaseStagedModelDataHandler#exportRatings(PortletDataContext,
+	 *             StagedModel)}
+	 */
+	@Deprecated
 	public void addRatingsEntries(
 		String className, long classPK, List<RatingsEntry> ratingsEntries);
 
@@ -281,6 +305,10 @@ public interface PortletDataContext extends Serializable {
 
 	public ClassLoader getClassLoader();
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public Map<String, List<MBMessage>> getComments();
 
 	public long getCompanyGroupId();
@@ -370,6 +398,10 @@ public interface PortletDataContext extends Serializable {
 
 	public Set<String> getPrimaryKeys();
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public Map<String, List<RatingsEntry>> getRatingsEntries();
 
 	public Element getReferenceDataElement(
@@ -534,6 +566,12 @@ public interface PortletDataContext extends Serializable {
 			String namespace)
 		throws PortalException, SystemException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             BaseStagedModelDataHandler#importComments(PortletDataContext,
+	 *             StagedModel)}
+	 */
+	@Deprecated
 	public void importComments(
 			Class<?> clazz, long classPK, long newClassPK, long groupId)
 		throws PortalException, SystemException;
@@ -554,6 +592,12 @@ public interface PortletDataContext extends Serializable {
 	public void importPortletPermissions(String resourceName)
 		throws PortalException, SystemException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             BaseStagedModelDataHandler#importRatings(PortletDataContext,
+	 *             StagedModel)}
+	 */
+	@Deprecated
 	public void importRatingsEntries(
 			Class<?> clazz, long classPK, long newClassPK)
 		throws PortalException, SystemException;

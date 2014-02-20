@@ -1,0 +1,101 @@
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portlet.ratings.lar;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.ratings.model.RatingsEntry;
+import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+
+import java.util.Map;
+
+/**
+ * @author Daniel Kocsis
+ */
+public class RatingsEntryStagedModelDataHandler
+	extends BaseStagedModelDataHandler<RatingsEntry> {
+
+	public static final String[] CLASS_NAMES = {RatingsEntry.class.getName()};
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException, SystemException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		RatingsEntry entry =
+			RatingsEntryLocalServiceUtil.fetchRatingsEntryByUuidAndCompanyId(
+				uuid, group.getCompanyId());
+
+		if (entry != null) {
+			RatingsEntryLocalServiceUtil.deleteRatingsEntry(entry);
+		}
+	}
+
+	@Override
+	public String[] getClassNames() {
+		return CLASS_NAMES;
+	}
+
+	@Override
+	public String getDisplayName(RatingsEntry entry) {
+		return entry.getUuid();
+	}
+
+	@Override
+	protected void doExportStagedModel(
+			PortletDataContext portletDataContext, RatingsEntry entry)
+		throws Exception {
+
+		Element entryElement = portletDataContext.getExportDataElement(entry);
+
+		portletDataContext.addClassedModel(
+			entryElement, ExportImportPathUtil.getModelPath(entry), entry);
+	}
+
+	@Override
+	protected void doImportStagedModel(
+			PortletDataContext portletDataContext, RatingsEntry entry)
+		throws Exception {
+
+		long userId = portletDataContext.getUserId(entry.getUserUuid());
+
+		Map<Long, Long> relatedClassPKs =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				entry.getClassName());
+
+		long newClassPK = MapUtil.getLong(
+			relatedClassPKs, entry.getClassPK(), entry.getClassPK());
+
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			entry);
+
+		RatingsEntry importedEntry = RatingsEntryLocalServiceUtil.updateEntry(
+			userId, entry.getClassName(), newClassPK, entry.getScore(),
+			serviceContext);
+
+		portletDataContext.importClassedModel(entry, importedEntry);
+	}
+
+}

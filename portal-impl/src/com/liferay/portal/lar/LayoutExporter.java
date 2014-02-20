@@ -535,7 +535,6 @@ public class LayoutExporter {
 
 		_portletExporter.exportAssetLinks(portletDataContext);
 		_portletExporter.exportAssetTags(portletDataContext);
-		_portletExporter.exportComments(portletDataContext);
 		_portletExporter.exportExpandoTables(portletDataContext);
 		_portletExporter.exportLocks(portletDataContext);
 
@@ -546,8 +545,6 @@ public class LayoutExporter {
 			_permissionExporter.exportPortletDataPermissions(
 				portletDataContext);
 		}
-
-		_portletExporter.exportRatingsEntries(portletDataContext, rootElement);
 
 		ExportImportHelperUtil.writeManifestSummary(
 			document, portletDataContext.getManifestSummary());

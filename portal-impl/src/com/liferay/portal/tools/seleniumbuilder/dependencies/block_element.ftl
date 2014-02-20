@@ -75,16 +75,6 @@
 
 			<#include "action_log_element.ftl">
 
-			<#if !(action?contains("#is"))>
-				<#if testCaseName??>
-					selenium
-				<#else>
-					liferaySelenium
-				</#if>
-
-				.saveScreenshot(commandScopeVariables.get("testCaseName"));
-			</#if>
-
 			<#include "action_element.ftl">
 
 			<#if action?contains("#is")>
@@ -183,6 +173,18 @@
 
 		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 	<#elseif name == "property">
+		<#assign lineNumber = element.attributeValue("line-number")>
+
+		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
+	<#elseif name == "take-screenshot">
+		<#assign variableContext = variableContextStack.peek()>
+
+		executeScopeVariables = new HashMap<String, String>();
+
+		executeScopeVariables.putAll(${variableContext});
+
+		${selenium}.saveScreenshot(commandScopeVariables.get("testCaseName"));
+
 		<#assign lineNumber = element.attributeValue("line-number")>
 
 		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");

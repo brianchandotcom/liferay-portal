@@ -287,30 +287,32 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			return;
 		}
 
-		MBDiscussion discussion = MBDiscussionLocalServiceUtil.fetchDiscussion(
-			ExportImportClassedModelUtil.getClassName(stagedModel),
-			ExportImportClassedModelUtil.getClassPK(stagedModel));
+		MBDiscussion mbDiscussion =
+			MBDiscussionLocalServiceUtil.fetchDiscussion(
+				ExportImportClassedModelUtil.getClassName(stagedModel),
+				ExportImportClassedModelUtil.getClassPK(stagedModel));
 
-		if (discussion == null) {
+		if (mbDiscussion == null) {
 			return;
 		}
 
-		List<MBMessage> messages = MBMessageLocalServiceUtil.getThreadMessages(
-			discussion.getThreadId(), WorkflowConstants.STATUS_APPROVED);
+		List<MBMessage> mbMessages =
+			MBMessageLocalServiceUtil.getThreadMessages(
+				mbDiscussion.getThreadId(), WorkflowConstants.STATUS_APPROVED);
 
-		if (messages.isEmpty()) {
+		if (mbMessages.isEmpty()) {
 			return;
 		}
 
-		MBMessage firstMessage = messages.get(0);
+		MBMessage firstMBMessage = mbMessages.get(0);
 
-		if ((messages.size() == 1) && firstMessage.isRoot()) {
+		if ((mbMessages.size() == 1) && firstMBMessage.isRoot()) {
 			return;
 		}
 
-		for (MBMessage message : messages) {
+		for (MBMessage mbMessage : mbMessages) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedModel, message,
+				portletDataContext, stagedModel, mbMessage,
 				PortletDataContext.REFERENCE_TYPE_WEAK);
 		}
 	}

@@ -14,33 +14,35 @@
  */
 --%>
 
-<c:if test="<%= (!checkedOut || hasLock) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && ((portletName.equals(PortletKeys.TRASH) && (restore || !fileEntry.isInTrash())) || showActions) %>">
+<c:if test="<%= showActions || (portletName.equals(PortletKeys.TRASH) && (restore || !fileEntry.isInTrash())) %>">
+	<c:if test="<%= fileEntryDisplayContext.isMoveButtonVisible() %>">
 
-	<%
-	PortletURL moveURL = liferayPortletResponse.createRenderURL(PortletKeys.DOCUMENT_LIBRARY);
+		<%
+		PortletURL moveURL = liferayPortletResponse.createRenderURL(PortletKeys.DOCUMENT_LIBRARY);
 
-	if (fileShortcut != null) {
-		moveURL.setParameter("struts_action", "/document_library/move_file_shortcut");
-		moveURL.setParameter("fileShortcutId", String.valueOf(fileShortcut.getFileShortcutId()));
-	}
-	else {
-		moveURL.setParameter("struts_action", "/document_library/move_file_entry");
-		moveURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
-	}
+		if (fileShortcut != null) {
+			moveURL.setParameter("struts_action", "/document_library/move_file_shortcut");
+			moveURL.setParameter("fileShortcutId", String.valueOf(fileShortcut.getFileShortcutId()));
+		}
+		else {
+			moveURL.setParameter("struts_action", "/document_library/move_file_entry");
+			moveURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+		}
 
-	if (portletName.equals(PortletKeys.TRASH)) {
-		moveURL.setParameter(Constants.CMD, Constants.MOVE_FROM_TRASH);
-		moveURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
-		moveURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-	}
-	else if (showActions) {
-		moveURL.setParameter("redirect", viewFolderURL.toString());
-	}
-	%>
+		if (portletName.equals(PortletKeys.TRASH)) {
+			moveURL.setParameter(Constants.CMD, Constants.MOVE_FROM_TRASH);
+			moveURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
+			moveURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+		}
+		else if (showActions) {
+			moveURL.setParameter("redirect", viewFolderURL.toString());
+		}
+		%>
 
-	<liferay-ui:icon
-		image="submit"
-		message="move"
-		url="<%= moveURL.toString() %>"
-	/>
+		<liferay-ui:icon
+			image="submit"
+			message="move"
+			url="<%= moveURL.toString() %>"
+		/>
+	</c:if>
 </c:if>

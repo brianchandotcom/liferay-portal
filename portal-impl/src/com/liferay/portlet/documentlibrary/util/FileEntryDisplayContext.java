@@ -36,8 +36,16 @@ import javax.servlet.http.HttpServletRequest;
 public class FileEntryDisplayContext {
 
 	public FileEntryDisplayContext(
-		HttpServletRequest request, FileEntry fileEntry,
-		FileVersion fileVersion) {
+			HttpServletRequest request, FileEntry fileEntry)
+		throws PortalException, SystemException {
+
+		this(request, fileEntry, fileEntry.getFileVersion());
+	}
+
+	public FileEntryDisplayContext(
+			HttpServletRequest request, FileEntry fileEntry,
+			FileVersion fileVersion)
+		throws PortalException, SystemException {
 
 		_request = request;
 
@@ -242,6 +250,18 @@ public class FileEntryDisplayContext {
 
 	public boolean isSaveButtonVisible() {
 		return _isDLFileEntryDraftsEnabled();
+	}
+
+	public boolean isViewButtonVisible()
+		throws PortalException, SystemException {
+
+		return _fileEntryDisplayContextHelper.hasViewPermission();
+	}
+
+	public boolean isViewOriginalFileButtonVisible()
+		throws PortalException, SystemException {
+
+		return _fileEntryDisplayContextHelper.hasViewPermission();
 	}
 
 	private boolean _hasWorkflowDefinitionLink() throws SystemException {

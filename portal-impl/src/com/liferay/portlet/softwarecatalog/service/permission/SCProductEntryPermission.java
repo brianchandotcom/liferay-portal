@@ -17,6 +17,7 @@ package com.liferay.portlet.softwarecatalog.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 import com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalServiceUtil;
@@ -25,7 +26,7 @@ import com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalServiceUti
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
  */
-public class SCProductEntryPermission {
+public class SCProductEntryPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long productEntryId,
@@ -73,6 +74,15 @@ public class SCProductEntryPermission {
 		return permissionChecker.hasPermission(
 			productEntry.getGroupId(), SCProductEntry.class.getName(),
 			productEntry.getProductEntryId(), actionId);
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException, SystemException {
+
+		SCProductEntryPermission.check(permissionChecker, primaryKey, actionId);
 	}
 
 }

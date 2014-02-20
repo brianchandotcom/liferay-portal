@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -28,7 +29,7 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BlogsEntryPermission {
+public class BlogsEntryPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, BlogsEntry entry,
@@ -97,6 +98,15 @@ public class BlogsEntryPermission {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
 
 		return contains(permissionChecker, entry, actionId);
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException, SystemException {
+
+		BlogsEntryPermission.contains(permissionChecker, primaryKey, actionId);
 	}
 
 }

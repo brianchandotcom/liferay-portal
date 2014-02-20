@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -32,7 +33,7 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @author Mate Thurzo
  */
-public class MBCategoryPermission {
+public class MBCategoryPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, long categoryId,
@@ -148,6 +149,16 @@ public class MBCategoryPermission {
 		}
 
 		return _hasPermission(permissionChecker, category, actionId);
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException, SystemException {
+
+		MBCategoryPermission.check(
+			permissionChecker, groupId, primaryKey, actionId);
 	}
 
 	private static boolean _hasPermission(

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -36,7 +37,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @author Charles May
  */
-public class DLFileEntryPermission {
+public class DLFileEntryPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, DLFileEntry dlFileEntry,
@@ -139,8 +140,8 @@ public class DLFileEntryPermission {
 		}
 
 		return permissionChecker.hasPermission(
-			dlFileEntry.getGroupId(), DLFileEntry.class.getName(),
-			dlFileEntry.getFileEntryId(), actionId);
+				dlFileEntry.getGroupId(), DLFileEntry.class.getName(),
+				dlFileEntry.getFileEntryId(), actionId);
 	}
 
 	public static boolean contains(
@@ -159,6 +160,15 @@ public class DLFileEntryPermission {
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 
 		return fileEntry.containsPermission(permissionChecker, actionId);
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException, SystemException {
+
+		DLFileEntryPermission.check(permissionChecker, primaryKey, actionId);
 	}
 
 }

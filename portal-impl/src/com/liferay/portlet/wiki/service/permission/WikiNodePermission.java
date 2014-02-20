@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -26,7 +27,7 @@ import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiNodePermission {
+public class WikiNodePermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long nodeId, String actionId)
@@ -96,6 +97,15 @@ public class WikiNodePermission {
 		return permissionChecker.hasPermission(
 			node.getGroupId(), WikiNode.class.getName(), node.getNodeId(),
 			actionId);
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException, SystemException {
+
+		WikiNodePermission.check(permissionChecker, primaryKey, actionId);
 	}
 
 }

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -34,7 +35,7 @@ import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
-public class JournalArticlePermission {
+public class JournalArticlePermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, JournalArticle article,
@@ -216,6 +217,15 @@ public class JournalArticlePermission {
 			groupId, articleId);
 
 		return contains(permissionChecker, article, actionId);
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException, SystemException {
+
+		JournalArticlePermission.check(permissionChecker, primaryKey, actionId);
 	}
 
 }

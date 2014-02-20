@@ -149,13 +149,8 @@ public class AssetCategoryIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		AssetCategory assetCategory = (AssetCategory)obj;
 
-		Document document = new DocumentImpl();
-
-		document.addUID(PORTLET_ID, assetCategory.getCategoryId());
-
-		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), assetCategory.getCompanyId(),
-			document.get(Field.UID));
+		deleteDocument(
+			assetCategory.getCompanyId(), assetCategory.getCategoryId());
 	}
 
 	@Override

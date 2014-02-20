@@ -557,6 +557,10 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 			ddlRecordVersionPersistence.remove(recordVersion);
 
+			// Dynamic data mapping storage
+
+			StorageEngineUtil.deleteByClass(recordVersion.getDDMStorageId());
+
 			return record;
 		}
 

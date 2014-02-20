@@ -141,8 +141,8 @@ public interface PortletDataContext extends Serializable {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#exportComments(
-	 *             PortletDataContext, com.liferay.portal.model.StagedModel)}
+	 *             BaseStagedModelDataHandler#exportComments(PortletDataContext,
+	 *             StagedModel)}
 	 */
 	@Deprecated
 	public void addComments(Class<?> clazz, long classPK)
@@ -150,8 +150,8 @@ public interface PortletDataContext extends Serializable {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#exportComments(
-	 *             PortletDataContext, com.liferay.portal.model.StagedModel)}
+	 *             BaseStagedModelDataHandler#exportComments(PortletDataContext,
+	 *             StagedModel)}
 	 */
 	@Deprecated
 	public void addComments(
@@ -191,8 +191,8 @@ public interface PortletDataContext extends Serializable {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#exportRatings(
-	 *             PortletDataContext, com.liferay.portal.model.StagedModel)}
+	 *             BaseStagedModelDataHandler#exportRatings(PortletDataContext,
+	 *             StagedModel)}
 	 */
 	@Deprecated
 	public void addRatingsEntries(Class<?> clazz, long classPK)
@@ -200,8 +200,8 @@ public interface PortletDataContext extends Serializable {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#exportRatings(
-	 *             PortletDataContext, com.liferay.portal.model.StagedModel)}
+	 *             BaseStagedModelDataHandler#exportRatings(PortletDataContext,
+	 *             StagedModel)}
 	 */
 	@Deprecated
 	public void addRatingsEntries(
@@ -568,8 +568,8 @@ public interface PortletDataContext extends Serializable {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#importComments(
-	 *             PortletDataContext, com.liferay.portal.model.StagedModel)}
+	 *             BaseStagedModelDataHandler#importComments(PortletDataContext,
+	 *             StagedModel)}
 	 */
 	@Deprecated
 	public void importComments(
@@ -594,8 +594,8 @@ public interface PortletDataContext extends Serializable {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#importRatings(
-	 *             PortletDataContext, com.liferay.portal.model.StagedModel)}
+	 *             BaseStagedModelDataHandler#importRatings(PortletDataContext,
+	 *             StagedModel)}
 	 */
 	@Deprecated
 	public void importRatingsEntries(

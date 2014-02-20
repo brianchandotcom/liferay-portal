@@ -308,8 +308,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#exportComments(
-	 *             com.liferay.portal.kernel.lar.PortletDataContext,
-	 *             com.liferay.portal.model.StagedModel)}
+	 *             PortletDataContext, StagedModel)}
 	 */
 	@Deprecated
 	@Override
@@ -320,8 +319,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#exportComments(
-	 *             com.liferay.portal.kernel.lar.PortletDataContext,
-	 *             com.liferay.portal.model.StagedModel)}
+	 *             PortletDataContext, StagedModel)}
 	 */
 	@Deprecated
 	@Override
@@ -495,8 +493,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#exportRatings(
-	 *             com.liferay.portal.kernel.lar.PortletDataContext,
-	 *             com.liferay.portal.model.StagedModel)}
+	 *             PortletDataContext, StagedModel)}
 	 */
 	@Deprecated
 	@Override
@@ -507,8 +504,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#exportRatings(
-	 *             com.liferay.portal.kernel.lar.PortletDataContext,
-	 *             com.liferay.portal.model.StagedModel)}
+	 *             PortletDataContext, StagedModel)}
 	 */
 	@Deprecated
 	@Override
@@ -1483,8 +1479,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#importComments(
-	 *             com.liferay.portal.kernel.lar.PortletDataContext,
-	 *             com.liferay.portal.model.StagedModel)}
+	 *             PortletDataContext, StagedModel)}
 	 */
 	@Deprecated
 	@Override
@@ -1624,8 +1619,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.portal.kernel.lar.BaseStagedModelDataHandler#importRatings(
-	 *             com.liferay.portal.kernel.lar.PortletDataContext,
-	 *             com.liferay.portal.model.StagedModel)}
+	 *             PortletDataContext, StagedModel)}
 	 */
 	@Deprecated
 	@Override

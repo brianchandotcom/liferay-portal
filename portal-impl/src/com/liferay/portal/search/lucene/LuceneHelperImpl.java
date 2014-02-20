@@ -804,7 +804,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 		ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
 			new MethodHandler(
-				_createTokenMethodKey, _TRANSIENT_TOKEN_KEEP_ALIVE_TIME),
+				_createTokenMethodKey,
+				_CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT),
 			bootupAddress);
 
 		FutureClusterResponses futureClusterResponses =
@@ -970,8 +971,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.LUCENE_BOOLEAN_QUERY_CLAUSE_MAX_SIZE),
 			BooleanQuery.getMaxClauseCount());
-
-	private static final long _TRANSIENT_TOKEN_KEEP_ALIVE_TIME = 10000;
 
 	private static Log _log = LogFactoryUtil.getLog(LuceneHelperImpl.class);
 

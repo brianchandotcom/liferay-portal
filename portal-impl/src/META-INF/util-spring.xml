@@ -688,19 +688,19 @@
 			<bean class="com.liferay.portal.service.permission.CommonPermissionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.service.permission.GroupPermissionImpl" class="com.liferay.portal.service.permission.GroupPermissionImpl" />
 	<bean id="com.liferay.portal.service.permission.GroupPermissionUtil" class="com.liferay.portal.service.permission.GroupPermissionUtil">
-		<property name="groupPermission">
-			<bean class="com.liferay.portal.service.permission.GroupPermissionImpl" />
-		</property>
+		<property name="groupPermission" ref="com.liferay.portal.service.permission.GroupPermissionImpl" />
 	</bean>
 	<bean id="com.liferay.portal.service.permission.LayoutBranchPermissionUtil" class="com.liferay.portal.service.permission.LayoutBranchPermissionUtil">
 		<property name="layoutBranchPermission">
 			<bean class="com.liferay.portal.service.permission.LayoutBranchPermissionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.service.permission.LayoutPermissionImpl" class="com.liferay.portal.service.permission.LayoutPermissionImpl" />
 	<bean id="com.liferay.portal.service.permission.LayoutPermissionUtil" class="com.liferay.portal.service.permission.LayoutPermissionUtil">
-		<property name="layoutPermission">
-			<bean class="com.liferay.portal.service.permission.LayoutPermissionImpl" />
+		<property name="layoutPermission" ref="com.liferay.portal.service.permission.LayoutPermissionImpl">
+
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.service.permission.LayoutPrototypePermissionUtil" class="com.liferay.portal.service.permission.LayoutPrototypePermissionUtil">
@@ -783,10 +783,9 @@
 			<bean class="com.liferay.portal.service.permission.UserGroupRolePermissionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.service.permission.UserPermissionImpl" class="com.liferay.portal.service.permission.UserPermissionImpl" />
 	<bean id="com.liferay.portal.service.permission.UserPermissionUtil" class="com.liferay.portal.service.permission.UserPermissionUtil">
-		<property name="userPermission">
-			<bean class="com.liferay.portal.service.permission.UserPermissionImpl" />
-		</property>
+		<property name="userPermission" ref="com.liferay.portal.service.permission.UserPermissionImpl" />
 	</bean>
 	<bean id="com.liferay.portal.service.persistence.BatchSessionUtil" class="com.liferay.portal.service.persistence.BatchSessionUtil">
 		<property name="batchSession">
@@ -1052,4 +1051,58 @@
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portlet.usersadmin.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.portlet.usersadmin.util.UsersAdmin" />
 	</bean>
+
+	<util:map id="entityPermissionCheckers" key-type="java.lang.String" value-type="com.liferay.portal.security.permission.BaseModelPermissionChecker">
+		<entry key="com.liferay.portlet.blogs.model.BlogsEntry.permission.checker">
+			<bean class="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" />
+		</entry>
+		<entry key="com.liferay.portlet.bookmarks.model.BookmarksEntry.permission.checker">
+			<bean class="com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission" />
+		</entry>
+		<entry key="com.liferay.portlet.bookmarks.model.BookmarksFolder.permission.checker">
+			<bean class="com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission" />
+		</entry>
+		<entry key="com.liferay.portlet.documentlibrary.model.DLFileEntry.permission.checker">
+			<bean class="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" />
+		</entry>
+		<entry key="com.liferay.portlet.documentlibrary.model.DLFolder.permission.checker">
+			<bean class="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" />
+		</entry>
+		<entry key="com.liferay.portal.model.Group.permission.checker" value-ref="com.liferay.portal.service.permission.GroupPermissionImpl" />
+		<entry key="com.liferay.portlet.journal.model.JournalArticle.permission.checker">
+			<bean class="com.liferay.portlet.journal.service.permission.JournalArticlePermission" />
+		</entry>
+		<entry key="com.liferay.portlet.journal.model.JournalFeed.permission.checker">
+			<bean class="com.liferay.portlet.journal.service.permission.JournalFeedPermission" />
+		</entry>
+		<entry key="com.liferay.portal.model.Layout.permission.checker" value-ref="com.liferay.portal.service.permission.LayoutPermissionImpl" />
+		<entry key="com.liferay.portlet.messageboards.model.MBCategory.permission.checker">
+			<bean class="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" />
+		</entry>
+		<entry key="com.liferay.portlet.messageboards.model.MBMessage.permission.checker">
+			<bean class="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" />
+		</entry>
+		<entry key="com.liferay.portlet.polls.model.PollsQuestion.permission.checker">
+			<bean class="com.liferay.portlet.polls.service.permission.PollsQuestionPermission" />
+		</entry>
+		<entry key="com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion.permission.checker">
+			<bean class="com.liferay.portlet.softwarecatalog.service.permission.SCFrameworkVersionPermission" />
+		</entry>
+		<entry key="com.liferay.portlet.softwarecatalog.model.SCProductEntry.permission.checker">
+			<bean class="com.liferay.portlet.softwarecatalog.service.permission.SCProductEntryPermission" />
+		</entry>
+		<entry key="com.liferay.portlet.shopping.model.ShoppingCategory.permission.checker">
+			<bean class="com.liferay.portlet.shopping.service.permission.ShoppingCategoryPermission" />
+		</entry>
+		<entry key="com.liferay.portlet.shopping.model.ShoppingItem.permission.checker">
+			<bean class="com.liferay.portlet.shopping.service.permission.ShoppingItemPermission" />
+		</entry>
+		<entry key="com.liferay.portal.model.User.permission.checker" value-ref="com.liferay.portal.service.permission.UserPermissionImpl" />
+		<entry key="com.liferay.portlet.wiki.model.WikiNode.permission.checker">
+			<bean class="com.liferay.portlet.wiki.service.permission.WikiNodePermission" />
+		</entry>
+		<entry key="com.liferay.portlet.wiki.model.WikiPage.permission.checker">
+			<bean class="com.liferay.portlet.wiki.service.permission.WikiPagePermission" />
+		</entry>
+	</util:map>
 </beans>

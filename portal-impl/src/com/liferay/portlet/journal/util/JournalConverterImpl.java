@@ -454,6 +454,14 @@ public class JournalConverterImpl implements JournalConverter {
 
 			serializable = jsonArray.toString();
 		}
+		else if (DDMImpl.TYPE_WCM_IMAGE.equals(type)) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("alt", dynamicContentElement.attributeValue("alt"));
+			jsonObject.put("data", dynamicContentElement.getText());
+
+			serializable = jsonObject.toString();
+		}
 		else {
 			serializable = FieldConstants.getSerializable(
 				dataType, dynamicContentElement.getText());
@@ -747,6 +755,22 @@ public class JournalConverterImpl implements JournalConverter {
 			else {
 				dynamicContentElement.addCDATA(jsonArray.getString(0));
 			}
+		}
+		else if (DDMImpl.TYPE_WCM_IMAGE.equals(fieldType) &&
+				 Validator.isNotNull(fieldValue)) {
+
+			if (fieldValue.equals("delete")) {
+				dynamicContentElement.addCDATA(fieldValue);
+
+				return;
+			}
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				fieldValue);
+
+			dynamicContentElement.addAttribute(
+				"alt", jsonObject.getString("alt"));
+			dynamicContentElement.addCDATA(jsonObject.getString("data"));
 		}
 		else {
 			dynamicContentElement.addCDATA(fieldValue);

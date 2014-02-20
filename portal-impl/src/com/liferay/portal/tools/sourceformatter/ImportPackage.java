@@ -43,12 +43,24 @@ public class ImportPackage implements Comparable<ImportPackage> {
 		return _import.equals(importPackage._import);
 	}
 
-	public String getImport() {
-		return _import;
-	}
-
 	public String getLine() {
 		return _line;
+	}
+
+	public String getPackageLevel() {
+
+		String s = _import;
+
+		int pos = s.indexOf(".");
+
+		pos = s.indexOf(".", pos + 1);
+
+		if (pos == -1) {
+			pos = s.indexOf(".");
+		}
+
+		String packageLevel = s.substring(0, pos);
+		return packageLevel;
 	}
 
 	@Override

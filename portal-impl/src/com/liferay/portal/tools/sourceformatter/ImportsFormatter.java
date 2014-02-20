@@ -63,17 +63,7 @@ public abstract class ImportsFormatter {
 		for (int i = 0; i < importPackages.size(); i++) {
 			ImportPackage importPackage = importPackages.get(i);
 
-			String s = importPackage.getImport();
-
-			int pos = s.indexOf(".");
-
-			pos = s.indexOf(".", pos + 1);
-
-			if (pos == -1) {
-				pos = s.indexOf(".");
-			}
-
-			String packageLevel = s.substring(0, pos);
+			String packageLevel = importPackage.getPackageLevel();
 
 			if ((i != 0) && !packageLevel.equals(temp)) {
 				sb.append("\n");

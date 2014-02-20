@@ -15,14 +15,15 @@
 package com.liferay.portal.repository.cmis.search;
 
 import com.liferay.portal.kernel.bean.BeanLocator;
-import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilderUtil;
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.service.RepositoryEntryLocalService;
@@ -34,10 +35,6 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.lang.reflect.Field;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
 
 import org.junit.After;
@@ -46,7 +43,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Matchers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import org.powermock.api.mockito.PowerMockito;
 
@@ -59,58 +59,14 @@ public class CMISQueryBuilderTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		_serviceUtilClasses.add(DLAppServiceUtil.class);
-
 		resetServices();
 
+		MockitoAnnotations.initMocks(this);
+
 		_beanLocator = PortalBeanLocatorUtil.getBeanLocator();
+		_beanLocatorProxy = Mockito.spy(_beanLocator);
 
-		_mockBeanLocator = mock(BeanLocator.class);
-
-		PortalBeanLocatorUtil.setBeanLocator(
-			new BeanLocator() {
-
-				@Override
-				public void destroy() {
-				}
-
-				@Override
-				public ClassLoader getClassLoader() {
-					return _beanLocator.getClassLoader();
-				}
-
-				@Override
-				public String[] getNames() {
-					return _beanLocator.getNames();
-				}
-
-				@Override
-				public Class<?> getType(String name)
-					throws BeanLocatorException {
-
-					return _beanLocator.getType(name);
-				}
-
-				@Override
-				public <T> Map<String, T> locate(Class<T> clazz)
-					throws BeanLocatorException {
-
-					return _beanLocator.locate(clazz);
-				}
-
-				@Override
-				public Object locate(String name) throws BeanLocatorException {
-					Object bean = _mockBeanLocator.locate(name);
-
-					if (bean != null) {
-						return bean;
-					}
-
-					return _beanLocator.locate(name);
-				}
-
-			}
-		);
+		PortalBeanLocatorUtil.setBeanLocator(_beanLocatorProxy);
 	}
 
 	@After
@@ -331,47 +287,11 @@ public class CMISQueryBuilderTest extends PowerMockito {
 
 	@Test
 	public void testFolderQuery() throws Exception {
-		getService(DLAppServiceUtil.class, DLAppService.class);
-
-		RepositoryEntryLocalService repositoryEntryLocalService =
-			getService(
-				RepositoryEntryLocalServiceUtil.class,
-				RepositoryEntryLocalService.class);
-		RepositoryEntry repositoryEntry = mock(RepositoryEntry.class);
-
-		when(
-			repositoryEntryLocalService.fetchRepositoryEntry(Mockito.eq(1000l))
-		).thenReturn(
-			repositoryEntry
-		);
-
-		when(
-			repositoryEntry.getMappedId()
-		).thenReturn(
-			"1000"
-		);
-
-		SearchContext searchContext = getSearchContext();
-
-		searchContext.setFolderIds(new long[] {1000});
-		searchContext.setKeywords("test");
-
-		BooleanQuery searchQuery =
-			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setAttribute(
-			"capabilityQuery", CapabilityQuery.BOTHCOMBINED.value());
-		queryConfig.setSearchSubfolders(false);
-
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
-			searchContext, searchQuery);
+		String folderQuery = buildFolderQuery(false);
 
 		assertQueryEquals(
 			"((IN_FOLDER('1000') AND (cmis:name = 'test' OR cmis:createdBy " +
-				"= 'test')) OR CONTAINS('test'))",
-			cmisQuery);
+				"= 'test')) OR CONTAINS('test'))", folderQuery);
 	}
 
 	@Test
@@ -465,47 +385,11 @@ public class CMISQueryBuilderTest extends PowerMockito {
 
 	@Test
 	public void testSubfolderQuery() throws Exception {
-		getService(DLAppServiceUtil.class, DLAppService.class);
-
-		RepositoryEntryLocalService repositoryEntryLocalService =
-			getService(
-				RepositoryEntryLocalServiceUtil.class,
-				RepositoryEntryLocalService.class);
-		RepositoryEntry repositoryEntry = mock(RepositoryEntry.class);
-
-		when(
-			repositoryEntryLocalService.fetchRepositoryEntry(Mockito.eq(1000l))
-		).thenReturn(
-			repositoryEntry
-		);
-
-		when(
-			repositoryEntry.getMappedId()
-		).thenReturn(
-			"1000"
-		);
-
-		SearchContext searchContext = getSearchContext();
-
-		searchContext.setFolderIds(new long[] {1000});
-		searchContext.setKeywords("test");
-
-		BooleanQuery searchQuery =
-			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setAttribute(
-			"capabilityQuery", CapabilityQuery.BOTHCOMBINED.value());
-		queryConfig.setSearchSubfolders(true);
-
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
-			searchContext, searchQuery);
+		String subFolderQuery = buildFolderQuery(true);
 
 		assertQueryEquals(
 			"((IN_TREE('1000') AND (cmis:name = 'test' OR cmis:createdBy = " +
-				"'test')) OR CONTAINS('test'))",
-			cmisQuery);
+				"'test')) OR CONTAINS('test'))", subFolderQuery);
 	}
 
 	@Test
@@ -546,6 +430,54 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		Assert.assertEquals(_QUERY_PREFIX + where + _QUERY_POSTFIX, query);
 	}
 
+	protected String buildFolderQuery(boolean searchSubfolders)
+		throws SearchException, SystemException {
+
+		when(
+			_repositoryEntry.getMappedId()
+		).thenReturn(
+			"1000"
+		);
+
+		when(
+			_repositoryEntryLocalService.fetchRepositoryEntry(
+				Matchers.eq(1000l))
+		).thenReturn(
+			_repositoryEntry
+		);
+
+		when(
+			_beanLocatorProxy.locate(
+				RepositoryEntryLocalService.class.getName())
+		).thenReturn(
+			_repositoryEntryLocalService
+		);
+
+		when(
+			_beanLocatorProxy.locate(
+				DLAppService.class.getName())
+		).thenReturn(
+			_dlAppService
+		);
+
+		SearchContext searchContext = getSearchContext();
+
+		searchContext.setFolderIds(new long[] {1000});
+		searchContext.setKeywords("test");
+
+		BooleanQuery searchQuery =
+			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setAttribute(
+			"capabilityQuery", CapabilityQuery.BOTHCOMBINED.value());
+		queryConfig.setSearchSubfolders(searchSubfolders);
+
+		return CMISSearchQueryBuilderUtil.buildQuery(
+			searchContext, searchQuery);
+	}
+
 	protected SearchContext getSearchContext() {
 		SearchContext searchContext = new SearchContext();
 
@@ -554,35 +486,21 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		return searchContext;
 	}
 
-	protected <T> T getService(
-		Class<?> serviceUtilClass, Class<T> serviceClass) {
+	protected void resetServiceOf(Class<?> serviceUtilClass) {
+		try {
+			Field field = serviceUtilClass.getDeclaredField("_service");
 
-		_serviceUtilClasses.add(serviceUtilClass);
+			field.setAccessible(true);
 
-		T service = mock(serviceClass);
-
-		when(
-			_mockBeanLocator.locate(
-				Mockito.eq(serviceClass.getName()))
-		).thenReturn(
-			service
-		);
-
-		return service;
+			field.set(serviceUtilClass, null);
+		}
+		catch (Exception e) {
+		}
 	}
 
 	protected void resetServices() {
-		for (Class<?> serviceUtilClass : _serviceUtilClasses) {
-			try {
-				Field field = serviceUtilClass.getDeclaredField("_service");
-
-				field.setAccessible(true);
-
-				field.set(serviceUtilClass, null);
-			}
-			catch (Exception e) {
-			}
-		}
+		resetServiceOf(DLAppServiceUtil.class);
+		resetServiceOf(RepositoryEntryLocalServiceUtil.class);
 	}
 
 	private static final String _QUERY_POSTFIX = " ORDER BY HITS DESC";
@@ -591,7 +509,15 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		"SELECT cmis:objectId, SCORE() AS HITS FROM cmis:document WHERE ";
 
 	private BeanLocator _beanLocator;
-	private BeanLocator _mockBeanLocator;
-	private List<Class<?>> _serviceUtilClasses = new ArrayList<Class<?>>();
+	private BeanLocator _beanLocatorProxy;
+
+	@Mock
+	private DLAppService _dlAppService;
+
+	@Mock
+	private RepositoryEntry _repositoryEntry;
+
+	@Mock
+	private RepositoryEntryLocalService _repositoryEntryLocalService;
 
 }

@@ -20,6 +20,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.EntityPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -28,7 +29,8 @@ import com.liferay.portal.service.UserLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
-public class GroupPermissionImpl implements GroupPermission {
+public class GroupPermissionImpl
+	implements EntityPermissionChecker, GroupPermission {
 
 	@Override
 	public void check(
@@ -57,6 +59,15 @@ public class GroupPermissionImpl implements GroupPermission {
 		if (!contains(permissionChecker, actionId)) {
 			throw new PrincipalException();
 		}
+	}
+
+	@Override
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, long entryId,
+			String actionId)
+		throws PortalException, SystemException {
+
+		check(permissionChecker, entryId, actionId);
 	}
 
 	@Override

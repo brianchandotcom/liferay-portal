@@ -556,12 +556,12 @@ public class PortletPreferencesLocalServiceTest {
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, -1, _portlet.getPortletId(),
 			_portlet, null);
 
-		long currentCount =
+		long actualCount =
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				_group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP, -1,
 				_portlet, false);
 
-		Assert.assertEquals(1, currentCount);
+		Assert.assertEquals(1, actualCount);
 	}
 
 	@Test
@@ -578,12 +578,12 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
 			_layout, _portlet);
 
-		long currentCount =
+		long actualCount =
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				_group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,
 				_layout.getPlid(), _portlet, false);
 
-		Assert.assertEquals(1, currentCount);
+		Assert.assertEquals(1, actualCount);
 	}
 
 	@Test
@@ -601,12 +601,12 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
 			_layout, _portlet);
 
-		long currentCount =
+		long actualCount =
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				_group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,
 				_layout.getPlid(), _portlet, true);
 
-		Assert.assertEquals(0, currentCount);
+		Assert.assertEquals(0, actualCount);
 	}
 
 	@Test
@@ -630,12 +630,12 @@ public class PortletPreferencesLocalServiceTest {
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, portlet);
 
-		long currentCount =
+		long actualCount =
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				_group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,
 				_portlet.getPortletId(), false);
 
-		Assert.assertEquals(1, currentCount);
+		Assert.assertEquals(1, actualCount);
 	}
 
 	@Test
@@ -653,12 +653,12 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
 			_layout, _portlet);
 
-		long currentCount =
+		long actualCount =
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				_group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,
 				_portlet.getPortletId(), true);
 
-		Assert.assertEquals(0, currentCount);
+		Assert.assertEquals(0, actualCount);
 	}
 
 	@Test
@@ -728,26 +728,26 @@ public class PortletPreferencesLocalServiceTest {
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 
-		long currentCountTypeLayout =
+		long actualCountTypeLayout =
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 				_portlet.getPortletId());
 
-		Assert.assertEquals(1, currentCountTypeLayout);
+		Assert.assertEquals(1, actualCountTypeLayout);
 
-		long currentCountTypeGroup =
+		long actualCountTypeGroup =
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_GROUP, layout.getPlid(),
 				_portlet.getPortletId());
 
-		Assert.assertEquals(1, currentCountTypeGroup);
+		Assert.assertEquals(1, actualCountTypeGroup);
 
-		long currentCountTypeCompany =
+		long actualCountTypeCompany =
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_COMPANY, _layout.getPlid(),
 				_portlet.getPortletId());
 
-		Assert.assertEquals(0, currentCountTypeCompany);
+		Assert.assertEquals(0, actualCountTypeCompany);
 	}
 
 	@Test
@@ -769,11 +769,11 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
 			_layout, _portlet);
 
-		long currentCount =
+		long actualCount =
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _portlet.getPortletId());
 
-		Assert.assertEquals(initialCount + 2, currentCount);
+		Assert.assertEquals(initialCount + 2, actualCount);
 	}
 
 	@Test

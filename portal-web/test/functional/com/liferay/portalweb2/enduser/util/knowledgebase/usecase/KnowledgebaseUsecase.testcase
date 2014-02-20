@@ -1,0 +1,208 @@
+<definition component-name="portal-util-misc">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="KBArticle#tearDownCP" />
+	</tear-down>
+
+	<command name="Demo" priority="5">
+		<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
+
+		<property name="portlet.properties.knowledge-base-portlet" value="admin.kb.article.sections=Application Server,Authentication,Content Management,Database,Development,Plugins,Portlets,Security,Server Configuration,User Interface$${line.separator}admin.kb.article.default.sections=" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base (Admin)" />
+		</execute>
+
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_ARTICLE_BUTTON" value1="Add Article" />
+
+		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="TITLE_FIELD" value1="KB Admin Article" />
+		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="CONTENT_FIELD" value1="This is an article created from the KB Admin" />
+		<execute action="CPKnowledgebaseadminAddarticle#select" locator-key1="SECTIONS_SELECT" value1="Portlets" />
+		<execute action="CPKnowledgebaseadminAddarticle#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base (Display)" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Article Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Article Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Article" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Search Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Search Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Search" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Section Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Section Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Section" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<var name="key_kbArticleTitle" value="KB Admin Article" />
+
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_TABLE_PRIORITY" value1="1.0" />
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_TABLE_TITLE" value1="KB Admin Article" />
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_TABLE_AUTHOR" value1="Test Test" />
+
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_TABLE_TITLE" value1="KB Admin Article" />
+
+		<execute action="PGKnowledgebasedisplayArticle#assertTextEquals" locator-key1="KB_ARTICLE_TITLE" value1="KB Admin Article" />
+		<execute action="PGKnowledgebasedisplayArticle#assertTextEquals" locator-key1="KB_ARTICLE_ENTITY_BODY" value1="This is an article created from the KB Admin" />
+		<execute action="PGKnowledgebasedisplayArticle#assertClick" locator-key1="KB_ARTICLE_DELETE" value1="Delete" />
+		<execute action="PGKnowledgebasedisplayArticle#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No articles were found." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#addPGViaKBDisplay">
+			<var name="kbArticleContent" value="This is the content of Article 1" />
+			<var name="kbArticleSection" value="Content Management" />
+			<var name="kbArticleTitle" value="Knowledge Base Article 1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#addPGViaKBDisplay">
+			<var name="kbArticleContent" value="Testing another publication of the article" />
+			<var name="kbArticleSection" value="Development" />
+			<var name="kbArticleTitle" value="Knowledge Base Article 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#addPGViaKBDisplay">
+			<var name="kbArticleContent" value="Number three detailing the specifics of Tomcat and Jboss" />
+			<var name="kbArticleSection" value="Application Server" />
+			<var name="kbArticleTitle" value="The third" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Article Page" />
+		</execute>
+
+		<execute macro="KBArticle#selectPGViaKBArticle">
+			<var name="kbArticleContent" value="This is the content of Article 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article 1" />
+			<var name="pageName" value="Knowledge Base Article Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Article Page" />
+		</execute>
+
+		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="KB_ARTICLE_TITLE" value1="Knowledge Base Article 1" />
+		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="KB_ARTICLE_ENTITY_BODY" value1="This is the content of Article 1" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Section Page" />
+		</execute>
+
+		<execute action="PGKnowledgebasesection#assertTextEquals" locator-key1="SECTIONS_TITLE" value1="General" />
+		<execute action="PGKnowledgebasesection#assertTextEquals" locator-key1="PORTLET_BODY" value1="No articles were found" />
+
+		<execute macro="KBArticle#selectSectionPGViaKBSection">
+			<var name="kbArticleSection" value="Application Server" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Section Page" />
+		</execute>
+
+		<var name="key_kbArticleTitle" value="The third" />
+
+		<execute action="PGKnowledgebasesection#assertTextEquals" locator-key1="SECTIONS_TITLE" value1="Application Server" />
+		<execute action="PGKnowledgebasesection#assertTextEquals" locator-key1="KB_ARTICLE_LINK" value1="The third" />
+		<execute action="PGKnowledgebasesection#assertClick" locator-key1="KB_ARTICLE_LINK" value1="The third" />
+
+		<execute action="PGKnowledgebasesectionArticle#assertTextEquals" locator-key1="KB_ARTICLE_TITLE" value1="The third" />
+		<execute action="PGKnowledgebasesectionArticle#assertTextEquals" locator-key1="KB_ARTICLE_ENTITY_BODY" value1="Number three detailing the specifics of Tomcat and Jboss" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Search Page" />
+		</execute>
+
+		<execute macro="KBArticle#searchPGViaKBSearch">
+			<var name="kbArticleTitle" value="Knowledge Base Article 1" />
+			<var name="searchTerm" value="content" />
+		</execute>
+
+		<execute macro="KBArticle#searchPGViaKBSearch">
+			<var name="kbArticleTitle" value="Knowledge Base Article 1" />
+			<var name="searchTerm" value="knowledge" />
+		</execute>
+
+		<execute macro="KBArticle#searchPGViaKBSearch">
+			<var name="kbArticleTitle" value="Knowledge Base Article 2" />
+			<var name="searchTerm" value="knowledge" />
+		</execute>
+
+		<execute macro="KBArticle#searchPGViaKBSearch">
+			<var name="kbArticleTitle" value="The third" />
+			<var name="searchTerm" value="tomcat" />
+		</execute>
+
+		<execute action="PGKnowledgebasesearchSearch#assertClick" locator-key1="ARTICLE_TABLE_TITLE" value1="The third" />
+
+		<execute action="PGKnowledgebasesearchArticle#assertTextEquals" locator-key1="KB_ARTICLE_TITLE" value1="The third" />
+		<execute action="PGKnowledgebasesearchArticle#assertTextEquals" locator-key1="KB_ARTICLE_ENTITY_BODY" value1="Number three detailing the specifics of Tomcat and Jboss" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Article Page" />
+		</execute>
+
+		<var name="key_kbArticleTitle" value="Knowledge Base Article 1" />
+
+		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="KB_ARTICLE_TITLE" value1="Knowledge Base Article 1" />
+
+		<execute action="PGKnowledgebasearticle#assertClick" locator-key1="KB_ARTICLE_DELETE" value1="Delete" />
+		<execute action="PGKnowledgebasearticle#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="The selected article no longer exists." />
+	</command>
+</definition>

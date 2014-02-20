@@ -136,12 +136,12 @@
 			cached.set(BODY_CONTENT, text);
 			cached.set(TRIGGER, obj);
 
-			cached.get(TRIGGER).detach('hover');
+			obj.detach('hover');
 
-			cached.get(TRIGGER).on(
+			obj.on(
 				'hover',
-				A.bind(cached._onBoundingBoxMouseenter, cached),
-				A.bind(cached._onBoundingBoxMouseleave, cached)
+				A.bind('_onBoundingBoxMouseenter', cached),
+				A.bind('_onBoundingBoxMouseleave', cached)
 			);
 
 			cached.show();

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.lucene;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseQuerySuggester;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -104,9 +106,10 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 
 		IndexSearcher indexSearcher = null;
 
+		long companyId = searchContext.getCompanyId();
+
 		try {
-			indexSearcher = LuceneHelperUtil.getSearcher(
-				searchContext.getCompanyId(), true);
+			indexSearcher = LuceneHelperUtil.getSearcher(companyId);
 
 			String localizedKeywordFieldName = DocumentImpl.getLocalizedName(
 				searchContext.getLanguageId(), Field.KEYWORD_SEARCH);
@@ -125,7 +128,12 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 			throw new SearchException("Unable to suggest query", e);
 		}
 		finally {
-			LuceneHelperUtil.cleanUp(indexSearcher);
+			try {
+				LuceneHelperUtil.releaseSearcher(companyId, indexSearcher);
+			}
+			catch (IOException ioe) {
+				_log.error("Unable to release searcher", ioe);
+			}
 		}
 	}
 
@@ -296,6 +304,8 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 
 		IndexSearcher indexSearcher = null;
 
+		long companyId = searchContext.getCompanyId();
+
 		try {
 			Map<String, List<String>> suggestions =
 				new LinkedHashMap<String, List<String>>();
@@ -306,8 +316,7 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 				scoresThreshold = _SCORES_THRESHOLD_DEFAULT;
 			}
 
-			indexSearcher = LuceneHelperUtil.getSearcher(
-				searchContext.getCompanyId(), true);
+			indexSearcher = LuceneHelperUtil.getSearcher(companyId);
 
 			List<IndexReader> indexReaders = new ArrayList<IndexReader>();
 
@@ -356,11 +365,18 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 			throw new SearchException("Unable to find suggestions", ioe);
 		}
 		finally {
-			LuceneHelperUtil.cleanUp(indexSearcher);
+			try {
+				LuceneHelperUtil.releaseSearcher(companyId, indexSearcher);
+			}
+			catch (IOException ioe) {
+				_log.error("Unable to release searcher", ioe);
+			}
 		}
 	}
 
 	private static final float _SCORES_THRESHOLD_DEFAULT = 0.5f;
+
+	private static Log _log = LogFactoryUtil.getLog(LuceneQuerySuggester.class);
 
 	private float _boostEnd = 1.0f;
 	private float _boostStart = 2.0f;

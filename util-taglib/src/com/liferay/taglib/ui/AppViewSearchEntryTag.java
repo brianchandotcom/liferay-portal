@@ -14,7 +14,10 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.taglib.util.IncludeTag;
@@ -124,7 +127,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_cssClass = null;
 		_description = null;
 		_fileEntryTuples = null;
-		_highlightEnabled = false;
+		_highlightEnabled = _HIGHLIGHT_ENABLED;
 		_locked = false;
 		_mbMessages = null;
 		_queryTerms = null;
@@ -194,6 +197,10 @@ public class AppViewSearchEntryTag extends IncludeTag {
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
+	private static final boolean _HIGHLIGHT_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED));
+
 	private static final String _PAGE =
 		"/html/taglib/ui/app_view_search_entry/page.jsp";
 
@@ -205,7 +212,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	private String _cssClass;
 	private String _description;
 	private List<Tuple> _fileEntryTuples;
-	private boolean _highlightEnabled;
+	private boolean _highlightEnabled = _HIGHLIGHT_ENABLED;
 	private boolean _locked;
 	private List<MBMessage> _mbMessages;
 	private String[] _queryTerms;

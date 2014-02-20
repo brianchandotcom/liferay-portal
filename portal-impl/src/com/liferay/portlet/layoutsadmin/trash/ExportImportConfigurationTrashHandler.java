@@ -31,8 +31,6 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import javax.portlet.PortletRequest;
 
 /**
- * Represents the trash handler for ExportImportConfiguration entries entity.
- *
  * @author Levente Hudák
  */
 public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
@@ -81,16 +79,6 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 
 		return new ExportImportConfigurationTrashRenderer(
 			exportImportConfiguration);
-	}
-
-	@Override
-	public boolean hasTrashPermission(
-			PermissionChecker permissionChecker, long groupId, long classPK,
-			String trashActionId)
-		throws PortalException, SystemException {
-
-		return super.hasTrashPermission(
-			permissionChecker, groupId, classPK, trashActionId);
 	}
 
 	@Override

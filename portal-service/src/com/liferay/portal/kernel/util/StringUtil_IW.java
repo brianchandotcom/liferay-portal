@@ -109,25 +109,6 @@ public class StringUtil_IW {
 		return StringUtil.extractLeadingDigits(s);
 	}
 
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	public java.lang.String highlight(java.lang.String s,
-		java.lang.String keywords) {
-		return StringUtil.highlight(s, keywords);
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	public java.lang.String highlight(java.lang.String s,
-		java.lang.String keywords, java.lang.String highlight1,
-		java.lang.String highlight2) {
-		return StringUtil.highlight(s, keywords, highlight1, highlight2);
-	}
-
 	public java.lang.String highlight(java.lang.String s,
 		java.lang.String[] queryTerms) {
 		return StringUtil.highlight(s, queryTerms);

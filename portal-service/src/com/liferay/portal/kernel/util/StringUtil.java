@@ -656,31 +656,6 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static String highlight(String s, String keywords) {
-		return highlight(s, keywords, "<span class=\"highlight\">", "</span>");
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public static String highlight(
-		String s, String keywords, String highlight1, String highlight2) {
-
-		if (Validator.isNull(s) || Validator.isNull(keywords)) {
-			return s;
-		}
-
-		Pattern pattern = Pattern.compile(
-			Pattern.quote(keywords), Pattern.CASE_INSENSITIVE);
-
-		return _highlight(s, pattern, highlight1, highlight2);
-	}
-
-	/**
 	 * Returns the string <code>s</code> with any of the query terms found
 	 * within it highlighted with HTML.
 	 *

@@ -96,12 +96,12 @@ public class ExportImportConfigurationLocalServiceImpl
 
 	@Override
 	public ExportImportConfiguration deleteExportImportConfiguration(
-			long configurationId)
+			long exportImportConfigurationId)
 		throws PortalException, SystemException {
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationPersistence.findByPrimaryKey(
-				configurationId);
+				exportImportConfigurationId);
 
 		return deleteExportImportConfiguration(exportImportConfiguration);
 	}
@@ -193,14 +193,14 @@ public class ExportImportConfigurationLocalServiceImpl
 
 	@Override
 	public ExportImportConfiguration updateExportImportConfiguration(
-			long configurationId, String name, String description,
+			long exportImportConfigurationId, String name, String description,
 			Map<String, Serializable> settingsMap,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationPersistence.findByPrimaryKey(
-				configurationId);
+				exportImportConfigurationId);
 
 		exportImportConfiguration.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));

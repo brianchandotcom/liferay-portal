@@ -23,8 +23,8 @@
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition FreeMarker Display Template Name" />
 		<var name="dataDefinitionName" value="Data Definition" />
-		<var name="ddlDisplayTemplateTextFieldScript" value="Text" />
 		<var name="displayTemplateLanguageSelect" value="FreeMarker (.ftl)" />
+		<var name="displayTemplateTextFieldScript" value="Text" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
@@ -54,8 +54,8 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="ddlDisplayTemplateTextFieldScript" value="${ddlDisplayTemplateTextFieldScript}" />
 			<var name="displayTemplateLanguageSelect" value="${displayTemplateLanguageSelect}" />
+			<var name="displayTemplateTextFieldScript" value="${displayTemplateTextFieldScript}" />
 		</execute>
 	</command>
 
@@ -63,8 +63,8 @@
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
 		<var name="dataDefinitionName" value="Data Definition" />
-		<var name="ddlDisplayTemplateTextFieldScript" value="Text" />
 		<var name="displayTemplateLanguageSelect" value="Velocity (.vm)" />
+		<var name="displayTemplateTextFieldScript" value="Text" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
@@ -95,8 +95,8 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="ddlDisplayTemplateTextFieldScript" value="${ddlDisplayTemplateTextFieldScript}" />
 			<var name="displayTemplateLanguageSelect" value="${displayTemplateLanguageSelect}" />
+			<var name="displayTemplateTextFieldScript" value="${displayTemplateTextFieldScript}" />
 		</execute>
 	</command>
 
@@ -1333,8 +1333,8 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="ddlDisplayTemplateTextFieldScript" value="Text" />
 			<var name="displayTemplateLanguageSelect" value="FreeMarker (.ftl)" />
+			<var name="displayTemplateTextFieldScript" value="Text" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -1417,8 +1417,8 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="ddlDisplayTemplateTextFieldScript" value="Text" />
 			<var name="displayTemplateLanguageSelect" value="FreeMarker (.ftl)" />
+			<var name="displayTemplateTextFieldScript" value="Text" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -1512,8 +1512,8 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="ddlDisplayTemplateTextFieldScript" value="Text" />
 			<var name="displayTemplateLanguageSelect" value="FreeMarker (.ftl)" />
+			<var name="displayTemplateTextFieldScript" value="Text" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -1618,8 +1618,8 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="ddlDisplayTemplateTextFieldScript" value="Text" />
 			<var name="displayTemplateLanguageSelect" value="FreeMarker (.ftl)" />
+			<var name="displayTemplateTextFieldScript" value="Text" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -1714,8 +1714,8 @@
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition FreeMarker Display Template Name" />
 		<var name="dataDefinitionName" value="Data Definition" />
-		<var name="ddlDisplayTemplateTextFieldScript" value="Text" />
 		<var name="displayTemplateLanguageSelect" value="FreeMarker (.ftl)" />
+		<var name="displayTemplateTextFieldScript" value="Text" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
@@ -1745,8 +1745,8 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="ddlDisplayTemplateTextFieldScript" value="${ddlDisplayTemplateTextFieldScript}" />
 			<var name="displayTemplateLanguageSelect" value="${displayTemplateLanguageSelect}" />
+			<var name="displayTemplateTextFieldScript" value="${displayTemplateTextFieldScript}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -1763,8 +1763,8 @@
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
 		<var name="dataDefinitionName" value="Data Definition" />
-		<var name="ddlDisplayTemplateTextFieldScript" value="Text" />
 		<var name="displayTemplateLanguageSelect" value="Velocity (.vm)" />
+		<var name="displayTemplateTextFieldScript" value="Text" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
@@ -2479,9 +2479,9 @@
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition FreeMarker Display Template Name" />
 		<var name="dataDefinitionDisplayTemplateNameEdit" value="Data Definition FreeMarker Display Template Name Edit" />
 		<var name="dataDefinitionName" value="Data Definition" />
-		<var name="ddlDisplayTemplateTextFieldScript" value="Text" />
-		<var name="ddlDisplayTemplateTextFieldScriptEdit" value="Text" />
 		<var name="displayTemplateLanguageSelect" value="FreeMarker (.ftl)" />
+		<var name="displayTemplateTextFieldScript" value="Text" />
+		<var name="displayTemplateTextFieldScriptEdit" value="Text" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
@@ -2511,8 +2511,8 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="ddlDisplayTemplateTextFieldScript" value="${ddlDisplayTemplateTextFieldScript}" />
 			<var name="displayTemplateLanguageSelect" value="${displayTemplateLanguageSelect}" />
+			<var name="displayTemplateTextFieldScript" value="${displayTemplateTextFieldScript}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -2524,8 +2524,8 @@
 			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 			<var name="dataDefinitionDisplayTemplateNameEdit" value="${dataDefinitionDisplayTemplateNameEdit}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="ddlDisplayTemplateTextFieldScriptEdit" value="${ddlDisplayTemplateTextFieldScriptEdit}" />
 			<var name="displayTemplateLanguageSelect" value="${displayTemplateLanguageSelect}" />
+			<var name="displayTemplateTextFieldScriptEdit" value="${displayTemplateTextFieldScriptEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -2543,9 +2543,9 @@
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
 		<var name="dataDefinitionDisplayTemplateNameEdit" value="Data Definition Velocity Display Template Name Edit" />
 		<var name="dataDefinitionName" value="Data Definition" />
-		<var name="ddlDisplayTemplateTextFieldScript" value="Text" />
-		<var name="ddlDisplayTemplateTextFieldScriptEdit" value="Text" />
 		<var name="displayTemplateLanguageSelect" value="Velocity (.vm)" />
+		<var name="displayTemplateTextFieldScript" value="Text" />
+		<var name="displayTemplateTextFieldScriptEdit" value="Text" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
@@ -2575,8 +2575,8 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="ddlDisplayTemplateTextFieldScript" value="${ddlDisplayTemplateTextFieldScript}" />
 			<var name="displayTemplateLanguageSelect" value="${displayTemplateLanguageSelect}" />
+			<var name="displayTemplateTextFieldScript" value="${displayTemplateTextFieldScript}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -2588,8 +2588,8 @@
 			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 			<var name="dataDefinitionDisplayTemplateNameEdit" value="${dataDefinitionDisplayTemplateNameEdit}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="ddlDisplayTemplateTextFieldScriptEdit" value="${ddlDisplayTemplateTextFieldScriptEdit}" />
 			<var name="displayTemplateLanguageSelect" value="${displayTemplateLanguageSelect}" />
+			<var name="displayTemplateTextFieldScriptEdit" value="${displayTemplateTextFieldScriptEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

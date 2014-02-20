@@ -11,15 +11,16 @@
 		<execute macro="UserGroup#tearDownCP" />
 
 		<execute macro="SiteTemplates#tearDownCP" />
+
+		<execute macro="DMDocument#tearDownCP" />
 	</tear-down>
 
 	<command name="SitesDynamicTemplateInheritance" priority="4">
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<execute macro="SiteTemplates#gotoManageSitesTemplates" />
+		<execute macro="Site#gotoManageSitesTemplatesViaAddDropdown" />
 
 		<execute macro="SiteTemplates#viewDefaultCP" />
 

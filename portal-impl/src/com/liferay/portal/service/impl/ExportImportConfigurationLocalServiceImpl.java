@@ -108,15 +108,16 @@ public class ExportImportConfigurationLocalServiceImpl
 
 	@Override
 	public void deleteExportImportConfigurations(long groupId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		List<ExportImportConfiguration> exportImportConfigurations =
 			exportImportConfigurationPersistence.findByGroupId(groupId);
 
-		for (ExportImportConfiguration configuration :
+		for (ExportImportConfiguration exportImportConfiguration :
 				exportImportConfigurations) {
 
-			exportImportConfigurationPersistence.remove(configuration);
+			exportImportConfigurationLocalService.
+				deleteExportImportConfiguration(exportImportConfiguration);
 		}
 	}
 

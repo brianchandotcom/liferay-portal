@@ -43,6 +43,18 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 	}
 
 	@Override
+	public IndexSearcher acquireIndexSearcher() throws IOException {
+		_readLock.lock();
+
+		try {
+			return _indexAccessor.acquireIndexSearcher();
+		}
+		finally {
+			_readLock.unlock();
+		}
+	}
+
+	@Override
 	public void addDocument(Document document) throws IOException {
 		_readLock.lock();
 
@@ -62,18 +74,6 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 
 		try {
 			_indexAccessor.addDocuments(documents);
-		}
-		finally {
-			_readLock.unlock();
-		}
-	}
-
-	@Override
-	public IndexSearcher acquireIndexSearcher() throws IOException {
-		_readLock.lock();
-
-		try {
-			return _indexAccessor.acquireIndexSearcher();
 		}
 		finally {
 			_readLock.unlock();

@@ -30,7 +30,6 @@ import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.base.JournalArticleServiceBaseImpl;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
-import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import java.io.File;
 import java.io.Serializable;

@@ -96,14 +96,18 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	@Override
 	@Test
 	public void testSubscriptionContainerModelWhenInContainerModel() {
+
 		// container subscriptions are not supported yet
+
 	}
 
 	@Ignore
 	@Override
 	@Test
 	public void testSubscriptionContainerModelWhenInSubcontainerModel() {
+
 		// container subscriptions are not supported yet
+
 	}
 
 	@Override

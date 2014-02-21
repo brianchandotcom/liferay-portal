@@ -328,7 +328,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	}
 
 	public void subscribe(long groupId, long folderId)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		JournalFolderPermission.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
@@ -337,7 +337,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	}
 
 	public void unsubscribe(long groupId, long folderId)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		JournalFolderPermission.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);

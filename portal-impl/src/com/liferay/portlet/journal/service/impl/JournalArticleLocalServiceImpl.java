@@ -121,7 +121,6 @@ import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.portlet.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.portlet.journal.model.impl.JournalFolderModelImpl;

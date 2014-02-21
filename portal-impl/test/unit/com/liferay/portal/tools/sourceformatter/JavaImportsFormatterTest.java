@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,27 +25,22 @@ import org.junit.Test;
 public class JavaImportsFormatterTest {
 
 	@Test
-	public void testAlphabeticalOrderVersusImportStatic() throws Exception {
+	public void testSortImports1() throws Exception {
 		String original =
 			"import org.junit.Assert;" + "\n" +
 			"import static org.mockito.Mockito.when;" + "\n" +
 			"import tw.xyz.FooUtils;";
 
 		String expected =
-			"import static org.mockito.Mockito.when;" + "\n" +
-			"\n" +
-			"import org.junit.Assert;" + "\n" +
-			"\n" +
+			"import static org.mockito.Mockito.when;" + "\n" + "\n" +
+			"import org.junit.Assert;" + "\n" + "\n" +
 			"import tw.xyz.FooUtils;" + "\n";
 
-		_assertFormat(
-			"regardless of alphabetical order ('org' -> 'static' -> 'tw'), " +
-			"mixed regular and static imports are sorted and grouped properly",
-			original, expected);
+		_test(original, expected);
 	}
 
 	@Test
-	public void testIfDuplicateImportsAreRemoved() throws Exception {
+	public void testDuplicateImports() throws Exception {
 		String original =
 			"import org.junit.Test;" + "\n" +
 			"import org.junit.Assert;" + "\n" +
@@ -53,20 +50,20 @@ public class JavaImportsFormatterTest {
 			"import org.junit.Assert;" + "\n" +
 			"import org.junit.Test;" + "\n";
 
-		_assertFormat("duplicates are removed", original, expected);
+		_test(original, expected);
 	}
 
 	@Test
-	public void testIfNewlineIsAppendedAfterImport() throws Exception {
+	public void testAppendNewLineAfterImports() throws Exception {
 		String original = "import org.junit.Test;";
 
 		String expected = original + "\n";
 
-		_assertFormat("single import, newline is appended", original, expected);
+		_test(original, expected);
 	}
 
 	@Test
-	public void testIfNewlineIsAppendedBetweenDifferentPackages()
+	public void testAppendNewLineBetweenDifferentPackages()
 		throws Exception {
 
 		String original =
@@ -74,17 +71,14 @@ public class JavaImportsFormatterTest {
 			"import org.junit.Assert;";
 
 		String expected =
-			"import org.junit.Assert;" + "\n" +
-			"\n" +
+			"import org.junit.Assert;" + "\n" + "\n" +
 			"import org.mockito.Mockito;" + "\n";
 
-		_assertFormat(
-			"different package groups are sorted and separated", original,
-			expected);
+		_test(original, expected);
 	}
 
 	@Test
-	public void testMixedIntentsMultiplePackages() throws Exception {
+	public void testSortImports2() throws Exception {
 		String original =
 			"import org.junit.Before;" + "\n" +
 			"import org.junit.Test;" + "\n" +
@@ -97,24 +91,19 @@ public class JavaImportsFormatterTest {
 
 		String expected =
 			"import static org.junit.Assert.assertThat;" + "\n" +
-			"import static org.junit.Assert.fail;" + "\n" +
-			"\n" +
+			"import static org.junit.Assert.fail;" + "\n" + "\n" +
 			"import static org.mockito.Mockito.doThrow;" + "\n" +
-			"import static org.mockito.Mockito.when;" + "\n" +
-			"\n" +
+			"import static org.mockito.Mockito.when;" + "\n" + "\n" +
 			"import org.junit.Before;" + "\n" +
-			"import org.junit.Test;" + "\n" +
-			"\n" +
+			"import org.junit.Test;" + "\n" + "\n" +
 			"import org.mockito.Mock;" + "\n" +
 			"import org.mockito.MockitoAnnotations;" + "\n";
 
-		_assertFormat(
-			"mixed regular and static imports are sorted and grouped properly",
-			original, expected);
+		_test(original, expected);
 	}
 
 	@Test
-	public void testMixedIntentsSinglePackage() throws Exception {
+	public void testSortImports3() throws Exception {
 		String original =
 			"import org.junit.Before;" + "\n" +
 			"import org.junit.Test;" + "\n" +
@@ -123,36 +112,31 @@ public class JavaImportsFormatterTest {
 
 		String expected =
 			"import static org.junit.Assert.assertThat;" + "\n" +
-			"import static org.junit.Assert.fail;" + "\n" +
-			"\n" +
+			"import static org.junit.Assert.fail;" + "\n" + "\n" +
 			"import org.junit.Before;" + "\n" +
 			"import org.junit.Test;" + "\n";
 
-		_assertFormat(
-			"mixed regular and static imports " +
-			"are sorted and grouped properly " +
-			"even when everything is in the same package", original, expected);
+		_test(original, expected);
 	}
 
 	@Test
-	public void testMultipleStaticImports() throws Exception {
+	public void testAppendNewLineAfterMultipleStaticImports() throws Exception {
 		String original =
 			"import static org.junit.Assert.assertEquals;" + "\n\n" +
 			"import static org.mockito.Mockito.when;";
 
 		String expected = original + "\n";
 
-		_assertFormat(
-			"multiple static imports should be preserved", original, expected);
+		_test(original, expected);
 	}
 
 	@Test
 	public void testNoImports() throws Exception {
-		_assertFormat("no imports, nothing happens", "", "");
+		_test(StringPool.BLANK, StringPool.BLANK);
 	}
 
 	@Test
-	public void testSorting() throws Exception {
+	public void testSortNonStaticImports() throws Exception {
 		String original =
 			"import org.junit.Test;" + "\n" +
 			"import org.junit.Assert;";
@@ -161,29 +145,24 @@ public class JavaImportsFormatterTest {
 			"import org.junit.Assert;" + "\n" +
 			"import org.junit.Test;" + "\n";
 
-		_assertFormat("multiple imports are sorted", original, expected);
+		_test(original, expected);
 	}
 
 	@Test
-	public void testSortingOfStaticImports() throws Exception {
+	public void testSortStaticImports() throws Exception {
 		String original =
-			"import static org.mockito.Mockito.when;" + "\n" +
-			"\n" +
+			"import static org.mockito.Mockito.when;" + "\n" + "\n" +
 			"import static org.junit.Assert.assertEquals;";
 
 		String expected =
-			"import static org.junit.Assert.assertEquals;" + "\n" +
-			"\n" +
+			"import static org.junit.Assert.assertEquals;" + "\n" + "\n" +
 			"import static org.mockito.Mockito.when;" + "\n";
 
-		_assertFormat(
-			"multiple static imports must be sorted, " +
-			"however separate package groups must remain separate", original,
-			expected);
+		_test(original, expected);
 	}
 
 	@Test
-	public void testSortingWithInnerClass() throws Exception {
+	public void testSortImportsWithInnerClass() throws Exception {
 		String original =
 			"import javax.servlet.FilterRegistration.Dynamic;" + "\n" +
 			"import javax.servlet.FilterRegistration;";
@@ -192,17 +171,15 @@ public class JavaImportsFormatterTest {
 			"import javax.servlet.FilterRegistration;" + "\n" +
 			"import javax.servlet.FilterRegistration.Dynamic;" + '\n';
 
-		_assertFormat(
-			"when a class and an inner class of itself are both imported, " +
-			"the inner class must be second in order", original, expected);
+		_test(original, expected);
 	}
 
-	private void _assertFormat(String message, String original, String expected)
-		throws Exception {
+	private void _test(String original, String expected) throws Exception {
+		String formatted = _importsFormatter.format(original);
 
-		String formatted = new JavaImportsFormatter().format(original);
-
-		Assert.assertEquals(message, expected, formatted);
+		Assert.assertEquals(expected, formatted);
 	}
+
+	private ImportsFormatter _importsFormatter = new JavaImportsFormatter();
 
 }

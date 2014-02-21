@@ -23,53 +23,47 @@ import org.junit.Test;
 public class JSPImportsFormatterTest {
 
 	@Test
-	public void testIfNewlineIsAppendedAfterImport() throws Exception {
+	public void testAppendNewLineAfterImports() throws Exception {
 		String original =
 			"<%@ page import=\"com.liferay.portal.kernel.util.WebKeys\" %>";
 
 		String expected = original + "\n";
 
-		_assertFormat("single import, newline is appended", original, expected);
+		_test(original, expected);
 	}
 
 	@Test
-	public void testIfNewlineIsAppendedBetweenDifferentPackages()
-		throws Exception {
-
+	public void testAppendNewLineBetweenDifferentPackages() throws Exception {
 		String original =
-			"<%@ page import=\"java.text.DateFormat\" %>" + '\n' +
+			"<%@ page import=\"java.text.DateFormat\" %>" + "\n" +
 			"<%@ page import=\"java.io.Serializable\" %>";
 
 		String expected =
-			"<%@ page import=\"java.io.Serializable\" %>" + '\n' +
-			'\n' +
-			"<%@ page import=\"java.text.DateFormat\" %>" + '\n';
+			"<%@ page import=\"java.io.Serializable\" %>" + "\n" + "\n" +
+			"<%@ page import=\"java.text.DateFormat\" %>" + "\n";
 
-		_assertFormat(
-			"different package groups are sorted and separated", original,
-			expected);
+		_test(original, expected);
 	}
 
 	@Test
-	public void testSorting() throws Exception {
-
+	public void testSortImports() throws Exception {
 		String original =
-			"<%@ page import=\"java.util.Arrays\" %>" + '\n' +
+			"<%@ page import=\"java.util.Arrays\" %>" + "\n" +
 			"<%@ page import=\"java.util.ArrayList\" %>";
 
 		String expected =
-			"<%@ page import=\"java.util.ArrayList\" %>" + '\n' +
-			"<%@ page import=\"java.util.Arrays\" %>" + '\n';
+			"<%@ page import=\"java.util.ArrayList\" %>" + "\n" +
+			"<%@ page import=\"java.util.Arrays\" %>" + "\n";
 
-		_assertFormat("multiple imports are sorted", original, expected);
+		_test(original, expected);
 	}
 
-	private void _assertFormat(String message, String original, String expected)
-		throws Exception {
+	private void _test(String original, String expected) throws Exception {
+		String formatted = _importsFormatter.format(original);
 
-		String formatted = new JSPImportsFormatter().format(original);
-
-		Assert.assertEquals(message, expected, formatted);
+		Assert.assertEquals(expected, formatted);
 	}
+
+	private ImportsFormatter _importsFormatter = new JSPImportsFormatter();
 
 }

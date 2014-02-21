@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -138,6 +139,42 @@ public class WikiPageLocalServiceTest {
 	@Test
 	public void testMovePage() throws Exception {
 		testMovePage(false);
+	}
+
+	@Test
+	public void testMovePageMovedPage() throws Exception {
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"A", true);
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		WikiPageLocalServiceUtil.movePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "A", "B", true,
+			serviceContext);
+
+		WikiPageLocalServiceUtil.movePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "A", "C", true,
+			serviceContext);
+
+		WikiPage pageA = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "A");
+		WikiPage pageB = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "B");
+		WikiPage pageC = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "C");
+
+		Assert.assertEquals(pageA.getRedirectTitle(), "C");
+		Assert.assertEquals(pageB.getRedirectTitle(), StringPool.BLANK);
+		Assert.assertEquals(pageC.getRedirectTitle(), StringPool.BLANK);
+
+		Assert.assertEquals(pageA.getSummary(), "Moved to C");
+		Assert.assertEquals(pageB.getSummary(), "Summary");
+		Assert.assertEquals(pageC.getSummary(), "Summary");
+
+		Assert.assertEquals(pageA.getContent(), "[[C]]");
+		Assert.assertEquals(pageC.getContent(), "[[B]]");
 	}
 
 	@Test(expected = DuplicatePageException.class)

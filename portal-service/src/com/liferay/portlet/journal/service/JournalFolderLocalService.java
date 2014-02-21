@@ -459,6 +459,34 @@ public interface JournalFolderLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Subscribe the user to changes in the folder.
+	*
+	* @param userId the primary key of the folder's user
+	* @param groupId the primary key of the folder's group
+	* @param folderId the primary key of the folder
+	* @throws PortalException if the user or group could not be found, or if
+	subscribing was not permissible
+	* @throws SystemException if a system exception occurred
+	*/
+	public void subscribe(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Unsubscribe the user from changes in the folder.
+	*
+	* @param userId the primary key of the folder's user
+	* @param groupId the primary key of the folder's group
+	* @param folderId the primary key of the folder
+	* @throws PortalException if the user or group could not be found, or if
+	unsubscribing was not permissible
+	* @throws SystemException if a system exception occurred
+	*/
+	public void unsubscribe(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void updateAsset(long userId,
 		com.liferay.portlet.journal.model.JournalFolder folder,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,

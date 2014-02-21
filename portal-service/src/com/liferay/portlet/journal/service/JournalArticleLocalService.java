@@ -2698,34 +2698,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Subscribes the user to notifications for the web content article matching
-	* the group, notifying him the instant versions of the article are created,
-	* deleted, or modified.
-	*
-	* @param userId the primary key of the user to subscribe
-	* @param groupId the primary key of the group
-	* @throws PortalException if a matching user or group could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public void subscribe(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Unsubscribes the user from notifications for the web content article
-	* matching the group.
-	*
-	* @param userId the primary key of the user to unsubscribe
-	* @param groupId the primary key of the group
-	* @throws PortalException if a matching user or subscription could not be
-	found
-	* @throws SystemException if a system exception occurred
-	*/
-	public void unsubscribe(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Updates the web content article matching the version, replacing its
 	* folder, title, description, content, and layout UUID.
 	*

@@ -399,6 +399,30 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
+	public static void subscribe(long groupId, long folderId)
+		throws RemoteException {
+		try {
+			JournalFolderServiceUtil.subscribe(groupId, folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void unsubscribe(long groupId, long folderId)
+		throws RemoteException {
+		try {
+			JournalFolderServiceUtil.unsubscribe(groupId, folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalFolderSoap updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,

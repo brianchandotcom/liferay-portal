@@ -1823,49 +1823,6 @@ public class JournalArticleServiceSoap {
 	}
 
 	/**
-	* Subscribes the user to notifications for the web content article matching
-	* the group, notifying him the instant versions of the article are created,
-	* deleted, or modified.
-	*
-	* @param groupId the primary key of the group
-	* @throws PortalException if the user did not have permission to subscribe
-	to the web content article or if a matching user or group could
-	not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void subscribe(long groupId) throws RemoteException {
-		try {
-			JournalArticleServiceUtil.subscribe(groupId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	* Unsubscribes the user from notifications for the web content article
-	* matching the group.
-	*
-	* @param groupId the primary key of the group
-	* @throws PortalException if the user did not have permission to subscribe
-	to the web content article or if a matching user or subscription
-	could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void unsubscribe(long groupId) throws RemoteException {
-		try {
-			JournalArticleServiceUtil.unsubscribe(groupId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
 	* Updates the web content article matching the version, replacing its
 	* folder, title, description, content, and layout UUID.
 	*

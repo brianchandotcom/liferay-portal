@@ -225,6 +225,18 @@ public class JournalFolderServiceUtil {
 		getService().restoreFolderFromTrash(folderId);
 	}
 
+	public static void subscribe(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().subscribe(groupId, folderId);
+	}
+
+	public static void unsubscribe(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsubscribe(groupId, folderId);
+	}
+
 	public static com.liferay.portlet.journal.model.JournalFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,

@@ -247,6 +247,20 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	}
 
 	@Override
+	public void subscribe(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderService.subscribe(groupId, folderId);
+	}
+
+	@Override
+	public void unsubscribe(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderService.unsubscribe(groupId, folderId);
+	}
+
+	@Override
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,

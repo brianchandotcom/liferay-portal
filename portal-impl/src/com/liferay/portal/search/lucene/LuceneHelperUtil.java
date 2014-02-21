@@ -320,6 +320,12 @@ public class LuceneHelperUtil {
 		return getLuceneHelper().getIndexAccessor(companyId);
 	}
 
+	public static IndexSearcher getIndexSearcher(long companyId)
+		throws IOException {
+
+		return getLuceneHelper().getIndexSearcher(companyId);
+	}
+
 	public static long getLastGeneration(long companyId) {
 		return getLuceneHelper().getLastGeneration(companyId);
 	}
@@ -338,12 +344,6 @@ public class LuceneHelperUtil {
 
 	public static Set<String> getQueryTerms(Query query) {
 		return getLuceneHelper().getQueryTerms(query);
-	}
-
-	public static IndexSearcher getIndexSearcher(long companyId)
-		throws IOException {
-
-		return getLuceneHelper().getIndexSearcher(companyId);
 	}
 
 	/**

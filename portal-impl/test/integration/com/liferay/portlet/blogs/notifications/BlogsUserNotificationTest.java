@@ -80,6 +80,8 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		BlogsEntryLocalServiceUtil.subscribe(
 			_user.getUserId(), _group.getGroupId());
 
+		addUserNotificationDeliveries();
+
 		setActiveAllUserNotificationDeliveries(true);
 
 		_logRecords = JDKLoggerTestUtil.configureJDKLogger(
@@ -552,10 +554,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	protected void setActiveUserNotificationDeliveryType(
 			int deliverType, int notificationType, boolean active)
 		throws Exception {
-
-		if (_userNotificationDeliveries.isEmpty()) {
-			addUserNotificationDeliveries();
-		}
 
 		for (UserNotificationDelivery userNotificationDelivery :
 				_userNotificationDeliveries) {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UniqueList;
@@ -85,15 +86,24 @@ public class ExportLayoutsAction extends PortletAction {
 				actionRequest, groupId, privateLayout, 0, null,
 				ExportImportDateUtil.RANGE_ALL);
 
-			String fileName = LanguageUtil.get(
-				actionRequest.getLocale(), "public-pages");
+			StringBundler sb = new StringBundler(4);
 
 			if (privateLayout) {
-				fileName = LanguageUtil.get(
-					actionRequest.getLocale(), "private-pages");
+				sb.append(
+					LanguageUtil.get(
+						actionRequest.getLocale(), "private-pages"));
+			}
+			else {
+				sb.append(
+					LanguageUtil.get(
+						actionRequest.getLocale(), "public-pages"));
 			}
 
-			fileName = fileName + StringPool.DASH + Time.getShortTimestamp();
+			sb.append(StringPool.DASH);
+			sb.append(Time.getShortTimestamp());
+			sb.append(".lar");
+
+			String fileName = sb.toString();
 
 			LayoutServiceUtil.exportLayoutsAsFileInBackground(
 				fileName, groupId, privateLayout, layoutIds,

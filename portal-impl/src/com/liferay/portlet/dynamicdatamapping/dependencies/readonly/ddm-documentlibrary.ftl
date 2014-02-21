@@ -24,4 +24,6 @@
 	${fieldStructure.children}
 </div>
 
-<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
+<#if !disabled>
+	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
+</#if>

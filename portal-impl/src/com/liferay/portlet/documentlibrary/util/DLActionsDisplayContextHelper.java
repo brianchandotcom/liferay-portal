@@ -29,9 +29,8 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
 public class DLActionsDisplayContextHelper {
 
 	public DLActionsDisplayContextHelper(
-			PermissionChecker permissionChecker, FileEntry fileEntry,
-			FileVersion fileVersion)
-		throws PortalException, SystemException {
+		PermissionChecker permissionChecker, FileEntry fileEntry,
+		FileVersion fileVersion) {
 
 		if ((fileEntry != null) && (fileVersion == null)) {
 			throw new IllegalArgumentException(

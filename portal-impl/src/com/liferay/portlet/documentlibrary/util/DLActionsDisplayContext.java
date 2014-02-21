@@ -43,9 +43,8 @@ public class DLActionsDisplayContext {
 	}
 
 	public DLActionsDisplayContext(
-			HttpServletRequest request, FileEntry fileEntry,
-			FileVersion fileVersion)
-		throws PortalException, SystemException {
+		HttpServletRequest request, FileEntry fileEntry,
+		FileVersion fileVersion) {
 
 		_request = request;
 

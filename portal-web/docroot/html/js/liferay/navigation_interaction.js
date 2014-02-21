@@ -3,9 +3,9 @@ AUI.add(
 	function(A) {
 		var ACTIVE_DESCENDANT = 'activeDescendant';
 
-		var DIRECTION_LEFT = 0;
+		var DIRECTION_LEFT = 'left';
 
-		var DIRECTION_RIGHT = 1;
+		var DIRECTION_RIGHT = 'right';
 
 		var NAME = 'liferaynavigationinteraction';
 
@@ -31,6 +31,8 @@ AUI.add(
 
 						instance._directChildLi = hostULId + '> li';
 						instance._hostULId = hostULId;
+
+						instance._triggerNode = A.one('.nav-navigation-btn');
 
 						Liferay.on(
 							['hideNavigationMenu', 'showNavigationMenu'],
@@ -67,40 +69,60 @@ AUI.add(
 						}
 
 						instance._hideMenu();
+
+						if (instance._isTriggerVisible()) {
+							Liferay.fire(
+								'exitNavigation',
+								{
+									navigation: instance.get('host')
+								}
+							);
+						}
 					},
 
 					_handleKey: function(event, direction) {
 						var instance = this;
 
-						var item;
+						if (!instance._isTriggerVisible()) {
+							var item;
 
-						var target = event.target;
+							var target = event.target;
 
-						var parent = target.ancestors(instance._directChildLi).item(0);
+							var parent = target.ancestors(instance._directChildLi).item(0);
 
-						var fallbackFirst = true;
+							var fallbackFirst = true;
 
-						if (direction == DIRECTION_LEFT) {
-							item = parent.previous();
+							if (direction == DIRECTION_LEFT) {
+								item = parent.previous();
 
-							fallbackFirst = false;
-						}
-						else {
-							item = parent.next();
-						}
-
-						if (!item) {
-							var siblings = parent.siblings();
-
-							if (fallbackFirst) {
-								item = siblings.first();
+								fallbackFirst = false;
 							}
 							else {
-								item = siblings.last();
+								item = parent.next();
 							}
-						}
 
-						instance._focusManager.focus(item.one('a'));
+							if (!item) {
+								var siblings = parent.siblings();
+
+								if (fallbackFirst) {
+									item = siblings.first();
+								}
+								else {
+									item = siblings.last();
+								}
+							}
+
+							instance._focusManager.focus(item.one('a'));
+						}
+						else {
+							Liferay.fire(
+								'exitNavigation',
+								{
+									direction: direction,
+									navigation: instance.get('host')
+								}
+							);
+						}
 					},
 
 					_handleKeyDown: function(event) {
@@ -155,6 +177,39 @@ AUI.add(
 								Liferay.fire('showNavigationMenu', mapHover);
 							}
 						}
+
+						if (instance._isTriggerVisible()) {
+							if (menuOld) {
+								var exitDirection;
+
+								var descendants = instance._focusManager.get('descendants');
+
+								var first = descendants.first();
+
+								var last = descendants.last();
+
+								var oldMenuLink = menuOld.one('a');
+
+								var newMenuLink = menuNew.one('a');
+
+								if ((oldMenuLink === last) && (newMenuLink === first)) {
+									exitDirection = 'down';
+								}
+								else if ((oldMenuLink === first) && (newMenuLink === last)) {
+									exitDirection = 'up';
+								}
+
+								if (exitDirection) {
+									Liferay.fire(
+										'exitNavigation',
+										{
+											direction: exitDirection,
+											navigation: instance.get('host')
+										}
+									);
+								}
+							}
+						}
 					},
 
 					_hideMenu: function() {
@@ -201,6 +256,12 @@ AUI.add(
 						focusManager.after(['activeDescendantChange', 'focusedChange'], instance._showMenu, instance);
 
 						instance._focusManager = focusManager;
+					},
+
+					_isTriggerVisible: function() {
+						var instance = this;
+
+						return instance._triggerNode.test(':visible');
 					},
 
 					_onMouseToggle: function(event) {

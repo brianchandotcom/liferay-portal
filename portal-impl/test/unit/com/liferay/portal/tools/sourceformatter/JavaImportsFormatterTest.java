@@ -49,7 +49,6 @@ public class JavaImportsFormatterTest {
 		String original =
 			"import org.mockito.Mockito;" + "\n" +
 			"import org.junit.Assert;";
-
 		String expected =
 			"import org.junit.Assert;" + "\n" + "\n" +
 			"import org.mockito.Mockito;" + "\n";
@@ -63,7 +62,6 @@ public class JavaImportsFormatterTest {
 			"import org.junit.Test;" + "\n" +
 			"import org.junit.Assert;" + "\n" +
 			"import org.junit.Assert;";
-
 		String expected =
 			"import org.junit.Assert;" + "\n" +
 			"import org.junit.Test;" + "\n";
@@ -82,7 +80,6 @@ public class JavaImportsFormatterTest {
 			"import org.junit.Assert;" + "\n" +
 			"import static org.mockito.Mockito.when;" + "\n" +
 			"import tw.xyz.FooUtils;";
-
 		String expected =
 			"import static org.mockito.Mockito.when;" + "\n" + "\n" +
 			"import org.junit.Assert;" + "\n" + "\n" +
@@ -102,7 +99,6 @@ public class JavaImportsFormatterTest {
 			"import org.mockito.MockitoAnnotations;" + "\n" +
 			"import static org.mockito.Mockito.doThrow;" + "\n" +
 			"import static org.mockito.Mockito.when;";
-
 		String expected =
 			"import static org.junit.Assert.assertThat;" + "\n" +
 			"import static org.junit.Assert.fail;" + "\n" + "\n" +
@@ -123,7 +119,6 @@ public class JavaImportsFormatterTest {
 			"import org.junit.Test;" + "\n" +
 			"import static org.junit.Assert.assertThat;" + "\n" +
 			"import static org.junit.Assert.fail;";
-
 		String expected =
 			"import static org.junit.Assert.assertThat;" + "\n" +
 			"import static org.junit.Assert.fail;" + "\n" + "\n" +
@@ -138,7 +133,6 @@ public class JavaImportsFormatterTest {
 		String original =
 			"import javax.servlet.FilterRegistration.Dynamic;" + "\n" +
 			"import javax.servlet.FilterRegistration;";
-
 		String expected =
 			"import javax.servlet.FilterRegistration;" + "\n" +
 			"import javax.servlet.FilterRegistration.Dynamic;" + '\n';
@@ -151,7 +145,6 @@ public class JavaImportsFormatterTest {
 		String original =
 			"import org.junit.Test;" + "\n" +
 			"import org.junit.Assert;";
-
 		String expected =
 			"import org.junit.Assert;" + "\n" +
 			"import org.junit.Test;" + "\n";
@@ -164,7 +157,6 @@ public class JavaImportsFormatterTest {
 		String original =
 			"import static org.mockito.Mockito.when;" + "\n" + "\n" +
 			"import static org.junit.Assert.assertEquals;";
-
 		String expected =
 			"import static org.junit.Assert.assertEquals;" + "\n" + "\n" +
 			"import static org.mockito.Mockito.when;" + "\n";

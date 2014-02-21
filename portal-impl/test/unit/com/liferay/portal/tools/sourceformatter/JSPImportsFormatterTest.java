@@ -37,7 +37,6 @@ public class JSPImportsFormatterTest {
 		String original =
 			"<%@ page import=\"java.text.DateFormat\" %>" + "\n" +
 			"<%@ page import=\"java.io.Serializable\" %>";
-
 		String expected =
 			"<%@ page import=\"java.io.Serializable\" %>" + "\n" + "\n" +
 			"<%@ page import=\"java.text.DateFormat\" %>" + "\n";
@@ -50,7 +49,6 @@ public class JSPImportsFormatterTest {
 		String original =
 			"<%@ page import=\"java.util.Arrays\" %>" + "\n" +
 			"<%@ page import=\"java.util.ArrayList\" %>";
-
 		String expected =
 			"<%@ page import=\"java.util.ArrayList\" %>" + "\n" +
 			"<%@ page import=\"java.util.Arrays\" %>" + "\n";

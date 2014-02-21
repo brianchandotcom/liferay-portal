@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -76,6 +77,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.LayoutComparator;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
@@ -432,6 +434,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout.setLayoutSet(layoutSet);
 
+		// Asset
+
+		updateAsset(
+			userId, layout, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames());
+
 		// Message boards
 
 		if (PropsValues.LAYOUT_COMMENTS_ENABLED) {
@@ -595,6 +603,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		subscriptionLocalService.deleteSubscriptions(
 			layout.getCompanyId(), Layout.class.getName(), layout.getPlid());
+
+		// Asset
+
+		assetEntryLocalService.deleteEntry(
+			Layout.class.getName(), layout.getPrimaryKey());
 
 		// Ratings
 
@@ -2208,6 +2221,21 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layoutSetLocalService.updatePageCount(groupId, privateLayout);
 	}
 
+	@Override
+	public void updateAsset(
+			long userId, Layout layout, long[] assetCategoryIds,
+			String[] assetTagNames)
+		throws PortalException, SystemException {
+
+		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
+			userId, layout.getGroupId(), layout.getCreateDate(),
+			layout.getModifiedDate(), Layout.class.getName(),
+			layout.getPrimaryKey(), layout.getUuid(), 0, assetCategoryIds,
+			assetTagNames, false, null, null, null, ContentTypes.TEXT_HTML,
+			layout.getName(LocaleUtil.getDefault()), null, null, null, null, 0,
+			0, null, false);
+	}
+
 	/**
 	 * Updates the friendly URL of the layout.
 	 *
@@ -2404,6 +2432,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.getUserId(), layout.getCompanyId(), layout.getGroupId(),
 			layout.getPlid(), layout.isPrivateLayout(), friendlyURLMap,
 			serviceContext);
+
+		// Asset
+
+		updateAsset(
+			serviceContext.getUserId(), layout,
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames());
 
 		return layout;
 	}

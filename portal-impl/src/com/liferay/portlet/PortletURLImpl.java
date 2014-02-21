@@ -1035,8 +1035,10 @@ public class PortletURLImpl
 
 			String name = entry.getKey();
 
+			Portlet portlet = getPortlet();
+
 			PublicRenderParameter publicRenderParameter =
-				getPortlet().getPublicRenderParameter(name);
+				portlet.getPublicRenderParameter(name);
 
 			if (publicRenderParameter == null) {
 				if (_log.isWarnEnabled()) {
@@ -1046,18 +1048,18 @@ public class PortletURLImpl
 				continue;
 			}
 
-			String removePrpName =
+			String removePublicRenderParameterName =
 				PortletQNameUtil.getRemovePublicRenderParameterName(
 					publicRenderParameter.getQName());
 
-			sb.append(HttpUtil.encodeURL(removePrpName));
+			sb.append(HttpUtil.encodeURL(removePublicRenderParameterName));
 			sb.append(StringPool.EQUAL);
 			sb.append(processValue(key, entry.getValue()[0]));
 			sb.append(StringPool.AMPERSAND);
 		}
 
-		Map<String, String[]> params = new LinkedHashMap<String, String[]>();
-		params.putAll(_params);
+		Map<String, String[]> params = new LinkedHashMap<String, String[]>(
+			_params);
 
 		if (_copyCurrentRenderParameters) {
 			mergeRenderParameters(params);
@@ -1228,8 +1230,8 @@ public class PortletURLImpl
 			}
 		}
 
-		Map<String, String[]> params = new LinkedHashMap<String, String[]>();
-		params.putAll(_params);
+		Map<String, String[]> params = new LinkedHashMap<String, String[]>(
+			_params);
 
 		if (_copyCurrentRenderParameters) {
 			mergeRenderParameters(params);
@@ -1364,8 +1366,10 @@ public class PortletURLImpl
 
 		Layout layout = getLayout();
 
+		Portlet portlet = getPortlet();
+
 		Map<String, String[]> renderParameters = RenderParametersPool.get(
-			_request, layout.getPlid(), getPortlet().getPortletId());
+			_request, layout.getPlid(), portlet.getPortletId());
 
 		for (Map.Entry<String, String[]> entry : renderParameters.entrySet()) {
 			String name = entry.getKey();

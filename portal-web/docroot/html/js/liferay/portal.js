@@ -127,10 +127,12 @@
 				instance._cached = cached;
 			}
 
-			if (text == null) {
+			if (!A.Node.prototype.isPrototypeOf(obj)) {
 				obj = A.one(obj);
 
-				text = instance._getText(obj.guid());
+				if (text == null) {
+					text = instance._getText(obj.guid());
+				}
 			}
 
 			cached.set(BODY_CONTENT, text);

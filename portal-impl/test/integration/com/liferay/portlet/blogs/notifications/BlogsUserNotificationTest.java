@@ -105,7 +105,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		BlogsEntry entry = addBlogsEntry();
 
-		Assert.assertEquals("An email has been sent", 0, _logRecords.size());
+		Assert.assertEquals(0, _logRecords.size());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
@@ -136,7 +136,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		updateEntry(entry);
 
-		Assert.assertEquals("An email has been sent", 0, _logRecords.size());
+		Assert.assertEquals(0, _logRecords.size());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
@@ -172,7 +172,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		BlogsEntry entry = addBlogsEntry();
 
-		Assert.assertEquals("An email has been sent", 0, _logRecords.size());
+		Assert.assertEquals(0, _logRecords.size());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
@@ -191,7 +191,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		updateEntry(entry);
 
-		Assert.assertEquals("An email has been sent", 0, _logRecords.size());
+		Assert.assertEquals(0, _logRecords.size());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
@@ -214,8 +214,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		LogRecord logRecord = _logRecords.get(0);
 
-		Assert.assertEquals(
-			"No mail has been sent", "Sending email", logRecord.getMessage());
+		Assert.assertEquals("Sending email", logRecord.getMessage());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
@@ -244,13 +243,11 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		LogRecord logRecord = _logRecords.get(0);
 
-		Assert.assertEquals(
-			"No mail has been sent", "Sending email", logRecord.getMessage());
+		Assert.assertEquals("Sending email", logRecord.getMessage());
 
 		logRecord = _logRecords.get(1);
 
-		Assert.assertEquals(
-			"No mail has been sent", "Sending email", logRecord.getMessage());
+		Assert.assertEquals("Sending email", logRecord.getMessage());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
@@ -267,8 +264,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		LogRecord logRecord = _logRecords.get(0);
 
-		Assert.assertEquals(
-			"No mail has been sent", "Sending email", logRecord.getMessage());
+		Assert.assertEquals("Sending email", logRecord.getMessage());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
@@ -293,13 +289,11 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		LogRecord logRecord = _logRecords.get(0);
 
-		Assert.assertEquals(
-			"No mail has been sent", "Sending email", logRecord.getMessage());
+		Assert.assertEquals("Sending email", logRecord.getMessage());
 
 		logRecord = _logRecords.get(1);
 
-		Assert.assertEquals(
-			"No mail has been sent", "Sending email", logRecord.getMessage());
+		Assert.assertEquals("Sending email", logRecord.getMessage());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
@@ -460,7 +454,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			return;
 		}
 
-		Assert.fail("UserNotification doesn't exist");
+		Assert.fail("User notification does not exist");
 	}
 
 	private void updateEntry(BlogsEntry entry) throws Exception {

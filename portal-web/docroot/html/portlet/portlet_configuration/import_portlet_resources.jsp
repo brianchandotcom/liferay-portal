@@ -82,7 +82,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 						<liferay-ui:message key="size" />
 					</dt>
 					<dd>
-						<%= fileEntry.getSize() / 1024 %>k
+						<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>
 					</dd>
 				</dl>
 			</aui:fieldset>

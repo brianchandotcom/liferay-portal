@@ -56,7 +56,12 @@
 		}
 
 		button.close, button.btn.close {
+			font-size: 9mm;
 			width: auto;
+
+			@media (max-width: 480px) {
+				line-height: 9mm;
+			}
 		}
 	}
 }

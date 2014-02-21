@@ -99,10 +99,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	public void testBlogUserNotificationInactiveMailNotificationsOnAdd()
 		throws Exception {
 
-		int initialUserNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(_user.getUserId());
-
 		updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 			UserNotificationDeliveryConstants.TYPE_EMAIL, false);
@@ -119,13 +115,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			Assert.fail("userNotification doesn't exists for this entry");
 		}
 
-		List<UserNotificationEvent> userNotificationEvents =
-			getUserNotificationEvents(_user.getUserId());
-
-		Assert.assertEquals(
-			initialUserNotificationEventsCount + 1,
-			userNotificationEvents.size());
-
 		Assert.assertEquals(1, entryUserNotificationEventsJsonObjects.size());
 
 		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
@@ -138,10 +127,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	@Test
 	public void testBlogUserNotificationInactiveMailNotificationsOnUpdate()
 		throws Exception {
-
-		int initialUserNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(_user.getUserId());
 
 		updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
@@ -164,13 +149,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		if (entryUserNotificationEventsJsonObjects.isEmpty()) {
 			Assert.fail("userNotification doesn't exists for this entry");
 		}
-
-		List<UserNotificationEvent> userNotificationEvents =
-			getUserNotificationEvents(_user.getUserId());
-
-		Assert.assertEquals(
-			initialUserNotificationEventsCount + 2,
-			userNotificationEvents.size());
 
 		Assert.assertEquals(2, entryUserNotificationEventsJsonObjects.size());
 
@@ -198,10 +176,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	public void testBlogUserNotificationInactiveNotificationsOnAdd()
 		throws Exception {
 
-		int initialUserNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(_user.getUserId());
-
 		updateUserNotificationsDelivery(false);
 
 		BlogsEntry entry = addBlogsEntry();
@@ -215,21 +189,11 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
 			Assert.fail("A userNotification exists for this entry");
 		}
-
-		List<UserNotificationEvent> userNotificationEvents =
-			getUserNotificationEvents(_user.getUserId());
-
-		Assert.assertEquals(
-			initialUserNotificationEventsCount, userNotificationEvents.size());
 	}
 
 	@Test
 	public void testBlogUserNotificationInactiveNotificationsOnUpdate()
 		throws Exception {
-
-		int initialUserNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(_user.getUserId());
 
 		updateUserNotificationsDelivery(false);
 
@@ -247,22 +211,12 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			Assert.fail("A userNotification exists for this entry");
 		}
 
-		List<UserNotificationEvent> userNotificationEvents =
-			getUserNotificationEvents(_user.getUserId());
-
-		Assert.assertEquals(
-			initialUserNotificationEventsCount, userNotificationEvents.size());
-
 		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
 	}
 
 	@Test
 	public void testBlogUserNotificationInactiveWebsiteNotificationsOnAdd()
 		throws Exception {
-
-		int initialUserNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(_user.getUserId());
 
 		updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
@@ -285,22 +239,12 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			Assert.fail("A userNotification exists for this entry");
 		}
 
-		List<UserNotificationEvent> userNotificationEvents =
-			getUserNotificationEvents(_user.getUserId());
-
-		Assert.assertEquals(
-			initialUserNotificationEventsCount, userNotificationEvents.size());
-
 		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
 	}
 
 	@Test
 	public void testBlogUserNotificationInactiveWebsiteNotificationsOnUpdate()
 		throws Exception {
-
-		int initialUserNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(_user.getUserId());
 
 		updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
@@ -334,21 +278,11 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			Assert.fail("A userNotification exists for this entry");
 		}
 
-		List<UserNotificationEvent> userNotificationEvents =
-			getUserNotificationEvents(_user.getUserId());
-
-		Assert.assertEquals(
-			initialUserNotificationEventsCount, userNotificationEvents.size());
-
 		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
 	}
 
 	@Test
 	public void testBlogUserNotificationOnAdd() throws Exception {
-		int initialUserNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(_user.getUserId());
-
 		BlogsEntry entry = addBlogsEntry();
 
 		Assert.assertEquals(1, _logRecords.size());
@@ -366,13 +300,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			Assert.fail("userNotification doesn't exists for this entry");
 		}
 
-		List<UserNotificationEvent> userNotificationEvents =
-			getUserNotificationEvents(_user.getUserId());
-
-		Assert.assertEquals(
-			initialUserNotificationEventsCount + 1,
-			userNotificationEvents.size());
-
 		Assert.assertEquals(1, entryUserNotificationEventsJsonObjects.size());
 
 		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
@@ -384,10 +311,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 	@Test
 	public void testBlogUserNotificationOnUpdate() throws Exception {
-		int initialUserNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(_user.getUserId());
-
 		BlogsEntry entry = addBlogsEntry();
 
 		updateEntry(entry);
@@ -411,13 +334,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		if (entryUserNotificationEventsJsonObjects.isEmpty()) {
 			Assert.fail("userNotification doesn't exists for this entry");
 		}
-
-		List<UserNotificationEvent> userNotificationEvents =
-			getUserNotificationEvents(_user.getUserId());
-
-		Assert.assertEquals(
-			initialUserNotificationEventsCount + 2,
-			userNotificationEvents.size());
 
 		Assert.assertEquals(2, entryUserNotificationEventsJsonObjects.size());
 
@@ -499,7 +415,8 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 	protected void deleteUserNotificationEvents(long userId) throws Exception {
 		List<UserNotificationEvent> userNotificationEvents =
-			getUserNotificationEvents(userId);
+			UserNotificationEventLocalServiceUtil.getUserNotificationEvents(
+				userId);
 
 		for (UserNotificationEvent userNotificationEvent :
 				userNotificationEvents) {
@@ -514,7 +431,8 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		throws Exception {
 
 		List<UserNotificationEvent> userNotificationEvents =
-			getUserNotificationEvents(userId);
+			UserNotificationEventLocalServiceUtil.getUserNotificationEvents(
+				userId);
 
 		List<JSONObject> userNotificationEventJsonObjects =
 			new ArrayList<JSONObject>(userNotificationEvents.size());
@@ -535,13 +453,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		}
 
 		return userNotificationEventJsonObjects;
-	}
-
-	protected List<UserNotificationEvent> getUserNotificationEvents(long userId)
-		throws Exception {
-
-		return UserNotificationEventLocalServiceUtil.getUserNotificationEvents(
-			userId);
 	}
 
 	protected void updateUserNotificationsDelivery(boolean deliver)

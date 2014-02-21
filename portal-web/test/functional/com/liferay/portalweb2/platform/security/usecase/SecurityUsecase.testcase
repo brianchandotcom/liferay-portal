@@ -1,5 +1,4 @@
 <definition component-name="portal-security">
-	<property name="portlet.plugins.includes" value="opensocial-portlet" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
@@ -31,7 +30,48 @@
 		<execute action="Home#assertElementPresent" locator-key1="PAGE" value1="Test" />
 	</command>
 
+	<command name="ValidateXSSVulnerabilities" priority="5">
+		<var name="maliciousURL1">
+			<![CDATA[
+				http://localhost:8080/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=&lt;/script&gt;&lt;script&gt;alert(document.domain)&lt;/script>
+			]]>
+		</var>
+		<var name="maliciousURL2">
+			<![CDATA[
+				http://localhost:8080/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=&lt;/script&gt;&lt;script&gt;alert(document.domain)&lt;/script&gt;
+			]]>
+		</var>
+		<var name="maliciousURL3">
+			<![CDATA[
+				http://localhost:8080/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=%3C/script%3E%3Cscript%3Ealert(document.domain)%3C/script%3E
+			]]>
+		</var>
+		<var name="maliciousURL4">
+			<![CDATA[
+				http://localhost:8080/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=</script><script>alert(document.domain)</script>
+			]]>
+		</var>
+
+		<execute action="Home#open" locator1="${maliciousURL1}" />
+
+		<execute action="Home#assertElementPresent" locator-key1="ERROR_MESSAGE_NOT_FOUND" />
+
+		<execute action="Home#open" locator1="${maliciousURL2}" />
+
+		<execute action="Home#assertElementPresent" locator-key1="ERROR_MESSAGE_NOT_FOUND" />
+
+		<execute action="Home#open" locator1="${maliciousURL3}" />
+
+		<execute action="Home#assertElementPresent" locator-key1="ERROR_MESSAGE_NOT_FOUND" />
+
+		<execute action="Home#open" locator1="${maliciousURL4}" />
+
+		<execute action="Home#assertElementPresent" locator-key1="ERROR_MESSAGE_NOT_FOUND" />
+	</command>
+
 	<command name="ViewExternalWebappsPG" priority="5">
+		<property name="portlet.plugins.includes" value="opensocial-portlet" />
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="External Webapps Test Page" />
 		</execute>

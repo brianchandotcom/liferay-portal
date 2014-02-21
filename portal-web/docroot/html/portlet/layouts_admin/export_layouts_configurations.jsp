@@ -63,7 +63,12 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 		<liferay-ui:search-container-column-text
 			name="user"
 		>
-			<liferay-ui:message key="<%= PortalUtil.getUserName(exportImportConfiguration) %>" />
+			<liferay-ui:user-display
+				displayStyle="<%= 3 %>"
+				height="40"
+				userId="<%= exportImportConfiguration.getUserId() %>"
+				width="40"
+			/>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text

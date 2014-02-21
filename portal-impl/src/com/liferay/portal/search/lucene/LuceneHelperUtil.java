@@ -283,6 +283,11 @@ public class LuceneHelperUtil {
 		getLuceneHelper().addTerm(booleanQuery, field, values, like);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #releaseSearcher(long, IndexSearcher)}
+	 */
+	@Deprecated
 	public static void cleanUp(IndexSearcher indexSearcher) {
 		getLuceneHelper().cleanUp(indexSearcher);
 	}
@@ -335,6 +340,15 @@ public class LuceneHelperUtil {
 		return getLuceneHelper().getQueryTerms(query);
 	}
 
+	public static IndexSearcher getSearcher(long companyId) throws IOException {
+		return getLuceneHelper().getSearcher(companyId);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *				#getSearcher(long)}
+	 */
+	@Deprecated
 	public static IndexSearcher getSearcher(long companyId, boolean readOnly)
 		throws IOException {
 
@@ -385,6 +399,13 @@ public class LuceneHelperUtil {
 		throws SystemException {
 
 		getLuceneHelper().loadIndexesFromCluster(companyId);
+	}
+
+	public static void releaseSearcher(
+			long companyId, IndexSearcher indexSearcher)
+		throws IOException {
+
+		getLuceneHelper().releaseSearcher(companyId, indexSearcher);
 	}
 
 	public static void shutdown() {

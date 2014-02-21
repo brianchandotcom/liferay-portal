@@ -17,7 +17,7 @@
 <c:if test="<%= showActions %>">
 	<c:choose>
 		<c:when test="<%= (fileShortcut == null) %>">
-			<c:if test="<%= fileEntryDisplayContext.isMoveToTheRecycleBinButtonVisible() %>">
+			<c:if test="<%= dlActionsDisplayContext.isMoveToTheRecycleBinButtonVisible() %>">
 				<portlet:actionURL var="deleteURL">
 					<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_TO_TRASH %>" />
@@ -30,7 +30,7 @@
 					url="<%= deleteURL %>"
 				/>
 			</c:if>
-			<c:if test="<%= fileEntryDisplayContext.isDeleteButtonVisible() %>">
+			<c:if test="<%= dlActionsDisplayContext.isDeleteButtonVisible() %>">
 				<portlet:actionURL var="deleteURL">
 					<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

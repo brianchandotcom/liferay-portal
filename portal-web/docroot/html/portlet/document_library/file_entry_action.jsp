@@ -111,7 +111,7 @@ if (fileShortcut != null) {
 	fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
 }
 
-DLActionsDisplayContext fileEntryDisplayContext = new DLActionsDisplayContext(request, fileEntry);
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, fileEntry);
 %>
 
 <liferay-util:buffer var="iconMenu">

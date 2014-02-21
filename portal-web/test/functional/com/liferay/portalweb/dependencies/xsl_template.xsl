@@ -4,6 +4,6 @@
 
 	<xsl:output method="html" omit-xml-declaration="yes"/>
 	<xsl:template match="/">
-		Text: <xsl:value-of select="/root/dynamic-element[@name='text']"/>
+		Text: <xsl:value-of select="/root/dynamic-element[@name='Text']"/>
 	</xsl:template>
 </xsl:stylesheet>

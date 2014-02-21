@@ -3213,6 +3213,8 @@
 			<var name="dataDefinitionFormTemplateMode" value="Create" />
 		</execute>
 
+		<execute action="BaseLiferay#pause" locator1="1000" />
+
 		<execute macro="DynamicDataMapping#viewField">
 			<var name="dataDefinitionFormTemplateMode" value="Create" />
 			<var name="field" value="${field}" />

@@ -123,7 +123,15 @@ public class ThreadLocalFacadeHttpServletRequestWrapper
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)getRequest();
 
-		return httpServletRequest.getSession(create);
+		HttpSession httpSession = httpServletRequest.getSession(false);
+
+		if (!create || (httpSession != null)) {
+			return httpSession;
+		}
+
+		synchronized (httpServletRequest.getServletContext()) {
+			return httpServletRequest.getSession(true);
+		}
 	}
 
 	@Override

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,20 +11,28 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/journal_content_search/init.jsp" %>
+package com.liferay.portal.kernel.search.util;
 
-<%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+import org.junit.Assert;
+import org.junit.Test;
 
-Object[] objArray = (Object[])row.getObject();
+/**
+ *
+ * @author Tibor Lipusz
+ *
+ */
+public class SearchUtilTest {
 
-Locale snippetLocale = ((Summary)objArray[1]).getLocale();
+	@Test
+	public void testHighlight() throws Exception {
+		Assert.assertEquals(
+			SearchUtil.DEFAULT_HIGHLIGHT_1 + "Hello" +
+			SearchUtil.DEFAULT_HIGHLIGHT_2 + " World " +
+			SearchUtil.DEFAULT_HIGHLIGHT_1 + "Liferay" +
+			SearchUtil.DEFAULT_HIGHLIGHT_2,
+			SearchUtil.highlight(
+				"Hello World Liferay", new String[] {"Hello","Liferay"}));
+	}
 
-String languageId = LocaleUtil.toLanguageId(snippetLocale);
-%>
-
-<c:if test="<%= languageId.length() > 0 %>">
-	<liferay-ui:icon image='<%= "../language/" + languageId %>' />
-</c:if>
+}

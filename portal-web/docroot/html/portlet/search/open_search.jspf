@@ -219,12 +219,12 @@ for (int i = 0; i < portlets.size(); i++) {
 				rowSB.append("<a class=\"entry-title\" href=\"");
 				rowSB.append(entryHref);
 				rowSB.append("\">");
-				rowSB.append(StringUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms));
+				rowSB.append(SearchUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms));
 				rowSB.append("</a>");
 
 				if (Validator.isNotNull(summary)) {
 					rowSB.append("<br />");
-					rowSB.append(StringUtil.highlight(HtmlUtil.escape(summary), queryTerms));
+					rowSB.append(SearchUtil.highlight(HtmlUtil.escape(summary), queryTerms));
 				}
 
 				rowSB.append("<br />");
@@ -265,7 +265,7 @@ for (int i = 0; i < portlets.size(); i++) {
 					rowSB.append("<a class=\"tag\" href=\"");
 					rowSB.append(tagURL.toString());
 					rowSB.append("\">");
-					rowSB.append(StringUtil.highlight(tag, tagsQueryTerms));
+					rowSB.append(SearchUtil.highlight(tag, tagsQueryTerms));
 					rowSB.append("</a>");
 
 					if ((k + 1) == tags.length) {

@@ -102,11 +102,11 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 			<liferay-ui:app-view-search-entry
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
-				description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : entry.getDescription() %>"
+				description="<%= (summary != null) ? summary.getContent() : entry.getDescription() %>"
 				mbMessages="<%= searchResult.getMBMessages() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
 				thumbnailSrc="<%= Validator.isNotNull(entry.getEntryImageURL(themeDisplay)) ? entry.getEntryImageURL(themeDisplay) : StringPool.BLANK %>"
-				title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : entry.getTitle() %>"
+				title="<%= (summary != null) ? summary.getTitle() : entry.getTitle() %>"
 				url="<%= rowURL %>"
 			/>
 		</liferay-ui:search-container-row>

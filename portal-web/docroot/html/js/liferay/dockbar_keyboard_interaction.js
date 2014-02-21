@@ -2,7 +2,6 @@ AUI.add(
 	'liferay-dockbar-keyboard-interaction',
 	function(A) {
 		var AArray = A.Array;
-
 		var AObject = A.Object;
 
 		var ACTIVE_DESCENDANT = 'activeDescendant';
@@ -117,9 +116,9 @@ AUI.add(
 							increment = -1;
 						}
 
-						var target = event.currentTarget;
+						var currentTarget = event.currentTarget;
 
-						var currentMenuItem = target.ancestor(SELECTOR_DOCKBAR_ITEM) || target;
+						var currentMenuItem = currentTarget.ancestor(SELECTOR_DOCKBAR_ITEM) || currentTarget;
 
 						var nextMenuItemPos = menuItems.indexOf(currentMenuItem) + increment;
 

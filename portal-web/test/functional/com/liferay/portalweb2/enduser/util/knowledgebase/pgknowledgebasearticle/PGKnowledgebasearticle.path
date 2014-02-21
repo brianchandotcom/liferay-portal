@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>PGKnowledgebasearticle</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKnowledgebasearticle</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGKnowledgebasearticle</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURE_INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-error')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--KB_ARTICLE-->
+<tr>
+	<td>KB_ARTICLE_TITLE</td>
+	<td>//div[@class='kb-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KB_ARTICLE_ADD_CHILD_ARTICLE</td>
+	<td>//div[@class='kb-article-icons']//a/span[contains(.,'Add Child Article')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KB_ARTICLE_EDIT</td>
+	<td>//div[@class='kb-article-icons']//a/span[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KB_ARTICLE_PERMISSIONS</td>
+	<td>//div[@class='kb-article-icons']//a/span[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KB_ARTICLE_MOVE</td>
+	<td>//div[@class='kb-article-icons']//a/span[contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KB_ARTICLE_DELETE</td>
+	<td>//div[@class='kb-article-icons']//a/span[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KB_ARTICLE_ENTITY_BODY</td>
+	<td>//div[@class='kb-entity-body']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

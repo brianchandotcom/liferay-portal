@@ -1,0 +1,64 @@
+<definition>
+	<command name="addPGViaKBDisplay">
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ADD_ARTICLE_BUTTON" value1="Add Article" />
+
+		<execute action="PGKnowledgebasedisplayAddarticle#type" locator-key1="TITLE_FIELD" value1="${kbArticleTitle}" />
+		<execute action="PGKnowledgebasedisplayAddarticle#type" locator-key1="CONTENT_FIELD" value1="${kbArticleContent}" />
+		<execute action="PGKnowledgebasedisplayAddarticle#addSelection" locator-key1="SECTIONS_SELECT" value1="${kbArticleSection}" />
+		<execute action="PGKnowledgebasedisplayAddarticle#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+	</command>
+
+	<command name="searchPGViaKBSearch">
+		<execute action="PGKnowledgebasesearch#type" locator-key1="SEARCH_FIELD" value1="${searchTerm}" />
+		<execute action="PGKnowledgebasesearch#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasesearchSearch#assertTextEquals" locator-key1="ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+	</command>
+
+	<command name="selectPGViaKBArticle">
+		<execute action="PGKnowledgebasearticle#assertClick" locator-key1="CONFIGURE_INFO_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
+
+		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGKnowledgebasearticleConfiguration#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
+
+		<execute action="PGKnowledgebasearticleConfigurationArticle#selectWindow" locator1="title=Knowledge Base Article" />
+
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasearticleConfigurationArticle#assertClick" locator-key1="ARTICLE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+
+		<execute action="PGKnowledgebasearticleConfiguration#selectWindow" locator1="title=${pageName} - Liferay" />
+		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" value1="relative=top" />
+		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGKnowledgebasearticleConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="selectSectionPGViaKBSection">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGKnowledgebasesectionConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGKnowledgebasesectionConfiguration#assertChecked" locator-key1="SHOW_SECTIONS_TITLE_CHECKBOX" />
+		<execute action="PGKnowledgebasesectionConfiguration#addSelection" locator-key1="SECTIONS_SELECT" value1="${kbArticleSection}" />
+		<execute action="PGKnowledgebasesectionConfiguration#assertSelectedLabel" locator-key1="ARTICLE_DISPLAY_STYLE_SELECT" value1="Title" />
+		<execute action="PGKnowledgebasesectionConfiguration#assertSelectedLabel" locator-key1="ARTICLE_WINDOW_STATE_SELECT" value1="Maximized" />
+		<execute action="PGKnowledgebasesectionConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGKnowledgebasearticleConfiguration#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base (Admin)" />
+		</execute>
+
+		<execute action="CPKnowledgebaseadmin#check" locator-key1="SELECT_ALL_CHECKBOX" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+		<execute action="CPKnowledgebaseadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No articles were found." />
+	</command>
+</definition>

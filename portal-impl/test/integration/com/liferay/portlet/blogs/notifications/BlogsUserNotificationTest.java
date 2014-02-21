@@ -17,8 +17,6 @@ package com.liferay.portlet.blogs.notifications;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
-import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -48,7 +46,6 @@ import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -80,9 +77,10 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		BlogsEntryLocalServiceUtil.subscribe(
 			_user.getUserId(), _group.getGroupId());
 
-		addUserNotificationDeliveries();
+		_userNotificationDeliveries =
+			getUserNotificationDeliveries(_user.getUserId());
 
-		setActiveAllUserNotificationDeliveries(true);
+		updateUserNotificationsDelivery(true);
 
 		_logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
@@ -107,9 +105,9 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			UserNotificationEventLocalServiceUtil.
 				getUserNotificationEventsCount(_user.getUserId());
 
-		setActiveUserNotificationDeliveryType(
-			UserNotificationDeliveryConstants.TYPE_EMAIL,
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, false);
+		updateUserNotificationDelivery(
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+			UserNotificationDeliveryConstants.TYPE_EMAIL, false);
 
 		BlogsEntry entry = addBlogsEntry();
 
@@ -147,13 +145,13 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			UserNotificationEventLocalServiceUtil.
 				getUserNotificationEventsCount(_user.getUserId());
 
-		setActiveUserNotificationDeliveryType(
-			UserNotificationDeliveryConstants.TYPE_EMAIL,
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, false);
+		updateUserNotificationDelivery(
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+			UserNotificationDeliveryConstants.TYPE_EMAIL, false);
 
-		setActiveUserNotificationDeliveryType(
-			UserNotificationDeliveryConstants.TYPE_EMAIL,
-			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY, false);
+		updateUserNotificationDelivery(
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+			UserNotificationDeliveryConstants.TYPE_EMAIL, false);
 
 		BlogsEntry entry = addBlogsEntry();
 
@@ -206,7 +204,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			UserNotificationEventLocalServiceUtil.
 				getUserNotificationEventsCount(_user.getUserId());
 
-		setActiveAllUserNotificationDeliveries(false);
+		updateUserNotificationsDelivery(false);
 
 		BlogsEntry entry = addBlogsEntry();
 
@@ -235,7 +233,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			UserNotificationEventLocalServiceUtil.
 				getUserNotificationEventsCount(_user.getUserId());
 
-		setActiveAllUserNotificationDeliveries(false);
+		updateUserNotificationsDelivery(false);
 
 		BlogsEntry entry = addBlogsEntry();
 
@@ -268,9 +266,9 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			UserNotificationEventLocalServiceUtil.
 				getUserNotificationEventsCount(_user.getUserId());
 
-		setActiveUserNotificationDeliveryType(
-			UserNotificationDeliveryConstants.TYPE_WEBSITE,
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, false);
+		updateUserNotificationDelivery(
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+			UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
 		BlogsEntry entry = addBlogsEntry();
 
@@ -306,13 +304,13 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			UserNotificationEventLocalServiceUtil.
 				getUserNotificationEventsCount(_user.getUserId());
 
-		setActiveUserNotificationDeliveryType(
-			UserNotificationDeliveryConstants.TYPE_WEBSITE,
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, false);
+		updateUserNotificationDelivery(
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+			UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
-		setActiveUserNotificationDeliveryType(
-			UserNotificationDeliveryConstants.TYPE_WEBSITE,
-			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY, false);
+		updateUserNotificationDelivery(
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+			UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
 		BlogsEntry entry = addBlogsEntry();
 
@@ -458,60 +456,42 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			serviceContext);
 	}
 
-	protected List<UserNotificationDelivery> addUserNotificationDeliveries()
+	protected List<UserNotificationDelivery> getUserNotificationDeliveries(
+			long userId)
 		throws Exception {
 
-		_userNotificationDeliveries = new ArrayList<UserNotificationDelivery>();
+		List<UserNotificationDelivery> userNotificationDeliveries =
+			new ArrayList<UserNotificationDelivery>();
 
-		Map<String, List<UserNotificationDefinition>>
-			userNotificationDefinitionsMap =
-				UserNotificationManagerUtil.getUserNotificationDefinitions();
+		userNotificationDeliveries.add(
+			UserNotificationDeliveryLocalServiceUtil.
+				getUserNotificationDelivery(
+					userId, PortletKeys.BLOGS, 0,
+					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+					UserNotificationDeliveryConstants.TYPE_EMAIL, true));
 
-		for (Map.Entry<String, List<UserNotificationDefinition>> entry :
-				userNotificationDefinitionsMap.entrySet()) {
+		userNotificationDeliveries.add(
+			UserNotificationDeliveryLocalServiceUtil.
+				getUserNotificationDelivery(
+					userId, PortletKeys.BLOGS, 0,
+					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+					UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
 
-			String portletId = entry.getKey();
+		userNotificationDeliveries.add(
+			UserNotificationDeliveryLocalServiceUtil.
+				getUserNotificationDelivery(
+					userId, PortletKeys.BLOGS, 0,
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+					UserNotificationDeliveryConstants.TYPE_EMAIL, true));
 
-			if (!portletId.equals(PortletKeys.BLOGS)) {
-				continue;
-			}
+		userNotificationDeliveries.add(
+			UserNotificationDeliveryLocalServiceUtil.
+				getUserNotificationDelivery(
+					userId, PortletKeys.BLOGS, 0,
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+					UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
 
-			List<UserNotificationDefinition> userNotificationDefinitions =
-				entry.getValue();
-
-			for (UserNotificationDefinition userNotificationDefinition :
-					userNotificationDefinitions) {
-
-				Map<Integer, UserNotificationDeliveryType>
-					userNotificationDeliveryTypesMap =
-						userNotificationDefinition.
-							getUserNotificationDeliveryTypes();
-
-				for (Map.Entry<Integer, UserNotificationDeliveryType>
-					userNotificationDeliveryTypeEntry :
-					userNotificationDeliveryTypesMap.entrySet()) {
-
-					UserNotificationDeliveryType userNotificationDeliveryType =
-						userNotificationDeliveryTypeEntry.getValue();
-
-					_userNotificationDeliveries.add(
-						UserNotificationDeliveryLocalServiceUtil.
-							getUserNotificationDelivery(
-								_user.getUserId(), portletId,
-								userNotificationDefinition.getClassNameId(),
-								userNotificationDefinition.
-									getNotificationType(),
-								userNotificationDeliveryType.getType(),
-								userNotificationDeliveryType.isDefault()));
-				}
-			}
-		}
-
-		if (_userNotificationDeliveries.isEmpty()) {
-			Assert.fail("userNotificationDeliveries could not be empty");
-		}
-
-		return _userNotificationDeliveries;
+		return userNotificationDeliveries;
 	}
 
 	protected void deleteUserNotificationDeliveries() throws Exception {
@@ -566,45 +546,39 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			userId);
 	}
 
-	protected void setActiveAllUserNotificationDeliveries(boolean active)
-		throws Exception {
-
-		setActiveUserNotificationDeliveryType(
-			UserNotificationDeliveryConstants.TYPE_EMAIL,
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, active);
-
-		setActiveUserNotificationDeliveryType(
-			UserNotificationDeliveryConstants.TYPE_EMAIL,
-			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY, active);
-
-		setActiveUserNotificationDeliveryType(
-			UserNotificationDeliveryConstants.TYPE_WEBSITE,
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, active);
-
-		setActiveUserNotificationDeliveryType(
-			UserNotificationDeliveryConstants.TYPE_WEBSITE,
-			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY, active);
-	}
-
-	protected void setActiveUserNotificationDeliveryType(
-			int deliverType, int notificationType, boolean active)
+	protected void updateUserNotificationsDelivery(boolean deliver)
 		throws Exception {
 
 		for (UserNotificationDelivery userNotificationDelivery :
 				_userNotificationDeliveries) {
 
-			if ((userNotificationDelivery.getDeliveryType() == deliverType) &&
-				(userNotificationDelivery.getNotificationType() ==
+			UserNotificationDeliveryLocalServiceUtil.
+				updateUserNotificationDelivery(
+					userNotificationDelivery.getUserNotificationDeliveryId(),
+					deliver);
+		}
+	}
+
+	protected void updateUserNotificationDelivery(
+			int notificationType, int deliveryType, boolean deliver)
+		throws Exception {
+
+		for (UserNotificationDelivery userNotificationDelivery :
+				_userNotificationDeliveries) {
+
+			if ((userNotificationDelivery.getDeliveryType() != deliveryType) ||
+				(userNotificationDelivery.getNotificationType() !=
 						notificationType)) {
 
-				UserNotificationDeliveryLocalServiceUtil.
-					updateUserNotificationDelivery(
-						userNotificationDelivery.
-							getUserNotificationDeliveryId(),
-						active);
-
-				return;
+				continue;
 			}
+
+			UserNotificationDeliveryLocalServiceUtil.
+				updateUserNotificationDelivery(
+					userNotificationDelivery.getUserNotificationDeliveryId(),
+					deliver);
+
+			return;
 		}
 
 		Assert.fail("UserNotification doesn't exist");

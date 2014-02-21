@@ -639,7 +639,7 @@ public class JournalFolderLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void unsubscribe(long userId, long groupId, long folderId)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			folderId = groupId;

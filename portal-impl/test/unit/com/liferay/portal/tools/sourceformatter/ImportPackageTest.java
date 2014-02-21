@@ -29,9 +29,10 @@ public class ImportPackageTest {
 
 	@Test
 	public void testContains() {
-
-		ImportPackage importPackage = _createImport(_ARRAYS_IMPORT_STATEMENT);
-		ImportPackage importPackage2 = _createImport(_ARRAYS_IMPORT_STATEMENT);
+		ImportPackage importPackage = _javaImportsFormatter.createImportPackage(
+			_ARRAYS_IMPORT_STATEMENT);
+		ImportPackage importPackage2 =
+			_javaImportsFormatter.createImportPackage(_ARRAYS_IMPORT_STATEMENT);
 
 		List<ImportPackage> importPackages = new ArrayList<ImportPackage>();
 
@@ -46,25 +47,29 @@ public class ImportPackageTest {
 
 	@Test
 	public void testEquals() {
-
-		ImportPackage importPackage = _createImport(_ARRAYS_IMPORT_STATEMENT);
-		ImportPackage importPackage2 = _createImport(_ARRAYS_IMPORT_STATEMENT);
+		ImportPackage importPackage = _javaImportsFormatter.createImportPackage(
+			_ARRAYS_IMPORT_STATEMENT);
+		ImportPackage importPackage2 =
+			_javaImportsFormatter.createImportPackage(_ARRAYS_IMPORT_STATEMENT);
 
 		Assert.assertEquals(importPackage, importPackage2);
 	}
 
 	@Test
 	public void testImportSorting() {
-
 		List<ImportPackage> importPackages = new ArrayList<ImportPackage>();
 
-		ImportPackage graphicsImportPackage = _createImport(
-			"import java.awt.Graphics;");
-		ImportPackage graphics2dImportPackage = _createImport(
-			"import java.awt.Graphics2D;");
-		ImportPackage mapEntryImportPackage = _createImport(
-			"import java.util.Map.Entry;");
-		ImportPackage mapImportPackage = _createImport("import java.util.Map;");
+		ImportPackage graphicsImportPackage =
+			_javaImportsFormatter.createImportPackage(
+				"import java.awt.Graphics;");
+		ImportPackage graphics2dImportPackage =
+			_javaImportsFormatter.createImportPackage(
+				"import java.awt.Graphics2D;");
+		ImportPackage mapEntryImportPackage =
+			_javaImportsFormatter.createImportPackage(
+				"import java.util.Map.Entry;");
+		ImportPackage mapImportPackage =
+			_javaImportsFormatter.createImportPackage("import java.util.Map;");
 
 		importPackages.add(graphicsImportPackage);
 		importPackages.add(graphics2dImportPackage);
@@ -77,11 +82,6 @@ public class ImportPackageTest {
 		Assert.assertEquals(1, importPackages.indexOf(graphics2dImportPackage));
 		Assert.assertEquals(2, importPackages.indexOf(mapImportPackage));
 		Assert.assertEquals(3, importPackages.indexOf(mapEntryImportPackage));
-	}
-
-	private ImportPackage _createImport(String string) {
-
-		return _javaImportsFormatter.createImportPackage(string);
 	}
 
 	private static final String _ARRAYS_IMPORT_STATEMENT =

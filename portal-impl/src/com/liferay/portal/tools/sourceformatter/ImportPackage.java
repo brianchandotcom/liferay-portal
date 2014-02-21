@@ -14,19 +14,25 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Carlos Sierra Andrés
  */
 public class ImportPackage implements Comparable<ImportPackage> {
 
 	@Override
-	public int compareTo(ImportPackage other) {
-
-		if (_static != other._static) {
-			return _static ? -1 : 1;
+	public int compareTo(ImportPackage importPackage) {
+		if (_isStatic != importPackage.isStatic()) {
+			if (_isStatic) {
+				return -1;
+			}
+			else {
+				return 1;
+			}
 		}
 
-		return _import.compareTo(other._import);
+		return _importString.compareTo(importPackage.getImportString());
 	}
 
 	@Override
@@ -39,13 +45,19 @@ public class ImportPackage implements Comparable<ImportPackage> {
 			return false;
 		}
 
-		ImportPackage other = (ImportPackage)obj;
+		ImportPackage importPackage = (ImportPackage)obj;
 
-		if (_static != other._static) {
-			return false;
+		if ((_isStatic == importPackage.isStatic()) &&
+			_importString.equals(importPackage.getImportString())) {
+
+			return true;
 		}
 
-		return _import.equals(other._import);
+		return false;
+	}
+
+	public String getImportString() {
+		return _importString;
 	}
 
 	public String getLine() {
@@ -53,47 +65,50 @@ public class ImportPackage implements Comparable<ImportPackage> {
 	}
 
 	public String getPackageLevel() {
+		int pos = _importString.indexOf(StringPool.PERIOD);
 
-		String s = _import;
-
-		int pos = s.indexOf(".");
-
-		pos = s.indexOf(".", pos + 1);
+		pos = _importString.indexOf(StringPool.PERIOD, pos + 1);
 
 		if (pos == -1) {
-			pos = s.indexOf(".");
+			pos = _importString.indexOf(StringPool.PERIOD);
 		}
 
-		String packageLevel = s.substring(0, pos);
-		return packageLevel;
+		return _importString.substring(0, pos);
 	}
 
 	@Override
 	public int hashCode() {
-		return _import.hashCode();
+		return _importString.hashCode();
 	}
 
-	public boolean isGroupedWith(ImportPackage previous) {
+	public boolean isGroupedWith(ImportPackage importPackage) {
+		if (_isStatic != importPackage.isStatic()) {
+			return false;
+		}
 
-		// First import is "grouped" (i.e., should not have a break before it)
+		String packageLevel = getPackageLevel();
 
-		if (previous == null) {
+		if (packageLevel.equals(importPackage.getPackageLevel())) {
 			return true;
 		}
 
-		return (_static == previous._static) &&
-			getPackageLevel().equals(previous.getPackageLevel());
+		return false;
 	}
 
-	protected ImportPackage(String importString, boolean isStatic, String line)
-	{
-		_import = importString;
-		_static = isStatic;
+	public boolean isStatic() {
+		return _isStatic;
+	}
+
+	protected ImportPackage(
+		String importString, boolean isStatic, String line) {
+
+		_importString = importString;
+		_isStatic = isStatic;
 		_line = line;
 	}
 
-	private String _import;
+	private String _importString;
+	private boolean _isStatic;
 	private String _line;
-	private boolean _static;
 
 }

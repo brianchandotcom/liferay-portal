@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 
-import java.util.SortedSet;
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -29,14 +29,13 @@ import java.util.TreeSet;
 public abstract class ImportsFormatter {
 
 	public String format(String imports) throws IOException {
-
 		if (imports.contains("/*") || imports.contains("*/") ||
 			imports.contains("//")) {
 
 			return imports + "\n";
 		}
 
-		SortedSet<ImportPackage> importPackages = new TreeSet<ImportPackage>();
+		Set<ImportPackage> importPackages = new TreeSet<ImportPackage>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(imports));
@@ -53,17 +52,19 @@ public abstract class ImportsFormatter {
 
 		StringBundler sb = new StringBundler(3 * importPackages.size());
 
-		ImportPackage temp = null;
+		ImportPackage previousImportPackage = null;
 
 		for (ImportPackage importPackage : importPackages) {
-			if (!importPackage.isGroupedWith(temp)) {
+			if ((previousImportPackage != null) &&
+				!importPackage.isGroupedWith(previousImportPackage)) {
+
 				sb.append("\n");
 			}
 
 			sb.append(importPackage.getLine());
 			sb.append("\n");
 
-			temp = importPackage;
+			previousImportPackage = importPackage;
 		}
 
 		return sb.toString();

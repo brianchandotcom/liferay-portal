@@ -25,11 +25,10 @@ public class JSPImportsFormatter extends ImportsFormatter {
 
 	@Override
 	protected ImportPackage createImportPackage(String line) {
+		Matcher matcher = _jspImportPattern.matcher(line);
 
-		Matcher jspMatcher = _jspImportPattern.matcher(line);
-
-		if (jspMatcher.find()) {
-			return new ImportPackage(jspMatcher.group(1), false, line);
+		if (matcher.find()) {
+			return new ImportPackage(matcher.group(1), false, line);
 		}
 
 		return null;

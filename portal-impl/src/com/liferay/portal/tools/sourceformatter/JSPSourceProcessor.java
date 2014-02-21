@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1252,7 +1251,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		imports = new JSPImportsFormatter().format(imports);
+		ImportsFormatter importsFormatter = new JSPImportsFormatter();
+
+		imports = importsFormatter.format(imports);
 
 		String beforeImports = content.substring(0, matcher.start());
 

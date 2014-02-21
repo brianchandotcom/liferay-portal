@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.util.SearchUtil;
 import com.liferay.portal.kernel.security.RandomUtil;
 
 import java.io.IOException;
@@ -33,8 +34,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -656,58 +655,26 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns the string <code>s</code> with any of the query terms found
-	 * within it highlighted with HTML.
-	 *
-	 * @param  s the string to search (optionally <code>null</code>)
-	 * @param  queryTerms the terms to search for in the string (optionally
-	 *         <code>null</code>)
-	 * @return the string <code>s</code> with any of the query terms found
-	 *         within it highlighted with HTML
+	 * @deprecated As of 7.0.0, moved to {@link
+	 *             com.liferay.portal.kernel.search.util.SearchUtil
+	 *             #highlight(String, String[])}}
 	 */
+	@Deprecated
 	public static String highlight(String s, String[] queryTerms) {
-		return highlight(
+		return SearchUtil.highlight(
 			s, queryTerms, "<span class=\"highlight\">", "</span>");
 	}
 
 	/**
-	 * Returns the string <code>s</code> with any of the query terms found
-	 * within it highlighted with the syntax highlighting tags.
-	 *
-	 * @param  s the string to search (optionally <code>null</code>)
-	 * @param  queryTerms the terms to search for in the string (optionally
-	 *         <code>null</code>)
-	 * @param  highlight1 the beginning highlight tag
-	 * @param  highlight2 the ending highlight tag
-	 * @return the string <code>s</code> with any of the query terms found
-	 *         within it highlighted with the syntax highlighting tags
+	 * @deprecated As of 7.0.0, moved to {@link
+	 *             com.liferay.portal.kernel.search.util.SearchUtil
+	 *             #highlight(String, String[], String, String)}}
 	 */
+	@Deprecated
 	public static String highlight(
 		String s, String[] queryTerms, String highlight1, String highlight2) {
 
-		if (Validator.isNull(s) || ArrayUtil.isEmpty(queryTerms)) {
-			return s;
-		}
-
-		if (queryTerms.length == 0) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(2 * queryTerms.length - 1);
-
-		for (int i = 0; i < queryTerms.length; i++) {
-			sb.append(Pattern.quote(queryTerms[i].trim()));
-
-			if ((i + 1) < queryTerms.length) {
-				sb.append(StringPool.PIPE);
-			}
-		}
-
-		int flags = Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE;
-
-		Pattern pattern = Pattern.compile(sb.toString(), flags);
-
-		return _highlight(s, pattern, highlight1, highlight2);
+		return SearchUtil.highlight(s, queryTerms, highlight1, highlight2);
 	}
 
 	/**
@@ -4490,48 +4457,6 @@ public class StringUtil {
 
 			return text;
 		}
-	}
-
-	private static String _highlight(
-		String s, Pattern pattern, String highlight1, String highlight2) {
-
-		StringTokenizer st = new StringTokenizer(s);
-
-		if (st.countTokens() == 0) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(2 * st.countTokens() - 1);
-
-		while (st.hasMoreTokens()) {
-			String token = st.nextToken();
-
-			Matcher matcher = pattern.matcher(token);
-
-			if (matcher.find()) {
-				StringBuffer hightlighted = new StringBuffer();
-
-				do {
-					matcher.appendReplacement(
-						hightlighted,
-						highlight1 + matcher.group() + highlight2);
-				}
-				while (matcher.find());
-
-				matcher.appendTail(hightlighted);
-
-				sb.append(hightlighted);
-			}
-			else {
-				sb.append(token);
-			}
-
-			if (st.hasMoreTokens()) {
-				sb.append(StringPool.SPACE);
-			}
-		}
-
-		return sb.toString();
 	}
 
 	/**

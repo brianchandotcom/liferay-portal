@@ -231,6 +231,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		_tempDir.mkdirs();
 	}
 
+	@Deprecated
 	protected static String getJavaScriptContent(String content) {
 		return MinifierUtil.minifyJavaScript(content);
 	}

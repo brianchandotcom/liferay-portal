@@ -19,6 +19,23 @@
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD);
 
+if (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.EXPORT) && !cmd.equals(Constants.UPDATE)) {
+	cmd = Constants.EXPORT;
+}
+
+long exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
+ExportImportConfiguration exportImportConfiguration = null;
+Map<String, Serializable> exportImportConfigurationSettingsMap = Collections.EMPTY_MAP;
+Map<String, String[]> parameterMap = Collections.EMPTY_MAP;
+Map<Long, Boolean> layoutIdMap = Collections.EMPTY_MAP;
+
+if (cmd.equals(Constants.UPDATE) && (exportImportConfigurationId > 0)) {
+	exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
+	exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
+	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
+	layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
+}
+
 String exportNav = ParamUtil.getString(request, "exportNav", "custom");
 
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -58,7 +75,14 @@ Date endDate = dateRange.getEndDate();
 
 String treeId = "layoutsExportTree" + liveGroupId + privateLayout;
 
-long[] selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode"), ','));
+long[] selectedLayoutIds = null;
+
+if (cmd.equals(Constants.UPDATE)) {
+	selectedLayoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
+}
+else {
+	selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode"), ','));
+}
 
 List<Layout> selectedLayouts = new ArrayList<Layout>();
 
@@ -79,7 +103,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/layouts_admin/export_layouts");
 portletURL.setParameter(Constants.CMD, Constants.EXPORT);
 
-if (cmd.equals(Constants.ADD)) {
+if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 	portletURL.setParameter("tabs2", "new-export-process");
 	portletURL.setParameter("exportNav", "export-configurations");
 }
@@ -150,7 +174,6 @@ if (!cmd.equals(Constants.ADD)) {
 				<portlet:param name="struts_action" value="/layouts_admin/edit_export_configuration" />
 				<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
 			</portlet:actionURL>
 
 			<portlet:actionURL var="exportPagesURL">
@@ -160,22 +183,43 @@ if (!cmd.equals(Constants.ADD)) {
 				<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
 			</portlet:actionURL>
 
-			<aui:form action='<%= (cmd.equals(Constants.ADD) ? addExportConfigurationURL : exportPagesURL) + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
-				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd.equals(Constants.ADD) ? Constants.ADD : Constants.EXPORT %>" />
+			<portlet:actionURL var="updateExportConfigurationURL">
+				<portlet:param name="struts_action" value="/layouts_admin/edit_export_configuration" />
+				<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfigurationId) %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			</portlet:actionURL>
+
+			<%
+			String actionURL = StringPool.BLANK;
+
+			if (cmd.equals(Constants.ADD)) {
+				actionURL = addExportConfigurationURL;
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				actionURL = updateExportConfigurationURL;
+			}
+			else {
+				actionURL = exportPagesURL;
+			}
+			%>
+
+			<aui:form action='<%= actionURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 				<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
 				<div class="export-dialog-tree">
-					<c:if test="<%= cmd.equals(Constants.ADD) %>">
-						<aui:model-context model="<%= ExportImportConfiguration.class %>" />
+					<c:if test="<%= cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE) %>">
+						<aui:model-context bean="<%= exportImportConfiguration %>" model="<%= ExportImportConfiguration.class %>" />
 
-						<aui:fieldset cssClass="options-group" label="new-export-template">
+						<aui:fieldset cssClass="options-group" label='<%= cmd.equals(Constants.ADD) ? "new-export-template" : "edit-template" %>'>
 							<aui:input label="name" name="name" showRequiredLabel="<%= false %>">
 								<aui:validator name="required" />
 							</aui:input>
 
-							<aui:input label="description" name="description" showRequiredLabel="<%= false %>" />
+							<aui:input label="description" name="description" />
 						</aui:fieldset>
 					</c:if>
 
@@ -190,19 +234,21 @@ if (!cmd.equals(Constants.ADD)) {
 							<div class="hide" id="<portlet:namespace />pages">
 								<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
 									<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
+										<liferay-util:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
 										<liferay-util:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
 										<liferay-util:param name="treeId" value="<%= treeId %>" />
 										<liferay-util:param name="defaultStateChecked" value="1" />
 										<liferay-util:param name="selectableTree" value="1" />
+										<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
 									</liferay-util:include>
 
-									<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= true %>" />
+									<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, true) %>" />
 								</aui:fieldset>
 
 								<aui:fieldset cssClass="portlet-data-section" label="look-and-feel">
-									<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
+									<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE, true) %>" />
 
-									<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
+									<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO, true) %>" />
 								</aui:fieldset>
 							</div>
 						</aui:fieldset>
@@ -216,15 +262,15 @@ if (!cmd.equals(Constants.ADD)) {
 						<aui:fieldset cssClass="options-group" label="application-configuration">
 							<ul class="lfr-tree unstyled">
 								<li class="tree-item">
-									<aui:input checked="<%= true %>" helpMessage="all-applications-export-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= true %>" />
+									<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" helpMessage="all-applications-export-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" />
 
 									<div class="hide" id="<portlet:namespace />globalConfiguration">
 										<aui:fieldset cssClass="portlet-data-section" label="all-applications">
-											<aui:input label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="checkbox" value="<%= true %>" />
+											<aui:input label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_SETUP_ALL, true) %>" />
 
-											<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="checkbox" value="<%= true %>" />
+											<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL, true) %>" />
 
-											<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="checkbox" value="<%= true %>" />
+											<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL, true) %>" />
 										</aui:fieldset>
 									</div>
 
@@ -236,11 +282,11 @@ if (!cmd.equals(Constants.ADD)) {
 										</li>
 									</ul>
 
-									<aui:input helpMessage="choose-applications-export-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= false %>" />
+									<aui:input checked="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" helpMessage="choose-applications-export-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" />
 
 									<c:if test="<%= !group.isLayoutPrototype() %>">
 										<ul class="hide options portlet-list select-options" id="<portlet:namespace />selectApplications">
-											<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= true %>" />
+											<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION, true) %>" />
 
 											<%
 											portletDataHandlerPortlets = ListUtil.sort(portletDataHandlerPortlets, new PortletTitleComparator(application, locale));
@@ -254,7 +300,7 @@ if (!cmd.equals(Constants.ADD)) {
 											%>
 
 												<li class="tree-item">
-													<aui:input label="<%= portletTitle %>" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
+													<aui:input label="<%= portletTitle %>" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId(), true) %>" />
 
 													<div class="hide" id="<portlet:namespace />configuration_<%= portlet.getRootPortletId() %>">
 														<ul class="lfr-tree unstyled">
@@ -265,6 +311,7 @@ if (!cmd.equals(Constants.ADD)) {
 																		<%
 																		request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
 																		request.setAttribute("render_controls.jsp-controls", configurationControls);
+																		request.setAttribute("render_controls.jsp-parameterMap", parameterMap);
 																		request.setAttribute("render_controls.jsp-portletId", portlet.getRootPortletId());
 																		%>
 
@@ -318,23 +365,28 @@ if (!cmd.equals(Constants.ADD)) {
 						<aui:fieldset cssClass="options-group" label="content">
 							<ul class="lfr-tree unstyled">
 								<li class="tree-item">
-									<aui:input checked="<%= true %>" helpMessage="all-content-export-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= true %>" />
+									<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" helpMessage="all-content-export-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" />
 
-									<aui:input helpMessage="choose-content-export-help" id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= false %>" />
+									<aui:input checked="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" helpMessage="choose-content-export-help" id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" />
 
 									<ul class="hide select-options" id="<portlet:namespace />selectContents">
 										<li>
-											<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= true %>" />
+											<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT, true) %>" />
 
-											<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= true %>" />
+											<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA, true) %>" />
 
 											<div class="hide" id="<portlet:namespace />range">
 												<ul class="lfr-tree unstyled">
 													<li class="tree-item">
 														<aui:fieldset cssClass="portlet-data-section" label="date-range">
-															<aui:input checked="<%= true %>" id="rangeAll" label="all" name="range" type="radio" value="all" />
 
-															<aui:input helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
+															<%
+															String selectedRange = MapUtil.getString(parameterMap, "range");
+															%>
+
+															<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_ALL) %>" id="rangeAll" label="all" name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_ALL %>" />
+
+															<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_DATE_RANGE) %>" helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_DATE_RANGE %>" />
 
 															<%
 															Calendar endCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
@@ -417,15 +469,15 @@ if (!cmd.equals(Constants.ADD)) {
 																</li>
 															</ul>
 
-															<aui:input id="rangeLast" label='<%= LanguageUtil.get(pageContext, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="last" />
+															<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_LAST) %>" id="rangeLast" label='<%= LanguageUtil.get(pageContext, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_LAST %>" />
 
 															<ul class="hide unstyled" id="<portlet:namespace />rangeLastInputs">
 																<li>
 																	<aui:select cssClass="relative-range" label="" name="last">
-																		<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "12", false) %>' value="12" />
-																		<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "24", false) %>' value="24" />
-																		<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "48", false) %>' value="48" />
-																		<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", "7", false) %>' value="168" />
+																		<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "12", false) %>' selected='<%= MapUtil.getString(parameterMap, "last").equals("12") %>' value="12" />
+																		<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "24", false) %>' selected='<%= MapUtil.getString(parameterMap, "last").equals("24") %>' value="24" />
+																		<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "48", false) %>' selected='<%= MapUtil.getString(parameterMap, "last").equals("48") %>' value="48" />
+																		<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", "7", false) %>' selected='<%= MapUtil.getString(parameterMap, "last").equals("168") %>' value="168" />
 																	</aui:select>
 																</li>
 															</ul>
@@ -484,7 +536,7 @@ if (!cmd.equals(Constants.ADD)) {
 																<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(pageContext, "deletions")) : StringPool.BLANK %></span>
 															</liferay-util:buffer>
 
-															<aui:input checked="<%= portletDataHandler.isPublishToLiveByDefault() %>" label="<%= portletTitle + badgeHTML %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" />
+															<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId(), portletDataHandler.isPublishToLiveByDefault()) %>" label="<%= portletTitle + badgeHTML %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId(), portletDataHandler.isPublishToLiveByDefault()) %>" />
 
 															<%
 															PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();
@@ -503,6 +555,7 @@ if (!cmd.equals(Constants.ADD)) {
 																					request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
 																					request.setAttribute("render_controls.jsp-controls", exportControls);
 																					request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
+																					request.setAttribute("render_controls.jsp-parameterMap", parameterMap);
 																					request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
 																				%>
 
@@ -589,9 +642,9 @@ if (!cmd.equals(Constants.ADD)) {
 												<div class="hide" id="<portlet:namespace />contentOptions">
 													<ul class="lfr-tree unstyled">
 														<li class="tree-item">
-															<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
+															<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.COMMENTS, true) %>" />
 
-															<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
+															<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.RATINGS, true) %>" />
 
 															<%
 															long modelDeletionCount = manifestSummary.getModelDeletionCount();
@@ -603,7 +656,7 @@ if (!cmd.equals(Constants.ADD)) {
 																String deletionsLabel = LanguageUtil.get(pageContext, "deletions") + (modelDeletionCount > 0 ? " (" + modelDeletionCount + ")" : StringPool.BLANK);
 																%>
 
-																<aui:input data-name="<%= deletionsLabel %>" helpMessage="deletions-help" label="<%= deletionsLabel %>" name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" />
+																<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS, false) %>" data-name="<%= deletionsLabel %>" helpMessage="deletions-help" label="<%= deletionsLabel %>" name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS, false) %>" />
 															</c:if>
 														</li>
 													</ul>
@@ -623,7 +676,7 @@ if (!cmd.equals(Constants.ADD)) {
 
 				<aui:button-row>
 					<c:choose>
-						<c:when test="<%= cmd.equals(Constants.ADD) %>">
+						<c:when test="<%= cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE) %>">
 							<aui:button type="submit" value="save" />
 
 							<aui:button href="<%= portletURL.toString() %>" type="cancel" />

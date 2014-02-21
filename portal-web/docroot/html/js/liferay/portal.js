@@ -127,7 +127,7 @@
 				instance._cached = cached;
 			}
 
-			if (!A.Node.prototype.isPrototypeOf(obj)) {
+			if (!A.instanceOf(obj, A.Node)) {
 				obj = A.one(obj);
 
 				if (text == null) {

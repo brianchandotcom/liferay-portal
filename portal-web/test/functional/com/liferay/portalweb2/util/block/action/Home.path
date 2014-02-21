@@ -114,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE_NOT_FOUND</td>
+	<td>//h3[contains(@class,'alert') and contains(@class,'error') and contains(.,'Not Found')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

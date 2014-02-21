@@ -111,10 +111,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			getEntryUserNotificationEventsJsonObjects(
 				_user.getUserId(), entry.getEntryId());
 
-		if (entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("userNotification doesn't exists for this entry");
-		}
-
 		Assert.assertEquals(1, entryUserNotificationEventsJsonObjects.size());
 
 		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
@@ -145,10 +141,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
 				_user.getUserId(), entry.getEntryId());
-
-		if (entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("userNotification doesn't exists for this entry");
-		}
 
 		Assert.assertEquals(2, entryUserNotificationEventsJsonObjects.size());
 
@@ -186,9 +178,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			getEntryUserNotificationEventsJsonObjects(
 				_user.getUserId(), entry.getEntryId());
 
-		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("A userNotification exists for this entry");
-		}
+		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
 	}
 
 	@Test
@@ -206,10 +196,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
 				_user.getUserId(), entry.getEntryId());
-
-		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("A userNotification exists for this entry");
-		}
 
 		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
 	}
@@ -234,10 +220,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
 				_user.getUserId(), entry.getEntryId());
-
-		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("A userNotification exists for this entry");
-		}
 
 		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
 	}
@@ -274,10 +256,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			getEntryUserNotificationEventsJsonObjects(
 				_user.getUserId(), entry.getEntryId());
 
-		if (!entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("A userNotification exists for this entry");
-		}
-
 		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
 	}
 
@@ -295,10 +273,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
 				_user.getUserId(), entry.getEntryId());
-
-		if (entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("userNotification doesn't exists for this entry");
-		}
 
 		Assert.assertEquals(1, entryUserNotificationEventsJsonObjects.size());
 
@@ -330,10 +304,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
 				_user.getUserId(), entry.getEntryId());
-
-		if (entryUserNotificationEventsJsonObjects.isEmpty()) {
-			Assert.fail("userNotification doesn't exists for this entry");
-		}
 
 		Assert.assertEquals(2, entryUserNotificationEventsJsonObjects.size());
 

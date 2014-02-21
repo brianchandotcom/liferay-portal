@@ -531,7 +531,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 				}
 			);
 
-			var WCMImageField = A.Component.create(
+			var DDMImageField = A.Component.create(
 				{
 					ATTRS: {
 						dataType: {
@@ -539,13 +539,13 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 						},
 
 						fieldNamespace: {
-							value: 'wcm'
+							value: 'ddm'
 						}
 					},
 
 					EXTENDS: A.FormBuilderField,
 
-					NAME: 'wcm-image',
+					NAME: 'ddm-image',
 
 					prototype: {
 						getHTML: function() {
@@ -558,13 +558,13 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 			FormBuilderTypes['ddm-date'] = DDMDateField;
 			FormBuilderTypes['ddm-decimal'] = DDMDecimalField;
 			FormBuilderTypes['ddm-documentlibrary'] = DDMDocumentLibraryField;
+			FormBuilderTypes['ddm-image'] = DDMImageField;
 			FormBuilderTypes['ddm-integer'] = DDMIntegerField;
 			FormBuilderTypes['ddm-link-to-page'] = DDMLinkToPageField;
 			FormBuilderTypes['ddm-number'] = DDMNumberField;
 			FormBuilderTypes['ddm-paragraph'] = DDMParagraphField;
 			FormBuilderTypes['ddm-separator'] = DDMSeparatorField;
 			FormBuilderTypes['ddm-text-html'] = DDMHTMLTextField;
-			FormBuilderTypes['wcm-image'] = WCMImageField;
 		},
 		'',
 		{

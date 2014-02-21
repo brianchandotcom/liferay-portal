@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.yahoo.platform.yui.compressor.CssCompressor;
 
@@ -43,7 +44,35 @@ public class MinifierUtil {
 		return _instance._minifyJavaScript(content);
 	}
 
+	public static String minifyJavaScript(String resource, String content) {
+		if (!PropsValues.MINIFIER_ENABLED) {
+			return content;
+		}
+
+		return _instance._minifyJavaScript(resource, content);
+	}
+
+	private static JavaScriptMinifier _getJavaScriptMinifier() {
+		try {
+			Class<JavaScriptMinifier> javaScriptMinifierClass =
+				(Class<JavaScriptMinifier>)Class.forName(
+					PropsValues.JAVASCRIPT_MINIFIER);
+
+			return javaScriptMinifierClass.newInstance();
+		}
+		catch (Exception e) {
+			if (_log.isErrorEnabled()) {
+				_log.error(
+					"Could not instantiate "+ PropsValues.JAVASCRIPT_MINIFIER +
+						". Returning YUIJavaScriptMinifier as default");
+			}
+
+			return new YUIJavaScriptMinifier();
+		}
+	}
+
 	private MinifierUtil() {
+		_javaScriptMinifierInstance = _getJavaScriptMinifier();
 	}
 
 	private String _minifyCss(String content) {
@@ -66,17 +95,17 @@ public class MinifierUtil {
 	}
 
 	private String _minifyJavaScript(String content) {
-
+		return _javaScriptMinifierInstance.compress(StringPool.BLANK, content);
 	}
 
+	private String _minifyJavaScript(String resource, String content) {
+		return _javaScriptMinifierInstance.compress(resource, content);
+	}
 
+	private static Log _log = LogFactoryUtil.getLog(MinifierUtil.class);
 
-			}
+	private static MinifierUtil _instance = new MinifierUtil();
 
-
-		}
-
-
-
+	private JavaScriptMinifier _javaScriptMinifierInstance;
 
 }

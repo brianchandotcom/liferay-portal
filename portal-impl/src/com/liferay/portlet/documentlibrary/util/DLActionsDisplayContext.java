@@ -100,7 +100,6 @@ public class DLActionsDisplayContext {
 		throws PortalException, SystemException {
 
 		if ((_dlActionsDisplayContextHelper.hasUpdatePermission() &&
-			 _dlActionsDisplayContextHelper.isCheckedOut() &&
 			 _dlActionsDisplayContextHelper.isLockedByMe()) ||
 			(_dlActionsDisplayContextHelper.isCheckedOut() &&
 			 _dlActionsDisplayContextHelper.hasOverrideCheckoutPermission())) {

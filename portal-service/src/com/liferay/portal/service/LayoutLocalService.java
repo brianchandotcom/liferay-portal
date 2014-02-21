@@ -1278,6 +1278,12 @@ public interface LayoutLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void updateAsset(long userId,
+		com.liferay.portal.model.Layout layout, long[] assetCategoryIds,
+		java.lang.String[] assetTagNames)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Updates the friendly URL of the layout.
 	*

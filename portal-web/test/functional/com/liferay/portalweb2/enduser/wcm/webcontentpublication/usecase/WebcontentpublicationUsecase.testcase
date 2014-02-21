@@ -763,9 +763,9 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="addGlobalSite" value="True" />
-			<var name="addOtherSite" value="True" />
-			<var name="addSite" value="False" />
+			<var name="addGlobalSite" value="true" />
+			<var name="addOtherSite" value="true" />
+			<var name="addSite" value="false" />
 			<var name="globalSite" value="Global" />
 			<var name="otherSiteName" value="Liferay" />
 			<var name="siteName" value="${siteName}" />
@@ -795,9 +795,9 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="addGlobalSite" value="False" />
-			<var name="addOtherSite" value="True" />
-			<var name="addSite" value="True" />
+			<var name="addGlobalSite" value="false" />
+			<var name="addOtherSite" value="true" />
+			<var name="addSite" value="true" />
 			<var name="globalSite" value="Global" />
 			<var name="otherSiteName" value="Liferay" />
 			<var name="siteName" value="${siteName}" />
@@ -826,9 +826,9 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="addGlobalSite" value="True" />
-			<var name="addOtherSite" value="False" />
-			<var name="addSite" value="True" />
+			<var name="addGlobalSite" value="true" />
+			<var name="addOtherSite" value="false" />
+			<var name="addSite" value="true" />
 			<var name="globalSite" value="Global" />
 			<var name="otherSiteName" value="Liferay" />
 			<var name="siteName" value="${siteName}" />

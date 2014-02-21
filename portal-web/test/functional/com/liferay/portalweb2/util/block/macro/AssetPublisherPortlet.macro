@@ -3,7 +3,7 @@
 		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
 
 		<if>
-			<equals arg1="${addGlobalSite}" arg2="True"/>
+			<equals arg1="${addGlobalSite}" arg2="true" />
 			<then>
 				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT" value1="Select" />
 				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT_GLOBAL" value1="Global" />
@@ -11,7 +11,7 @@
 		</if>
 
 		<if>
-			<equals arg1="${addOtherSite}" arg2="True"/>
+			<equals arg1="${addOtherSite}" arg2="true" />
 			<then>
 				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT" value1="Select" />
 				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
@@ -29,7 +29,7 @@
 		</if>
 
 		<if>
-			<equals arg1="${addSite}" arg2="True"/>
+			<equals arg1="${addSite}" arg2="true" />
 			<then>
 				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT" value1="Select" />
 				<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT_OTHER_SITE" value1="Other Site..." />
@@ -97,7 +97,7 @@
 			<execute action="PGAssetpublisherConfiguration#click" locator-key1="SELECT_MORE_THAN_ONE_ASSET_TYPE_CONTENT" />
 
 			<if>
-				<equals arg1="${moveSelected}" arg2="True" />
+				<equals arg1="${moveSelected}" arg2="true" />
 				<then>
 					<execute action="PGAssetpublisherConfiguration#click" locator-key1="SELECT_MORE_THAN_ONE_ASSET_TYPE_MOVE_SELECTED" />
 				</then>

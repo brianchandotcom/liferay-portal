@@ -58,6 +58,7 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 		throws AutoDeployException {
 
 		if (isMatchingFile(file, "WEB-INF/liferay-layout-templates.xml") &&
+			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml") &&
 			!isThemePlugin(file)) {
 
 			return true;

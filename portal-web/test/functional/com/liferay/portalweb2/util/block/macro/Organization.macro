@@ -113,6 +113,7 @@
 			</or>
 			<then>
 				<execute action="CPUsersandorganizationsOrganizationEdit#select" locator-key1="ORGANIZATION_SITE_PUBLIC_PAGES_SELECT" value1="${organizationSite}" />
+
 				<if>
 					<equals arg1="${checkEnablePropagationCheckbox}" arg2="true" />
 					<then>

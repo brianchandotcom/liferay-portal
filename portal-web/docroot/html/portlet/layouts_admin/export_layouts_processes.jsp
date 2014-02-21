@@ -58,9 +58,15 @@ OrderByComparator orderByComparator = BackgroundTaskComparatorFactoryUtil.getBac
 		modelVar="backgroundTask"
 	>
 		<liferay-ui:search-container-column-text
-			name="user-name"
-			value="<%= HtmlUtil.escape(backgroundTask.getUserName()) %>"
-		/>
+			name="user"
+		>
+			<liferay-ui:user-display
+				displayStyle="<%= 3 %>"
+				height="40"
+				userId="<%= backgroundTask.getUserId() %>"
+				width="40"
+			/>
+		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp
 			cssClass="background-task-status-column"

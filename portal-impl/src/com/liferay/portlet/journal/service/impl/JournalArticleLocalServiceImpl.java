@@ -6472,16 +6472,8 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(article.getUserId());
 
-		if (article.getId() ==
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			subscriptionSender.addPersistedSubscribers(
-					JournalFolder.class.getName(), article.getGroupId());
-		}
-		else {
-			subscriptionSender.addPersistedSubscribers(
-					JournalArticle.class.getName(),
-					article.getResourcePrimKey());
-		}
+		subscriptionSender.addPersistedSubscribers(
+				JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		JournalFolder folder = article.getFolder();
 
@@ -6497,9 +6489,8 @@ public class JournalArticleLocalServiceImpl
 			subscriptionSender.addPersistedSubscribers(
 				JournalFolder.class.getName(), curFolderId);
 		}
-
 		subscriptionSender.addPersistedSubscribers(
-			JournalArticle.class.getName(), article.getGroupId());
+			JournalFolder.class.getName(), article.getGroupId());
 
 		notify(subscriptionSender);
 	}

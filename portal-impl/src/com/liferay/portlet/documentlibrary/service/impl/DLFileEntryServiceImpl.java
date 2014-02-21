@@ -350,7 +350,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		QueryDefinition queryDefinition = new QueryDefinition(
 			WorkflowConstants.STATUS_IN_TRASH, true, start, end, obc);
 
-		return dlFileEntryFinder.findByG_U_F_M(
+		return dlFileEntryFinder.filterFindByG_U_F_M(
 			groupId, 0, folderIds, mimeTypes, queryDefinition);
 	}
 
@@ -392,7 +392,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		folderIds.add(folderId);
 
-		return dlFileEntryFinder.countByG_U_F_M(
+		return dlFileEntryFinder.filterCountByG_U_F_M(
 			groupId, 0, folderIds, mimeTypes,
 			new QueryDefinition(WorkflowConstants.STATUS_ANY));
 	}

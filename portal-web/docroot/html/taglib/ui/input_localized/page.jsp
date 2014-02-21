@@ -36,7 +36,7 @@ String name = (String)request.getAttribute("liferay-ui:input-localized:name");
 String xml = (String)request.getAttribute("liferay-ui:input-localized:xml");
 String type = (String)request.getAttribute("liferay-ui:input-localized:type");
 
-id =HtmlUtil.auiCompatibleId(id);
+id = HtmlUtil.auiCompatibleId(id);
 
 Locale defaultLocale = null;
 

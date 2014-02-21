@@ -37,7 +37,10 @@ public class HtmlImplTest {
 		Assert.assertEquals(
 			"hello_20_world", _htmlImpl.auiCompatibleId("hello world"));
 
-		StringBundler actual = new StringBundler(52);
+		Assert.assertEquals(
+			"hello__world", _htmlImpl.auiCompatibleId("hello_world"));
+
+		StringBundler actual = new StringBundler(53);
 
 		for (int i = 0; i <= 47; i++) {
 			actual.append(StringPool.ASCII_TABLE[i]);
@@ -55,14 +58,11 @@ public class HtmlImplTest {
 		expected.append("_11__12__13__14__15__16__17__18__19__1a__1b__1c__1d_");
 		expected.append("_1e__1f__20__21__22__23__24__25__26__27__28__29__2a_");
 		expected.append("_2b__2c__2d__2e__2f__3a__3b__3c__3d__3e__3f__40__5b_");
-		expected.append("_5c__5d__5e____60__7b__7c__7d__7e__7f__a0__2007__202");
-		expected.append("f_");
+		expected.append("_5c__5d__5e____60__7b__7c__7d__7e__7f__a0__2007_");
+		expected.append("_202f_");
 
 		Assert.assertEquals(
 			expected.toString(), _htmlImpl.auiCompatibleId(actual.toString()));
-
-		Assert.assertEquals(
-			"hello__world", _htmlImpl.auiCompatibleId("hello_world"));
 	}
 
 	@Test

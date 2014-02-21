@@ -68,7 +68,7 @@ import org.testng.Assert;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 @Transactional
-public class WikiPageServiceTest {
+public class WikiPageLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {

@@ -327,6 +327,24 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		journalFolderLocalService.restoreFolderFromTrash(getUserId(), folderId);
 	}
 
+	public void subscribe(long groupId, long folderId)
+			throws PortalException, SystemException {
+
+		JournalFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
+
+		journalFolderLocalService.subscribe(getUserId(), groupId, folderId);
+	}
+
+	public void unsubscribe(long groupId, long folderId)
+			throws PortalException, SystemException {
+
+		JournalFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
+
+		journalFolderLocalService.unsubscribe(getUserId(), groupId, folderId);
+	}
+
 	@Override
 	public JournalFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,

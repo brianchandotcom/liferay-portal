@@ -121,6 +121,7 @@ import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.portlet.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.portlet.journal.model.impl.JournalFolderModelImpl;
@@ -6471,8 +6472,16 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(article.getUserId());
 
-		subscriptionSender.addPersistedSubscribers(
-			JournalArticle.class.getName(), article.getResourcePrimKey());
+		if (article.getId() ==
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			subscriptionSender.addPersistedSubscribers(
+					JournalFolder.class.getName(), article.getGroupId());
+		}
+		else {
+			subscriptionSender.addPersistedSubscribers(
+					JournalArticle.class.getName(),
+					article.getResourcePrimKey());
+		}
 
 		JournalFolder folder = article.getFolder();
 

@@ -607,6 +607,48 @@ public class JournalFolderLocalServiceImpl
 			extraDataJSONObject.toString(), 0);
 	}
 
+	/**
+	 * Subscribe the user to changes in the folder.
+	 *
+	 * @param userId the primary key of the folder's user
+	 * @param groupId the primary key of the folder's group
+	 * @param folderId the primary key of the folder
+	 * @throws PortalException if the user or group could not be found, or if
+	subscribing was not permissible
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void subscribe(long userId, long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			folderId = groupId;
+		}
+
+		subscriptionLocalService.addSubscription(
+			userId, groupId, JournalFolder.class.getName(), folderId);
+	}
+
+	/**
+	 * Unsubscribe the user from changes in the folder.
+	 *
+	 * @param userId the primary key of the folder's user
+	 * @param groupId the primary key of the folder's group
+	 * @param folderId the primary key of the folder
+	 * @throws PortalException if the user or group could not be found, or if
+	unsubscribing was not permissible
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void unsubscribe(long userId, long groupId, long folderId)
+			throws PortalException, SystemException {
+
+		if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			folderId = groupId;
+		}
+
+		subscriptionLocalService.deleteSubscription(
+			userId, JournalFolder.class.getName(), folderId);
+	}
+
 	@Override
 	public void updateAsset(
 			long userId, JournalFolder folder, long[] assetCategoryIds,

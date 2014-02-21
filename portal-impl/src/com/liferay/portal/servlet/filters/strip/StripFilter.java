@@ -429,6 +429,7 @@ public class StripFilter extends BasePortalFilter {
 		skipWhiteSpace(oldCharBuffer, writer, true);
 	}
 
+	@Deprecated
 	protected void processJavaScript(
 			CharBuffer charBuffer, Writer writer, char[] openTag)
 		throws Exception {

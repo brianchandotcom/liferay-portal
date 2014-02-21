@@ -1369,6 +1369,18 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>lib/portal/closure-compiler.jar</file-name>
+		<version>v20131118</version>
+		<project-name>Closure Compiler</project-name>
+		<project-url>https://code.google.com/p/closure-compiler</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/portal/commons-beanutils.jar</file-name>
 		<version>1.8.2</version>
 		<project-name>Commons Beanutils</project-name>

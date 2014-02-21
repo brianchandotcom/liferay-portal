@@ -14,10 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -38,6 +34,10 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
+
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -124,7 +124,7 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doCountByG_U_F_M(
-			groupId, 0, folderIds, null, queryDefinition, false, false);
+			groupId, 0, folderIds, null, queryDefinition, false);
 	}
 
 	@Override
@@ -199,8 +199,7 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doCountByG_U_F_M(
-			groupId, userId, folderIds, mimeTypes, queryDefinition, false,
-			false);
+			groupId, userId, folderIds, mimeTypes, queryDefinition, false);
 	}
 
 	@Override
@@ -210,8 +209,7 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doCountByG_U_F_M(
-			groupId, userId, folderIds, mimeTypes, queryDefinition, false,
-			true);
+			groupId, userId, folderIds, mimeTypes, queryDefinition, true);
 	}
 
 	@Override
@@ -256,7 +254,7 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doCountByG_U_F_M(
-			groupId, 0, folderIds, null, queryDefinition, true, true);
+			groupId, 0, folderIds, null, queryDefinition, true);
 	}
 
 	@Override
@@ -265,7 +263,7 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doFindByG_U_F_M(
-			groupId, 0, folderIds, null, queryDefinition, true, true);
+			groupId, 0, folderIds, null, queryDefinition, true);
 	}
 
 	@Override
@@ -275,8 +273,21 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doFindByG_U_F_M(
-			groupId, userId, folderIds, mimeTypes, queryDefinition, false,
-			true);
+			groupId, userId, folderIds, mimeTypes, queryDefinition, true);
+	}
+
+	@Override
+	public DLFileEntry findByAnyImageId(long imageId)
+		throws NoSuchFileEntryException, SystemException {
+
+		DLFileEntry dlFileEntry = fetchByAnyImageId(imageId);
+
+		if (dlFileEntry != null) {
+			return dlFileEntry;
+		}
+
+		throw new NoSuchFileEntryException(
+			"No DLFileEntry exists with the imageId " + imageId);
 	}
 
 	@Override
@@ -459,7 +470,7 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doFindByG_U_F_M(
-			groupId, 0, folderIds, null, queryDefinition, false, false);
+			groupId, 0, folderIds, null, queryDefinition, false);
 	}
 
 	@Override
@@ -469,28 +480,12 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doFindByG_U_F_M(
-			groupId, userId, folderIds, mimeTypes, queryDefinition, false,
-			false);
-	}
-
-	@Override
-	public DLFileEntry findByAnyImageId(long imageId)
-		throws NoSuchFileEntryException, SystemException {
-
-		DLFileEntry dlFileEntry = fetchByAnyImageId(imageId);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		throw new NoSuchFileEntryException(
-			"No DLFileEntry exists with the imageId " + imageId);
+			groupId, userId, folderIds, mimeTypes, queryDefinition, false);
 	}
 
 	protected int doCountByG_U_F_M(
 			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
-			QueryDefinition queryDefinition, boolean inlineSQLHelper,
-			boolean filter)
+			QueryDefinition queryDefinition, boolean inlineSQLHelper)
 		throws SystemException {
 
 		Session session = null;
@@ -510,12 +505,6 @@ public class DLFileEntryFinderImpl
 			String sql = getFileEntriesSQL(
 				id, groupId, folderIds, mimeTypes, queryDefinition,
 				inlineSQLHelper);
-
-			if (filter) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DLFileEntry.class.getName(),
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -561,8 +550,7 @@ public class DLFileEntryFinderImpl
 
 	protected List<DLFileEntry> doFindByG_U_F_M(
 			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
-			QueryDefinition queryDefinition, boolean inlineSQLHelper,
-			boolean filter)
+			QueryDefinition queryDefinition, boolean inlineSQLHelper)
 		throws SystemException {
 
 		Session session = null;
@@ -585,12 +573,6 @@ public class DLFileEntryFinderImpl
 
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
-
-			if (filter) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DLFileEntry.class.getName(),
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -738,8 +720,5 @@ public class DLFileEntryFinderImpl
 
 		return sb.toString();
 	}
-
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"dlFileEntry.fileEntryId";
 
 }

@@ -381,7 +381,7 @@
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
-			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoCP" />

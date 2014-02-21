@@ -25,7 +25,7 @@
 	</command>
 
 	<command name="addStagingAdminRole">
-		<var name="${roleName}" value="Staging Admin" />
+		<var name="roleName" value="Staging Admin" />
 
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName}" />

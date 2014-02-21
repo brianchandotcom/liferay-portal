@@ -981,12 +981,6 @@ public class JournalArticleLocalServiceImpl
 
 		if (articlesCount == 1) {
 
-			// Subscriptions
-
-			subscriptionLocalService.deleteSubscriptions(
-				article.getCompanyId(), JournalArticle.class.getName(),
-				article.getResourcePrimKey());
-
 			// Ratings
 
 			ratingsStatsLocalService.deleteStats(
@@ -4404,42 +4398,6 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Subscribes the user to notifications for the web content article matching
-	 * the group, notifying him the instant versions of the article are created,
-	 * deleted, or modified.
-	 *
-	 * @param  userId the primary key of the user to subscribe
-	 * @param  groupId the primary key of the group
-	 * @throws PortalException if a matching user or group could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void subscribe(long userId, long groupId)
-		throws PortalException, SystemException {
-
-		subscriptionLocalService.addSubscription(
-			userId, groupId, JournalArticle.class.getName(), groupId);
-	}
-
-	/**
-	 * Unsubscribes the user from notifications for the web content article
-	 * matching the group.
-	 *
-	 * @param  userId the primary key of the user to unsubscribe
-	 * @param  groupId the primary key of the group
-	 * @throws PortalException if a matching user or subscription could not be
-	 *         found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void unsubscribe(long userId, long groupId)
-		throws PortalException, SystemException {
-
-		subscriptionLocalService.deleteSubscription(
-			userId, JournalArticle.class.getName(), groupId);
-	}
-
-	/**
 	 * Updates the web content article matching the version, replacing its
 	 * folder, title, description, content, and layout UUID.
 	 *
@@ -6455,25 +6413,22 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setUserId(article.getUserId());
 
 		subscriptionSender.addPersistedSubscribers(
-			JournalArticle.class.getName(), article.getResourcePrimKey());
+				JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		JournalFolder folder = article.getFolder();
 
-		List<Long> folderIds = new ArrayList<Long>();
-
 		if (folder != null) {
-			folderIds.add(folder.getFolderId());
-
-			folderIds.addAll(folder.getAncestorFolderIds());
-		}
-
-		for (long curFolderId : folderIds) {
 			subscriptionSender.addPersistedSubscribers(
-				JournalFolder.class.getName(), curFolderId);
+				JournalFolder.class.getName(), folder.getFolderId());
+
+			for (Long ancestorFolderId : folder.getAncestorFolderIds()) {
+				subscriptionSender.addPersistedSubscribers(
+					JournalFolder.class.getName(), ancestorFolderId);
+			}
 		}
 
 		subscriptionSender.addPersistedSubscribers(
-			JournalArticle.class.getName(), article.getGroupId());
+			JournalFolder.class.getName(), article.getGroupId());
 
 		subscriptionSender.flushNotificationsAsync();
 	}

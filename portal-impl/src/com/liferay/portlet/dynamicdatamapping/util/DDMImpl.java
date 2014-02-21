@@ -95,6 +95,8 @@ public class DDMImpl implements DDM {
 
 	public static final String TYPE_SELECT = "select";
 
+	public static final String TYPE_WCM_IMAGE = "wcm-image";
+
 	@Override
 	public DDMDisplay getDDMDisplay(ServiceContext serviceContext) {
 		String refererPortletName = (String)serviceContext.getAttribute(
@@ -492,23 +494,8 @@ public class DDMImpl implements DDM {
 					return null;
 				}
 
-				UploadRequest uploadRequest = (UploadRequest)request;
-
-				File file = uploadRequest.getFile(fieldNameValue);
-
-				try {
-					byte[] bytes = FileUtil.getBytes(file);
-
-					if (ArrayUtil.isNotEmpty(bytes)) {
-						fieldValue = UnicodeFormatter.bytesToHex(bytes);
-					}
-					else {
-						fieldValue = "update";
-					}
-				}
-				catch (IOException ioe) {
-					return null;
-				}
+				fieldValue = getImageFieldValue(
+					(UploadRequest)request, fieldNameValue);
 			}
 
 			if (fieldValue == null) {
@@ -533,6 +520,34 @@ public class DDMImpl implements DDM {
 		}
 
 		return fieldValues;
+	}
+
+	protected String getImageFieldValue(
+		UploadRequest uploadRequest, String fieldNameValue) {
+
+		File file = uploadRequest.getFile(fieldNameValue);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			byte[] bytes = FileUtil.getBytes(file);
+
+			if (ArrayUtil.isNotEmpty(bytes)) {
+				jsonObject.put("data", UnicodeFormatter.bytesToHex(bytes));
+			}
+			else {
+				jsonObject.put("data", "update");
+			}
+		}
+		catch (IOException ioe) {
+			return null;
+		}
+
+		String alt = uploadRequest.getParameter(fieldNameValue + "Alt");
+
+		jsonObject.put("alt", alt);
+
+		return jsonObject.toString();
 	}
 
 }

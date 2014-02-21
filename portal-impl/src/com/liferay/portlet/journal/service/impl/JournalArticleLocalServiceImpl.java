@@ -984,12 +984,6 @@ public class JournalArticleLocalServiceImpl
 
 		if (articlesCount == 1) {
 
-			// Subscriptions
-
-			subscriptionLocalService.deleteSubscriptions(
-				article.getCompanyId(), JournalArticle.class.getName(),
-				article.getResourcePrimKey());
-
 			// Ratings
 
 			ratingsStatsLocalService.deleteStats(
@@ -4404,42 +4398,6 @@ public class JournalArticleLocalServiceImpl
 			groupId, userId, creatorUserId, status, start, end);
 
 		return searchJournalArticles(searchContext);
-	}
-
-	/**
-	 * Subscribes the user to notifications for the web content article matching
-	 * the group, notifying him the instant versions of the article are created,
-	 * deleted, or modified.
-	 *
-	 * @param  userId the primary key of the user to subscribe
-	 * @param  groupId the primary key of the group
-	 * @throws PortalException if a matching user or group could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void subscribe(long userId, long groupId)
-		throws PortalException, SystemException {
-
-		subscriptionLocalService.addSubscription(
-			userId, groupId, JournalArticle.class.getName(), groupId);
-	}
-
-	/**
-	 * Unsubscribes the user from notifications for the web content article
-	 * matching the group.
-	 *
-	 * @param  userId the primary key of the user to unsubscribe
-	 * @param  groupId the primary key of the group
-	 * @throws PortalException if a matching user or subscription could not be
-	 *         found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void unsubscribe(long userId, long groupId)
-		throws PortalException, SystemException {
-
-		subscriptionLocalService.deleteSubscription(
-			userId, JournalArticle.class.getName(), groupId);
 	}
 
 	/**

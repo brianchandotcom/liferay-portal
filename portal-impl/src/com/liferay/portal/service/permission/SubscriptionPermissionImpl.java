@@ -31,7 +31,6 @@ import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
-import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -168,8 +167,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			return DLFileEntryPermission.contains(
 				permissionChecker, classPK, actionId);
 		}
-		else if (className.equals(JournalArticle.class.getName())
-				|| className.equals(JournalFolder.class.getName())) {
+		else if (className.equals(JournalFolder.class.getName())) {
 			return JournalPermission.contains(
 				permissionChecker, classPK, actionId);
 		}

@@ -2195,6 +2195,8 @@
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldName" value="Boolean" />
 		<var name="fieldPredefinedValue" value="Yes" />
+		<var name="listDescription" value="List Description" />
+		<var name="listName" value="List Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />

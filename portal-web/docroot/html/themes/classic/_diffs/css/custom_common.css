@@ -851,6 +851,17 @@
 		}
 	}
 
+	.yui3-aclist-list {
+		.yui3-aclist-item-active {
+			background-color: #0AF;
+		}
+
+		.yui3-aclist-item-hover {
+			background-color: #EEE;
+			color: inherit;
+		}
+	}
+
 	/* ---------- Extras ---------- */
 
 	$prefixes: ("-webkit-","-moz-", "-o-", "");

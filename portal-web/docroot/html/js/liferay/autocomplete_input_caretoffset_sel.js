@@ -2,6 +2,9 @@ AUI.add(
 	'liferay-autocomplete-input-caretoffset-sel',
 	function(A) {
 		var Lang = A.Lang;
+
+		var DOC = A.config.doc;
+
 		var AutcompleteInputCaretOffset = function(){};
 
 		AutcompleteInputCaretOffset.prototype = {
@@ -12,16 +15,14 @@ AUI.add(
 
 				node.focus();
 
-				var doc = A.getDoc().getDOMNode();
-
-				var range = doc.selection.createRange();
+				var range = DOC.selection.createRange();
 
 				var xy = node.getXY();
 
 				return {
 					x: range.boundingLeft - xy[0],
 					y: Lang.toInt(range.boundingTop) - xy[1] + node.get('scrollTop')
-						+ doc.documentElement.scrollTop
+						+ DOC.documentElement.scrollTop
 				};
 			}
 		};

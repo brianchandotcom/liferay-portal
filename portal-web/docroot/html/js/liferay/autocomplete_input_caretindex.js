@@ -9,7 +9,7 @@ AUI.add(
 
 				node = node || instance.get('inputNode');
 
-				var input = node.getDOMNode();
+				var input = node.getDOM();
 
 				return {
 					start: input.selectionStart,
@@ -22,9 +22,9 @@ AUI.add(
 
 				node = node || instance.get(STR_INPUT_NODE);
 
-				var input = node.getDOMNode();
+				var input = node.getDOM();
 
-				input.focus();
+				Liferay.Util.focusFormField(input);
 
 				input.setSelectionRange(caretIndex, caretIndex);
 			}

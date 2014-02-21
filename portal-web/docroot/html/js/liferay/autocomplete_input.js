@@ -9,6 +9,8 @@ AUI.add(
 
 		var KEY_LIST = [KEY_DOWN, KeyMap.LEFT, KeyMap.RIGHT, KeyMap.UP].join();
 
+		var REGEX_TERM = /term/g;
+
 		var STR_INPUT_NODE = 'inputNode';
 
 		var STR_PHRASE_MATCH = 'phraseMatch';
@@ -78,7 +80,11 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._ac = new A.AutoComplete(instance._getACConfig()).render();
+						var ac = new A.AutoComplete(instance._getACConfig()).render();
+
+						ac.get('boundingBox').addClass('lfr-autocomplete-input-list');
+
+						instance._ac = ac;
 
 						instance._bindUI();
 					},
@@ -103,9 +109,7 @@ AUI.add(
 						return AArray.map(
 							results,
 							function(result) {
-								var userData = result.raw;
-
-								return Lang.sub(tplResults, userData);
+								return Lang.sub(tplResults, result.raw);
 							}
 						);
 					},
@@ -135,15 +139,17 @@ AUI.add(
 									if (res) {
 										var restText = val.substring(res[1].length + 1);
 
-										if (restText.length === 0 || restText.charAt(0) !== STR_SPACE) {
-											text += ' ';
+										var spaceAdded = 1;
 
-											var spaceAdded = true;
+										if (restText.length === 0 || restText.charAt(0) !== STR_SPACE) {
+											text += STR_SPACE;
+
+											spaceAdded = 0;
 										}
 
 										var resultText = prefix + instance.get(STR_TERM) + text;
 
-										var resultEndPos = resultText.length + (spaceAdded ? 0 : 1);
+										var resultEndPos = resultText.length + spaceAdded;
 
 										inputNode.val(resultText + restText);
 
@@ -179,10 +185,7 @@ AUI.add(
 						xy[0] += caretXY.x + offsetX;
 						xy[1] += caretXY.y + Lang.toInt(inputNode.getStyle('fontSize')) + offsetY;
 
-						var acBoundingBox = instance._ac.get('boundingBox');
-
-						acBoundingBox.setStyle('left', xy[0]);
-						acBoundingBox.setStyle('top', xy[1]);
+						instance._ac.get('boundingBox').setXY(xy);
 					},
 
 					_afterACVisibleChange: function(event) {
@@ -280,7 +283,7 @@ AUI.add(
 
 								var res = regExp.exec(val);
 
-								if (res && (res.index + res[1].length + term.length === val.length)) {
+								if (res && ((res.index + res[1].length + term.length) === val.length)) {
 									result = val;
 								}
 							}
@@ -292,12 +295,15 @@ AUI.add(
 					_onACKeyDown: function() {
 						var instance = this;
 
-						if (instance._ac.get(STR_VISIBLE)) {
-							instance._ac._activateNextItem();
+						var ac = instance._ac;
+
+						var acVisible = ac.get(STR_VISIBLE);
+
+						if (acVisible) {
+							ac._activateNextItem();
 						}
-						else {
-							return false;
-						}
+
+						return acVisible;
 					},
 
 					_onACQuery: function(event) {
@@ -311,8 +317,10 @@ AUI.add(
 						else {
 							event.preventDefault();
 
-							if (instance._ac.get(STR_VISIBLE)) {
-								instance._ac.hide();
+							var ac = instance._ac;
+
+							if (ac.get(STR_VISIBLE)) {
+								ac.hide();
 							}
 						}
 					},
@@ -334,22 +342,22 @@ AUI.add(
 
 						var input = instance._getQuery(inputNode.val());
 
+						var ac = instance._ac;
+
 						if (input) {
 							input = input.substring(1);
 
-							instance._ac.sendRequest(input);
+							ac.sendRequest(input);
 						}
-						else if (instance._ac.get(STR_VISIBLE)) {
-							instance._ac.hide();
+						else if (ac.get(STR_VISIBLE)) {
+							ac.hide();
 						}
 					},
 
 					_setRegExp: function(value) {
 						var instance = this;
 
-						var term = instance.get(STR_TERM);
-
-						return new RegExp(value.replace(/term/g, term));
+						return new RegExp(value.replace(REGEX_TERM, instance.get(STR_TERM)));
 					},
 
 					_syncACPosition: function() {

@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-autocomplete-input-caretindex-sel',
 	function(A) {
+		var DOC = A.config.doc;
+
 		var REGEX_NEW_LINE = /\r\n/g;
 
 		var STR_CHARACTER = 'character';
@@ -17,50 +19,50 @@ AUI.add(
 			_getCaretIndex: function(node) {
 				var instance = this;
 
-				var endRange, len, normalizedValue, range, textInputRange;
-
 				node = node || instance.get(STR_INPUT_NODE);
 
-				var inputDOMNode = node.getDOMNode();
-
-				var docNode = A.getDoc().getDOMNode();
-
-				var start = 0;
 				var end = 0;
+				var start = 0;
 
-				range = docNode.selection.createRange();
+				var range = DOC.selection.createRange();
 
-				if (range && range.parentElement() === inputDOMNode) {
-					len = inputDOMNode.value.length;
+				var inputEl = node.getDOM();
 
-					normalizedValue = inputDOMNode.value.replace(REGEX_NEW_LINE, STR_NEW_LINE);
+				if (range && range.parentElement() === inputEl) {
+					var value = inputEl.value;
 
-					textInputRange = inputDOMNode.createTextRange();
+					var normalizedValue = value.replace(REGEX_NEW_LINE, STR_NEW_LINE);
+
+					var textInputRange = inputEl.createTextRange();
+
 					textInputRange.moveToBookmark(range.getBookmark());
 
-					endRange = inputDOMNode.createTextRange();
+					var endRange = inputEl.createTextRange();
+
 					endRange.collapse(false);
 
+					var length = value.length;
+
 					if (textInputRange.compareEndPoints('StartToEnd', endRange) > -1) {
-						start = end = len;
+						start = end = length;
 					}
 					else {
-						start = -textInputRange.moveStart(STR_CHARACTER, -len);
+						start = -textInputRange.moveStart(STR_CHARACTER, -length);
 						start += normalizedValue.slice(0, start).split(STR_NEW_LINE).length - 1;
 
 						if (textInputRange.compareEndPoints(STR_END_TO_END, endRange) > -1) {
-							end = len;
+							end = length;
 						}
 						else {
-							end = -textInputRange.moveEnd(STR_CHARACTER, -len);
+							end = -textInputRange.moveEnd(STR_CHARACTER, -length);
 							end += normalizedValue.slice(0, end).split(STR_NEW_LINE).length - 1;
 						}
 					}
 				}
 
 				return {
-					start: start,
-					end: end
+					end: end,
+					start: start
 				};
 			},
 
@@ -69,16 +71,14 @@ AUI.add(
 
 				node = node || instance.get(STR_INPUT_NODE);
 
-				var input = node.getDOMNode();
+				var input = node.getDOM();
 
 				if (input.createTextRange) {
 					var val = node.val().substring(0, cursorIndex);
 
 					var count = 0;
 
-					var regExpNewLine = /\r\n/g;
-
-					while (regExpNewLine.exec(val) !== null) {
+					while (REGEX_NEW_LINE.exec(val) !== null) {
 						count++;
 					}
 

@@ -8,13 +8,11 @@
 
 	var PATH_JAVASCRIPT = LiferayAUI.getJavaScriptRootPath();
 
-	var hasInputSelection = function() {
+	var hasInputSelection = (function() {
 		var input = document.createElement('input');
 
-		var res = ((typeof input.selectionStart === 'number') && (typeof input.selectionEnd === 'number'));
-
-		return res;
-	}();
+		return ((typeof input.selectionStart === 'number') && (typeof input.selectionEnd === 'number'));
+	}());
 
 	window.YUI_config = {
 		base: PATH_JAVASCRIPT + '/aui/',

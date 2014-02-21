@@ -462,7 +462,11 @@
 
 /* ---------- Input mirror ---------- */
 
-.input-mirror {
+.lfr-autocomplete-input-list .yui3-aclist-list {
+	margin: 0;
+}
+
+.liferay-autocomplete-input-mirror {
 	left: -9999px;
 	overflow-x: hidden;
 	overflow-y: auto;

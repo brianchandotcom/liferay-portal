@@ -213,7 +213,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		return getJavaScriptContent(sb.toString());
+		return getJavaScriptContent(
+			StringUtil.merge(fileNames, "+"), sb.toString());
 	}
 
 	@Override
@@ -232,6 +233,12 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 	protected static String getJavaScriptContent(String content) {
 		return MinifierUtil.minifyJavaScript(content);
+	}
+
+	protected static String getJavaScriptContent(
+		String resourceName, String content) {
+
+		return MinifierUtil.minifyJavaScript(resourceName, content);
 	}
 
 	protected Object getBundleContent(
@@ -434,7 +441,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 					request, response, resourcePath, content);
 			}
 			else if (minifierType.equals("js")) {
-				content = getJavaScriptContent(content);
+				content = getJavaScriptContent(resourcePath, content);
 			}
 
 			FileUtil.write(
@@ -503,7 +510,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 		String content = StringUtil.read(urlConnection.getInputStream());
 
-		return getJavaScriptContent(content);
+		return getJavaScriptContent(resourceURL.toString(), content);
 	}
 
 	@Override

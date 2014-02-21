@@ -548,7 +548,6 @@
 		<if>
 			<equals arg1="${dataDefinitionFormTemplateMode}" arg2="Create" />
 			<then>
-				<execute action="Dynamicdatamapping#pause" locator1="1000" />
 				<execute action="Dynamicdatamapping#assertElementNotPresent" locator-key1="SETTINGS_READ_ONLY" />
 			</then>
 			<elseif>

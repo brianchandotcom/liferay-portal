@@ -33,11 +33,11 @@ public interface IndexAccessor {
 
 	public static final long DEFAULT_LAST_GENERATION = -1;
 
+	public IndexSearcher acquireIndexSearcher() throws IOException;
+
 	public void addDocument(Document document) throws IOException;
 
 	public void addDocuments(Collection<Document> documents) throws IOException;
-
-	public IndexSearcher acquireIndexSearcher() throws IOException;
 
 	public void close();
 

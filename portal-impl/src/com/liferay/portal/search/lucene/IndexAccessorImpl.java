@@ -81,6 +81,11 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	@Override
+	public IndexSearcher acquireIndexSearcher() throws IOException {
+		return _indexSearcherManager.acquire();
+	}
+
+	@Override
 	public void addDocument(Document document) throws IOException {
 		if (SearchEngineUtil.isIndexReadOnly()) {
 			return;
@@ -103,11 +108,6 @@ public class IndexAccessorImpl implements IndexAccessor {
 		finally {
 			_commit();
 		}
-	}
-
-	@Override
-	public IndexSearcher acquireIndexSearcher() throws IOException {
-		return _indexSearcherManager.acquire();
 	}
 
 	@Override

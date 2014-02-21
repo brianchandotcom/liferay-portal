@@ -359,7 +359,6 @@
 							ul.dropdown-menu, .site-administration-menu {
 								border-width: 0;
 								margin: 0;
-								right: auto;
 
 								@include respond-to(phone, tablet) {
 									margin-top: 3px;
@@ -403,13 +402,6 @@
 								&:after, &:before {
 									border-width: 0;
 								}
-							}
-						}
-
-						li.dropdown.user-avatar {
-							.dropdown-menu {
-								left: auto;
-								right: 0;
 							}
 						}
 					}

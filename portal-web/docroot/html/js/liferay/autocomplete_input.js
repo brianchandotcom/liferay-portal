@@ -1,17 +1,13 @@
 AUI.add(
 	'liferay-autocomplete-input',
 	function(A) {
+		var AArray = A.Array;
+		var KeyMap = A.Event.KeyMap;
 		var Lang = A.Lang;
 
-		var AArray = A.Array;
+		var KEY_DOWN = KeyMap.DOWN;
 
-		var KEY_ARROW_DOWN = 40;
-
-		var KEY_ARROW_LEFT = 37;
-
-		var KEY_ARROW_RIGHT = 39;
-
-		var KEY_ARROW_UP = 38;
+		var KEY_LIST = [KEY_DOWN, KeyMap.LEFT, KeyMap.RIGHT, KeyMap.UP].join();
 
 		var STR_INPUT_NODE = 'inputNode';
 
@@ -206,7 +202,7 @@ AUI.add(
 
 						ac.after('visibleChange', instance._afterACVisibleChange, instance);
 
-						ac._keys[KEY_ARROW_DOWN] = A.bind(instance._onACKeyDown, instance);
+						ac._keys[KEY_DOWN] = A.bind(instance._onACKeyDown, instance);
 
 						A.Do.before(instance._syncACPosition, ac, '_syncUIPosAlign', instance);
 
@@ -215,8 +211,7 @@ AUI.add(
 						var inputNode = instance.get(STR_INPUT_NODE);
 
 						instance._eventHandles = [
-							inputNode.on('key', A.bind(instance._onKeyUp, instance), 'up:' +
-								KEY_ARROW_DOWN + ',' + KEY_ARROW_LEFT + ',' + KEY_ARROW_RIGHT + ',' + KEY_ARROW_UP)
+							inputNode.on('key', A.bind(instance._onKeyUp, instance), 'up:' + KEY_LIST)
 						];
 					},
 

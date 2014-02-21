@@ -86,7 +86,7 @@ FCKConfig.ToolbarSets["edit-in-place"] = [
 	['Subscript', 'Superscript', 'SpecialChar'],
 	['Undo', 'Redo'],
 	['SpellCheck'],
-	['OrderedList', 'UnorderedList', '-', 'Outdent', 'Indent'], ['Source', 'RemoveFormat'],
+	['OrderedList', 'UnorderedList', '-', 'Outdent', 'Indent'], ['Source', 'RemoveFormat']
 ];
 
 FCKConfig.ToolbarSets["email"] = [

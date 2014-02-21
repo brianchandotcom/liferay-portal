@@ -2604,7 +2604,7 @@ AUI.add(
 								after: {
 									success: instance._currentPanelEditInitListener
 								},
-								uri: categoryEditURL.toString(),
+								uri: categoryEditURL.toString()
 							}
 						);
 

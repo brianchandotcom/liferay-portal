@@ -838,7 +838,7 @@ FileEntryDisplayContext fileEntryDisplayContext = new FileEntryDisplayContext(re
 							Liferay.Util.openWindow(
 								{
 									title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
-									uri: '<%= permissionsURL.toString() %>',
+									uri: '<%= permissionsURL.toString() %>'
 								}
 							);
 						}

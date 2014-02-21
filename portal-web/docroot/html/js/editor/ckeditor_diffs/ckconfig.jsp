@@ -116,7 +116,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['Subscript', 'Superscript', 'SpecialChar'],
 		['Undo', 'Redo'],
 		['SpellChecker', 'Scayt'],
-		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'], ['Source', 'RemoveFormat'],
+		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'], ['Source', 'RemoveFormat']
 	];
 
 	config.toolbar_email = [
@@ -137,7 +137,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 			['AjaxSave', '-', 'Restore'],
 		</c:if>
 
-		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', ],
+		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord' ],
 		['Styles', 'FontSize', '-', 'TextColor', 'BGColor'],
 		'/',
 		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],

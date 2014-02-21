@@ -67,7 +67,7 @@
 		{
 			devices: {
 				autosize: {
-					skin: 'autosize',
+					skin: 'autosize'
 				},
 				custom: {
 					height: '#<portlet:namespace />height',

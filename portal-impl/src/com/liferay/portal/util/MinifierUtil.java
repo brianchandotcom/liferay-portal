@@ -36,6 +36,7 @@ public class MinifierUtil {
 		return _instance._minifyCss(content);
 	}
 
+	@Deprecated
 	public static String minifyJavaScript(String content) {
 		if (!PropsValues.MINIFIER_ENABLED) {
 			return content;
@@ -94,6 +95,7 @@ public class MinifierUtil {
 		return unsyncStringWriter.toString();
 	}
 
+	@Deprecated
 	private String _minifyJavaScript(String content) {
 		return _javaScriptMinifierInstance.compress(StringPool.BLANK, content);
 	}

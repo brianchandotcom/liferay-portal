@@ -78,8 +78,8 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		BlogsEntryLocalServiceUtil.subscribe(
 			_user.getUserId(), _group.getGroupId());
 
-		_userNotificationDeliveries =
-			getUserNotificationDeliveries(_user.getUserId());
+		_userNotificationDeliveries = getUserNotificationDeliveries(
+			_user.getUserId());
 
 		_logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
@@ -94,6 +94,32 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		deleteUserNotificationEvents(_user.getUserId());
 
 		deleteUserNotificationDeliveries();
+	}
+
+	@Test
+	public void testAddBlogUserNotification() throws Exception {
+		BlogsEntry entry = addBlogsEntry();
+
+		Assert.assertEquals(1, _logRecords.size());
+
+		LogRecord logRecord = _logRecords.get(0);
+
+		Assert.assertEquals("Sending email", logRecord.getMessage());
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(
+				_user.getUserId(), entry.getEntryId());
+
+		Assert.assertEquals(1, entryUserNotificationEventsJsonObjects.size());
+
+		for (JSONObject entryUserNotificationEventsJsonObject :
+				entryUserNotificationEventsJsonObjects) {
+
+			Assert.assertEquals(
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				entryUserNotificationEventsJsonObject.getInt(
+					"notificationType"));
+		}
 	}
 
 	@Test
@@ -119,6 +145,92 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 				jsonObject.getInt("notificationType"));
 		}
+	}
+
+	@Test
+	public void testAddBlogUserNotificationWhenNotificationsDisabled()
+		throws Exception {
+
+		updateUserNotificationsDelivery(false);
+
+		BlogsEntry entry = addBlogsEntry();
+
+		Assert.assertEquals(0, _logRecords.size());
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(
+				_user.getUserId(), entry.getEntryId());
+
+		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
+	}
+
+	@Test
+	public void testAddBlogUserNotificationWhenWebsiteNotificationsDisabled()
+		throws Exception {
+
+		updateUserNotificationDelivery(
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+			UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
+
+		BlogsEntry entry = addBlogsEntry();
+
+		Assert.assertEquals(1, _logRecords.size());
+
+		LogRecord logRecord = _logRecords.get(0);
+
+		Assert.assertEquals("Sending email", logRecord.getMessage());
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(
+				_user.getUserId(), entry.getEntryId());
+
+		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
+	}
+
+	@Test
+	public void testUpdateBlogUserNotification() throws Exception {
+		BlogsEntry entry = addBlogsEntry();
+
+		updateEntry(entry);
+
+		Assert.assertEquals(2, _logRecords.size());
+
+		LogRecord logRecord = _logRecords.get(0);
+
+		Assert.assertEquals("Sending email", logRecord.getMessage());
+
+		logRecord = _logRecords.get(1);
+
+		Assert.assertEquals("Sending email", logRecord.getMessage());
+
+		List<JSONObject> entryUserNotificationEventsJsonObjects =
+			getEntryUserNotificationEventsJsonObjects(
+				_user.getUserId(), entry.getEntryId());
+
+		Assert.assertEquals(2, entryUserNotificationEventsJsonObjects.size());
+
+		int[] notificationTypes = new int[0];
+
+		for (JSONObject entryUserNotificationEventsJsonObject :
+				entryUserNotificationEventsJsonObjects) {
+
+			notificationTypes = ArrayUtil.append(
+				notificationTypes,
+				entryUserNotificationEventsJsonObject.getInt(
+					"notificationType"));
+		}
+
+		Assert.assertNotEquals(notificationTypes[0], notificationTypes[1]);
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				notificationTypes,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY));
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				notificationTypes,
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY));
 	}
 
 	@Test
@@ -170,23 +282,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	}
 
 	@Test
-	public void testAddBlogUserNotificationWhenNotificationsDisabled()
-		throws Exception {
-
-		updateUserNotificationsDelivery(false);
-
-		BlogsEntry entry = addBlogsEntry();
-
-		Assert.assertEquals(0, _logRecords.size());
-
-		List<JSONObject> entryUserNotificationEventsJsonObjects =
-			getEntryUserNotificationEventsJsonObjects(
-				_user.getUserId(), entry.getEntryId());
-
-		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
-	}
-
-	@Test
 	public void testUpdateBlogUserNotificationWhenNotificationsDisabled()
 		throws Exception {
 
@@ -197,29 +292,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		updateEntry(entry);
 
 		Assert.assertEquals(0, _logRecords.size());
-
-		List<JSONObject> entryUserNotificationEventsJsonObjects =
-			getEntryUserNotificationEventsJsonObjects(
-				_user.getUserId(), entry.getEntryId());
-
-		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
-	}
-
-	@Test
-	public void testAddBlogUserNotificationWhenWebsiteNotificationsDisabled()
-		throws Exception {
-
-		updateUserNotificationDelivery(
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-			UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
-
-		BlogsEntry entry = addBlogsEntry();
-
-		Assert.assertEquals(1, _logRecords.size());
-
-		LogRecord logRecord = _logRecords.get(0);
-
-		Assert.assertEquals("Sending email", logRecord.getMessage());
 
 		List<JSONObject> entryUserNotificationEventsJsonObjects =
 			getEntryUserNotificationEventsJsonObjects(
@@ -261,78 +333,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		Assert.assertEquals(0, entryUserNotificationEventsJsonObjects.size());
 	}
 
-	@Test
-	public void testAddBlogUserNotification() throws Exception {
-		BlogsEntry entry = addBlogsEntry();
-
-		Assert.assertEquals(1, _logRecords.size());
-
-		LogRecord logRecord = _logRecords.get(0);
-
-		Assert.assertEquals("Sending email", logRecord.getMessage());
-
-		List<JSONObject> entryUserNotificationEventsJsonObjects =
-			getEntryUserNotificationEventsJsonObjects(
-				_user.getUserId(), entry.getEntryId());
-
-		Assert.assertEquals(1, entryUserNotificationEventsJsonObjects.size());
-
-		for (JSONObject entryUserNotificationEventsJsonObject :
-				entryUserNotificationEventsJsonObjects) {
-
-			Assert.assertEquals(
-				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-				entryUserNotificationEventsJsonObject.getInt(
-					"notificationType"));
-		}
-	}
-
-	@Test
-	public void testUpdateBlogUserNotification() throws Exception {
-		BlogsEntry entry = addBlogsEntry();
-
-		updateEntry(entry);
-
-		Assert.assertEquals(2, _logRecords.size());
-
-		LogRecord logRecord = _logRecords.get(0);
-
-		Assert.assertEquals("Sending email", logRecord.getMessage());
-
-		logRecord = _logRecords.get(1);
-
-		Assert.assertEquals("Sending email", logRecord.getMessage());
-
-		List<JSONObject> entryUserNotificationEventsJsonObjects =
-			getEntryUserNotificationEventsJsonObjects(
-				_user.getUserId(), entry.getEntryId());
-
-		Assert.assertEquals(2, entryUserNotificationEventsJsonObjects.size());
-
-		int[] notificationTypes = new int[0];
-
-		for (JSONObject entryUserNotificationEventsJsonObject :
-				entryUserNotificationEventsJsonObjects) {
-
-			notificationTypes = ArrayUtil.append(
-				notificationTypes,
-				entryUserNotificationEventsJsonObject.getInt(
-					"notificationType"));
-		}
-
-		Assert.assertNotEquals(notificationTypes[0], notificationTypes[1]);
-
-		Assert.assertTrue(
-			ArrayUtil.contains(
-				notificationTypes,
-				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY));
-
-		Assert.assertTrue(
-			ArrayUtil.contains(
-				notificationTypes,
-				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY));
-	}
-
 	protected BlogsEntry addBlogsEntry() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
@@ -344,44 +344,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		return BlogsTestUtil.addEntry(
 			_user.getUserId(), ServiceTestUtil.randomString(), true,
 			serviceContext);
-	}
-
-	protected List<UserNotificationDelivery> getUserNotificationDeliveries(
-			long userId)
-		throws Exception {
-
-		List<UserNotificationDelivery> userNotificationDeliveries =
-			new ArrayList<UserNotificationDelivery>();
-
-		userNotificationDeliveries.add(
-			UserNotificationDeliveryLocalServiceUtil.
-				getUserNotificationDelivery(
-					userId, PortletKeys.BLOGS, 0,
-					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-					UserNotificationDeliveryConstants.TYPE_EMAIL, true));
-
-		userNotificationDeliveries.add(
-			UserNotificationDeliveryLocalServiceUtil.
-				getUserNotificationDelivery(
-					userId, PortletKeys.BLOGS, 0,
-					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-					UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
-
-		userNotificationDeliveries.add(
-			UserNotificationDeliveryLocalServiceUtil.
-				getUserNotificationDelivery(
-					userId, PortletKeys.BLOGS, 0,
-					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
-					UserNotificationDeliveryConstants.TYPE_EMAIL, true));
-
-		userNotificationDeliveries.add(
-			UserNotificationDeliveryLocalServiceUtil.
-				getUserNotificationDelivery(
-					userId, PortletKeys.BLOGS, 0,
-					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
-					UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
-
-		return userNotificationDeliveries;
 	}
 
 	protected void deleteUserNotificationDeliveries() throws Exception {
@@ -431,17 +393,42 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		return userNotificationEventJsonObjects;
 	}
 
-	protected void updateUserNotificationsDelivery(boolean deliver)
+	protected List<UserNotificationDelivery> getUserNotificationDeliveries(
+			long userId)
 		throws Exception {
 
-		for (UserNotificationDelivery userNotificationDelivery :
-				_userNotificationDeliveries) {
+		List<UserNotificationDelivery> userNotificationDeliveries =
+			new ArrayList<UserNotificationDelivery>();
 
+		userNotificationDeliveries.add(
 			UserNotificationDeliveryLocalServiceUtil.
-				updateUserNotificationDelivery(
-					userNotificationDelivery.getUserNotificationDeliveryId(),
-					deliver);
-		}
+				getUserNotificationDelivery(
+					userId, PortletKeys.BLOGS, 0,
+					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+					UserNotificationDeliveryConstants.TYPE_EMAIL, true));
+
+		userNotificationDeliveries.add(
+			UserNotificationDeliveryLocalServiceUtil.
+				getUserNotificationDelivery(
+					userId, PortletKeys.BLOGS, 0,
+					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+					UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
+
+		userNotificationDeliveries.add(
+			UserNotificationDeliveryLocalServiceUtil.
+				getUserNotificationDelivery(
+					userId, PortletKeys.BLOGS, 0,
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+					UserNotificationDeliveryConstants.TYPE_EMAIL, true));
+
+		userNotificationDeliveries.add(
+			UserNotificationDeliveryLocalServiceUtil.
+				getUserNotificationDelivery(
+					userId, PortletKeys.BLOGS, 0,
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+					UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
+
+		return userNotificationDeliveries;
 	}
 
 	protected void updateUserNotificationDelivery(
@@ -467,6 +454,19 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		}
 
 		Assert.fail("User notification does not exist");
+	}
+
+	protected void updateUserNotificationsDelivery(boolean deliver)
+		throws Exception {
+
+		for (UserNotificationDelivery userNotificationDelivery :
+				_userNotificationDeliveries) {
+
+			UserNotificationDeliveryLocalServiceUtil.
+				updateUserNotificationDelivery(
+					userNotificationDelivery.getUserNotificationDeliveryId(),
+					deliver);
+		}
 	}
 
 	private void updateEntry(BlogsEntry entry) throws Exception {

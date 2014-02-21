@@ -874,7 +874,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testGetPreferencesByOwnerAndPlidAndPortletAutoAdded()
+	public void testGetPreferencesByOwnerAndPlidAndPortletIdAutoAdded()
 		throws Exception {
 
 		String portletPreferencesXML =
@@ -893,7 +893,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testGetPreferencesByOwnerAndPlidAndPortletNotAutoAdded()
+	public void testGetPreferencesByOwnerAndPlidAndPortletIdNotAutoAdded()
 		throws Exception {
 
 		String portletPreferencesXMLSingle =

@@ -59,7 +59,7 @@ List results = searchContainer.getResults();
 					thumbnailId = "entry_" + fileEntry.getFileEntryId();
 				}
 
-				DLActionsDisplayContext fileEntryDisplayContext = new DLActionsDisplayContext(request, fileEntry);
+				DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, fileEntry);
 				%>
 
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">

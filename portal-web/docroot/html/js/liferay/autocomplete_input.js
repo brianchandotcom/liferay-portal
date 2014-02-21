@@ -202,16 +202,16 @@ AUI.add(
 
 						ac.after('visibleChange', instance._afterACVisibleChange, instance);
 
-						ac._keys[KEY_DOWN] = A.bind(instance._onACKeyDown, instance);
+						ac._keys[KEY_DOWN] = A.bind('_onACKeyDown', instance);
 
 						A.Do.before(instance._syncACPosition, ac, '_syncUIPosAlign', instance);
 
-						ac._updateValue = A.bind(instance._acUpdateValue, instance);
+						ac._updateValue = A.bind('_acUpdateValue', instance);
 
 						var inputNode = instance.get(STR_INPUT_NODE);
 
 						instance._eventHandles = [
-							inputNode.on('key', A.bind(instance._onKeyUp, instance), 'up:' + KEY_LIST)
+							inputNode.on('key', A.bind('_onKeyUp', instance), 'up:' + KEY_LIST)
 						];
 					},
 
@@ -223,7 +223,7 @@ AUI.add(
 						var tplResults = instance.get(STR_TPL_RESULTS);
 
 						if (tplResults) {
-							acConfig.resultFormatter = A.bind(instance._acResultFormatter, instance);
+							acConfig.resultFormatter = A.bind('_acResultFormatter', instance);
 						}
 
 						var input = instance.get(STR_INPUT_NODE);

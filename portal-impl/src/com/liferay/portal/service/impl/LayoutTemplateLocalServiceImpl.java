@@ -348,10 +348,14 @@ public class LayoutTemplateLocalServiceImpl
 
 			layoutTemplateModel.setStandard(standard);
 			layoutTemplateModel.setThemeId(themeId);
-			layoutTemplateModel.setName(
-				GetterUtil.getString(
-					layoutTemplateElement.attributeValue("name"),
-					layoutTemplateModel.getName()));
+
+			String templateName = GetterUtil.getString(
+				layoutTemplateElement.attributeValue("name"));
+
+			if (Validator.isNotNull(templateName)) {
+				layoutTemplateModel.setName(templateName);
+			}
+
 			layoutTemplateModel.setTemplatePath(
 				GetterUtil.getString(
 					layoutTemplateElement.elementText("template-path"),

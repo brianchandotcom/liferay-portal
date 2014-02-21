@@ -64,6 +64,15 @@
 		<execute action="CPSitetemplateSettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
+	<command name="gotoViewPages">
+		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+		<execute action="CPSitetemplates#assertClick" locator-key1="SITE_TEMPLATE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSitetemplates#assertClick" locator-key1="SITE_TEMPLATE_MENULIST_VIEW_PAGES" value1="View Pages" />
+		<execute action="CPSitetemplates#selectWindow" locator1="home - Liferay" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />

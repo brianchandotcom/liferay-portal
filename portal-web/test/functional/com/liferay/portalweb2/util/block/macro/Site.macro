@@ -408,6 +408,11 @@
 		<execute action="CPSites#assertClick" locator-key1="DOWNLOAD_FILE" value1="${fileDownload}" />
 	</command>
 
+	<command name="gotoManageSitesTemplatesViaAddDropdown">
+		<execute action="CPSites#assertClick" locator-key1="ADD" value1="Add" />
+		<execute action="CPSites#assertClick" locator-key1="ADD_MANAGE_SITES_TEMPLATES" value1="Manage Sites Templates" />
+	</command>
+
 	<command name="importSite">
 		<var name="key_siteName" value="${siteName}" />
 

@@ -37,16 +37,6 @@
 		</if>
 
 		<if>
-			<isset var="taskPriority" />
-			<then>
-				<execute action="SOTasksAdd#select" locator-key1="TASK_PRIORITY_SELECT_MENU" value1="${taskPriority}" />
-			</then>
-			<else>
-				<execute action="SOTasksAdd#select" locator-key1="TASK_PRIORITY_SELECT_MENU" value1="Normal" />
-			</else>
-		</if>
-
-		<if>
 			<isset var="numberOfTags" />
 			<then>
 				<var name="tagNumber" value="0" />

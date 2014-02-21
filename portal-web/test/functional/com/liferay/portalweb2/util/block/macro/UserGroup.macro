@@ -5,6 +5,14 @@
 		<execute action="CPUsergroups#assertClick" locator-key1="ADD" value1="Add" />
 
 		<execute action="CPUsergroupsAddusergroup#type" locator-key1="NAME_FIELD" value1="${userGroupName}" />
+
+		<if>
+			<equals arg1="${selectSiteTemplate}" arg2="true" />
+			<then>
+				<execute action="CPUsergroupsAddusergroup#select" locator-key1="PUBLIC_PAGES_SELECT" value1="${siteTemplateName}" />
+			</then>
+		</if>
+
 		<execute action="CPUsergroupsAddusergroup#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<if>
@@ -282,6 +290,23 @@
 				<execute action="CPUsergroups#assertElementPresent" locator-key1="BASIC_SEARCH_ADVANCED" />
 			</else>
 		</if>
+	</command>
+
+	<command name="viewPG">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPUsergroupsEditusergroup#assertClick" locator-key1="PUBLIC_PAGES_OPEN_PAGES" value1="Open Pages (Opens New Window)" />
+		<execute action="CPUsergroupsEditusergroup#selectWindow" locator1="home - Liferay" />
+
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
+		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />>
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="TITLE" value1="Message Boards" />
+
+		<execute action="CPUsergroupsEditusergroup#close" locator1="home - Liferay" />
 	</command>
 
 	<command name="viewPortletCP">

@@ -35,12 +35,9 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -111,7 +108,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	@Override
-	public IndexSearcher aquireIndexSearcher() {
+	public IndexSearcher aquireIndexSearcher() throws IOException {
 		return _indexSearcherManager.aquire();
 	}
 
@@ -291,8 +288,6 @@ public class IndexAccessorImpl implements IndexAccessor {
 			_indexWriter.deleteAll();
 
 			_indexWriter.commit();
-
-			_indexSearcherManager.maybeReopen();
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -329,14 +324,12 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 			try {
 				_indexWriter.commit();
-
-				if (_indexSearcherManager != null) {
-					_indexSearcherManager.maybeReopen();
-				}
 			}
 			finally {
 				_commitLock.unlock();
 			}
+
+			_indexSearcherManager.invalid();
 		}
 
 		_batchCount = 0;
@@ -481,11 +474,10 @@ public class IndexAccessorImpl implements IndexAccessor {
 					_log.debug("Creating missing index");
 				}
 
-				_doCommit();
+				_indexWriter.commit();
 			}
 
-			_indexSearcherManager = new IndexSearcherManager(
-				_indexWriter, true);
+			_indexSearcherManager = new IndexSearcherManager(_indexWriter);
 		}
 		catch (Exception e) {
 			_log.error(
@@ -529,51 +521,70 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 	private class IndexSearcherManager {
 
-		public IndexSearcherManager(IndexWriter writer, boolean applyAllDeletes)
-			throws IOException {
-
-			IndexReader indexReader = IndexReader.open(writer, applyAllDeletes);
-
-			IndexSearcher indexSearcher = new IndexSearcher(
-				indexReader, _executorService);
-
-			_initIndexSearcher(indexSearcher);
-
-			_indexSearcherAtomicReference.set(indexSearcher);
+		public IndexSearcherManager(IndexWriter writer) throws IOException {
+			_indexSearcher = _createIndexSearcher(
+				IndexReader.open(writer, true));
 		}
 
-		public IndexSearcher aquire() {
-			int count = 10;
+		public IndexSearcher aquire() throws IOException {
+			if (_invalid) {
+				synchronized (this) {
+					if (_invalid) {
+						IndexSearcher indexSearcher = _indexSearcher;
 
-			do {
-				IndexSearcher indexSearcher =
-					_indexSearcherAtomicReference.get();
+						if (indexSearcher == null) {
+							throw new AlreadyClosedException(
+								"IndexSearcherManager is closed");
+						}
 
-				if (indexSearcher == null) {
-					throw new AlreadyClosedException(
-						"This SearcherManager is closed");
+						IndexReader newIndexReader = IndexReader.openIfChanged(
+							indexSearcher.getIndexReader());
+
+						if (newIndexReader != null) {
+
+							// Must update _indexSearcher before release
+							// previous IndexSearcher.
+
+							_indexSearcher = _createIndexSearcher(
+								newIndexReader);
+
+							release(indexSearcher);
+						}
+
+						_invalid = false;
+					}
 				}
+			}
 
+			IndexSearcher indexSearcher = null;
+
+			while ((indexSearcher = _indexSearcher) != null) {
 				IndexReader indexReader = indexSearcher.getIndexReader();
 
 				if (indexReader.tryIncRef()) {
 					return indexSearcher;
 				}
 
-				count--;
-			}
-			while (count > 0);
+				// IndexReader is closed. If it is caused by a concurrent
+				// reopen, _indexSearcher must have already been updated,
+				// otherwise it must be caused by an illegal external close.
 
-			throw new IllegalStateException("Unable to get IndexSearcher.");
+				if (indexSearcher == _indexSearcher) {
+					throw new IllegalStateException(
+						"IndexReader has been closed externally");
+				}
+			}
+
+			throw new AlreadyClosedException("IndexSearcherManager is closed");
 		}
 
-		public void close() throws IOException {
-			IndexSearcher indexSearcher =
-				_indexSearcherAtomicReference.getAndSet(null);
+		public synchronized void close() throws IOException {
 
-			if (indexSearcher == null) {
-				return;
-			}
+			// Must update _indexSearcher before release previous IndexSearcher.
+
+			IndexSearcher indexSearcher = _indexSearcher;
+
+			_indexSearcher = null;
 
 			release(indexSearcher);
 
@@ -581,53 +592,8 @@ public class IndexAccessorImpl implements IndexAccessor {
 				_LUCENE_SEARCHER_MANAGER_THREAD_POOL);
 		}
 
-		public void maybeReopen() throws IOException {
-			IndexSearcher indexSearcher = _indexSearcherAtomicReference.get();
-
-			if (indexSearcher == null) {
-				throw new AlreadyClosedException(
-					"This SearcherManager is closed");
-			}
-
-			// Reopen IndexReader is costly
-
-			if (!_reopenLock.tryAcquire()) {
-				return;
-			}
-
-			try {
-				IndexReader indexReader = indexSearcher.getIndexReader();
-
-				IndexReader newIndexReader = IndexReader.openIfChanged(
-					indexReader);
-
-				if (newIndexReader == null) {
-					return;
-				}
-
-				IndexSearcher newIndexSearcher = new IndexSearcher(
-					newIndexReader, _executorService);
-
-				_initIndexSearcher(newIndexSearcher);
-
-				boolean success = false;
-
-				try {
-					success = _indexSearcherAtomicReference.compareAndSet(
-						indexSearcher, newIndexSearcher);
-				}
-				finally {
-					if (success) {
-						release(indexSearcher);
-					}
-					else {
-						release(newIndexSearcher);
-					}
-				}
-			}
-			finally {
-				_reopenLock.release();
-			}
+		public synchronized void invalid() {
+			_invalid = true;
 		}
 
 		public void release(IndexSearcher indexSearcher) throws IOException {
@@ -640,20 +606,23 @@ public class IndexAccessorImpl implements IndexAccessor {
 			indexReader.decRef();
 		}
 
-		private void _initIndexSearcher(IndexSearcher indexSearcher) {
+		private IndexSearcher _createIndexSearcher(IndexReader indexReader) {
+			IndexSearcher indexSearcher = new IndexSearcher(
+				indexReader,
+				PortalExecutorManagerUtil.getPortalExecutor(
+					_LUCENE_SEARCHER_MANAGER_THREAD_POOL));
+
 			indexSearcher.setDefaultFieldSortScoring(true, false);
 			indexSearcher.setSimilarity(new FieldWeightSimilarity());
+
+			return indexSearcher;
 		}
 
 		private static final String _LUCENE_SEARCHER_MANAGER_THREAD_POOL =
 			"LUCENE_SEARCHER_MANAGER_THREAD_POOL";
 
-		private ExecutorService _executorService =
-			PortalExecutorManagerUtil.getPortalExecutor(
-				_LUCENE_SEARCHER_MANAGER_THREAD_POOL);
-		private AtomicReference<IndexSearcher> _indexSearcherAtomicReference =
-			new AtomicReference<IndexSearcher>();
-		private Semaphore _reopenLock = new Semaphore(1);
+		private volatile IndexSearcher _indexSearcher;
+		private volatile boolean _invalid;
 
 	}
 

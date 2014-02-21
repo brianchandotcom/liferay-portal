@@ -69,7 +69,7 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 	}
 
 	@Override
-	public IndexSearcher aquireIndexSearcher() {
+	public IndexSearcher aquireIndexSearcher() throws IOException {
 		_readLock.lock();
 
 		try {

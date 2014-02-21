@@ -21,6 +21,8 @@
 	<tear-down>
 		<execute macro="Page#tearDownPG" />
 
+		<execute macro="Bookmark#tearDownCP" />
+
 		<execute macro="WebContent#tearDownCP" />
 
 		<execute macro="BlogsEntry#tearDownCP" />

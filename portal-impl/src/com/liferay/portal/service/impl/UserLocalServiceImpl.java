@@ -1664,7 +1664,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		boolean sendEmail = ParamUtil.getBoolean(serviceContext, "sendEmail");
 
 		if (sendEmail) {
-			sendEmail(user, password, serviceContext);
+			notifyUser(user, password, serviceContext);
 		}
 
 		Company company = companyPersistence.findByPrimaryKey(
@@ -5823,47 +5823,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		);
 	}
 
-	protected void reindex(final User user) {
-		final Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			User.class);
-
-		Callable<Void> callable = new ShardCallable<Void>(
-			user.getCompanyId()) {
-
-			@Override
-			protected Void doCall() throws Exception {
-				indexer.reindex(user);
-
-				return null;
-			}
-
-		};
-
-		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
-	}
-
-	protected BaseModelSearchResult<User> searchUsers(
-			SearchContext searchContext)
-		throws PortalException, SystemException {
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(
-				searchContext, UsersAdmin.USER_SELECTED_FIELD_NAMES);
-
-			List<User> users = UsersAdminUtil.getUsers(hits);
-
-			if (users != null) {
-				return new BaseModelSearchResult<User>(users, hits.getLength());
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
-	}
-
-	protected void sendEmail(
+	protected void notifyUser(
 			User user, String password, ServiceContext serviceContext)
 		throws SystemException {
 
@@ -5916,6 +5876,46 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
 		notify(subscriptionSender);
+	}
+
+	protected void reindex(final User user) {
+		final Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			User.class);
+
+		Callable<Void> callable = new ShardCallable<Void>(
+			user.getCompanyId()) {
+
+			@Override
+			protected Void doCall() throws Exception {
+				indexer.reindex(user);
+
+				return null;
+			}
+
+		};
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
+	}
+
+	protected BaseModelSearchResult<User> searchUsers(
+			SearchContext searchContext)
+		throws PortalException, SystemException {
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(
+				searchContext, UsersAdmin.USER_SELECTED_FIELD_NAMES);
+
+			List<User> users = UsersAdminUtil.getUsers(hits);
+
+			if (users != null) {
+				return new BaseModelSearchResult<User>(users, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	protected void setEmailAddress(

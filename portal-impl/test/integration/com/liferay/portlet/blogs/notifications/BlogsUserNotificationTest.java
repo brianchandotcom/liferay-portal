@@ -57,6 +57,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 @ExecutionTestListeners(listeners = {
 	MainServletExecutionTestListener.class,
@@ -96,7 +97,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	}
 
 	@Test
-	public void testBlogUserNotificationInactiveMailNotificationsOnAdd()
+	public void testAddBlogUserNotificationWhenEmailNotificationsDisabled()
 		throws Exception {
 
 		updateUserNotificationDelivery(
@@ -121,7 +122,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	}
 
 	@Test
-	public void testBlogUserNotificationInactiveMailNotificationsOnUpdate()
+	public void testUpdateBlogUserNotificationWhenEmailNotificationsDisabled()
 		throws Exception {
 
 		updateUserNotificationDelivery(
@@ -144,11 +145,15 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		Assert.assertEquals(2, entryUserNotificationEventsJsonObjects.size());
 
-		int[]notificationTypes = new int[0];
+		int[] notificationTypes = new int[0];
 
-		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
+		for (JSONObject entryUserNotificationEventsJsonObject :
+				entryUserNotificationEventsJsonObjects) {
+
 			notificationTypes = ArrayUtil.append(
-				notificationTypes, jsonObject.getInt("notificationType"));
+				notificationTypes,
+				entryUserNotificationEventsJsonObject.getInt(
+					"notificationType"));
 		}
 
 		Assert.assertNotEquals(notificationTypes[0], notificationTypes[1]);
@@ -165,7 +170,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	}
 
 	@Test
-	public void testBlogUserNotificationInactiveNotificationsOnAdd()
+	public void testAddBlogUserNotificationWhenNotificationsDisabled()
 		throws Exception {
 
 		updateUserNotificationsDelivery(false);
@@ -182,7 +187,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	}
 
 	@Test
-	public void testBlogUserNotificationInactiveNotificationsOnUpdate()
+	public void testUpdateBlogUserNotificationWhenNotificationsDisabled()
 		throws Exception {
 
 		updateUserNotificationsDelivery(false);
@@ -201,7 +206,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	}
 
 	@Test
-	public void testBlogUserNotificationInactiveWebsiteNotificationsOnAdd()
+	public void testAddBlogUserNotificationWhenWebsiteNotificationsDisabled()
 		throws Exception {
 
 		updateUserNotificationDelivery(
@@ -224,7 +229,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	}
 
 	@Test
-	public void testBlogUserNotificationInactiveWebsiteNotificationsOnUpdate()
+	public void testUpdateBlogUserNotificationWhenWebsiteNotificationsDisabled()
 		throws Exception {
 
 		updateUserNotificationDelivery(
@@ -257,7 +262,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	}
 
 	@Test
-	public void testBlogUserNotificationOnAdd() throws Exception {
+	public void testAddBlogUserNotification() throws Exception {
 		BlogsEntry entry = addBlogsEntry();
 
 		Assert.assertEquals(1, _logRecords.size());
@@ -272,15 +277,18 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		Assert.assertEquals(1, entryUserNotificationEventsJsonObjects.size());
 
-		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
+		for (JSONObject entryUserNotificationEventsJsonObject :
+				entryUserNotificationEventsJsonObjects) {
+
 			Assert.assertEquals(
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-				jsonObject.getInt("notificationType"));
+				entryUserNotificationEventsJsonObject.getInt(
+					"notificationType"));
 		}
 	}
 
 	@Test
-	public void testBlogUserNotificationOnUpdate() throws Exception {
+	public void testUpdateBlogUserNotification() throws Exception {
 		BlogsEntry entry = addBlogsEntry();
 
 		updateEntry(entry);
@@ -301,11 +309,15 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 
 		Assert.assertEquals(2, entryUserNotificationEventsJsonObjects.size());
 
-		int[]notificationTypes = new int[0];
+		int[] notificationTypes = new int[0];
 
-		for (JSONObject jsonObject : entryUserNotificationEventsJsonObjects) {
+		for (JSONObject entryUserNotificationEventsJsonObject :
+				entryUserNotificationEventsJsonObjects) {
+
 			notificationTypes = ArrayUtil.append(
-				notificationTypes, jsonObject.getInt("notificationType"));
+				notificationTypes,
+				entryUserNotificationEventsJsonObject.getInt(
+					"notificationType"));
 		}
 
 		Assert.assertNotEquals(notificationTypes[0], notificationTypes[1]);

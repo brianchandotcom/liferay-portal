@@ -12,31 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.upgrade;
+package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeRepositoryEntry;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeSchema;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeShopping;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeSubscription;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolder;
 
 /**
- * @author Julio Camarero
+ * @author Eduardo Garcia
  */
-public class UpgradeProcess_7_0_0 extends UpgradeProcess {
-
-	@Override
-	public int getThreshold() {
-		return ReleaseInfo.RELEASE_7_0_0_BUILD_NUMBER;
-	}
+public class UpgradeSubscription extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeSchema.class);
-		upgrade(UpgradeRepositoryEntry.class);
-		upgrade(UpgradeShopping.class);
-		upgrade(UpgradeSubscription.class);
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("update Subscription set classNameId = ");
+		sb.append(PortalUtil.getClassNameId(JournalFolder.class));
+		sb.append(" where classNameId = ");
+		sb.append(PortalUtil.getClassNameId(JournalArticle.class));
+
+		runSQL(sb.toString());
 	}
 
 }

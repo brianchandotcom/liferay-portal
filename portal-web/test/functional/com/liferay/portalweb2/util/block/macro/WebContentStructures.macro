@@ -163,7 +163,8 @@
 
 		<for list="${structureFieldNames}" param="structureFieldName">
 			<execute macro="DynamicDataMapping#viewField">
-				<var name="fieldName" value="${structureFieldName}" />
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var name="fieldName" value="${structureFieldName?replace(' ', '_')}" />
 			</execute>
 		</for>
 	</command>

@@ -1314,6 +1314,8 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
+		<execute macro="Staging#submitForPublicationPageRevision" />
+
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>

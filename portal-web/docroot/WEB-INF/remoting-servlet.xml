@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
-	<bean name="/com_liferay_portal_service_spring_AccountService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.AccountService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.AccountService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_AccountService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.AccountService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.AccountService" />
@@ -12,10 +8,6 @@
 	<bean name="/com_liferay_portal_service_spring_AccountService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.AccountService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.AccountService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_AddressService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.AddressService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.AddressService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_AddressService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.AddressService" />
@@ -25,10 +17,6 @@
 		<property name="service" ref="com.liferay.portal.service.AddressService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.AddressService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_BackgroundTaskService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.BackgroundTaskService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.BackgroundTaskService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_BackgroundTaskService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.BackgroundTaskService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.BackgroundTaskService" />
@@ -36,10 +24,6 @@
 	<bean name="/com_liferay_portal_service_spring_BackgroundTaskService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.BackgroundTaskService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.BackgroundTaskService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_ClassNameService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ClassNameService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ClassNameService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_ClassNameService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.ClassNameService" />
@@ -49,10 +33,6 @@
 		<property name="service" ref="com.liferay.portal.service.ClassNameService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.ClassNameService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_CompanyService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.CompanyService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.CompanyService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_CompanyService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.CompanyService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.CompanyService" />
@@ -60,10 +40,6 @@
 	<bean name="/com_liferay_portal_service_spring_CompanyService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.CompanyService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.CompanyService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_ContactService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ContactService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ContactService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_ContactService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.ContactService" />
@@ -73,10 +49,6 @@
 		<property name="service" ref="com.liferay.portal.service.ContactService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.ContactService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_CountryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.CountryService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.CountryService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_CountryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.CountryService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.CountryService" />
@@ -84,10 +56,6 @@
 	<bean name="/com_liferay_portal_service_spring_CountryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.CountryService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.CountryService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_EmailAddressService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.EmailAddressService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.EmailAddressService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_EmailAddressService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.EmailAddressService" />
@@ -97,10 +65,6 @@
 		<property name="service" ref="com.liferay.portal.service.EmailAddressService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.EmailAddressService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_GroupService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.GroupService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.GroupService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_GroupService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.GroupService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.GroupService" />
@@ -108,10 +72,6 @@
 	<bean name="/com_liferay_portal_service_spring_GroupService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.GroupService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.GroupService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_ImageService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ImageService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ImageService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_ImageService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.ImageService" />
@@ -121,10 +81,6 @@
 		<property name="service" ref="com.liferay.portal.service.ImageService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.ImageService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_LayoutService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.LayoutService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.LayoutService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_LayoutService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.LayoutService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.LayoutService" />
@@ -132,10 +88,6 @@
 	<bean name="/com_liferay_portal_service_spring_LayoutService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.LayoutService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.LayoutService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_LayoutBranchService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.LayoutBranchService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.LayoutBranchService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_LayoutBranchService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.LayoutBranchService" />
@@ -145,10 +97,6 @@
 		<property name="service" ref="com.liferay.portal.service.LayoutBranchService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.LayoutBranchService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_LayoutPrototypeService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.LayoutPrototypeService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.LayoutPrototypeService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_LayoutPrototypeService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.LayoutPrototypeService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.LayoutPrototypeService" />
@@ -156,10 +104,6 @@
 	<bean name="/com_liferay_portal_service_spring_LayoutPrototypeService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.LayoutPrototypeService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.LayoutPrototypeService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_LayoutRevisionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.LayoutRevisionService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.LayoutRevisionService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_LayoutRevisionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.LayoutRevisionService" />
@@ -169,10 +113,6 @@
 		<property name="service" ref="com.liferay.portal.service.LayoutRevisionService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.LayoutRevisionService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_LayoutSetService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.LayoutSetService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.LayoutSetService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_LayoutSetService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.LayoutSetService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.LayoutSetService" />
@@ -180,10 +120,6 @@
 	<bean name="/com_liferay_portal_service_spring_LayoutSetService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.LayoutSetService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.LayoutSetService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_LayoutSetBranchService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.LayoutSetBranchService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.LayoutSetBranchService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_LayoutSetBranchService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.LayoutSetBranchService" />
@@ -193,10 +129,6 @@
 		<property name="service" ref="com.liferay.portal.service.LayoutSetBranchService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.LayoutSetBranchService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_LayoutSetPrototypeService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.LayoutSetPrototypeService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.LayoutSetPrototypeService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_LayoutSetPrototypeService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.LayoutSetPrototypeService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.LayoutSetPrototypeService" />
@@ -204,10 +136,6 @@
 	<bean name="/com_liferay_portal_service_spring_LayoutSetPrototypeService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.LayoutSetPrototypeService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.LayoutSetPrototypeService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_ListTypeService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ListTypeService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ListTypeService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_ListTypeService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.ListTypeService" />
@@ -217,10 +145,6 @@
 		<property name="service" ref="com.liferay.portal.service.ListTypeService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.ListTypeService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_MembershipRequestService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.MembershipRequestService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.MembershipRequestService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_MembershipRequestService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.MembershipRequestService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.MembershipRequestService" />
@@ -228,10 +152,6 @@
 	<bean name="/com_liferay_portal_service_spring_MembershipRequestService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.MembershipRequestService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.MembershipRequestService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_OrganizationService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.OrganizationService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.OrganizationService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_OrganizationService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.OrganizationService" />
@@ -241,10 +161,6 @@
 		<property name="service" ref="com.liferay.portal.service.OrganizationService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.OrganizationService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_OrgLaborService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.OrgLaborService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.OrgLaborService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_OrgLaborService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.OrgLaborService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.OrgLaborService" />
@@ -252,10 +168,6 @@
 	<bean name="/com_liferay_portal_service_spring_OrgLaborService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.OrgLaborService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.OrgLaborService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_PasswordPolicyService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.PasswordPolicyService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.PasswordPolicyService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_PasswordPolicyService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.PasswordPolicyService" />
@@ -265,10 +177,6 @@
 		<property name="service" ref="com.liferay.portal.service.PasswordPolicyService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.PasswordPolicyService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_PermissionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.PermissionService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.PermissionService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_PermissionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.PermissionService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.PermissionService" />
@@ -276,10 +184,6 @@
 	<bean name="/com_liferay_portal_service_spring_PermissionService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.PermissionService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.PermissionService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_PhoneService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.PhoneService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.PhoneService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_PhoneService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.PhoneService" />
@@ -289,10 +193,6 @@
 		<property name="service" ref="com.liferay.portal.service.PhoneService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.PhoneService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_PluginSettingService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.PluginSettingService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.PluginSettingService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_PluginSettingService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.PluginSettingService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.PluginSettingService" />
@@ -300,10 +200,6 @@
 	<bean name="/com_liferay_portal_service_spring_PluginSettingService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.PluginSettingService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.PluginSettingService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_PortalService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.PortalService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.PortalService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_PortalService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.PortalService" />
@@ -313,10 +209,6 @@
 		<property name="service" ref="com.liferay.portal.service.PortalService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.PortalService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_PortletService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.PortletService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.PortletService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_PortletService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.PortletService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.PortletService" />
@@ -324,10 +216,6 @@
 	<bean name="/com_liferay_portal_service_spring_PortletService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.PortletService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.PortletService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_PortletPreferencesService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.PortletPreferencesService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.PortletPreferencesService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_PortletPreferencesService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.PortletPreferencesService" />
@@ -337,10 +225,6 @@
 		<property name="service" ref="com.liferay.portal.service.PortletPreferencesService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.PortletPreferencesService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_RegionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.RegionService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.RegionService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_RegionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.RegionService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.RegionService" />
@@ -348,10 +232,6 @@
 	<bean name="/com_liferay_portal_service_spring_RegionService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.RegionService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.RegionService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_RepositoryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.RepositoryService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.RepositoryService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_RepositoryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.RepositoryService" />
@@ -361,10 +241,6 @@
 		<property name="service" ref="com.liferay.portal.service.RepositoryService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.RepositoryService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_ResourceBlockService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ResourceBlockService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ResourceBlockService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_ResourceBlockService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.ResourceBlockService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.ResourceBlockService" />
@@ -372,10 +248,6 @@
 	<bean name="/com_liferay_portal_service_spring_ResourceBlockService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.ResourceBlockService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.ResourceBlockService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_ResourcePermissionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ResourcePermissionService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ResourcePermissionService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_ResourcePermissionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.ResourcePermissionService" />
@@ -385,10 +257,6 @@
 		<property name="service" ref="com.liferay.portal.service.ResourcePermissionService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.ResourcePermissionService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_RoleService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.RoleService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.RoleService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_RoleService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.RoleService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.RoleService" />
@@ -396,10 +264,6 @@
 	<bean name="/com_liferay_portal_service_spring_RoleService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.RoleService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.RoleService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_StagingService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.StagingService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.StagingService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_StagingService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.StagingService" />
@@ -409,10 +273,6 @@
 		<property name="service" ref="com.liferay.portal.service.StagingService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.StagingService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_TeamService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.TeamService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.TeamService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_TeamService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.TeamService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.TeamService" />
@@ -420,10 +280,6 @@
 	<bean name="/com_liferay_portal_service_spring_TeamService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.TeamService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.TeamService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_ThemeService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ThemeService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ThemeService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_ThemeService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.ThemeService" />
@@ -433,10 +289,6 @@
 		<property name="service" ref="com.liferay.portal.service.ThemeService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.ThemeService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_UserService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.UserService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.UserService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_UserService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.UserService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.UserService" />
@@ -444,10 +296,6 @@
 	<bean name="/com_liferay_portal_service_spring_UserService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.UserService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.UserService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_UserGroupService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.UserGroupService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.UserGroupService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_UserGroupService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.UserGroupService" />
@@ -457,10 +305,6 @@
 		<property name="service" ref="com.liferay.portal.service.UserGroupService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.UserGroupService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_UserGroupGroupRoleService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.UserGroupGroupRoleService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.UserGroupGroupRoleService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_UserGroupGroupRoleService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.UserGroupGroupRoleService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.UserGroupGroupRoleService" />
@@ -468,10 +312,6 @@
 	<bean name="/com_liferay_portal_service_spring_UserGroupGroupRoleService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.UserGroupGroupRoleService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.UserGroupGroupRoleService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_UserGroupRoleService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.UserGroupRoleService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.UserGroupRoleService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_UserGroupRoleService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.UserGroupRoleService" />
@@ -481,10 +321,6 @@
 		<property name="service" ref="com.liferay.portal.service.UserGroupRoleService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.UserGroupRoleService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_WebsiteService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.WebsiteService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.WebsiteService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_WebsiteService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.WebsiteService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.WebsiteService" />
@@ -492,10 +328,6 @@
 	<bean name="/com_liferay_portal_service_spring_WebsiteService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.WebsiteService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.WebsiteService" />
-	</bean>
-	<bean name="/com_liferay_portlet_announcements_service_spring_AnnouncementsDeliveryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.announcements.service.AnnouncementsDeliveryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.announcements.service.AnnouncementsDeliveryService" />
 	</bean>
 	<bean name="/com_liferay_portlet_announcements_service_spring_AnnouncementsDeliveryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.announcements.service.AnnouncementsDeliveryService" />
@@ -505,10 +337,6 @@
 		<property name="service" ref="com.liferay.portlet.announcements.service.AnnouncementsDeliveryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.announcements.service.AnnouncementsDeliveryService" />
 	</bean>
-	<bean name="/com_liferay_portlet_announcements_service_spring_AnnouncementsEntryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.announcements.service.AnnouncementsEntryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.announcements.service.AnnouncementsEntryService" />
-	</bean>
 	<bean name="/com_liferay_portlet_announcements_service_spring_AnnouncementsEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.announcements.service.AnnouncementsEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.announcements.service.AnnouncementsEntryService" />
@@ -516,10 +344,6 @@
 	<bean name="/com_liferay_portlet_announcements_service_spring_AnnouncementsEntryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.announcements.service.AnnouncementsEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.announcements.service.AnnouncementsEntryService" />
-	</bean>
-	<bean name="/com_liferay_portlet_announcements_service_spring_AnnouncementsFlagService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.announcements.service.AnnouncementsFlagService" />
-		<property name="serviceInterface" value="com.liferay.portlet.announcements.service.AnnouncementsFlagService" />
 	</bean>
 	<bean name="/com_liferay_portlet_announcements_service_spring_AnnouncementsFlagService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.announcements.service.AnnouncementsFlagService" />
@@ -529,10 +353,6 @@
 		<property name="service" ref="com.liferay.portlet.announcements.service.AnnouncementsFlagService" />
 		<property name="serviceInterface" value="com.liferay.portlet.announcements.service.AnnouncementsFlagService" />
 	</bean>
-	<bean name="/com_liferay_portlet_asset_service_spring_AssetCategoryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.asset.service.AssetCategoryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetCategoryService" />
-	</bean>
 	<bean name="/com_liferay_portlet_asset_service_spring_AssetCategoryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetCategoryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetCategoryService" />
@@ -540,10 +360,6 @@
 	<bean name="/com_liferay_portlet_asset_service_spring_AssetCategoryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetCategoryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetCategoryService" />
-	</bean>
-	<bean name="/com_liferay_portlet_asset_service_spring_AssetCategoryPropertyService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.asset.service.AssetCategoryPropertyService" />
-		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetCategoryPropertyService" />
 	</bean>
 	<bean name="/com_liferay_portlet_asset_service_spring_AssetCategoryPropertyService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetCategoryPropertyService" />
@@ -553,10 +369,6 @@
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetCategoryPropertyService" />
 		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetCategoryPropertyService" />
 	</bean>
-	<bean name="/com_liferay_portlet_asset_service_spring_AssetEntryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.asset.service.AssetEntryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetEntryService" />
-	</bean>
 	<bean name="/com_liferay_portlet_asset_service_spring_AssetEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetEntryService" />
@@ -564,10 +376,6 @@
 	<bean name="/com_liferay_portlet_asset_service_spring_AssetEntryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetEntryService" />
-	</bean>
-	<bean name="/com_liferay_portlet_asset_service_spring_AssetTagService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.asset.service.AssetTagService" />
-		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetTagService" />
 	</bean>
 	<bean name="/com_liferay_portlet_asset_service_spring_AssetTagService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetTagService" />
@@ -577,10 +385,6 @@
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetTagService" />
 		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetTagService" />
 	</bean>
-	<bean name="/com_liferay_portlet_asset_service_spring_AssetTagPropertyService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.asset.service.AssetTagPropertyService" />
-		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetTagPropertyService" />
-	</bean>
 	<bean name="/com_liferay_portlet_asset_service_spring_AssetTagPropertyService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetTagPropertyService" />
 		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetTagPropertyService" />
@@ -588,10 +392,6 @@
 	<bean name="/com_liferay_portlet_asset_service_spring_AssetTagPropertyService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetTagPropertyService" />
 		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetTagPropertyService" />
-	</bean>
-	<bean name="/com_liferay_portlet_asset_service_spring_AssetVocabularyService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.asset.service.AssetVocabularyService" />
-		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetVocabularyService" />
 	</bean>
 	<bean name="/com_liferay_portlet_asset_service_spring_AssetVocabularyService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetVocabularyService" />
@@ -601,10 +401,6 @@
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetVocabularyService" />
 		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetVocabularyService" />
 	</bean>
-	<bean name="/com_liferay_portlet_blogs_service_spring_BlogsEntryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.blogs.service.BlogsEntryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.blogs.service.BlogsEntryService" />
-	</bean>
 	<bean name="/com_liferay_portlet_blogs_service_spring_BlogsEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.blogs.service.BlogsEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.blogs.service.BlogsEntryService" />
@@ -612,10 +408,6 @@
 	<bean name="/com_liferay_portlet_blogs_service_spring_BlogsEntryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.blogs.service.BlogsEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.blogs.service.BlogsEntryService" />
-	</bean>
-	<bean name="/com_liferay_portlet_bookmarks_service_spring_BookmarksEntryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.bookmarks.service.BookmarksEntryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.bookmarks.service.BookmarksEntryService" />
 	</bean>
 	<bean name="/com_liferay_portlet_bookmarks_service_spring_BookmarksEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.bookmarks.service.BookmarksEntryService" />
@@ -625,10 +417,6 @@
 		<property name="service" ref="com.liferay.portlet.bookmarks.service.BookmarksEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.bookmarks.service.BookmarksEntryService" />
 	</bean>
-	<bean name="/com_liferay_portlet_bookmarks_service_spring_BookmarksFolderService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.bookmarks.service.BookmarksFolderService" />
-		<property name="serviceInterface" value="com.liferay.portlet.bookmarks.service.BookmarksFolderService" />
-	</bean>
 	<bean name="/com_liferay_portlet_bookmarks_service_spring_BookmarksFolderService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.bookmarks.service.BookmarksFolderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.bookmarks.service.BookmarksFolderService" />
@@ -636,10 +424,6 @@
 	<bean name="/com_liferay_portlet_bookmarks_service_spring_BookmarksFolderService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.bookmarks.service.BookmarksFolderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.bookmarks.service.BookmarksFolderService" />
-	</bean>
-	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLAppService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLAppService" />
-		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLAppService" />
 	</bean>
 	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLAppService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLAppService" />
@@ -649,10 +433,6 @@
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLAppService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLAppService" />
 	</bean>
-	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFileEntryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileEntryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileEntryService" />
-	</bean>
 	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFileEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileEntryService" />
@@ -660,10 +440,6 @@
 	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFileEntryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileEntryService" />
-	</bean>
-	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFileEntryTypeService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService" />
-		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService" />
 	</bean>
 	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFileEntryTypeService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService" />
@@ -673,10 +449,6 @@
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService" />
 	</bean>
-	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFileShortcutService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileShortcutService" />
-		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileShortcutService" />
-	</bean>
 	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFileShortcutService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileShortcutService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileShortcutService" />
@@ -684,10 +456,6 @@
 	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFileShortcutService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileShortcutService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileShortcutService" />
-	</bean>
-	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFileVersionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileVersionService" />
-		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileVersionService" />
 	</bean>
 	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFileVersionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileVersionService" />
@@ -697,10 +465,6 @@
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFileVersionService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFileVersionService" />
 	</bean>
-	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFolderService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFolderService" />
-		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFolderService" />
-	</bean>
 	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFolderService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFolderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFolderService" />
@@ -708,10 +472,6 @@
 	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLFolderService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFolderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFolderService" />
-	</bean>
-	<bean name="/com_liferay_portlet_dynamicdatalists_service_spring_DDLRecordService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.dynamicdatalists.service.DDLRecordService" />
-		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatalists.service.DDLRecordService" />
 	</bean>
 	<bean name="/com_liferay_portlet_dynamicdatalists_service_spring_DDLRecordService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.dynamicdatalists.service.DDLRecordService" />
@@ -721,10 +481,6 @@
 		<property name="service" ref="com.liferay.portlet.dynamicdatalists.service.DDLRecordService" />
 		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatalists.service.DDLRecordService" />
 	</bean>
-	<bean name="/com_liferay_portlet_dynamicdatalists_service_spring_DDLRecordSetService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService" />
-		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService" />
-	</bean>
 	<bean name="/com_liferay_portlet_dynamicdatalists_service_spring_DDLRecordSetService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService" />
 		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService" />
@@ -732,10 +488,6 @@
 	<bean name="/com_liferay_portlet_dynamicdatalists_service_spring_DDLRecordSetService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService" />
 		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService" />
-	</bean>
-	<bean name="/com_liferay_portlet_dynamicdatamapping_service_spring_DDMStructureService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.dynamicdatamapping.service.DDMStructureService" />
-		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatamapping.service.DDMStructureService" />
 	</bean>
 	<bean name="/com_liferay_portlet_dynamicdatamapping_service_spring_DDMStructureService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.dynamicdatamapping.service.DDMStructureService" />
@@ -745,10 +497,6 @@
 		<property name="service" ref="com.liferay.portlet.dynamicdatamapping.service.DDMStructureService" />
 		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatamapping.service.DDMStructureService" />
 	</bean>
-	<bean name="/com_liferay_portlet_dynamicdatamapping_service_spring_DDMTemplateService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService" />
-		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService" />
-	</bean>
 	<bean name="/com_liferay_portlet_dynamicdatamapping_service_spring_DDMTemplateService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService" />
 		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService" />
@@ -756,10 +504,6 @@
 	<bean name="/com_liferay_portlet_dynamicdatamapping_service_spring_DDMTemplateService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService" />
 		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService" />
-	</bean>
-	<bean name="/com_liferay_portlet_expando_service_spring_ExpandoColumnService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.expando.service.ExpandoColumnService" />
-		<property name="serviceInterface" value="com.liferay.portlet.expando.service.ExpandoColumnService" />
 	</bean>
 	<bean name="/com_liferay_portlet_expando_service_spring_ExpandoColumnService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.expando.service.ExpandoColumnService" />
@@ -769,10 +513,6 @@
 		<property name="service" ref="com.liferay.portlet.expando.service.ExpandoColumnService" />
 		<property name="serviceInterface" value="com.liferay.portlet.expando.service.ExpandoColumnService" />
 	</bean>
-	<bean name="/com_liferay_portlet_expando_service_spring_ExpandoValueService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.expando.service.ExpandoValueService" />
-		<property name="serviceInterface" value="com.liferay.portlet.expando.service.ExpandoValueService" />
-	</bean>
 	<bean name="/com_liferay_portlet_expando_service_spring_ExpandoValueService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.expando.service.ExpandoValueService" />
 		<property name="serviceInterface" value="com.liferay.portlet.expando.service.ExpandoValueService" />
@@ -780,10 +520,6 @@
 	<bean name="/com_liferay_portlet_expando_service_spring_ExpandoValueService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.expando.service.ExpandoValueService" />
 		<property name="serviceInterface" value="com.liferay.portlet.expando.service.ExpandoValueService" />
-	</bean>
-	<bean name="/com_liferay_portlet_flags_service_spring_FlagsEntryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.flags.service.FlagsEntryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.flags.service.FlagsEntryService" />
 	</bean>
 	<bean name="/com_liferay_portlet_flags_service_spring_FlagsEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.flags.service.FlagsEntryService" />
@@ -793,10 +529,6 @@
 		<property name="service" ref="com.liferay.portlet.flags.service.FlagsEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.flags.service.FlagsEntryService" />
 	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalArticleService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalArticleService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalArticleService" />
-	</bean>
 	<bean name="/com_liferay_portlet_journal_service_spring_JournalArticleService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalArticleService" />
 		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalArticleService" />
@@ -804,10 +536,6 @@
 	<bean name="/com_liferay_portlet_journal_service_spring_JournalArticleService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalArticleService" />
 		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalArticleService" />
-	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalFeedService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalFeedService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFeedService" />
 	</bean>
 	<bean name="/com_liferay_portlet_journal_service_spring_JournalFeedService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalFeedService" />
@@ -817,10 +545,6 @@
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalFeedService" />
 		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFeedService" />
 	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalFolderService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalFolderService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFolderService" />
-	</bean>
 	<bean name="/com_liferay_portlet_journal_service_spring_JournalFolderService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalFolderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFolderService" />
@@ -828,10 +552,6 @@
 	<bean name="/com_liferay_portlet_journal_service_spring_JournalFolderService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalFolderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFolderService" />
-	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalStructureService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalStructureService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalStructureService" />
 	</bean>
 	<bean name="/com_liferay_portlet_journal_service_spring_JournalStructureService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalStructureService" />
@@ -841,10 +561,6 @@
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalStructureService" />
 		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalStructureService" />
 	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalTemplateService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalTemplateService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalTemplateService" />
-	</bean>
 	<bean name="/com_liferay_portlet_journal_service_spring_JournalTemplateService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalTemplateService" />
 		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalTemplateService" />
@@ -852,10 +568,6 @@
 	<bean name="/com_liferay_portlet_journal_service_spring_JournalTemplateService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.journal.service.JournalTemplateService" />
 		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalTemplateService" />
-	</bean>
-	<bean name="/com_liferay_portlet_messageboards_service_spring_MBBanService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.messageboards.service.MBBanService" />
-		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBBanService" />
 	</bean>
 	<bean name="/com_liferay_portlet_messageboards_service_spring_MBBanService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBBanService" />
@@ -865,10 +577,6 @@
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBBanService" />
 		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBBanService" />
 	</bean>
-	<bean name="/com_liferay_portlet_messageboards_service_spring_MBCategoryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.messageboards.service.MBCategoryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBCategoryService" />
-	</bean>
 	<bean name="/com_liferay_portlet_messageboards_service_spring_MBCategoryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBCategoryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBCategoryService" />
@@ -876,10 +584,6 @@
 	<bean name="/com_liferay_portlet_messageboards_service_spring_MBCategoryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBCategoryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBCategoryService" />
-	</bean>
-	<bean name="/com_liferay_portlet_messageboards_service_spring_MBMessageService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.messageboards.service.MBMessageService" />
-		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBMessageService" />
 	</bean>
 	<bean name="/com_liferay_portlet_messageboards_service_spring_MBMessageService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBMessageService" />
@@ -889,10 +593,6 @@
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBMessageService" />
 		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBMessageService" />
 	</bean>
-	<bean name="/com_liferay_portlet_messageboards_service_spring_MBThreadService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.messageboards.service.MBThreadService" />
-		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBThreadService" />
-	</bean>
 	<bean name="/com_liferay_portlet_messageboards_service_spring_MBThreadService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBThreadService" />
 		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBThreadService" />
@@ -900,10 +600,6 @@
 	<bean name="/com_liferay_portlet_messageboards_service_spring_MBThreadService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBThreadService" />
 		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBThreadService" />
-	</bean>
-	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRActionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRActionService" />
-		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRActionService" />
 	</bean>
 	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRActionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRActionService" />
@@ -913,10 +609,6 @@
 		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRActionService" />
 		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRActionService" />
 	</bean>
-	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleService" />
-		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleService" />
-	</bean>
 	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleService" />
 		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleService" />
@@ -924,10 +616,6 @@
 	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleService" />
 		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleService" />
-	</bean>
-	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleGroupService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" />
-		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" />
 	</bean>
 	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleGroupService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" />
@@ -937,10 +625,6 @@
 		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" />
 		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" />
 	</bean>
-	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleGroupInstanceService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
-		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
-	</bean>
 	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleGroupInstanceService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
 		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
@@ -948,10 +632,6 @@
 	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleGroupInstanceService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
 		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
-	</bean>
-	<bean name="/com_liferay_portlet_polls_service_spring_PollsChoiceService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.polls.service.PollsChoiceService" />
-		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsChoiceService" />
 	</bean>
 	<bean name="/com_liferay_portlet_polls_service_spring_PollsChoiceService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.polls.service.PollsChoiceService" />
@@ -961,10 +641,6 @@
 		<property name="service" ref="com.liferay.portlet.polls.service.PollsChoiceService" />
 		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsChoiceService" />
 	</bean>
-	<bean name="/com_liferay_portlet_polls_service_spring_PollsQuestionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.polls.service.PollsQuestionService" />
-		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsQuestionService" />
-	</bean>
 	<bean name="/com_liferay_portlet_polls_service_spring_PollsQuestionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.polls.service.PollsQuestionService" />
 		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsQuestionService" />
@@ -972,10 +648,6 @@
 	<bean name="/com_liferay_portlet_polls_service_spring_PollsQuestionService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.polls.service.PollsQuestionService" />
 		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsQuestionService" />
-	</bean>
-	<bean name="/com_liferay_portlet_polls_service_spring_PollsVoteService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.polls.service.PollsVoteService" />
-		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsVoteService" />
 	</bean>
 	<bean name="/com_liferay_portlet_polls_service_spring_PollsVoteService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.polls.service.PollsVoteService" />
@@ -985,10 +657,6 @@
 		<property name="service" ref="com.liferay.portlet.polls.service.PollsVoteService" />
 		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsVoteService" />
 	</bean>
-	<bean name="/com_liferay_portlet_ratings_service_spring_RatingsEntryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.ratings.service.RatingsEntryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.ratings.service.RatingsEntryService" />
-	</bean>
 	<bean name="/com_liferay_portlet_ratings_service_spring_RatingsEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.ratings.service.RatingsEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.ratings.service.RatingsEntryService" />
@@ -996,10 +664,6 @@
 	<bean name="/com_liferay_portlet_ratings_service_spring_RatingsEntryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.ratings.service.RatingsEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.ratings.service.RatingsEntryService" />
-	</bean>
-	<bean name="/com_liferay_portlet_shopping_service_spring_ShoppingCategoryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.shopping.service.ShoppingCategoryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.shopping.service.ShoppingCategoryService" />
 	</bean>
 	<bean name="/com_liferay_portlet_shopping_service_spring_ShoppingCategoryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.shopping.service.ShoppingCategoryService" />
@@ -1009,10 +673,6 @@
 		<property name="service" ref="com.liferay.portlet.shopping.service.ShoppingCategoryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.shopping.service.ShoppingCategoryService" />
 	</bean>
-	<bean name="/com_liferay_portlet_shopping_service_spring_ShoppingCouponService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.shopping.service.ShoppingCouponService" />
-		<property name="serviceInterface" value="com.liferay.portlet.shopping.service.ShoppingCouponService" />
-	</bean>
 	<bean name="/com_liferay_portlet_shopping_service_spring_ShoppingCouponService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.shopping.service.ShoppingCouponService" />
 		<property name="serviceInterface" value="com.liferay.portlet.shopping.service.ShoppingCouponService" />
@@ -1020,10 +680,6 @@
 	<bean name="/com_liferay_portlet_shopping_service_spring_ShoppingCouponService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.shopping.service.ShoppingCouponService" />
 		<property name="serviceInterface" value="com.liferay.portlet.shopping.service.ShoppingCouponService" />
-	</bean>
-	<bean name="/com_liferay_portlet_shopping_service_spring_ShoppingItemService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.shopping.service.ShoppingItemService" />
-		<property name="serviceInterface" value="com.liferay.portlet.shopping.service.ShoppingItemService" />
 	</bean>
 	<bean name="/com_liferay_portlet_shopping_service_spring_ShoppingItemService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.shopping.service.ShoppingItemService" />
@@ -1033,10 +689,6 @@
 		<property name="service" ref="com.liferay.portlet.shopping.service.ShoppingItemService" />
 		<property name="serviceInterface" value="com.liferay.portlet.shopping.service.ShoppingItemService" />
 	</bean>
-	<bean name="/com_liferay_portlet_shopping_service_spring_ShoppingOrderService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.shopping.service.ShoppingOrderService" />
-		<property name="serviceInterface" value="com.liferay.portlet.shopping.service.ShoppingOrderService" />
-	</bean>
 	<bean name="/com_liferay_portlet_shopping_service_spring_ShoppingOrderService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.shopping.service.ShoppingOrderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.shopping.service.ShoppingOrderService" />
@@ -1044,10 +696,6 @@
 	<bean name="/com_liferay_portlet_shopping_service_spring_ShoppingOrderService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.shopping.service.ShoppingOrderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.shopping.service.ShoppingOrderService" />
-	</bean>
-	<bean name="/com_liferay_portlet_social_service_spring_SocialActivityService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.social.service.SocialActivityService" />
-		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialActivityService" />
 	</bean>
 	<bean name="/com_liferay_portlet_social_service_spring_SocialActivityService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.social.service.SocialActivityService" />
@@ -1057,10 +705,6 @@
 		<property name="service" ref="com.liferay.portlet.social.service.SocialActivityService" />
 		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialActivityService" />
 	</bean>
-	<bean name="/com_liferay_portlet_social_service_spring_SocialActivitySettingService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.social.service.SocialActivitySettingService" />
-		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialActivitySettingService" />
-	</bean>
 	<bean name="/com_liferay_portlet_social_service_spring_SocialActivitySettingService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.social.service.SocialActivitySettingService" />
 		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialActivitySettingService" />
@@ -1068,10 +712,6 @@
 	<bean name="/com_liferay_portlet_social_service_spring_SocialActivitySettingService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.social.service.SocialActivitySettingService" />
 		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialActivitySettingService" />
-	</bean>
-	<bean name="/com_liferay_portlet_social_service_spring_SocialRequestService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.social.service.SocialRequestService" />
-		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialRequestService" />
 	</bean>
 	<bean name="/com_liferay_portlet_social_service_spring_SocialRequestService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.social.service.SocialRequestService" />
@@ -1081,10 +721,6 @@
 		<property name="service" ref="com.liferay.portlet.social.service.SocialRequestService" />
 		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialRequestService" />
 	</bean>
-	<bean name="/com_liferay_portlet_softwarecatalog_service_spring_SCFrameworkVersionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService" />
-		<property name="serviceInterface" value="com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService" />
-	</bean>
 	<bean name="/com_liferay_portlet_softwarecatalog_service_spring_SCFrameworkVersionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService" />
 		<property name="serviceInterface" value="com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService" />
@@ -1092,10 +728,6 @@
 	<bean name="/com_liferay_portlet_softwarecatalog_service_spring_SCFrameworkVersionService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService" />
 		<property name="serviceInterface" value="com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService" />
-	</bean>
-	<bean name="/com_liferay_portlet_softwarecatalog_service_spring_SCLicenseService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCLicenseService" />
-		<property name="serviceInterface" value="com.liferay.portlet.softwarecatalog.service.SCLicenseService" />
 	</bean>
 	<bean name="/com_liferay_portlet_softwarecatalog_service_spring_SCLicenseService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCLicenseService" />
@@ -1105,10 +737,6 @@
 		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCLicenseService" />
 		<property name="serviceInterface" value="com.liferay.portlet.softwarecatalog.service.SCLicenseService" />
 	</bean>
-	<bean name="/com_liferay_portlet_softwarecatalog_service_spring_SCProductEntryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCProductEntryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.softwarecatalog.service.SCProductEntryService" />
-	</bean>
 	<bean name="/com_liferay_portlet_softwarecatalog_service_spring_SCProductEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCProductEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.softwarecatalog.service.SCProductEntryService" />
@@ -1116,10 +744,6 @@
 	<bean name="/com_liferay_portlet_softwarecatalog_service_spring_SCProductEntryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCProductEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.softwarecatalog.service.SCProductEntryService" />
-	</bean>
-	<bean name="/com_liferay_portlet_softwarecatalog_service_spring_SCProductVersionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCProductVersionService" />
-		<property name="serviceInterface" value="com.liferay.portlet.softwarecatalog.service.SCProductVersionService" />
 	</bean>
 	<bean name="/com_liferay_portlet_softwarecatalog_service_spring_SCProductVersionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCProductVersionService" />
@@ -1129,10 +753,6 @@
 		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCProductVersionService" />
 		<property name="serviceInterface" value="com.liferay.portlet.softwarecatalog.service.SCProductVersionService" />
 	</bean>
-	<bean name="/com_liferay_portlet_trash_service_spring_TrashEntryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.trash.service.TrashEntryService" />
-		<property name="serviceInterface" value="com.liferay.portlet.trash.service.TrashEntryService" />
-	</bean>
 	<bean name="/com_liferay_portlet_trash_service_spring_TrashEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.trash.service.TrashEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.trash.service.TrashEntryService" />
@@ -1141,10 +761,6 @@
 		<property name="service" ref="com.liferay.portlet.trash.service.TrashEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.trash.service.TrashEntryService" />
 	</bean>
-	<bean name="/com_liferay_portlet_wiki_service_spring_WikiNodeService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.wiki.service.WikiNodeService" />
-		<property name="serviceInterface" value="com.liferay.portlet.wiki.service.WikiNodeService" />
-	</bean>
 	<bean name="/com_liferay_portlet_wiki_service_spring_WikiNodeService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.wiki.service.WikiNodeService" />
 		<property name="serviceInterface" value="com.liferay.portlet.wiki.service.WikiNodeService" />
@@ -1152,10 +768,6 @@
 	<bean name="/com_liferay_portlet_wiki_service_spring_WikiNodeService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.wiki.service.WikiNodeService" />
 		<property name="serviceInterface" value="com.liferay.portlet.wiki.service.WikiNodeService" />
-	</bean>
-	<bean name="/com_liferay_portlet_wiki_service_spring_WikiPageService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.wiki.service.WikiPageService" />
-		<property name="serviceInterface" value="com.liferay.portlet.wiki.service.WikiPageService" />
 	</bean>
 	<bean name="/com_liferay_portlet_wiki_service_spring_WikiPageService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.wiki.service.WikiPageService" />

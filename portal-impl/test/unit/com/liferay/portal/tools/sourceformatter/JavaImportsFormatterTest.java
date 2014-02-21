@@ -25,16 +25,34 @@ import org.junit.Test;
 public class JavaImportsFormatterTest {
 
 	@Test
-	public void testSortImports1() throws Exception {
+	public void testAppendNewLineAfterImports() throws Exception {
+		String original = "import org.junit.Test;";
+
+		String expected = original + "\n";
+
+		_test(original, expected);
+	}
+
+	@Test
+	public void testAppendNewLineAfterMultipleStaticImports() throws Exception {
 		String original =
-			"import org.junit.Assert;" + "\n" +
-			"import static org.mockito.Mockito.when;" + "\n" +
-			"import tw.xyz.FooUtils;";
+			"import static org.junit.Assert.assertEquals;" + "\n\n" +
+			"import static org.mockito.Mockito.when;";
+
+		String expected = original + "\n";
+
+		_test(original, expected);
+	}
+
+	@Test
+	public void testAppendNewLineBetweenDifferentPackages() throws Exception {
+		String original =
+			"import org.mockito.Mockito;" + "\n" +
+			"import org.junit.Assert;";
 
 		String expected =
-			"import static org.mockito.Mockito.when;" + "\n" + "\n" +
 			"import org.junit.Assert;" + "\n" + "\n" +
-			"import tw.xyz.FooUtils;" + "\n";
+			"import org.mockito.Mockito;" + "\n";
 
 		_test(original, expected);
 	}
@@ -54,25 +72,21 @@ public class JavaImportsFormatterTest {
 	}
 
 	@Test
-	public void testAppendNewLineAfterImports() throws Exception {
-		String original = "import org.junit.Test;";
-
-		String expected = original + "\n";
-
-		_test(original, expected);
+	public void testNoImports() throws Exception {
+		_test(StringPool.BLANK, StringPool.BLANK);
 	}
 
 	@Test
-	public void testAppendNewLineBetweenDifferentPackages()
-		throws Exception {
-
+	public void testSortImports1() throws Exception {
 		String original =
-			"import org.mockito.Mockito;" + "\n" +
-			"import org.junit.Assert;";
+			"import org.junit.Assert;" + "\n" +
+			"import static org.mockito.Mockito.when;" + "\n" +
+			"import tw.xyz.FooUtils;";
 
 		String expected =
+			"import static org.mockito.Mockito.when;" + "\n" + "\n" +
 			"import org.junit.Assert;" + "\n" + "\n" +
-			"import org.mockito.Mockito;" + "\n";
+			"import tw.xyz.FooUtils;" + "\n";
 
 		_test(original, expected);
 	}
@@ -120,19 +134,16 @@ public class JavaImportsFormatterTest {
 	}
 
 	@Test
-	public void testAppendNewLineAfterMultipleStaticImports() throws Exception {
+	public void testSortImportsWithInnerClass() throws Exception {
 		String original =
-			"import static org.junit.Assert.assertEquals;" + "\n\n" +
-			"import static org.mockito.Mockito.when;";
+			"import javax.servlet.FilterRegistration.Dynamic;" + "\n" +
+			"import javax.servlet.FilterRegistration;";
 
-		String expected = original + "\n";
+		String expected =
+			"import javax.servlet.FilterRegistration;" + "\n" +
+			"import javax.servlet.FilterRegistration.Dynamic;" + '\n';
 
 		_test(original, expected);
-	}
-
-	@Test
-	public void testNoImports() throws Exception {
-		_test(StringPool.BLANK, StringPool.BLANK);
 	}
 
 	@Test
@@ -157,19 +168,6 @@ public class JavaImportsFormatterTest {
 		String expected =
 			"import static org.junit.Assert.assertEquals;" + "\n" + "\n" +
 			"import static org.mockito.Mockito.when;" + "\n";
-
-		_test(original, expected);
-	}
-
-	@Test
-	public void testSortImportsWithInnerClass() throws Exception {
-		String original =
-			"import javax.servlet.FilterRegistration.Dynamic;" + "\n" +
-			"import javax.servlet.FilterRegistration;";
-
-		String expected =
-			"import javax.servlet.FilterRegistration;" + "\n" +
-			"import javax.servlet.FilterRegistration.Dynamic;" + '\n';
 
 		_test(original, expected);
 	}

@@ -17,6 +17,30 @@
 		}
 	}
 
+	&.display-style-3 {
+		.user-profile-image {
+			background: #333 no-repeat center;
+			border-radius: 50%;
+			display: block;
+			margin-top: -2px;
+			vertical-align: middle;
+		}
+	}
+
+	&.display-style-4 {
+		.user-profile-image {
+			background: #333 no-repeat center;
+			border-radius: 50%;
+			display: block;
+			margin-top: -2px;
+			vertical-align: middle;
+		}
+
+		.user-name {
+			display: none;
+		}
+	}
+
 	.user-details {
 		margin-top: 1em;
 	}

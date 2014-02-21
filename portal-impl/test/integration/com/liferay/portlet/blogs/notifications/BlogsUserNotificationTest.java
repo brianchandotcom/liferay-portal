@@ -80,8 +80,6 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		_userNotificationDeliveries =
 			getUserNotificationDeliveries(_user.getUserId());
 
-		updateUserNotificationsDelivery(true);
-
 		_logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 	}

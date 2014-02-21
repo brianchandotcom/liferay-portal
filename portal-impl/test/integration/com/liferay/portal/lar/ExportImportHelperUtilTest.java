@@ -538,13 +538,15 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		content = StringUtil.replace(
 			content,
 			new String[] {
-				"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]", "[$IMAGE_ID$]",
-				"[$PATH_CONTEXT$]", "[$PATH_FRIENDLY_URL_PRIVATE_GROUP$]",
+				"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]", "[$LIVE_GROUP_ID$]",
+				"[$IMAGE_ID$]", "[$PATH_CONTEXT$]",
+				"[$PATH_FRIENDLY_URL_PRIVATE_GROUP$]",
 				"[$PATH_FRIENDLY_URL_PRIVATE_USER$]",
 				"[$PATH_FRIENDLY_URL_PUBLIC$]", "[$TITLE$]", "[$UUID$]"
 			},
 			new String[] {
 				_stagingGroup.getFriendlyURL(),
+				String.valueOf(fileEntry.getGroupId()),
 				String.valueOf(fileEntry.getGroupId()),
 				String.valueOf(fileEntry.getFileEntryId()),
 				PortalUtil.getPathContext(),

@@ -71,12 +71,8 @@ public class EditExportConfigurationAction extends PortletAction {
 		}
 
 		try {
-			long exportImportConfigurationId = ParamUtil.getLong(
-				actionRequest, "exportImportConfigurationId");
-
-			if (cmd.equals(Constants.ADD)) {
-				ExportImportConfigurationHelper.
-					addExportLayoutExportImportConfiguration(actionRequest);
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				updateExportConfiguration(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteExportImportConfiguration(actionRequest, false);
@@ -86,8 +82,7 @@ public class EditExportConfigurationAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.EXPORT)) {
 				ExportImportConfigurationHelper.
-					exportLayoutsByExportImportConfiguration(
-						exportImportConfigurationId);
+					exportLayoutsByExportImportConfiguration(actionRequest);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -192,6 +187,23 @@ public class EditExportConfigurationAction extends PortletAction {
 			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
 			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
+
+	protected ExportImportConfiguration updateExportConfiguration(
+			ActionRequest actionRequest)
+		throws Exception {
+
+		long exportImportConfigurationId = ParamUtil.getLong(
+			actionRequest, "exportImportConfigurationId");
+
+		if (exportImportConfigurationId > 0) {
+			return ExportImportConfigurationHelper.
+				updateExportLayoutExportImportConfiguration(actionRequest);
+		}
+		else {
+			return ExportImportConfigurationHelper.
+				addExportLayoutExportImportConfiguration(actionRequest);
 		}
 	}
 

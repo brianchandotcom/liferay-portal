@@ -128,6 +128,13 @@ if (layout != null) {
 
 							for (int i = 0; (layouts != null) && (i < layouts.size()); i++) {
 								Layout curLayout = (Layout)layouts.get(i);
+								if (0 == 0) {
+							%>
+
+								,
+
+							<%
+								}
 							%>
 
 								{
@@ -135,7 +142,7 @@ if (layout != null) {
 									id: <%= curLayout.getLayoutId() %>,
 									sortable: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroup, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSortable(curLayout) %>,
 									updateable: !TOUCH && <%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.UPDATE) %>
-								},
+								}
 
 							<%
 							}

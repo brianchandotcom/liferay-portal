@@ -315,6 +315,19 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			fileVersion.getStatus());
 	}
 
+	protected boolean updateDynamicElement(Element element) {
+		String dataType = element.attributeValue("dataType");
+
+		if (Validator.equals(dataType, "image")) {
+			element.addAttribute("fieldNamespace", "ddm");
+			element.addAttribute("type", "ddm-image");
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void updateFieldValues(
 			long storageId, Map<String, String> fieldValues)
 		throws Exception {
@@ -498,6 +511,10 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 		for (Node node : nodes) {
 			Element dynamicElementElement = (Element)node;
+
+			if (updateDynamicElement(dynamicElementElement)) {
+				modified = true;
+			}
 
 			if (createDefaultMetadataElement(
 					dynamicElementElement, defaultLanguageId)) {

@@ -55,21 +55,21 @@
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}01" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
-			<var name="whatsHappeningEntryContent" value="${microblogsEntryContent}03" />
+			<var name="whatsHappeningEntryContent" value="${whatsHappeningEntryContent}03" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}02" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
-			<var name="whatsHappeningEntryContent" value="${microblogsEntryContent}03" />
+			<var name="whatsHappeningEntryContent" value="${whatsHappeningEntryContent}03" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntryTag">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}03" />
 			<var name="microblogsEntryTagValue" value="${microblogsEntryTagValue}" />
-			<var name="whatsHappeningEntryContent" value="${microblogsEntryContent}03" />
+			<var name="whatsHappeningEntryContent" value="${whatsHappeningEntryContent}03" />
 		</execute>
 	</command>
 
@@ -617,6 +617,7 @@
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntryProfile">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 

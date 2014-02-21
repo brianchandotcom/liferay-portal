@@ -71,12 +71,17 @@
 </tr>
 <tr>
 	<td>NAVIGATION_PAGE</td>
-	<td>//div[@id='content']//li[contains(.,'${pageName}')]/a/span</td>
+	<td>//div[@id='content']//li[contains(.,'${key_pageName}')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_USER_ADDED_PAGE</td>
+	<td>xpath=(//div[@id='content']//li[contains(@class,'lfr-nav-deletable')]/a/span)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_PAGE_DELETE</td>
-	<td>//span[contains(@class,'delete-tab')]</td>
+	<td>xpath=(//div[@id='content']//li[contains(@class,'lfr-nav-deletable')]/span[contains(@class,'delete')])[2]</td>
 	<td></td>
 </tr>
 <tr>

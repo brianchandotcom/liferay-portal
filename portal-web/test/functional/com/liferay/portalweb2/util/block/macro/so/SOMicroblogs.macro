@@ -319,7 +319,6 @@
 	</command>
 
 	<command name="viewMicroblogsEntryMention">
-		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 		<var name="microblogsEntryContent" value="${mentionUserName}" />
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
@@ -334,6 +333,8 @@
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor" />
+
+		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
 		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
 

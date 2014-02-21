@@ -202,14 +202,15 @@
 		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
 
 		<execute action="SOProfileAddProfilePicture#uploadCommonFile" locator-key1="UPLOAD_IMAGE_FIELD" value1="${imageFileName}" />
-		<execute action="SOProfileAddWebsite#click" locator-key1="SAVE_BUTTON" />
+		<execute action="SOProfileAddProfilePicture#pause" value1="1000" />
+		<execute action="SOProfileAddProfilePicture#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="SOProfile#selectFrame" value1="relative=top" />
 
 		<var name="key_userName" value="${userName}" />
 
-		<execute action="SOProfile#assertElementPresent" locator-key1="USER_PROFILE_PICTURE" />
 		<execute action="SOProfile#assertElementNotPresent" locator-key1="DEFAULT_PROFILE_PICTURE" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="USER_PROFILE_PICTURE" />
 	</command>
 
 	<command name="addProjects">

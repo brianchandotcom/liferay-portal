@@ -4,11 +4,14 @@
 	<property name="theme.plugins.includes" value="so-theme" />
 	<property name="web.plugins.includes" value="resources-importer-web" />
 
+	<var name="adminEmailAddress" value="test@liferay.com" />
+	<var name="adminName" value="Test Test" />
 	<var name="key_siteName" value="${siteName}" />
 	<var name="pageName" value="Forums" />
 	<var name="siteDescription" value="Open Site Description" />
 	<var name="siteName" value="Open Site Name" />
 	<var name="siteType" value="Open" />
+	<var name="soPage" value="true" />
 
 	<set-up>
 		<execute macro="SOUser#firstLoginPG" />
@@ -20,56 +23,122 @@
 		</execute>
 	</set-up>
 
-	<var name="categoryName" value="MB Category Name" />
-	<var name="threadBody" value="MB Category Thread Message Body" />
-	<var name="threadBodyEdit" value="MB Category Thread Message Body Edit" />
-	<var name="threadReplyBody" value="MB Category Thread Message Reply Body" />
-	<var name="threadSubject" value="MB Category Thread Message Subject" />
-	<var name="threadSubjectEdit" value="MB Category Thread Message Subject Edit" />
-	<var name="userName" value="Test Test" />
-
 	<command name="AddMBCategoryThread" priority="5">
-		<execute macro="SOSite#gotoPG" />
+		<var name="categoryName" value="MB Category Name" />
+		<var name="threadBody" value="MB Category Thread Message Body" />
+		<var name="threadSubject" value="MB Category Thread Message Subject" />
 
-		<execute macro="MessageboardsCategory#addPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
 
-		<execute macro="MessageboardsCategory#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="MessageboardsThread#addPG" />
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 
-		<execute macro="SOForumsCategoryThread#viewPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="SOForumsCategoryThread#viewPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${adminName}" />
+		</execute>
 
-		<execute macro="SOForumsCategoryThread#viewMyPostsPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="SOForumsCategoryThread#viewMyPostsPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${adminName}" />
+		</execute>
 
-		<execute macro="SOForumsCategoryThread#viewRecentPostsPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOForumsCategoryThread#viewRecentPostsPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${adminName}" />
+		</execute>
 	</command>
 
 	<command name="DeleteMBCategoryThread" priority="5">
-		<execute macro="SOSite#gotoPG" />
+		<var name="categoryName" value="MB Category Name" />
+		<var name="threadBody" value="MB Category Thread Message Body" />
+		<var name="threadSubject" value="MB Category Thread Message Subject" />
 
-		<execute macro="MessageboardsCategory#addPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
 
-		<execute macro="MessageboardsCategory#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="MessageboardsThread#addPG" />
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 
-		<execute macro="MessageboardsCategory#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="MessageboardsThread#deletePG" />
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="MessageboardsThread#deletePG">
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<var name="key_categoryName" value="${categoryName}" />
 
@@ -84,52 +153,123 @@
 	</command>
 
 	<command name="EditMBCategoryThread" priority="5">
-		<execute macro="SOSite#gotoPG" />
+		<var name="categoryName" value="MB Category Name" />
+		<var name="threadBody" value="MB Category Thread Message Body" />
+		<var name="threadBodyEdit" value="MB Category Thread Message Body Edit" />
+		<var name="threadSubject" value="MB Category Thread Message Subject" />
+		<var name="threadSubjectEdit" value="MB Category Thread Message Subject Edit" />
 
-		<execute macro="MessageboardsCategory#addPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG" />
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="MessageboardsCategory#gotoPG" />
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
 
-		<execute macro="MessageboardsThread#editPG" />
+		<execute macro="MessageboardsThread#editPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadBodyEdit" value="${threadBodyEdit}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="SOForumsCategoryThread#viewPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBodyEdit}" />
 			<var name="threadSubject" value="${threadSubjectEdit}" />
+			<var name="userName" value="${adminName}" />
 		</execute>
 	</command>
 
 	<command name="ReplyMBCategoryThread" priority="5">
-		<execute macro="SOSite#gotoPG" />
+		<var name="categoryName" value="MB Category Name" />
+		<var name="threadBody" value="MB Category Thread Message Body" />
+		<var name="threadReplyBody" value="MB Category Thread Message Reply Body" />
+		<var name="threadSubject" value="MB Category Thread Message Subject" />
 
-		<execute macro="MessageboardsCategory#addPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
 
-		<execute macro="MessageboardsCategory#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="MessageboardsThread#addPG" />
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 
-		<execute macro="MessageboardsCategory#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="MessageboardsThread#replyPG" />
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="MessageboardsThread#replyPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadReplyBody" value="${threadReplyBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 
-		<execute macro="SOForumsCategoryThread#viewReplyPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOForumsCategoryThread#viewReplyPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadReplyBody" value="${threadReplyBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${adminName}" />
+		</execute>
 	</command>
 
 	<tear-down>

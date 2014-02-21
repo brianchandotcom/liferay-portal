@@ -32,7 +32,7 @@
 		<execute action="Home#assertLocation" value1="http://localhost:8080/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="SPANISH (Spain)" />
+			<var name="language" value="Spanish (Spain)" />
 		</execute>
 
 		<execute action="Home#assertLocation" value1="http://localhost:8080/web/guest/language-test-page" />
@@ -77,7 +77,7 @@
 		<execute action="Home#assertLocation" value1="http://localhost:8080/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="SPANISH (Spain)" />
+			<var name="language" value="Spanish (Spain)" />
 		</execute>
 
 		<execute action="Home#assertLocation" value1="http://localhost:8080/es/web/guest/language-test-page" />
@@ -122,7 +122,7 @@
 		<execute action="Home#assertLocation" value1="http://localhost:8080/en/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="SPANISH (Spain)" />
+			<var name="language" value="Spanish (Spain)" />
 		</execute>
 
 		<execute action="Home#assertLocation" value1="http://localhost:8080/es/web/guest/language-test-page" />

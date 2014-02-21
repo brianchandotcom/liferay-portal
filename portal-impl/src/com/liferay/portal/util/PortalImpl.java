@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
@@ -3695,15 +3694,20 @@ public class PortalImpl implements Portal {
 
 		String modelKey = TextFormatter.format(modelName, TextFormatter.P);
 
-		String orderByColKey = modelKey + "-order-by-col";
-		String orderByTypeKey = modelKey + "-order-by-type";
+		String orderByColParam = modelKey + "-order-by-col";
+		String orderByTypeParam = modelKey + "-order-by-type";
 
-		portalPreferences.setValue(portletKey, orderByColKey, orderByCol);
-		portalPreferences.setValue(portletKey, orderByTypeKey, orderByType);
+		portalPreferences.setValue(portletKey, orderByColParam, orderByCol);
+		portalPreferences.setValue(portletKey, orderByTypeParam, orderByType);
+
+		boolean asending = false;
+
+		if (orderByType.equals(OrderByComparator.ORDER_BY_TYPE_ASC)) {
+			asending = true;
+		}
 
 		return OrderByComparatorFactoryUtil.create(
-			tableName, orderByCol,
-			orderByType.equals(OrderByComparator.ORDER_BY_TYPE_ASC));
+			tableName, orderByCol, asending);
 	}
 
 	@Override

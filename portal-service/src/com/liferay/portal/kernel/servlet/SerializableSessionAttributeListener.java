@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -32,13 +31,19 @@ import javax.servlet.http.HttpSessionBindingEvent;
  * @author Bruno Farache
  */
 public class SerializableSessionAttributeListener
-	extends BasePortalLifecycle implements HttpSessionAttributeListener {
+	implements HttpSessionAttributeListener {
+
+	public static void initialize() {
+		_SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE),
+			true);
+	}
 
 	@Override
 	public void attributeAdded(
 		HttpSessionBindingEvent httpSessionBindingEvent) {
 
-		if (!_sessionVerifySerializableAttribute) {
+		if (!_SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE) {
 			return;
 		}
 
@@ -86,21 +91,11 @@ public class SerializableSessionAttributeListener
 		attributeAdded(httpSessionBindingEvent);
 	}
 
-	@Override
-	protected void doPortalDestroy() throws Exception {
-	}
-
-	@Override
-	protected void doPortalInit() throws Exception {
-		_sessionVerifySerializableAttribute = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE),
-			true);
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		SerializableSessionAttributeListener.class);
 
+	private static boolean _SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE;
+
 	private Boolean _requiresSerializable;
-	private boolean _sessionVerifySerializableAttribute;
 
 }

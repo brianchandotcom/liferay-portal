@@ -127,12 +127,10 @@
 				instance._cached = cached;
 			}
 
-			if (!A.instanceOf(obj, A.Node)) {
-				obj = A.one(obj);
+			obj = A.one(obj);
 
-				if (text == null) {
-					text = instance._getText(obj.guid());
-				}
+			if (text == null) {
+				text = instance._getText(obj.guid());
 			}
 
 			cached.set(BODY_CONTENT, text);

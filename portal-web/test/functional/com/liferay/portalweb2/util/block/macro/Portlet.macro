@@ -41,6 +41,7 @@
 				</if>
 
 				<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
+				<execute action="Dockbar#pause" locator1="1000" />
 			</then>
 		</while>
 	</command>
@@ -124,6 +125,7 @@
 		</if>
 
 		<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
+		<execute action="Dockbar#pause" locator1="1000" />
 	</command>
 
 	<command name="deletePG">

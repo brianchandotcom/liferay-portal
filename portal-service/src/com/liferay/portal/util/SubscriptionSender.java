@@ -532,7 +532,12 @@ public class SubscriptionSender implements Serializable {
 
 					sendEmail(to, user.getLocale());
 				}
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 
+			try {
 				if (UserNotificationManagerUtil.isDeliver(
 						user.getUserId(), portletId, _notificationClassNameId,
 						_notificationType,

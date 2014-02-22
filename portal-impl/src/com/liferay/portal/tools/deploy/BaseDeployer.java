@@ -1197,11 +1197,13 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			sb.append("</context-param>");
 		}
 
-		sb.append("<listener>");
-		sb.append("<listener-class>");
-		sb.append(SerializableSessionAttributeListener.class.getName());
-		sb.append("</listener-class>");
-		sb.append("</listener>");
+		if (PropsValues.SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE) {
+			sb.append("<listener>");
+			sb.append("<listener-class>");
+			sb.append(SerializableSessionAttributeListener.class.getName());
+			sb.append("</listener-class>");
+			sb.append("</listener>");
+		}
 
 		sb.append(getDynamicResourceServletContent());
 

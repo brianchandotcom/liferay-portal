@@ -29,8 +29,8 @@
 	var toggleAdvancedNode = A.one('#<%= id %>toggleAdvanced');
 
 	var enableOrDisableElements = function(disable) {
-		simpleNode.all('input').set('disabled', disable);
-		advancedNode.all('input').set('disabled', !disable);
+		simpleNode.all('input').attr('disabled', disable);
+		advancedNode.all('input').attr('disabled', !disable);
 	}
 
 	var toggler = new A.Toggler(
@@ -40,7 +40,7 @@
 			expanded: <%= displayTerms.isAdvancedSearch() %>,
 			header: toggleAdvancedNode,
 			transition: {
-				duration: .2,
+				duration: 0.2,
 				easing: 'cubic-bezier(0, 0.1, 0, 1.0)',
 			}
 		}
@@ -59,7 +59,7 @@
 				keywordsNode.focus();
 			}
 			else {
-				var inputTextNode = advancedNode.one('input[type=text]');
+				var inputTextNode = advancedNode.one('input:text');
 
 				if (inputTextNode) {
 					inputTextNode.focus();
@@ -73,6 +73,7 @@
 	}
 
 	closeAdvancedNode.on('click', toggleAdvancedSearch);
+
 	keywordsNode.on('key', toggleAdvancedSearch, 'down:38,40');
 </aui:script>
 

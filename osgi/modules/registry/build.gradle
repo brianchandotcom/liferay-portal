@@ -1,1 +1,3 @@
-apply from: '../gradle/java.gradle'
+subprojects {
+	apply from: '../../gradle/java.gradle'
+}

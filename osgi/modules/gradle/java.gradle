@@ -1,118 +1,110 @@
-allprojects {
-	repositories {
-		mavenCentral()
+apply plugin: "java"
+
+ext.liferayProjectDir = "${rootDir}/../../.."
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+configurations {
+	bnd
+}
+
+dependencies {
+	bnd files(["${liferayProjectDir}/portal-service/classes"])
+	bnd files(["${liferayProjectDir}/util-java/classes"])
+
+	bnd fileTree(
+		dir:"${liferayProjectDir}/lib/portal",
+		includes: ["**/bnd.jar"]
+	)
+}
+
+dependencies {
+	compile files(["${liferayProjectDir}/portal-service/classes"])
+	compile files(["${liferayProjectDir}/util-java/classes"])
+
+	compile fileTree(
+		dir:"${liferayProjectDir}/lib/development",
+		includes: ["**/*.jar"]
+	)
+
+	compile fileTree(
+		dir:"${liferayProjectDir}/lib/global",
+		includes: ["**/*.jar"]
+	)
+
+	compile fileTree(
+		dir:"${liferayProjectDir}/lib/portal",
+		includes: ["**/*.jar"]
+	)
+}
+
+jar {
+	actions = []
+
+	doLast {
+		tasks.baseline.execute()
 	}
 }
 
-subprojects {
-	apply plugin: "java"
+task baseline << {
+	ant.property(
+		name: "ant.project.name",
+		project.name
+	)
 
-	ext.liferayProjectDir = "${rootDir}/../../.."
+	ant.property(
+		name: "sdk.dir",
+		liferayProjectDir
+	)
 
-	sourceCompatibility = 1.6
-	targetCompatibility = 1.6
+	ant.taskdef(
+		classname: "com.liferay.util.ant.bnd.BaselineJarTask",
+		classpath: configurations.bnd.asPath,
+		name: "bnd"
+	)
 
-	configurations {
-		bnd
-	}
+	ant.taskdef(
+		classname: "com.liferay.util.ant.ManifestHelperTask",
+		classpath: configurations.bnd.asPath,
+		name: "manifestHelper"
+	)
 
-	dependencies {
-		bnd files(["${liferayProjectDir}/portal-service/classes"])
-		bnd files(["${liferayProjectDir}/util-java/classes"])
+	ant.manifestHelper(
+		projectDirPropertyName: "sdk.dir"
+	)
 
-		bnd fileTree(
-			dir:"${liferayProjectDir}/lib/portal",
-			includes: ["**/bnd.jar"]
-		)
-	}
+	def buildLibDir = new File("${projectDir}/build/libs")
 
-	dependencies {
-		compile files(["${liferayProjectDir}/portal-service/classes"])
-		compile files(["${liferayProjectDir}/util-java/classes"])
+	buildLibDir.mkdir()
 
-		compile fileTree(
-			dir:"${liferayProjectDir}/lib/development",
-			includes: ["**/*.jar"]
-		)
-
-		compile fileTree(
-			dir:"${liferayProjectDir}/lib/global",
-			includes: ["**/*.jar"]
-		)
-
-		compile fileTree(
-			dir:"${liferayProjectDir}/lib/portal",
-			includes: ["**/*.jar"]
-		)
-	}
-
-	jar {
-		actions = []
-
-		doLast {
-			tasks.baseline.execute()
+	ant.bnd(
+		bndRootFile: "${liferayProjectDir}/common.bnd",
+		file: "bnd.bnd",
+		outputPath: "${buildLibDir}/${project.name}.jar",
+		sourcePath: "."
+	) {
+		classpath {
+			pathelement(location: "build/classes/main")
 		}
 	}
 
-	task baseline << {
-		ant.property(
-			name: "ant.project.name",
-			project.name
-		)
+}
 
-		ant.property(
-			name: "sdk.dir",
-			liferayProjectDir
-		)
- 
-		ant.taskdef(
-			classname: "com.liferay.util.ant.bnd.BaselineJarTask",
-			classpath: configurations.bnd.asPath,
-			name: "bnd"
-		)
-
-		ant.taskdef(
-			classname: "com.liferay.util.ant.ManifestHelperTask",
-			classpath: configurations.bnd.asPath,
-			name: "manifestHelper"
-		)
-
-		ant.manifestHelper(
-			projectDirPropertyName: "sdk.dir"
-		)
-
+task deploy(dependsOn: jar) << {
+	if (project.hasProperty('deployDir') && (project.deployDir != null)) {
 		def buildLibDir = new File("${projectDir}/build/libs")
 
-		buildLibDir.mkdir()
+		logger.quiet "Copying ${buildLibDir}/${project.name}.jar to " + project.deployDir + "."
 
-		ant.bnd(
-			bndRootFile: "${liferayProjectDir}/common.bnd",
-			file: "bnd.bnd",
-			outputPath: "${buildLibDir}/${project.name}.jar",
-			sourcePath: "."
-		) {
-			classpath {
-				pathelement(location: "build/classes/main")
-			}
+		copy {
+			from "${buildLibDir}/${project.name}.jar"
+			into project.deployDir
 		}
-
 	}
-
-	task deploy(dependsOn: jar) << {
-		if (project.hasProperty('deployDir') && (project.deployDir != null)) {
-			def buildLibDir = new File("${projectDir}/build/libs")
-
-			logger.quiet "Copying ${buildLibDir}/${project.name}.jar to " + project.deployDir + "."
-
-			copy {
-				from "${buildLibDir}/${project.name}.jar"
-				into project.deployDir
-			}
-		}
-		else {
-			logger.quiet "Skipping deploy because ${project.name}\"s \"deployDir\" property is not set."
-			logger.quiet "First, see if it\"s build.gradle file contains the property"
-			logger.quiet "\"project.ext.deployDir\". Second, make sure to execute the deploy using Ant."
-		}
+	else {
+		logger.quiet "Skipping deploy because ${project.name}\"s \"deployDir\" property is not set."
+		logger.quiet "First, see if it\"s build.gradle file contains the property"
+		logger.quiet "\"project.ext.deployDir\". Second, make sure to execute the deploy using Ant."
 	}
 }

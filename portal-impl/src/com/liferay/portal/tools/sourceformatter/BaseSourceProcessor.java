@@ -93,66 +93,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _firstSourceMismatchException;
 	}
 
-	protected static String formatImports(String imports, int classStartPos)
-		throws IOException {
-
-		if (imports.contains("/*") || imports.contains("*/") ||
-			imports.contains("//")) {
-
-			return imports + "\n";
-		}
-
-		List<ImportPackage> importPackages = new ArrayList<ImportPackage>();
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			ImportPackage importPackage = ImportPackageFactoryUtil.create(line);
-
-			if ((importPackage != null) &&
-				!importPackages.contains(importPackage)) {
-
-				importPackages.add(importPackage);
-			}
-		}
-
-		importPackages = ListUtil.sort(importPackages);
-
-		StringBundler sb = new StringBundler(3 * importPackages.size());
-
-		String temp = null;
-
-		for (int i = 0; i < importPackages.size(); i++) {
-			ImportPackage importPackage = importPackages.get(i);
-
-			String s = importPackage.getLine();
-
-			int pos = s.indexOf(".");
-
-			pos = s.indexOf(".", pos + 1);
-
-			if (pos == -1) {
-				pos = s.indexOf(".");
-			}
-
-			String packageLevel = s.substring(classStartPos, pos);
-
-			if ((i != 0) && !packageLevel.equals(temp)) {
-				sb.append("\n");
-			}
-
-			temp = packageLevel;
-
-			sb.append(s);
-			sb.append("\n");
-		}
-
-		return sb.toString();
-	}
-
 	protected void checkIfClauseParentheses(
 		String ifClause, String fileName, int lineCount) {
 

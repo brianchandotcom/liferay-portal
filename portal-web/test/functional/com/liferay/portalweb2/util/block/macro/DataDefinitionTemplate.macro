@@ -176,7 +176,6 @@
 		</if>
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#select" locator-key1="DETAILS_MODE_SELECT" value1="${dataDefinitionFormTemplateMode}" />
-
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#pause" locator1="1000" />
 
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />

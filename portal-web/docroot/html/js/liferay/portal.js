@@ -127,9 +127,9 @@
 				instance._cached = cached;
 			}
 
-			if (text == null) {
-				obj = A.one(obj);
+			obj = A.one(obj);
 
+			if (text == null) {
 				text = instance._getText(obj.guid());
 			}
 

@@ -100,7 +100,6 @@
 
 		<execute action="CPWebcontentStructuresAddstructure#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
-
 		<execute action="CPWebcontentStructuresAddstructure#selectFrame" locator-key1="STRUCTURES_IFRAME" />
 
 		<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

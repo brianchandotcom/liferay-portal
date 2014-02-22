@@ -129,13 +129,29 @@ public class JavaImportsFormatterTest {
 	}
 
 	@Test
+	public void testSortImports4() throws Exception {
+		String original =
+			"import java.awt.Graphics2D;" + "\n" +
+			"import java.awt.Graphics;";
+		String expected =
+			"import java.awt.Graphics;" + "\n" +
+			"import java.awt.Graphics2D;" + "\n";
+
+		_test(original, expected);
+	}
+
+	@Test
 	public void testSortImportsWithInnerClass() throws Exception {
 		String original =
 			"import javax.servlet.FilterRegistration.Dynamic;" + "\n" +
-			"import javax.servlet.FilterRegistration;";
-		String expected =
 			"import javax.servlet.FilterRegistration;" + "\n" +
-			"import javax.servlet.FilterRegistration.Dynamic;" + '\n';
+			"import java.util.Map;" + "\n" +
+			"import java.util.Map.Entry;";
+		String expected =
+			"import java.util.Map;" + "\n" +
+			"import java.util.Map.Entry;" + "\n" + "\n" +
+			"import javax.servlet.FilterRegistration;" + "\n" +
+			"import javax.servlet.FilterRegistration.Dynamic;" + "\n";
 
 		_test(original, expected);
 	}

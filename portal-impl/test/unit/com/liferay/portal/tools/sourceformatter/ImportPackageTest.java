@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import com.liferay.portal.kernel.util.ListUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,35 +51,6 @@ public class ImportPackageTest {
 			_javaImportsFormatter.createImportPackage(_ARRAYS_IMPORT_STATEMENT);
 
 		Assert.assertEquals(importPackage, importPackage2);
-	}
-
-	@Test
-	public void testImportSorting() {
-		List<ImportPackage> importPackages = new ArrayList<ImportPackage>();
-
-		ImportPackage graphicsImportPackage =
-			_javaImportsFormatter.createImportPackage(
-				"import java.awt.Graphics;");
-		ImportPackage graphics2dImportPackage =
-			_javaImportsFormatter.createImportPackage(
-				"import java.awt.Graphics2D;");
-		ImportPackage mapEntryImportPackage =
-			_javaImportsFormatter.createImportPackage(
-				"import java.util.Map.Entry;");
-		ImportPackage mapImportPackage =
-			_javaImportsFormatter.createImportPackage("import java.util.Map;");
-
-		importPackages.add(graphicsImportPackage);
-		importPackages.add(graphics2dImportPackage);
-		importPackages.add(mapEntryImportPackage);
-		importPackages.add(mapImportPackage);
-
-		ListUtil.sort(importPackages);
-
-		Assert.assertEquals(0, importPackages.indexOf(graphicsImportPackage));
-		Assert.assertEquals(1, importPackages.indexOf(graphics2dImportPackage));
-		Assert.assertEquals(2, importPackages.indexOf(mapImportPackage));
-		Assert.assertEquals(3, importPackages.indexOf(mapEntryImportPackage));
 	}
 
 	private static final String _ARRAYS_IMPORT_STATEMENT =

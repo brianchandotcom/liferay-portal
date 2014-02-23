@@ -1,3 +1,4 @@
 .gradle
 
 /registry/registry-api/build
+/registry/registry-impl/build

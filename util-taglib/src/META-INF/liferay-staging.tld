@@ -11,7 +11,7 @@
 	<uri>http://liferay.com/tld/staging</uri>
 	<tag>
 		<name>menu</name>
-		<tag-class>com.liferay.taglib.staging.StagingMenuTag</tag-class>
+		<tag-class>com.liferay.taglib.staging.MenuTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>cssClass</name>

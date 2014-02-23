@@ -1,1 +1,8 @@
 evaluationDependsOn(':registry-api')
+
+dependencies {
+	compile fileTree(dir: liferayProjectDir + '/osgi/lib/common/core', include: '*.jar')
+	compile project(':registry-api')
+}
+
+project.ext.deployDir = project.hasProperty('osgiLibDir') ? project.osgiLibDir + "/core" : null

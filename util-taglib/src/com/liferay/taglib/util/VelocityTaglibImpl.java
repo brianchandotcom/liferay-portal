@@ -46,6 +46,7 @@ import com.liferay.taglib.portletext.IconRefreshTag;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.security.DoAsURLTag;
 import com.liferay.taglib.security.PermissionsURLTag;
+import com.liferay.taglib.staging.MenuTag;
 import com.liferay.taglib.theme.LayoutIconTag;
 import com.liferay.taglib.theme.MetaTagsTag;
 import com.liferay.taglib.theme.WrapPortletTag;
@@ -65,7 +66,6 @@ import com.liferay.taglib.ui.RatingsTag;
 import com.liferay.taglib.ui.SearchTag;
 import com.liferay.taglib.ui.SitesDirectoryTag;
 import com.liferay.taglib.ui.SocialBookmarksTag;
-import com.liferay.taglib.ui.StagingTag;
 import com.liferay.taglib.ui.ToggleTag;
 
 import java.io.Writer;
@@ -1154,11 +1154,11 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	@Override
 	public void staging() throws Exception {
-		StagingTag stagingTag = new StagingTag();
+		MenuTag menuTag = new MenuTag();
 
-		setUp(stagingTag);
+		setUp(menuTag);
 
-		stagingTag.runTag();
+		menuTag.runTag();
 	}
 
 	@Override

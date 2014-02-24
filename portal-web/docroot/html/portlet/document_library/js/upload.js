@@ -865,7 +865,7 @@ AUI.add(
 
 					var redirect = config.redirect;
 
-					uploadURL = unescape(config.uploadURL);
+					uploadURL = unescape(config.upload.uploadURL);
 
 					instance._uploadURL = Liferay.Util.addParams(
 						{
@@ -1239,8 +1239,6 @@ AUI.add(
 
 				var maxFileSize = instance._maxFileSize;
 
-				var invalidSizeText = sub(instance._invalidFileSizeText, [maxFileSize / 1024]);
-
 				return AArray.partition(
 					data,
 					function(item, index, collection) {
@@ -1250,7 +1248,13 @@ AUI.add(
 						var type = item.get('type') || '';
 
 						if ((maxFileSize !== 0) && (size > maxFileSize)) {
-							errorMessage = invalidSizeText;
+							var storageFormatter = new Liferay.StorageFormatter(
+								{
+									decimalSeparator: instance._config.upload.decimalSeparator
+								}
+							);
+
+							errorMessage = sub(instance._invalidFileSizeText, [storageFormatter.format(instance._maxFileSize)]);
 						}
 						else if (!type) {
 							errorMessage = instance._invalidFileType;
@@ -1274,6 +1278,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-search-container', 'uploader']
+		requires: ['aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-search-container', 'liferay-storage-formatter', 'uploader']
 	}
 );

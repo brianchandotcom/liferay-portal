@@ -143,6 +143,10 @@ AUI.add(
 		var Upload = A.Component.create(
 			{
 				ATTRS: {
+					decimalSeparator: {
+						validator: Lang.isString,
+						value: '.'
+					},
 					deleteFile: {
 						value: ''
 					},
@@ -244,9 +248,15 @@ AUI.add(
 							);
 						}
 						else {
-							var maxFileSizeKB = Math.floor(instance.get('maxFileSize') / 1024);
+							var storageFormatter = new Liferay.StorageFormatter(
+								{
+									decimalSeparator: instance.get('decimalSeparator')
+								}
+							);
 
-							instance._invalidFileSizeText = Lang.sub(strings.invalidFileSizeText, [maxFileSizeKB]);
+							var maxFileSize = storageFormatter.format(instance.get('maxFileSize'));
+
+							instance._invalidFileSizeText = Lang.sub(strings.invalidFileSizeText, [maxFileSize]);
 
 							instance._metadataContainer = instance.get('metadataContainer');
 							instance._metadataExplanationContainer = instance.get('metadataExplanationContainer');

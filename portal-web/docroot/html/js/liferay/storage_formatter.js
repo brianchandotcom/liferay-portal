@@ -12,7 +12,7 @@ AUI.add(
 				ATTRS: {
 					addSpaceBeforeSuffix: {
 						validator: Lang.isBoolean,
-						value: true
+						value: false
 					},
 
 					decimalSeparator: {

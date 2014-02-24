@@ -455,7 +455,8 @@
 						requires: [
 							'aui-image-cropper',
 							'aui-io-request',
-							'liferay-portlet-base'
+							'liferay-portlet-base',
+							'liferay-storage-formatter'
 						]
 					},
 					'liferay-logo-selector': {
@@ -720,6 +721,7 @@
 							'aui-template-deprecated',
 							'collection',
 							'liferay-portlet-base',
+							'liferay-storage-formatter',
 							'uploader'
 						]
 					},

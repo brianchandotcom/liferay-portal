@@ -283,7 +283,10 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 			syncMessageDisabled: <%= !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE %>,
 			syncMessageSuppressed: <%= !GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true")) %>,
 			updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>,
-			uploadURL: '<%= uploadURL %>',
+			upload: {
+				decimalSeparator: '<%= StringPool.PERIOD %>',
+				uploadURL: '<%= uploadURL %>'
+			},
 			viewFileEntryURL: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/view_file_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
 		}
 	);

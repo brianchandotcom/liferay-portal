@@ -6,15 +6,22 @@ AUI.add(
 		var LogoEditor = A.Component.create(
 			{
 				ATTRS: {
+					decimalSeparator: {
+						validator: Lang.isString,
+						value: '.'
+					},
+
 					maxFileSize: {
-						value: null
+						validator: Lang.isNumber
 					},
 
 					previewURL: {
+						validator: Lang.isString,
 						value: null
 					},
 
 					uploadURL: {
+						validator: Lang.isString,
 						value: null
 					}
 				},
@@ -96,13 +103,23 @@ AUI.add(
 							exception = 'TypeException';
 						}
 
+						var message;
+
 						if (exception) {
 							var message = '';
 
 							if (exception == 'FileSizeException') {
+								var storageFormatter = new Liferay.StorageFormatter(
+									{
+										decimalSeparator: instance.get('decimalSeparator')
+									}
+								);
+
+								var maxFileSize = storageFormatter.format(instance.get('maxFileSize'));
+
 								message = Lang.sub(
-									Liferay.Language.get('upload-images-no-larger-than-x-k'),
-									[instance.get('maxFileSize')]
+									Liferay.Language.get('upload-images-no-larger-than-x'),
+									[maxFileSize]
 								);
 							}
 							else {

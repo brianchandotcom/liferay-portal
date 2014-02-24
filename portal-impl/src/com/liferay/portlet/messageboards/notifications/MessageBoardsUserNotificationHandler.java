@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.notifications;
+package com.liferay.portlet.messageboards.notifications;
 
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.util.PortletKeys;
 
 /**
- * @author Roberto Díaz
+ * @author Sergio González
  */
-public class BookmarksUserNotificationHandler
+public class MessageBoardsUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
-	public BookmarksUserNotificationHandler() {
-		setPortletId(PortletKeys.BOOKMARKS);
+	public MessageBoardsUserNotificationHandler() {
+		setPortletId(PortletKeys.MESSAGE_BOARDS);
 	}
 
 }

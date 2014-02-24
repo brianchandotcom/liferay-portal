@@ -15,6 +15,7 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
@@ -50,6 +52,9 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetTestUtil;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.util.MBTestUtil;
 
 import java.io.Serializable;
 
@@ -107,7 +112,13 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		StagedModel stagedModel = addStagedModel(
 			stagingGroup, dependentStagedModelsMap);
 
+		// Assets
+
 		StagedModelAssets stagedModelAssets = updateAssetEntry(stagedModel);
+
+		// Comments
+
+		addComments(stagedModel);
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, stagedModel);
@@ -133,6 +144,13 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		validateImport(
 			stagedModel, stagedModelAssets, dependentStagedModelsMap,
 			liveGroup);
+	}
+
+	protected void addComments(StagedModel stagedModel) throws Exception {
+		MBTestUtil.addDiscussionMessage(
+			TestPropsValues.getUser(), stagingGroup.getGroupId(),
+			ExportImportClassedModelUtil.getClassName(stagedModel),
+			ExportImportClassedModelUtil.getClassPK(stagedModel));
 	}
 
 	protected List<StagedModel> addDependentStagedModel(
@@ -377,6 +395,45 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			assetVocabulary.getUuid(), importedAssetVocabulary.getUuid());
 	}
 
+	protected void validateComments(
+			StagedModel stagedModel, StagedModel importedStagedModel,
+			Group group)
+		throws Exception {
+
+		List<MBMessage> discussionMessages =
+			MBMessageLocalServiceUtil.getMessages(
+				ExportImportClassedModelUtil.getClassName(stagedModel),
+				ExportImportClassedModelUtil.getClassPK(stagedModel),
+				WorkflowConstants.STATUS_ANY);
+
+		// Not every StagedModel supports comments
+
+		if (ListUtil.isEmpty(discussionMessages)) {
+			return;
+		}
+
+		int importedDiscussionMessagesCount =
+			MBMessageLocalServiceUtil.getDiscussionMessagesCount(
+				ExportImportClassedModelUtil.getClassName(importedStagedModel),
+				ExportImportClassedModelUtil.getClassPK(importedStagedModel),
+				WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			discussionMessages.size(), importedDiscussionMessagesCount + 1);
+
+		for (MBMessage discussionMessage : discussionMessages) {
+			if (discussionMessage.isRoot()) {
+				continue;
+			}
+
+			MBMessage importedDiscussionMessage =
+				MBMessageLocalServiceUtil.fetchMBMessageByUuidAndGroupId(
+					discussionMessage.getUuid(), group.getGroupId());
+
+			Assert.assertNotNull(importedDiscussionMessage);
+		}
+	}
+
 	protected void validateExport(
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
@@ -465,6 +522,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		Assert.assertNotNull(importedStagedModel);
 
 		validateAssets(importedStagedModel.getUuid(), stagedModelAssets, group);
+
+		validateComments(stagedModel, importedStagedModel, group);
 
 		validateImport(dependentStagedModelsMap, group);
 	}

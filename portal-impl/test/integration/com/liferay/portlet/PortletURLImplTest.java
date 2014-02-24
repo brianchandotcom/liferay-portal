@@ -390,7 +390,7 @@ public class PortletURLImplTest {
 		portletURL.setPortletId(PORTLET_DDM);
 
 		expectedURLParts.add("http://domain2.net/destination-layout");
-		expectedURLParts.add("p_p_id="+PORTLET_DDM);
+		expectedURLParts.add("p_p_id=" + PORTLET_DDM);
 		expectedURLParts.add("p_p_lifecycle=0");
 		expectedURLParts.add("?&" + ampersands.toString());
 

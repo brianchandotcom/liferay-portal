@@ -131,9 +131,11 @@ public class Summary {
 			text = SearchUtil.highlight(
 				text, _queryTerms, ESCAPE_SAFE_HIGHLIGHT_1,
 				ESCAPE_SAFE_HIGHLIGHT_2);
+		}
 
-			text = HtmlUtil.escape(text);
+		text = HtmlUtil.escape(text);
 
+		if (_highlight) {
 			text = StringUtil.replace(
 				text,
 				new String[] {ESCAPE_SAFE_HIGHLIGHT_1, ESCAPE_SAFE_HIGHLIGHT_2},

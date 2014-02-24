@@ -5808,21 +5808,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return userIds;
 	}
 
-	protected void notify(final SubscriptionSender subscriptionSender) {
-		TransactionCommitCallbackRegistryUtil.registerCallback(
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					subscriptionSender.flushNotificationsAsync();
-
-					return null;
-				}
-
-			}
-		);
-	}
-
 	protected void notifyUser(
 			User user, String password, ServiceContext serviceContext)
 		throws SystemException {
@@ -5875,7 +5860,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
-		notify(subscriptionSender);
+		subscriptionSender.flushNotificationsAsync();
 	}
 
 	protected void reindex(final User user) {

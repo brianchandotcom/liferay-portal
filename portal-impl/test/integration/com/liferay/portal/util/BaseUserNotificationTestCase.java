@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.notifications;
+package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDelivery;
@@ -36,11 +37,6 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.util.BaseMailTestCase;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
@@ -66,25 +62,25 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class BlogsUserNotificationTest extends BaseMailTestCase {
+public class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_logRecords = JDKLoggerTestUtil.configureJDKLogger(
+		logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		_user = TestPropsValues.getUser();
+		user = TestPropsValues.getUser();
 
-		_group = GroupTestUtil.addGroup();
+		group = GroupTestUtil.addGroup();
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			_user.getUserId(), _group.getGroupId());
+			user.getUserId(), group.getGroupId());
 
-		_userNotificationDeliveries = getUserNotificationDeliveries(
-			_user.getUserId());
+		userNotificationDeliveries = getUserNotificationDeliveries(
+			user.getUserId());
 	}
 
 	@After
@@ -92,26 +88,26 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		GroupLocalServiceUtil.deleteGroup(_group);
+		GroupLocalServiceUtil.deleteGroup(group);
 
-		deleteUserNotificationEvents(_user.getUserId());
+		deleteUserNotificationEvents(user.getUserId());
 
 		deleteUserNotificationDeliveries();
 	}
 
 	@Test
-	public void testAddBlogsUserNotification() throws Exception {
-		BlogsEntry blogsEntry = addBlogsEntry();
+	public void testAddUserNotification() throws Exception {
+		BaseModel baseModel = addBaseModel();
 
-		Assert.assertEquals(1, _logRecords.size());
+		Assert.assertEquals(1, logRecords.size());
 
-		LogRecord logRecord = _logRecords.get(0);
+		LogRecord logRecord = logRecords.get(0);
 
 		Assert.assertEquals("Sending email", logRecord.getMessage());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
 			getUserNotificationEventsJSONObjects(
-				_user.getUserId(), blogsEntry.getEntryId());
+				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(1, userNotificationEventsJSONObjects.size());
 
@@ -125,20 +121,20 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	}
 
 	@Test
-	public void testAddBlogsUserNotificationWhenEmailNotificationsDisabled()
+	public void testAddUserNotificationWhenEmailNotificationsDisabled()
 		throws Exception {
 
 		updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 			UserNotificationDeliveryConstants.TYPE_EMAIL, false);
 
-		BlogsEntry blogsEntry = addBlogsEntry();
+		BaseModel baseModel = addBaseModel();
 
-		Assert.assertEquals(0, _logRecords.size());
+		Assert.assertEquals(0, logRecords.size());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
 			getUserNotificationEventsJSONObjects(
-				_user.getUserId(), blogsEntry.getEntryId());
+				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(1, userNotificationEventsJSONObjects.size());
 
@@ -152,64 +148,64 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	}
 
 	@Test
-	public void testAddBlogsUserNotificationWhenNotificationsDisabled()
+	public void testAddUserNotificationWhenNotificationsDisabled()
 		throws Exception {
 
 		updateUserNotificationsDelivery(false);
 
-		BlogsEntry blogsEntry = addBlogsEntry();
+		BaseModel baseModel = addBaseModel();
 
-		Assert.assertEquals(0, _logRecords.size());
+		Assert.assertEquals(0, logRecords.size());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
 			getUserNotificationEventsJSONObjects(
-				_user.getUserId(), blogsEntry.getEntryId());
+				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(0, userNotificationEventsJSONObjects.size());
 	}
 
 	@Test
-	public void testAddBlogsUserNotificationWhenWebsiteNotificationsDisabled()
+	public void testAddUserNotificationWhenWebsiteNotificationsDisabled()
 		throws Exception {
 
 		updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 			UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
-		BlogsEntry blogsEntry = addBlogsEntry();
+		BaseModel baseModel = addBaseModel();
 
-		Assert.assertEquals(1, _logRecords.size());
+		Assert.assertEquals(1, logRecords.size());
 
-		LogRecord logRecord = _logRecords.get(0);
+		LogRecord logRecord = logRecords.get(0);
 
 		Assert.assertEquals("Sending email", logRecord.getMessage());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
 			getUserNotificationEventsJSONObjects(
-				_user.getUserId(), blogsEntry.getEntryId());
+				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(0, userNotificationEventsJSONObjects.size());
 	}
 
 	@Test
-	public void testUpdateBlogsUserNotification() throws Exception {
-		BlogsEntry blogsEntry = addBlogsEntry();
+	public void testUpdateUserNotification() throws Exception {
+		BaseModel baseModel = addBaseModel();
 
-		updateBlogsEntry(blogsEntry);
+		updateBaseModel(baseModel);
 
-		Assert.assertEquals(2, _logRecords.size());
+		Assert.assertEquals(2, logRecords.size());
 
-		LogRecord logRecord = _logRecords.get(0);
+		LogRecord logRecord = logRecords.get(0);
 
 		Assert.assertEquals("Sending email", logRecord.getMessage());
 
-		logRecord = _logRecords.get(1);
+		logRecord = logRecords.get(1);
 
 		Assert.assertEquals("Sending email", logRecord.getMessage());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
 			getUserNotificationEventsJSONObjects(
-				_user.getUserId(), blogsEntry.getEntryId());
+				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(2, userNotificationEventsJSONObjects.size());
 
@@ -235,7 +231,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	}
 
 	@Test
-	public void testUpdateBlogsUserNotificationWhenEmailNotificationsDisabled()
+	public void testUpdateUserNotificationWhenEmailNotificationsDisabled()
 		throws Exception {
 
 		updateUserNotificationDelivery(
@@ -245,15 +241,15 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
 			UserNotificationDeliveryConstants.TYPE_EMAIL, false);
 
-		BlogsEntry blogsEntry = addBlogsEntry();
+		BaseModel baseModel = addBaseModel();
 
-		updateBlogsEntry(blogsEntry);
+		updateBaseModel(baseModel);
 
-		Assert.assertEquals(0, _logRecords.size());
+		Assert.assertEquals(0, logRecords.size());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
 			getUserNotificationEventsJSONObjects(
-				_user.getUserId(), blogsEntry.getEntryId());
+				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(2, userNotificationEventsJSONObjects.size());
 
@@ -279,27 +275,27 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 	}
 
 	@Test
-	public void testUpdateBlogsUserNotificationWhenNotificationsDisabled()
+	public void testUpdateUserNotificationWhenNotificationsDisabled()
 		throws Exception {
 
 		updateUserNotificationsDelivery(false);
 
-		BlogsEntry blogsEntry = addBlogsEntry();
+		BaseModel baseModel = addBaseModel();
 
-		updateBlogsEntry(blogsEntry);
+		updateBaseModel(baseModel);
 
-		Assert.assertEquals(0, _logRecords.size());
+		Assert.assertEquals(0, logRecords.size());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
 			getUserNotificationEventsJSONObjects(
-				_user.getUserId(), blogsEntry.getEntryId());
+				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(0, userNotificationEventsJSONObjects.size());
 	}
 
 	@Test
 	public void
-			testUpdateBlogsUserNotificationWhenWebsiteNotificationsDisabled()
+			testUpdateUserNotificationWhenWebsiteNotificationsDisabled()
 		throws Exception {
 
 		updateUserNotificationDelivery(
@@ -309,43 +305,43 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
 			UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
-		BlogsEntry blogsEntry = addBlogsEntry();
+		BaseModel baseModel = addBaseModel();
 
-		updateBlogsEntry(blogsEntry);
+		updateBaseModel(baseModel);
 
-		Assert.assertEquals(2, _logRecords.size());
+		Assert.assertEquals(2, logRecords.size());
 
-		LogRecord logRecord = _logRecords.get(0);
+		LogRecord logRecord = logRecords.get(0);
 
 		Assert.assertEquals("Sending email", logRecord.getMessage());
 
-		logRecord = _logRecords.get(1);
+		logRecord = logRecords.get(1);
 
 		Assert.assertEquals("Sending email", logRecord.getMessage());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
 			getUserNotificationEventsJSONObjects(
-				_user.getUserId(), blogsEntry.getEntryId());
+				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(0, userNotificationEventsJSONObjects.size());
 	}
 
-	protected BlogsEntry addBlogsEntry() throws Exception {
+	protected BaseModel addBaseModel() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+			group.getGroupId());
 
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		serviceContext.setScopeGroupId(group.getGroupId());
 
 		return BlogsTestUtil.addEntry(
-			_user.getUserId(), ServiceTestUtil.randomString(), true,
+			user.getUserId(), ServiceTestUtil.randomString(), true,
 			serviceContext);
 	}
 
 	protected void deleteUserNotificationDeliveries() throws Exception {
 		UserNotificationDeliveryLocalServiceUtil.
-			deleteUserNotificationDeliveries(_user.getUserId());
+			deleteUserNotificationDeliveries(user.getUserId());
 	}
 
 	protected void deleteUserNotificationEvents(long userId) throws Exception {
@@ -427,12 +423,12 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		return userNotificationEventJSONObjects;
 	}
 
-	protected void updateBlogsEntry(BlogsEntry blogsEntry) throws Exception {
+	protected void updateBaseModel(BaseModel baseModel) throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		serviceContext.setCommand(Constants.UPDATE);
 		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		serviceContext.setScopeGroupId(group.getGroupId());
 
 		BlogsEntryLocalServiceUtil.updateEntry(
 			blogsEntry.getUserId(), blogsEntry.getEntryId(),
@@ -448,7 +444,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		throws Exception {
 
 		for (UserNotificationDelivery userNotificationDelivery :
-				_userNotificationDeliveries) {
+			userNotificationDeliveries) {
 
 			if ((userNotificationDelivery.getNotificationType() !=
 					notificationType) ||
@@ -472,7 +468,7 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		throws Exception {
 
 		for (UserNotificationDelivery userNotificationDelivery :
-				_userNotificationDeliveries) {
+			userNotificationDeliveries) {
 
 			UserNotificationDeliveryLocalServiceUtil.
 				updateUserNotificationDelivery(
@@ -481,10 +477,10 @@ public class BlogsUserNotificationTest extends BaseMailTestCase {
 		}
 	}
 
-	private Group _group;
-	private List<LogRecord> _logRecords;
-	private User _user;
-	private List<UserNotificationDelivery> _userNotificationDeliveries =
+	protected Group group;
+	protected List<LogRecord> logRecords;
+	protected User user;
+	protected List<UserNotificationDelivery> userNotificationDeliveries =
 		new ArrayList<UserNotificationDelivery>();
 
 }

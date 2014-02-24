@@ -147,28 +147,6 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		}
 	}
 
-	protected boolean createDefaultMetadataElement(
-		Element dynamicElementElement, String defaultLanguageId) {
-
-		boolean hasDefaultMetadataElement = hasDefaultMetadataElement(
-			dynamicElementElement, defaultLanguageId);
-
-		if (hasDefaultMetadataElement) {
-			return false;
-		}
-
-		Element metadataElement = dynamicElementElement.addElement("meta-data");
-
-		metadataElement.addAttribute("locale", defaultLanguageId);
-
-		Element entryElement = metadataElement.addElement("entry");
-
-		entryElement.addAttribute("name", "label");
-		entryElement.addCDATA(StringPool.BLANK);
-
-		return true;
-	}
-
 	protected ServiceContext createServiceContext() {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -187,9 +165,16 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 		for (DDMStructure structure : structures) {
 			verifyStructure(structure);
+			verifyTemplates(structure);
 
 			updateFileUploadReferences(structure);
 		}
+	}
+
+	protected List<Node> getDynamicElementNodes(Document document) {
+		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
+
+		return xPathSelector.selectNodes(document);
 	}
 
 	protected String getFileUploadPath(BaseModel<?> baseModel)
@@ -230,6 +215,15 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		sb.append(version);
 
 		return sb.toString();
+	}
+
+	protected List<DDMTemplate> getFormTemplates(DDMStructure structure)
+		throws Exception {
+
+		return DDMTemplateLocalServiceUtil.getTemplates(
+			structure.getGroupId(), _ddmStructureClassNameId,
+			structure.getStructureId(),
+			DDMTemplateConstants.TEMPLATE_TYPE_FORM);
 	}
 
 	protected String getJSON(FileEntry fileEntry) {
@@ -315,19 +309,6 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			fileVersion.getStatus());
 	}
 
-	protected boolean updateDynamicElement(Element element) {
-		String dataType = element.attributeValue("dataType");
-
-		if (Validator.equals(dataType, "image")) {
-			element.addAttribute("fieldNamespace", "ddm");
-			element.addAttribute("type", "ddm-image");
-
-			return true;
-		}
-
-		return false;
-	}
-
 	protected void updateFieldValues(
 			long storageId, Map<String, String> fieldValues)
 		throws Exception {
@@ -378,15 +359,16 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			updateFileUploadReferences(structureLink);
 		}
 
-		updateStructure(structure, updateXSD(structure.getXsd()));
+		String xsd = updateFileUploadReferences(structure.getXsd());
 
-		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(
-			structure.getGroupId(), _ddmStructureClassNameId,
-			structure.getStructureId(),
-			DDMTemplateConstants.TEMPLATE_TYPE_FORM);
+		updateStructure(structure, xsd);
+
+		List<DDMTemplate> templates = getFormTemplates(structure);
 
 		for (DDMTemplate template : templates) {
-			updateTemplate(template, updateXSD(template.getScript()));
+			String script = updateFileUploadReferences(template.getScript());
+
+			updateTemplate(template, script);
 		}
 	}
 
@@ -400,6 +382,15 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		}
 		else if (classNameId == _dlFileEntryMetadataClassNameId) {
 			updateDLFileUploadReferences(structureLink.getClassPK());
+		}
+	}
+
+	protected void updateFileUploadReferences(Element dynamicElementElement) {
+		String dataType = dynamicElementElement.attributeValue("dataType");
+
+		if (Validator.equals(dataType, "file-upload")) {
+			dynamicElementElement.addAttribute("dataType", "document-library");
+			dynamicElementElement.addAttribute("type", "ddm-documentlibrary");
 		}
 	}
 
@@ -447,10 +438,26 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		updateFieldValues(storageId, fieldValues);
 	}
 
+	protected String updateFileUploadReferences(String xsd) throws Exception {
+		Document document = SAXReaderUtil.read(xsd);
+
+		List<Node> nodes = getDynamicElementNodes(document);
+
+		for (Node node : nodes) {
+			Element dynamicElementElement = (Element)node;
+
+			updateFileUploadReferences(dynamicElementElement);
+		}
+
+		return DDMXMLUtil.formatXML(document.asXML());
+	}
+
 	protected void updateStructure(DDMStructure structure, String xsd)
 		throws Exception {
 
-		xsd = DDMXMLUtil.formatXML(xsd);
+		if (xsd.equals(structure.getXsd())) {
+			return;
+		}
 
 		structure.setXsd(xsd);
 
@@ -460,71 +467,87 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 	protected void updateTemplate(DDMTemplate template, String script)
 		throws Exception {
 
-		script = DDMXMLUtil.formatXML(script);
+		if (script.equals(template.getScript())) {
+			return;
+		}
 
 		template.setScript(script);
 
 		DDMTemplateLocalServiceUtil.updateDDMTemplate(template);
 	}
 
-	protected String updateXSD(String xsd) throws Exception {
+	protected void verifyDynamicElement(
+		Element dynamicElementElement, String defaultLanguageId) {
+
+		String dataType = dynamicElementElement.attributeValue("dataType");
+
+		if (Validator.equals(dataType, "image")) {
+			dynamicElementElement.addAttribute("fieldNamespace", "ddm");
+			dynamicElementElement.addAttribute("type", "ddm-image");
+		}
+
+		verifyMetadataElement(dynamicElementElement, defaultLanguageId);
+	}
+
+	protected void verifyMetadataElement(
+		Element dynamicElementElement, String defaultLanguageId) {
+
+		boolean hasDefaultMetadataElement = hasDefaultMetadataElement(
+			dynamicElementElement, defaultLanguageId);
+
+		if (hasDefaultMetadataElement) {
+			return;
+		}
+
+		Element metadataElement = dynamicElementElement.addElement("meta-data");
+
+		metadataElement.addAttribute("locale", defaultLanguageId);
+
+		Element entryElement = metadataElement.addElement("entry");
+
+		entryElement.addAttribute("name", "label");
+		entryElement.addCDATA(StringPool.BLANK);
+	}
+
+	protected String verifySchema(String xsd, String defaultLanguageId)
+		throws Exception {
+
 		Document document = SAXReaderUtil.read(xsd);
 
-		Element rootElement = document.getRootElement();
-
-		List<Element> dynamicElementElements = rootElement.elements(
-			"dynamic-element");
-
-		for (Element dynamicElementElement : dynamicElementElements) {
-			updateXSDDynamicElement(dynamicElementElement);
-		}
-
-		return document.asXML();
-	}
-
-	protected void updateXSDDynamicElement(Element element) {
-		String dataType = element.attributeValue("dataType");
-
-		if (Validator.equals(dataType, "file-upload")) {
-			element.addAttribute("dataType", "document-library");
-			element.addAttribute("type", "ddm-documentlibrary");
-		}
-
-		List<Element> dynamicElementElements = element.elements(
-			"dynamic-element");
-
-		for (Element dynamicElementElement : dynamicElementElements) {
-			updateXSDDynamicElement(dynamicElementElement);
-		}
-	}
-
-	protected void verifyStructure(DDMStructure structure) throws Exception {
-		boolean modified = false;
-
-		String defaultLanguageId = structure.getDefaultLanguageId();
-
-		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
-
-		Document document = structure.getDocument();
-
-		List<Node> nodes = xPathSelector.selectNodes(document);
+		List<Node> nodes = getDynamicElementNodes(document);
 
 		for (Node node : nodes) {
 			Element dynamicElementElement = (Element)node;
 
-			if (updateDynamicElement(dynamicElementElement)) {
-				modified = true;
-			}
-
-			if (createDefaultMetadataElement(
-					dynamicElementElement, defaultLanguageId)) {
-
-				modified = true;
-			}
+			verifyDynamicElement(dynamicElementElement, defaultLanguageId);
 		}
 
-		if (modified) {
-			updateStructure(structure, document.asXML());
+		return DDMXMLUtil.formatXML(document.asXML());
+	}
+
+	protected void verifyStructure(DDMStructure structure) throws Exception {
+		String xsd = verifySchema(
+			structure.getXsd(), structure.getDefaultLanguageId());
+
+		updateStructure(structure, xsd);
+	}
+
+	protected void verifyTemplate(DDMTemplate template) throws Exception {
+		if (template.getType() != DDMTemplateConstants.TEMPLATE_TYPE_FORM) {
+			return;
+		}
+
+		String script = verifySchema(
+			template.getScript(), template.getDefaultLanguageId());
+
+		updateTemplate(template, script);
+	}
+
+	protected void verifyTemplates(DDMStructure structure) throws Exception {
+		List<DDMTemplate> templates = getFormTemplates(structure);
+
+		for (DDMTemplate template : templates) {
+			verifyTemplate(template);
 		}
 	}
 

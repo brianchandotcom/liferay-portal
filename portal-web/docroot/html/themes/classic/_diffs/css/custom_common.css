@@ -523,26 +523,28 @@
 			display: none;
 		}
 
-		@include respond-to(phone, tablet) {
-			padding-left: 5px;
-			padding-right: 5px;
+		&.breadcrumb-horizontal {
+			@include respond-to(phone, tablet) {
+				padding-left: 5px;
+				padding-right: 5px;
 
-			li {
-				display: none;
+				li {
+					display: none;
 
-				&.only, &.first, &.last, &.current-parent {
-					display: inline-block;
-				}
-
-				&.breadcrumb-truncate {
-					&.only, &.first a, &.last a, &.active, &.current-parent a {
-						max-width: 65px;
+					&.only, &.first, &.last, &.current-parent {
+						display: inline-block;
 					}
 
-					&.current-parent:before {
-						color: #999;
-						content: " ... / ";
-						font-weight: bold;
+					&.breadcrumb-truncate {
+						&.only, &.first a, &.last a, &.active, &.current-parent a {
+							max-width: 65px;
+						}
+
+						&.current-parent:before {
+							color: #999;
+							content: " ... / ";
+							font-weight: bold;
+						}
 					}
 				}
 			}

@@ -637,6 +637,29 @@ body.portlet {
 	}
 }
 
+/* ---------- Breadcrumbs taglib ---------- */
+.breadcrumb.breadcrumb-vertical {
+	display: inline-block;
+	text-align: center;
+
+	li {
+		background: url(@theme_image_path@/arrows/07_down.png) no-repeat 50% 100%;
+		display: block;
+
+		a {
+			padding-bottom: 0.2em;
+		}
+
+		&.last, &.only {
+			background: none;
+		}
+	}
+
+	.divider {
+		display: none;
+	}
+}
+
 /* ---------- Calendar taglib ---------- */
 
 .taglib-calendar {

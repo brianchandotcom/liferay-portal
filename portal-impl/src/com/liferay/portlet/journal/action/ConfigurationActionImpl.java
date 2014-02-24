@@ -17,7 +17,6 @@ package com.liferay.portlet.journal.action;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
@@ -83,7 +82,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 					actionRequest, "emailArticleApprovalDeniedSubject");
 			}
 			else if (Validator.isNull(emailArticleApprovalDeniedBody)) {
-				SessionErrors.add(actionRequest, "emailArticleApprovalDeniedBody");
+				SessionErrors.add(
+					actionRequest, "emailArticleApprovalDeniedBody");
 			}
 		}
 	}
@@ -105,7 +105,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 					actionRequest, "emailArticleApprovalGrantedSubject");
 			}
 			else if (Validator.isNull(emailArticleApprovalGrantedBody)) {
-				SessionErrors.add(actionRequest, "emailArticleApprovalGrantedBody");
+				SessionErrors.add(
+					actionRequest, "emailArticleApprovalGrantedBody");
 			}
 		}
 	}
@@ -114,8 +115,10 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionRequest actionRequest)
 		throws Exception {
 
-		boolean emailArticleApprovalRequestedEnabled = GetterUtil.getBoolean(
-			getParameter(actionRequest, "emailArticleApprovalRequestedEnabled"));
+		boolean emailArticleApprovalRequestedEnabled =
+			GetterUtil.getBoolean(
+				getParameter(
+					actionRequest, "emailArticleApprovalRequestedEnabled"));
 		String emailArticleApprovalRequestedSubject = getParameter(
 			actionRequest, "emailArticleApprovalRequestedSubject");
 		String emailArticleApprovalRequestedBody = getParameter(

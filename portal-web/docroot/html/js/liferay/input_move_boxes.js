@@ -118,15 +118,7 @@ AUI.add(
 							sort = !instance.get('leftReorder');
 						}
 
-						Util.moveItem(from, to, sort);
-
-						Liferay.fire(
-							NAME + ':moveItem',
-							{
-								fromBox: from,
-								toBox: to
-							}
-						);
+						instance._moveItem(from, to, sort);
 					},
 
 					_afterOrderClick: function(event, box) {
@@ -145,6 +137,18 @@ AUI.add(
 						}
 
 						Util.reorder(box, direction);
+					},
+
+					_moveItem: function(from, to, sort) {
+						Util.moveItem(from, to, sort);
+
+						Liferay.fire(
+							NAME + ':moveItem',
+							{
+								fromBox: from,
+								toBox: to
+							}
+						);
 					},
 
 					_onSelectFocus: function(event, box) {

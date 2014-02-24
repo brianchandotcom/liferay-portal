@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -34,7 +35,7 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
+import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.GroupTestUtil;
@@ -69,9 +70,10 @@ import org.testng.Assert;
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,
-		TransactionalCallbackAwareExecutionTestListener.class
+		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Transactional
 public class PortletURLImplTest {
 
 	@Before

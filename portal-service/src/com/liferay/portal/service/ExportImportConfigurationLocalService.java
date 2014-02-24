@@ -83,11 +83,13 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	*
 	* @param exportImportConfiguration the export import configuration
 	* @return the export import configuration that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ExportImportConfiguration deleteExportImportConfiguration(
 		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -253,7 +255,8 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteExportImportConfigurations(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.ExportImportConfiguration> getExportImportConfigurations(
@@ -270,11 +273,26 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	public int getExportImportConfigurationsCount(long groupId, int type)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portal.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
+		long userId, long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
+		long userId, long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portal.model.ExportImportConfiguration updateExportImportConfiguration(
-		long configurationId, java.lang.String name,
+		long exportImportConfigurationId, java.lang.String name,
 		java.lang.String description,
 		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.ExportImportConfiguration updateStatus(
+		long userId, long exportImportConfigurationId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

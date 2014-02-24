@@ -67,6 +67,10 @@ public class ExportImportConfigurationWrapper
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
 		attributes.put("settings", getSettings());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -144,6 +148,30 @@ public class ExportImportConfigurationWrapper
 
 		if (settings != null) {
 			setSettings(settings);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -427,6 +455,257 @@ public class ExportImportConfigurationWrapper
 	@Override
 	public void setSettings(java.lang.String settings) {
 		_exportImportConfiguration.setSettings(settings);
+	}
+
+	/**
+	* Returns the status of this export import configuration.
+	*
+	* @return the status of this export import configuration
+	*/
+	@Override
+	public int getStatus() {
+		return _exportImportConfiguration.getStatus();
+	}
+
+	/**
+	* Sets the status of this export import configuration.
+	*
+	* @param status the status of this export import configuration
+	*/
+	@Override
+	public void setStatus(int status) {
+		_exportImportConfiguration.setStatus(status);
+	}
+
+	/**
+	* Returns the status by user ID of this export import configuration.
+	*
+	* @return the status by user ID of this export import configuration
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _exportImportConfiguration.getStatusByUserId();
+	}
+
+	/**
+	* Sets the status by user ID of this export import configuration.
+	*
+	* @param statusByUserId the status by user ID of this export import configuration
+	*/
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		_exportImportConfiguration.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Returns the status by user uuid of this export import configuration.
+	*
+	* @return the status by user uuid of this export import configuration
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _exportImportConfiguration.getStatusByUserUuid();
+	}
+
+	/**
+	* Sets the status by user uuid of this export import configuration.
+	*
+	* @param statusByUserUuid the status by user uuid of this export import configuration
+	*/
+	@Override
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+		_exportImportConfiguration.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Returns the status by user name of this export import configuration.
+	*
+	* @return the status by user name of this export import configuration
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _exportImportConfiguration.getStatusByUserName();
+	}
+
+	/**
+	* Sets the status by user name of this export import configuration.
+	*
+	* @param statusByUserName the status by user name of this export import configuration
+	*/
+	@Override
+	public void setStatusByUserName(java.lang.String statusByUserName) {
+		_exportImportConfiguration.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	* Returns the status date of this export import configuration.
+	*
+	* @return the status date of this export import configuration
+	*/
+	@Override
+	public java.util.Date getStatusDate() {
+		return _exportImportConfiguration.getStatusDate();
+	}
+
+	/**
+	* Sets the status date of this export import configuration.
+	*
+	* @param statusDate the status date of this export import configuration
+	*/
+	@Override
+	public void setStatusDate(java.util.Date statusDate) {
+		_exportImportConfiguration.setStatusDate(statusDate);
+	}
+
+	/**
+	* Returns the trash entry created when this export import configuration was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this export import configuration.
+	*
+	* @return the trash entry created when this export import configuration was moved to the Recycle Bin
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _exportImportConfiguration.getTrashEntry();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this export import configuration.
+	*
+	* @return the class primary key of the trash entry for this export import configuration
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _exportImportConfiguration.getTrashEntryClassPK();
+	}
+
+	/**
+	* Returns the trash handler for this export import configuration.
+	*
+	* @return the trash handler for this export import configuration
+	*/
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _exportImportConfiguration.getTrashHandler();
+	}
+
+	/**
+	* Returns <code>true</code> if this export import configuration is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this export import configuration is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrash() {
+		return _exportImportConfiguration.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if the parent of this export import configuration is in the Recycle Bin.
+	*
+	* @return <code>true</code> if the parent of this export import configuration is in the Recycle Bin; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public boolean isInTrashContainer() {
+		return _exportImportConfiguration.isInTrashContainer();
+	}
+
+	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _exportImportConfiguration.isInTrashExplicitly();
+	}
+
+	/**
+	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
+	*/
+	@Deprecated
+	@Override
+	public boolean getApproved() {
+		return _exportImportConfiguration.getApproved();
+	}
+
+	/**
+	* Returns <code>true</code> if this export import configuration is approved.
+	*
+	* @return <code>true</code> if this export import configuration is approved; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isApproved() {
+		return _exportImportConfiguration.isApproved();
+	}
+
+	/**
+	* Returns <code>true</code> if this export import configuration is denied.
+	*
+	* @return <code>true</code> if this export import configuration is denied; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDenied() {
+		return _exportImportConfiguration.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this export import configuration is a draft.
+	*
+	* @return <code>true</code> if this export import configuration is a draft; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDraft() {
+		return _exportImportConfiguration.isDraft();
+	}
+
+	/**
+	* Returns <code>true</code> if this export import configuration is expired.
+	*
+	* @return <code>true</code> if this export import configuration is expired; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isExpired() {
+		return _exportImportConfiguration.isExpired();
+	}
+
+	/**
+	* Returns <code>true</code> if this export import configuration is inactive.
+	*
+	* @return <code>true</code> if this export import configuration is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _exportImportConfiguration.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this export import configuration is incomplete.
+	*
+	* @return <code>true</code> if this export import configuration is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _exportImportConfiguration.isIncomplete();
+	}
+
+	/**
+	* Returns <code>true</code> if this export import configuration is pending.
+	*
+	* @return <code>true</code> if this export import configuration is pending; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPending() {
+		return _exportImportConfiguration.isPending();
+	}
+
+	/**
+	* Returns <code>true</code> if this export import configuration is scheduled.
+	*
+	* @return <code>true</code> if this export import configuration is scheduled; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isScheduled() {
+		return _exportImportConfiguration.isScheduled();
 	}
 
 	@Override

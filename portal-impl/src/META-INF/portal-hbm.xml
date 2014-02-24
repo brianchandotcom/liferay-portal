@@ -375,6 +375,10 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
 		<property name="settings" type="com.liferay.portal.dao.orm.hibernate.StringType" column="settings_" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.GroupImpl" table="Group_" dynamic-update="true">
 		<cache usage="read-write" />

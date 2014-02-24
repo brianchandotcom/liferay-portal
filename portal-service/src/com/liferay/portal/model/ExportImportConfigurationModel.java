@@ -17,10 +17,13 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.io.Serializable;
 
@@ -41,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface ExportImportConfigurationModel extends BaseModel<ExportImportConfiguration>,
-	GroupedModel, MVCCModel {
+	GroupedModel, MVCCModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -264,6 +267,204 @@ public interface ExportImportConfigurationModel extends BaseModel<ExportImportCo
 	 * @param settings the settings of this export import configuration
 	 */
 	public void setSettings(String settings);
+
+	/**
+	 * Returns the status of this export import configuration.
+	 *
+	 * @return the status of this export import configuration
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this export import configuration.
+	 *
+	 * @param status the status of this export import configuration
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this export import configuration.
+	 *
+	 * @return the status by user ID of this export import configuration
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this export import configuration.
+	 *
+	 * @param statusByUserId the status by user ID of this export import configuration
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this export import configuration.
+	 *
+	 * @return the status by user uuid of this export import configuration
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public String getStatusByUserUuid() throws SystemException;
+
+	/**
+	 * Sets the status by user uuid of this export import configuration.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this export import configuration
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this export import configuration.
+	 *
+	 * @return the status by user name of this export import configuration
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this export import configuration.
+	 *
+	 * @param statusByUserName the status by user name of this export import configuration
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this export import configuration.
+	 *
+	 * @return the status date of this export import configuration
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this export import configuration.
+	 *
+	 * @param statusDate the status date of this export import configuration
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the trash entry created when this export import configuration was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this export import configuration.
+	 *
+	 * @return the trash entry created when this export import configuration was moved to the Recycle Bin
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TrashEntry getTrashEntry() throws PortalException, SystemException;
+
+	/**
+	 * Returns the class primary key of the trash entry for this export import configuration.
+	 *
+	 * @return the class primary key of the trash entry for this export import configuration
+	 */
+	@Override
+	public long getTrashEntryClassPK();
+
+	/**
+	 * Returns the trash handler for this export import configuration.
+	 *
+	 * @return the trash handler for this export import configuration
+	 */
+	@Override
+	public TrashHandler getTrashHandler();
+
+	/**
+	 * Returns <code>true</code> if this export import configuration is in the Recycle Bin.
+	 *
+	 * @return <code>true</code> if this export import configuration is in the Recycle Bin; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInTrash();
+
+	/**
+	 * Returns <code>true</code> if the parent of this export import configuration is in the Recycle Bin.
+	 *
+	 * @return <code>true</code> if the parent of this export import configuration is in the Recycle Bin; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public boolean isInTrashContainer();
+
+	@Override
+	public boolean isInTrashExplicitly() throws SystemException;
+
+	/**
+	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
+	 */
+	@Deprecated
+	@Override
+	public boolean getApproved();
+
+	/**
+	 * Returns <code>true</code> if this export import configuration is approved.
+	 *
+	 * @return <code>true</code> if this export import configuration is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this export import configuration is denied.
+	 *
+	 * @return <code>true</code> if this export import configuration is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this export import configuration is a draft.
+	 *
+	 * @return <code>true</code> if this export import configuration is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this export import configuration is expired.
+	 *
+	 * @return <code>true</code> if this export import configuration is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this export import configuration is inactive.
+	 *
+	 * @return <code>true</code> if this export import configuration is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this export import configuration is incomplete.
+	 *
+	 * @return <code>true</code> if this export import configuration is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this export import configuration is pending.
+	 *
+	 * @return <code>true</code> if this export import configuration is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this export import configuration is scheduled.
+	 *
+	 * @return <code>true</code> if this export import configuration is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 	@Override
 	public boolean isNew();

@@ -21,9 +21,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.portal.service.http.ExportImportConfigurationServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @see com.liferay.portal.service.http.ExportImportConfigurationServiceSoap
  * @generated
  */
 public class ExportImportConfigurationSoap implements Serializable {
@@ -43,6 +44,10 @@ public class ExportImportConfigurationSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setType(model.getType());
 		soapModel.setSettings(model.getSettings());
+		soapModel.setStatus(model.getStatus());
+		soapModel.setStatusByUserId(model.getStatusByUserId());
+		soapModel.setStatusByUserName(model.getStatusByUserName());
+		soapModel.setStatusDate(model.getStatusDate());
 
 		return soapModel;
 	}
@@ -194,6 +199,38 @@ public class ExportImportConfigurationSoap implements Serializable {
 		_settings = settings;
 	}
 
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public String getStatusByUserName() {
+		return _statusByUserName;
+	}
+
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
 	private long _mvccVersion;
 	private long _exportImportConfigurationId;
 	private long _groupId;
@@ -206,4 +243,8 @@ public class ExportImportConfigurationSoap implements Serializable {
 	private String _description;
 	private int _type;
 	private String _settings;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 }

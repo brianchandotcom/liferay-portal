@@ -791,7 +791,11 @@ create table ExportImportConfiguration (
 	name VARCHAR(75) null,
 	description STRING null,
 	type_ INTEGER,
-	settings_ TEXT null
+	settings_ TEXT null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 create table Group_ (

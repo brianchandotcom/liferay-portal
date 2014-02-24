@@ -37,10 +37,12 @@ import java.util.Map;
 public class TemplateNode extends LinkedHashMap<String, Object> {
 
 	public TemplateNode(
-		ThemeDisplay themeDisplay, String name, String data, String type) {
+		ThemeDisplay themeDisplay, String name, String data, String type,
+		Map<String, String> attributes) {
 
 		_themeDisplay = themeDisplay;
 
+		put("attributes", attributes);
 		put("name", name);
 		put("data", data);
 		put("type", type);
@@ -73,6 +75,20 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 	public void appendSibling(TemplateNode templateNode) {
 		_siblingTemplateNodes.add(templateNode);
+	}
+
+	public String getAttribute(String name) {
+		Map<String, String> attributes = getAttributes();
+
+		if (attributes == null) {
+			return StringPool.BLANK;
+		}
+
+		return attributes.get(name);
+	}
+
+	public Map<String, String> getAttributes() {
+		return (Map<String, String>)get("attributes");
 	}
 
 	public TemplateNode getChild(String name) {

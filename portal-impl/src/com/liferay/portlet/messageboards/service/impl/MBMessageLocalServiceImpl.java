@@ -2065,6 +2065,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			categoryIds.addAll(category.getAncestorCategoryIds());
 		}
 
+		String entryTitle = message.getSubject();
+		String entryURL = getMessageURL(message, serviceContext);
+
 		String fromName = MBUtil.getEmailFromName(portletSettings);
 		String fromAddress = MBUtil.getEmailFromAddress(portletSettings);
 
@@ -2146,15 +2149,19 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSenderPrototype.setBody(body);
 		subscriptionSenderPrototype.setBulk(
 			PropsValues.MESSAGE_BOARDS_EMAIL_BULK);
+		subscriptionSenderPrototype.setClassName(message.getModelClassName());
+		subscriptionSenderPrototype.setClassPK(message.getMessageId());
 		subscriptionSenderPrototype.setCompanyId(message.getCompanyId());
 		subscriptionSenderPrototype.setContextAttribute(
 			"[$MESSAGE_BODY$]", messageBody, false);
 		subscriptionSenderPrototype.setContextAttributes(
 			"[$CATEGORY_NAME$]", categoryName, "[$MAILING_LIST_ADDRESS$]",
 			replyToAddress, "[$MESSAGE_ID$]", message.getMessageId(),
-			"[$MESSAGE_SUBJECT$]", message.getSubject(), "[$MESSAGE_URL$]",
-			getMessageURL(message, serviceContext), "[$MESSAGE_USER_ADDRESS$]",
-			emailAddress, "[$MESSAGE_USER_NAME$]", fullName);
+			"[$MESSAGE_SUBJECT$]", entryTitle, "[$MESSAGE_URL$]", entryURL,
+			"[$MESSAGE_USER_ADDRESS$]", emailAddress, "[$MESSAGE_USER_NAME$]",
+			fullName);
+		subscriptionSenderPrototype.setEntryTitle(entryTitle);
+		subscriptionSenderPrototype.setEntryURL(entryURL);
 		subscriptionSenderPrototype.setFrom(fromAddress, fromName);
 		subscriptionSenderPrototype.setHtmlFormat(htmlFormat);
 		subscriptionSenderPrototype.setInReplyTo(inReplyTo);

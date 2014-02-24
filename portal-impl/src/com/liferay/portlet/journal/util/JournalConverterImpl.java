@@ -83,13 +83,13 @@ public class JournalConverterImpl implements JournalConverter {
 
 		_ddmTypesToJournalTypes.put("checkbox", "boolean");
 		_ddmTypesToJournalTypes.put("ddm-documentlibrary", "document_library");
+		_ddmTypesToJournalTypes.put("ddm-image", "image");
 		_ddmTypesToJournalTypes.put("ddm-link-to-page", "link_to_layout");
 		_ddmTypesToJournalTypes.put("ddm-separator", "selection_break");
 		_ddmTypesToJournalTypes.put("ddm-text-html", "text_area");
 		_ddmTypesToJournalTypes.put("select", "list");
 		_ddmTypesToJournalTypes.put("text", "text");
 		_ddmTypesToJournalTypes.put("textarea", "text_box");
-		_ddmTypesToJournalTypes.put("ddm-image", "image");
 
 		_journalTypesToDDMTypes = new HashMap<String, String>();
 

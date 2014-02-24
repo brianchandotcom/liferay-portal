@@ -318,6 +318,30 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 				}
 			);
 
+			var DDMImageField = A.Component.create(
+				{
+					ATTRS: {
+						dataType: {
+							value: 'image'
+						},
+
+						fieldNamespace: {
+							value: 'ddm'
+						}
+					},
+
+					EXTENDS: A.FormBuilderField,
+
+					NAME: 'ddm-image',
+
+					prototype: {
+						getHTML: function() {
+							return TPL_WCM_IMAGE;
+						}
+					}
+				}
+			);
+
 			var DDMIntegerField = A.Component.create(
 				{
 					ATTRS: {
@@ -526,30 +550,6 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 					prototype: {
 						getHTML: function() {
 							return TPL_LINK_TO_PAGE;
-						}
-					}
-				}
-			);
-
-			var DDMImageField = A.Component.create(
-				{
-					ATTRS: {
-						dataType: {
-							value: 'image'
-						},
-
-						fieldNamespace: {
-							value: 'ddm'
-						}
-					},
-
-					EXTENDS: A.FormBuilderField,
-
-					NAME: 'ddm-image',
-
-					prototype: {
-						getHTML: function() {
-							return TPL_WCM_IMAGE;
 						}
 					}
 				}

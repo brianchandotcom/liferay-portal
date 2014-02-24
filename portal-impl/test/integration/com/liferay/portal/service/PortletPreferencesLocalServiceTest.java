@@ -719,21 +719,19 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 
 		Assert.assertEquals(
-			1,
+			0,
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY, _layout.getPlid(),
 				_portlet.getPortletId()));
-
 		Assert.assertEquals(
 			1,
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_GROUP, layout.getPlid(),
 				_portlet.getPortletId()));
-
 		Assert.assertEquals(
-			0,
+			1,
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_COMPANY, _layout.getPlid(),
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 				_portlet.getPortletId()));
 	}
 

@@ -99,8 +99,7 @@ public class DLActionsDisplayContext {
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException, SystemException {
 
-		if ((_dlActionsDisplayContextHelper.hasUpdatePermission() &&
-			 _dlActionsDisplayContextHelper.isLockedByMe()) ||
+		if (isCheckinButtonVisible() ||
 			(_dlActionsDisplayContextHelper.isCheckedOut() &&
 			 _dlActionsDisplayContextHelper.hasOverrideCheckoutPermission())) {
 
@@ -118,7 +117,8 @@ public class DLActionsDisplayContext {
 		throws PortalException, SystemException {
 
 		if (_dlActionsDisplayContextHelper.hasUpdatePermission() &&
-			_dlActionsDisplayContextHelper.isLockedByMe()) {
+			_dlActionsDisplayContextHelper.isLockedByMe() &&
+			_dlActionsDisplayContextHelper.isSupportsLocking()) {
 
 			return true;
 		}
@@ -146,11 +146,7 @@ public class DLActionsDisplayContext {
 	public boolean isDeleteButtonVisible()
 		throws PortalException, SystemException {
 
-		if (_dlActionsDisplayContextHelper.hasDeletePermission() &&
-			!_isFileEntryCheckedOutByOther() &&
-			(!_dlActionsDisplayContextHelper.isDLFileEntry() ||
-			 !_isTrashEnabled())) {
-
+		if (_isFileEntryDeletable() && !_isFileEntryTrashable()) {
 			return true;
 		}
 
@@ -190,11 +186,7 @@ public class DLActionsDisplayContext {
 	public boolean isMoveToTheRecycleBinButtonVisible()
 		throws PortalException, SystemException {
 
-		if (_dlActionsDisplayContextHelper.hasDeletePermission() &&
-			_dlActionsDisplayContextHelper.isDLFileEntry() &&
-			!_isFileEntryCheckedOutByOther() &&
-			_isTrashEnabled()) {
-
+		if (!isDeleteButtonVisible() && _isFileEntryDeletable()) {
 			return true;
 		}
 
@@ -288,10 +280,34 @@ public class DLActionsDisplayContext {
 		return false;
 	}
 
+	private boolean _isFileEntryDeletable()
+		throws PortalException, SystemException {
+
+		if (_dlActionsDisplayContextHelper.hasDeletePermission() &&
+			!_isFileEntryCheckedOutByOther()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isFileEntrySaveAsDraft() {
 		if ((_dlActionsDisplayContextHelper.isCheckedOut() ||
 			 _dlActionsDisplayContextHelper.isPending()) &&
 			!_isDLFileEntryDraftsEnabled()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isFileEntryTrashable()
+		throws PortalException, SystemException {
+
+		if (_dlActionsDisplayContextHelper.isDLFileEntry() &&
+			_isTrashEnabled()) {
 
 			return true;
 		}

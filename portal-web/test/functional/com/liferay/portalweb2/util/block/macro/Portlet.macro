@@ -20,33 +20,22 @@
 
 				<execute action="Home#refresh" />
 
-				<execute action="Dockbar#pause" locator1="1000" />
-
-				<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
-				<execute action="Dockbar#assertClick" locator-key1="ADD_APPLICATION_LINK" value1="Applications" />
-				<execute action="Dockbar#type" locator-key1="ADD_APPLICATION_SEARCH_FIELD" value1="${portletName}" />
-
-				<var name="portletLocator" value="//span[@data-title='${portletName}' and contains(@class,'add-content-item')]" />
-
-				<if>
-					<or>
-						<equals arg1="${portletName}" arg2="Asset Publisher" />
-						<equals arg1="${portletName}" arg2="Documents and Media Display" />
-						<equals arg1="${portletName}" arg2="Navigation" />
-						<equals arg1="${portletName}" arg2="Web Content Display" />
-					</or>
-					<then>
-						<var name="portletLocator" value="xpath=(${portletLocator})[2]" />
-					</then>
-				</if>
-
-				<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
-				<execute action="Dockbar#pause" locator1="1000" />
+				<execute macro="Portlet#addPGCmd">
+					<var name="portletName" value="${portletName}" />
+				</execute>
 			</then>
 		</while>
 	</command>
 
 	<command name="addPG">
+		<execute macro="Portlet#addPGCmd">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</command>
+
+	<command name="addPGCmd">
+		<description message="Add a ${portletName} portlet." />
+
 		<var name="portletTypeKey" value="PORTLET" />
 
 		<if>
@@ -61,42 +50,6 @@
 				</then>
 			</elseif>
 		</if>
-
-		<var name="i" value="1" />
-
-		<while>
-			<not>
-				<equals arg1="${i}" arg2="5" />
-			</not>
-			<then>
-				<var name="i" value="${i?increment()}" />
-				<var name="key_portletName" value="${portletName}" />
-
-				<execute action="Home#refresh" />
-
-				<execute action="Dockbar#pause" locator1="1000" />
-
-				<if>
-					<and>
-						<condition action="Home#isElementNotPresent" locator-key1="${portletTypeKey}" />
-					</and>
-					<then>
-						<execute macro="Portlet#addPGCmd">
-							<var name="portletName" value="${portletName}" />
-						</execute>
-					</then>
-					<else>
-						<var name="i" value="5" />
-					</else>
-				</if>
-			</then>
-		</while>
-
-		<execute action="Home#assertElementPresent" locator-key1="${portletTypeKey}" />
-	</command>
-
-	<command name="addPGCmd">
-		<description message="Add a ${portletName} portlet." />
 
 		<if>
 			<equals arg1="${portletName}" arg2="Where are the Liferay members?" />
@@ -124,8 +77,12 @@
 			</then>
 		</if>
 
-		<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
 		<execute action="Dockbar#pause" locator1="1000" />
+		<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
+
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute action="Home#assertElementPresent" locator-key1="${portletTypeKey}" />
 	</command>
 
 	<command name="deletePG">

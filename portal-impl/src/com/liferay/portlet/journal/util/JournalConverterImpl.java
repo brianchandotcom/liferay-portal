@@ -89,13 +89,13 @@ public class JournalConverterImpl implements JournalConverter {
 		_ddmTypesToJournalTypes.put("select", "list");
 		_ddmTypesToJournalTypes.put("text", "text");
 		_ddmTypesToJournalTypes.put("textarea", "text_box");
-		_ddmTypesToJournalTypes.put("wcm-image", "image");
+		_ddmTypesToJournalTypes.put("ddm-image", "image");
 
 		_journalTypesToDDMTypes = new HashMap<String, String>();
 
 		_journalTypesToDDMTypes.put("boolean", "checkbox");
 		_journalTypesToDDMTypes.put("document_library", "ddm-documentlibrary");
-		_journalTypesToDDMTypes.put("image", "wcm-image");
+		_journalTypesToDDMTypes.put("image", "ddm-image");
 		_journalTypesToDDMTypes.put("image_gallery", "ddm-documentlibrary");
 		_journalTypesToDDMTypes.put("link_to_layout", "ddm-link-to-page");
 		_journalTypesToDDMTypes.put("list", "select");
@@ -882,8 +882,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 			element.addAttribute("width", "25");
 		}
-		else if (newType.equals("wcm-image")) {
-			element.addAttribute("fieldNamespace", "wcm");
+		else if (newType.equals("ddm-image")) {
+			element.addAttribute("fieldNamespace", "ddm");
 			element.addAttribute("readOnly", "false");
 		}
 

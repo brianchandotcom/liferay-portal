@@ -93,7 +93,6 @@ boolean emailArticleUpdatedEnabled = ParamUtil.getBoolean(request, "preferences-
 
 <aui:script>
 	function <portlet:namespace />saveEmails() {
-	debugger;
 		try {
 			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailArticleAddedBody--'].value = window['<portlet:namespace />emailArticleAdded'].getHTML();
 		}

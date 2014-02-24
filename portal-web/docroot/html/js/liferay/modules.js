@@ -668,6 +668,13 @@
 							'aui-node'
 						]
 					},
+					'liferay-storage-formatter': {
+						path: 'storage_formatter.js',
+						requires: [
+							'aui-base',
+							'datatype-number-format'
+						]
+					},
 					'liferay-store': {
 						path: 'store.js',
 						requires: [

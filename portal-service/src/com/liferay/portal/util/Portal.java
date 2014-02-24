@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -33,6 +34,7 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
@@ -862,6 +864,11 @@ public interface Portal {
 
 	public String getNewPortletTitle(
 		String portletTitle, String oldScopeName, String newScopeName);
+
+	public OrderByComparator getOrderByComparator(
+			HttpServletRequest request, Class<? extends BaseModelImpl<?>> clazz,
+			String portletKey, Object... defaultOrderByColumns)
+		throws SystemException;
 
 	public HttpServletRequest getOriginalServletRequest(
 		HttpServletRequest request);

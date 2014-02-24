@@ -27,6 +27,10 @@ import java.util.Comparator;
 @SuppressWarnings("rawtypes")
 public abstract class OrderByComparator implements Comparator, Serializable {
 
+	public static final String ORDER_BY_TYPE_ASC = "asc";
+
+	public static final String ORDER_BY_TYPE_DESC = "desc";
+
 	@Override
 	public abstract int compare(Object obj1, Object obj2);
 
@@ -75,6 +79,14 @@ public abstract class OrderByComparator implements Comparator, Serializable {
 		}
 
 		return fields;
+	}
+
+	public String getOrderByType() {
+		if (isAscending()) {
+			return ORDER_BY_TYPE_ASC;
+		}
+
+		return ORDER_BY_TYPE_DESC;
 	}
 
 	public boolean isAscending() {

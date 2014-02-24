@@ -838,7 +838,7 @@ public class DLImpl implements DL {
 
 		boolean orderByAsc = true;
 
-		if (orderByType.equals("desc")) {
+		if (orderByType.equals(OrderByComparator.ORDER_BY_TYPE_DESC)) {
 			orderByAsc = false;
 		}
 

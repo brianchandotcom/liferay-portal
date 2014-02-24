@@ -31,16 +31,24 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
+	<%
+	OrderByComparator obc = PortalUtil.getOrderByComparator(request, LayoutPrototypeModelImpl.class, PortletKeys.LAYOUT_PROTOTYPE, "name", true);
+
+	String orderByCol = obc.getOrderByFields()[0];
+	%>
+
 	<liferay-ui:search-container
 		emptyResultsMessage="no-page-templates-were-found"
 		headerNames="name"
 		iteratorURL="<%= portletURL %>"
+		orderByCol="<%= orderByCol %>"
+		orderByType="<%= obc.getOrderByType() %>"
 		total="<%= LayoutPrototypeLocalServiceUtil.searchCount(company.getCompanyId(), null) %>"
 	>
 		<aui:input name="deleteLayoutPrototypesIds" type="hidden" />
 
 		<liferay-ui:search-container-results
-			results="<%= LayoutPrototypeLocalServiceUtil.search(company.getCompanyId(), null, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
+			results="<%= LayoutPrototypeLocalServiceUtil.search(company.getCompanyId(), null, searchContainer.getStart(), searchContainer.getEnd(), obc) %>"
 		/>
 
 		<liferay-ui:search-container-row

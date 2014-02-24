@@ -142,7 +142,7 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
-	public void testMovePageMovedPage() throws Exception {
+	public void testMoveMovedPage() throws Exception {
 		WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
 			"A", true);
@@ -171,7 +171,7 @@ public class WikiPageLocalServiceTest {
 
 		Assert.assertEquals(pageA.getSummary(), "Moved to C");
 		Assert.assertEquals(pageB.getSummary(), "Summary");
-		Assert.assertEquals(pageC.getSummary(), "Summary");
+		Assert.assertEquals(pageC.getSummary(), StringPool.BLANK);
 
 		Assert.assertEquals(pageA.getContent(), "[[C]]");
 		Assert.assertEquals(pageC.getContent(), "[[B]]");

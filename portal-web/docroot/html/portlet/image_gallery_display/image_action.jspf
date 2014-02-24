@@ -15,7 +15,6 @@
 --%>
 
 <%
-boolean checkedOut = fileEntry.isCheckedOut();
 boolean hasLock = fileEntry.hasLock();
 %>
 

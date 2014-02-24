@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -78,18 +77,16 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (Validator.isNull(cmd)) {
-				UploadException uploadException =
-					(UploadException)actionRequest.getAttribute(
-						WebKeys.UPLOAD_EXCEPTION);
+			UploadException uploadException =
+				(UploadException)actionRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
 
-				if (uploadException != null) {
-					if (uploadException.isExceededSizeLimit()) {
-						throw new FileSizeException(uploadException.getCause());
-					}
-
-					throw new PortalException(uploadException.getCause());
+			if (uploadException != null) {
+				if (uploadException.isExceededSizeLimit()) {
+					throw new FileSizeException(uploadException.getCause());
 				}
+
+				throw new PortalException(uploadException.getCause());
 			}
 			else if (cmd.equals(Constants.ADD)) {
 				addAttachment(actionRequest);

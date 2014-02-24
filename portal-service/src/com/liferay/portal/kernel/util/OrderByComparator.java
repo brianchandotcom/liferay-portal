@@ -38,14 +38,6 @@ public abstract class OrderByComparator implements Comparator, Serializable {
 		return null;
 	}
 
-	public String getOrderByType() {
-		if (isAscending()) {		
-			return ORDER_BY_TYPE_ASC;
-		}
-
-		return ORDER_BY_TYPE_DESC;
-	}
-
 	public String[] getOrderByConditionFields() {
 		return getOrderByFields();
 	}
@@ -87,6 +79,14 @@ public abstract class OrderByComparator implements Comparator, Serializable {
 		}
 
 		return fields;
+	}
+
+	public String getOrderByType() {
+		if (isAscending()) {
+			return ORDER_BY_TYPE_ASC;
+		}
+
+		return ORDER_BY_TYPE_DESC;
 	}
 
 	public boolean isAscending() {

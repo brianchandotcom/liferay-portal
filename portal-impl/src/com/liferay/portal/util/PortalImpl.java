@@ -3700,14 +3700,13 @@ public class PortalImpl implements Portal {
 		portalPreferences.setValue(portletKey, orderByColParam, orderByCol);
 		portalPreferences.setValue(portletKey, orderByTypeParam, orderByType);
 
-		boolean asending = false;
-
 		if (orderByType.equals(OrderByComparator.ORDER_BY_TYPE_ASC)) {
-			asending = true;
+			return OrderByComparatorFactoryUtil.create(
+				tableName, orderByCol, true);
 		}
 
 		return OrderByComparatorFactoryUtil.create(
-			tableName, orderByCol, asending);
+			tableName, orderByCol, false);
 	}
 
 	@Override

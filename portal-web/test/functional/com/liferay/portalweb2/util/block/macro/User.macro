@@ -879,6 +879,9 @@
 
 		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
+
+		<take-screenshot />
+
 		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
 
 		<if>

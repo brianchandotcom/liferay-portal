@@ -233,12 +233,15 @@ public class Logger {
 
 		_screenshotCount++;
 
-		sb.append("<br />");
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
 		sb.append("<img alt=\"");
 		sb.append(_screenshotCount);
-		sb.append("\" height=\"750\" src=\"screenshots/");
+		sb.append("\" height=\"450\" src=\"screenshots/");
 		sb.append(_screenshotCount);
-		sb.append(".jpg\" width=\"1050\" />");
+		sb.append(".jpg\" width=\"630\" />");
 		sb.append("<br />");
 
 		log("descriptionLog", sb.toString(), "descriptionLog");

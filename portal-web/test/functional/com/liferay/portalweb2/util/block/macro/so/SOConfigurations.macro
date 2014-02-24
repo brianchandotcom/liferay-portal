@@ -13,7 +13,6 @@
 		<execute action="SOConfigurations#check" locator-key1="USER_TABLE_CHECKBOX" />
 		<execute action="SOConfigurations#click" locator-key1="SAVE_BUTTON" />
 		<execute action="SOConfigurations#assertTextEquals" locator-key1="SUCCESS_MESSAGE_1" value1="Your request completed successfully." />
-		<execute action="SOConfigurations#assertChecked" locator-key1="USER_TABLE_CHECKBOX" />
 	</command>
 
 	<command name="unassignUserRoleCP">
@@ -30,7 +29,5 @@
 		<execute action="SOConfigurations#uncheck" locator-key1="USER_TABLE_CHECKBOX" />
 		<execute action="SOConfigurations#click" locator-key1="SAVE_BUTTON" />
 		<execute action="SOConfigurations#assertTextEquals" locator-key1="SUCCESS_MESSAGE_1" value1="Your request completed successfully." />
-		<execute action="SOConfigurations#assertTextEquals" locator-key1="SUCCESS_MESSAGE_2" value1="Thank you for installing Social Office! At this time, no users have been given Social Office access. Now it's time to figure out who to give Social Office to:" />
-		<execute action="SOConfigurations#assertNotChecked" locator-key1="USER_TABLE_CHECKBOX" />
 	</command>
 </definition>

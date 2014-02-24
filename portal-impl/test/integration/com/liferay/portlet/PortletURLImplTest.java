@@ -103,7 +103,7 @@ public class PortletURLImplTest {
 
 	@Test
 	public void testGenerateToString() throws Exception {
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest request = mockHttpServletRequest();
 
 		PortletURLImpl portletURL =
 			new PortletURLImpl(
@@ -120,7 +120,7 @@ public class PortletURLImplTest {
 
 	@Test
 	public void testGenerateToStringActionComplex() throws Exception {
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest request = mockHttpServletRequest();
 
 		PortletURLImpl portletURL =
 			new PortletURLImpl(
@@ -226,7 +226,7 @@ public class PortletURLImplTest {
 
 	@Test
 	public void testGenerateToStringResourceComplete() throws Exception {
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest request = mockHttpServletRequest();
 
 		PortletURLImpl portletURL = new PortletURLImpl(
 			request, "0", 0, PortletRequest.RENDER_PHASE);
@@ -355,7 +355,7 @@ public class PortletURLImplTest {
 
 	@Test
 	public void testGenerateToStringWithAutopropagating() throws Exception {
-		MockHttpServletRequest request = getHttpServletRequest();
+		MockHttpServletRequest request = mockHttpServletRequest();
 
 		List<String> expectedURLParts = new ArrayList<String>();
 
@@ -401,7 +401,7 @@ public class PortletURLImplTest {
 
 	@Test
 	public void testGenerateToStringWithPPAuthToken() throws Exception {
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest request = mockHttpServletRequest();
 
 		int plid = 1;
 
@@ -467,19 +467,6 @@ public class PortletURLImplTest {
 				PortalUtil.getCompany(request).getKeyObj(), value));
 	}
 
-	protected MockHttpServletRequest getHttpServletRequest() throws Exception {
-		MockHttpServletRequest request = new MockHttpServletRequest();
-
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		PortalUtil.getCompany(request).setKeyObj(null);
-		PortalUtil.getCompany(request).setKey(COMPANY_KEY);
-
-		return request;
-	}
-
 	protected ThemeDisplay getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -497,6 +484,19 @@ public class PortletURLImplTest {
 		themeDisplay.setServerPort(80);
 
 		return themeDisplay;
+	}
+
+	protected MockHttpServletRequest mockHttpServletRequest() throws Exception {
+		MockHttpServletRequest request = new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		PortalUtil.getCompany(request).setKeyObj(null);
+		PortalUtil.getCompany(request).setKey(COMPANY_KEY);
+
+		return request;
 	}
 
 	private static String COMPANY_KEY =

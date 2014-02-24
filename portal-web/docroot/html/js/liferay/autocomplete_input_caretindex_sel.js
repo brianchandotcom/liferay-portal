@@ -78,7 +78,9 @@ AUI.add(
 
 					var count = 0;
 
-					while (REGEX_NEW_LINE.exec(val) !== null) {
+					var regExpNewLine = /\r\n/g;
+
+					while (regExpNewLine.exec(val) !== null) {
 						count++;
 					}
 

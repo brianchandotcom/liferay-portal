@@ -838,7 +838,7 @@ AUI.add(
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-picture',
 					label: Liferay.Language.get('image'),
-					type: 'wcm-image'
+					type: 'ddm-image'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.separator,

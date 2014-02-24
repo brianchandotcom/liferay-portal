@@ -137,11 +137,6 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
-	public void testMovePage() throws Exception {
-		testMovePage(false);
-	}
-
-	@Test
 	public void testMoveMovedPage() throws Exception {
 		WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
@@ -175,6 +170,11 @@ public class WikiPageLocalServiceTest {
 
 		Assert.assertEquals(pageA.getContent(), "[[C]]");
 		Assert.assertEquals(pageC.getContent(), "[[B]]");
+	}
+
+	@Test
+	public void testMovePage() throws Exception {
+		testMovePage(false);
 	}
 
 	@Test(expected = DuplicatePageException.class)

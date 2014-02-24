@@ -56,7 +56,7 @@ public class ExportImportConfigurationTrashRenderer extends BaseTrashRenderer {
 
 	@Override
 	public String getSummary(Locale locale) {
-		return HtmlUtil.stripHtml(_exportImportConfiguration.getDescription());
+		return _exportImportConfiguration.getDescription();
 	}
 
 	@Override

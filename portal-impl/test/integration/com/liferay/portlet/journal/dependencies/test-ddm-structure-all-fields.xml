@@ -98,19 +98,19 @@
 			<entry name="tip"><![CDATA[]]></entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="image" fieldNamespace="wcm" indexType="" name="image_1" readOnly="false" repeatable="false" required="false" showLabel="true" type="wcm-image">
+	<dynamic-element dataType="image" fieldNamespace="ddm" indexType="" name="image_1" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-image">
 		<meta-data locale="en_US">
 			<entry name="label"><![CDATA[Image Field]]></entry>
 			<entry name="predefinedValue"><![CDATA[]]></entry>
 			<entry name="tip"><![CDATA[]]></entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="image" fieldNamespace="wcm" indexType="" name="image_2" readOnly="false" repeatable="false" required="false" showLabel="true" type="wcm-image">
+	<dynamic-element dataType="image" fieldNamespace="ddm" indexType="" name="image_2" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-image">
 		<meta-data locale="en_US">
 			<entry name="label"><![CDATA[image_2]]></entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="image" fieldNamespace="wcm" indexType="" name="image_3" readOnly="false" required="false" showLabel="true" type="wcm-image">
+	<dynamic-element dataType="image" fieldNamespace="ddm" indexType="" name="image_3" readOnly="false" required="false" showLabel="true" type="ddm-image">
 		<meta-data locale="en_US">
 			<entry name="label"><![CDATA[image_3]]></entry>
 		</meta-data>

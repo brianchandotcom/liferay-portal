@@ -295,6 +295,7 @@ page import="com.liferay.util.xml.XMLFormatter" %>
 
 <%@ page import="java.text.DateFormat" %><%@
 page import="java.text.DecimalFormat" %><%@
+page import="java.text.DecimalFormatSymbols" %><%@
 page import="java.text.Format" %><%@
 page import="java.text.NumberFormat" %><%@
 page import="java.text.SimpleDateFormat" %>

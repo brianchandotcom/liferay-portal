@@ -90,7 +90,12 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 
 			var logoEditor = new Liferay.LogoEditor(
 				{
-					decimalSeparator: ',',
+
+					<%
+					DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+					%>
+
+					decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 					maxFileSize: <%= maxFileSize %>,
 					namespace: '<portlet:namespace />',
 					on: {

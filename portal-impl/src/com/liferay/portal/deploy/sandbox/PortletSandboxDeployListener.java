@@ -43,6 +43,7 @@ public class PortletSandboxDeployListener
 		portletExtTaglibDTD =
 			portalWebDir + "/WEB-INF/tld/liferay-portlet-ext.tld";
 		securityTaglibDTD = portalWebDir + "/WEB-INF/tld/liferay-security.tld";
+		stagingTaglibDTD = portalWebDir + "/WEB-INF/tld/liferay-staging.tld";
 		themeTaglibDTD = portalWebDir + "/WEB-INF/tld/liferay-theme.tld";
 		uiTaglibDTD = portalWebDir + "/WEB-INF/tld/liferay-ui.tld";
 		utilTaglibDTD = portalWebDir + "/WEB-INF/tld/liferay-util.tld";

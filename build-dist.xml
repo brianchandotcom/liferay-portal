@@ -624,6 +624,7 @@ app.server.jboss.zip.name=jboss-eap-$${app.server.jboss.version}.zip</echo>
 			<jvmarg value="-Ddeployer.portlet.taglib.dtd=util-taglib/classes/META-INF/liferay-portlet.tld" />
 			<jvmarg value="-Ddeployer.portlet-ext.taglib.dtd=util-taglib/classes/META-INF/liferay-portlet-ext.tld" />
 			<jvmarg value="-Ddeployer.security.taglib.dtd=util-taglib/classes/META-INF/liferay-security.tld" />
+			<jvmarg value="-Ddeployer.staging.taglib.dtd=util-taglib/classes/META-INF/liferay-staging.tld" />
 			<jvmarg value="-Ddeployer.theme.taglib.dtd=util-taglib/classes/META-INF/liferay-theme.tld" />
 			<jvmarg value="-Ddeployer.ui.taglib.dtd=util-taglib/classes/META-INF/liferay-ui.tld" />
 			<jvmarg value="-Ddeployer.util.taglib.dtd=util-taglib/classes/META-INF/liferay-util.tld" />

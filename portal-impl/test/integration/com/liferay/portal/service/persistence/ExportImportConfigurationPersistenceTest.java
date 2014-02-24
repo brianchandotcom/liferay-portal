@@ -133,6 +133,14 @@ public class ExportImportConfigurationPersistenceTest {
 
 		newExportImportConfiguration.setSettings(ServiceTestUtil.randomString());
 
+		newExportImportConfiguration.setStatus(ServiceTestUtil.nextInt());
+
+		newExportImportConfiguration.setStatusByUserId(ServiceTestUtil.nextLong());
+
+		newExportImportConfiguration.setStatusByUserName(ServiceTestUtil.randomString());
+
+		newExportImportConfiguration.setStatusDate(ServiceTestUtil.nextDate());
+
 		_persistence.update(newExportImportConfiguration);
 
 		ExportImportConfiguration existingExportImportConfiguration = _persistence.findByPrimaryKey(newExportImportConfiguration.getPrimaryKey());
@@ -164,6 +172,15 @@ public class ExportImportConfigurationPersistenceTest {
 			newExportImportConfiguration.getType());
 		Assert.assertEquals(existingExportImportConfiguration.getSettings(),
 			newExportImportConfiguration.getSettings());
+		Assert.assertEquals(existingExportImportConfiguration.getStatus(),
+			newExportImportConfiguration.getStatus());
+		Assert.assertEquals(existingExportImportConfiguration.getStatusByUserId(),
+			newExportImportConfiguration.getStatusByUserId());
+		Assert.assertEquals(existingExportImportConfiguration.getStatusByUserName(),
+			newExportImportConfiguration.getStatusByUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingExportImportConfiguration.getStatusDate()),
+			Time.getShortTimestamp(newExportImportConfiguration.getStatusDate()));
 	}
 
 	@Test
@@ -197,6 +214,19 @@ public class ExportImportConfigurationPersistenceTest {
 				ServiceTestUtil.nextInt());
 
 			_persistence.countByG_T(0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_T_S() {
+		try {
+			_persistence.countByG_T_S(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt(), ServiceTestUtil.nextInt());
+
+			_persistence.countByG_T_S(0L, 0, 0);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -243,7 +273,9 @@ public class ExportImportConfigurationPersistenceTest {
 			"mvccVersion", true, "exportImportConfigurationId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "name", true,
-			"description", true, "type", true, "settings", true);
+			"description", true, "type", true, "settings", true, "status",
+			true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -391,6 +423,14 @@ public class ExportImportConfigurationPersistenceTest {
 		exportImportConfiguration.setType(ServiceTestUtil.nextInt());
 
 		exportImportConfiguration.setSettings(ServiceTestUtil.randomString());
+
+		exportImportConfiguration.setStatus(ServiceTestUtil.nextInt());
+
+		exportImportConfiguration.setStatusByUserId(ServiceTestUtil.nextLong());
+
+		exportImportConfiguration.setStatusByUserName(ServiceTestUtil.randomString());
+
+		exportImportConfiguration.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(exportImportConfiguration);
 

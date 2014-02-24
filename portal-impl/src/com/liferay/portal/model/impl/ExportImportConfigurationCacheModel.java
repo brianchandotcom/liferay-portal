@@ -48,7 +48,7 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -74,6 +74,14 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 		sb.append(type);
 		sb.append(", settings=");
 		sb.append(settings);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -133,6 +141,23 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 			exportImportConfigurationImpl.setSettings(settings);
 		}
 
+		exportImportConfigurationImpl.setStatus(status);
+		exportImportConfigurationImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			exportImportConfigurationImpl.setStatusByUserName(StringPool.BLANK);
+		}
+		else {
+			exportImportConfigurationImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			exportImportConfigurationImpl.setStatusDate(null);
+		}
+		else {
+			exportImportConfigurationImpl.setStatusDate(new Date(statusDate));
+		}
+
 		exportImportConfigurationImpl.resetOriginalValues();
 
 		return exportImportConfigurationImpl;
@@ -152,6 +177,10 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 		description = objectInput.readUTF();
 		type = objectInput.readInt();
 		settings = objectInput.readUTF();
+		status = objectInput.readInt();
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -195,6 +224,18 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 		else {
 			objectOutput.writeUTF(settings);
 		}
+
+		objectOutput.writeInt(status);
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long mvccVersion;
@@ -209,4 +250,8 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 	public String description;
 	public int type;
 	public String settings;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 }

@@ -38,6 +38,8 @@ import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
+import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
+
 import java.io.Serializable;
 
 import java.util.List;
@@ -115,13 +117,14 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 *
 	 * @param exportImportConfiguration the export import configuration
 	 * @return the export import configuration that was removed
+	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ExportImportConfiguration deleteExportImportConfiguration(
 		ExportImportConfiguration exportImportConfiguration)
-		throws SystemException {
+		throws PortalException, SystemException {
 		return exportImportConfigurationPersistence.remove(exportImportConfiguration);
 	}
 
@@ -309,6 +312,25 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the export import configuration remote service.
+	 *
+	 * @return the export import configuration remote service
+	 */
+	public com.liferay.portal.service.ExportImportConfigurationService getExportImportConfigurationService() {
+		return exportImportConfigurationService;
+	}
+
+	/**
+	 * Sets the export import configuration remote service.
+	 *
+	 * @param exportImportConfigurationService the export import configuration remote service
+	 */
+	public void setExportImportConfigurationService(
+		com.liferay.portal.service.ExportImportConfigurationService exportImportConfigurationService) {
+		this.exportImportConfigurationService = exportImportConfigurationService;
+	}
+
+	/**
 	 * Returns the export import configuration persistence.
 	 *
 	 * @return the export import configuration persistence
@@ -344,6 +366,63 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	public void setCounterLocalService(
 		com.liferay.counter.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
+	}
+
+	/**
+	 * Returns the trash entry local service.
+	 *
+	 * @return the trash entry local service
+	 */
+	public com.liferay.portlet.trash.service.TrashEntryLocalService getTrashEntryLocalService() {
+		return trashEntryLocalService;
+	}
+
+	/**
+	 * Sets the trash entry local service.
+	 *
+	 * @param trashEntryLocalService the trash entry local service
+	 */
+	public void setTrashEntryLocalService(
+		com.liferay.portlet.trash.service.TrashEntryLocalService trashEntryLocalService) {
+		this.trashEntryLocalService = trashEntryLocalService;
+	}
+
+	/**
+	 * Returns the trash entry remote service.
+	 *
+	 * @return the trash entry remote service
+	 */
+	public com.liferay.portlet.trash.service.TrashEntryService getTrashEntryService() {
+		return trashEntryService;
+	}
+
+	/**
+	 * Sets the trash entry remote service.
+	 *
+	 * @param trashEntryService the trash entry remote service
+	 */
+	public void setTrashEntryService(
+		com.liferay.portlet.trash.service.TrashEntryService trashEntryService) {
+		this.trashEntryService = trashEntryService;
+	}
+
+	/**
+	 * Returns the trash entry persistence.
+	 *
+	 * @return the trash entry persistence
+	 */
+	public TrashEntryPersistence getTrashEntryPersistence() {
+		return trashEntryPersistence;
+	}
+
+	/**
+	 * Sets the trash entry persistence.
+	 *
+	 * @param trashEntryPersistence the trash entry persistence
+	 */
+	public void setTrashEntryPersistence(
+		TrashEntryPersistence trashEntryPersistence) {
+		this.trashEntryPersistence = trashEntryPersistence;
 	}
 
 	/**
@@ -484,10 +563,18 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 
 	@BeanReference(type = com.liferay.portal.service.ExportImportConfigurationLocalService.class)
 	protected com.liferay.portal.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService;
+	@BeanReference(type = com.liferay.portal.service.ExportImportConfigurationService.class)
+	protected com.liferay.portal.service.ExportImportConfigurationService exportImportConfigurationService;
 	@BeanReference(type = ExportImportConfigurationPersistence.class)
 	protected ExportImportConfigurationPersistence exportImportConfigurationPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryLocalService.class)
+	protected com.liferay.portlet.trash.service.TrashEntryLocalService trashEntryLocalService;
+	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryService.class)
+	protected com.liferay.portlet.trash.service.TrashEntryService trashEntryService;
+	@BeanReference(type = TrashEntryPersistence.class)
+	protected TrashEntryPersistence trashEntryPersistence;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserService.class)

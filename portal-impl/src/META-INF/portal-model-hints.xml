@@ -237,6 +237,10 @@
 		<field name="settings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.Group">
 		<field name="mvccVersion" type="long" />

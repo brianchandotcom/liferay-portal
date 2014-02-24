@@ -197,8 +197,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			if (discussion == null) {
 				mbDiscussionLocalService.addDiscussion(
-					userId, classNameId, classPK, message.getThreadId(),
-					serviceContext);
+					userId, groupId, classNameId, classPK,
+					message.getThreadId(), serviceContext);
 			}
 		}
 

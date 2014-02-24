@@ -110,9 +110,12 @@ public class PortletURLImplTest {
 				request, PORTLET_ID, _targetLayout.getPlid(),
 				PortletRequest.RENDER_PHASE);
 
-		compareURLs(new String[] {
+		String[] expectedParts = {
 			"http://domain2.net/destination-layout", "p_p_id=2",
-			"p_p_lifecycle=0", "?&"}, portletURL.generateToString());
+			"p_p_lifecycle=0", "?&"
+		};
+
+		compareURLs(expectedParts, portletURL.generateToString());
 	}
 
 	@Test
@@ -166,7 +169,7 @@ public class PortletURLImplTest {
 		String tagPRPNameRemove =
 			PortletQNameUtil.getRemovePublicRenderParameterName(tagPRPQName);
 
-		String[] expected = new String[] {
+		String[] expectedParts = new String[] {
 			"http://domain2.net/destination-layout", "p_auth=" + token,
 			"p_p_id=19", "p_p_lifecycle=1", "p_p_state=normal",
 			"p_p_state_rcv=1", "p_p_mode=edit", "p_p_resource_id=resourceId",
@@ -178,12 +181,12 @@ public class PortletURLImplTest {
 			"_19_%26c%26=%26c%26", "?&&&&&&&&&&&&&&&&&&&&&"
 		};
 
-		compareURLs(expected, portletURL.generateToString());
+		compareURLs(expectedParts, portletURL.generateToString());
 
 		portletURL.setLifecycle(PortletRequest.RESOURCE_PHASE);
 		portletURL.setEncrypt(true);
 
-		expected = new String[] {
+		expectedParts = new String[] {
 			"http://domain2.net/destination-layout",
 			"p_p_id=%2FUyxNdhH5RmqYqg7E%2BGgcw%3D%3D",
 			"p_p_lifecycle=wDuoiLepIRWTCLSAoqQsgg%3D%3D",
@@ -210,15 +213,15 @@ public class PortletURLImplTest {
 			"?&&&&&&&&&&&&&&&&&&&&&&"
 		};
 
-		compareURLs(expected, portletURL.generateToString());
+		compareURLs(expectedParts, portletURL.generateToString());
 
 		portletURL.setEscapeXml(true);
 
-		expected[expected.length - 1] =
+		expectedParts[expectedParts.length - 1] =
 			"?&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;" +
 				"&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;";
 
-		compareURLs(expected, portletURL.generateToString());
+		compareURLs(expectedParts, portletURL.generateToString());
 	}
 
 	@Test
@@ -284,7 +287,7 @@ public class PortletURLImplTest {
 		String tagPRPNameRemove =
 			PortletQNameUtil.getRemovePublicRenderParameterName(tagPRPQName);
 
-		String[] expected = new String[] {
+		String[] expectedParts = new String[] {
 			"https://domain2.net/destination-layout",
 			"p_p_id=" + PORTLET_MESSAGE_BOARDS, "p_p_lifecycle=2",
 			"p_p_state=exclusive", "p_p_state_rcv=1", "p_p_mode=edit",
@@ -299,12 +302,12 @@ public class PortletURLImplTest {
 			tagPRPName + "=0", "?&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 		};
 
-		compareURLs(expected, portletURL.generateToString());
+		compareURLs(expectedParts, portletURL.generateToString());
 
 		portletURL.setEncrypt(true);
 		portletURL.setPlid(_sourceLayout.getPlid());
 
-		expected = new String[] {
+		expectedParts = new String[] {
 			"https://domain1.net/source-layout",
 			"p_p_id=%2FUyxNdhH5RmqYqg7E%2BGgcw%3D%3D",
 			"p_p_lifecycle=wDuoiLepIRWTCLSAoqQsgg%3D%3D",
@@ -338,16 +341,16 @@ public class PortletURLImplTest {
 			"?&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 		};
 
-		compareURLs(expected, portletURL.generateToString());
+		compareURLs(expectedParts, portletURL.generateToString());
 
 		portletURL.setEscapeXml(true);
 
-		expected[expected.length - 1] =
+		expectedParts[expectedParts.length - 1] =
 			"?&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;" +
 				"&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;" +
 				"&amp;&amp;&amp;&amp;&amp;";
 
-		compareURLs(expected, portletURL.generateToString());
+		compareURLs(expectedParts, portletURL.generateToString());
 	}
 
 	@Test
@@ -408,10 +411,12 @@ public class PortletURLImplTest {
 			new PortletURLImpl(
 				request, PORTLET_ID, 1, PortletRequest.RENDER_PHASE);
 
-		compareURLs(new String[] {
-			"http://localhost/portal/layout", "p_l_id=1", "p_p_auth=" +
-			token, "p_p_id=2", "p_p_lifecycle=0", "?&&&"},
-			portletURL.generateToString());
+		String[] expectedParts = {
+			"http://localhost/portal/layout", "p_l_id=1", "p_p_auth=" + token,
+			"p_p_id=2", "p_p_lifecycle=0", "?&&&"
+		};
+
+		compareURLs(expectedParts, portletURL.generateToString());
 	}
 
 	protected void addPortlet(Layout layout, String portletId)

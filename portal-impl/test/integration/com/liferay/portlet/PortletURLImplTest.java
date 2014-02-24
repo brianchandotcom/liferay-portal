@@ -56,13 +56,12 @@ import javax.portlet.ResourceURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-
-import org.testng.Assert;
 
 /**
  * @author Tomas Polesovsky
@@ -429,13 +428,13 @@ public class PortletURLImplTest {
 			int pos = actualURL.indexOf(expectedPart);
 
 			Assert.assertTrue(
-				pos > -1, expectedPart + " is not present in " + actualURL);
+				expectedPart + " is not present in " + actualURL, pos > -1);
 
 			actualURL = actualURL.substring(0, pos) + actualURL.substring(
 				pos + expectedPart.length());
 		}
 
-		Assert.assertEquals(actualURL, "", "Should be empty");
+		Assert.assertEquals("Should be empty", "", actualURL);
 	}
 
 	protected String encrypt(HttpServletRequest request, long value)

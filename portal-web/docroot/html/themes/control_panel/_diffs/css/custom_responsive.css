@@ -85,7 +85,7 @@
 
 @include respond-to(phone) {
 	.aui{
-		.control-panel-home-actions {
+		.control-panel-home-actions, .portlet-title .taglib-icon-help {
 			display: none;
 		}
 	}

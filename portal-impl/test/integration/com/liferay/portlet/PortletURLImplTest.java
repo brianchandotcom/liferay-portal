@@ -81,11 +81,13 @@ public class PortletURLImplTest {
 
 		LayoutSetLocalServiceUtil.updateVirtualHost(
 			_group.getGroupId(), false, "domain1.net");
+
 		LayoutSetLocalServiceUtil.updateVirtualHost(
 			_group.getGroupId(), true, "domain2.net");
 
 		_sourceLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), "Source Layout", false);
+
 		_targetLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), "Destination Layout", true);
 
@@ -116,6 +118,7 @@ public class PortletURLImplTest {
 	@Test
 	public void testGenerateToStringActionComplex() throws Exception {
 		HttpServletRequest request = getHttpServletRequest();
+
 		PortletURLImpl portletURL =
 			new PortletURLImpl(
 				request, PORTLET_MESSAGE_BOARDS, _targetLayout.getPlid(),
@@ -145,15 +148,14 @@ public class PortletURLImplTest {
 
 		portletURL.setParameter("tag", "0");
 		portletURL.removePublicRenderParameter("tag");
-
 		portletURL.addParameterIncludedInPath("inPath");
 		portletURL.setParameter("inPath", "0");
-
 		portletURL.setParameter("a", "0");
 		portletURL.setParameter("b", new String[]{"0", "1"});
 		portletURL.setParameter("&c&", "&c&");
 
 		String token = AuthTokenUtil.getToken(request);
+
 		QName tagPRPQName =
 			PortletLocalServiceUtil.getPortletById(PORTLET_MESSAGE_BOARDS).
 				getPublicRenderParameter("tag").getQName();
@@ -207,18 +209,22 @@ public class PortletURLImplTest {
 			"_19_%26c%26=42iZV7yhtYJCHCubzHoa1Q%3D%3D", "shuo=1",
 			"?&&&&&&&&&&&&&&&&&&&&&&"
 		};
+
 		compareURLs(expected, portletURL.generateToString());
 
 		portletURL.setEscapeXml(true);
+
 		expected[expected.length - 1] =
 			"?&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;" +
 				"&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;";
+
 		compareURLs(expected, portletURL.generateToString());
 	}
 
 	@Test
 	public void testGenerateToStringResourceComplete() throws Exception {
 		HttpServletRequest request = getHttpServletRequest();
+
 		PortletURLImpl portletURL = new PortletURLImpl(
 			request, "0", 0, PortletRequest.RENDER_PHASE);
 
@@ -248,7 +254,6 @@ public class PortletURLImplTest {
 		portletURL.removePublicRenderParameter("tag");
 		portletURL.addParameterIncludedInPath("inPath");
 		portletURL.setParameter("inPath", "0");
-
 		portletURL.setPlid(_targetLayout.getPlid());
 		portletURL.setPortletId(PORTLET_MESSAGE_BOARDS);
 		portletURL.setPortletMode(PortletMode.EDIT);
@@ -262,7 +267,9 @@ public class PortletURLImplTest {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			com.liferay.portal.util.WebKeys.THEME_DISPLAY);
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		portletDisplay.setColumnId("column-1");
 		portletDisplay.setColumnPos(1);
 		portletDisplay.setColumnCount(2);
@@ -334,6 +341,7 @@ public class PortletURLImplTest {
 		compareURLs(expected, portletURL.generateToString());
 
 		portletURL.setEscapeXml(true);
+
 		expected[expected.length - 1] =
 			"?&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;" +
 				"&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;" +
@@ -363,7 +371,9 @@ public class PortletURLImplTest {
 					autoParam;
 
 			request.setParameter(autoParam, "0");
+
 			expectedURLParts.add(namespacedAutoParam + "=0");
+
 			ampersands.append(StringPool.AMPERSAND);
 		}
 
@@ -391,6 +401,7 @@ public class PortletURLImplTest {
 		HttpServletRequest request = getHttpServletRequest();
 
 		int plid = 1;
+
 		String token = AuthTokenUtil.getToken(request, plid, PORTLET_ID);
 
 		PortletURLImpl portletURL =

@@ -85,14 +85,14 @@ public class PortletURLImplTest {
 		LayoutSetLocalServiceUtil.updateVirtualHost(
 			_group.getGroupId(), true, "domain2.net");
 
-		_srcLayout = LayoutTestUtil.addLayout(
+		_sourceLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), "Source Layout", false);
-		_dstLayout = LayoutTestUtil.addLayout(
+		_targetLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), "Destination Layout", true);
 
-		addPortlet(_dstLayout, PORTLET_ID);
-		addPortlet(_dstLayout, PORTLET_MESSAGE_BOARDS);
-		addPortlet(_srcLayout, PORTLET_MESSAGE_BOARDS);
+		addPortlet(_targetLayout, PORTLET_ID);
+		addPortlet(_targetLayout, PORTLET_MESSAGE_BOARDS);
+		addPortlet(_sourceLayout, PORTLET_MESSAGE_BOARDS);
 	}
 
 	@After
@@ -106,7 +106,7 @@ public class PortletURLImplTest {
 
 		PortletURLImpl portletURL =
 			new PortletURLImpl(
-				request, PORTLET_ID, _dstLayout.getPlid(),
+				request, PORTLET_ID, _targetLayout.getPlid(),
 				PortletRequest.RENDER_PHASE);
 
 		compareURLs(new String[] {
@@ -119,7 +119,7 @@ public class PortletURLImplTest {
 		HttpServletRequest request = getHttpServletRequest();
 		PortletURLImpl portletURL =
 			new PortletURLImpl(
-				request, PORTLET_MESSAGE_BOARDS, _dstLayout.getPlid(),
+				request, PORTLET_MESSAGE_BOARDS, _targetLayout.getPlid(),
 				PortletRequest.ACTION_PHASE);
 
 		portletURL.setWindowState(LiferayWindowState.NORMAL);
@@ -250,12 +250,12 @@ public class PortletURLImplTest {
 		portletURL.addParameterIncludedInPath("inPath");
 		portletURL.setParameter("inPath", "0");
 
-		portletURL.setPlid(_dstLayout.getPlid());
+		portletURL.setPlid(_targetLayout.getPlid());
 		portletURL.setPortletId(PORTLET_MESSAGE_BOARDS);
 		portletURL.setPortletMode(PortletMode.EDIT);
 		portletURL.setProperty("key", "value");
-		portletURL.setRefererGroupId(_srcLayout.getGroupId());
-		portletURL.setRefererPlid(_srcLayout.getPlid());
+		portletURL.setRefererGroupId(_sourceLayout.getGroupId());
+		portletURL.setRefererPlid(_sourceLayout.getPlid());
 		portletURL.setResourceID("resourceID");
 		portletURL.setSecure(true);
 		portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
@@ -285,18 +285,18 @@ public class PortletURLImplTest {
 			"p_p_resource_id=resourceID", "p_p_cacheability=cacheLevelFull",
 			"p_p_col_id=column-1", "p_p_col_pos=1", "p_p_col_count=2",
 			"doAsUserId=y4iMKl9Wv7skJFYEehXTKQ%3D%3D", "doAsUserLanguageId=en",
-			"doAsGroupId=10000", "refererGroupId=" + _srcLayout.getGroupId(),
-			"refererPlid=" + _srcLayout.getPlid(), "controlPanelCategory=sites",
-			"_19_a=a", "_19_b=b1", "_19_b=b2", "_19_c=c1", "_19_c=c2",
-			"_19_d=d2", "_19_e=e0", "_19_e=e1", "_19_e=e2", "_19_f=f1",
-			"_19_f=f2", tagPRPNameRemove + "=1", tagPRPName + "=0",
-			"?&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+			"doAsGroupId=10000", "refererGroupId=" + _sourceLayout.getGroupId(),
+			"refererPlid=" + _sourceLayout.getPlid(),
+			"controlPanelCategory=sites", "_19_a=a", "_19_b=b1", "_19_b=b2",
+			"_19_c=c1", "_19_c=c2", "_19_d=d2", "_19_e=e0", "_19_e=e1",
+			"_19_e=e2", "_19_f=f1", "_19_f=f2", tagPRPNameRemove + "=1",
+			tagPRPName + "=0", "?&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 		};
 
 		compareURLs(expected, portletURL.generateToString());
 
 		portletURL.setEncrypt(true);
-		portletURL.setPlid(_srcLayout.getPlid());
+		portletURL.setPlid(_sourceLayout.getPlid());
 
 		expected = new String[] {
 			"https://domain1.net/source-layout",
@@ -313,8 +313,8 @@ public class PortletURLImplTest {
 			"doAsUserId=y4iMKl9Wv7skJFYEehXTKQ%3D%3D",
 			"doAsUserLanguageId=T1bJvFsD1nyZTaFS3FZhfQ%3D%3D",
 			"doAsGroupId=y4iMKl9Wv7skJFYEehXTKQ%3D%3D",
-			"refererGroupId=" + encrypt(request, _srcLayout.getGroupId()),
-			"refererPlid=" + encrypt(request, _srcLayout.getPlid()),
+			"refererGroupId=" + encrypt(request, _sourceLayout.getGroupId()),
+			"refererPlid=" + encrypt(request, _sourceLayout.getPlid()),
 			"controlPanelCategory=R50hL5BiH0AEiVzHCjzOXw%3D%3D",
 			"_19_a=YjGjF2JxcNdBjkxIOcmQuA%3D%3D",
 			"_19_b=pQ8oY8tR1xC7h7D7e8%2BFAQ%3D%3D",
@@ -368,11 +368,11 @@ public class PortletURLImplTest {
 			ampersands.append(StringPool.AMPERSAND);
 		}
 
-		addPortlet(_dstLayout, PORTLET_DDM);
+		addPortlet(_targetLayout, PORTLET_DDM);
 
 		PortletURLImpl portletURL =
 			new PortletURLImpl(
-				request, "0", _dstLayout.getPlid(),
+				request, "0", _targetLayout.getPlid(),
 				PortletRequest.RENDER_PHASE);
 
 		portletURL.setPortletId(PORTLET_DDM);
@@ -475,7 +475,7 @@ public class PortletURLImplTest {
 
 		themeDisplay.setPermissionChecker(permissionChecker);
 
-		themeDisplay.setLayout(_srcLayout);
+		themeDisplay.setLayout(_sourceLayout);
 
 		themeDisplay.setSecure(false);
 		themeDisplay.setServerName("liferay.com");
@@ -496,6 +496,7 @@ public class PortletURLImplTest {
 	private static String PORTLET_MESSAGE_BOARDS = "19";
 
 	private Group _group;
-	private Layout _dstLayout; private Layout _srcLayout;
+	private Layout _sourceLayout;
+	private Layout _targetLayout;
 
 }

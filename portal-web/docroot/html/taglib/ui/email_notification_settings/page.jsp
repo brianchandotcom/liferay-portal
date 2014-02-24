@@ -14,46 +14,61 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String emailFromName = ParamUtil.getString(request, "emailFromName");
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress");
-
-Boolean emailEnabled = ParamUtil.getBoolean(request, "emailEnabled");
-String emailParam = ParamUtil.getString(request, "emailParam");
-String defaultEmailSubject = ParamUtil.getString(request, "defaultEmailSubject");
-String defaultEmailBody = ParamUtil.getString(request, "defaultEmailBody");
-
-String emailSubjectParam = emailParam + "Subject";
-String emailBodyParam = emailParam + "Body";
-
-String emailSubject = PrefsParamUtil.getString(portletPreferences, request, emailSubjectParam, defaultEmailSubject);
-String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBodyParam, defaultEmailBody);
+Map<String, String> definitionTerms = (Map<String, String>)request.getAttribute("liferay-ui:email-notification-settings:definitionTerms");
+String emailBody = (String)request.getAttribute("liferay-ui:email-notification-settings:emailBody");
+boolean emailEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:email-notification-settings:emailEnabled"));
+String emailParam = (String)request.getAttribute("liferay-ui:email-notification-settings:emailParam");
+String emailSubject = (String)request.getAttribute("liferay-ui:email-notification-settings:emailSubject");
 %>
 
 <aui:fieldset>
 	<aui:input label="enabled" name='<%= "preferences--" + emailParam + "Enabled--" %>' type="checkbox" value="<%= emailEnabled %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
+	<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailParam + "Subject--" %>' value="<%= emailSubject %>" />
 
 	<aui:field-wrapper label="body">
-		<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" initMethod='<%= "init" + emailBodyParam + "Editor" %>' name="<%= emailParam %>" />
+		<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" initMethod='<%= "init" + emailParam + "BodyEditor" %>' name="<%= emailParam %>" />
 
-		<aui:input name='<%= "preferences--" + emailBodyParam + "--" %>' type="hidden" />
+		<aui:input name='<%= "preferences--" + emailParam + "Body--" %>' type="hidden" />
 	</aui:field-wrapper>
 </aui:fieldset>
 
-<aui:fieldset cssClass="definition-of-terms">
-	<%@ include file="/html/portlet/journal/definition_of_terms.jspf" %>
-</aui:fieldset>
+<if test="<%= definitionTerms.size() > 0 %>">
+	<aui:fieldset cssClass="definition-of-terms">
+		<legend>
+			<liferay-ui:message key="definition-of-terms" />
+		</legend>
+
+		<dl>
+
+			<%
+			for (Map.Entry<String, String> definitionTerm : definitionTerms.entrySet()) {
+			%>
+
+				<dt>
+					<%= definitionTerm.getKey() %>
+				</dt>
+				<dd>
+					<%= definitionTerm.getValue() %>
+				</dd>
+
+			<%
+			}
+			%>
+
+		</dl>
+	</aui:fieldset>
+</if>
 
 <aui:script>
-	function <portlet:namespace />init<%= emailBodyParam %>Editor() {
+	function <portlet:namespace />init<%= emailParam %>BodyEditor() {
 		return "<%= UnicodeFormatter.toString(emailBody) %>";
 	}
 </aui:script>
 
 <%!
-public static final String EDITOR_WYSIWYG_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.journal.configuration.jsp";
+public static final String EDITOR_WYSIWYG_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.taglib.ui.email_notification_settings.jsp";
 %>

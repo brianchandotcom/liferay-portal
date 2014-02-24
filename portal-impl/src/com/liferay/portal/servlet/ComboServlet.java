@@ -299,7 +299,7 @@ public class ComboServlet extends HttpServlet {
 				}
 				else if (minifierType.equals("js")) {
 					stringFileContent = MinifierUtil.minifyJavaScript(
-						stringFileContent);
+						resourcePath, stringFileContent);
 				}
 			}
 

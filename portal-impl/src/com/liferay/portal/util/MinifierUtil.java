@@ -18,11 +18,9 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.yahoo.platform.yui.compressor.CssCompressor;
-import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
-import com.yahoo.platform.yui.mozilla.javascript.ErrorReporter;
-import com.yahoo.platform.yui.mozilla.javascript.EvaluatorException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -38,6 +36,7 @@ public class MinifierUtil {
 		return _instance._minifyCss(content);
 	}
 
+	@Deprecated
 	public static String minifyJavaScript(String content) {
 		if (!PropsValues.MINIFIER_ENABLED) {
 			return content;
@@ -46,7 +45,35 @@ public class MinifierUtil {
 		return _instance._minifyJavaScript(content);
 	}
 
+	public static String minifyJavaScript(String resource, String content) {
+		if (!PropsValues.MINIFIER_ENABLED) {
+			return content;
+		}
+
+		return _instance._minifyJavaScript(resource, content);
+	}
+
+	private static JavaScriptMinifier _getJavaScriptMinifier() {
+		try {
+			Class<JavaScriptMinifier> javaScriptMinifierClass =
+				(Class<JavaScriptMinifier>)Class.forName(
+					PropsValues.JAVASCRIPT_MINIFIER);
+
+			return javaScriptMinifierClass.newInstance();
+		}
+		catch (Exception e) {
+			if (_log.isErrorEnabled()) {
+				_log.error(
+					"Could not instantiate "+ PropsValues.JAVASCRIPT_MINIFIER +
+						". Returning YUIJavaScriptMinifier as default");
+			}
+
+			return new YUIJavaScriptMinifier();
+		}
+	}
+
 	private MinifierUtil() {
+		_javaScriptMinifierInstance = _getJavaScriptMinifier();
 	}
 
 	private String _minifyCss(String content) {
@@ -68,77 +95,19 @@ public class MinifierUtil {
 		return unsyncStringWriter.toString();
 	}
 
+	@Deprecated
 	private String _minifyJavaScript(String content) {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+		return _javaScriptMinifierInstance.compress(StringPool.BLANK, content);
+	}
 
-		try {
-			JavaScriptCompressor javaScriptCompressor =
-				new JavaScriptCompressor(
-					new UnsyncStringReader(content),
-					new JavaScriptErrorReporter());
-
-			javaScriptCompressor.compress(
-				unsyncStringWriter, PropsValues.YUI_COMPRESSOR_JS_LINE_BREAK,
-				PropsValues.YUI_COMPRESSOR_JS_MUNGE,
-				PropsValues.YUI_COMPRESSOR_JS_VERBOSE,
-				PropsValues.YUI_COMPRESSOR_JS_PRESERVE_ALL_SEMICOLONS,
-				PropsValues.YUI_COMPRESSOR_JS_DISABLE_OPTIMIZATIONS);
-		}
-		catch (Exception e) {
-			_log.error("JavaScript Minifier failed for\n" + content);
-
-			unsyncStringWriter.append(content);
-		}
-
-		return unsyncStringWriter.toString();
+	private String _minifyJavaScript(String resource, String content) {
+		return _javaScriptMinifierInstance.compress(resource, content);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MinifierUtil.class);
 
 	private static MinifierUtil _instance = new MinifierUtil();
 
-	private class JavaScriptErrorReporter implements ErrorReporter {
-
-		@Override
-		public void error(
-			String message, String sourceName, int line, String lineSource,
-			int lineOffset) {
-
-			if (line < 0) {
-				_log.error(message);
-			}
-			else {
-				_log.error(line + ": " + lineOffset + ": " + message);
-			}
-		}
-
-		@Override
-		public EvaluatorException runtimeError(
-			String message, String sourceName, int line, String lineSource,
-			int lineOffset) {
-
-			error(message, sourceName, line, lineSource, lineOffset);
-
-			return new EvaluatorException(message);
-		}
-
-		@Override
-		public void warning(
-			String message, String sourceName, int line, String lineSource,
-			int lineOffset) {
-
-			if (!_log.isWarnEnabled()) {
-				return;
-			}
-
-			if (line < 0) {
-				_log.warn(message);
-			}
-			else {
-				_log.warn(line + ": " + lineOffset + ": " + message);
-			}
-		}
-
-	}
+	private JavaScriptMinifier _javaScriptMinifierInstance;
 
 }

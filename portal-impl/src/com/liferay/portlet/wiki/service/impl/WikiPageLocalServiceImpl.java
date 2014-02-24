@@ -1378,7 +1378,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			if (Validator.isNotNull(page.getRedirectTitle())) {
 				page.setRedirectTitle(StringPool.BLANK);
-				page.setSummary("Summary");
+
+				page.setSummary(StringPool.BLANK);
 			}
 
 			wikiPagePersistence.update(page);

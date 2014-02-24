@@ -14,7 +14,7 @@
 	<#if (fields??) && (fieldValue != "")>
 		[ <a href="javascript:;" id="${portletNamespace}${namespacedFieldName}ToggleImage" onClick="${portletNamespace}${namespacedFieldName}ToggleImage();">${languageUtil.get(locale, "show")}</a> ]
 
-		<div class="hide wcm-image-preview" id="${portletNamespace}${namespacedFieldName}Container">
+		<div class="hide ddm-image-preview" id="${portletNamespace}${namespacedFieldName}Container">
 			<#if !required>
 				<a href="javascript:;" id="${portletNamespace}${namespacedFieldName}DeleteImage" onClick="${portletNamespace}${namespacedFieldName}ToggleDeleteImage();">${languageUtil.get(locale, "delete")}</a>
 			</#if>

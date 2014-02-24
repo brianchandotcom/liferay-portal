@@ -11,6 +11,8 @@
 
 	<@aui.input name="${namespacedFieldName}Delete" type="hidden" value="delete" />
 
+	<#assign alt = "">
+
 	<#if fieldRawValue?has_content>
 		<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
 
@@ -30,7 +32,7 @@
 		</div>
 	</#if>
 
-	<@aui.input label="image-description" name="${namespacedFieldName}Alt" type="text" value=alt />
+	<@aui.input label="image-description" name="${namespacedFieldName}Alt" type="text" value="${alt}" />
 
 	${fieldStructure.children}
 </@>

@@ -642,8 +642,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				&.open {
 					.toggler-content {
 						border: 1px solid #DDD;
-						left: 49px;
-						margin-left: -1px;
+						left: 48px;
 						margin-top: 0 !important;
 
 						&:before {
@@ -1106,9 +1105,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			.portlet-borderless-container {
-				@include box-shadow(inset 1px 0 #DDD);
-
-				.accordion .accordion-group {
+				&, .accordion .accordion-group {
 					@include box-shadow(inset 1px 0 #DDD);
 				}
 			}
@@ -1185,7 +1182,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 							&.open {
 								.toggler-content {
 									left: -1px;
-									margin-left: 0;
 									margin-top: 0 !important;
 									position: absolute;
 									width: 100%;

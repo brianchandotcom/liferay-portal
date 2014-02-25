@@ -358,7 +358,7 @@ public class WikiPageLocalServiceTest {
 
 		WikiPage originalPage = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _node.getNodeId(),
-			ServiceTestUtil.randomString(), originalContent, true,
+			ServiceTestUtil.randomString(), originalContent, true, true,
 			serviceContext);
 
 		if (hasExpandoValues) {

@@ -107,7 +107,8 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 		return WikiTestUtil.addPage(
 			TestPropsValues.getUserId(),
 			(Long)parentBaseModel.getPrimaryKeyObj(),
-			ServiceTestUtil.randomString(), keywords, approved, serviceContext);
+			ServiceTestUtil.randomString(), keywords, true, approved,
+			serviceContext);
 	}
 
 	@Override

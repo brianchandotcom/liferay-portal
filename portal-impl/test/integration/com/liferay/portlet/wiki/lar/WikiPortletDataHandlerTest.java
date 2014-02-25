@@ -47,7 +47,7 @@ public class WikiPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), node.getNodeId(),
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
-			true, serviceContext);
+			true, true, serviceContext);
 	}
 
 	@Override

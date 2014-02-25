@@ -95,7 +95,7 @@ public class WikiPageStagedModelDataHandlerTest
 		WikiPage page = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), node.getNodeId(),
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
-			true, serviceContext);
+			true, true, serviceContext);
 
 		WikiTestUtil.addWikiAttachment(
 			TestPropsValues.getUserId(), node.getNodeId(), page.getTitle(),

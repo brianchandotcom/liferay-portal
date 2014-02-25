@@ -1,1 +1,1 @@
-include 'registry-api', 'registry-impl'
+include 'registry-api', 'registry-impl', 'registry-test'

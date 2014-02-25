@@ -2,3 +2,6 @@
 
 /registry/registry-api/build
 /registry/registry-impl/build
+/registry/registry-test/build
+/registry/registry-test/generated
+/registry/registry-test/test-reports

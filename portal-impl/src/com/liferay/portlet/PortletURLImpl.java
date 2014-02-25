@@ -1346,17 +1346,25 @@ public class PortletURLImpl
 				continue;
 			}
 
-			String[] originalValue = new String[]{value};
-			String[] updatedValue = params.get(autopropagatedParameter);
-
-			if (updatedValue == null) {
-				params.put(autopropagatedParameter, originalValue);
+			if (!PropsValues.PORTLET_URL_APPEND_PARAMETERS) {
+				params.put(autopropagatedParameter, new String[]{value});
 			}
-			else if (PropsValues.PORTLET_URL_APPEND_PARAMETERS) {
-				String[] newValues = ArrayUtil.append(
-					originalValue, updatedValue);
+			else {
+				String[] updatedValue = params.get(autopropagatedParameter);
 
-				params.put(autopropagatedParameter, newValues);
+				if (updatedValue == null) {
+					params.put(autopropagatedParameter, new String[]{value});
+				}
+				else {
+					String[] newValues = new String[updatedValue.length + 1];
+
+					newValues[0] = value;
+
+					System.arraycopy(
+						updatedValue, 0, newValues, 1, updatedValue.length);
+
+					params.put(autopropagatedParameter, newValues);
+				}
 			}
 		}
 	}

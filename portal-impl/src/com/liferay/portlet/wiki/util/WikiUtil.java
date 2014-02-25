@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -69,6 +70,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -192,6 +194,49 @@ public class WikiUtil {
 
 		return PortalUtil.getEmailFromAddress(
 			preferences, companyId, PropsValues.WIKI_EMAIL_FROM_ADDRESS);
+	}
+
+	public static Map<String, String> getEmailFromDefinitionTerms(
+		RenderRequest request, String emailFromAddress, String emailFromName) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, String> definitionTerms = new HashMap<String, String>();
+
+		definitionTerms.put(
+			"[$COMPANY_ID$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-id-associated-with-the-wiki"));
+		definitionTerms.put(
+			"[$COMPANY_MX$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-mx-associated-with-the-wiki"));
+		definitionTerms.put(
+			"[$COMPANY_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-name-associated-with-the-wiki"));
+		definitionTerms.put(
+			"[$PAGE_USER_ADDRESS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-email-address-of-the-user-who-added-the-page"));
+		definitionTerms.put(
+			"[$PAGE_USER_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-user-who-added-the-page"));
+		definitionTerms.put(
+			"[$PORTLET_NAME$]", PortalUtil.getPortletTitle(request));
+		definitionTerms.put(
+			"[$SITE_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-site-name-associated-with-the-wiki"));
+
+		return definitionTerms;
 	}
 
 	public static String getEmailFromName(

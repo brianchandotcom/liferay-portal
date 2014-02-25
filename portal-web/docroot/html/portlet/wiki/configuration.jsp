@@ -74,48 +74,24 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 				</legend>
 
 				<dl>
-					<dt>
-						[$COMPANY_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-id-associated-with-the-wiki" />
-					</dd>
-					<dt>
-						[$COMPANY_MX$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-mx-associated-with-the-wiki" />
-					</dd>
-					<dt>
-						[$COMPANY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-name-associated-with-the-wiki" />
-					</dd>
-					<dt>
-						[$PAGE_USER_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-user-who-added-the-page" />
-					</dd>
-					<dt>
-						[$PAGE_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-added-the-page" />
-					</dd>
-					<dt>
-						[$PORTLET_NAME$]
-					</dt>
-					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
-					</dd>
-					<dt>
-						[$SITE_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-wiki" />
-					</dd>
+
+					<%
+					Map<String, String> definitionTerms = WikiUtil.getEmailFromDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+
+					for (Map.Entry<String, String> definitionTerm : definitionTerms.entrySet()) {
+					%>
+
+						<dt>
+							<%= definitionTerm.getKey() %>
+						</dt>
+						<dd>
+							<%= definitionTerm.getValue() %>
+						</dd>
+
+					<%
+					}
+					%>
+
 				</dl>
 			</aui:fieldset>
 		</liferay-ui:section>

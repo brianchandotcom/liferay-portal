@@ -729,6 +729,49 @@
 		</execute>
 	</command>
 
+	<command name="PublishDraftWebContent" priority="4">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addDraftCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCPStatus">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#publishCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCPStatus">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentStatus" value="Approved" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
 	<command name="PublishExpireWebContent" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
@@ -763,49 +806,6 @@
 		<execute macro="WebContent#viewCPStatus">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentStatus" value="Expired" />
-			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#publishCP">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentStatus" value="Approved" />
-			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
-	</command>
-
-	<command name="PublishDraftWebContent" priority="4">
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#addDraftCP">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
@@ -970,7 +970,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="User#logoutPG" /> 
+		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />

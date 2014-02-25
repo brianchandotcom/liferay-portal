@@ -381,13 +381,6 @@
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="${webContentTitle} is not approved." />
 	</command>
 
-	<command name="clickIntoCmdCP">
-		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
-		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-	</command>
-
 	<command name="copyCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
@@ -499,6 +492,13 @@
 		<execute action="CPWebcontent#assertClick" locator-key1="ACTION_MENULIST_EXPIRE" value1="Expire" />
 	</command>
 
+	<command name="gotoCP">
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
+		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+	</command>
+
 	<command name="moveToRecycleBinCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
@@ -513,7 +513,7 @@
 	<command name="previewCPwithStructureTemplateXSL">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute macro="WebContent#clickIntoCmdCP">
+		<execute macro="WebContent#gotoCP">
 			<var name="key_webContentTitle" value="${webContentTitle}" />
 		</execute>
 
@@ -528,7 +528,7 @@
 	<command name="publishCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute macro="WebContent#clickIntoCmdCP">
+		<execute macro="WebContent#gotoCP">
 			<var name="key_webContentTitle" value="${webContentTitle}" />
 		</execute>
 
@@ -616,7 +616,7 @@
 	<command name="viewCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute macro="WebContent#clickIntoCmdCP">
+		<execute macro="WebContent#gotoCP">
 			<var name="key_webContentTitle" value="${webContentTitle}" />
 		</execute>
 
@@ -706,7 +706,7 @@
 
 				<execute action="CPWebcontentAddwebcontent#selectFrameTop" />
 			</else>
-		</if>		
+		</if>
 	</command>
 
 	<command name="viewCPUserEdit">

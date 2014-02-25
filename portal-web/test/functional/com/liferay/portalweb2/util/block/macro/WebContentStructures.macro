@@ -138,8 +138,8 @@
 		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" locator-key1="STRUCTURES_IFRAME" />
 
 		<for list="${editSubstructureFieldNames}" param="structureFieldName">
-			<var name="structureFieldName" value="${structureFieldName?replace(' ', '_')}" />			
 			<var name="key_fieldDefaultValue" value="${structureFieldName}" />
+			<var name="structureFieldName" value="${structureFieldName?replace(' ', '_')}" />
 
 			<execute action="CPWebcontentStructuresEditdefaultvalues#type" locator-key1="FIELD_NAME_FIELD" value1="Edited ${structureFieldName} Field" />
 		</for>

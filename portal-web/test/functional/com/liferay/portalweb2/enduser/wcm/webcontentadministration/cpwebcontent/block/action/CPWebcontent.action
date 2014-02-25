@@ -63,7 +63,7 @@
 		<case locator-key1="ENTRY_DESCRIPTIVE_LAST_UPDATED">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
-		
+
 		<case locator-key1="ENTRY_DESCRIPTIVE_TITLE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>

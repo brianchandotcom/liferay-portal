@@ -44,8 +44,8 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 		String fileName = file.getName();
 
 		if (isMatchingFile(file, "WEB-INF/liferay-hook.xml") &&
-			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml") &&
-			!isThemePlugin(file) && !isWebPlugin(file)) {
+			!isPortletPlugin(file) && !isThemePlugin(file) &&
+			!isWebPlugin(file)) {
 
 			return true;
 		}
@@ -57,8 +57,7 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 		throws AutoDeployException {
 
 		if (isMatchingFile(file, "WEB-INF/liferay-layout-templates.xml") &&
-			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml") &&
-			!isThemePlugin(file)) {
+			!isPortletPlugin(file) && !isThemePlugin(file)) {
 
 			return true;
 		}
@@ -135,6 +134,28 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(file.getPath() + " does not have a matching extension");
+		}
+
+		return false;
+	}
+
+	public boolean isPortletPlugin(File file) throws AutoDeployException {
+		if (isMatchingFile(
+				file, "WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD)) {
+
+			return true;
+		}
+
+		if (isMatchingFile(file, "WEB-INF/liferay-portlet.xml")) {
+			return true;
+		}
+
+		if (isMatchingFile(file, "index_mvc.jsp")) {
+			return true;
+		}
+
+		if (isMatchingFile(file, "index.php")) {
+			return true;
 		}
 
 		return false;

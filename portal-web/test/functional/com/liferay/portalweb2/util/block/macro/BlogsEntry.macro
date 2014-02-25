@@ -8,9 +8,48 @@
 		</if>
 
 		<execute action="PGBlogsAdd#type" locator-key1="ABSTRACT_DESCRIPTION_FIELD" value1="${entryAbstractDescription}" />
+
+		<if>
+			<isset var="smallImageURL" />
+			<then>
+				<execute macro="BlogsEntry#addAbstractSmallImagePG">
+					<var name="smallImageURL" value="${smallImageURL}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="smallImageFile" />
+			<then>
+				<execute macro="BlogsEntry#addAbstractSmallImagePG">
+					<var name="smallImageFile" value="${smallImageFile}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="addAbstractSmallImagePG">
+		<execute action="PGBlogsAdd#check" locator-key1="ABSTRACT_USE_SMALL_IMAGE_CHECKBOX" />
+
+		<if>
+			<isset var="smallImageURL" />
+			<then>
+				<execute action="PGBlogsAdd#click" locator-key1="ABSTRACT_SMALL_IMAGE_URL_RADIO" />
+				<execute action="PGBlogsAdd#type" locator-key1="ABSTRACT_SMALL_IMAGE_URL_FIELD" value1="${smallImageURL}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="smallImageFile" />
+			<then>
+				<execute action="PGBlogsAdd#click" locator-key1="ABSTRACT_SMALL_IMAGE_FILE_RADIO" />
+				<execute action="PGBlogsAdd#uploadCommonFile" locator-key1="ABSTRACT_SMALL_IMAGE_FILE_BROWSE_BUTTON" value1="${smallImageFile}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="addCategoryCP">
@@ -179,6 +218,17 @@
 
 					<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_TITLE" />
 					<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_CONTENT" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${entryTitleSpecialCharacter}" arg2="true" />
+				<then>
+					<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+					<var name="key_entryTitle" value="${entryTitle}" />
+
+					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_GENERIC" value1="${entryTitle}" />
+					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_GENERIC" value1="${entryContent}" />
 				</then>
 			</elseif>
 			<else>
@@ -654,6 +704,25 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
+	<command name="viewAbstractEntryViaAPPG">
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_DESCRIPTION" value1="${entryAbstractDescription}" />
+
+		<if>
+			<isset var="smallImage" />
+			<then>
+				<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_DESCRIPTION_SMALL_IMAGE" />
+			</then>
+		</if>
+
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+
+		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${entryTitle}" />
+		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_CONTENT" value1="${entryContent}" />
+	</command>
+
 	<command name="viewCP">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -781,6 +850,36 @@
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
+	<command name="viewFriendlyURLPG">
+		<var name="entryTitleURL" value="${entryTitle?replace(' ', '-')}" />
+		<var name="entryTitleURL" value="${entryTitleURL?lowercase()}" />
+		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
+		<var name="pageNameURL" value="${pageNameURL?lowercase()}" />
+
+		<var name="friendlyURL" value="http://localhost:8080/web/guest/${pageNameURL}/-/blogs/${entryTitleURL}" />
+
+		<execute action="Home#open" locator1="${friendlyURL}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+	</command>
+
+	<command name="viewFriendlyURLViaRecentBloggersPG">
+		<var name="entryTitleURL" value="${entryTitle?replace(' ', '-')}" />
+		<var name="entryTitleURL" value="${entryTitleURL?lowercase()}" />
+		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
+		<var name="pageNameURL" value="${pageNameURL?lowercase()}" />
+
+		<var name="friendlyURL" value="http://localhost:8080/web/guest/${pageNameURL}/-/blogs/${entryTitleURL}" />
+
+		<execute action="PGRecentbloggers#assertClick" locator-key1="RECENT_BLOGGER_USER_NAME" value1="${entryAuthor}" />
+
+		<execute action="Home#assertLocation" value1="${friendlyURL}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+	</command>
+
 	<command name="viewNoEditLinkPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -833,9 +932,19 @@
 	<command name="viewPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
-		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<if>
+			<equals arg1="${entryTitleSpecialCharacter}" arg2="true" />
+			<then>
+				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_GENERIC" value1="${entryTitle}" />
+				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_GENERIC" value1="${entryContent}" />
+				<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE_GENERIC" value1="${entryTitle}" />
+			</then>
+			<else>
+				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+				<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+			</else>
+		</if>
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />

@@ -42,7 +42,6 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetTag;
@@ -114,7 +113,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		// Assets
 
-		StagedModelAssets stagedModelAssets = updateAssetEntry(stagedModel);
+		StagedModelAssets stagedModelAssets = updateAssetEntry(
+			stagedModel, stagingGroup);
 
 		// Comments
 
@@ -190,6 +190,13 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
 		throws Exception {
+	}
+
+	protected AssetEntry fetchAssetEntry(StagedModel stagedModel, Group group)
+		throws Exception {
+
+		return AssetEntryLocalServiceUtil.fetchEntry(
+			group.getGroupId(), stagedModel.getUuid());
 	}
 
 	protected Date getEndDate() {
@@ -291,16 +298,13 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		return exportedStagedModel;
 	}
 
-	protected StagedModelAssets updateAssetEntry(StagedModel stagedModel)
+	protected StagedModelAssets updateAssetEntry(
+			StagedModel stagedModel, Group group)
 		throws Exception {
 
-		AssetEntry assetEntry = null;
+		AssetEntry assetEntry = fetchAssetEntry(stagedModel, group);
 
-		try {
-			assetEntry = AssetEntryLocalServiceUtil.getEntry(
-				stagingGroup.getGroupId(), stagedModel.getUuid());
-		}
-		catch (NoSuchEntryException nsee) {
+		if (assetEntry == null) {
 			return null;
 		}
 
@@ -337,15 +341,15 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	}
 
 	protected void validateAssets(
-			String classUuid, StagedModelAssets stagedModelAssets, Group group)
+			StagedModel stagedModel, StagedModelAssets stagedModelAssets,
+			Group group)
 		throws Exception {
 
 		if (stagedModelAssets == null) {
 			return;
 		}
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			group.getGroupId(), classUuid);
+		AssetEntry assetEntry = fetchAssetEntry(stagedModel, group);
 
 		List<AssetCategory> assetCategories =
 			AssetCategoryLocalServiceUtil.getEntryCategories(
@@ -522,7 +526,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		Assert.assertNotNull(importedStagedModel);
 
-		validateAssets(importedStagedModel.getUuid(), stagedModelAssets, group);
+		validateAssets(importedStagedModel, stagedModelAssets, group);
 
 		validateComments(stagedModel, importedStagedModel, group);
 

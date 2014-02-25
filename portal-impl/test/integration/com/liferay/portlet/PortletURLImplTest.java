@@ -16,16 +16,17 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.QName;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.GroupTestUtil;
@@ -44,6 +44,9 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.util.Encryptor;
+import com.liferay.util.EncryptorException;
+
+import java.security.Key;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +55,6 @@ import java.util.Set;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -66,13 +67,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Tomas Polesovsky
  */
-@ExecutionTestListeners(
-	listeners = {
-		MainServletExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 public class PortletURLImplTest {
 
 	@Before
@@ -91,23 +87,48 @@ public class PortletURLImplTest {
 		_targetLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), "Destination Layout", true);
 
-		addPortlet(_targetLayout, PORTLET_ID);
-		addPortlet(_targetLayout, PORTLET_MESSAGE_BOARDS);
-		addPortlet(_sourceLayout, PORTLET_MESSAGE_BOARDS);
+		addPortlet(_targetLayout, PORTLET_MY_ACCOUNT_ID);
+		addPortlet(_targetLayout, PORTLET_MESSAGE_BOARDS_ID);
+		addPortlet(_sourceLayout, PORTLET_MESSAGE_BOARDS_ID);
+
+		_request = new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
+
+		themeDisplay.setPermissionChecker(permissionChecker);
+
+		themeDisplay.setLayout(_sourceLayout);
+
+		themeDisplay.setSecure(false);
+		themeDisplay.setServerName("liferay.com");
+		themeDisplay.setServerPort(80);
+
+		_request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		Company company = PortalUtil.getCompany(_request);
+
+		company.setKeyObj(null);
+		company.setKey(COMPANY_KEY);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		LayoutLocalServiceUtil.deleteLayout(_sourceLayout);
+		LayoutLocalServiceUtil.deleteLayout(_targetLayout);
+
 		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
 	public void testGenerateToString() throws Exception {
-		HttpServletRequest request = mockHttpServletRequest();
-
 		PortletURLImpl portletURL =
 			new PortletURLImpl(
-				request, PORTLET_ID, _targetLayout.getPlid(),
+				_request, PORTLET_MY_ACCOUNT_ID, _targetLayout.getPlid(),
 				PortletRequest.RENDER_PHASE);
 
 		String[] expectedParts = {
@@ -120,11 +141,9 @@ public class PortletURLImplTest {
 
 	@Test
 	public void testGenerateToStringActionComplex() throws Exception {
-		HttpServletRequest request = mockHttpServletRequest();
-
 		PortletURLImpl portletURL =
 			new PortletURLImpl(
-				request, PORTLET_MESSAGE_BOARDS, _targetLayout.getPlid(),
+				_request, PORTLET_MESSAGE_BOARDS_ID, _targetLayout.getPlid(),
 				PortletRequest.ACTION_PHASE);
 
 		portletURL.setWindowState(LiferayWindowState.NORMAL);
@@ -132,10 +151,11 @@ public class PortletURLImplTest {
 		portletURL.setPortletMode(PortletMode.EDIT);
 		portletURL.setResourceID("resourceId");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			com.liferay.portal.util.WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		portletDisplay.setColumnId("column-1");
 		portletDisplay.setColumnPos(1);
 		portletDisplay.setColumnCount(2);
@@ -157,11 +177,13 @@ public class PortletURLImplTest {
 		portletURL.setParameter("b", new String[]{"0", "1"});
 		portletURL.setParameter("&c&", "&c&");
 
-		String token = AuthTokenUtil.getToken(request);
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			PORTLET_MESSAGE_BOARDS_ID);
 
-		QName tagPRPQName =
-			PortletLocalServiceUtil.getPortletById(PORTLET_MESSAGE_BOARDS).
-				getPublicRenderParameter("tag").getQName();
+		PublicRenderParameter publicRenderParameter =
+			portlet.getPublicRenderParameter("tag");
+
+		QName tagPRPQName = publicRenderParameter.getQName();
 
 		String tagPRPName = PortletQNameUtil.getPublicRenderParameterName(
 			tagPRPQName);
@@ -170,9 +192,10 @@ public class PortletURLImplTest {
 			PortletQNameUtil.getRemovePublicRenderParameterName(tagPRPQName);
 
 		String[] expectedParts = new String[] {
-			"http://domain2.net/destination-layout", "p_auth=" + token,
-			"p_p_id=19", "p_p_lifecycle=1", "p_p_state=normal",
-			"p_p_state_rcv=1", "p_p_mode=edit", "p_p_resource_id=resourceId",
+			"http://domain2.net/destination-layout",
+			"p_auth=" + AuthTokenUtil.getToken(_request), "p_p_id=19",
+			"p_p_lifecycle=1", "p_p_state=normal", "p_p_state_rcv=1",
+			"p_p_mode=edit", "p_p_resource_id=resourceId",
 			"p_p_col_id=column-1", "p_p_col_pos=1", "p_p_col_count=2",
 			"doAsUserId=y4iMKl9Wv7skJFYEehXTKQ%3D%3D", "doAsUserLanguageId=en",
 			"doAsGroupId=10000", "refererGroupId=10000", "refererPlid=10000",
@@ -226,10 +249,8 @@ public class PortletURLImplTest {
 
 	@Test
 	public void testGenerateToStringResourceComplete() throws Exception {
-		HttpServletRequest request = mockHttpServletRequest();
-
 		PortletURLImpl portletURL = new PortletURLImpl(
-			request, "0", 0, PortletRequest.RENDER_PHASE);
+			_request, "0", 0, PortletRequest.RENDER_PHASE);
 
 		portletURL.addProperty("key", "value0");
 		portletURL.setAnchor(true);
@@ -258,7 +279,7 @@ public class PortletURLImplTest {
 		portletURL.addParameterIncludedInPath("inPath");
 		portletURL.setParameter("inPath", "0");
 		portletURL.setPlid(_targetLayout.getPlid());
-		portletURL.setPortletId(PORTLET_MESSAGE_BOARDS);
+		portletURL.setPortletId(PORTLET_MESSAGE_BOARDS_ID);
 		portletURL.setPortletMode(PortletMode.EDIT);
 		portletURL.setProperty("key", "value");
 		portletURL.setRefererGroupId(_sourceLayout.getGroupId());
@@ -268,8 +289,8 @@ public class PortletURLImplTest {
 		portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 		portletURL.setWindowStateRestoreCurrentView(true);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			com.liferay.portal.util.WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -277,9 +298,13 @@ public class PortletURLImplTest {
 		portletDisplay.setColumnPos(1);
 		portletDisplay.setColumnCount(2);
 
-		QName tagPRPQName =
-			PortletLocalServiceUtil.getPortletById(PORTLET_MESSAGE_BOARDS).
-				getPublicRenderParameter("tag").getQName();
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			PORTLET_MESSAGE_BOARDS_ID);
+
+		PublicRenderParameter publicRenderParameter =
+			portlet.getPublicRenderParameter("tag");
+
+		QName tagPRPQName = publicRenderParameter.getQName();
 
 		String tagPRPName = PortletQNameUtil.getPublicRenderParameterName(
 			tagPRPQName);
@@ -289,7 +314,7 @@ public class PortletURLImplTest {
 
 		String[] expectedParts = new String[] {
 			"https://domain2.net/destination-layout",
-			"p_p_id=" + PORTLET_MESSAGE_BOARDS, "p_p_lifecycle=2",
+			"p_p_id=" + PORTLET_MESSAGE_BOARDS_ID, "p_p_lifecycle=2",
 			"p_p_state=exclusive", "p_p_state_rcv=1", "p_p_mode=edit",
 			"p_p_resource_id=resourceID", "p_p_cacheability=cacheLevelFull",
 			"p_p_col_id=column-1", "p_p_col_pos=1", "p_p_col_count=2",
@@ -307,6 +332,10 @@ public class PortletURLImplTest {
 		portletURL.setEncrypt(true);
 		portletURL.setPlid(_sourceLayout.getPlid());
 
+		Company company = PortalUtil.getCompany(_request);
+
+		Key key = company.getKeyObj();
+
 		expectedParts = new String[] {
 			"https://domain1.net/source-layout",
 			"p_p_id=%2FUyxNdhH5RmqYqg7E%2BGgcw%3D%3D",
@@ -322,8 +351,8 @@ public class PortletURLImplTest {
 			"doAsUserId=y4iMKl9Wv7skJFYEehXTKQ%3D%3D",
 			"doAsUserLanguageId=T1bJvFsD1nyZTaFS3FZhfQ%3D%3D",
 			"doAsGroupId=y4iMKl9Wv7skJFYEehXTKQ%3D%3D",
-			"refererGroupId=" + encrypt(request, _sourceLayout.getGroupId()),
-			"refererPlid=" + encrypt(request, _sourceLayout.getPlid()),
+			"refererGroupId=" + encrypt(key, _sourceLayout.getGroupId()),
+			"refererPlid=" + encrypt(key, _sourceLayout.getPlid()),
 			"controlPanelCategory=R50hL5BiH0AEiVzHCjzOXw%3D%3D",
 			"_19_a=YjGjF2JxcNdBjkxIOcmQuA%3D%3D",
 			"_19_b=pQ8oY8tR1xC7h7D7e8%2BFAQ%3D%3D",
@@ -355,66 +384,59 @@ public class PortletURLImplTest {
 
 	@Test
 	public void testGenerateToStringWithAutopropagating() throws Exception {
-		MockHttpServletRequest request = mockHttpServletRequest();
-
 		List<String> expectedURLParts = new ArrayList<String>();
 
 		Portlet ddmPortlet = PortletLocalServiceUtil.getPortletById(
-			PORTLET_DDM);
+			PORTLET_DDM_ID);
 
 		Set<String> autopropagatedParameters =
 			ddmPortlet.getAutopropagatedParameters();
 
-		StringBundler ampersands = new StringBundler(
-			autopropagatedParameters.size());
+		StringBundler sb = new StringBundler(autopropagatedParameters.size());
 
-		for (String autoParam : autopropagatedParameters) {
-			String namespacedAutoParam =
-				StringPool.UNDERLINE + PORTLET_DDM + StringPool.UNDERLINE +
-					autoParam;
+		for (String autopropagatedParameter : autopropagatedParameters) {
+			String namespacedAutoprogatedParameter =
+				StringPool.UNDERLINE + PORTLET_DDM_ID + StringPool.UNDERLINE +
+					autopropagatedParameter;
 
-			request.setParameter(autoParam, "0");
+			_request.setParameter(autopropagatedParameter, "0");
 
-			expectedURLParts.add(namespacedAutoParam + "=0");
+			expectedURLParts.add(namespacedAutoprogatedParameter + "=0");
 
-			ampersands.append(StringPool.AMPERSAND);
+			sb.append(StringPool.AMPERSAND);
 		}
 
-		addPortlet(_targetLayout, PORTLET_DDM);
+		addPortlet(_targetLayout, PORTLET_DDM_ID);
 
 		PortletURLImpl portletURL =
 			new PortletURLImpl(
-				request, "0", _targetLayout.getPlid(),
+				_request, "0", _targetLayout.getPlid(),
 				PortletRequest.RENDER_PHASE);
 
-		portletURL.setPortletId(PORTLET_DDM);
+		portletURL.setPortletId(PORTLET_DDM_ID);
 
 		expectedURLParts.add("http://domain2.net/destination-layout");
-		expectedURLParts.add("p_p_id=" + PORTLET_DDM);
+		expectedURLParts.add("p_p_id=" + PORTLET_DDM_ID);
 		expectedURLParts.add("p_p_lifecycle=0");
-		expectedURLParts.add("?&" + ampersands.toString());
+		expectedURLParts.add("?&" + sb.toString());
 
 		compareURLs(
-			expectedURLParts.toArray(new String[0]),
+			expectedURLParts.toArray(new String[expectedURLParts.size()]),
 			portletURL.generateToString());
 	}
 
 	@Test
 	public void testGenerateToStringWithPPAuthToken() throws Exception {
-		HttpServletRequest request = mockHttpServletRequest();
-
-		int plid = 1;
-
-		String token = AuthTokenUtil.getToken(request, plid, PORTLET_ID);
+		String[] expectedParts = {
+			"http://localhost/portal/layout", "p_l_id=1", "p_p_auth=" +
+				AuthTokenUtil.getToken(_request, 1, PORTLET_MY_ACCOUNT_ID),
+			"p_p_id=2", "p_p_lifecycle=0", "?&&&"
+		};
 
 		PortletURLImpl portletURL =
 			new PortletURLImpl(
-				request, PORTLET_ID, 1, PortletRequest.RENDER_PHASE);
-
-		String[] expectedParts = {
-			"http://localhost/portal/layout", "p_l_id=1", "p_p_auth=" + token,
-			"p_p_id=2", "p_p_lifecycle=0", "?&&&"
-		};
+				_request, PORTLET_MY_ACCOUNT_ID, 1,
+				PortletRequest.RENDER_PHASE);
 
 		compareURLs(expectedParts, portletURL.generateToString());
 	}
@@ -425,18 +447,19 @@ public class PortletURLImplTest {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		if (!layoutTypePortlet.hasPortletId(portletId)) {
-			layoutTypePortlet.addPortletId(0, portletId, "column-1", -1, false);
-
-			LayoutLocalServiceUtil.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), layout.getTypeSettings());
-
-			// add portlet preferences
-
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout, portletId);
+		if (layoutTypePortlet.hasPortletId(portletId)) {
+			return;
 		}
+
+		layoutTypePortlet.addPortletId(0, portletId, "column-1", -1, false);
+
+		LayoutLocalServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
+
+		// add portlet preferences
+
+		PortletPreferencesFactoryUtil.getLayoutPortletSetup(layout, portletId);
 	}
 
 	protected void compareURLs(String expectedParts[], String actualURL) {
@@ -446,71 +469,33 @@ public class PortletURLImplTest {
 			Assert.assertTrue(
 				expectedPart + " is not present in " + actualURL, pos > -1);
 
-			actualURL = actualURL.substring(0, pos) + actualURL.substring(
-				pos + expectedPart.length());
+			String prefix = actualURL.substring(0, pos);
+			String postfix = actualURL.substring(pos + expectedPart.length());
+
+			actualURL = prefix.concat(postfix);
 		}
 
-		Assert.assertEquals("Should be empty", "", actualURL);
+		Assert.assertTrue("Should be empty", actualURL.isEmpty());
 	}
 
-	protected String encrypt(HttpServletRequest request, long value)
-		throws Exception {
-
-		return encrypt(request, String.valueOf(value));
-	}
-
-	protected String encrypt(HttpServletRequest request, String value)
-		throws Exception {
-
+	protected String encrypt(Key key, long value) throws EncryptorException {
 		return HttpUtil.encodeURL(
-			Encryptor.encrypt(
-				PortalUtil.getCompany(request).getKeyObj(), value));
+			Encryptor.encrypt(key, String.valueOf(value)));
 	}
 
-	protected ThemeDisplay getThemeDisplay() throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
-
-		themeDisplay.setPermissionChecker(permissionChecker);
-
-		themeDisplay.setLayout(_sourceLayout);
-
-		themeDisplay.setSecure(false);
-		themeDisplay.setServerName("liferay.com");
-		themeDisplay.setServerPort(80);
-
-		return themeDisplay;
-	}
-
-	protected MockHttpServletRequest mockHttpServletRequest() throws Exception {
-		MockHttpServletRequest request = new MockHttpServletRequest();
-
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		PortalUtil.getCompany(request).setKeyObj(null);
-		PortalUtil.getCompany(request).setKey(COMPANY_KEY);
-
-		return request;
-	}
-
-	private static String COMPANY_KEY =
+	private static final String COMPANY_KEY =
 		"rO0ABXNyAB9qYXZheC5jcnlwdG8uc3BlYy5TZWNyZXRLZXlTcGVjW0cLZuIwYU0CAAJM" +
 			"AAlhbGdvcml0aG10ABJMamF2YS9sYW5nL1N0cmluZztbAANrZXl0AAJbQnhwdAAD" +
 			"QUVTdXIAAltCrPMX+AYIVOACAAB4cAAAABDAkqmOGU4a6Kq2rZgmKMJj";
 
-	private static String PORTLET_DDM = "166";
+	private static final String PORTLET_DDM_ID = "166";
 
-	private static String PORTLET_ID = "2";
+	private static final String PORTLET_MESSAGE_BOARDS_ID = "19";
 
-	private static String PORTLET_MESSAGE_BOARDS = "19";
+	private static final String PORTLET_MY_ACCOUNT_ID = "2";
 
 	private Group _group;
+	private MockHttpServletRequest _request;
 	private Layout _sourceLayout;
 	private Layout _targetLayout;
 

@@ -41,6 +41,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.auth.AuthTokenUtil;
@@ -104,8 +105,6 @@ public class PortletURLImpl
 		_removePublicRenderParameters = new LinkedHashMap<String, String[]>();
 		_secure = PortalUtil.isSecure(request);
 		_wsrp = ParamUtil.getBoolean(request, "wsrp");
-
-		Portlet portlet = getPortlet();
 
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
@@ -373,10 +372,14 @@ public class PortletURLImpl
 			return PropsValues.PORTLET_URL_ESCAPE_XML;
 		}
 
-		return MapUtil.getBoolean(
-			portlet.getPortletApp().getContainerRuntimeOptions(),
+		PortletApp portletApp = portlet.getPortletApp();
+
+		_escapeXml = MapUtil.getBoolean(
+			portletApp.getContainerRuntimeOptions(),
 			LiferayPortletConfig.RUNTIME_OPTION_ESCAPE_XML,
 			PropsValues.PORTLET_URL_ESCAPE_XML);
+
+		return _escapeXml;
 	}
 
 	@Override
@@ -603,6 +606,7 @@ public class PortletURLImpl
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
 		_portlet = null;
+		_escapeXml = null;
 
 		clearCache();
 	}
@@ -1022,6 +1026,8 @@ public class PortletURLImpl
 			sb.append(StringPool.AMPERSAND);
 		}
 
+		Portlet portlet = getPortlet();
+
 		for (Map.Entry<String, String[]> entry :
 				_removePublicRenderParameters.entrySet()) {
 
@@ -1034,8 +1040,6 @@ public class PortletURLImpl
 			}
 
 			String name = entry.getKey();
-
-			Portlet portlet = getPortlet();
 
 			PublicRenderParameter publicRenderParameter =
 				portlet.getPublicRenderParameter(name);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.notifications;
+package com.liferay.portlet.notifications.wiki;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.Constants;
@@ -20,15 +20,19 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.BlogsTestUtil;
+import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.wiki.model.WikiNode;
+import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.model.WikiPageConstants;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.portlet.wiki.util.WikiTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -43,7 +47,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
+public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 
 	protected BaseModel addBaseModel() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
@@ -51,26 +55,36 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(group.getGroupId());
 
-		return BlogsTestUtil.addEntry(
-			user.getUserId(), ServiceTestUtil.randomString(), true,
-			serviceContext);
+		return WikiPageLocalServiceUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			ServiceTestUtil.randomString(), WikiPageConstants.VERSION_DEFAULT,
+			ServiceTestUtil.randomString(50), ServiceTestUtil.randomString(),
+			false, WikiPageConstants.DEFAULT_FORMAT, true, StringPool.BLANK,
+			StringPool.BLANK, serviceContext);
+	}
+
+	@Override
+	protected void addContainerModel() throws Exception {
+		_node = WikiTestUtil.addNode(
+			user.getUserId(), group.getGroupId(),
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50));
 	}
 
 	@Override
 	protected void addSubscription() throws Exception {
-		BlogsEntryLocalServiceUtil.subscribe(
-			user.getUserId(), group.getGroupId());
+		SubscriptionLocalServiceUtil.addSubscription(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			WikiNode.class.getName(), _node.getNodeId());
 	}
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.BLOGS;
+		return PortletKeys.WIKI;
 	}
 
 	protected void updateBaseModel(BaseModel baseModel) throws Exception {
-		BlogsEntry blogsEntry = (BlogsEntry)baseModel;
+		WikiPage page = (WikiPage)baseModel;
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
@@ -78,13 +92,14 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 		serviceContext.setLayoutFullURL("http://localhost");
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		BlogsEntryLocalServiceUtil.updateEntry(
-			blogsEntry.getUserId(), blogsEntry.getEntryId(),
-			ServiceTestUtil.randomString(), blogsEntry.getDescription(),
-			blogsEntry.getContent(), 1, 1, 2012, 12, 00, true, true,
-			new String[0], blogsEntry.getSmallImage(),
-			blogsEntry.getSmallImageURL(), StringPool.BLANK, null,
-			serviceContext);
+		WikiPageLocalServiceUtil.updatePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
+			page.getVersion(), ServiceTestUtil.randomString(50),
+			ServiceTestUtil.randomString(), false,
+			WikiPageConstants.DEFAULT_FORMAT, StringPool.BLANK,
+			StringPool.BLANK, serviceContext);
 	}
+
+	private WikiNode _node;
 
 }

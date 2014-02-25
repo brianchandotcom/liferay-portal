@@ -843,7 +843,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		if (!event.equals(DLSyncConstants.EVENT_DELETE) &&
-			!event.equals(DLSyncConstants.EVENT_MOVE_TO_TRASH)) {
+			!event.equals(DLSyncConstants.EVENT_TRASH)) {
 
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -1077,7 +1077,7 @@ public class DLAppHelperLocalServiceImpl
 			// Sync
 
 			registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_RESTORE_FROM_TRASH, fileEntry);
+				DLSyncConstants.EVENT_RESTORE, fileEntry);
 		}
 
 		// Trash
@@ -1183,8 +1183,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// Sync
 
-		registerDLSyncEventCallback(
-			DLSyncConstants.EVENT_RESTORE_FROM_TRASH, folder);
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, folder);
 
 		// Trash
 
@@ -1662,8 +1661,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// Sync
 
-		registerDLSyncEventCallback(
-			DLSyncConstants.EVENT_RESTORE_FROM_TRASH, fileEntry);
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, fileEntry);
 
 		// Social
 
@@ -1714,8 +1712,7 @@ public class DLAppHelperLocalServiceImpl
 
 			// Sync
 
-			registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_MOVE_TO_TRASH, fileEntry);
+			registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, fileEntry);
 		}
 
 		// Trash
@@ -1844,8 +1841,7 @@ public class DLAppHelperLocalServiceImpl
 
 			// Sync
 
-			registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_RESTORE_FROM_TRASH, folder);
+			registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, folder);
 
 			// Social
 
@@ -1907,8 +1903,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// Sync
 
-		registerDLSyncEventCallback(
-			DLSyncConstants.EVENT_MOVE_TO_TRASH, folder);
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, folder);
 
 		// Social
 

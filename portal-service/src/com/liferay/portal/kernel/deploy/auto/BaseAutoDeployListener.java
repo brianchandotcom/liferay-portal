@@ -45,8 +45,7 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 		if (isMatchingFile(file, "WEB-INF/liferay-hook.xml") &&
 			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml") &&
-			!fileName.contains("-theme") && !fileName.contains("-web") &&
-			!isJarFile(file)) {
+			!isThemePlugin(file) && !isWebPlugin(file)) {
 
 			return true;
 		}
@@ -142,9 +141,7 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	}
 
 	public boolean isThemePlugin(File file) throws AutoDeployException {
-		if (isMatchingFile(file, "WEB-INF/liferay-look-and-feel.xml") &&
-			!isJarFile(file)) {
-
+		if (isMatchingFile(file, "WEB-INF/liferay-look-and-feel.xml")) {
 			return true;
 		}
 
@@ -163,7 +160,7 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 		String fileName = file.getName();
 
 		if (isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties") &&
-			fileName.contains("-web") && !isJarFile(file)) {
+			fileName.contains("-web")) {
 
 			return true;
 		}

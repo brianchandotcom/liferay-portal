@@ -335,7 +335,7 @@ AUI.add(
 							instance._onAdvancedSearchFormSubmit(event);
 						}
 						else {
-							instance._onSimpleSearchFormSubmit(event)
+							instance._onSimpleSearchFormSubmit(event);
 						}
 					},
 

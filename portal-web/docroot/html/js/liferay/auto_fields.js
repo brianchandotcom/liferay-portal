@@ -405,6 +405,8 @@ AUI.add(
 
 						var formValidator = instance._getFormValidator(node);
 
+						var clonedRow;
+
 						if (instance.url) {
 							clonedRow = instance._createCloneFromURL(clone, guid);
 						}

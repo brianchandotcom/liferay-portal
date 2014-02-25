@@ -36,7 +36,7 @@ AUI.add(
 					event.halt();
 				}
 			}
-		}
+		};
 
 		Dockbar.AddContentSearch = AddContentSearch;
 	},

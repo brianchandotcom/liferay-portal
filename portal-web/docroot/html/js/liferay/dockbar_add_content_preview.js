@@ -68,7 +68,7 @@ AUI.add(
 					]
 				);
 
-				tooltip.setStdModContent(A.WidgetStdMod.BODY, errorMsg);
+				instance._tooltip.setStdModContent(A.WidgetStdMod.BODY, errorMsg);
 			},
 
 			_afterPreviewSuccess: function(event) {

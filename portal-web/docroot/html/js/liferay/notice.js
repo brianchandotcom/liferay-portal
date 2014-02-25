@@ -239,7 +239,7 @@ AUI.add(
 					function(item, index, collection) {
 						notice.addClass(item);
 					}
-				)
+				);
 
 				instance._addCloseButton(notice);
 				instance._addToggleButton(notice);

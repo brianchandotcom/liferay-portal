@@ -357,7 +357,7 @@ AUI.add(
 						queue.pauseUpload();
 
 						A.each(
-							queuedFiles,
+							queue.queuedFiles,
 							function(item, index, collection) {
 								var li = A.one('#' + item.id);
 

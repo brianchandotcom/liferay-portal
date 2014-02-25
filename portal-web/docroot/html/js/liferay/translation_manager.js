@@ -389,7 +389,7 @@ AUI.add(
 									tplBuffer.displayName = localesMap[item];
 									tplBuffer.locale = item;
 
-									html = Lang.sub(TPL_AVAILABLE_TRANSLATION_LINK, tplBuffer);
+									var html = Lang.sub(TPL_AVAILABLE_TRANSLATION_LINK, tplBuffer);
 
 									buffer.push(html);
 								}

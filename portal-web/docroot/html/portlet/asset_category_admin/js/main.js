@@ -427,7 +427,7 @@ AUI.add(
 							var buffer = AArray.map(
 								categories,
 								function(item, index, collection) {
-									if (item.parentCategoryId == 0) {
+									if (item.parentCategoryId === 0) {
 										instance._vocabularyRootCategories[item.categoryId] = 1;
 									}
 
@@ -1099,7 +1099,7 @@ AUI.add(
 							function(item, index, collection) {
 								var checked = false;
 
-								if (item.parentCategoryId == 0) {
+								if (item.parentCategoryId === 0) {
 									instance._vocabularyRootCategories[item.categoryId] = 1;
 								}
 
@@ -1248,7 +1248,7 @@ AUI.add(
 							ioCategoryUpdate = A.io.request(
 								null,
 								{
-									arguments: {},
+									'arguments': {},
 									autoLoad: false,
 									dataType: 'json',
 									on: {

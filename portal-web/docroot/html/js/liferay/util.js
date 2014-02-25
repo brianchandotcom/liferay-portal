@@ -1365,7 +1365,7 @@
 				);
 			}
 
-			if (selectedOption && selectedOption.text() != '' && sort == true) {
+			if (selectedOption && selectedOption.text() !== '' && sort === true) {
 				Util.sortBox(toBox);
 			}
 		},
@@ -1582,11 +1582,14 @@
 
 				var length = selectedItems.size();
 
+				var item;
+				var itemIndex;
+
 				if (down) {
 					while (length--) {
-						var item = selectedItems.item(length);
+						item = selectedItems.item(length);
 
-						var itemIndex = item.get('index');
+						itemIndex = item.get('index');
 
 						var referenceNode = box.get('firstChild');
 
@@ -1603,11 +1606,11 @@
 				}
 				else {
 					for (var i = 0; i < length; i++) {
-						var item = selectedItems.item(i);
+						item = selectedItems.item(i);
 
-						var itemIndex = item.get('index');
+						itemIndex = item.get('index');
 
-						if (itemIndex == 0) {
+						if (itemIndex === 0) {
 							box.append(item);
 						}
 						else {

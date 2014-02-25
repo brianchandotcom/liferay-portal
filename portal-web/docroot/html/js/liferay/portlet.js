@@ -374,7 +374,7 @@
 				Liferay.fire('closePortlet', options);
 			}
 			else {
-				self.focus();
+				A.config.win.focus();
 			}
 		},
 		['aui-io-request']

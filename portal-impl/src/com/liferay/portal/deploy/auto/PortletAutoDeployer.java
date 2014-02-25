@@ -49,6 +49,8 @@ public class PortletAutoDeployer
 				"liferay-portlet-ext.tld");
 			securityTaglibDTD = DeployUtil.getResourcePath(
 				"liferay-security.tld");
+			stagingTaglibDTD = DeployUtil.getResourcePath(
+				"liferay-staging.tld");
 			themeTaglibDTD = DeployUtil.getResourcePath("liferay-theme.tld");
 			uiTaglibDTD = DeployUtil.getResourcePath("liferay-ui.tld");
 			utilTaglibDTD = DeployUtil.getResourcePath("liferay-util.tld");

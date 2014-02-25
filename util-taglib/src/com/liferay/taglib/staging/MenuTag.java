@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.taglib.staging;
 
 import com.liferay.taglib.util.IncludeTag;
 
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
-public class StagingTag extends IncludeTag {
+public class MenuTag extends IncludeTag {
 
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
@@ -84,28 +84,29 @@ public class StagingTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:staging:cssClass", _cssClass);
+		request.setAttribute("liferay-staging:menu:cssClass", _cssClass);
 		request.setAttribute(
-			"liferay-ui:staging:extended", String.valueOf(_extended));
+			"liferay-staging:menu:extended", String.valueOf(_extended));
 		request.setAttribute(
-			"liferay-ui:staging:groupId", String.valueOf(_groupId));
-		request.setAttribute("liferay-ui:staging:icon", _icon);
+			"liferay-staging:menu:groupId", String.valueOf(_groupId));
+		request.setAttribute("liferay-staging:menu:icon", _icon);
 		request.setAttribute(
-			"liferay-ui:staging:layoutSetBranchId",
+			"liferay-staging:menu:layoutSetBranchId",
 			String.valueOf(_layoutSetBranchId));
-		request.setAttribute("liferay-ui:staging:message", _message);
+		request.setAttribute("liferay-staging:menu:message", _message);
 		request.setAttribute(
-			"liferay-ui:staging:onlyActions", String.valueOf(_onlyActions));
+			"liferay-staging:menu:onlyActions", String.valueOf(_onlyActions));
 		request.setAttribute(
-			"liferay-ui:staging:privateLayout", String.valueOf(_privateLayout));
+			"liferay-staging:menu:privateLayout",
+			String.valueOf(_privateLayout));
 		request.setAttribute(
-			"liferay-ui:staging:selPlid", String.valueOf(_selPlid));
+			"liferay-staging:menu:selPlid", String.valueOf(_selPlid));
 		request.setAttribute(
-			"liferay-ui:staging:showManageBranches",
+			"liferay-staging:menu:showManageBranches",
 			String.valueOf(_showManageBranches));
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/staging/page.jsp";
+	private static final String _PAGE = "/html/taglib/staging/menu/page.jsp";
 
 	private String _cssClass;
 	private boolean _extended = true;

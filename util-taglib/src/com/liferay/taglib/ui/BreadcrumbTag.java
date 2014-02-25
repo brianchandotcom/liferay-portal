@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -533,8 +534,15 @@ public class BreadcrumbTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:breadcrumb:breadcrumbString",
 			getBreadcrumbString(request));
+
+		String displayStyle = _displayStyle;
+
+		if (!ArrayUtil.contains(_DISPLAY_STYLE_OPTIONS, displayStyle)) {
+			displayStyle = _DISPLAY_STYLE_OPTIONS[0];
+		}
+
 		request.setAttribute(
-			"liferay-ui:breadcrumb:displayStyle", _displayStyle);
+			"liferay-ui:breadcrumb:displayStyle", displayStyle);
 		request.setAttribute("liferay-ui:breadcrumb:portletURL", _portletURL);
 		request.setAttribute("liferay-ui:breadcrumb:selLayout", _selLayout);
 		request.setAttribute(
@@ -558,7 +566,11 @@ public class BreadcrumbTag extends IncludeTag {
 			String.valueOf(_showPortletBreadcrumb));
 	}
 
-	private static final String _DISPLAY_STYLE = "0";
+	private static final String _DISPLAY_STYLE = GetterUtil.getString(
+		PropsUtil.get(PropsKeys.BREADCRUMB_DISPLAY_STYLE_DEFAULT));
+
+	private static final String[] _DISPLAY_STYLE_OPTIONS = PropsUtil.getArray(
+		PropsKeys.BREADCRUMB_DISPLAY_STYLE_OPTIONS);
 
 	private static final String _PAGE = "/html/taglib/ui/breadcrumb/page.jsp";
 

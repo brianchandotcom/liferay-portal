@@ -5709,6 +5709,10 @@ public class PortalImpl implements Portal {
 		return getUserPassword(getHttpServletRequest(portletRequest));
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getUserValue(long userId, String param, String defaultValue)
 		throws SystemException {

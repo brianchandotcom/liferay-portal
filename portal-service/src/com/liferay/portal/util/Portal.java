@@ -1192,6 +1192,10 @@ public interface Portal {
 
 	public String getUserPassword(PortletRequest portletRequest);
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public String getUserValue(long userId, String param, String defaultValue)
 		throws SystemException;
 

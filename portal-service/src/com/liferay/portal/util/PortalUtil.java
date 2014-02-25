@@ -1653,6 +1653,10 @@ public class PortalUtil {
 		return getPortal().getUserPassword(portletRequest);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public static String getUserValue(
 			long userId, String param, String defaultValue)
 		throws SystemException {

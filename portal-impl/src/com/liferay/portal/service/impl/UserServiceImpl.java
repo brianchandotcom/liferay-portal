@@ -1681,8 +1681,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public User updateStatus(long userId, int status)
 		throws PortalException, SystemException {
 
-		return userLocalService.updateStatus(
-				userId, status, new ServiceContext());
+		return updateStatus(userId, status, new ServiceContext());
 	}
 
 	/**

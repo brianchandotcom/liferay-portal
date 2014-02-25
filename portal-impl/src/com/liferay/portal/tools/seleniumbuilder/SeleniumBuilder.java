@@ -288,8 +288,10 @@ public class SeleniumBuilder {
 				testCaseMethodNames.add(testCaseMethodName);
 			}
 
-			testCaseMethodNameMap.put(
-				componentName, compontentTestCaseMethodNames);
+			if (!compontentTestCaseMethodNames.isEmpty()) {
+				testCaseMethodNameMap.put(
+					componentName, compontentTestCaseMethodNames);
+			}
 		}
 
 		List<String> componentNames =

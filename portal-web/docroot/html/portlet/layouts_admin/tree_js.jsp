@@ -65,13 +65,10 @@ if (!selectableTree) {
 	<%
 	JSONArray checkedNodesJSONArray = JSONFactoryUtil.createJSONArray();
 
-	String checkedLayoutIds = null;
+	String checkedLayoutIds = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
 
 	if (cmd.equals(Constants.UPDATE)) {
 		checkedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
-	}
-	else {
-		checkedLayoutIds = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
 	}
 
 	if (Validator.isNotNull(checkedLayoutIds)) {

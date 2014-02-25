@@ -19,19 +19,21 @@
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD);
 
-if (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.EXPORT) && !cmd.equals(Constants.UPDATE)) {
+if (Validator.isNull(cmd)) {
 	cmd = Constants.EXPORT;
 }
 
 long exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
+
 ExportImportConfiguration exportImportConfiguration = null;
-Map<String, Serializable> exportImportConfigurationSettingsMap = Collections.EMPTY_MAP;
 Map<String, String[]> parameterMap = Collections.EMPTY_MAP;
 Map<Long, Boolean> layoutIdMap = Collections.EMPTY_MAP;
 
 if (cmd.equals(Constants.UPDATE) && (exportImportConfigurationId > 0)) {
 	exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
-	exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
+
+	Map<String, Serializable> exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
+
 	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
 	layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
 }
@@ -170,8 +172,9 @@ if (!cmd.equals(Constants.ADD)) {
 		</div>
 
 		<div <%= exportNav.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportOptions">
-			<portlet:actionURL var="addExportConfigurationURL">
+			<portlet:actionURL var="updateExportConfigurationURL">
 				<portlet:param name="struts_action" value="/layouts_admin/edit_export_configuration" />
+				<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfigurationId) %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			</portlet:actionURL>
@@ -183,28 +186,7 @@ if (!cmd.equals(Constants.ADD)) {
 				<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
 			</portlet:actionURL>
 
-			<portlet:actionURL var="updateExportConfigurationURL">
-				<portlet:param name="struts_action" value="/layouts_admin/edit_export_configuration" />
-				<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfigurationId) %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-			</portlet:actionURL>
-
-			<%
-			String actionURL = StringPool.BLANK;
-
-			if (cmd.equals(Constants.ADD)) {
-				actionURL = addExportConfigurationURL;
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				actionURL = updateExportConfigurationURL;
-			}
-			else {
-				actionURL = exportPagesURL;
-			}
-			%>
-
-			<aui:form action='<%= actionURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
+			<aui:form action='<%= cmd.equals(Constants.EXPORT) ? exportPagesURL : updateExportConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 

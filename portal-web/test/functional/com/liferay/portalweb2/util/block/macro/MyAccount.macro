@@ -155,6 +155,8 @@
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
 		<execute action="Myaccount#selectFrame" locator-key1="UPLOAD_IMAGE_IFRAME" />
 		<execute action="Myaccount#uploadCommonFile" locator-key1="PROFILE_PICTURE_UPLOAD_IMAGE_FIELD" value1="${imageFileName}" />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute action="Myaccount#selectFrame" locator-key1="UPLOAD_IMAGE_IFRAME" />
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertElementNotPresent" value1="UPLOAD_IMAGE_IFRAME" />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />

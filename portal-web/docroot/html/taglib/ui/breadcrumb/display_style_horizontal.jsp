@@ -16,6 +16,6 @@
 
 <%@ include file="/html/taglib/ui/breadcrumb/init.jsp" %>
 
-<ul aria-label="<%= LanguageUtil.get(pageContext, "breadcrumb") %>" class="breadcrumb breadcrumbhorizontal">
+<ul aria-label="<%= LanguageUtil.get(pageContext, "breadcrumb") %>" class="breadcrumb breadcrumb-horizontal">
 	<%= breadcrumbString %>
 </ul>

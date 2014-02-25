@@ -28,7 +28,6 @@ import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,8 +57,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 		group = GroupTestUtil.addGroup();
 
-		BlogsEntryLocalServiceUtil.subscribe(
-			user.getUserId(), group.getGroupId());
+		addSubscription();
 
 		userNotificationDeliveries = getUserNotificationDeliveries(
 			user.getUserId());
@@ -310,6 +308,8 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 	protected abstract BaseModel addBaseModel() throws Exception;
 
+	protected abstract void addSubscription() throws Exception;
+
 	protected void deleteUserNotificationDeliveries() throws Exception {
 		UserNotificationDeliveryLocalServiceUtil.
 			deleteUserNotificationDeliveries(user.getUserId());
@@ -328,6 +328,8 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 		}
 	}
 
+	protected abstract String getPortletId();
+
 	protected List<UserNotificationDelivery> getUserNotificationDeliveries(
 			long userId)
 		throws Exception {
@@ -338,25 +340,25 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 		userNotificationDeliveries.add(
 			UserNotificationDeliveryLocalServiceUtil.
 				getUserNotificationDelivery(
-					userId, PortletKeys.BLOGS, 0,
+					userId, getPortletId(), 0,
 					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 					UserNotificationDeliveryConstants.TYPE_EMAIL, true));
 		userNotificationDeliveries.add(
 			UserNotificationDeliveryLocalServiceUtil.
 				getUserNotificationDelivery(
-					userId, PortletKeys.BLOGS, 0,
+					userId, getPortletId(), 0,
 					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 					UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
 		userNotificationDeliveries.add(
 			UserNotificationDeliveryLocalServiceUtil.
 				getUserNotificationDelivery(
-					userId, PortletKeys.BLOGS, 0,
+					userId, getPortletId(), 0,
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
 					UserNotificationDeliveryConstants.TYPE_EMAIL, true));
 		userNotificationDeliveries.add(
 			UserNotificationDeliveryLocalServiceUtil.
 				getUserNotificationDelivery(
-					userId, PortletKeys.BLOGS, 0,
+					userId, getPortletId(), 0,
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
 					UserNotificationDeliveryConstants.TYPE_WEBSITE, true));
 
@@ -402,7 +404,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 		throws Exception {
 
 		for (UserNotificationDelivery userNotificationDelivery :
-			userNotificationDeliveries) {
+				userNotificationDeliveries) {
 
 			if ((userNotificationDelivery.getNotificationType() !=
 					notificationType) ||
@@ -426,7 +428,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 		throws Exception {
 
 		for (UserNotificationDelivery userNotificationDelivery :
-			userNotificationDeliveries) {
+				userNotificationDeliveries) {
 
 			UserNotificationDeliveryLocalServiceUtil.
 				updateUserNotificationDelivery(

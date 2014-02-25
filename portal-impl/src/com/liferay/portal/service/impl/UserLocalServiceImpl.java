@@ -1670,7 +1670,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Company company = companyPersistence.findByPrimaryKey(
 			user.getCompanyId());
 
-		if (company.isStrangersVerify() && (serviceContext.getPlid() > 0)) {
+		if (company.isStrangersVerify()) {
 			sendEmailAddressVerification(
 				user, user.getEmailAddress(), serviceContext);
 		}
@@ -3392,12 +3392,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			serviceContext.getPortalURL() + serviceContext.getPathMain() +
 				"/portal/verify_email_address?ticketKey=" + ticket.getKey();
 
-		Layout layout = layoutLocalService.getLayout(serviceContext.getPlid());
+		long plid = serviceContext.getPlid();
 
-		Group group = layout.getGroup();
+		if (plid > 0) {
+			Layout layout = layoutLocalService.fetchLayout(plid);
 
-		if (!layout.isPrivateLayout() && !group.isUser()) {
-			verifyEmailAddressURL += "&p_l_id=" + serviceContext.getPlid();
+			if (layout != null) {
+				Group group = layout.getGroup();
+
+				if (!layout.isPrivateLayout() && !group.isUser()) {
+					verifyEmailAddressURL += "&p_l_id=" +
+						serviceContext.getPlid();
+				}
+			}
 		}
 
 		String fromName = PrefsPropsUtil.getString(

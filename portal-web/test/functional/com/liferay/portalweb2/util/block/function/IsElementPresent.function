@@ -3,6 +3,10 @@
 		<execute selenium="isElementPresent" />
 	</command>
 
+	<command name="isElementPresentAfterWait">
+		<execute selenium="isElementPresentAfterWait" />
+	</command>
+
 	<command name="isElementPresentClickNavigation">
 		<execute selenium="clickAt" argument1="//nav[@id='navigation']" />
 

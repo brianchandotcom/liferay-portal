@@ -475,6 +475,25 @@ public class LiferaySeleniumHelper {
 		return !liferaySelenium.isElementPresent(locator);
 	}
 
+	public static boolean isElementPresentAfterWait(
+			LiferaySelenium liferaySelenium, String locator)
+		throws Exception {
+
+		for (int second = 0;; second++) {
+			if (second < TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				return liferaySelenium.isElementPresent(locator);
+			}
+
+			if (liferaySelenium.isElementPresent(locator)) {
+				break;
+			}
+
+			Thread.sleep(1000);
+		}
+
+		return liferaySelenium.isElementPresent(locator);
+	}
+
 	public static boolean isIgnorableErrorLine(String line) {
 		if (line.contains("[antelope:post]")) {
 			return true;

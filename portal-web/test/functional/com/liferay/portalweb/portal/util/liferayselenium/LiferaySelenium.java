@@ -130,6 +130,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isElementNotPresent(String locator);
 
+	public boolean isElementPresentAfterWait(String locator) throws Exception;
+
 	public boolean isNotChecked(String locator);
 
 	public boolean isNotPartialText(String locator, String value);

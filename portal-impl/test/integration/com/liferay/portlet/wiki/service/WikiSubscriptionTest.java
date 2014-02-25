@@ -15,7 +15,6 @@
 package com.liferay.portlet.wiki.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -28,7 +27,7 @@ import com.liferay.portal.util.BaseSubscriptionTestCase;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.model.WikiPageConstants;
+import com.liferay.portlet.wiki.util.WikiTestUtil;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -48,18 +47,8 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 
 	@Override
 	public long addBaseModel(long containerModelId) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		WikiPage page = WikiPageLocalServiceUtil.addPage(
-			TestPropsValues.getUserId(), containerModelId,
-			ServiceTestUtil.randomString(), WikiPageConstants.VERSION_DEFAULT,
-			ServiceTestUtil.randomString(50), ServiceTestUtil.randomString(),
-			false, WikiPageConstants.DEFAULT_FORMAT, true, StringPool.BLANK,
-			StringPool.BLANK, serviceContext);
+		WikiPage page = WikiTestUtil.addPage(
+			group.getGroupId(), containerModelId);
 
 		return page.getResourcePrimKey();
 	}
@@ -130,20 +119,8 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 
 	@Override
 	public long updateEntry(long baseModelId) throws Exception {
-		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId, true);
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		serviceContext.setCommand(Constants.UPDATE);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		page = WikiPageLocalServiceUtil.updatePage(
-			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle(),
-			page.getVersion(), ServiceTestUtil.randomString(50),
-			ServiceTestUtil.randomString(), false,
-			WikiPageConstants.DEFAULT_FORMAT, StringPool.BLANK,
-			StringPool.BLANK, serviceContext);
+		WikiPage page = WikiTestUtil.updatePage(
+			WikiPageLocalServiceUtil.getPage(baseModelId, true));
 
 		return page.getResourcePrimKey();
 	}

@@ -46,16 +46,7 @@ import org.junit.runner.RunWith;
 public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 
 	protected BaseModel addBaseModel() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(group.getGroupId());
-
-		return BlogsTestUtil.addEntry(
-			user.getUserId(), ServiceTestUtil.randomString(), true,
-			serviceContext);
+		return BlogsTestUtil.addEntry(user.getUserId(), group.getGroupId());
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.util;
 
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -66,6 +67,19 @@ public class BlogsTestUtil {
 			group.getGroupId());
 
 		return addEntry(userId, title, approved, smallImage, serviceContext);
+	}
+
+	public static BlogsEntry addEntry(long userId, long groupId)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return addEntry(
+			userId, ServiceTestUtil.randomString(), true, serviceContext);
 	}
 
 	public static BlogsEntry addEntry(

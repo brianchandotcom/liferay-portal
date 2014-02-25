@@ -15,12 +15,14 @@
 package com.liferay.portlet.wiki.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
@@ -53,6 +55,18 @@ public class WikiTestUtil {
 		return node;
 	}
 
+	public static WikiPage addPage(long groupId, long nodeId) throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return addPage(
+			TestPropsValues.getUserId(), nodeId, ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(), false, true, serviceContext);
+	}
+
 	public static WikiPage addPage(
 			long userId, long groupId, long nodeId, String title,
 			boolean approved)
@@ -62,12 +76,12 @@ public class WikiTestUtil {
 			groupId);
 
 		return addPage(
-			userId, nodeId, title, "content", approved, serviceContext);
+			userId, nodeId, title, "content", true, approved, serviceContext);
 	}
 
 	public static WikiPage addPage(
 			long userId, long nodeId, String title, String content,
-			boolean approved, ServiceContext serviceContext)
+			boolean minorEdit, boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -81,7 +95,7 @@ public class WikiTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			WikiPage page = WikiPageLocalServiceUtil.addPage(
-				userId, nodeId, title, content, "Summary", true,
+				userId, nodeId, title, content, "Summary", minorEdit,
 				serviceContext);
 
 			if (approved) {
@@ -167,7 +181,7 @@ public class WikiTestUtil {
 
 		WikiPage copyPage = addPage(
 			page.getUserId(), page.getNodeId(), ServiceTestUtil.randomString(),
-			page.getContent(), approved, serviceContext);
+			page.getContent(), true, approved, serviceContext);
 
 		WikiPageLocalServiceUtil.copyPageAttachments(
 			page.getUserId(), page.getNodeId(), page.getTitle(),
@@ -176,8 +190,29 @@ public class WikiTestUtil {
 		return copyPage;
 	}
 
+	public static WikiPage updatePage(WikiPage page) throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			page.getGroupId());
+
+		serviceContext.setCommand(Constants.UPDATE);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return updatePage(
+			page, page.getUserId(), ServiceTestUtil.randomString(),
+			page.getContent(), serviceContext);
+	}
+
 	public static WikiPage updatePage(
 			WikiPage page, long userId, String content,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return updatePage(
+			page, userId, page.getTitle(), content, serviceContext);
+	}
+
+	public static WikiPage updatePage(
+			WikiPage page, long userId, String title, String content,
 			ServiceContext serviceContext)
 		throws Exception {
 

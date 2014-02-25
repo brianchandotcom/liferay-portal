@@ -15,10 +15,7 @@
 package com.liferay.portlet.notifications.wiki;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -30,8 +27,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.model.WikiPageConstants;
-import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.util.WikiTestUtil;
 
 import org.junit.runner.RunWith;
@@ -50,18 +45,7 @@ import org.junit.runner.RunWith;
 public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 
 	protected BaseModel addBaseModel() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return WikiPageLocalServiceUtil.addPage(
-			TestPropsValues.getUserId(), _node.getNodeId(),
-			ServiceTestUtil.randomString(), WikiPageConstants.VERSION_DEFAULT,
-			ServiceTestUtil.randomString(50), ServiceTestUtil.randomString(),
-			false, WikiPageConstants.DEFAULT_FORMAT, true, StringPool.BLANK,
-			StringPool.BLANK, serviceContext);
+		return WikiTestUtil.addPage(group.getGroupId(), _node.getNodeId());
 	}
 
 	@Override
@@ -84,20 +68,7 @@ public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 	}
 
 	protected BaseModel updateBaseModel(BaseModel baseModel) throws Exception {
-		WikiPage page = (WikiPage)baseModel;
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setCommand(Constants.UPDATE);
-		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(group.getGroupId());
-
-		return WikiPageLocalServiceUtil.updatePage(
-			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
-			page.getVersion(), ServiceTestUtil.randomString(50),
-			ServiceTestUtil.randomString(), false,
-			WikiPageConstants.DEFAULT_FORMAT, StringPool.BLANK,
-			StringPool.BLANK, serviceContext);
+		return WikiTestUtil.updatePage((WikiPage)baseModel);
 	}
 
 	private WikiNode _node;

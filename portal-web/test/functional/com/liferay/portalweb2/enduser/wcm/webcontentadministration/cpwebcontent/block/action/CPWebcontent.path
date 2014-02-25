@@ -205,6 +205,37 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SEARCH_RESULTS-->
+<tr>
+	<td>SEARCH_RESULTS_NONE</td>
+	<td>//div[@id='_15_searchResultsContainer']//div[contains(.,'No web content was found that matched the keywords: ${searchQuery}.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS_FILTER_REMOVE_BUTTON</td>
+	<td>//div[@id='_15_searchInfo']//a[contains(.,'Remove')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS_TITLE</td>
+	<td>//div[@data-title='${key_webContentTitle}']/a/div/span[contains(@class,'entry-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS_BODY</td>
+	<td>//div[@data-title='${key_webContentTitle}']/a/div/span[contains(@class,'entry-description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS_FOLDER</td>
+	<td>//div[@class='entry-metadata']//dl[contains(.,'Folder')]/dd[contains(.,'${key_webContentFolder}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FILTER-->
 <tr>
 	<td>FILTER_HOME</td>
@@ -306,7 +337,7 @@
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_MENULIST_ARROW</td>
-	<td>//div[@data-title='${key_webContentTitle}']//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a/i[@class='caret']</td>
+	<td>//div[@data-title='WC WebContent Title']//span[contains(@class,'entry-action')]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -326,7 +357,12 @@
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_VERSION</td>
-	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dt[contains(.,'Version: ')]/following-sibling::dd</td>
+	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dt[contains(.,'Version:')]/following-sibling::dd</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DESCRIPTIVE_LAST_UPDATED</td>
+	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dd[contains(.,'ago by ${key_userFirstLast}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -336,7 +372,7 @@
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_DISPLAY_DATE</td>
-	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dt[contains(.,'Display Date: ')]/following-sibling::dd</td>
+	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dt[contains(.,'Display Date:')]/following-sibling::dd</td>
 	<td></td>
 </tr>
 <tr>
@@ -360,6 +396,11 @@
 	<td></td>
 </tr>
 <!--ENTRY_LIST-->
+<tr>
+	<td>ENTRY_LIST_WORKFLOW_STATUS</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]//span[@class='workflow-status']/strong</td>
+	<td></td>
+</tr>
 <tr>
 	<td></td>
 	<td></td>

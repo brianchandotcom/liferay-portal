@@ -16,12 +16,11 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * @author Shuyang Zhou
@@ -77,6 +76,6 @@ public class TransientTokenUtil {
 	}
 
 	private static final SortedMap<Long, String> _tokens =
-		Collections.synchronizedSortedMap(new TreeMap<Long, String>());
+		new ConcurrentSkipListMap<Long, String>();
 
 }

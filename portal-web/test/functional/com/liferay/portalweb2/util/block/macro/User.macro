@@ -988,6 +988,27 @@
 		<execute macro="User#deleteCP" />
 	</command>
 
+	<command name="unassignRegularRoleCP">
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_USER_INFORMATION_ROLES" value1="Roles" />
+
+		<var name="key_roleName" value="${roleName}" />
+
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="ROLES_REGULAR_ROLES_TABLE_REMOVE" value1="Remove" />
+		<execute action="CPUsersandorganizationsUser#assertElementNotPresent" locator-key1="ROLES_REGULAR_ROLES_TABLE_TITLE" value1="${roleName}" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="viewCP">
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
 

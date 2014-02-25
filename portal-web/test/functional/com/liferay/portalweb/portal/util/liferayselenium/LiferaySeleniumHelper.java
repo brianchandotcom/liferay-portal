@@ -476,9 +476,14 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static boolean isElementPresentAfterWait(
-			LiferaySelenium liferaySelenium, String locator) throws Exception {
+			LiferaySelenium liferaySelenium, String locator)
+		throws Exception {
 
-		for (int second = 0; second < TestPropsValues.TIMEOUT_EXPLICIT_WAIT; second++) {
+		for (int second = 0;; second++) {
+			if (second < TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				return liferaySelenium.isElementPresent(locator);
+			}
+
 			if (liferaySelenium.isElementPresent(locator)) {
 				break;
 			}

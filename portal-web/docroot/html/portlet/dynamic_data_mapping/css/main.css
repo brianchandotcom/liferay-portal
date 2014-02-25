@@ -117,6 +117,10 @@
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;
+
+					.palette-item {
+						padding-right: 13px;
+					}
 				}
 			}
 		}

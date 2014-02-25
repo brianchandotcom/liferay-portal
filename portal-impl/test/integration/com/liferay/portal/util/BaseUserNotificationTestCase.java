@@ -57,6 +57,8 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 		group = GroupTestUtil.addGroup();
 
+		addContainerModel();
+
 		addSubscription();
 
 		userNotificationDeliveries = getUserNotificationDeliveries(
@@ -307,6 +309,10 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 	}
 
 	protected abstract BaseModel addBaseModel() throws Exception;
+
+	protected void addContainerModel() throws Exception {
+		return;
+	}
 
 	protected abstract void addSubscription() throws Exception;
 

@@ -123,26 +123,22 @@ public class Summary {
 	}
 
 	private String _escapeAndHighlight(String text) {
-		if (Validator.isNull(text) || ArrayUtil.isEmpty(_queryTerms)) {
-			return text;
+		if (Validator.isNull(text) || ArrayUtil.isEmpty(_queryTerms) ||
+			!_highlight) {
+
+			return HtmlUtil.escape(text);
 		}
 
-		if (_highlight) {
-			text = SearchUtil.highlight(
-				text, _queryTerms, ESCAPE_SAFE_HIGHLIGHT_1,
-				ESCAPE_SAFE_HIGHLIGHT_2);
-		}
+		text = SearchUtil.highlight(
+			text, _queryTerms, ESCAPE_SAFE_HIGHLIGHT_1,
+			ESCAPE_SAFE_HIGHLIGHT_2);
 
 		text = HtmlUtil.escape(text);
 
-		if (_highlight) {
-			text = StringUtil.replace(
-				text,
-				new String[] {ESCAPE_SAFE_HIGHLIGHT_1, ESCAPE_SAFE_HIGHLIGHT_2},
-				new String[] {SearchUtil.HIGHLIGHT_1, SearchUtil.HIGHLIGHT_2});
-		}
-
-		return text;
+		return StringUtil.replace(
+			text,
+			new String[] {ESCAPE_SAFE_HIGHLIGHT_1, ESCAPE_SAFE_HIGHLIGHT_2},
+			new String[] {SearchUtil.HIGHLIGHT_1, SearchUtil.HIGHLIGHT_2});
 	}
 
 	private static final String ESCAPE_SAFE_HIGHLIGHT_1 = "[@HIGHLIGHT1@]";

@@ -83,7 +83,7 @@ public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 		return PortletKeys.WIKI;
 	}
 
-	protected void updateBaseModel(BaseModel baseModel) throws Exception {
+	protected BaseModel updateBaseModel(BaseModel baseModel) throws Exception {
 		WikiPage page = (WikiPage)baseModel;
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
@@ -92,7 +92,7 @@ public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 		serviceContext.setLayoutFullURL("http://localhost");
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		WikiPageLocalServiceUtil.updatePage(
+		return WikiPageLocalServiceUtil.updatePage(
 			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
 			page.getVersion(), ServiceTestUtil.randomString(50),
 			ServiceTestUtil.randomString(), false,

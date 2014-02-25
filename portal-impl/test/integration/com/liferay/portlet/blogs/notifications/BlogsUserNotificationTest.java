@@ -69,7 +69,7 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 		return PortletKeys.BLOGS;
 	}
 
-	protected void updateBaseModel(BaseModel baseModel) throws Exception {
+	protected BaseModel updateBaseModel(BaseModel baseModel) throws Exception {
 		BlogsEntry blogsEntry = (BlogsEntry)baseModel;
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
@@ -78,7 +78,7 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 		serviceContext.setLayoutFullURL("http://localhost");
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		BlogsEntryLocalServiceUtil.updateEntry(
+		return BlogsEntryLocalServiceUtil.updateEntry(
 			blogsEntry.getUserId(), blogsEntry.getEntryId(),
 			ServiceTestUtil.randomString(), blogsEntry.getDescription(),
 			blogsEntry.getContent(), 1, 1, 2012, 12, 00, true, true,

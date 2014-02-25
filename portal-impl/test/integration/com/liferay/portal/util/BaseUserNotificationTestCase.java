@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
@@ -59,8 +58,6 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 		addContainerModel();
 
-		addSubscription();
-
 		userNotificationDeliveries = getUserNotificationDeliveries(
 			user.getUserId());
 	}
@@ -79,6 +76,8 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 	@Test
 	public void testAddUserNotification() throws Exception {
+		addSubscription();
+
 		BaseModel baseModel = addBaseModel();
 
 		Assert.assertEquals(1, logRecords.size());
@@ -105,6 +104,8 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 	@Test
 	public void testAddUserNotificationWhenEmailNotificationsDisabled()
 		throws Exception {
+
+		addSubscription();
 
 		updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
@@ -133,6 +134,8 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 	public void testAddUserNotificationWhenNotificationsDisabled()
 		throws Exception {
 
+		addSubscription();
+
 		updateUserNotificationsDelivery(false);
 
 		BaseModel baseModel = addBaseModel();
@@ -149,6 +152,8 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 	@Test
 	public void testAddUserNotificationWhenWebsiteNotificationsDisabled()
 		throws Exception {
+
+		addSubscription();
 
 		updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
@@ -173,43 +178,34 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 	public void testUpdateUserNotification() throws Exception {
 		BaseModel baseModel = addBaseModel();
 
-		updateBaseModel(baseModel);
+		addSubscription();
 
-		Assert.assertEquals(2, logRecords.size());
+		BaseModel updatedBasemodel = updateBaseModel(baseModel);
+
+		Assert.assertEquals(1, logRecords.size());
 
 		LogRecord logRecord = logRecords.get(0);
 
 		Assert.assertEquals("Sending email", logRecord.getMessage());
 
-		logRecord = logRecords.get(1);
-
-		Assert.assertEquals("Sending email", logRecord.getMessage());
-
 		List<JSONObject> userNotificationEventsJSONObjects =
 			getUserNotificationEventsJSONObjects(
-				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
+				user.getUserId(), (Long)updatedBasemodel.getPrimaryKeyObj());
 
-		Assert.assertEquals(2, userNotificationEventsJSONObjects.size());
+		Assert.assertEquals(1, userNotificationEventsJSONObjects.size());
 
-		int[] notificationTypes = new int[0];
+		int notificationType = -1;
 
 		for (JSONObject userNotificationEventsJSONObject :
 				userNotificationEventsJSONObjects) {
 
-			notificationTypes = ArrayUtil.append(
-				notificationTypes,
-				userNotificationEventsJSONObject.getInt("notificationType"));
+			notificationType = userNotificationEventsJSONObject.getInt(
+				"notificationType");
 		}
 
-		Assert.assertNotEquals(notificationTypes[0], notificationTypes[1]);
-		Assert.assertTrue(
-			ArrayUtil.contains(
-				notificationTypes,
-				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY));
-		Assert.assertTrue(
-			ArrayUtil.contains(
-				notificationTypes,
-				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY));
+		Assert.assertEquals(
+			notificationType,
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY);
 	}
 
 	@Test
@@ -225,35 +221,30 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 		BaseModel baseModel = addBaseModel();
 
-		updateBaseModel(baseModel);
+		addSubscription();
+
+		BaseModel updatedBasemodel = updateBaseModel(baseModel);
 
 		Assert.assertEquals(0, logRecords.size());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
 			getUserNotificationEventsJSONObjects(
-				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
+				user.getUserId(), (Long)updatedBasemodel.getPrimaryKeyObj());
 
-		Assert.assertEquals(2, userNotificationEventsJSONObjects.size());
+		Assert.assertEquals(1, userNotificationEventsJSONObjects.size());
 
-		int[] notificationTypes = new int[0];
+		int notificationType = -1;
 
 		for (JSONObject userNotificationEventsJSONObject :
 				userNotificationEventsJSONObjects) {
 
-			notificationTypes = ArrayUtil.append(
-				notificationTypes,
-				userNotificationEventsJSONObject.getInt("notificationType"));
+			notificationType = userNotificationEventsJSONObject.getInt(
+				"notificationType");
 		}
 
-		Assert.assertNotEquals(notificationTypes[0], notificationTypes[1]);
-		Assert.assertTrue(
-			ArrayUtil.contains(
-				notificationTypes,
-				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY));
-		Assert.assertTrue(
-			ArrayUtil.contains(
-				notificationTypes,
-				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY));
+		Assert.assertEquals(
+			notificationType,
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY);
 	}
 
 	@Test
@@ -264,13 +255,15 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 		BaseModel baseModel = addBaseModel();
 
-		updateBaseModel(baseModel);
+		addSubscription();
+
+		BaseModel updatedBasemodel = updateBaseModel(baseModel);
 
 		Assert.assertEquals(0, logRecords.size());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
 			getUserNotificationEventsJSONObjects(
-				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
+				user.getUserId(), (Long)updatedBasemodel.getPrimaryKeyObj());
 
 		Assert.assertEquals(0, userNotificationEventsJSONObjects.size());
 	}
@@ -289,21 +282,19 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 		BaseModel baseModel = addBaseModel();
 
-		updateBaseModel(baseModel);
+		addSubscription();
 
-		Assert.assertEquals(2, logRecords.size());
+		BaseModel updatedBasemodel = updateBaseModel(baseModel);
+
+		Assert.assertEquals(1, logRecords.size());
 
 		LogRecord logRecord = logRecords.get(0);
 
 		Assert.assertEquals("Sending email", logRecord.getMessage());
 
-		logRecord = logRecords.get(1);
-
-		Assert.assertEquals("Sending email", logRecord.getMessage());
-
 		List<JSONObject> userNotificationEventsJSONObjects =
 			getUserNotificationEventsJSONObjects(
-				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
+				user.getUserId(), (Long)updatedBasemodel.getPrimaryKeyObj());
 
 		Assert.assertEquals(0, userNotificationEventsJSONObjects.size());
 	}
@@ -402,7 +393,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 		return userNotificationEventJSONObjects;
 	}
 
-	protected abstract void updateBaseModel(BaseModel baseModel)
+	protected abstract BaseModel updateBaseModel(BaseModel baseModel)
 		throws Exception;
 
 	protected void updateUserNotificationDelivery(

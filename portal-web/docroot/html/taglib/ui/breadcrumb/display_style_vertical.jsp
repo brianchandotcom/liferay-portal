@@ -14,10 +14,8 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/ui/breadcrumb/init.jsp" %>
 
-<%
-String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:breadcrumb:displayStyle"));
-
-String breadcrumbString = GetterUtil.getString((String)request.getAttribute("liferay-ui:breadcrumb:breadcrumbString"));
-%>
+<ul aria-label="<%= LanguageUtil.get(pageContext, "breadcrumb") %>" class="breadcrumb breadcrumbvertical">
+	<%= breadcrumbString %>
+</ul>

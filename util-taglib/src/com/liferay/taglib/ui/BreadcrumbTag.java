@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -61,6 +62,10 @@ import javax.servlet.http.HttpSession;
  * @author Brian Wing Shun Chan
  */
 public class BreadcrumbTag extends IncludeTag {
+
+	public void setDisplayStyle(String displayStyle) {
+		_displayStyle = displayStyle;
+	}
 
 	public void setPortletURL(PortletURL portletURL) {
 		_portletURL = portletURL;
@@ -315,6 +320,7 @@ public class BreadcrumbTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_displayStyle = _DISPLAY_STYLE;
 		_portletURL = null;
 		_selLayout = null;
 		_selLayoutParam = null;
@@ -528,6 +534,15 @@ public class BreadcrumbTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:breadcrumb:breadcrumbString",
 			getBreadcrumbString(request));
+
+		String displayStyle = _displayStyle;
+
+		if (!ArrayUtil.contains(_DISPLAY_STYLE_OPTIONS, displayStyle)) {
+			displayStyle = _DISPLAY_STYLE_OPTIONS[0];
+		}
+
+		request.setAttribute(
+			"liferay-ui:breadcrumb:displayStyle", displayStyle);
 		request.setAttribute("liferay-ui:breadcrumb:portletURL", _portletURL);
 		request.setAttribute("liferay-ui:breadcrumb:selLayout", _selLayout);
 		request.setAttribute(
@@ -551,6 +566,12 @@ public class BreadcrumbTag extends IncludeTag {
 			String.valueOf(_showPortletBreadcrumb));
 	}
 
+	private static final String _DISPLAY_STYLE = GetterUtil.getString(
+		PropsUtil.get(PropsKeys.BREADCRUMB_DISPLAY_STYLE_DEFAULT));
+
+	private static final String[] _DISPLAY_STYLE_OPTIONS = PropsUtil.getArray(
+		PropsKeys.BREADCRUMB_DISPLAY_STYLE_OPTIONS);
+
 	private static final String _PAGE = "/html/taglib/ui/breadcrumb/page.jsp";
 
 	private static final boolean _SHOW_GUEST_GROUP = GetterUtil.getBoolean(
@@ -561,6 +582,7 @@ public class BreadcrumbTag extends IncludeTag {
 
 	private static Log _log = LogFactoryUtil.getLog(BreadcrumbTag.class);
 
+	private String _displayStyle = _DISPLAY_STYLE;
 	private PortletURL _portletURL;
 	private Layout _selLayout;
 	private String _selLayoutParam;

@@ -45,6 +45,19 @@ public class ManifestSummaryTest
 	extends JournalArticleStagedModelDataHandlerTest {
 
 	@Override
+	protected void addComments(StagedModel stagedModel) throws Exception {
+		return;
+	}
+
+	@Override
+	protected StagedModelAssets updateAssetEntry(
+			StagedModel stagedModel, Group group)
+		throws Exception {
+
+		return null;
+	}
+
+	@Override
 	protected void validateExport(
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			Map<String, List<StagedModel>> dependentStagedModelsMap)

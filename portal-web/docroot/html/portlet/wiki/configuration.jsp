@@ -17,21 +17,16 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "display-settings");
-
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", WikiUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", WikiUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
 
-<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL">
-	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-</liferay-portlet:renderURL>
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<%
@@ -144,10 +139,9 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		function() {
 			<portlet:namespace />saveEmails();
 
-			<c:if test='<%= tabs2.equals("display-settings") %>'>
-				document.<portlet:namespace />fm.<portlet:namespace />visibleNodes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentVisibleNodes);
-				document.<portlet:namespace />fm.<portlet:namespace />hiddenNodes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />availableVisibleNodes);
-			</c:if>
+			document.<portlet:namespace />fm.<portlet:namespace />visibleNodes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentVisibleNodes);
+
+			document.<portlet:namespace />fm.<portlet:namespace />hiddenNodes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />availableVisibleNodes);
 
 			submitForm(document.<portlet:namespace />fm);
 		},

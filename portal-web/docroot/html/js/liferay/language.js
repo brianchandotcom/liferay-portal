@@ -31,6 +31,8 @@
 						authUrl = Liferay.Util.addParams('p_auth=' + authToken, url);
 					}
 
+					var value = '';
+
 					A.io(
 						authUrl,
 						{

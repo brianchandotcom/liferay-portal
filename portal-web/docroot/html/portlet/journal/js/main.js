@@ -64,6 +64,8 @@ AUI.add(
 
 		var TPL_INSTRUCTIONS_CONTAINER = '<div class="alert alert-info journal-article-instructions-container journal-article-instructions-message"></div>';
 
+		var TPL_OPTION = '<option></option>';
+
 		var TPL_STRUCTURE_FIELD_INPUT = '<input class="lfr-input-text" type="text" value="" size="40"/>';
 
 		var TPL_TOOLTIP_IMAGE = '<img align="top" class="journal-article-instructions-container" src="' + themeDisplay.getPathThemeImages() + '/portlet/help.png" />';
@@ -984,7 +986,7 @@ AUI.add(
 						var imageWrapper = imagePreview.one('.journal-image-wrapper');
 						var imageDelete = instance.getByName(imagePreview, 'journalImageDelete');
 
-						if (imageDelete.val() == '') {
+						if (imageDelete.val() === '') {
 							imageDelete.val('delete');
 							imageWrapper.hide();
 
@@ -1128,7 +1130,7 @@ AUI.add(
 					nodeName = 'dynamic-element';
 				}
 
-				var typeElementModel = ['<', nodeName, (attributeMap ? ' ' : ''), , '>', ,'</', nodeName, '>'];
+				var typeElementModel = ['<', nodeName, (attributeMap ? ' ' : ''), '', '>', '','</', nodeName, '>'];
 
 				A.each(
 					attributeMap || {},
@@ -1140,7 +1142,8 @@ AUI.add(
 				);
 
 				typeElementModel[3] = attrs.join('').replace(/[\s]+$/g, '');
-				typeElement = typeElementModel.join('').replace(/></, '>><<').replace(/ +>/, '>').split(/></);
+
+				var typeElement = typeElementModel.join('').replace(/></, '>><<').replace(/ +>/, '>').split(/></);
 
 				return {
 					closeTag: typeElement[1],

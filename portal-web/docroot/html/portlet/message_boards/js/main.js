@@ -59,7 +59,7 @@ AUI.add(
 
 					instance._selectionRange = null;
 				}
-				else if (field.selectionStart || field.selectionStart == 0) {
+				else if (field.selectionStart || field.selectionStart === 0) {
 					var startPos = field.selectionStart;
 					var endPos = field.selectionEnd;
 
@@ -388,8 +388,6 @@ AUI.add(
 
 				var colorpicker = instance._location.one('.use-colorpicker');
 
-				var colorpicker = instance._location.one('.use-colorpicker');
-
 				if (colorpicker) {
 					instance._fontColorInput.placeBefore(colorpicker);
 
@@ -451,7 +449,7 @@ AUI.add(
 
 					selection = instance._selectionRange.text;
 				}
-				else if (field.selectionStart || field.selectionStart == 0) {
+				else if (field.selectionStart || field.selectionStart === 0) {
 					selection = value.substring(field.selectionStart, field.selectionEnd);
 				}
 
@@ -504,7 +502,7 @@ AUI.add(
 				var list = "\n";
 				var entry;
 
-				while (entry = prompt(Liferay.Language.get('enter-a-list-item-click-cancel-or-leave-blank-to-end-the-list'), '')) {
+				while ((entry = prompt(Liferay.Language.get('enter-a-list-item-click-cancel-or-leave-blank-to-end-the-list'), ''))) {
 					if (!entry) {
 						break;
 					}

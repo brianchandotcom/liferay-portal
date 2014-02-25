@@ -130,7 +130,7 @@ AUI.add(
 
 		var TPL_IMAGE_THUMBNAIL = themeDisplay.getPathContext() + '/documents/' + themeDisplay.getScopeGroupId() + '/{0}/{1}';
 
-		DocumentLibraryUpload = function() {
+		var DocumentLibraryUpload = function() {
 		};
 
 		DocumentLibraryUpload.NAME = 'documentlibraryupload';

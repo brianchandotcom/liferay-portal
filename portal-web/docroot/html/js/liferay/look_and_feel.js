@@ -900,13 +900,7 @@ AUI.add(
 			_getSafeInteger: function(input) {
 				var instance = this;
 
-				var output = parseInt(input);
-
-				if (output == EMPTY || isNaN(output)) {
-					output = 0;
-				}
-
-				return output;
+				return Lang.toInt(input);
 			},
 
 			_insertCustomCSSValue: function(textarea, value) {
@@ -1158,6 +1152,8 @@ AUI.add(
 							message = Liferay.Language.get('your-settings-could-not-be-saved');
 							messageClass = 'alert alert-error';
 						}
+
+						var ajaxResponse = ajaxResponseMsg;
 
 						if (!ajaxResponseMsg) {
 							ajaxResponse = A.Node.create(ajaxResponseHTML);

@@ -1520,6 +1520,27 @@ Please set the property "jdk.6.home" in build.properties.
 		<ant dir=".." target="deploy-properties" inheritAll="false" />
 	</target>
 
+	<target name="format-js">
+		<taskdef name="jshint" classname="com.philmander.jshint.JsHintAntTask"
+    classpath="${project.dir}/lib/development/ant-jshint.jar" />
+
+		<jshint
+			dir="${project.dir}"
+			globals="alert: true, AUI: true, confirm: true, Liferay: true, prompt: true, submitForm: true, themeDisplay: true, YUI: true"
+			options="browser=true,curly=true,devel=false,eqeqeq=false,eqnull=true,evil=true,forin=false,funcscope=true,nonew=false,nonstandard=true,scripturl=true,strict=false,trailing=true,yui=true"
+		>
+			<include name="**/*.js"/>
+
+			<exclude name="**/aui/**"/>
+			<exclude name="**/editor/**"/>
+			<exclude name="**/misc/**"/>
+			<exclude name="**/selenium/**"/>
+			<exclude name="**/VAADIN/**"/>
+
+			<exclude name="**/dynamiccss/dependencies/r2*.js"/>
+		</jshint>
+	</target>
+
 	<target name="war" depends="compile">
 		<antcall target="build-alloy" />
 		<antcall target="build-ckeditor" />

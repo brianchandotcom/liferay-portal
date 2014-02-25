@@ -226,6 +226,8 @@ AUI.add(
 				},
 
 				_updateRevision: function(cmd, layoutRevisionId, layoutSetBranchId) {
+					var instance = this;
+
 					A.io.request(
 						themeDisplay.getPathMain() + '/portal/update_layout',
 						{
@@ -240,7 +242,7 @@ AUI.add(
 							},
 							on: {
 								failure: function() {
-									instance._getNotification().show;
+									instance._getNotification().show();
 								},
 								success: function(event, id, obj) {
 									window.location.reload();

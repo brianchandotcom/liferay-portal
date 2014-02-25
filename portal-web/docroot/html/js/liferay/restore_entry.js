@@ -123,7 +123,7 @@ AUI.add(
 									failure: A.rbind('_afterCheckEntryFailure', instance),
 									success: A.rbind('_afterCheckEntrySuccess', instance)
 								},
-								arguments: uri,
+								'arguments': uri,
 								data: instance.ns(
 									{
 										trashEntryId: event.trashEntryId
@@ -209,7 +209,7 @@ AUI.add(
 										failure: A.rbind('_afterPopupCheckEntryFailure', instance),
 										success: A.rbind('_afterPopupCheckEntrySuccess', instance)
 									},
-									arguments: form,
+									'arguments': form,
 									data: instance.ns(
 										{
 											trashEntryId: trashEntryId.val(),

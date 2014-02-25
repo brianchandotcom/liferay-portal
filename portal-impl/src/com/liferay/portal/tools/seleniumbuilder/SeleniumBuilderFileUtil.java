@@ -1822,7 +1822,7 @@ public class SeleniumBuilderFileUtil {
 			"portal-document-management", "portal-frameworks",
 			"portal-infrastructure", "portal-integrations", "portal-legacy",
 			"portal-opensocial", "portal-operations", "portal-permissions",
-			"portal-personalization-and-customization",
+			"portal-personalization-and-customization", "portal-plugins",
 			"portal-sample-portlet-plugins", "portal-search", "portal-security",
 			"portal-social-networking", "portal-staging",
 			"portal-theme-development", "portal-tools", "portal-upgrades",

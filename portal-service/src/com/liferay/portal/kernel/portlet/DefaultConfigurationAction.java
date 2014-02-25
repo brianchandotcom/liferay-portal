@@ -29,6 +29,8 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portal.settings.Settings;
+import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletConfigFactoryUtil;
@@ -96,6 +98,9 @@ public class DefaultConfigurationAction
 
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");
+		String settingsScope = ParamUtil.getString(
+			actionRequest, "settingsScope");
+		String serviceName = ParamUtil.getString(actionRequest, "serviceName");
 
 		Layout layout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
 
@@ -103,33 +108,82 @@ public class DefaultConfigurationAction
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
 			layout, portletResource, ActionKeys.CONFIGURATION);
 
-		PortletPreferences portletPreferences = actionRequest.getPreferences();
+		PortletPreferences portletPreferences = null;
+		Settings settings = null;
 
-		for (Map.Entry<String, String> entry : properties.entrySet()) {
-			String name = entry.getKey();
-			String value = entry.getValue();
+		if (Validator.isNull(settingsScope)) {
+			portletPreferences = actionRequest.getPreferences();
 
-			portletPreferences.setValue(name, value);
-		}
-
-		Map<String, String[]> portletPreferencesMap =
-			(Map<String, String[]>)actionRequest.getAttribute(
-				WebKeys.PORTLET_PREFERENCES_MAP);
-
-		if (portletPreferencesMap != null) {
-			for (Map.Entry<String, String[]> entry :
-					portletPreferencesMap.entrySet()) {
-
+			for (Map.Entry<String, String> entry : properties.entrySet()) {
 				String name = entry.getKey();
-				String[] values = entry.getValue();
+				String value = entry.getValue();
 
-				portletPreferences.setValues(name, values);
+				portletPreferences.setValue(name, value);
+			}
+
+			Map<String, String[]> portletPreferencesMap =
+				(Map<String, String[]>)actionRequest.getAttribute(
+					WebKeys.PORTLET_PREFERENCES_MAP);
+
+			if (portletPreferencesMap != null) {
+				for (Map.Entry<String, String[]> entry :
+						portletPreferencesMap.entrySet()) {
+
+					String name = entry.getKey();
+					String[] values = entry.getValue();
+
+					portletPreferences.setValues(name, values);
+				}
+			}
+		}
+		else {
+			if (settingsScope.equals("company")) {
+				settings = SettingsFactoryUtil.getServiceCompanySettings(
+					themeDisplay.getCompanyId(), serviceName);
+			}
+			else if (settingsScope.equals("group")) {
+				settings = SettingsFactoryUtil.getServiceGroupSettings(
+					themeDisplay.getSiteGroupId(), serviceName);
+			}
+			else if (settingsScope.equals("portletInstance")) {
+				settings = SettingsFactoryUtil.getPortletInstanceSettings(
+					themeDisplay.getLayout(), portletResource);
+			}
+
+			if (settings != null) {
+				for (Map.Entry<String, String> entry : properties.entrySet()) {
+					String name = entry.getKey();
+					String value = entry.getValue();
+
+					settings.setValue(name, value);
+				}
+
+				Map<String, String[]> portletPreferencesMap =
+					(Map<String, String[]>)actionRequest.getAttribute(
+						WebKeys.PORTLET_PREFERENCES_MAP);
+
+				if (portletPreferencesMap != null) {
+					for (Map.Entry<String, String[]> entry :
+							portletPreferencesMap.entrySet()) {
+
+						String name = entry.getKey();
+						String[] values = entry.getValue();
+
+						settings.setValues(name, values);
+					}
+				}
 			}
 		}
 
 		if (SessionErrors.isEmpty(actionRequest)) {
 			try {
-				portletPreferences.store();
+				if (portletPreferences != null) {
+					portletPreferences.store();
+				}
+
+				if (settings != null) {
+					settings.store();
+				}
 			}
 			catch (ValidatorException ve) {
 				SessionErrors.add(

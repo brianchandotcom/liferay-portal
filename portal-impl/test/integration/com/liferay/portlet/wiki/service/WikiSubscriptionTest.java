@@ -135,7 +135,7 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
-		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setCommand(Constants.UPDATE);
 		serviceContext.setLayoutFullURL("http://localhost");
 
 		page = WikiPageLocalServiceUtil.updatePage(

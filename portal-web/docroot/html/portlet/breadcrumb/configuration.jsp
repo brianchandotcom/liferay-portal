@@ -34,6 +34,7 @@
 					%>
 
 						<aui:option label="<%= displayStyleOption %>" selected="<%= displayStyle.equals(displayStyleOption) %>" />
+
 					<%
 					}
 					%>

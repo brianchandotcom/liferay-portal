@@ -252,8 +252,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#viewCPDraft">
+		<execute macro="WebContent#viewCPStatus">
 			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
@@ -589,6 +590,46 @@
 		</execute>
 	</command>
 
+	<command name="EditSubstructureDefaultValues" priority="4">
+		<var name="editSubstructureFieldNames" value="Text" />
+		<var name="structureDescription" value="WC Structure Description" />
+		<var name="structureFieldNames1" value="Text,Text Box,Image,Documents and Media" />
+		<var name="structureFieldNames2" value="Integer" />
+		<var name="structureName1" value="WC Structure Name1" />
+		<var name="structureName2" value="2" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureFieldNames" value="${structureFieldNames1}" />
+			<var name="structureName" value="${structureName1}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="parentStructureName" value="${structureName1}" />
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureFieldNames" value="${structureFieldNames2}" />
+			<var name="structureName" value="${structureName2}" />
+			<var name="substructure" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#editSubstructureDefaultValuesCP">
+			<var name="editSubstructureFieldNames" value="${editSubstructureFieldNames}" />
+			<var name="substructureName" value="${structureName2}" />
+		</execute>
+	</command>
+
 	<command name="EditWebContent" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentContentEdit" value="WC WebContent Content Edit" />
@@ -685,6 +726,276 @@
 			<var name="expireContent" value="true" />
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<command name="PublishExpireWebContent" priority="4">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#expireCP">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="expireContent" value="true" />
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCPStatus">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentStatus" value="Expired" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#publishCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCPStatus">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentStatus" value="Approved" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<command name="PublishDraftWebContent" priority="4">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addDraftCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCPStatus">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#publishCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCPStatus">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentStatus" value="Approved" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<command name="SearchWebContent" priority="4">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentFolder" value="Home" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#searchCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentFolder" value="${webContentFolder}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#searchNoResultsCP">
+			<var name="searchQuery" value="WC2 WebContent2 Title2" />
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentFolder" value="${webContentFolder}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<command name="UserEditWebContent" priority="4">
+		<var name="permissionDefinition1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACTION_CHECKBOX" />
+		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ACTION_CHECKBOX" />
+		<var name="permissionDefinition3Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_FOLDER_ACTION_CHECKBOX" />
+		<var name="permissionDefinition4Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_ACTION_CHECKBOX" />
+		<var name="permissionDefinitionValue" value="Action" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
+		<var name="permissionNavigationValue" value="Web Content" />
+		<var name="roleName" value="Web Content Administrator Role" />
+		<var name="roleType" value="Regular" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentContentEdit" value="WC WebContent Content Edit" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+		<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition3Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition4Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" /> 
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP" />
+
+		<execute macro="WebContent#editCP">
+			<var name="webContentContentEdit" value="${webContentContentEdit}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitleEdit" value="${webContentTitleEdit}" />
+		</execute>
+
+		<execute macro="WebContent#viewCPUserEdit">
+			<var name="userFirstLast" value="userfn userln" />
+			<var name="webContentContent" value="${webContentContentEdit}" />
+			<var name="webContentTitle" value="${webContentTitleEdit}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
 </definition>

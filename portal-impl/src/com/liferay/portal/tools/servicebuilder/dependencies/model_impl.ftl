@@ -48,8 +48,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.TrashedModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -631,7 +633,14 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		<#if column.userUuid>
 			@Override
 			public String get${column.methodUserUuidName}() throws SystemException {
-				return PortalUtil.getUserValue(get${column.methodName}(), "uuid", _${column.userUuidName});
+				try {
+					User user = UserLocalServiceUtil.getUserById(get${column.methodName}());
+
+					return user.getUuid();
+				}
+				catch (PortalException pe) {
+					return StringPool.BLANK;
+				}
 			}
 
 			@Override

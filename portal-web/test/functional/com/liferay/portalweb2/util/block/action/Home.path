@@ -104,18 +104,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ERROR_MESSAGE_ALERT_INFO</td>
 	<td>//tr[contains(.,'This site is inactive. Please contact the administrator.')]/td[@align='center']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ERROR_MESSAGE_NOT_FOUND</td>
-	<td>//h3[contains(@class,'alert') and contains(@class,'error') and contains(.,'Not Found')]</td>
+	<td>ERROR_MESSAGE_ALERT_ERROR</td>
+	<td>//div[@class='portlet-content']/h3[contains(@class,'alert') and contains(@class, 'alert-error')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_ERROR_MESSAGE</td>
+	<td>//code[@class='lfr-url-error']</td>
 	<td></td>
 </tr>
 <tr>

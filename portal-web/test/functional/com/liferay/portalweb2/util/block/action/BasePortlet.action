@@ -8,4 +8,10 @@
 			<execute function="AssertClick#assertTextClickAndWait" />
 		</case>
 	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="PORTLET_CONTENT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
 </definition>

@@ -54,19 +54,27 @@
 
 		<execute action="Home#open" locator1="${maliciousURL1}" />
 
-		<execute action="Home#assertElementPresent" locator-key1="ERROR_MESSAGE_NOT_FOUND" />
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute action="Home#assertElementPresent" locator-key1="URL_ERROR_MESSAGE" />
 
 		<execute action="Home#open" locator1="${maliciousURL2}" />
 
-		<execute action="Home#assertElementPresent" locator-key1="ERROR_MESSAGE_NOT_FOUND" />
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute action="Home#assertElementPresent" locator-key1="URL_ERROR_MESSAGE" />
 
 		<execute action="Home#open" locator1="${maliciousURL3}" />
 
-		<execute action="Home#assertElementPresent" locator-key1="ERROR_MESSAGE_NOT_FOUND" />
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute action="Home#assertElementPresent" locator-key1="URL_ERROR_MESSAGE" />
 
 		<execute action="Home#open" locator1="${maliciousURL4}" />
 
-		<execute action="Home#assertElementPresent" locator-key1="ERROR_MESSAGE_NOT_FOUND" />
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="PORTLET_CONTENT" value1="The requested resource was not found." />
+		<execute action="Home#assertElementPresent" locator-key1="URL_ERROR_MESSAGE" />
 	</command>
 
 	<command name="ViewExternalWebappsPG" priority="5">

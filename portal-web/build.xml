@@ -5,6 +5,7 @@
 
 	<property name="war.file" value="${ant.project.name}" />
 
+	<property name="alloy.version" value="2.0.0" />
 	<property name="alloy-font-awesome.version" value="1.0.0" />
 
 	<property name="ckeditor.file" value="ckeditor_4.0.3_liferay.zip" />
@@ -52,8 +53,6 @@
 
 	<target name="build-alloy">
 		<antcall target="build-alloy-bootstrap" />
-
-		<property name="alloy.version" value="2.0.0" />
 
 		<path id="alloy.zip.path">
 			<fileset dir="third-party">

@@ -2426,7 +2426,10 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<isset property="env.JENKINS_HOME" />
 			<then>
 				<if>
-					<equals arg1="${test.save.screenshot}" arg2="true" />
+					<and>
+						<available file="portal-web/test-results/functional/screenshots" />
+						<equals arg1="${test.save.screenshot}" arg2="true" />
+					</and>
 					<then>
 						<copy todir="screenshots">
 							<fileset
@@ -2437,7 +2440,10 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				</if>
 
 				<if>
-					<equals arg1="${test.selenium.logger.enabled}" arg2="true" />
+					<and>
+						<available file="portal-web/test-results/functional/report.html" />
+						<equals arg1="${test.selenium.logger.enabled}" arg2="true" />
+					</and>
 					<then>
 						<copy
 							file="portal-web/test-results/functional/report.html"

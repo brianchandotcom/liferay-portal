@@ -114,7 +114,8 @@ public class DLFileShortcutStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModelAssets updateAssetEntry(StagedModel stagedModel)
+	protected StagedModelAssets updateAssetEntry(
+			StagedModel stagedModel, Group group)
 		throws Exception {
 
 		return null;

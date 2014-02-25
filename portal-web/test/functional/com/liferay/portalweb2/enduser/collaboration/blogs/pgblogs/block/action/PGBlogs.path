@@ -131,6 +131,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_TITLE_GENERIC</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_TITLE_1</td>
 	<td>xpath=(//div[@class='entry-title']/h2/a)[1]</td>
 	<td></td>
@@ -153,6 +158,11 @@
 <tr>
 	<td>ENTRY_CONTENT</td>
 	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_GENERIC</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved')]//div[@class='entry-body']/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -202,7 +212,7 @@
 </tr>
 <tr>
 	<td>ENTRY_EDIT</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div[contains(@class,'edit-actions')]//span/a/span[.='Edit']</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]/ul[contains(@class,'edit-actions')]/li/span/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

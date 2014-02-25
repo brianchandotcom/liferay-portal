@@ -381,6 +381,13 @@
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="${webContentTitle} is not approved." />
 	</command>
 
+	<command name="clickIntoCmdCP">
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
+		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+	</command>
+
 	<command name="copyCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
@@ -506,10 +513,9 @@
 	<command name="previewCPwithStructureTemplateXSL">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
-		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute macro="WebContent#clickIntoCmdCP">
+			<var name="key_webContentTitle" value="${webContentTitle}" />
+		</execute>
 
 		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator1="//input[contains(@id,'_15_Text') and @type='text']" value1="${webContentText}" />
@@ -517,6 +523,29 @@
 
 		<execute action="CPWebcontentPreview#selectFrame" locator-key1="PREVIEW_IFRAME" />
 		<execute action="CPWebcontentPreview#assertTextEquals" locator-key1="BODY_FIELD" value1="Text: ${webContentText}" />
+	</command>
+
+	<command name="publishCP">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute macro="WebContent#clickIntoCmdCP">
+			<var name="key_webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute action="CPWebcontentEditwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="searchCP">
+		<var name="key_webContentFolder" value="${webContentFolder}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute action="CPWebcontent#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${webContentTitle}" />
+		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SEARCH_RESULTS_TITLE" value1="${webContentTitle}" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SEARCH_RESULTS_BODY" value1="${webContentContent}" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SEARCH_RESULTS_FOLDER" value1="${webContentFolder}" />
 	</command>
 
 	<command name="searchNoPGViaWCS">
@@ -534,6 +563,19 @@
 				<execute action="PGWebcontentsearchResults#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No pages were found that matched the keywords: ${webContentSearchTerm}." />
 			</then>
 		</if>
+	</command>
+
+	<command name="searchNoResultsCP">
+		<var name="key_webContentFolder" value="${webContentFolder}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute action="CPWebcontent#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${searchQuery}" />
+		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SEARCH_RESULTS_NONE" value1="No web content was found that matched the keywords: ${searchQuery}." />
+		<execute action="CPWebcontent#assertTextNotPresent" locator-key1="SEARCH_RESULTS_TITLE" value1="${webContentTitle}" />
+		<execute action="CPWebcontent#assertTextNotPresent" locator-key1="SEARCH_RESULTS_BODY" value1="${webContentContent}" />
+		<execute action="CPWebcontent#assertClick" locator-key1="SEARCH_RESULTS_FILTER_REMOVE_BUTTON" value1="Remove" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SEARCH_RESULTS_TITLE" value1="${webContentTitle}" />
 	</command>
 
 	<command name="searchPGViaWCS">
@@ -574,10 +616,9 @@
 	<command name="viewCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
-		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute macro="WebContent#clickIntoCmdCP">
+			<var name="key_webContentTitle" value="${webContentTitle}" />
+		</execute>
 
 		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="CPWebcontentEditwebcontent#selectFrame" locator-key1="CONTENT_FIELD" />
@@ -645,17 +686,39 @@
 	<command name="viewCPStatus">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
+		<if>
+			<equals arg1="${webContentStatus}" arg2="Approved" />
+			<then>
+				<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+				<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_LIST" value1="List" />
+				<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_LIST_WORKFLOW_STATUS" value1="Approved" />
+			</then>
+			<else>
+				<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+				<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+				<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
+				<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="${webContentStatus}" />
+				<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+
+				<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
+				<execute action="CPWebcontentAddwebcontent#selectFrame" locator-key1="CONTENT_FIELD" />
+				<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="BODY_FIELD" value1="${webContentContent}" />
+
+				<execute action="CPWebcontentAddwebcontent#selectFrameTop" />
+			</else>
+		</if>		
+	</command>
+
+	<command name="viewCPUserEdit">
+		<var name="key_userFirstLast" value="${userFirstLast}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
 		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
-		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="${webContentStatus}" />
-		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-
-		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
-		<execute action="CPWebcontentAddwebcontent#selectFrame" locator-key1="CONTENT_FIELD" />
-		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="BODY_FIELD" value1="${webContentContent}" />
-
-		<execute action="CPWebcontentAddwebcontent#selectFrameTop" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_VERSION" value1="1.1" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_LAST_UPDATED" value1="${userFirstLast}" />
 	</command>
 
 	<command name="viewDefaultCP">

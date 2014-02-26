@@ -76,7 +76,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 	@Test
 	public void testAddUserNotification() throws Exception {
-		addSubscription();
+		subscribeToContainer();
 
 		BaseModel baseModel = addBaseModel();
 
@@ -105,7 +105,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 	public void testAddUserNotificationWhenEmailNotificationsDisabled()
 		throws Exception {
 
-		addSubscription();
+		subscribeToContainer();
 
 		updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
@@ -134,7 +134,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 	public void testAddUserNotificationWhenNotificationsDisabled()
 		throws Exception {
 
-		addSubscription();
+		subscribeToContainer();
 
 		updateUserNotificationsDelivery(false);
 
@@ -153,7 +153,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 	public void testAddUserNotificationWhenWebsiteNotificationsDisabled()
 		throws Exception {
 
-		addSubscription();
+		subscribeToContainer();
 
 		updateUserNotificationDelivery(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
@@ -178,7 +178,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 	public void testUpdateUserNotification() throws Exception {
 		BaseModel baseModel = addBaseModel();
 
-		addSubscription();
+		subscribeToContainer();
 
 		BaseModel updatedBasemodel = updateBaseModel(baseModel);
 
@@ -221,7 +221,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 		BaseModel baseModel = addBaseModel();
 
-		addSubscription();
+		subscribeToContainer();
 
 		BaseModel updatedBasemodel = updateBaseModel(baseModel);
 
@@ -255,7 +255,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 		BaseModel baseModel = addBaseModel();
 
-		addSubscription();
+		subscribeToContainer();
 
 		BaseModel updatedBasemodel = updateBaseModel(baseModel);
 
@@ -282,7 +282,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 		BaseModel baseModel = addBaseModel();
 
-		addSubscription();
+		subscribeToContainer();
 
 		BaseModel updatedBasemodel = updateBaseModel(baseModel);
 
@@ -304,8 +304,6 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 	protected void addContainerModel() throws Exception {
 		return;
 	}
-
-	protected abstract void addSubscription() throws Exception;
 
 	protected void deleteUserNotificationDeliveries() throws Exception {
 		UserNotificationDeliveryLocalServiceUtil.
@@ -392,6 +390,8 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 
 		return userNotificationEventJSONObjects;
 	}
+
+	protected abstract void subscribeToContainer() throws Exception;
 
 	protected abstract BaseModel updateBaseModel(BaseModel baseModel)
 		throws Exception;

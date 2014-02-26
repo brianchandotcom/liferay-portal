@@ -51,14 +51,14 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 	}
 
 	@Override
-	protected void addSubscription() throws Exception {
-		BlogsEntryLocalServiceUtil.subscribe(
-			user.getUserId(), group.getGroupId());
+	protected String getPortletId() {
+		return PortletKeys.BLOGS;
 	}
 
 	@Override
-	protected String getPortletId() {
-		return PortletKeys.BLOGS;
+	protected void subscribeToContainer() throws Exception {
+		BlogsEntryLocalServiceUtil.subscribe(
+			user.getUserId(), group.getGroupId());
 	}
 
 	@Override

@@ -23,7 +23,6 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
@@ -57,14 +56,14 @@ public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 	}
 
 	@Override
-	protected void addSubscription() throws Exception {
-		WikiNodeLocalServiceUtil.subscribeNode(
-			user.getUserId(), _node.getNodeId());
+	protected String getPortletId() {
+		return PortletKeys.WIKI;
 	}
 
 	@Override
-	protected String getPortletId() {
-		return PortletKeys.WIKI;
+	protected void subscribeToContainer() throws Exception {
+		WikiNodeLocalServiceUtil.subscribeNode(
+			user.getUserId(), _node.getNodeId());
 	}
 
 	@Override

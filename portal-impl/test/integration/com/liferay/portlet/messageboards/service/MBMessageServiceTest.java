@@ -29,6 +29,7 @@ import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 
 import java.io.InputStream;
@@ -165,10 +166,12 @@ public class MBMessageServiceTest {
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
 
-			MBMessageServiceUtil.addMessage(
+			MBMessage mbMessage = MBMessageServiceUtil.addMessage(
 				_category.getGroupId(), _category.getCategoryId(), _subject,
 				body, MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
 				anonymous, priority, allowPingbacks, serviceContext);
+
+			MBMessageLocalServiceUtil.deleteMessage(mbMessage);
 		}
 
 		private String _subject;

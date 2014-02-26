@@ -55,6 +55,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 	<aui:input inlineField="<%= true %>" label="" name="search" src='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' title="search" type="image" />
 </aui:fieldset>
+
 <aui:script>
 	function <%= randomNamespace %><%= namespace %>search() {
 		var keywords = document.<%= randomNamespace %><%= namespace %>fm.<%= namespace %>keywords.value;

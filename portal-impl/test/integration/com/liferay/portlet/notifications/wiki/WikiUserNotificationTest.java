@@ -12,13 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.notifications;
+package com.liferay.portlet.notifications.wiki;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -26,9 +23,11 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.BlogsTestUtil;
+import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.wiki.model.WikiNode;
+import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.portlet.wiki.util.WikiTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -43,41 +42,38 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
+public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected BaseModel addBaseModel() throws Exception {
-		return BlogsTestUtil.addEntry(user.getUserId(), group, true);
+		return WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), group.getGroupId(), _node.getNodeId(),
+			ServiceTestUtil.randomString(), true);
+	}
+
+	@Override
+	protected void addContainerModel() throws Exception {
+		_node = WikiTestUtil.addNode(
+			user.getUserId(), group.getGroupId(),
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50));
 	}
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.BLOGS;
+		return PortletKeys.WIKI;
 	}
 
 	@Override
 	protected void subscribeToContainer() throws Exception {
-		BlogsEntryLocalServiceUtil.subscribe(
-			user.getUserId(), group.getGroupId());
+		WikiNodeLocalServiceUtil.subscribeNode(
+			user.getUserId(), _node.getNodeId());
 	}
 
 	@Override
 	protected BaseModel updateBaseModel(BaseModel baseModel) throws Exception {
-		BlogsEntry blogsEntry = (BlogsEntry)baseModel;
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setCommand(Constants.UPDATE);
-		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setScopeGroupId(group.getGroupId());
-
-		return BlogsEntryLocalServiceUtil.updateEntry(
-			blogsEntry.getUserId(), blogsEntry.getEntryId(),
-			ServiceTestUtil.randomString(), blogsEntry.getDescription(),
-			blogsEntry.getContent(), 1, 1, 2012, 12, 00, true, true,
-			new String[0], blogsEntry.getSmallImage(),
-			blogsEntry.getSmallImageURL(), StringPool.BLANK, null,
-			serviceContext);
+		return WikiTestUtil.updatePage((WikiPage)baseModel);
 	}
+
+	private WikiNode _node;
 
 }

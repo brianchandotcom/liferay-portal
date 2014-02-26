@@ -136,6 +136,8 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 		);
 	}
 
+	Liferay.Util.focusFormField('#<portlet:namespace />reason');
+
 	Liferay.Util.toggleSelectBox('<portlet:namespace />reason', 'other', '<portlet:namespace />otherReasonContainer');
 
 	A.one('#<portlet:namespace />flagsSubmit').on(

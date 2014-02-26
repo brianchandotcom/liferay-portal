@@ -82,62 +82,11 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public void postProcessContextQuery(
-			BooleanQuery contextQuery, SearchContext searchContext)
-		throws Exception {
-
-		long[] groupIds = searchContext.getGroupIds();
-
-		if (!ArrayUtil.isEmpty(groupIds)) {
-			BooleanQuery groupQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			for (long groupId : groupIds) {
-				groupQuery.addTerm(Field.GROUP_ID, String.valueOf(groupId));
-			}
-
-			contextQuery.add(groupQuery, BooleanClauseOccur.MUST);
-		}
-	}
-
-	@Override
 	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, true);
-	}
-
-	@Override
-	protected void addSearchLocalizedTerm(
-			BooleanQuery searchQuery, SearchContext searchContext, String field,
-			boolean like)
-		throws Exception {
-
-		if (Validator.isNull(field)) {
-			return;
-		}
-
-		String value = String.valueOf(searchContext.getAttribute(field));
-
-		if (Validator.isNull(value)) {
-			value = searchContext.getKeywords();
-		}
-
-		if (Validator.isNull(value)) {
-			return;
-		}
-
-		String localizedField = DocumentImpl.getLocalizedName(
-			searchContext.getLocale(), field);
-
-		BooleanQuery localizedQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
-
-		localizedQuery.addTerm(field, value, like);
-		localizedQuery.addTerm(localizedField, value, like);
-
-		searchQuery.add(localizedQuery, BooleanClauseOccur.MUST);
 	}
 
 	@Override

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.yahoo.platform.yui.compressor.CssCompressor;
 
@@ -34,15 +33,6 @@ public class MinifierUtil {
 		}
 
 		return _instance._minifyCss(content);
-	}
-
-	@Deprecated
-	public static String minifyJavaScript(String content) {
-		if (!PropsValues.MINIFIER_ENABLED) {
-			return content;
-		}
-
-		return _instance._minifyJavaScript(content);
 	}
 
 	public static String minifyJavaScript(String resource, String content) {
@@ -93,11 +83,6 @@ public class MinifierUtil {
 		}
 
 		return unsyncStringWriter.toString();
-	}
-
-	@Deprecated
-	private String _minifyJavaScript(String content) {
-		return _javaScriptMinifierInstance.compress(StringPool.BLANK, content);
 	}
 
 	private String _minifyJavaScript(String resource, String content) {

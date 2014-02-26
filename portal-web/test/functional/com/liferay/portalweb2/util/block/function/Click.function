@@ -66,8 +66,8 @@
 		<execute function="Click#clickAt" />
 	</command>
 
-	<command name="clickImageElement">
-		<execute selenium="clickImageElement" />
+	<command name="clickSikuli">
+		<execute selenium="clickSikuli" />
 
 		<execute selenium="pause" argument1="2000" />
 	</command>

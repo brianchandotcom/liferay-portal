@@ -1,13 +1,13 @@
 <definition>
 	<command name="click">
 		<default>
-			<execute function="Click#clickImageElement" />
+			<execute function="Click#clickSikuli" />
 		</default>
 	</command>
 
 	<command name="type">
 		<default>
-			<execute function="Type#typeImageElement" />
+			<execute function="Type#typeSikuli" />
 		</default>
 	</command>
 </definition>

@@ -48,10 +48,4 @@ private static ArrayList<Object> _toArrayList(Object obj) {
 private static HashMap<String, Object> _toHashMap(Object obj) {
 	return (HashMap<String, Object>)_deserialize(obj);
 }
-
-private static void _updateOptions(Map<String, Object> options, String key, Object value) {
-	if ((options != null) && options.containsKey(key)) {
-		options.put(key, value);
-	}
-}
 %>

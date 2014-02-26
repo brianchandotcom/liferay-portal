@@ -6,13 +6,11 @@
 
 	var CORE_MODULES = YUI.Env.core;
 
+	var INPUT_EL = document.createElement('input');
+
 	var PATH_JAVASCRIPT = LiferayAUI.getJavaScriptRootPath();
 
-	var hasInputSelection = (function() {
-		var input = document.createElement('input');
-
-		return ((typeof input.selectionStart === 'number') && (typeof input.selectionEnd === 'number'));
-	}());
+	var SUPPORTS_INPUT_SELECTION = ((typeof INPUT_EL.selectionStart === 'number') && (typeof INPUT_EL.selectionEnd === 'number'));
 
 	window.YUI_config = {
 		base: PATH_JAVASCRIPT + '/aui/',
@@ -128,7 +126,7 @@
 						condition: {
 							name: 'liferay-autocomplete-input-caretindex',
 							test: function() {
-								return hasInputSelection;
+								return SUPPORTS_INPUT_SELECTION;
 							},
 							trigger: 'liferay-autocomplete-input'
 						},
@@ -141,7 +139,7 @@
 						condition: {
 							name: 'liferay-autocomplete-input-caretindex-sel',
 							test: function() {
-								return !hasInputSelection;
+								return !SUPPORTS_INPUT_SELECTION;
 							},
 							trigger: 'liferay-autocomplete-input'
 						},
@@ -333,7 +331,7 @@
 						condition: {
 							name: 'liferay-form-placeholders',
 							test: function(A) {
-								return !('placeholder' in document.createElement('input'));
+								return !('placeholder' in INPUT_EL);
 							},
 							trigger: 'liferay-form'
 						},

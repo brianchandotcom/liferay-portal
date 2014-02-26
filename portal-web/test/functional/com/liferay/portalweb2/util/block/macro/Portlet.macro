@@ -28,14 +28,6 @@
 	</command>
 
 	<command name="addPG">
-		<execute macro="Portlet#addPGCmd">
-			<var name="portletName" value="${portletName}" />
-		</execute>
-	</command>
-
-	<command name="addPGCmd">
-		<description message="Add a ${portletName} portlet." />
-
 		<var name="portletTypeKey" value="PORTLET" />
 
 		<if>
@@ -50,6 +42,39 @@
 				</then>
 			</elseif>
 		</if>
+
+		<execute macro="Portlet#addPGCmd">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<var name="i" value="1" />
+		<var name="key_portletName" value="${portletName}" />
+
+		<while>
+			<not>
+				<or>
+					<condition action="Home#isElementPresent" locator-key1="${portletTypeKey}" />
+					<equals arg1="${i}" arg2="3" />
+				</or>
+			</not>
+			<then>
+				<var name="i" value="${i?increment()}" />
+
+				<echo message="The xpath ${portletTypeKey} could not be found. Refreshing the page. Attempt number ${i}..." />
+
+				<execute action="Home#refresh" />
+
+				<execute macro="Portlet#addPGCmd">
+					<var name="portletName" value="${portletName}" />
+				</execute>
+			</then>
+		</while>
+
+		<execute action="Home#assertElementPresent" locator-key1="${portletTypeKey}" />
+	</command>
+
+	<command name="addPGCmd">
+		<description message="Add a ${portletName} portlet." />
 
 		<if>
 			<equals arg1="${portletName}" arg2="Where are the Liferay members?" />
@@ -77,12 +102,7 @@
 			</then>
 		</if>
 
-		<execute action="Dockbar#pause" locator1="1000" />
 		<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
-
-		<var name="key_portletName" value="${portletName}" />
-
-		<execute action="Home#assertElementPresent" locator-key1="${portletTypeKey}" />
 	</command>
 
 	<command name="deletePG">

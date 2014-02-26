@@ -668,27 +668,6 @@
 							'aui-node'
 						]
 					},
-					'liferay-staging': {
-						path: 'staging.js',
-						requires: [
-							'aui-io-plugin-deprecated',
-							'aui-modal',
-							'liferay-node'
-						]
-					},
-					'liferay-staging-branch': {
-						path: 'staging_branch.js',
-						requires: [
-							'liferay-staging'
-						]
-					},
-					'liferay-staging-version': {
-						path: 'staging_version.js',
-						requires: [
-							'aui-button',
-							'liferay-staging'
-						]
-					},
 					'liferay-store': {
 						path: 'store.js',
 						requires: [

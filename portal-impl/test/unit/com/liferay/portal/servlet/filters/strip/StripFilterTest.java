@@ -181,7 +181,7 @@ public class StripFilterTest extends PowerMockito {
 		StringWriter stringWriter = new StringWriter();
 
 		stripFilter.processJavaScript(
-			charBuffer, stringWriter, "script".toCharArray());
+			"test.js", charBuffer, stringWriter, "script".toCharArray());
 
 		Assert.assertEquals("script>", stringWriter.toString());
 		Assert.assertEquals(7, charBuffer.position());
@@ -192,7 +192,7 @@ public class StripFilterTest extends PowerMockito {
 		stringWriter = new StringWriter();
 
 		stripFilter.processJavaScript(
-			charBuffer, stringWriter, "script".toCharArray());
+			"test.js", charBuffer, stringWriter, "script".toCharArray());
 
 		Assert.assertEquals("script></script>", stringWriter.toString());
 		Assert.assertEquals(16, charBuffer.position());
@@ -203,7 +203,7 @@ public class StripFilterTest extends PowerMockito {
 		stringWriter = new StringWriter();
 
 		stripFilter.processJavaScript(
-			charBuffer, stringWriter, "script".toCharArray());
+			"test.js", charBuffer, stringWriter, "script".toCharArray());
 
 		Assert.assertEquals("script></script>", stringWriter.toString());
 		Assert.assertEquals(20, charBuffer.position());
@@ -211,13 +211,13 @@ public class StripFilterTest extends PowerMockito {
 		// Minifier code
 
 		String code = "function(){ var abcd; var efgh; }";
-		String minifiedCode = MinifierUtil.minifyJavaScript(code);
+		String minifiedCode = MinifierUtil.minifyJavaScript("test.js", code);
 
 		charBuffer = CharBuffer.wrap("script>" + code + "</script>");
 		stringWriter = new StringWriter();
 
 		stripFilter.processJavaScript(
-			charBuffer, stringWriter, "script".toCharArray());
+			"test.js", charBuffer, stringWriter, "script".toCharArray());
 
 		Assert.assertEquals(
 			"script>" + minifiedCode + "</script>", stringWriter.toString());
@@ -229,7 +229,7 @@ public class StripFilterTest extends PowerMockito {
 		stringWriter = new StringWriter();
 
 		stripFilter.processJavaScript(
-			charBuffer, stringWriter, "script".toCharArray());
+			"test.js", charBuffer, stringWriter, "script".toCharArray());
 
 		Assert.assertEquals(
 			"script>" + minifiedCode + "</script> ", stringWriter.toString());

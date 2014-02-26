@@ -38,6 +38,7 @@ import java.lang.reflect.Method;
 
 import java.nio.ByteBuffer;
 
+import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -53,7 +54,14 @@ public class IntrabandRPCUtilTest {
 
 	@ClassRule
 	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(RPCResponse.class);
+			}
+
+		};
 
 	@Test
 	public void testConstructor() {
@@ -66,7 +74,7 @@ public class IntrabandRPCUtilTest {
 	}
 
 	@Test
-	public void testExecuteFail() {
+	public void testExecuteFail() throws Exception {
 		PortalClassLoaderUtil.setClassLoader(getClass().getClassLoader());
 
 		MockIntraband mockIntraband = new MockIntraband() {
@@ -93,6 +101,52 @@ public class IntrabandRPCUtilTest {
 
 			Assert.assertSame(RuntimeException.class, throwable.getClass());
 		}
+
+		final Exception exception = new Exception("Execution error");
+
+		mockIntraband = new MockIntraband() {
+
+			@Override
+			protected void doSendDatagram(
+				RegistrationReference registrationReference,
+				Datagram datagram) {
+
+				try {
+					Serializer serializer = new Serializer();
+
+					serializer.writeObject(new RPCResponse(exception));
+
+					CompletionHandler<Object> completionHandler =
+						DatagramHelper.getCompletionHandler(datagram);
+
+					completionHandler.replied(
+						null,
+						Datagram.createResponseDatagram(
+							datagram, serializer.toByteBuffer()));
+				}
+				catch (Exception e) {
+					Assert.fail(e.getMessage());
+				}
+			}
+
+		};
+
+		MockRegistrationReference mockRegistrationReference =
+			new MockRegistrationReference(mockIntraband);
+
+		Future<String> futureResult = IntrabandRPCUtil.execute(
+			mockRegistrationReference, new TestProcessCallable());
+
+		try {
+			futureResult.get();
+
+			Assert.fail();
+		}
+		catch (ExecutionException ee) {
+			Throwable t = ee.getCause();
+
+			Assert.assertEquals(exception.getMessage(), t.getMessage());
+		}
 	}
 
 	@Test
@@ -110,14 +164,13 @@ public class IntrabandRPCUtilTest {
 					datagram.getDataByteBuffer());
 
 				try {
+					Serializer serializer = new Serializer();
+
 					ProcessCallable<Serializable> processCallable =
 						deserializer.readObject();
 
-					Serializable result = processCallable.call();
-
-					Serializer serializer = new Serializer();
-
-					serializer.writeObject(result);
+					serializer.writeObject(
+						new RPCResponse(processCallable.call()));
 
 					CompletionHandler<Object> completionHandler =
 						DatagramHelper.getCompletionHandler(datagram);

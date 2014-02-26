@@ -102,9 +102,16 @@ public class IntrabandRPCUtil {
 				datagram.getDataByteBuffer());
 
 			try {
-				V v = deserializer.readObject();
+				RPCResponse rpcResponse = deserializer.readObject();
 
-				_futureResult.set(v);
+				Exception exception = rpcResponse.getException();
+
+				if (exception != null) {
+					_futureResult.setException(exception);
+				}
+				else {
+					_futureResult.set((V)rpcResponse.getResult());
+				}
 			}
 			catch (ClassNotFoundException cnfe) {
 				_futureResult.setException(cnfe);

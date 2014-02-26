@@ -36,12 +36,8 @@ String emailSubject = (String)request.getAttribute("liferay-ui:email-notificatio
 	</aui:field-wrapper>
 </aui:fieldset>
 
-<if test="<%= definitionTerms.size() > 0 %>">
-	<aui:fieldset cssClass="definition-of-terms">
-		<legend>
-			<liferay-ui:message key="definition-of-terms" />
-		</legend>
-
+<if test="<%= (definitionTerms != null) && (definitionTerms.size() > 0) %>">
+	<aui:fieldset cssClass="definition-of-terms" label="definition-of-terms">
 		<dl>
 
 			<%

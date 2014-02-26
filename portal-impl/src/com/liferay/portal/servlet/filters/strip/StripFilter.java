@@ -430,7 +430,8 @@ public class StripFilter extends BasePortalFilter {
 	}
 
 	protected void processJavaScript(
-			CharBuffer charBuffer, Writer writer, char[] openTag)
+			String resourceName, CharBuffer charBuffer, Writer writer,
+			char[] openTag)
 		throws Exception {
 
 		int endPos = openTag.length + 1;
@@ -532,7 +533,8 @@ public class StripFilter extends BasePortalFilter {
 			minifiedContent = _minifierCache.get(key);
 
 			if (minifiedContent == null) {
-				minifiedContent = MinifierUtil.minifyJavaScript(content);
+				minifiedContent = MinifierUtil.minifyJavaScript(
+					resourceName, content);
 
 				boolean skipCache = false;
 
@@ -670,7 +672,11 @@ public class StripFilter extends BasePortalFilter {
 					continue;
 				}
 				else if (hasMarker(charBuffer, _MARKER_SCRIPT_OPEN)) {
-					processJavaScript(charBuffer, writer, _MARKER_SCRIPT_OPEN);
+					StringBuffer requestURL = request.getRequestURL();
+
+					processJavaScript(
+						requestURL.toString(), charBuffer, writer,
+						_MARKER_SCRIPT_OPEN);
 
 					continue;
 				}

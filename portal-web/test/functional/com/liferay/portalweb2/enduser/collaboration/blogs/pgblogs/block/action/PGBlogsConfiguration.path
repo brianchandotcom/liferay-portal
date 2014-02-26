@@ -41,27 +41,27 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_SETUP</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'pills')]/li/a[contains(.,'Setup')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Setup')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_PERMISSIONS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'pills')]/li/a[contains(.,'Permissions')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_COMMUNICATION</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'pills')]/li/a[contains(.,'Communication')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Communication')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SHARING</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'pills')]/li/a[contains(.,'Sharing')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Sharing')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SCOPE</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'pills')]/li/a[contains(.,'Scope')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Scope')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -70,6 +70,11 @@
 	<td></td>
 </tr>
 <!--NAVIGATION_SETUP-->
+<tr>
+	<td>NAVIGATION_SETUP_DISPLAY_SETTINGS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Display Settings')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>NAVIGATION_SETUP_EMAIL_FROM</td>
 	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Email From')]</td>

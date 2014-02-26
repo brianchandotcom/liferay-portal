@@ -91,6 +91,7 @@
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle"><![CDATA[Blogs Entry Title !@? ...!@#$%^&*(){.,:;'p[]"}]]></var>
+			<var name="entryTitleSpecialCharacter" value="${entryTitleSpecialCharacter}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -181,6 +182,7 @@
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle"><![CDATA[Blogs Entry2 Title !@#$%^&*(){['.:;"]}]]></var>
+			<var name="entryTitleSpecialCharacter" value="${entryTitleSpecialCharacter}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />

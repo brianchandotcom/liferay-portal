@@ -19,26 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLET_TITLE</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>OPTIONS</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>NO_RECENT_BLOGGER_MESSAGE</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>RECENT_BLOGGER_USER_NAME</td>
 	<td>//span[@class='user-name']</td>
 	<td></td>

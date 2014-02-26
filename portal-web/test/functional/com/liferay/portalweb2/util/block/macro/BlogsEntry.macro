@@ -220,24 +220,8 @@
 					<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_CONTENT" />
 				</then>
 			</elseif>
-			<elseif>
-				<equals arg1="${entryTitleSpecialCharacter}" arg2="true" />
-				<then>
-					<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-					<var name="key_entryTitle" value="${entryTitle}" />
-
-					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_GENERIC" value1="${entryTitle}" />
-					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_GENERIC" value1="${entryContent}" />
-				</then>
-			</elseif>
 			<else>
 				<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-				<var name="key_entryTitle" value="${entryTitle}" />
-
-				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 			</else>
 		</if>
 	</command>

@@ -39,15 +39,13 @@
 			}
 		}
 
-		@include respond-to(phone, tablet) {
-			.form-search .input-append .btn {
-				display: inline-block;
-				padding: 5px 19px 6px;
+		.form-search .input-append .btn {
+			display: inline-block;
+			padding: 5px 19px 6px;
 
-				@include respond-to(phone) {
-					margin-top: 0;
-					width: auto;
-				}
+			@include respond-to(phone) {
+				margin-top: 0;
+				width: auto;
 			}
 		}
 
@@ -56,7 +54,14 @@
 		}
 
 		button.close, button.btn.close {
+			font-size: 2em;
 			width: auto;
+		}
+
+		@media (max-width: 480px) {
+			.modal-header button.close {
+				padding: 12px;
+			}
 		}
 	}
 }

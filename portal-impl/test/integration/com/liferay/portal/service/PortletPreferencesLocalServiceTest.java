@@ -739,9 +739,10 @@ public class PortletPreferencesLocalServiceTest {
 	public void testGetLayoutPortletPreferencesCountByPortletId()
 		throws Exception {
 
-		long initialCount =
+		Assert.assertEquals(
+			0,
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _portlet.getPortletId());
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _portlet.getPortletId()));
 
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
 			_layout, _portlet);
@@ -754,11 +755,10 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
 			_layout, _portlet);
 
-		long actualCount =
+		Assert.assertEquals(
+			2,
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _portlet.getPortletId());
-
-		Assert.assertEquals(initialCount + 2, actualCount);
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _portlet.getPortletId()));
 	}
 
 	@Test

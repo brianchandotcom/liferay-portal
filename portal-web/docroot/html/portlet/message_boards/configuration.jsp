@@ -28,28 +28,23 @@ boolean emailMessageUpdatedEnabled = ParamUtil.getBoolean(request, "preferences-
 String emailParam = StringPool.BLANK;
 String defaultEmailSubject = StringPool.BLANK;
 String defaultEmailBody = StringPool.BLANK;
-String defaultEmailSignature = StringPool.BLANK;
 
 if (tabs2.equals("message-added-email")) {
 	emailParam = "emailMessageAdded";
 	defaultEmailSubject = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT);
 	defaultEmailBody = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY);
-	defaultEmailSignature = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SIGNATURE);
 }
 else if (tabs2.equals("message-updated-email")) {
 	emailParam = "emailMessageUpdated";
 	defaultEmailSubject = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT);
 	defaultEmailBody = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY);
-	defaultEmailSignature = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SIGNATURE);
 }
 
 String emailSubjectParam = emailParam + "Subject";
 String emailBodyParam = emailParam + "Body";
-String emailSignatureParam = emailParam + "Signature";
 
 String emailSubject = PortletSettingsParamUtil.getString(groupPortletSettings, request, emailSubjectParam, defaultEmailSubject);
 String emailBody = PortletSettingsParamUtil.getString(groupPortletSettings, request, emailBodyParam, defaultEmailBody);
-String emailSignature = PortletSettingsParamUtil.getString(groupPortletSettings, request, emailSignatureParam, defaultEmailSignature);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="portletURL">
@@ -84,10 +79,8 @@ String emailSignature = PortletSettingsParamUtil.getString(groupPortletSettings,
 	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 	<liferay-ui:error key="emailMessageAddedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailMessageAddedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailMessageAddedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailMessageUpdatedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailMessageUpdatedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailMessageUpdatedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="userRank" message="please-enter-valid-user-ranks" />
 
@@ -212,8 +205,6 @@ String emailSignature = PortletSettingsParamUtil.getString(groupPortletSettings,
 				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
 
 				<aui:input cssClass="lfr-textarea-container" label="body" name='<%= "preferences--" + emailBodyParam + "--" %>' type="textarea" value="<%= emailBody %>" warp="soft" />
-
-				<aui:input cssClass="lfr-textarea-container" label="signature" name='<%= "preferences--" + emailSignatureParam + "--" %>' type="textarea" value="<%= emailSignature %>" wrap="soft" />
 			</aui:fieldset>
 
 			<aui:fieldset cssClass="definition-of-terms">

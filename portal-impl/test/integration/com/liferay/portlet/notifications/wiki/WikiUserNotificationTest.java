@@ -44,6 +44,7 @@ import org.junit.runner.RunWith;
 @Sync
 public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 
+	@Override
 	protected BaseModel addBaseModel() throws Exception {
 		return WikiTestUtil.addPage(group.getGroupId(), _node.getNodeId());
 	}
@@ -67,6 +68,7 @@ public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 		return PortletKeys.WIKI;
 	}
 
+	@Override
 	protected BaseModel updateBaseModel(BaseModel baseModel) throws Exception {
 		return WikiTestUtil.updatePage((WikiPage)baseModel);
 	}

@@ -45,6 +45,7 @@ import org.junit.runner.RunWith;
 @Sync
 public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 
+	@Override
 	protected BaseModel addBaseModel() throws Exception {
 		return BlogsTestUtil.addEntry(user.getUserId(), group.getGroupId());
 	}
@@ -60,6 +61,7 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 		return PortletKeys.BLOGS;
 	}
 
+	@Override
 	protected BaseModel updateBaseModel(BaseModel baseModel) throws Exception {
 		BlogsEntry blogsEntry = (BlogsEntry)baseModel;
 

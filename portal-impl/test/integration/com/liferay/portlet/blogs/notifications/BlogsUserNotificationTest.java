@@ -47,7 +47,7 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected BaseModel addBaseModel() throws Exception {
-		return BlogsTestUtil.addEntry(user.getUserId(), group.getGroupId());
+		return BlogsTestUtil.addEntry(user.getUserId(), group, true);
 	}
 
 	@Override

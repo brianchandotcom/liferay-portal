@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
@@ -55,18 +54,6 @@ public class WikiTestUtil {
 		return node;
 	}
 
-	public static WikiPage addPage(long groupId, long nodeId) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			groupId);
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return addPage(
-			TestPropsValues.getUserId(), nodeId, ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(), false, true, serviceContext);
-	}
-
 	public static WikiPage addPage(
 			long userId, long groupId, long nodeId, String title,
 			boolean approved)
@@ -75,13 +62,16 @@ public class WikiTestUtil {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			groupId);
 
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
 		return addPage(
-			userId, nodeId, title, "content", true, approved, serviceContext);
+			userId, nodeId, title, "content", approved, serviceContext);
 	}
 
 	public static WikiPage addPage(
 			long userId, long nodeId, String title, String content,
-			boolean minorEdit, boolean approved, ServiceContext serviceContext)
+			boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -95,7 +85,7 @@ public class WikiTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			WikiPage page = WikiPageLocalServiceUtil.addPage(
-				userId, nodeId, title, content, "Summary", minorEdit,
+				userId, nodeId, title, content, "Summary", false,
 				serviceContext);
 
 			if (approved) {
@@ -181,7 +171,7 @@ public class WikiTestUtil {
 
 		WikiPage copyPage = addPage(
 			page.getUserId(), page.getNodeId(), ServiceTestUtil.randomString(),
-			page.getContent(), true, approved, serviceContext);
+			page.getContent(), approved, serviceContext);
 
 		WikiPageLocalServiceUtil.copyPageAttachments(
 			page.getUserId(), page.getNodeId(), page.getTitle(),

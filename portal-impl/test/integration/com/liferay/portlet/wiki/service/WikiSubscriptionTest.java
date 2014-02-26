@@ -48,7 +48,8 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 	@Override
 	public long addBaseModel(long containerModelId) throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
-			group.getGroupId(), containerModelId);
+			TestPropsValues.getUserId(), group.getGroupId(), containerModelId,
+			ServiceTestUtil.randomString(), true);
 
 		return page.getResourcePrimKey();
 	}

@@ -400,21 +400,6 @@ public class MBUtil {
 		}
 	}
 
-	public static String getEmailMessageAddedSignature(
-		PortletSettings portletSettings) {
-
-		String emailMessageAddedSignature = portletSettings.getValue(
-			"emailMessageAddedSignature", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailMessageAddedSignature)) {
-			return emailMessageAddedSignature;
-		}
-		else {
-			return ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SIGNATURE);
-		}
-	}
-
 	public static String getEmailMessageAddedSubject(
 		PortletSettings portletSettings) {
 
@@ -456,21 +441,6 @@ public class MBUtil {
 		}
 		else {
 			return PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_ENABLED;
-		}
-	}
-
-	public static String getEmailMessageUpdatedSignature(
-		PortletSettings portletSettings) {
-
-		String emailMessageUpdatedSignature = portletSettings.getValue(
-			"emailMessageUpdatedSignature", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailMessageUpdatedSignature)) {
-			return emailMessageUpdatedSignature;
-		}
-		else {
-			return ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SIGNATURE);
 		}
 	}
 

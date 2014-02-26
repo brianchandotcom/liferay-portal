@@ -319,11 +319,11 @@ public class ServiceTrackerCollection<S> implements Collection<S> {
 		}
 
 		@Override
-		public S addedService(ServiceReference<S> serviceReference) {
+		public S addingService(ServiceReference<S> serviceReference) {
 			S service = null;
 
 			if (_serviceTrackerCustomizer != null) {
-				service = _serviceTrackerCustomizer.addedService(
+				service = _serviceTrackerCustomizer.addingService(
 					serviceReference);
 			}
 			else {

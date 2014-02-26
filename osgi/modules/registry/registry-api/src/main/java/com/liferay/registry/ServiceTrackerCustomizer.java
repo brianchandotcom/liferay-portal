@@ -19,7 +19,7 @@ package com.liferay.registry;
  */
 public interface ServiceTrackerCustomizer<S, T> {
 
-	public T addedService(ServiceReference<S> serviceReference);
+	public T addingService(ServiceReference<S> serviceReference);
 
 	public void modifiedService(
 		ServiceReference<S> serviceReference, T service);

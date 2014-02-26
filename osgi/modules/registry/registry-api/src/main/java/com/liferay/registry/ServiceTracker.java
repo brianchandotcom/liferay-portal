@@ -42,7 +42,7 @@ public interface ServiceTracker<S, T> {
 
 	public SortedMap<ServiceReference<S>, T> getTrackedServiceReferences();
 
-	public int getTrackingServiceReferencesCount();
+	public int getUpdateMarker();
 
 	@Override
 	public int hashCode();

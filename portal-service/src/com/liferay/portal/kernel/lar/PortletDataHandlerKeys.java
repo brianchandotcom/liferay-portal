@@ -19,6 +19,10 @@ package com.liferay.portal.kernel.lar;
  */
 public class PortletDataHandlerKeys {
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String CATEGORIES = "CATEGORIES";
 
 	public static final String COMMENTS = "COMMENTS";

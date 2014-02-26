@@ -193,8 +193,6 @@ public class LayoutImporter {
 			Boolean.TRUE.booleanValue());
 		boolean deletePortletData = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
-		boolean importCategories = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.CATEGORIES);
 		boolean importPermissions = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
 		boolean importLogo = MapUtil.getBoolean(
@@ -220,7 +218,6 @@ public class LayoutImporter {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Delete portlet data " + deletePortletData);
-			_log.debug("Import categories " + importCategories);
 			_log.debug("Import permissions " + importPermissions);
 		}
 

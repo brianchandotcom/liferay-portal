@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2014 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -41,10 +41,6 @@ public class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 		return _cssClass;
 	}
 
-	public boolean getEscapeXml() {
-		return _escapeXml;
-	}
-
 	public boolean getInlineLabels() {
 		return _inlineLabels;
 	}
@@ -79,12 +75,6 @@ public class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 		_cssClass = cssClass;
 
 		setScopedAttribute("cssClass", cssClass);
-	}
-
-	public void setEscapeXml(boolean escapeXml) {
-		_escapeXml = escapeXml;
-
-		setScopedAttribute("escapeXml", escapeXml);
 	}
 
 	public void setInlineLabels(boolean inlineLabels) {
@@ -127,7 +117,6 @@ public class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 	protected void cleanUp() {
 		_action = null;
 		_cssClass = null;
-		_escapeXml = true;
 		_inlineLabels = false;
 		_method = "post";
 		_name = "fm";
@@ -150,7 +139,6 @@ public class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "action", _action);
 		setNamespacedAttribute(request, "cssClass", _cssClass);
-		setNamespacedAttribute(request, "escapeXml", _escapeXml);
 		setNamespacedAttribute(request, "inlineLabels", _inlineLabels);
 		setNamespacedAttribute(request, "method", _method);
 		setNamespacedAttribute(request, "name", _name);
@@ -169,7 +157,6 @@ public class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 
 	private java.lang.String _action = null;
 	private java.lang.String _cssClass = null;
-	private boolean _escapeXml = true;
 	private boolean _inlineLabels = false;
 	private java.lang.String _method = "post";
 	private java.lang.String _name = "fm";

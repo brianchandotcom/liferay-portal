@@ -226,10 +226,17 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	protected String getLayoutType() {
 		String data = (String)get("data");
 
-		int pos = data.indexOf(CharPool.AT);
+		int pos1 = data.indexOf(CharPool.AT);
 
-		if (pos != -1) {
-			data = data.substring(pos + 1);
+		int pos2 = data.lastIndexOf(CharPool.AT);
+
+		if ((pos1 != -1) && (pos2 != -1)) {
+			if (pos1 == pos2) {
+				data = data.substring(pos1 + 1);
+			}
+			else {
+				data = data.substring(pos1 + 1, pos2);
+			}
 		}
 
 		return data;

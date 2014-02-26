@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
@@ -64,7 +65,9 @@ public class TransientTokenUtil {
 
 		String token = PortalUUIDUtil.generate();
 
-		_tokens.put(expireTime, token);
+		while (_tokens.putIfAbsent(expireTime, token) != null) {
+			expireTime++;
+		}
 
 		return token;
 	}
@@ -75,7 +78,7 @@ public class TransientTokenUtil {
 		headMap.clear();
 	}
 
-	private static final SortedMap<Long, String> _tokens =
+	private static final ConcurrentNavigableMap<Long, String> _tokens =
 		new ConcurrentSkipListMap<Long, String>();
 
 }

@@ -22,6 +22,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,7 +33,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Deliberately package private.
@@ -69,25 +72,25 @@ class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 	}
 
 	@Override
-	public void add(int index, S element) {
+	public void add(int index, S service) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean add(S element) {
-		Map<String, Object> properties = new HashMap<String, Object>(
-			_properties);
-
-		if ((_filter != null) && !_filter.matches(properties)) {
+	public boolean add(S service) {
+		if ((_filter != null) && !_filter.matches(_properties)) {
 			return false;
 		}
+
+		Map<String, Object> properties = new HashMap<String, Object>(
+			_properties);
 
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceRegistration<S> serviceRegistration = registry.registerService(
-			_clazz, element, properties);
+			_clazz, service, properties);
 
-		_serviceRegistrations.put(element, serviceRegistration);
+		_serviceRegistrations.put(service, serviceRegistration);
 
 		return true;
 	}
@@ -118,7 +121,7 @@ class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 	}
 
 	@Override
-	public boolean addAll(int index, Collection<? extends S> collection) {
+	public boolean addAll(int index, Collection<? extends S> services) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -142,7 +145,7 @@ class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
 	@Override
 	public boolean contains(Object service) {
-		return _services.contains(service);
+		return _servicesList.get().contains(service);
 	}
 
 	@Override
@@ -152,12 +155,12 @@ class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
 	@Override
 	public S get(int index) {
-		return _services.get(index);
+		return _servicesList.get().get(index);
 	}
 
 	@Override
-	public int indexOf(Object object) {
-		return _services.indexOf(object);
+	public int indexOf(Object service) {
+		return _servicesList.get().indexOf(service);
 	}
 
 	@Override
@@ -167,22 +170,22 @@ class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
 	@Override
 	public Iterator<S> iterator() {
-		return _services.iterator();
+		return _servicesList.get().iterator();
 	}
 
 	@Override
-	public int lastIndexOf(Object object) {
-		return _services.lastIndexOf(object);
+	public int lastIndexOf(Object service) {
+		return _servicesList.get().lastIndexOf(service);
 	}
 
 	@Override
 	public ListIterator<S> listIterator() {
-		return Collections.unmodifiableList(_services).listIterator();
+		return _servicesList.get().listIterator();
 	}
 
 	@Override
 	public ListIterator<S> listIterator(int index) {
-		return Collections.unmodifiableList(_services).listIterator(index);
+		return _servicesList.get().listIterator(index);
 	}
 
 	@Override
@@ -215,7 +218,7 @@ class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 	}
 
 	@Override
-	public S set(int index, S element) {
+	public S set(int index, S service) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -226,18 +229,17 @@ class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
 	@Override
 	public java.util.List<S> subList(int fromIndex, int toIndex) {
-		return Collections.unmodifiableList(_services).subList(
-			fromIndex, toIndex);
+		return _servicesList.get().subList(fromIndex, toIndex);
 	}
 
 	@Override
 	public Object[] toArray() {
-		return _services.toArray();
+		return _servicesList.get().toArray();
 	}
 
 	@Override
 	public <T> T[] toArray(T[] services) {
-		return _services.toArray(services);
+		return _servicesList.get().toArray(services);
 	}
 
 	private Filter _getFilter(Filter filter, Class<S> clazz) {
@@ -267,7 +269,11 @@ class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 	private final Map<String, Object> _properties;
 	private final Map<S, ServiceRegistration<S>> _serviceRegistrations =
 		new ConcurrentHashMap<S, ServiceRegistration<S>>();
-	private final List<S> _services = new CopyOnWriteArrayList<S>();
+	private final ConcurrentNavigableMap<ServiceReference<S>, S> _services =
+		new ConcurrentSkipListMap<ServiceReference<S>, S>(
+			Collections.reverseOrder());
+	private final AtomicReference<List<S>> _servicesList =
+		new AtomicReference<List<S>>();
 	private final ServiceTracker<S, S> _serviceTracker;
 
 	private class DefaultServiceTrackerCustomizer
@@ -294,7 +300,11 @@ class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 			}
 
 			if (service != null) {
-				_services.add(service);
+				_services.put(serviceReference, service);
+
+				_servicesList.set(
+					Collections.unmodifiableList(
+						new ArrayList<S>(_services.values())));
 			}
 
 			return service;
@@ -308,6 +318,14 @@ class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 				_serviceTrackerCustomizer.modifiedService(
 					serviceReference, service);
 			}
+
+			if (service != null) {
+				_services.put(serviceReference, service);
+
+				_servicesList.set(
+					Collections.unmodifiableList(
+						new ArrayList<S>(_services.values())));
+			}
 		}
 
 		@Override
@@ -319,11 +337,15 @@ class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 					serviceReference, service);
 			}
 
+			if (_services.remove(serviceReference) != null) {
+				_servicesList.set(
+					Collections.unmodifiableList(
+						new ArrayList<S>(_services.values())));
+			}
+
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
-
-			_services.remove(service);
 		}
 
 		private final ServiceTrackerCustomizer<S, S> _serviceTrackerCustomizer;

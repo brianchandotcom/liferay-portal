@@ -113,11 +113,17 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 
 						String title = HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60));
 
+						boolean hasAddToPagePermission = PortletPermissionUtil.contains(permissionChecker, layout, assetRenderer.getAddToPagePortletId(), ActionKeys.ADD_TO_PAGE);
+
 						Map<String, Object> data = new HashMap<String, Object>();
 
 						data.put("class-name", assetEntry.getClassName());
 						data.put("class-pk", assetEntry.getClassPK());
-						data.put("draggable", true);
+
+						if (hasAddToPagePermission) {
+							data.put("draggable", true);
+						}
+
 						data.put("instanceable", true);
 						data.put("portlet-id", assetRenderer.getAddToPagePortletId());
 						data.put("title", title);
@@ -151,11 +157,11 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 										</div>
 									</div>
 								</c:when>
-								<c:otherwise >
+								<c:when test="<%= hasAddToPagePermission %>">
 									<div <%= AUIUtil.buildData(data) %> class="add-content-item">
 										<liferay-ui:message key="add" />
 									</div>
-								</c:otherwise>
+								</c:when>
 							</c:choose>
 						</aui:nav-item>
 

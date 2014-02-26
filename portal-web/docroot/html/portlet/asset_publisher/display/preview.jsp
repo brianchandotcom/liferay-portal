@@ -80,5 +80,7 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp
 	data.put("portlet-id", assetRenderer.getAddToPagePortletId());
 	%>
 
-	<aui:button cssClass="add-button-preview" data="<%= data %>" value="add" />
+	<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, layout, assetRenderer.getAddToPagePortletId(), ActionKeys.ADD_TO_PAGE) %>">
+		<aui:button cssClass="add-button-preview" data="<%= data %>" value="add" />
+	</c:if>
 </div>

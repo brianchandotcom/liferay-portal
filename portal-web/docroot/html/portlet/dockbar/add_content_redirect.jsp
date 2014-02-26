@@ -26,10 +26,12 @@ long classPK = ParamUtil.getLong(request, "classPK");
 
 Map<String, Object> data = new HashMap<String, Object>();
 
+AssetRenderer assetRenderer = null;
+
 if (Validator.isNotNull(className) && (classPK > 0)) {
 	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
-	AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+	assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 
 	data.put("class-name", className);
 	data.put("class-pk", classPK);
@@ -41,15 +43,17 @@ if (Validator.isNotNull(className) && (classPK > 0)) {
 <span <%= AUIUtil.buildData(data) %> class="aui-helper-hidden portlet-item"></span>
 
 <aui:script use="aui-base">
-	<c:if test="<%= Validator.isNotNull(className) && (classPK > 0) %>">
+	<c:if test="<%= assetRenderer != null %>">
 		var Util = Liferay.Util;
 
-		Util.getOpener().Liferay.fire(
-			'AddContent:addPortlet',
-			{
-				node: A.one('.portlet-item')
-			}
-		);
+	   <c:if test="<%= PortletPermissionUtil.contains(permissionChecker, layout, assetRenderer.getAddToPagePortletId(), ActionKeys.ADD_TO_PAGE) %>">
+			Util.getOpener().Liferay.fire(
+				'AddContent:addPortlet',
+				{
+					node: A.one('.portlet-item')
+				}
+			);
+	   </c:if>
 
 		Util.getOpener().Liferay.fire('AddContent:refreshContentList');
 	</c:if>

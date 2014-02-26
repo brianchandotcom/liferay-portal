@@ -19,30 +19,11 @@
 <%@ include file="/html/taglib/taglib-init.jsp" %>
 
 <%
-Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:container:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:container:scopedAttributes");
-
-Map<String, Object> _options = new HashMap<String, Object>();
-
-if ((scopedAttributes != null) && !scopedAttributes.isEmpty()) {
-	_options.putAll(scopedAttributes);
-}
-
-if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
-	_options.putAll(dynamicAttributes);
-}
-
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:container:cssClass"));
 boolean fluid = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:container:fluid")), true);
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:container:id"));
-
-_updateOptions(_options, "cssClass", cssClass);
-_updateOptions(_options, "fluid", fluid);
-_updateOptions(_options, "id", id);
+Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:container:dynamicAttributes");
+Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:container:scopedAttributes");
 %>
 
 <%@ include file="/html/taglib/aui/container/init-ext.jspf" %>
-
-<%!
-private static final String _NAMESPACE = "aui:container:";
-%>

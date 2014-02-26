@@ -19,7 +19,7 @@
 <%
 Map<String, Object> jsonifiedOptions = (Map<String, Object>)request.getAttribute("aui:component:jsonifiedOptions");
 
-Object render = String.valueOf(_options.get("render"));
+Object render = String.valueOf(AUIUtil.getAttribute(request, "aui:component:", "render"));
 
 if (Validator.isNull(render)) {
 	render = true;

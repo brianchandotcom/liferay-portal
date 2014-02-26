@@ -519,6 +519,8 @@ public class LayoutStagedModelDataHandler
 
 		layoutPlids.put(layout.getPlid(), importedLayout.getPlid());
 
+		importAssets(portletDataContext, layout, importedLayout);
+
 		importLayoutFriendlyURLs(portletDataContext, layout);
 
 		portletDataContext.importClassedModel(layout, importedLayout);
@@ -767,6 +769,22 @@ public class LayoutStagedModelDataHandler
 		}
 
 		return friendlyURL;
+	}
+
+	protected void importAssets(
+			PortletDataContext portletDataContext, Layout layout,
+			Layout importedLayout)
+		throws Exception {
+
+		long userId = portletDataContext.getUserId(layout.getUserUuid());
+
+		long[] assetCategoryIds = portletDataContext.getAssetCategoryIds(
+			Layout.class, layout.getPlid());
+		String[] assetTagNames = portletDataContext.getAssetTagNames(
+			Layout.class, layout.getPlid());
+
+		LayoutLocalServiceUtil.updateAsset(
+			userId, importedLayout, assetCategoryIds, assetTagNames);
 	}
 
 	protected void importJournalArticle(

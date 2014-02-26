@@ -51,6 +51,22 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testToLowerCase() throws Exception {
+		Assert.assertEquals(
+			"hello world", StringUtil.toLowerCase("HELLO WORLD"));
+		Assert.assertEquals(
+			"\u00F1", StringUtil.toLowerCase("\u00D1"));
+	}
+
+	@Test
+	public void testToUpperCase() throws Exception {
+		Assert.assertEquals(
+			"HELLO WORLD", StringUtil.toUpperCase("hello world"));
+		Assert.assertEquals(
+			"\u00D1", StringUtil.toUpperCase("\u00F1"));
+	}
+
+	@Test
 	public void testIndexOfAny() throws Exception {
 		char[] chars = {CharPool.COLON, CharPool.COMMA};
 

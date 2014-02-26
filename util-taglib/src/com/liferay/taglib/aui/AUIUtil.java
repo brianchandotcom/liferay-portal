@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Shuyang Zhou
  */
@@ -162,6 +164,27 @@ public class AUIUtil {
 		boolean choiceField) {
 
 		return buildLabel(StringPool.BLANK, false, showForLabel, forLabel);
+	}
+
+	public static Object getAttribute(
+		HttpServletRequest request, String namespace, String key) {
+
+		Map<String, Object> dynamicAttributes =
+			(Map<String, Object>)request.getAttribute(
+				namespace.concat("dynamicAttributes"));
+		Map<String, Object> scopedAttributes =
+			(Map<String, Object>)request.getAttribute(
+				namespace.concat("scopedAttributes"));
+
+		if (((dynamicAttributes != null) &&
+			 dynamicAttributes.containsKey(key)) ||
+			((scopedAttributes != null) &&
+			 scopedAttributes.containsKey(key))) {
+
+			return request.getAttribute(namespace.concat(key));
+		}
+
+		return null;
 	}
 
 }

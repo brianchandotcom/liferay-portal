@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.nio.intraband.rpc;
 
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.DatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.Intraband;
@@ -39,29 +37,24 @@ public class BootstrapRPCDatagramReceiveHandler
 		Deserializer deserializer = new Deserializer(
 			datagram.getDataByteBuffer());
 
+		Serializer serializer = new Serializer();
+
 		try {
 			ProcessCallable<? extends Serializable> processCallable =
 				deserializer.readObject();
 
-			Serializer serializer = new Serializer();
-
-			Serializable result = processCallable.call();
-
-			serializer.writeObject(result);
-
-			Intraband intraband = registrationReference.getIntraband();
-
-			intraband.sendDatagram(
-				registrationReference,
-				Datagram.createResponseDatagram(
-					datagram, serializer.toByteBuffer()));
+			serializer.writeObject(new RPCResponse(processCallable.call()));
 		}
 		catch (Exception e) {
-			_log.error("Unable to execute", e);
+			serializer.writeObject(new RPCResponse(e));
 		}
-	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		BootstrapRPCDatagramReceiveHandler.class);
+		Intraband intraband = registrationReference.getIntraband();
+
+		intraband.sendDatagram(
+			registrationReference,
+			Datagram.createResponseDatagram(
+				datagram, serializer.toByteBuffer()));
+	}
 
 }

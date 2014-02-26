@@ -37,14 +37,16 @@ public class RPCDatagramReceiveHandler extends BaseAsyncDatagramReceiveHandler {
 		Deserializer deserializer = new Deserializer(
 			datagram.getDataByteBuffer());
 
-		ProcessCallable<? extends Serializable> processCallable =
-			deserializer.readObject();
-
 		Serializer serializer = new Serializer();
 
-		Serializable result = processCallable.call();
-
-		serializer.writeObject(result);
+		try {
+			ProcessCallable<? extends Serializable> processCallable =
+				deserializer.readObject();
+			serializer.writeObject(new RPCResponse(processCallable.call()));
+		}
+		catch (Exception e) {
+			serializer.writeObject(new RPCResponse(e));
+		}
 
 		Intraband intraband = registrationReference.getIntraband();
 

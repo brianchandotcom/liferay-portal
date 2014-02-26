@@ -65,7 +65,7 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 			name="user"
 		>
 			<liferay-ui:user-display
-				displayStyle="<%= 5 %>"
+				displayStyle="<%= 3 %>"
 				height="30"
 				userId="<%= exportImportConfiguration.getUserId() %>"
 				width="30"

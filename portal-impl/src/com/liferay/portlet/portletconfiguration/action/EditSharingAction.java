@@ -64,23 +64,11 @@ public class EditSharingAction extends PortletAction {
 		actionRequest = ActionUtil.getWrappedActionRequest(
 			actionRequest, portletPreferences);
 
-		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
-
-		if (tabs2.equals("any-website")) {
-			updateAnyWebsite(actionRequest, portletPreferences);
-		}
-		else if (tabs2.equals("facebook")) {
-			updateFacebook(actionRequest, portletPreferences);
-		}
-		else if (tabs2.equals("friends")) {
-			updateFriends(actionRequest, portletPreferences);
-		}
-		else if (tabs2.equals("opensocial-gadget")) {
-			updateGoogleGadget(actionRequest, portletPreferences);
-		}
-		else if (tabs2.equals("netvibes")) {
-			updateNetvibes(actionRequest, portletPreferences);
-		}
+		updateAnyWebsite(actionRequest, portletPreferences);
+		updateFacebook(actionRequest, portletPreferences);
+		updateFriends(actionRequest, portletPreferences);
+		updateGoogleGadget(actionRequest, portletPreferences);
+		updateNetvibes(actionRequest, portletPreferences);
 
 		portletPreferences.store();
 

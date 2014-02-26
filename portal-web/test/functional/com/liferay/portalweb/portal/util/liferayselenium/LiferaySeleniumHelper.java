@@ -480,7 +480,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		for (int second = 0;; second++) {
-			if (second < TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				return liferaySelenium.isElementPresent(locator);
 			}
 

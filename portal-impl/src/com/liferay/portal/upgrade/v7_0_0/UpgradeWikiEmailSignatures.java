@@ -35,25 +35,25 @@ public class UpgradeWikiEmailSignatures extends BaseUpgradePortletPreferences {
 
 	protected void upgradeEmailSignature(
 			PortletPreferences portletPreferences,
-			String signaturePortletPreferencesKey,
-			String bodyPortletPreferencesKey)
+			String emailMessageBodyPortletPreferencesKey,
+			String emailMessageSignaturePortletPreferencesKey)
 		throws ReadOnlyException {
 
 		String emailMessageSignature = portletPreferences.getValue(
-			signaturePortletPreferencesKey, StringPool.BLANK);
+			emailMessageSignaturePortletPreferencesKey, StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageSignature)) {
 			String emailMessageBody = portletPreferences.getValue(
-				bodyPortletPreferencesKey, StringPool.BLANK);
+				emailMessageBodyPortletPreferencesKey, StringPool.BLANK);
 
 			emailMessageBody =
 				emailMessageBody + StringPool.NEW_LINE + emailMessageSignature;
 
 			portletPreferences.setValue(
-				bodyPortletPreferencesKey, emailMessageBody);
+				emailMessageBodyPortletPreferencesKey, emailMessageBody);
 		}
 
-		portletPreferences.reset(signaturePortletPreferencesKey);
+		portletPreferences.reset(emailMessageSignaturePortletPreferencesKey);
 	}
 
 	@Override
@@ -67,12 +67,12 @@ public class UpgradeWikiEmailSignatures extends BaseUpgradePortletPreferences {
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
 		upgradeEmailSignature(
-			portletPreferences, "emailPageAddedSignature",
-			"emailPageAddedBody");
+			portletPreferences, "emailPageAddedBody",
+			"emailPageAddedSignature");
 
 		upgradeEmailSignature(
-			portletPreferences, "emailPageUpdatedSignature",
-			"emailPageUpdatedBody");
+			portletPreferences, "emailPageUpdatedBody",
+			"emailPageUpdatedSignature");
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}

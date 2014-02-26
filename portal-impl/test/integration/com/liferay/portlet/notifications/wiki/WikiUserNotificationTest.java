@@ -59,7 +59,7 @@ public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 	@Override
 	protected void addSubscription() throws Exception {
 		WikiNodeLocalServiceUtil.subscribeNode(
-			TestPropsValues.getUserId(), _node.getNodeId());
+			user.getUserId(), _node.getNodeId());
 	}
 
 	@Override

@@ -21,8 +21,7 @@ AUI.add(
 
 				return {
 					x: range.boundingLeft - xy[0],
-					y: Lang.toInt(range.boundingTop) - xy[1] + node.get('scrollTop')
-						+ DOC.documentElement.scrollTop
+					y: Lang.toInt(range.boundingTop) - xy[1] + node.get('scrollTop') + DOC.documentElement.scrollTop
 				};
 			}
 		};

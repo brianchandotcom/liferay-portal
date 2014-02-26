@@ -58,7 +58,7 @@ public class MinifierUtil {
 						". Returning YUIJavaScriptMinifier as default");
 			}
 
-			return new YUIJavaScriptMinifier();
+			return new GoogleClosureCompileJavaScriptMinifier();
 		}
 	}
 

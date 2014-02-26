@@ -25,6 +25,10 @@
 				</execute>
 			</then>
 		</while>
+
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute action="Home#assertElementPresent" locator-key1="${portletTypeKey}" />
 	</command>
 
 	<command name="addPG">

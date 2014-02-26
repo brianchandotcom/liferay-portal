@@ -305,7 +305,7 @@ if (!cmd.equals(Constants.ADD)) {
 					</c:if>
 
 					<%
-					List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId());
+					List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId(), false);
 
 					PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), liveGroupId, startDate, endDate);
 
@@ -447,9 +447,6 @@ if (!cmd.equals(Constants.ADD)) {
 
 										<li class="options">
 											<ul class="portlet-list">
-												<li class="tree-item">
-													<aui:input helpMessage="export-import-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= true %>" />
-												</li>
 
 												<%
 												Set<String> displayedControls = new HashSet<String>();

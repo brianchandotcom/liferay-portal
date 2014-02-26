@@ -337,8 +337,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 										<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= true %>" />
 
-										<aui:input helpMessage="export-import-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= true %>" />
-
 										<%
 										Set<String> displayedControls = new HashSet<String>();
 										Set<String> portletDataHandlerClasses = new HashSet<String>();

@@ -1487,7 +1487,9 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @return the user's display URL
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
 	*/
+	@Deprecated
 	@Override
 	public java.lang.String getDisplayURL(java.lang.String portalURL,
 		java.lang.String mainPath)
@@ -1528,7 +1530,9 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @return the user's display URL
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
 	*/
+	@Deprecated
 	@Override
 	public java.lang.String getDisplayURL(java.lang.String portalURL,
 		java.lang.String mainPath, boolean privateLayout)

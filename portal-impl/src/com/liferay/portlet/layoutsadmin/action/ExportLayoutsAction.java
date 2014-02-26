@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutsadmin.action;
 
+import com.liferay.portal.LARFileNameException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
@@ -104,14 +105,16 @@ public class ExportLayoutsAction extends PortletAction {
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
-
 			SessionErrors.add(actionRequest, e.getClass());
 
-			String pagesRedirect = ParamUtil.getString(
-				actionRequest, "pagesRedirect");
+			if (!(e instanceof LARFileNameException)) {
+				_log.error(e, e);
 
-			sendRedirect(actionRequest, actionResponse, pagesRedirect);
+				String pagesRedirect = ParamUtil.getString(
+					actionRequest, "pagesRedirect");
+
+				sendRedirect(actionRequest, actionResponse, pagesRedirect);
+			}
 		}
 	}
 

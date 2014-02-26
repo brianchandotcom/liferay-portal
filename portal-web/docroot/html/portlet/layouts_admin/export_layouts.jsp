@@ -162,6 +162,8 @@ if (!cmd.equals(Constants.ADD)) {
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd.equals(Constants.ADD) ? Constants.ADD : Constants.EXPORT %>" />
 				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
+				<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
+
 				<div class="export-dialog-tree">
 					<c:if test="<%= cmd.equals(Constants.ADD) %>">
 						<aui:model-context model="<%= ExportImportConfiguration.class %>" />

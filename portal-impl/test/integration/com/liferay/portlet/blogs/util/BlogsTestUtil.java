@@ -55,6 +55,9 @@ public class BlogsTestUtil {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
 		return addEntry(userId, title, approved, serviceContext);
 	}
 
@@ -66,20 +69,10 @@ public class BlogsTestUtil {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
-		return addEntry(userId, title, approved, smallImage, serviceContext);
-	}
-
-	public static BlogsEntry addEntry(long userId, long groupId)
-		throws Exception {
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			groupId);
-
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
 
-		return addEntry(
-			userId, ServiceTestUtil.randomString(), true, serviceContext);
+		return addEntry(userId, title, approved, smallImage, serviceContext);
 	}
 
 	public static BlogsEntry addEntry(

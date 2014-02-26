@@ -606,6 +606,17 @@ create database lportal2 character set utf8;</echo>
 		</if>
 	</target>
 
+	<target name="copy-sikuli-temp-files">
+		<if>
+			<os family="unix" />
+			<then>
+				<copy file="tools/selenium/sikuli/linux/libJXGrabKey.so" tofile="lib/development/libs/libJXGrabKey.so" />
+				<copy file="tools/selenium/sikuli/linux/libVisionProxy.so" tofile="lib/development/libs/libVisionProxy.so" />
+				<copy file="tools/selenium/sikuli/linux/MadeForSikuliX64L.txt" tofile="lib/development/libs/MadeForSikuliX64L.txt" />
+			</then>
+		</if>
+	</target>
+
 	<target name="evaluate-logs">
 		<if>
 			<available file="portal-web/test-ant-scripts/log" />
@@ -2587,6 +2598,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<equals arg1="${browser.type}" arg2="ie" />
 			<then>
 				<antcall target="start-ie-driver" />
+			</then>
+		</if>
+
+		<if>
+			<os family="unix" />
+			<then>
+				<antcall target="copy-sikuli-temp-files" />
 			</then>
 		</if>
 

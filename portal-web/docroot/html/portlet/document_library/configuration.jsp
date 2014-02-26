@@ -92,10 +92,8 @@ catch (NoSuchFolderException nsfe) {
 
 	<liferay-ui:error key="displayViewsInvalid" message="display-style-views-cannot-be-empty" />
 	<liferay-ui:error key="emailFileEntryAddedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailFileEntryAddedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailFileEntryAddedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailFileEntryUpdatedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailFileEntryUpdatedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailFileEntryUpdatedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />

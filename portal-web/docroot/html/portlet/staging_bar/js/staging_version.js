@@ -258,6 +258,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-node', 'liferay-staging']
+		requires: ['aui-button', 'liferay-staging']
 	}
 );

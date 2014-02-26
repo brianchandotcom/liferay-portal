@@ -542,7 +542,7 @@
 
 						&.current-parent:before {
 							color: #999;
-							content: " ... / ";
+							content: ' ... / ';
 							font-weight: bold;
 						}
 					}

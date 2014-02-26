@@ -114,7 +114,7 @@ portletURL.setParameter("tabs3", tabs3);
 						name="name"
 					>
 
-						<%= HtmlUtil.escape(user2.getFullName()) %>
+						<%= user2.getFullName() %>
 
 						<%
 						PasswordPolicyRel passwordPolicyRel = PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(User.class.getName(), user.getUserId());
@@ -141,7 +141,7 @@ portletURL.setParameter("tabs3", tabs3);
 
 					<liferay-ui:search-container-column-text
 						name="screen-name"
-						value="<%= HtmlUtil.escape(user2.getScreenName()) %>"
+						value="<%= user2.getScreenName() %>"
 					/>
 				</liferay-ui:search-container-row>
 

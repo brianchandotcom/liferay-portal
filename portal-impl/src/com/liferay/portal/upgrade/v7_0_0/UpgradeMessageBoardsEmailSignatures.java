@@ -64,16 +64,16 @@ public class UpgradeMessageBoardsEmailSignatures
 
 	protected void upgradeEmailSignature(
 			PortletPreferences portletPreferences,
-			String signaturePortletPreferencesKey,
-			String bodyPortletPreferencesKey)
+			String emailMessageBodyPortletPreferencesKey,
+			String emailMessageSignaturePortletPreferencesKey)
 		throws ReadOnlyException {
 
 		String emailMessageSignature = portletPreferences.getValue(
-			signaturePortletPreferencesKey, StringPool.BLANK);
+			emailMessageSignaturePortletPreferencesKey, StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageSignature)) {
 			String emailMessageBody = portletPreferences.getValue(
-				bodyPortletPreferencesKey, StringPool.BLANK);
+				emailMessageBodyPortletPreferencesKey, StringPool.BLANK);
 
 			String signatureSeparator = getEmailSignatureSeparator(
 				portletPreferences);
@@ -81,10 +81,10 @@ public class UpgradeMessageBoardsEmailSignatures
 			emailMessageBody += signatureSeparator + emailMessageSignature;
 
 			portletPreferences.setValue(
-				bodyPortletPreferencesKey, emailMessageBody);
+				emailMessageBodyPortletPreferencesKey, emailMessageBody);
 		}
 
-		portletPreferences.reset(signaturePortletPreferencesKey);
+		portletPreferences.reset(emailMessageSignaturePortletPreferencesKey);
 	}
 
 	@Override
@@ -98,12 +98,14 @@ public class UpgradeMessageBoardsEmailSignatures
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
 		upgradeEmailSignature(
-			portletPreferences, "emailMessageAddedSignature",
-			"emailMessageAddedBody");
+			portletPreferences, "emailMessageAddedBody",
+			"emailMessageAddedSignature"
+		);
 
 		upgradeEmailSignature(
-			portletPreferences, "emailMessageUpdatedSignature",
-			"emailMessageUpdatedBody");
+			portletPreferences, "emailMessageUpdatedBody",
+			"emailMessageUpdatedSignature"
+		);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}

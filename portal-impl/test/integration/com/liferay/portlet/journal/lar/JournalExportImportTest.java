@@ -209,9 +209,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		Map<String, String[]> parameterMap = new HashMap<String, String[]>();
 
 		parameterMap.put(
-			PortletDataHandlerKeys.CATEGORIES,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
 			PortletDataHandlerKeys.PERMISSIONS,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(

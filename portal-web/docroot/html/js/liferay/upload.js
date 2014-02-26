@@ -143,10 +143,6 @@ AUI.add(
 		var Upload = A.Component.create(
 			{
 				ATTRS: {
-					decimalSeparator: {
-						validator: Lang.isString,
-						value: '.'
-					},
 					deleteFile: {
 						value: ''
 					},
@@ -215,7 +211,7 @@ AUI.add(
 					}
 				},
 
-				AUGMENTS: [Liferay.PortletBase],
+				AUGMENTS: [Liferay.PortletBase, Liferay.StorageFormatter],
 
 				NAME: 'liferayupload',
 
@@ -248,13 +244,7 @@ AUI.add(
 							);
 						}
 						else {
-							var storageFormatter = new Liferay.StorageFormatter(
-								{
-									decimalSeparator: instance.get('decimalSeparator')
-								}
-							);
-
-							var maxFileSize = storageFormatter.format(instance.get('maxFileSize'));
+							var maxFileSize = instance.formatStorage(instance.get('maxFileSize'));
 
 							instance._invalidFileSizeText = Lang.sub(strings.invalidFileSizeText, [maxFileSize]);
 
@@ -1162,6 +1152,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'aui-template-deprecated', 'collection', 'liferay-portlet-base', 'uploader']
+		requires: ['aui-io-request', 'aui-template-deprecated', 'collection', 'liferay-portlet-base', 'liferay-storage-formatter', 'uploader']
 	}
 );

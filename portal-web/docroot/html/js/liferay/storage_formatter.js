@@ -7,90 +7,88 @@ AUI.add(
 
 		var STR_SUFFIX_KB = 'suffixKB';
 
-		var StorageFormatter = A.Component.create(
-			{
-				ATTRS: {
-					addSpaceBeforeSuffix: {
-						validator: Lang.isBoolean,
-						value: false
-					},
+		var StorageFormatter = function() {};
 
-					decimalSeparator: {
-						validator: Lang.isString,
-						value: '.'
-					},
+		StorageFormatter.NAME = 'storageformatter';
 
-					denominator: {
-						validator: Lang.isNumber,
-						value: 1024.0
-					},
+		StorageFormatter.ATTRS = {
+			addSpaceBeforeSuffix: {
+				validator: Lang.isBoolean,
+				value: false
+			},
 
-					suffixGB: {
-						validator: Lang.isString,
-						value: 'GB'
-					},
+			decimalSeparator: {
+				validator: Lang.isString,
+				value: '.'
+			},
 
-					suffixKB: {
-						validator: Lang.isString,
-						value: 'KB'
-					},
+			denominator: {
+				validator: Lang.isNumber,
+				value: 1024.0
+			},
 
-					suffixMB: {
-						validator: Lang.isString,
-						value: 'MB'
-					}
-				},
+			suffixGB: {
+				validator: Lang.isString,
+				value: 'GB'
+			},
 
-				EXTENDS: A.Base,
+			suffixKB: {
+				validator: Lang.isString,
+				value: 'KB'
+			},
 
-				prototype: {
-					format: function(size) {
-						var instance = this;
-
-						var suffix = instance.get(STR_SUFFIX_KB);
-
-						var denominator = instance.get('denominator');
-
-						size = size / denominator;
-
-						if (size >= denominator) {
-							suffix = instance.get('suffixMB');
-
-							size = size / denominator;
-						}
-
-						if (size >= denominator) {
-							suffix = instance.get('suffixGB');
-
-							size = size / denominator;
-						}
-
-						return A.Number.format(
-							size,
-							{
-								decimalPlaces: instance._getDecimalPlaces(size, suffix),
-								decimalSeparator: instance.get('decimalSeparator'),
-								suffix: instance.get('addSpaceBeforeSuffix') ? STR_SPACE + suffix : suffix
-							}
-						);
-					},
-
-					_getDecimalPlaces: function(size, suffix) {
-						var instance = this;
-
-						var decimalPlaces = 1;
-
-						var suffixKB = instance.get(STR_SUFFIX_KB);
-
-						if (suffix === suffixKB) {
-							decimalPlaces = 0;
-						}
-
-						return decimalPlaces;
-					}
-				}
+			suffixMB: {
+				validator: Lang.isString,
+				value: 'MB'
 			}
-		);
+		};
+
+		StorageFormatter.prototype = {
+			formatStorage: function(size) {
+				var instance = this;
+
+				var suffix = instance.get(STR_SUFFIX_KB);
+
+				var denominator = instance.get('denominator');
+
+				size = size / denominator;
+
+				if (size >= denominator) {
+					suffix = instance.get('suffixMB');
+
+					size = size / denominator;
+				}
+
+				if (size >= denominator) {
+					suffix = instance.get('suffixGB');
+
+					size = size / denominator;
+				}
+
+				return A.Number.format(
+					size,
+					{
+						decimalPlaces: instance._getDecimalPlaces(size, suffix),
+						decimalSeparator: instance.get('decimalSeparator'),
+						suffix: instance.get('addSpaceBeforeSuffix') ? STR_SPACE + suffix : suffix
+					}
+				);
+			},
+
+			_getDecimalPlaces: function(size, suffix) {
+				var instance = this;
+
+				var decimalPlaces = 1;
+
+				var suffixKB = instance.get(STR_SUFFIX_KB);
+
+				if (suffix === suffixKB) {
+					decimalPlaces = 0;
+				}
+
+				return decimalPlaces;
+			}
+		};
 
 		Liferay.StorageFormatter = StorageFormatter;
 	},

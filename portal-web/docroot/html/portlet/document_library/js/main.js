@@ -61,7 +61,7 @@ AUI.add(
 
 		var DocumentLibrary = A.Component.create(
 			{
-				AUGMENTS: [Liferay.PortletBase, Liferay.DocumentLibraryUpload],
+				AUGMENTS: [Liferay.PortletBase, Liferay.DocumentLibraryUpload, Liferay.StorageFormatter],
 
 				EXTENDS: A.Base,
 
@@ -617,6 +617,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-loading-mask-deprecated', 'aui-parse-content', 'document-library-upload', 'event-simulate', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-history-manager', 'liferay-message', 'liferay-portlet-base', 'querystring-parse-simple']
+		requires: ['aui-loading-mask-deprecated', 'aui-parse-content', 'document-library-upload', 'event-simulate', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-history-manager', 'liferay-message', 'liferay-portlet-base', 'liferay-storage-formatter', 'querystring-parse-simple']
 	}
 );

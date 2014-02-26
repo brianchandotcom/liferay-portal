@@ -211,6 +211,12 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 		{
 			columnNames: ['<%= StringUtil.merge(escapedEntryColumns, "','") %>'],
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
+
+			<%
+			DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+			%>
+
+			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 			folders: {
 				defaultParams: {
 					p_p_id: <%= HtmlUtil.escapeJS(portletId) %>,
@@ -283,15 +289,7 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 			syncMessageDisabled: <%= !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE %>,
 			syncMessageSuppressed: <%= !GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true")) %>,
 			updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>,
-
-			<%
-			DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-			%>
-
-			upload: {
-				decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
-				uploadURL: '<%= uploadURL %>'
-			},
+			uploadURL: '<%= uploadURL %>',
 			viewFileEntryURL: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/view_file_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
 		}
 	);

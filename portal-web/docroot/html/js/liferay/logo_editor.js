@@ -6,11 +6,6 @@ AUI.add(
 		var LogoEditor = A.Component.create(
 			{
 				ATTRS: {
-					decimalSeparator: {
-						validator: Lang.isString,
-						value: '.'
-					},
-
 					maxFileSize: {
 						validator: Lang.isNumber
 					},
@@ -26,7 +21,7 @@ AUI.add(
 					}
 				},
 
-				AUGMENTS: [Liferay.PortletBase],
+				AUGMENTS: [Liferay.PortletBase, Liferay.StorageFormatter],
 
 				EXTENDS: A.Base,
 
@@ -109,13 +104,7 @@ AUI.add(
 							var message = '';
 
 							if (exception == 'FileSizeException') {
-								var storageFormatter = new Liferay.StorageFormatter(
-									{
-										decimalSeparator: instance.get('decimalSeparator')
-									}
-								);
-
-								var maxFileSize = storageFormatter.format(instance.get('maxFileSize'));
+								var maxFileSize = instance.formatStorage(instance.get('maxFileSize'));
 
 								message = Lang.sub(
 									Liferay.Language.get('upload-images-no-larger-than-x'),
@@ -307,6 +296,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-image-cropper', 'aui-io-request', 'liferay-portlet-base']
+		requires: ['aui-image-cropper', 'aui-io-request', 'liferay-portlet-base', 'liferay-storage-formatter']
 	}
 );

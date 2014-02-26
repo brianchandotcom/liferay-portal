@@ -388,14 +388,6 @@ AUI.add(
 			_createEntryRow: function(name, size) {
 				var instance = this;
 
-				var storageFormatter = new Liferay.StorageFormatter(
-					{
-						decimalSeparator: instance._config.upload.decimalSeparator
-					}
-				);
-
-				var storageSize = storageFormatter.format(size);
-
 				var searchContainerNode = instance._entriesContainer.one(SELECTOR_SEARCH_CONTAINER);
 
 				var searchContainer = Liferay.SearchContainer.get(searchContainerNode.attr('id'));
@@ -409,7 +401,7 @@ AUI.add(
 							value = sub(TPL_ENTRY_ROW_TITLE, [name]);
 						}
 						else if (item == 'size') {
-							value = storageSize;
+							value = instance.formatStorage(size);
 						}
 						else if (item == 'downloads') {
 							value = '0';
@@ -837,7 +829,7 @@ AUI.add(
 
 					var redirect = config.redirect;
 
-					uploadURL = unescape(config.upload.uploadURL);
+					uploadURL = unescape(config.uploadURL);
 
 					instance._uploadURL = Liferay.Util.addParams(
 						{
@@ -1220,13 +1212,7 @@ AUI.add(
 						var type = item.get('type') || '';
 
 						if ((maxFileSize !== 0) && (size > maxFileSize)) {
-							var storageFormatter = new Liferay.StorageFormatter(
-								{
-									decimalSeparator: instance._config.upload.decimalSeparator
-								}
-							);
-
-							errorMessage = sub(instance._invalidFileSizeText, [storageFormatter.format(instance._maxFileSize)]);
+							errorMessage = sub(instance._invalidFileSizeText, [instance.formatStorage(instance._maxFileSize)]);
 						}
 						else if (!type) {
 							errorMessage = instance._invalidFileType;

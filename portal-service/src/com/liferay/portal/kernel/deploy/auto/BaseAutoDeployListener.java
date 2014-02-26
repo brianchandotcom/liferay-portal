@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.deploy.auto;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.Portal;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +42,6 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	}
 
 	public boolean isHookPlugin(File file) throws AutoDeployException {
-		String fileName = file.getName();
 
 		if (isMatchingFile(file, "WEB-INF/liferay-hook.xml") &&
 			!isPortletPlugin(file) && !isThemePlugin(file) &&

@@ -17,8 +17,8 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.GroupPortletSettings;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
 import javax.portlet.PortletPreferences;
@@ -30,26 +30,16 @@ import javax.portlet.ReadOnlyException;
 public class UpgradeMessageBoardsEmailSignatures
 	extends BaseUpgradePortletPreferences {
 
-	protected String getEmailMessageFormat(
-		PortletPreferences portletPreferences) {
-
-		String messageFormat = portletPreferences.getValue(
-			"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
-
-		if (MBUtil.isValidMessageFormat(messageFormat)) {
-			return messageFormat;
-		}
-
-		return "html";
-	}
-
 	protected String getEmailSignatureSeparator(
 		PortletPreferences portletPreferences) {
 
-		boolean htmlFormat = getEmailMessageFormat(
-			portletPreferences).equals("html");
+		GroupPortletSettings groupPortletSettings = new GroupPortletSettings(
+			portletPreferences);
 
-		if (htmlFormat) {
+		boolean emailHtmlFormat = MBUtil.getEmailHtmlFormat(
+			groupPortletSettings);
+
+		if (emailHtmlFormat) {
 			return "<br />--<br />";
 		}
 		else {

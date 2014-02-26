@@ -51,6 +51,10 @@
 		<case comparator="startsWith" locator-key1="PAGE_">
 			<execute function="IsElementPresent#isElementPresentClickNavigation" />
 		</case>
+
+		<case comparator="startsWith" locator-key1="PORTLET">
+			<execute function="IsElementPresent#isElementPresentAfterWait" />
+		</case>
 	</command>
 
 	<command name="mouseOver">

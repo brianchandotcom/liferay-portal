@@ -3497,7 +3497,7 @@ public class PortalImpl implements Portal {
 			Locale originalLocale)
 		throws Exception {
 
-		String contextPath = getPathContext();
+		String contextPath = StringUtil.toLowerCase(getPathContext());
 
 		String requestURI = request.getRequestURI();
 

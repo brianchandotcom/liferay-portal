@@ -48,6 +48,8 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 	public static final String[] FIXED_ISSUES = StringUtil.split(
 		TestPropsUtil.get("fixed.issues"));
 
+	public static final String IGNORE_ERROR = TestPropsUtil.get("ignore.error");
+
 	public static final String OUTPUT_DIR = TestPropsUtil.get("output.dir");
 
 	public static final String PORTAL_URL = TestPropsUtil.get("portal.url");

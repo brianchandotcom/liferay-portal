@@ -12,13 +12,22 @@
  * details.
  */
 
-package com.liferay.registry;
+package com.liferay.registry.collections;
+
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -26,34 +35,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ * Deliberately package private.
+ *
  * @author Raymond Augé
  */
-public class ServiceTrackerCollection<S> implements Collection<S> {
+class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
-	public ServiceTrackerCollection(Class<S> clazz) {
-		this(clazz, (Filter)null, null, new HashMap<String, Object>());
-	}
-
-	public ServiceTrackerCollection(Class<S> clazz, Filter filter) {
-		this(clazz, filter, null, new HashMap<String, Object>());
-	}
-
-	public ServiceTrackerCollection(
-		Class<S> clazz, Filter filter, Map<String, Object> properties) {
-
-		this(clazz, filter, null, properties);
-	}
-
-	public ServiceTrackerCollection(
-		Class<S> clazz, Filter filter,
-		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer) {
-
-		this(
-			clazz, filter, serviceTrackerCustomizer,
-			new HashMap<String, Object>());
-	}
-
-	public ServiceTrackerCollection(
+	ServiceTrackerCollectionImpl(
 		Class<S> clazz, Filter filter,
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
 		Map<String, Object> properties) {
@@ -80,57 +68,9 @@ public class ServiceTrackerCollection<S> implements Collection<S> {
 		_serviceTracker.open();
 	}
 
-	public ServiceTrackerCollection(
-		Class<S> clazz, Map<String, Object> properties) {
-
-		this(clazz, (Filter)null, null, properties);
-	}
-
-	public ServiceTrackerCollection(
-		Class<S> clazz,
-		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer) {
-
-		this(
-			clazz, (Filter)null, serviceTrackerCustomizer,
-			new HashMap<String, Object>());
-	}
-
-	public ServiceTrackerCollection(
-		Class<S> clazz, ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
-		Map<String, Object> properties) {
-
-		this(clazz, (Filter)null, serviceTrackerCustomizer, properties);
-	}
-
-	public ServiceTrackerCollection(Class<S> clazz, String filterString) {
-		this(
-			clazz, _getFilter(filterString), null,
-			new HashMap<String, Object>());
-	}
-
-	public ServiceTrackerCollection(
-		Class<S> clazz, String filterString, Map<String, Object> properties) {
-
-		this(clazz, _getFilter(filterString), null, properties);
-	}
-
-	public ServiceTrackerCollection(
-		Class<S> clazz, String filterString,
-		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer) {
-
-		this(
-			clazz, _getFilter(filterString), serviceTrackerCustomizer,
-			new HashMap<String, Object>());
-	}
-
-	public ServiceTrackerCollection(
-		Class<S> clazz, String filterString,
-		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
-		Map<String, Object> properties) {
-
-		this(
-			clazz, _getFilter(filterString), serviceTrackerCustomizer,
-			properties);
+	@Override
+	public void add(int index, S element) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -152,6 +92,7 @@ public class ServiceTrackerCollection<S> implements Collection<S> {
 		return true;
 	}
 
+	@Override
 	public boolean add(S service, Map<String, Object> properties) {
 		properties = new HashMap<String, Object>(properties);
 
@@ -173,17 +114,12 @@ public class ServiceTrackerCollection<S> implements Collection<S> {
 
 	@Override
 	public boolean addAll(Collection<? extends S> services) {
-		if (this == services) {
-			return false;
-		}
+		throw new UnsupportedOperationException();
+	}
 
-		boolean modified = false;
-
-		for (S service : services) {
-			modified = add(service);
-		}
-
-		return modified;
+	@Override
+	public boolean addAll(int index, Collection<? extends S> collection) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -211,17 +147,17 @@ public class ServiceTrackerCollection<S> implements Collection<S> {
 
 	@Override
 	public boolean containsAll(Collection<?> services) {
-		if (this == services) {
-			return true;
-		}
+		throw new UnsupportedOperationException();
+	}
 
-		for (Object element : services) {
-			if (!contains(element)) {
-				return false;
-			}
-		}
+	@Override
+	public S get(int index) {
+		return _services.get(index);
+	}
 
-		return true;
+	@Override
+	public int indexOf(Object object) {
+		return _services.indexOf(object);
 	}
 
 	@Override
@@ -232,6 +168,26 @@ public class ServiceTrackerCollection<S> implements Collection<S> {
 	@Override
 	public Iterator<S> iterator() {
 		return _services.iterator();
+	}
+
+	@Override
+	public int lastIndexOf(Object object) {
+		return _services.lastIndexOf(object);
+	}
+
+	@Override
+	public ListIterator<S> listIterator() {
+		return Collections.unmodifiableList(_services).listIterator();
+	}
+
+	@Override
+	public ListIterator<S> listIterator(int index) {
+		return Collections.unmodifiableList(_services).listIterator(index);
+	}
+
+	@Override
+	public S remove(int index) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -250,17 +206,28 @@ public class ServiceTrackerCollection<S> implements Collection<S> {
 
 	@Override
 	public boolean removeAll(Collection<?> services) {
-		return false;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean retainAll(Collection<?> services) {
-		return false;
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public S set(int index, S element) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public int size() {
 		return _services.size();
+	}
+
+	@Override
+	public java.util.List<S> subList(int fromIndex, int toIndex) {
+		return Collections.unmodifiableList(_services).subList(
+			fromIndex, toIndex);
 	}
 
 	@Override
@@ -271,12 +238,6 @@ public class ServiceTrackerCollection<S> implements Collection<S> {
 	@Override
 	public <T> T[] toArray(T[] services) {
 		return _services.toArray(services);
-	}
-
-	private static Filter _getFilter(String filterString) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		return registry.getFilter(filterString);
 	}
 
 	private Filter _getFilter(Filter filter, Class<S> clazz) {
@@ -332,7 +293,9 @@ public class ServiceTrackerCollection<S> implements Collection<S> {
 				service = registry.getService(serviceReference);
 			}
 
-			_services.add(service);
+			if (service != null) {
+				_services.add(service);
+			}
 
 			return service;
 		}
@@ -355,11 +318,10 @@ public class ServiceTrackerCollection<S> implements Collection<S> {
 				_serviceTrackerCustomizer.removedService(
 					serviceReference, service);
 			}
-			else {
-				Registry registry = RegistryUtil.getRegistry();
 
-				registry.ungetService(serviceReference);
-			}
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
 
 			_services.remove(service);
 		}

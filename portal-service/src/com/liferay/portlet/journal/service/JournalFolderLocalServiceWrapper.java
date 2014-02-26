@@ -601,6 +601,40 @@ public class JournalFolderLocalServiceWrapper
 		_journalFolderLocalService.restoreFolderFromTrash(userId, folderId);
 	}
 
+	/**
+	* Subscribe the user to changes in the folder.
+	*
+	* @param userId the primary key of the folder's user
+	* @param groupId the primary key of the folder's group
+	* @param folderId the primary key of the folder
+	* @throws PortalException if the user or group could not be found, or if
+	subscribing was not permissible
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void subscribe(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.subscribe(userId, groupId, folderId);
+	}
+
+	/**
+	* Unsubscribe the user from changes in the folder.
+	*
+	* @param userId the primary key of the folder's user
+	* @param groupId the primary key of the folder's group
+	* @param folderId the primary key of the folder
+	* @throws PortalException if the user or group could not be found, or if
+	unsubscribing was not permissible
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void unsubscribe(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.unsubscribe(userId, groupId, folderId);
+	}
+
 	@Override
 	public void updateAsset(long userId,
 		com.liferay.portlet.journal.model.JournalFolder folder,

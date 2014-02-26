@@ -22,10 +22,13 @@ import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.PortalExecutorManagerUtilAdvice;
 import com.liferay.portal.kernel.nio.intraband.SystemDataType;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -40,7 +43,14 @@ public class RPCDatagramReceiveHandlerTest {
 
 	@ClassRule
 	public static CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor();
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(RPCResponse.class);
+			}
+
+		};
 
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
 	@Test
@@ -68,8 +78,45 @@ public class RPCDatagramReceiveHandlerTest {
 		Deserializer deserializer = new Deserializer(
 			responseDatagram.getDataByteBuffer());
 
+		RPCResponse rpcResponse = deserializer.readObject();
+
 		Assert.assertEquals(
-			TestProcessCallable.class.getName(), deserializer.readObject());
+			TestProcessCallable.class.getName(), rpcResponse.getResult());
+		Assert.assertNull(rpcResponse.getException());
+
+		serializer = new Serializer();
+
+		serializer.writeObject(new ErrorTestProcessCallable());
+
+		rpcDatagramReceiveHandler.receive(
+			new MockRegistrationReference(mockIntraband),
+			Datagram.createRequestDatagram(
+				systemDataType.getValue(), serializer.toByteBuffer()));
+
+		responseDatagram = mockIntraband.getDatagram();
+
+		deserializer = new Deserializer(responseDatagram.getDataByteBuffer());
+
+		rpcResponse = deserializer.readObject();
+
+		Assert.assertNull(rpcResponse.getResult());
+
+		Exception exception = rpcResponse.getException();
+
+		Assert.assertSame(ProcessException.class, exception.getClass());
+		Assert.assertEquals("Execution error", exception.getMessage());
+	}
+
+	private static class ErrorTestProcessCallable
+		implements ProcessCallable<String> {
+
+		@Override
+		public String call() throws ProcessException {
+			throw new ProcessException("Execution error");
+		}
+
+		private static final long serialVersionUID = 1L;
+
 	}
 
 	private static class TestProcessCallable

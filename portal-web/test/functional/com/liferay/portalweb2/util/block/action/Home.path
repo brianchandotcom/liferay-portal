@@ -119,6 +119,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE_STATU_INFO</td>
+	<td>//div[contains(@class,'portlet-content')]/h3[contains(@class,'alert alert-error')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_INFO</td>
+	<td>//div[contains(@class,'alert alert-error')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

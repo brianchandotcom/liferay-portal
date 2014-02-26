@@ -26,7 +26,7 @@ import javax.portlet.ReadOnlyException;
 /**
  * @author Ivan Zaera
  */
-public class UpgradeWikiEmailSignatures extends BaseUpgradePortletPreferences {
+public class UpgradeWiki extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {

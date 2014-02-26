@@ -27,8 +27,7 @@ import javax.portlet.ReadOnlyException;
 /**
  * @author Ivan Zaera
  */
-public class UpgradeMessageBoardsEmailSignatures
-	extends BaseUpgradePortletPreferences {
+public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 
 	protected String getEmailSignatureSeparator(
 		PortletPreferences portletPreferences) {

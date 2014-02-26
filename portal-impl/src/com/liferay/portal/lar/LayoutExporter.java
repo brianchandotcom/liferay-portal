@@ -106,6 +106,13 @@ public class LayoutExporter {
 	public static List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception {
 
+		return getDataSiteLevelPortlets(companyId, false);
+	}
+
+	public static List<Portlet> getDataSiteLevelPortlets(
+			long companyId, boolean excludeDataAlwaysStaged)
+		throws Exception {
+
 		List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(companyId);
 
 		Iterator<Portlet> itr = portlets.iterator();
@@ -123,7 +130,9 @@ public class LayoutExporter {
 				portlet.getPortletDataHandlerInstance();
 
 			if ((portletDataHandler == null) ||
-				!portletDataHandler.isDataSiteLevel()) {
+				!portletDataHandler.isDataSiteLevel() ||
+				(excludeDataAlwaysStaged &&
+				 portletDataHandler.isDataAlwaysStaged())) {
 
 				itr.remove();
 			}

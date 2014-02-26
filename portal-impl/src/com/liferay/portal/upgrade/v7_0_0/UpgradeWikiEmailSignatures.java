@@ -29,11 +29,6 @@ import javax.portlet.ReadOnlyException;
 public class UpgradeWikiEmailSignatures extends BaseUpgradePortletPreferences {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		super.doUpgrade();
-	}
-
-	@Override
 	protected String[] getPortletIds() {
 		return new String[] {PortletKeys.WIKI};
 	}

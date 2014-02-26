@@ -87,12 +87,6 @@ AUI.add(
 
 		var STR_NAVIGATION_OVERLAY_BACKGROUND = '#FFF';
 
-		var STR_SIZE_SUFFIX_KB = 'k';
-
-		var STR_SIZE_SUFFIX_MB = 'MB';
-
-		var STR_SIZE_SUFFIX_GB = 'GB';
-
 		var STR_SPACE = ' ';
 
 		var STR_THUMBNAIL_EXTENSION = '.png';
@@ -394,7 +388,13 @@ AUI.add(
 			_createEntryRow: function(name, size) {
 				var instance = this;
 
-				var storageSize = instance._formatStorageSize(size);
+				var storageFormatter = new Liferay.StorageFormatter(
+					{
+						decimalSeparator: instance._config.upload.decimalSeparator
+					}
+				);
+
+				var storageSize = storageFormatter.format(size);
 
 				var searchContainerNode = instance._entriesContainer.one(SELECTOR_SEARCH_CONTAINER);
 
@@ -597,34 +597,6 @@ AUI.add(
 
 					resultsNode.addClass(uploadResultClass);
 				}
-			},
-
-			_formatStorageSize: function(size) {
-				var instance = this;
-
-				var suffix = STR_SIZE_SUFFIX_KB;
-
-				size /= SIZE_DENOMINATOR;
-
-				if (size > SIZE_DENOMINATOR) {
-					suffix = STR_SIZE_SUFFIX_MB;
-
-					size /= SIZE_DENOMINATOR;
-				}
-
-				if (size > SIZE_DENOMINATOR) {
-					suffix = STR_SIZE_SUFFIX_GB;
-
-					size /= SIZE_DENOMINATOR;
-				}
-
-				var precision = 1;
-
-				if (suffix == STR_SIZE_SUFFIX_KB) {
-					precision = 0;
-				}
-
-				return LString.round(size, precision) + suffix;
 			},
 
 			_getCurrentUploadData: function() {

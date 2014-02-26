@@ -21,6 +21,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeRepositoryEntry;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeShopping;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSubscription;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeWikiEmailSignatures;
 
 /**
  * @author Julio Camarero
@@ -39,6 +40,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeShopping.class);
 		upgrade(UpgradeMessageBoardsEmailSignatures.class);
 		upgrade(UpgradeSubscription.class);
+		upgrade(UpgradeWikiEmailSignatures.class);
 	}
 
 }

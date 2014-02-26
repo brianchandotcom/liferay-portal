@@ -30,11 +30,6 @@ import javax.portlet.ReadOnlyException;
 public class UpgradeMessageBoardsEmailSignatures
 	extends BaseUpgradePortletPreferences {
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		super.doUpgrade();
-	}
-
 	protected String getEmailMessageFormat(
 		PortletPreferences portletPreferences) {
 

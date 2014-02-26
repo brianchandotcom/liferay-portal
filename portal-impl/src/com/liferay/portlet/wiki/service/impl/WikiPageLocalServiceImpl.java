@@ -2494,21 +2494,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String subject = null;
 		String body = null;
-		String signature = null;
 
 		if (update) {
 			subject = WikiUtil.getEmailPageUpdatedSubject(preferences);
 			body = WikiUtil.getEmailPageUpdatedBody(preferences);
-			signature = WikiUtil.getEmailPageUpdatedSignature(preferences);
 		}
 		else {
 			subject = WikiUtil.getEmailPageAddedSubject(preferences);
 			body = WikiUtil.getEmailPageAddedBody(preferences);
-			signature = WikiUtil.getEmailPageAddedSignature(preferences);
-		}
-
-		if (Validator.isNotNull(signature)) {
-			body += "\n" + signature;
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();

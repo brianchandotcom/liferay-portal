@@ -79,10 +79,8 @@ String socialBookmarkTypes = portletPreferences.getValue("socialBookmarksTypes",
 	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 	<liferay-ui:error key="emailEntryAddedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailEntryAddedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailEntryAddedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailEntryUpdatedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailEntryUpdatedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
 
 	<c:choose>

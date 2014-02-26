@@ -19,8 +19,6 @@
 </div>
 
 <aui:fieldset>
-	<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="report-inappropriate-content" />
-
 	<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">
 
 		<%

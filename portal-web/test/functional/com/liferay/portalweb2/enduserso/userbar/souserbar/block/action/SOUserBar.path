@@ -196,6 +196,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GO_TO_VIEW_ALL</td>
+	<td>//li[@class='more']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GO_TO_ADD_SITE_BUTTON</td>
 	<td>//button[contains(.,'Add Site')]</td>
 	<td></td>

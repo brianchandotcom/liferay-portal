@@ -298,6 +298,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROFILE_INFO_SITES_TITLE</td>
+	<td>//div[@class='user-sites-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROFILE_INFO_SITES</td>
+	<td>//ul[@class='user-sites']//a[contains(.,'${key_siteName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROFILE_INFO_SITES_EMPTY</td>
+	<td>//ul[@class='user-sites']//div[@class='empty']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROFILE_INFO_SMS_TITLE</td>
 	<td>//div[@data-title='SMS']/h3</td>
 	<td></td>

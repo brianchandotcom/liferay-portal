@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2014 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -19,26 +19,10 @@
 <%@ include file="/html/taglib/taglib-init.jsp" %>
 
 <%
+java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:layout:cssClass"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:layout:dynamicAttributes");
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:layout:scopedAttributes");
-
-Map<String, Object> _options = new HashMap<String, Object>();
-
-if ((scopedAttributes != null) && !scopedAttributes.isEmpty()) {
-	_options.putAll(scopedAttributes);
-}
-
-if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
-	_options.putAll(dynamicAttributes);
-}
-
-java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:layout:cssClass"));
-
-_updateOptions(_options, "cssClass", cssClass);
 %>
+
 
 <%@ include file="/html/taglib/aui/layout/init-ext.jspf" %>
-
-<%!
-private static final String _NAMESPACE = "aui:layout:";
-%>

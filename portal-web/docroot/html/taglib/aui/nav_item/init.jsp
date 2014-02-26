@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2014 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -19,19 +19,6 @@
 <%@ include file="/html/taglib/taglib-init.jsp" %>
 
 <%
-Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:nav-item:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:nav-item:scopedAttributes");
-
-Map<String, Object> _options = new HashMap<String, Object>();
-
-if ((scopedAttributes != null) && !scopedAttributes.isEmpty()) {
-	_options.putAll(scopedAttributes);
-}
-
-if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
-	_options.putAll(dynamicAttributes);
-}
-
 java.lang.String anchorCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:anchorCssClass"));
 java.util.Map anchorData = (java.util.Map)request.getAttribute("aui:nav-item:anchorData");
 java.lang.String anchorId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:anchorId"));
@@ -51,30 +38,9 @@ java.lang.String title = GetterUtil.getString((java.lang.String)request.getAttri
 boolean toggle = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:toggle")));
 boolean useDialog = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:useDialog")), false);
 boolean wrapDropDownMenu = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:wrapDropDownMenu")), true);
-
-_updateOptions(_options, "anchorCssClass", anchorCssClass);
-_updateOptions(_options, "anchorData", anchorData);
-_updateOptions(_options, "anchorId", anchorId);
-_updateOptions(_options, "ariaLabel", ariaLabel);
-_updateOptions(_options, "ariaRole", ariaRole);
-_updateOptions(_options, "cssClass", cssClass);
-_updateOptions(_options, "data", data);
-_updateOptions(_options, "dropdown", dropdown);
-_updateOptions(_options, "href", href);
-_updateOptions(_options, "iconCssClass", iconCssClass);
-_updateOptions(_options, "id", id);
-_updateOptions(_options, "label", label);
-_updateOptions(_options, "localizeLabel", localizeLabel);
-_updateOptions(_options, "selected", selected);
-_updateOptions(_options, "state", state);
-_updateOptions(_options, "title", title);
-_updateOptions(_options, "toggle", toggle);
-_updateOptions(_options, "useDialog", useDialog);
-_updateOptions(_options, "wrapDropDownMenu", wrapDropDownMenu);
+Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:nav-item:dynamicAttributes");
+Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:nav-item:scopedAttributes");
 %>
+
 
 <%@ include file="/html/taglib/aui/nav_item/init-ext.jspf" %>
-
-<%!
-private static final String _NAMESPACE = "aui:nav-item:";
-%>

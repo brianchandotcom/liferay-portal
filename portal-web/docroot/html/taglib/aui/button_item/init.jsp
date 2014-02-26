@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2014 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,23 +17,6 @@
 --%>
 
 <%@ include file="/html/taglib/taglib-init.jsp" %>
-
-<%
-Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:button-item:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:button-item:scopedAttributes");
-
-Map<String, Object> _options = new HashMap<String, Object>();
-
-if ((scopedAttributes != null) && !scopedAttributes.isEmpty()) {
-	_options.putAll(scopedAttributes);
-}
-
-if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
-	_options.putAll(dynamicAttributes);
-}
-%>
-
-<%@ include file="/html/taglib/aui/init-alloy.jspf" %>
 
 <%
 boolean activeState = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:button-item:activeState")), false);
@@ -143,7 +126,25 @@ java.lang.Object onVisibleChange = (java.lang.Object)request.getAttribute("aui:b
 java.lang.Object onContentUpdate = (java.lang.Object)request.getAttribute("aui:button-item:onContentUpdate");
 java.lang.Object onRender = (java.lang.Object)request.getAttribute("aui:button-item:onRender");
 java.lang.Object onWidthChange = (java.lang.Object)request.getAttribute("aui:button-item:onWidthChange");
+Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:button-item:dynamicAttributes");
+Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:button-item:scopedAttributes");
+%>
 
+<%
+Map<String, Object> _options = new HashMap<String, Object>();
+
+if ((scopedAttributes != null) && !scopedAttributes.isEmpty()) {
+	_options.putAll(scopedAttributes);
+}
+
+if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
+	_options.putAll(dynamicAttributes);
+}
+%>
+
+<%@ include file="/html/taglib/aui/init-alloy.jspf" %>
+
+<%
 _updateOptions(_options, "activeState", activeState);
 _updateOptions(_options, "boundingBox", boundingBox);
 _updateOptions(_options, "classNames", classNames);
@@ -256,8 +257,14 @@ _updateOptions(_options, "onRender", onRender);
 _updateOptions(_options, "onWidthChange", onWidthChange);
 %>
 
-<%@ include file="/html/taglib/aui/button_item/init-ext.jspf" %>
-
 <%!
+private static void _updateOptions(Map<String, Object> options, String key, Object value) {
+	if ((options != null) && options.containsKey(key)) {
+		options.put(key, value);
+	}
+}
+
 private static final String _NAMESPACE = "aui:button-item:";
 %>
+
+<%@ include file="/html/taglib/aui/button_item/init-ext.jspf" %>

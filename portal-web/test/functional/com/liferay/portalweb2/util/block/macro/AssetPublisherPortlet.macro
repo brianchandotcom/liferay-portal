@@ -293,6 +293,23 @@
 		<execute action="PGAssetpublisherConfiguration#assertElementPresent" locator-key1="SOURCE_SCOPE_DELETE" />
 	</command>
 
+	<command name="configureSiteScopePGRemoveSite">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="PGAssetpublisherConfiguration#click" locator-key1="SOURCE_SCOPE_DELETE" />
+		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGAssetpublisherConfiguration#assertTextNotPresent" locator-key1="SOURCE_SCOPE_NAME" value1="${siteName}" />
+		<execute action="PGAssetpublisherConfiguration#assertTextNotPresent" locator-key1="SOURCE_SCOPE_TYPE" value1="${siteScopeType}" />
+	</command>
+
 	<command name="configureToggleSiteScope">
 		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
 

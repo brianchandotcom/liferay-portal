@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2014 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -25,11 +25,9 @@ boolean disabled = GetterUtil.getBoolean(String.valueOf(request.getAttribute("au
 java.lang.Object label = (java.lang.Object)request.getAttribute("aui:option:label");
 boolean selected = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:option:selected")));
 java.lang.String style = GetterUtil.getString((java.lang.String)request.getAttribute("aui:option:style"));
-boolean useModelValue = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:option:useModelValue")), true);
 java.lang.Object value = (java.lang.Object)request.getAttribute("aui:option:value");
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:option:dynamicAttributes");
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:option:scopedAttributes");
 %>
-
 
 <%@ include file="/html/taglib/aui/option/init-ext.jspf" %>

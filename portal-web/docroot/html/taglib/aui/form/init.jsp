@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2014 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -21,7 +21,6 @@
 <%
 java.lang.String action = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:action"));
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:cssClass"));
-boolean escapeXml = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:form:escapeXml")), true);
 boolean inlineLabels = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:form:inlineLabels")));
 java.lang.String method = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:method"), "post");
 java.lang.String name = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:name"), "fm");
@@ -31,6 +30,5 @@ boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:form:dynamicAttributes");
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:form:scopedAttributes");
 %>
-
 
 <%@ include file="/html/taglib/aui/form/init-ext.jspf" %>

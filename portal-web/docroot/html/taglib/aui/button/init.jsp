@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2014 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -34,6 +34,5 @@ java.lang.String value = GetterUtil.getString((java.lang.String)request.getAttri
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:button:dynamicAttributes");
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:button:scopedAttributes");
 %>
-
 
 <%@ include file="/html/taglib/aui/button/init-ext.jspf" %>

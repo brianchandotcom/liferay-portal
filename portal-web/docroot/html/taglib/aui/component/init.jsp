@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2014 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -19,7 +19,6 @@
 <%@ include file="/html/taglib/taglib-init.jsp" %>
 
 <%
-boolean defineVar = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:component:defineVar")), true);
 java.lang.String excludeAttributes = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:excludeAttributes"));
 java.lang.String javaScriptAttributes = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:javaScriptAttributes"));
 java.lang.String module = GetterUtil.getString((java.lang.String)request.getAttribute("aui:component:module"));

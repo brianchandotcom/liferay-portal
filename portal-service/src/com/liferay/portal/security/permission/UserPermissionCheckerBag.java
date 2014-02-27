@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.permission;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 
@@ -25,6 +27,7 @@ import java.util.Set;
 /**
  * @author László Csontos
  */
+@ProviderType
 public interface UserPermissionCheckerBag extends Serializable {
 
 	public List<Group> getGroups();

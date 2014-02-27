@@ -2581,12 +2581,11 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<if>
 			<isset property="web.xml.timeout" />
 			<then>
-				<replace file="${app.server.dir}/webapps/ROOT/WEB-INF/web.xml">
-					<replacetoken><![CDATA[<session-timeout>30</session-timeout>]]></replacetoken>
-					<replacevalue><![CDATA[<session-timeout>timeoutValue</session-timeout>]]></replacevalue>
-				</replace>
-
-				<replace file="${app.server.dir}/webapps/ROOT/WEB-INF/web.xml" token="timeoutValue" value="${web.xml.timeout}" />
+				<replace
+					file="${app.server.dir}/webapps/ROOT/WEB-INF/web.xml"
+					token="&lt;session-timeout&gt;30&lt;/session-timeout&gt;"
+					value="&lt;session-timeout&gt;${web.xml.timeout}&lt;/session-timeout&gt;"
+				/>
 			</then>
 		</if>
 

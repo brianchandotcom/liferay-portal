@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.PortletSettings;
-import com.liferay.portlet.PortletSettingsFactoryUtil;
+import com.liferay.portlet.Settings;
+import com.liferay.portlet.SettingsFactoryUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -188,8 +188,8 @@ public class PortletDisplay implements Serializable {
 		return _columnPos;
 	}
 
-	public PortletSettings getCompanyPortletSettings() throws SystemException {
-		return PortletSettingsFactoryUtil.getCompanyPortletSettings(
+	public Settings getServiceCompanySettings() throws SystemException {
+		return SettingsFactoryUtil.getServiceCompanySettings(
 			_themeDisplay.getCompanyId(), _id);
 	}
 
@@ -209,7 +209,7 @@ public class PortletDisplay implements Serializable {
 		return _description;
 	}
 
-	public PortletSettings getGroupPortletSettings()
+	public Settings getServiceGroupSettings()
 		throws PortalException, SystemException {
 
 		String portletId = _id;
@@ -218,7 +218,7 @@ public class PortletDisplay implements Serializable {
 			portletId = _portletResource;
 		}
 
-		return PortletSettingsFactoryUtil.getGroupPortletSettings(
+		return SettingsFactoryUtil.getServiceGroupSettings(
 			_themeDisplay.getSiteGroupId(), portletId);
 	}
 
@@ -234,10 +234,10 @@ public class PortletDisplay implements Serializable {
 		return _namespace;
 	}
 
-	public PortletSettings getPortletInstancePortletSettings()
+	public Settings getPortletInstanceSettings()
 		throws SystemException {
 
-		return PortletSettingsFactoryUtil.getPortletInstancePortletSettings(
+		return SettingsFactoryUtil.getPortletInstanceSettings(
 			_themeDisplay.getLayout(), _id);
 	}
 

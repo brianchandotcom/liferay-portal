@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portlet.PortletSettings;
+import com.liferay.portlet.Settings;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -509,47 +509,45 @@ public class LocalizationImpl implements Localization {
 	}
 
 	@Override
-	public String getPortletSettingsValue(
-		PortletSettings portletSettings, String key, String languageId) {
+	public String getSettingsValue(
+		Settings settings, String key, String languageId) {
 
-		return getPortletSettingsValue(portletSettings, key, languageId, true);
+		return getSettingsValue(settings, key, languageId, true);
 	}
 
 	@Override
-	public String getPortletSettingsValue(
-		PortletSettings portletSettings, String key, String languageId,
-		boolean useDefault) {
+	public String getSettingsValue(
+		Settings settings, String key, String languageId, boolean useDefault) {
 
 		String localizedKey = getPreferencesKey(key, languageId);
 
-		String value = portletSettings.getValue(localizedKey, StringPool.BLANK);
+		String value = settings.getValue(localizedKey, StringPool.BLANK);
 
 		if (useDefault && Validator.isNull(value)) {
-			value = portletSettings.getValue(key, StringPool.BLANK);
+			value = settings.getValue(key, StringPool.BLANK);
 		}
 
 		return value;
 	}
 
 	@Override
-	public String[] getPortletSettingsValues(
-		PortletSettings portletSettings, String key, String languageId) {
+	public String[] getSettingsValues(
+		Settings settings, String key, String languageId) {
 
-		return getPortletSettingsValues(portletSettings, key, languageId, true);
+		return getSettingsValues(settings, key, languageId, true);
 	}
 
 	@Override
-	public String[] getPortletSettingsValues(
-		PortletSettings portletSettings, String key, String languageId,
-		boolean useDefault) {
+	public String[] getSettingsValues(
+		Settings settings, String key, String languageId, boolean useDefault) {
 
 		String localizedKey = getPreferencesKey(key, languageId);
 
-		String[] values = portletSettings.getValues(
+		String[] values = settings.getValues(
 			localizedKey, new String[0]);
 
 		if (useDefault && ArrayUtil.isEmpty(values)) {
-			values = portletSettings.getValues(key, new String[0]);
+			values = settings.getValues(key, new String[0]);
 		}
 
 		return values;

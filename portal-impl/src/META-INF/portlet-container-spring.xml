@@ -29,9 +29,9 @@
 			<bean class="com.liferay.portlet.PortletQNameImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.PortletSettingsFactoryUtil" class="com.liferay.portlet.PortletSettingsFactoryUtil">
-		<property name="portletSettingsFactory">
-			<bean class="com.liferay.portlet.PortletSettingsFactoryImpl" />
+	<bean id="com.liferay.portlet.SettingsFactoryUtil" class="com.liferay.portlet.SettingsFactoryUtil">
+		<property name="settingsFactory">
+			<bean class="com.liferay.portlet.SettingsFactoryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.PortletURLFactoryUtil" class="com.liferay.portlet.PortletURLFactoryUtil">

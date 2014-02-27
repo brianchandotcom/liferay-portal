@@ -26,51 +26,50 @@ import com.liferay.portal.model.Layout;
  * @author Jorge Ferrer
  */
 @ProviderType
-public class PortletSettingsFactoryUtil {
+public class SettingsFactoryUtil {
 
 	public static void clearCache() {
-		getPortletSettingsFactory().clearCache();
+		getSettingsFactory().clearCache();
 	}
 
-	public static PortletSettings getCompanyPortletSettings(
-			long companyId, String portletId)
+	public static Settings getServiceCompanySettings(
+			long companyId, String serviceId)
 		throws SystemException {
 
-		return getPortletSettingsFactory().getCompanyPortletSettings(
-			companyId, portletId);
+		return getSettingsFactory().getServiceCompanySettings(
+			companyId, serviceId);
 	}
 
-	public static PortletSettings getGroupPortletSettings(
-			long groupId, String portletId)
+	public static Settings getServiceGroupSettings(
+			long groupId, String serviceId)
 		throws PortalException, SystemException {
 
-		return getPortletSettingsFactory().getGroupPortletSettings(
-			groupId, portletId);
+		return getSettingsFactory().getServiceGroupSettings(
+			groupId, serviceId);
 	}
 
-	public static PortletSettings getPortletInstancePortletSettings(
+	public static Settings getPortletInstanceSettings(
 			Layout layout, String portletId)
 		throws SystemException {
 
-		return getPortletSettingsFactory().getPortletInstancePortletSettings(
+		return getSettingsFactory().getPortletInstanceSettings(
 			layout, portletId);
 	}
 
-	public static PortletSettingsFactory getPortletSettingsFactory() {
+	public static SettingsFactory getSettingsFactory() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			PortletSettingsFactoryUtil.class);
+			SettingsFactoryUtil.class);
 
-		return _portletSettingsFactory;
+		return _settingsFactory;
 	}
 
-	public void setPortletSettingsFactory(
-		PortletSettingsFactory portletPreferencesFactory) {
+	public void setSettingsFactory(SettingsFactory settingsFactory) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_portletSettingsFactory = portletPreferencesFactory;
+		_settingsFactory = settingsFactory;
 	}
 
-	private static PortletSettingsFactory _portletSettingsFactory;
+	private static SettingsFactory _settingsFactory;
 
 }

@@ -23,12 +23,12 @@ import org.junit.Test;
 /**
  * @author Jorge Ferrer
  */
-public class GroupPortletSettingsTest extends CompanyPortletSettingsTest {
+public class ServiceGroupSettingsTest extends ServiceCompanySettingsTest {
 
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		portletSettings = new GroupPortletSettings(getPortletPreferences());
+		_settings = new ServiceGroupSettings(getPortletPreferences());
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class GroupPortletSettingsTest extends CompanyPortletSettingsTest {
 			_COMPANY_PORTLET_PREFERENCES_NAME,
 			_COMPANY_PORTLET_PREFERENCES_VALUE);
 
-		String value = portletSettings.getValue(
+		String value = _settings.getValue(
 			_COMPANY_PORTLET_PREFERENCES_NAME, null);
 
 		Assert.assertEquals(_COMPANY_PORTLET_PREFERENCES_VALUE, value);
@@ -46,15 +46,15 @@ public class GroupPortletSettingsTest extends CompanyPortletSettingsTest {
 	protected void setCompanyPortletPreferences(String name, String value)
 		throws Exception {
 
-		GroupPortletSettings groupPortletSettings =
-			(GroupPortletSettings)portletSettings;
+		ServiceGroupSettings serviceGroupSettings =
+			(ServiceGroupSettings)_settings;
 
 		PortletPreferences companyPortletPreferences =
 			new PortletPreferencesImpl();
 
 		companyPortletPreferences.setValue(name, value);
 
-		groupPortletSettings.setCompanyPortletPreferences(
+		serviceGroupSettings.setCompanyPortletPreferences(
 			companyPortletPreferences);
 	}
 

@@ -29,7 +29,7 @@ import javax.portlet.ReadOnlyException;
  * @author Raymond Augé
  * @author Jorge Ferrer
  */
-public abstract class BasePortletSettings implements PortletSettings {
+public abstract class BaseSettings implements Settings {
 
 	@Override
 	public String getValue(String key, String defaultValue) {
@@ -94,7 +94,7 @@ public abstract class BasePortletSettings implements PortletSettings {
 	}
 
 	@Override
-	public PortletSettings setValue(String key, String value) {
+	public Settings setValue(String key, String value) {
 		try {
 			PortletPreferences writeablePortletPreferences =
 				getWriteablePortletPreferences();
@@ -109,7 +109,7 @@ public abstract class BasePortletSettings implements PortletSettings {
 	}
 
 	@Override
-	public PortletSettings setValues(String key, String[] values) {
+	public Settings setValues(String key, String[] values) {
 		try {
 			PortletPreferences writeablePortletPreferences =
 				getWriteablePortletPreferences();
@@ -123,7 +123,7 @@ public abstract class BasePortletSettings implements PortletSettings {
 		return this;
 	}
 
-	protected BasePortletSettings() {
+	protected BaseSettings() {
 	}
 
 	protected abstract PortletPreferences getWriteablePortletPreferences();
@@ -175,6 +175,6 @@ public abstract class BasePortletSettings implements PortletSettings {
 
 	private static final String _NULL_VALUE = "NULL_VALUE";
 
-	private static Log _log = LogFactoryUtil.getLog(BasePortletSettings.class);
+	private static Log _log = LogFactoryUtil.getLog(BaseSettings.class);
 
 }

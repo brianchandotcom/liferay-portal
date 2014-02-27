@@ -88,10 +88,6 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected void addSubscriptionBaseModel(long baseModelId) {
-	}
-
-	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 

@@ -217,11 +217,13 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 	protected abstract long addBaseModel(long containerModelId)
 		throws Exception;
 
-	protected abstract long addContainerModel(long containerModelId)
-		throws Exception;
+	protected long addContainerModel(long containerModelId) throws Exception {
+		return 0;
+	};
 
-	protected abstract void addSubscriptionBaseModel(long baseModelId)
-		throws Exception;
+	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
+		return;
+	}
 
 	protected abstract void addSubscriptionContainerModel(long containerModelId)
 		throws Exception;

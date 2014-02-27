@@ -91,15 +91,6 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected long addContainerModel(long containerModelId) throws Exception {
-		return 0;
-	}
-
-	@Override
-	protected void addSubscriptionBaseModel(long baseModelId) {
-	}
-
-	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 

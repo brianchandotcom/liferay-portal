@@ -18,14 +18,14 @@ package com.liferay.portlet;
  * @author Raymond Augé
  * @author Jorge Ferrer
  */
-public interface PortletSettings {
+public interface Settings {
 
 	public String getValue(String key, String defaultValue);
 
 	public String[] getValues(String key, String[] defaultValue);
 
-	public PortletSettings setValue(String key, String value);
+	public Settings setValue(String key, String value);
 
-	public PortletSettings setValues(String key, String[] values);
+	public Settings setValues(String key, String[] values);
 
 }

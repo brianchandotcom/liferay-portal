@@ -26,51 +26,48 @@ import com.liferay.portal.model.Layout;
  * @author Jorge Ferrer
  */
 @ProviderType
-public class PortletSettingsFactoryUtil {
+public class SettingsFactoryUtil {
 
 	public static void clearCache() {
-		getPortletSettingsFactory().clearCache();
+		getSettingsFactory().clearCache();
 	}
 
-	public static PortletSettings getCompanyPortletSettings(
-			long companyId, String portletId)
-		throws SystemException {
-
-		return getPortletSettingsFactory().getCompanyPortletSettings(
-			companyId, portletId);
-	}
-
-	public static PortletSettings getGroupPortletSettings(
-			long groupId, String portletId)
-		throws PortalException, SystemException {
-
-		return getPortletSettingsFactory().getGroupPortletSettings(
-			groupId, portletId);
-	}
-
-	public static PortletSettings getPortletInstancePortletSettings(
+	public static Settings getPortletInstanceSettings(
 			Layout layout, String portletId)
 		throws SystemException {
 
-		return getPortletSettingsFactory().getPortletInstancePortletSettings(
+		return getSettingsFactory().getPortletInstanceSettings(
 			layout, portletId);
 	}
 
-	public static PortletSettingsFactory getPortletSettingsFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletSettingsFactoryUtil.class);
+	public static Settings getServiceCompanySettings(
+			long companyId, String serviceId)
+		throws SystemException {
 
-		return _portletSettingsFactory;
+		return getSettingsFactory().getServiceCompanySettings(
+			companyId, serviceId);
 	}
 
-	public void setPortletSettingsFactory(
-		PortletSettingsFactory portletPreferencesFactory) {
+	public static Settings getServiceGroupSettings(
+			long groupId, String serviceId)
+		throws PortalException, SystemException {
+
+		return getSettingsFactory().getServiceGroupSettings(groupId, serviceId);
+	}
+
+	public static SettingsFactory getSettingsFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(SettingsFactoryUtil.class);
+
+		return _settingsFactory;
+	}
+
+	public void setSettingsFactory(SettingsFactory settingsFactory) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_portletSettingsFactory = portletPreferencesFactory;
+		_settingsFactory = settingsFactory;
 	}
 
-	private static PortletSettingsFactory _portletSettingsFactory;
+	private static SettingsFactory _settingsFactory;
 
 }

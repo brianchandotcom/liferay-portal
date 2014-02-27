@@ -21,7 +21,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 MBStatsUser statsUser = (MBStatsUser)row.getObject();
 
-String[] ranks = MBUtil.getUserRank(groupPortletSettings, themeDisplay.getLanguageId(), statsUser);
+String[] ranks = MBUtil.getUserRank(serviceGroupSettings, themeDisplay.getLanguageId(), statsUser);
 %>
 
 <liferay-ui:user-display userId="<%= statsUser.getUserId() %>">

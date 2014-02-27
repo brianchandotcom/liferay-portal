@@ -25,20 +25,17 @@ import com.liferay.portal.model.Layout;
  * @author Jorge Ferrer
  */
 @ProviderType
-public interface PortletSettingsFactory {
+public interface SettingsFactory {
 
 	public void clearCache();
 
-	public PortletSettings getCompanyPortletSettings(
-			long companyId, String portletId)
+	public Settings getPortletInstanceSettings(Layout layout, String portletId)
 		throws SystemException;
 
-	public PortletSettings getGroupPortletSettings(
-			long groupId, String portletId)
+	public Settings getServiceCompanySettings(long companyId, String serviceId)
+		throws SystemException;
+
+	public Settings getServiceGroupSettings(long groupId, String serviceId)
 		throws PortalException, SystemException;
-
-	public PortletSettings getPortletInstancePortletSettings(
-			Layout layout, String portletId)
-		throws SystemException;
 
 }

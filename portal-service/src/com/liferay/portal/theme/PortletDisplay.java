@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.PortletSettings;
-import com.liferay.portlet.PortletSettingsFactoryUtil;
+import com.liferay.portlet.Settings;
+import com.liferay.portlet.SettingsFactoryUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -188,11 +188,6 @@ public class PortletDisplay implements Serializable {
 		return _columnPos;
 	}
 
-	public PortletSettings getCompanyPortletSettings() throws SystemException {
-		return PortletSettingsFactoryUtil.getCompanyPortletSettings(
-			_themeDisplay.getCompanyId(), _id);
-	}
-
 	public StringBundler getContent() {
 		return _content;
 	}
@@ -209,19 +204,6 @@ public class PortletDisplay implements Serializable {
 		return _description;
 	}
 
-	public PortletSettings getGroupPortletSettings()
-		throws PortalException, SystemException {
-
-		String portletId = _id;
-
-		if (Validator.isNotNull(_portletResource)) {
-			portletId = _portletResource;
-		}
-
-		return PortletSettingsFactoryUtil.getGroupPortletSettings(
-			_themeDisplay.getSiteGroupId(), portletId);
-	}
-
 	public String getId() {
 		return _id;
 	}
@@ -234,11 +216,15 @@ public class PortletDisplay implements Serializable {
 		return _namespace;
 	}
 
-	public PortletSettings getPortletInstancePortletSettings()
-		throws SystemException {
+	public Settings getPortletInstanceSettings() throws SystemException {
+		String portletId = _id;
 
-		return PortletSettingsFactoryUtil.getPortletInstancePortletSettings(
-			_themeDisplay.getLayout(), _id);
+		if (Validator.isNotNull(_portletResource)) {
+			portletId = _portletResource;
+		}
+
+		return SettingsFactoryUtil.getPortletInstanceSettings(
+			_themeDisplay.getLayout(), portletId);
 	}
 
 	public String getPortletName() {

@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
-public class PortletSettingsFactoryTest {
+public class SettingsFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -62,12 +62,11 @@ public class PortletSettingsFactoryTest {
 	}
 
 	@Test
-	public void testGetPortletInstancePortletSettings() throws Exception {
-		PortletSettings portletInstancePortletSettings =
-			_portletSettingsFactory.getPortletInstancePortletSettings(
-				_layout, _portletId);
+	public void testGetPortletInstanceSettings() throws Exception {
+		Settings portletInstanceSettings =
+			_settingsFactory.getPortletInstanceSettings(_layout, _portletId);
 
-		String[] values = portletInstancePortletSettings.getValues(_NAME, null);
+		String[] values = portletInstanceSettings.getValues(_NAME, null);
 
 		Assert.assertArrayEquals(_VALUES, values);
 	}
@@ -79,8 +78,7 @@ public class PortletSettingsFactoryTest {
 	private Group _group;
 	private Layout _layout;
 	private String _portletId = PortletKeys.NAVIGATION;
-	private PortletSettingsFactory _portletSettingsFactory =
-		new PortletSettingsFactoryImpl();
 	private Map<String, String[]> _preferenceMap;
+	private SettingsFactory _settingsFactory = new SettingsFactoryImpl();
 
 }

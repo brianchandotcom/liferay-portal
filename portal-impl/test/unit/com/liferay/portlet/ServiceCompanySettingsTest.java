@@ -23,18 +23,18 @@ import org.junit.Test;
 /**
  * @author Jorge Ferrer
  */
-public class CompanyPortletSettingsTest extends BasePortletSettingsTestCase {
+public class ServiceCompanySettingsTest extends BaseSettingsTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		portletSettings = new CompanyPortletSettings(getPortletPreferences());
+		_settings = new ServiceCompanySettings(getPortletPreferences());
 	}
 
 	@Test
 	public void testGetValueFromPortalProperties() {
 		setPortalProperties(_PORTAL_PROPERTIES_NAME, _PORTAL_PROPERTIES_VALUE);
 
-		String value = portletSettings.getValue(_PORTAL_PROPERTIES_NAME, null);
+		String value = _settings.getValue(_PORTAL_PROPERTIES_NAME, null);
 
 		Assert.assertEquals(_PORTAL_PROPERTIES_VALUE, value);
 	}
@@ -43,22 +43,22 @@ public class CompanyPortletSettingsTest extends BasePortletSettingsTestCase {
 	public void testSetValue() {
 		setPortalProperties(_PORTAL_PROPERTIES_NAME, _PORTAL_PROPERTIES_VALUE);
 
-		portletSettings.setValue(_PORTAL_PROPERTIES_NAME, "newValue");
+		_settings.setValue(_PORTAL_PROPERTIES_NAME, "newValue");
 
-		String value = portletSettings.getValue(_PORTAL_PROPERTIES_NAME, null);
+		String value = _settings.getValue(_PORTAL_PROPERTIES_NAME, null);
 
 		Assert.assertEquals("newValue", value);
 	}
 
 	protected void setPortalProperties(String name, String value) {
-		CompanyPortletSettings companyPortletSettings =
-			(CompanyPortletSettings)portletSettings;
+		ServiceCompanySettings serviceCompanySettings =
+			(ServiceCompanySettings)_settings;
 
 		Properties portalProperties = new Properties();
 
 		portalProperties.setProperty(name, value);
 
-		companyPortletSettings.setPortalProperties(portalProperties);
+		serviceCompanySettings.setPortalProperties(portalProperties);
 	}
 
 	private static final String _PORTAL_PROPERTIES_NAME =

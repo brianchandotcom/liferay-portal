@@ -19,26 +19,26 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Jorge Ferrer
  */
-public class GroupPortletSettings extends CompanyPortletSettings {
+public class PortletInstanceSettings extends ServiceGroupSettings {
 
-	public GroupPortletSettings(PortletPreferences groupPortletPreferences) {
-		this.groupPortletPreferences = groupPortletPreferences;
+	public PortletInstanceSettings(
+		PortletPreferences portletInstancePortletPreferences) {
+
+		this.portletInstancePortletPreferences =
+			portletInstancePortletPreferences;
 	}
 
-	public PortletSettings setCompanyPortletPreferences(
-		PortletPreferences companyPortletPreferences) {
+	public Settings setGroupPortletPreferences(
+		PortletPreferences groupPortletPreferences) {
 
-		this.companyPortletPreferences = companyPortletPreferences;
+		this.groupPortletPreferences = groupPortletPreferences;
 
 		return this;
 	}
 
-	protected GroupPortletSettings() {
-	}
-
 	@Override
 	protected PortletPreferences getWriteablePortletPreferences() {
-		return groupPortletPreferences;
+		return portletInstancePortletPreferences;
 	}
 
 }

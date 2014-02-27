@@ -23,36 +23,36 @@ import org.junit.Test;
 /**
  * @author Jorge Ferrer
  */
-public abstract class BasePortletSettingsTestCase {
+public abstract class BaseSettingsTestCase {
 
 	@Test
 	public void testGetNonnexistentValue() {
-		String value = portletSettings.getValue("nonexistentName", null);
+		String value = _settings.getValue("nonexistentName", null);
 
 		Assert.assertNull(value);
 	}
 
 	@Test
 	public void testGetValidValue() {
-		String value = portletSettings.getValue(_PORTLET_SETTINGS_NAME, null);
+		String value = _settings.getValue(_SETTINGS_NAME, null);
 
-		Assert.assertEquals(_PORTLET_SETTINGS_VALUE, value);
+		Assert.assertEquals(_SETTINGS_VALUE, value);
 	}
 
 	@Test
 	public void testSetExistentValue() {
-		portletSettings.setValue(_PORTLET_SETTINGS_NAME, "newValue");
+		_settings.setValue(_SETTINGS_NAME, "newValue");
 
-		String value = portletSettings.getValue(_PORTLET_SETTINGS_NAME, null);
+		String value = _settings.getValue(_SETTINGS_NAME, null);
 
 		Assert.assertEquals("newValue", value);
 	}
 
 	@Test
 	public void testSetNonexistentValue() {
-		portletSettings.setValue("nonexistentName", "newValue");
+		_settings.setValue("nonexistentName", "newValue");
 
-		String value = portletSettings.getValue("nonexistentName", null);
+		String value = _settings.getValue("nonexistentName", null);
 
 		Assert.assertEquals("newValue", value);
 	}
@@ -62,17 +62,15 @@ public abstract class BasePortletSettingsTestCase {
 
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
-		portletPreferences.setValue(
-			_PORTLET_SETTINGS_NAME, _PORTLET_SETTINGS_VALUE);
+		portletPreferences.setValue(_SETTINGS_NAME, _SETTINGS_VALUE);
 
 		return portletPreferences;
 	}
 
-	protected PortletSettings portletSettings;
+	protected Settings _settings;
 
-	private static final String _PORTLET_SETTINGS_NAME = "portletSettingsName";
+	private static final String _SETTINGS_NAME = "settingsName";
 
-	private static final String _PORTLET_SETTINGS_VALUE =
-		"portletSettingsValue";
+	private static final String _SETTINGS_VALUE = "settingsValue";
 
 }

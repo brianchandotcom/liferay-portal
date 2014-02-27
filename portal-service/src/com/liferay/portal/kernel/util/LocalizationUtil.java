@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portlet.PortletSettings;
+import com.liferay.portlet.Settings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -190,36 +190,6 @@ public class LocalizationUtil {
 		return modifiedLocales;
 	}
 
-	public static String getPortletSettingsValue(
-		PortletSettings portletSettings, String key, String languageId) {
-
-		return getLocalization().getPortletSettingsValue(
-			portletSettings, key, languageId);
-	}
-
-	public static String getPortletSettingsValue(
-		PortletSettings portletSettings, String key, String languageId,
-		boolean useDefault) {
-
-		return getLocalization().getPortletSettingsValue(
-			portletSettings, key, languageId, useDefault);
-	}
-
-	public static String[] getPortletSettingsValues(
-		PortletSettings portletSettings, String key, String languageId) {
-
-		return getLocalization().getPortletSettingsValues(
-			portletSettings, key, languageId);
-	}
-
-	public static String[] getPortletSettingsValues(
-		PortletSettings portletSettings, String key, String languageId,
-		boolean useDefault) {
-
-		return getLocalization().getPortletSettingsValues(
-			portletSettings, key, languageId, useDefault);
-	}
-
 	public static String getPreferencesKey(String key, String languageId) {
 		return getLocalization().getPreferencesKey(key, languageId);
 	}
@@ -252,6 +222,32 @@ public class LocalizationUtil {
 
 		return getLocalization().getPreferencesValues(
 			preferences, key, languageId, useDefault);
+	}
+
+	public static String getSettingsValue(
+		Settings settings, String key, String languageId) {
+
+		return getLocalization().getSettingsValue(settings, key, languageId);
+	}
+
+	public static String getSettingsValue(
+		Settings settings, String key, String languageId, boolean useDefault) {
+
+		return getLocalization().getSettingsValue(
+			settings, key, languageId, useDefault);
+	}
+
+	public static String[] getSettingsValues(
+		Settings settings, String key, String languageId) {
+
+		return getLocalization().getSettingsValues(settings, key, languageId);
+	}
+
+	public static String[] getSettingsValues(
+		Settings settings, String key, String languageId, boolean useDefault) {
+
+		return getLocalization().getSettingsValues(
+			settings, key, languageId, useDefault);
 	}
 
 	public static String removeLocalization(

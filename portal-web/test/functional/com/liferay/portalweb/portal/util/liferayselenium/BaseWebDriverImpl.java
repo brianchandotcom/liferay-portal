@@ -285,8 +285,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void clickImageElement(String image) throws Exception {
-		LiferaySeleniumHelper.clickImageElement(this, image);
+	public void clickSikuli(String image) throws Exception {
+		LiferaySeleniumHelper.clickSikuli(this, image);
 	}
 
 	@Override
@@ -341,6 +341,11 @@ public abstract class BaseWebDriverImpl
 		Calendar calendar = Calendar.getInstance();
 
 		return StringUtil.valueOf(calendar.get(Calendar.YEAR));
+	}
+
+	@Override
+	public String getDependenciesDir() {
+		return _dependenciesDir;
 	}
 
 	@Override
@@ -662,13 +667,20 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void typeImageElement(String image, String value) throws Exception {
-		LiferaySeleniumHelper.typeImageElement(this, image, value);
+	public void typeSikuli(String image, String value) throws Exception {
+		LiferaySeleniumHelper.typeSikuli(this, image, value);
 	}
 
 	@Override
 	public void uploadCommonFile(String location, String value) {
 		uploadFile(location, _projectDir + _dependenciesDir + value);
+	}
+
+	@Override
+	public void uploadCommonFileSikuli(String image, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.uploadCommonFileSikuli(this, image, value);
 	}
 
 	@Override
@@ -688,7 +700,14 @@ public abstract class BaseWebDriverImpl
 			slash = "\\";
 		}
 
-		uploadFile(location, TestPropsValues.OUTPUT_DIR + slash + value);
+		uploadFile(location, _outputDir + slash + value);
+	}
+
+	@Override
+	public void uploadTempFileSikuli(String image, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.uploadTempFileSikuli(this, image, value);
 	}
 
 	@Override

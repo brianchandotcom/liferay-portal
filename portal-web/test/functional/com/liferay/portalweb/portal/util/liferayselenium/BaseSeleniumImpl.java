@@ -213,8 +213,8 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void clickImageElement(String image) throws Exception {
-		LiferaySeleniumHelper.clickImageElement(this, image);
+	public void clickSikuli(String image) throws Exception {
+		LiferaySeleniumHelper.clickSikuli(this, image);
 	}
 
 	@Override
@@ -263,6 +263,11 @@ public abstract class BaseSeleniumImpl
 	@Override
 	public String getCurrentYear() {
 		return _commandProcessor.getString("getCurrentYear", new String[0]);
+	}
+
+	@Override
+	public String getDependenciesDir() {
+		return _dependenciesDir;
 	}
 
 	@Override
@@ -571,18 +576,25 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void typeImageElement(String image, String value) throws Exception {
-		LiferaySeleniumHelper.typeImageElement(this, image, value);
-	}
-
-	@Override
 	public void typeKeys(String locator, String value) {
 		sendKeys(locator, value);
 	}
 
 	@Override
+	public void typeSikuli(String image, String value) throws Exception {
+		LiferaySeleniumHelper.typeSikuli(this, image, value);
+	}
+
+	@Override
 	public void uploadCommonFile(String location, String value) {
 		super.type(location, _projectDir + _dependenciesDir + value);
+	}
+
+	@Override
+	public void uploadCommonFileSikuli(String image, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.uploadCommonFileSikuli(this, image, value);
 	}
 
 	@Override
@@ -595,6 +607,13 @@ public abstract class BaseSeleniumImpl
 	@Override
 	public void uploadTempFile(String location, String value) {
 		super.type(location, TestPropsValues.OUTPUT_DIR + value);
+	}
+
+	@Override
+	public void uploadTempFileSikuli(String image, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.uploadTempFileSikuli(this, image, value);
 	}
 
 	@Override

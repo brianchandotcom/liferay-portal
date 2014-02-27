@@ -172,6 +172,16 @@
 				name="env.key.liferay.portal"
 				override="true"
 			/>
+
+			<loadfile
+				property="liferay.plugins.git.id"
+				srcfile="git-commit-plugins"
+			/>
+
+			<loadfile
+				property="liferay.portal.git.id"
+				srcfile="git-commit-portal"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -342,8 +352,10 @@ create database lportal2 character set utf8;</echo>
 				<property name="browser.version" value="${browser.version}" />
 				<property name="database.type" value="${database.type}" />
 				<property name="database.version" value="${database.version}" />
+				<property name="liferay.plugins.git.id" value="${liferay.plugins.git.id}" />
 				<property name="liferay.portal.branch" value="${liferay.portal.branch}" />
 				<property name="liferay.portal.bundle" value="${liferay.portal.bundle}" />
+				<property name="liferay.portal.git.id" value="${liferay.portal.git.id}" />
 				<property name="environment.id" value="${env.key.app.server}${env.key.browser}${env.key.database}${env.key.java.jdk}${env.key.liferay.portal}${env.key.operating.system}" />
 				<property name="java.jdk.type" value="${java.jdk.type}" />
 				<property name="java.jdk.version" value="${java.jdk.version}" />

@@ -22,7 +22,6 @@
 
 			if (actionCommandLogButtonChecked) {
 				actionCommandLog.style.display = "block";
-				actionCommandLog.style.width = "99%";
 				descriptionLog.style.display ="none";
 				errorLog.style.display ="none";
 				pageObjectXMLLog.style.display = "none";
@@ -30,14 +29,12 @@
 			else if (descriptionLogButtonChecked) {
 				actionCommandLog.style.display = "none";
 				descriptionLog.style.display ="block";
-				descriptionLog.style.width = "99%";
 				errorLog.style.display ="none";
 				pageObjectXMLLog.style.display = "none";
 			}
 			else if (errorLogButtonChecked) {
 				actionCommandLog.style.display = "none";
 				descriptionLog.style.display ="none";
-				errorLog.style.width = "99%";
 				errorLog.style.display ="block";
 				pageObjectXMLLog.style.display = "none";
 			}
@@ -45,7 +42,6 @@
 				actionCommandLog.style.display = "none";
 				descriptionLog.style.display ="none";
 				errorLog.style.display ="none";
-				pageObjectXMLLog.style.width = "99%";
 				pageObjectXMLLog.style.display = "block";
 			}
 		}

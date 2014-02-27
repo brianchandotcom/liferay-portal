@@ -52,27 +52,27 @@
 </tr>
 <tr>
 	<td>ENTRY_EDIT</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//td[@class='edit-entry']/span/a/span</td>
+	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='edit-entry']/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DELETE</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//td[@class='delete-entry']/span/a/span</td>
+	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='delete-entry']/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_MARK_AS_READ</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//td[@class='control-entry' and contains(.,'Mark as Read')]/a</td>
+	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='control-entry' and contains(.,'Mark as Read')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_SHOW</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//td[@class='control-entry' and contains(.,'Show')]/a</td>
+	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='control-entry' and contains(.,'Show')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_HIDE</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//td[@class='control-entry' and contains(.,'Hide')]/a</td>
+	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='control-entry' and contains(.,'Hide')]/a</td>
 	<td></td>
 </tr>
 <tr>

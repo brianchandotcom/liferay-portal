@@ -243,24 +243,6 @@ public class PortletDisplay implements Serializable {
 		return _rootPortletId;
 	}
 
-	public Settings getServiceCompanySettings() throws SystemException {
-		return SettingsFactoryUtil.getServiceCompanySettings(
-			_themeDisplay.getCompanyId(), _id);
-	}
-
-	public Settings getServiceGroupSettings()
-		throws PortalException, SystemException {
-
-		String portletId = _id;
-
-		if (Validator.isNotNull(_portletResource)) {
-			portletId = _portletResource;
-		}
-
-		return SettingsFactoryUtil.getServiceGroupSettings(
-			_themeDisplay.getSiteGroupId(), portletId);
-	}
-
 	public ThemeDisplay getThemeDisplay() {
 		return _themeDisplay;
 	}

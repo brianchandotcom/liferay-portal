@@ -41,6 +41,7 @@ page import="com.liferay.portlet.messageboards.model.MBBan" %><%@
 page import="com.liferay.portlet.messageboards.model.MBCategory" %><%@
 page import="com.liferay.portlet.messageboards.model.MBCategoryConstants" %><%@
 page import="com.liferay.portlet.messageboards.model.MBCategoryDisplay" %><%@
+page import="com.liferay.portlet.messageboards.model.MBConstants" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMailingList" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMessageConstants" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMessageDisplay" %><%@
@@ -79,7 +80,7 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
-Settings serviceGroupSettings = portletDisplay.getServiceGroupSettings();
+Settings serviceGroupSettings = SettingsFactoryUtil.getServiceGroupSettings(themeDisplay.getSiteGroupId(), MBConstants.SERVICE_ID);
 
 String[] priorities = LocalizationUtil.getSettingsValues(serviceGroupSettings, "priorities", currentLanguageId);
 

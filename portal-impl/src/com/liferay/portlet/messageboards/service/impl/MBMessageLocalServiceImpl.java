@@ -74,6 +74,7 @@ import com.liferay.portlet.messageboards.NoSuchThreadException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.messageboards.model.MBConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
@@ -225,7 +226,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			MBMessage.class.getName(), "subject", subject);
 
 		Settings settings = SettingsFactoryUtil.getServiceGroupSettings(
-			groupId, PortletKeys.MESSAGE_BOARDS);
+			groupId, MBConstants.SERVICE_ID);
 
 		if (settings != null) {
 			if (!MBUtil.isAllowAnonymousPosting(settings)) {

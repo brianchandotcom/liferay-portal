@@ -45,43 +45,6 @@ import org.junit.runner.RunWith;
 @Sync
 public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 
-	@Override
-	public long addBaseModel(long containerModelId) throws Exception {
-		WikiPage page = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), group.getGroupId(), containerModelId,
-			ServiceTestUtil.randomString(), true);
-
-		return page.getResourcePrimKey();
-	}
-
-	@Override
-	public long addContainerModel(long containerModelId) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		WikiNode node = WikiNodeLocalServiceUtil.addNode(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-			StringPool.BLANK, serviceContext);
-
-		return node.getNodeId();
-	}
-
-	@Override
-	public void addSubscriptionBaseModel(long baseModelId) throws Exception {
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			WikiPage.class.getName(), baseModelId);
-	}
-
-	@Override
-	public void addSubscriptionContainerModel(long containerModelId)
-		throws Exception {
-
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			WikiNode.class.getName(), containerModelId);
-	}
-
 	@Ignore
 	@Override
 	@Test
@@ -119,7 +82,44 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	public long updateEntry(long baseModelId) throws Exception {
+	protected long addBaseModel(long containerModelId) throws Exception {
+		WikiPage page = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), group.getGroupId(), containerModelId,
+			ServiceTestUtil.randomString(), true);
+
+		return page.getResourcePrimKey();
+	}
+
+	@Override
+	protected long addContainerModel(long containerModelId) throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		WikiNode node = WikiNodeLocalServiceUtil.addNode(
+			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
+			StringPool.BLANK, serviceContext);
+
+		return node.getNodeId();
+	}
+
+	@Override
+	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
+		SubscriptionLocalServiceUtil.addSubscription(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			WikiPage.class.getName(), baseModelId);
+	}
+
+	@Override
+	protected void addSubscriptionContainerModel(long containerModelId)
+		throws Exception {
+
+		SubscriptionLocalServiceUtil.addSubscription(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			WikiNode.class.getName(), containerModelId);
+	}
+
+	@Override
+	protected long updateEntry(long baseModelId) throws Exception {
 		WikiPage page = WikiTestUtil.updatePage(
 			WikiPageLocalServiceUtil.getPage(baseModelId, true));
 

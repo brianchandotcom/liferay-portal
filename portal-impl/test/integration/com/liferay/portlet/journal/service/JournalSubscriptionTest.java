@@ -46,8 +46,20 @@ import org.junit.runner.RunWith;
 @Sync
 public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 
+	@Ignore
 	@Override
-	public long addBaseModel(long containerModelId) throws Exception {
+	@Test
+	public void testSubscriptionContainerModelWhenInContainerModel() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSubscriptionContainerModelWhenInSubcontainerModel() {
+	}
+
+	@Override
+	protected long addBaseModel(long containerModelId) throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
@@ -62,7 +74,7 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	public long addContainerModel(long containerModelId) throws Exception {
+	protected long addContainerModel(long containerModelId) throws Exception {
 		JournalFolder folder = JournalTestUtil.addFolder(
 			group.getGroupId(), containerModelId,
 			ServiceTestUtil.randomString());
@@ -71,14 +83,14 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	public void addSubscriptionBaseModel(long baseModelId) throws Exception {
+	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
 		SubscriptionLocalServiceUtil.addSubscription(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			JournalArticle.class.getName(), baseModelId);
 	}
 
 	@Override
-	public void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
 		long classPK = containerModelId;
@@ -92,20 +104,8 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 			JournalFolder.class.getName(), classPK);
 	}
 
-	@Ignore
 	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenInContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenInSubcontainerModel() {
-	}
-
-	@Override
-	public long updateEntry(long baseModelId) throws Exception {
+	protected long updateEntry(long baseModelId) throws Exception {
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.getLatestArticle(
 				baseModelId, WorkflowConstants.STATUS_APPROVED, true);

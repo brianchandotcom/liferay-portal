@@ -46,8 +46,20 @@ import org.junit.runner.RunWith;
 @Sync
 public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 
+	@Ignore
 	@Override
-	public long addBaseModel(long containerModelId) throws Exception {
+	@Test
+	public void testSubscriptionBaseModelWhenInContainerModel() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSubscriptionBaseModelWhenInRootContainerModel() {
+	}
+
+	@Override
+	protected long addBaseModel(long containerModelId) throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
@@ -65,7 +77,7 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	public long addContainerModel(long containerModelId) throws Exception {
+	protected long addContainerModel(long containerModelId) throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
@@ -77,11 +89,11 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	public void addSubscriptionBaseModel(long baseModelId) {
+	protected void addSubscriptionBaseModel(long baseModelId) {
 	}
 
 	@Override
-	public void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
 		long classPK = containerModelId;
@@ -95,20 +107,8 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 			Folder.class.getName(), classPK);
 	}
 
-	@Ignore
 	@Override
-	@Test
-	public void testSubscriptionBaseModelWhenInContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionBaseModelWhenInRootContainerModel() {
-	}
-
-	@Override
-	public long updateEntry(long baseModelId) throws Exception {
+	protected long updateEntry(long baseModelId) throws Exception {
 		return 0;
 	}
 

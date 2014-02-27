@@ -41,32 +41,6 @@ import org.junit.runner.RunWith;
 @Sync
 public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 
-	@Override
-	public long addBaseModel(long containerModelId) throws Exception {
-		BlogsEntry entry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
-
-		return entry.getEntryId();
-	}
-
-	@Override
-	public long addContainerModel(long containerModelId) throws Exception {
-		return 0;
-	}
-
-	@Override
-	public void addSubscriptionBaseModel(long baseModelId) {
-	}
-
-	@Override
-	public void addSubscriptionContainerModel(long containerModelId)
-		throws Exception {
-
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			BlogsEntry.class.getName(), group.getGroupId());
-	}
-
 	@Ignore
 	@Override
 	@Test
@@ -110,7 +84,33 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	public long updateEntry(long baseModelId) {
+	protected long addBaseModel(long containerModelId) throws Exception {
+		BlogsEntry entry = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		return entry.getEntryId();
+	}
+
+	@Override
+	protected long addContainerModel(long containerModelId) throws Exception {
+		return 0;
+	}
+
+	@Override
+	protected void addSubscriptionBaseModel(long baseModelId) {
+	}
+
+	@Override
+	protected void addSubscriptionContainerModel(long containerModelId)
+		throws Exception {
+
+		SubscriptionLocalServiceUtil.addSubscription(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			BlogsEntry.class.getName(), group.getGroupId());
+	}
+
+	@Override
+	protected long updateEntry(long baseModelId) {
 		return 0;
 	}
 

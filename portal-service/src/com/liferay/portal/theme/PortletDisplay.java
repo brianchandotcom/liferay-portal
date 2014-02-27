@@ -217,8 +217,14 @@ public class PortletDisplay implements Serializable {
 	}
 
 	public Settings getPortletInstanceSettings() throws SystemException {
+		String portletId = _id;
+
+		if (Validator.isNotNull(_portletResource)) {
+			portletId = _portletResource;
+		}
+
 		return SettingsFactoryUtil.getPortletInstanceSettings(
-			_themeDisplay.getLayout(), _id);
+			_themeDisplay.getLayout(), portletId);
 	}
 
 	public String getPortletName() {

@@ -54,29 +54,12 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		ShoppingPreferences preferences = ShoppingPreferences.getInstance(
 			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
 
-		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
-		String tabs3 = ParamUtil.getString(actionRequest, "tabs3");
-
-		if (tabs2.equals("payment-settings")) {
-			updatePayment(actionRequest, preferences);
-		}
-		else if (tabs2.equals("shipping-calculation")) {
-			updateShippingCalculation(actionRequest, preferences);
-		}
-		else if (tabs2.equals("insurance-calculation")) {
-			updateInsuranceCalculation(actionRequest, preferences);
-		}
-		else if (tabs2.equals("emails")) {
-			if (tabs3.equals("email-from")) {
-				updateEmailFrom(actionRequest, preferences);
-			}
-			else if (tabs3.equals("confirmation-email")) {
-				updateEmailOrderConfirmation(actionRequest, preferences);
-			}
-			else if (tabs3.equals("shipping-email")) {
-				updateEmailOrderShipping(actionRequest, preferences);
-			}
-		}
+		updatePayment(actionRequest, preferences);
+		updateShippingCalculation(actionRequest, preferences);
+		updateInsuranceCalculation(actionRequest, preferences);
+		updateEmailFrom(actionRequest, preferences);
+		updateEmailOrderConfirmation(actionRequest, preferences);
+		updateEmailOrderShipping(actionRequest, preferences);
 
 		if (SessionErrors.isEmpty(actionRequest)) {
 			preferences.store();
@@ -126,20 +109,21 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String emailOrderConfirmationBody = ParamUtil.getString(
 			actionRequest, "emailOrderConfirmationBody");
 
-		if (Validator.isNull(emailOrderConfirmationSubject)) {
-			SessionErrors.add(actionRequest, "emailOrderConfirmationSubject");
+		if (emailOrderConfirmationEnabled) {
+			if (Validator.isNull(emailOrderConfirmationSubject)) {
+				SessionErrors.add(actionRequest, "emailOrderConfirmationSubject");
+			}
+			else if (Validator.isNull(emailOrderConfirmationBody)) {
+				SessionErrors.add(actionRequest, "emailOrderConfirmationBody");
+			}
 		}
-		else if (Validator.isNull(emailOrderConfirmationBody)) {
-			SessionErrors.add(actionRequest, "emailOrderConfirmationBody");
-		}
-		else {
-			preferences.setEmailOrderConfirmationEnabled(
-				emailOrderConfirmationEnabled);
-			preferences.setEmailOrderConfirmationSubject(
-				emailOrderConfirmationSubject);
-			preferences.setEmailOrderConfirmationBody(
-				emailOrderConfirmationBody);
-		}
+
+		preferences.setEmailOrderConfirmationEnabled(
+			emailOrderConfirmationEnabled);
+		preferences.setEmailOrderConfirmationSubject(
+			emailOrderConfirmationSubject);
+		preferences.setEmailOrderConfirmationBody(
+			emailOrderConfirmationBody);
 	}
 
 	protected void updateEmailOrderShipping(
@@ -153,17 +137,18 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String emailOrderShippingBody = ParamUtil.getString(
 			actionRequest, "emailOrderShippingBody");
 
-		if (Validator.isNull(emailOrderShippingSubject)) {
-			SessionErrors.add(actionRequest, "emailOrderShippingSubject");
+		if (emailOrderShippingEnabled) {
+			if (Validator.isNull(emailOrderShippingSubject)) {
+				SessionErrors.add(actionRequest, "emailOrderShippingSubject");
+			}
+			else if (Validator.isNull(emailOrderShippingBody)) {
+				SessionErrors.add(actionRequest, "emailOrderShippingBody");
+			}
 		}
-		else if (Validator.isNull(emailOrderShippingBody)) {
-			SessionErrors.add(actionRequest, "emailOrderShippingBody");
-		}
-		else {
-			preferences.setEmailOrderShippingEnabled(emailOrderShippingEnabled);
-			preferences.setEmailOrderShippingSubject(emailOrderShippingSubject);
-			preferences.setEmailOrderShippingBody(emailOrderShippingBody);
-		}
+
+		preferences.setEmailOrderShippingEnabled(emailOrderShippingEnabled);
+		preferences.setEmailOrderShippingSubject(emailOrderShippingSubject);
+		preferences.setEmailOrderShippingBody(emailOrderShippingBody);
 	}
 
 	protected void updateInsuranceCalculation(

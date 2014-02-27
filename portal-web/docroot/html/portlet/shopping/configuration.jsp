@@ -245,7 +245,3 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 		['liferay-util-list-fields']
 	);
 </aui:script>
-
-<%!
-public static final String EDITOR_WYSIWYG_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.shopping.configuration.jsp";
-%>

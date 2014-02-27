@@ -313,7 +313,7 @@
 			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
 		</execute>
 
-		<execute macro="RecentBloggersPortlet#viewPG">
+		<execute macro="RecentBloggers#viewPG">
 			<var name="entryAuthor" value="Test Test" />
 			<var name="postCount" value="1" />
 		</execute>
@@ -337,7 +337,7 @@
 			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
 		</execute>
 
-		<execute macro="RecentBloggersPortlet#viewPG">
+		<execute macro="RecentBloggers#viewPG">
 			<var name="entryAuthor" value="Test Test" />
 			<var name="postCount" value="1" />
 		</execute>

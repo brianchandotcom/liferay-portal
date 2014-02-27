@@ -169,6 +169,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ABSTRACT_DESCRIPTION_SMALL_IMAGE</td>
+	<td>//div[contains(.,'${key_assetTitle}')]//div[@class='asset-small-image']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_ABSTRACT_SUMMARY</td>
 	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//div[@class='asset-summary']</td>
 	<td></td>

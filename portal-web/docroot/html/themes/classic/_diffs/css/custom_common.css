@@ -290,9 +290,9 @@
 					}
 
 					.user-avatar-image {
-					    position: relative;
-					    top: 2px;
-					    width: 28px;
+						position: relative;
+						top: 2px;
+						width: 28px;
 				    }
 				}
 
@@ -877,6 +877,11 @@
 		}
 	}
 
+	@mixin user-avatar-circle() {
+		@include border-radius(50%);
+		@include box-shadow(0 0 0 2px #5594E0);
+	}
+
 	@include respond-to(phone, tablet) {
 		#navigation.open .navbar-inner .nav-collapse li a {
 			@include border-radius(0);
@@ -927,6 +932,10 @@
 		@include box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6));
 	}
 
+	.taglib-user-display.display-style-3 .user-profile-image {
+		@include user-avatar-circle();
+	}
+
 	.dockbar {
 		.nav {
 			> li {
@@ -948,8 +957,7 @@
 
 		.container .btn, .nav li.dropdown.user-avatar {
 			.user-avatar-image {
-				@include border-radius(50%);
-				@include box-shadow(0 0 0 2px #5594E0);
+				@include user-avatar-circle();
 			}
 		}
 	}

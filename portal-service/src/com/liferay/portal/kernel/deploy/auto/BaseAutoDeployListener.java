@@ -31,7 +31,16 @@ import java.util.zip.ZipFile;
  */
 public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
-	public boolean isExtPlugin(File file) {
+	public boolean isExtPlugin(File file) throws AutoDeployException {
+		// Assuming you want the deployer with the most code to run, order of
+		// preference is: portlet, theme, web, hook, layout template, [ext]
+
+		if (isPortletPlugin(file) || isThemePlugin(file) || isWebPlugin(file) ||
+			isHookPlugin(file) || isLayoutTemplatePlugin(file)) {
+
+			return false;
+		}
+
 		String fileName = file.getName();
 
 		if (fileName.contains("-ext") && !isJarFile(file)) {
@@ -42,11 +51,14 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	}
 
 	public boolean isHookPlugin(File file) throws AutoDeployException {
+		// Assuming you want the deployer with the most code to run, order of
+		// preference is: portlet, theme, web, [hook], layout template, ext
 
-		if (isMatchingFile(file, "WEB-INF/liferay-hook.xml") &&
-			!isPortletPlugin(file) && !isThemePlugin(file) &&
-			!isWebPlugin(file)) {
+		if (isPortletPlugin(file) || isThemePlugin(file) || isWebPlugin(file)) {
+			return false;
+		}
 
+		if (isMatchingFile(file, "WEB-INF/liferay-hook.xml")) {
 			return true;
 		}
 
@@ -56,9 +68,16 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	public boolean isLayoutTemplatePlugin(File file)
 		throws AutoDeployException {
 
-		if (isMatchingFile(file, "WEB-INF/liferay-layout-templates.xml") &&
-			!isPortletPlugin(file) && !isThemePlugin(file)) {
+		// Assuming you want the deployer with the most code to run, order of
+		// preference is: portlet, theme, web, hook, [layout template], ext
 
+		if (isPortletPlugin(file) || isThemePlugin(file) || isWebPlugin(file) ||
+			isHookPlugin(file)) {
+
+			return false;
+		}
+
+		if (isMatchingFile(file, "WEB-INF/liferay-layout-templates.xml")) {
 			return true;
 		}
 
@@ -140,6 +159,9 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	}
 
 	public boolean isPortletPlugin(File file) throws AutoDeployException {
+		// Assuming you want the deployer with the most code to run, order of
+		// preference is: [portlet], theme, web, hook, layout template, ext
+
 		if (isMatchingFile(
 				file, "WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD)) {
 
@@ -162,6 +184,13 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	}
 
 	public boolean isThemePlugin(File file) throws AutoDeployException {
+		// Assuming you want the deployer with the most code to run, order of
+		// preference is: portlet, [theme], web, hook, layout template, ext
+
+		if (isPortletPlugin(file)) {
+			return false;
+		}
+
 		if (isMatchingFile(file, "WEB-INF/liferay-look-and-feel.xml")) {
 			return true;
 		}
@@ -178,6 +207,13 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	}
 
 	public boolean isWebPlugin(File file) throws AutoDeployException {
+		// Assuming you want the deployer with the most code to run, order of
+		// preference is: portlet, theme, [web], hook, layout template, ext
+
+		if (isPortletPlugin(file) || isThemePlugin(file)) {
+			return false;
+		}
+
 		String fileName = file.getName();
 
 		if (isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties") &&

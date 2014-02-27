@@ -86,6 +86,15 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashGrandParentBaseModelAndRestoreParentModel()
+		throws Exception {
+
+		trashGrandParentBaseModelAndRestoreParentModel();
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashIsRestorableBaseModel() throws Exception {
 	}
 

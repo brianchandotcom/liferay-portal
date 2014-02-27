@@ -68,6 +68,15 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashGrandParentBaseModelAndRestoreParentModel()
+		throws Exception {
+
+		trashGrandParentBaseModelAndRestoreParentModel();
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashMyBaseModel() throws Exception {
 	}
 

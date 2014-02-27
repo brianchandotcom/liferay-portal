@@ -187,6 +187,18 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected BaseModel<?> getParentBaseModel(
+			Group group, long parentModelId, ServiceContext serviceContext)
+		throws Exception {
+
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), parentModelId,
+			ServiceTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH));
+
+		return (DLFolder)folder.getModel();
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 

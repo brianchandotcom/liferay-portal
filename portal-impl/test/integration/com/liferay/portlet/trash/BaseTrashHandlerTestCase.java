@@ -164,6 +164,14 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	@Transactional
+	public void testTrashGrandParentBaseModelAndRestoreParentModel()
+		throws Exception {
+
+		trashGrandParentBaseModelAndRestoreParentModel();
+	}
+
+	@Test
+	@Transactional
 	public void testTrashIsRestorableBaseModel() throws Exception {
 		trashIsRestorableBaseModel();
 	}
@@ -386,6 +394,13 @@ public abstract class BaseTrashHandlerTestCase {
 	protected abstract int getNotInTrashBaseModelsCount(
 			BaseModel<?> parentBaseModel)
 		throws Exception;
+
+	protected BaseModel<?> getParentBaseModel(
+			Group group, long parentModelId, ServiceContext serviceContext)
+		throws Exception {
+
+		return group;
+	}
 
 	protected BaseModel<?> getParentBaseModel(
 			Group group, ServiceContext serviceContext)
@@ -745,6 +760,69 @@ public abstract class BaseTrashHandlerTestCase {
 			getTrashEntriesCount(group.getGroupId()));
 
 		Assert.assertTrue(isBaseModelTrashName(duplicateBaseModel));
+	}
+
+	protected void trashGrandParentBaseModelAndRestoreParentModel()
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		BaseModel<?> grandParentBaseModel = getParentBaseModel(
+			group, (Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
+
+		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
+			parentBaseModel);
+		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
+
+		baseModel = addBaseModel(grandParentBaseModel, true, serviceContext);
+
+		Assert.assertEquals(
+			initialBaseModelsCount,
+			getNotInTrashBaseModelsCount(parentBaseModel));
+		Assert.assertEquals(
+			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
+
+		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
+
+		Assert.assertTrue(isInTrashContainer(baseModel));
+		Assert.assertTrue(isInTrashContainer(grandParentBaseModel));
+
+		Assert.assertEquals(
+			initialBaseModelsCount,
+			getNotInTrashBaseModelsCount(parentBaseModel));
+		Assert.assertEquals(
+			initialTrashEntriesCount + 1,
+			getTrashEntriesCount(group.getGroupId()));
+
+		TrashHandler parentTrashHandler =
+			TrashHandlerRegistryUtil.getTrashHandler(
+				getParentBaseModelClassName());
+
+		if (isAssetableModel()) {
+			Assert.assertFalse(isAssetEntryVisible(baseModel));
+		}
+
+		Assert.assertFalse(isAssetEntryVisible(grandParentBaseModel));
+
+		parentTrashHandler.restoreTrashEntry(
+			TestPropsValues.getUserId(),
+			(Long)parentBaseModel.getPrimaryKeyObj());
+
+		Assert.assertEquals(
+			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
+
+		Assert.assertFalse(isInTrashContainer(baseModel));
+		Assert.assertFalse(isInTrashContainer(grandParentBaseModel));
+
+		if (isAssetableModel()) {
+			Assert.assertTrue(isAssetEntryVisible(baseModel));
+		}
+
+		Assert.assertTrue(isAssetEntryVisible(grandParentBaseModel));
 	}
 
 	protected void trashIsRestorableBaseModel() throws Exception {

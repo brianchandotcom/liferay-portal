@@ -177,6 +177,16 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected BaseModel<?> getParentBaseModel(
+			Group group, long parentModelId, ServiceContext serviceContext)
+		throws Exception {
+
+		return BookmarksFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), parentModelId,
+			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 

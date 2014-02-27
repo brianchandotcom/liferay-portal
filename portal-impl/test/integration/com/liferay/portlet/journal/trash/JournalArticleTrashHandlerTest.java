@@ -179,16 +179,21 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected Long getAssetClassPK(ClassedModel classedModel) {
-		JournalArticle article = (JournalArticle)classedModel;
+		if (classedModel instanceof JournalArticle) {
+			JournalArticle article = (JournalArticle)classedModel;
 
-		try {
-			JournalArticleResource journalArticleResource =
-				JournalArticleResourceLocalServiceUtil.getArticleResource(
-					article.getResourcePrimKey());
+			try {
+				JournalArticleResource journalArticleResource =
+					JournalArticleResourceLocalServiceUtil.getArticleResource(
+						article.getResourcePrimKey());
 
-			return journalArticleResource.getResourcePrimKey();
+				return journalArticleResource.getResourcePrimKey();
+			}
+			catch (Exception e) {
+				return super.getAssetClassPK(classedModel);
+			}
 		}
-		catch (Exception e) {
+		else {
 			return super.getAssetClassPK(classedModel);
 		}
 	}
@@ -237,6 +242,16 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		return JournalArticleLocalServiceUtil.getNotInTrashArticlesCount(
 			folder.getGroupId(), folder.getFolderId());
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
+			Group group, long parentModelId, ServiceContext serviceContext)
+		throws Exception {
+
+		return JournalTestUtil.addFolder(
+			group.getGroupId(), parentModelId,
+			ServiceTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH));
 	}
 
 	@Override

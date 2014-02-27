@@ -187,6 +187,17 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected BaseModel<?> getParentBaseModel(
+			Group group, long getParentModelId, ServiceContext serviceContext)
+		throws Exception {
+
+		return DLFolderLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
+			false, getParentModelId, ServiceTestUtil.randomString(),
+			StringPool.BLANK, false, serviceContext);
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 

@@ -23,24 +23,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String emailFromName = ParamUtil.getString(request, "emailFromName", shoppingPrefs.getEmailFromName(company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shoppingPrefs.getEmailFromAddress(company.getCompanyId()));
-
-String emailOrderConfirmationSubject = ParamUtil.getString(request, "emailOrderConfirmationSubject", shoppingPrefs.getEmailOrderConfirmationSubject());
-String emailOrderConfirmationBody = ParamUtil.getString(request, "emailOrderConfirmationBody", shoppingPrefs.getEmailOrderConfirmationBody());
-
-String emailOrderShippingSubject = ParamUtil.getString(request, "emailOrderShippingSubject", shoppingPrefs.getEmailOrderShippingSubject());
-String emailOrderShippingBody = ParamUtil.getString(request, "emailOrderShippingBody", shoppingPrefs.getEmailOrderShippingBody());
-
-String editorParam = StringPool.BLANK;
-String editorContent = StringPool.BLANK;
-
-if (tabs3.equals("confirmation-email")) {
-	editorParam = "emailOrderConfirmationBody";
-	editorContent = emailOrderConfirmationBody;
-}
-else if (tabs3.equals("shipping-email")) {
-	editorParam = "emailOrderShippingBody";
-	editorContent = emailOrderShippingBody;
-}
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
@@ -250,19 +232,13 @@ else if (tabs3.equals("shipping-email")) {
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(editorContent) %>";
-	}
-
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveConfiguration',
 		function() {
 			document.<portlet:namespace />fm.<portlet:namespace />ccTypes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />current_cc_types);
 
-			<c:if test='<%= tabs3.endsWith("-email") %>'>
-				document.<portlet:namespace />fm.<portlet:namespace /><%= editorParam %>.value = window.<portlet:namespace />editor.getHTML();
-			</c:if>
+			<portlet:namespace />saveEmails();
 
 			submitForm(document.<portlet:namespace />fm);
 		},

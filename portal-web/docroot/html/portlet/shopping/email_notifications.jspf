@@ -13,180 +13,57 @@
  * details.
  */
 --%>
+
+<%
+Map<String, String> emailDefinitionTerms = ShoppingUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+%>
+
 <liferay-ui:section>
-	<aui:fieldset>
-		<aui:input label="enabled" name="emailOrderConfirmationEnabled" type="checkbox" value="<%= shoppingPrefs.getEmailOrderConfirmationEnabled() %>" />
 
-		<aui:input cssClass="lfr-input-text-container" label="subject" name="emailOrderConfirmationSubject" type="text" value="<%= emailOrderConfirmationSubject %>" />
+	<%
+	boolean emailEnabled = shoppingPrefs.getEmailOrderConfirmationEnabled();
+	String emailSubject = ParamUtil.getString(request, "emailOrderConfirmationSubject", shoppingPrefs.getEmailOrderConfirmationSubject());
+	String emailBody = ParamUtil.getString(request, "emailOrderConfirmationBody", shoppingPrefs.getEmailOrderConfirmationBody());
+	%>
 
-		<aui:field-wrapper label="body">
-			<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
-
-			<aui:input name="<%= editorParam %>" type="hidden" value="" />
-		</aui:field-wrapper>
-
-		<aui:fieldset cssClass="definition-of-terms">
-			<legend>
-				<liferay-ui:message key="definition-of-terms" />
-			</legend>
-
-			<dl>
-				<dt>
-					[$FROM_ADDRESS$]
-				</dt>
-				<dd>
-					<%= HtmlUtil.escape(emailFromAddress) %>
-				</dd>
-				<dt>
-					[$FROM_NAME$]
-				</dt>
-				<dd>
-					<%= HtmlUtil.escape(emailFromName) %>
-				</dd>
-				<dt>
-					[$ORDER_BILLING_ADDRESS$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-order-billing-address" />
-				</dd>
-				<dt>
-					[$ORDER_CURRENCY$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-order-currency" />
-				</dd>
-				<dt>
-					[$ORDER_NUMBER$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-order-id" />
-				</dd>
-				<dt>
-					[$ORDER_SHIPPING_ADDRESS$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-order-shipping-address" />
-				</dd>
-				<dt>
-					[$ORDER_TOTAL$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-order-total" />
-				</dd>
-				<dt>
-					[$PORTAL_URL$]
-				</dt>
-				<dd>
-					<%= company.getVirtualHostname() %>
-				</dd>
-				<dt>
-					[$PORTLET_NAME$]
-				</dt>
-				<dd>
-					<%= PortalUtil.getPortletTitle(renderResponse) %>
-				</dd>
-				<dt>
-					[$TO_ADDRESS$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-address-of-the-email-recipient" />
-				</dd>
-				<dt>
-					[$TO_NAME$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-name-of-the-email-recipient" />
-				</dd>
-			</dl>
-		</aui:fieldset>
-	</aui:fieldset>
+	<liferay-ui:email-notifications-settings
+		emailBody="<%= emailBody %>"
+		emailDefinitionTerms="<%= emailDefinitionTerms %>"
+		emailEnabled="<%= emailEnabled %>"
+		emailParam="emailOrderConfirmation"
+		emailSubject="<%= emailSubject %>"
+	/>
 </liferay-ui:section>
 
 <liferay-ui:section>
-	<aui:fieldset>
-		<aui:input label="enabled" name="emailOrderShippingEnabled" type="checkbox" value="<%= shoppingPrefs.getEmailOrderShippingEnabled() %>" />
 
-		<aui:input cssClass="lfr-input-text-container" label="subject" name="emailOrderShippingSubject" type="text" value="<%= emailOrderShippingSubject %>" />
+	<%
+	boolean emailEnabled = shoppingPrefs.getEmailOrderShippingEnabled();
+	String emailSubject = ParamUtil.getString(request, "emailOrderShippingSubject", shoppingPrefs.getEmailOrderShippingSubject());
+	String emailBody = ParamUtil.getString(request, "emailOrderShippingBody", shoppingPrefs.getEmailOrderShippingBody());
+	%>
 
-		<aui:field-wrapper label="body">
-			<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
-
-			<aui:input name="<%= editorParam %>" type="hidden" value="" />
-		</aui:field-wrapper>
-
-		<aui:fieldset cssClass="definition-of-terms">
-			<legend>
-				<liferay-ui:message key="definition-of-terms" />
-			</legend>
-
-			<dl>
-				<dt>
-					[$FROM_ADDRESS$]
-				</dt>
-				<dd>
-					<%= HtmlUtil.escape(emailFromAddress) %>
-				</dd>
-				<dt>
-					[$FROM_NAME$]
-				</dt>
-				<dd>
-					<%= HtmlUtil.escape(emailFromName) %>
-				</dd>
-				<dt>
-					[$ORDER_BILLING_ADDRESS$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-order-billing-address" />
-				</dd>
-				<dt>
-					[$ORDER_CURRENCY$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-order-currency" />
-				</dd>
-				<dt>
-					[$ORDER_NUMBER$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-order-id" />
-				</dd>
-				<dt>
-					[$ORDER_SHIPPING_ADDRESS$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-order-shipping-address" />
-				</dd>
-				<dt>
-					[$ORDER_TOTAL$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-order-total" />
-				</dd>
-				<dt>
-					[$PORTAL_URL$]
-				</dt>
-				<dd>
-					<%= company.getVirtualHostname() %>
-				</dd>
-				<dt>
-					[$PORTLET_NAME$]
-				</dt>
-				<dd>
-					<%= PortalUtil.getPortletTitle(renderResponse) %>
-				</dd>
-				<dt>
-					[$TO_ADDRESS$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-address-of-the-email-recipient" />
-				</dd>
-				<dt>
-					[$TO_NAME$]
-				</dt>
-				<dd>
-					<liferay-ui:message key="the-name-of-the-email-recipient" />
-				</dd>
-			</dl>
-		</aui:fieldset>
-	</aui:fieldset>
+	<liferay-ui:email-notifications-settings
+		emailBody="<%= emailBody %>"
+		emailDefinitionTerms="<%= emailDefinitionTerms %>"
+		emailEnabled="<%= emailEnabled %>"
+		emailParam="emailOrderShipping"
+		emailSubject="<%= emailSubject %>"
+	/>
 </liferay-ui:section>
+
+<aui:script>
+	function <portlet:namespace />saveEmails() {
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailOrderConfirmationBody--'].value = window['<portlet:namespace />emailOrderConfirmation'].getHTML();
+		}
+		catch (e) {
+		}
+
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailOrderShippingBody--'].value = window['<portlet:namespace />emailOrderShipping'].getHTML();
+		}
+		catch (e) {
+		}
+	}
+</aui:script>

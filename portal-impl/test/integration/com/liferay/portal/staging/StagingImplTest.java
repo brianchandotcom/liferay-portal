@@ -131,9 +131,6 @@ public class StagingImplTest {
 		Map<String, String[]> parameters = StagingUtil.getStagingParameters();
 
 		parameters.put(
-			PortletDataHandlerKeys.CATEGORIES,
-			new String[] {String.valueOf(stageCategories)});
-		parameters.put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION +
 				StringPool.UNDERLINE + PortletKeys.JOURNAL,
 			new String[] {String.valueOf(stageJournal)});
@@ -156,9 +153,6 @@ public class StagingImplTest {
 				PortletKeys.JOURNAL,
 			new String[] {String.valueOf(stageJournal)});
 
-		serviceContext.setAttribute(
-			StagingUtil.getStagedPortletId(PortletDataHandlerKeys.CATEGORIES),
-			stageCategories);
 		serviceContext.setAttribute(
 			StagingUtil.getStagedPortletId(PortletKeys.JOURNAL), stageJournal);
 

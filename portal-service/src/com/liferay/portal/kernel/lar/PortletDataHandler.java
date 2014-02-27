@@ -176,6 +176,8 @@ public interface PortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws PortletDataException;
 
+	public boolean isDataAlwaysStaged();
+
 	public boolean isDataLocalized();
 
 	public boolean isDataPortalLevel();

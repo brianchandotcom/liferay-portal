@@ -361,6 +361,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 	}
 
+	public boolean isDataAlwaysStaged() {
+		return _dataAlwaysStaged;
+	}
+
 	@Override
 	public boolean isDataLocalized() {
 		return _dataLocalized;
@@ -852,6 +856,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	protected void setAlwaysStaged(boolean alwaysStaged) {
 	}
 
+	protected void setDataAlwaysStaged(boolean dataAlwaysStaged) {
+		_dataAlwaysStaged = dataAlwaysStaged;
+	}
+
 	protected void setDataLevel(DataLevel dataLevel) {
 		_dataLevel = dataLevel;
 	}
@@ -912,6 +920,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	private static Log _log = LogFactoryUtil.getLog(
 		BasePortletDataHandler.class);
 
+	private boolean _dataAlwaysStaged;
 	private DataLevel _dataLevel = DataLevel.SITE;
 	private boolean _dataLocalized;
 	private String[] _dataPortletPreferences = StringPool.EMPTY_ARRAY;

@@ -310,7 +310,7 @@ else {
 						</c:if>
 
 						<%
-						List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId());
+						List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId(), false);
 						%>
 
 						<c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">

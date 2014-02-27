@@ -70,7 +70,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.io.File;
@@ -106,6 +105,13 @@ public class LayoutExporter {
 	public static List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception {
 
+		return getDataSiteLevelPortlets(companyId, false);
+	}
+
+	public static List<Portlet> getDataSiteLevelPortlets(
+			long companyId, boolean excludeDataAlwaysStaged)
+		throws Exception {
+
 		List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(companyId);
 
 		Iterator<Portlet> itr = portlets.iterator();
@@ -123,7 +129,9 @@ public class LayoutExporter {
 				portlet.getPortletDataHandlerInstance();
 
 			if ((portletDataHandler == null) ||
-				!portletDataHandler.isDataSiteLevel()) {
+				!portletDataHandler.isDataSiteLevel() ||
+				(excludeDataAlwaysStaged &&
+				 portletDataHandler.isDataAlwaysStaged())) {
 
 				itr.remove();
 			}
@@ -219,8 +227,6 @@ public class LayoutExporter {
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws Exception {
 
-		boolean exportCategories = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.CATEGORIES);
 		boolean exportIgnoreLastPublishDate = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE);
 		boolean exportPermissions = MapUtil.getBoolean(
@@ -469,18 +475,6 @@ public class LayoutExporter {
 
 		Element portletsElement = rootElement.addElement("portlets");
 
-		Layout dummyLayout = new LayoutImpl();
-
-		dummyLayout.setCompanyId(companyId);
-		dummyLayout.setGroupId(groupId);
-
-		if (exportPortletDataAll || exportCategories || group.isCompany()) {
-			_portletExporter.exportPortlet(
-				portletDataContext, layoutCache,
-				PortletKeys.ASSET_CATEGORIES_ADMIN, dummyLayout,
-				portletsElement, false, false, true, false, false);
-		}
-
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
 
 		for (Map.Entry<String, Object[]> portletIdsEntry :
@@ -511,7 +505,10 @@ public class LayoutExporter {
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
 			if (layout == null) {
-				layout = dummyLayout;
+				layout = new LayoutImpl();
+
+				layout.setCompanyId(companyId);
+				layout.setGroupId(groupId);
 			}
 
 			portletDataContext.setPlid(plid);

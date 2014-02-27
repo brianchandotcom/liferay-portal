@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
@@ -40,9 +41,17 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "asset_category";
 
 	public AssetCategoryPortletDataHandler() {
+		setDataAlwaysStaged(true);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(AssetCategory.class),
 			new StagedModelType(AssetVocabulary.class));
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "categories", true, false, null,
+				AssetCategory.class.getName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "vocabularies", true, false, null,
+				AssetVocabulary.class.getName()));
 		setPublishToLiveByDefault(true);
 	}
 
@@ -75,15 +84,19 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ActionableDynamicQuery categoryActionableDynamicQuery =
-			getCategoryActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "categories")) {
+			ActionableDynamicQuery categoryActionableDynamicQuery =
+				getCategoryActionableDynamicQuery(portletDataContext);
 
-		categoryActionableDynamicQuery.performActions();
+			categoryActionableDynamicQuery.performActions();
+		}
 
-		ActionableDynamicQuery vocabularyActionableDynamicQuery =
-			getVocabularyActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "vocabularies")) {
+			ActionableDynamicQuery vocabularyActionableDynamicQuery =
+				getVocabularyActionableDynamicQuery(portletDataContext);
 
-		vocabularyActionableDynamicQuery.performActions();
+			vocabularyActionableDynamicQuery.performActions();
+		}
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -94,24 +107,30 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		Element categoriesElement =
-			portletDataContext.getImportDataGroupElement(AssetCategory.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "categories")) {
+			Element categoriesElement =
+				portletDataContext.getImportDataGroupElement(
+					AssetCategory.class);
 
-		List<Element> categoryElements = categoriesElement.elements();
+			List<Element> categoryElements = categoriesElement.elements();
 
-		for (Element categoryElement : categoryElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, categoryElement);
+			for (Element categoryElement : categoryElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, categoryElement);
+			}
 		}
 
-		Element vocabulariesElement =
-			portletDataContext.getImportDataGroupElement(AssetVocabulary.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "vocabularies")) {
+			Element vocabulariesElement =
+				portletDataContext.getImportDataGroupElement(
+					AssetVocabulary.class);
 
-		List<Element> vocabularyElements = vocabulariesElement.elements();
+			List<Element> vocabularyElements = vocabulariesElement.elements();
 
-		for (Element vocabularyElement : vocabularyElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, vocabularyElement);
+			for (Element vocabularyElement : vocabularyElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, vocabularyElement);
+			}
 		}
 
 		return null;

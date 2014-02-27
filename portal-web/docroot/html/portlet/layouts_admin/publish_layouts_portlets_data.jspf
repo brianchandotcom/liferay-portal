@@ -192,9 +192,6 @@ ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 			<li class="options">
 				<ul class="portlet-list">
-					<li class="tree-item">
-						<aui:input helpMessage="export-import-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= true %>" />
-					</li>
 
 					<%
 					Set<String> displayedControls = new HashSet<String>();

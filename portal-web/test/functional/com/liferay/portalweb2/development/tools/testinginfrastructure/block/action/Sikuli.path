@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMAIL_ADDRESS</td>
+	<td>email_address.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILE_DIALOG</td>
 	<td>file_dialog.png</td>
 	<td></td>
@@ -29,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PASSWORD</td>
+	<td>password.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TESTLAR_FILE</td>
 	<td>test_lar.png</td>
 	<td></td>
@@ -36,6 +46,11 @@
 <tr>
 	<td>TYPE_FILE_NAME</td>
 	<td>type_file_name.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN</td>
+	<td>sign_in.png</td>
 	<td></td>
 </tr>
 </tbody>

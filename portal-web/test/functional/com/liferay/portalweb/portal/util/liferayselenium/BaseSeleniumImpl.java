@@ -213,11 +213,6 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void clickImageElement(String image) throws Exception {
-		LiferaySeleniumHelper.clickImageElement(this, image);
-	}
-
-	@Override
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception {
 
@@ -263,6 +258,11 @@ public abstract class BaseSeleniumImpl
 	@Override
 	public String getCurrentYear() {
 		return _commandProcessor.getString("getCurrentYear", new String[0]);
+	}
+
+	@Override
+	public String getDependenciesDir() {
+		return _dependenciesDir;
 	}
 
 	@Override
@@ -558,6 +558,30 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void sikuliClick(String image) throws Exception {
+		LiferaySeleniumHelper.sikuliClick(this, image);
+	}
+
+	@Override
+	public void sikuliType(String image, String value) throws Exception {
+		LiferaySeleniumHelper.sikuliType(this, image, value);
+	}
+
+	@Override
+	public void sikuliUploadCommonFile(String image, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.sikuliUploadCommonFile(this, image, value);
+	}
+
+	@Override
+	public void sikuliUploadTempFile(String image, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.sikuliUploadTempFile(this, image, value);
+	}
+
+	@Override
 	public void startLogger() {
 	}
 
@@ -568,11 +592,6 @@ public abstract class BaseSeleniumImpl
 	@Override
 	public void typeFrame(String locator, String value) {
 		LiferaySeleniumHelper.typeFrame(this, locator, value);
-	}
-
-	@Override
-	public void typeImageElement(String image, String value) throws Exception {
-		LiferaySeleniumHelper.typeImageElement(this, image, value);
 	}
 
 	@Override

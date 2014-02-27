@@ -83,8 +83,6 @@ public interface LiferaySelenium extends Selenium {
 
 	public void clickAtAndWait(String locator, String coordString);
 
-	public void clickImageElement(String image) throws Exception;
-
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception;
 
@@ -103,6 +101,8 @@ public interface LiferaySelenium extends Selenium {
 	public String getCurrentMonth();
 
 	public String getCurrentYear();
+
+	public String getDependenciesDir();
 
 	public String getEmailBody(String index) throws Exception;
 
@@ -203,13 +203,21 @@ public interface LiferaySelenium extends Selenium {
 
 	public void setTimeoutImplicit(String timeout);
 
+	public void sikuliClick(String image) throws Exception;
+
+	public void sikuliType(String image, String value) throws Exception;
+
+	public void sikuliUploadCommonFile(String image, String value)
+		throws Exception;
+
+	public void sikuliUploadTempFile(String image, String value)
+		throws Exception;
+
 	public void startLogger();
 
 	public void stopLogger();
 
 	public void typeFrame(String locator, String value);
-
-	public void typeImageElement(String image, String value) throws Exception;
 
 	public void uploadCommonFile(String locator, String value);
 

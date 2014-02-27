@@ -14,14 +14,9 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.Sync;
-import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -31,18 +26,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
-@ExecutionTestListeners(
-	listeners = {
-		MainServletExecutionTestListener.class,
-		SynchronousDestinationExecutionTestListener.class
-	})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Sync
 public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 
 	@Before
@@ -69,7 +57,7 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
 		long containerModelId = addContainerModel(
-			DEFAULT_PARENT_CONTAINER_MODEL_ID);
+			_DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
 		long baseModelId = addBaseModel(containerModelId);
 
@@ -91,7 +79,7 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		long baseModelId = addBaseModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		long baseModelId = addBaseModel(_DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
 		addSubscriptionBaseModel(baseModelId);
 
@@ -112,7 +100,7 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
 		long containerModelId = addContainerModel(
-			DEFAULT_PARENT_CONTAINER_MODEL_ID);
+			_DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
 		addSubscriptionContainerModel(containerModelId);
 
@@ -133,11 +121,11 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
 		long containerModelId = addContainerModel(
-			DEFAULT_PARENT_CONTAINER_MODEL_ID);
+			_DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
 		addSubscriptionContainerModel(containerModelId);
 
-		addBaseModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		addBaseModel(_DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
 		Assert.assertEquals(0, logRecords.size());
 	}
@@ -150,7 +138,7 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
 		long containerModelId = addContainerModel(
-			DEFAULT_PARENT_CONTAINER_MODEL_ID);
+			_DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
 		addSubscriptionContainerModel(containerModelId);
 
@@ -172,10 +160,10 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		addSubscriptionContainerModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		addSubscriptionContainerModel(_DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
 		long containerModelId = addContainerModel(
-			DEFAULT_PARENT_CONTAINER_MODEL_ID);
+			_DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
 		addBaseModel(containerModelId);
 
@@ -193,9 +181,9 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		addSubscriptionContainerModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		addSubscriptionContainerModel(_DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
-		addBaseModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		addBaseModel(_DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
 		Assert.assertEquals(1, logRecords.size());
 
@@ -211,10 +199,10 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		addSubscriptionContainerModel(DEFAULT_PARENT_CONTAINER_MODEL_ID);
+		addSubscriptionContainerModel(_DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
 		long containerModelId = addContainerModel(
-			DEFAULT_PARENT_CONTAINER_MODEL_ID);
+			_DEFAULT_PARENT_CONTAINER_MODEL_ID);
 
 		long subcontainerModelId = addContainerModel(containerModelId);
 
@@ -230,19 +218,21 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 	protected abstract long addBaseModel(long containerModelId)
 		throws Exception;
 
-	protected abstract long addContainerModel(long containerModelId)
-		throws Exception;
+	protected long addContainerModel(long containerModelId) throws Exception {
+		return 0;
+	};
 
-	protected abstract void addSubscriptionBaseModel(long baseModelId)
-		throws Exception;
+	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
+		return;
+	}
 
 	protected abstract void addSubscriptionContainerModel(long containerModelId)
 		throws Exception;
 
 	protected abstract long updateEntry(long baseModelId) throws Exception;
 
-	protected static final long DEFAULT_PARENT_CONTAINER_MODEL_ID = 0;
-
 	protected Group group;
+
+	private static final long _DEFAULT_PARENT_CONTAINER_MODEL_ID = 0;
 
 }

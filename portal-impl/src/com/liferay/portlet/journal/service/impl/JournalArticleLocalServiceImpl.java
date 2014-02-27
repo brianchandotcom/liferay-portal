@@ -6429,9 +6429,6 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(article.getUserId());
 
-		subscriptionSender.addPersistedSubscribers(
-			JournalArticle.class.getName(), article.getResourcePrimKey());
-
 		JournalFolder folder = article.getFolder();
 
 		if (folder != null) {

@@ -15,7 +15,6 @@
 package com.liferay.portlet.blogs.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -31,6 +30,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -40,32 +40,6 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
-
-	@Override
-	public long addBaseModel(long containerModelId) throws Exception {
-		BlogsEntry entry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
-
-		return entry.getEntryId();
-	}
-
-	@Override
-	public long addContainerModel(long containerModelId) throws Exception {
-		return 0;
-	}
-
-	@Override
-	public void addSubscriptionBaseModel(long baseModelId) {
-	}
-
-	@Override
-	public void addSubscriptionContainerModel(long containerModelId)
-		throws Exception {
-
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			BlogsEntry.class.getName(), group.getGroupId());
-	}
 
 	@Ignore
 	@Override
@@ -110,7 +84,23 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	public long updateEntry(long baseModelId) {
+	protected long addBaseModel(long containerModelId) throws Exception {
+		BlogsEntry entry = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		return entry.getEntryId();
+	}
+
+	@Override
+	protected void addSubscriptionContainerModel(long containerModelId)
+		throws Exception {
+
+		BlogsEntryLocalServiceUtil.subscribe(
+			TestPropsValues.getUserId(), group.getGroupId());
+	}
+
+	@Override
+	protected long updateEntry(long baseModelId) {
 		return 0;
 	}
 

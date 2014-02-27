@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -36,6 +35,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
+ * @author Roberto Díaz
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -46,50 +46,16 @@ import org.junit.runner.RunWith;
 @Sync
 public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 
+	@Ignore
 	@Override
-	public long addBaseModel(long containerModelId) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		JournalArticle article = JournalTestUtil.addArticle(
-			group.getGroupId(), ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(), serviceContext);
-
-		return article.getResourcePrimKey();
+	@Test
+	public void testSubscriptionBaseModelWhenInContainerModel() {
 	}
 
+	@Ignore
 	@Override
-	public long addContainerModel(long containerModelId) throws Exception {
-		JournalFolder folder = JournalTestUtil.addFolder(
-			group.getGroupId(), containerModelId,
-			ServiceTestUtil.randomString());
-
-		return folder.getFolderId();
-	}
-
-	@Override
-	public void addSubscriptionBaseModel(long baseModelId) throws Exception {
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			JournalArticle.class.getName(), baseModelId);
-	}
-
-	@Override
-	public void addSubscriptionContainerModel(long containerModelId)
-		throws Exception {
-
-		long classPK = containerModelId;
-
-		if (containerModelId == DEFAULT_PARENT_CONTAINER_MODEL_ID) {
-			classPK = group.getGroupId();
-		}
-
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			JournalFolder.class.getName(), classPK);
+	@Test
+	public void testSubscriptionBaseModelWhenInRootContainerModel() {
 	}
 
 	@Ignore
@@ -105,7 +71,39 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	public long updateEntry(long baseModelId) throws Exception {
+	protected long addBaseModel(long containerModelId) throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			group.getGroupId(), ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(), serviceContext);
+
+		return article.getResourcePrimKey();
+	}
+
+	@Override
+	protected long addContainerModel(long containerModelId) throws Exception {
+		JournalFolder folder = JournalTestUtil.addFolder(
+			group.getGroupId(), containerModelId,
+			ServiceTestUtil.randomString());
+
+		return folder.getFolderId();
+	}
+
+	@Override
+	protected void addSubscriptionContainerModel(long containerModelId)
+		throws Exception {
+
+		JournalFolderLocalServiceUtil.subscribe(
+			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected long updateEntry(long baseModelId) throws Exception {
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.getLatestArticle(
 				baseModelId, WorkflowConstants.STATUS_APPROVED, true);

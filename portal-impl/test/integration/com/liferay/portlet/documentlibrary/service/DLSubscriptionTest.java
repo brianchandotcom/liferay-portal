@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -36,6 +35,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -46,8 +46,20 @@ import org.junit.runner.RunWith;
 @Sync
 public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 
+	@Ignore
 	@Override
-	public long addBaseModel(long containerModelId) throws Exception {
+	@Test
+	public void testSubscriptionBaseModelWhenInContainerModel() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSubscriptionBaseModelWhenInRootContainerModel() {
+	}
+
+	@Override
+	protected long addBaseModel(long containerModelId) throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
@@ -65,7 +77,7 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	public long addContainerModel(long containerModelId) throws Exception {
+	protected long addContainerModel(long containerModelId) throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
@@ -77,38 +89,15 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	public void addSubscriptionBaseModel(long baseModelId) {
-	}
-
-	@Override
-	public void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		long classPK = containerModelId;
-
-		if (containerModelId == DEFAULT_PARENT_CONTAINER_MODEL_ID) {
-			classPK = group.getGroupId();
-		}
-
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			Folder.class.getName(), classPK);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionBaseModelWhenInContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionBaseModelWhenInRootContainerModel() {
+		DLAppLocalServiceUtil.subscribeFolder(
+			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override
-	public long updateEntry(long baseModelId) throws Exception {
+	protected long updateEntry(long baseModelId) throws Exception {
 		return 0;
 	}
 

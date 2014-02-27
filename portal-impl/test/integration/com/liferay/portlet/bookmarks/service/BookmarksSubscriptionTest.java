@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -33,6 +32,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
 public class BookmarksSubscriptionTest extends BaseSubscriptionTestCase {
 
 	@Override
-	public long addBaseModel(long containerModelId) throws Exception {
+	protected long addBaseModel(long containerModelId) throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
@@ -60,7 +60,7 @@ public class BookmarksSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	public long addContainerModel(long containerModelId) throws Exception {
+	protected long addContainerModel(long containerModelId) throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
@@ -72,29 +72,21 @@ public class BookmarksSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	public void addSubscriptionBaseModel(long baseModelId) throws Exception {
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			BookmarksEntry.class.getName(), baseModelId);
+	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
+		BookmarksEntryLocalServiceUtil.subscribeEntry(
+			TestPropsValues.getUserId(), baseModelId);
 	}
 
 	@Override
-	public void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		long classPK = containerModelId;
-
-		if (containerModelId == DEFAULT_PARENT_CONTAINER_MODEL_ID) {
-			classPK = group.getGroupId();
-		}
-
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			BookmarksFolder.class.getName(), classPK);
+		BookmarksFolderLocalServiceUtil.subscribeFolder(
+			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override
-	public long updateEntry(long baseModelId) throws Exception {
+	protected long updateEntry(long baseModelId) throws Exception {
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
 			baseModelId);
 

@@ -33,16 +33,14 @@ public class SPIPortalCacheManagerConfigurator {
 			PortalCacheManager<K, V> portalCacheManager)
 		throws RemoteException {
 
-		if (SPIUtil.isSPI()) {
-			SPI spi = SPIUtil.getSPI();
-
-			portalCacheManager = new IntrabandPortalCacheManager<K, V>(
-				spi.getRegistrationReference());
+		if (!SPIUtil.isSPI()) {
+			return portalCacheManager;
 		}
 
-		IntrabandPortalCacheManager.setPortalCacheManager(portalCacheManager);
+		SPI spi = SPIUtil.getSPI();
 
-		return portalCacheManager;
+		return new IntrabandPortalCacheManager<K, V>(
+			spi.getRegistrationReference());
 	}
 
 }

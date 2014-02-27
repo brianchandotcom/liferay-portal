@@ -29,7 +29,7 @@ import com.yahoo.platform.yui.mozilla.javascript.EvaluatorException;
 public class YUIJavaScriptMinifier implements JavaScriptMinifier {
 
 	@Override
-	public String compress(String resource, String content) {
+	public String compress(String resourceName, String content) {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		try {

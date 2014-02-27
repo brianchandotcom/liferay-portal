@@ -57,7 +57,6 @@ public class DBBuilder {
 		new DBBuilder(databaseName, databaseTypes, sqlDir);
 
 		FileUtil.deltree(new File(PropsUtil.get(PropsKeys.LIFERAY_HOME)));
-		System.exit(0);
 	}
 
 	public DBBuilder(

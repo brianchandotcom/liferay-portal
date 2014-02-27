@@ -516,6 +516,10 @@ create database lportal2 character set utf8;</echo>
 		<delete dir="lib/development/libs" />
 	</target>
 
+	<target name="clean-up-web-xml">
+		<copy file="portal-web/docroot/WEB-INF/web.xml" tofile="${app.server.dir}/webapps/ROOT/WEB-INF/web.xml" overwrite="true" />
+	</target>
+
 	<target name="copy-log-file">
 		<for param="log.file">
 			<path>
@@ -2527,6 +2531,17 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</then>
 		</if>
 
+		<if>
+			<isset property="web.xml.timeout" />
+			<then>
+				<replace
+					file="${app.server.dir}/webapps/ROOT/WEB-INF/web.xml"
+					token="&lt;session-timeout&gt;30&lt;/session-timeout&gt;"
+					value="&lt;session-timeout&gt;${web.xml.timeout}&lt;/session-timeout&gt;"
+				/>
+			</then>
+		</if>
+
 		<antcall target="prepare-selenium" />
 
 		<if>
@@ -2623,6 +2638,8 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<antcall target="stop-app-server" />
 
 		<antcall target="clean-up-sikuli-temp-files" />
+
+		<antcall target="clean-up-web-xml" />
 
 		<if>
 			<equals arg1="${browser.type}" arg2="googlechrome" />

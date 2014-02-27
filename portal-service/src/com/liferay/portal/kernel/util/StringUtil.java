@@ -3889,7 +3889,7 @@ public class StringUtil {
 					locale = LocaleUtil.getDefault();
 				}
 
-				return s.toLowerCase(locale);
+				return s.toUpperCase(locale);
 			}
 
 			if ((c >= 'a') && (c <= 'z')) {

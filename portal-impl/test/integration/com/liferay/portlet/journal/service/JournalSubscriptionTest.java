@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -80,13 +79,6 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 			ServiceTestUtil.randomString());
 
 		return folder.getFolderId();
-	}
-
-	@Override
-	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			JournalArticle.class.getName(), baseModelId);
 	}
 
 	@Override

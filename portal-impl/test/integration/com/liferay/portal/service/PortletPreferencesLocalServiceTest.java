@@ -616,13 +616,6 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
 			_layout, _portlet);
 
-		Layout layout = LayoutTestUtil.addLayout(GroupTestUtil.addGroup());
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			TestPropsValues.getCompanyId(), String.valueOf(_PORTLET_ID + 1));
-
-		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, portlet);
-
 		Assert.assertEquals(
 			1,
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
@@ -711,23 +704,27 @@ public class PortletPreferencesLocalServiceTest {
 	public void testGetLayoutPortletPreferencesCountByPlidAndPortletId()
 		throws Exception {
 
-		PortletPreferencesTestUtil.addLayoutPortletPreferences(
-			_layout, _portlet);
-
-		Layout layout = LayoutTestUtil.addLayout(GroupTestUtil.addGroup());
-
-		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
-
 		Assert.assertEquals(
 			0,
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_COMPANY, _layout.getPlid(),
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 				_portlet.getPortletId()));
+
+		PortletPreferencesTestUtil.addLayoutPortletPreferences(
+			_layout, _portlet);
+
 		Assert.assertEquals(
 			1,
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_GROUP, layout.getPlid(),
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 				_portlet.getPortletId()));
+
+		Group group = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addLayout(group);
+
+		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
+
 		Assert.assertEquals(
 			1,
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
@@ -751,6 +748,11 @@ public class PortletPreferencesLocalServiceTest {
 
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
 			layout, _portlet);
+
+		Assert.assertEquals(
+			2,
+			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _portlet.getPortletId()));
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
 			_layout, _portlet);

@@ -145,6 +145,10 @@
 		}
 	}
 
+	.lfr-search .control-group {
+		margin-bottom: 0;
+	}
+
 	@include respond-to(phone) {
 		.form-search .input-append {
 			.btn {

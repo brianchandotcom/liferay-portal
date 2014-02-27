@@ -108,9 +108,9 @@ public class ExportImportConfigurationHelper {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(
-			exportImportConfiguration.getName().replace(
-				StringPool.SPACE, StringPool.UNDERLINE));
+		String name = exportImportConfiguration.getName();
+
+		sb.append(name.replace(StringPool.SPACE, StringPool.UNDERLINE));
 		sb.append(StringPool.DASH);
 		sb.append(Time.getShortTimestamp());
 		sb.append(".lar");

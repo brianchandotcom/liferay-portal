@@ -472,7 +472,7 @@
 
 		<execute macro="AssetPublisherPortlet#configureAPSelectMoreThanOnePG" >
 			<var name="contentName" value="Bookmarks Entry" />
-			<var name="moveSelected" value="True" />
+			<var name="moveSelected" value="true" />
 			<var name="selectContent" value="${contentName}" />
 		</execute>
 

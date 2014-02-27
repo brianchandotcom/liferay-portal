@@ -122,7 +122,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 		>
 
 			<%
-			buffer.append(HtmlUtil.escape(user2.getFullName()));
+			buffer.append(user2.getFullName());
 
 			List<String> names = new ArrayList<String>();
 

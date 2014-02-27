@@ -29,7 +29,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.shopping.NoSuchCartException;
 import com.liferay.portlet.shopping.model.ShoppingCart;
@@ -707,6 +709,54 @@ public class ShoppingUtil {
 		cart.setInsure(false);
 
 		return cart;
+	}
+
+	public static Map<String, String> getEmailDefinitionTerms(
+		RenderRequest request, String emailFromAddress, String emailFromName) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, String> definitionTerms = new HashMap<String, String>();
+
+		definitionTerms.put(
+			"[$FROM_ADDRESS$]", HtmlUtil.escape(emailFromAddress));
+		definitionTerms.put("[$FROM_NAME$]", HtmlUtil.escape(emailFromName));
+		definitionTerms.put(
+			"[$ORDER_BILLING_ADDRESS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-order-billing-address"));
+		definitionTerms.put(
+			"[$ORDER_CURRENCY$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-order-currency"));
+		definitionTerms.put(
+			"[$ORDER_NUMBER$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-order-id"));
+		definitionTerms.put(
+			"[$ORDER_SHIPPING_ADDRESS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-order-shipping-address"));
+		definitionTerms.put(
+			"[$ORDER_TOTAL$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-order-total"));
+
+		Company company = themeDisplay.getCompany();
+
+		definitionTerms.put("[$PORTAL_URL$]", company.getVirtualHostname());
+
+		definitionTerms.put(
+			"[$PORTLET_NAME$]", PortalUtil.getPortletTitle(request));
+		definitionTerms.put(
+			"[$TO_ADDRESS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-address-of-the-email-recipient"));
+		definitionTerms.put(
+			"[$TO_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-name-of-the-email-recipient"));
+
+		return definitionTerms;
 	}
 
 	public static int getFieldsQuantitiesPos(

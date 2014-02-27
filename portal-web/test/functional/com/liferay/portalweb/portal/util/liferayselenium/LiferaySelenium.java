@@ -25,6 +25,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void assertAlert(String pattern) throws Exception;
 
+	public void assertAlertNotPresent() throws Exception;
+
 	public void assertChecked(String pattern) throws Exception;
 
 	public void assertConfirmation(String pattern) throws Exception;

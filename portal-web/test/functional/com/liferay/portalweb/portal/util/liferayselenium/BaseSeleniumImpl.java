@@ -65,6 +65,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void assertAlertNotPresent() throws Exception {
+		LiferaySeleniumHelper.assertAlertNotPresent(this);
+	}
+
+	@Override
 	public void assertChecked(String locator) throws Exception {
 		LiferaySeleniumHelper.assertChecked(this, locator);
 	}

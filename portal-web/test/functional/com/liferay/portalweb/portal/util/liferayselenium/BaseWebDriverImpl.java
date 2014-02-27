@@ -79,6 +79,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void assertAlertNotPresent() throws Exception {
+		LiferaySeleniumHelper.assertAlertNotPresent(this);
+	}
+
+	@Override
 	public void assertChecked(String locator) throws Exception {
 		LiferaySeleniumHelper.assertChecked(this, locator);
 	}

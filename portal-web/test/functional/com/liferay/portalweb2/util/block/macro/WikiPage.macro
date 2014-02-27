@@ -452,7 +452,16 @@
 		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${wikiPageTitle} was moved to the Recycle Bin. Undo" />
-		<execute action="PGWikiAllpages#assertElementNotPresent" locator-key1="WIKI_PAGE_TABLE_PAGE" />
+
+		<if>
+			<equals arg1="${wikiPageTitle}" arg2="FrontPage" />
+			<then>
+				<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_REVISION" value1="1.0" />
+			</then>
+			<else>
+				<execute action="PGWikiAllpages#assertElementNotPresent" locator-key1="WIKI_PAGE_TABLE_PAGE" />
+			</else>
+		</if>
 
 		<execute macro="RecycleBin#emptyCP" />
 	</command>

@@ -30,6 +30,7 @@ public class HtmlUtil {
 	 * Escape given String using XSS recommendations from {@link
 	 * http://www.owasp.org/index.php/Cross_Site_Scripting#How_to_Protect_Yourself}
 	 *
+	 * @param  html The text to be HTML-encoded
 	 * @return the sanitized text that is safe to use in an HTML context
 	 */
 	public static String escape(String html) {
@@ -41,6 +42,8 @@ public class HtmlUtil {
 	 * URL, TEXT). Note that escape(text, ESCAPE_MODE_TEXT) is the same as
 	 * escape(text).
 	 *
+	 * @param  html the text to escape
+	 * @param  mode one of the ESCAPE_MODE_* constants in this class
 	 * @return hex-encoded value of input text for the given use
 	 * @see    escapeCSS, escapeAttribute, escapeURL, escapeJS
 	 */
@@ -50,6 +53,9 @@ public class HtmlUtil {
 
 	/**
 	 * escape the given text so that it can safely be used as an attribute value
+	 * 
+	 * @param  attribute
+	 * @return
 	 */
 	public static String escapeAttribute(String attribute) {
 		return getHtml().escapeAttribute(attribute);
@@ -57,6 +63,9 @@ public class HtmlUtil {
 
 	/**
 	 * escape the given text so that it can safely be used in CSS
+	 * 
+	 * @param  css
+	 * @return
 	 */
 	public static String escapeCSS(String css) {
 		return getHtml().escapeCSS(css);
@@ -64,6 +73,9 @@ public class HtmlUtil {
 
 	/**
 	 * escape the given text so that it can safely be used as a href attribute.
+	 * 
+	 * @param  href
+	 * @return
 	 */
 	public static String escapeHREF(String href) {
 		return getHtml().escapeHREF(href);
@@ -71,6 +83,9 @@ public class HtmlUtil {
 
 	/**
 	 * escape the given text so that it can safely be used in javascript
+	 * 
+	 * @param  js
+	 * @return
 	 */
 	public static String escapeJS(String js) {
 		return getHtml().escapeJS(js);
@@ -78,6 +93,9 @@ public class HtmlUtil {
 
 	/**
 	 * escape the given text so that it can safely be used as a URL
+	 * 
+	 * @param  url
+	 * @return
 	 */
 	public static String escapeURL(String url) {
 		return getHtml().escapeURL(url);
@@ -135,6 +153,9 @@ public class HtmlUtil {
 	/**
 	 * replaces a few fancy unicode characters that MS-Word tends to use with
 	 * some plain HTML entities or characters.
+	 * 
+	 * @param  html
+	 * @return
 	 */
 	public static String replaceMsWordCharacters(String html) {
 		return getHtml().replaceMsWordCharacters(html);
@@ -142,6 +163,9 @@ public class HtmlUtil {
 
 	/**
 	 * replaces all newlines (or carriage-return/new-lines) with "<br />"
+	 * 
+	 * @param  html
+	 * @return
 	 */
 	public static String replaceNewLine(String html) {
 		return getHtml().replaceNewLine(html);
@@ -154,6 +178,7 @@ public class HtmlUtil {
 	 * consist of a separate opening and closing tag. Self-closing tags will
 	 * remain in the result
 	 *
+	 * @param  html the text to be stripped
 	 * @param  tag the tag used for delimiting - give just the tag's name, no
 	 *         &lt; etc.
 	 * @return the stripped text, without the given tag and the contents of the
@@ -165,6 +190,9 @@ public class HtmlUtil {
 
 	/**
 	 * Strips all xml comments
+	 * 
+	 * @param  html
+	 * @return
 	 */
 	public static String stripComments(String html) {
 		return getHtml().stripComments(html);
@@ -177,6 +205,7 @@ public class HtmlUtil {
 	/**
 	 * Encodes text so that it's safe to be used in HTML input fields as value
 	 *
+	 * @param  html the text to be used as value
 	 * @return the text that can be used as input field value
 	 */
 	public static String toInputSafe(String html) {

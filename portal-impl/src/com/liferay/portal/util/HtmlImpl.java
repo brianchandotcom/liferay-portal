@@ -223,6 +223,9 @@ public class HtmlImpl implements Html {
 
 	/**
 	 * escape the given text so that it can safely be used as an attribute value
+	 * 
+	 * @param  attribute
+	 * @return
 	 */
 	@Override
 	public String escapeAttribute(String attribute) {
@@ -231,6 +234,9 @@ public class HtmlImpl implements Html {
 
 	/**
 	 * escape the given text so that it can safely be used in CSS
+	 * 
+	 * @param  css
+	 * @return
 	 */
 	@Override
 	public String escapeCSS(String css) {
@@ -239,6 +245,9 @@ public class HtmlImpl implements Html {
 
 	/**
 	 * escape the given text so that it can safely be used as a href attribute.
+	 * 
+	 * @param  href
+	 * @return
 	 */
 	@Override
 	public String escapeHREF(String href) {
@@ -263,6 +272,9 @@ public class HtmlImpl implements Html {
 
 	/**
 	 * escape the given text so that it can safely be used in javascript
+	 * 
+	 * @param  js
+	 * @return
 	 */
 	@Override
 	public String escapeJS(String js) {
@@ -271,6 +283,9 @@ public class HtmlImpl implements Html {
 
 	/**
 	 * escape the given text so that it can safely be used as a URL
+	 * 
+	 * @param  url
+	 * @return
 	 */
 	@Override
 	public String escapeURL(String url) {
@@ -386,6 +401,9 @@ public class HtmlImpl implements Html {
 	/**
 	 * replaces a few fancy unicode characters that MS-Word tends to use with
 	 * some plain HTML entities or characters.
+	 * 
+	 * @param  text
+	 * @return
 	 */
 	@Override
 	public String replaceMsWordCharacters(String text) {
@@ -394,6 +412,9 @@ public class HtmlImpl implements Html {
 
 	/**
 	 * replaces sll newlines (or carriage-return/new-lines) with "<br />"
+	 * 
+	 * @param  text
+	 * @return
 	 */
 	@Override
 	public String replaceNewLine(String text) {
@@ -425,7 +446,8 @@ public class HtmlImpl implements Html {
 	/**
 	 * Strips all xml comments
 	 *
-	 * @param text the text to be stripped
+	 * @param  text the text to be stripped
+	 * @return
 	 */
 	@Override
 	public String stripComments(String text) {

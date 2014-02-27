@@ -312,15 +312,43 @@ public class StringUtilTest {
 	@Test
 	public void testToLowerCase() throws Exception {
 		Assert.assertEquals(
+			"hello world", StringUtil.toLowerCase("hello world"));
+		Assert.assertEquals(
 			"hello world", StringUtil.toLowerCase("HELLO WORLD"));
+		Assert.assertEquals(
+			"hello world", StringUtil.toLowerCase("hElLo WoRlD"));
+		Assert.assertEquals(
+			"hello-world-1", StringUtil.toLowerCase("HELLO-WORLD-1"));
+	}
+
+	@Test
+	public void testToLowerCaseWithNonASCIICharacters() throws Exception {
 		Assert.assertEquals("\u00F1", StringUtil.toLowerCase("\u00D1"));
+		Assert.assertEquals(
+			"hello world \u00F1", StringUtil.toLowerCase("hello world \u00D1"));
+		Assert.assertEquals(
+			"hello-world-\u00F1", StringUtil.toLowerCase("HELLO-WORLD-\u00D1"));
 	}
 
 	@Test
 	public void testToUpperCase() throws Exception {
 		Assert.assertEquals(
 			"HELLO WORLD", StringUtil.toUpperCase("hello world"));
+		Assert.assertEquals(
+			"HELLO WORLD", StringUtil.toUpperCase("HELLO WORLD"));
+		Assert.assertEquals(
+			"HELLO WORLD", StringUtil.toUpperCase("hElLo WoRlD"));
+		Assert.assertEquals(
+			"HELLO-WORLD-1", StringUtil.toUpperCase("hello-world-1"));
+	}
+
+	@Test
+	public void testToUpperCaseWithNonASCIICharacters() throws Exception {
 		Assert.assertEquals("\u00D1", StringUtil.toUpperCase("\u00F1"));
+		Assert.assertEquals(
+			"HELLO WORLD \u00D1", StringUtil.toUpperCase("hello world \u00F1"));
+		Assert.assertEquals(
+			"HELLO-WORLD-\u00D1", StringUtil.toUpperCase("HELLO-WORLD-\u00F1"));
 	}
 
 	@Test

@@ -19,28 +19,10 @@
 <%@ include file="/html/taglib/taglib-init.jsp" %>
 
 <%
-Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:button-row:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:button-row:scopedAttributes");
-
-Map<String, Object> _options = new HashMap<String, Object>();
-
-if ((scopedAttributes != null) && !scopedAttributes.isEmpty()) {
-	_options.putAll(scopedAttributes);
-}
-
-if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
-	_options.putAll(dynamicAttributes);
-}
-
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:button-row:cssClass"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:button-row:id"));
-
-_updateOptions(_options, "cssClass", cssClass);
-_updateOptions(_options, "id", id);
+Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:button-row:dynamicAttributes");
+Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:button-row:scopedAttributes");
 %>
 
 <%@ include file="/html/taglib/aui/button_row/init-ext.jspf" %>
-
-<%!
-private static final String _NAMESPACE = "aui:button-row:";
-%>

@@ -19,36 +19,14 @@
 <%@ include file="/html/taglib/taglib-init.jsp" %>
 
 <%
-Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:col:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:col:scopedAttributes");
-
-Map<String, Object> _options = new HashMap<String, Object>();
-
-if ((scopedAttributes != null) && !scopedAttributes.isEmpty()) {
-	_options.putAll(scopedAttributes);
-}
-
-if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
-	_options.putAll(dynamicAttributes);
-}
-
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:col:cssClass"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:col:id"));
 int offset = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:col:offset")));
 int offsetWidth = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:col:offsetWidth")));
 int span = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:col:span")), 12);
 int width = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:col:width")));
-
-_updateOptions(_options, "cssClass", cssClass);
-_updateOptions(_options, "id", id);
-_updateOptions(_options, "offset", offset);
-_updateOptions(_options, "offsetWidth", offsetWidth);
-_updateOptions(_options, "span", span);
-_updateOptions(_options, "width", width);
+Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:col:dynamicAttributes");
+Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:col:scopedAttributes");
 %>
 
 <%@ include file="/html/taglib/aui/col/init-ext.jspf" %>
-
-<%!
-private static final String _NAMESPACE = "aui:col:";
-%>

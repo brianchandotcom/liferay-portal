@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -680,11 +681,18 @@ public class EditFileEntryAction extends PortletAction {
 				"please-enter-a-file-with-a-valid-file-name");
 		}
 		else if (e instanceof FileSizeException) {
-			long maxSizeMB = PrefsPropsUtil.getLong(
-				PropsKeys.DL_FILE_MAX_SIZE) / 1024 / 1024;
+			long fileMaxSize = PrefsPropsUtil.getLong(
+				PropsKeys.DL_FILE_MAX_SIZE);
+
+			if (fileMaxSize == 0) {
+				fileMaxSize = PrefsPropsUtil.getLong(
+					PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+			}
 
 			errorMessage = themeDisplay.translate(
-				"file-size-is-larger-than-x-megabytes", maxSizeMB);
+				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
+				TextFormatter.formatStorageSize(
+					fileMaxSize, themeDisplay.getLocale()));
 		}
 		else if (e instanceof InvalidFileEntryTypeException) {
 			errorMessage = themeDisplay.translate(
@@ -857,12 +865,11 @@ public class EditFileEntryAction extends PortletAction {
 							PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 					}
 
-					fileMaxSize /= 1024;
-
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-file-size-no-larger" +
 							"-than-x",
-						fileMaxSize);
+						TextFormatter.formatStorageSize(
+							fileMaxSize, themeDisplay.getLocale()));
 
 					errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 				}

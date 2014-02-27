@@ -38,7 +38,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 <liferay-ui:error exception="<%= LARFileException.class %>" message="please-specify-a-lar-file-to-import" />
 
 <liferay-ui:error exception="<%= LARFileSizeException.class %>">
-	<liferay-ui:message arguments="<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024 %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE), locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= LARTypeException.class %>">
@@ -161,7 +161,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 						<liferay-ui:message key="size" />
 					</dt>
 					<dd>
-						<%= fileEntry.getSize() / 1024 %>k
+						<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>
 					</dd>
 				</dl>
 			</aui:fieldset>

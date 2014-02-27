@@ -7,19 +7,21 @@ AUI.add(
 			{
 				ATTRS: {
 					maxFileSize: {
-						value: null
+						validator: Lang.isNumber
 					},
 
 					previewURL: {
+						validator: Lang.isString,
 						value: null
 					},
 
 					uploadURL: {
+						validator: Lang.isString,
 						value: null
 					}
 				},
 
-				AUGMENTS: [Liferay.PortletBase],
+				AUGMENTS: [Liferay.PortletBase, Liferay.StorageFormatter],
 
 				EXTENDS: A.Base,
 
@@ -96,13 +98,17 @@ AUI.add(
 							exception = 'TypeException';
 						}
 
+						var message;
+
 						if (exception) {
 							var message = '';
 
 							if (exception == 'FileSizeException') {
+								var maxFileSize = instance.formatStorage(instance.get('maxFileSize'));
+
 								message = Lang.sub(
-									Liferay.Language.get('upload-images-no-larger-than-x-k'),
-									[instance.get('maxFileSize')]
+									Liferay.Language.get('upload-images-no-larger-than-x'),
+									[maxFileSize]
 								);
 							}
 							else {
@@ -290,6 +296,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-image-cropper', 'aui-io-request', 'liferay-portlet-base']
+		requires: ['aui-image-cropper', 'aui-io-request', 'liferay-portlet-base', 'liferay-storage-formatter']
 	}
 );

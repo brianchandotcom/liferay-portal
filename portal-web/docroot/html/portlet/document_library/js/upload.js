@@ -87,12 +87,6 @@ AUI.add(
 
 		var STR_NAVIGATION_OVERLAY_BACKGROUND = '#FFF';
 
-		var STR_SIZE_SUFFIX_KB = 'k';
-
-		var STR_SIZE_SUFFIX_MB = 'MB';
-
-		var STR_SIZE_SUFFIX_GB = 'GB';
-
 		var STR_SPACE = ' ';
 
 		var STR_THUMBNAIL_EXTENSION = '.png';
@@ -394,8 +388,6 @@ AUI.add(
 			_createEntryRow: function(name, size) {
 				var instance = this;
 
-				var storageSize = instance._formatStorageSize(size);
-
 				var searchContainerNode = instance._entriesContainer.one(SELECTOR_SEARCH_CONTAINER);
 
 				var searchContainer = Liferay.SearchContainer.get(searchContainerNode.attr('id'));
@@ -409,7 +401,7 @@ AUI.add(
 							value = sub(TPL_ENTRY_ROW_TITLE, [name]);
 						}
 						else if (item == 'size') {
-							value = storageSize;
+							value = instance.formatStorage(size);
 						}
 						else if (item == 'downloads') {
 							value = '0';
@@ -597,34 +589,6 @@ AUI.add(
 
 					resultsNode.addClass(uploadResultClass);
 				}
-			},
-
-			_formatStorageSize: function(size) {
-				var instance = this;
-
-				var suffix = STR_SIZE_SUFFIX_KB;
-
-				size /= SIZE_DENOMINATOR;
-
-				if (size > SIZE_DENOMINATOR) {
-					suffix = STR_SIZE_SUFFIX_MB;
-
-					size /= SIZE_DENOMINATOR;
-				}
-
-				if (size > SIZE_DENOMINATOR) {
-					suffix = STR_SIZE_SUFFIX_GB;
-
-					size /= SIZE_DENOMINATOR;
-				}
-
-				var precision = 1;
-
-				if (suffix == STR_SIZE_SUFFIX_KB) {
-					precision = 0;
-				}
-
-				return LString.round(size, precision) + suffix;
 			},
 
 			_getCurrentUploadData: function() {
@@ -1239,8 +1203,6 @@ AUI.add(
 
 				var maxFileSize = instance._maxFileSize;
 
-				var invalidSizeText = sub(instance._invalidFileSizeText, [maxFileSize / 1024]);
-
 				return AArray.partition(
 					data,
 					function(item, index, collection) {
@@ -1250,7 +1212,7 @@ AUI.add(
 						var type = item.get('type') || '';
 
 						if ((maxFileSize !== 0) && (size > maxFileSize)) {
-							errorMessage = invalidSizeText;
+							errorMessage = sub(instance._invalidFileSizeText, [instance.formatStorage(instance._maxFileSize)]);
 						}
 						else if (!type) {
 							errorMessage = instance._invalidFileType;
@@ -1274,6 +1236,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-search-container', 'uploader']
+		requires: ['aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-search-container', 'liferay-storage-formatter', 'uploader']
 	}
 );

@@ -211,7 +211,7 @@ AUI.add(
 					}
 				},
 
-				AUGMENTS: [Liferay.PortletBase],
+				AUGMENTS: [Liferay.PortletBase, Liferay.StorageFormatter],
 
 				NAME: 'liferayupload',
 
@@ -244,9 +244,9 @@ AUI.add(
 							);
 						}
 						else {
-							var maxFileSizeKB = Math.floor(instance.get('maxFileSize') / 1024);
+							var maxFileSize = instance.formatStorage(instance.get('maxFileSize'));
 
-							instance._invalidFileSizeText = Lang.sub(strings.invalidFileSizeText, [maxFileSizeKB]);
+							instance._invalidFileSizeText = Lang.sub(strings.invalidFileSizeText, [maxFileSize]);
 
 							instance._metadataContainer = instance.get('metadataContainer');
 							instance._metadataExplanationContainer = instance.get('metadataExplanationContainer');
@@ -1152,6 +1152,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'aui-template-deprecated', 'collection', 'liferay-portlet-base', 'uploader']
+		requires: ['aui-io-request', 'aui-template-deprecated', 'collection', 'liferay-portlet-base', 'liferay-storage-formatter', 'uploader']
 	}
 );

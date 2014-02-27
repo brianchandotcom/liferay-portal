@@ -455,7 +455,8 @@
 						requires: [
 							'aui-image-cropper',
 							'aui-io-request',
-							'liferay-portlet-base'
+							'liferay-portlet-base',
+							'liferay-storage-formatter'
 						]
 					},
 					'liferay-logo-selector': {
@@ -668,6 +669,13 @@
 							'aui-node'
 						]
 					},
+					'liferay-storage-formatter': {
+						path: 'storage_formatter.js',
+						requires: [
+							'aui-base',
+							'datatype-number-format'
+						]
+					},
 					'liferay-store': {
 						path: 'store.js',
 						requires: [
@@ -713,6 +721,7 @@
 							'aui-template-deprecated',
 							'collection',
 							'liferay-portlet-base',
+							'liferay-storage-formatter',
 							'uploader'
 						]
 					},

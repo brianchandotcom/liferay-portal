@@ -189,4 +189,37 @@ public class TextFormatterTest {
 		Assert.assertEquals(expected, actual);
 	}
 
+	@Test
+	public void testformatStorageSizeOneGB() throws Exception {
+		long bytes = 1024 * 1024 * 1024;
+
+		Assert.assertEquals(
+			"1GB", TextFormatter.formatStorageSize(bytes, LocaleUtil.SPAIN));
+
+		Assert.assertEquals(
+			"1GB", TextFormatter.formatStorageSize(bytes, LocaleUtil.US));
+	}
+
+	@Test
+	public void testformatStorageSizeOneKB() throws Exception {
+		long bytes = 1024;
+
+		Assert.assertEquals(
+			"1k", TextFormatter.formatStorageSize(bytes, LocaleUtil.SPAIN));
+
+		Assert.assertEquals(
+			"1k", TextFormatter.formatStorageSize(bytes, LocaleUtil.US));
+	}
+
+	@Test
+	public void testformatStorageSizeOneMB() throws Exception {
+		long bytes = 1024 * 1024;
+
+		Assert.assertEquals(
+			"1MB", TextFormatter.formatStorageSize(bytes, LocaleUtil.SPAIN));
+
+		Assert.assertEquals(
+			"1MB", TextFormatter.formatStorageSize(bytes, LocaleUtil.US));
+	}
+
 }

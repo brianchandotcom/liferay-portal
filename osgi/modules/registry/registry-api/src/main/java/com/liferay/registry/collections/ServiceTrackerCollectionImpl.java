@@ -33,9 +33,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentNavigableMap;
-import java.util.concurrent.ConcurrentSkipListMap;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Deliberately package private.
@@ -145,9 +143,7 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
 	@Override
 	public boolean contains(Object service) {
-		List<S> services = _servicesList.get();
-
-		return services.contains(service);
+		return _services.contains(service);
 	}
 
 	@Override
@@ -157,16 +153,12 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
 	@Override
 	public S get(int index) {
-		List<S> services = _servicesList.get();
-
-		return services.get(index);
+		return _services.get(index).service;
 	}
 
 	@Override
 	public int indexOf(Object service) {
-		List<S> services = _servicesList.get();
-
-		return services.indexOf(service);
+		return _services.indexOf(service);
 	}
 
 	@Override
@@ -176,30 +168,22 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
 	@Override
 	public Iterator<S> iterator() {
-		List<S> services = _servicesList.get();
-
-		return services.iterator();
+		return new ServiceTrackerIterator(_services.listIterator());
 	}
 
 	@Override
 	public int lastIndexOf(Object service) {
-		List<S> services = _servicesList.get();
-
-		return services.lastIndexOf(service);
+		return _services.lastIndexOf(service);
 	}
 
 	@Override
 	public ListIterator<S> listIterator() {
-		List<S> services = _servicesList.get();
-
-		return services.listIterator();
+		return new ServiceTrackerIterator(_services.listIterator());
 	}
 
 	@Override
 	public ListIterator<S> listIterator(int index) {
-		List<S> services = _servicesList.get();
-
-		return services.listIterator(index);
+		return new ServiceTrackerIterator(_services.listIterator(index));
 	}
 
 	@Override
@@ -242,24 +226,26 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 	}
 
 	@Override
-	public List<S> subList(int fromIndex, int toIndex) {
-		List<S> services = _servicesList.get();
+	public java.util.List<S> subList(int fromIndex, int toIndex) {
+		List<EntryWrapper> subList = _services.subList(fromIndex, toIndex);
 
-		return services.subList(fromIndex, toIndex);
+		List<S> list = new ArrayList<S>();
+
+		for (EntryWrapper entryWrapper : subList) {
+			list.add(entryWrapper.service);
+		}
+
+		return list;
 	}
 
 	@Override
 	public Object[] toArray() {
-		List<S> services = _servicesList.get();
-
-		return services.toArray();
+		return _services.toArray();
 	}
 
 	@Override
-	public <T> T[] toArray(T[] servicesArray) {
-		List<S> services = _servicesList.get();
-
-		return services.toArray(servicesArray);
+	public <T> T[] toArray(T[] services) {
+		return _services.toArray(services);
 	}
 
 	private Filter _getFilter(Filter filter, Class<S> clazz) {
@@ -289,11 +275,8 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 	private final Map<String, Object> _properties;
 	private final Map<S, ServiceRegistration<S>> _serviceRegistrations =
 		new ConcurrentHashMap<S, ServiceRegistration<S>>();
-	private final ConcurrentNavigableMap<ServiceReference<S>, S> _services =
-		new ConcurrentSkipListMap<ServiceReference<S>, S>(
-			Collections.reverseOrder());
-	private final AtomicReference<List<S>> _servicesList =
-		new AtomicReference<List<S>>();
+	private final List<EntryWrapper> _services =
+		new CopyOnWriteArrayList<EntryWrapper>();
 	private final ServiceTracker<S, S> _serviceTracker;
 
 	private class DefaultServiceTrackerCustomizer
@@ -319,13 +302,7 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 				service = registry.getService(serviceReference);
 			}
 
-			if (service != null) {
-				_services.put(serviceReference, service);
-
-				_servicesList.set(
-					Collections.unmodifiableList(
-						new ArrayList<S>(_services.values())));
-			}
+			update(serviceReference, service, false);
 
 			return service;
 		}
@@ -339,13 +316,7 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 					serviceReference, service);
 			}
 
-			if (service != null) {
-				_services.put(serviceReference, service);
-
-				_servicesList.set(
-					Collections.unmodifiableList(
-						new ArrayList<S>(_services.values())));
-			}
+			update(serviceReference, service, false);
 		}
 
 		@Override
@@ -357,18 +328,115 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 					serviceReference, service);
 			}
 
-			if (_services.remove(serviceReference) != null) {
-				_servicesList.set(
-					Collections.unmodifiableList(
-						new ArrayList<S>(_services.values())));
-			}
+			update(serviceReference, service, true);
 
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
 		}
 
+		private void update(
+			ServiceReference<S> serviceReference, S service, boolean remove) {
+
+			if (service == null) {
+				return;
+			}
+
+			EntryWrapper entryWrapper = new EntryWrapper(
+				serviceReference, service);
+
+			synchronized(_services) {
+				int position = Collections.binarySearch(
+					_services, entryWrapper);
+
+				if (remove) {
+					if (position >= 0) {
+						_services.remove(position);
+					}
+				}
+				else if (position < 0) {
+					_services.add(((-position) - 1), entryWrapper);
+				}
+			}
+		}
+
 		private final ServiceTrackerCustomizer<S, S> _serviceTrackerCustomizer;
+
+	}
+
+	private class EntryWrapper implements Comparable<EntryWrapper> {
+
+		public EntryWrapper(ServiceReference<S> serviceReference, S service) {
+			this.serviceReference = serviceReference;
+			this.service = service;
+		}
+
+		@Override
+		public int compareTo(EntryWrapper entryWrapper) {
+
+			// Note the order is deliberately reversed
+
+			return entryWrapper.serviceReference.compareTo(
+				this.serviceReference);
+		}
+
+		S service;
+		ServiceReference<S> serviceReference;
+
+	}
+
+	private class ServiceTrackerIterator implements ListIterator<S> {
+
+		public ServiceTrackerIterator(ListIterator<EntryWrapper> listIterator) {
+			_listIterator = listIterator;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return _listIterator.hasNext();
+		}
+
+		@Override
+		public S next() {
+			return _listIterator.next().service;
+		}
+
+		@Override
+		public boolean hasPrevious() {
+			return _listIterator.hasPrevious();
+		}
+
+		@Override
+		public S previous() {
+			return _listIterator.previous().service;
+		}
+
+		@Override
+		public int nextIndex() {
+			return _listIterator.nextIndex();
+		}
+
+		@Override
+		public int previousIndex() {
+			return _listIterator.previousIndex();
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void set(S e) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void add(S e) {
+			throw new UnsupportedOperationException();
+		}
+
+		ListIterator<EntryWrapper> _listIterator;
 
 	}
 

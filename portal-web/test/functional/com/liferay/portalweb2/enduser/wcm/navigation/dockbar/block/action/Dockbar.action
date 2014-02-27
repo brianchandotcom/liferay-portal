@@ -18,6 +18,10 @@
 			<execute function="AssertClick#assertTextClickAtAddApplication" />
 		</case>
 
+		<case locator-key1="ADD_PAGE_BUTTON">
+			<execute function="AssertClick#pauseAssertTextClickAt" />
+		</case>
+
 		<case locator-key1="ADD_PAGE_LINK">
 			<execute function="AssertClick#assertTextClickAtAddApplication" />
 		</case>

@@ -53,6 +53,8 @@ public interface IndexAccessor {
 
 	public Directory getLuceneDir();
 
+	public void invalidate();
+
 	public void loadIndex(InputStream inputStream) throws IOException;
 
 	public void releaseIndexSearcher(IndexSearcher indexSearcher)

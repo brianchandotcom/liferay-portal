@@ -22,12 +22,18 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.AlreadyClosedException;
+import org.apache.lucene.store.Directory;
 
 /**
  * @author Tina Tian
  * @author Shuyang Zhou
  */
 public class IndexSearcherManager {
+
+	public IndexSearcherManager(Directory directory) throws IOException {
+		_indexSearcher = _createIndexSearcher(
+			IndexReader.open(directory, true));
+	}
 
 	public IndexSearcherManager(IndexWriter writer) throws IOException {
 		_indexSearcher = _createIndexSearcher(IndexReader.open(writer, true));

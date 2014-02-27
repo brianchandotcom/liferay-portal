@@ -1530,7 +1530,7 @@ Please set the property "jdk.6.home" in build.properties.
 	</target>
 
 	<target name="format-js">
-		<taskdef classname="com.philmander.jshint.JsHintAntTask" classpath="${project.dir}/lib/development/ant-jshint.jar" name="jshint" />
+		<taskdef classname="com.philmander.jshint.JsHintAntTask" classpath="${project.dir}/lib/development/ant-jshint.jar:${project.dir}/lib/portal/closure-compiler.jar" name="jshint" />
 
 		<jshint
 			dir="${project.dir}"

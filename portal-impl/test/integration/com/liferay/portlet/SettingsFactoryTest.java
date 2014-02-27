@@ -64,8 +64,7 @@ public class SettingsFactoryTest {
 	@Test
 	public void testGetPortletInstanceSettings() throws Exception {
 		Settings portletInstanceSettings =
-			_settingsFactory.getPortletInstanceSettings(
-				_layout, _portletId);
+			_settingsFactory.getPortletInstanceSettings(_layout, _portletId);
 
 		String[] values = portletInstanceSettings.getValues(_NAME, null);
 
@@ -80,7 +79,6 @@ public class SettingsFactoryTest {
 	private Layout _layout;
 	private String _portletId = PortletKeys.NAVIGATION;
 	private Map<String, String[]> _preferenceMap;
-	private SettingsFactory _settingsFactory =
-		new SettingsFactoryImpl();
+	private SettingsFactory _settingsFactory = new SettingsFactoryImpl();
 
 }

@@ -509,51 +509,6 @@ public class LocalizationImpl implements Localization {
 	}
 
 	@Override
-	public String getSettingsValue(
-		Settings settings, String key, String languageId) {
-
-		return getSettingsValue(settings, key, languageId, true);
-	}
-
-	@Override
-	public String getSettingsValue(
-		Settings settings, String key, String languageId, boolean useDefault) {
-
-		String localizedKey = getPreferencesKey(key, languageId);
-
-		String value = settings.getValue(localizedKey, StringPool.BLANK);
-
-		if (useDefault && Validator.isNull(value)) {
-			value = settings.getValue(key, StringPool.BLANK);
-		}
-
-		return value;
-	}
-
-	@Override
-	public String[] getSettingsValues(
-		Settings settings, String key, String languageId) {
-
-		return getSettingsValues(settings, key, languageId, true);
-	}
-
-	@Override
-	public String[] getSettingsValues(
-		Settings settings, String key, String languageId, boolean useDefault) {
-
-		String localizedKey = getPreferencesKey(key, languageId);
-
-		String[] values = settings.getValues(
-			localizedKey, new String[0]);
-
-		if (useDefault && ArrayUtil.isEmpty(values)) {
-			values = settings.getValues(key, new String[0]);
-		}
-
-		return values;
-	}
-
-	@Override
 	public String getPreferencesKey(String key, String languageId) {
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getDefault());
@@ -606,6 +561,50 @@ public class LocalizationImpl implements Localization {
 
 		if (useDefault && ArrayUtil.isEmpty(values)) {
 			values = preferences.getValues(key, new String[0]);
+		}
+
+		return values;
+	}
+
+	@Override
+	public String getSettingsValue(
+		Settings settings, String key, String languageId) {
+
+		return getSettingsValue(settings, key, languageId, true);
+	}
+
+	@Override
+	public String getSettingsValue(
+		Settings settings, String key, String languageId, boolean useDefault) {
+
+		String localizedKey = getPreferencesKey(key, languageId);
+
+		String value = settings.getValue(localizedKey, StringPool.BLANK);
+
+		if (useDefault && Validator.isNull(value)) {
+			value = settings.getValue(key, StringPool.BLANK);
+		}
+
+		return value;
+	}
+
+	@Override
+	public String[] getSettingsValues(
+		Settings settings, String key, String languageId) {
+
+		return getSettingsValues(settings, key, languageId, true);
+	}
+
+	@Override
+	public String[] getSettingsValues(
+		Settings settings, String key, String languageId, boolean useDefault) {
+
+		String localizedKey = getPreferencesKey(key, languageId);
+
+		String[] values = settings.getValues(localizedKey, new String[0]);
+
+		if (useDefault && ArrayUtil.isEmpty(values)) {
+			values = settings.getValues(key, new String[0]);
 		}
 
 		return values;

@@ -32,6 +32,14 @@ public class SettingsFactoryUtil {
 		getSettingsFactory().clearCache();
 	}
 
+	public static Settings getPortletInstanceSettings(
+			Layout layout, String portletId)
+		throws SystemException {
+
+		return getSettingsFactory().getPortletInstanceSettings(
+			layout, portletId);
+	}
+
 	public static Settings getServiceCompanySettings(
 			long companyId, String serviceId)
 		throws SystemException {
@@ -44,21 +52,11 @@ public class SettingsFactoryUtil {
 			long groupId, String serviceId)
 		throws PortalException, SystemException {
 
-		return getSettingsFactory().getServiceGroupSettings(
-			groupId, serviceId);
-	}
-
-	public static Settings getPortletInstanceSettings(
-			Layout layout, String portletId)
-		throws SystemException {
-
-		return getSettingsFactory().getPortletInstanceSettings(
-			layout, portletId);
+		return getSettingsFactory().getServiceGroupSettings(groupId, serviceId);
 	}
 
 	public static SettingsFactory getSettingsFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			SettingsFactoryUtil.class);
+		PortalRuntimePermission.checkGetBeanProperty(SettingsFactoryUtil.class);
 
 		return _settingsFactory;
 	}

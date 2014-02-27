@@ -188,11 +188,6 @@ public class PortletDisplay implements Serializable {
 		return _columnPos;
 	}
 
-	public Settings getServiceCompanySettings() throws SystemException {
-		return SettingsFactoryUtil.getServiceCompanySettings(
-			_themeDisplay.getCompanyId(), _id);
-	}
-
 	public StringBundler getContent() {
 		return _content;
 	}
@@ -209,19 +204,6 @@ public class PortletDisplay implements Serializable {
 		return _description;
 	}
 
-	public Settings getServiceGroupSettings()
-		throws PortalException, SystemException {
-
-		String portletId = _id;
-
-		if (Validator.isNotNull(_portletResource)) {
-			portletId = _portletResource;
-		}
-
-		return SettingsFactoryUtil.getServiceGroupSettings(
-			_themeDisplay.getSiteGroupId(), portletId);
-	}
-
 	public String getId() {
 		return _id;
 	}
@@ -234,9 +216,7 @@ public class PortletDisplay implements Serializable {
 		return _namespace;
 	}
 
-	public Settings getPortletInstanceSettings()
-		throws SystemException {
-
+	public Settings getPortletInstanceSettings() throws SystemException {
 		return SettingsFactoryUtil.getPortletInstanceSettings(
 			_themeDisplay.getLayout(), _id);
 	}
@@ -255,6 +235,24 @@ public class PortletDisplay implements Serializable {
 
 	public String getRootPortletId() {
 		return _rootPortletId;
+	}
+
+	public Settings getServiceCompanySettings() throws SystemException {
+		return SettingsFactoryUtil.getServiceCompanySettings(
+			_themeDisplay.getCompanyId(), _id);
+	}
+
+	public Settings getServiceGroupSettings()
+		throws PortalException, SystemException {
+
+		String portletId = _id;
+
+		if (Validator.isNotNull(_portletResource)) {
+			portletId = _portletResource;
+		}
+
+		return SettingsFactoryUtil.getServiceGroupSettings(
+			_themeDisplay.getSiteGroupId(), portletId);
 	}
 
 	public ThemeDisplay getThemeDisplay() {

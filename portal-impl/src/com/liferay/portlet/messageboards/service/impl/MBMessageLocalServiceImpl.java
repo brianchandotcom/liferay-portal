@@ -59,9 +59,9 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.Settings;
 import com.liferay.portlet.SettingsFactoryUtil;
-import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -2020,7 +2020,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			MBUtil.getEmailMessageAddedEnabled(settings)) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-			MBUtil.getEmailMessageUpdatedEnabled(settings)) {
+				 MBUtil.getEmailMessageUpdatedEnabled(settings)) {
 		}
 		else {
 			return;

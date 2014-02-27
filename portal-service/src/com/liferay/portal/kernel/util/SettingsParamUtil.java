@@ -29,8 +29,7 @@ public class SettingsParamUtil {
 	public static boolean getBoolean(
 		Settings settings, HttpServletRequest request, String param) {
 
-		return getBoolean(
-			settings, request, param, GetterUtil.DEFAULT_BOOLEAN);
+		return getBoolean(settings, request, param, GetterUtil.DEFAULT_BOOLEAN);
 	}
 
 	public static boolean getBoolean(
@@ -67,8 +66,7 @@ public class SettingsParamUtil {
 	public static double getDouble(
 		Settings settings, HttpServletRequest request, String param) {
 
-		return getDouble(
-			settings, request, param, GetterUtil.DEFAULT_DOUBLE);
+		return getDouble(settings, request, param, GetterUtil.DEFAULT_DOUBLE);
 	}
 
 	public static double getDouble(
@@ -105,8 +103,7 @@ public class SettingsParamUtil {
 	public static int getInteger(
 		Settings settings, HttpServletRequest request, String param) {
 
-		return getInteger(
-			settings, request, param, GetterUtil.DEFAULT_INTEGER);
+		return getInteger(settings, request, param, GetterUtil.DEFAULT_INTEGER);
 	}
 
 	public static int getInteger(
@@ -143,8 +140,7 @@ public class SettingsParamUtil {
 	public static long getLong(
 		Settings settings, HttpServletRequest request, String param) {
 
-		return getLong(
-			settings, request, param, GetterUtil.DEFAULT_LONG);
+		return getLong(settings, request, param, GetterUtil.DEFAULT_LONG);
 	}
 
 	public static long getLong(

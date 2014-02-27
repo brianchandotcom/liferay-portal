@@ -23,8 +23,7 @@ import org.junit.Test;
 /**
  * @author Jorge Ferrer
  */
-public class PortletInstanceSettingsTest
-	extends ServiceGroupSettingsTest {
+public class PortletInstanceSettingsTest extends ServiceGroupSettingsTest {
 
 	@Before
 	@Override

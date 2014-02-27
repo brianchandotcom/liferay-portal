@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
-import net.htmlparser.jericho.Renderer;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Clarence Shen

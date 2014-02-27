@@ -16,9 +16,11 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.UserConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,6 +29,15 @@ import java.util.List;
 public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 
 	public UserPermissionCheckerBagImpl() {
+		this(UserConstants.DEFAULT_USER_ID);
+	}
+
+	public UserPermissionCheckerBagImpl(long userId) {
+		_userGroups = Collections.<Group>emptyList();
+		_userId = userId;
+		_userOrgs = Collections.<Organization>emptyList();
+		_userOrgGroups = Collections.<Group>emptyList();
+		_userUserGroupGroups = Collections.<Group>emptyList();
 	}
 
 	public UserPermissionCheckerBagImpl(
@@ -112,10 +123,10 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 	}
 
 	private List<Group> _groups;
-	private List<Group> _userGroups;
-	private long _userId;
-	private List<Group> _userOrgGroups;
-	private List<Organization> _userOrgs;
-	private List<Group> _userUserGroupGroups;
+	private final List<Group> _userGroups;
+	private final long _userId;
+	private final List<Group> _userOrgGroups;
+	private final List<Organization> _userOrgs;
+	private final List<Group> _userUserGroupGroups;
 
 }

@@ -22,6 +22,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
 import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +43,11 @@ public class PermissionCheckerBagImpl
 	extends UserPermissionCheckerBagImpl implements PermissionCheckerBag {
 
 	public PermissionCheckerBagImpl() {
+		this(UserConstants.DEFAULT_USER_ID);
+	}
+
+	public PermissionCheckerBagImpl(long userId) {
+		this(userId, Collections.<Role>emptyList());
 	}
 
 	public PermissionCheckerBagImpl(
@@ -49,6 +56,12 @@ public class PermissionCheckerBagImpl
 		List<Role> roles) {
 
 		super(userId, userGroups, userOrgs, userOrgGroups, userUserGroupGroups);
+
+		_roles = roles;
+	}
+
+	public PermissionCheckerBagImpl(long userId, List<Role> roles) {
+		super(userId);
 
 		_roles = roles;
 	}
@@ -459,6 +472,6 @@ public class PermissionCheckerBagImpl
 	private Map<Long, Boolean> _organizationOwners =
 		new HashMap<Long, Boolean>();
 	private long[] _roleIds;
-	private List<Role> _roles;
+	private final List<Role> _roles;
 
 }

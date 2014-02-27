@@ -156,20 +156,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			// as this implies group membership which is incorrect in the case
 			// of unauthenticated users.
 
-			bag = new PermissionCheckerBagImpl(
-				defaultUserId, Collections.<Group>emptyList(),
-				Collections.<Organization>emptyList(),
-				Collections.<Group>emptyList(), Collections.<Group>emptyList(),
-				roles);
+			bag = new PermissionCheckerBagImpl(defaultUserId, roles);
 		}
 		finally {
 			if (bag == null) {
-				bag = new PermissionCheckerBagImpl(
-					defaultUserId, Collections.<Group>emptyList(),
-					Collections.<Organization>emptyList(),
-					Collections.<Group>emptyList(),
-					Collections.<Group>emptyList(),
-					Collections.<Role>emptyList());
+				bag = new PermissionCheckerBagImpl(defaultUserId);
 			}
 
 			PermissionCacheUtil.putBag(
@@ -450,12 +441,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 		finally {
 			if (bag == null) {
-				bag = new PermissionCheckerBagImpl(
-					userId, Collections.<Group>emptyList(),
-					Collections.<Organization>emptyList(),
-					Collections.<Group>emptyList(),
-					Collections.<Group>emptyList(),
-					Collections.<Role>emptyList());
+				bag = new PermissionCheckerBagImpl(userId);
 			}
 
 			PermissionCacheUtil.putBag(userId, groupId, bag);

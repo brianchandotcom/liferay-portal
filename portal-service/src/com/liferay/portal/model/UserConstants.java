@@ -31,6 +31,8 @@ import com.liferay.portal.webserver.WebServerServletTokenUtil;
  */
 public class UserConstants {
 
+	public static final long DEFAULT_USER_ID = 0;
+
 	public static final int FULL_NAME_MAX_LENGTH = 75;
 
 	public static final String LIST_VIEW_FLAT_ORGANIZATIONS =

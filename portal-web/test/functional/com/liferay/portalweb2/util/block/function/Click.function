@@ -66,12 +66,6 @@
 		<execute function="Click#clickAt" />
 	</command>
 
-	<command name="clickSikuli">
-		<execute selenium="clickSikuli" />
-
-		<execute selenium="pause" argument1="2000" />
-	</command>
-
 	<command name="clickWaitForInlineCKEditor">
 		<if>
 			<condition selenium="isElementPresent" argument1="//div[contains(@class,'cke_editable_inline')]" />
@@ -131,6 +125,12 @@
 		<execute selenium="pause" argument1="1000" />
 
 		<execute function="Click#textClickAtAndWait" />
+	</command>
+
+	<command name="sikuliClick">
+		<execute selenium="sikuliClick" />
+
+		<execute selenium="pause" argument1="2000" />
 	</command>
 
 	<command name="textClick">

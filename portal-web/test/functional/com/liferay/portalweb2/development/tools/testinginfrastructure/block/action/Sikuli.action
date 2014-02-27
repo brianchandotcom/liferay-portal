@@ -1,13 +1,13 @@
 <definition>
 	<command name="click">
 		<default>
-			<execute function="Click#clickSikuli" />
+			<execute function="Click#sikuliClick" />
 		</default>
 	</command>
 
 	<command name="type">
 		<default>
-			<execute function="Type#typeSikuli" />
+			<execute function="Type#sikuliType" />
 		</default>
 	</command>
 </definition>

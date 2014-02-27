@@ -404,27 +404,6 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
-	public static void clickSikuli(
-			LiferaySelenium liferaySelenium, String image)
-		throws Exception {
-
-		Screen screen = new Screen();
-
-		Match match = screen.exists(
-			liferaySelenium.getProjectDir() +
-			liferaySelenium.getSikuliImagesDir() + image);
-
-		liferaySelenium.pause("1000");
-
-		if (match == null) {
-			return;
-		}
-
-		screen.click(
-			liferaySelenium.getProjectDir() +
-			liferaySelenium.getSikuliImagesDir() + image);
-	}
-
 	public static void connectToEmailAccount(
 			String emailAddress, String emailPassword)
 		throws Exception {
@@ -717,22 +696,28 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.pause("3000");
 	}
 
-	public static void typeFrame(
-		LiferaySelenium liferaySelenium, String locator, String value) {
+	public static void sikuliClick(
+			LiferaySelenium liferaySelenium, String image)
+		throws Exception {
 
-		liferaySelenium.selectFrame(locator);
+		Screen screen = new Screen();
 
-		value = value.replace("\\", "\\\\");
+		Match match = screen.exists(
+			liferaySelenium.getProjectDir() +
+			liferaySelenium.getSikuliImagesDir() + image);
 
-		value = HtmlUtil.escapeJS(value);
+		liferaySelenium.pause("1000");
 
-		liferaySelenium.runScript(
-			"document.body.innerHTML = \"" + value + "\"");
+		if (match == null) {
+			return;
+		}
 
-		liferaySelenium.selectFrame("relative=parent");
+		screen.click(
+			liferaySelenium.getProjectDir() +
+			liferaySelenium.getSikuliImagesDir() + image);
 	}
 
-	public static void typeSikuli(
+	public static void sikuliType(
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
 
@@ -755,17 +740,17 @@ public class LiferaySeleniumHelper {
 		screen.type(value);
 	}
 
-	public static void uploadCommonFileSikuli(
+	public static void sikuliUploadCommonFile(
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
 
-		typeSikuli(
+		sikuliType(
 			liferaySelenium, image,
 			liferaySelenium.getProjectDir() +
 				liferaySelenium.getDependenciesDir() + value);
 	}
 
-	public static void uploadTempFileSikuli(
+	public static void sikuliUploadTempFile(
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
 
@@ -775,9 +760,24 @@ public class LiferaySeleniumHelper {
 			slash = "\\";
 		}
 
-		typeSikuli(
+		sikuliType(
 			liferaySelenium, image,
 			liferaySelenium.getOutputDir() + slash + value);
+	}
+
+	public static void typeFrame(
+		LiferaySelenium liferaySelenium, String locator, String value) {
+
+		liferaySelenium.selectFrame(locator);
+
+		value = value.replace("\\", "\\\\");
+
+		value = HtmlUtil.escapeJS(value);
+
+		liferaySelenium.runScript(
+			"document.body.innerHTML = \"" + value + "\"");
+
+		liferaySelenium.selectFrame("relative=parent");
 	}
 
 	public static void waitForElementNotPresent(

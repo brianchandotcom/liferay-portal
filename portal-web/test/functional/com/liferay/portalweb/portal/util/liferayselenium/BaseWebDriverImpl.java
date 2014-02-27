@@ -285,11 +285,6 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void clickSikuli(String image) throws Exception {
-		LiferaySeleniumHelper.clickSikuli(this, image);
-	}
-
-	@Override
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception {
 
@@ -654,6 +649,30 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void sikuliClick(String image) throws Exception {
+		LiferaySeleniumHelper.sikuliClick(this, image);
+	}
+
+	@Override
+	public void sikuliType(String image, String value) throws Exception {
+		LiferaySeleniumHelper.sikuliType(this, image, value);
+	}
+
+	@Override
+	public void sikuliUploadCommonFile(String image, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.sikuliUploadCommonFile(this, image, value);
+	}
+
+	@Override
+	public void sikuliUploadTempFile(String image, String value)
+		throws Exception {
+
+		LiferaySeleniumHelper.sikuliUploadTempFile(this, image, value);
+	}
+
+	@Override
 	public void startLogger() {
 	}
 
@@ -667,20 +686,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void typeSikuli(String image, String value) throws Exception {
-		LiferaySeleniumHelper.typeSikuli(this, image, value);
-	}
-
-	@Override
 	public void uploadCommonFile(String location, String value) {
 		uploadFile(location, _projectDir + _dependenciesDir + value);
-	}
-
-	@Override
-	public void uploadCommonFileSikuli(String image, String value)
-		throws Exception {
-
-		LiferaySeleniumHelper.uploadCommonFileSikuli(this, image, value);
 	}
 
 	@Override
@@ -701,13 +708,6 @@ public abstract class BaseWebDriverImpl
 		}
 
 		uploadFile(location, _outputDir + slash + value);
-	}
-
-	@Override
-	public void uploadTempFileSikuli(String image, String value)
-		throws Exception {
-
-		LiferaySeleniumHelper.uploadTempFileSikuli(this, image, value);
 	}
 
 	@Override

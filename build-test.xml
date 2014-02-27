@@ -2601,12 +2601,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</then>
 		</if>
 
-		<if>
-			<os family="unix" />
-			<then>
-				<antcall target="copy-sikuli-temp-files" />
-			</then>
-		</if>
+		<antcall target="copy-sikuli-temp-files" />
 
 		<antcall target="start-app-server" />
 

@@ -759,32 +759,15 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
 
-		Screen screen = new Screen();
-
-		Match match = screen.exists(
+		typeSikuli(
+			liferaySelenium, image,
 			liferaySelenium.getProjectDir() +
-			liferaySelenium.getSikuliImagesDir() + image);
-
-		liferaySelenium.pause("1000");
-
-		if (match == null) {
-			return;
-		}
-
-		screen.click(
-			liferaySelenium.getProjectDir() +
-			liferaySelenium.getSikuliImagesDir() + image);
-
-		screen.type(
-			liferaySelenium.getProjectDir() +
-			liferaySelenium.getDependenciesDir() + value);
+				liferaySelenium.getDependenciesDir() + value);
 	}
 
 	public static void uploadTempFileSikuli(
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
-
-		Screen screen = new Screen();
 
 		String slash = "/";
 
@@ -792,21 +775,9 @@ public class LiferaySeleniumHelper {
 			slash = "\\";
 		}
 
-		Match match = screen.exists(
-			liferaySelenium.getProjectDir() +
-			liferaySelenium.getSikuliImagesDir() + image);
-
-		liferaySelenium.pause("1000");
-
-		if (match == null) {
-			return;
-		}
-
-		screen.click(
-			liferaySelenium.getProjectDir() +
-			liferaySelenium.getSikuliImagesDir() + image);
-
-		screen.type(liferaySelenium.getOutputDir() + slash + value);
+		typeSikuli(
+			liferaySelenium, image,
+			liferaySelenium.getOutputDir() + slash + value);
 	}
 
 	public static void waitForElementNotPresent(

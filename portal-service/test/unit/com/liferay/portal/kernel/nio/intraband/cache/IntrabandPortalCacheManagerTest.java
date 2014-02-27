@@ -137,20 +137,6 @@ public class IntrabandPortalCacheManagerTest {
 	}
 
 	@Test
-	public void testPortalCacheManagerGetterAndSetter() {
-		Assert.assertNull(IntrabandPortalCacheManager.getPortalCacheManager());
-
-		PortalCacheManager<String, String> portalCacheManager =
-			new MockPortalCacheManager();
-
-		IntrabandPortalCacheManager.setPortalCacheManager(portalCacheManager);
-
-		Assert.assertSame(
-			portalCacheManager,
-			IntrabandPortalCacheManager.getPortalCacheManager());
-	}
-
-	@Test
 	public void testReconfigureCaches() {
 		String className = IntrabandPortalCacheManagerTest.class.getName();
 		String resourcePath = className.replace('.', '/');

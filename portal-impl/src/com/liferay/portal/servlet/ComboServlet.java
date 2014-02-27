@@ -339,25 +339,21 @@ public class ComboServlet extends HttpServlet {
 		return url;
 	}
 
-	protected ServletContext getServletContext(String contextPath)
+	protected ServletContext getServletContext(String contextName)
 		throws ServletException {
 
-		if (Validator.isNull(contextPath)) {
+		if (Validator.isNull(contextName)) {
 			return getServletContext();
 		}
 
-		if (contextPath.startsWith(StringPool.SLASH)) {
-			contextPath = contextPath.substring(1);
-		}
-
-		ServletContext servletContext = ServletContextPool.get(contextPath);
+		ServletContext servletContext = ServletContextPool.get(contextName);
 
 		if (servletContext != null) {
 			return servletContext;
 		}
 
 		throw new ServletException(
-			"Servlet context " + contextPath + " does not exist");
+			"Servlet context " + contextName + " does not exist");
 	}
 
 	protected boolean validateModuleExtension(String moduleName)

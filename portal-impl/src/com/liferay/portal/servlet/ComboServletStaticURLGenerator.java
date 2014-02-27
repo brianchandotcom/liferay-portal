@@ -65,13 +65,14 @@ public class ComboServletStaticURLGenerator {
 					else {
 						sb.append(StringPool.AMPERSAND);
 
-						String contextPath = portlet.getContextPath();
+						String contextName = portlet.getContextName();
 
 						if (!portletResourceAccessor.isPortalResource() &&
-							(contextPath != null) &&
-							!contextPath.equals(PortalUtil.getPathContext())) {
+							(contextName != null) &&
+							!contextName.equals(
+								PortalUtil.getServletContextName())) {
 
-							sb.append(contextPath);
+							sb.append(contextName);
 							sb.append(StringPool.COLON);
 						}
 

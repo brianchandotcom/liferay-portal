@@ -58,7 +58,7 @@ summary.setQueryTerms(queryTerms);
 
 		<div class="entry-metadata">
 			<span class="entry-title">
-				<%= summary.getHighlightedContent() %>
+				<%= summary.getHighlightedTitle() %>
 
 				<c:if test="<%= (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
 					<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />

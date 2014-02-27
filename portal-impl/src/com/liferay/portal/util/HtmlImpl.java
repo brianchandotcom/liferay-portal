@@ -52,13 +52,12 @@ public class HtmlImpl implements Html {
 	public static final int ESCAPE_MODE_URL = 5;
 
 	/**
-	 * Escape given String using XSS recommendations from
-	 * {@link http://www.owasp.org/index.php/Cross_Site_Scripting#How_to_Protect_Yourself}
-	 * 
-	 * @param text The text to be HTML-encoded
+	 * Escape given String using XSS recommendations from {@link
+	 * http://www.owasp.org/index.php/Cross_Site_Scripting#How_to_Protect_Yourself}
+	 *
+	 * @param  text The text to be HTML-encoded
 	 * @return the sanitized text that is safe to use in an HTML context
 	 */
-	
 	@Override
 	public String escape(String text) {
 		if (text == null) {
@@ -151,16 +150,15 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * Escape into Hex-values for the given encoding type 
-	 * (CSS, JS, ATTRIBUTE, URL, TEXT).
-	 * Note that escape(text, ESCAPE_MODE_TEXT) is the same as escape(text). 
-	 * 
-	 * @see escapeCSS, escapeAttribute, escapeURL, escapeJS
-	 * @param text the text to escape
-	 * @param type one of the ESCAPE_MODE_* constants in this class
+	 * Escape into Hex-values for the given encoding type (CSS, JS, ATTRIBUTE,
+	 * URL, TEXT). Note that escape(text, ESCAPE_MODE_TEXT) is the same as
+	 * escape(text).
+	 *
+	 * @param  text the text to escape
+	 * @param  type one of the ESCAPE_MODE_* constants in this class
 	 * @return hex-encoded value of input text for the given use
+	 * @see    escapeCSS, escapeAttribute, escapeURL, escapeJS
 	 */
-	
 	@Override
 	public String escape(String text, int type) {
 		if (text == null) {
@@ -224,17 +222,15 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * escape the given text so that it can safely be used as an 
-	 * attribute value
+	 * escape the given text so that it can safely be used as an attribute value
 	 */
-	
 	@Override
 	public String escapeAttribute(String attribute) {
 		return escape(attribute, ESCAPE_MODE_ATTRIBUTE);
 	}
 
 	/**
-	 * escape the given text so that it can safely be used in CSS 
+	 * escape the given text so that it can safely be used in CSS
 	 */
 	@Override
 	public String escapeCSS(String css) {
@@ -242,10 +238,8 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * escape the given text so that it can safely be used as a href
-	 * attribute. 
+	 * escape the given text so that it can safely be used as a href attribute.
 	 */
-	
 	@Override
 	public String escapeHREF(String href) {
 		if (href == null) {
@@ -278,7 +272,6 @@ public class HtmlImpl implements Html {
 	/**
 	 * escape the given text so that it can safely be used as a URL
 	 */
-	
 	@Override
 	public String escapeURL(String url) {
 		return escape(url, ESCAPE_MODE_URL);
@@ -337,12 +330,12 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * extracts the raw text from given HTML input, e.g. to store in a search index.
-	 * Also compresses whitespace as much as possible.
-	 * @see net.htmlparser.jericho.TextExtractor
-	 * 
-	 * @param html the html text to process
+	 * extracts the raw text from given HTML input, e.g. to store in a search
+	 * index. Also compresses whitespace as much as possible.
+	 *
+	 * @param  html the html text to process
 	 * @return the text content without attributes, scripts and styles
+	 * @see    net.htmlparser.jericho.TextExtractor
 	 */
 	@Override
 	public String extractText(String html) {
@@ -363,19 +356,19 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 *  Performs a simple rendering of HTML markup into text.
-	 *  This provides a human readable version of the segment content that 
-	 *  is modelled on the way Mozilla Thunderbird and other email clients 
-	 *  provide an automatic conversion of HTML content to text in their 
-	 *  alternative MIME encoding of emails.
-	 *  
-	 *  The output using default settings complies with the 
-	 *  "text/plain; format=flowed" (DelSp=No) protocol described in 
-	 *  RFC3676.
-	 *  
-	 *   @see Renderer
-	 *   @param html the content to render
-	 *   @return the rendered content
+	 * Performs a simple rendering of HTML markup into text. This provides a
+	 * human readable version of the segment content that is modelled on the way
+	 * Mozilla Thunderbird and other email clients provide an automatic
+	 * conversion of HTML content to text in their alternative MIME encoding of
+	 * emails.
+	 *
+	 * The output using default settings complies with the
+	 * "text/plain; format=flowed" (DelSp=No) protocol described in
+	 * RFC3676.
+	 *
+	 * @param  html the content to render
+	 * @return the rendered content
+	 * @see    Renderer
 	 */
 	@Override
 	public String render(String html) {
@@ -391,8 +384,8 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * replaces a few fancy unicode characters that MS-Word tends to use
-	 * with some plain HTML entities or characters.
+	 * replaces a few fancy unicode characters that MS-Word tends to use with
+	 * some plain HTML entities or characters.
 	 */
 	@Override
 	public String replaceMsWordCharacters(String text) {
@@ -412,17 +405,18 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * Strips all content delimited by the given tag out of the text. 
-	 * If the tag appears multiple times, all occurrences (including 
-	 * the tag) will be stripped. The tag may have attributes. In order
-	 * to match, the tag must consist of a separate opening and closing 
-	 * tag. Self-closing tags will remain in the result
-	 * 
-	 * @param text the text to be stripped
-	 * @param tag the tag used for delimiting - give just the tag's name, no &lt; etc.
-	 * @return the stripped text, without the given tag and the contents of the tag.
+	 * Strips all content delimited by the given tag out of the text. If the tag
+	 * appears multiple times, all occurrences (including the tag) will be
+	 * stripped. The tag may have attributes. In order to match, the tag must
+	 * consist of a separate opening and closing tag. Self-closing tags will
+	 * remain in the result
+	 *
+	 * @param  text the text to be stripped
+	 * @param  tag the tag used for delimiting - give just the tag's name, no
+	 *         &lt; etc.
+	 * @return the stripped text, without the given tag and the contents of the
+	 *         tag.
 	 */
-	
 	@Override
 	public String stripBetween(String text, String tag) {
 		return StringUtil.stripBetween(text, "<" + tag, "</" + tag + ">");
@@ -430,7 +424,7 @@ public class HtmlImpl implements Html {
 
 	/**
 	 * Strips all xml comments
-	 * 
+	 *
 	 * @param text the text to be stripped
 	 */
 	@Override
@@ -491,11 +485,10 @@ public class HtmlImpl implements Html {
 
 	/**
 	 * Encodes text so that it's safe to be used in HTML input fields as value
-	 * 
-	 * @param text the text to be used as value
+	 *
+	 * @param  text the text to be used as value
 	 * @return the text that can be used as input field value
 	 */
-	
 	@Override
 	public String toInputSafe(String text) {
 		return StringUtil.replace(

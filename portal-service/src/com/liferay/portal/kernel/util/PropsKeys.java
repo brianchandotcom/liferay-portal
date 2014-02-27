@@ -1461,6 +1461,8 @@ public interface PropsKeys {
 
 	public static final String LOCK_LISTENERS = "lock.listeners";
 
+	public static final String LOG4J_CLEANUP = "log4j.cleanup";
+
 	public static final String LOG_SANITIZER_ENABLED = "log.sanitizer.enabled";
 
 	public static final String LOG_SANITIZER_ESCAPE_HTML_ENABLED = "log.sanitizer.escape.html.enabled";

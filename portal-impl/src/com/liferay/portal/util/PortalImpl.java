@@ -3497,12 +3497,12 @@ public class PortalImpl implements Portal {
 			Locale originalLocale)
 		throws Exception {
 
-		String contextPath = StringUtil.toLowerCase(getPathContext());
+		String contextPath = getPathContext();
 
 		String requestURI = StringUtil.toLowerCase(request.getRequestURI());
 
 		if (Validator.isNotNull(contextPath) &&
-			requestURI.contains(contextPath)) {
+			requestURI.contains(StringUtil.toLowerCase(contextPath))) {
 
 			requestURI = requestURI.substring(contextPath.length());
 		}

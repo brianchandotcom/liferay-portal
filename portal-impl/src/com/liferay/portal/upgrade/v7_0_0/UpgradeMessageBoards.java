@@ -15,11 +15,11 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.GroupPortletSettings;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.messageboards.util.MBUtil;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
@@ -29,14 +29,24 @@ import javax.portlet.ReadOnlyException;
  */
 public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 
+	protected boolean getEmailHtmlFormat(
+		PortletPreferences portletPreferences) {
+
+		String emailHtmlFormat = portletPreferences.getValue(
+			"emailHtmlFormat", StringPool.BLANK);
+
+		if (Validator.isNotNull(emailHtmlFormat)) {
+			return GetterUtil.getBoolean(emailHtmlFormat);
+		}
+		else {
+			return PropsValues.MESSAGE_BOARDS_EMAIL_HTML_FORMAT;
+		}
+	}
+
 	protected String getEmailSignatureSeparator(
 		PortletPreferences portletPreferences) {
 
-		GroupPortletSettings groupPortletSettings = new GroupPortletSettings(
-			portletPreferences);
-
-		boolean emailHtmlFormat = MBUtil.getEmailHtmlFormat(
-			groupPortletSettings);
+		boolean emailHtmlFormat = getEmailHtmlFormat(portletPreferences);
 
 		if (emailHtmlFormat) {
 			return "<br />--<br />";

@@ -2,7 +2,19 @@
 	<command name="activateStagingCP">
 		<execute action="CPSitesEdit#assertClick" locator-key1="MENU_STAGING" value1="Staging" />
 		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SITE_TITLE" value1="${siteName}" />
-		<execute action="CPSitesEdit#check" locator-key1="STAGING_LOCAL_LIVE" />
+
+		<if>
+			<equals arg1="${remoteStaging}" arg2="true" />
+			<then>
+				<execute action="CPSitesEdit#check" locator-key1="STAGING_REMOTE_LIVE" />
+				<execute action="CPSitesEdit#type" locator-key1="REMOTE_STAGING_IP" value1="localhost" />
+				<execute action="CPSitesEdit#type" locator-key1="REMOTE_STAGING_PORT" value1="8080" />
+				<execute action="CPSitesEdit#paste" locator-key1="REMOTE_STAGING_SITE_ID" value1="${siteID}" />
+			</then>
+			<else>
+				<execute action="CPSitesEdit#check" locator-key1="STAGING_LOCAL_LIVE" />
+			</else>
+		</if>
 
 		<if>
 			<equals arg1="${pageVersioningEnabled}" arg2="true" />
@@ -33,6 +45,14 @@
 				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
 				<execute action="CPSitesEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
+			<elseif>
+				<equals arg1="${remoteStaging}" arg2="true" />
+				<then>
+					<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
+					<execute action="CPSitesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to activate remote staging for ${siteName}?" />
+					<execute action="CPSitesEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				</then>
+			</elseif>
 			<else>
 				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
 				<execute action="CPSitesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to activate local staging for ${siteName}?" />
@@ -110,6 +130,23 @@
 
 		<execute action="PGStagingManagesitepagesvariations#assertClick" locator-key1="ADD_SITE_PAGES_VARIATION_ADD_BUTTON" value1="Add" />
 		<execute action="PGStagingManagesitepagesvariations#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Site page variation was added." />
+	</command>
+
+	<command name="changePageVariationPG">
+		<if>
+			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			<then>
+				<execute action="PGStaging#assertClick" locator-key1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
+			</then>
+		</if>
+
+		<var name="key_pageVariationName" value="${pageVariationName}" />
+
+		<execute action="PGStaging#click" locator-key1="PAGE_VARIATION_DROPDOWN" />
+
+		<var name="key_pageVariationName" value="${pageVariationNameMenulistName}" />
+
+		<execute action="PGStaging#assertClick" locator-key1="PAGE_VARIATION_MENULIST_NAME" value1="${pageVariationNameMenulistName}" />
 	</command>
 
 	<command name="changeSitePageVariationPG">
@@ -349,6 +386,39 @@
 		<execute action="PGStaging#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to redo your last changes?" />
 	</command>
 
+	<command name="remoteStagingSetUp">
+		<var name="siteID" value="${siteID}" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Remote Site" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Remote Site" />
+		</execute>
+
+		<var name="siteID" value="siteID" />
+
+		<execute action="CPSitesEdit#copy" locator-key1="SITE_ID" value1="siteID" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="pageVersioningEnabled" value="${pageVersioningEnabled}" />
+			<var name="remoteStaging" value="true" />
+			<var name="siteID" value="${siteID}" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+	</command>
+
 	<command name="schedulePublishToLivePG">
 		<if>
 			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
@@ -407,6 +477,37 @@
 		<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="ADD_EVENT_BUTTON" value1="Add Event" />
 		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGStagingPublishtolivenow#selectFrameTop" value1="relative=top" />
+	</command>
+
+	<command name="setContentDateRange">
+		<if>
+			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			<then>
+				<execute action="PGStaging#assertClick" locator-key1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
+				<execute action="PGStaging#assertElementPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			</then>
+		</if>
+
+		<if>
+			<condition action="PGStaging#isElementPresent" locator-key1="STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
+			<then>
+				<execute action="PGStaging#assertClick" locator-key1="STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" value1="Mark as Ready for Publication" />
+				<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_READY_FOR_PUBLICATION" value1="Ready for Publication" />
+			</then>
+		</if>
+
+		<execute action="PGStaging#click" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+
+		<execute action="PGStagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
+		<execute action="PGStagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
+		<execute action="PGStagingPublishtolivenow#click" locator-key1="CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" />
+
+		<var name="key_contentDateRange" value="DateRange" />
+
+		<execute action="PGStagingPublishtolivenow#click" locator-key1="DATE_RANGE_POPUP_RANGE_RADIO" />
+		<execute action="PGStagingPublishtolivenow#type" locator-key1="DATE_RANGE_START_DATE" value1="${dateRangeStartDate}" />
+		<execute action="PGStagingPublishtolivenow#type" locator-key1="DATE_RANGE_END_DATE" value1="${dateRangeEndDate}" />
+		<execute action="PGStagingPublishtolivenow#click" locator-key1="DATE_RANGE_POPUP_OK_BUTTON" />
 	</command>
 
 	<command name="submitForPublicationPageRevision">

@@ -206,7 +206,27 @@ public class Logger {
 		sb.append(": ");
 		sb.append(thowableMessage);
 
+		_liferaySelenium.saveScreenshot();
+
+		logErrorScreenShots();
+
 		BaseTestCase.fail(sb.toString());
+	}
+
+	public void logErrorScreenShots() throws Exception {
+		StringBundler sb = new StringBundler();
+
+		_screenshotCount++;
+
+		sb.append("<br />");
+		sb.append("<img alt=\"");
+		sb.append(_screenshotCount);
+		sb.append("\" height=\"750\" src=\"screenshots/");
+		sb.append(_screenshotCount);
+		sb.append(".jpg\" width=\"1050\" />");
+		sb.append("<br />");
+
+		log("errorLog", sb.toString(), "errorLog");
 	}
 
 	public void logMacroDescription(Object[] arguments) throws Exception {
@@ -228,7 +248,7 @@ public class Logger {
 		log("descriptionLog", sb.toString(), "descriptionLog");
 	}
 
-	public void logScreenShots(Object[] arguments) throws Exception {
+	public void logScreenShots() throws Exception {
 		StringBundler sb = new StringBundler();
 
 		_screenshotCount++;

@@ -584,12 +584,12 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void saveScreenshot(String fileName) throws Exception {
+	public void saveScreenshot() throws Exception {
 		if (!TestPropsValues.SAVE_SCREENSHOT) {
 			return;
 		}
 
-		LiferaySeleniumHelper.saveScreenshot(this, fileName);
+		LiferaySeleniumHelper.saveScreenshot(this);
 	}
 
 	@Override

@@ -183,7 +183,7 @@
 
 		executeScopeVariables.putAll(${variableContext});
 
-		${selenium}.saveScreenshot(commandScopeVariables.get("testCaseName"));
+		${selenium}.saveScreenshot();
 
 		<#assign lineNumber = element.attributeValue("line-number")>
 

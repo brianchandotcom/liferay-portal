@@ -35,6 +35,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
+ * @author Roberto Díaz
  */
 @ExecutionTestListeners(
 	listeners = {

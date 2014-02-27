@@ -29,6 +29,7 @@ import org.junit.Test;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 

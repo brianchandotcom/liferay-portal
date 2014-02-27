@@ -144,6 +144,11 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 	}
 
 	@Override
+	public void invalidate() {
+		_indexAccessor.invalidate();
+	}
+
+	@Override
 	public void loadIndex(InputStream inputStream) throws IOException {
 		_writeLock.lock();
 

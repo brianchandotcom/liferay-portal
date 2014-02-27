@@ -867,6 +867,10 @@ public class LuceneHelperImplTest {
 		}
 
 		@Override
+		public void invalidate() {
+		}
+
+		@Override
 		public void loadIndex(InputStream inputStream) throws IOException {
 			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();

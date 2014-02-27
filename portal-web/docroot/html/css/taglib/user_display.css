@@ -22,7 +22,7 @@
 	}
 
 	&.display-style-3 {
-		padding: 0em;
+		padding: 0;
 
 		.user-profile-image {
 			@include border-radius(50%);

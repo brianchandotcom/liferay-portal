@@ -93,15 +93,8 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		long classPK = containerModelId;
-
-		if (containerModelId == DEFAULT_PARENT_CONTAINER_MODEL_ID) {
-			classPK = group.getGroupId();
-		}
-
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			JournalFolder.class.getName(), classPK);
+		JournalFolderLocalServiceUtil.subscribe(
+			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override

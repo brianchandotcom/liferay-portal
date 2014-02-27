@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -104,18 +103,18 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 
 	@Override
 	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			WikiPage.class.getName(), baseModelId);
+		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);
+
+		WikiPageLocalServiceUtil.subscribePage(
+			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle());
 	}
 
 	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			WikiNode.class.getName(), containerModelId);
+		WikiNodeLocalServiceUtil.subscribeNode(
+			TestPropsValues.getUserId(), containerModelId);
 	}
 
 	@Override

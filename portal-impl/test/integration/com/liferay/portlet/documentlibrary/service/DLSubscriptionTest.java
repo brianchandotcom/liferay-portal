@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -96,15 +95,8 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		long classPK = containerModelId;
-
-		if (containerModelId == DEFAULT_PARENT_CONTAINER_MODEL_ID) {
-			classPK = group.getGroupId();
-		}
-
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			Folder.class.getName(), classPK);
+		DLAppLocalServiceUtil.subscribeFolder(
+			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override

@@ -15,7 +15,6 @@
 package com.liferay.portlet.blogs.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -104,9 +103,8 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		SubscriptionLocalServiceUtil.addSubscription(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			BlogsEntry.class.getName(), group.getGroupId());
+		BlogsEntryLocalServiceUtil.subscribe(
+			TestPropsValues.getUserId(), group.getGroupId());
 	}
 
 	@Override

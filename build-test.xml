@@ -342,6 +342,8 @@ create database lportal2 character set utf8;</echo>
 				<property name="browser.version" value="${browser.version}" />
 				<property name="database.type" value="${database.type}" />
 				<property name="database.version" value="${database.version}" />
+				<property name="liferay.portal.branch" value="${liferay.portal.branch}" />
+				<property name="liferay.portal.bundle" value="${liferay.portal.bundle}" />
 				<property name="environment.id" value="${env.key.app.server}${env.key.browser}${env.key.database}${env.key.java.jdk}${env.key.liferay.portal}${env.key.operating.system}" />
 				<property name="java.jdk.type" value="${java.jdk.type}" />
 				<property name="java.jdk.version" value="${java.jdk.version}" />

@@ -23,8 +23,8 @@ import org.junit.Assume;
  */
 public class FixedIssuesUtils {
 
-	public static void assumeFixIsAvailable(String fix) {
-		Assume.assumeTrue(ArrayUtil.contains(_instance._fixedIssues, fix));
+	public static void assumeIssueIsFixed(String issue) {
+		Assume.assumeTrue(ArrayUtil.contains(_instance._fixedIssues, issue));
 	}
 
 	private FixedIssuesUtils() {

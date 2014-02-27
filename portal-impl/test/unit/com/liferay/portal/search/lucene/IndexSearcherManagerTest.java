@@ -42,6 +42,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.AlreadyClosedException;
+import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 
@@ -77,7 +78,13 @@ public class IndexSearcherManagerTest {
 		IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
 			Version.LUCENE_35, new StandardAnalyzer(Version.LUCENE_35));
 
-		_indexWriter = new IndexWriter(new RAMDirectory(), indexWriterConfig);
+		_directory = new RAMDirectory();
+
+		_indexWriter = new IndexWriter(_directory, indexWriterConfig);
+
+		// Workaround for LUCENE-2386
+
+		_indexWriter.commit();
 
 		_indexSearcherManager = new IndexSearcherManager(_indexWriter);
 	}
@@ -190,6 +197,8 @@ public class IndexSearcherManagerTest {
 
 	@Test
 	public void testClose() throws Exception {
+		_indexSearcherManager = new IndexSearcherManager(_directory);
+
 		IndexSearcher indexSearcher = _indexSearcherManager.acquire();
 
 		IndexReader indexReader = indexSearcher.getIndexReader();
@@ -338,6 +347,7 @@ public class IndexSearcherManagerTest {
 
 	private static final String _FIELD_NAME = "fieldName";
 
+	private Directory _directory;
 	private IndexSearcherManager _indexSearcherManager;
 	private IndexWriter _indexWriter;
 

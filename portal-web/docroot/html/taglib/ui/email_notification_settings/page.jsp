@@ -36,7 +36,7 @@ String emailSubject = (String)request.getAttribute("liferay-ui:email-notificatio
 	</aui:field-wrapper>
 </aui:fieldset>
 
-<if test="<%= (emailDefinitionTerms != null) && !emailDefinitionTerms.isEmpty() %>">
+<c:if test="<%= (emailDefinitionTerms != null) && !emailDefinitionTerms.isEmpty() %>">
 	<aui:fieldset cssClass="definition-of-terms" label="definition-of-terms">
 		<dl>
 
@@ -57,7 +57,7 @@ String emailSubject = (String)request.getAttribute("liferay-ui:email-notificatio
 
 		</dl>
 	</aui:fieldset>
-</if>
+</c:if>
 
 <aui:script>
 	function <portlet:namespace />init<%= emailParam %>BodyEditor() {

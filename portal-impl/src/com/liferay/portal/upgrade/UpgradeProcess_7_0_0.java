@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeEmailNotificationPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeAsset;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeJournal;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRepositoryEntry;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeShopping;
@@ -38,7 +40,9 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgrade(UpgradeSchema.class);
+		upgrade(UpgradeAsset.class);
 		upgrade(UpgradeEmailNotificationPreferences.class);
+		upgrade(UpgradeJournal.class);
 		upgrade(UpgradeMessageBoards.class);
 		upgrade(UpgradePortletSettings.class);
 		upgrade(UpgradeRepositoryEntry.class);

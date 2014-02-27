@@ -611,6 +611,10 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		if (line.contains(TestPropsValues.IGNORE_ERROR)) {
+			return true;
+		}
+
 		return false;
 	}
 

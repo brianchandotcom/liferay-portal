@@ -1,3 +1,4 @@
 <definition component-name="portal-upgrades" extends="ViewLatestLegacySmoke">
+	<property name="ignore.error" value="Plugin security management is not enabled. Enable a security manager, then restart." />
 	<property name="portal.version" value="6.0.11" />
 </definition>

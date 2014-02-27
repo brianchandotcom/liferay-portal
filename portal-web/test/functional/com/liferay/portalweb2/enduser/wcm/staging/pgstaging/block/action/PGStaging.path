@@ -64,6 +64,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_VARIATION_DROPDOWN</td>
+	<td>//div[contains(@class,'page-variation-options')]//span[contains(.,'${key_pageVariationName}')]/following-sibling::i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_VARIATION_DROPDOWN</td>
+	<td>//div[contains(@class,'page-variations-options')]//span[contains(.,'${key_pageVariationName}')]/following-sibling::i</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MANAGE_SITE_PAGES_VARIATIONS</td>
 	<td>//a[@id='_170_manageLayoutSetBranches']</td>
 	<td></td>
@@ -82,6 +92,17 @@
 <tr>
 	<td>SITE_PAGES_VARIATION_MENULIST_NAME</td>
 	<td>//ul//a[contains(.,'${key_sitePagesVariationName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGE_VARIATION_MENULIST-->
+<tr>
+	<td>PAGE_VARIATION_MENULIST_NAME</td>
+	<td>//ul//a[contains(.,'${key_pageVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>

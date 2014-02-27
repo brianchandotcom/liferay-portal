@@ -37,7 +37,7 @@ if (Validator.isNull(url) && (userDisplay != null)) {
 
 	<aui:a href="<%= url %>">
 		<c:choose>
-			<c:when test="<%= (displayStyle == 3) %>">
+			<c:when test="<%= displayStyle == 3 %>">
 				<c:choose>
 					<c:when test="<%= BrowserSnifferUtil.isIe(request) && (BrowserSnifferUtil.getMajorVersion(request) < 9) %>">
 						<img alt="" class="user-profile-image" src="<%= HtmlUtil.escape(taglibSrc) %>" style="height: <%= height %>px; width: <%= width %>px;" />

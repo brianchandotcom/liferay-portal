@@ -33,6 +33,10 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 		return super.doStartTag();
 	}
 
+	public boolean getDefineVar() {
+		return _defineVar;
+	}
+
 	public java.lang.String getExcludeAttributes() {
 		return _excludeAttributes;
 	}
@@ -67,6 +71,12 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 
 	public java.lang.String getVar() {
 		return _var;
+	}
+
+	public void setDefineVar(boolean defineVar) {
+		_defineVar = defineVar;
+
+		setScopedAttribute("defineVar", defineVar);
 	}
 
 	public void setExcludeAttributes(java.lang.String excludeAttributes) {
@@ -125,6 +135,7 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_defineVar = true;
 		_excludeAttributes = null;
 		_javaScriptAttributes = null;
 		_module = null;
@@ -143,6 +154,7 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		setNamespacedAttribute(request, "defineVar", _defineVar);
 		setNamespacedAttribute(request, "excludeAttributes", _excludeAttributes);
 		setNamespacedAttribute(request, "javaScriptAttributes", _javaScriptAttributes);
 		setNamespacedAttribute(request, "module", _module);
@@ -159,6 +171,7 @@ public class BaseComponentTag extends com.liferay.taglib.util.IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/aui/component/page.jsp";
 
+	private boolean _defineVar = true;
 	private java.lang.String _excludeAttributes = null;
 	private java.lang.String _javaScriptAttributes = null;
 	private java.lang.String _module = null;

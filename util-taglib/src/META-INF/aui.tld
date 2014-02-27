@@ -1128,6 +1128,12 @@
 		<tag-class>com.liferay.taglib.aui.ComponentTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>defineVar</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>excludeAttributes</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1323,6 +1329,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>escapeXml</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>inlineLabels</name>
@@ -1964,6 +1976,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>useModelValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>value</name>

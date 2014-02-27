@@ -34,7 +34,15 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
+	<command name="ActivateDeactivateRemoteStaging" priority="5">
+		<echo message="override" />
+	</command>
+
 	<command name="ActivateDeactivateStagingLocalLiveDM" priority="5">
+		<echo message="override" />
+	</command>
+
+	<command name="ActivateRemoteStaging" priority="5">
 		<echo message="override" />
 	</command>
 
@@ -169,6 +177,14 @@
 		<execute macro="SitesDirectory#viewPortletTitlePG">
 			<var name="portletName" value="${portletName} Custom" />
 		</execute>
+	</command>
+
+	<command name="PublishWCViaRemoteStaging" priority="5">
+		<echo message="override" />
+	</command>
+
+	<command name="PublishWCWithPagesVariationViaRemoteStaging" priority="5">
+		<echo message="override" />
 	</command>
 
 	<command name="StagingAssetPublisher" priority="4">
@@ -2366,6 +2382,112 @@
 
 	<command name="StagingPublishPortlet" priority="5">
 		<echo message="override" />
+	</command>
+
+	<command name="StagingRemoteLiveWebContent" priority="5">
+		<property name="custom.properties" value="axis.servlet.hosts.allowed=$${line.separator}tunnel.servlet.hosts.allowed=$${line.separator}tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
+
+		<execute macro="Staging#remoteStagingSetUp" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="Structure Description" />
+			<var name="structureFieldNames" value="Text,Text Box" />
+			<var name="structureName" value="Structure Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="Structure Name" />
+			<var name="templateDescription" value="Template Description" />
+			<var name="templateFieldNames" value="Text,Text Box" />
+			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#addCPwithStructure">
+			<var name="structureName" value="Structure Name" />
+			<var name="webContentText" value="Staging Web Content Text" />
+			<var name="webContentTextBox" value="Staging Web Content Body" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="dateRangeEndDate"><![CDATA[1/2]]></var>
+		<var name="dateRangeStartDate"><![CDATA[1/1]]></var>
+
+		<execute macro="Staging#setContentDateRange">
+			<var name="dateRangeEndDate" value="${dateRangeEndDate}" />
+			<var name="dateRangeStartDate" value="${dateRangeStartDate}" />
+		</execute>
+
+		<var name="key_contentName" value="Web Content" />
+
+		<execute action="PGStagingPublishtolivenow#assertElementNotPresent" locator-key1="CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#publishToLiveNowPG">
+			<var name="contentDateRange" value="All" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Remote Site" />
+		</execute>
+
+		<var name="key_webContentTitle" value="Web Content Title" />
+
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="Web Content Title" />
+
+		<execute macro="WebContentStructures#viewCP">
+			<var name="structureDescription" value="Structure Description" />
+			<var name="structureFieldNames" value="Text,Text Box" />
+			<var name="structureName" value="Structure Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Remote Site" />
+		</execute>
+
+		<execute macro="WebContentTemplates#viewCP">
+			<var name="templateDescription" value="Template Description" />
+			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="Template Name" />
+		</execute>
 	</command>
 
 	<command name="StagingSiteVariationIncompletePage" priority="5">

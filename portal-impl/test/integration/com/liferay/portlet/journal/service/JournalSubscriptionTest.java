@@ -48,6 +48,18 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testSubscriptionBaseModelWhenInContainerModel() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSubscriptionBaseModelWhenInRootContainerModel() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testSubscriptionContainerModelWhenInContainerModel() {
 	}
 

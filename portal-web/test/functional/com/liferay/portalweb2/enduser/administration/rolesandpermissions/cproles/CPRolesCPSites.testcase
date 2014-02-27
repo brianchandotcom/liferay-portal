@@ -66,8 +66,8 @@
 			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
 			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP" />
@@ -82,8 +82,8 @@
 			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
 			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP" />

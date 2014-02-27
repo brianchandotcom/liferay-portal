@@ -17,9 +17,12 @@ package com.liferay.portal.tools;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.InitUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.Map;
@@ -53,6 +56,7 @@ public class DBBuilder {
 
 		new DBBuilder(databaseName, databaseTypes, sqlDir);
 
+		FileUtil.deltree(new File(PropsUtil.get(PropsKeys.LIFERAY_HOME)));
 		System.exit(0);
 	}
 

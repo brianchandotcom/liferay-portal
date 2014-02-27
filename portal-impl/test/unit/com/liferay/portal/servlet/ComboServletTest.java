@@ -117,7 +117,7 @@ public class ComboServletTest extends PowerMockito {
 		_pluginServletContext.getResource("/js/javascript.js");
 	}
 
-	@Test
+	@Test(expected = ServletException.class)
 	public void testGetResourceFromPluginContextWithInitialSlash()
 		throws Exception {
 

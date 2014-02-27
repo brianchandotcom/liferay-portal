@@ -36,10 +36,10 @@ public class GoogleClosureCompileJavaScriptMinifier
 	implements JavaScriptMinifier {
 
 	@Override
-	public String compress(String resource, String content) {
+	public String compress(String resourceName, String content) {
 		Compiler compiler = new Compiler(new LogErrorManager(_log));
 
-		SourceFile sourceFile = SourceFile.fromCode(resource, content);
+		SourceFile sourceFile = SourceFile.fromCode(resourceName, content);
 
 		CompilerOptions compilerOptions = new CompilerOptions();
 

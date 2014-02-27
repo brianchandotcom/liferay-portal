@@ -35,12 +35,12 @@ public class MinifierUtil {
 		return _instance._minifyCss(content);
 	}
 
-	public static String minifyJavaScript(String resource, String content) {
+	public static String minifyJavaScript(String resourceName, String content) {
 		if (!PropsValues.MINIFIER_ENABLED) {
 			return content;
 		}
 
-		return _instance._minifyJavaScript(resource, content);
+		return _instance._minifyJavaScript(resourceName, content);
 	}
 
 	private static JavaScriptMinifier _getJavaScriptMinifier() {
@@ -85,8 +85,8 @@ public class MinifierUtil {
 		return unsyncStringWriter.toString();
 	}
 
-	private String _minifyJavaScript(String resource, String content) {
-		return _javaScriptMinifierInstance.compress(resource, content);
+	private String _minifyJavaScript(String resourceName, String content) {
+		return _javaScriptMinifierInstance.compress(resourceName, content);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MinifierUtil.class);

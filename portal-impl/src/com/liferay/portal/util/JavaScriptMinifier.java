@@ -19,6 +19,6 @@ package com.liferay.portal.util;
  */
 public interface JavaScriptMinifier {
 
-	public String compress(String resource, String content);
+	public String compress(String resourceName, String content);
 
 }

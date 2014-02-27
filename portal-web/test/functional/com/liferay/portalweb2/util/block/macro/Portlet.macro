@@ -1,5 +1,20 @@
 <definition>
 	<command name="addDuplicatePG">
+		<var name="portletTypeKey" value="PORTLET" />
+
+		<if>
+			<equals arg1="${portletName}" arg2="Map" />
+			<then>
+				<var name="portletName" value="Where are the Liferay members?" />
+			</then>
+			<elseif>
+				<equals arg1="${portletName}" arg2="Requests" />
+				<then>
+					<var name="portletTypeKey" value="PORTLET_BORDERLESS" />
+				</then>
+			</elseif>
+		</if>
+
 		<if>
 			<not>
 				<isset var="portletCount" />

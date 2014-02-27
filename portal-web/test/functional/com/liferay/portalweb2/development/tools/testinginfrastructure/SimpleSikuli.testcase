@@ -1,7 +1,0 @@
-<definition component-name="portal-tools">
-	<command name="simpleSikuli" priority="5">
-		<execute action="Sikuli#type" locator-key1="EMAIL_ADDRESS" value1="test@liferay.com" />
-		<execute action="Sikuli#type" locator-key1="PASSWORD" value1="test" />
-		<execute action="Sikuli#click" locator-key1="SIGN_IN" />
-	</command>
-</definition>

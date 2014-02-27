@@ -36,19 +36,6 @@ public class IntrabandPortalCacheManager
 		<K extends Serializable, V extends Serializable>
 	implements PortalCacheManager<K, V> {
 
-	public static <K extends Serializable, V extends Serializable>
-		PortalCacheManager<K, V> getPortalCacheManager() {
-
-		return (PortalCacheManager<K, V>)_portalCacheManager;
-	}
-
-	public static void setPortalCacheManager(
-		PortalCacheManager<? extends Serializable, ? extends Serializable>
-		portalCacheManager) {
-
-		_portalCacheManager = portalCacheManager;
-	}
-
 	public IntrabandPortalCacheManager(
 		RegistrationReference registrationReference) {
 
@@ -136,9 +123,6 @@ public class IntrabandPortalCacheManager
 			Datagram.createRequestDatagram(
 				systemDataType.getValue(), serializer.toByteBuffer()));
 	}
-
-	private static PortalCacheManager
-		<? extends Serializable, ? extends Serializable> _portalCacheManager;
 
 	private final Intraband _intraband;
 	private final Map<String, PortalCache<K, V>> _portalCaches =

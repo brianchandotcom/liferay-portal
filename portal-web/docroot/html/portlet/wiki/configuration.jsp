@@ -28,28 +28,23 @@ boolean emailPageUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--em
 String emailParam = StringPool.BLANK;
 String defaultEmailSubject = StringPool.BLANK;
 String defaultEmailBody = StringPool.BLANK;
-String defaultEmailSignature = StringPool.BLANK;
 
 if (tabs2.equals("page-added-email")) {
 	emailParam = "emailPageAdded";
 	defaultEmailSubject = ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_SUBJECT);
 	defaultEmailBody = ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_BODY);
-	defaultEmailSignature = ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_SIGNATURE);
 }
 else if (tabs2.equals("page-updated-email")) {
 	emailParam = "emailPageUpdated";
 	defaultEmailSubject = ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_SUBJECT);
 	defaultEmailBody = ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_BODY);
-	defaultEmailSignature = ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_SIGNATURE);
 }
 
 String emailSubjectParam = emailParam + "Subject";
 String emailBodyParam = emailParam + "Body";
-String emailSignatureParam = emailParam + "Signature";
 
 String emailSubject = PrefsParamUtil.getString(portletPreferences, request, emailSubjectParam, defaultEmailSubject);
 String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBodyParam, defaultEmailBody);
-String emailSignature = PrefsParamUtil.getString(portletPreferences, request, emailSignatureParam, defaultEmailSignature);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
@@ -80,10 +75,8 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 	<liferay-ui:error key="emailPageAddedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailPageAddedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailPageAddedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailPageUpdatedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailPageUpdatedSignature" message="please-enter-a-valid-signature" />
 	<liferay-ui:error key="emailPageUpdatedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="visibleNodesCount" message="please-specify-at-least-one-visible-node" />
 
@@ -163,8 +156,6 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
 
 				<aui:input cssClass="lfr-textarea-container" label="body" name='<%= "preferences--" + emailBodyParam + "--" %>' type="textarea" value="<%= emailBody %>" />
-
-				<aui:input cssClass="lfr-textarea-container" label="signature" name='<%= "preferences--" + emailSignatureParam + "--" %>' type="textarea" value="<%= emailSignature %>" wrap="soft" />
 			</aui:fieldset>
 
 			<aui:fieldset cssClass="definition-of-terms">

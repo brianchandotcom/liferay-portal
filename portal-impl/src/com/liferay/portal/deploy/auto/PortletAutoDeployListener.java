@@ -60,10 +60,8 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 			autoDeployer = getPhpDeployer();
 		}
 		else if (!isExtPlugin(file) && !isHookPlugin(file) &&
-				 !isMatchingFile(
-					file, "WEB-INF/liferay-layout-templates.xml") &&
-				 !isThemePlugin(file) && !isWebPlugin(file) &&
-				 file.getName().endsWith(".war")) {
+			!isLayoutTemplatePlugin(file) && !isThemePlugin(file) &&
+			!isWebPlugin(file) && isMatchingFileExtension(file, ".war")) {
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Deploying package as a web application");

@@ -83,7 +83,7 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 		</c:if>
 	</aui:nav>
 
-	<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/journal/article_search.jsp" />
+	<aui:nav-bar-search cssClass="navbar-search-advanced" file="/html/portlet/journal/article_search.jsp" />
 </aui:nav-bar>
 
 <aui:script>

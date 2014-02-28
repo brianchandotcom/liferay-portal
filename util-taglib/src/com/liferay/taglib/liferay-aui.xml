@@ -748,6 +748,11 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<name>searchContainer</name>
+				<inputType><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></inputType>
+				<outputType><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></outputType>
+			</attribute>
+			<attribute>
 				<name>useNamespace</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>

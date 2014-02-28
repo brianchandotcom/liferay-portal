@@ -57,12 +57,12 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				</liferay-portlet:renderURL>
 
-				<aui:nav>
+				<aui:nav searchContainer="<%= ruleGroupSearch %>">
 					<aui:nav-item href="<%= addRuleGroupURL %>" iconCssClass="icon-plus" label="add-device-family" />
 				</aui:nav>
 			</c:if>
 
-			<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/mobile_device_rules/rule_group_search.jsp" searchContainer="<%= ruleGroupSearch %>" />
+			<aui:nav-bar-search cssClass="navbar-search-advanced" file="/html/portlet/mobile_device_rules/rule_group_search.jsp" searchContainer="<%= ruleGroupSearch %>" />
 		</aui:nav-bar>
 
 		<%

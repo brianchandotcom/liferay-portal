@@ -423,7 +423,8 @@ public class BookmarksFolderLocalServiceUtil {
 
 	public static java.util.List<java.lang.Object> getFoldersAndEntries(
 		long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getFoldersAndEntries(groupId, folderId);
 	}
 

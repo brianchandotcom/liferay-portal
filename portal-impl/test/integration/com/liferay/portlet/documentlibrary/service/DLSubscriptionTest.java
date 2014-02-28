@@ -62,7 +62,7 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 			group.getGroupId(), group.getGroupId(), containerModelId,
 			ServiceTestUtil.randomString());
 
-	return fileEntry.getFileEntryId();
+		return fileEntry.getFileEntryId();
 	}
 
 	@Override

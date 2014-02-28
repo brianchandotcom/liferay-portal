@@ -105,7 +105,8 @@ public class NavBarSearchTag extends BaseNavBarSearchTag {
 		SearchContainer searchContainer = getSearchContainer();
 
 		if (searchContainer != null) {
-			DisplayTerms displayTerms = (DisplayTerms)searchContainer.getDisplayTerms();
+			DisplayTerms displayTerms =
+				(DisplayTerms)searchContainer.getDisplayTerms();
 
 			boolean searchResults = displayTerms.isAdvancedSearch();
 

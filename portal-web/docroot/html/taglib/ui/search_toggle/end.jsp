@@ -21,6 +21,8 @@
 </div>
 
 <aui:script position="inline" use="aui-toggler,event-key">
+	var Util = Liferay.Util;
+
 	var advancedNode = A.one('#<%= id %>advanced');
 	var advancedSearchNode = A.one('#<%= id + displayTerms.ADVANCED_SEARCH %>');
 	var closeAdvancedNode = A.one('#<portlet:namespace />closeAdvancedSearch');
@@ -28,10 +30,10 @@
 	var simpleNode = A.one('#<%= id %>simple');
 	var toggleAdvancedNode = A.one('#<%= id %>toggleAdvanced');
 
-	var enableOrDisableElements = function(disable) {
-		simpleNode.all('input').attr('disabled', disable);
-		advancedNode.all('input').attr('disabled', !disable);
-	}
+	var toggleDisabled = function(state) {
+		Util.toggleDisabled(simpleNode.all('input'), state);
+		Util.toggleDisabled(advancedNode.all('input'), !state);
+	};
 
 	var toggler = new A.Toggler(
 		{
@@ -53,28 +55,19 @@
 
 			advancedSearchNode.val(expanded);
 
-			enableOrDisableElements(expanded);
+			toggleDisabled(expanded);
 
-			if (!expanded) {
-				keywordsNode.focus();
-			}
-			else {
-				var inputTextNode = advancedNode.one('input:text');
+			var inputNode = keywordsNode;
 
-				if (inputTextNode) {
-					inputTextNode.focus();
-				}
+			if (expanded) {
+				inputNode = advancedNode.one('input:text');
 			}
+
+			Util.focusFormField(inputNode);
 		}
 	);
 
-	var toggleAdvancedSearch = function() {
-		toggler.toggle();
-	}
-
-	closeAdvancedNode.on('click', toggleAdvancedSearch);
-
-	keywordsNode.on('key', toggleAdvancedSearch, 'down:38,40');
+	closeAdvancedNode.on('click', A.fn(0, 'toggle', toggler));
 </aui:script>
 
 <c:if test="<%= autoFocus %>">

@@ -160,7 +160,8 @@ public class NavTag extends BaseNavTag {
 		SearchContainer searchContainer = getSearchContainer();
 
 		if (searchContainer != null) {
-			DisplayTerms displayTerms = (DisplayTerms)searchContainer.getDisplayTerms();
+			DisplayTerms displayTerms =
+				(DisplayTerms)searchContainer.getDisplayTerms();
 
 			boolean searchResults = displayTerms.isAdvancedSearch();
 

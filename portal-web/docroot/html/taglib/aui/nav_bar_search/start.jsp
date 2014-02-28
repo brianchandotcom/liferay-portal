@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/aui/nav_bar_search/init.jsp" %>
 
-<div class='collapse nav-collapse <%= searchResults ? "open" : StringPool.BLANK %>' id="<%= id %>NavbarSearchCollapse">
+<div class="collapse nav-collapse <%= searchResults ? "open" : StringPool.BLANK %>" id="<%= id %>NavbarSearchCollapse">
 	<div class="navbar-search <%= cssClass %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 		<c:if test="<%= Validator.isNotNull(file) %>">
 			<liferay-ui:search-form
@@ -102,12 +102,7 @@
 
 			var navbarButton = A.one('#<%= id %>NavbarBtn');
 
-			navbarButton.on(
-				['click', 'keypress'],
-				function(event) {
-					toggleSearchMenu(event);
-				}
-			);
+			navbarButton.on(['click', 'keypress'], toggleSearchMenu);
 
 			if (advancedSearchResults) {
 				toggleSearchMenu(

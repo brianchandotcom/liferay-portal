@@ -73,6 +73,7 @@ import com.liferay.portlet.messageboards.NoSuchThreadException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.messageboards.model.MBConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
@@ -82,7 +83,6 @@ import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageDisplayImpl;
 import com.liferay.portlet.messageboards.service.base.MBMessageLocalServiceBaseImpl;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.portlet.messageboards.util.MBSubscriptionSender;
 import com.liferay.portlet.messageboards.util.MBUtil;
@@ -224,7 +224,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			MBMessage.class.getName(), "subject", subject);
 
 		Settings settings = SettingsFactoryUtil.getServiceGroupSettings(
-			groupId, MBPermission.RESOURCE_NAME);
+			groupId, MBConstants.SERVICE_NAME);
 
 		if (settings != null) {
 			if (!MBUtil.isAllowAnonymousPosting(settings)) {
@@ -1976,7 +1976,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		Settings settings = SettingsFactoryUtil.getServiceGroupSettings(
-				message.getGroupId(), PortletKeys.MESSAGE_BOARDS);
+			message.getGroupId(), MBConstants.SERVICE_NAME);
 
 		if (serviceContext.isCommandAdd() &&
 			MBUtil.getEmailMessageAddedEnabled(settings)) {

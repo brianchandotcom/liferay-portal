@@ -14,14 +14,19 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.settings.Settings;
+import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
@@ -106,6 +111,28 @@ public class ActionUtil {
 			portletRequest);
 
 		getMessage(request);
+	}
+
+	public static Settings getSettings(HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings serviceGroupSettings = (Settings)request.getAttribute(
+			WebKeys.MESSAGE_BOARDS_SERVICE_GROUP_SETTINGS);
+
+		if (serviceGroupSettings == null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			serviceGroupSettings =
+				SettingsFactoryUtil.getServiceGroupSettings(
+					themeDisplay.getSiteGroupId(), MBConstants.SERVICE_NAME);
+
+			request.setAttribute(
+				WebKeys.MESSAGE_BOARDS_SERVICE_GROUP_SETTINGS,
+				serviceGroupSettings);
+		}
+
+		return serviceGroupSettings;
 	}
 
 	public static void getThreadMessage(HttpServletRequest request)

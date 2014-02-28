@@ -37,7 +37,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 <c:if test="<%= showToolbar %>">
 
 	<%
-	request.setAttribute("searchContainer", searchContainer);
+	request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 	%>
 
 	<liferay-util:include page="/html/portlet/dynamic_data_mapping/template_toolbar.jsp">

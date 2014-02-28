@@ -90,7 +90,7 @@ if (filterManageableOrganizations) {
 				<aui:nav-bar>
 
 					<%
-					request.setAttribute("searchContainer", organizationSearchContainer);
+					request.setAttribute(WebKeys.SEARCH_CONTAINER, organizationSearchContainer);
 					%>
 
 					<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />

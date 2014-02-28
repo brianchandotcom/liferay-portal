@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/users_admin/init.jsp" %>
 
 <%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("searchContainer");
+SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 

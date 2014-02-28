@@ -193,7 +193,7 @@ $editLayoutPanelWidth: 460px;
 									left: 0;
 									margin: 3px 0 0 0;
 									position: absolute;
-									top: auto;
+									top: 100%;
 									width: 100%;
 								}
 
@@ -330,7 +330,7 @@ $editLayoutPanelWidth: 460px;
 									margin: 3px 0 0 0;
 									padding: 0;
 									position: absolute;
-									top: auto;
+									top: 100%;
 									width: 100%;
 								}
 
@@ -556,7 +556,7 @@ $editLayoutPanelWidth: 460px;
 									background-color: #F6F6F6;
 									display: none;
 									position: absolute;
-									top: auto;
+									top: 100%;
 								}
 
 								> li {
@@ -831,7 +831,8 @@ $editLayoutPanelWidth: 460px;
 		.staging-bar {
 			.dropdown-menu {
 				font-size: 13px;
-				min-width: 520px;
+				position: absolute;
+				top: 100%;
 				width: 100%;
 
 				.btn-link {

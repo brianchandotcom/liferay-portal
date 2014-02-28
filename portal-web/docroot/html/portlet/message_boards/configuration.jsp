@@ -19,11 +19,11 @@
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2", "general");
 
-String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", MBUtil.getEmailFromName(serviceGroupSettings));
-String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", MBUtil.getEmailFromAddress(serviceGroupSettings));
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", mbSettings.getEmailFromName());
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", mbSettings.getEmailFromAddress());
 
-boolean emailMessageAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageAddedEnabled--", MBUtil.getEmailMessageAddedEnabled(serviceGroupSettings));
-boolean emailMessageUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageUpdatedEnabled--", MBUtil.getEmailMessageUpdatedEnabled(serviceGroupSettings));
+boolean emailMessageAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageAddedEnabled--", mbSettings.isEmailMessageAddedEnabled());
+boolean emailMessageUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageUpdatedEnabled--", mbSettings.isEmailMessageUpdatedEnabled());
 
 String emailParam = StringPool.BLANK;
 String defaultEmailSubject = StringPool.BLANK;
@@ -42,6 +42,8 @@ else if (tabs2.equals("message-updated-email")) {
 
 String emailSubjectParam = emailParam + "Subject";
 String emailBodyParam = emailParam + "Body";
+
+Settings serviceGroupSettings = mbSettings.getServiceGroupSettings();
 
 String emailSubject = SettingsParamUtil.getString(serviceGroupSettings, request, emailSubjectParam, defaultEmailSubject);
 String emailBody = SettingsParamUtil.getString(serviceGroupSettings, request, emailBodyParam, defaultEmailBody);
@@ -87,7 +89,7 @@ String emailBody = SettingsParamUtil.getString(serviceGroupSettings, request, em
 	<c:choose>
 		<c:when test='<%= tabs2.equals("general") %>'>
 			<aui:fieldset>
-				<aui:input name="preferences--allowAnonymousPosting--" type="checkbox" value="<%= MBUtil.isAllowAnonymousPosting(serviceGroupSettings) %>" />
+				<aui:input name="preferences--allowAnonymousPosting--" type="checkbox" value="<%= mbSettings.isAllowAnonymousPosting() %>" />
 
 				<aui:input helpMessage="message-boards-message-subscribe-by-default-help" label="subscribe-by-default" name="preferences--subscribeByDefault--" type="checkbox" value="<%= subscribeByDefault %>" />
 
@@ -127,7 +129,7 @@ String emailBody = SettingsParamUtil.getString(serviceGroupSettings, request, em
 
 				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
 
-				<aui:input label="html-format" name="preferences--emailHtmlFormat--" type="checkbox" value="<%= MBUtil.getEmailHtmlFormat(serviceGroupSettings) %>" />
+				<aui:input label="html-format" name="preferences--emailHtmlFormat--" type="checkbox" value="<%= mbSettings.isEmailHtmlFormat() %>" />
 			</aui:fieldset>
 
 			<aui:fieldset cssClass="definition-of-terms">
@@ -385,7 +387,7 @@ String emailBody = SettingsParamUtil.getString(serviceGroupSettings, request, em
 					</tr>
 
 					<%
-					priorities = LocalizationUtil.getSettingsValues(serviceGroupSettings, "priorities", defaultLanguageId);
+					priorities = mbSettings.getPriorities(defaultLanguageId);
 
 					for (int i = 0; i < 10; i++) {
 						String name = StringPool.BLANK;
@@ -622,7 +624,7 @@ String emailBody = SettingsParamUtil.getString(serviceGroupSettings, request, em
 				</tr>
 				<tr>
 					<td>
-						<aui:input cssClass="lfr-textarea-container" label="" name='<%= "ranks_" + defaultLanguageId %>' type="textarea" value='<%= StringUtil.merge(LocalizationUtil.getSettingsValues(serviceGroupSettings, "ranks", defaultLanguageId), StringPool.NEW_LINE) %>' />
+						<aui:input cssClass="lfr-textarea-container" label="" name='<%= "ranks_" + defaultLanguageId %>' type="textarea" value="<%= StringUtil.merge(mbSettings.getRanks(defaultLanguageId), StringPool.NEW_LINE) %>" />
 					</td>
 					<td>
 
@@ -633,7 +635,7 @@ String emailBody = SettingsParamUtil.getString(serviceGroupSettings, request, em
 							}
 						%>
 
-							<aui:input name='<%= "ranks_" + LocaleUtil.toLanguageId(locales[i]) %>' type="hidden" value='<%= StringUtil.merge(LocalizationUtil.getSettingsValues(serviceGroupSettings, "ranks", LocaleUtil.toLanguageId(locales[i]), false), StringPool.NEW_LINE) %>' />
+							<aui:input name='<%= "ranks_" + LocaleUtil.toLanguageId(locales[i]) %>' type="hidden" value="<%= StringUtil.merge(mbSettings.getRanks(LocaleUtil.toLanguageId(locales[i])), StringPool.NEW_LINE) %>" />
 
 						<%
 						}

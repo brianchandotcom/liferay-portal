@@ -32,9 +32,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -56,24 +54,25 @@ import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.settings.Settings;
+import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.messageboards.MBSettings;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.messageboards.model.MBConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
-import com.liferay.util.ContentUtil;
 import com.liferay.util.mail.JavaMailUtil;
 
 import java.io.InputStream;
@@ -347,106 +346,6 @@ public class MBUtil {
 		return classPKs;
 	}
 
-	public static String getEmailFromAddress(Settings settings) {
-		return settings.getValue(
-			PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS,
-			PropsValues.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS);
-	}
-
-	public static String getEmailFromName(Settings settings) {
-		return settings.getValue(
-			PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_NAME,
-			PropsValues.MESSAGE_BOARDS_EMAIL_FROM_NAME);
-	}
-
-	public static boolean getEmailHtmlFormat(Settings settings) {
-		String emailHtmlFormat = settings.getValue(
-			"emailHtmlFormat", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailHtmlFormat)) {
-			return GetterUtil.getBoolean(emailHtmlFormat);
-		}
-		else {
-			return PropsValues.MESSAGE_BOARDS_EMAIL_HTML_FORMAT;
-		}
-	}
-
-	public static String getEmailMessageAddedBody(Settings settings) {
-		String emailMessageAddedBody = settings.getValue(
-			"emailMessageAddedBody", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailMessageAddedBody)) {
-			return emailMessageAddedBody;
-		}
-		else {
-			return ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY);
-		}
-	}
-
-	public static boolean getEmailMessageAddedEnabled(Settings settings) {
-		String emailMessageAddedEnabled = settings.getValue(
-			"emailMessageAddedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailMessageAddedEnabled)) {
-			return GetterUtil.getBoolean(emailMessageAddedEnabled);
-		}
-		else {
-			return PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_ENABLED;
-		}
-	}
-
-	public static String getEmailMessageAddedSubject(Settings settings) {
-		String emailMessageAddedSubject = settings.getValue(
-			"emailMessageAddedSubject", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailMessageAddedSubject)) {
-			return emailMessageAddedSubject;
-		}
-		else {
-			return ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT);
-		}
-	}
-
-	public static String getEmailMessageUpdatedBody(Settings settings) {
-		String emailMessageUpdatedBody = settings.getValue(
-			"emailMessageUpdatedBody", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailMessageUpdatedBody)) {
-			return emailMessageUpdatedBody;
-		}
-		else {
-			return ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY);
-		}
-	}
-
-	public static boolean getEmailMessageUpdatedEnabled(Settings settings) {
-		String emailMessageUpdatedEnabled = settings.getValue(
-			"emailMessageUpdatedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailMessageUpdatedEnabled)) {
-			return GetterUtil.getBoolean(emailMessageUpdatedEnabled);
-		}
-		else {
-			return PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_ENABLED;
-		}
-	}
-
-	public static String getEmailMessageUpdatedSubject(Settings settings) {
-		String emailMessageUpdatedSubject = settings.getValue(
-			"emailMessageUpdatedSubject", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailMessageUpdatedSubject)) {
-			return emailMessageUpdatedSubject;
-		}
-		else {
-			return ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT);
-		}
-	}
-
 	public static List<Object> getEntries(Hits hits) {
 		List<Object> entries = new ArrayList<Object>();
 
@@ -517,17 +416,6 @@ public class MBUtil {
 		}
 
 		return entries;
-	}
-
-	public static String getMessageFormat(Settings settings) {
-		String messageFormat = settings.getValue(
-			"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
-
-		if (isValidMessageFormat(messageFormat)) {
-			return messageFormat;
-		}
-
-		return "html";
 	}
 
 	public static long getMessageId(String mailId) {
@@ -632,6 +520,16 @@ public class MBUtil {
 		return sb.toString();
 	}
 
+	public static MBSettings getSettings(long groupId)
+		throws PortalException, SystemException {
+
+		Settings serviceGroupSettings =
+			SettingsFactoryUtil.getServiceGroupSettings(
+				groupId, MBConstants.SERVICE_NAME);
+
+		return new MBSettings(serviceGroupSettings);
+	}
+
 	public static String getSubjectWithoutMessageId(Message message)
 		throws Exception {
 
@@ -651,12 +549,11 @@ public class MBUtil {
 	}
 
 	public static String[] getThreadPriority(
-			Settings settings, String languageId, double value,
+			MBSettings mbSettings, String languageId, double value,
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		String[] priorities = LocalizationUtil.getSettingsValues(
-			settings, "priorities", languageId);
+		String[] priorities = mbSettings.getPriorities(languageId);
 
 		String[] priorityPair = _findThreadPriority(
 			value, themeDisplay, priorities);
@@ -665,8 +562,7 @@ public class MBUtil {
 			String defaultLanguageId = LocaleUtil.toLanguageId(
 				LocaleUtil.getSiteDefault());
 
-			priorities = LocalizationUtil.getSettingsValues(
-				settings, "priorities", defaultLanguageId);
+			priorities = mbSettings.getPriorities(defaultLanguageId);
 
 			priorityPair = _findThreadPriority(value, themeDisplay, priorities);
 		}
@@ -703,13 +599,12 @@ public class MBUtil {
 	}
 
 	public static String getUserRank(
-			Settings settings, String languageId, int posts)
+			MBSettings mbSettings, String languageId, int posts)
 		throws Exception {
 
 		String rank = StringPool.BLANK;
 
-		String[] ranks = LocalizationUtil.getSettingsValues(
-			settings, "ranks", languageId);
+		String[] ranks = mbSettings.getRanks(languageId);
 
 		for (int i = 0; i < ranks.length; i++) {
 			String[] kvp = StringUtil.split(ranks[i], CharPool.EQUAL);
@@ -729,7 +624,7 @@ public class MBUtil {
 	}
 
 	public static String[] getUserRank(
-			Settings settings, String languageId, MBStatsUser statsUser)
+			MBSettings mbSettings, String languageId, MBStatsUser statsUser)
 		throws Exception {
 
 		String[] rank = {StringPool.BLANK, StringPool.BLANK};
@@ -740,8 +635,7 @@ public class MBUtil {
 
 		long companyId = group.getCompanyId();
 
-		String[] ranks = LocalizationUtil.getSettingsValues(
-			settings, "ranks", languageId);
+		String[] ranks = mbSettings.getRanks(languageId);
 
 		for (int i = 0; i < ranks.length; i++) {
 			String[] kvp = StringUtil.split(ranks[i], CharPool.EQUAL);
@@ -802,12 +696,6 @@ public class MBUtil {
 		}
 
 		return false;
-	}
-
-	public static boolean isAllowAnonymousPosting(Settings settings) {
-		return GetterUtil.getBoolean(
-			settings.getValue("allowAnonymousPosting", null),
-			PropsValues.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
 	}
 
 	public static boolean isValidMessageFormat(String messageFormat) {

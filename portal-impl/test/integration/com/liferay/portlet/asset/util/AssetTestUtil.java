@@ -47,9 +47,9 @@ public class AssetTestUtil {
 
 		long userId = TestPropsValues.getUserId();
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
-
 		Locale locale = LocaleUtil.getSiteDefault();
+
+		Map<Locale, String> titleMap = new HashMap<Locale, String>();
 
 		titleMap.put(locale, ServiceTestUtil.randomString());
 
@@ -58,6 +58,7 @@ public class AssetTestUtil {
 		descriptionMap.put(locale, ServiceTestUtil.randomString());
 
 		String[] categoryProperties = null;
+
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			groupId, userId);
 
@@ -68,7 +69,9 @@ public class AssetTestUtil {
 
 	public static AssetVocabulary addVocabulary(long groupId) throws Exception {
 		long userId = TestPropsValues.getUserId();
+
 		String title = ServiceTestUtil.randomString();
+
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			groupId, userId);
 

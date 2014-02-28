@@ -204,6 +204,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--DATE_RANGE-->
+<tr>
+	<td>DATE_RANGE_START_DATE</td>
+	<td>//input[@id='_88_startDate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_RANGE_END_DATE</td>
+	<td>//input[@id='_88_endDate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--PERMISSIONS-->
 <tr>
 	<td>PERMISSIONS_CHECKBOX</td>
@@ -240,11 +256,6 @@
 <tr>
 	<td>SCHEDULED_TABLE_END_DATE</td>
 	<td>//tr[contains(.,'${key_scheduleTitleName}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHOOSE_CONTENT_DATE_RANGE_CHANGE</td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

@@ -17,9 +17,11 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ExportImportConfiguration;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.ExportImportConfigurationLocalServiceBaseImpl;
@@ -81,6 +83,7 @@ public class ExportImportConfigurationLocalServiceImpl
 	}
 
 	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ExportImportConfiguration deleteExportImportConfiguration(
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException, SystemException {
@@ -103,7 +106,8 @@ public class ExportImportConfigurationLocalServiceImpl
 			exportImportConfigurationPersistence.findByPrimaryKey(
 				exportImportConfigurationId);
 
-		return deleteExportImportConfiguration(exportImportConfiguration);
+		return exportImportConfigurationLocalService.
+			deleteExportImportConfiguration(exportImportConfiguration);
 	}
 
 	@Override
@@ -139,6 +143,14 @@ public class ExportImportConfigurationLocalServiceImpl
 		return exportImportConfigurationPersistence.findByG_T_S(
 			groupId, type, WorkflowConstants.STATUS_APPROVED, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public int getExportImportConfigurationsCount(long groupId)
+		throws SystemException {
+
+		return exportImportConfigurationPersistence.countByG_S(
+			groupId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override

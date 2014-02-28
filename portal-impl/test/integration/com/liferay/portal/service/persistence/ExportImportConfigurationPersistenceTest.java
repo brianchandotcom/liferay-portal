@@ -208,6 +208,19 @@ public class ExportImportConfigurationPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_S() {
+		try {
+			_persistence.countByG_S(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt());
+
+			_persistence.countByG_S(0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByG_T() {
 		try {
 			_persistence.countByG_T(ServiceTestUtil.nextLong(),

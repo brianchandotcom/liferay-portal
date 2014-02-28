@@ -313,6 +313,11 @@ public class ExportImportConfigurationLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static int getExportImportConfigurationsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getExportImportConfigurationsCount(groupId);
+	}
+
 	public static int getExportImportConfigurationsCount(long groupId, int type)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getExportImportConfigurationsCount(groupId, type);

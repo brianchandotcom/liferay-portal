@@ -456,10 +456,11 @@
 		<if>
 			<equals arg1="${wikiPageTitle}" arg2="FrontPage" />
 			<then>
-				<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_REVISION" value1="1.0" />
+				<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="FrontPage" />
+				<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_REVISION" value1="1.0 (Minor Edit)" />
 			</then>
 			<else>
-				<execute action="PGWikiAllpages#assertElementNotPresent" locator-key1="WIKI_PAGE_TABLE_PAGE" />
+				<execute action="PGWikiAllpages#assertElementNotPresent" locator-key1="WIKI_PAGE_TABLE_PAGE_2" />
 			</else>
 		</if>
 

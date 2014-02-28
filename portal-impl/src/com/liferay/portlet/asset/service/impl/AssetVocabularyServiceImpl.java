@@ -192,8 +192,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	public List<AssetVocabulary> getGroupVocabularies(long groupId)
 		throws PortalException, SystemException {
 
-		return filterVocabularies(
-			assetVocabularyLocalService.getGroupVocabularies(groupId));
+		return getGroupVocabularies(groupId, true);
 	}
 
 	@Override
@@ -201,9 +200,21 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			long groupId, boolean createDefaultVocabulary)
 		throws PortalException, SystemException {
 
-		return filterVocabularies(
-			assetVocabularyLocalService.getGroupVocabularies(
-				groupId, createDefaultVocabulary));
+		List<AssetVocabulary> vocabularies =
+			assetVocabularyPersistence.filterFindByGroupId(groupId);
+
+		if (!vocabularies.isEmpty() || !createDefaultVocabulary) {
+			return vocabularies;
+		}
+
+		AssetVocabulary vocabulary =
+			assetVocabularyLocalService.addDefaultVocabulary(groupId);
+
+		vocabularies = new ArrayList<AssetVocabulary>();
+
+		vocabularies.add(vocabulary);
+
+		return vocabularies;
 	}
 
 	@Override

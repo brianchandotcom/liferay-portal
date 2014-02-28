@@ -63,13 +63,12 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 
 <portlet:actionURL var="deleteExportConfigurationURL">
 	<portlet:param name="struts_action" value="/layouts_admin/edit_export_configuration" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(liveGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 	<portlet:param name="redirect" value="<%= deleteRedirectURL %>" />
 	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 </portlet:actionURL>
 
-<liferay-ui:icon
-	image="delete"
-	message="delete"
+<liferay-ui:icon-delete
+	trash="<%= TrashUtil.isTrashEnabled(liveGroupId) %>"
 	url="<%= deleteExportConfigurationURL %>"
 />

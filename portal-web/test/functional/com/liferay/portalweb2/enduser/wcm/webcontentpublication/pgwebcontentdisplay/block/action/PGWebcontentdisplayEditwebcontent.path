@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_WEB_CONTENT_IFRAME</td>
+	<td>//iframe[contains(@id,'editAsset_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_STATUS</td>
 	<td>//span[contains(@class,'workflow-status') and contains(@class,'workflow-status-icon')]/strong</td>
 	<td></td>

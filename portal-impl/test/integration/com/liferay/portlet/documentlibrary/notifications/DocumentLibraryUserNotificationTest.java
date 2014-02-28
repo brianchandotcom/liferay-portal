@@ -78,12 +78,10 @@ public class DocumentLibraryUserNotificationTest
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-			(Long)baseModel.getPrimaryKeyObj());
-
-		fileEntry = DLAppTestUtil.updateFileEntry(
-			group.getGroupId(), fileEntry.getFileEntryId(),
-			ServiceTestUtil.randomString(), fileEntry.getTitle(), false);
+		FileEntry fileEntry = DLAppTestUtil.updateFileEntry(
+			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(),
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
+			false);
 
 		return (BaseModel<?>)fileEntry.getModel();
 	}

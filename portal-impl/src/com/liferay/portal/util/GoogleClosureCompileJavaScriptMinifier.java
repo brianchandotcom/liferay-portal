@@ -99,10 +99,16 @@ public class GoogleClosureCompileJavaScriptMinifier
 							error.format(level, _simpleMessageFormatter));
 					}
 
+					break;
 				case WARNING:
 					if (_log.isWarnEnabled()) {
 						_log.warn(error.format(level, _simpleMessageFormatter));
 					}
+
+					break;
+
+				default:
+					break;
 			}
 		}
 

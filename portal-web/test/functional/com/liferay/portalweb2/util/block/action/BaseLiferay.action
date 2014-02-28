@@ -13,7 +13,7 @@
 
 	<command name="assertAlertNotPresent">
 		<default>
-			<description message="Check and fail if the alert is present." />
+			<description message="Fail if the alert is present." />
 
 			<execute function="AssertAlertNotPresent#assertAlertNotPresent" />
 		</default>

@@ -177,11 +177,6 @@
 			<bean class="com.liferay.portal.jsonwebservice.JSONWebServiceActionsManagerImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceClassVisitorFactoryUtil" class="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceClassVisitorFactoryUtil">
-		<property name="JSONWebServiceClassVisitorFactory">
-			<bean class="com.liferay.portal.jsonwebservice.JSONWebServiceClassVisitorFactoryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.language.LanguageUtil" class="com.liferay.portal.kernel.language.LanguageUtil">
 		<property name="language">
 			<bean class="com.liferay.portal.language.LanguageImpl" />

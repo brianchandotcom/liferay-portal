@@ -61,6 +61,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetTagProperty;
+import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetCategoryPropertyLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -68,6 +69,7 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.service.permission.AssetTagPermission;
+import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.assetpublisher.util.AssetSearcher;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -248,6 +250,31 @@ public class AssetUtil {
 
 		return viewableTagIdsArray.toArray(
 			new long[viewableTagIdsArray.size()][]);
+	}
+
+	public static List<AssetVocabulary> filterVocabulariesBySelectedClassName(
+		List<AssetVocabulary> vocabularies, String className) {
+
+		List<AssetVocabulary> filteredVocabularies =
+			new ArrayList<AssetVocabulary>();
+
+		for (AssetVocabulary groupVocabulary : vocabularies) {
+			UnicodeProperties settingsProperties =
+				groupVocabulary.getSettingsProperties();
+
+			long[] selectedClassNameIds = StringUtil.split(
+				settingsProperties.getProperty("selectedClassNameIds"), 0L);
+			long classNameId = PortalUtil.getClassNameId(className);
+
+			if ((selectedClassNameIds.length == 0) ||
+				(selectedClassNameIds[0] == 0) ||
+				ArrayUtil.contains(selectedClassNameIds, classNameId)) {
+
+				filteredVocabularies.add(groupVocabulary);
+			}
+		}
+
+		return filteredVocabularies;
 	}
 
 	public static PortletURL getAddPortletURL(

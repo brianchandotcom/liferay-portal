@@ -52,6 +52,8 @@ public class DBBuilder {
 		String sqlDir = arguments.get("db.sql.dir");
 
 		new DBBuilder(databaseName, databaseTypes, sqlDir);
+
+		System.exit(0);
 	}
 
 	public DBBuilder(

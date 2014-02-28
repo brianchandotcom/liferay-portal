@@ -87,8 +87,8 @@
 			</license>
 		</licenses>
 		<comments>
-			Removed javax.*, junit.*, org.hamcrest.*, org.json.*, and
-			org.junit.*.
+			Removed com.google.*, javax.*, junit.*, org.hamcrest.*, org.json.*,
+			org.junit.* and rhino_ast.
 		</comments>
 	</library>
 	<library>

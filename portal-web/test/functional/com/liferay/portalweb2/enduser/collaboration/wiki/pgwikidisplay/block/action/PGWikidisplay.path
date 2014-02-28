@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_CONFIGURATION_MESSAGE</td>
 	<td>//div[@class='alert alert-info portlet-configuration']/a</td>
 	<td></td>

@@ -345,7 +345,6 @@
 		<execute action="CPUsersandorganizationsAssignuserrolesUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute action="CPUsersandorganizationsAssignuserrolesUser#assertClick" locator-key1="CURRENT" value1="Current" />
-		<execute action="CPUsersandorganizationsAssignuserrolesUser#assertChecked" locator-key1="USER_TABLE_CHECKBOX_1" />
 		<execute action="CPUsersandorganizationsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_USER_NAME_1" value1="${userFirstName} ${userLastName}" />
 		<execute action="CPUsersandorganizationsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
 	</command>

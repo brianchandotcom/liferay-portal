@@ -439,7 +439,7 @@
 		<execute action="PGWikidisplayAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="PGWikidisplayAllpages#assertClick" locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute action="PGWikidisplayAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${wikiPageTitle} was moved to the Recycle Bin. Undo" />
-		<execute action="PGWikidisplayAllpages#assertElementNotPresent" locator-key1="WIKI_PAGE_TABLE_PAGE" />
+		<execute action="PGWikidisplayAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_REVISION" value1="1.0" />
 
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
@@ -712,10 +712,9 @@
 	</command>
 
 	<command name="viewDefaultPGViaWD">
-		<execute action="PGWikidisplay#assertTextEquals" locator-key1="PORTLET_CONFIGURATION_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
-		<execute action="PGWikidisplay#assertTextNotPresent" value1="${wikiPageTitle}" />
+		<execute action="PGWikidisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="This page is empty. Edit it to add some text." />
+		<execute action="PGWikidisplay#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="FrontPage" />
 		<execute action="PGWikidisplay#assertTextNotPresent" value1="${wikiPageContent}" />
-		<execute action="PGWikidisplay#assertElementNotPresent" locator-key1="WIKI_PAGE_TITLE" />
 		<execute action="PGWikidisplay#assertElementNotPresent" locator-key1="WIKI_PAGE_BODY" />
 	</command>
 

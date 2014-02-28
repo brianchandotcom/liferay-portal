@@ -56,7 +56,7 @@ public class MinifierUtil {
 			if (_log.isErrorEnabled()) {
 				_log.error(
 					"Could not instantiate "+ PropsValues.JAVASCRIPT_MINIFIER +
-						". Returning YUIJavaScriptMinifier as default");
+						". Returning GoogleClosureCompileJavaScriptMinifier as default");
 			}
 
 			return new GoogleClosureCompileJavaScriptMinifier();

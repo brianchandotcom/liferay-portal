@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_IFRAME</td>
-	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td>//iframe[contains(@src,'editAsset_iframe')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -11,6 +11,14 @@
 		</default>
 	</command>
 
+	<command name="assertAlertNotPresent">
+		<default>
+			<description message="Fail if the alert is present." />
+
+			<execute function="AssertAlertNotPresent#assertAlertNotPresent" />
+		</default>
+	</command>
+
 	<command name="assertChecked">
 		<default>
 			<execute function="AssertChecked#assertChecked" />

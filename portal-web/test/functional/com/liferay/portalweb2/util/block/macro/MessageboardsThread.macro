@@ -333,14 +333,7 @@
 	<command name="viewNoXSSPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<!--
-			The following assertions needs to be executed but is pending LPS-42086 (isAlertPresent)
-			to be implemented. The test will still fail if an alert box is displayed because webdriver
-			will see a Confirmation/Alert Dialog box and it has to be accepted.
-
-			<execute action="PGMessageboardsThread#assertAlertNotPresent" />
-		-->
-
+		<execute action="PGMessageboardsThread#assertAlertNotPresent" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />

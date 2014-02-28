@@ -183,9 +183,61 @@
 			line-height: normal;
 		}
 
+		fieldset {
+			display: table-cell;
+			min-width: 0;
+			width: 100%;
+		}
+
+		input, input.input-large, textarea, .uneditable-input {
+			max-width: 100%;
+			width: auto;
+		}
+
+		select {
+			max-width: 100%;
+		}
+
 		@include respond-to(phone) {
-			input[type=file] {
+			input[type=file], input.input-large {
 				width: 100%;
+			}
+		}
+
+		&.ios {
+			input, input.input-large, textarea, .uneditable-input {
+				max-width: 90% !important;
+			}
+		}
+
+		&.ie {
+			input[type="color"],
+			input[type="date"],
+			input[type="datetime"],
+			input[type="datetime-local"],
+			input[type="email"],
+			input[type="month"],
+			input[type="number"],
+			input[type="password"],
+			input[type="search"],
+			input[type="tel"],
+			input[type="text"],
+			input[type="time"],
+			input[type="url"],
+			input[type="week"],
+			select,
+			textarea,
+			.uneditable-input {
+				max-width: 90%;
+				width: 180px;
+
+				&.input-medium {
+					width: 150px;
+				}
+
+				&.input-small {
+					width: 90px;
+				}
 			}
 		}
 	}

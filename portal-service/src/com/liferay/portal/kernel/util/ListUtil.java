@@ -39,7 +39,7 @@ import java.util.Set;
  */
 public class ListUtil {
 
-	public static <E> List<E> copy(List<E> master) {
+	public static <E> List<E> copy(List<? extends E> master) {
 		if (master == null) {
 			return null;
 		}
@@ -47,7 +47,9 @@ public class ListUtil {
 		return new ArrayList<E>(master);
 	}
 
-	public static <E> void copy(List<E> master, List<? super E> copy) {
+	public static <E> void copy(
+		List<? extends E> master, List<? super E> copy) {
+
 		if ((master == null) || (copy == null)) {
 			return;
 		}
@@ -57,33 +59,32 @@ public class ListUtil {
 		copy.addAll(master);
 	}
 
-	public static void distinct(List<?> list) {
-		distinct(list, null);
-	}
+	public static <E> void distinct(
+		List<? extends E> list, Comparator<E> comparator) {
 
-	public static <E> void distinct(List<E> list, Comparator<E> comparator) {
 		if ((list == null) || list.isEmpty()) {
 			return;
 		}
 
 		Set<E> set = new HashSet<E>();
 
-		Iterator<E> itr = list.iterator();
+		Iterator<? extends E> itr = list.iterator();
 
 		while (itr.hasNext()) {
 			E obj = itr.next();
 
-			if (set.contains(obj)) {
+			if (!set.add(obj)) {
 				itr.remove();
-			}
-			else {
-				set.add(obj);
 			}
 		}
 
 		if (comparator != null) {
 			Collections.sort(list, comparator);
 		}
+	}
+
+	public static void distinct(List<?> list) {
+		distinct(list, null);
 	}
 
 	public static <E> List<E> fromArray(E[] array) {
@@ -95,7 +96,7 @@ public class ListUtil {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public static <E> List<E> fromCollection(Collection<E> c) {
+	public static <E> List<E> fromCollection(Collection<? extends E> c) {
 		if ((c != null) && List.class.isAssignableFrom(c.getClass())) {
 			return (List)c;
 		}
@@ -111,7 +112,7 @@ public class ListUtil {
 		return list;
 	}
 
-	public static <E> List<E> fromEnumeration(Enumeration<E> enu) {
+	public static <E> List<E> fromEnumeration(Enumeration<? extends E> enu) {
 		List<E> list = new ArrayList<E>();
 
 		while (enu.hasMoreElements()) {
@@ -148,28 +149,28 @@ public class ListUtil {
 		return fromFile(new File(fileName));
 	}
 
-	public static <E> List<E> fromMapKeys(Map<E, ?> map) {
+	public static <E> List<E> fromMapKeys(Map<? extends E, ?> map) {
 		if ((map == null) || map.isEmpty()) {
 			return new ArrayList<E>();
 		}
 
 		List<E> list = new ArrayList<E>(map.size());
 
-		for (Map.Entry<E, ?> entry : map.entrySet()) {
+		for (Map.Entry<? extends E, ?> entry : map.entrySet()) {
 			list.add(entry.getKey());
 		}
 
 		return list;
 	}
 
-	public static <E> List<E> fromMapValues(Map<?, E> map) {
+	public static <E> List<E> fromMapValues(Map<?, ? extends E> map) {
 		if ((map == null) || map.isEmpty()) {
 			return new ArrayList<E>();
 		}
 
 		List<E> list = new ArrayList<E>(map.size());
 
-		for (Map.Entry<?, E> entry : map.entrySet()) {
+		for (Map.Entry<?, ? extends E> entry : map.entrySet()) {
 			list.add(entry.getValue());
 		}
 
@@ -188,8 +189,8 @@ public class ListUtil {
 	 * @deprecated As of 6.2.0
 	 */
 	@Deprecated
-	public static <E> boolean remove(List<E> list, E element) {
-		Iterator<E> itr = list.iterator();
+	public static <E> boolean remove(List<? extends E> list, E element) {
+		Iterator<? extends E> itr = list.iterator();
 
 		while (itr.hasNext()) {
 			E curElement = itr.next();
@@ -204,7 +205,7 @@ public class ListUtil {
 		return false;
 	}
 
-	public static <E> List<E> remove(List<E> list, List<E> remove) {
+	public static <E> List<E> remove(List<E> list, List<? extends E> remove) {
 		if ((list == null) || list.isEmpty() ||
 			(remove == null)|| remove.isEmpty()) {
 
@@ -359,6 +360,44 @@ public class ListUtil {
 	}
 
 	/**
+	 * @see ArrayUtil#toString(Object[], Accessor)
+	 */
+	public static <T, V> String toString(
+		List<? extends T> list, Accessor<T, V> accessor) {
+
+		return toString(list, accessor, StringPool.COMMA);
+	}
+
+	/**
+	 * @see ArrayUtil#toString(Object[], Accessor, String)
+	 */
+	public static <T, V> String toString(
+		List<? extends T> list, Accessor<T, V> accessor, String delimiter) {
+
+		if ((list == null) || list.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(2 * list.size() - 1);
+
+		for (int i = 0; i < list.size(); i++) {
+			T bean = list.get(i);
+
+			V value = accessor.get(bean);
+
+			if (value != null) {
+				sb.append(value);
+			}
+
+			if ((i + 1) != list.size()) {
+				sb.append(delimiter);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	/**
 	 * @see ArrayUtil#toString(Object[], String)
 	 */
 	public static String toString(List<?> list, String param) {
@@ -388,44 +427,6 @@ public class ListUtil {
 			else {
 				value = BeanPropertiesUtil.getObject(bean, param);
 			}
-
-			if (value != null) {
-				sb.append(value);
-			}
-
-			if ((i + 1) != list.size()) {
-				sb.append(delimiter);
-			}
-		}
-
-		return sb.toString();
-	}
-
-	/**
-	 * @see ArrayUtil#toString(Object[], Accessor)
-	 */
-	public static <T, V> String toString(
-		List<T> list, Accessor<T, V> accessor) {
-
-		return toString(list, accessor, StringPool.COMMA);
-	}
-
-	/**
-	 * @see ArrayUtil#toString(Object[], Accessor, String)
-	 */
-	public static <T, V> String toString(
-		List<T> list, Accessor<T, V> accessor, String delimiter) {
-
-		if ((list == null) || list.isEmpty()) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(2 * list.size() - 1);
-
-		for (int i = 0; i < list.size(); i++) {
-			T bean = list.get(i);
-
-			V value = accessor.get(bean);
 
 			if (value != null) {
 				sb.append(value);

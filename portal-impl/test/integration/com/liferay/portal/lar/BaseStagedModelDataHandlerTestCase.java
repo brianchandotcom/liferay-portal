@@ -15,6 +15,7 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
@@ -38,7 +40,6 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetTag;
@@ -47,6 +48,9 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.util.MBTestUtil;
 
 import java.io.Serializable;
 
@@ -104,7 +108,14 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		StagedModel stagedModel = addStagedModel(
 			stagingGroup, dependentStagedModelsMap);
 
-		StagedModelAssets stagedModelAssets = updateAssetEntry(stagedModel);
+		// Assets
+
+		StagedModelAssets stagedModelAssets = updateAssetEntry(
+			stagedModel, stagingGroup);
+
+		// Comments
+
+		addComments(stagedModel);
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, stagedModel);
@@ -130,6 +141,14 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		validateImport(
 			stagedModel, stagedModelAssets, dependentStagedModelsMap,
 			liveGroup);
+	}
+
+	protected void addComments(StagedModel stagedModel) throws Exception {
+		MBTestUtil.addDiscussionMessage(
+			stagingGroup.getGroupId(),
+			ExportImportClassedModelUtil.getClassName(stagedModel),
+			ExportImportClassedModelUtil.getClassPK(stagedModel),
+			ServiceTestUtil.randomString());
 	}
 
 	protected List<StagedModel> addDependentStagedModel(
@@ -168,6 +187,13 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
 		throws Exception {
+	}
+
+	protected AssetEntry fetchAssetEntry(StagedModel stagedModel, Group group)
+		throws Exception {
+
+		return AssetEntryLocalServiceUtil.fetchEntry(
+			group.getGroupId(), stagedModel.getUuid());
 	}
 
 	protected Date getEndDate() {
@@ -269,16 +295,13 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		return exportedStagedModel;
 	}
 
-	protected StagedModelAssets updateAssetEntry(StagedModel stagedModel)
+	protected StagedModelAssets updateAssetEntry(
+			StagedModel stagedModel, Group group)
 		throws Exception {
 
-		AssetEntry assetEntry = null;
+		AssetEntry assetEntry = fetchAssetEntry(stagedModel, group);
 
-		try {
-			assetEntry = AssetEntryLocalServiceUtil.getEntry(
-				stagingGroup.getGroupId(), stagedModel.getUuid());
-		}
-		catch (NoSuchEntryException nsee) {
+		if (assetEntry == null) {
 			return null;
 		}
 
@@ -308,15 +331,15 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	}
 
 	protected void validateAssets(
-			String classUuid, StagedModelAssets stagedModelAssets, Group group)
+			StagedModel stagedModel, StagedModelAssets stagedModelAssets,
+			Group group)
 		throws Exception {
 
 		if (stagedModelAssets == null) {
 			return;
 		}
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			group.getGroupId(), classUuid);
+		AssetEntry assetEntry = fetchAssetEntry(stagedModel, group);
 
 		List<AssetCategory> assetCategories =
 			AssetCategoryLocalServiceUtil.getEntryCategories(
@@ -348,6 +371,45 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		Assert.assertEquals(
 			assetVocabulary.getUuid(), importedAssetVocabulary.getUuid());
+	}
+
+	protected void validateComments(
+			StagedModel stagedModel, StagedModel importedStagedModel,
+			Group group)
+		throws Exception {
+
+		List<MBMessage> discussionMessages =
+			MBMessageLocalServiceUtil.getMessages(
+				ExportImportClassedModelUtil.getClassName(stagedModel),
+				ExportImportClassedModelUtil.getClassPK(stagedModel),
+				WorkflowConstants.STATUS_ANY);
+
+		// Not every StagedModel supports comments
+
+		if (ListUtil.isEmpty(discussionMessages)) {
+			return;
+		}
+
+		int importedDiscussionMessagesCount =
+			MBMessageLocalServiceUtil.getDiscussionMessagesCount(
+				ExportImportClassedModelUtil.getClassName(importedStagedModel),
+				ExportImportClassedModelUtil.getClassPK(importedStagedModel),
+				WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			discussionMessages.size(), importedDiscussionMessagesCount + 1);
+
+		for (MBMessage discussionMessage : discussionMessages) {
+			if (discussionMessage.isRoot()) {
+				continue;
+			}
+
+			MBMessage importedDiscussionMessage =
+				MBMessageLocalServiceUtil.fetchMBMessageByUuidAndGroupId(
+					discussionMessage.getUuid(), group.getGroupId());
+
+			Assert.assertNotNull(importedDiscussionMessage);
+		}
 	}
 
 	protected void validateExport(
@@ -437,7 +499,9 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		Assert.assertNotNull(importedStagedModel);
 
-		validateAssets(importedStagedModel.getUuid(), stagedModelAssets, group);
+		validateAssets(importedStagedModel, stagedModelAssets, group);
+
+		validateComments(stagedModel, importedStagedModel, group);
 
 		validateImport(dependentStagedModelsMap, group);
 	}

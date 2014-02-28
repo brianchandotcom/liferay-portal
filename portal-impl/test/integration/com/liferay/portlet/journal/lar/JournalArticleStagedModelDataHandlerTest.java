@@ -29,6 +29,8 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -40,6 +42,7 @@ import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.persistence.JournalArticleResourceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
@@ -211,6 +214,20 @@ public class JournalArticleStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected AssetEntry fetchAssetEntry(StagedModel stagedModel, Group group)
+		throws Exception {
+
+		JournalArticle article = (JournalArticle)stagedModel;
+
+		JournalArticleResource articleResource =
+			JournalArticleResourceLocalServiceUtil.getArticleResource(
+				article.getResourcePrimKey());
+
+		return AssetEntryLocalServiceUtil.fetchEntry(
+			group.getGroupId(), articleResource.getUuid());
+	}
+
+	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return JournalArticleLocalServiceUtil.
@@ -324,10 +341,14 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		Assert.assertNotNull(articleResource);
 
-		JournalArticleLocalServiceUtil.getLatestArticle(
-			articleResource.getResourcePrimKey(), article.getStatus(), false);
+		JournalArticle importedArticle =
+			JournalArticleLocalServiceUtil.getLatestArticle(
+				articleResource.getResourcePrimKey(), article.getStatus(),
+				false);
 
-		validateAssets(articleResource.getUuid(), stagedModelAssets, group);
+		validateAssets(importedArticle, stagedModelAssets, group);
+
+		validateComments(article, importedArticle, group);
 
 		validateImport(dependentStagedModelsMap, group);
 	}

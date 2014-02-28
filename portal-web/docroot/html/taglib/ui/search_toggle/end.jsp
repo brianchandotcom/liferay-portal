@@ -16,76 +16,58 @@
 
 <%@ include file="/html/taglib/ui/search_toggle/init.jsp" %>
 
-			</div>
 		</div>
 	</div>
 </div>
 
-<aui:script position="inline" use="aui-popover,event-key">
-	var popover;
+<aui:script position="inline" use="aui-toggler,event-key">
+	var Util = Liferay.Util;
 
-	var simpleNode = A.one('#<%= id %>simple');
 	var advancedNode = A.one('#<%= id %>advanced');
-	var toggleAdvancedNode = A.one('#<%= id %>toggleAdvanced');
+	var advancedSearchNode = A.one('#<%= id + displayTerms.ADVANCED_SEARCH %>');
+	var closeAdvancedNode = A.one('#<portlet:namespace />closeAdvancedSearch');
 	var keywordsNode = A.one('#<%= id + displayTerms.KEYWORDS %>');
+	var simpleNode = A.one('#<%= id %>simple');
+	var toggleAdvancedNode = A.one('#<%= id %>toggleAdvanced');
 
-	function enableOrDisableElements(event) {
-		simpleNode.all('input').set('disabled', event.newVal);
-		advancedNode.all('input').set('disabled', !event.newVal);
-	}
+	var toggleDisabled = function(state) {
+		Util.toggleDisabled(simpleNode.all('input'), state);
+		Util.toggleDisabled(advancedNode.all('input'), !state);
+	};
 
-	function getPopover() {
-		if (!popover) {
-			popover = new A.Popover(
-				{
-					after: {
-						visibleChange: enableOrDisableElements
-					},
-					align: {
-						node: toggleAdvancedNode,
-						points:[A.WidgetPositionAlign.TL, A.WidgetPositionAlign.BL]
-					},
-					bodyContent: A.one('#<%= id %>advancedBodyNode'),
-					boundingBox: advancedNode,
-					position: 'bottom',
-					srcNode: '#<%= id %>advancedContent',
-					visible: false,
-					width: <%= width %>,
-					zIndex: Liferay.zIndex.ALERT
-				}
-			);
-		}
-
-		return popover;
-	}
-
-	function togglePopover(event) {
-		popover = getPopover().render();
-
-		var visible = popover.get('visible');
-
-		popover.set('visible', !visible);
-
-		if (visible) {
-			keywordsNode.focus();
-		}
-		else {
-			var inputTextNode = advancedNode.one('input[type=text]');
-
-			if (inputTextNode) {
-				inputTextNode.focus();
+	var toggler = new A.Toggler(
+		{
+			animated: true,
+			content: advancedNode,
+			expanded: <%= displayTerms.isAdvancedSearch() %>,
+			header: toggleAdvancedNode,
+			transition: {
+				duration: 0.2,
+				easing: 'cubic-bezier(0, 0.1, 0, 1.0)',
 			}
 		}
+	);
 
-		var advancedSearchNode = advancedNode.one('#<%= id + displayTerms.ADVANCED_SEARCH %>');
+	toggler.on(
+		'expandedChange',
+		function() {
+			var expanded = !toggler.get('expanded');
 
-		advancedSearchNode.val(!visible);
+			advancedSearchNode.val(expanded);
 
-		event.preventDefault();
-	}
+			toggleDisabled(expanded);
 
-	toggleAdvancedNode.on('click', togglePopover);
-	keywordsNode.on('key', togglePopover, 'down:38,40');
+			var inputNode = keywordsNode;
+
+			if (expanded) {
+				inputNode = advancedNode.one('input:text');
+			}
+
+			Util.focusFormField(inputNode);
+		}
+	);
+
+	closeAdvancedNode.on('click', A.fn(0, 'toggle', toggler));
 </aui:script>
 
 <c:if test="<%= autoFocus %>">

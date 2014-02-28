@@ -16,16 +16,20 @@
 
 <%@ include file="/html/taglib/ui/search_toggle/init.jsp" %>
 
+<%
+boolean advancedSearch = displayTerms.isAdvancedSearch();
+%>
+
 <div class="taglib-search-toggle">
 	<div class="form-search">
 		<div class="input-append" id="<%= id %>simple">
 			<div class="advanced-search">
-				<span class="toggle-advanced" id="<%= id %>toggleAdvanced">
+				<a class="toggle-advanced" href="javascript:;" id="<%= id %>toggleAdvanced">
 					<i class="icon-search"></i>
 					<i class="caret"></i>
-				</span>
+				</a>
 
-				<input class="search-query span9" id="<%= id + displayTerms.KEYWORDS %>" name="<portlet:namespace /><%= displayTerms.KEYWORDS %>" placeholder="<liferay-ui:message key="keywords" />" type="text" value="<%= HtmlUtil.escapeAttribute(displayTerms.getKeywords()) %>" />
+				<input class="search-query span9" <%= advancedSearch ? "disabled" : StringPool.BLANK %> id="<%= id + displayTerms.KEYWORDS %>" name="<portlet:namespace /><%= displayTerms.KEYWORDS %>" placeholder="<liferay-ui:message key="keywords" />" type="text" value="<%= HtmlUtil.escapeAttribute(displayTerms.getKeywords()) %>" />
 
 				<button class="btn" type="submit">
 					<%= LanguageUtil.get(pageContext, buttonLabel, "search") %>
@@ -33,16 +37,20 @@
 			</div>
 		</div>
 	</div>
-	<div class="popover taglib-search-toggle-advanced" id="<%= id %>advanced">
-		<input id="<%= id + displayTerms.ADVANCED_SEARCH %>" name="<portlet:namespace /><%= displayTerms.ADVANCED_SEARCH %>" type="hidden" value="false" />
+</div>
+
+<div class="taglib-search-toggle-advanced-wrapper">
+	<div class="taglib-search-toggle-advanced <%= advancedSearch ? "toggler-content-expanded" : "toggler-content-collapsed" %>" id="<%= id %>advanced">
+		<input id="<%= id + displayTerms.ADVANCED_SEARCH %>" name="<portlet:namespace /><%= displayTerms.ADVANCED_SEARCH %>" type="hidden" value="<%= advancedSearch %>" />
 
 		<div id="<%= id %>advancedContent">
-			<div id="<%= id %>advancedBodyNode">
-				<liferay-util:buffer var="andOperator">
-					<aui:select cssClass="inline-control" inlineField="<%= true %>" label="" name="<%= displayTerms.AND_OPERATOR %>">
-						<aui:option label="all" selected="<%= displayTerms.isAndOperator() %>" value="1" />
-						<aui:option label="any" selected="<%= !displayTerms.isAndOperator() %>" value="0" />
-					</aui:select>
-				</liferay-util:buffer>
+			<aui:button cssClass="close pull-right" name="closeAdvancedSearch" value="&times;" />
 
-				<liferay-ui:message arguments="<%= andOperator %>" key="match-x-of-the-following-fields" translateArguments="<%= false %>" />
+			<liferay-util:buffer var="andOperator">
+				<aui:select cssClass="inline-control" inlineField="<%= true %>" label="" name="<%= displayTerms.AND_OPERATOR %>">
+					<aui:option label="all" selected="<%= displayTerms.isAndOperator() %>" value="1" />
+					<aui:option label="any" selected="<%= !displayTerms.isAndOperator() %>" value="0" />
+				</aui:select>
+			</liferay-util:buffer>
+
+			<liferay-ui:message arguments="<%= andOperator %>" key="match-x-of-the-following-fields" translateArguments="<%= false %>" />

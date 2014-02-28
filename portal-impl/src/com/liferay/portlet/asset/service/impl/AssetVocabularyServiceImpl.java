@@ -219,6 +219,13 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	}
 
 	@Override
+	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds)
+		throws PortalException, SystemException {
+
+		return assetVocabularyPersistence.filterFindByGroupId(groupIds);
+	}
+
+	@Override
 	public int getGroupVocabulariesCount(long groupId) throws SystemException {
 		return assetVocabularyPersistence.filterCountByGroupId(groupId);
 	}
@@ -228,6 +235,13 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		throws SystemException {
 
 		return assetVocabularyPersistence.filterCountByG_LikeN(groupId, name);
+	}
+
+	@Override
+	public int getGroupVocabulariesCount(long[] groupIds)
+		throws PortalException, SystemException {
+
+		return assetVocabularyPersistence.filterCountByGroupId(groupIds);
 	}
 
 	@Override

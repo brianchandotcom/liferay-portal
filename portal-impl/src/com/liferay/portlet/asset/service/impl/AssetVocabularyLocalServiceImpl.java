@@ -330,6 +330,20 @@ public class AssetVocabularyLocalServiceImpl
 	}
 
 	@Override
+	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds)
+		throws PortalException, SystemException {
+
+		return assetVocabularyPersistence.findByGroupId(groupIds);
+	}
+
+	@Override
+	public int getGroupVocabulariesCount(long[] groupIds)
+		throws PortalException, SystemException {
+
+		return assetVocabularyPersistence.countByGroupId(groupIds);
+	}
+
+	@Override
 	public AssetVocabulary getGroupVocabulary(long groupId, String name)
 		throws PortalException, SystemException {
 

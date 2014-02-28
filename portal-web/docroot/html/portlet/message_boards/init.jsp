@@ -24,6 +24,7 @@ page import="com.liferay.portlet.documentlibrary.FileNameException" %><%@
 page import="com.liferay.portlet.messageboards.BannedUserException" %><%@
 page import="com.liferay.portlet.messageboards.CategoryNameException" %><%@
 page import="com.liferay.portlet.messageboards.LockedThreadException" %><%@
+page import="com.liferay.portlet.messageboards.MBSettings" %><%@
 page import="com.liferay.portlet.messageboards.MailingListEmailAddressException" %><%@
 page import="com.liferay.portlet.messageboards.MailingListInServerNameException" %><%@
 page import="com.liferay.portlet.messageboards.MailingListInUserNameException" %><%@
@@ -41,7 +42,6 @@ page import="com.liferay.portlet.messageboards.model.MBBan" %><%@
 page import="com.liferay.portlet.messageboards.model.MBCategory" %><%@
 page import="com.liferay.portlet.messageboards.model.MBCategoryConstants" %><%@
 page import="com.liferay.portlet.messageboards.model.MBCategoryDisplay" %><%@
-page import="com.liferay.portlet.messageboards.model.MBConstants" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMailingList" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMessageConstants" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMessageDisplay" %><%@
@@ -69,8 +69,7 @@ page import="com.liferay.portlet.messageboards.util.MBUtil" %><%@
 page import="com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator" %><%@
 page import="com.liferay.portlet.ratings.model.RatingsStats" %><%@
 page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %><%@
-page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %><%@
-page import="com.liferay.util.RSSUtil" %>
+page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %>
 
 <%
 String currentLanguageId = LanguageUtil.getLanguageId(request);
@@ -80,22 +79,22 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
-Settings serviceGroupSettings = SettingsFactoryUtil.getServiceGroupSettings(themeDisplay.getSiteGroupId(), MBConstants.SERVICE_NAME);
+MBSettings mbSettings = MBUtil.getSettings(themeDisplay.getSiteGroupId());
 
-String[] priorities = LocalizationUtil.getSettingsValues(serviceGroupSettings, "priorities", currentLanguageId);
+String[] priorities = mbSettings.getPriorities(currentLanguageId);
 
-boolean allowAnonymousPosting = MBUtil.isAllowAnonymousPosting(serviceGroupSettings);
-boolean subscribeByDefault = GetterUtil.getBoolean(serviceGroupSettings.getValue("subscribeByDefault", null), PropsValues.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT);
-String messageFormat = MBUtil.getMessageFormat(serviceGroupSettings);
-boolean enableFlags = GetterUtil.getBoolean(serviceGroupSettings.getValue("enableFlags", null), true);
-boolean enableRatings = GetterUtil.getBoolean(serviceGroupSettings.getValue("enableRatings", null), true);
-boolean threadAsQuestionByDefault = GetterUtil.getBoolean(serviceGroupSettings.getValue("threadAsQuestionByDefault", null));
-String recentPostsDateOffset = serviceGroupSettings.getValue("recentPostsDateOffset", "7");
+boolean allowAnonymousPosting = mbSettings.isAllowAnonymousPosting();
+boolean subscribeByDefault = mbSettings.isSubscribeByDefault();
+String messageFormat = mbSettings.getMessageFormat();
+boolean enableFlags = mbSettings.isEnableFlags();
+boolean enableRatings = mbSettings.isEnableRatings();
+boolean threadAsQuestionByDefault = mbSettings.isThreadAsQuestionByDefault();
+String recentPostsDateOffset = mbSettings.getRecentPostsDateOffset();
 
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(serviceGroupSettings.getValue("enableRss", null), true);
-int rssDelta = GetterUtil.getInteger(serviceGroupSettings.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = serviceGroupSettings.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-String rssFeedType = serviceGroupSettings.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+boolean enableRSS = mbSettings.isEnableRSS();
+int rssDelta = mbSettings.getRSSDelta();
+String rssDisplayStyle = mbSettings.getRSSDisplayStyle();
+String rssFeedType = mbSettings.getRSSFeedType();
 
 ResourceURL rssURL = liferayPortletResponse.createResourceURL();
 

@@ -26,6 +26,14 @@
 
 /*Skin*/
 
+.taglib-search-toggle .toggle-advanced {
+	color: inherit;
+
+	&, &:hover, &:focus {
+		text-decoration: none;
+	}
+}
+
 .taglib-search-toggle-advanced-wrapper .taglib-search-toggle-advanced {
 	background-color: #FCFCFC;
 	border-color: #DDD;

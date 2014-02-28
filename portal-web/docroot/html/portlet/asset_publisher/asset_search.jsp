@@ -30,11 +30,11 @@ long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selecte
 	id="toggle_id_asset_search"
 >
 	<aui:fieldset>
-		<aui:input name="<%= displayTerms.TITLE %>" inlineField="<%= true %>" size="20" type="text" value="<%= displayTerms.getTitle() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= displayTerms.TITLE %>" size="20" type="text" value="<%= displayTerms.getTitle() %>" />
 
-		<aui:input name="<%= displayTerms.DESCRIPTION %>" inlineField="<%= true %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= displayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
 
-		<aui:input name="<%= displayTerms.USER_NAME %>" inlineField="<%= true %>" size="20" type="text" value="<%= displayTerms.getUserName() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= displayTerms.USER_NAME %>" size="20" type="text" value="<%= displayTerms.getUserName() %>" />
 	</aui:fieldset>
 
 	<aui:fieldset>

@@ -134,6 +134,16 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute action="CPSitetemplates#close" locator1="home - Liferay" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.png" />

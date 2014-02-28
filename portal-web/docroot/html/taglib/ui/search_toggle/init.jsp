@@ -21,5 +21,4 @@ boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 String buttonLabel = (String)request.getAttribute("liferay-ui:search-toggle:buttonLabel");
 DisplayTerms displayTerms = (DisplayTerms)request.getAttribute("liferay-ui:search-toggle:displayTerms");
 String id = (String)request.getAttribute("liferay-ui:search-toggle:id");
-int width = GetterUtil.getInteger(request.getAttribute("liferay-ui:search-toggle:width"), 248);
 %>

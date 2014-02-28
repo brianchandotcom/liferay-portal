@@ -289,8 +289,22 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page 1" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs Aggregator" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page 1" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

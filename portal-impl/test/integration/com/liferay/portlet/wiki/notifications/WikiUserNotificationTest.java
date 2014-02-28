@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.notifications.wiki;
+package com.liferay.portlet.wiki.notifications;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.BaseModel;

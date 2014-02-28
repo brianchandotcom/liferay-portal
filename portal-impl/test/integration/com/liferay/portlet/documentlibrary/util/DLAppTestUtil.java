@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -134,6 +135,9 @@ public abstract class DLAppTestUtil {
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			groupId);
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
 
 		return addFileEntry(
 			TestPropsValues.getUserId(), repositoryId, folderId, sourceFileName,
@@ -436,9 +440,15 @@ public abstract class DLAppTestUtil {
 			boolean majorVersion)
 		throws Exception {
 
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		serviceContext.setCommand(Constants.UPDATE);
+		serviceContext.setLayoutFullURL("http://localhost");
+
 		return updateFileEntry(
 			groupId, fileEntryId, sourceFileName, ContentTypes.TEXT_PLAIN,
-			title, majorVersion, new ServiceContext());
+			title, majorVersion, serviceContext);
 	}
 
 	public static FileEntry updateFileEntry(

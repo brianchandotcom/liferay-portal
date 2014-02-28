@@ -99,9 +99,4 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 			TestPropsValues.getUserId(), group.getGroupId());
 	}
 
-	@Override
-	protected long updateEntry(long baseModelId) {
-		return 0;
-	}
-
 }

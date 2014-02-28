@@ -12,28 +12,29 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service;
+package com.liferay.portlet.documentlibrary.notifications;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.util.BaseSubscriptionTestCase;
+import com.liferay.portal.util.BaseUserNotificationTestCase;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Sergio González
  * @author Roberto Díaz
+ * @author Sergio González
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -42,44 +43,49 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class DLSubscriptionTest extends BaseSubscriptionTestCase {
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionBaseModelWhenInContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionBaseModelWhenInRootContainerModel() {
-	}
+public class DocumentLibraryUserNotificationTest
+	extends BaseUserNotificationTestCase {
 
 	@Override
-	protected long addBaseModel(long containerModelId) throws Exception {
+	protected BaseModel<?> addBaseModel() throws Exception {
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), group.getGroupId(), containerModelId,
+			group.getGroupId(), group.getGroupId(), _folder.getFolderId(),
 			ServiceTestUtil.randomString());
 
-		return fileEntry.getFileEntryId();
+		return (BaseModel<?>)fileEntry.getModel();
 	}
 
 	@Override
-	protected long addContainerModel(long containerModelId) throws Exception {
-		Folder folder = DLAppTestUtil.addFolder(
+	protected void addContainerModel() throws Exception {
+		_folder = DLAppTestUtil.addFolder(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceTestUtil.randomString());
-
-		return folder.getFolderId();
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected String getPortletId() {
+		return PortletKeys.DOCUMENT_LIBRARY;
+	}
+
+	@Override
+	protected void subscribeToContainer() throws Exception {
+		DLAppLocalServiceUtil.subscribeFolder(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			_folder.getFolderId());
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		DLAppLocalServiceUtil.subscribeFolder(
-			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+		FileEntry fileEntry = DLAppTestUtil.updateFileEntry(
+			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(),
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
+			false);
+
+		return (BaseModel<?>)fileEntry.getModel();
 	}
+
+	private Folder _folder;
 
 }

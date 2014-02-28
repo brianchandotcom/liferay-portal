@@ -1212,6 +1212,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
+		.panel-manage-apps, .panel-manage-configuration, .panel-manage-sites, .panel-manage-users {
+			padding: 0;
+		}
+
 		.span6 {
 			&.article-structure, &.article-template {
 				float: left;

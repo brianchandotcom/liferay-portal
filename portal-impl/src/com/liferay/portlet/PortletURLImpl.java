@@ -106,8 +106,6 @@ public class PortletURLImpl
 		_secure = PortalUtil.isSecure(request);
 		_wsrp = ParamUtil.getBoolean(request, "wsrp");
 
-		Portlet portlet = getPortlet();
-
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
 		if ((layout != null) && (layout.getPlid() == _plid) &&
@@ -602,6 +600,7 @@ public class PortletURLImpl
 	@Override
 	public void setPlid(long plid) {
 		_plid = plid;
+
 		_layout = null;
 		_layoutFriendlyURL = null;
 
@@ -611,6 +610,7 @@ public class PortletURLImpl
 	@Override
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
+
 		_portlet = null;
 		_portletAppEscapeXML = null;
 
@@ -1063,13 +1063,14 @@ public class PortletURLImpl
 					publicRenderParameter.getQName());
 
 			sb.append(HttpUtil.encodeURL(removePublicRenderParameterName));
+
 			sb.append(StringPool.EQUAL);
 			sb.append(processValue(key, entry.getValue()[0]));
 			sb.append(StringPool.AMPERSAND);
 		}
 
-		Map<String, String[]> params = new LinkedHashMap<String, String[]>();
-		params.putAll(_params);
+		Map<String, String[]> params = new LinkedHashMap<String, String[]>(
+			_params);
 
 		if (_copyCurrentRenderParameters) {
 			mergeRenderParameters(params);
@@ -1240,8 +1241,8 @@ public class PortletURLImpl
 			}
 		}
 
-		Map<String, String[]> params = new LinkedHashMap<String, String[]>();
-		params.putAll(_params);
+		Map<String, String[]> params = new LinkedHashMap<String, String[]>(
+			_params);
 
 		if (_copyCurrentRenderParameters) {
 			mergeRenderParameters(params);
@@ -1376,8 +1377,10 @@ public class PortletURLImpl
 
 		Layout layout = getLayout();
 
+		Portlet portlet = getPortlet();
+
 		Map<String, String[]> renderParameters = RenderParametersPool.get(
-			_request, layout.getPlid(), getPortlet().getPortletId());
+			_request, layout.getPlid(), portlet.getPortletId());
 
 		for (Map.Entry<String, String[]> entry : renderParameters.entrySet()) {
 			String name = entry.getKey();

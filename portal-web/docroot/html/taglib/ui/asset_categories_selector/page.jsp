@@ -44,22 +44,14 @@ if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 }
 
 if (Validator.isNotNull(className)) {
+	vocabularies = AssetUtil.filterVocabulariesBySelectedClassName(vocabularies, className);
+
 	long classNameId = PortalUtil.getClassNameId(className);
 
 	for (AssetVocabulary vocabulary : vocabularies) {
 		vocabulary = vocabulary.toEscapedModel();
 
-		int vocabularyCategoriesCount = AssetCategoryServiceUtil.getVocabularyCategoriesCount(vocabulary.getGroupId(), vocabulary.getVocabularyId());
-
-		if (vocabularyCategoriesCount == 0) {
-			continue;
-		}
-
-		UnicodeProperties settingsProperties = vocabulary.getSettingsProperties();
-
-		long[] selectedClassNameIds = StringUtil.split(settingsProperties.getProperty("selectedClassNameIds"), 0L);
-
-		if ((selectedClassNameIds.length > 0) && (selectedClassNameIds[0] != AssetCategoryConstants.ALL_CLASS_NAME_IDS) && !ArrayUtil.contains(selectedClassNameIds, classNameId)) {
+		if (AssetCategoryServiceUtil.getVocabularyCategoriesCount(vocabulary.getGroupId(), vocabulary.getVocabularyId()) == 0) {
 			continue;
 		}
 

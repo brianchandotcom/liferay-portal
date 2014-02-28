@@ -121,6 +121,10 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 		_assetVocabularyService.deleteVocabulary(vocabularyId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getCompanyVocabularies(
 		long companyId)
@@ -181,6 +185,14 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getGroupVocabularies(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabularyService.getGroupVocabularies(groupIds);
+	}
+
+	@Override
 	public int getGroupVocabulariesCount(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetVocabularyService.getGroupVocabulariesCount(groupId);
@@ -190,6 +202,13 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	public int getGroupVocabulariesCount(long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetVocabularyService.getGroupVocabulariesCount(groupId, name);
+	}
+
+	@Override
+	public int getGroupVocabulariesCount(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabularyService.getGroupVocabulariesCount(groupIds);
 	}
 
 	@Override
@@ -227,6 +246,10 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 			start, end, obc);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#AssetUtil.filterVocabularyIds(PermissionChecker, long[])}
+	*/
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getVocabularies(
 		long[] vocabularyIds)

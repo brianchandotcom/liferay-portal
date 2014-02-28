@@ -457,6 +457,19 @@ public class AssetVocabularyLocalServiceUtil {
 		return getService().getGroupVocabularies(groupId, name, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getGroupVocabularies(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupVocabularies(groupIds);
+	}
+
+	public static int getGroupVocabulariesCount(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupVocabulariesCount(groupIds);
+	}
+
 	public static com.liferay.portlet.asset.model.AssetVocabulary getGroupVocabulary(
 		long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,

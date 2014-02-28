@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.EscapableObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -66,6 +67,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import javax.mail.internet.InternetAddress;
 
@@ -213,11 +215,23 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	public void flushNotificationsAsync() {
-		Thread currentThread = Thread.currentThread();
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
 
-		_classLoader = currentThread.getContextClassLoader();
+				@Override
+				public Void call() throws Exception {
+					Thread currentThread = Thread.currentThread();
 
-		MessageBusUtil.sendMessage(DestinationNames.SUBSCRIPTION_SENDER, this);
+					_classLoader = currentThread.getContextClassLoader();
+
+					MessageBusUtil.sendMessage(
+						DestinationNames.SUBSCRIPTION_SENDER,
+						SubscriptionSender.this);
+
+					return null;
+				}
+			}
+		);
 	}
 
 	public Object getContextAttribute(String key) {

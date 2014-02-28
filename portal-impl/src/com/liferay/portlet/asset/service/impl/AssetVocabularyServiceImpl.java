@@ -31,6 +31,7 @@ import com.liferay.portlet.asset.model.AssetVocabularyDisplay;
 import com.liferay.portlet.asset.service.base.AssetVocabularyServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
+import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
@@ -176,9 +177,15 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			long[] groupIds, String className)
 		throws PortalException, SystemException {
 
-		return filterVocabularies(
-			assetVocabularyLocalService.getGroupsVocabularies(
-				groupIds, className));
+		List<AssetVocabulary> groupVocabularies =
+			assetVocabularyPersistence.filterFindByGroupId(groupIds);
+
+		if (Validator.isNull(className)) {
+			return groupVocabularies;
+		}
+
+		return AssetUtil.filterVocabulariesBySelectedClassName(
+			groupVocabularies, className);
 	}
 
 	@Override

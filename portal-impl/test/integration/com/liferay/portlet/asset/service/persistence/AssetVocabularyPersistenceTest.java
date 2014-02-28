@@ -227,6 +227,18 @@ public class AssetVocabularyPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupIdArrayable() {
+		try {
+			_persistence.countByGroupId(new long[] {
+					ServiceTestUtil.nextLong(), 0L
+				});
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByCompanyId() {
 		try {
 			_persistence.countByCompanyId(ServiceTestUtil.nextLong());

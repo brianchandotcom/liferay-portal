@@ -37,11 +37,11 @@ page import="com.liferay.portlet.messageboards.NoSuchMailingListException" %><%@
 page import="com.liferay.portlet.messageboards.NoSuchMessageException" %><%@
 page import="com.liferay.portlet.messageboards.RequiredMessageException" %><%@
 page import="com.liferay.portlet.messageboards.SplitThreadException" %><%@
+page import="com.liferay.portlet.messageboards.action.ActionUtil" %><%@
 page import="com.liferay.portlet.messageboards.model.MBBan" %><%@
 page import="com.liferay.portlet.messageboards.model.MBCategory" %><%@
 page import="com.liferay.portlet.messageboards.model.MBCategoryConstants" %><%@
 page import="com.liferay.portlet.messageboards.model.MBCategoryDisplay" %><%@
-page import="com.liferay.portlet.messageboards.model.MBConstants" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMailingList" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMessageConstants" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMessageDisplay" %><%@
@@ -80,7 +80,7 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
-Settings serviceGroupSettings = SettingsFactoryUtil.getServiceGroupSettings(themeDisplay.getSiteGroupId(), MBConstants.SERVICE_NAME);
+Settings serviceGroupSettings = ActionUtil.getSettings(request);
 
 String[] priorities = LocalizationUtil.getSettingsValues(serviceGroupSettings, "priorities", currentLanguageId);
 

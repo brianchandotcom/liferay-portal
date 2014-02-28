@@ -34,7 +34,6 @@ public class UpgradePortletSettings extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		for (Map.Entry<String, String> entry : _serviceNames.entrySet()) {
-
 			String portletId = entry.getKey();
 			String serviceName = entry.getValue();
 

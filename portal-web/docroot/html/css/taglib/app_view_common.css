@@ -49,7 +49,7 @@
 		margin: 10px 0 20px;
 
 		@include respond-to(phone, tablet) {
-			margin-left: 15px;
+			margin: 0 0 5px 15px;
 			width: 85%;
 		}
 

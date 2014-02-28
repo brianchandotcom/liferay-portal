@@ -156,7 +156,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 		<aui:nav-bar>
 
 			<%
-			request.setAttribute("searchContainer", userSearchContainer);
+			request.setAttribute(WebKeys.SEARCH_CONTAINER, userSearchContainer);
 			%>
 
 			<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />

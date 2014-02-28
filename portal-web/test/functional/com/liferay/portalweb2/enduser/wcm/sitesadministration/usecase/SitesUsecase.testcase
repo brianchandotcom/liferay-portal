@@ -53,10 +53,10 @@
 
 		<execute macro="WebContent#viewCP">
 			<var name="webContentContent" value="${webContentContent}" />
-	   		<var name="webContentTitle" value="${webContentTitle}" />
-	   	</execute>
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
 
-	   	<execute macro="Page#addPG">
+		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -73,7 +73,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureSiteScopePGRemoveSite">
+		<execute macro="AssetPublisherPortlet#configureSiteScopeRemoveSitePG">
 			<var name="siteName" value="${removeSiteScopeName}" />
 			<var name="siteScopeType" value="${removeSiteScopeType}" />
 		</execute>
@@ -158,11 +158,11 @@
 		</execute>
 
 		<execute macro="WebContent#viewCP">
-	    	<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
-	   	<execute macro="Page#gotoCP">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
@@ -201,7 +201,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureSiteScopePGRemoveSite">
+		<execute macro="AssetPublisherPortlet#configureSiteScopeRemoveSitePG">
 			<var name="siteName" value="${removeSiteScopeName}" />
 			<var name="siteScopeType" value="${removeSiteScopeType}" />
 		</execute>
@@ -345,7 +345,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureSiteScopePGRemoveSite">
+		<execute macro="AssetPublisherPortlet#configureSiteScopeRemoveSitePG">
 			<var name="siteName" value="${removeSiteScopeName}" />
 			<var name="siteScopeType" value="${removeSiteScopeType}" />
 		</execute>
@@ -453,7 +453,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-			<execute macro="AssetPublisherPortlet#configureSiteScopePG">
+		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
 			<var name="siteName" value="${globalSiteName}" />
 			<var name="siteScopeType" value="${globalSiteType}" />
 		</execute>
@@ -464,7 +464,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureSiteScopePGRemoveSite">
+		<execute macro="AssetPublisherPortlet#configureSiteScopeRemoveSitePG">
 			<var name="siteName" value="${removeSiteScopeName}" />
 			<var name="siteScopeType" value="${removeSiteScopeType}" />
 		</execute>

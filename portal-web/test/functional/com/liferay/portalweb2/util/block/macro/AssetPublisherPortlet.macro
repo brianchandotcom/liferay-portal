@@ -293,7 +293,7 @@
 		<execute action="PGAssetpublisherConfiguration#assertElementPresent" locator-key1="SOURCE_SCOPE_DELETE" />
 	</command>
 
-	<command name="configureSiteScopePGRemoveSite">
+	<command name="configureSiteScopeRemoveSitePG">
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />

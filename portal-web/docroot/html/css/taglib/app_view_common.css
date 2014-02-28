@@ -49,6 +49,7 @@
 		margin: 10px 0 20px;
 
 		@include respond-to(phone, tablet) {
+			margin: 0 0 5px 15px;
 			width: 85%;
 		}
 
@@ -132,6 +133,10 @@
 		margin: 5px 10px 5px 5px;
 		position: relative;
 		text-align: center;
+
+		@include respond-to(phone, tablet) {
+			float: none;
+		}
 	}
 
 	&.selected, &.selected:hover {

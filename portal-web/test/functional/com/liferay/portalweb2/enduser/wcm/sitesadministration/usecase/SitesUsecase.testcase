@@ -1,4 +1,6 @@
 <definition component-name="portal-wcm">
+	<var name="globalSiteName" value="Global" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
@@ -7,7 +9,477 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Site#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="WebContent#tearDownCP">
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#tearDownCP">
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContentStructures#tearDownCP">
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
 	</tear-down>
+
+	<command name="AddWebContentWithGlobalScopeViaCPToLiferayAP" priority="4">
+		<var name="globalSiteType" value="Global" />
+		<var name="pageName" value="Test Page 1" />
+		<var name="portletName" value="Asset Publisher" />
+		<var name="removeSiteScopeName" value="Liferay" />
+		<var name="removeSiteScopeType" value="Current Site" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentContentEdit" value="WC WebContent Content Edit" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+		<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
+			<var name="siteName" value="${globalSiteName}" />
+			<var name="siteScopeType" value="${globalSiteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureSiteScopeRemoveSitePG">
+			<var name="siteName" value="${removeSiteScopeName}" />
+			<var name="siteScopeType" value="${removeSiteScopeType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<var name="key_assetTitle" value="${webContentTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentContent}" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContent#editCP">
+			<var name="webContentContentEdit" value="${webContentContentEdit}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitleEdit" value="${webContentTitleEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<var name="key_assetTitle" value="${webContentTitleEdit}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentContentEdit}" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContent#deleteCP" >
+			<var name="siteScopeName" value="${globalSiteName}" />
+			<var name="webContentTitle" value="${webContentTitleEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<var name="key_assetTitle" value="${webContentTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentContent}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentContentEdit}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" value1="Read More" />
+	</command>
+
+	<command name="AddWebContentWithGlobalScopeViaCPToSiteAP" priority="4">
+		<var name="globalSiteType" value="Global" />
+		<var name="portletName" value="Asset Publisher" />
+		<var name="removeSiteScopeName" value="Site Name" />
+		<var name="removeSiteScopeType" value="Current Site" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageName" value="Site Test Page 1" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentContentEdit" value="WC WebContent Content Edit" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+		<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${sitePageName}" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
+			<var name="siteName" value="${globalSiteName}" />
+			<var name="siteScopeType" value="${globalSiteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureSiteScopeRemoveSitePG">
+			<var name="siteName" value="${removeSiteScopeName}" />
+			<var name="siteScopeType" value="${removeSiteScopeType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_assetTitle" value="${webContentTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentContent}" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContent#editCP">
+			<var name="webContentContentEdit" value="${webContentContentEdit}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitleEdit" value="${webContentTitleEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_assetTitle" value="${webContentTitleEdit}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentContentEdit}" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContent#deleteCP" >
+			<var name="siteScopeName" value="${globalSiteName}" />
+			<var name="webContentTitle" value="${webContentTitleEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_assetTitle" value="${webContentTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitleEdit}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentContent}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentContentEdit}" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" value1="Read More" />
+	</command>
+
+	<command name="AddWebContentWithStructureAndGlobalScopeViaCPToLiferayAP" priority="4">
+		<var name="globalSiteType" value="Global" />
+		<var name="pageName" value="Test Page 1" />
+		<var name="portletName" value="Asset Publisher" />
+		<var name="removeSiteScopeName" value="Liferay" />
+		<var name="removeSiteScopeType" value="Current Site" />
+		<var name="structureDescription" value="WC Structure Description" />
+		<var name="structureFieldNames" value="Text" />
+		<var name="structureName" value="WC Structure Name" />
+		<var name="templateDescription" value="WC Template Description" />
+		<var name="templateLanguage" value="ftl" />
+		<var name="templateName" value="WC Template Name" />
+		<var name="webContentText" value="WC WebContent Text" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureFieldNames" value="${structureFieldNames}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateFieldNames" value="${structureFieldNames}" />
+			<var name="templateLanguage" value="${templateLanguage}" />
+			<var name="templateName" value="${templateName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContent#addCPwithStructure">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateName" value="${templateName}" />
+			<var name="webContentText" value="${webContentText}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContent#viewCPWithStructure">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<var name="key_fieldName" value="${structureFieldNames}" />
+
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="TEXT_FIELD" value1="${webContentText}" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
+			<var name="siteName" value="${globalSiteName}" />
+			<var name="siteScopeType" value="${globalSiteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureSiteScopeRemoveSitePG">
+			<var name="siteName" value="${removeSiteScopeName}" />
+			<var name="siteScopeType" value="${removeSiteScopeType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<var name="key_assetTitle" value="${webContentTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentText}" />
+	</command>
+
+	<command name="AddWebContentWithStructureAndGlobalScopeViaCPToSiteAP" priority="4">
+		<var name="globalSiteType" value="Global" />
+		<var name="portletName" value="Asset Publisher" />
+		<var name="removeSiteScopeName" value="Site Name" />
+		<var name="removeSiteScopeType" value="Current Site" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageName" value="Site Test Page 1" />
+		<var name="structureDescription" value="WC Structure Description" />
+		<var name="structureFieldNames" value="Text" />
+		<var name="structureName" value="WC Structure Name" />
+		<var name="templateDescription" value="WC Template Description" />
+		<var name="templateLanguage" value="ftl" />
+		<var name="templateName" value="WC Template Name" />
+		<var name="webContentText" value="WC WebContent Text" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureFieldNames" value="${structureFieldNames}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateFieldNames" value="${structureFieldNames}" />
+			<var name="templateLanguage" value="${templateLanguage}" />
+			<var name="templateName" value="${templateName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContent#addCPwithStructure">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateName" value="${templateName}" />
+			<var name="webContentText" value="${webContentText}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContent#viewCPWithStructure">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<var name="key_fieldName" value="${structureFieldNames}" />
+
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="TEXT_FIELD" value1="${webContentText}" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${sitePageName}" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
+			<var name="siteName" value="${globalSiteName}" />
+			<var name="siteScopeType" value="${globalSiteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureSiteScopeRemoveSitePG">
+			<var name="siteName" value="${removeSiteScopeName}" />
+			<var name="siteScopeType" value="${removeSiteScopeType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_assetTitle" value="${webContentTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentText}" />
+	</command>
 
 	<command name="WebContentAdministrationSitesTemplatePermissionPersistence" priority="5">
 		<var name="password" value="test" />

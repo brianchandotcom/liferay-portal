@@ -212,7 +212,7 @@
 </tr>
 <tr>
 	<td>ENTRY_EDIT</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]/ul[contains(@class,'edit-actions')]/li/span/a[contains(.,'Edit')]</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]/ul[contains(@class,'edit-actions')]//span/a/span[.='Edit']</td>
 	<td></td>
 </tr>
 <tr>

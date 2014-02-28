@@ -14,6 +14,8 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.dao.search.DisplayTerms;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -60,6 +62,10 @@ public class NavTag extends BaseNavTag {
 				sb.append(StringPool.SPACE);
 				sb.append(cssClass);
 				sb.append("-btn");
+			}
+
+			if (_hasSearchResults()) {
+				sb.append(" hide");
 			}
 
 			sb.append("\" id=\"");
@@ -147,6 +153,26 @@ public class NavTag extends BaseNavTag {
 		}
 
 		return _namespacedId;
+	}
+
+	private boolean _hasSearchResults() {
+		SearchContainer<?> searchContainer = getSearchContainer();
+
+		if (searchContainer == null) {
+			return false;
+		}
+
+		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
+
+		String keywords = displayTerms.getKeywords();
+
+		if (displayTerms.isAdvancedSearch() ||
+			!keywords.equals(StringPool.BLANK)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _calledCollapsibleSetter;

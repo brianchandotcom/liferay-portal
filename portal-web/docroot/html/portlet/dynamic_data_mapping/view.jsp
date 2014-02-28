@@ -74,6 +74,11 @@ portletURL.setParameter("tabs1", tabs1);
 	>
 
 		<c:if test="<%= showToolbar %>">
+
+			<%
+			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
+			%>
+
 			<liferay-util:include page="/html/portlet/dynamic_data_mapping/toolbar.jsp">
 				<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			</liferay-util:include>

@@ -17,12 +17,14 @@
 <%@ include file="/html/portlet/users_admin/init.jsp" %>
 
 <%
+SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
+
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 
 String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIST_VIEW_TREE);
 %>
 
-<aui:nav>
+<aui:nav searchContainer="<%= searchContainer %>">
 
 	<%
 	boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ORGANIZATION);

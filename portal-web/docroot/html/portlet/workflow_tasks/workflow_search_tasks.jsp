@@ -28,9 +28,9 @@ WorkflowTaskDisplayTerms displayTerms = new WorkflowTaskDisplayTerms(renderReque
 >
 
 	<aui:fieldset>
-		<aui:input label="task" name="<%= displayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
+		<aui:input inlineField="<%= true %>" label="task" name="<%= displayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
 
-		<aui:select name="<%= displayTerms.TYPE %>">
+		<aui:select inlineField="<%= true %>" name="<%= displayTerms.TYPE %>">
 
 			<%
 			String displayTermsType = displayTerms.getType();

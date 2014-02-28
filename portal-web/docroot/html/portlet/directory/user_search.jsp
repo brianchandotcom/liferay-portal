@@ -28,11 +28,11 @@ UserDisplayTerms displayTerms = (UserDisplayTerms)searchContainer.getDisplayTerm
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_directory_user_search"
 >
+	<%@ include file="/html/portlet/directory/user_search_user_name.jspf" %>
+
 	<aui:fieldset>
-		<%@ include file="/html/portlet/directory/user_search_user_name.jspf" %>
+		<aui:input inlineField="<%= true %>" name="<%= displayTerms.SCREEN_NAME %>" size="20" type="text" value="<%= displayTerms.getScreenName() %>" />
 
-		<aui:input name="<%= displayTerms.SCREEN_NAME %>" size="20" type="text" value="<%= displayTerms.getScreenName() %>" />
-
-		<aui:input name="<%= displayTerms.EMAIL_ADDRESS %>" size="20" type="text" value="<%= displayTerms.getEmailAddress() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= displayTerms.EMAIL_ADDRESS %>" size="20" type="text" value="<%= displayTerms.getEmailAddress() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>

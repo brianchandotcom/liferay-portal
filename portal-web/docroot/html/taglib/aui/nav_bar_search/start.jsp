@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/aui/nav_bar_search/init.jsp" %>
 
-<div class="collapse nav-collapse" id="<%= id %>NavbarSearchCollapse">
+<div class="collapse nav-collapse <%= searchResults ? "open" : StringPool.BLANK %>" id="<%= id %>NavbarSearchCollapse">
 	<div class="navbar-search <%= cssClass %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 		<c:if test="<%= Validator.isNotNull(file) %>">
 			<liferay-ui:search-form
@@ -26,70 +26,90 @@
 		</c:if>
 
 		<aui:script use="aui-base,event-outside">
-			A.one('#<%= id %>NavbarBtn').on(
-				['click', 'keypress'],
-				function(event) {
-					if ((event.type === 'click') || event.isKeyInSet('ENTER', 'SPACE')) {
-						var btnNavbar = event.currentTarget;
+			var Util = Liferay.Util;
 
-						var navbar = btnNavbar.ancestor('.navbar');
+			var advancedSearchResults = <%= searchResults %>;
 
-						var navbarCollapse = A.one('#<%= id %>NavbarSearchCollapse');
+			var toggleSearchMenu = function(event) {
+				if ((event.type === 'click') || event.isKeyInSet('ENTER', 'SPACE')) {
+					var btnNavbar = event.currentTarget;
 
-						var handles = Liferay.Data['<%= id %>Handle'];
+					var navbar = btnNavbar.ancestor('.navbar');
 
-						var navbarWillOpen = !navbarCollapse.hasClass('open');
+					var navbarCollapse = A.one('#<%= id %>NavbarSearchCollapse');
 
-						if (!navbarWillOpen && handles && handles.length) {
+					var handles = Liferay.Data['<%= id %>Handle'];
+
+					var navbarWillOpen = !navbarCollapse.hasClass('open');
+
+					if (advancedSearchResults) {
+						navbarWillOpen = true;
+
+						advancedSearchResults = false;
+					}
+
+					if (!navbarWillOpen && handles && handles.length) {
+						(new A.EventHandle(handles)).detach();
+
+						handles = null;
+					}
+					else {
+						handles = handles || [];
+
+						var closeNavBar = function() {
+							var handles = Liferay.Data['<%= id %>Handle'];
+
 							(new A.EventHandle(handles)).detach();
 
-							handles = null;
-						}
-						else {
-							handles = handles || [];
+							Liferay.Data['<%= id %>Handle'] = null;
 
-							var closeNavBar = function() {
-								var handles = Liferay.Data['<%= id %>Handle'];
+							navbarCollapse.removeClass('open');
 
-								(new A.EventHandle(handles)).detach();
+							if (navbar) {
+								navbar.all('.btn-navbar, .nav').show();
+							}
 
-								Liferay.Data['<%= id %>Handle'] = null;
+							btnNavbar.focus();
+						};
 
-								navbarCollapse.removeClass('open');
-
-								if (navbar) {
-									navbar.all('.btn-navbar, .nav').show();
+						var handleMouseOutside = navbarCollapse.on(
+							'mousedownoutside',
+							function(event) {
+								if (!btnNavbar.contains(event.target)) {
+									closeNavBar();
 								}
+							}
+						);
 
-								btnNavbar.focus();
-							};
+						var handleEscape = A.getDoc().on('key', closeNavBar, 'down:27');
 
-							var handleMouseOutside = navbarCollapse.on(
-								'mousedownoutside',
-								function(event) {
-									if (!btnNavbar.contains(event.target)) {
-										closeNavBar();
-									}
-								}
-							);
-
-							var handleEscape = A.getDoc().on('key', closeNavBar, 'down:27');
-
-							handles.push(handleEscape, handleMouseOutside);
-						}
-
-						navbarCollapse.toggleClass('open', navbarWillOpen);
-
-						if (navbar) {
-							navbar.all('.btn-navbar, .nav').hide();
-						}
-
-						if (navbarWillOpen) {
-							Liferay.Util.focusFormField(navbarCollapse.one('input.search-query'));
-						}
-
-						Liferay.Data['<%= id %>Handle'] = handles;
+						handles.push(handleEscape, handleMouseOutside);
 					}
+
+					navbarCollapse.toggleClass('open', navbarWillOpen);
+
+					if (navbar && (Util.isPhone() || Util.isTablet())) {
+						navbar.all('.btn-navbar, .nav').hide();
+					}
+
+					if (navbarWillOpen) {
+						Liferay.Util.focusFormField(navbarCollapse.one('input.search-query'));
+					}
+
+					Liferay.Data['<%= id %>Handle'] = handles;
 				}
-			);
+			};
+
+			var navbarButton = A.one('#<%= id %>NavbarBtn');
+
+			navbarButton.on(['click', 'keypress'], toggleSearchMenu);
+
+			if (advancedSearchResults) {
+				toggleSearchMenu(
+					{
+						currentTarget: navbarButton,
+						type: 'click'
+					}
+				);
+			}
 		</aui:script>

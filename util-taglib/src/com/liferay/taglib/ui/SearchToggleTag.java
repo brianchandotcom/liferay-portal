@@ -40,10 +40,6 @@ public class SearchToggleTag extends IncludeTag {
 		_id = id;
 	}
 
-	public void setWidth(String width) {
-		_width = width;
-	}
-
 	@Override
 	protected void cleanUp() {
 		_autoFocus = false;
@@ -71,7 +67,6 @@ public class SearchToggleTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:search-toggle:displayTerms", _displayTerms);
 		request.setAttribute("liferay-ui:search-toggle:id", _id);
-		request.setAttribute("liferay-ui:search-toggle:width", _width);
 	}
 
 	private static final String _END_PAGE =
@@ -84,6 +79,5 @@ public class SearchToggleTag extends IncludeTag {
 	private String _buttonLabel;
 	private DisplayTerms _displayTerms;
 	private String _id;
-	private String _width;
 
 }

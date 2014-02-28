@@ -76,7 +76,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 	>
 
 		<aui:nav-bar>
-			<aui:nav>
+			<aui:nav searchContainer="<%= searchContainer %>">
 				<c:if test="<%= showAddRecordButton %>">
 					<portlet:renderURL var="addRecordURL">
 						<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
@@ -89,7 +89,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 				</c:if>
 			</aui:nav>
 
-			<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/dynamic_data_lists/record_search.jsp" searchContainer="<%= searchContainer %>" />
+			<aui:nav-bar-search cssClass="navbar-search-advanced" file="/html/portlet/dynamic_data_lists/record_search.jsp" searchContainer="<%= searchContainer %>" />
 		</aui:nav-bar>
 
 		<liferay-ui:search-container-results>

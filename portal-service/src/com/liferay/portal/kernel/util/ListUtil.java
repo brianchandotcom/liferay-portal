@@ -185,7 +185,7 @@ public class ListUtil {
 		return fromArray(StringUtil.split(s, delimiter));
 	}
 
-	public static <E> boolean isEmpty(List<E> list) {
+	public static boolean isEmpty(List<?> list) {
 		if ((list == null) || list.isEmpty()) {
 			return true;
 		}
@@ -193,7 +193,7 @@ public class ListUtil {
 		return false;
 	}
 
-	public static <E> boolean isNotEmpty(List<E> list) {
+	public static boolean isNotEmpty(List<?> list) {
 		return !isEmpty(list);
 	}
 

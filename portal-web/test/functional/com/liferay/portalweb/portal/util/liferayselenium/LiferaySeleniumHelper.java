@@ -101,6 +101,14 @@ public class LiferaySeleniumHelper {
 		BaseTestCase.assertEquals(pattern, liferaySelenium.getAlert());
 	}
 
+	public static void assertAlertNotPresent(LiferaySelenium liferaySelenium)
+		throws Exception {
+
+		if (liferaySelenium.isAlertPresent()) {
+			throw new Exception("Alert is present");
+		}
+	}
+
 	public static void assertChecked(
 			LiferaySelenium liferaySelenium, String locator)
 		throws Exception {

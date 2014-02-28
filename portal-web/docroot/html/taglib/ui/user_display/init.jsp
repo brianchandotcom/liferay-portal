@@ -17,8 +17,10 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String userName = GetterUtil.getString((String)request.getAttribute("liferay-ui:user-display:user-name"));
-User userDisplay = (User)request.getAttribute("liferay-ui:user-display:user");
-String url = (String)request.getAttribute("liferay-ui:user-display:url");
 int displayStyle = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:user-display:displayStyle"));
+int height = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:user-display:height"));
+String url = (String)request.getAttribute("liferay-ui:user-display:url");
+User userDisplay = (User)request.getAttribute("liferay-ui:user-display:user");
+String userName = GetterUtil.getString((String)request.getAttribute("liferay-ui:user-display:user-name"));
+int width = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:user-display:width"));
 %>

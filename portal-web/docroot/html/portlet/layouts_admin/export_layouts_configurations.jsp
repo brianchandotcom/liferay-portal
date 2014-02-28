@@ -61,22 +61,26 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 		modelVar="exportImportConfiguration"
 	>
 		<liferay-ui:search-container-column-text
+			cssClass="export-configuration-user-column"
 			name="user"
 		>
-			<liferay-ui:message key="<%= PortalUtil.getUserName(exportImportConfiguration) %>" />
+			<liferay-ui:user-display
+				displayStyle="3"
+				height="30"
+				userId="<%= exportImportConfiguration.getUserId() %>"
+				width="30"
+			/>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
 			name="name"
-		>
-			<liferay-ui:message key="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>" />
-		</liferay-ui:search-container-column-text>
+			value="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>"
+		/>
 
 		<liferay-ui:search-container-column-text
 			name="description"
-		>
-			<liferay-ui:message key="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>" />
-		</liferay-ui:search-container-column-text>
+			value="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>"
+		/>
 
 		<liferay-ui:search-container-column-date
 			name="create-date"

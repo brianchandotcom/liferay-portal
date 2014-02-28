@@ -36,9 +36,23 @@ if (Validator.isNull(url) && (userDisplay != null)) {
 	%>
 
 	<aui:a href="<%= url %>">
-		<span class="user-profile-image">
-			<img alt="" class="avatar" src="<%= HtmlUtil.escape(taglibSrc) %>" width="65" />
-		</span>
+		<c:choose>
+			<c:when test="<%= displayStyle == 3 %>">
+				<c:choose>
+					<c:when test="<%= BrowserSnifferUtil.isIe(request) && (BrowserSnifferUtil.getMajorVersion(request) < 9) %>">
+						<img alt="" class="user-profile-image" src="<%= HtmlUtil.escape(taglibSrc) %>" style="height: <%= height %>px; width: <%= width %>px;" />
+					</c:when>
+					<c:otherwise>
+						<span class="user-profile-image" style="background-image: url('<%= HtmlUtil.escape(taglibSrc) %>'); background-size: <%= height %>px <%= width %>px; height: <%= height %>px; width: <%= width %>px;"></span>
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+			<c:otherwise>
+				<span class="user-profile-image">
+					<img alt="" class="avatar" src="<%= HtmlUtil.escape(taglibSrc) %>" style="height: <%= height %>px; width: <%= width %>px;" />
+				</span>
+			</c:otherwise>
+		</c:choose>
 
 		<span class="user-name">
 			<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>

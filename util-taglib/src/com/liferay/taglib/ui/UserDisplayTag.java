@@ -78,6 +78,11 @@ public class UserDisplayTag extends TagSupport {
 				"liferay-ui:user-display:displayStyle",
 				String.valueOf(_displayStyle));
 
+			request.setAttribute(
+				"liferay-ui:user-display:height", String.valueOf(_height));
+			request.setAttribute(
+				"liferay-ui:user-display:width", String.valueOf(_width));
+
 			PortalIncludeUtil.include(pageContext, getStartPage());
 
 			if (user != null) {
@@ -100,6 +105,10 @@ public class UserDisplayTag extends TagSupport {
 		_endPage = endPage;
 	}
 
+	public void setHeight(int height) {
+		_height = height;
+	}
+
 	public void setStartPage(String startPage) {
 		_startPage = startPage;
 	}
@@ -114,6 +123,10 @@ public class UserDisplayTag extends TagSupport {
 
 	public void setUserName(String userName) {
 		_userName = userName;
+	}
+
+	public void setWidth(int width) {
+		_width = width;
 	}
 
 	protected String getEndPage() {
@@ -142,9 +155,11 @@ public class UserDisplayTag extends TagSupport {
 
 	private int _displayStyle = 1;
 	private String _endPage;
+	private int _height;
 	private String _startPage;
 	private String _url;
 	private long _userId;
 	private String _userName;
+	private int _width;
 
 }

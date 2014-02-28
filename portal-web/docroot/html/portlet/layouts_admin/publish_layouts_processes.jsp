@@ -81,9 +81,16 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 		modelVar="backgroundTask"
 	>
 		<liferay-ui:search-container-column-text
-			name="user-name"
-			value="<%= HtmlUtil.escape(backgroundTask.getUserName()) %>"
-		/>
+			cssClass="background-task-user-column"
+			name="user"
+		>
+			<liferay-ui:user-display
+				displayStyle="3"
+				height="30"
+				userId="<%= backgroundTask.getUserId() %>"
+				width="30"
+			/>
+		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp
 			cssClass="background-task-status-column"

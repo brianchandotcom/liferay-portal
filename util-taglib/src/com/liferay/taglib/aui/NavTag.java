@@ -156,17 +156,20 @@ public class NavTag extends BaseNavTag {
 	}
 
 	private boolean _hasSearchResults() {
-		SearchContainer searchContainer = getSearchContainer();
+		SearchContainer<?> searchContainer = getSearchContainer();
 
-		if (searchContainer != null) {
-			DisplayTerms displayTerms =
-				(DisplayTerms)searchContainer.getDisplayTerms();
+		if (searchContainer == null) {
+			return false;
+		}
 
-			boolean searchResults = displayTerms.isAdvancedSearch();
+		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
-			String keywords = displayTerms.getKeywords();
+		String keywords = displayTerms.getKeywords();
 
-			return (searchResults || !keywords.equals(StringPool.BLANK));
+		if (displayTerms.isAdvancedSearch() ||
+			!keywords.equals(StringPool.BLANK)) {
+
+			return true;
 		}
 
 		return false;

@@ -277,6 +277,25 @@ public class AssetUtil {
 		return filteredVocabularies;
 	}
 
+	public static long[] filterVocabularyIds(
+			PermissionChecker permissionChecker, long[] vocabularyIds)
+		throws PortalException, SystemException {
+
+		List<Long> viewableVocabularyIds = new ArrayList<Long>();
+
+		for (long vocabularyId : vocabularyIds) {
+			if (AssetVocabularyPermission.contains(
+					permissionChecker, vocabularyId, ActionKeys.VIEW)) {
+
+				viewableVocabularyIds.add(vocabularyId);
+			}
+		}
+
+		return ArrayUtil.toArray(
+			viewableVocabularyIds.toArray(
+				new Long[viewableVocabularyIds.size()]));
+	}
+
 	public static PortletURL getAddPortletURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long groupId,

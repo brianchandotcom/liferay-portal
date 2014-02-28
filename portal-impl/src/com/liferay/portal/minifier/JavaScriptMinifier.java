@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.minifier;
 
 /**
  * @author Carlos Sierra Andrés

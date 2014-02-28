@@ -16,6 +16,7 @@ package com.liferay.portlet.bookmarks.util;
 
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
@@ -24,6 +25,7 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 
@@ -72,6 +74,9 @@ public class BookmarksTestUtil {
 			BookmarksEntry entry = BookmarksEntryServiceUtil.addEntry(
 				serviceContext.getScopeGroupId(), folderId, name, url,
 				description, serviceContext);
+
+			serviceContext.setCommand(Constants.ADD);
+			serviceContext.setLayoutFullURL("http://localhost");
 
 			if (approved) {
 				entry.setStatus(WorkflowConstants.STATUS_APPROVED);
@@ -146,6 +151,21 @@ public class BookmarksTestUtil {
 		searchContext.setQueryConfig(queryConfig);
 
 		return searchContext;
+	}
+
+	public static BookmarksEntry updateEntry(BookmarksEntry entry)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			entry.getGroupId());
+
+		serviceContext.setCommand(Constants.UPDATE);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return BookmarksEntryLocalServiceUtil.updateEntry(
+			TestPropsValues.getUserId(), entry.getEntryId(), entry.getGroupId(),
+			entry.getFolderId(), ServiceTestUtil.randomString(), entry.getUrl(),
+			entry.getDescription(), serviceContext);
 	}
 
 }

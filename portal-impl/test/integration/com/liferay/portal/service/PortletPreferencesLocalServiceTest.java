@@ -718,18 +718,6 @@ public class PortletPreferencesLocalServiceTest {
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 				_portlet.getPortletId()));
-
-		Group group = GroupTestUtil.addGroup();
-
-		Layout layout = LayoutTestUtil.addLayout(group);
-
-		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
-
-		Assert.assertEquals(
-			1,
-			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
-				_portlet.getPortletId()));
 	}
 
 	@Test
@@ -748,14 +736,6 @@ public class PortletPreferencesLocalServiceTest {
 
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
 			layout, _portlet);
-
-		Assert.assertEquals(
-			2,
-			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _portlet.getPortletId()));
-
-		PortletPreferencesTestUtil.addGroupPortletPreferences(
-			_layout, _portlet);
 
 		Assert.assertEquals(
 			2,

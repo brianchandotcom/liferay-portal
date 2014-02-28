@@ -230,21 +230,6 @@ public class WikiUtil {
 		}
 	}
 
-	public static String getEmailPageAddedSignature(
-		PortletPreferences preferences) {
-
-		String emailPageAddedSignature = preferences.getValue(
-			"emailPageAddedSignature", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailPageAddedSignature)) {
-			return emailPageAddedSignature;
-		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SIGNATURE));
-		}
-	}
-
 	public static String getEmailPageAddedSubject(
 		PortletPreferences preferences) {
 
@@ -287,21 +272,6 @@ public class WikiUtil {
 		else {
 			return GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED));
-		}
-	}
-
-	public static String getEmailPageUpdatedSignature(
-		PortletPreferences preferences) {
-
-		String emailPageUpdatedSignature = preferences.getValue(
-			"emailPageUpdatedSignature", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailPageUpdatedSignature)) {
-			return emailPageUpdatedSignature;
-		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SIGNATURE));
 		}
 	}
 

@@ -2041,33 +2041,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		String subject = null;
 		String body = null;
-		String signature = null;
 
 		if (serviceContext.isCommandUpdate()) {
 			subject = MBUtil.getEmailMessageUpdatedSubject(settings);
 			body = MBUtil.getEmailMessageUpdatedBody(settings);
-			signature = MBUtil.getEmailMessageUpdatedSignature(settings);
 		}
 		else {
 			subject = MBUtil.getEmailMessageAddedSubject(settings);
 			body = MBUtil.getEmailMessageAddedBody(settings);
-			signature = MBUtil.getEmailMessageAddedSignature(settings);
 		}
 
 		boolean htmlFormat = MBUtil.getEmailHtmlFormat(settings);
-
-		if (Validator.isNotNull(signature)) {
-			String signatureSeparator = null;
-
-			if (htmlFormat) {
-				signatureSeparator = "<br />--<br />";
-			}
-			else {
-				signatureSeparator = "\n--\n";
-			}
-
-			body += signatureSeparator + signature;
-		}
 
 		String messageBody = message.getBody();
 

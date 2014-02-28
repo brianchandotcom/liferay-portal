@@ -15,6 +15,7 @@
 package com.liferay.portlet.bookmarks.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -43,18 +44,22 @@ public class BookmarksSubscriptionTest extends BaseSubscriptionTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			containerModelId, true,
-			ServiceTestUtil.getServiceContext(group.getGroupId()));
+			containerModelId, true, serviceContext);
 
 		return entry.getEntryId();
 	}
 
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			containerModelId, ServiceTestUtil.randomString(),
-			ServiceTestUtil.getServiceContext(group.getGroupId()));
+			containerModelId, ServiceTestUtil.randomString(), serviceContext);
 
 		return folder.getFolderId();
 	}

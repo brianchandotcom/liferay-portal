@@ -667,8 +667,7 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.pause("3000");
 	}
 
-	public static void saveScreenshot(
-			LiferaySelenium liferaySelenium, String fileName)
+	public static void saveScreenshot(LiferaySelenium liferaySelenium)
 		throws Exception {
 
 		_screenshotCount++;

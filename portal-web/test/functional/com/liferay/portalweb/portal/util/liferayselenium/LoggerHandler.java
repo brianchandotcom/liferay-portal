@@ -43,7 +43,7 @@ public class LoggerHandler implements InvocationHandler {
 				_logger.pauseLoggerCheck();
 			}
 			else if (methodName.equals("saveScreenshot")) {
-				_logger.logScreenShots(arguments);
+				_logger.logScreenShots();
 			}
 			else if (methodName.equals("sendActionDescriptionLogger")) {
 				_logger.logActionDescription(arguments);

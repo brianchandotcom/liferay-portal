@@ -124,8 +124,8 @@ public class Logger {
 		log("descriptionLog", sb.toString(), "descriptionLog");
 	}
 
-	public void logError(
-		Method method, Object[] arguments, Throwable throwable) {
+	public void logError(Method method, Object[] arguments, Throwable throwable)
+		throws Exception {
 
 		send("", "fail");
 
@@ -182,6 +182,27 @@ public class Logger {
 
 		log("actionCommandLog", sb.toString(), "selenium");
 
+		_liferaySelenium.saveScreenshot();
+
+		_screenshotCount++;
+
+		sb = new StringBundler();
+
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+		sb.append("<img alt=\"");
+		sb.append(_screenshotCount);
+		sb.append("\" height=\"450\" src=\"screenshots/");
+		sb.append(_screenshotCount);
+		sb.append(".jpg\" width=\"630\" />");
+		sb.append("<br />");
+
+		log("descriptionLog", sb.toString(), "descriptionLog");
+
+		log("errorLog", sb.toString(), "errorLog");
+
 		sb = new StringBundler();
 
 		sb.append("Command failure \"");
@@ -228,7 +249,7 @@ public class Logger {
 		log("descriptionLog", sb.toString(), "descriptionLog");
 	}
 
-	public void logScreenShots(Object[] arguments) throws Exception {
+	public void logScreenShots() throws Exception {
 		StringBundler sb = new StringBundler();
 
 		_screenshotCount++;

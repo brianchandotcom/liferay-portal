@@ -62,7 +62,7 @@ public class ListUtil {
 	}
 
 	public static <E> void distinct(List<E> list, Comparator<E> comparator) {
-		if ((list == null) || list.isEmpty()) {
+		if (isEmpty(list)) {
 			return;
 		}
 
@@ -149,7 +149,7 @@ public class ListUtil {
 	}
 
 	public static <E> List<E> fromMapKeys(Map<E, ?> map) {
-		if ((map == null) || map.isEmpty()) {
+		if (MapUtil.isEmpty(map)) {
 			return new ArrayList<E>();
 		}
 
@@ -163,7 +163,7 @@ public class ListUtil {
 	}
 
 	public static <E> List<E> fromMapValues(Map<?, E> map) {
-		if ((map == null) || map.isEmpty()) {
+		if (MapUtil.isEmpty(map)) {
 			return new ArrayList<E>();
 		}
 
@@ -217,9 +217,7 @@ public class ListUtil {
 	}
 
 	public static <E> List<E> remove(List<E> list, List<E> remove) {
-		if ((list == null) || list.isEmpty() ||
-			(remove == null)|| remove.isEmpty()) {
-
+		if (isEmpty(list) || isEmpty(remove)) {
 			return list;
 		}
 
@@ -383,7 +381,7 @@ public class ListUtil {
 	public static String toString(
 		List<?> list, String param, String delimiter) {
 
-		if ((list == null) || list.isEmpty()) {
+		if (isEmpty(list)) {
 			return StringPool.BLANK;
 		}
 
@@ -428,7 +426,7 @@ public class ListUtil {
 	public static <T, V> String toString(
 		List<T> list, Accessor<T, V> accessor, String delimiter) {
 
-		if ((list == null) || list.isEmpty()) {
+		if (isEmpty(list)) {
 			return StringPool.BLANK;
 		}
 

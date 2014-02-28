@@ -338,7 +338,7 @@ public class MapUtil {
 	public static String toString(
 		Map<?, ?> map, String hideIncludesRegex, String hideExcludesRegex) {
 
-		if ((map == null) || map.isEmpty()) {
+		if (isEmpty(map)) {
 			return StringPool.OPEN_CURLY_BRACE + StringPool.CLOSE_CURLY_BRACE;
 		}
 

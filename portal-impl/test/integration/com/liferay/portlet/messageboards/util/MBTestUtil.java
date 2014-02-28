@@ -110,17 +110,14 @@ public class MBTestUtil {
 		List<MBMessage> messages = MBMessageLocalServiceUtil.getMessages(
 			className, classPK, WorkflowConstants.STATUS_ANY);
 
-		MBMessage rootMessage = null;
-
-		if (!ListUtil.isEmpty(messages)) {
-			rootMessage = messages.get(0);
-		}
-		else {
+		if (ListUtil.isEmpty(messages)) {
 			return null;
 		}
 
+		MBMessage rootMessage = messages.get(0);
+
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			groupId);
+			groupId, user.getUserId());
 
 		return MBMessageLocalServiceUtil.addDiscussionMessage(
 			user.getUserId(), user.getFullName(), groupId, className, classPK,

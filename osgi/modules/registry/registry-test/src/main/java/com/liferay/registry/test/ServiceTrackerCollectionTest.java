@@ -558,4 +558,5 @@ public class ServiceTrackerCollectionTest {
 		private AtomicInteger _counter;
 
 	}
+
 }

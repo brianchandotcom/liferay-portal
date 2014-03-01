@@ -1052,4 +1052,5 @@ public class RegistryTest {
 		private InterfaceOne _b;
 
 	}
+
 }

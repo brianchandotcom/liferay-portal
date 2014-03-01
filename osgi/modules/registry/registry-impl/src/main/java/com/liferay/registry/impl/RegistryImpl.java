@@ -117,12 +117,12 @@ public class RegistryImpl implements Registry {
 
 	@Override
 	public <T> Collection<ServiceReference<T>> getServiceReferences(
-			Class<T> clazz, String filter)
+			Class<T> clazz, String filterString)
 		throws Exception {
 
 		Collection<org.osgi.framework.ServiceReference<T>>
 			originalServiceReferences = _bundleContext.getServiceReferences(
-				clazz, filter);
+				clazz, filterString);
 
 		if (originalServiceReferences.isEmpty()) {
 			return Collections.emptyList();
@@ -145,12 +145,12 @@ public class RegistryImpl implements Registry {
 
 	@Override
 	public <T> ServiceReference<T>[] getServiceReferences(
-			String className, String filter)
+			String className, String filterString)
 		throws Exception {
 
 		org.osgi.framework.ServiceReference<T>[] originalServiceReferences =
 			(org.osgi.framework.ServiceReference<T>[])
-				_bundleContext.getServiceReferences(className, filter);
+				_bundleContext.getServiceReferences(className, filterString);
 
 		if (originalServiceReferences == null) {
 			return null;
@@ -168,11 +168,12 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
-	public <T> Collection<T> getServices(Class<T> clazz, String filter)
+	public <T> Collection<T> getServices(
+			Class<T> clazz, String filterString)
 		throws Exception {
 
 		Collection<org.osgi.framework.ServiceReference<T>> serviceReferences =
-			_bundleContext.getServiceReferences(clazz, filter);
+			_bundleContext.getServiceReferences(clazz, filterString);
 
 		if (serviceReferences.isEmpty()) {
 			return Collections.emptyList();
@@ -198,11 +199,11 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
-	public <T> T[] getServices(String className, String filter)
+	public <T> T[] getServices(String className, String filterString)
 		throws Exception {
 
 		org.osgi.framework.ServiceReference<?>[] serviceReferences =
-			_bundleContext.getServiceReferences(className, filter);
+			_bundleContext.getServiceReferences(className, filterString);
 
 		if (serviceReferences == null) {
 			return null;

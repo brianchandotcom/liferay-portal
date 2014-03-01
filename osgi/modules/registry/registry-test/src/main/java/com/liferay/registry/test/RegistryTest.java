@@ -41,13 +41,20 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class RegistryTest {
 
+	@Before
+	public void setup() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_bundleContext = bundle.getBundleContext();
+	}
+
 	@Test
-	public void bundleContextIsNotNull() {
+	public void testBundleContextIsNotNull() {
 		Assert.assertNotNull(_bundleContext);
 	}
 
 	@Test
-	public void getServiceByClass() {
+	public void testGetServiceByClass() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
@@ -65,7 +72,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void getServiceByString() {
+	public void testGetServiceByString() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
@@ -83,7 +90,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void getServiceByStringAndfilter() throws Exception {
+	public void testGetServiceByStringAndfilter() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();
@@ -122,7 +129,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void getServiceReferenceByClass() {
+	public void testGetServiceReferenceByClass() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
@@ -145,7 +152,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void getServiceReferenceByString() {
+	public void testGetServiceReferenceByString() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
@@ -168,7 +175,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void getServiceReferencesByClass() throws Exception {
+	public void testGetServiceReferencesByClass() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();
@@ -203,7 +210,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void getServiceReferencesByClassAndFilter() throws Exception {
+	public void testGetServiceReferencesByClassAndFilter() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();
@@ -244,7 +251,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void getServiceReferencesByString() throws Exception {
+	public void testGetServiceReferencesByString() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();
@@ -280,7 +287,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void getServiceReferencesByStringAndFilter() throws Exception {
+	public void testGetServiceReferencesByStringAndFilter() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();
@@ -322,7 +329,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void getServicesByClassAndFilter() throws Exception {
+	public void testGetServicesByClassAndFilter() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();
@@ -361,7 +368,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void registerServiceByClass() {
+	public void testRegisterServiceByClass() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
@@ -388,7 +395,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void registerServiceByClassAndMap() {
+	public void testRegisterServiceByClassAndMap() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
@@ -420,7 +427,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void registerServiceByString() {
+	public void testRegisterServiceByString() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
@@ -447,7 +454,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void registerServiceByStringAndMap() {
+	public void testRegisterServiceByStringAndMap() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
@@ -480,7 +487,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void registerServiceByStrings() {
+	public void testRegisterServiceByStrings() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceBoth one = new InterfaceBoth() {/**/};
@@ -513,7 +520,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void registerServiceByStringsAndMap() {
+	public void testRegisterServiceByStringsAndMap() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceBoth one = new InterfaceBoth() {/**/};
@@ -549,14 +556,14 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void registryWasWired() {
+	public void testRegistryWasWired() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Assert.assertNotNull(registry);
 	}
 
 	@Test
-	public void serviceExists() {
+	public void testServiceExists() {
 		org.osgi.framework.ServiceReference<Registry> serviceReference =
 			_bundleContext.getServiceReference(Registry.class);
 
@@ -566,22 +573,15 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void serviceReferenceExists() {
+	public void testServiceReferenceExists() {
 		org.osgi.framework.ServiceReference<Registry> serviceReference =
 			_bundleContext.getServiceReference(Registry.class);
 
 		Assert.assertNotNull(serviceReference);
 	}
 
-	@Before
-	public void setup() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_bundleContext = bundle.getBundleContext();
-	}
-
 	@Test
-	public void trackServicesByClass() {
+	public void testTrackServicesByClass() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceTracker<InterfaceOne, InterfaceOne> serviceTracker =
@@ -645,7 +645,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void trackServicesByClassAndCustomizer() {
+	public void testTrackServicesByClassAndCustomizer() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();
@@ -717,7 +717,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void trackServicesByFilter() throws Exception {
+	public void testTrackServicesByFilter() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter("(a.property=G)");
@@ -783,7 +783,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void trackServicesByFilterAndCustomizer() throws Exception {
+	public void testTrackServicesByFilterAndCustomizer() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();
@@ -857,7 +857,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void trackServicesByString() {
+	public void testTrackServicesByString() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceTracker<InterfaceOne, InterfaceOne> serviceTracker =
@@ -921,7 +921,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void trackServicesByStringAndCustomizer() {
+	public void testTrackServicesByStringAndCustomizer() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();

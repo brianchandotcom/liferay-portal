@@ -37,7 +37,7 @@ import org.junit.Test;
 public class ServiceTrackerCollectionTest {
 
 	@Test
-	public void byClass() {
+	public void testByClass() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
@@ -71,7 +71,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void byClassFilter() throws Exception {
+	public void testByClassFilter() throws Exception {
 		final Registry registry = RegistryUtil.getRegistry();
 
 		Map<String, Object> properties = new HashMap<String, Object>();
@@ -126,7 +126,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void byClassFilterMap() throws Exception {
+	public void testByClassFilterMap() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Map<String, Object> properties = new HashMap<String, Object>();
@@ -180,7 +180,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void byClassFilterSTCustomizer() throws Exception {
+	public void testByClassFilterSTCustomizer() throws Exception {
 		final Registry registry = RegistryUtil.getRegistry();
 		final AtomicInteger counter = new AtomicInteger();
 
@@ -243,7 +243,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void byClassFilterSTCustomizerMap() throws Exception {
+	public void testByClassFilterSTCustomizerMap() throws Exception {
 		final Registry registry = RegistryUtil.getRegistry();
 		final AtomicInteger counter = new AtomicInteger();
 
@@ -304,7 +304,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void byClassMap() throws Exception {
+	public void testByClassMap() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Map<String, Object> properties = new HashMap<String, Object>();
@@ -355,7 +355,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void byClassSTCustomizer() {
+	public void testByClassSTCustomizer() {
 		final Registry registry = RegistryUtil.getRegistry();
 		final AtomicInteger counter = new AtomicInteger();
 
@@ -397,7 +397,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void byClassSTCustomizerMap() throws Exception {
+	public void testByClassSTCustomizerMap() throws Exception {
 		final Registry registry = RegistryUtil.getRegistry();
 		final AtomicInteger counter = new AtomicInteger();
 
@@ -456,7 +456,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void byClassSTCustomizerMap_2() throws Exception {
+	public void testByClassSTCustomizerMap_2() throws Exception {
 		final Registry registry = RegistryUtil.getRegistry();
 		final AtomicInteger counter = new AtomicInteger();
 

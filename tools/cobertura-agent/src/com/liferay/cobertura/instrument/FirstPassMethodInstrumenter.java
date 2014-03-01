@@ -38,7 +38,8 @@ public class FirstPassMethodInstrumenter extends MethodVisitor {
 
 		super(
 			Opcodes.ASM4,
-			new MethodNode(access, name, desc, signature, exceptions));
+			new BackwardCompatibleMethodNode(
+				access, name, desc, signature, exceptions));
 
 		_classData = classData;
 

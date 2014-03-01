@@ -66,6 +66,7 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.messageboards.MBSettings;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
@@ -226,8 +227,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		Settings settings = SettingsFactoryUtil.getServiceGroupSettings(
 			groupId, MBConstants.SERVICE_NAME);
 
+		MBSettings mbSettings = new MBSettings(settings);
+
 		if (settings != null) {
-			if (!MBUtil.isAllowAnonymousPosting(settings)) {
+			if (!mbSettings.isAllowAnonymousPosting()) {
 				if (anonymous || user.isDefaultUser()) {
 					throw new PrincipalException();
 				}
@@ -1978,11 +1981,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		Settings settings = SettingsFactoryUtil.getServiceGroupSettings(
 			message.getGroupId(), MBConstants.SERVICE_NAME);
 
+		MBSettings mbSettings = new MBSettings(settings);
+
 		if (serviceContext.isCommandAdd() &&
-			MBUtil.getEmailMessageAddedEnabled(settings)) {
+			mbSettings.isEmailMessageAddedEnabled()) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-				 MBUtil.getEmailMessageUpdatedEnabled(settings)) {
+				 mbSettings.isEmailMessageUpdatedEnabled()) {
 		}
 		else {
 			return;
@@ -2028,8 +2033,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		String entryTitle = message.getSubject();
 		String entryURL = getMessageURL(message, serviceContext);
 
-		String fromName = MBUtil.getEmailFromName(settings);
-		String fromAddress = MBUtil.getEmailFromAddress(settings);
+		String fromName = mbSettings.getEmailFromName();
+		String fromAddress = mbSettings.getEmailFromAddress();
 
 		String replyToAddress = StringPool.BLANK;
 
@@ -2043,15 +2048,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		String body = null;
 
 		if (serviceContext.isCommandUpdate()) {
-			subject = MBUtil.getEmailMessageUpdatedSubject(settings);
-			body = MBUtil.getEmailMessageUpdatedBody(settings);
+			subject = mbSettings.getEmailMessageUpdatedSubject();
+			body = mbSettings.getEmailMessageUpdatedBody();
 		}
 		else {
-			subject = MBUtil.getEmailMessageAddedSubject(settings);
-			body = MBUtil.getEmailMessageAddedBody(settings);
+			subject = mbSettings.getEmailMessageAddedSubject();
+			body = mbSettings.getEmailMessageAddedBody();
 		}
 
-		boolean htmlFormat = MBUtil.getEmailHtmlFormat(settings);
+		boolean htmlFormat = mbSettings.isEmailHtmlFormat();
 
 		String messageBody = message.getBody();
 

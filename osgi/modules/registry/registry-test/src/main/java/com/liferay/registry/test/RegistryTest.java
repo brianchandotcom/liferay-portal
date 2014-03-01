@@ -89,13 +89,14 @@ public class RegistryTest {
 		InterfaceOne a = getInstance();
 		InterfaceOne b = getInstance();
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
-			registry.registerService(InterfaceOne.class, b, map);
+			registry.registerService(InterfaceOne.class, b, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
@@ -208,13 +209,14 @@ public class RegistryTest {
 		InterfaceOne a = getInstance();
 		InterfaceOne b = getInstance();
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
-			registry.registerService(InterfaceOne.class, b, map);
+			registry.registerService(InterfaceOne.class, b, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
@@ -284,13 +286,14 @@ public class RegistryTest {
 		InterfaceOne a = getInstance();
 		InterfaceOne b = getInstance();
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
-			registry.registerService(InterfaceOne.class, b, map);
+			registry.registerService(InterfaceOne.class, b, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
@@ -325,13 +328,14 @@ public class RegistryTest {
 		InterfaceOne a = getInstance();
 		InterfaceOne b = getInstance();
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
-			registry.registerService(InterfaceOne.class, b, map);
+			registry.registerService(InterfaceOne.class, b, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
@@ -388,13 +392,14 @@ public class RegistryTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
-		Map<String, Object> map = new HashMap<String, Object>();
 
-		map.put("a.property", "A");
-		map.put("b.property", "B");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "A");
+		properties.put("b.property", "B");
 
 		ServiceRegistration<InterfaceOne> serviceRegistration =
-			registry.registerService(InterfaceOne.class, one, map);
+			registry.registerService(InterfaceOne.class, one, properties);
 
 		Assert.assertNotNull(serviceRegistration);
 
@@ -446,13 +451,15 @@ public class RegistryTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
-		Map<String, Object> map = new HashMap<String, Object>();
 
-		map.put("a.property", "C");
-		map.put("b.property", "D");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "C");
+		properties.put("b.property", "D");
 
 		ServiceRegistration<InterfaceOne> serviceRegistration =
-			registry.registerService(InterfaceOne.class.getName(), one, map);
+			registry.registerService(
+				InterfaceOne.class.getName(), one, properties);
 
 		Assert.assertNotNull(serviceRegistration);
 
@@ -515,13 +522,13 @@ public class RegistryTest {
 			InterfaceOne.class.getName(), InterfaceTwo.class.getName()
 		};
 
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<String, Object>();
 
-		map.put("a.property", "E");
-		map.put("b.property", "F");
+		properties.put("a.property", "E");
+		properties.put("b.property", "F");
 
 		ServiceRegistration<?> serviceRegistration = registry.registerService(
-			classNames, one, map);
+			classNames, one, properties);
 
 		Assert.assertNotNull(serviceRegistration);
 
@@ -588,13 +595,14 @@ public class RegistryTest {
 		InterfaceOne a = getInstance();
 		InterfaceOne b = getInstance();
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
-			registry.registerService(InterfaceOne.class, b, map);
+			registry.registerService(InterfaceOne.class, b, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
@@ -659,13 +667,14 @@ public class RegistryTest {
 		Assert.assertTrue(serviceTracker.isEmpty());
 		Assert.assertEquals(0, serviceTracker.size());
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
-			registry.registerService(InterfaceOne.class, b, map);
+			registry.registerService(InterfaceOne.class, b, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
@@ -724,13 +733,14 @@ public class RegistryTest {
 		InterfaceOne a = getInstance();
 		InterfaceOne b = getInstance();
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
-			registry.registerService(InterfaceOne.class, b, map);
+			registry.registerService(InterfaceOne.class, b, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
@@ -797,13 +807,14 @@ public class RegistryTest {
 		Assert.assertTrue(serviceTracker.isEmpty());
 		Assert.assertEquals(0, serviceTracker.size());
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
-			registry.registerService(InterfaceOne.class, b, map);
+			registry.registerService(InterfaceOne.class, b, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
@@ -860,13 +871,14 @@ public class RegistryTest {
 		InterfaceOne a = getInstance();
 		InterfaceOne b = getInstance();
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
-			registry.registerService(InterfaceOne.class, b, map);
+			registry.registerService(InterfaceOne.class, b, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
@@ -931,13 +943,14 @@ public class RegistryTest {
 		Assert.assertTrue(serviceTracker.isEmpty());
 		Assert.assertEquals(0, serviceTracker.size());
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
-			registry.registerService(InterfaceOne.class, b, map);
+			registry.registerService(InterfaceOne.class, b, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);

@@ -74,8 +74,9 @@ public class ServiceTrackerCollectionTest {
 	public void byClassFilter() throws Exception {
 		final Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		Filter filter = registry.getFilter("(a.property=G)");
 
@@ -88,7 +89,7 @@ public class ServiceTrackerCollectionTest {
 		InterfaceOne b = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			registry.registerService(InterfaceOne.class, a, map);
+			registry.registerService(InterfaceOne.class, a, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 
@@ -128,13 +129,15 @@ public class ServiceTrackerCollectionTest {
 	public void byClassFilterMap() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		Filter filter = registry.getFilter("(a.property=G)");
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(InterfaceOne.class, filter, map);
+			ServiceTrackerCollections.list(
+				InterfaceOne.class, filter, properties);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
@@ -184,8 +187,9 @@ public class ServiceTrackerCollectionTest {
 		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne> customizer =
 			new TestCustomizer(counter);
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		Filter filter = registry.getFilter("(a.property=G)");
 
@@ -199,7 +203,7 @@ public class ServiceTrackerCollectionTest {
 		InterfaceOne b = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			registry.registerService(InterfaceOne.class, a, map);
+			registry.registerService(InterfaceOne.class, a, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 
@@ -246,14 +250,15 @@ public class ServiceTrackerCollectionTest {
 		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne> customizer =
 			new TestCustomizer(counter);
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		Filter filter = registry.getFilter("(a.property=G)");
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
 			ServiceTrackerCollections.list(
-				InterfaceOne.class, filter, customizer, map);
+				InterfaceOne.class, filter, customizer, properties);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
@@ -302,11 +307,12 @@ public class ServiceTrackerCollectionTest {
 	public void byClassMap() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(InterfaceOne.class, map);
+			ServiceTrackerCollections.list(InterfaceOne.class, properties);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
@@ -314,7 +320,7 @@ public class ServiceTrackerCollectionTest {
 		InterfaceOne b = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			registry.registerService(InterfaceOne.class, a, map);
+			registry.registerService(InterfaceOne.class, a, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 
@@ -398,11 +404,13 @@ public class ServiceTrackerCollectionTest {
 		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne> customizer =
 			new TestCustomizer(counter);
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(InterfaceOne.class, customizer, map);
+			ServiceTrackerCollections.list(
+				InterfaceOne.class, customizer, properties);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
@@ -410,7 +418,7 @@ public class ServiceTrackerCollectionTest {
 		InterfaceOne b = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			registry.registerService(InterfaceOne.class, a, map);
+			registry.registerService(InterfaceOne.class, a, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 
@@ -455,11 +463,13 @@ public class ServiceTrackerCollectionTest {
 		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne> customizer =
 			new TestCustomizer(counter);
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(InterfaceOne.class, customizer, map);
+			ServiceTrackerCollections.list(
+				InterfaceOne.class, customizer, properties);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 

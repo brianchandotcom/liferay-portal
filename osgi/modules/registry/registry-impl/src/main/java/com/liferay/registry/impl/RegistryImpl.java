@@ -246,10 +246,11 @@ public class RegistryImpl implements Registry {
 
 	@Override
 	public <T> ServiceRegistration<T> registerService(
-		Class<T> clazz, T service, Map<String, Object> map) {
+		Class<T> clazz, T service, Map<String, Object> properties) {
 
 		org.osgi.framework.ServiceRegistration<T> serviceRegistration =
-			_bundleContext.registerService(clazz, service, new MapWrapper(map));
+			_bundleContext.registerService(
+				clazz, service, new MapWrapper(properties));
 
 		return new ServiceRegistrationWrapper<T>(serviceRegistration);
 	}
@@ -264,11 +265,11 @@ public class RegistryImpl implements Registry {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public <T> ServiceRegistration<T> registerService(
-		String className, T service, Map<String, Object> map) {
+		String className, T service, Map<String, Object> properties) {
 
 		org.osgi.framework.ServiceRegistration<?> serviceRegistration =
 			_bundleContext.registerService(
-				className, service, new MapWrapper(map));
+				className, service, new MapWrapper(properties));
 
 		return new ServiceRegistrationWrapper(serviceRegistration);
 	}
@@ -283,11 +284,11 @@ public class RegistryImpl implements Registry {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public <T> ServiceRegistration<T> registerService(
-		String[] classNames, T service, Map<String, Object> map) {
+		String[] classNames, T service, Map<String, Object> properties) {
 
 		org.osgi.framework.ServiceRegistration<?> serviceRegistration =
 			_bundleContext.registerService(
-				classNames, service, new MapWrapper(map));
+				classNames, service, new MapWrapper(properties));
 
 		return new ServiceRegistrationWrapper(serviceRegistration);
 	}

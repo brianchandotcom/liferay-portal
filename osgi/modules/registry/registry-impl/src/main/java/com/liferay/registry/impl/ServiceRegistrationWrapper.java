@@ -32,6 +32,10 @@ public class ServiceRegistrationWrapper<T> implements ServiceRegistration<T> {
 
 	@Override
 	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
 		if (!(object instanceof ServiceRegistrationWrapper)) {
 			return false;
 		}

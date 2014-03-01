@@ -48,6 +48,10 @@ public class ServiceTrackerWrapper<S, T> implements ServiceTracker<S, T> {
 
 	@Override
 	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
 		if (!(object instanceof ServiceTrackerWrapper)) {
 			return false;
 		}

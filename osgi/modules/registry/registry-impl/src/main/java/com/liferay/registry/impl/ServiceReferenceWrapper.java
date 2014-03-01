@@ -29,6 +29,10 @@ public class ServiceReferenceWrapper<T> implements ServiceReference<T> {
 
 	@Override
 	public int compareTo(Object object) {
+		if (this == object) {
+			return 0;
+		}
+
 		if (!(object instanceof ServiceReferenceWrapper)) {
 			throw new IllegalArgumentException();
 		}
@@ -42,6 +46,10 @@ public class ServiceReferenceWrapper<T> implements ServiceReference<T> {
 
 	@Override
 	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
 		if (!(object instanceof ServiceReferenceWrapper)) {
 			return false;
 		}

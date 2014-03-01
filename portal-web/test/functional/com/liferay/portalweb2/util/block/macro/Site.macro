@@ -617,10 +617,15 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<execute action="CPSites#check" locator-key1="SITE_TABLE_ALL_CHECKBOX" />
-		<execute action="CPSites#assertClick" locator-key1="SITE_BUTTON_DELETE" value1="Delete" />
-		<execute action="CPSites#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="CPSites#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<if>
+			<condition action="CPSites#isElementPresent" locator-key1="SITE_TABLE_GENERIC_CHECKBOX" />
+			<then>
+				<execute action="CPSites#check" locator-key1="SITE_TABLE_ALL_CHECKBOX" />
+				<execute action="CPSites#assertClick" locator-key1="SITE_BUTTON_DELETE" value1="Delete" />
+				<execute action="CPSites#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPSites#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewCannotAdd">

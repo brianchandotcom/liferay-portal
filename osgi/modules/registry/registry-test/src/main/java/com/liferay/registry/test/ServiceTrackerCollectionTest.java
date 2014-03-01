@@ -124,7 +124,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassFilterMap() throws Exception {
+	public void testByClassFilterProperties() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter("(a.property=G)");
@@ -240,7 +240,9 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassFilterServiceTrackerCustomizerMap() throws Exception {
+	public void testByClassFilterServiceTrackerCustomizerProperties()
+		throws Exception {
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter("(a.property=G)");
@@ -304,7 +306,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassMap() throws Exception {
+	public void testByClassProperties() throws Exception {
 		Map<String, Object> properties = new HashMap<String, Object>();
 
 		properties.put("a.property", "G");
@@ -401,7 +403,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassServiceTrackerCustomizerCustomizerMap1()
+	public void testByClassServiceTrackerCustomizerCustomizerProperties1()
 		throws Exception {
 
 		AtomicInteger counter = new AtomicInteger();
@@ -464,7 +466,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassServiceTrackerCustomizerCustomizerMap2()
+	public void testByClassServiceTrackerCustomizerCustomizerProperties2()
 		throws Exception {
 
 		AtomicInteger counter = new AtomicInteger();

@@ -12,7 +12,7 @@
  * details.
  */
 
-package net.sourceforge.cobertura.instrument;
+package com.liferay.cobertura.instrument;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

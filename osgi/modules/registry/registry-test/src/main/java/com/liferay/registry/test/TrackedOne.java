@@ -18,5 +18,4 @@ package com.liferay.registry.test;
  * @author Raymond Augé
  */
 public class TrackedOne {
-	//
 }

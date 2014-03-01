@@ -391,9 +391,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void byClassSTCustomizerMap()
-		throws Exception {
-
+	public void byClassSTCustomizerMap() throws Exception {
 		final Registry registry = RegistryUtil.getRegistry();
 		final AtomicInteger counter = new AtomicInteger();
 
@@ -450,9 +448,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void byClassSTCustomizerMap_2()
-		throws Exception {
-
+	public void byClassSTCustomizerMap_2() throws Exception {
 		final Registry registry = RegistryUtil.getRegistry();
 		final AtomicInteger counter = new AtomicInteger();
 

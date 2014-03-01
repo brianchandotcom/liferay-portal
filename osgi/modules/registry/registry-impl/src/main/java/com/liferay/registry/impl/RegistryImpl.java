@@ -137,10 +137,10 @@ public class RegistryImpl implements Registry {
 		while (iterator.hasNext()) {
 			org.osgi.framework.ServiceReference<T> osgiServiceReference =
 				iterator.next();
-			
+
 			ServiceReference<T> serviceReference =
-				new ServiceReferenceWrapper<T>(osgiServiceReference); 
-				
+				new ServiceReferenceWrapper<T>(osgiServiceReference);
+
 			serviceReferences.add(serviceReference);
 		}
 
@@ -175,8 +175,7 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
-	public <T> Collection<T> getServices(
-			Class<T> clazz, String filterString)
+	public <T> Collection<T> getServices(Class<T> clazz, String filterString)
 		throws Exception {
 
 		Collection<org.osgi.framework.ServiceReference<T>> serviceReferences =

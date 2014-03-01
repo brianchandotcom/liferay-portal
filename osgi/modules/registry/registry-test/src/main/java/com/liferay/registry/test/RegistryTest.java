@@ -41,45 +41,13 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class RegistryTest {
 
-	@Before
-	public void setup() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_bundleContext = bundle.getBundleContext();
-	}
-
 	@Test
 	public void bundleContextIsNotNull() {
 		Assert.assertNotNull(_bundleContext);
 	}
 
 	@Test
-	public void serviceReferenceExists() {
-		org.osgi.framework.ServiceReference<Registry> serviceReference =
-			_bundleContext.getServiceReference(Registry.class);
-
-		Assert.assertNotNull(serviceReference);
-	}
-
-	@Test
-	public void serviceExists() {
-		org.osgi.framework.ServiceReference<Registry> serviceReference =
-			_bundleContext.getServiceReference(Registry.class);
-
-		Registry registry = _bundleContext.getService(serviceReference);
-
-		Assert.assertNotNull(registry);
-	}
-
-	@Test
-	public void registryWasWired() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Assert.assertNotNull(registry);
-	}
-
-	@Test
-	public void registerServiceByClass() {
+	public void getServiceByClass() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
@@ -89,178 +57,67 @@ public class RegistryTest {
 
 		Assert.assertNotNull(serviceRegistration);
 
-		ServiceReference<InterfaceOne> serviceReference =
-			serviceRegistration.getServiceReference();
-
-		Assert.assertNotNull(serviceReference);
-
-		InterfaceOne actual = registry.getService(serviceReference);
+		InterfaceOne actual = registry.getService(InterfaceOne.class);
 
 		Assert.assertEquals(one, actual);
 
 		serviceRegistration.unregister();
-
-		actual = registry.getService(serviceReference);
-
-		Assert.assertNull(actual);
 	}
 
 	@Test
-	public void registerServiceByString() {
+	public void getServiceByString() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistration =
-			registry.registerService(InterfaceOne.class.getName(), one);
+			registry.registerService(InterfaceOne.class, one);
 
 		Assert.assertNotNull(serviceRegistration);
 
-		ServiceReference<InterfaceOne> serviceReference =
-			serviceRegistration.getServiceReference();
-
-		Assert.assertNotNull(serviceReference);
-
-		InterfaceOne actual = registry.getService(serviceReference);
+		InterfaceOne actual = registry.getService(InterfaceOne.class.getName());
 
 		Assert.assertEquals(one, actual);
 
 		serviceRegistration.unregister();
-
-		actual = registry.getService(serviceReference);
-
-		Assert.assertNull(actual);
 	}
 
 	@Test
-	public void registerServiceByStrings() {
+	public void getServiceByStringAndfilter() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
-		InterfaceBoth one = new InterfaceBoth() {/**/};
-
-		String[] classNames = new String[] {
-			InterfaceOne.class.getName(), InterfaceTwo.class.getName()
-		};
-
-		ServiceRegistration<?> serviceRegistration =
-			registry.registerService(classNames, one);
-
-		Assert.assertNotNull(serviceRegistration);
-
-		ServiceReference<?> serviceReference =
-			serviceRegistration.getServiceReference();
-
-		Assert.assertNotNull(serviceReference);
-
-		Object actual = registry.getService(serviceReference);
-
-		Assert.assertEquals(one, actual);
-		Assert.assertTrue(actual instanceof InterfaceOne);
-		Assert.assertTrue(actual instanceof InterfaceTwo);
-
-		serviceRegistration.unregister();
-
-		actual = registry.getService(serviceReference);
-
-		Assert.assertNull(actual);
-	}
-
-	@Test
-	public void registerServiceByClassAndMap() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		InterfaceOne one = getInstance();
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		map.put("a.property", "A");
-		map.put("b.property", "B");
-
-		ServiceRegistration<InterfaceOne> serviceRegistration =
-			registry.registerService(InterfaceOne.class, one, map);
-
-		Assert.assertNotNull(serviceRegistration);
-
-		ServiceReference<InterfaceOne> serviceReference =
-			serviceRegistration.getServiceReference();
-
-		Assert.assertNotNull(serviceReference);
-
-		Assert.assertEquals(serviceReference.getProperty("a.property"), "A");
-		Assert.assertEquals(serviceReference.getProperty("b.property"), "B");
-		Assert.assertNull(serviceReference.getProperty("c.property"));
-
-		serviceRegistration.unregister();
-
-		InterfaceOne actual = registry.getService(serviceReference);
-
-		Assert.assertNull(actual);
-	}
-
-	@Test
-	public void registerServiceByStringAndMap() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		InterfaceOne one = getInstance();
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		map.put("a.property", "C");
-		map.put("b.property", "D");
-
-		ServiceRegistration<InterfaceOne> serviceRegistration =
-			registry.registerService(InterfaceOne.class.getName(), one, map);
-
-		Assert.assertNotNull(serviceRegistration);
-
-		ServiceReference<InterfaceOne> serviceReference =
-			serviceRegistration.getServiceReference();
-
-		Assert.assertNotNull(serviceReference);
-
-		Assert.assertEquals(serviceReference.getProperty("a.property"), "C");
-		Assert.assertEquals(serviceReference.getProperty("b.property"), "D");
-		Assert.assertNull(serviceReference.getProperty("c.property"));
-
-		serviceRegistration.unregister();
-
-		InterfaceOne actual = registry.getService(serviceReference);
-
-		Assert.assertNull(actual);
-	}
-
-	@Test
-	public void registerServiceByStringsAndMap() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		InterfaceBoth one = new InterfaceBoth() {/**/};
-
-		String[] classNames = new String[] {
-			InterfaceOne.class.getName(), InterfaceTwo.class.getName()
-		};
+		InterfaceOne a = getInstance();
+		InterfaceOne b = getInstance();
 
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("a.property", "G");
 
-		map.put("a.property", "E");
-		map.put("b.property", "F");
+		ServiceRegistration<InterfaceOne> serviceRegistrationA =
+			registry.registerService(InterfaceOne.class, a);
+		ServiceRegistration<InterfaceOne> serviceRegistrationB =
+			registry.registerService(InterfaceOne.class, b, map);
 
-		ServiceRegistration<?> serviceRegistration =
-			registry.registerService(classNames, one, map);
+		Assert.assertNotNull(serviceRegistrationA);
+		Assert.assertNotNull(serviceRegistrationB);
 
-		Assert.assertNotNull(serviceRegistration);
+		String filter = "(a.property=G)";
 
-		ServiceReference<?> serviceReference =
-			serviceRegistration.getServiceReference();
+		InterfaceOne[] services = registry.getServices(
+			InterfaceOne.class.getName(), filter);
 
-		Assert.assertNotNull(serviceReference);
+		Assert.assertEquals(1, services.length);
 
-		Assert.assertEquals(serviceReference.getProperty("a.property"), "E");
-		Assert.assertEquals(serviceReference.getProperty("b.property"), "F");
-		Assert.assertNull(serviceReference.getProperty("c.property"));
+		serviceRegistrationA.unregister();
 
-		serviceRegistration.unregister();
+		services = registry.getServices(InterfaceOne.class.getName(), filter);
 
-		Object actual = registry.getService(serviceReference);
+		Assert.assertEquals(1, services.length);
 
-		Assert.assertNull(actual);
+		serviceRegistrationB.unregister();
+
+		services = registry.getServices(InterfaceOne.class.getName(), filter);
+
+		Assert.assertNull(services);
 	}
 
 	@Test
@@ -276,6 +133,29 @@ public class RegistryTest {
 
 		ServiceReference<InterfaceOne> serviceReference =
 			registry.getServiceReference(InterfaceOne.class);
+
+		Assert.assertNotNull(serviceReference);
+
+		InterfaceOne actual = registry.getService(serviceReference);
+
+		Assert.assertEquals(one, actual);
+
+		serviceRegistration.unregister();
+	}
+
+	@Test
+	public void getServiceReferenceByString() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		InterfaceOne one = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistration =
+			registry.registerService(InterfaceOne.class, one);
+
+		Assert.assertNotNull(serviceRegistration);
+
+		ServiceReference<InterfaceOne> serviceReference =
+			registry.getServiceReference(InterfaceOne.class.getName());
 
 		Assert.assertNotNull(serviceReference);
 
@@ -362,29 +242,6 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void getServiceReferenceByString() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		InterfaceOne one = getInstance();
-
-		ServiceRegistration<InterfaceOne> serviceRegistration =
-			registry.registerService(InterfaceOne.class, one);
-
-		Assert.assertNotNull(serviceRegistration);
-
-		ServiceReference<InterfaceOne> serviceReference =
-			registry.getServiceReference(InterfaceOne.class.getName());
-
-		Assert.assertNotNull(serviceReference);
-
-		InterfaceOne actual = registry.getService(serviceReference);
-
-		Assert.assertEquals(one, actual);
-
-		serviceRegistration.unregister();
-	}
-
-	@Test
 	public void getServiceReferencesByString() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -400,8 +257,7 @@ public class RegistryTest {
 		Assert.assertNotNull(serviceRegistrationB);
 
 		ServiceReference<InterfaceOne>[] serviceReferences =
-			registry.getServiceReferences(
-				InterfaceOne.class.getName(), null);
+			registry.getServiceReferences(InterfaceOne.class.getName(), null);
 
 		Assert.assertNotNull(serviceReferences);
 		Assert.assertEquals(2, serviceReferences.length);
@@ -463,24 +319,6 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void getServiceByClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		InterfaceOne one = getInstance();
-
-		ServiceRegistration<InterfaceOne> serviceRegistration =
-			registry.registerService(InterfaceOne.class, one);
-
-		Assert.assertNotNull(serviceRegistration);
-
-		InterfaceOne actual = registry.getService(InterfaceOne.class);
-
-		Assert.assertEquals(one, actual);
-
-		serviceRegistration.unregister();
-	}
-
-	@Test
 	public void getServicesByClassAndFilter() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -519,7 +357,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void getServiceByString() {
+	public void registerServiceByClass() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
@@ -529,49 +367,210 @@ public class RegistryTest {
 
 		Assert.assertNotNull(serviceRegistration);
 
-		InterfaceOne actual = registry.getService(InterfaceOne.class.getName());
+		ServiceReference<InterfaceOne> serviceReference =
+			serviceRegistration.getServiceReference();
+
+		Assert.assertNotNull(serviceReference);
+
+		InterfaceOne actual = registry.getService(serviceReference);
 
 		Assert.assertEquals(one, actual);
 
 		serviceRegistration.unregister();
+
+		actual = registry.getService(serviceReference);
+
+		Assert.assertNull(actual);
 	}
 
 	@Test
-	public void getServiceByStringAndfilter() throws Exception {
+	public void registerServiceByClassAndMap() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		InterfaceOne a = getInstance();
-		InterfaceOne b = getInstance();
+		InterfaceOne one = getInstance();
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("a.property", "A");
+		map.put("b.property", "B");
+
+		ServiceRegistration<InterfaceOne> serviceRegistration =
+			registry.registerService(InterfaceOne.class, one, map);
+
+		Assert.assertNotNull(serviceRegistration);
+
+		ServiceReference<InterfaceOne> serviceReference =
+			serviceRegistration.getServiceReference();
+
+		Assert.assertNotNull(serviceReference);
+
+		Assert.assertEquals(serviceReference.getProperty("a.property"), "A");
+		Assert.assertEquals(serviceReference.getProperty("b.property"), "B");
+		Assert.assertNull(serviceReference.getProperty("c.property"));
+
+		serviceRegistration.unregister();
+
+		InterfaceOne actual = registry.getService(serviceReference);
+
+		Assert.assertNull(actual);
+	}
+
+	@Test
+	public void registerServiceByString() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		InterfaceOne one = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistration =
+			registry.registerService(InterfaceOne.class.getName(), one);
+
+		Assert.assertNotNull(serviceRegistration);
+
+		ServiceReference<InterfaceOne> serviceReference =
+			serviceRegistration.getServiceReference();
+
+		Assert.assertNotNull(serviceReference);
+
+		InterfaceOne actual = registry.getService(serviceReference);
+
+		Assert.assertEquals(one, actual);
+
+		serviceRegistration.unregister();
+
+		actual = registry.getService(serviceReference);
+
+		Assert.assertNull(actual);
+	}
+
+	@Test
+	public void registerServiceByStringAndMap() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		InterfaceOne one = getInstance();
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("a.property", "C");
+		map.put("b.property", "D");
+
+		ServiceRegistration<InterfaceOne> serviceRegistration =
+			registry.registerService(InterfaceOne.class.getName(), one, map);
+
+		Assert.assertNotNull(serviceRegistration);
+
+		ServiceReference<InterfaceOne> serviceReference =
+			serviceRegistration.getServiceReference();
+
+		Assert.assertNotNull(serviceReference);
+
+		Assert.assertEquals(serviceReference.getProperty("a.property"), "C");
+		Assert.assertEquals(serviceReference.getProperty("b.property"), "D");
+		Assert.assertNull(serviceReference.getProperty("c.property"));
+
+		serviceRegistration.unregister();
+
+		InterfaceOne actual = registry.getService(serviceReference);
+
+		Assert.assertNull(actual);
+	}
+
+	@Test
+	public void registerServiceByStrings() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		InterfaceBoth one = new InterfaceBoth() {/**/};
+
+		String[] classNames = new String[] {
+			InterfaceOne.class.getName(), InterfaceTwo.class.getName()
+		};
+
+		ServiceRegistration<?> serviceRegistration = registry.registerService(
+			classNames, one);
+
+		Assert.assertNotNull(serviceRegistration);
+
+		ServiceReference<?> serviceReference =
+			serviceRegistration.getServiceReference();
+
+		Assert.assertNotNull(serviceReference);
+
+		Object actual = registry.getService(serviceReference);
+
+		Assert.assertEquals(one, actual);
+		Assert.assertTrue(actual instanceof InterfaceOne);
+		Assert.assertTrue(actual instanceof InterfaceTwo);
+
+		serviceRegistration.unregister();
+
+		actual = registry.getService(serviceReference);
+
+		Assert.assertNull(actual);
+	}
+
+	@Test
+	public void registerServiceByStringsAndMap() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		InterfaceBoth one = new InterfaceBoth() {/**/};
+
+		String[] classNames = new String[] {
+			InterfaceOne.class.getName(), InterfaceTwo.class.getName()
+		};
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("a.property", "G");
 
-		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			registry.registerService(InterfaceOne.class, a);
-		ServiceRegistration<InterfaceOne> serviceRegistrationB =
-			registry.registerService(InterfaceOne.class, b, map);
+		map.put("a.property", "E");
+		map.put("b.property", "F");
 
-		Assert.assertNotNull(serviceRegistrationA);
-		Assert.assertNotNull(serviceRegistrationB);
+		ServiceRegistration<?> serviceRegistration = registry.registerService(
+			classNames, one, map);
 
-		String filter = "(a.property=G)";
+		Assert.assertNotNull(serviceRegistration);
 
-		InterfaceOne[] services = registry.getServices(
-			InterfaceOne.class.getName(), filter);
+		ServiceReference<?> serviceReference =
+			serviceRegistration.getServiceReference();
 
-		Assert.assertEquals(1, services.length);
+		Assert.assertNotNull(serviceReference);
 
-		serviceRegistrationA.unregister();
+		Assert.assertEquals(serviceReference.getProperty("a.property"), "E");
+		Assert.assertEquals(serviceReference.getProperty("b.property"), "F");
+		Assert.assertNull(serviceReference.getProperty("c.property"));
 
-		services = registry.getServices(InterfaceOne.class.getName(), filter);
+		serviceRegistration.unregister();
 
-		Assert.assertEquals(1, services.length);
+		Object actual = registry.getService(serviceReference);
 
-		serviceRegistrationB.unregister();
+		Assert.assertNull(actual);
+	}
 
-		services = registry.getServices(InterfaceOne.class.getName(), filter);
+	@Test
+	public void registryWasWired() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		Assert.assertNull(services);
+		Assert.assertNotNull(registry);
+	}
+
+	@Test
+	public void serviceExists() {
+		org.osgi.framework.ServiceReference<Registry> serviceReference =
+			_bundleContext.getServiceReference(Registry.class);
+
+		Registry registry = _bundleContext.getService(serviceReference);
+
+		Assert.assertNotNull(registry);
+	}
+
+	@Test
+	public void serviceReferenceExists() {
+		org.osgi.framework.ServiceReference<Registry> serviceReference =
+			_bundleContext.getServiceReference(Registry.class);
+
+		Assert.assertNotNull(serviceReference);
+	}
+
+	@Before
+	public void setup() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_bundleContext = bundle.getBundleContext();
 	}
 
 	@Test

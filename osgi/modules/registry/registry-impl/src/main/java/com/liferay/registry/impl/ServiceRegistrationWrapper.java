@@ -59,13 +59,13 @@ public class ServiceRegistrationWrapper<T> implements ServiceRegistration<T> {
 	}
 
 	@Override
-	public String toString() {
-		return _serviceRegistration.toString();
+	public void setProperties(Map<String, Object> properties) {
+		_serviceRegistration.setProperties(new MapWrapper(properties));
 	}
 
 	@Override
-	public void setProperties(Map<String, Object> properties) {
-		_serviceRegistration.setProperties(new MapWrapper(properties));
+	public String toString() {
+		return _serviceRegistration.toString();
 	}
 
 	@Override

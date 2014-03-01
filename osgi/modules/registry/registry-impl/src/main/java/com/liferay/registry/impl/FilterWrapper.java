@@ -53,8 +53,8 @@ public class FilterWrapper implements Filter {
 	}
 
 	@Override
-	public boolean matches(Map<String, Object> map) {
-		return _filter.match(new MapWrapper(map));
+	public boolean matches(Map<String, Object> properties) {
+		return _filter.match(new MapWrapper(properties));
 	}
 
 	@Override
@@ -70,8 +70,8 @@ public class FilterWrapper implements Filter {
 	}
 
 	@Override
-	public boolean matchesCase(Map<String, Object> map) {
-		return _filter.matchCase(new MapWrapper(map));
+	public boolean matchesCase(Map<String, Object> properties) {
+		return _filter.matchCase(new MapWrapper(properties));
 	}
 
 	@Override

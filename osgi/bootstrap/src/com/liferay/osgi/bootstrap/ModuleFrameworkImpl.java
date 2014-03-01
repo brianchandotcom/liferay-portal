@@ -441,8 +441,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			return;
 		}
 
-		RegistryUtil.setRegistry(null);
-
 		_framework.stop();
 
 		FrameworkEvent frameworkEvent = _framework.waitForStop(5000);
@@ -450,6 +448,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		if (_log.isInfoEnabled()) {
 			_log.info(frameworkEvent);
 		}
+
+		RegistryUtil.setRegistry(null);
 	}
 
 	@Override

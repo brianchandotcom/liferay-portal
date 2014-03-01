@@ -19,7 +19,10 @@
 				</uptodate>
 			</not>
 			<then>
-				<gradle-execute gradleTask=":registry-impl:compileJava" gradleModuleDir="/registry" />
+				<gradle-execute
+					gradleModuleDir="/registry"
+					gradleTask=":registry-impl:compileJava"
+				/>
 
 				<mkdir dir="classes" />
 

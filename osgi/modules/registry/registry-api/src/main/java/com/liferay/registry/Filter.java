@@ -22,7 +22,7 @@ import java.util.Map;
 public interface Filter {
 
 	@Override
-	public boolean equals(Object obj);
+	public boolean equals(Object object);
 
 	@Override
 	public int hashCode();

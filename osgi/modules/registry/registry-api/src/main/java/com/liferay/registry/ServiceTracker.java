@@ -26,7 +26,7 @@ public interface ServiceTracker<S, T> {
 	public void close();
 
 	@Override
-	public boolean equals(Object obj);
+	public boolean equals(Object object);
 
 	public T getService();
 

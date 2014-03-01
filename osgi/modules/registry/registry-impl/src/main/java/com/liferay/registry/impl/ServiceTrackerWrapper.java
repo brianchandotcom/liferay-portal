@@ -35,10 +35,10 @@ public class ServiceTrackerWrapper<S, T> implements ServiceTracker<S, T> {
 
 	@Override
 	public T addingService(ServiceReference<S> serviceReference) {
-		org.osgi.framework.ServiceReference<S> wrappedServiceReference =
+		org.osgi.framework.ServiceReference<S> osgiServiceReference =
 			getServiceReference(serviceReference);
 
-		return _serviceTracker.addingService(wrappedServiceReference);
+		return _serviceTracker.addingService(osgiServiceReference);
 	}
 
 	@Override
@@ -70,10 +70,10 @@ public class ServiceTrackerWrapper<S, T> implements ServiceTracker<S, T> {
 
 	@Override
 	public T getService(ServiceReference<S> serviceReference) {
-		org.osgi.framework.ServiceReference<S> wrappedServiceReference =
+		org.osgi.framework.ServiceReference<S> osgiServiceReference =
 			getServiceReference(serviceReference);
 
-		return _serviceTracker.getService(wrappedServiceReference);
+		return _serviceTracker.getService(osgiServiceReference);
 	}
 
 	@Override

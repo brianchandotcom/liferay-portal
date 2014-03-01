@@ -12,7 +12,7 @@
  * details.
  */
 
-package net.sourceforge.cobertura.instrument;
+package com.liferay.cobertura.instrument;
 
 import java.io.File;
 
@@ -269,7 +269,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 				name.equals("initialize") && desc.equals("()V")) {
 
 				owner =
-					"net/sourceforge/cobertura/instrument/InstrumentationAgent";
+					"com/liferay/cobertura/instrument/InstrumentationAgent";
 			}
 
 			super.visitMethodInsn(opcode, owner, name, desc);

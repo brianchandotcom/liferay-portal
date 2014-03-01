@@ -12,63 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.minifier;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.util.PropsValues;
 
-import com.yahoo.platform.yui.compressor.CssCompressor;
 import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
 import com.yahoo.platform.yui.mozilla.javascript.ErrorReporter;
 import com.yahoo.platform.yui.mozilla.javascript.EvaluatorException;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Raymond Augé
+ * @author Carlos Sierra Andrés
  */
-public class MinifierUtil {
+public class YUIJavaScriptMinifier implements JavaScriptMinifier {
 
-	public static String minifyCss(String content) {
-		if (!PropsValues.MINIFIER_ENABLED) {
-			return content;
-		}
-
-		return _instance._minifyCss(content);
-	}
-
-	public static String minifyJavaScript(String content) {
-		if (!PropsValues.MINIFIER_ENABLED) {
-			return content;
-		}
-
-		return _instance._minifyJavaScript(content);
-	}
-
-	private MinifierUtil() {
-	}
-
-	private String _minifyCss(String content) {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		try {
-			CssCompressor cssCompressor = new CssCompressor(
-				new UnsyncStringReader(content));
-
-			cssCompressor.compress(
-				unsyncStringWriter, PropsValues.YUI_COMPRESSOR_CSS_LINE_BREAK);
-		}
-		catch (Exception e) {
-			_log.error("CSS Minifier failed for\n" + content);
-
-			unsyncStringWriter.append(content);
-		}
-
-		return unsyncStringWriter.toString();
-	}
-
-	private String _minifyJavaScript(String content) {
+	@Override
+	public String compress(String resourceName, String content) {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		try {
@@ -93,9 +55,8 @@ public class MinifierUtil {
 		return unsyncStringWriter.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MinifierUtil.class);
-
-	private static MinifierUtil _instance = new MinifierUtil();
+	private static Log _log = LogFactoryUtil.getLog(
+		YUIJavaScriptMinifier.class);
 
 	private class JavaScriptErrorReporter implements ErrorReporter {
 

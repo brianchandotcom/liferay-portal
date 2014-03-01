@@ -1077,9 +1077,9 @@ public interface PropsKeys {
 
 	public static final String JAVASCRIPT_LOG_ENABLED = "javascript.log.enabled";
 
-	public static final String JCR_INITIALIZE_ON_STARTUP = "jcr.initialize.on.startup";
+	public static final String JAVASCRIPT_MINIFIER = "javascript.minifier"; public static final String JCR_JACKRABBIT_CONFIG_FILE_PATH = "jcr.jackrabbit.config.file.path";
 
-	public static final String JCR_JACKRABBIT_CONFIG_FILE_PATH = "jcr.jackrabbit.config.file.path";
+	public static final String JCR_INITIALIZE_ON_STARTUP = "jcr.initialize.on.startup";
 
 	public static final String JCR_JACKRABBIT_CREDENTIALS_PASSWORD = "jcr.jackrabbit.credentials.password";
 

@@ -35,11 +35,11 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.minifier.MinifierUtil;
 import com.liferay.portal.servlet.filters.IgnoreModuleRequestFilter;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
 import com.liferay.portal.util.AggregateUtil;
 import com.liferay.portal.util.JavaScriptBundleUtil;
-import com.liferay.portal.util.MinifierUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -213,7 +213,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		return getJavaScriptContent(sb.toString());
+		return getJavaScriptContent(
+			StringUtil.merge(fileNames, "+"), sb.toString());
 	}
 
 	@Override
@@ -230,8 +231,10 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		_tempDir.mkdirs();
 	}
 
-	protected static String getJavaScriptContent(String content) {
-		return MinifierUtil.minifyJavaScript(content);
+	protected static String getJavaScriptContent(
+		String resourceName, String content) {
+
+		return MinifierUtil.minifyJavaScript(resourceName, content);
 	}
 
 	protected Object getBundleContent(
@@ -434,7 +437,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 					request, response, resourcePath, content);
 			}
 			else if (minifierType.equals("js")) {
-				content = getJavaScriptContent(content);
+				content = getJavaScriptContent(resourcePath, content);
 			}
 
 			FileUtil.write(
@@ -503,7 +506,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 		String content = StringUtil.read(urlConnection.getInputStream());
 
-		return getJavaScriptContent(content);
+		return getJavaScriptContent(resourceURL.toString(), content);
 	}
 
 	@Override

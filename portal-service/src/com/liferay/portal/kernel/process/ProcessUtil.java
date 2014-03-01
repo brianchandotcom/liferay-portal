@@ -36,6 +36,9 @@ import java.util.concurrent.TimeoutException;
  */
 public class ProcessUtil {
 
+	public static final CollectorOutputProcessor COLLECTOR_OUTPUT_PROCESSOR =
+		new CollectorOutputProcessor();
+
 	public static final ConsumerOutputProcessor CONSUMER_OUTPUT_PROCESSOR =
 		new ConsumerOutputProcessor();
 

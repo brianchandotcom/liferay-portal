@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.process;
 
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -193,17 +194,20 @@ public class ProcessUtilTest {
 	}
 
 	@Test
-	public void testEchoLogging() throws Exception {
+	public void testEcho() throws Exception {
+
+		// Logging
+
 		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			LoggingOutputProcessor.class.getName(), Level.INFO);
 
-		Future<?> future = ProcessUtil.execute(
+		Future<ObjectValuePair<Void, Void>> loggingFuture = ProcessUtil.execute(
 			ProcessUtil.LOGGING_OUTPUT_PROCESSOR,
 			_buildArguments(Echo.class, "2"));
 
-		future.get();
+		loggingFuture.get();
 
-		future.cancel(true);
+		loggingFuture.cancel(true);
 
 		List<String> messageRecords = new ArrayList<String>();
 
@@ -211,14 +215,30 @@ public class ProcessUtilTest {
 			messageRecords.add(logRecord.getMessage());
 		}
 
-		Assert.assertTrue(
-			messageRecords.contains("{stdErr}" + Echo.class.getName() + "0"));
-		Assert.assertTrue(
-			messageRecords.contains("{stdErr}" + Echo.class.getName() + "1"));
-		Assert.assertTrue(
-			messageRecords.contains("{stdOut}" + Echo.class.getName() + "0"));
-		Assert.assertTrue(
-			messageRecords.contains("{stdOut}" + Echo.class.getName() + "1"));
+		Assert.assertTrue(messageRecords.contains(Echo.buildMessage(false, 0)));
+		Assert.assertTrue(messageRecords.contains(Echo.buildMessage(false, 1)));
+		Assert.assertTrue(messageRecords.contains(Echo.buildMessage(true, 0)));
+		Assert.assertTrue(messageRecords.contains(Echo.buildMessage(true, 1)));
+
+		// Collector
+
+		Future<ObjectValuePair<byte[], byte[]>> collectorFuture =
+			ProcessUtil.execute(
+				ProcessUtil.COLLECTOR_OUTPUT_PROCESSOR,
+				_buildArguments(Echo.class, "2"));
+
+		ObjectValuePair<byte[], byte[]> objectValuePair = collectorFuture.get();
+
+		collectorFuture.cancel(true);
+
+		Assert.assertEquals(
+			Echo.buildMessage(true, 0) + "\n" + Echo.buildMessage(true, 1) +
+				"\n",
+			new String(objectValuePair.getKey()));
+		Assert.assertEquals(
+			Echo.buildMessage(false, 0) + "\n" + Echo.buildMessage(false, 1) +
+				"\n",
+			new String(objectValuePair.getValue()));
 	}
 
 	@Test
@@ -543,13 +563,21 @@ public class ProcessUtilTest {
 
 	private static class Echo {
 
+		public static String buildMessage(boolean stdOut, int number) {
+			if (stdOut) {
+				return "{stdOut}" + Echo.class.getName() + number;
+			}
+
+			return "{stdErr}" + Echo.class.getName() + number;
+		}
+
 		@SuppressWarnings("unused")
 		public static void main(String[] arguments) {
 			int times = Integer.parseInt(arguments[0]);
 
 			for (int i = 0; i < times; i++) {
-				System.err.println("{stdErr}" + Echo.class.getName() + i);
-				System.out.println("{stdOut}" + Echo.class.getName() + i);
+				System.err.println(buildMessage(false, i));
+				System.out.println(buildMessage(true, i));
 			}
 		}
 

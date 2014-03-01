@@ -28,28 +28,26 @@ public class ServiceReferenceWrapper<T> implements ServiceReference<T> {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public int compareTo(Object reference) {
-		if (!(reference instanceof ServiceReferenceWrapper)) {
+	public int compareTo(Object object) {
+		if (!(object instanceof ServiceReferenceWrapper)) {
 			throw new IllegalArgumentException();
 		}
 
 		ServiceReferenceWrapper<T> serviceReferenceWrapper =
-			(ServiceReferenceWrapper<T>)reference;
+			(ServiceReferenceWrapper<T>)object;
 
 		return _serviceReference.compareTo(
 			serviceReferenceWrapper.getServiceReference());
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public boolean equals(Object reference) {
-		if (!(reference instanceof ServiceReferenceWrapper)) {
+	public boolean equals(Object object) {
+		if (!(object instanceof ServiceReferenceWrapper)) {
 			return false;
 		}
 
 		ServiceReferenceWrapper<T> serviceReferenceWrapper =
-			(ServiceReferenceWrapper<T>)reference;
+			(ServiceReferenceWrapper<T>)object;
 
 		return _serviceReference.equals(
 			serviceReferenceWrapper.getServiceReference());

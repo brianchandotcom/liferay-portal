@@ -29,12 +29,12 @@ public class FilterWrapper implements Filter {
 	}
 
 	@Override
-	public boolean equals(Object filter) {
-		if (!(filter instanceof FilterWrapper)) {
+	public boolean equals(Object object) {
+		if (!(object instanceof FilterWrapper)) {
 			throw new IllegalArgumentException();
 		}
 
-		FilterWrapper filterWrapper = (FilterWrapper)filter;
+		FilterWrapper filterWrapper = (FilterWrapper)object;
 
 		return _filter.equals(filterWrapper.getFilter());
 	}

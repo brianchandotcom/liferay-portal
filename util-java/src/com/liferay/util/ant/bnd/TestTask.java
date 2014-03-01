@@ -50,22 +50,25 @@ public class TestTask extends BaseBndTask {
 		Project bndProject = getBndProject();
 
 		try {
-			List<Project> projects;
+			List<Project> projects = null;
 
 			if (_runFiles == null) {
 				projects = Collections.singletonList(bndProject);
 			}
 			else {
-				StringTokenizer tokenizer = new StringTokenizer(_runFiles, ",");
+				StringTokenizer stringTokenizer = new StringTokenizer(
+					_runFiles, ",");
 
 				projects = new LinkedList<Project>();
 
-				while (tokenizer.hasMoreTokens()) {
-					String runFilePath = tokenizer.nextToken().trim();
+				while (stringTokenizer.hasMoreTokens()) {
+					String runFilePath = stringTokenizer.nextToken();
 
-					Project runProject;
+					runFilePath = runFilePath.trim();
 
-					if (".".equals(runFilePath)) {
+					Project runProject = null;
+
+					if (runFilePath.equals(".")) {
 						runProject = bndProject;
 					}
 					else {
@@ -74,8 +77,8 @@ public class TestTask extends BaseBndTask {
 						if (!runFile.isFile()) {
 							throw new BuildException(
 								String.format(
-									"Run file %s does not exist (or is not a " +
-										"file).",
+									"Run file %s does not exist or is not a " +
+										"file",
 								runFile.getAbsolutePath()));
 						}
 
@@ -102,42 +105,42 @@ public class TestTask extends BaseBndTask {
 		}
 	}
 
-	private void executeProject(Project project) throws Exception {
+	protected void executeProject(Project project) throws Exception {
 		this.project.log("Testing " + project.getPropertiesFile());
 
-		ProjectTester tester = project.getProjectTester();
+		ProjectTester projectTester = project.getProjectTester();
 
-		tester.setContinuous(_continuous);
+		projectTester.setContinuous(_continuous);
 
 		if (_dir != null) {
-			tester.setCwd(_dir);
+			projectTester.setCwd(_dir);
 		}
 
 		String testerDir = project.getProperty("tester.dir", "test-reports");
 
 		File reportDir = new File(project.getBase(), testerDir);
 
-		tester.setReportDir(reportDir);
+		projectTester.setReportDir(reportDir);
 
-		tester.prepare();
+		projectTester.prepare();
 
 		if (report(project)) {
-			throw new BuildException("Failed to initialise for testing.");
+			throw new BuildException("Unable to initialise for testing");
 		}
 
-		int errors = tester.test();
+		int errors = projectTester.test();
 
 		if (errors == 0) {
 			this.project.log("All tests passed");
 		}
 		else {
-			if (errors > 0) {
+			if (errors == 1) {
 				this.project.log(
-					errors + " Error(s)", org.apache.tools.ant.Project.MSG_ERR);
+					errors + " Error", org.apache.tools.ant.Project.MSG_ERR);
 			}
 			else {
 				this.project.log(
-					"Error " + errors, org.apache.tools.ant.Project.MSG_ERR);
+					errors + " Errors", org.apache.tools.ant.Project.MSG_ERR);
 			}
 
 			throw new BuildException("Tests failed");
@@ -148,8 +151,8 @@ public class TestTask extends BaseBndTask {
 		}
 	}
 
-	private boolean	_continuous	= false;
-	private String	_runFiles	= null;
-	private File _dir = null;
+	private boolean	_continuous;
+	private File _dir;
+	private String _runFiles;
 
 }

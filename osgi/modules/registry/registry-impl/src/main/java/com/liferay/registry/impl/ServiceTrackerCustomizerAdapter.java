@@ -16,11 +16,13 @@ package com.liferay.registry.impl;
 
 import com.liferay.registry.ServiceTrackerCustomizer;
 
+import org.osgi.framework.ServiceReference;
+
 /**
  * @author Raymond Augé
  */
 public class ServiceTrackerCustomizerAdapter<S, T>
-		implements org.osgi.util.tracker.ServiceTrackerCustomizer<S, T> {
+	implements org.osgi.util.tracker.ServiceTrackerCustomizer<S, T> {
 
 	public ServiceTrackerCustomizerAdapter(
 		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
@@ -29,16 +31,14 @@ public class ServiceTrackerCustomizerAdapter<S, T>
 	}
 
 	@Override
-	public T addingService(
-		org.osgi.framework.ServiceReference<S> serviceReference) {
-
+	public T addingService(ServiceReference<S> serviceReference) {
 		return _serviceTrackerCustomizer.addingService(
 			new ServiceReferenceWrapper<S>(serviceReference));
 	}
 
 	@Override
 	public void modifiedService(
-		org.osgi.framework.ServiceReference<S> serviceReference, T service) {
+		ServiceReference<S> serviceReference, T service) {
 
 		_serviceTrackerCustomizer.modifiedService(
 			new ServiceReferenceWrapper<S>(serviceReference), service);
@@ -46,7 +46,7 @@ public class ServiceTrackerCustomizerAdapter<S, T>
 
 	@Override
 	public void removedService(
-		org.osgi.framework.ServiceReference<S> serviceReference, T service) {
+		ServiceReference<S> serviceReference, T service) {
 
 		_serviceTrackerCustomizer.removedService(
 			new ServiceReferenceWrapper<S>(serviceReference), service);

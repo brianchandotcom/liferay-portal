@@ -2,6 +2,6 @@ Bundle-Version: 1.0.0
 Include-Resource: build/classes/main
 Test-Cases: ${classes;CONCRETE;EXTENDS;junit.framework.TestCase},${classes;ANNOTATION;org.junit.Test}
 
--runbundles: \
+-runbundles:\
 	${workspace}/osgi/modules/registry/registry-api/build/libs/registry-api.jar;version=file,\
 	${workspace}/osgi/modules/registry/registry-impl/build/libs/registry-impl.jar;version=file

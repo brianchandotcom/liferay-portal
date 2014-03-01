@@ -1,8 +1,9 @@
-evaluationDependsOn(':registry-api')
+evaluationDependsOn(':registry-impl')
 
 dependencies {
 	compile fileTree(dir: liferayProjectDir + '/osgi/lib/common/core', include: '*.jar')
 	compile project(':registry-api')
+	compile project(':registry-impl')
 }
 
-project.ext.deployDir = project.hasProperty('osgiLibDir') ? project.osgiLibDir + "/core" : null
+test.finalizedBy(bndIntegrationTest)

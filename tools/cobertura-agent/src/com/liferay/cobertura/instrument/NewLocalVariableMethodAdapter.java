@@ -1,4 +1,3 @@
-
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,57 +11,67 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.cobertura.instrument;
 
 import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodAdapter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
-import static org.objectweb.asm.Opcodes.ACC_STATIC;
 import org.objectweb.asm.Type;
 
 /**
- *
  * @author Shuyang Zhou
  */
-public class NewLocalVariableMethodAdapter extends MethodAdapter implements Opcodes
-{
-	protected int firstStackVariable;
-	protected int addedStackWords;
+public class NewLocalVariableMethodAdapter extends MethodVisitor {
 
-	public NewLocalVariableMethodAdapter(MethodVisitor mv, int access, String desc, int addedStackWords)
-	{
-		super(mv);
-		Type[] args = Type.getArgumentTypes(desc);
-		firstStackVariable = ((ACC_STATIC & access) != 0) ? 0 : 1;
-		for (int i = 0; i < args.length; i++) {
-			firstStackVariable += args[i].getSize();
+	public NewLocalVariableMethodAdapter(
+		MethodVisitor methodVisitor, int access, String desc,
+		int addedStackWords) {
+
+		super(Opcodes.ASM4, methodVisitor);
+
+		if ((Opcodes.ACC_STATIC & access) == 0) {
+			firstStackVariable = 1;
 		}
+
+		for (Type type : Type.getArgumentTypes(desc)) {
+			firstStackVariable += type.getSize();
+		}
+
 		this.addedStackWords = addedStackWords;
 	}
-	
-	public void visitVarInsn(int opcode, int var) 
-	{
-		mv.visitVarInsn(opcode, (var >= firstStackVariable) ? var + addedStackWords : var);
-	}
 
+	@Override
 	public void visitIincInsn(int var, int increment) {
-		mv.visitIincInsn((var >= firstStackVariable) ? var + addedStackWords : var, increment);
+		if (var >= firstStackVariable) {
+			var += addedStackWords;
+		}
+
+		mv.visitIincInsn(var, increment);
 	}
 
-	public void visitLocalVariable(String name, String desc, String signature, Label start, Label end, int index)
-	{
-		mv.visitLocalVariable(name, desc, signature, start, end, (index >= firstStackVariable) ? index + addedStackWords : index);
+	@Override
+	public void visitLocalVariable(
+		String name, String desc, String signature, Label start, Label end,
+		int index) {
+
+		if (index >= firstStackVariable) {
+			index += addedStackWords;
+		}
+
+		mv.visitLocalVariable(name, desc, signature, start, end, index);
 	}
 
-	public int getAddedStackWords()
-	{
-		return addedStackWords;
+	@Override
+	public void visitVarInsn(int opcode, int var) {
+		if (var >= firstStackVariable) {
+			var += addedStackWords;
+		}
+
+		mv.visitVarInsn(opcode, var);
 	}
 
-	public int getFirstStackVariable()
-	{
-		return firstStackVariable;
-	}
+	protected int addedStackWords;
+	protected int firstStackVariable;
 
 }

@@ -42,14 +42,14 @@ import org.osgi.framework.FrameworkUtil;
 public class RegistryTest {
 
 	@Before
-	public void setup() {
+	public void setUp() {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		_bundleContext = bundle.getBundleContext();
 	}
 
 	@Test
-	public void testBundleContextIsNotNull() {
+	public void testBundleContext() {
 		Assert.assertNotNull(_bundleContext);
 	}
 
@@ -64,15 +64,15 @@ public class RegistryTest {
 
 		Assert.assertNotNull(serviceRegistration);
 
-		InterfaceOne actual = registry.getService(InterfaceOne.class);
+		InterfaceOne registeredOne = registry.getService(InterfaceOne.class);
 
-		Assert.assertEquals(one, actual);
+		Assert.assertEquals(one, registeredOne);
 
 		serviceRegistration.unregister();
 	}
 
 	@Test
-	public void testGetServiceByString() {
+	public void testGetServiceByClassName() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
@@ -82,48 +82,54 @@ public class RegistryTest {
 
 		Assert.assertNotNull(serviceRegistration);
 
-		InterfaceOne actual = registry.getService(InterfaceOne.class.getName());
+		InterfaceOne registeredOne = registry.getService(
+			InterfaceOne.class.getName());
 
-		Assert.assertEquals(one, actual);
+		Assert.assertEquals(one, registeredOne);
 
 		serviceRegistration.unregister();
 	}
 
 	@Test
-	public void testGetServiceByStringAndfilter() throws Exception {
+	public void testGetServiceByClassNameAndFilterString() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistrationA =
+			registry.registerService(InterfaceOne.class, a);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
 		InterfaceOne b = getInstance();
 
 		Map<String, Object> properties = new HashMap<String, Object>();
 
 		properties.put("a.property", "G");
 
-		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			registry.registerService(InterfaceOne.class, a);
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
 			registry.registerService(InterfaceOne.class, b, properties);
 
-		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
 
-		String filter = "(a.property=G)";
+		String filterString = "(a.property=G)";
 
 		InterfaceOne[] services = registry.getServices(
-			InterfaceOne.class.getName(), filter);
+			InterfaceOne.class.getName(), filterString);
 
 		Assert.assertEquals(1, services.length);
 
 		serviceRegistrationA.unregister();
 
-		services = registry.getServices(InterfaceOne.class.getName(), filter);
+		services = registry.getServices(
+			InterfaceOne.class.getName(), filterString);
 
 		Assert.assertEquals(1, services.length);
 
 		serviceRegistrationB.unregister();
 
-		services = registry.getServices(InterfaceOne.class.getName(), filter);
+		services = registry.getServices(
+			InterfaceOne.class.getName(), filterString);
 
 		Assert.assertNull(services);
 	}
@@ -144,15 +150,15 @@ public class RegistryTest {
 
 		Assert.assertNotNull(serviceReference);
 
-		InterfaceOne actual = registry.getService(serviceReference);
+		InterfaceOne registeredOne = registry.getService(serviceReference);
 
-		Assert.assertEquals(one, actual);
+		Assert.assertEquals(one, registeredOne);
 
 		serviceRegistration.unregister();
 	}
 
 	@Test
-	public void testGetServiceReferenceByString() {
+	public void testGetServiceReferenceByClassName() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne one = getInstance();
@@ -179,14 +185,17 @@ public class RegistryTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();
-		InterfaceOne b = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
+
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
 			registry.registerService(InterfaceOne.class, b);
 
-		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
 
 		Collection<ServiceReference<InterfaceOne>> serviceReferences =
@@ -210,59 +219,67 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void testGetServiceReferencesByClassAndFilter() throws Exception {
+	public void testGetServiceReferencesByClassAndFilterString()
+		throws Exception {
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistrationA =
+			registry.registerService(InterfaceOne.class, a);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
 		InterfaceOne b = getInstance();
 
 		Map<String, Object> properties = new HashMap<String, Object>();
 
 		properties.put("a.property", "G");
 
-		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			registry.registerService(InterfaceOne.class, a);
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
 			registry.registerService(InterfaceOne.class, b, properties);
 
-		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
 
-		String filter = "(a.property=G)";
+		String filterString = "(a.property=G)";
 
 		Collection<ServiceReference<InterfaceOne>> serviceReferences =
-			registry.getServiceReferences(InterfaceOne.class, filter);
+			registry.getServiceReferences(InterfaceOne.class, filterString);
 
 		Assert.assertEquals(1, serviceReferences.size());
 
 		serviceRegistrationA.unregister();
 
 		serviceReferences = registry.getServiceReferences(
-			InterfaceOne.class, filter);
+			InterfaceOne.class, filterString);
 
 		Assert.assertEquals(1, serviceReferences.size());
 
 		serviceRegistrationB.unregister();
 
 		serviceReferences = registry.getServiceReferences(
-			InterfaceOne.class, filter);
+			InterfaceOne.class, filterString);
 
 		Assert.assertEquals(0, serviceReferences.size());
 	}
 
 	@Test
-	public void testGetServiceReferencesByString() throws Exception {
+	public void testGetServiceReferencesByClassName() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();
-		InterfaceOne b = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
+
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
 			registry.registerService(InterfaceOne.class, b);
 
-		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
 
 		ServiceReference<InterfaceOne>[] serviceReferences =
@@ -287,28 +304,34 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void testGetServiceReferencesByStringAndFilter() throws Exception {
+	public void testGetServiceReferencesByClassAndFilterString()
+		throws Exception {
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		InterfaceOne a = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistrationA =
+			registry.registerService(InterfaceOne.class, a);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
 		InterfaceOne b = getInstance();
 
 		Map<String, Object> properties = new HashMap<String, Object>();
 
 		properties.put("a.property", "G");
 
-		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			registry.registerService(InterfaceOne.class, a);
 		ServiceRegistration<InterfaceOne> serviceRegistrationB =
 			registry.registerService(InterfaceOne.class, b, properties);
 
-		Assert.assertNotNull(serviceRegistrationA);
 		Assert.assertNotNull(serviceRegistrationB);
 
-		String filter = "(a.property=G)";
+		String filterString = "(a.property=G)";
 
 		ServiceReference<InterfaceOne>[] serviceReferences =
-			registry.getServiceReferences(InterfaceOne.class.getName(), filter);
+			registry.getServiceReferences(
+				InterfaceOne.class.getName(), filterString);
 
 		Assert.assertNotNull(serviceReferences);
 		Assert.assertEquals(1, serviceReferences.length);
@@ -316,14 +339,14 @@ public class RegistryTest {
 		serviceRegistrationA.unregister();
 
 		serviceReferences = registry.getServiceReferences(
-			InterfaceOne.class.getName(), filter);
+			InterfaceOne.class.getName(), filterString);
 
 		Assert.assertEquals(1, serviceReferences.length);
 
 		serviceRegistrationB.unregister();
 
 		serviceReferences = registry.getServiceReferences(
-			InterfaceOne.class.getName(), filter);
+			InterfaceOne.class.getName(), filterString);
 
 		Assert.assertNull(serviceReferences);
 	}
@@ -657,7 +680,7 @@ public class RegistryTest {
 			new AtomicReference<TrackedOne>();
 
 		ServiceTrackerCustomizer<InterfaceOne, TrackedOne> customizer =
-			new TestCustomizer(a, b, referenceA, referenceB);
+			new TestServiceTrackerCustomizer(a, b, referenceA, referenceB);
 
 		ServiceTracker<InterfaceOne, TrackedOne> serviceTracker =
 			registry.trackServices(InterfaceOne.class, customizer);
@@ -797,7 +820,7 @@ public class RegistryTest {
 		Filter filter = registry.getFilter("(a.property=G)");
 
 		ServiceTrackerCustomizer<InterfaceOne, TrackedOne> customizer =
-			new TestCustomizer(a, b, referenceA, referenceB);
+			new TestServiceTrackerCustomizer(a, b, referenceA, referenceB);
 
 		ServiceTracker<InterfaceOne, TrackedOne> serviceTracker =
 			registry.trackServices(filter, customizer);
@@ -933,7 +956,7 @@ public class RegistryTest {
 			new AtomicReference<TrackedOne>();
 
 		ServiceTrackerCustomizer<InterfaceOne, TrackedOne> customizer =
-			new TestCustomizer(a, b, referenceA, referenceB);
+			new TestServiceTrackerCustomizer(a, b, referenceA, referenceB);
 
 		ServiceTracker<InterfaceOne, TrackedOne> serviceTracker =
 			registry.trackServices(InterfaceOne.class.getName(), customizer);
@@ -992,16 +1015,16 @@ public class RegistryTest {
 		serviceTracker.close();
 	}
 
-	private InterfaceOne getInstance() {
-		return new InterfaceOne() {/**/};
+	protected InterfaceOne getInstance() {
+		return new InterfaceOne() {};
 	}
 
 	private BundleContext _bundleContext;
 
-	private class TestCustomizer
+	private class TestServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<InterfaceOne, TrackedOne> {
 
-		public TestCustomizer(
+		public TestServiceTrackerCustomizer(
 			InterfaceOne a, InterfaceOne b,
 			AtomicReference<TrackedOne> referenceA,
 			AtomicReference<TrackedOne> referenceB) {
@@ -1034,16 +1057,12 @@ public class RegistryTest {
 		public void modifiedService(
 			ServiceReference<InterfaceOne> serviceReference,
 			TrackedOne service) {
-
-			//
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<InterfaceOne> serviceReference,
 			TrackedOne service) {
-
-			//
 		}
 
 		private AtomicReference<TrackedOne> _referenceA;

@@ -82,6 +82,106 @@
 		</execute>
 	</command>
 
+	<command name="ViewMessageBoardsThreadStatistics" priority="4">
+		<var name="threadBody" value="MB Thread Message Body" />
+		<var name="threadBody2" value="MB Thread Message Body" />
+		<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
+		<var name="threadPostNumber0" value="0" />
+		<var name="threadPostNumber1" value="1" />
+		<var name="threadPostNumber2" value="2" />
+		<var name="threadSubject" value="MB Thread Message Subject" />
+		<var name="threadSubject2" value="MB Thread Message Subject 2" />
+		<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
+			<var name="threadPostNumber" value="${threadPostNumber1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#editAsDraftPG">
+			<var name="threadBodyEdit" value="${threadBodyEdit}" />
+			<var name="threadSubjectEdit" value="${threadSubjectEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
+			<var name="threadPostNumber" value="${threadPostNumber0}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#publishDraftViaMyPosts">
+			<var name="threadSubject" value="${threadSubjectEdit}" />
+			<var name="threadSubjectEdit" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
+			<var name="threadPostNumber" value="${threadPostNumber1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody2}" />
+			<var name="threadSubject" value="${threadSubject2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
+			<var name="threadPostNumber" value="${threadPostNumber2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#deletePG">
+			<var name="threadSubject" value="${threadSubject2}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
+			<var name="threadPostNumber" value="${threadPostNumber1}" />
+		</execute>
+	</command>
+
 	<command name="ViewNoMBThreadXSS" priority="5">
 		<var name="source" value="True" />
 		<var name="threadBody" value="[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]" />

@@ -37,7 +37,7 @@ import org.junit.Test;
 public class ServiceTrackerCollectionTest {
 
 	@Test
-	public void testByClass() {
+	public void testClass() {
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
 			ServiceTrackerCollections.list(InterfaceOne.class);
 
@@ -72,7 +72,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassFilter() throws Exception {
+	public void testClassFilter() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter("(a.property=G)");
@@ -124,7 +124,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassFilterProperties() throws Exception {
+	public void testClassFilterProperties() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter("(a.property=G)");
@@ -178,7 +178,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassFilterServiceTrackerCustomizer() throws Exception {
+	public void testClassFilterServiceTrackerCustomizer() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter("(a.property=G)");
@@ -240,7 +240,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassFilterServiceTrackerCustomizerProperties()
+	public void testClassFilterServiceTrackerCustomizerProperties()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -306,7 +306,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassProperties() throws Exception {
+	public void testClassProperties() throws Exception {
 		Map<String, Object> properties = new HashMap<String, Object>();
 
 		properties.put("a.property", "G");
@@ -357,7 +357,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassServiceTrackerCustomizer() {
+	public void testClassServiceTrackerCustomizer() {
 		AtomicInteger counter = new AtomicInteger();
 
 		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne>
@@ -403,7 +403,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassServiceTrackerCustomizerCustomizerProperties1()
+	public void testClassServiceTrackerCustomizerCustomizerProperties1()
 		throws Exception {
 
 		AtomicInteger counter = new AtomicInteger();
@@ -466,7 +466,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassServiceTrackerCustomizerCustomizerProperties2()
+	public void testClassServiceTrackerCustomizerCustomizerProperties2()
 		throws Exception {
 
 		AtomicInteger counter = new AtomicInteger();

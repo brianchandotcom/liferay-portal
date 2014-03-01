@@ -47,14 +47,13 @@ public class ServiceTrackerWrapper<S, T> implements ServiceTracker<S, T> {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public boolean equals(Object serviceTracker) {
-		if (!(serviceTracker instanceof ServiceTrackerWrapper)) {
+	public boolean equals(Object object) {
+		if (!(object instanceof ServiceTrackerWrapper)) {
 			return false;
 		}
 
 		ServiceTrackerWrapper<S, T> serviceReferenceWrapper =
-			(ServiceTrackerWrapper<S, T>)serviceTracker;
+			(ServiceTrackerWrapper<S, T>)object;
 
 		return _serviceTracker.equals(
 			serviceReferenceWrapper.getServiceTracker());
@@ -93,26 +92,26 @@ public class ServiceTrackerWrapper<S, T> implements ServiceTracker<S, T> {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public ServiceReference<S>[] getServiceReferences() {
-		org.osgi.framework.ServiceReference<S>[] serviceReferences =
+		org.osgi.framework.ServiceReference<S>[] osgiServiceReferences =
 			_serviceTracker.getServiceReferences();
 
-		if (serviceReferences == null) {
+		if (osgiServiceReferences == null) {
 			return null;
 		}
 
-		ServiceReference<S>[] array =
-			new ServiceReference[serviceReferences.length];
+		ServiceReference<S>[] serviceReferences =
+			new ServiceReference[osgiServiceReferences.length];
 
-		for (int i = 0; i < serviceReferences.length; i++) {
-			org.osgi.framework.ServiceReference<S> serviceReference =
-				serviceReferences[i];
+		for (int i = 0; i < osgiServiceReferences.length; i++) {
+			org.osgi.framework.ServiceReference<S> osgiServiceReference =
+				osgiServiceReferences[i];
 
-			array[i] = new ServiceReferenceWrapper<S>(serviceReference);
+			serviceReferences[i] = new ServiceReferenceWrapper<S>(
+				osgiServiceReference);
 		}
 
-		return array;
+		return serviceReferences;
 	}
 
 	@Override
@@ -121,8 +120,8 @@ public class ServiceTrackerWrapper<S, T> implements ServiceTracker<S, T> {
 	}
 
 	@Override
-	public T[] getServices(T[] array) {
-		return _serviceTracker.getServices(array);
+	public T[] getServices(T[] services) {
+		return _serviceTracker.getServices(services);
 	}
 
 	public org.osgi.util.tracker.ServiceTracker<S, T> getServiceTracker() {
@@ -135,17 +134,17 @@ public class ServiceTrackerWrapper<S, T> implements ServiceTracker<S, T> {
 			new TreeMap<ServiceReference<S>, T>(Collections.reverseOrder());
 
 		SortedMap<org.osgi.framework.ServiceReference<S>, T>
-			curTrackedServiceReferences = _serviceTracker.getTracked();
+			trackedOSGiServiceReferences = _serviceTracker.getTracked();
 
 		for (Entry<org.osgi.framework.ServiceReference<S>, T> entry :
-				curTrackedServiceReferences.entrySet()) {
+				trackedOSGiServiceReferences.entrySet()) {
 
-			org.osgi.framework.ServiceReference<S> serviceReference =
+			org.osgi.framework.ServiceReference<S> osgiServiceReference =
 				entry.getKey();
 			T service = entry.getValue();
 
 			ServiceReferenceWrapper<S> serviceReferenceWrapper =
-				new ServiceReferenceWrapper<S>(serviceReference);
+				new ServiceReferenceWrapper<S>(osgiServiceReference);
 
 			trackedServiceReferences.put(serviceReferenceWrapper, service);
 		}
@@ -172,10 +171,10 @@ public class ServiceTrackerWrapper<S, T> implements ServiceTracker<S, T> {
 	public void modifiedService(
 		ServiceReference<S> serviceReference, T service) {
 
-		org.osgi.framework.ServiceReference<S> wrappedServiceReference =
+		org.osgi.framework.ServiceReference<S> osgiServiceReference =
 			getServiceReference(serviceReference);
 
-		_serviceTracker.modifiedService(wrappedServiceReference, service);
+		_serviceTracker.modifiedService(osgiServiceReference, service);
 	}
 
 	@Override
@@ -190,20 +189,20 @@ public class ServiceTrackerWrapper<S, T> implements ServiceTracker<S, T> {
 
 	@Override
 	public void remove(ServiceReference<S> serviceReference) {
-		org.osgi.framework.ServiceReference<S> wrappedServiceReference =
+		org.osgi.framework.ServiceReference<S> osgiServiceReference =
 			getServiceReference(serviceReference);
 
-		_serviceTracker.remove(wrappedServiceReference);
+		_serviceTracker.remove(osgiServiceReference);
 	}
 
 	@Override
 	public void removedService(
 		ServiceReference<S> serviceReference, T service) {
 
-		org.osgi.framework.ServiceReference<S> wrappedServiceReference =
+		org.osgi.framework.ServiceReference<S> osgiServiceReference =
 			getServiceReference(serviceReference);
 
-		_serviceTracker.removedService(wrappedServiceReference, service);
+		_serviceTracker.removedService(osgiServiceReference, service);
 	}
 
 	@Override

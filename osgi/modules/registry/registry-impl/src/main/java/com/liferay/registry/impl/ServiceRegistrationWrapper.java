@@ -31,13 +31,13 @@ public class ServiceRegistrationWrapper<T> implements ServiceRegistration<T> {
 	}
 
 	@Override
-	public boolean equals(Object registration) {
-		if (!(registration instanceof ServiceRegistrationWrapper)) {
+	public boolean equals(Object object) {
+		if (!(object instanceof ServiceRegistrationWrapper)) {
 			return false;
 		}
 
 		ServiceRegistrationWrapper<T> serviceReferenceWrapper =
-			(ServiceRegistrationWrapper<T>)registration;
+			(ServiceRegistrationWrapper<T>)object;
 
 		return _serviceRegistration.equals(
 			serviceReferenceWrapper.getServiceRegistration());
@@ -64,8 +64,8 @@ public class ServiceRegistrationWrapper<T> implements ServiceRegistration<T> {
 	}
 
 	@Override
-	public void setProperties(Map<String, Object> map) {
-		_serviceRegistration.setProperties(new MapWrapper(map));
+	public void setProperties(Map<String, Object> properties) {
+		_serviceRegistration.setProperties(new MapWrapper(properties));
 	}
 
 	@Override

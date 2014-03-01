@@ -401,7 +401,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassServiceTrackerCustomizerCustomizerMap()
+	public void testByClassServiceTrackerCustomizerCustomizerMap1()
 		throws Exception {
 
 		AtomicInteger counter = new AtomicInteger();
@@ -464,7 +464,7 @@ public class ServiceTrackerCollectionTest {
 	}
 
 	@Test
-	public void testByClassServiceTrackerCustomizerCustomizerMap_2()
+	public void testByClassServiceTrackerCustomizerCustomizerMap2()
 		throws Exception {
 
 		AtomicInteger counter = new AtomicInteger();

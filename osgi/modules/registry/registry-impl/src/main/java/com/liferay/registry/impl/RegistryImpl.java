@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
 
 /**
  * @author Raymond Augé
@@ -46,7 +47,7 @@ public class RegistryImpl implements Registry {
 		try {
 			return new FilterWrapper(_bundleContext.createFilter(filterString));
 		}
-		catch (org.osgi.framework.InvalidSyntaxException ise) {
+		catch (InvalidSyntaxException ise) {
 			throw new RuntimeException(ise);
 		}
 	}

@@ -1825,7 +1825,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/groovy.jar</file-name>
-		<version>1.7.5</version>
+		<version>2.2.2</version>
 		<project-name>Groovy</project-name>
 		<project-url>http://groovy.codehaus.org</project-url>
 		<licenses>

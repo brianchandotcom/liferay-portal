@@ -161,7 +161,7 @@ task bndIntegrationTest << {
 
 	ant.bndTest(
 		bndRootFile: "${liferayProjectDir}/common.bnd",
-		runfiles: "bnd.bnd"
+		runFiles: "bnd.bnd"
 	)
 }
 

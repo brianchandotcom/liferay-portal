@@ -39,7 +39,7 @@ public class TestTask extends BaseBndTask {
 		_dir = dir;
 	}
 
-	public void setRunfiles(String runFiles) {
+	public void setRunFiles(String runFiles) {
 		_runFiles = runFiles;
 	}
 

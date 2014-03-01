@@ -121,26 +121,30 @@ public class RegistryImpl implements Registry {
 		throws Exception {
 
 		Collection<org.osgi.framework.ServiceReference<T>>
-			originalServiceReferences = _bundleContext.getServiceReferences(
+			osgiServiceReferences = _bundleContext.getServiceReferences(
 				clazz, filterString);
 
-		if (originalServiceReferences.isEmpty()) {
+		if (osgiServiceReferences.isEmpty()) {
 			return Collections.emptyList();
 		}
 
-		Collection<ServiceReference<T>> newServiceReferences =
-			new ArrayList<ServiceReference<T>>(
-				originalServiceReferences.size());
+		Collection<ServiceReference<T>> serviceReferences =
+			new ArrayList<ServiceReference<T>>(osgiServiceReferences.size());
 
-		Iterator<org.osgi.framework.ServiceReference<T>> itr =
-			originalServiceReferences.iterator();
+		Iterator<org.osgi.framework.ServiceReference<T>> iterator =
+			osgiServiceReferences.iterator();
 
-		while (itr.hasNext()) {
-			newServiceReferences.add(
-				new ServiceReferenceWrapper<T>(itr.next()));
+		while (iterator.hasNext()) {
+			org.osgi.framework.ServiceReference<T> osgiServiceReference =
+				iterator.next();
+			
+			ServiceReference<T> serviceReference =
+				new ServiceReferenceWrapper<T>(osgiServiceReference); 
+				
+			serviceReferences.add(serviceReference);
 		}
 
-		return newServiceReferences;
+		return serviceReferences;
 	}
 
 	@Override
@@ -148,23 +152,26 @@ public class RegistryImpl implements Registry {
 			String className, String filterString)
 		throws Exception {
 
-		org.osgi.framework.ServiceReference<T>[] originalServiceReferences =
+		org.osgi.framework.ServiceReference<T>[] osgiServiceReferences =
 			(org.osgi.framework.ServiceReference<T>[])
 				_bundleContext.getServiceReferences(className, filterString);
 
-		if (originalServiceReferences == null) {
+		if (osgiServiceReferences == null) {
 			return null;
 		}
 
-		ServiceReference<T>[] newServiceReferences = new ServiceReference[
-			originalServiceReferences.length];
+		ServiceReference<T>[] serviceReferences =
+			new ServiceReference[osgiServiceReferences.length];
 
-		for (int i = 0; i < originalServiceReferences.length; i++) {
-			newServiceReferences[i] = new ServiceReferenceWrapper<T>(
-				originalServiceReferences[i]);
+		for (int i = 0; i < osgiServiceReferences.length; i++) {
+			org.osgi.framework.ServiceReference<T> osgiServiceReference =
+				osgiServiceReferences[i];
+
+			serviceReferences[i] = new ServiceReferenceWrapper<T>(
+				osgiServiceReference);
 		}
 
-		return newServiceReferences;
+		return serviceReferences;
 	}
 
 	@Override
@@ -181,12 +188,12 @@ public class RegistryImpl implements Registry {
 
 		List<T> services = new ArrayList<T>();
 
-		Iterator<org.osgi.framework.ServiceReference<T>> itr =
+		Iterator<org.osgi.framework.ServiceReference<T>> iterator =
 			serviceReferences.iterator();
 
-		while (itr.hasNext()) {
+		while (iterator.hasNext()) {
 			org.osgi.framework.ServiceReference<T> serviceReference =
-				itr.next();
+				iterator.next();
 
 			T service = _bundleContext.getService(serviceReference);
 
@@ -255,7 +262,7 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("rawtypes")
 	public <T> ServiceRegistration<T> registerService(
 		String className, T service, Map<String, Object> map) {
 
@@ -274,7 +281,7 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("rawtypes")
 	public <T> ServiceRegistration<T> registerService(
 		String[] classNames, T service, Map<String, Object> map) {
 

@@ -31,7 +31,6 @@ public class ServiceRegistrationWrapper<T> implements ServiceRegistration<T> {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public boolean equals(Object registration) {
 		if (!(registration instanceof ServiceRegistrationWrapper)) {
 			return false;

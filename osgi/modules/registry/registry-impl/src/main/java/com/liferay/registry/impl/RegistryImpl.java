@@ -78,7 +78,6 @@ public class RegistryImpl implements Registry {
 			serviceReferenceWrapper.getServiceReference());
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T getService(String className) {
 		org.osgi.framework.ServiceReference<?> serviceReference =
@@ -104,7 +103,6 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public <T> ServiceReference<T> getServiceReference(String className) {
 		org.osgi.framework.ServiceReference<T> serviceReference =
 			(org.osgi.framework.ServiceReference<T>)
@@ -146,7 +144,6 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public <T> ServiceReference<T>[] getServiceReferences(
 			String className, String filter)
 		throws Exception {
@@ -200,7 +197,6 @@ public class RegistryImpl implements Registry {
 		return services;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T[] getServices(String className, String filter)
 		throws Exception {

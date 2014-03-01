@@ -55,10 +55,10 @@ public abstract class BaseBndTask extends BndTask {
 		Workspace workspace = Workspace.getWorkspace(
 			bndRootFile.getParentFile(), getBndDirName());
 
+		workspace.setProperties(bndRootFile);
+
 		aQute.bnd.build.Project bndProject = new aQute.bnd.build.Project(
 			workspace, bndRootFile.getParentFile());
-
-		workspace.setProperties(bndRootFile);
 
 		bndProject.setFileMustExist(true);
 		bndProject.setProperties(bndRootFile);

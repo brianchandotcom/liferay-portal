@@ -1,7 +1,11 @@
 evaluationDependsOn(':registry-api')
 
 dependencies {
-	compile fileTree(dir: liferayProjectDir + '/osgi/lib/common/core', include: '*.jar')
+	compile fileTree(
+		dir: liferayProjectDir + '/osgi/lib/common/core',
+		include: '*.jar'
+	)
+
 	compile project(':registry-api')
 }
 

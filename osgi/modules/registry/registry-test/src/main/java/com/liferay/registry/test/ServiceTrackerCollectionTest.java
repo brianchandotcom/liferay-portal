@@ -38,20 +38,21 @@ public class ServiceTrackerCollectionTest {
 
 	@Test
 	public void testByClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
 			ServiceTrackerCollections.list(InterfaceOne.class);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
+		Registry registry = RegistryUtil.getRegistry();
+
 		InterfaceOne a = getInstance();
-		InterfaceOne b = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 
 		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
 
 		serviceTrackerList.add(b);
 
@@ -72,11 +73,7 @@ public class ServiceTrackerCollectionTest {
 
 	@Test
 	public void testByClassFilter() throws Exception {
-		final Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<String, Object>();
-
-		properties.put("a.property", "G");
+		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter("(a.property=G)");
 
@@ -86,17 +83,19 @@ public class ServiceTrackerCollectionTest {
 		Assert.assertEquals(0, serviceTrackerList.size());
 
 		InterfaceOne a = getInstance();
-		InterfaceOne b = getInstance();
+
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 
-		boolean added = serviceTrackerList.add(b);
+		InterfaceOne b = getInstance();
 
-		Assert.assertFalse(added);
-
+		Assert.assertFalse(serviceTrackerList.add(b));
 		Assert.assertEquals(1, serviceTrackerList.size());
 
 		for (InterfaceOne interfaceOne : serviceTrackerList) {
@@ -121,7 +120,6 @@ public class ServiceTrackerCollectionTest {
 		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, services.size());
-
 		Assert.assertEquals(0, serviceTrackerList.size());
 	}
 
@@ -129,11 +127,11 @@ public class ServiceTrackerCollectionTest {
 	public void testByClassFilterMap() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
+		Filter filter = registry.getFilter("(a.property=G)");
+
 		Map<String, Object> properties = new HashMap<String, Object>();
 
 		properties.put("a.property", "G");
-
-		Filter filter = registry.getFilter("(a.property=G)");
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
 			ServiceTrackerCollections.list(
@@ -142,12 +140,13 @@ public class ServiceTrackerCollectionTest {
 		Assert.assertEquals(0, serviceTrackerList.size());
 
 		InterfaceOne a = getInstance();
-		InterfaceOne b = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 
 		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
 
 		serviceTrackerList.add(b);
 
@@ -175,42 +174,41 @@ public class ServiceTrackerCollectionTest {
 		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, services.size());
-
 		Assert.assertEquals(0, serviceTrackerList.size());
 	}
 
 	@Test
 	public void testByClassFilterSTCustomizer() throws Exception {
-		final Registry registry = RegistryUtil.getRegistry();
-		final AtomicInteger counter = new AtomicInteger();
-
-		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne> customizer =
-			new TestCustomizer(counter);
-
-		Map<String, Object> properties = new HashMap<String, Object>();
-
-		properties.put("a.property", "G");
+		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter("(a.property=G)");
 
+		AtomicInteger counter = new AtomicInteger();
+
+		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne>
+			serviceTrackerCustomizer = new TestServiceTrackerCustomizer(
+				counter);
+
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
 			ServiceTrackerCollections.list(
-				InterfaceOne.class, filter, customizer);
+				InterfaceOne.class, filter, serviceTrackerCustomizer);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
 		InterfaceOne a = getInstance();
-		InterfaceOne b = getInstance();
+
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 
-		boolean added = serviceTrackerList.add(b);
+		InterfaceOne b = getInstance();
 
-		Assert.assertFalse(added);
-
+		Assert.assertFalse(serviceTrackerList.add(b));
 		Assert.assertEquals(1, serviceTrackerList.size());
 
 		for (InterfaceOne interfaceOne : serviceTrackerList) {
@@ -237,38 +235,41 @@ public class ServiceTrackerCollectionTest {
 		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, services.size());
-
 		Assert.assertEquals(0, serviceTrackerList.size());
 		Assert.assertEquals(2, counter.intValue());
 	}
 
 	@Test
 	public void testByClassFilterSTCustomizerMap() throws Exception {
-		final Registry registry = RegistryUtil.getRegistry();
-		final AtomicInteger counter = new AtomicInteger();
+		Registry registry = RegistryUtil.getRegistry();
 
-		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne> customizer =
-			new TestCustomizer(counter);
+		Filter filter = registry.getFilter("(a.property=G)");
+
+		AtomicInteger counter = new AtomicInteger();
+
+		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne>
+			serviceTrackerCustomizer = new TestServiceTrackerCustomizer(
+				counter);
 
 		Map<String, Object> properties = new HashMap<String, Object>();
 
 		properties.put("a.property", "G");
 
-		Filter filter = registry.getFilter("(a.property=G)");
-
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
 			ServiceTrackerCollections.list(
-				InterfaceOne.class, filter, customizer, properties);
+				InterfaceOne.class, filter, serviceTrackerCustomizer,
+				properties);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
 		InterfaceOne a = getInstance();
-		InterfaceOne b = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 
 		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
 
 		serviceTrackerList.add(b);
 
@@ -298,15 +299,12 @@ public class ServiceTrackerCollectionTest {
 		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, services.size());
-
 		Assert.assertEquals(0, serviceTrackerList.size());
 		Assert.assertEquals(2, counter.intValue());
 	}
 
 	@Test
 	public void testByClassMap() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
 		Map<String, Object> properties = new HashMap<String, Object>();
 
 		properties.put("a.property", "G");
@@ -316,13 +314,16 @@ public class ServiceTrackerCollectionTest {
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
+		Registry registry = RegistryUtil.getRegistry();
+
 		InterfaceOne a = getInstance();
-		InterfaceOne b = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
 
 		serviceTrackerList.add(b);
 
@@ -350,30 +351,33 @@ public class ServiceTrackerCollectionTest {
 		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, services.size());
-
 		Assert.assertEquals(0, serviceTrackerList.size());
 	}
 
 	@Test
 	public void testByClassSTCustomizer() {
-		final Registry registry = RegistryUtil.getRegistry();
-		final AtomicInteger counter = new AtomicInteger();
+		AtomicInteger counter = new AtomicInteger();
 
-		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne> customizer =
-			new TestCustomizer(counter);
+		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne>
+			serviceTrackerCustomizer = new TestServiceTrackerCustomizer(
+				counter);
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(InterfaceOne.class, customizer);
+			ServiceTrackerCollections.list(
+				InterfaceOne.class, serviceTrackerCustomizer);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
+		Registry registry = RegistryUtil.getRegistry();
+
 		InterfaceOne a = getInstance();
-		InterfaceOne b = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 
 		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
 
 		serviceTrackerList.add(b);
 
@@ -398,11 +402,11 @@ public class ServiceTrackerCollectionTest {
 
 	@Test
 	public void testByClassSTCustomizerMap() throws Exception {
-		final Registry registry = RegistryUtil.getRegistry();
-		final AtomicInteger counter = new AtomicInteger();
+		AtomicInteger counter = new AtomicInteger();
 
-		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne> customizer =
-			new TestCustomizer(counter);
+		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne>
+			serviceTrackerCustomizer = new TestServiceTrackerCustomizer(
+				counter);
 
 		Map<String, Object> properties = new HashMap<String, Object>();
 
@@ -410,17 +414,20 @@ public class ServiceTrackerCollectionTest {
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
 			ServiceTrackerCollections.list(
-				InterfaceOne.class, customizer, properties);
+				InterfaceOne.class, serviceTrackerCustomizer, properties);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
+		Registry registry = RegistryUtil.getRegistry();
+
 		InterfaceOne a = getInstance();
-		InterfaceOne b = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
 
 		serviceTrackerList.add(b);
 
@@ -450,18 +457,17 @@ public class ServiceTrackerCollectionTest {
 		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, services.size());
-
 		Assert.assertEquals(0, serviceTrackerList.size());
 		Assert.assertEquals(4, counter.intValue());
 	}
 
 	@Test
 	public void testByClassSTCustomizerMap_2() throws Exception {
-		final Registry registry = RegistryUtil.getRegistry();
-		final AtomicInteger counter = new AtomicInteger();
+		AtomicInteger counter = new AtomicInteger();
 
-		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne> customizer =
-			new TestCustomizer(counter);
+		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne>
+			serviceTrackerCustomizer = new TestServiceTrackerCustomizer(
+				counter);
 
 		Map<String, Object> properties = new HashMap<String, Object>();
 
@@ -469,17 +475,20 @@ public class ServiceTrackerCollectionTest {
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
 			ServiceTrackerCollections.list(
-				InterfaceOne.class, customizer, properties);
+				InterfaceOne.class, serviceTrackerCustomizer, properties);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
+		Registry registry = RegistryUtil.getRegistry();
+
 		InterfaceOne a = getInstance();
-		InterfaceOne b = getInstance();
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
 			registry.registerService(InterfaceOne.class, a);
 
 		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
 
 		serviceTrackerList.add(b);
 
@@ -509,19 +518,18 @@ public class ServiceTrackerCollectionTest {
 		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, services.size());
-
 		Assert.assertEquals(0, serviceTrackerList.size());
 		Assert.assertEquals(4, counter.intValue());
 	}
 
-	private InterfaceOne getInstance() {
-		return new InterfaceOne() {/**/};
+	protected InterfaceOne getInstance() {
+		return new InterfaceOne() {};
 	}
 
-	private class TestCustomizer
+	private class TestServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<InterfaceOne, InterfaceOne> {
 
-		public TestCustomizer(AtomicInteger counter) {
+		public TestServiceTrackerCustomizer(AtomicInteger counter) {
 			_counter = counter;
 		}
 

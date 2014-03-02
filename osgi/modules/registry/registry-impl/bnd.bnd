@@ -1,0 +1,8 @@
+Bundle-Activator: com.liferay.registry.impl.ServiceRegistryActivator
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.registry;version='[1.0.0,2.0.0)',\
+	org.osgi.framework;version='[1.2.0,2.0.0)',\
+	org.osgi.util.tracker;version='[1.5.0,2.0.0)'
+Include-Resource: build/classes/main
+Private-Package: com.liferay.registry.impl

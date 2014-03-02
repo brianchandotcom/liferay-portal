@@ -55,6 +55,8 @@ public abstract class BaseBndTask extends BndTask {
 		Workspace workspace = Workspace.getWorkspace(
 			bndRootFile.getParentFile(), getBndDirName());
 
+		workspace.setProperties(bndRootFile);
+
 		aQute.bnd.build.Project bndProject = new aQute.bnd.build.Project(
 			workspace, bndRootFile.getParentFile());
 
@@ -68,7 +70,7 @@ public abstract class BaseBndTask extends BndTask {
 
 		bndProject.setProperties(properties);
 
-		Set<Object> plugins = bndProject.getPlugins();
+		Set<Object> plugins = workspace.getPlugins();
 
 		for (Object plugin : plugins) {
 			if (plugin instanceof IndexProvider) {
@@ -104,6 +106,26 @@ public abstract class BaseBndTask extends BndTask {
 		}
 
 		_bndRootFile = _bndRootFile.getAbsoluteFile();
+
+		File rootDir = _bndRootFile.getParentFile();
+
+		_bndDir = new File(rootDir, getBndDirName());
+
+		if (!rootDir.canWrite()) {
+			return;
+		}
+
+		if (!_bndDir.exists() && !_bndDir.mkdir()) {
+			return;
+		}
+
+		File buildFile = new File(_bndDir, "build.bnd");
+
+		if (buildFile.exists() || !_bndDir.canWrite()) {
+			return;
+		}
+
+		buildFile.createNewFile();
 	}
 
 	protected abstract void doExecute() throws Exception;
@@ -126,6 +148,7 @@ public abstract class BaseBndTask extends BndTask {
 
 	private static final String _BND_DIR = ".bnd";
 
+	private File _bndDir;
 	private String _bndDirName;
 	private File _bndRootFile;
 

@@ -30,6 +30,18 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
+					<label>osgi\modules\registry\registry-impl\src\main\java</label>
+					<type>java</type>
+					<location>osgi/modules/registry/registry-impl/src/main/java</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
+				<source-folder>
+					<label>osgi\modules\registry\registry-test\src\main\java</label>
+					<type>java</type>
+					<location>osgi/modules/registry/registry-test/src/main/java</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
+				<source-folder>
 					<label>portal-impl\src</label>
 					<type>java</type>
 					<location>portal-impl/src</location>
@@ -156,6 +168,14 @@
 					<source-folder style="packages">
 						<label>osgi\modules\registry\registry-api\src\main\java</label>
 						<location>osgi/modules/registry/registry-api/src/main/java</location>
+					</source-folder>
+					<source-folder style="packages">
+						<label>osgi\modules\registry\registry-impl\src\main\java</label>
+						<location>osgi/modules/registry/registry-impl/src/main/java</location>
+					</source-folder>
+					<source-folder style="packages">
+						<label>osgi\modules\registry\registry-test\src\main\java</label>
+						<location>osgi/modules/registry/registry-test/src/main/java</location>
 					</source-folder>
 					<source-folder style="packages">
 						<label>portal-impl\src</label>

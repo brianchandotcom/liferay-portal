@@ -304,7 +304,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void testGetServiceReferencesByClassAndFilterString()
+	public void testGetServiceReferencesByClassNameAndFilterString()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();

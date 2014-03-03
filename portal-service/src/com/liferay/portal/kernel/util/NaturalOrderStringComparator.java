@@ -80,6 +80,24 @@ public class NaturalOrderStringComparator
 				continue;
 			}
 
+			if (checkSpecialCharacters() && Validator.isAscii(c1) &&
+				Validator.isAscii(c2)) {
+
+				boolean isDigitOrLetter1 = _isDigitOrLetter(c1);
+				boolean isDigitOrLetter2 = _isDigitOrLetter(c2);
+
+				if (isDigitOrLetter1 ^ isDigitOrLetter2) {
+					if (isDigitOrLetter1) {
+						value = 1;
+					}
+					else {
+						value = -1;
+					}
+
+					break;
+				}
+			}
+
 			if (c1 == c2) {
 				i1++;
 				i2++;
@@ -123,6 +141,19 @@ public class NaturalOrderStringComparator
 		}
 		else {
 			return -value;
+		}
+	}
+
+	protected boolean checkSpecialCharacters() {
+		return true;
+	}
+
+	private boolean _isDigitOrLetter(char c) {
+		if (Validator.isChar(c) || Validator.isDigit(c)) {
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 

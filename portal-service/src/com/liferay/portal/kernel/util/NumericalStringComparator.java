@@ -27,4 +27,9 @@ public class NumericalStringComparator extends NaturalOrderStringComparator {
 		super(ascending, caseSensitive);
 	}
 
+	@Override
+	protected boolean checkSpecialCharacters() {
+		return false;
+	}
+
 }

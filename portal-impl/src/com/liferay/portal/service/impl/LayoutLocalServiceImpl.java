@@ -77,7 +77,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.LayoutComparator;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
-import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
@@ -2237,11 +2236,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			String[] assetTagNames)
 		throws PortalException, SystemException {
 
-		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
+		assetEntryLocalService.updateEntry(
 			userId, layout.getGroupId(), layout.getCreateDate(),
-			layout.getModifiedDate(), Layout.class.getName(),
-			layout.getPrimaryKey(), layout.getUuid(), 0, assetCategoryIds,
-			assetTagNames, false, null, null, null, ContentTypes.TEXT_HTML,
+			layout.getModifiedDate(), Layout.class.getName(), layout.getPlid(),
+			layout.getUuid(), 0, assetCategoryIds, assetTagNames, false, null,
+			null, null, ContentTypes.TEXT_HTML,
 			layout.getName(LocaleUtil.getDefault()), null, null, null, null, 0,
 			0, null, false);
 	}

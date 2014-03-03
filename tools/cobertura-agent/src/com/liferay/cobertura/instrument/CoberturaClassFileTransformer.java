@@ -14,6 +14,8 @@
 
 package com.liferay.cobertura.instrument;
 
+import com.liferay.portal.kernel.util.CharPool;
+
 import java.io.File;
 
 import java.lang.instrument.ClassFileTransformer;
@@ -132,8 +134,11 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 				ClassWriter classWriter = new ClassWriter(
 					ClassWriter.COMPUTE_MAXS);
 
-				ClassVisitor classVisitor = new ClassInstrumenter(
-					projectData, classWriter);
+				String name = className.replace(
+					CharPool.SLASH, CharPool.PERIOD);
+
+				ClassVisitor classVisitor = new CoberturaClassVisitor(
+					projectData.getOrCreateClassData(name), classWriter);
 
 				ClassReader classReader = new ClassReader(classfileBuffer);
 

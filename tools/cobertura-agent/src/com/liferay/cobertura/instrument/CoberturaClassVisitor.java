@@ -14,10 +14,7 @@
 
 package com.liferay.cobertura.instrument;
 
-import com.liferay.portal.kernel.util.CharPool;
-
 import net.sourceforge.cobertura.coveragedata.ClassData;
-import net.sourceforge.cobertura.coveragedata.ProjectData;
 
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -29,24 +26,20 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Shuyang Zhou
  */
-public class ClassInstrumenter extends ClassVisitor {
+public class CoberturaClassVisitor extends ClassVisitor {
 
-	public ClassInstrumenter(
-		ProjectData projectData, ClassVisitor classVisitor) {
+	public CoberturaClassVisitor(
+		ClassData classData, ClassVisitor classVisitor) {
 
 		super(Opcodes.ASM4, classVisitor);
 
-		_projectData = projectData;
+		_classData = classData;
 	}
 
 	@Override
 	public void visit(
 		int version, int access, String name, String signature,
 		String superName, String[] interfaces) {
-
-		_className = name.replace(CharPool.SLASH, CharPool.PERIOD);
-
-		_classData = _projectData.getOrCreateClassData(_className);
 
 		_classData.setContainsInstrumentationInfo();
 
@@ -65,8 +58,9 @@ public class ClassInstrumenter extends ClassVisitor {
 			_logger.isWarnEnabled()) {
 
 			_logger.warn(
-				"No line number information found for class " + _className +
-					". Please recompile with debug info.");
+				"No line number information found for class " +
+					_classData.getName() +
+						". Please recompile with debug info.");
 		}
 	}
 
@@ -78,17 +72,13 @@ public class ClassInstrumenter extends ClassVisitor {
 		MethodVisitor methodVisitor = cv.visitMethod(
 			access, name, desc, signature, exceptions);
 
-		if (!_instrument) {
+		if (!_instrument || (methodVisitor == null)) {
 			return methodVisitor;
 		}
 
-		if (methodVisitor != null) {
-			methodVisitor = new FirstPassMethodInstrumenter(
-				_classData, methodVisitor, _className, access, name, desc,
-				signature, exceptions);
-		}
-
-		return methodVisitor;
+		return new FirstPassMethodInstrumenter(
+			_classData, methodVisitor, _classData.getName(), access, name, desc,
+			signature, exceptions);
 	}
 
 	@Override
@@ -99,11 +89,9 @@ public class ClassInstrumenter extends ClassVisitor {
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(
-		ClassInstrumenter.class);
+		CoberturaClassVisitor.class);
 
-	private ClassData _classData;
-	private String _className;
+	private final ClassData _classData;;
 	private boolean _instrument;
-	private final ProjectData _projectData;
 
 }

@@ -316,7 +316,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 		if (rootFolderId > 0) {
 			Element foldersElement =
-				portletDataContext.getImportDataGroupElement(Folder.class);
+				portletDataContext.getImportDataGroupElement(DLFolder.class);
 
 			List<Element> folderElements = foldersElement.elements();
 

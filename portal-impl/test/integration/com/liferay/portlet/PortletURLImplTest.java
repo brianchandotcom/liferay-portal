@@ -1013,7 +1013,7 @@ public class PortletURLImplTest {
 		testAutopropagatedPortlet(
 			PortletRequest.ACTION_PHASE, encrypt, escapeXML, expectedURLParts);
 
-		testPRPPortlet(
+		testGetPublicRenderParametersInPortlet(
 			PortletRequest.ACTION_PHASE, encrypt, escapeXML, expectedURLParts);
 	}
 
@@ -1085,7 +1085,7 @@ public class PortletURLImplTest {
 		}
 	}
 
-	protected void testPRPPortlet(
+	protected void testGetPublicRenderParametersInPortlet(
 			String lifecycle, boolean encrypt, boolean escapeXML,
 			List<String[]> expectedURLParts)
 		throws Exception {
@@ -1129,7 +1129,7 @@ public class PortletURLImplTest {
 		testAutopropagatedPortlet(
 			PortletRequest.RENDER_PHASE, encrypt, escapeXML, expectedURLParts);
 
-		testPRPPortlet(
+		testGetPublicRenderParametersInPortlet(
 			PortletRequest.RENDER_PHASE, encrypt, escapeXML, expectedURLParts);
 	}
 
@@ -1158,7 +1158,7 @@ public class PortletURLImplTest {
 			PortletRequest.RESOURCE_PHASE, encrypt, escapeXML,
 			expectedURLParts);
 
-		testPRPPortlet(
+		testGetPublicRenderParametersInPortlet(
 			PortletRequest.RESOURCE_PHASE, encrypt, escapeXML,
 			expectedURLParts);
 	}

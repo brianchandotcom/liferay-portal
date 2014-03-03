@@ -15,13 +15,9 @@
 package com.liferay.portlet.comments.notifications;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -29,12 +25,11 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.util.MBTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -67,26 +62,9 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
-		MBMessageDisplay messageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				siteMember.getUserId(), group.getGroupId(),
-				BlogsEntry.class.getName(), _commentedEntry.getEntryId(),
-				WorkflowConstants.STATUS_APPROVED);
-
-		MBThread thread =  messageDisplay.getThread();
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return MBMessageLocalServiceUtil.addDiscussionMessage(
-			siteMember.getUserId(), user.getFullName(), group.getGroupId(),
-			BlogsEntry.class.getName(), _commentedEntry.getEntryId(),
-			thread.getThreadId(), thread.getRootMessageId(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
-			serviceContext);
+		return MBTestUtil.addDiscussionMessage(
+			siteMember, group.getGroupId(), BlogsEntry.class.getName(),
+			_commentedEntry.getEntryId());
 	}
 
 	@Override
@@ -105,17 +83,10 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		serviceContext.setCommand(Constants.UPDATE);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return MBMessageLocalServiceUtil.updateDiscussionMessage(
-			siteMember.getUserId(), (Long)baseModel.getPrimaryKeyObj(),
-			BlogsEntry.class.getName(), _commentedEntry.getEntryId(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
-			serviceContext);
+		return MBTestUtil.updateDiscussionMessage(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			(Long)baseModel.getPrimaryKeyObj(), BlogsEntry.class.getName(),
+			_commentedEntry.getEntryId());
 	}
 
 	private BlogsEntry _commentedEntry;

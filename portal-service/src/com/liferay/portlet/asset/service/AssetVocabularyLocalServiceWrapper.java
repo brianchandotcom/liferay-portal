@@ -527,6 +527,15 @@ public class AssetVocabularyLocalServiceWrapper
 		return _assetVocabularyLocalService.getVocabulary(vocabularyId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.asset.model.AssetVocabulary> searchVocabularies(
+		long companyId, long groupId, java.lang.String title, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabularyLocalService.searchVocabularies(companyId,
+			groupId, title, start, end);
+	}
+
 	/**
 	* @deprecated As of 6.1.0
 	*/

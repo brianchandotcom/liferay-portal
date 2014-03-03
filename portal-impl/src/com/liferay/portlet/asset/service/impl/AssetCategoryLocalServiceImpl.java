@@ -17,6 +17,16 @@ package com.liferay.portlet.asset.service.impl;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,6 +48,9 @@ import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetCategoryProperty;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.base.AssetCategoryLocalServiceBaseImpl;
+import com.liferay.portlet.asset.util.AssetCategoryUtil;
+
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Date;
@@ -60,6 +73,7 @@ import java.util.concurrent.Callable;
 public class AssetCategoryLocalServiceImpl
 	extends AssetCategoryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetCategory addCategory(
 			long userId, long parentCategoryId, Map<Locale, String> titleMap,
@@ -170,7 +184,7 @@ public class AssetCategoryLocalServiceImpl
 
 		descriptionMap.put(locale, StringPool.BLANK);
 
-		return addCategory(
+		return assetCategoryLocalService.addCategory(
 			userId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
 			descriptionMap, vocabularyId, null, serviceContext);
 	}
@@ -200,21 +214,22 @@ public class AssetCategoryLocalServiceImpl
 			category.getCategoryId(), groupPermissions, guestPermissions);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public void deleteCategory(AssetCategory category)
+	public AssetCategory deleteCategory(AssetCategory category)
 		throws PortalException, SystemException {
 
-		deleteCategory(category, false);
+		return deleteCategory(category, false);
 	}
 
 	@Override
-	public void deleteCategory(long categoryId)
+	public AssetCategory deleteCategory(long categoryId)
 		throws PortalException, SystemException {
 
 		AssetCategory category = assetCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		deleteCategory(category);
+		return assetCategoryLocalService.deleteCategory(category);
 	}
 
 	@Override
@@ -228,7 +243,8 @@ public class AssetCategoryLocalServiceImpl
 			if (category.getParentCategoryId() ==
 					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
-				deleteCategory(category.getCategoryId());
+				assetCategoryLocalService.deleteCategory(
+					category.getCategoryId());
 			}
 		}
 	}
@@ -390,8 +406,9 @@ public class AssetCategoryLocalServiceImpl
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, vocabularyId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public void mergeCategories(long fromCategoryId, long toCategoryId)
+	public AssetCategory mergeCategories(long fromCategoryId, long toCategoryId)
 		throws PortalException, SystemException {
 
 		List<AssetEntry> entries = assetCategoryPersistence.getAssetEntries(
@@ -414,9 +431,12 @@ public class AssetCategoryLocalServiceImpl
 			}
 		}
 
-		deleteCategory(fromCategoryId);
+		assetCategoryLocalService.deleteCategory(fromCategoryId);
+
+		return getCategory(toCategoryId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetCategory moveCategory(
 			long categoryId, long parentCategoryId, long vocabularyId,
@@ -466,6 +486,30 @@ public class AssetCategoryLocalServiceImpl
 			groupId, name, categoryProperties, start, end);
 	}
 
+	@Override
+	public BaseModelSearchResult<AssetCategory> searchCategories(
+			long companyId, long groupIds, String title, long vocabularyId,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		return searchCategories(
+			companyId, new long[] {groupIds}, title, new long[] {vocabularyId},
+			start, end);
+	}
+
+	@Override
+	public BaseModelSearchResult<AssetCategory> searchCategories(
+			long companyId, long[] groupIds, String title, long[] vocabularyIds,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupIds, title, vocabularyIds, start, end);
+
+		return searchCategories(searchContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetCategory updateCategory(
 			long userId, long categoryId, long parentCategoryId,
@@ -598,7 +642,38 @@ public class AssetCategoryLocalServiceImpl
 		return category;
 	}
 
-	protected void deleteCategory(AssetCategory category, boolean childCategory)
+	protected SearchContext buildSearchContext(
+		long companyId, long[] groupIds, String title, long[] vocabularyIds,
+		int start, int end) {
+
+		SearchContext searchContext = new SearchContext();
+
+		Map<String, Serializable> attributes =
+			new HashMap<String, Serializable>();
+
+		attributes.put(Field.TITLE, title);
+		attributes.put("vocabularyIds", vocabularyIds);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(groupIds);
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		searchContext.setStart(start);
+
+		return searchContext;
+	}
+
+	protected AssetCategory deleteCategory(
+			AssetCategory category, boolean childCategory)
 		throws PortalException, SystemException {
 
 		// Categories
@@ -650,6 +725,8 @@ public class AssetCategoryLocalServiceImpl
 		// Indexer
 
 		assetEntryLocalService.reindex(entries);
+
+		return category;
 	}
 
 	protected long[] getCategoryIds(List<AssetCategory> categories) {
@@ -661,6 +738,30 @@ public class AssetCategoryLocalServiceImpl
 	protected String[] getCategoryNames(List<AssetCategory> categories) {
 		return StringUtil.split(
 			ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR));
+	}
+
+	protected BaseModelSearchResult<AssetCategory> searchCategories(
+			SearchContext searchContext)
+		throws PortalException, SystemException {
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetCategory.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(
+				searchContext, AssetCategoryUtil.SELECTED_FIELD_NAMES);
+
+			List<AssetCategory> categories = AssetCategoryUtil.getCategories(
+				hits);
+
+			if (categories != null) {
+				return new BaseModelSearchResult<AssetCategory>(
+					categories, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	protected void updateChildrenVocabularyId(

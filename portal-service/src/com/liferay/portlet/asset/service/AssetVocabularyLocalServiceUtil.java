@@ -487,6 +487,14 @@ public class AssetVocabularyLocalServiceUtil {
 		return getService().getVocabulary(vocabularyId);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.asset.model.AssetVocabulary> searchVocabularies(
+		long companyId, long groupId, java.lang.String title, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .searchVocabularies(companyId, groupId, title, start, end);
+	}
+
 	/**
 	* @deprecated As of 6.1.0
 	*/

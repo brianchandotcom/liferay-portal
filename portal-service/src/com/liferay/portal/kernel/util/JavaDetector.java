@@ -111,6 +111,10 @@ public class JavaDetector {
 		return _instance._openJDK;
 	}
 
+	public static boolean isOracle() {
+		return _instance._oracle;
+	}
+
 	protected JavaDetector() {
 		_javaClassPath = System.getProperty("java.class.path");
 		_javaClassVersion = GetterUtil.getDouble(
@@ -128,6 +132,9 @@ public class JavaDetector {
 
 		if (_javaVendor != null) {
 			_ibm = _javaVendor.startsWith("IBM");
+
+			_oracle = _javaVendor.startsWith("Sun") ||
+				_javaVendor.startsWith("Oracle");
 		}
 
 		if (_javaRuntimeName != null) {
@@ -162,5 +169,6 @@ public class JavaDetector {
 	private String _javaVersion;
 	private String _javaVmVersion;
 	private boolean _openJDK;
+	private boolean _oracle;
 
 }

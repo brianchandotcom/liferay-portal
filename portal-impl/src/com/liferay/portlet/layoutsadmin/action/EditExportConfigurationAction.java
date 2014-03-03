@@ -17,10 +17,13 @@ package com.liferay.portlet.layoutsadmin.action;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationHelper;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,11 +33,15 @@ import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ExportImportConfigurationServiceUtil;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.sites.action.ActionUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -66,10 +73,6 @@ public class EditExportConfigurationAction extends PortletAction {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		if (Validator.isNull(cmd)) {
-			return;
-		}
-
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateExportConfiguration(actionRequest);
@@ -83,6 +86,9 @@ public class EditExportConfigurationAction extends PortletAction {
 			else if (cmd.equals(Constants.EXPORT)) {
 				ExportImportConfigurationHelper.
 					exportLayoutsByExportImportConfiguration(actionRequest);
+			}
+			else if (Validator.isNull(cmd)) {
+				saveSessionParameters(actionRequest);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -188,6 +194,38 @@ public class EditExportConfigurationAction extends PortletAction {
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
+	}
+
+	protected void saveSessionParameters(ActionRequest actionRequest)
+		throws Exception {
+
+		long exportImportConfigurationId = ParamUtil.getLong(
+			actionRequest, "exportImportConfigurationId");
+
+		if (exportImportConfigurationId > 0) {
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					"exportImportConfigurationId",
+				exportImportConfigurationId);
+
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) + "editedAfterFirstEdit",
+				true);
+		}
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+				actionRequest, groupId,
+				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT);
+
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) + "settingsMap",
+			settingsMap);
 	}
 
 	protected ExportImportConfiguration updateExportConfiguration(

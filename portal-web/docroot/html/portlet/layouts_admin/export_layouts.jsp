@@ -25,15 +25,29 @@ if (Validator.isNull(cmd)) {
 
 long exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
 
+if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId")) {
+	exportImportConfigurationId = (Long)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId");
+}
+
 ExportImportConfiguration exportImportConfiguration = null;
+Map<String, Serializable> exportImportConfigurationSettingsMap = Collections.EMPTY_MAP;
 Map<String, String[]> parameterMap = Collections.EMPTY_MAP;
 Map<Long, Boolean> layoutIdMap = Collections.EMPTY_MAP;
 
-if (cmd.equals(Constants.UPDATE) && (exportImportConfigurationId > 0)) {
+boolean editedAfterFirstEdit = SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "editedAfterFirstEdit");
+
+if ((exportImportConfigurationId > 0) && !editedAfterFirstEdit) {
 	exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
+	exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
+	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
+	layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
+}
+else if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "settingsMap")) {
+	if (exportImportConfigurationId > 0) {
+		exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
+	}
 
-	Map<String, Serializable> exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
-
+	exportImportConfigurationSettingsMap = (Map<String, Serializable>)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "settingsMap");
 	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
 	layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
 }
@@ -153,7 +167,7 @@ if (!cmd.equals(Constants.ADD)) {
 	</div>
 
 	<liferay-ui:section>
-		<div <%= !cmd.equals(Constants.ADD) ? StringPool.BLANK : "class=\"hide\"" %>>
+		<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
 			<aui:nav-bar>
 				<aui:nav id="exportNav">
 					<aui:nav-item
@@ -174,26 +188,26 @@ if (!cmd.equals(Constants.ADD)) {
 		<div <%= exportNav.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportOptions">
 			<portlet:actionURL var="updateExportConfigurationURL">
 				<portlet:param name="struts_action" value="/layouts_admin/edit_export_configuration" />
-				<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfigurationId) %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			</portlet:actionURL>
 
 			<portlet:actionURL var="exportPagesURL">
 				<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
-				<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
 			</portlet:actionURL>
 
 			<aui:form action='<%= cmd.equals(Constants.EXPORT) ? exportPagesURL : updateExportConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
+				<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
+				<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
+				<aui:input name="liveGroupId" type="hidden" value="<%= String.valueOf(liveGroupId) %>" />
+				<aui:input name="privateLayout" type="hidden" value="<%= String.valueOf(privateLayout) %>" />
 				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+				<aui:input name="rootNodeName" type="hidden" value="<%= rootNodeName %>" />
 
 				<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
 				<div class="export-dialog-tree">
-					<c:if test="<%= cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE) %>">
+					<c:if test="<%= !cmd.equals(Constants.EXPORT) %>">
 						<aui:model-context bean="<%= exportImportConfiguration %>" model="<%= ExportImportConfiguration.class %>" />
 
 						<aui:fieldset cssClass="options-group" label='<%= cmd.equals(Constants.ADD) ? "new-export-template" : "edit-template" %>'>
@@ -244,7 +258,7 @@ if (!cmd.equals(Constants.ADD)) {
 						<aui:fieldset cssClass="options-group" label="application-configuration">
 							<ul class="lfr-tree unstyled">
 								<li class="tree-item">
-									<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" helpMessage="all-applications-export-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" />
+									<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" helpMessage="all-applications-export-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= true %>" />
 
 									<div class="hide" id="<portlet:namespace />globalConfiguration">
 										<aui:fieldset cssClass="portlet-data-section" label="all-applications">
@@ -264,7 +278,7 @@ if (!cmd.equals(Constants.ADD)) {
 										</li>
 									</ul>
 
-									<aui:input checked="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" helpMessage="choose-applications-export-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" />
+									<aui:input checked="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" helpMessage="choose-applications-export-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= false %>" />
 
 									<c:if test="<%= !group.isLayoutPrototype() %>">
 										<ul class="hide options portlet-list select-options" id="<portlet:namespace />selectApplications">
@@ -347,9 +361,9 @@ if (!cmd.equals(Constants.ADD)) {
 						<aui:fieldset cssClass="options-group" label="content">
 							<ul class="lfr-tree unstyled">
 								<li class="tree-item">
-									<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" helpMessage="all-content-export-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" />
+									<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" helpMessage="all-content-export-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= true %>" />
 
-									<aui:input checked="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" helpMessage="choose-content-export-help" id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" />
+									<aui:input checked="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" helpMessage="choose-content-export-help" id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= false %>" />
 
 									<ul class="hide select-options" id="<portlet:namespace />selectContents">
 										<li>

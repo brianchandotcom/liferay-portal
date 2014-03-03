@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.NumericalStringComparator;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -488,7 +488,7 @@ public class LangBuilder {
 			new FileWriter(propertiesFile));
 
 		Map<String, String> messages = new TreeMap<String, String>(
-			new NumericalStringComparator(true, true));
+			new NaturalOrderStringComparator(true, true));
 
 		boolean begin = false;
 		boolean firstLine = true;

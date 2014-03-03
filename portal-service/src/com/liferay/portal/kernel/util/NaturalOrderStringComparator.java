@@ -21,14 +21,16 @@ import java.util.Comparator;
 /**
  * @author Hugo Huijser
  */
-public class NumericalStringComparator
+public class NaturalOrderStringComparator
 	implements Comparator<String>, Serializable {
 
-	public NumericalStringComparator() {
+	public NaturalOrderStringComparator() {
 		this(true, false);
 	}
 
-	public NumericalStringComparator(boolean ascending, boolean caseSensitive) {
+	public NaturalOrderStringComparator(
+		boolean ascending, boolean caseSensitive) {
+
 		_ascending = ascending;
 		_caseSensitive = caseSensitive;
 	}

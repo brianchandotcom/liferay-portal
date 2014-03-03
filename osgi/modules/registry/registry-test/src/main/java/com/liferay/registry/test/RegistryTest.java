@@ -49,7 +49,7 @@ public class RegistryTest {
 	}
 
 	@Test
-	public void testBundleContext() {
+	public void testGetBundleContext() {
 		Assert.assertNotNull(_bundleContext);
 	}
 

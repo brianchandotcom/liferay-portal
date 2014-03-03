@@ -43,7 +43,7 @@
 			header: toggleAdvancedNode,
 			transition: {
 				duration: 0.2,
-				easing: 'cubic-bezier(0, 0.1, 0, 1.0)',
+				easing: 'cubic-bezier(0, 0.1, 0, 1.0)'
 			}
 		}
 	);

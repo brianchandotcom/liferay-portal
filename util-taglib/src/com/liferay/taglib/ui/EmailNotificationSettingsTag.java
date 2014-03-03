@@ -52,6 +52,14 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 		_emailSubject = emailSubject;
 	}
 
+	public void setLanguageId(String languageId) {
+		_languageId = languageId;
+	}
+
+	public void setShowEmailEnabled(boolean showEmailEnabled) {
+		_showEmailEnabled = showEmailEnabled;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_emailDefinitionTerms = null;
@@ -59,6 +67,8 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 		_emailEnabled = false;
 		_emailParam = null;
 		_emailSubject = null;
+		_languageId = null;
+		_showEmailEnabled = true;
 	}
 
 	@Override
@@ -86,6 +96,11 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:email-notification-settings:emailSubject",
 			_emailSubject);
+		request.setAttribute(
+			"liferay-ui:email-notification-settings:languageId", _languageId);
+		request.setAttribute(
+			"liferay-ui:email-notification-settings:showEmailEnabled",
+			_showEmailEnabled);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -98,5 +113,7 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 	private boolean _emailEnabled;
 	private String _emailParam;
 	private String _emailSubject;
+	private String _languageId;
+	private boolean _showEmailEnabled;
 
 }

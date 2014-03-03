@@ -16,7 +16,6 @@ package com.liferay.portlet.login.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
@@ -35,12 +34,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String tabs1 = ParamUtil.getString(actionRequest, "tabs1");
-		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
-
-		if (tabs1.equals("email-notifications") && tabs2.equals("general")) {
-			validateEmailFrom(actionRequest);
-		}
+		validateEmailFrom(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

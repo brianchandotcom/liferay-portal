@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -65,6 +67,7 @@ import javax.portlet.PortletModeException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
@@ -152,6 +155,69 @@ public class LoginUtil {
 		}
 
 		return userId;
+	}
+
+	public static Map<String, String> getEmailDefinitionTerms(
+		RenderRequest request, String emailFromAddress, String emailFromName,
+		boolean showPasswordTerms) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, String> definitionTerms = new HashMap<String, String>();
+
+		definitionTerms.put(
+			"[$FROM_ADDRESS$]", HtmlUtil.escape(emailFromAddress));
+		definitionTerms.put("[$FROM_NAME$]", HtmlUtil.escape(emailFromName));
+
+		if (showPasswordTerms) {
+			definitionTerms.put(
+				"[$PASSWORD_RESET_URL$]",
+				LanguageUtil.get(
+					themeDisplay.getLocale(), "the-password-reset-url"));
+		}
+
+		Company company = themeDisplay.getCompany();
+
+		definitionTerms.put("[$PORTAL_URL$]", company.getVirtualHostname());
+
+		definitionTerms.put(
+			"[$REMOTE_ADDRESS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-browser's-remote-address"));
+		definitionTerms.put(
+			"[$REMOTE_HOST$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-browser's-remote-host"));
+		definitionTerms.put(
+			"[$TO_ADDRESS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-address-of-the-email-recipient"));
+		definitionTerms.put(
+			"[$TO_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-name-of-the-email-recipient"));
+		definitionTerms.put(
+			"[$USER_AGENT$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-browser's-user-agent"));
+		definitionTerms.put(
+			"[$USER_ID$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-user-id"));
+
+		if (showPasswordTerms) {
+			definitionTerms.put(
+				"[$USER_PASSWORD$]",
+				LanguageUtil.get(
+					themeDisplay.getLocale(), "the-user-password"));
+		}
+
+		definitionTerms.put(
+			"[$USER_SCREENNAME$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-user-screen-name"));
+
+		return definitionTerms;
 	}
 
 	public static String getEmailFromAddress(

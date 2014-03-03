@@ -586,7 +586,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.getLayoutId());
 
 		for (Layout childLayout : childLayouts) {
-			deleteLayout(childLayout, updateLayoutSet, serviceContext);
+			layoutLocalService.deleteLayout(
+				childLayout, updateLayoutSet, serviceContext);
 		}
 
 		// Layout friendly URLs
@@ -606,8 +607,17 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		// Asset
 
-		assetEntryLocalService.deleteEntry(
-			Layout.class.getName(), layout.getPrimaryKey());
+		SystemEventHierarchyEntryThreadLocal.pop(
+			Layout.class, layout.getPlid());
+
+		try {
+			assetEntryLocalService.deleteEntry(
+				Layout.class.getName(), layout.getPlid());
+		}
+		finally {
+			SystemEventHierarchyEntryThreadLocal.push(
+				Layout.class, layout.getPlid());
+		}
 
 		// Ratings
 
@@ -726,7 +736,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
 
-		deleteLayout(layout, true, serviceContext);
+		layoutLocalService.deleteLayout(layout, true, serviceContext);
 	}
 
 	/**
@@ -745,7 +755,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
-		deleteLayout(layout, true, serviceContext);
+		layoutLocalService.deleteLayout(layout, true, serviceContext);
 	}
 
 	/**
@@ -777,7 +787,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		for (Layout layout : layouts) {
 			try {
-				deleteLayout(layout, false, serviceContext);
+				layoutLocalService.deleteLayout(layout, false, serviceContext);
 			}
 			catch (NoSuchLayoutException nsle) {
 			}

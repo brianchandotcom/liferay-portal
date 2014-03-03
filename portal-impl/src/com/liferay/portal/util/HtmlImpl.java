@@ -52,11 +52,10 @@ public class HtmlImpl implements Html {
 	public static final int ESCAPE_MODE_URL = 5;
 
 	/**
-	 * Escape given String using XSS recommendations from {@link
-	 * http://www.owasp.org/index.php/Cross_Site_Scripting#How_to_Protect_Yourself}
+	 * Escapes the HTML text so that it is safe to use in an HTML context.
 	 *
-	 * @param  text The text to be HTML-encoded
-	 * @return the sanitized text that is safe to use in an HTML context
+	 * @param  text the HTML text to escape
+	 * @return the escaped HTML text
 	 */
 	@Override
 	public String escape(String text) {
@@ -150,14 +149,18 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * Escape into Hex-values for the given encoding type (CSS, JS, ATTRIBUTE,
-	 * URL, TEXT). Note that escape(text, ESCAPE_MODE_TEXT) is the same as
-	 * escape(text).
+	 * Escapes the input text as a hexadecimal value, based on the mode.
+	 *
+	 * <p>
+	 * Note that <code>escape(html, 4)</code> (<code>ESCAPE_MODE_TEXT</code> =
+	 * 4) returns the same as <code>escape(html)</code>.
+	 * </p>
 	 *
 	 * @param  text the text to escape
-	 * @param  type one of the ESCAPE_MODE_* constants in this class
-	 * @return hex-encoded value of input text for the given use
-	 * @see    escapeCSS, escapeAttribute, escapeURL, escapeJS
+	 * @param  type the encoding type, which can be chosen from the
+	 *         <code>ESCAPE_MODE_*</code> constants in this class
+	 * @return the escaped hexadecimal value of the input text, based on the
+	 *         mode
 	 */
 	@Override
 	public String escape(String text, int type) {
@@ -222,10 +225,10 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * escape the given text so that it can safely be used as an attribute value
-	 * 
-	 * @param  attribute
-	 * @return
+	 * Escapes the attribute value so that it is safe to use in an HTML context.
+	 *
+	 * @param  attribute the HTML attribute to escape
+	 * @return the escaped attribute value
 	 */
 	@Override
 	public String escapeAttribute(String attribute) {
@@ -233,10 +236,10 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * escape the given text so that it can safely be used in CSS
-	 * 
-	 * @param  css
-	 * @return
+	 * Escapes the CSS value so that it is safe to use in a CSS context.
+	 *
+	 * @param  css the CSS value to escape
+	 * @return the escaped CSS value
 	 */
 	@Override
 	public String escapeCSS(String css) {
@@ -244,10 +247,10 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * escape the given text so that it can safely be used as a href attribute.
-	 * 
-	 * @param  href
-	 * @return
+	 * Escapes the HREF attribute so that it is safe to use as a URL.
+	 *
+	 * @param  href the HREF attribute to escape
+	 * @return the escaped HREF attribute
 	 */
 	@Override
 	public String escapeHREF(String href) {
@@ -271,10 +274,11 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * escape the given text so that it can safely be used in javascript
-	 * 
-	 * @param  js
-	 * @return
+	 * Escapes the JavaScript value so that it is safe to use in a JavaScript
+	 * context.
+	 *
+	 * @param  js the JavaScript value to escape
+	 * @return the escaped JavaScript value
 	 */
 	@Override
 	public String escapeJS(String js) {
@@ -282,10 +286,10 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * escape the given text so that it can safely be used as a URL
-	 * 
-	 * @param  url
-	 * @return
+	 * Escapes the URL value so that it is safe to use as a URL.
+	 *
+	 * @param  url the URL value to escape
+	 * @return the escaped URL value
 	 */
 	@Override
 	public String escapeURL(String url) {
@@ -345,12 +349,16 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * extracts the raw text from given HTML input, e.g. to store in a search
-	 * index. Also compresses whitespace as much as possible.
+	 * Extracts the raw text from the HTML input. The raw text has compressed
+	 * whitespace and no attributes, scripts, or styles.
 	 *
-	 * @param  html the html text to process
-	 * @return the text content without attributes, scripts and styles
-	 * @see    net.htmlparser.jericho.TextExtractor
+	 * <p>
+	 * For example, raw text returned by this method can be stored in a search
+	 * index.
+	 * </p>
+	 *
+	 * @param  html the HTML text
+	 * @return the raw text from the HTML input
 	 */
 	@Override
 	public String extractText(String html) {
@@ -371,19 +379,19 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * Performs a simple rendering of HTML markup into text. This provides a
-	 * human readable version of the segment content that is modelled on the way
-	 * Mozilla Thunderbird and other email clients provide an automatic
-	 * conversion of HTML content to text in their alternative MIME encoding of
-	 * emails.
+	 * Renders the HTML content into text. This provides a human readable
+	 * version of the content that is modeled on the way Mozilla Thunderbird and
+	 * other email clients provide an automatic conversion of HTML content to
+	 * text in their alternative MIME encoding of emails.
 	 *
-	 * The output using default settings complies with the
-	 * "text/plain; format=flowed" (DelSp=No) protocol described in
-	 * RFC3676.
+	 * <p>
+	 * Using the default settings, the output complies with the
+	 * <code>Text/Plain; Format=Flowed (DelSp=No)</code> protocol described in
+	 * <a href="http://tools.ietf.org/html/rfc3676">RFC-3676</a>.
+	 * </p>
 	 *
-	 * @param  html the content to render
-	 * @return the rendered content
-	 * @see    Renderer
+	 * @param  html the HTML text
+	 * @return the rendered HTML text
 	 */
 	@Override
 	public String render(String html) {
@@ -399,11 +407,10 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * replaces a few fancy unicode characters that MS-Word tends to use with
-	 * some plain HTML entities or characters.
-	 * 
-	 * @param  text
-	 * @return
+	 * Replaces the Microsoft Word unicode characters with plain HTML entities
+	 * or characters.
+	 *
+	 * @return the converted HTML text
 	 */
 	@Override
 	public String replaceMsWordCharacters(String text) {
@@ -411,10 +418,10 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * replaces sll newlines (or carriage-return/new-lines) with "<br />"
-	 * 
-	 * @param  text
-	 * @return
+	 * Replaces all new lines or carriage returns with the <code><br /></code>
+	 * HTML tag.
+	 *
+	 * @return the converted HTML text
 	 */
 	@Override
 	public String replaceNewLine(String text) {
@@ -426,17 +433,18 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * Strips all content delimited by the given tag out of the text. If the tag
-	 * appears multiple times, all occurrences (including the tag) will be
-	 * stripped. The tag may have attributes. In order to match, the tag must
-	 * consist of a separate opening and closing tag. Self-closing tags will
-	 * remain in the result
+	 * Strips all content delimited by the tag out of the HTML text.
 	 *
-	 * @param  text the text to be stripped
-	 * @param  tag the tag used for delimiting - give just the tag's name, no
-	 *         &lt; etc.
-	 * @return the stripped text, without the given tag and the contents of the
-	 *         tag.
+	 * <p>
+	 * If the tag appears multiple times, all occurrences (including the tag)
+	 * are stripped. The tag may have attributes. In order for this method to
+	 * recognize the tag, it must consist of a separate opening and closing tag.
+	 * Self-closing tags remain in the result.
+	 * </p>
+	 *
+	 * @param  tag the tag used for delimiting, which should only be the tag's
+	 *         name (e.g. no &lt;)
+	 * @return the HTML text, without the stripped tag and its contents
 	 */
 	@Override
 	public String stripBetween(String text, String tag) {
@@ -444,10 +452,9 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * Strips all xml comments
+	 * Strips all XML comments out of the HTML text.
 	 *
-	 * @param  text the text to be stripped
-	 * @return
+	 * @return the HTML text, without the stripped XML comments
 	 */
 	@Override
 	public String stripComments(String text) {
@@ -506,10 +513,14 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * Encodes text so that it's safe to be used in HTML input fields as value
+	 * Encodes the HTML text so that it's safe to use as an input field value.
 	 *
-	 * @param  text the text to be used as value
-	 * @return the text that can be used as input field value
+	 * <p>
+	 * For example, the <code>&</code> character is replaced by
+	 * <code>&amp;amp;</code>.
+	 * </p>
+	 *
+	 * @return the encoded text that is safe to use as an input field value
 	 */
 	@Override
 	public String toInputSafe(String text) {

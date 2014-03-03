@@ -25,75 +25,80 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 public class HtmlUtil {
 
 	/**
-	 * Escape given String using XSS recommendations from {@link
-	 * http://www.owasp.org/index.php/Cross_Site_Scripting#How_to_Protect_Yourself}
+	 * Escapes the HTML text so that it is safe to use in an HTML context.
 	 *
-	 * @param  html The text to be HTML-encoded
-	 * @return the sanitized text that is safe to use in an HTML context
+	 * @param  html the HTML text to escape
+	 * @return the escaped HTML text
 	 */
 	public static String escape(String html) {
 		return getHtml().escape(html);
 	}
 
 	/**
-	 * Escape into Hex-values for the given encoding type (CSS, JS, ATTRIBUTE,
-	 * URL, TEXT). Note that escape(text, ESCAPE_MODE_TEXT) is the same as
-	 * escape(text).
+	 * Escapes the input text as a hexadecimal value, based on the mode.
+	 *
+	 * <p>
+	 * Note that <code>escape(html, 4)</code> (<code>ESCAPE_MODE_TEXT</code> =
+	 * 4) returns the same as <code>escape(html)</code>.
+	 * </p>
 	 *
 	 * @param  html the text to escape
-	 * @param  mode one of the ESCAPE_MODE_* constants in this class
-	 * @return hex-encoded value of input text for the given use
-	 * @see    escapeCSS, escapeAttribute, escapeURL, escapeJS
+	 * @param  mode the encoding type. For more information on the escape mode
+	 *         types and their corresponding integer values, visit {@link
+	 *         HtmlImpl}.
+	 * @return the escaped hexadecimal value of the input text, based on the
+	 *         mode
 	 */
 	public static String escape(String html, int mode) {
 		return getHtml().escape(html, mode);
 	}
 
 	/**
-	 * escape the given text so that it can safely be used as an attribute value
-	 * 
-	 * @param  attribute
-	 * @return
+	 * Escapes the attribute value so that it is safe to use in an HTML context.
+	 *
+	 * @param  attribute the HTML attribute to escape
+	 * @return the escaped attribute value
 	 */
 	public static String escapeAttribute(String attribute) {
 		return getHtml().escapeAttribute(attribute);
 	}
 
 	/**
-	 * escape the given text so that it can safely be used in CSS
-	 * 
-	 * @param  css
-	 * @return
+	 * Escapes the CSS value so that it is safe to use in a CSS context.
+	 *
+	 * @param  css the CSS value to escape
+	 * @return the escaped CSS value
 	 */
 	public static String escapeCSS(String css) {
 		return getHtml().escapeCSS(css);
 	}
 
 	/**
-	 * escape the given text so that it can safely be used as a href attribute.
-	 * 
-	 * @param  href
-	 * @return
+	 * Escapes the HREF attribute so that it is safe to use as a URL.
+	 *
+	 * @param  href the HREF attribute to escape
+	 * @return the escaped HREF attribute
 	 */
 	public static String escapeHREF(String href) {
 		return getHtml().escapeHREF(href);
 	}
 
 	/**
-	 * escape the given text so that it can safely be used in javascript
-	 * 
-	 * @param  js
-	 * @return
+	 * Escapes the JavaScript value so that it is safe to use in a JavaScript
+	 * context.
+	 *
+	 * @param  js the JavaScript value to escape
+	 * @return the escaped JavaScript value
 	 */
 	public static String escapeJS(String js) {
 		return getHtml().escapeJS(js);
 	}
 
 	/**
-	 * escape the given text so that it can safely be used as a URL
-	 * 
-	 * @param  url
-	 * @return
+	 * Escapes the URL value so that it is safe to use as a URL.
+	 *
+	 * @param  url the URL value to escape
+	 * @return the escaped URL value
 	 */
 	public static String escapeURL(String url) {
 		return getHtml().escapeURL(url);
@@ -108,12 +113,16 @@ public class HtmlUtil {
 	}
 
 	/**
-	 * extracts the raw text from given HTML input, e.g. to store in a search
-	 * index. Also compresses whitespace as much as possible.
+	 * Extracts the raw text from the HTML input. The raw text has compressed
+	 * whitespace and no attributes, scripts, or styles.
 	 *
-	 * @param  html the html text to process
-	 * @return the text content without attributes, scripts and styles
-	 * @see    net.htmlparser.jericho.TextExtractor
+	 * <p>
+	 * For example, raw text returned by this method can be stored in a search
+	 * index.
+	 * </p>
+	 *
+	 * @param  html the HTML text
+	 * @return the raw text from the HTML input
 	 */
 	public static String extractText(String html) {
 		return getHtml().extractText(html);
@@ -130,67 +139,70 @@ public class HtmlUtil {
 	}
 
 	/**
-	 * Performs a simple rendering of HTML markup into text. This provides a
-	 * human readable version of the segment content that is modelled on the way
-	 * Mozilla Thunderbird and other email clients provide an automatic
-	 * conversion of HTML content to text in their alternative MIME encoding of
-	 * emails.
+	 * Renders the HTML content into text. This provides a human readable
+	 * version of the segment content that is modeled on the way Mozilla
+	 * Thunderbird and other email clients provide an automatic conversion of
+	 * HTML content to text in their alternative MIME encoding of emails.
 	 *
-	 * The output using default settings complies with the
-	 * "text/plain; format=flowed" (DelSp=No) protocol described in
-	 * RFC3676.
+	 * <p>
+	 * Using the default settings, the output complies with the
+	 * <code>Text/Plain; Format=Flowed (DelSp=No)</code> protocol described in
+	 * <a href="http://tools.ietf.org/html/rfc3676">RFC-3676</a>.
+	 * </p>
 	 *
-	 * @param  html the content to render
-	 * @return the rendered content
-	 * @see    Renderer
+	 * @param  html the HTML text
+	 * @return the rendered HTML text
 	 */
 	public static String render(String html) {
 		return getHtml().render(html);
 	}
 
 	/**
-	 * replaces a few fancy unicode characters that MS-Word tends to use with
-	 * some plain HTML entities or characters.
-	 * 
-	 * @param  html
-	 * @return
+	 * Replaces the Microsoft Word unicode characters with plain HTML entities
+	 * or characters.
+	 *
+	 * @param  html the HTML text
+	 * @return the converted HTML text
 	 */
 	public static String replaceMsWordCharacters(String html) {
 		return getHtml().replaceMsWordCharacters(html);
 	}
 
 	/**
-	 * replaces all newlines (or carriage-return/new-lines) with "<br />"
-	 * 
-	 * @param  html
-	 * @return
+	 * Replaces all new lines or carriage returns with the <code><br /></code>
+	 * HTML tag.
+	 *
+	 * @param  html the HTML text
+	 * @return the converted HTML text
 	 */
 	public static String replaceNewLine(String html) {
 		return getHtml().replaceNewLine(html);
 	}
 
 	/**
-	 * Strips all content delimited by the given tag out of the text. If the tag
-	 * appears multiple times, all occurrences (including the tag) will be
-	 * stripped. The tag may have attributes. In order to match, the tag must
-	 * consist of a separate opening and closing tag. Self-closing tags will
-	 * remain in the result
+	 * Strips all content delimited by the tag out of the HTML text.
 	 *
-	 * @param  html the text to be stripped
-	 * @param  tag the tag used for delimiting - give just the tag's name, no
-	 *         &lt; etc.
-	 * @return the stripped text, without the given tag and the contents of the
-	 *         tag.
+	 * <p>
+	 * If the tag appears multiple times, all occurrences (including the tag)
+	 * are stripped. The tag may have attributes. In order for this method to
+	 * recognize the tag, it must consist of a separate opening and closing tag.
+	 * Self-closing tags remain in the result.
+	 * </p>
+	 *
+	 * @param  html the HTML text
+	 * @param  tag the tag used for delimiting, which should only be the tag's
+	 *         name (e.g. no &lt;)
+	 * @return the HTML text, without the stripped tag and its contents
 	 */
 	public static String stripBetween(String html, String tag) {
 		return getHtml().stripBetween(html, tag);
 	}
 
 	/**
-	 * Strips all xml comments
-	 * 
-	 * @param  html
-	 * @return
+	 * Strips all XML comments out of the HTML text.
+	 *
+	 * @param  html the HTML text
+	 * @return the HTML text, without the stripped XML comments
 	 */
 	public static String stripComments(String html) {
 		return getHtml().stripComments(html);
@@ -201,10 +213,15 @@ public class HtmlUtil {
 	}
 
 	/**
-	 * Encodes text so that it's safe to be used in HTML input fields as value
+	 * Encodes the HTML text so that it's safe to use as an input field value.
 	 *
-	 * @param  html the text to be used as value
-	 * @return the text that can be used as input field value
+	 * <p>
+	 * For example, the <code>&</code> character is replaced by
+	 * <code>&amp;amp;</code>.
+	 * </p>
+	 *
+	 * @param  html the HTML text
+	 * @return the encoded text that is safe to use as an input field value
 	 */
 	public static String toInputSafe(String html) {
 		return getHtml().toInputSafe(html);

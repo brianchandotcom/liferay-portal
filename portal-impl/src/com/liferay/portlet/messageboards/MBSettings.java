@@ -28,6 +28,10 @@ import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.RSSUtil;
 
+import java.io.IOException;
+
+import javax.portlet.ValidatorException;
+
 /**
  * @author Jorge Ferrer
  */
@@ -224,6 +228,11 @@ public class MBSettings implements Settings {
 	@Override
 	public Settings setValues(String key, String[] values) {
 		return _settings.setValues(key, values);
+	}
+
+	@Override
+	public void store() throws IOException, ValidatorException {
+		_settings.store();
 	}
 
 	private Settings _settings;

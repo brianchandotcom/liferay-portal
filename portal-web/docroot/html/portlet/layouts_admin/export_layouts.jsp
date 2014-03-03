@@ -715,15 +715,17 @@ if (!cmd.equals(Constants.ADD)) {
 	};
 
 	var processDataValue = function(dataValue) {
-		var exportOptions = A.one('#<portlet:namespace />exportOptions');
 		var exportConfigurations = A.one('#<portlet:namespace />exportConfigurations');
+		var exportOptions = A.one('#<portlet:namespace />exportOptions');
 
 		if (dataValue === 'custom') {
 			exportConfigurations.hide();
+
 			exportOptions.show();
 		}
 		else if (dataValue === 'export-configurations') {
 			exportOptions.hide();
+
 			exportConfigurations.show();
 		}
 	};

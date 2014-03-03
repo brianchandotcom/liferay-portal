@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
 
 <%
+SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
+
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -27,7 +29,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 %>
 
 <aui:nav-bar>
-	<aui:nav>
+	<aui:nav searchContainer="<%= searchContainer %>">
 
 		<%
 		String message = "add";
@@ -137,5 +139,5 @@ long classPK = ParamUtil.getLong(request, "classPK");
 		</c:choose>
 	</aui:nav>
 
-	<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/dynamic_data_mapping/template_search.jsp" />
+	<aui:nav-bar-search cssClass="navbar-search-advanced" file="/html/portlet/dynamic_data_mapping/template_search.jsp" searchContainer="<%= searchContainer %>" />
 </aui:nav-bar>

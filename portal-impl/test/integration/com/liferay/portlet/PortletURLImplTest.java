@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PublicRenderParameter;
@@ -118,7 +117,7 @@ public class PortletURLImplTest {
 		_targetLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), "Destination Layout", true);
 
-		addPortlet(_targetLayout, PORTLET_WIKI_ID);
+		LayoutTestUtil.addPortletToLayout(_targetLayout, PORTLET_WIKI_ID);
 
 		_request = new MockHttpServletRequest();
 
@@ -457,7 +456,7 @@ public class PortletURLImplTest {
 	public void testPortletFriendlyURL() throws Exception {
 		List<String[]> expectedURLParts = new ArrayList<String[]>();
 
-		addPortlet(_targetLayout, PORTLET_JOURNAL_ID);
+		LayoutTestUtil.addPortletToLayout(_targetLayout, PORTLET_JOURNAL_ID);
 
 		PortletURLImpl portletURL = new PortletURLImpl(
 			_request, PORTLET_JOURNAL_ID, _targetLayout.getPlid(),
@@ -742,27 +741,6 @@ public class PortletURLImplTest {
 		finally {
 			_request.setParameter(_WSRP, Boolean.FALSE.toString());
 		}
-	}
-
-	protected void addPortlet(Layout layout, String portletId)
-		throws Exception {
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		if (layoutTypePortlet.hasPortletId(portletId)) {
-			return;
-		}
-
-		layoutTypePortlet.addPortletId(0, portletId, "column-1", -1, false);
-
-		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
-
-		// add portlet preferences
-
-		PortletPreferencesFactoryUtil.getLayoutPortletSetup(layout, portletId);
 	}
 
 	protected void compareURLsPartiallyOrdered(

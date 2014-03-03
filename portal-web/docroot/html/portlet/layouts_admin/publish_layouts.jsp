@@ -27,23 +27,23 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
 
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
-Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
+Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
 Group liveGroup = null;
 Group stagingGroup = null;
 
-if (selGroup.isStagingGroup()) {
-	liveGroup = selGroup.getLiveGroup();
-	stagingGroup = selGroup;
+if (group.isStagingGroup()) {
+	liveGroup = group.getLiveGroup();
+	stagingGroup = group;
 }
-else if (selGroup.isStaged()) {
-	liveGroup = selGroup;
+else if (group.isStaged()) {
+	liveGroup = group;
 
-	if (selGroup.isStagedRemotely()) {
-		stagingGroup = selGroup;
+	if (group.isStagedRemotely()) {
+		stagingGroup = group;
 	}
 	else {
-		stagingGroup = selGroup.getStagingGroup();
+		stagingGroup = group.getStagingGroup();
 	}
 }
 
@@ -117,7 +117,7 @@ long[] selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTree
 
 List<Layout> selectedLayouts = new ArrayList<Layout>();
 
-long selectedLayoutsGroupId = selGroup.getGroupId();
+long selectedLayoutsGroupId = group.getGroupId();
 
 if (stagingGroupId > 0) {
 	selectedLayoutsGroupId = stagingGroupId;
@@ -135,7 +135,7 @@ UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
 PortletURL portletURL = renderResponse.createActionURL();
 
-if (selGroup.isStaged() && selGroup.isStagedRemotely()) {
+if (group.isStaged() && group.isStagedRemotely()) {
 	cmd = "publish_to_remote";
 }
 
@@ -281,7 +281,7 @@ else {
 							<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
 						</aui:fieldset>
 
-						<c:if test="<%= !selGroup.isCompany() %>">
+						<c:if test="<%= !group.isCompany() %>">
 							<aui:fieldset cssClass="options-group" label="pages">
 								<%@ include file="/html/portlet/layouts_admin/publish_layouts_select_pages.jspf" %>
 							</aui:fieldset>
@@ -297,7 +297,7 @@ else {
 							exportLayouts = selectedLayouts;
 						}
 						else {
-							exportLayouts = LayoutLocalServiceUtil.getLayouts(selGroup.getGroupId(), privateLayout);
+							exportLayouts = LayoutLocalServiceUtil.getLayouts(group.getGroupId(), privateLayout);
 						}
 
 						List<Portlet> portletDataHandlerPortlets = LayoutExporter.getPortletDataHandlerPortlets(exportLayouts);
@@ -320,7 +320,7 @@ else {
 						</c:if>
 
 						<aui:fieldset cssClass="options-group" label="permissions">
-							<%@ include file="/html/portlet/layouts_admin/publish_layouts_permissions.jspf" %>
+							<%@ include file="/html/portlet/layouts_admin/export_configuration/permissions.jspf" %>
 						</aui:fieldset>
 
 						<c:if test="<%= !localPublishing %>">

@@ -42,7 +42,7 @@
 				<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
 			</c:when>
 			<c:otherwise>
-				<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(selGroup, privateLayout) %>">
+				<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(group, privateLayout) %>">
 
 					<%
 					List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);

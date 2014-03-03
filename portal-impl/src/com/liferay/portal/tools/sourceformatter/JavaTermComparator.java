@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import com.liferay.portal.kernel.util.NumericalStringComparator;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Comparator;
@@ -72,17 +72,17 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		}
 
 		if (name1.compareToIgnoreCase(name2) != 0) {
-			NumericalStringComparator numericalStringComparator =
-				new NumericalStringComparator(true, false);
+			NaturalOrderStringComparator naturalOrderStringComparator =
+				new NaturalOrderStringComparator(true, false);
 
-			return numericalStringComparator.compare(name1, name2);
+			return naturalOrderStringComparator.compare(name1, name2);
 		}
 
 		if (name1.compareTo(name2) != 0) {
-			NumericalStringComparator numericalStringComparator =
-				new NumericalStringComparator(true, true);
+			NaturalOrderStringComparator naturalOrderStringComparator =
+				new NaturalOrderStringComparator(true, true);
 
-			return -numericalStringComparator.compare(name1, name2);
+			return -naturalOrderStringComparator.compare(name1, name2);
 		}
 
 		return _compareParameterTypes(javaTerm1, javaTerm2);

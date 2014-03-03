@@ -140,7 +140,7 @@ public class PortletURLImplTest {
 		Company company = PortalUtil.getCompany(_request);
 
 		company.setKeyObj(null);
-		company.setKey(COMPANY_KEY);
+		company.setKey(_COMPANY_KEY);
 
 		_key = company.getKeyObj();
 	}
@@ -196,27 +196,27 @@ public class PortletURLImplTest {
 
 		portletURL.setRemovedParameterNames(removedParameterNames);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_id", PORTLET_DDM_ID, false, false, expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_lifecycle", "0", false, false, expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"a", new String[]{"a1", "a0"}, false, false, PORTLET_DDM_ID,
 			expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"b", new String[]{"b2", "b0", "b1"}, false, false, PORTLET_DDM_ID,
 			expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"c", "c0", false, false, PORTLET_DDM_ID, expectedURLParts);
 
-		expectedURLParts.remove(AMPERSAND);
+		expectedURLParts.remove(_AMPERSAND);
 
 		compareURLsPartiallyOrdered(
 			expectedURLParts, portletURL.generateToString());
@@ -233,34 +233,34 @@ public class PortletURLImplTest {
 
 		portletURL.setRemovedParameterNames(removedParameterNames);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_id", PORTLET_DDM_ID, false, false, expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_lifecycle", "2", false, false, expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_cacheability", "cacheLevelPage", false, false,
 			expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"a", new String[]{"a1", "a0"}, false, false, PORTLET_DDM_ID,
 			expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"b", new String[]{"b2", "b0", "b1"}, false, false, PORTLET_DDM_ID,
 			expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"c", "c0", false, false, PORTLET_DDM_ID, expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"d", "d0", false, false, PORTLET_DDM_ID, expectedURLParts);
 
-		expectedURLParts.remove(AMPERSAND);
+		expectedURLParts.remove(_AMPERSAND);
 
 		compareURLsPartiallyOrdered(
 			expectedURLParts, portletURL.generateToString());
@@ -291,22 +291,22 @@ public class PortletURLImplTest {
 			_request, PORTLET_DDM_ID, _targetLayout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_lifecycle", "0", false, false, expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_id", PORTLET_DDM_ID, false, false, expectedURLParts);
 
 		portletURL.setParameter("test&name", "test&value");
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"test&name", "test&value", false, false, PORTLET_DDM_ID,
 			expectedURLParts);
 
-		expectedURLParts.remove(AMPERSAND);
+		expectedURLParts.remove(_AMPERSAND);
 
 		compareURLsPartiallyOrdered(
 			expectedURLParts, portletURL.generateToString());
@@ -321,21 +321,21 @@ public class PortletURLImplTest {
 			_request, PORTLET_DDM_ID, _targetLayout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
-		addExpectedURLPart("p_p_lifecycle", "0", false, true, expectedURLParts);
+		_addExpectedURLPart("p_p_lifecycle", "0", false, true, expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_id", PORTLET_DDM_ID, false, true, expectedURLParts);
 
 		portletURL.setParameter("test&name", "test&value");
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"test&name", "test&value", false, true, PORTLET_DDM_ID,
 			expectedURLParts);
 
-		expectedURLParts.remove(AMPERSAND_ESCAPED);
+		expectedURLParts.remove(_AMPERSAND_ESCAPED);
 
 		compareURLsPartiallyOrdered(
 			expectedURLParts, portletURL.generateToString());
@@ -359,22 +359,22 @@ public class PortletURLImplTest {
 			_request, PORTLET_DDM_ID, _targetLayout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_lifecycle", "0", false, false, expectedURLParts);
 
-		addExpectedURLPart
+		_addExpectedURLPart
 			("p_p_id", PORTLET_DDM_ID, false, false, expectedURLParts);
 
 		portletURL.setParameter("test&name", "test&value");
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"test&name", "test&value", false, false, PORTLET_DDM_ID,
 			expectedURLParts);
 
-		expectedURLParts.remove(AMPERSAND);
+		expectedURLParts.remove(_AMPERSAND);
 
 		compareURLsPartiallyOrdered(
 			expectedURLParts, portletURL.generateToString());
@@ -387,21 +387,21 @@ public class PortletURLImplTest {
 			_request, PORTLET_DDM_ID, _targetLayout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
-		addExpectedURLPart("p_p_lifecycle", "0", false, true, expectedURLParts);
+		_addExpectedURLPart("p_p_lifecycle", "0", false, true, expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_id", PORTLET_DDM_ID, false, true, expectedURLParts);
 
 		portletURL.setParameter("test&name", "test&value");
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"test&name", "test&value", false, true, PORTLET_DDM_ID,
 			expectedURLParts);
 
-		expectedURLParts.remove(AMPERSAND_ESCAPED);
+		expectedURLParts.remove(_AMPERSAND_ESCAPED);
 
 		compareURLsPartiallyOrdered(
 			expectedURLParts, portletURL.generateToString());
@@ -421,24 +421,24 @@ public class PortletURLImplTest {
 				_request, PORTLET_DDM_ID, _targetLayout.getPlid(),
 				PortletRequest.RENDER_PHASE);
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				FacebookUtil.FACEBOOK_APPS_URL, expectedURLParts);
 
-			addExpectedURLPart("canvas_page/?", expectedURLParts);
+			_addExpectedURLPart("canvas_page/?", expectedURLParts);
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"p_p_lifecycle", "0", false, false, expectedURLParts);
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"p_p_id", PORTLET_DDM_ID, false, false, expectedURLParts);
 
 			portletURL.setParameter("test&name", "test&value");
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"test&name", "test&value", false, false, PORTLET_DDM_ID,
 				expectedURLParts);
 
-			expectedURLParts.remove(AMPERSAND);
+			expectedURLParts.remove(_AMPERSAND);
 
 			compareURLsPartiallyOrdered(
 				expectedURLParts, portletURL.generateToString());
@@ -462,18 +462,18 @@ public class PortletURLImplTest {
 		portletURL.setParameter("feedId", "feedId");
 		portletURL.setParameter("test&name", "test&value");
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"test&name", "test&value", false, false, PORTLET_JOURNAL_ID,
 			expectedURLParts);
 
 		portletURL.setWindowState(WindowState.NORMAL);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"http://domain2.net/destination-layout", expectedURLParts);
-		addExpectedURLPart("/-/journal", expectedURLParts);
-		addExpectedURLPart("/rss/feedId?", expectedURLParts);
+		_addExpectedURLPart("/-/journal", expectedURLParts);
+		_addExpectedURLPart("/rss/feedId?", expectedURLParts);
 
-		expectedURLParts.remove(AMPERSAND);
+		expectedURLParts.remove(_AMPERSAND);
 
 		compareURLsPartiallyOrdered(
 			expectedURLParts, portletURL.generateToString());
@@ -489,10 +489,11 @@ public class PortletURLImplTest {
 			PORTLET_DDM_ID, PortletRequest.RENDER_PHASE, false, false,
 			expectedURLParts);
 
-		addExpectedURLPart(
-			"p_p_auth", AuthTokenUtil.getToken(_request,
-			_targetLayout.getPlid(), PORTLET_MY_ACCOUNT_ID), false, false, null,
-			expectedURLParts);
+		_addExpectedURLPart(
+			"p_p_auth",
+			AuthTokenUtil.getToken(
+				_request, _targetLayout.getPlid(), PORTLET_MY_ACCOUNT_ID),
+			false, false, null, expectedURLParts);
 
 		testPortletURL(
 			PORTLET_MY_ACCOUNT_ID, PortletRequest.RENDER_PHASE, false, false,
@@ -517,16 +518,16 @@ public class PortletURLImplTest {
 			_request, PORTLET_WIKI_ID, _targetLayout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_id", PORTLET_WIKI_ID, false, false, expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_lifecycle", "0", false, false, expectedURLParts);
 
-		expectedURLParts.remove(AMPERSAND);
+		expectedURLParts.remove(_AMPERSAND);
 
 		compareURLsPartiallyOrdered(
 			expectedURLParts, portletURL.generateToString());
@@ -535,21 +536,22 @@ public class PortletURLImplTest {
 
 		portletURL.setPlid(_sourceLayout.getPlid());
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"http://domain1.net/source-layout?", expectedURLParts);
 
-		addExpectedURLPart(
-			"p_p_auth", AuthTokenUtil.getToken(_request,
-			_sourceLayout.getPlid(), PORTLET_WIKI_ID), false, false, null,
-			expectedURLParts);
+		_addExpectedURLPart(
+			"p_p_auth",
+			AuthTokenUtil.getToken(
+				_request, _sourceLayout.getPlid(), PORTLET_WIKI_ID),
+			false, false, null, expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_id", PORTLET_WIKI_ID, false, false, expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_lifecycle", "0", false, false, expectedURLParts);
 
-		expectedURLParts.remove(AMPERSAND);
+		expectedURLParts.remove(_AMPERSAND);
 
 		compareURLsPartiallyOrdered(
 			expectedURLParts, portletURL.generateToString());
@@ -617,22 +619,22 @@ public class PortletURLImplTest {
 				_request, "0", _targetLayout.getPlid(),
 				PortletRequest.RENDER_PHASE);
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"http://domain2.net/destination-layout?", expectedURLParts);
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"p_p_lifecycle", "0", false, true, expectedURLParts);
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"p_p_id", PORTLET_DDM_ID, false, true, expectedURLParts);
 
 			portletURL.setParameter("test&name", "test&value");
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"test&name", "test&value", false, true, PORTLET_DDM_ID,
 				expectedURLParts);
 
-			expectedURLParts.remove(AMPERSAND_ESCAPED);
+			expectedURLParts.remove(_AMPERSAND_ESCAPED);
 
 			portletURL.setPortletId(PORTLET_DDM_ID);
 
@@ -673,7 +675,7 @@ public class PortletURLImplTest {
 
 			portletURL.setParameter(publicRenderParameter.getIdentifier(), "0");
 
-			addExpectedURLPart(tagPRPName, "0", false, false, expectedURLParts);
+			_addExpectedURLPart(tagPRPName, "0", false, false, expectedURLParts);
 
 			portletURL.removePublicRenderParameter(
 				publicRenderParameter.getIdentifier());
@@ -682,22 +684,22 @@ public class PortletURLImplTest {
 				PortletQNameUtil.getRemovePublicRenderParameterName(
 					tagPRPQName);
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				tagPRPNameRemove, "1", false, false, expectedURLParts);
 		}
 
 		portletURL.setPortletId(PORTLET_WIKI_ID);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_id", PORTLET_WIKI_ID, false, false, expectedURLParts);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_lifecycle", "0", false, false, expectedURLParts);
 
-		expectedURLParts.remove(AMPERSAND);
+		expectedURLParts.remove(_AMPERSAND);
 
 		compareURLsPartiallyOrdered(
 			expectedURLParts, portletURL.generateToString());
@@ -772,116 +774,116 @@ public class PortletURLImplTest {
 			List<String[]> expectedURLParts, boolean encrypt, boolean escapeXML)
 		throws Exception {
 
-		addExpectedURLPart("?", expectedURLParts);
+		_addExpectedURLPart("?", expectedURLParts);
 
 		portletURL.addProperty("key", "value0");
 		portletURL.setAnchor(true);
 
 		if (_portletUrlAnchorEnableField.getBoolean(null)) {
-			addExpectedURLPart("#p_" + portletId, expectedURLParts);
+			_addExpectedURLPart("#p_" + portletId, expectedURLParts);
 
 			if (escapeXML) {
-				expectedURLParts.add(AMPERSAND_ESCAPED);
+				expectedURLParts.add(_AMPERSAND_ESCAPED);
 			}
 			else {
-				expectedURLParts.add(AMPERSAND);
+				expectedURLParts.add(_AMPERSAND);
 			}
 		}
 
 		if (portletURL.getLifecycle().equals(PortletRequest.RESOURCE_PHASE)) {
 			portletURL.setCacheability(ResourceURL.FULL);
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"p_p_cacheability", "cacheLevelFull", encrypt, escapeXML,
 				expectedURLParts);
 		}
 
 		portletURL.setControlPanelCategory(PortletCategoryKeys.SITES);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"controlPanelCategory", "sites", encrypt, escapeXML,
 			expectedURLParts);
 
 		portletURL.setDoAsGroupId(10000);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"doAsGroupId", "10000", encrypt, escapeXML, expectedURLParts);
 
 		portletURL.setDoAsUserId(10000);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"doAsUserId", "10000", true, escapeXML, expectedURLParts);
 
 		portletURL.setDoAsUserLanguageId("en");
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"doAsUserLanguageId", "en", encrypt, escapeXML, expectedURLParts);
 
 		portletURL.setEncrypt(encrypt);
 
 		if (encrypt) {
-			addExpectedURLPart("shuo", "1", false, escapeXML, expectedURLParts);
+			_addExpectedURLPart("shuo", "1", false, escapeXML, expectedURLParts);
 		}
 
 		portletURL.setEscapeXml(escapeXML);
 
 		if (portletURL.getLifecycle().equals(PortletRequest.ACTION_PHASE)) {
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"p_p_lifecycle", "1", encrypt, escapeXML, expectedURLParts);
 		}
 
 		if (portletURL.getLifecycle().equals(PortletRequest.RENDER_PHASE)) {
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"p_p_lifecycle", "0", encrypt, escapeXML, expectedURLParts);
 		}
 
 		if (portletURL.getLifecycle().equals(PortletRequest.RESOURCE_PHASE)) {
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"p_p_lifecycle", "2", encrypt, escapeXML, expectedURLParts);
 		}
 
 		portletURL.setParameter("a", "a");
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"a", "a", encrypt, escapeXML, portletId, expectedURLParts);
 
 		portletURL.setParameter("b", new String[]{"b1", "b2"});
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"b", new String[]{"b1", "b2"}, encrypt, escapeXML, portletId,
 			expectedURLParts);
 
 		portletURL.setParameter("c", "c1");
 		portletURL.setParameter("c", "c2", true);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"c", new String[]{"c1", "c2"}, encrypt, escapeXML, portletId,
 			expectedURLParts);
 
 		portletURL.setParameter("d", "d1");
 		portletURL.setParameter("d", "d2", false);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"d", "d2", encrypt, escapeXML, portletId, expectedURLParts);
 
 		portletURL.setParameter("e", "e0");
 		portletURL.setParameter("e", new String[]{"e1", "e2"}, true);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"e", new String[]{"e0", "e1", "e2"}, encrypt, escapeXML, portletId,
 			expectedURLParts);
 
 		portletURL.setParameter("f", "f0");
 		portletURL.setParameter("f", new String[]{"f1", "f2"}, false);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"f", new String[]{"f1", "f2"}, encrypt, escapeXML, portletId,
 			expectedURLParts);
 
 		portletURL.setParameter(
 			"invalid & \u0000 name", " invalid \r\n\t \u0000 < > '\" value");
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"invalid & \u0000 name", " invalid \r\n\t \u0000 < > '\" value",
 			encrypt, escapeXML, portletId, expectedURLParts);
 
@@ -899,7 +901,7 @@ public class PortletURLImplTest {
 
 			portletURL.setParameter(publicRenderParameter.getIdentifier(), "0");
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				tagPRPName, "0", encrypt, escapeXML, expectedURLParts);
 
 			portletURL.removePublicRenderParameter(
@@ -909,7 +911,7 @@ public class PortletURLImplTest {
 				PortletQNameUtil.getRemovePublicRenderParameterName(
 					tagPRPQName);
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				tagPRPNameRemove, "1", encrypt, escapeXML, expectedURLParts);
 		}
 
@@ -917,52 +919,52 @@ public class PortletURLImplTest {
 		portletURL.setParameter("inPath", "0");
 		portletURL.setPlid(_targetLayout.getPlid());
 
-		addExpectedURLPart("domain2.net/destination-layout", expectedURLParts);
+		_addExpectedURLPart("domain2.net/destination-layout", expectedURLParts);
 
 		portletURL.setPortletId(portletId);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_id", portletId, encrypt, escapeXML, expectedURLParts);
 
 		portletURL.setPortletMode(PortletMode.EDIT);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_mode", "edit", encrypt, escapeXML, expectedURLParts);
 
 		portletURL.setProperty("key", "value");
 
 		portletURL.setRefererGroupId(_sourceLayout.getGroupId());
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"refererGroupId", String.valueOf(_sourceLayout.getGroupId()),
 			encrypt, escapeXML, expectedURLParts);
 
 		portletURL.setRefererPlid(_sourceLayout.getPlid());
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"refererPlid", String.valueOf(_sourceLayout.getPlid()), encrypt,
 			escapeXML, expectedURLParts);
 
 		if (portletURL.getLifecycle().equals(PortletRequest.RESOURCE_PHASE)) {
 			portletURL.setResourceID("resourceID");
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"p_p_resource_id", "resourceID", encrypt, escapeXML,
 				expectedURLParts);
 		}
 
 		portletURL.setSecure(true);
 
-		addExpectedURLPart("https://", expectedURLParts);
+		_addExpectedURLPart("https://", expectedURLParts);
 
 		portletURL.setWindowState(LiferayWindowState.NORMAL);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_state", "normal", encrypt, escapeXML, expectedURLParts);
 
 		portletURL.setWindowStateRestoreCurrentView(true);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_state_rcv", "1", encrypt, escapeXML, expectedURLParts);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
@@ -972,17 +974,17 @@ public class PortletURLImplTest {
 
 		portletDisplay.setColumnId("column-1");
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_col_id", "column-1", encrypt, escapeXML, expectedURLParts);
 
 		portletDisplay.setColumnPos(1);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_col_pos", "1", encrypt, escapeXML, expectedURLParts);
 
 		portletDisplay.setColumnCount(2);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"p_p_col_count", "2", encrypt, escapeXML, expectedURLParts);
 
 		boolean isPortletUrlAppendParameters =
@@ -1001,7 +1003,7 @@ public class PortletURLImplTest {
 			}
 
 			if ((counter++ % 2) == 1) {
-				addExpectedURLPart(
+				_addExpectedURLPart(
 					autopropagatedParameter, value, encrypt, escapeXML,
 					portletId, expectedURLParts);
 			}
@@ -1009,12 +1011,12 @@ public class PortletURLImplTest {
 				portletURL.setParameter(autopropagatedParameter, "1");
 
 				if (isPortletUrlAppendParameters) {
-					addExpectedURLPart(
+					_addExpectedURLPart(
 						autopropagatedParameter, new String[]{value, "1"},
 						encrypt, escapeXML, portletId, expectedURLParts);
 				}
 				else {
-					addExpectedURLPart(
+					_addExpectedURLPart(
 						autopropagatedParameter, "1", encrypt, escapeXML,
 						portletId, expectedURLParts);
 				}
@@ -1024,10 +1026,10 @@ public class PortletURLImplTest {
 		// remove last ampersand
 
 		if (escapeXML) {
-			expectedURLParts.remove(AMPERSAND_ESCAPED);
+			expectedURLParts.remove(_AMPERSAND_ESCAPED);
 		}
 		else {
-			expectedURLParts.remove(AMPERSAND);
+			expectedURLParts.remove(_AMPERSAND);
 		}
 	}
 
@@ -1039,7 +1041,7 @@ public class PortletURLImplTest {
 		boolean isWSRP = ParamUtil.getBoolean(_request, _WSRP);
 
 		if (!isWSRP) {
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"p_auth", AuthTokenUtil.getToken(_request), encrypt, escapeXML,
 				null, expectedURLParts);
 		}
@@ -1229,22 +1231,22 @@ public class PortletURLImplTest {
 
 		List<String[]> expectedParameters = new ArrayList<String[]>();
 
-		addExpectedURLPart("wsrp_rewrite?", expectedURLParts);
+		_addExpectedURLPart("wsrp_rewrite?", expectedURLParts);
 
 		portletURL.addProperty("key", "value0");
 		portletURL.setAnchor(true);
 
 		if (_portletUrlAnchorEnableField.getBoolean(null)) {
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"wsrp-fragmentID=#p_" + URLEncoder.encode(
 					portletId, StringPool.UTF8), expectedURLParts);
 
-			expectedURLParts.add(AMPERSAND);
+			expectedURLParts.add(_AMPERSAND);
 		}
 
 		if (portletURL.getLifecycle().equals(PortletRequest.RESOURCE_PHASE)) {
 			portletURL.setCacheability(ResourceURL.FULL);
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"wsrp-resourceCacheability", "cacheLevelFull", false, false,
 				expectedURLParts);
 		}
@@ -1257,63 +1259,63 @@ public class PortletURLImplTest {
 		portletURL.setEscapeXml(escapeXML);
 
 		if (portletURL.getLifecycle().equals(PortletRequest.ACTION_PHASE)) {
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"wsrp-urlType", "blockingAction", false, false,
 				expectedURLParts);
 		}
 
 		if (portletURL.getLifecycle().equals(PortletRequest.RENDER_PHASE)) {
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"wsrp-urlType", "render", false, false, expectedURLParts);
 		}
 
 		if (portletURL.getLifecycle().equals(PortletRequest.RESOURCE_PHASE)) {
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"wsrp-urlType", "resource", false, false, expectedURLParts);
 		}
 
 		portletURL.setParameter("a", "a");
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"a", "a", false, false, portletId, expectedParameters);
 
 		portletURL.setParameter("b", new String[]{"b1", "b2"});
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"b", new String[]{"b1", "b2"}, false, false, portletId,
 			expectedParameters);
 
 		portletURL.setParameter("c", "c1");
 		portletURL.setParameter("c", "c2", true);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"c", new String[]{"c1", "c2"}, false, false, portletId,
 			expectedParameters);
 
 		portletURL.setParameter("d", "d1");
 		portletURL.setParameter("d", "d2", false);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"d", "d2", false, false, portletId, expectedParameters);
 
 		portletURL.setParameter("e", "e0");
 		portletURL.setParameter("e", new String[]{"e1", "e2"}, true);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"e", new String[]{"e0", "e1", "e2"}, false, false, portletId,
 			expectedParameters);
 
 		portletURL.setParameter("f", "f0");
 		portletURL.setParameter("f", new String[]{"f1", "f2"}, false);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"f", new String[]{"f1", "f2"}, false, false, portletId,
 			expectedParameters);
 
 		portletURL.setParameter(
 			"invalid & \u0000 name", " invalid \r\n\t \u0000 < > '\" value");
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"invalid & \u0000 name", " invalid \r\n\t \u0000 < > '\" value",
 			false, false, portletId, expectedParameters);
 
@@ -1331,7 +1333,7 @@ public class PortletURLImplTest {
 
 			portletURL.setParameter(publicRenderParameter.getIdentifier(), "0");
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				tagPRPName, "0", false, false, expectedParameters);
 		}
 
@@ -1341,7 +1343,7 @@ public class PortletURLImplTest {
 		portletURL.setPortletId(portletId);
 		portletURL.setPortletMode(PortletMode.EDIT);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"wsrp-mode", "wsrp:edit", false, false, expectedURLParts);
 
 		portletURL.setProperty("key", "value");
@@ -1351,7 +1353,7 @@ public class PortletURLImplTest {
 		if (portletURL.getLifecycle().equals(PortletRequest.RESOURCE_PHASE)) {
 			portletURL.setResourceID("resourceID");
 
-			addExpectedURLPart(
+			_addExpectedURLPart(
 				"wsrp-resourceID", "resourceID", false, false,
 				expectedURLParts);
 		}
@@ -1359,7 +1361,7 @@ public class PortletURLImplTest {
 		portletURL.setSecure(true);
 		portletURL.setWindowState(LiferayWindowState.NORMAL);
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			"wsrp-windowState", "wsrp:normal", false, false, expectedURLParts);
 
 		portletURL.setWindowStateRestoreCurrentView(true);
@@ -1380,7 +1382,7 @@ public class PortletURLImplTest {
 			}
 
 			if ((counter++ % 2) == 1) {
-				addExpectedURLPart(
+				_addExpectedURLPart(
 					autopropagatedParameter, value, false, false, portletId,
 					expectedParameters);
 			}
@@ -1388,12 +1390,12 @@ public class PortletURLImplTest {
 				portletURL.setParameter(autopropagatedParameter, "1");
 
 				if (isPortletUrlAppendParameters) {
-					addExpectedURLPart(
+					_addExpectedURLPart(
 						autopropagatedParameter, new String[]{value, "1"},
 						false, false, portletId, expectedParameters);
 				}
 				else {
-					addExpectedURLPart(
+					_addExpectedURLPart(
 						autopropagatedParameter, "1", false, false, portletId,
 						expectedParameters);
 				}
@@ -1428,33 +1430,33 @@ public class PortletURLImplTest {
 		compareURLsPartiallyOrdered(expectedParameters, actualParams);
 	}
 
-	private void addExpectedURLPart(
+	private void _addExpectedURLPart(
 		String part, List<String[]> expectedURLParts) {
 
 		expectedURLParts.add(new String[]{part});
 	}
 
-	private void addExpectedURLPart(
+	private void _addExpectedURLPart(
 			String name, String value, boolean encrypt, boolean escapeXML,
 			List<String[]> expectedURLParts)
 		throws Exception {
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			name, new String[]{value}, encrypt, escapeXML, null,
 			expectedURLParts);
 	}
 
-	private void addExpectedURLPart(
+	private void _addExpectedURLPart(
 			String name, String value, boolean encrypt, boolean escapeXML,
 			String portletId, List<String[]> expectedURLParts)
 		throws Exception {
 
-		addExpectedURLPart(
+		_addExpectedURLPart(
 			name, new String[]{value}, encrypt, escapeXML, portletId,
 			expectedURLParts);
 	}
 
-	private void addExpectedURLPart(
+	private void _addExpectedURLPart(
 			String name, String[] values, boolean encrypt, boolean escapeXML,
 			String portletId, List<String[]> expectedURLParts)
 		throws Exception {
@@ -1483,10 +1485,10 @@ public class PortletURLImplTest {
 
 			if (escapeXML) {
 				expectedURLPart[i] = HtmlUtil.escape(expectedURLPart[i]);
-				expectedURLParts.add(AMPERSAND_ESCAPED);
+				expectedURLParts.add(_AMPERSAND_ESCAPED);
 			}
 			else {
-				expectedURLParts.add(AMPERSAND);
+				expectedURLParts.add(_AMPERSAND);
 			}
 		}
 	}
@@ -1498,13 +1500,13 @@ public class PortletURLImplTest {
 
 	private static final String _WSRP_REWRITE = "/wsrp_rewrite";
 
-	private static final String[] AMPERSAND =
+	private static final String[] _AMPERSAND =
 		new String[]{StringPool.AMPERSAND};
 
-	private static final String[] AMPERSAND_ESCAPED =
+	private static final String[] _AMPERSAND_ESCAPED =
 		new String[]{StringPool.AMPERSAND + "amp;"};
 
-	private static final String COMPANY_KEY =
+	private static final String _COMPANY_KEY =
 		"rO0ABXNyAB9qYXZheC5jcnlwdG8uc3BlYy5TZWNyZXRLZXlTcGVjW0cLZuIwYU0CAAJM" +
 			"AAlhbGdvcml0aG10ABJMamF2YS9sYW5nL1N0cmluZztbAANrZXl0AAJbQnhwdAAD" +
 			"QUVTdXIAAltCrPMX+AYIVOACAAB4cAAAABDAkqmOGU4a6Kq2rZgmKMJj";

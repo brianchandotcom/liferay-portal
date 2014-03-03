@@ -15,6 +15,8 @@
 		<execute macro="Page#tearDownPG" />
 
 		<execute macro="User#tearDownCP" />
+
+		<execute macro="Role#tearDownCP" />
 	</tear-down>
 
 	<command name="AddSitePageXSS" priority="5">
@@ -93,7 +95,7 @@
 
 		<execute action="Home#open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=130&amp;p_p_state=maximized" />
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_INFO" value1="You do not have the roles required to access this portlet." />
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -204,7 +206,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextNotPresent" locator-key1="ERROR_MESSAGE_STATU_INFO" value1="Not Found" />
+		<execute action="Home#assertTextNotPresent" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="Site Page" />
 
@@ -241,7 +243,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_STATU_INFO" value1="Not Found" />
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 
 		<execute action="Home#assertTextNotPresent" locator-key1="BREADCRUMB_2" value1="Site Page" />
 

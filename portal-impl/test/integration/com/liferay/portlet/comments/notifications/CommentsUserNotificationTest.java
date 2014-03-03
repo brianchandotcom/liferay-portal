@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -29,6 +28,7 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
+import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.MBTestUtil;
 
 import org.junit.runner.RunWith;
@@ -74,7 +74,7 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected void subscribeToContainer() throws Exception {
-		SubscriptionLocalServiceUtil.addSubscription(
+		MBDiscussionLocalServiceUtil.subscribeDiscussion(
 			user.getUserId(), group.getGroupId(), BlogsEntry.class.getName(),
 			_commentedEntry.getEntryId());
 	}

@@ -123,7 +123,7 @@
 		<if>
 			<isset var="categoryDescription" />
 			<then>
-				<execute action="CPCategoriesAdd#type" locator-key1="DESCRIPTION_FIELD" value1="${localizationName}" />
+				<execute action="CPCategoriesAdd#type" locator-key1="DESCRIPTION_FIELD" value1="${categoryDescription}" />
 			</then>
 		</if>
 

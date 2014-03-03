@@ -149,6 +149,7 @@
 		<var name="structureFieldNames" value="Text" />
 		<var name="structureName" value="WC Structure Name" />
 		<var name="templateDescription" value="WC Template Description" />
+		<var name="templateLanguage" value="ftl" />
 		<var name="templateName" value="WC Template Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -168,6 +169,8 @@
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="${structureName}" />
 			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateFieldNames" value="${structureFieldNames}" />
+			<var name="templateLanguage" value="${templateLanguage}" />
 			<var name="templateName" value="${templateName}" />
 		</execute>
 
@@ -179,7 +182,7 @@
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="${templateDescription}" />
 			<var name="templateName" value="${templateName}" />
-			<var name="templateScript"><![CDATA["/root/dynamic-element[@name='text']"]]></var>
+			<var name="templateScript"><![CDATA[${Text.getData()}]]></var>
 		</execute>
 	</command>
 
@@ -208,7 +211,7 @@
 			<var name="templateDescription" value="${templateDescription}" />
 			<var name="templateLanguage" value="${templateLanguage}" />
 			<var name="templateName" value="${templateName}" />
-			<var name="templateScript"><![CDATA["/root/dynamic-element[@name='text']"]]></var>
+			<var name="templateScript"><![CDATA["/root/dynamic-element[@name='Text']"]]></var>
 		</execute>
 	</command>
 

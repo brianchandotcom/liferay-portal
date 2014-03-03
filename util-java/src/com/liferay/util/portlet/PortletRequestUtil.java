@@ -14,12 +14,10 @@
 
 package com.liferay.util.portlet;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,11 +26,8 @@ import com.liferay.portal.kernel.xml.simple.Element;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import java.io.InputStream;
-
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -46,81 +41,11 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowStateException;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.portlet.PortletFileUpload;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
 public class PortletRequestUtil {
-
-	public static void testMultipartWithCommonsFileUpload(
-			ActionRequest actionRequest)
-		throws Exception {
-
-		// Check if the given request is a multipart request
-
-		boolean multiPartContent = PortletFileUpload.isMultipartContent(
-			actionRequest);
-
-		if (_log.isInfoEnabled()) {
-			if (multiPartContent) {
-				_log.info("The given request is a multipart request");
-			}
-			else {
-				_log.info("The given request is NOT a multipart request");
-			}
-		}
-
-		DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
-
-		PortletFileUpload portletFileUpload = new PortletFileUpload(
-			diskFileItemFactory);
-
-		List<org.apache.commons.fileupload.FileItem> fileItemsList =
-			portletFileUpload.parseRequest(actionRequest);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Apache commons upload was able to parse " +
-					fileItemsList.size() + " items");
-		}
-
-		for (int i = 0; i < fileItemsList.size(); i++) {
-			FileItem fileItem = fileItemsList.get(i);
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Item " + i + " " + fileItem);
-			}
-		}
-	}
-
-	public static int testMultipartWithPortletInputStream(
-			ActionRequest actionRequest)
-		throws Exception {
-
-		InputStream inputStream = actionRequest.getPortletInputStream();
-
-		if (inputStream != null) {
-			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
-
-			StreamUtil.transfer(inputStream, unsyncByteArrayOutputStream);
-
-			int size = unsyncByteArrayOutputStream.size();
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Byte array size from the raw input stream is " + size);
-			}
-
-			return size;
-		}
-
-		return -1;
-	}
 
 	public static String toXML(
 		PortletRequest portletRequest, PortletResponse portletResponse) {

@@ -161,13 +161,8 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testActionURLFieldFalseNoEncryptNoEscapeXML() throws Exception {
-		testActionURL(false, false, false);
-	}
-
-	@Test
-	public void testActionURLFieldFalseNoEncryptEscapeXML() throws Exception {
-		testActionURL(false, false, true);
+	public void testActionURLFieldFalseEncryptEscapeXML() throws Exception {
+		testActionURL(false, true, true);
 	}
 
 	@Test
@@ -176,18 +171,18 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testActionURLFieldFalseEncryptEscapeXML() throws Exception {
-		testActionURL(false, true, true);
+	public void testActionURLFieldFalseNoEncryptEscapeXML() throws Exception {
+		testActionURL(false, false, true);
 	}
 
 	@Test
-	public void testActionURLFieldTrueNoEncryptNoEscapeXML() throws Exception {
-		testActionURL(true, false, false);
+	public void testActionURLFieldFalseNoEncryptNoEscapeXML() throws Exception {
+		testActionURL(false, false, false);
 	}
 
 	@Test
-	public void testActionURLFieldTrueNoEncryptEscapeXML() throws Exception {
-		testActionURL(true, false, true);
+	public void testActionURLFieldTrueEncryptEscapeXML() throws Exception {
+		testActionURL(true, true, true);
 	}
 
 	@Test
@@ -196,8 +191,13 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testActionURLFieldTrueEncryptEscapeXML() throws Exception {
-		testActionURL(true, true, true);
+	public void testActionURLFieldTrueNoEncryptEscapeXML() throws Exception {
+		testActionURL(true, false, true);
+	}
+
+	@Test
+	public void testActionURLFieldTrueNoEncryptNoEscapeXML() throws Exception {
+		testActionURL(true, false, false);
 	}
 
 	@Test
@@ -538,13 +538,8 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testRenderURLFieldFalseNoEncryptNoEscapeXML() throws Exception {
-		testRenderURL(false, false, false);
-	}
-
-	@Test
-	public void testRenderURLFieldFalseNoEncryptEscapeXML() throws Exception {
-		testRenderURL(false, false, true);
+	public void testRenderURLFieldFalseEncryptEscapeXML() throws Exception {
+		testRenderURL(false, true, true);
 	}
 
 	@Test
@@ -553,23 +548,13 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testRenderURLFieldFalseEncryptEscapeXML() throws Exception {
-		testRenderURL(false, true, true);
+	public void testRenderURLFieldFalseNoEncryptEscapeXML() throws Exception {
+		testRenderURL(false, false, true);
 	}
 
 	@Test
-	public void testRenderURLFieldTrueNoEncryptNoEscapeXML() throws Exception {
-		testRenderURL(true, false, false);
-	}
-
-	@Test
-	public void testRenderURLFieldTrueNoEncryptEscapeXML() throws Exception {
-		testRenderURL(true, false, true);
-	}
-
-	@Test
-	public void testRenderURLFieldTrueEncryptNoEscapeXML() throws Exception {
-		testRenderURL(true, true, false);
+	public void testRenderURLFieldFalseNoEncryptNoEscapeXML() throws Exception {
+		testRenderURL(false, false, false);
 	}
 
 	@Test
@@ -578,18 +563,18 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testResourceURLFieldFalseNoEncryptNoEscapeXML() throws Exception {
-		testRenderURL(false, false, false);
+	public void testRenderURLFieldTrueEncryptNoEscapeXML() throws Exception {
+		testRenderURL(true, true, false);
 	}
 
 	@Test
-	public void testResourceURLFieldFalseNoEncryptEscapeXML() throws Exception {
-		testResourceURL(false, false, true);
+	public void testRenderURLFieldTrueNoEncryptEscapeXML() throws Exception {
+		testRenderURL(true, false, true);
 	}
 
 	@Test
-	public void testResourceURLFieldFalseEncryptNoEscapeXML() throws Exception {
-		testResourceURL(false, true, false);
+	public void testRenderURLFieldTrueNoEncryptNoEscapeXML() throws Exception {
+		testRenderURL(true, false, false);
 	}
 
 	@Test
@@ -598,13 +583,25 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testResourceURLFieldTrueNoEncryptNoEscapeXML() throws Exception {
-		testResourceURL(true, false, false);
+	public void testResourceURLFieldFalseEncryptNoEscapeXML() throws Exception {
+		testResourceURL(false, true, false);
 	}
 
 	@Test
-	public void testResourceURLFieldTrueNoEncryptEscapeXML() throws Exception {
-		testResourceURL(true, false, true);
+	public void testResourceURLFieldFalseNoEncryptEscapeXML() throws Exception {
+		testResourceURL(false, false, true);
+	}
+
+	@Test
+	public void testResourceURLFieldFalseNoEncryptNoEscapeXML()
+		throws Exception {
+
+		testRenderURL(false, false, false);
+	}
+
+	@Test
+	public void testResourceURLFieldTrueEncryptEscapeXML() throws Exception {
+		testResourceURL(true, true, true);
 	}
 
 	@Test
@@ -613,8 +610,15 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testResourceURLFieldTrueEncryptEscapeXML() throws Exception {
-		testResourceURL(true, true, true);
+	public void testResourceURLFieldTrueNoEncryptEscapeXML() throws Exception {
+		testResourceURL(true, false, true);
+	}
+
+	@Test
+	public void testResourceURLFieldTrueNoEncryptNoEscapeXML()
+		throws Exception {
+
+		testResourceURL(true, false, false);
 	}
 
 	@Test
@@ -814,17 +818,8 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testWSRPActionURLFieldFalseNoEncryptNoEscapeXML()
-		throws Exception {
-
-		testWSRPURLs(_ACTION_URL_TYPE, false, false, false);
-	}
-
-	@Test
-	public void testWSRPActionURLFieldFalseNoEncryptEscapeXML()
-		throws Exception {
-
-		testWSRPURLs(_ACTION_URL_TYPE, false, false, true);
+	public void testWSRPActionURLFieldFalseEncryptEscapeXML() throws Exception {
+		testWSRPURLs(_ACTION_URL_TYPE, false, true, true);
 	}
 
 	@Test
@@ -835,24 +830,22 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testWSRPActionURLFieldFalseEncryptEscapeXML()
+	public void testWSRPActionURLFieldFalseNoEncryptEscapeXML()
 		throws Exception {
 
-		testWSRPURLs(_ACTION_URL_TYPE, false, true, true);
+		testWSRPURLs(_ACTION_URL_TYPE, false, false, true);
 	}
 
 	@Test
-	public void testWSRPActionURLFieldTrueNoEncryptNoEscapeXML()
+	public void testWSRPActionURLFieldFalseNoEncryptNoEscapeXML()
 		throws Exception {
 
-		testWSRPURLs(_ACTION_URL_TYPE, true, false, false);
+		testWSRPURLs(_ACTION_URL_TYPE, false, false, false);
 	}
 
 	@Test
-	public void testWSRPActionURLFieldTrueNoEncryptEscapeXML()
-		throws Exception {
-
-		testWSRPURLs(_ACTION_URL_TYPE, true, false, true);
+	public void testWSRPActionURLFieldTrueEncryptEscapeXML() throws Exception {
+		testWSRPURLs(_ACTION_URL_TYPE, true, true, true);
 	}
 
 	@Test
@@ -863,24 +856,22 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testWSRPActionURLFieldTrueEncryptEscapeXML()
+	public void testWSRPActionURLFieldTrueNoEncryptEscapeXML()
 		throws Exception {
 
-		testWSRPURLs(_ACTION_URL_TYPE, true, true, true);
+		testWSRPURLs(_ACTION_URL_TYPE, true, false, true);
 	}
 
 	@Test
-	public void testWSRPRenderURLFieldFalseNoEncryptNoEscapeXML()
+	public void testWSRPActionURLFieldTrueNoEncryptNoEscapeXML()
 		throws Exception {
 
-		testWSRPURLs(_RENDER_URL_TYPE, false, false, false);
+		testWSRPURLs(_ACTION_URL_TYPE, true, false, false);
 	}
 
 	@Test
-	public void testWSRPRenderURLFieldFalseNoEncryptEscapeXML()
-		throws Exception {
-
-		testWSRPURLs(_RENDER_URL_TYPE, false, false, true);
+	public void testWSRPRenderURLFieldFalseEncryptEscapeXML() throws Exception {
+		testWSRPURLs(_RENDER_URL_TYPE, false, true, true);
 	}
 
 	@Test
@@ -891,24 +882,22 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testWSRPRenderURLFieldFalseEncryptEscapeXML()
+	public void testWSRPRenderURLFieldFalseNoEncryptEscapeXML()
 		throws Exception {
 
-		testWSRPURLs(_RENDER_URL_TYPE, false, true, true);
+		testWSRPURLs(_RENDER_URL_TYPE, false, false, true);
 	}
 
 	@Test
-	public void testWSRPRenderURLFieldTrueNoEncryptNoEscapeXML()
+	public void testWSRPRenderURLFieldFalseNoEncryptNoEscapeXML()
 		throws Exception {
 
-		testWSRPURLs(_RENDER_URL_TYPE, true, false, false);
+		testWSRPURLs(_RENDER_URL_TYPE, false, false, false);
 	}
 
 	@Test
-	public void testWSRPRenderURLFieldTrueNoEncryptEscapeXML()
-		throws Exception {
-
-		testWSRPURLs(_RENDER_URL_TYPE, true, false, true);
+	public void testWSRPRenderURLFieldTrueEncryptEscapeXML() throws Exception {
+		testWSRPURLs(_RENDER_URL_TYPE, true, true, true);
 	}
 
 	@Test
@@ -919,31 +908,17 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testWSRPRenderURLFieldTrueEncryptEscapeXML()
+	public void testWSRPRenderURLFieldTrueNoEncryptEscapeXML()
 		throws Exception {
 
-		testWSRPURLs(_RENDER_URL_TYPE, true, true, true);
+		testWSRPURLs(_RENDER_URL_TYPE, true, false, true);
 	}
 
 	@Test
-	public void testWSRPResourceURLFieldFalseNoEncryptNoEscapeXML()
+	public void testWSRPRenderURLFieldTrueNoEncryptNoEscapeXML()
 		throws Exception {
 
-		testWSRPURLs(_RESOURCE_URL_TYPE, false, false, false);
-	}
-
-	@Test
-	public void testWSRPResourceURLFieldFalseNoEncryptEscapeXML()
-		throws Exception {
-
-		testWSRPURLs(_RESOURCE_URL_TYPE, false, false, true);
-	}
-
-	@Test
-	public void testWSRPResourceURLFieldFalseEncryptNoEscapeXML()
-		throws Exception {
-
-		testWSRPURLs(_RESOURCE_URL_TYPE, false, true, false);
+		testWSRPURLs(_RENDER_URL_TYPE, true, false, false);
 	}
 
 	@Test
@@ -954,17 +929,31 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testWSRPResourceURLFieldTrueNoEncryptNoEscapeXML()
+	public void testWSRPResourceURLFieldFalseEncryptNoEscapeXML()
 		throws Exception {
 
-		testWSRPURLs(_RESOURCE_URL_TYPE, true, false, false);
+		testWSRPURLs(_RESOURCE_URL_TYPE, false, true, false);
 	}
 
 	@Test
-	public void testWSRPResourceURLFieldTrueNoEncryptEscapeXML()
+	public void testWSRPResourceURLFieldFalseNoEncryptEscapeXML()
 		throws Exception {
 
-		testWSRPURLs(_RESOURCE_URL_TYPE, true, false, true);
+		testWSRPURLs(_RESOURCE_URL_TYPE, false, false, true);
+	}
+
+	@Test
+	public void testWSRPResourceURLFieldFalseNoEncryptNoEscapeXML()
+		throws Exception {
+
+		testWSRPURLs(_RESOURCE_URL_TYPE, false, false, false);
+	}
+
+	@Test
+	public void testWSRPResourceURLFieldTrueEncryptEscapeXML()
+		throws Exception {
+
+		testWSRPURLs(_RESOURCE_URL_TYPE, true, true, true);
 	}
 
 	@Test
@@ -975,10 +964,17 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testWSRPResourceURLFieldTrueEncryptEscapeXML()
+	public void testWSRPResourceURLFieldTrueNoEncryptEscapeXML()
 		throws Exception {
 
-		testWSRPURLs(_RESOURCE_URL_TYPE, true, true, true);
+		testWSRPURLs(_RESOURCE_URL_TYPE, true, false, true);
+	}
+
+	@Test
+	public void testWSRPResourceURLFieldTrueNoEncryptNoEscapeXML()
+		throws Exception {
+
+		testWSRPURLs(_RESOURCE_URL_TYPE, true, false, false);
 	}
 
 	protected void compareURLsPartiallyOrdered(

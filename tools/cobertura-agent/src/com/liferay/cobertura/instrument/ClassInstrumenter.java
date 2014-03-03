@@ -1,4 +1,3 @@
-
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,137 +11,124 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.cobertura.instrument;
 
-import java.util.Collection;
+import com.liferay.portal.kernel.util.CharPool;
 
 import net.sourceforge.cobertura.coveragedata.ClassData;
 import net.sourceforge.cobertura.coveragedata.ProjectData;
 
-import org.apache.log4j.Logger;
-import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Shuyang Zhou
  */
-public class ClassInstrumenter extends ClassAdapter
-{
+public class ClassInstrumenter extends ClassVisitor {
 
-	private static final Logger logger = Logger
-			.getLogger(ClassInstrumenter.class);
+	public ClassInstrumenter(
+		ProjectData projectData, ClassVisitor classVisitor) {
 
-	private final static String hasBeenInstrumented = "net/sourceforge/cobertura/coveragedata/HasBeenInstrumented";
+		super(Opcodes.ASM4, classVisitor);
 
-	private Collection ignoreRegexs;
-
-	private Collection ignoreBranchesRegexs;
-
-	private ProjectData projectData;
-
-	private ClassData classData;
-
-	private String myName;
-
-	private boolean instrument = false;
-
-	public String getClassName()
-	{
-		return this.myName;
+		_projectData = projectData;
 	}
 
-	public boolean isInstrumented()
-	{
-		return instrument;
+	@Override
+	public void visit(
+		int version, int access, String name, String signature,
+		String superName, String[] interfaces) {
+
+		_className = name.replace(CharPool.SLASH, CharPool.PERIOD);
+
+		_classData = _projectData.getOrCreateClassData(_className);
+
+		_classData.setContainsInstrumentationInfo();
+
+		// Don't instrument interfaces or classes that have already been
+		// instrumented.
+
+		if (((access & Opcodes.ACC_INTERFACE) == 0) &&
+			!_hasBeenInstrumented(interfaces)) {
+
+			String[] newInterfaces = new String[interfaces.length + 1];
+
+			System.arraycopy(
+				interfaces, 0, newInterfaces, 0, interfaces.length);
+
+			newInterfaces[newInterfaces.length - 1] = _HAS_BEEN_INSTRUMENTED;
+
+			interfaces = newInterfaces;
+
+			_instrument = true;
+		}
+
+		super.visit(version, access, name, signature, superName, interfaces);
 	}
 
-	public ClassInstrumenter(ProjectData projectData, final ClassVisitor cv,
-			final Collection ignoreRegexs, final Collection ignoreBranchesRegexes)
-	{
-		super(cv);
-		this.projectData = projectData;
-		this.ignoreRegexs = ignoreRegexs;
-		this.ignoreBranchesRegexs = ignoreBranchesRegexs;
+	@Override
+	public void visitEnd() {
+		if (_instrument && (_classData.getNumberOfValidLines() == 0) &&
+			_logger.isWarnEnabled()) {
+
+			_logger.warn(
+				"No line number information found for class " + _className +
+					". Please recompile with debug info.");
+		}
 	}
 
-	private boolean arrayContains(Object[] array, Object key)
-	{
-		for (int i = 0; i < array.length; i++)
-		{
-			if (array[i].equals(key))
+	@Override
+	public MethodVisitor visitMethod(
+		int access, final String name, String desc, final String signature,
+		String[] exceptions) {
+
+		MethodVisitor methodVisitor = cv.visitMethod(
+			access, name, desc, signature, exceptions);
+
+		if (!_instrument) {
+			return methodVisitor;
+		}
+
+		if (methodVisitor != null) {
+			methodVisitor = new FirstPassMethodInstrumenter(
+				_classData, methodVisitor, _className, access, name, desc,
+				signature, exceptions);
+		}
+
+		return methodVisitor;
+	}
+
+	@Override
+	public void visitSource(String source, String debug) {
+		super.visitSource(source, debug);
+
+		_classData.setSourceFileName(source);
+	}
+
+	private static boolean _hasBeenInstrumented(String[] interfaces) {
+		for (String interfaceName : interfaces) {
+			if (interfaceName.equals(_HAS_BEEN_INSTRUMENTED)) {
 				return true;
+			}
 		}
 
 		return false;
 	}
 
-	/**
-	 * @param name In the format
-	 *             "net/sourceforge/cobertura/coverage/ClassInstrumenter"
-	 */
-	public void visit(int version, int access, String name, String signature,
-			String superName, String[] interfaces)
-	{
-		this.myName = name.replace('/', '.');
-		this.classData = this.projectData.getOrCreateClassData(this.myName);
-		this.classData.setContainsInstrumentationInfo();
+	private static final String _HAS_BEEN_INSTRUMENTED =
+		"net/sourceforge/cobertura/coveragedata/HasBeenInstrumented";
 
-		// Do not attempt to instrument interfaces or classes that
-		// have already been instrumented
-		if (((access & Opcodes.ACC_INTERFACE) != 0)
-				|| arrayContains(interfaces, hasBeenInstrumented))
-		{
-			super.visit(version, access, name, signature, superName,
-							interfaces);
-		}
-		else
-		{
-			instrument = true;
+	private static final Logger _logger = LoggerFactory.getLogger(
+		ClassInstrumenter.class);
 
-			// Flag this class as having been instrumented
-			String[] newInterfaces = new String[interfaces.length + 1];
-			System.arraycopy(interfaces, 0, newInterfaces, 0,
-							interfaces.length);
-			newInterfaces[newInterfaces.length - 1] = hasBeenInstrumented;
-
-			super.visit(version, access, name, signature, superName,
-					newInterfaces);
-		}
-	}
-
-	/**
-	 * @param source In the format "ClassInstrumenter.java"
-	 */
-	public void visitSource(String source, String debug)
-	{
-		super.visitSource(source, debug);
-		classData.setSourceFileName(source);
-	}
-
-	public MethodVisitor visitMethod(final int access, final String name,
-			final String desc, final String signature,
-			final String[] exceptions)
-	{
-		MethodVisitor mv = cv.visitMethod(access, name, desc, signature,
-				exceptions);
-
-		if (!instrument)
-			return mv;
-
-		return mv == null ? null : new FirstPassMethodInstrumenter(classData, mv,
-				this.myName, access, name, desc, signature, exceptions, ignoreRegexs, 
-				ignoreBranchesRegexs);
-	}
-
-	public void visitEnd()
-	{
-		if (instrument && classData.getNumberOfValidLines() == 0)
-			logger.warn("No line number information found for class "
-					+ this.myName
-					+ ".  Perhaps you need to compile with debug=true?");
-	}
+	private ClassData _classData;
+	private String _className;
+	private boolean _instrument;
+	private final ProjectData _projectData;
 
 }
-

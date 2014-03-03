@@ -1,4 +1,3 @@
-
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,348 +11,357 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.cobertura.instrument;
+
+import java.util.Map;
 
 import net.sourceforge.cobertura.instrument.JumpHolder;
 import net.sourceforge.cobertura.instrument.SwitchHolder;
-import net.sourceforge.cobertura.util.RegexUtil;
+
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
-import static org.objectweb.asm.Opcodes.GOTO;
-import static org.objectweb.asm.Opcodes.ICONST_0;
-import static org.objectweb.asm.Opcodes.ICONST_1;
-import static org.objectweb.asm.Opcodes.IFLT;
-import static org.objectweb.asm.Opcodes.IF_ICMPNE;
-import static org.objectweb.asm.Opcodes.ILOAD;
-import static org.objectweb.asm.Opcodes.INVOKESTATIC;
-import static org.objectweb.asm.Opcodes.ISTORE;
-import static org.objectweb.asm.Opcodes.JSR;
-import static org.objectweb.asm.Opcodes.SIPUSH;
 
 /**
- *
  * @author Shuyang Zhou
  */
-public class SecondPassMethodInstrumenter extends NewLocalVariableMethodAdapter implements Opcodes
+public class SecondPassMethodInstrumenter extends NewLocalVariableMethodAdapter
 {
-	private String TOUCH_COLLECTOR_CLASS="net/sourceforge/cobertura/coveragedata/TouchCollector";
-	
-	private int currentLine;
-   
-	private int currentJump;
-	
-	private boolean methodStarted;
-	
-	private int myVariableIndex;
+	public SecondPassMethodInstrumenter(
+		FirstPassMethodInstrumenter firstPassMethodInstrumenter) {
 
-	private Label startLabel;
-	
-	private Label endLabel;
-	
-	private JumpHolder lastJump;
-   
-	private FirstPassMethodInstrumenter firstPass;
-	
-	private static final int BOOLEAN_TRUE = ICONST_0;
-	private static final int BOOLEAN_FALSE = ICONST_1;
+		super(
+			firstPassMethodInstrumenter.methodVisitor,
+			firstPassMethodInstrumenter.access,
+			firstPassMethodInstrumenter.desc, 2);
 
-	public SecondPassMethodInstrumenter(FirstPassMethodInstrumenter firstPass)
-	{
-		super(firstPass.getWriterMethodVisitor(), firstPass.getMyAccess(), firstPass.getMyDescriptor(), 2);
-		this.firstPass = firstPass;
-		this.currentLine = 0;
+		_firstPassMethodInstrumenter = firstPassMethodInstrumenter;
 	}
 
-	public void visitJumpInsn(int opcode, Label label)
-	{
-		//to touch the previous branch (when there is such)
+	@Override
+	public void visitCode() {
+		_methodStarted = true;
+
+		super.visitCode();
+	}
+
+	@Override
+	public void visitFieldInsn(
+		int opcode, String owner, String name, String desc) {
+
 		touchBranchFalse();
-		
-		// Ignore any jump instructions in the "class init" method.
-		// When initializing static variables, the JVM first checks
-		// that the variable is null before attempting to set it.
-		// This check contains an IFNONNULL jump instruction which
-		// would confuse people if it showed up in the reports.
-		if ((opcode != GOTO) && (opcode != JSR) && (currentLine != 0)
-				&& (!this.firstPass.getMyName().equals("<clinit>")))
-		{
-			lastJump = new JumpHolder(currentLine, currentJump++); 
-			mv.visitIntInsn(SIPUSH, currentLine);
-			mv.visitVarInsn(ISTORE, myVariableIndex);
-			mv.visitIntInsn(SIPUSH, lastJump.getJumpNumber());
-			mv.visitVarInsn(ISTORE, myVariableIndex + 1);
-		}
-		
-		super.visitJumpInsn(opcode, label);
-	}
 
-	public void visitLineNumber(int line, Label start)
-	{
-		// Record initial information about this line of code
-		currentLine = line;
-		currentJump = 0;
-
-		instrumentOwnerClass();
-
-		// Mark the current line number as covered:
-		// classData.touch(line)
-		mv.visitIntInsn(SIPUSH, line);
-		mv.visitMethodInsn(INVOKESTATIC,
-				TOUCH_COLLECTOR_CLASS, "touch",
-				"(Ljava/lang/String;I)V");
-
-		super.visitLineNumber(line, start);
-	}
-
-	public void visitMethodInsn(int opcode, String owner, String name,
-			String desc)
-	{
-		//to touch the previous branch (when there is such)
-		touchBranchFalse();
-		
-		super.visitMethodInsn(opcode, owner, name, desc);
-
-		// If any of the ignore patterns match this line
-		// then remove it from our data
-		if (RegexUtil.matches(firstPass.getIgnoreRegexs(), owner)) 
-		{
-			firstPass.removeLine(currentLine);
-		}
-	}
-
-	public void visitFieldInsn(int opcode, String owner, String name, String desc)
-	{
-		//to touch the previous branch (when there is such)
-		touchBranchFalse();
-		
 		super.visitFieldInsn(opcode, owner, name, desc);
 	}
 
-	public void visitIincInsn(int var, int increment)
-	{
-		//to touch the previous branch (when there is such)
+	@Override
+	public void visitIincInsn(int var, int increment) {
 		touchBranchFalse();
-		
+
 		super.visitIincInsn(var, increment);
 	}
 
-	public void visitInsn(int opcode)
-	{
-		//to touch the previous branch (when there is such)
+	@Override
+	public void visitInsn(int opcode) {
 		touchBranchFalse();
-		
+
 		super.visitInsn(opcode);
 	}
 
-	public void visitIntInsn(int opcode, int operand)
-	{
-		//to touch the previous branch (when there is such)
+	@Override
+	public void visitIntInsn(int opcode, int operand) {
 		touchBranchFalse();
-		
+
 		super.visitIntInsn(opcode, operand);
 	}
 
-	public void visitLabel(Label label)
-	{
-		//When this is the first method's label ... create the 2 new local variables (lineNumber and branchNumber)
-		if (methodStarted) 
-		{
-			methodStarted = false;
-			myVariableIndex = getFirstStackVariable();
-			mv.visitInsn(ICONST_0);
-			mv.visitVarInsn(ISTORE, myVariableIndex);
-			mv.visitIntInsn(SIPUSH, -1); 
-			mv.visitVarInsn(ISTORE, myVariableIndex + 1);
-			startLabel = label;
+	@Override
+	public void visitJumpInsn(int opcode, Label label) {
+		touchBranchFalse();
+
+		// Ignore any jump instructions in the "class init" method. When
+		// initializing static variables, the JVM first checks that the variable
+		// is null before attempting to set it. This check contains an IFNONNULL
+		// jump instruction which would confuse people if it showed up in the
+		// reports.
+
+		if (!"<clinit>".equals(_firstPassMethodInstrumenter.name) &&
+			(opcode != Opcodes.GOTO) && (opcode != Opcodes.JSR) &&
+			(_currentLine != 0)) {
+
+			_lastJump = new JumpHolder(_currentLine, _currentJump++);
+
+			mv.visitIntInsn(Opcodes.SIPUSH, _currentLine);
+			mv.visitVarInsn(Opcodes.ISTORE, _variableIndex);
+			mv.visitIntInsn(Opcodes.SIPUSH, _lastJump.getJumpNumber());
+			mv.visitVarInsn(Opcodes.ISTORE, _variableIndex + 1);
 		}
-		//to have the last label for visitLocalVariable
-		endLabel = label;
-		
+
+		super.visitJumpInsn(opcode, label);
+	}
+
+	@Override
+	public void visitLabel(Label label) {
+		if (_methodStarted) {
+			_methodStarted = false;
+			_variableIndex = firstStackVariable;
+
+			mv.visitInsn(Opcodes.ICONST_0);
+			mv.visitVarInsn(Opcodes.ISTORE, _variableIndex);
+			mv.visitIntInsn(Opcodes.SIPUSH, -1);
+			mv.visitVarInsn(Opcodes.ISTORE, _variableIndex + 1);
+
+			_startLabel = label;
+		}
+
+		_endLabel = label;
+
 		super.visitLabel(label);
-		
-		//instrument the branch coverage collection
-		if (firstPass.getJumpTargetLabels().keySet().contains(label)) 
-		{ //this label is the true branch label
-			if (lastJump != null) 
-			{ //this is also label after jump - we have to check the branch number whether this is the true or false branch
-				Label newLabelX = instrumentIsLastJump();
+
+		Map<Label, JumpHolder> jumpLables =
+			_firstPassMethodInstrumenter.jumpLabels;
+
+		if (jumpLables.containsKey(label)) {
+			if (_lastJump != null) {
+				Label label1 = instrumentIsLastJump();
+
 				instrumentOwnerClass();
 				instrumentPutLineAndBranchNumbers();
-				mv.visitInsn(BOOLEAN_FALSE);
+
+				mv.visitInsn(_BOOLEAN_FALSE);
+
 				instrumentInvokeTouchJump();
-				Label newLabelY = new Label();
-				mv.visitJumpInsn(GOTO, newLabelY);
-				mv.visitLabel(newLabelX);
-				mv.visitVarInsn(ILOAD, myVariableIndex + 1);
-				mv.visitJumpInsn(IFLT, newLabelY);
+
+				Label label2 = new Label();
+
+				mv.visitJumpInsn(Opcodes.GOTO, label2);
+				mv.visitLabel(label1);
+				mv.visitVarInsn(Opcodes.ILOAD, _variableIndex + 1);
+				mv.visitJumpInsn(Opcodes.IFLT, label2);
+
 				instrumentOwnerClass();
 				instrumentPutLineAndBranchNumbers();
-				mv.visitInsn(BOOLEAN_TRUE);
+
+				mv.visitInsn(_BOOLEAN_TRUE);
+
 				instrumentInvokeTouchJump();
-				mv.visitLabel(newLabelY);
+
+				mv.visitLabel(label2);
 			}
-			else
-			{ //just hit te true branch
-				//just check whether the jump has been invoked or the label has been touched other way 
-				mv.visitVarInsn(ILOAD, myVariableIndex + 1);
-				Label newLabelX = new Label();
-				mv.visitJumpInsn(IFLT, newLabelX);
+			else {
+				mv.visitVarInsn(Opcodes.ILOAD, _variableIndex + 1);
+
+				Label label1 = new Label();
+
+				mv.visitJumpInsn(Opcodes.IFLT, label1);
+
 				instrumentJumpHit(true);
-				mv.visitLabel(newLabelX);
+
+				mv.visitLabel(label1);
 			}
-		} 
-		else if (lastJump != null) 
-		{ //this is "only" after jump label, hit the false branch only if the lastJump is same as stored stack lineNumber and jumpNumber
-			Label newLabelX = instrumentIsLastJump();
-			instrumentJumpHit(false); 
-			mv.visitLabel(newLabelX);
 		}
-		lastJump = null;
-		
-		SwitchHolder sh = (SwitchHolder) firstPass.getSwitchTargetLabels().get(label);
-		if (sh != null)
-		{
-			instrumentSwitchHit(sh.getLineNumber(), sh.getSwitchNumber(), sh.getBranch());
+		else if (_lastJump != null) {
+			Label label1 = instrumentIsLastJump();
+
+			instrumentJumpHit(false);
+
+			mv.visitLabel(label1);
 		}
-		
-		//we have to manually invoke the visitLineNumber because of not correct MedthodNode's handling
-		Integer line = (Integer) firstPass.getLineLabels().get(label);
+
+		_lastJump = null;
+
+		Map<Label, SwitchHolder> switchLabels =
+			_firstPassMethodInstrumenter.switchLabels;
+
+		SwitchHolder switchHolder = switchLabels.get(label);
+
+		if (switchHolder != null) {
+			instrumentSwitchHit(
+				switchHolder.getLineNumber(), switchHolder.getSwitchNumber(),
+				switchHolder.getBranch());
+		}
+
+		Map<Label, Integer> lineLabels =
+			_firstPassMethodInstrumenter.lineLabels;
+
+		Integer line = lineLabels.get(label);
+
 		if (line != null) {
 			visitLineNumber(line.intValue(), label);
 		}
 	}
 
-	public void visitLdcInsn(Object cst)
-	{
-		//to touch the previous branch (when there is such)
+	@Override
+	public void visitLdcInsn(Object cst) {
 		touchBranchFalse();
-		
+
 		super.visitLdcInsn(cst);
 	}
 
-	public void visitMultiANewArrayInsn(String desc, int dims)
-	{
-		//to touch the previous branch (when there is such)
-		touchBranchFalse();
-		
-		super.visitMultiANewArrayInsn(desc, dims);
+	@Override
+	public void visitLineNumber(int line, Label start) {
+		_currentLine = line;
+		_currentJump = 0;
+
+		instrumentOwnerClass();
+
+		mv.visitIntInsn(Opcodes.SIPUSH, line);
+		mv.visitMethodInsn(
+			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touch",
+			"(Ljava/lang/String;I)V");
+
+		super.visitLineNumber(line, start);
 	}
 
-	public void visitLookupSwitchInsn(Label dflt, int[] keys, Label[] labels)
-	{
-		//to touch the previous branch (when there is such)
+	@Override
+	public void visitLookupSwitchInsn(Label dflt, int[] keys, Label[] labels) {
 		touchBranchFalse();
-		
+
 		super.visitLookupSwitchInsn(dflt, keys, labels);
 	}
 
-	public void visitTableSwitchInsn(int min, int max, Label dflt, Label[] labels)
-	{
-		//to touch the previous branch (when there is such)
+	@Override
+	public void visitMaxs(int maxStack, int maxLocals) {
+		mv.visitLocalVariable(
+			"__cobertura__line__number__", "I", null, _startLabel, _endLabel,
+			_variableIndex);
+
+		mv.visitLocalVariable(
+			"__cobertura__branch__number__", "I", null, _startLabel, _endLabel,
+			_variableIndex + 1);
+
+		super.visitMaxs(maxStack, maxLocals);
+	}
+
+	@Override
+	public void visitMethodInsn(
+		int opcode, String owner, String name, String desc) {
+
 		touchBranchFalse();
-		
+
+		super.visitMethodInsn(opcode, owner, name, desc);
+	}
+
+	@Override
+	public void visitMultiANewArrayInsn(String desc, int dims) {
+		touchBranchFalse();
+
+		super.visitMultiANewArrayInsn(desc, dims);
+	}
+
+	@Override
+	public void visitTableSwitchInsn(
+		int min, int max, Label dflt, Label... labels) {
+
+		touchBranchFalse();
+
 		super.visitTableSwitchInsn(min, max, dflt, labels);
 	}
 
-	public void visitTryCatchBlock(Label start, Label end, Label handler, String type)
-	{
-		//to touch the previous branch (when there is such)
+	@Override
+	public void visitTryCatchBlock(
+		Label start, Label end, Label handler, String type) {
+
 		touchBranchFalse();
-		
+
 		super.visitTryCatchBlock(start, end, handler, type);
 	}
 
-	public void visitTypeInsn(int opcode, String desc)
-	{
-		//to touch the previous branch (when there is such)
+	@Override
+	public void visitTypeInsn(int opcode, String desc) {
 		touchBranchFalse();
-		
+
 		super.visitTypeInsn(opcode, desc);
 	}
 
-	public void visitVarInsn(int opcode, int var)
-	{
-		//to touch the previous branch (when there is such)
+	@Override
+	public void visitVarInsn(int opcode, int var) {
 		touchBranchFalse();
-		
-		//this is to change the variable instructions to conform to 2 new variables
+
 		super.visitVarInsn(opcode, var);
 	}
 
-	public void visitCode()
-	{
-		methodStarted = true;
-		super.visitCode();
+	private void instrumentInvokeTouchJump() {
+		mv.visitMethodInsn(
+			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touchJump",
+			"(Ljava/lang/String;IIZ)V");
+
+		mv.visitIntInsn(Opcodes.SIPUSH, -1);
+		mv.visitVarInsn(Opcodes.ISTORE, _variableIndex + 1);
 	}
-	
+
+	private void instrumentInvokeTouchSwitch() {
+		mv.visitMethodInsn(
+			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touchSwitch",
+			"(Ljava/lang/String;III)V");
+	}
+
+	private Label instrumentIsLastJump() {
+		mv.visitVarInsn(Opcodes.ILOAD, _variableIndex);
+		mv.visitIntInsn(Opcodes.SIPUSH, _lastJump.getLineNumber());
+
+		Label label = new Label();
+
+		mv.visitJumpInsn(Opcodes.IF_ICMPNE, label);
+		mv.visitVarInsn(Opcodes.ILOAD, _variableIndex + 1);
+		mv.visitIntInsn(Opcodes.SIPUSH, _lastJump.getJumpNumber());
+		mv.visitJumpInsn(Opcodes.IF_ICMPNE, label);
+
+		return label;
+	}
+
+	private void instrumentJumpHit(boolean branch) {
+		instrumentOwnerClass();
+
+		instrumentPutLineAndBranchNumbers();
+
+		mv.visitInsn(branch ? _BOOLEAN_TRUE : _BOOLEAN_FALSE);
+
+		instrumentInvokeTouchJump();
+	}
+
+	private void instrumentOwnerClass() {
+		mv.visitLdcInsn(_firstPassMethodInstrumenter.owner);
+	}
+
+	private void instrumentPutLineAndBranchNumbers() {
+		mv.visitVarInsn(Opcodes.ILOAD, _variableIndex);
+		mv.visitVarInsn(Opcodes.ILOAD, _variableIndex + 1);
+	}
+
+	private void instrumentSwitchHit(
+		int lineNumber, int switchNumber, int branch) {
+
+		instrumentOwnerClass();
+
+		mv.visitIntInsn(Opcodes.SIPUSH, lineNumber);
+		mv.visitIntInsn(Opcodes.SIPUSH, switchNumber);
+		mv.visitIntInsn(Opcodes.SIPUSH, branch);
+
+		instrumentInvokeTouchSwitch();
+	}
+
 	private void touchBranchFalse() {
-		if (lastJump != null) {
-			lastJump = null;
+		if (_lastJump != null) {
+			_lastJump = null;
 			instrumentJumpHit(false);
 		}
 	}
 
-	private void instrumentOwnerClass()
-	{
-		// OwnerClass is the name of the class being instrumented
-		mv.visitLdcInsn(firstPass.getOwnerClass());
-	}
-	
-	private void instrumentSwitchHit(int lineNumber, int switchNumber, int branch)
-	{
-		instrumentOwnerClass();
-		
-		//Invoke the touchSwitch(lineNumber, switchNumber, branch)
-		mv.visitIntInsn(SIPUSH, lineNumber);
-		mv.visitIntInsn(SIPUSH, switchNumber);
-		mv.visitIntInsn(SIPUSH, branch);
-		instrumentInvokeTouchSwitch();
-	}
-	
-	private void instrumentJumpHit(boolean branch)
-	{
-		instrumentOwnerClass();
-		
-		//Invoke the touchJump(lineNumber, branchNumber, branch)
-		instrumentPutLineAndBranchNumbers();
-		mv.visitInsn(branch ? BOOLEAN_TRUE : BOOLEAN_FALSE);
-		instrumentInvokeTouchJump();
-	}
+	private static final int _BOOLEAN_FALSE = Opcodes.ICONST_1;
 
-	private void instrumentInvokeTouchJump()
-	{
-		mv.visitMethodInsn(INVOKESTATIC, TOUCH_COLLECTOR_CLASS, "touchJump", "(Ljava/lang/String;IIZ)V");
-		mv.visitIntInsn(SIPUSH, -1); //is important to reset current branch, because we have to know that the branch info on stack has already been used and can't be used
-		mv.visitVarInsn(ISTORE, myVariableIndex + 1);
-	}
+	private static final int _BOOLEAN_TRUE = Opcodes.ICONST_0;
 
-	private void instrumentInvokeTouchSwitch()
-	{
-		mv.visitMethodInsn(INVOKESTATIC, TOUCH_COLLECTOR_CLASS, "touchSwitch", "(Ljava/lang/String;III)V");
-	}
+	private static final String _TOUCH_COLLECTOR_CLASS =
+		"net/sourceforge/cobertura/coveragedata/TouchCollector";
 
-	private void instrumentPutLineAndBranchNumbers()
-	{
-		mv.visitVarInsn(ILOAD, myVariableIndex);
-		mv.visitVarInsn(ILOAD, myVariableIndex + 1);
-	}
-
-	private Label instrumentIsLastJump() {
-		mv.visitVarInsn(ILOAD, myVariableIndex);
-		mv.visitIntInsn(SIPUSH, lastJump.getLineNumber());
-		Label newLabelX = new Label();
-		mv.visitJumpInsn(IF_ICMPNE, newLabelX);
-		mv.visitVarInsn(ILOAD, myVariableIndex + 1);
-		mv.visitIntInsn(SIPUSH, lastJump.getJumpNumber());
-		mv.visitJumpInsn(IF_ICMPNE, newLabelX);
-		return newLabelX;
-	}
-
-	public void visitMaxs(int maxStack, int maxLocals)
-	{
-		mv.visitLocalVariable("__cobertura__line__number__", "I", null, startLabel, endLabel, myVariableIndex);
-		mv.visitLocalVariable("__cobertura__branch__number__", "I", null, startLabel, endLabel, myVariableIndex + 1);
-		super.visitMaxs(maxStack, maxLocals);
-	}
+	private int _currentJump;
+	private int _currentLine;
+	private Label _endLabel;
+	private final FirstPassMethodInstrumenter _firstPassMethodInstrumenter;
+	private JumpHolder _lastJump;
+	private boolean _methodStarted;
+	private Label _startLabel;
+	private int _variableIndex;
 
 }

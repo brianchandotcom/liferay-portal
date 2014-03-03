@@ -23,7 +23,6 @@ import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -33,11 +32,9 @@ import java.util.regex.Pattern;
 import net.sourceforge.cobertura.coveragedata.CoverageDataFileHandler;
 import net.sourceforge.cobertura.coveragedata.ProjectData;
 
-import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodAdapter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -145,9 +142,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 						classVisitor);
 				}
 
-				classVisitor = new ClassInstrumenter(
-					projectData, classVisitor, Collections.emptyList(),
-					Collections.emptyList());
+				classVisitor = new ClassInstrumenter(projectData, classVisitor);
 
 				ClassReader classReader = new ClassReader(classfileBuffer);
 
@@ -196,12 +191,12 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 		new ConcurrentHashMap<ClassLoader, ProjectData>();
 
 	private static class RemoveHasBeenInstrumentedClassVisitor
-		extends ClassAdapter {
+		extends ClassVisitor {
 
 		public RemoveHasBeenInstrumentedClassVisitor(
 			ClassVisitor classVisitor) {
 
-			super(classVisitor);
+			super(Opcodes.ASM4, classVisitor);
 		}
 
 		@Override
@@ -230,10 +225,10 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 		}
 	}
 
-	private static class TouchCollectorClassVisitor extends ClassAdapter {
+	private static class TouchCollectorClassVisitor extends ClassVisitor {
 
 		public TouchCollectorClassVisitor(ClassVisitor classVisitor) {
-			super(classVisitor);
+			super(Opcodes.ASM4, classVisitor);
 		}
 
 		@Override
@@ -253,10 +248,10 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
 	}
 
-	private static class TouchCollectorCLINITVisitor extends MethodAdapter {
+	private static class TouchCollectorCLINITVisitor extends MethodVisitor {
 
 		public TouchCollectorCLINITVisitor(MethodVisitor methodVisitor) {
-			super(methodVisitor);
+			super(Opcodes.ASM4, methodVisitor);
 		}
 
 		@Override
@@ -268,8 +263,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 					"net/sourceforge/cobertura/coveragedata/ProjectData") &&
 				name.equals("initialize") && desc.equals("()V")) {
 
-				owner =
-					"com/liferay/cobertura/instrument/InstrumentationAgent";
+				owner = "com/liferay/cobertura/instrument/InstrumentationAgent";
 			}
 
 			super.visitMethodInsn(opcode, owner, name, desc);

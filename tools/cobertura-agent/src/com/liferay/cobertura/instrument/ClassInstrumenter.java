@@ -50,21 +50,9 @@ public class ClassInstrumenter extends ClassVisitor {
 
 		_classData.setContainsInstrumentationInfo();
 
-		// Don't instrument interfaces or classes that have already been
-		// instrumented.
+		// Don't instrument interfaces
 
-		if (((access & Opcodes.ACC_INTERFACE) == 0) &&
-			!_hasBeenInstrumented(interfaces)) {
-
-			String[] newInterfaces = new String[interfaces.length + 1];
-
-			System.arraycopy(
-				interfaces, 0, newInterfaces, 0, interfaces.length);
-
-			newInterfaces[newInterfaces.length - 1] = _HAS_BEEN_INSTRUMENTED;
-
-			interfaces = newInterfaces;
-
+		if ((access & Opcodes.ACC_INTERFACE) == 0) {
 			_instrument = true;
 		}
 
@@ -109,19 +97,6 @@ public class ClassInstrumenter extends ClassVisitor {
 
 		_classData.setSourceFileName(source);
 	}
-
-	private static boolean _hasBeenInstrumented(String[] interfaces) {
-		for (String interfaceName : interfaces) {
-			if (interfaceName.equals(_HAS_BEEN_INSTRUMENTED)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private static final String _HAS_BEEN_INSTRUMENTED =
-		"net/sourceforge/cobertura/coveragedata/HasBeenInstrumented";
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		ClassInstrumenter.class);

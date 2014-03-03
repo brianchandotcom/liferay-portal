@@ -20,10 +20,7 @@ import java.lang.instrument.ClassFileTransformer;
 
 import java.security.ProtectionDomain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
@@ -135,14 +132,8 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 				ClassWriter classWriter = new ClassWriter(
 					ClassWriter.COMPUTE_MAXS);
 
-				ClassVisitor classVisitor = classWriter;
-
-				if (!InstrumentationAgent.isStaticallyInstrumented()) {
-					classVisitor = new RemoveHasBeenInstrumentedClassVisitor(
-						classVisitor);
-				}
-
-				classVisitor = new ClassInstrumenter(projectData, classVisitor);
+				ClassVisitor classVisitor = new ClassInstrumenter(
+					projectData, classWriter);
 
 				ClassReader classReader = new ClassReader(classfileBuffer);
 
@@ -182,48 +173,10 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 		return null;
 	}
 
-	private static final String _HAS_BEEN_INSTRUMENTED_CLASS_NAME =
-		"net/sourceforge/cobertura/coveragedata/HasBeenInstrumented";
-
 	private Pattern[] _excludePatterns;
 	private Pattern[] _includePatterns;
 	private ConcurrentMap<ClassLoader, ProjectData> _projectDatas =
 		new ConcurrentHashMap<ClassLoader, ProjectData>();
-
-	private static class RemoveHasBeenInstrumentedClassVisitor
-		extends ClassVisitor {
-
-		public RemoveHasBeenInstrumentedClassVisitor(
-			ClassVisitor classVisitor) {
-
-			super(Opcodes.ASM4, classVisitor);
-		}
-
-		@Override
-		public void visit(
-			int version, int access, String name, String signature,
-			String superName, String[] interfaces) {
-
-			if ((access & Opcodes.ACC_SUPER) != 0) {
-				List<String> interfacesList = new ArrayList<String>(
-					Arrays.asList(interfaces));
-
-				if (interfacesList.remove(_HAS_BEEN_INSTRUMENTED_CLASS_NAME)) {
-					interfaces = interfacesList.toArray(
-						new String[interfacesList.size()]);
-
-					super.visit(
-						version, access, name, signature, superName,
-						interfaces);
-
-					return;
-				}
-			}
-
-			super.visit(
-				version, access, name, signature, superName, interfaces);
-		}
-	}
 
 	private static class TouchCollectorClassVisitor extends ClassVisitor {
 

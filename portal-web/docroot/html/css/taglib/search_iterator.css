@@ -35,14 +35,11 @@
 		margin: 0;
 
 		@include respond-to(phone, tablet) {
+			width: 100%;
+
 			@include respond-to(phone) {
 				float: none;
 				margin-top: 20px;
-				width: 100%;
-			}
-
-			@include respond-to(tablet) {
-				width: 50%;
 			}
 
 			> li {

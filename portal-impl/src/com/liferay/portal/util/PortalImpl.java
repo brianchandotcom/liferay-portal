@@ -4638,6 +4638,10 @@ public class PortalImpl implements Portal {
 	public PreferencesValidator getPreferencesValidator(Portlet portlet) {
 		PortletBag portletBag = PortletBagPool.get(portlet.getRootPortletId());
 
+		if (portletBag == null) {
+			return null;
+		}
+
 		return portletBag.getPreferencesValidatorInstance();
 	}
 

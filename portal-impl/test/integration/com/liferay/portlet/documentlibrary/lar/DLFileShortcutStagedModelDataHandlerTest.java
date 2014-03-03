@@ -28,7 +28,6 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -121,11 +120,11 @@ public class DLFileShortcutStagedModelDataHandlerTest
 
 	@Override
 	protected void validateAssets(
-			String classUuid, StagedModelAssets stagedModelAssets, Group group)
+			StagedModel stagedModel, StagedModelAssets stagedModelAssets,
+			Group group)
 		throws Exception {
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			group.getGroupId(), classUuid);
+		AssetEntry assetEntry = fetchAssetEntry(stagedModel, group);
 
 		List<AssetCategory> assetCategories =
 			AssetCategoryLocalServiceUtil.getEntryCategories(

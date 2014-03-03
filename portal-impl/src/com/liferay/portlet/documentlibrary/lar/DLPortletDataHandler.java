@@ -187,7 +187,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "folders")) {
 			Element foldersElement =
-				portletDataContext.getImportDataGroupElement(Folder.class);
+				portletDataContext.getImportDataGroupElement(DLFolder.class);
 
 			List<Element> folderElements = foldersElement.elements();
 
@@ -199,7 +199,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "documents")) {
 			Element fileEntriesElement =
-				portletDataContext.getImportDataGroupElement(FileEntry.class);
+				portletDataContext.getImportDataGroupElement(DLFileEntry.class);
 
 			List<Element> fileEntryElements = fileEntriesElement.elements();
 
@@ -316,7 +316,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 		if (rootFolderId > 0) {
 			Element foldersElement =
-				portletDataContext.getImportDataGroupElement(Folder.class);
+				portletDataContext.getImportDataGroupElement(DLFolder.class);
 
 			List<Element> folderElements = foldersElement.elements();
 

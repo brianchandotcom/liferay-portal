@@ -101,7 +101,7 @@ AUI.add(
 						var message;
 
 						if (exception) {
-							var message = '';
+							message = '';
 
 							if (exception == 'FileSizeException') {
 								var maxFileSize = instance.formatStorage(instance.get('maxFileSize'));

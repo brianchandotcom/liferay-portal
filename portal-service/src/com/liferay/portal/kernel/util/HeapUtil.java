@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessUtil;
 
 import java.lang.management.ManagementFactory;
@@ -21,14 +23,35 @@ import java.lang.management.RuntimeMXBean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * @author Shuyang Zhou
  */
 public class HeapUtil {
 
-	public static void heapDump(boolean live, boolean binary, String file) {
-		int processId = _getProcessId();
+	public static int getProcessId() {
+		if (!_supported) {
+			throw new IllegalStateException(
+				HeapUtil.class.getName() + " does not support current JVM");
+		}
+
+		return _processId;
+	}
+
+	public static Future<ObjectValuePair<Void, Void>> heapDump(
+		boolean live, boolean binary, String file) {
+
+		return heapDump(_processId, live, binary, file);
+	}
+
+	public static Future<ObjectValuePair<Void, Void>> heapDump(
+		int processId, boolean live, boolean binary, String file) {
+
+		if (!_supported) {
+			throw new IllegalStateException(
+				HeapUtil.class.getName() + " does not support current JVM");
+		}
 
 		StringBundler sb = new StringBundler(5);
 
@@ -52,11 +75,59 @@ public class HeapUtil {
 		arguments.add(String.valueOf(processId));
 
 		try {
-			ProcessUtil.execute(
+			return ProcessUtil.execute(
 				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, arguments);
 		}
 		catch (Exception e) {
 			throw new RuntimeException("Unable to perform heap dump", e);
+		}
+	}
+
+	public static boolean isSupported() {
+		return _supported;
+	}
+
+	private static void _checkJmap(int processId) throws Exception {
+		Future<ObjectValuePair<byte[], byte[]>> future =
+			ProcessUtil.execute(
+				ProcessUtil.COLLECTOR_OUTPUT_PROCESSOR, "jmap", "-histo:live",
+				String.valueOf(processId));
+
+		ObjectValuePair<byte[], byte[]> objectValuePair = future.get();
+
+		String stdOutString = new String(objectValuePair.getKey());
+
+		if (!stdOutString.contains("#instances")) {
+			throw new IllegalStateException(
+				"jmap can not connect to process id : " + processId);
+		}
+
+		byte[] stdErrBytes = objectValuePair.getValue();
+
+		if (stdErrBytes.length != 0) {
+			throw new IllegalStateException(
+				"jmap returns with error message : " + new String(stdErrBytes));
+		}
+	}
+
+	private static void _checkJps(int processId) throws Exception {
+		Future<ObjectValuePair<byte[], byte[]>> future = ProcessUtil.execute(
+			ProcessUtil.COLLECTOR_OUTPUT_PROCESSOR, "jps");
+
+		ObjectValuePair<byte[], byte[]> objectValuePair = future.get();
+
+		String stdOutString = new String(objectValuePair.getKey());
+
+		if (!stdOutString.contains(String.valueOf(processId))) {
+			throw new IllegalStateException(
+				"jps can not detect expected process id : " + processId);
+		}
+
+		byte[] stdErrBytes = objectValuePair.getValue();
+
+		if (stdErrBytes.length != 0) {
+			throw new IllegalStateException(
+				"jps returns with error message : " + new String(stdErrBytes));
 		}
 	}
 
@@ -78,6 +149,42 @@ public class HeapUtil {
 		}
 
 		return pid;
+	}
+
+	private static final int _processId;
+	private static final boolean _supported;
+	private static Log _log = LogFactoryUtil.getLog(HeapUtil.class);
+
+	static {
+		boolean supported = false;
+
+		int processId = -1;
+
+		if (JavaDetector.isOracle()) {
+			try {
+				processId = _getProcessId();
+
+				_checkJps(processId);
+				_checkJmap(processId);
+
+				supported = true;
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						HeapUtil.class.getName() +
+							" has been disabled due to detection failure.", e);
+				}
+			}
+		}
+		else if (_log.isDebugEnabled()) {
+			_log.debug(
+				HeapUtil.class.getName() +
+					" is not supported on non-Oracle JVM");
+		}
+
+		_supported = supported;
+		_processId = processId;
 	}
 
 }

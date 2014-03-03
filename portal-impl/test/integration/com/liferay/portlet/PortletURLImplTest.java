@@ -163,19 +163,7 @@ public class PortletURLImplTest {
 
 	@Test
 	public void testActionURL() throws Exception {
-		_portletUrlAnchorEnableField.set(null, false);
-		_portletUrlAppendParametersField.set(null, false);
-		testActionURL(false, false);
-		testActionURL(false, true);
-		testActionURL(true, false);
-		testActionURL(true, true);
-
-		_portletUrlAnchorEnableField.set(null, true);
-		_portletUrlAppendParametersField.set(null, true);
-		testActionURL(false, false);
-		testActionURL(false, true);
-		testActionURL(true, false);
-		testActionURL(true, true);
+		testActionURLDefault();
 	}
 
 	@Test
@@ -505,36 +493,12 @@ public class PortletURLImplTest {
 
 	@Test
 	public void testRenderURL() throws Exception {
-		_portletUrlAnchorEnableField.set(null, false);
-		_portletUrlAppendParametersField.set(null, false);
-		testRenderURL(false, false);
-		testRenderURL(false, true);
-		testRenderURL(true, false);
-		testRenderURL(true, true);
-
-		_portletUrlAnchorEnableField.set(null, true);
-		_portletUrlAppendParametersField.set(null, true);
-		testRenderURL(false, false);
-		testRenderURL(false, true);
-		testRenderURL(true, false);
-		testRenderURL(true, true);
+		testRenderURLDefault();
 	}
 
 	@Test
 	public void testResourceURL() throws Exception {
-		_portletUrlAnchorEnableField.set(null, false);
-		_portletUrlAppendParametersField.set(null, false);
-		testResourceURL(false, false);
-		testResourceURL(false, true);
-		testResourceURL(true, false);
-		testResourceURL(true, true);
-
-		_portletUrlAnchorEnableField.set(null, true);
-		_portletUrlAppendParametersField.set(null, true);
-		testResourceURL(false, false);
-		testResourceURL(false, true);
-		testResourceURL(true, false);
-		testResourceURL(true, true);
+		testResourceURLDefault();
 	}
 
 	@Test
@@ -734,9 +698,9 @@ public class PortletURLImplTest {
 	public void testWSRPURLs() throws Exception {
 		_request.setParameter(_WSRP, Boolean.TRUE.toString());
 		try {
-			testActionURL();
-			testRenderURL();
-			testResourceURL();
+			testActionURLDefault();
+			testRenderURLDefault();
+			testResourceURLDefault();
 		}
 		finally {
 			_request.setParameter(_WSRP, Boolean.FALSE.toString());
@@ -1051,6 +1015,22 @@ public class PortletURLImplTest {
 			PortletRequest.ACTION_PHASE, encrypt, escapeXML, expectedURLParts);
 	}
 
+	protected void testActionURLDefault() throws Exception {
+		_portletUrlAnchorEnableField.set(null, false);
+		_portletUrlAppendParametersField.set(null, false);
+		testActionURL(false, false);
+		testActionURL(false, true);
+		testActionURL(true, false);
+		testActionURL(true, true);
+
+		_portletUrlAnchorEnableField.set(null, true);
+		_portletUrlAppendParametersField.set(null, true);
+		testActionURL(false, false);
+		testActionURL(false, true);
+		testActionURL(true, false);
+		testActionURL(true, true);
+	}
+
 	protected void testAutopropagatedPortlet(
 			String lifecycle, boolean encrypt, boolean escapeXML,
 			List<String[]> expectedURLParts)
@@ -1123,6 +1103,22 @@ public class PortletURLImplTest {
 			PORTLET_WIKI_ID, lifecycle, encrypt, escapeXML, expectedURLParts);
 	}
 
+	protected void testRenderURLDefault() throws Exception {
+		_portletUrlAnchorEnableField.set(null, false);
+		_portletUrlAppendParametersField.set(null, false);
+		testRenderURL(false, false);
+		testRenderURL(false, true);
+		testRenderURL(true, false);
+		testRenderURL(true, true);
+
+		_portletUrlAnchorEnableField.set(null, true);
+		_portletUrlAppendParametersField.set(null, true);
+		testRenderURL(false, false);
+		testRenderURL(false, true);
+		testRenderURL(true, false);
+		testRenderURL(true, true);
+	}
+
 	protected void testRenderURL(boolean encrypt, boolean escapeXML)
 		throws Exception {
 
@@ -1133,6 +1129,22 @@ public class PortletURLImplTest {
 
 		testPRPPortlet(
 			PortletRequest.RENDER_PHASE, encrypt, escapeXML, expectedURLParts);
+	}
+
+	protected void testResourceURLDefault() throws Exception {
+		_portletUrlAnchorEnableField.set(null, false);
+		_portletUrlAppendParametersField.set(null, false);
+		testResourceURL(false, false);
+		testResourceURL(false, true);
+		testResourceURL(true, false);
+		testResourceURL(true, true);
+
+		_portletUrlAnchorEnableField.set(null, true);
+		_portletUrlAppendParametersField.set(null, true);
+		testResourceURL(false, false);
+		testResourceURL(false, true);
+		testResourceURL(true, false);
+		testResourceURL(true, true);
 	}
 
 	protected void testResourceURL(boolean encrypt, boolean escapeXML)

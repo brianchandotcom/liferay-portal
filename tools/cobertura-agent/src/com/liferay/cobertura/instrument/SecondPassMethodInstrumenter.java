@@ -20,20 +20,33 @@ import net.sourceforge.cobertura.instrument.JumpHolder;
 import net.sourceforge.cobertura.instrument.SwitchHolder;
 
 import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 /**
  * @author Shuyang Zhou
  */
-public class SecondPassMethodInstrumenter extends NewLocalVariableMethodAdapter
-{
+public class SecondPassMethodInstrumenter extends MethodVisitor {
+
 	public SecondPassMethodInstrumenter(
 		FirstPassMethodInstrumenter firstPassMethodInstrumenter) {
 
-		super(
-			firstPassMethodInstrumenter.methodVisitor,
-			firstPassMethodInstrumenter.access,
-			firstPassMethodInstrumenter.desc, 2);
+		super(Opcodes.ASM4, firstPassMethodInstrumenter.methodVisitor);
+
+		int stackVariableCount = 0;
+
+		if ((Opcodes.ACC_STATIC & firstPassMethodInstrumenter.access) == 0) {
+			stackVariableCount++;
+		}
+
+		for (Type type : Type.getArgumentTypes(
+				firstPassMethodInstrumenter.desc)) {
+
+			stackVariableCount += type.getSize();
+		}
+
+		_stackVariableCount = stackVariableCount;
 
 		_firstPassMethodInstrumenter = firstPassMethodInstrumenter;
 	}
@@ -58,7 +71,11 @@ public class SecondPassMethodInstrumenter extends NewLocalVariableMethodAdapter
 	public void visitIincInsn(int var, int increment) {
 		touchBranchFalse();
 
-		super.visitIincInsn(var, increment);
+		if (var >= _stackVariableCount) {
+			var += 2;
+		}
+
+		mv.visitIincInsn(var, increment);
 	}
 
 	@Override
@@ -104,7 +121,7 @@ public class SecondPassMethodInstrumenter extends NewLocalVariableMethodAdapter
 	public void visitLabel(Label label) {
 		if (_methodStarted) {
 			_methodStarted = false;
-			_variableIndex = firstStackVariable;
+			_variableIndex = _stackVariableCount;
 
 			mv.visitInsn(Opcodes.ICONST_0);
 			mv.visitVarInsn(Opcodes.ISTORE, _variableIndex);
@@ -214,6 +231,18 @@ public class SecondPassMethodInstrumenter extends NewLocalVariableMethodAdapter
 	}
 
 	@Override
+	public void visitLocalVariable(
+		String name, String desc, String signature, Label start, Label end,
+		int index) {
+
+		if (index >= _stackVariableCount) {
+			index += 2;
+		}
+
+		mv.visitLocalVariable(name, desc, signature, start, end, index);
+	}
+
+	@Override
 	public void visitLookupSwitchInsn(Label dflt, int[] keys, Label[] labels) {
 		touchBranchFalse();
 
@@ -278,7 +307,11 @@ public class SecondPassMethodInstrumenter extends NewLocalVariableMethodAdapter
 	public void visitVarInsn(int opcode, int var) {
 		touchBranchFalse();
 
-		super.visitVarInsn(opcode, var);
+		if (var >= _stackVariableCount) {
+			var += 2;
+		}
+
+		mv.visitVarInsn(opcode, var);
 	}
 
 	private void instrumentInvokeTouchJump() {
@@ -361,6 +394,7 @@ public class SecondPassMethodInstrumenter extends NewLocalVariableMethodAdapter
 	private final FirstPassMethodInstrumenter _firstPassMethodInstrumenter;
 	private JumpHolder _lastJump;
 	private boolean _methodStarted;
+	private final int _stackVariableCount;
 	private Label _startLabel;
 	private int _variableIndex;
 

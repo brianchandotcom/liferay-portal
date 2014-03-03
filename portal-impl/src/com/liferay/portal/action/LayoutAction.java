@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -45,6 +46,10 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.RenderParametersPool;
 import com.liferay.portlet.login.util.LoginUtil;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -330,7 +335,7 @@ public class LayoutAction extends Action {
 			String portletId = ParamUtil.getString(request, "p_p_id");
 
 			if (!PropsValues.TCK_URL && resetLayout &&
-				(Validator.isNull(portletId) ||
+				(_layoutResetPortletIds.contains(portletId) ||
 				 ((previousLayout != null) &&
 				  (layout.getPlid() != previousLayout.getPlid())))) {
 
@@ -407,6 +412,14 @@ public class LayoutAction extends Action {
 				}
 			}
 		}
+	}
+
+	private static final Set<String> _layoutResetPortletIds =
+		new HashSet<String>(
+			Arrays.asList(PropsValues.LAYOUT_RESET_PORTLET_IDS));
+
+	static {
+		_layoutResetPortletIds.add(StringPool.BLANK);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutAction.class);

@@ -324,7 +324,8 @@ public class PortletURLImplTest {
 		_addExpectedURLPart(
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
-		_addExpectedURLPart("p_p_lifecycle", "0", false, true, expectedURLParts);
+		_addExpectedURLPart(
+			"p_p_lifecycle", "0", false, true, expectedURLParts);
 
 		_addExpectedURLPart(
 			"p_p_id", PORTLET_DDM_ID, false, true, expectedURLParts);
@@ -390,7 +391,8 @@ public class PortletURLImplTest {
 		_addExpectedURLPart(
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
-		_addExpectedURLPart("p_p_lifecycle", "0", false, true, expectedURLParts);
+		_addExpectedURLPart(
+			"p_p_lifecycle", "0", false, true, expectedURLParts);
 
 		_addExpectedURLPart(
 			"p_p_id", PORTLET_DDM_ID, false, true, expectedURLParts);
@@ -675,7 +677,8 @@ public class PortletURLImplTest {
 
 			portletURL.setParameter(publicRenderParameter.getIdentifier(), "0");
 
-			_addExpectedURLPart(tagPRPName, "0", false, false, expectedURLParts);
+			_addExpectedURLPart(
+				tagPRPName, "0", false, false, expectedURLParts);
 
 			portletURL.removePublicRenderParameter(
 				publicRenderParameter.getIdentifier());
@@ -822,7 +825,8 @@ public class PortletURLImplTest {
 		portletURL.setEncrypt(encrypt);
 
 		if (encrypt) {
-			_addExpectedURLPart("shuo", "1", false, escapeXML, expectedURLParts);
+			_addExpectedURLPart(
+				"shuo", "1", false, escapeXML, expectedURLParts);
 		}
 
 		portletURL.setEscapeXml(escapeXML);
@@ -1095,6 +1099,26 @@ public class PortletURLImplTest {
 			PORTLET_DDM_ID, lifecycle, encrypt, escapeXML, expectedURLParts);
 	}
 
+	protected void testGetPublicRenderParametersInPortlet(
+			String lifecycle, boolean encrypt, boolean escapeXML,
+			List<String[]> expectedURLParts)
+		throws Exception {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			PORTLET_WIKI_ID);
+
+		Set<PublicRenderParameter> publicRenderParameters =
+			portlet.getPublicRenderParameters();
+
+		Assert.assertTrue(
+			"Portlet " + PORTLET_WIKI_ID +
+				" should have at least one public render parameter!",
+			publicRenderParameters.size() > 0);
+
+		testPortletURL(
+			PORTLET_WIKI_ID, lifecycle, encrypt, escapeXML, expectedURLParts);
+	}
+
 	protected void testPortletURL(
 			String portletId, String lifecycle, boolean encrypt,
 			boolean escapeXML, List<String[]> expectedURLParts)
@@ -1123,24 +1147,16 @@ public class PortletURLImplTest {
 		}
 	}
 
-	protected void testGetPublicRenderParametersInPortlet(
-			String lifecycle, boolean encrypt, boolean escapeXML,
-			List<String[]> expectedURLParts)
+	protected void testRenderURL(boolean encrypt, boolean escapeXML)
 		throws Exception {
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PORTLET_WIKI_ID);
+		List<String[]> expectedURLParts = new ArrayList<String[]>();
 
-		Set<PublicRenderParameter> publicRenderParameters =
-			portlet.getPublicRenderParameters();
+		testGetAutopropagatedParametersInPortlet(
+			PortletRequest.RENDER_PHASE, encrypt, escapeXML, expectedURLParts);
 
-		Assert.assertTrue(
-			"Portlet " + PORTLET_WIKI_ID +
-				" should have at least one public render parameter!",
-			publicRenderParameters.size() > 0);
-
-		testPortletURL(
-			PORTLET_WIKI_ID, lifecycle, encrypt, escapeXML, expectedURLParts);
+		testGetPublicRenderParametersInPortlet(
+			PortletRequest.RENDER_PHASE, encrypt, escapeXML, expectedURLParts);
 	}
 
 	protected void testRenderURLDefault() throws Exception {
@@ -1161,16 +1177,18 @@ public class PortletURLImplTest {
 		testRenderURL(true, true);
 	}
 
-	protected void testRenderURL(boolean encrypt, boolean escapeXML)
+	protected void testResourceURL(boolean encrypt, boolean escapeXML)
 		throws Exception {
 
 		List<String[]> expectedURLParts = new ArrayList<String[]>();
 
 		testGetAutopropagatedParametersInPortlet(
-			PortletRequest.RENDER_PHASE, encrypt, escapeXML, expectedURLParts);
+			PortletRequest.RESOURCE_PHASE, encrypt, escapeXML,
+			expectedURLParts);
 
 		testGetPublicRenderParametersInPortlet(
-			PortletRequest.RENDER_PHASE, encrypt, escapeXML, expectedURLParts);
+			PortletRequest.RESOURCE_PHASE, encrypt, escapeXML,
+			expectedURLParts);
 	}
 
 	protected void testResourceURLDefault() throws Exception {
@@ -1189,39 +1207,6 @@ public class PortletURLImplTest {
 		testResourceURL(false, true);
 		testResourceURL(true, false);
 		testResourceURL(true, true);
-	}
-
-	protected void testResourceURL(boolean encrypt, boolean escapeXML)
-		throws Exception {
-
-		List<String[]> expectedURLParts = new ArrayList<String[]>();
-
-		testGetAutopropagatedParametersInPortlet(
-			PortletRequest.RESOURCE_PHASE, encrypt, escapeXML,
-			expectedURLParts);
-
-		testGetPublicRenderParametersInPortlet(
-			PortletRequest.RESOURCE_PHASE, encrypt, escapeXML,
-			expectedURLParts);
-	}
-
-	protected void testWSRPURLs(int type) throws Exception {
-		_request.setParameter(_WSRP, Boolean.TRUE.toString());
-
-		try {
-			if (type == _ACTION_URL_TYPE) {
-				testActionURLDefault();
-			}
-			else if (type == _RENDER_URL_TYPE) {
-				testRenderURLDefault();
-			}
-			else if (type == _RESOURCE_URL_TYPE) {
-				testResourceURLDefault();
-			}
-		}
-		finally {
-			_request.setParameter(_WSRP, Boolean.FALSE.toString());
-		}
 	}
 
 	protected void testWSRPURL(
@@ -1430,6 +1415,25 @@ public class PortletURLImplTest {
 		compareURLsPartiallyOrdered(expectedParameters, actualParams);
 	}
 
+	protected void testWSRPURLs(int type) throws Exception {
+		_request.setParameter(_WSRP, Boolean.TRUE.toString());
+
+		try {
+			if (type == _ACTION_URL_TYPE) {
+				testActionURLDefault();
+			}
+			else if (type == _RENDER_URL_TYPE) {
+				testRenderURLDefault();
+			}
+			else if (type == _RESOURCE_URL_TYPE) {
+				testResourceURLDefault();
+			}
+		}
+		finally {
+			_request.setParameter(_WSRP, Boolean.FALSE.toString());
+		}
+	}
+
 	private void _addExpectedURLPart(
 		String part, List<String[]> expectedURLParts) {
 
@@ -1493,12 +1497,7 @@ public class PortletURLImplTest {
 		}
 	}
 
-	private static final String _WSRP = "wsrp";
-
-	private static final String _WSRP_NAVIGATIONAL_STATE =
-		"wsrp-navigationalState=";
-
-	private static final String _WSRP_REWRITE = "/wsrp_rewrite";
+	private static final int _ACTION_URL_TYPE = 1;
 
 	private static final String[] _AMPERSAND =
 		new String[]{StringPool.AMPERSAND};
@@ -1511,6 +1510,17 @@ public class PortletURLImplTest {
 			"AAlhbGdvcml0aG10ABJMamF2YS9sYW5nL1N0cmluZztbAANrZXl0AAJbQnhwdAAD" +
 			"QUVTdXIAAltCrPMX+AYIVOACAAB4cAAAABDAkqmOGU4a6Kq2rZgmKMJj";
 
+	private static final int _RENDER_URL_TYPE = 2;
+
+	private static final int _RESOURCE_URL_TYPE = 3;
+
+	private static final String _WSRP = "wsrp";
+
+	private static final String _WSRP_NAVIGATIONAL_STATE =
+		"wsrp-navigationalState=";
+
+	private static final String _WSRP_REWRITE = "/wsrp_rewrite";
+
 	private static final String PORTLET_DDM_ID =
 		PortletKeys.DYNAMIC_DATA_MAPPING;
 
@@ -1519,10 +1529,6 @@ public class PortletURLImplTest {
 	private static final String PORTLET_MY_ACCOUNT_ID = PortletKeys.MY_ACCOUNT;
 
 	private static final String PORTLET_WIKI_ID = PortletKeys.WIKI;
-
-	private static final int _ACTION_URL_TYPE = 1;
-	private static final int _RENDER_URL_TYPE = 2;
-	private static final int _RESOURCE_URL_TYPE = 3;
 
 	private Group _group;
 	private Key _key;

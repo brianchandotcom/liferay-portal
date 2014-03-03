@@ -271,7 +271,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteSelectedGroupPortletPreferencesByPlidAndPortletId()
+	public void testDeleteOriginalGroupPortletPreferencesByPlidAndPortletId()
 		throws Exception {
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
@@ -298,7 +298,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteSelectedLayoutPortletPreferencesByPlid()
+	public void testDeleteOriginalLayoutPortletPreferencesByPlid()
 		throws Exception {
 
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
@@ -325,7 +325,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteSelectedLayoutPortletPreferencesByPlidAndPortletId()
+	public void testDeleteOriginalLayoutPortletPreferencesByPlidAndPortletId()
 		throws Exception {
 
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
@@ -349,7 +349,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteSelectedPortletPreferencesByPlid() throws Exception {
+	public void testDeleteOriginalPortletPreferencesByPlid() throws Exception {
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
 				_layout, _portlet);
 
@@ -369,7 +369,9 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteSelectGroupPortletPreferencesByPlid() throws Exception {
+	public void testDeleteOriginalGroupPortletPreferencesByPlid()
+		throws Exception {
+
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
 			_layout, _portlet);
 
@@ -842,7 +844,7 @@ public class PortletPreferencesLocalServiceTest {
 
 	@Test
 	public void
-			testGetSelectedGroupPortletPreferencesByCompanyIdAndGroupIdAndPortletId()
+			testGetOriginalGroupPortletPreferencesByCompanyIdAndGroupIdAndPortletId()
 		throws Exception {
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
@@ -870,7 +872,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testGetSelectedGroupPortletPreferencesByOwnerAndPlid()
+	public void testGetOriginalGroupPortletPreferencesByOwnerAndPlid()
 		throws Exception {
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
@@ -897,7 +899,8 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testGetSelectedGroupPortletPreferencesByOwnerAndPlidAndPortletId()
+	public void
+			testGetOriginalGroupPortletPreferencesByOwnerAndPlidAndPortletId()
 		throws Exception {
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
@@ -933,7 +936,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testGetSelectedGroupPortletPreferencesByPlidAndPortletId()
+	public void testGetOriginalGroupPortletPreferencesByPlidAndPortletId()
 		throws Exception {
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
@@ -961,7 +964,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testGetSelectedLayoutPortletPreferencesByPlidAndPortletId()
+	public void testGetOriginalLayoutPortletPreferencesByPlidAndPortletId()
 		throws Exception {
 
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
@@ -991,7 +994,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testGetSelectedLayoutPortletPreferencesCountByPlidAndPortletId()
+	public void testGetOriginalLayoutPortletPreferencesCountByPlidAndPortletId()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -1023,7 +1026,7 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	@Test
-	public void testGetSelectedLayoutPortletPreferencesCountByPortletId()
+	public void testGetOriginalLayoutPortletPreferencesCountByPortletId()
 		throws Exception {
 
 		Assert.assertEquals(

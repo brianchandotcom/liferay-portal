@@ -157,8 +157,11 @@ public class DLFileEntryTypeLocalServiceImpl
 	public void cascadeFileEntryTypes(long userId, DLFolder dlFolder)
 		throws PortalException, SystemException {
 
+		long[] groupIds = PortalUtil.getSiteAndCompanyGroupIds(
+			dlFolder.getGroupId());
+
 		List<DLFileEntryType> dlFileEntryTypes = getFolderFileEntryTypes(
-			new long[] {dlFolder.getGroupId()}, dlFolder.getFolderId(), true);
+			groupIds, dlFolder.getFolderId(), true);
 
 		List<Long> fileEntryTypeIds = getFileEntryTypeIds(dlFileEntryTypes);
 

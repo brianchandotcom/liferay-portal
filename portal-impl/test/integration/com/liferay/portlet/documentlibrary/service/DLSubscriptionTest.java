@@ -68,7 +68,7 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
 		Folder folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			group.getGroupId(), containerModelId,
 			ServiceTestUtil.randomString());
 
 		return folder.getFolderId();

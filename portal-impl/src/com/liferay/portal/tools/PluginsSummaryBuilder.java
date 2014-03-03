@@ -16,7 +16,7 @@ package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.NumericalStringComparator;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -170,7 +170,7 @@ public class PluginsSummaryBuilder {
 		throws Exception {
 
 		Set<String> ticketIds = new TreeSet<String>(
-			new NumericalStringComparator()
+			new NaturalOrderStringComparator()
 		);
 
 		Runtime runtime = Runtime.getRuntime();

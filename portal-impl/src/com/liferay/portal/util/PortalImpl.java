@@ -3499,10 +3499,10 @@ public class PortalImpl implements Portal {
 
 		String contextPath = getPathContext();
 
-		String requestURI = request.getRequestURI();
+		String requestURI = StringUtil.toLowerCase(request.getRequestURI());
 
 		if (Validator.isNotNull(contextPath) &&
-			requestURI.contains(contextPath)) {
+			requestURI.contains(StringUtil.toLowerCase(contextPath))) {
 
 			requestURI = requestURI.substring(contextPath.length());
 		}
@@ -3510,7 +3510,7 @@ public class PortalImpl implements Portal {
 		requestURI = StringUtil.replace(
 			requestURI, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
-		String path = request.getPathInfo();
+		String path = StringUtil.toLowerCase(request.getPathInfo());
 
 		int x = path.indexOf(CharPool.SLASH, 1);
 

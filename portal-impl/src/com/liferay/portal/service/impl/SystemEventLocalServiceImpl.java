@@ -168,12 +168,7 @@ public class SystemEventLocalServiceImpl
 			systemEventId = counterLocalService.increment();
 		}
 
-		SystemEvent systemEvent = systemEventPersistence.fetchByPrimaryKey(
-			systemEventId);
-
-		if (systemEvent == null) {
-			systemEvent = systemEventPersistence.create(systemEventId);
-		}
+		SystemEvent systemEvent = systemEventPersistence.create(systemEventId);
 
 		systemEvent.setGroupId(groupId);
 		systemEvent.setCompanyId(companyId);

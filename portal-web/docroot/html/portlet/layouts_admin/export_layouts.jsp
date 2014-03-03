@@ -222,34 +222,14 @@ if (!cmd.equals(Constants.ADD)) {
 						</aui:fieldset>
 					</c:if>
 
-					<aui:input name="layoutIds" type="hidden" />
-
 					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 						<aui:fieldset cssClass="options-group" label="pages">
-							<span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
-
-							<aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
-
-							<div class="hide" id="<portlet:namespace />pages">
-								<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
-									<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
-										<liferay-util:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
-										<liferay-util:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
-										<liferay-util:param name="treeId" value="<%= treeId %>" />
-										<liferay-util:param name="defaultStateChecked" value="1" />
-										<liferay-util:param name="selectableTree" value="1" />
-										<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
-									</liferay-util:include>
-
-									<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, true) %>" />
-								</aui:fieldset>
-
-								<aui:fieldset cssClass="portlet-data-section" label="look-and-feel">
-									<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE, true) %>" />
-
-									<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO, true) %>" />
-								</aui:fieldset>
-							</div>
+							<liferay-util:include page="/html/portlet/layouts_admin/export_configuration/select_pages.jsp">
+								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+								<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
+								<liferay-util:param name="treeId" value="<%= treeId %>" />
+							</liferay-util:include>
 						</aui:fieldset>
 					</c:if>
 

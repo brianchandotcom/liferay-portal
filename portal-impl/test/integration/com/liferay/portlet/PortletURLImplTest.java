@@ -695,16 +695,18 @@ public class PortletURLImplTest {
 	}
 
 	@Test
-	public void testWSRPURLs() throws Exception {
-		_request.setParameter(_WSRP, Boolean.TRUE.toString());
-		try {
-			testActionURLDefault();
-			testRenderURLDefault();
-			testResourceURLDefault();
-		}
-		finally {
-			_request.setParameter(_WSRP, Boolean.FALSE.toString());
-		}
+	public void testWSRPActionURLs() throws Exception {
+		testWSRPURLs(_ACTION_URL_TYPE);
+	}
+
+	@Test
+	public void testWSRPRenderURLs() throws Exception {
+		testWSRPURLs(_RENDER_URL_TYPE);
+	}
+
+	@Test
+	public void testWSRPResourceURLs() throws Exception {
+		testWSRPURLs(_RESOURCE_URL_TYPE);
 	}
 
 	protected void compareURLsPartiallyOrdered(
@@ -1161,6 +1163,25 @@ public class PortletURLImplTest {
 			expectedURLParts);
 	}
 
+	protected void testWSRPURLs(int type) throws Exception {
+		_request.setParameter(_WSRP, Boolean.TRUE.toString());
+
+		try {
+			if (type == _ACTION_URL_TYPE) {
+				testActionURLDefault();
+			}
+			else if (type == _RENDER_URL_TYPE) {
+				testRenderURLDefault();
+			}
+			else if (type == _RESOURCE_URL_TYPE) {
+				testResourceURLDefault();
+			}
+		}
+		finally {
+			_request.setParameter(_WSRP, Boolean.FALSE.toString());
+		}
+	}
+
 	protected void testWSRPURL(
 			String portletId, PortletURLImpl portletURL, boolean encrypt,
 			boolean escapeXML, List<String[]> expectedURLParts)
@@ -1450,6 +1471,10 @@ public class PortletURLImplTest {
 	private static final String PORTLET_MY_ACCOUNT_ID = PortletKeys.MY_ACCOUNT;
 
 	private static final String PORTLET_WIKI_ID = PortletKeys.WIKI;
+
+	private static final int _ACTION_URL_TYPE = 1;
+	private static final int _RENDER_URL_TYPE = 2;
+	private static final int _RESOURCE_URL_TYPE = 3;
 
 	private Group _group;
 	private Key _key;

@@ -46,6 +46,12 @@ import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
+import com.liferay.portlet.asset.service.persistence.AssetCategoryFinder;
+import com.liferay.portlet.asset.service.persistence.AssetCategoryPersistence;
+import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
+import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
+import com.liferay.portlet.asset.service.persistence.AssetTagFinder;
+import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoRowPersistence;
 import com.liferay.portlet.journal.service.persistence.JournalArticleFinder;
 import com.liferay.portlet.journal.service.persistence.JournalArticlePersistence;
@@ -473,6 +479,230 @@ public abstract class LayoutServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setImagePersistence(ImagePersistence imagePersistence) {
 		this.imagePersistence = imagePersistence;
+	}
+
+	/**
+	 * Returns the asset category local service.
+	 *
+	 * @return the asset category local service
+	 */
+	public com.liferay.portlet.asset.service.AssetCategoryLocalService getAssetCategoryLocalService() {
+		return assetCategoryLocalService;
+	}
+
+	/**
+	 * Sets the asset category local service.
+	 *
+	 * @param assetCategoryLocalService the asset category local service
+	 */
+	public void setAssetCategoryLocalService(
+		com.liferay.portlet.asset.service.AssetCategoryLocalService assetCategoryLocalService) {
+		this.assetCategoryLocalService = assetCategoryLocalService;
+	}
+
+	/**
+	 * Returns the asset category remote service.
+	 *
+	 * @return the asset category remote service
+	 */
+	public com.liferay.portlet.asset.service.AssetCategoryService getAssetCategoryService() {
+		return assetCategoryService;
+	}
+
+	/**
+	 * Sets the asset category remote service.
+	 *
+	 * @param assetCategoryService the asset category remote service
+	 */
+	public void setAssetCategoryService(
+		com.liferay.portlet.asset.service.AssetCategoryService assetCategoryService) {
+		this.assetCategoryService = assetCategoryService;
+	}
+
+	/**
+	 * Returns the asset category persistence.
+	 *
+	 * @return the asset category persistence
+	 */
+	public AssetCategoryPersistence getAssetCategoryPersistence() {
+		return assetCategoryPersistence;
+	}
+
+	/**
+	 * Sets the asset category persistence.
+	 *
+	 * @param assetCategoryPersistence the asset category persistence
+	 */
+	public void setAssetCategoryPersistence(
+		AssetCategoryPersistence assetCategoryPersistence) {
+		this.assetCategoryPersistence = assetCategoryPersistence;
+	}
+
+	/**
+	 * Returns the asset category finder.
+	 *
+	 * @return the asset category finder
+	 */
+	public AssetCategoryFinder getAssetCategoryFinder() {
+		return assetCategoryFinder;
+	}
+
+	/**
+	 * Sets the asset category finder.
+	 *
+	 * @param assetCategoryFinder the asset category finder
+	 */
+	public void setAssetCategoryFinder(AssetCategoryFinder assetCategoryFinder) {
+		this.assetCategoryFinder = assetCategoryFinder;
+	}
+
+	/**
+	 * Returns the asset entry local service.
+	 *
+	 * @return the asset entry local service
+	 */
+	public com.liferay.portlet.asset.service.AssetEntryLocalService getAssetEntryLocalService() {
+		return assetEntryLocalService;
+	}
+
+	/**
+	 * Sets the asset entry local service.
+	 *
+	 * @param assetEntryLocalService the asset entry local service
+	 */
+	public void setAssetEntryLocalService(
+		com.liferay.portlet.asset.service.AssetEntryLocalService assetEntryLocalService) {
+		this.assetEntryLocalService = assetEntryLocalService;
+	}
+
+	/**
+	 * Returns the asset entry remote service.
+	 *
+	 * @return the asset entry remote service
+	 */
+	public com.liferay.portlet.asset.service.AssetEntryService getAssetEntryService() {
+		return assetEntryService;
+	}
+
+	/**
+	 * Sets the asset entry remote service.
+	 *
+	 * @param assetEntryService the asset entry remote service
+	 */
+	public void setAssetEntryService(
+		com.liferay.portlet.asset.service.AssetEntryService assetEntryService) {
+		this.assetEntryService = assetEntryService;
+	}
+
+	/**
+	 * Returns the asset entry persistence.
+	 *
+	 * @return the asset entry persistence
+	 */
+	public AssetEntryPersistence getAssetEntryPersistence() {
+		return assetEntryPersistence;
+	}
+
+	/**
+	 * Sets the asset entry persistence.
+	 *
+	 * @param assetEntryPersistence the asset entry persistence
+	 */
+	public void setAssetEntryPersistence(
+		AssetEntryPersistence assetEntryPersistence) {
+		this.assetEntryPersistence = assetEntryPersistence;
+	}
+
+	/**
+	 * Returns the asset entry finder.
+	 *
+	 * @return the asset entry finder
+	 */
+	public AssetEntryFinder getAssetEntryFinder() {
+		return assetEntryFinder;
+	}
+
+	/**
+	 * Sets the asset entry finder.
+	 *
+	 * @param assetEntryFinder the asset entry finder
+	 */
+	public void setAssetEntryFinder(AssetEntryFinder assetEntryFinder) {
+		this.assetEntryFinder = assetEntryFinder;
+	}
+
+	/**
+	 * Returns the asset tag local service.
+	 *
+	 * @return the asset tag local service
+	 */
+	public com.liferay.portlet.asset.service.AssetTagLocalService getAssetTagLocalService() {
+		return assetTagLocalService;
+	}
+
+	/**
+	 * Sets the asset tag local service.
+	 *
+	 * @param assetTagLocalService the asset tag local service
+	 */
+	public void setAssetTagLocalService(
+		com.liferay.portlet.asset.service.AssetTagLocalService assetTagLocalService) {
+		this.assetTagLocalService = assetTagLocalService;
+	}
+
+	/**
+	 * Returns the asset tag remote service.
+	 *
+	 * @return the asset tag remote service
+	 */
+	public com.liferay.portlet.asset.service.AssetTagService getAssetTagService() {
+		return assetTagService;
+	}
+
+	/**
+	 * Sets the asset tag remote service.
+	 *
+	 * @param assetTagService the asset tag remote service
+	 */
+	public void setAssetTagService(
+		com.liferay.portlet.asset.service.AssetTagService assetTagService) {
+		this.assetTagService = assetTagService;
+	}
+
+	/**
+	 * Returns the asset tag persistence.
+	 *
+	 * @return the asset tag persistence
+	 */
+	public AssetTagPersistence getAssetTagPersistence() {
+		return assetTagPersistence;
+	}
+
+	/**
+	 * Sets the asset tag persistence.
+	 *
+	 * @param assetTagPersistence the asset tag persistence
+	 */
+	public void setAssetTagPersistence(AssetTagPersistence assetTagPersistence) {
+		this.assetTagPersistence = assetTagPersistence;
+	}
+
+	/**
+	 * Returns the asset tag finder.
+	 *
+	 * @return the asset tag finder
+	 */
+	public AssetTagFinder getAssetTagFinder() {
+		return assetTagFinder;
+	}
+
+	/**
+	 * Sets the asset tag finder.
+	 *
+	 * @param assetTagFinder the asset tag finder
+	 */
+	public void setAssetTagFinder(AssetTagFinder assetTagFinder) {
+		this.assetTagFinder = assetTagFinder;
 	}
 
 	/**
@@ -1595,6 +1825,30 @@ public abstract class LayoutServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.service.ImageService imageService;
 	@BeanReference(type = ImagePersistence.class)
 	protected ImagePersistence imagePersistence;
+	@BeanReference(type = com.liferay.portlet.asset.service.AssetCategoryLocalService.class)
+	protected com.liferay.portlet.asset.service.AssetCategoryLocalService assetCategoryLocalService;
+	@BeanReference(type = com.liferay.portlet.asset.service.AssetCategoryService.class)
+	protected com.liferay.portlet.asset.service.AssetCategoryService assetCategoryService;
+	@BeanReference(type = AssetCategoryPersistence.class)
+	protected AssetCategoryPersistence assetCategoryPersistence;
+	@BeanReference(type = AssetCategoryFinder.class)
+	protected AssetCategoryFinder assetCategoryFinder;
+	@BeanReference(type = com.liferay.portlet.asset.service.AssetEntryLocalService.class)
+	protected com.liferay.portlet.asset.service.AssetEntryLocalService assetEntryLocalService;
+	@BeanReference(type = com.liferay.portlet.asset.service.AssetEntryService.class)
+	protected com.liferay.portlet.asset.service.AssetEntryService assetEntryService;
+	@BeanReference(type = AssetEntryPersistence.class)
+	protected AssetEntryPersistence assetEntryPersistence;
+	@BeanReference(type = AssetEntryFinder.class)
+	protected AssetEntryFinder assetEntryFinder;
+	@BeanReference(type = com.liferay.portlet.asset.service.AssetTagLocalService.class)
+	protected com.liferay.portlet.asset.service.AssetTagLocalService assetTagLocalService;
+	@BeanReference(type = com.liferay.portlet.asset.service.AssetTagService.class)
+	protected com.liferay.portlet.asset.service.AssetTagService assetTagService;
+	@BeanReference(type = AssetTagPersistence.class)
+	protected AssetTagPersistence assetTagPersistence;
+	@BeanReference(type = AssetTagFinder.class)
+	protected AssetTagFinder assetTagFinder;
 	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoRowLocalService.class)
 	protected com.liferay.portlet.expando.service.ExpandoRowLocalService expandoRowLocalService;
 	@BeanReference(type = ExpandoRowPersistence.class)

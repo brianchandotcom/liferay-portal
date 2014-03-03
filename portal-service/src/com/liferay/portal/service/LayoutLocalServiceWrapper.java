@@ -1529,6 +1529,16 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			layoutIds, serviceContext);
 	}
 
+	@Override
+	public void updateAsset(long userId,
+		com.liferay.portal.model.Layout layout, long[] assetCategoryIds,
+		java.lang.String[] assetTagNames)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutLocalService.updateAsset(userId, layout, assetCategoryIds,
+			assetTagNames);
+	}
+
 	/**
 	* Updates the friendly URL of the layout.
 	*

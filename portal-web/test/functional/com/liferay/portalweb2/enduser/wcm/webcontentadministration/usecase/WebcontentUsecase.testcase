@@ -13,8 +13,8 @@
 		<execute macro="WebContentTemplates#tearDownCP" />
 
 		<execute macro="WebContentStructures#tearDownCP">
- 			<var name="siteScopeName" value="${globalSiteName}" />
- 		</execute>
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
@@ -92,7 +92,6 @@
 
 	<command name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="5">
 		<var name="pageName" value="Web Content Display Page" />
-		<var name="portletName" value="Web Content Display" />
 		<var name="structureDescription" value="Global WC Structure Description" />
 		<var name="structureFieldNames" value="Text,Image,Text Box" />
 		<var name="structureName" value="Global WC Structure Name" />
@@ -132,7 +131,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute action="PGWebcontentdisplay#click" locator-key1="ADD_WEB_CONTENT" value1="Add" />

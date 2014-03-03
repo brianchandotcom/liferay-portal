@@ -71,7 +71,7 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 					</aui:field-wrapper>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message arguments="<%= new Object[] {publicLayoutSetPrototype.getName(locale)} %>" key="this-site-was-cloned-from-site-template-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(publicLayoutSetPrototype.getName(locale))} %>" key="this-site-was-cloned-from-site-template-x" translateArguments="<%= false %>" />
 				</c:otherwise>
 			</c:choose>
 		</aui:fieldset>
@@ -94,7 +94,7 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 					</aui:field-wrapper>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototype.getName(locale)} %>" key="this-site-was-cloned-from-site-template-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(privateLayoutSetPrototype.getName(locale))} %>" key="this-site-was-cloned-from-site-template-x" translateArguments="<%= false %>" />
 				</c:otherwise>
 			</c:choose>
 		</aui:fieldset>

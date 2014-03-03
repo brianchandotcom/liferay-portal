@@ -1168,13 +1168,13 @@ public class DLImpl implements DL {
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
 
+			ancestorFolderIds.add(folderId);
+
 			if (recursive) {
-				ancestorFolderIds = folder.getAncestorFolderIds();
+				ancestorFolderIds.addAll(folder.getAncestorFolderIds());
 
 				ancestorFolderIds.add(groupId);
 			}
-
-			ancestorFolderIds.add(0, folderId);
 		}
 		else {
 			ancestorFolderIds.add(groupId);

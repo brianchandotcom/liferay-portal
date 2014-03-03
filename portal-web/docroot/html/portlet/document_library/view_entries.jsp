@@ -250,7 +250,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 %>
 
 <div class="subscribe-action">
-	<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && ((folder == null) || folder.isSupportsSubscribing()) && (DLUtil.getEmailFileEntryAddedEnabled(portletPreferences) || DLUtil.getEmailFileEntryUpdatedEnabled(portletPreferences)) %>">
+	<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && ((folder == null) || folder.isSupportsSubscribing()) && DLUtil.getEmailFileEntryAnyEventEnabled(portletPreferences) %>">
 
 		<%
 		boolean subscribed = false;

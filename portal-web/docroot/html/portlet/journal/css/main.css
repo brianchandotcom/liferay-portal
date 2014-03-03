@@ -284,6 +284,13 @@
 		}
 	}
 
+	.subscribe-action {
+		margin-bottom: 10px;
+		margin-right: 10px;
+		margin-top: 5px;
+		text-align: right;
+	}
+
 	.component-group .tree-placeholder {
 		display: none;
 	}

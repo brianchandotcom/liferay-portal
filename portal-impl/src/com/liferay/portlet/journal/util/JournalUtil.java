@@ -60,6 +60,7 @@ import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.templateparser.Transformer;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -623,6 +624,21 @@ public class JournalUtil {
 		}
 	}
 
+	public static boolean getEmailArticleAnyEventEnabled(
+		PortletPreferences preferences) {
+
+		return JournalUtil.getEmailArticleAddedEnabled(preferences) ||
+			JournalUtil.getEmailArticleApprovalDeniedEnabled(
+				preferences) ||
+			JournalUtil.getEmailArticleApprovalGrantedEnabled(
+				preferences) ||
+			JournalUtil.getEmailArticleApprovalRequestedEnabled(
+				preferences) ||
+			JournalUtil.getEmailArticleReviewEnabled(
+				preferences) ||
+			JournalUtil.getEmailArticleUpdatedEnabled(preferences);
+	}
+
 	public static String getEmailArticleApprovalDeniedBody(
 		PortletPreferences preferences) {
 
@@ -1156,6 +1172,42 @@ public class JournalUtil {
 
 		return ModelHintsUtil.trimString(
 			JournalArticle.class.getName(), "urlTitle", title);
+	}
+
+	public static boolean isSubscribedToFolder(
+			long companyId, long groupId, long userId, long folderId)
+		throws PortalException, SystemException {
+
+		return isSubscribedToFolder(companyId, groupId, userId, folderId, true);
+	}
+
+	public static boolean isSubscribedToFolder(
+			long companyId, long groupId, long userId, long folderId,
+			boolean recursive)
+		throws PortalException, SystemException {
+
+		List<Long> ancestorFolderIds = new ArrayList<Long>();
+
+		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
+				folderId);
+
+			ancestorFolderIds.add(folderId);
+
+			if (recursive) {
+				ancestorFolderIds.addAll(folder.getAncestorFolderIds());
+
+				ancestorFolderIds.add(groupId);
+			}
+		}
+		else {
+			ancestorFolderIds.add(groupId);
+		}
+
+		long[] folderIdsArray = ArrayUtil.toLongArray(ancestorFolderIds);
+
+		return SubscriptionLocalServiceUtil.isSubscribed(
+			companyId, userId, JournalFolder.class.getName(), folderIdsArray);
 	}
 
 	public static String mergeArticleContent(

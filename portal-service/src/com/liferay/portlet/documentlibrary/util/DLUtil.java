@@ -170,6 +170,13 @@ public class DLUtil {
 		return getDL().getEmailFileEntryAddedSubjectMap(preferences);
 	}
 
+	public static boolean getEmailFileEntryAnyEventEnabled(
+		PortletPreferences preferences) {
+
+		return DLUtil.getEmailFileEntryAddedEnabled(preferences) ||
+			DLUtil.getEmailFileEntryUpdatedEnabled(preferences);
+	}
+
 	public static Map<Locale, String> getEmailFileEntryUpdatedBodyMap(
 		PortletPreferences preferences) {
 

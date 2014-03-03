@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -36,9 +37,15 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutSetBranch;
+import com.liferay.portal.model.LayoutStagingHandler;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -60,6 +67,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -71,6 +81,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Michael C. Han
  * @author Mate Thurzo
+ * @author Vilmos Papp
  */
 public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
@@ -134,6 +145,14 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				typeSettingsProperties.getProperty("remoteGroupId"));
 
 			disableRemoteStaging(remoteURL, remoteGroupId);
+
+			boolean branchingPrivate = GetterUtil.getBoolean(
+				typeSettingsProperties.getProperty("branchingPrivate"));
+			boolean branchingPublic = GetterUtil.getBoolean(
+				typeSettingsProperties.getProperty("branchingPublic"));
+
+			updatePageVersioning(
+				liveGroup.getGroupId(), branchingPrivate, branchingPublic);
 		}
 
 		typeSettingsProperties.remove("branchingPrivate");
@@ -197,6 +216,11 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		UnicodeProperties typeSettingsProperties =
 			liveGroup.getTypeSettingsProperties();
 
+		boolean currentylBranchingPrivate = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("branchingPrivate"));
+		boolean currentlyBranchingPublic = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("branchingPublic"));
+
 		typeSettingsProperties.setProperty(
 			"branchingPrivate", String.valueOf(branchingPrivate));
 		typeSettingsProperties.setProperty(
@@ -233,6 +257,13 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
 					false, parameterMap, null, null);
 			}
+		}
+		else {
+			Group stagingGroup = liveGroup.getStagingGroup();
+
+			updatePageVersioning(
+				stagingGroup.getGroupId(), currentylBranchingPrivate,
+				currentlyBranchingPublic, branchingPrivate, branchingPublic);
 		}
 
 		StagingUtil.checkDefaultLayoutSetBranches(
@@ -285,6 +316,15 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		if (!stagedRemotely) {
 			enableRemoteStaging(remoteURL, remoteGroupId);
 		}
+
+		boolean currentylBranchingPrivate = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("branchingPrivate"));
+		boolean currentlyBranchingPublic = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("branchingPublic"));
+
+		updatePageVersioning(
+			liveGroup.getGroupId(), currentylBranchingPrivate,
+			currentlyBranchingPublic, branchingPrivate, branchingPublic);
 
 		typeSettingsProperties.setProperty(
 			"branchingPrivate", String.valueOf(branchingPrivate));
@@ -560,6 +600,39 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			".lar";
 	}
 
+	protected Map<Long, Long> getPublishedLayoutRevisions(
+			List<Long> lastPublishDates,
+			Map<Long, Long> publishedLayoutSetBranches)
+		throws PortalException, SystemException {
+
+		Map<Long, Long> publishedLayoutRevisions = new HashMap<Long, Long>();
+
+		for (Long lastPublishDate : lastPublishDates) {
+			Long layoutSetBranchId = publishedLayoutSetBranches.get(
+				lastPublishDate);
+
+			LayoutSetBranch layoutSetBranch =
+				layoutSetBranchLocalService.getLayoutSetBranch(
+					layoutSetBranchId);
+
+			List<LayoutRevision> headRevisions =
+				layoutRevisionLocalService.getLayoutRevisions(
+					layoutSetBranch.getLayoutSetBranchId(), true);
+
+			for (LayoutRevision layoutRevision : headRevisions) {
+				Date statusDate = layoutRevision.getStatusDate();
+
+				if (statusDate.getTime() <= lastPublishDate) {
+					publishedLayoutRevisions.put(
+						layoutRevision.getPlid(),
+						layoutRevision.getLayoutRevisionId());
+				}
+			}
+		}
+
+		return publishedLayoutRevisions;
+	}
+
 	protected FileEntry getStagingRequestFileEntry(
 			long userId, long stagingRequestId, Folder folder)
 		throws PortalException, SystemException {
@@ -654,6 +727,110 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				typeSettingsProperties.setProperty(
 					parameterName, String.valueOf(staged));
 			}
+		}
+	}
+
+	protected void updateLayoutsWithLatestRevisions(
+			long groupId, boolean privateLayout)
+		throws PortalException, SystemException {
+
+		List<LayoutSetBranch> layoutSetBranches =
+			layoutSetBranchLocalService.getLayoutSetBranches(
+				groupId, privateLayout);
+
+		List<Long> lastPublishDates = new ArrayList<Long>();
+
+		Map<Long, Long> publishedLayoutSetBranches = new HashMap<Long, Long>();
+
+		for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
+			String lastPublishDate = layoutSetBranch.getSettingsProperty(
+				"last-publish-date");
+
+			if (Validator.isNotNull(lastPublishDate)) {
+				Long lastPublishTime = new Long(lastPublishDate);
+
+				lastPublishDates.add(lastPublishTime);
+
+				publishedLayoutSetBranches.put(
+					lastPublishTime, layoutSetBranch.getLayoutSetBranchId());
+			}
+		}
+
+		Collections.sort(lastPublishDates);
+
+		Map<Long, Long> publishedLayoutRevisions =
+			getPublishedLayoutRevisions(
+				lastPublishDates, publishedLayoutSetBranches);
+
+		Set<Long> publishedLayoutPlids = publishedLayoutRevisions.keySet();
+
+		for (Long plid : publishedLayoutPlids) {
+			long layoutRevisionId = publishedLayoutRevisions.get(plid);
+
+			LayoutRevision layoutRevision =
+				layoutRevisionLocalService.fetchLayoutRevision(
+					layoutRevisionId);
+
+			Layout layout = layoutLocalService.fetchLayout(plid);
+
+			layout = updateLayoutWithLayoutRevision(layout, layoutRevision);
+
+			layoutLocalService.updateLayout(layout);
+		}
+	}
+
+	protected Layout updateLayoutWithLayoutRevision(
+			Layout layout, LayoutRevision layoutRevision)
+		throws PortalException, SystemException {
+
+		LayoutStagingHandler layoutStagingHandler =
+			LayoutStagingUtil.getLayoutStagingHandler(layout);
+
+		layout = layoutStagingHandler.getLayout();
+
+		layout.setUserId(layoutRevision.getUserId());
+		layout.setUserName(layoutRevision.getUserName());
+		layout.setCreateDate(layoutRevision.getCreateDate());
+		layout.setModifiedDate(layoutRevision.getModifiedDate());
+		layout.setPrivateLayout(layoutRevision.getPrivateLayout());
+		layout.setName(layoutRevision.getName());
+		layout.setTitle(layoutRevision.getTitle());
+		layout.setDescription(layoutRevision.getDescription());
+		layout.setKeywords(layoutRevision.getKeywords());
+		layout.setRobots(layoutRevision.getRobots());
+		layout.setTypeSettings(layoutRevision.getTypeSettings());
+		layout.setIconImageId(layoutRevision.getIconImageId());
+		layout.setThemeId(layoutRevision.getThemeId());
+		layout.setColorSchemeId(layoutRevision.getColorSchemeId());
+		layout.setWapThemeId(layoutRevision.getWapThemeId());
+		layout.setWapColorSchemeId(layoutRevision.getWapColorSchemeId());
+		layout.setCss(layoutRevision.getCss());
+
+		return layout;
+	}
+
+	protected void updatePageVersioning(
+			long groupId, boolean currentlyBranchingPrivate,
+			boolean currentlyBranchingPublic)
+		throws PortalException, SystemException {
+
+		updatePageVersioning(
+			groupId, currentlyBranchingPrivate, currentlyBranchingPublic, false,
+			false);
+	}
+
+	protected void updatePageVersioning(
+			long groupId, boolean currentlyBranchingPrivate,
+			boolean currentlyBranchingPublic, boolean branchingPrivate,
+			boolean branchingPublic)
+		throws PortalException, SystemException {
+
+		if (!branchingPrivate && currentlyBranchingPrivate) {
+			updateLayoutsWithLatestRevisions(groupId, true);
+		}
+
+		if (!branchingPublic && currentlyBranchingPublic) {
+			updateLayoutsWithLatestRevisions(groupId, false);
 		}
 	}
 

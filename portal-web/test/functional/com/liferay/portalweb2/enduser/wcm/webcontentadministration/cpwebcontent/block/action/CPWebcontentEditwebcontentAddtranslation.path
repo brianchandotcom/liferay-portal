@@ -30,8 +30,8 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_TRANSLATION_IFRAME</td>
- 	<td>//iframe[contains(@src,'_15_toLanguageId')]</td>
- 	<td></td>
+	<td>//iframe[contains(@src,'_15_toLanguageId')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>

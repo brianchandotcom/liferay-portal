@@ -45,10 +45,8 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 		<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 		<liferay-ui:error key="emailPageAddedBody" message="please-enter-a-valid-body" />
-		<liferay-ui:error key="emailPageAddedSignature" message="please-enter-a-valid-signature" />
 		<liferay-ui:error key="emailPageAddedSubject" message="please-enter-a-valid-subject" />
 		<liferay-ui:error key="emailPageUpdatedBody" message="please-enter-a-valid-body" />
-		<liferay-ui:error key="emailPageUpdatedSignature" message="please-enter-a-valid-signature" />
 		<liferay-ui:error key="emailPageUpdatedSubject" message="please-enter-a-valid-subject" />
 		<liferay-ui:error key="visibleNodesCount" message="please-specify-at-least-one-visible-node" />
 
@@ -97,8 +95,8 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 		<liferay-ui:section>
 			<liferay-ui:email-notifications-settings
-				emailDefinitionTerms="<%= definitionTerms %>"
 				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailPageAddedBody", ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_BODY)) %>'
+				emailDefinitionTerms="<%= definitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailPageAddedEnabled--", WikiUtil.getEmailPageAddedEnabled(portletPreferences)) %>'
 				emailParam="emailPageAdded"
 				emailSubject='<%= PrefsParamUtil.getString(portletPreferences, request, "emailPageAddedSubject", ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_SUBJECT)) %>'
@@ -107,8 +105,8 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 		<liferay-ui:section>
 			<liferay-ui:email-notifications-settings
-				emailDefinitionTerms="<%= definitionTerms %>"
 				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailPageUpdatedBody", ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_BODY)) %>'
+				emailDefinitionTerms="<%= definitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailPageUpdatedEnabled--", WikiUtil.getEmailPageUpdatedEnabled(portletPreferences)) %>'
 				emailParam="emailPageUpdated"
 				emailSubject='<%= PrefsParamUtil.getString(portletPreferences, request, "emailPageUpdatedSubject", ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_SUBJECT)) %>'

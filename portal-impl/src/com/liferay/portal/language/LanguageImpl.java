@@ -889,27 +889,6 @@ public class LanguageImpl implements Language {
 		return _localesMap.get(languageCode);
 	}
 
-	private ResourceBundle _getResourceBundleFromConfiguratingPortlet(
-			PageContext pageContext, Locale locale)
-		throws SystemException {
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		String portletResource = ParamUtil.getString(
-			request, "portletResource");
-
-		long companyId = PortalUtil.getCompanyId(request);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			companyId, portletResource);
-
-		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-			portlet, pageContext.getServletContext());
-
-		return portletConfig.getResourceBundle(locale);
-	}
-
 	private ResourceBundle _getResourceBundleFromPageContext(
 		PageContext pageContext) {
 
@@ -941,24 +920,6 @@ public class LanguageImpl implements Language {
 		if (configPortletConfig != null) {
 			ResourceBundle configResourceBundle =
 				configPortletConfig.getResourceBundle(locale);
-
-			String portletName = configPortletConfig.getPortletName();
-
-			if (portletName.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-				try {
-					ResourceBundle resourceBundle =
-						_getResourceBundleFromConfiguratingPortlet(
-							pageContext, locale);
-
-					return new CompositeResourceBundle(
-						configResourceBundle, resourceBundle);
-				}
-				catch (SystemException e) {
-					if (_log.isErrorEnabled()) {
-						_log.error(e.getMessage(), e);
-					}
-				}
-			}
 
 			return configResourceBundle;
 		}

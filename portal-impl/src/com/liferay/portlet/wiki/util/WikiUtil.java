@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -69,6 +71,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -194,12 +197,153 @@ public class WikiUtil {
 			preferences, companyId, PropsValues.WIKI_EMAIL_FROM_ADDRESS);
 	}
 
+	public static Map<String, String> getEmailFromDefinitionTerms(
+		RenderRequest request, String emailFromAddress, String emailFromName) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, String> definitionTerms = new HashMap<String, String>();
+
+		definitionTerms.put(
+			"[$COMPANY_ID$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-id-associated-with-the-wiki"));
+		definitionTerms.put(
+			"[$COMPANY_MX$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-mx-associated-with-the-wiki"));
+		definitionTerms.put(
+			"[$COMPANY_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-name-associated-with-the-wiki"));
+		definitionTerms.put(
+			"[$PAGE_USER_ADDRESS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-email-address-of-the-user-who-added-the-page"));
+		definitionTerms.put(
+			"[$PAGE_USER_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-user-who-added-the-page"));
+		definitionTerms.put(
+			"[$PORTLET_NAME$]", PortalUtil.getPortletTitle(request));
+		definitionTerms.put(
+			"[$SITE_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-site-name-associated-with-the-wiki"));
+
+		return definitionTerms;
+	}
+
 	public static String getEmailFromName(
 			PortletPreferences preferences, long companyId)
 		throws SystemException {
 
 		return PortalUtil.getEmailFromName(
 			preferences, companyId, PropsValues.WIKI_EMAIL_FROM_NAME);
+	}
+
+	public static Map<String, String> getEmailNotificationDefinitionTerms(
+		RenderRequest request, String emailFromAddress, String emailFromName) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, String> definitionTerms = new HashMap<String, String>();
+
+		definitionTerms.put(
+			"[$COMPANY_ID$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-id-associated-with-the-wiki"));
+		definitionTerms.put(
+			"[$COMPANY_MX$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-mx-associated-with-the-wiki"));
+		definitionTerms.put(
+			"[$COMPANY_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-name-associated-with-the-wiki"));
+		definitionTerms.put(
+			"[$DIFFS_URL$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-url-of-the-page-comparing-this-page-content-with-the-" +
+					"previous-version"));
+		definitionTerms.put(
+			"[$FROM_ADDRESS$]", HtmlUtil.escape(emailFromAddress));
+		definitionTerms.put("[$FROM_NAME$]", HtmlUtil.escape(emailFromName));
+		definitionTerms.put(
+			"[$NODE_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-node-in-which-the-page-was-added"));
+		definitionTerms.put(
+			"[$PAGE_CONTENT$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-page-content"));
+		definitionTerms.put(
+			"[$PAGE_DATE_UPDATE$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-date-of-the-modifications"));
+		definitionTerms.put(
+			"[$PAGE_DIFFS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-page-content-compared-with-the-previous-version-page-" +
+					"content"));
+		definitionTerms.put(
+			"[$PAGE_ID$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-page-id"));
+		definitionTerms.put(
+			"[$PAGE_SUMMARY$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-summary-of-the-page-or-the-modifications"));
+		definitionTerms.put(
+			"[$PAGE_TITLE$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-page-title"));
+		definitionTerms.put(
+			"[$PAGE_URL$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-page-url"));
+		definitionTerms.put(
+			"[$PAGE_USER_ADDRESS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-email-address-of-the-user-who-added-the-page"));
+		definitionTerms.put(
+			"[$PAGE_USER_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-user-who-added-the-page"));
+
+		Company company = themeDisplay.getCompany();
+
+		definitionTerms.put("[$PORTAL_URL$]", company.getVirtualHostname());
+
+		definitionTerms.put(
+			"[$PORTLET_NAME$]", PortalUtil.getPortletTitle(request));
+		definitionTerms.put(
+			"[$SITE_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-site-name-associated-with-the-wiki"));
+		definitionTerms.put(
+			"[$TO_ADDRESS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-address-of-the-email-recipient"));
+		definitionTerms.put(
+			"[$TO_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-name-of-the-email-recipient"));
+
+		return definitionTerms;
 	}
 
 	public static String getEmailPageAddedBody(PortletPreferences preferences) {

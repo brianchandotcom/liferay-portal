@@ -40,6 +40,8 @@ import java.io.File;
 import java.io.InputStreamReader;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
@@ -131,6 +133,25 @@ public class LiferaySeleniumHelper {
 			throw new Exception(
 				"Pattern \"" + pattern + "\" does not match \"" + confirmation +
 					"\"");
+		}
+	}
+
+	public static void assertConsoleContentPresent(String text)
+		throws Exception {
+
+		String currentDate = DateUtil.getCurrentDate(
+			"yyyy-MM-dd", LocaleUtil.getDefault());
+
+		String log4jXMLFile =
+			PropsValues.LIFERAY_HOME + "/logs/liferay." + currentDate + ".log";
+
+		String content = FileUtil.read(log4jXMLFile);
+
+		Pattern pattern = Pattern.compile(text);
+		Matcher matcher = pattern.matcher(content);
+
+		while (!matcher.find()) {
+			throw new Exception("\"" + text + "\" is not present in console");
 		}
 	}
 

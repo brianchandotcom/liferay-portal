@@ -127,6 +127,11 @@ public class LayoutPrototypeLocalServiceImpl
 			new ServiceContext());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(long,
+	 *             long, Map, Map, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPrototype addLayoutPrototype(
 			long userId, long companyId, Map<Locale, String> nameMap,
@@ -301,6 +306,11 @@ public class LayoutPrototypeLocalServiceImpl
 			layoutPrototypeId, nameMap, description, active, null);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateLayoutPrototype(long,
+	 *             Map, Map, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPrototype updateLayoutPrototype(
 			long layoutPrototypeId, Map<Locale, String> nameMap,

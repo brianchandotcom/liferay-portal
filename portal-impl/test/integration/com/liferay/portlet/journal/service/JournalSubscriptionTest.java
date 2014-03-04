@@ -56,18 +56,6 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	public void testSubscriptionBaseModelWhenInRootContainerModel() {
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenInContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenInSubcontainerModel() {
-	}
-
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
 		JournalArticle article = JournalTestUtil.addArticle(

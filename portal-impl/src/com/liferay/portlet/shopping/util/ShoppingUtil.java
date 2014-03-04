@@ -34,7 +34,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.shopping.NoSuchCartException;
-import com.liferay.portlet.shopping.ShoppingPreferences;
+import com.liferay.portlet.shopping.ShoppingSettings;
 import com.liferay.portlet.shopping.model.ShoppingCart;
 import com.liferay.portlet.shopping.model.ShoppingCartItem;
 import com.liferay.portlet.shopping.model.ShoppingCategory;
@@ -122,7 +122,7 @@ public class ShoppingUtil {
 		double shipping = calculateShipping(items);
 		double alternativeShipping = shipping;
 
-		ShoppingPreferences preferences = null;
+		ShoppingSettings preferences = null;
 
 		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
@@ -132,8 +132,8 @@ public class ShoppingUtil {
 			if (preferences == null) {
 				ShoppingCategory category = item.getCategory();
 
-				preferences = ShoppingPreferences.getInstance(
-					category.getCompanyId(), category.getGroupId());
+				preferences = ShoppingSettings.getInstance(
+						category.getCompanyId(), category.getGroupId());
 
 				break;
 			}
@@ -307,7 +307,7 @@ public class ShoppingUtil {
 		double insurance = 0.0;
 		double subtotal = 0.0;
 
-		ShoppingPreferences preferences = null;
+		ShoppingSettings preferences = null;
 
 		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
@@ -318,8 +318,8 @@ public class ShoppingUtil {
 			if (preferences == null) {
 				ShoppingCategory category = item.getCategory();
 
-				preferences = ShoppingPreferences.getInstance(
-					category.getCompanyId(), category.getGroupId());
+				preferences = ShoppingSettings.getInstance(
+						category.getCompanyId(), category.getGroupId());
 			}
 
 			ShoppingItemPrice itemPrice = _getItemPrice(item, count.intValue());
@@ -333,7 +333,7 @@ public class ShoppingUtil {
 
 		double insuranceRate = 0.0;
 
-		double[] range = ShoppingPreferences.INSURANCE_RANGE;
+		double[] range = ShoppingSettings.INSURANCE_RANGE;
 
 		for (int i = 0; i < range.length - 1; i++) {
 			if ((subtotal > range[i]) && (subtotal <= range[i + 1])) {
@@ -374,7 +374,7 @@ public class ShoppingUtil {
 		double shipping = 0.0;
 		double subtotal = 0.0;
 
-		ShoppingPreferences preferences = null;
+		ShoppingSettings preferences = null;
 
 		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
@@ -385,8 +385,8 @@ public class ShoppingUtil {
 			if (preferences == null) {
 				ShoppingCategory category = item.getCategory();
 
-				preferences = ShoppingPreferences.getInstance(
-					category.getCompanyId(), category.getGroupId());
+				preferences = ShoppingSettings.getInstance(
+						category.getCompanyId(), category.getGroupId());
 			}
 
 			if (item.isRequiresShipping()) {
@@ -409,7 +409,7 @@ public class ShoppingUtil {
 
 		double shippingRate = 0.0;
 
-		double[] range = ShoppingPreferences.SHIPPING_RANGE;
+		double[] range = ShoppingSettings.SHIPPING_RANGE;
 
 		for (int i = 0; i < range.length - 1; i++) {
 			if ((subtotal > range[i]) && (subtotal <= range[i + 1])) {
@@ -459,7 +459,7 @@ public class ShoppingUtil {
 
 		double tax = 0.0;
 
-		ShoppingPreferences preferences = null;
+		ShoppingSettings preferences = null;
 
 		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
@@ -469,8 +469,8 @@ public class ShoppingUtil {
 			if (preferences == null) {
 				ShoppingCategory category = item.getCategory();
 
-				preferences = ShoppingPreferences.getInstance(
-					category.getCompanyId(), category.getGroupId());
+				preferences = ShoppingSettings.getInstance(
+						category.getCompanyId(), category.getGroupId());
 
 				break;
 			}
@@ -901,7 +901,7 @@ public class ShoppingUtil {
 	}
 
 	public static String getPayPalRedirectURL(
-		ShoppingPreferences preferences, ShoppingOrder order, double total,
+		ShoppingSettings preferences, ShoppingOrder order, double total,
 		String returnURL, String notifyURL) {
 
 		String payPalEmailAddress = HttpUtil.encodeURL(
@@ -1052,7 +1052,7 @@ public class ShoppingUtil {
 	}
 
 	public static boolean meetsMinOrder(
-			ShoppingPreferences preferences,
+			ShoppingSettings preferences,
 			Map<ShoppingCartItem, Integer> items)
 		throws PortalException, SystemException {
 

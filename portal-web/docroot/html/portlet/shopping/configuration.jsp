@@ -1,4 +1,3 @@
-<%@ page import="com.liferay.portlet.shopping.ShoppingPreferences" %>
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -62,7 +61,7 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 				<aui:field-wrapper label="credit-cards">
 
 					<%
-					String[] ccTypes1 = ShoppingPreferences.CC_TYPES;
+					String[] ccTypes1 = ShoppingSettings.CC_TYPES;
 					String[] ccTypes2 = shoppingPrefs.getCcTypes();
 
 					// Left list
@@ -98,10 +97,10 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 				<aui:select label="currency" name="currencyId">
 
 					<%
-					for (int i = 0; i < ShoppingPreferences.CURRENCY_IDS.length; i++) {
+					for (int i = 0; i < ShoppingSettings.CURRENCY_IDS.length; i++) {
 					%>
 
-						<aui:option label="<%= ShoppingPreferences.CURRENCY_IDS[i] %>" selected="<%= shoppingPrefs.getCurrencyId().equals(ShoppingPreferences.CURRENCY_IDS[i]) %>" />
+						<aui:option label="<%= ShoppingSettings.CURRENCY_IDS[i] %>" selected="<%= shoppingPrefs.getCurrencyId().equals(ShoppingSettings.CURRENCY_IDS[i]) %>" />
 
 					<%
 					}
@@ -146,8 +145,8 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 					int shippingRange = 0;
 
 					for (int i = 0; i < 5; i++) {
-						double shippingRangeA = ShoppingPreferences.INSURANCE_RANGE[shippingRange++];
-						double shippingRangeB = ShoppingPreferences.INSURANCE_RANGE[shippingRange++];
+						double shippingRangeA = ShoppingSettings.INSURANCE_RANGE[shippingRange++];
+						double shippingRangeB = ShoppingSettings.INSURANCE_RANGE[shippingRange++];
 					%>
 
 					<%= currencyFormat.format(shippingRangeA) %>
@@ -187,8 +186,8 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 					int insuranceRange = 0;
 
 					for (int i = 0; i < 5; i++) {
-						double insuranceRangeA = ShoppingPreferences.INSURANCE_RANGE[insuranceRange++];
-						double insuranceRangeB = ShoppingPreferences.INSURANCE_RANGE[insuranceRange++];
+						double insuranceRangeA = ShoppingSettings.INSURANCE_RANGE[insuranceRange++];
+						double insuranceRangeB = ShoppingSettings.INSURANCE_RANGE[insuranceRange++];
 					%>
 
 					<%= currencyFormat.format(insuranceRangeA) %>

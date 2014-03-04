@@ -25,7 +25,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.shopping.ShoppingPreferences;
+import com.liferay.portlet.shopping.ShoppingSettings;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -51,8 +51,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ShoppingPreferences preferences = ShoppingPreferences.getInstance(
-			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
+		ShoppingSettings preferences = ShoppingSettings.getInstance(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
 
 		updatePayment(actionRequest, preferences);
 		updateShippingCalculation(actionRequest, preferences);
@@ -78,7 +78,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	}
 
 	protected void updateEmailFrom(
-			ActionRequest actionRequest, ShoppingPreferences preferences)
+			ActionRequest actionRequest, ShoppingSettings preferences)
 		throws Exception {
 
 		String emailFromName = ParamUtil.getString(
@@ -99,7 +99,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	}
 
 	protected void updateEmailOrderConfirmation(
-			ActionRequest actionRequest, ShoppingPreferences preferences)
+			ActionRequest actionRequest, ShoppingSettings preferences)
 		throws Exception {
 
 		boolean emailOrderConfirmationEnabled = ParamUtil.getBoolean(
@@ -127,7 +127,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	}
 
 	protected void updateEmailOrderShipping(
-			ActionRequest actionRequest, ShoppingPreferences preferences)
+			ActionRequest actionRequest, ShoppingSettings preferences)
 		throws Exception {
 
 		boolean emailOrderShippingEnabled = ParamUtil.getBoolean(
@@ -152,7 +152,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	}
 
 	protected void updateInsuranceCalculation(
-			ActionRequest actionRequest, ShoppingPreferences preferences)
+			ActionRequest actionRequest, ShoppingSettings preferences)
 		throws Exception {
 
 		String insuranceFormula = ParamUtil.getString(
@@ -170,7 +170,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	}
 
 	protected void updatePayment(
-			ActionRequest actionRequest, ShoppingPreferences preferences)
+			ActionRequest actionRequest, ShoppingSettings preferences)
 		throws Exception {
 
 		String payPalEmailAddress = ParamUtil.getString(
@@ -191,7 +191,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	}
 
 	protected void updateShippingCalculation(
-			ActionRequest actionRequest, ShoppingPreferences preferences)
+			ActionRequest actionRequest, ShoppingSettings preferences)
 		throws Exception {
 
 		String shippingFormula = ParamUtil.getString(

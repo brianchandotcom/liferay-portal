@@ -42,7 +42,7 @@ import javax.portlet.ValidatorException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingPreferences {
+public class ShoppingSettings {
 
 	public static final String CC_NONE = "none";
 
@@ -91,10 +91,10 @@ public class ShoppingPreferences {
 		Double.POSITIVE_INFINITY
 	};
 
-	public static ShoppingPreferences getInstance(long companyId, long groupId)
+	public static ShoppingSettings getInstance(long companyId, long groupId)
 		throws SystemException {
 
-		return new ShoppingPreferences(companyId, groupId);
+		return new ShoppingSettings(companyId, groupId);
 	}
 
 	public String[][] getAlternativeShipping() {
@@ -443,7 +443,7 @@ public class ShoppingPreferences {
 		return Validator.isNotNull(getPayPalEmailAddress());
 	}
 
-	protected ShoppingPreferences(long companyId, long groupId)
+	protected ShoppingSettings(long companyId, long groupId)
 		throws SystemException {
 
 		long ownerId = groupId;

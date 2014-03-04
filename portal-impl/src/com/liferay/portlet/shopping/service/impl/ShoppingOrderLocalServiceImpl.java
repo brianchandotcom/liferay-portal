@@ -47,6 +47,7 @@ import com.liferay.portlet.shopping.ShippingPhoneException;
 import com.liferay.portlet.shopping.ShippingStateException;
 import com.liferay.portlet.shopping.ShippingStreetException;
 import com.liferay.portlet.shopping.ShippingZipException;
+import com.liferay.portlet.shopping.ShoppingSettings;
 import com.liferay.portlet.shopping.model.ShoppingCart;
 import com.liferay.portlet.shopping.model.ShoppingCartItem;
 import com.liferay.portlet.shopping.model.ShoppingItem;
@@ -56,7 +57,6 @@ import com.liferay.portlet.shopping.model.ShoppingOrderConstants;
 import com.liferay.portlet.shopping.model.ShoppingOrderItem;
 import com.liferay.portlet.shopping.model.impl.ShoppingCartItemImpl;
 import com.liferay.portlet.shopping.service.base.ShoppingOrderLocalServiceBaseImpl;
-import com.liferay.portlet.shopping.ShoppingPreferences;
 import com.liferay.portlet.shopping.util.ShoppingUtil;
 import com.liferay.portlet.shopping.util.comparator.OrderDateComparator;
 import com.liferay.util.CreditCard;
@@ -318,8 +318,8 @@ public class ShoppingOrderLocalServiceImpl
 		Map<ShoppingCartItem, Integer> items = cart.getItems();
 		Date now = new Date();
 
-		ShoppingPreferences shoppingPrefs = ShoppingPreferences.getInstance(
-			cart.getCompanyId(), cart.getGroupId());
+		ShoppingSettings shoppingPrefs = ShoppingSettings.getInstance(
+				cart.getCompanyId(), cart.getGroupId());
 
 		if (!ShoppingUtil.meetsMinOrder(shoppingPrefs, items)) {
 			throw new CartMinOrderException();
@@ -438,8 +438,8 @@ public class ShoppingOrderLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		ShoppingPreferences shoppingPrefs = ShoppingPreferences.getInstance(
-			order.getCompanyId(), order.getGroupId());
+		ShoppingSettings shoppingPrefs = ShoppingSettings.getInstance(
+				order.getCompanyId(), order.getGroupId());
 
 		if (emailType.equals("confirmation") &&
 			shoppingPrefs.getEmailOrderConfirmationEnabled()) {
@@ -530,8 +530,8 @@ public class ShoppingOrderLocalServiceImpl
 		ShoppingOrder order = shoppingOrderPersistence.findByPrimaryKey(
 			orderId);
 
-		ShoppingPreferences shoppingPrefs = ShoppingPreferences.getInstance(
-			order.getCompanyId(), order.getGroupId());
+		ShoppingSettings shoppingPrefs = ShoppingSettings.getInstance(
+				order.getCompanyId(), order.getGroupId());
 
 		validate(
 			shoppingPrefs, billingFirstName, billingLastName,
@@ -608,7 +608,7 @@ public class ShoppingOrderLocalServiceImpl
 
 	protected void notifyUser(
 			ShoppingOrder order, String emailType,
-			ShoppingPreferences shoppingPrefs, ServiceContext serviceContext)
+			ShoppingSettings shoppingPrefs, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(order.getUserId());
@@ -682,7 +682,7 @@ public class ShoppingOrderLocalServiceImpl
 	}
 
 	protected void validate(
-			ShoppingPreferences shoppingPrefs, String billingFirstName,
+			ShoppingSettings shoppingPrefs, String billingFirstName,
 			String billingLastName, String billingEmailAddress,
 			String billingStreet, String billingCity, String billingState,
 			String billingZip, String billingCountry, String billingPhone,

@@ -184,7 +184,6 @@
 		}
 
 		fieldset {
-			display: table-cell;
 			min-width: 0;
 			width: 100%;
 		}
@@ -201,6 +200,12 @@
 		@include respond-to(phone) {
 			input[type=file], input.input-large {
 				width: 100%;
+			}
+		}
+
+		&.firefox {
+			fieldset {
+				display: table-cell;
 			}
 		}
 

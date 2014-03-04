@@ -141,7 +141,7 @@ else {
 									<aui:input id='<%= "addLayoutSelectedPageTemplate" + layoutPrototype.getUuid() %>' label="<%= name %>" name="selectedPageTemplate" type="radio" />
 
 									<div class="lfr-page-template-description">
-										<small><%= HtmlUtil.escape(layoutPrototype.getDescription()) %></small>
+										<small><%= HtmlUtil.escape(layoutPrototype.getDescription(user.getLanguageId())) %></small>
 									</div>
 								</div>
 

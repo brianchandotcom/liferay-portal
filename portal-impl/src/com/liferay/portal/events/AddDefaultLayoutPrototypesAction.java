@@ -104,9 +104,13 @@ public class AddDefaultLayoutPrototypesAction
 
 		nameMap.put(LocaleUtil.getDefault(), name);
 
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+		descriptionMap.put(LocaleUtil.getDefault(), description);
+
 		LayoutPrototype layoutPrototype =
 			LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
-				defaultUserId, companyId, nameMap, description, true,
+				defaultUserId, companyId, nameMap, descriptionMap, true,
 				new ServiceContext());
 
 		Layout layout = layoutPrototype.getLayout();

@@ -1559,6 +1559,11 @@ public class Creole10Parser]]></replacevalue>
 	</target>
 
 	<target name="jar" depends="compile">
+		<gradle-execute
+			gradleModuleDir="/registry"
+			gradleTask=":registry-impl:deploy"
+		/>
+
 		<ant dir="../util-bridges" target="jar" inheritAll="false" />
 		<ant dir="../util-java" target="jar" inheritAll="false" />
 		<ant dir="../util-taglib" target="jar" inheritAll="false" />

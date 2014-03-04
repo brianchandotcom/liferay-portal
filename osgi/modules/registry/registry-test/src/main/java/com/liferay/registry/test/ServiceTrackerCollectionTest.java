@@ -1,0 +1,576 @@
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.registry.test;
+
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+/**
+ * @author Raymond Augé
+ */
+public class ServiceTrackerCollectionTest {
+
+	@Test
+	public void testClass() {
+		ServiceTrackerList<InterfaceOne> serviceTrackerList =
+			ServiceTrackerCollections.list(InterfaceOne.class);
+
+		Assert.assertEquals(0, serviceTrackerList.size());
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		InterfaceOne a = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistrationA =
+			registry.registerService(InterfaceOne.class, a);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
+
+		serviceTrackerList.add(b);
+
+		Assert.assertEquals(2, serviceTrackerList.size());
+
+		for (InterfaceOne interfaceOne : serviceTrackerList) {
+			Assert.assertNotNull(interfaceOne);
+		}
+
+		serviceRegistrationA.unregister();
+
+		Assert.assertEquals(1, serviceTrackerList.size());
+
+		serviceTrackerList.remove(b);
+
+		Assert.assertEquals(0, serviceTrackerList.size());
+	}
+
+	@Test
+	public void testClassFilter() throws Exception {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter("(a.property=G)");
+
+		ServiceTrackerList<InterfaceOne> serviceTrackerList =
+			ServiceTrackerCollections.list(InterfaceOne.class, filter);
+
+		Assert.assertEquals(0, serviceTrackerList.size());
+
+		InterfaceOne a = getInstance();
+
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
+
+		ServiceRegistration<InterfaceOne> serviceRegistrationA =
+			registry.registerService(InterfaceOne.class, a, properties);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
+
+		Assert.assertFalse(serviceTrackerList.add(b));
+		Assert.assertEquals(1, serviceTrackerList.size());
+
+		for (InterfaceOne interfaceOne : serviceTrackerList) {
+			Assert.assertNotNull(interfaceOne);
+		}
+
+		Collection<InterfaceOne> services = registry.getServices(
+			InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(1, services.size());
+
+		serviceRegistrationA.unregister();
+
+		Assert.assertEquals(0, serviceTrackerList.size());
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(0, services.size());
+
+		serviceTrackerList.remove(b);
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(0, services.size());
+		Assert.assertEquals(0, serviceTrackerList.size());
+	}
+
+	@Test
+	public void testClassFilterProperties() throws Exception {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter("(a.property=G)");
+
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
+
+		ServiceTrackerList<InterfaceOne> serviceTrackerList =
+			ServiceTrackerCollections.list(
+				InterfaceOne.class, filter, properties);
+
+		Assert.assertEquals(0, serviceTrackerList.size());
+
+		InterfaceOne a = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistrationA =
+			registry.registerService(InterfaceOne.class, a);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
+
+		serviceTrackerList.add(b);
+
+		Assert.assertEquals(1, serviceTrackerList.size());
+
+		for (InterfaceOne interfaceOne : serviceTrackerList) {
+			Assert.assertNotNull(interfaceOne);
+		}
+
+		Collection<InterfaceOne> services = registry.getServices(
+			InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(1, services.size());
+
+		serviceRegistrationA.unregister();
+
+		Assert.assertEquals(1, serviceTrackerList.size());
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(1, services.size());
+
+		serviceTrackerList.remove(b);
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(0, services.size());
+		Assert.assertEquals(0, serviceTrackerList.size());
+	}
+
+	@Test
+	public void testClassFilterServiceTrackerCustomizer() throws Exception {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter("(a.property=G)");
+
+		AtomicInteger counter = new AtomicInteger();
+
+		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne>
+			serviceTrackerCustomizer = new TestServiceTrackerCustomizer(
+				counter);
+
+		ServiceTrackerList<InterfaceOne> serviceTrackerList =
+			ServiceTrackerCollections.list(
+				InterfaceOne.class, filter, serviceTrackerCustomizer);
+
+		Assert.assertEquals(0, serviceTrackerList.size());
+
+		InterfaceOne a = getInstance();
+
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
+
+		ServiceRegistration<InterfaceOne> serviceRegistrationA =
+			registry.registerService(InterfaceOne.class, a, properties);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
+
+		Assert.assertFalse(serviceTrackerList.add(b));
+		Assert.assertEquals(1, serviceTrackerList.size());
+
+		for (InterfaceOne interfaceOne : serviceTrackerList) {
+			Assert.assertNotNull(interfaceOne);
+		}
+
+		Collection<InterfaceOne> services = registry.getServices(
+			InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(1, services.size());
+		Assert.assertEquals(1, counter.intValue());
+
+		serviceRegistrationA.unregister();
+
+		Assert.assertEquals(0, serviceTrackerList.size());
+		Assert.assertEquals(2, counter.intValue());
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(0, services.size());
+
+		serviceTrackerList.remove(b);
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(0, services.size());
+		Assert.assertEquals(0, serviceTrackerList.size());
+		Assert.assertEquals(2, counter.intValue());
+	}
+
+	@Test
+	public void testClassFilterServiceTrackerCustomizerProperties()
+		throws Exception {
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter("(a.property=G)");
+
+		AtomicInteger counter = new AtomicInteger();
+
+		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne>
+			serviceTrackerCustomizer = new TestServiceTrackerCustomizer(
+				counter);
+
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
+
+		ServiceTrackerList<InterfaceOne> serviceTrackerList =
+			ServiceTrackerCollections.list(
+				InterfaceOne.class, filter, serviceTrackerCustomizer,
+				properties);
+
+		Assert.assertEquals(0, serviceTrackerList.size());
+
+		InterfaceOne a = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistrationA =
+			registry.registerService(InterfaceOne.class, a);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
+
+		serviceTrackerList.add(b);
+
+		Assert.assertEquals(1, serviceTrackerList.size());
+
+		for (InterfaceOne interfaceOne : serviceTrackerList) {
+			Assert.assertNotNull(interfaceOne);
+		}
+
+		Collection<InterfaceOne> services = registry.getServices(
+			InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(1, services.size());
+		Assert.assertEquals(1, counter.intValue());
+
+		serviceRegistrationA.unregister();
+
+		Assert.assertEquals(1, serviceTrackerList.size());
+		Assert.assertEquals(1, counter.intValue());
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(1, services.size());
+
+		serviceTrackerList.remove(b);
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(0, services.size());
+		Assert.assertEquals(0, serviceTrackerList.size());
+		Assert.assertEquals(2, counter.intValue());
+	}
+
+	@Test
+	public void testClassProperties() throws Exception {
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
+
+		ServiceTrackerList<InterfaceOne> serviceTrackerList =
+			ServiceTrackerCollections.list(InterfaceOne.class, properties);
+
+		Assert.assertEquals(0, serviceTrackerList.size());
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		InterfaceOne a = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistrationA =
+			registry.registerService(InterfaceOne.class, a, properties);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
+
+		serviceTrackerList.add(b);
+
+		Assert.assertEquals(2, serviceTrackerList.size());
+
+		for (InterfaceOne interfaceOne : serviceTrackerList) {
+			Assert.assertNotNull(interfaceOne);
+		}
+
+		Collection<InterfaceOne> services = registry.getServices(
+			InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(2, services.size());
+
+		serviceRegistrationA.unregister();
+
+		Assert.assertEquals(1, serviceTrackerList.size());
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(1, services.size());
+
+		serviceTrackerList.remove(b);
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(0, services.size());
+		Assert.assertEquals(0, serviceTrackerList.size());
+	}
+
+	@Test
+	public void testClassServiceTrackerCustomizer() {
+		AtomicInteger counter = new AtomicInteger();
+
+		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne>
+			serviceTrackerCustomizer = new TestServiceTrackerCustomizer(
+				counter);
+
+		ServiceTrackerList<InterfaceOne> serviceTrackerList =
+			ServiceTrackerCollections.list(
+				InterfaceOne.class, serviceTrackerCustomizer);
+
+		Assert.assertEquals(0, serviceTrackerList.size());
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		InterfaceOne a = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistrationA =
+			registry.registerService(InterfaceOne.class, a);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
+
+		serviceTrackerList.add(b);
+
+		Assert.assertEquals(2, serviceTrackerList.size());
+
+		for (InterfaceOne interfaceOne : serviceTrackerList) {
+			Assert.assertNotNull(interfaceOne);
+		}
+
+		Assert.assertEquals(2, counter.intValue());
+
+		serviceRegistrationA.unregister();
+
+		Assert.assertEquals(1, serviceTrackerList.size());
+		Assert.assertEquals(3, counter.intValue());
+
+		serviceTrackerList.remove(b);
+
+		Assert.assertEquals(0, serviceTrackerList.size());
+		Assert.assertEquals(4, counter.intValue());
+	}
+
+	@Test
+	public void testClassServiceTrackerCustomizerCustomizerProperties1()
+		throws Exception {
+
+		AtomicInteger counter = new AtomicInteger();
+
+		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne>
+			serviceTrackerCustomizer = new TestServiceTrackerCustomizer(
+				counter);
+
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
+
+		ServiceTrackerList<InterfaceOne> serviceTrackerList =
+			ServiceTrackerCollections.list(
+				InterfaceOne.class, serviceTrackerCustomizer, properties);
+
+		Assert.assertEquals(0, serviceTrackerList.size());
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		InterfaceOne a = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistrationA =
+			registry.registerService(InterfaceOne.class, a, properties);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
+
+		serviceTrackerList.add(b);
+
+		Assert.assertEquals(2, serviceTrackerList.size());
+
+		for (InterfaceOne interfaceOne : serviceTrackerList) {
+			Assert.assertNotNull(interfaceOne);
+		}
+
+		Collection<InterfaceOne> services = registry.getServices(
+			InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(2, services.size());
+		Assert.assertEquals(2, counter.intValue());
+
+		serviceRegistrationA.unregister();
+
+		Assert.assertEquals(1, serviceTrackerList.size());
+		Assert.assertEquals(3, counter.intValue());
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(1, services.size());
+
+		serviceTrackerList.remove(b);
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(0, services.size());
+		Assert.assertEquals(0, serviceTrackerList.size());
+		Assert.assertEquals(4, counter.intValue());
+	}
+
+	@Test
+	public void testClassServiceTrackerCustomizerCustomizerProperties2()
+		throws Exception {
+
+		AtomicInteger counter = new AtomicInteger();
+
+		ServiceTrackerCustomizer<InterfaceOne, InterfaceOne>
+			serviceTrackerCustomizer = new TestServiceTrackerCustomizer(
+				counter);
+
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("a.property", "G");
+
+		ServiceTrackerList<InterfaceOne> serviceTrackerList =
+			ServiceTrackerCollections.list(
+				InterfaceOne.class, serviceTrackerCustomizer, properties);
+
+		Assert.assertEquals(0, serviceTrackerList.size());
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		InterfaceOne a = getInstance();
+
+		ServiceRegistration<InterfaceOne> serviceRegistrationA =
+			registry.registerService(InterfaceOne.class, a);
+
+		Assert.assertNotNull(serviceRegistrationA);
+
+		InterfaceOne b = getInstance();
+
+		serviceTrackerList.add(b);
+
+		Assert.assertEquals(2, serviceTrackerList.size());
+
+		for (InterfaceOne interfaceOne : serviceTrackerList) {
+			Assert.assertNotNull(interfaceOne);
+		}
+
+		Collection<InterfaceOne> services = registry.getServices(
+			InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(1, services.size());
+		Assert.assertEquals(2, counter.intValue());
+
+		serviceRegistrationA.unregister();
+
+		Assert.assertEquals(1, serviceTrackerList.size());
+		Assert.assertEquals(3, counter.intValue());
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(1, services.size());
+
+		serviceTrackerList.remove(b);
+
+		services = registry.getServices(InterfaceOne.class, "(a.property=G)");
+
+		Assert.assertEquals(0, services.size());
+		Assert.assertEquals(0, serviceTrackerList.size());
+		Assert.assertEquals(4, counter.intValue());
+	}
+
+	protected InterfaceOne getInstance() {
+		return new InterfaceOne() {};
+	}
+
+	private class TestServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<InterfaceOne, InterfaceOne> {
+
+		public TestServiceTrackerCustomizer(AtomicInteger counter) {
+			_counter = counter;
+		}
+
+		@Override
+		public InterfaceOne addingService(
+			ServiceReference<InterfaceOne> serviceReference) {
+
+			InterfaceOne service = RegistryUtil.getRegistry().getService(
+				serviceReference);
+
+			_counter.incrementAndGet();
+
+			return service;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<InterfaceOne> serviceReference,
+			InterfaceOne service) {
+
+			_counter.incrementAndGet();
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<InterfaceOne> serviceReference,
+			InterfaceOne service) {
+
+			RegistryUtil.getRegistry().ungetService(serviceReference);
+
+			_counter.incrementAndGet();
+		}
+
+		private AtomicInteger _counter;
+
+	}
+
+}

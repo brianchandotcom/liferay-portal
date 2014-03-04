@@ -54,6 +54,26 @@ task baseline << {
 	)
 
 	ant.property(
+		name: "baseline.jar.bnddir.name",
+		".bnd"
+	)
+
+	ant.property(
+		name: "baseline.jar.report.level",
+		"diff"
+	)
+
+	ant.property(
+		name: "baseline.jar.report.only.dirty.packages",
+		true
+	)
+
+	ant.property(
+		name: "baseline.jar.reports.dir.name",
+		"baseline-reports"
+	)
+
+	ant.property(
 		name: "sdk.dir",
 		liferayProjectDir
 	)
@@ -89,6 +109,60 @@ task baseline << {
 		}
 	}
 
+}
+
+
+task bndIntegrationTest << {
+	ant.property(
+		name: "ant.project.name",
+		project.name
+	)
+
+	ant.property(
+		name: "baseline.jar.bnddir.name",
+		".bnd"
+	)
+
+	ant.property(
+		name: "baseline.jar.report.level",
+		"diff"
+	)
+
+	ant.property(
+		name: "baseline.jar.report.only.dirty.packages",
+		true
+	)
+
+	ant.property(
+		name: "baseline.jar.reports.dir.name",
+		"baseline-reports"
+	)
+
+	ant.property(
+		name: "sdk.dir",
+		liferayProjectDir
+	)
+
+	ant.taskdef(
+		classname: "com.liferay.util.ant.bnd.TestTask",
+		classpath: configurations.bnd.asPath,
+		name: "bndTest"
+	)
+
+	ant.taskdef(
+		classname: "com.liferay.util.ant.ManifestHelperTask",
+		classpath: configurations.bnd.asPath,
+		name: "manifestHelper"
+	)
+
+	ant.manifestHelper(
+		projectDirPropertyName: "sdk.dir"
+	)
+
+	ant.bndTest(
+		bndRootFile: "${liferayProjectDir}/common.bnd",
+		runFiles: "bnd.bnd"
+	)
 }
 
 task deploy(dependsOn: jar) << {

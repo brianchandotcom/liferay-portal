@@ -19,11 +19,18 @@ Liferay-Portal-Version: ${release.info.version}
 -baseline: *
 -baselinerepo: remoterepo
 -donotcopy: (\.touch)
--plugin: \
+-dsannotations: *
+-plugin:\
 	aQute.bnd.deployer.repository.LocalIndexedRepo;\
 		local=${workspace}/.bnd/localrepo;\
 		name=localrepo;\
-		phase=build;\
+		phase=any;\
+		type=R5,\
+	aQute.bnd.deployer.repository.FixedIndexedRepo;\
+		cache=${workspace}/.bnd/bndtoolsrepo;\
+		locations='https://github.com/bndtools/bundle-hub/raw/master/index.xml.gz';\
+		name=bndtoolsrepo;\
+		phase=any;\
 		type=R5,\
 	aQute.bnd.deployer.repository.FixedIndexedRepo;\
 		cache=${workspace}/.bnd/remoterepo;\
@@ -34,3 +41,12 @@ Liferay-Portal-Version: ${release.info.version}
 -pluginpath: ${workspace}/osgi/lib/plugin/bnd-repository.jar
 -releaserepo: localrepo
 -sources: false
+
+##
+## Test Properties
+##
+
+-resolve.effective: active
+-runee: JavaSE-1.6
+-runfw: org.apache.felix.framework
+-runvm: -ea

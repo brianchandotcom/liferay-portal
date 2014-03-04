@@ -5,4 +5,33 @@
 
 	<property name="deploy.dir" value="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi/core" />
 	<property name="jar.file" value="${ant.project.name}" />
+
+	<path id="bootstrap.classpath">
+		<pathelement path="${project.dir}/osgi/modules/registry/registry-impl/build/classes/main" />
+		<path refid="project.classpath" />
+	</path>
+
+	<target name="compile">
+		<if>
+			<not>
+				<uptodate targetfile="classes/.touch">
+					<srcfiles dir="src" includes="**/*.*" />
+				</uptodate>
+			</not>
+			<then>
+				<gradle-execute
+					gradleModuleDir="/registry"
+					gradleTask=":registry-impl:compileJava"
+				/>
+
+				<mkdir dir="classes" />
+
+				<antcall target="compile-java">
+					<param name="javac.classpathref" value="bootstrap.classpath" />
+					<param name="javac.destdir" value="classes" />
+					<param name="javac.srcdir" value="src" />
+				</antcall>
+			</then>
+		</if>
+	</target>
 </project>

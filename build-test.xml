@@ -1201,29 +1201,25 @@ tunnel.servlet.hosts.allowed=</echo>
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
-net.sf.ehcache.configurationResourceName=/ehcache/hibernate-clustered.xml
-
-ehcache.multi.vm.config.location=/ehcache/liferay-multi-vm-clustered.xml
-
 cluster.link.enabled=true
 
-web.server.display.node=true
-
 cluster.link.channel.system.properties=\
-		#
-		# Common
-		#
-		\
-		jgroups.bind_addr:${cluster.link.bind.addr["cluster-link-udp"]},\
-		jgroups.bind_interface:127.0.0.1,\
-		\
-		#
-		# Multicast
-		#
-		\
-		jgroups.mping.mcast_addr:${multicast.group.address["cluster-link-mping"]},\
-		jgroups.mping.mcast_port:${multicast.group.port["cluster-link-mping"]},\
-		jgroups.mping.ip_ttl:8</echo>
+	#
+	# Common
+	#
+	\
+	jgroups.bind_addr:${cluster.link.bind.addr["cluster-link-udp"]},\
+	jgroups.bind_interface:127.0.0.1,\
+	\
+	#
+	# Multicast
+	#
+	\
+	jgroups.mping.mcast_addr:${multicast.group.address["cluster-link-mping"]},\
+	jgroups.mping.mcast_port:${multicast.group.port["cluster-link-mping"]},\
+	jgroups.mping.ip_ttl:8
+
+web.server.display.node=true</echo>
 			</then>
 		</if>
 
@@ -2470,7 +2466,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 	</target>
 
-	<target name="run-simple-server" depends="prepare-portal-ext-properties, generate-test-properties">
+	<target name="run-simple-server" depends="prepare-portal-ext-properties">
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
@@ -2727,17 +2723,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				<arg line="${app.server.start.executable.arg.line}" />
 			</exec>
 		</forget>
-
-		<if>
-			<equals arg1="${cluster.enabled}" arg2="true" />
-			<then>
-				<forget>
-					<exec dir="${app.server.parent.dir}-node-2/tomcat-${app.server.tomcat.version}/bin" executable="${app.server.start.executable}" resolveexecutable="true">
-						<arg line="${app.server.start.executable.arg.line}" />
-					</exec>
-				</forget>
-			</then>
-		</if>
 
 		<waitfor maxwait="5" maxwaitunit="minute">
 			<and>

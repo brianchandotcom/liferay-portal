@@ -85,6 +85,22 @@
 	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//div[contains(@class,'entry-content')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGINATION-->
+<tr>
+	<td>PAGINATION_NEXT</td>
+	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li[contains(.,'Next')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_PREVIOUS</td>
+	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li[contains(.,'Previous')]/a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

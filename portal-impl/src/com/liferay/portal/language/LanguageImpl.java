@@ -750,6 +750,11 @@ public class LanguageImpl implements Language {
 		CookieKeys.addCookie(request, response, languageIdCookie);
 	}
 
+	@Override
+	public Set<String> getKeys(Locale locale) {
+		return LanguageResources.getKeys(locale);
+	}
+
 	private static LanguageImpl _getInstance() {
 		Long companyId = CompanyThreadLocal.getCompanyId();
 

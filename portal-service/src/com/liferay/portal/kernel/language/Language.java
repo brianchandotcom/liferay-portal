@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -166,4 +167,5 @@ public interface Language {
 		HttpServletRequest request, HttpServletResponse response,
 		Locale locale);
 
+	public Set<String> getKeys(Locale locale);
 }

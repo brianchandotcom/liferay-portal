@@ -30,20 +30,14 @@ public class CompositeResourceBundle extends ResourceBundle {
 	private final HashSet<String> _keySet;
 
 	public CompositeResourceBundle(ResourceBundle ... delegateResourceBundles) {
-
 		_delegateResourceBundles = delegateResourceBundles;
 		_keySet = new HashSet<String>();
 
 		for (ResourceBundle delegateResourceBundle : _delegateResourceBundles) {
-			try {
-				Set<String> delegateKeySet = delegateResourceBundle.keySet();
+			Set<String> delegateKeySet = delegateResourceBundle.keySet();
 
-				_keySet.addAll(delegateKeySet);
-			} catch (Exception e) {
-				continue;
-			}
+			_keySet.addAll(delegateKeySet);
 		}
-
 	}
 
 	@Override

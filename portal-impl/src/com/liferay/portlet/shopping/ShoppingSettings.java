@@ -14,16 +14,13 @@
 
 package com.liferay.portlet.shopping;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.settings.Settings;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContentUtil;
@@ -35,14 +32,14 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Eduardo Garcia
  */
-public class ShoppingSettings {
+public class ShoppingSettings implements Settings {
 
 	public static final String CC_NONE = "none";
 
@@ -91,15 +88,12 @@ public class ShoppingSettings {
 		Double.POSITIVE_INFINITY
 	};
 
-	public static ShoppingSettings getInstance(long companyId, long groupId)
-		throws SystemException {
-
-		return new ShoppingSettings(companyId, groupId);
+	public ShoppingSettings(Settings settings) {
+		_settings = settings;
 	}
 
 	public String[][] getAlternativeShipping() {
-		String value = _portletPreferences.getValue(
-			"alternativeShipping", null);
+		String value = _settings.getValue("alternativeShipping", null);
 
 		if (value == null) {
 			return new String[0][0];
@@ -129,7 +123,7 @@ public class ShoppingSettings {
 	}
 
 	public String[] getCcTypes() {
-		String ccTypes = _portletPreferences.getValue(
+		String ccTypes = _settings.getValue(
 			"ccTypes", StringUtil.merge(CC_TYPES));
 
 		if (ccTypes.equals(CC_NONE)) {
@@ -141,23 +135,21 @@ public class ShoppingSettings {
 	}
 
 	public String getCurrencyId() {
-		return _portletPreferences.getValue("currencyId", "USD");
+		return _settings.getValue("currencyId", "USD");
 	}
 
-	public String getEmailFromAddress(long companyId) throws SystemException {
-		return PortalUtil.getEmailFromAddress(
-			_portletPreferences, companyId,
-			PropsValues.SHOPPING_EMAIL_FROM_ADDRESS);
+	public String getEmailFromAddress() {
+		return _settings.getValue(
+			"emailFromAddress", PropsValues.SHOPPING_EMAIL_FROM_ADDRESS);
 	}
 
-	public String getEmailFromName(long companyId) throws SystemException {
-		return PortalUtil.getEmailFromName(
-			_portletPreferences, companyId,
-			PropsValues.SHOPPING_EMAIL_FROM_NAME);
+	public String getEmailFromName() {
+		return _settings.getValue(
+			"emailFromName", PropsValues.SHOPPING_EMAIL_FROM_NAME);
 	}
 
 	public String getEmailOrderConfirmationBody() {
-		String emailOrderConfirmationBody = _portletPreferences.getValue(
+		String emailOrderConfirmationBody = _settings.getValue(
 			"emailOrderConfirmationBody", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailOrderConfirmationBody)) {
@@ -171,7 +163,7 @@ public class ShoppingSettings {
 	}
 
 	public boolean getEmailOrderConfirmationEnabled() {
-		String emailOrderConfirmationEnabled = _portletPreferences.getValue(
+		String emailOrderConfirmationEnabled = _settings.getValue(
 			"emailOrderConfirmationEnabled", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailOrderConfirmationEnabled)) {
@@ -185,7 +177,7 @@ public class ShoppingSettings {
 	}
 
 	public String getEmailOrderConfirmationSubject() {
-		String emailOrderConfirmationSubject = _portletPreferences.getValue(
+		String emailOrderConfirmationSubject = _settings.getValue(
 			"emailOrderConfirmationSubject", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailOrderConfirmationSubject)) {
@@ -199,7 +191,7 @@ public class ShoppingSettings {
 	}
 
 	public String getEmailOrderShippingBody() {
-		String emailOrderShippingBody = _portletPreferences.getValue(
+		String emailOrderShippingBody = _settings.getValue(
 			"emailOrderShippingBody", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailOrderShippingBody)) {
@@ -212,7 +204,7 @@ public class ShoppingSettings {
 	}
 
 	public boolean getEmailOrderShippingEnabled() {
-		String emailOrderShippingEnabled = _portletPreferences.getValue(
+		String emailOrderShippingEnabled = _settings.getValue(
 			"emailOrderShippingEnabled", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailOrderShippingEnabled)) {
@@ -225,7 +217,7 @@ public class ShoppingSettings {
 	}
 
 	public String getEmailOrderShippingSubject() {
-		String emailOrderShippingSubject = _portletPreferences.getValue(
+		String emailOrderShippingSubject = _settings.getValue(
 			"emailOrderShippingSubject", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailOrderShippingSubject)) {
@@ -238,7 +230,7 @@ public class ShoppingSettings {
 	}
 
 	public String[] getInsurance() {
-		String value = _portletPreferences.getValue("insurance", null);
+		String value = _settings.getValue("insurance", null);
 
 		if (value == null) {
 			return new String[5];
@@ -249,21 +241,20 @@ public class ShoppingSettings {
 	}
 
 	public String getInsuranceFormula() {
-		return _portletPreferences.getValue("insuranceFormula", "flat");
+		return _settings.getValue("insuranceFormula", "flat");
 	}
 
 	public double getMinOrder() {
 		return GetterUtil.getDouble(
-			_portletPreferences.getValue("minOrder", StringPool.BLANK));
+			_settings.getValue("minOrder", StringPool.BLANK));
 	}
 
 	public String getPayPalEmailAddress() {
-		return _portletPreferences.getValue(
-			"paypalEmailAddress", StringPool.BLANK);
+		return _settings.getValue("paypalEmailAddress", StringPool.BLANK);
 	}
 
 	public String[] getShipping() {
-		String value = _portletPreferences.getValue("shipping", null);
+		String value = _settings.getValue("shipping", null);
 
 		if (value == null) {
 			return new String[5];
@@ -274,24 +265,33 @@ public class ShoppingSettings {
 	}
 
 	public String getShippingFormula() {
-		return _portletPreferences.getValue("shippingFormula", "flat");
+		return _settings.getValue("shippingFormula", "flat");
 	}
 
 	public double getTaxRate() {
 		return GetterUtil.getDouble(
-			_portletPreferences.getValue("taxRate", StringPool.BLANK));
+			_settings.getValue("taxRate", StringPool.BLANK));
 	}
 
 	public String getTaxState() {
-		return _portletPreferences.getValue("taxState", "CA");
+		return _settings.getValue("taxState", "CA");
+	}
+
+	@Override
+	public String getValue(String key, String defaultValue) {
+		return _settings.getValue(key, defaultValue);
+	}
+
+	@Override
+	public String[] getValues(String key, String[] defaultValue) {
+		return _settings.getValues(key, defaultValue);
 	}
 
 	public void setAlternativeShipping(String[][] alternativeShipping)
 		throws ReadOnlyException {
 
 		if (alternativeShipping.length == 0) {
-			_portletPreferences.setValue(
-				"alternativeShipping", StringPool.BLANK);
+			_settings.setValue("alternativeShipping", StringPool.BLANK);
 		}
 
 		StringBundler sb = new StringBundler(
@@ -305,38 +305,38 @@ public class ShoppingSettings {
 			}
 		}
 
-		_portletPreferences.setValue("alternativeShipping", sb.toString());
+		_settings.setValue("alternativeShipping", sb.toString());
 	}
 
 	public void setCcTypes(String[] ccTypes) throws ReadOnlyException {
 		if (ccTypes.length == 0) {
-			_portletPreferences.setValue("ccTypes", CC_NONE);
+			_settings.setValue("ccTypes", CC_NONE);
 		}
 		else {
-			_portletPreferences.setValue("ccTypes", StringUtil.merge(ccTypes));
+			_settings.setValue("ccTypes", StringUtil.merge(ccTypes));
 		}
 	}
 
 	public void setCurrencyId(String currencyId) throws ReadOnlyException {
-		_portletPreferences.setValue("currencyId", currencyId);
+		_settings.setValue("currencyId", currencyId);
 	}
 
 	public void setEmailFromAddress(String emailFromAddress)
 		throws ReadOnlyException {
 
-		_portletPreferences.setValue("emailFromAddress", emailFromAddress);
+		_settings.setValue("emailFromAddress", emailFromAddress);
 	}
 
 	public void setEmailFromName(String emailFromName)
 		throws ReadOnlyException {
 
-		_portletPreferences.setValue("emailFromName", emailFromName);
+		_settings.setValue("emailFromName", emailFromName);
 	}
 
 	public void setEmailOrderConfirmationBody(String emailOrderConfirmationBody)
 		throws ReadOnlyException {
 
-		_portletPreferences.setValue(
+		_settings.setValue(
 			"emailOrderConfirmationBody", emailOrderConfirmationBody);
 	}
 
@@ -344,7 +344,7 @@ public class ShoppingSettings {
 			boolean emailOrderConfirmationEnabled)
 		throws ReadOnlyException {
 
-		_portletPreferences.setValue(
+		_settings.setValue(
 			"emailOrderConfirmationEnabled",
 			String.valueOf(emailOrderConfirmationEnabled));
 	}
@@ -353,21 +353,20 @@ public class ShoppingSettings {
 			String emailOrderConfirmationSubject)
 		throws ReadOnlyException {
 
-		_portletPreferences.setValue(
+		_settings.setValue(
 			"emailOrderConfirmationSubject", emailOrderConfirmationSubject);
 	}
 
 	public void setEmailOrderShippingBody(String emailOrderShippingBody)
 		throws ReadOnlyException {
 
-		_portletPreferences.setValue(
-			"emailOrderShippingBody", emailOrderShippingBody);
+		_settings.setValue("emailOrderShippingBody", emailOrderShippingBody);
 	}
 
 	public void setEmailOrderShippingEnabled(boolean emailOrderShippingEnabled)
 		throws ReadOnlyException {
 
-		_portletPreferences.setValue(
+		_settings.setValue(
 			"emailOrderShippingEnabled",
 			String.valueOf(emailOrderShippingEnabled));
 	}
@@ -375,50 +374,61 @@ public class ShoppingSettings {
 	public void setEmailOrderShippingSubject(String emailOrderShippingSubject)
 		throws ReadOnlyException {
 
-		_portletPreferences.setValue(
+		_settings.setValue(
 			"emailOrderShippingSubject", emailOrderShippingSubject);
 	}
 
 	public void setInsurance(String[] insurance) throws ReadOnlyException {
-		_portletPreferences.setValue("insurance", StringUtil.merge(insurance));
+		_settings.setValue("insurance", StringUtil.merge(insurance));
 	}
 
 	public void setInsuranceFormula(String insuranceFormula)
 		throws ReadOnlyException {
 
-		_portletPreferences.setValue("insuranceFormula", insuranceFormula);
+		_settings.setValue("insuranceFormula", insuranceFormula);
 	}
 
 	public void setMinOrder(double minOrder) throws ReadOnlyException {
-		_portletPreferences.setValue("minOrder", String.valueOf(minOrder));
+		_settings.setValue("minOrder", String.valueOf(minOrder));
 	}
 
 	public void setPayPalEmailAddress(String payPalEmailAddress)
 		throws ReadOnlyException {
 
-		_portletPreferences.setValue("paypalEmailAddress", payPalEmailAddress);
+		_settings.setValue("paypalEmailAddress", payPalEmailAddress);
 	}
 
 	public void setShipping(String[] shipping) throws ReadOnlyException {
-		_portletPreferences.setValue("shipping", StringUtil.merge(shipping));
+		_settings.setValue("shipping", StringUtil.merge(shipping));
 	}
 
 	public void setShippingFormula(String shippingFormula)
 		throws ReadOnlyException {
 
-		_portletPreferences.setValue("shippingFormula", shippingFormula);
+		_settings.setValue("shippingFormula", shippingFormula);
 	}
 
 	public void setTaxRate(double taxRate) throws ReadOnlyException {
-		_portletPreferences.setValue("taxRate", String.valueOf(taxRate));
+		_settings.setValue("taxRate", String.valueOf(taxRate));
 	}
 
 	public void setTaxState(String taxState) throws ReadOnlyException {
-		_portletPreferences.setValue("taxState", taxState);
+		_settings.setValue("taxState", taxState);
 	}
 
+	@Override
+	public Settings setValue(String key, String value) {
+		return _settings.setValue(key, value);
+	}
+
+	@Override
+	public Settings setValues(String key, String[] values) {
+		return _settings.setValues(key, values);
+	}
+
+	@Override
 	public void store() throws IOException, ValidatorException {
-		_portletPreferences.store();
+		_settings.store();
 	}
 
 	public boolean useAlternativeShipping() {
@@ -443,18 +453,6 @@ public class ShoppingSettings {
 		return Validator.isNotNull(getPayPalEmailAddress());
 	}
 
-	protected ShoppingSettings(long companyId, long groupId)
-		throws SystemException {
-
-		long ownerId = groupId;
-		int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
-		long plid = PortletKeys.PREFS_PLID_SHARED;
-		String portletId = PortletKeys.SHOPPING;
-
-		_portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(
-			companyId, ownerId, ownerType, plid, portletId);
-	}
-
-	private PortletPreferences _portletPreferences;
+	private Settings _settings;
 
 }

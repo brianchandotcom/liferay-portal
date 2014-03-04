@@ -285,17 +285,11 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			return null;
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			stagingGroup.getGroupId());
 
-		AssetVocabulary assetVocabulary =
-			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-				serviceContext);
-
-		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-			assetVocabulary.getVocabularyId(), serviceContext);
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			stagingGroup.getGroupId(), assetVocabulary.getVocabularyId());
 
 		Company company = CompanyLocalServiceUtil.getCompany(
 			stagedModel.getCompanyId());
@@ -308,9 +302,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		AssetCategory globalAssetCategory = AssetTestUtil.addCategory(
 			companyGroup.getGroupId(), globalAssetVocabulary.getVocabularyId());
 
-		AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(), null,
-			serviceContext);
+		AssetTag assetTag = AssetTestUtil.addTag(stagingGroup.getGroupId());
 
 		AssetEntryLocalServiceUtil.updateEntry(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),

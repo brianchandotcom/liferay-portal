@@ -103,6 +103,8 @@ public interface Constants {
 
 	public static final String REJECT = "reject";
 
+	public static final String RELAUNCH = "relaunch";
+
 	public static final String REMOVE = "remove";
 
 	public static final String RENAME = "rename";

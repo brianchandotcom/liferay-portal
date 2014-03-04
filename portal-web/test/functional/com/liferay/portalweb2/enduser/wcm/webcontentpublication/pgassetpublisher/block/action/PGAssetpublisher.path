@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_WRENCH_ICON</td>
-	<td>//section[contains(.,'Asset Publisher')]//a[contains(.,'Options')]</td>
+	<td>//div[contains(@class,'portlet-asset-publisher')]//a[contains(.,'Options')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,7 +71,7 @@
 <!--CATEGORIES_FILTER-->
 <tr>
 	<td>CATEGORIES_FILTER_CATEGORY</td>
-	<td>//section[contains(.,'Asset Publisher')]//div[@class='portlet-body']//span[contains(.,'${key_categoryName}')]</td>
+	<td>//div[contains(@class,'portlet-asset-publisher')]//div[@class='portlet-body']//span[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

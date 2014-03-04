@@ -15,6 +15,7 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.language.CompositeResourceBundle;
 import com.liferay.portal.model.Portlet;
@@ -48,6 +49,8 @@ public class ConfigurationPortlet extends StrutsPortlet {
 		throws IOException, PortletException {
 
 		_portletRequestThreadLocal.set(actionRequest);
+		actionRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
 
 		super.processAction(actionRequest, actionResponse);
 	}
@@ -58,6 +61,8 @@ public class ConfigurationPortlet extends StrutsPortlet {
 		throws PortletException, IOException {
 
 		_portletRequestThreadLocal.set(renderRequest);
+		renderRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -68,6 +73,8 @@ public class ConfigurationPortlet extends StrutsPortlet {
 		throws IOException, PortletException {
 
 		_portletRequestThreadLocal.set(resourceRequest);
+		resourceRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
 
 		super.serveResource(resourceRequest, resourceResponse);
 	}
@@ -78,6 +85,8 @@ public class ConfigurationPortlet extends StrutsPortlet {
 		throws IOException, PortletException {
 
 		_portletRequestThreadLocal.set(eventRequest);
+		eventRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
 
 		super.processEvent(eventRequest, eventResponse);
 	}
@@ -143,5 +152,6 @@ public class ConfigurationPortlet extends StrutsPortlet {
 		return super.getPortletConfig();
 	}
 
-	ThreadLocal<PortletRequest> _portletRequestThreadLocal;
+	ThreadLocal<PortletRequest> _portletRequestThreadLocal =
+		new ThreadLocal<PortletRequest>();
 }

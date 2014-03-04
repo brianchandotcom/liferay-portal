@@ -234,7 +234,7 @@
 			<var name="siteScopeName" value="${site1Name}" />
 		</execute>
 
-		<execute action="CPSitesettings#select" locator-key1="APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter EE Hook" />
+		<execute action="CPSitesettings#select" locator-key1="APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
 		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoCP">
@@ -298,7 +298,7 @@
 			<var name="siteScopeName" value="${site2Name}" />
 		</execute>
 
-		<execute action="CPSitesettings#select" locator-key1="APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter EE Hook" />
+		<execute action="CPSitesettings#select" locator-key1="APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
 		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoPG">

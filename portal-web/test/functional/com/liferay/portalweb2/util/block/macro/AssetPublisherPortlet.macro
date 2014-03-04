@@ -592,6 +592,19 @@
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" />
 	</command>
 
+	<command name="viewDynamicAssetSelectionConfigurationPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+		<execute action="PGAssetpublisherConfiguration#click" locator-key1="ASSET_SELECTION_DYNAMIC" />
+		<execute action="PGAssetpublisherConfiguration#assertElementPresent" locator-key1="SOURCE_DROPDOWN" />
+		<execute action="PGAssetpublisherConfiguration#assertElementPresent" locator-key1="FILTER_DROPDOWN" />
+		<execute action="PGAssetpublisherConfiguration#assertElementPresent" locator-key1="CUSTOM_USER_DROPDOWN" />
+		<execute action="PGAssetpublisherConfiguration#assertElementPresent" locator-key1="ORDERING_AND_GROUPING_DROPDOWN" />
+	</command>
+
 	<command name="viewEditLinkPG">
 		<var name="key_assetTitle" value="${entryTitle}" />
 
@@ -626,6 +639,23 @@
 				</for>
 			</else>
 		</if>
+	</command>
+
+	<command name="viewManualAssetSelectionConfigurationPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+		<execute action="PGAssetpublisherConfiguration#click" locator-key1="ASSET_SELECTION_MANUAL" />
+		<execute action="PGAssetpublisherConfiguration#assertElementNotPresent" locator-key1="SOURCE_DROPDOWN" />
+		<execute action="PGAssetpublisherConfiguration#assertElementNotPresent" locator-key1="SOURCE_DROPDOWN_COLLAPSED" />
+		<execute action="PGAssetpublisherConfiguration#assertElementNotPresent" locator-key1="FILTER_DROPDOWN" />
+		<execute action="PGAssetpublisherConfiguration#assertElementNotPresent" locator-key1="FILTER_DROPDOWN_COLLAPSED" />
+		<execute action="PGAssetpublisherConfiguration#assertElementNotPresent" locator-key1="CUSTOM_USER_DROPDOWN" />
+		<execute action="PGAssetpublisherConfiguration#assertElementNotPresent" locator-key1="CUSTOM_USER_DROPDOWN_COLLAPSED" />
+		<execute action="PGAssetpublisherConfiguration#assertElementNotPresent" locator-key1="ORDERING_AND_GROUPING_DROPDOWN" />
+		<execute action="PGAssetpublisherConfiguration#assertElementNotPresent" locator-key1="ORDERING_AND_GROUPING_DROPDOWN_COLLAPSED" />
 	</command>
 
 	<command name="viewNoEditLinkPG">

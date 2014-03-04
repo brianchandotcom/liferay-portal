@@ -101,6 +101,16 @@
 </tr>
 <!--SOURCE_SCOPE-->
 <tr>
+	<td>SOURCE_DROPDOWN</td>
+	<td>//div[contains(@class,'header') and contains(@class,'expanded') and contains(.,'Source')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_DROPDOWN_COLLAPSED</td>
+	<td>//div[contains(@class,'header') and contains(@class,'collapsed') and contains(.,'Source')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOURCE_CURRENT_SCOPE_NAME</td>
 	<td>//div[@id='_86_groupsSearchContainer']//tr[contains(.,'Current Site (${key_siteName})')]/td[1]/span/span</td>
 	<td></td>
@@ -210,6 +220,16 @@
 </tr>
 <!--FILTER-->
 <tr>
+	<td>FILTER_DROPDOWN</td>
+	<td>//div[contains(@class,'header') and contains(@class,'expanded') and contains(.,'Filter')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_DROPDOWN_COLLAPSED</td>
+	<td>//div[contains(@class,'header') and contains(@class,'collapsed') and contains(.,'Filter')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_TAGS_FIELD</td>
 	<td>//input[@title='Add Tags']</td>
 	<td></td>
@@ -241,11 +261,31 @@
 </tr>
 <!--CUSTOM_USER_ATTRIBUTES-->
 <tr>
+	<td>CUSTOM_USER_DROPDOWN</td>
+	<td>//div[contains(@class,'header') and contains(@class,'expanded') and contains(.,'Custom User Attributes')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_USER_DROPDOWN_COLLAPSED</td>
+	<td>//div[contains(@class,'header') and contains(@class,'collapsed') and contains(.,'Custom User Attributes')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--ORDERING_AND_GROUPING-->
+<tr>
+	<td>ORDERING_AND_GROUPING_DROPDOWN</td>
+	<td>//div[contains(@class,'header') and contains(@class,'expanded') and contains(.,'Ordering and Grouping')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDERING_AND_GROUPING_DROPDOWN_COLLAPSED</td>
+	<td>//div[contains(@class,'header') and contains(@class,'collapsed') and contains(.,'Ordering and Grouping')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>ORDERING_AND_GROUPING_SECTION_COLLAPSED</td>
 	<td>//div[contains(@class,'toggler-header-collapsed')]/div/span[contains(.,'Ordering and Grouping')]</td>

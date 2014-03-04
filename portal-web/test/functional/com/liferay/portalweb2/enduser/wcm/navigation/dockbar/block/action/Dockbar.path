@@ -368,7 +368,7 @@
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_MESSAGE</td>
-	<td>//div[@class="alert alert-info"]</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>
@@ -461,12 +461,12 @@
 </tr>
 <tr>
 	<td>USER_MY_PROFILE</td>
-	<td>//span[contains(.,'My Profile')]</td>
+	<td>//a/span[contains(.,'My Profile')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_MY_DASHBOARD</td>
-	<td>//span[contains(.,'My Dashboard')]</td>
+	<td>//a/span[contains(.,'My Dashboard')]</td>
 	<td></td>
 </tr>
 <tr>

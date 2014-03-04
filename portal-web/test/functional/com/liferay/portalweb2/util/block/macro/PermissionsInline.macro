@@ -155,6 +155,19 @@
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 	</command>
 
+	<command name="gotoSitepageCP">
+		<execute macro="SitePage#addCmd" />
+
+		<execute macro="SitePage#expandRootCP" />
+
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
+		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+	</command>
+
 	<command name="gotoWCArticle">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

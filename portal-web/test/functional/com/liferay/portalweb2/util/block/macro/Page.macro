@@ -15,7 +15,14 @@
 	<command name="addPG">
 		<description message="Add a page called ${pageName}." />
 
-		<execute macro="Page#openURL" />
+		<if>
+			<not>
+				<equals arg1="${defaultURL}" arg2="false" />
+			</not>
+			<then>
+				<execute macro="Page#openURL" />
+			</then>
+		</if>
 
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
 		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />

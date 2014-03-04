@@ -229,7 +229,14 @@
 	<command name="gotoPG">
 		<description message="Navigate to the page named ${pageName}." />
 
-		<execute macro="Page#openURL" />
+		<if>
+			<not>
+				<equals arg1="${defaultURL}" arg2="false" />
+			</not>
+			<then>
+				<execute macro="Page#openURL" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${soPage}" arg2="true" />

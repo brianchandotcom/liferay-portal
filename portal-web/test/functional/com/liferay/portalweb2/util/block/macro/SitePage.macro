@@ -105,6 +105,15 @@
 		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
 	</command>
 
+	<command name="addOnlyOptionSiteAdminPG">
+		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADD_CONTENT_LINK" />
+		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADD_APPLICATION_LINK" />
+		<execute action="Dockbar#assertElementPresent" locator-key1="ADD_PAGE_LINK" />
+
+		<execute action="Home#refresh" />
+	</command>
+
 	<command name="addSitePageTypeEmbeddedCP">
 		<execute action="CPSitepagesAddpage#type" locator-key1="PAGE_TYPE_EMBEDDED_URL_FIELD" value1="${pageTypeURL}" />
 		<execute action="CPSitepagesAddpage#type" locator-key1="PAGE_TYPE_EMBEDDED_DESCRIPTION_FIELD" value1="${pageTypeDescription}" />
@@ -120,6 +129,65 @@
 
 		<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_PANEL_CHECKBOX" />
 		<execute action="CPSitepagesAddpage#assertChecked" locator-key1="PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
+	</command>
+
+	<command name="addTemplateCP">
+		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+		<execute action="CPSitetemplates#click" locator-key1="SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
+		<execute action="CPSitetemplates#click" locator-key1="SITE_TEMPLATE_MENULIST_MANAGE" />
+
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_ADD_PAGE" value1="Add Page" />
+
+		<if>
+			<isset var="pageType" />
+			<then>
+				<var name="key_pageType" value="${pageType}" />
+
+				<execute action="CPSitepagesAddpage#assertTextEquals" locator-key1="PAGE_TYPE_LABEL" value1="${pageType}" />
+
+				<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_RADIO" value1="${pageType}" />
+				<execute action="CPSitepagesAddpage#assertTextEquals" locator-key1="PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
+				<if>
+					<equals arg1="${pageTemplateAutoApplyChanges}" arg2="true" />
+					<then>
+						<execute action="CPSitepagesAddpage#check" locator-key1="PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" value1="${pageType}" />
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
+		<execute action="CPSitepagesAddpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+	</command>
+
+	<command name="allowChangesToPageTemplateCP">
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName"  />
+
+		<if>
+			<equals arg1="${allow}" arg2="true" />
+			<then>
+				<execute action="CPSitepages#check" locator-key1="DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX" />
+				<execute action="CPSitepages#click" locator-key1="SAVE_BUTTON" />
+			</then>
+			<else>
+				<execute action="CPSitepages#uncheck" locator-key1="DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX" />
+				<execute action="CPSitepages#click" locator-key1="SAVE_BUTTON" />
+			</else>
+		</if>
+	</command>
+
+	<command name="allowSiteAdminsToEditThisPageCP">
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName"  />
+
+		<execute action="CPSitepages#check" locator-key1="DETAILS_PAGE_TEMPLATE_UPDATEABLE_CHECKBOX" />
+		<execute action="CPSitepages#click" locator-key1="SAVE_BUTTON" />
 	</command>
 
 	<command name="copyApplicationsFromPageToPagePG">
@@ -161,6 +229,22 @@
 		</while>
 	</command>
 
+	<command name="doNotAllowSiteAdminsToEditThisPageCP">
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName"  />
+
+		<execute action="CPSitepages#uncheck" locator-key1="DETAILS_PAGE_TEMPLATE_UPDATEABLE_CHECKBOX" />
+		<execute action="CPSitepages#click" locator-key1="SAVE_BUTTON" />
+	</command>
+
+	<command name="editTemplatePagesCP">
+		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+		<execute action="CPSitetemplates#click" locator-key1="SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
+		<execute action="CPSitetemplates#click" locator-key1="SITE_TEMPLATE_MENULIST_MANAGE" />
+	</command>
+
 	<command name="embeddedPageTypePG">
 
 		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" value1="Edit" />
@@ -193,6 +277,30 @@
 				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_ARROW_1" />
 			</then>
 		</if>
+	</command>
+
+	<command name="pageLockCheckPG">
+		<execute action="Dockbar#assertTextEquals" locator-key1="PAGE_INFO_MESSAGE" value1="This page is linked to a site template which does not allow modifications to it." />
+	</command>
+
+	<command name="pageNotLockCheckPG">
+		<if>
+			<condition action="Dockbar#isElementPresent" locator-key1="PAGE_INFO_MESSAGE" />
+			<then>
+				<execute action="Dockbar#assertTextNotEquals" locator-key1="PAGE_INFO_MESSAGE" value1="This page is linked to a site template which does not allow modifications to it." />
+			</then>
+			<else>
+				<execute action="Dockbar#assertElementNotPresent" locator-key1="PAGE_INFO_MESSAGE" />
+			</else>
+		</if>
+	</command>
+
+	<command name="pageTemplateLockCheckPG">
+		<execute action="Dockbar#assertTextEquals" locator-key1="PAGE_INFO_MESSAGE" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
+	</command>
+
+	<command name="pageTemplateNotLockedCheckPG">
+		<execute action="Dockbar#assertElementNotPresent" locator-key1="PAGE_INFO_MESSAGE" />
 	</command>
 
 	<command name="selectSitePagesVariationNameCP">
@@ -310,6 +418,15 @@
 		<execute action="CPSitepages#assertTextEquals" locator-key1="INCOMPLETE_STAGING_PAGE_VARIATION_INFO_MESSAGE" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="INCOMPLETE_STAGING_PAGE_VARIATION_ENABLE_BUTTON" value1="Enable in ${sitePagesVariationName}" />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="INCOMPLETE_STAGING_PAGE_VARIATION_DELETE_BUTTON" value1="Delete in All Pages Variations" />
+	</command>
+
+	<command name="viewPagesCP">
+		<var name="key_siteName" value="${siteName}" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_ROOT_LINK" />
+		<execute action="CPSitepages#click" locator-key1="TOOLBAR_VIEW_PAGES" />
+
+		<execute action="BaseLiferay#pause" locator1="5000" />
 	</command>
 
 	<command name="viewPageTemplatePG">

@@ -52,13 +52,32 @@
 		<execute action="CPSitetemplateSettings#type" locator-key1="NAME_FIELD" value1="${siteTemplateName} Edit" />
 
 		<if>
-			<equals arg1="${siteTemplateActiveEdit}" arg2="No" />
+			<isset var="siteTemplateActiveEdit" />
 			<then>
-				<execute action="CPSitetemplateSettings#uncheck" locator-key1="ACTIVE_CHECKBOX" />
+				<if>
+					<equals arg1="${siteTemplateActiveEdit}" arg2="No" />
+					<then>
+						<execute action="CPSitetemplateSettings#uncheck" locator-key1="ACTIVE_CHECKBOX" />
+					</then>
+					<else>
+						<execute action="CPSitetemplateSettings#check" locator-key1="ACTIVE_CHECKBOX" />
+					</else>
+				</if>
 			</then>
-			<else>
-				<execute action="CPSitetemplateSettings#check" locator-key1="ACTIVE_CHECKBOX" />
-			</else>
+		</if>
+
+		<if>
+			<isset var="allowSiteAdminsToModifyPages" />
+			<then>
+				<execute action="CPSitetemplateSettings#check" locator-key1="ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="notAllowSiteAdminsToModifyPages" />
+			<then>
+				<execute action="CPSitetemplateSettings#uncheck" locator-key1="ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
+			</then>
 		</if>
 
 		<execute action="CPSitetemplateSettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />

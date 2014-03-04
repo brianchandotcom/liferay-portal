@@ -1,11 +1,11 @@
 <definition>
 	<command name="addSOSite">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-		<execute action="SOUserBar#click" locator-key1="USER_BAR" />
+		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_ADD_SITE_BUTTON" />
 
-		<execute action="SOUserBarAddSite#pause" value1="1000" />
+		<execute action="SOUserBarAddSite#selectFrameTop" />
 		<execute action="SOUserBarAddSite#type" locator-key1="NAME_FIELD" value1="${siteName}" />
 		<execute action="SOUserBarAddSite#type" locator-key1="DESCRIPTION_FIELD" value1="${siteDescription}" />
 		<execute action="SOUserBarAddSite#click" locator-key1="NEXT_BUTTON" />
@@ -31,6 +31,15 @@
 		</if>
 
 		<execute action="SOUserBarAddSite#click" locator-key1="SAVE_BUTTON" />
+
+		<if>
+			<condition action="SOUserBarAddSite#isElementPresent" locator-key1="ERROR_MESSAGE" />
+			<then>
+				<execute action="SOUserBarAddSite#type" locator-key1="NAME_FIELD" value1="${siteName}" />
+				<execute action="SOUserBarAddSite#click" locator-key1="SAVE_BUTTON" />
+			</then>
+		</if>
+
 		<execute action="SOUserBarAddSite#assertElementNotPresent" locator-key1="SAVE_BUTTON" />
 	</command>
 
@@ -44,16 +53,19 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
 
 		<if>
 			<equals arg1="${siteType}" arg2="Private" />
 			<then>
+				<execute action="SOUserBar#selectFrameTop" />
 				<execute action="SOUserBar#click" locator-key1="GO_TO" />
 				<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
 			</then>
 			<else>
+				<execute action="SOUserBar#selectFrameTop" />
 				<execute action="SOUserBar#click" locator-key1="GO_TO" />
 				<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
 			</else>
@@ -70,6 +82,7 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName}" />
@@ -81,6 +94,7 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
 
@@ -95,6 +109,7 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
 
@@ -118,6 +133,7 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
 
@@ -142,6 +158,7 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 
 		<if>
@@ -154,6 +171,7 @@
 			</else>
 		</if>
 
+		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName}" />

@@ -143,6 +143,7 @@
 		<execute action="SOUserBar#assertTextEquals" locator-key1="MY_DOCUMENTS" value1="My Documents" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="TASKS" value1="Tasks" />
 		<execute action="SOUserBar#click" locator-key1="USER_BAR" />
+		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SITE_LIST" />
@@ -171,6 +172,7 @@
 		<execute action="SOUserBar#assertTextEquals" locator-key1="MY_DOCUMENTS" value1="My Documents" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="TASKS" value1="Tasks" />
 		<execute action="SOUserBar#click" locator-key1="USER_BAR" />
+		<execute action="SOUserBar#selectFrameTop" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SEARCH_FIELD" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SITE_CATEGORY_SELECT" />

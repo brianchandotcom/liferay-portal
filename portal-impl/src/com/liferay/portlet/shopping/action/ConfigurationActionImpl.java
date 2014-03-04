@@ -111,7 +111,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		if (emailOrderConfirmationEnabled) {
 			if (Validator.isNull(emailOrderConfirmationSubject)) {
-				SessionErrors.add(actionRequest, "emailOrderConfirmationSubject");
+				SessionErrors.add(
+					actionRequest, "emailOrderConfirmationSubject");
 			}
 			else if (Validator.isNull(emailOrderConfirmationBody)) {
 				SessionErrors.add(actionRequest, "emailOrderConfirmationBody");
@@ -122,8 +123,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			emailOrderConfirmationEnabled);
 		preferences.setEmailOrderConfirmationSubject(
 			emailOrderConfirmationSubject);
-		preferences.setEmailOrderConfirmationBody(
-			emailOrderConfirmationBody);
+		preferences.setEmailOrderConfirmationBody(emailOrderConfirmationBody);
 	}
 
 	protected void updateEmailOrderShipping(

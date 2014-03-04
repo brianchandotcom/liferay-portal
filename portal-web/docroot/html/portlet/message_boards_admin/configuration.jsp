@@ -21,30 +21,6 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "general");
 
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", mbSettings.getEmailFromName());
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", mbSettings.getEmailFromAddress());
-
-boolean emailMessageAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageAddedEnabled--", mbSettings.isEmailMessageAddedEnabled());
-boolean emailMessageUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageUpdatedEnabled--", mbSettings.isEmailMessageUpdatedEnabled());
-
-String emailParam = StringPool.BLANK;
-String defaultEmailSubject = StringPool.BLANK;
-String defaultEmailBody = StringPool.BLANK;
-
-if (tabs2.equals("message-added-email")) {
-	emailParam = "emailMessageAdded";
-	defaultEmailSubject = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT);
-	defaultEmailBody = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY);
-}
-else if (tabs2.equals("message-updated-email")) {
-	emailParam = "emailMessageUpdated";
-	defaultEmailSubject = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT);
-	defaultEmailBody = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY);
-}
-
-String emailSubjectParam = emailParam + "Subject";
-String emailBodyParam = emailParam + "Body";
-
-String emailSubject = SettingsParamUtil.getString(mbSettings, request, emailSubjectParam, defaultEmailSubject);
-String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyParam, defaultEmailBody);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="portletURL">
@@ -156,272 +132,28 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 			</aui:fieldset>
 		</liferay-ui:section>
 
+		<%
+		Map<String, String> emailDefinitionTerms = MBUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED, !PropsValues.MESSAGE_BOARDS_EMAIL_BULK);
+		%>
+
 		<liferay-ui:section>
-			<aui:fieldset>
-				<aui:input label="enabled" name="preferences--emailMessageAddedEnabled--" type="checkbox" value="<%= emailMessageAddedEnabled %>" />
-
-				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
-
-				<aui:input cssClass="lfr-textarea-container" label="body" name='<%= "preferences--" + emailBodyParam + "--" %>' type="textarea" value="<%= emailBody %>" warp="soft" />
-			</aui:fieldset>
-
-			<aui:fieldset cssClass="definition-of-terms">
-				<legend>
-					<liferay-ui:message key="definition-of-terms" />
-				</legend>
-
-				<dl>
-					<dt>
-						[$CATEGORY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-category-in-which-the-message-has-been-posted" />
-					</dd>
-					<dt>
-						[$COMPANY_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-id-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$COMPANY_MX$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-mx-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$COMPANY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-name-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$FROM_ADDRESS$]
-					</dt>
-					<dd>
-						<%= HtmlUtil.escape(emailFromAddress) %>
-					</dd>
-					<dt>
-						[$FROM_NAME$]
-					</dt>
-					<dd>
-						<%= HtmlUtil.escape(emailFromName) %>
-					</dd>
-
-					<c:if test="<%= PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED %>">
-						<dt>
-							[$MAILING_LIST_ADDRESS$]
-						</dt>
-						<dd>
-							<liferay-ui:message key="the-email-address-of-the-mailing-list" />
-						</dd>
-					</c:if>
-
-					<dt>
-						[$MESSAGE_BODY$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-message-body" />
-					</dd>
-					<dt>
-						[$MESSAGE_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-message-id" />
-					</dd>
-					<dt>
-						[$MESSAGE_SUBJECT$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-message-subject" />
-					</dd>
-					<dt>
-						[$MESSAGE_URL$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-message-url" />
-					</dd>
-					<dt>
-						[$MESSAGE_USER_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-user-who-added-the-message" />
-					</dd>
-					<dt>
-						[$MESSAGE_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-added-the-message" />
-					</dd>
-					<dt>
-						[$PORTAL_URL$]
-					</dt>
-					<dd>
-						<%= company.getVirtualHostname() %>
-					</dd>
-					<dt>
-						[$PORTLET_NAME$]
-					</dt>
-					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
-					</dd>
-					<dt>
-						[$SITE_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
-					</dd>
-
-					<c:if test="<%= !PropsValues.MESSAGE_BOARDS_EMAIL_BULK %>">
-						<dt>
-							[$TO_ADDRESS$]
-						</dt>
-						<dd>
-							<liferay-ui:message key="the-address-of-the-email-recipient" />
-						</dd>
-						<dt>
-							[$TO_NAME$]
-						</dt>
-						<dd>
-							<liferay-ui:message key="the-name-of-the-email-recipient" />
-						</dd>
-					</c:if>
-				</dl>
-			</aui:fieldset>
+			<liferay-ui:email-notifications-settings
+				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailMessageAddedBody", ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY)) %>'
+				emailDefinitionTerms="<%= emailDefinitionTerms %>"
+				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailMessageAddedEnabled--", mbSettings.isEmailMessageAddedEnabled()) %>'
+				emailParam="emailMessageAdded"
+				emailSubject='<%= PrefsParamUtil.getString(portletPreferences, request, "emailMessageAddedSubject", ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT)) %>'
+			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<aui:fieldset>
-				<aui:input label="enabled" name="preferences--emailMessageUpdatedEnabled--" type="checkbox" value="<%= emailMessageUpdatedEnabled %>" />
-
-				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
-
-				<aui:input cssClass="lfr-textarea-container" label="body" name='<%= "preferences--" + emailBodyParam + "--" %>' type="textarea" value="<%= emailBody %>" warp="soft" />
-			</aui:fieldset>
-
-			<aui:fieldset cssClass="definition-of-terms">
-				<legend>
-					<liferay-ui:message key="definition-of-terms" />
-				</legend>
-
-				<dl>
-					<dt>
-						[$CATEGORY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-category-in-which-the-message-has-been-posted" />
-					</dd>
-					<dt>
-						[$COMPANY_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-id-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$COMPANY_MX$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-mx-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$COMPANY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-name-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$FROM_ADDRESS$]
-					</dt>
-					<dd>
-						<%= HtmlUtil.escape(emailFromAddress) %>
-					</dd>
-					<dt>
-						[$FROM_NAME$]
-					</dt>
-					<dd>
-						<%= HtmlUtil.escape(emailFromName) %>
-					</dd>
-
-					<c:if test="<%= PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED %>">
-						<dt>
-							[$MAILING_LIST_ADDRESS$]
-						</dt>
-						<dd>
-							<liferay-ui:message key="the-email-address-of-the-mailing-list" />
-						</dd>
-					</c:if>
-
-					<dt>
-						[$MESSAGE_BODY$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-message-body" />
-					</dd>
-					<dt>
-						[$MESSAGE_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-message-id" />
-					</dd>
-					<dt>
-						[$MESSAGE_SUBJECT$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-message-subject" />
-					</dd>
-					<dt>
-						[$MESSAGE_URL$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-message-url" />
-					</dd>
-					<dt>
-						[$MESSAGE_USER_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-user-who-added-the-message" />
-					</dd>
-					<dt>
-						[$MESSAGE_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-added-the-message" />
-					</dd>
-					<dt>
-						[$PORTAL_URL$]
-					</dt>
-					<dd>
-						<%= company.getVirtualHostname() %>
-					</dd>
-					<dt>
-						[$PORTLET_NAME$]
-					</dt>
-					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
-					</dd>
-					<dt>
-						[$SITE_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
-					</dd>
-
-					<c:if test="<%= !PropsValues.MESSAGE_BOARDS_EMAIL_BULK %>">
-						<dt>
-							[$TO_ADDRESS$]
-						</dt>
-						<dd>
-							<liferay-ui:message key="the-address-of-the-email-recipient" />
-						</dd>
-						<dt>
-							[$TO_NAME$]
-						</dt>
-						<dd>
-							<liferay-ui:message key="the-name-of-the-email-recipient" />
-						</dd>
-					</c:if>
-				</dl>
-			</aui:fieldset>
+			<liferay-ui:email-notifications-settings
+				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailMessageUpdatedBody", ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY)) %>'
+				emailDefinitionTerms="<%= emailDefinitionTerms %>"
+				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailMessageUpdatedEnabled--", mbSettings.isEmailMessageUpdatedEnabled()) %>'
+				emailParam="emailMessageUpdated"
+				emailSubject='<%= PrefsParamUtil.getString(portletPreferences, request, "emailMessageUpdatedSubject", ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT)) %>'
+			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
@@ -826,10 +558,26 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 
 <aui:script>
 	function <portlet:namespace />saveConfiguration() {
+		<portlet:namespace />saveEmails();
+
 		<c:if test='<%= tabs2.equals("user-ranks") || tabs2.equals("thread-priorities") %>'>
 			<portlet:namespace />updateLanguage();
 		</c:if>
 
 		submitForm(document.<portlet:namespace />fm);
+	}
+
+	function <portlet:namespace />saveEmails() {
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailMessageAddedBody--'].value = window['<portlet:namespace />emailMessageAdded'].getHTML();
+		}
+		catch (e) {
+		}
+
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailMessageUpdatedBody--'].value = window['<portlet:namespace />emailMessageUpdated'].getHTML();
+		}
+		catch (e) {
+		}
 	}
 </aui:script>

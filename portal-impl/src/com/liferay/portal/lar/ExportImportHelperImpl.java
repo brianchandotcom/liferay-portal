@@ -328,6 +328,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			exportCurPortletConfiguration};
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getImportPortletControls(long, String, Map, Element,
+	 *             ManifestSummary)}
+	 */
+	@Deprecated
 	@Override
 	public boolean[] getImportPortletControls(
 			long companyId, String portletId,

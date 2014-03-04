@@ -150,7 +150,7 @@ public class ListUtil {
 	}
 
 	public static <E> List<E> fromMapKeys(Map<? extends E, ?> map) {
-		if ((map == null) || map.isEmpty()) {
+		if (MapUtil.isEmpty(map)) {
 			return new ArrayList<E>();
 		}
 
@@ -164,7 +164,7 @@ public class ListUtil {
 	}
 
 	public static <E> List<E> fromMapValues(Map<?, ? extends E> map) {
-		if ((map == null) || map.isEmpty()) {
+		if (MapUtil.isEmpty(map)) {
 			return new ArrayList<E>();
 		}
 

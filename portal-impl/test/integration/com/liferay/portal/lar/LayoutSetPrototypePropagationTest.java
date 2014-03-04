@@ -23,11 +23,16 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -44,7 +49,9 @@ import com.liferay.portlet.journal.util.JournalTestUtil;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -105,6 +112,47 @@ public class LayoutSetPrototypePropagationTest
 	@Test
 	public void testIsLayoutUpdateable() throws Exception {
 		doTestIsLayoutUpdateable();
+	}
+
+	@Test
+	public void testLayoutPermissionPropagationWithLinkEnabled()
+		throws Exception {
+
+		LayoutSet layoutSet = _layoutSetPrototype.getLayoutSet();
+
+		layout = LayoutTestUtil.addLayout(
+			layoutSet.getGroupId(), ServiceTestUtil.randomString(),
+			layoutSet.getPrivateLayout());
+
+		LayoutSetLocalServiceUtil.updateLayoutSetPrototypeLinkEnabled(
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+			layoutSet.isLayoutSetPrototypeLinkEnabled(),
+			_layoutSetPrototype.getUuid());
+
+		User user = TestPropsValues.getUser();
+
+		long roleIds[] = user.getRoleIds();
+
+		List<String> resourceActions =
+			ResourceActionsUtil.getModelResourceActions(Layout.class.getName());
+
+		Map<Long, String[]> roleIdsToActionIds = new HashMap<Long, String[]>();
+
+		for (long roleId : roleIds) {
+			roleIdsToActionIds.put(
+				roleId,
+				resourceActions.toArray(new String[resourceActions.size()]));
+		}
+
+		Date modifiedDate = layout.getModifiedDate();
+
+		ResourcePermissionServiceUtil.setIndividualResourcePermissions(
+			layout.getGroupId(), layout.getCompanyId(), Layout.class.getName(),
+			String.valueOf(layout.getPrimaryKey()), roleIdsToActionIds);
+
+		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+
+		Assert.assertNotEquals(modifiedDate, layout.getModifiedDate());
 	}
 
 	@Test

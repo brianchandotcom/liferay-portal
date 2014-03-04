@@ -45,6 +45,14 @@
 		<execute selenium="type" />
 	</command>
 
+	<command name="typeAceEditor">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="typeAceEditor" />
+	</command>
+
 	<command name="typeFrame">
 		<execute selenium="waitForVisible" />
 

@@ -40,12 +40,18 @@ import com.liferay.portal.tools.deploy.PortletDeployer;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -68,6 +74,7 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.filter.ActionFilter;
 import javax.portlet.filter.EventFilter;
 import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.FilterConfig;
 import javax.portlet.filter.PortletFilter;
 import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
@@ -728,20 +735,48 @@ public class InvokerPortletImpl implements InvokerPortlet {
 		_strutsPortlet = strutsPortlet;
 		_strutsBridgePortlet = strutsBridgePortlet;
 		_expCache = portletModel.getExpCache();
-		setPortletFilters();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Create instance cache wrapper for " +
 					_liferayPortletContext.getPortlet().getPortletId());
 		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("(javax.portlet.name=");
+		sb.append(_portletId);
+		sb.append(")");
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("javax.portlet.name", _portletId);
+
+		_actionFilters = ServiceTrackerCollections.list(
+			ActionFilter.class, sb.toString(),
+			new PortletFilterCustomizer<ActionFilter>(_liferayPortletContext),
+			map);
+		_eventFilters = ServiceTrackerCollections.list(
+			EventFilter.class, sb.toString(),
+			new PortletFilterCustomizer<EventFilter>(_liferayPortletContext),
+			map);
+		_renderFilters = ServiceTrackerCollections.list(
+			RenderFilter.class, sb.toString(),
+			new PortletFilterCustomizer<RenderFilter>(_liferayPortletContext),
+			map);
+		_resourceFilters = ServiceTrackerCollections.list(
+			ResourceFilter.class, sb.toString(),
+			new PortletFilterCustomizer<ResourceFilter>(_liferayPortletContext),
+			map);
+
+		setPortletFilters();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(InvokerPortletImpl.class);
 
-	private List<ActionFilter> _actionFilters = new ArrayList<ActionFilter>();
+	private List<ActionFilter> _actionFilters;
 	private boolean _checkAuthToken;
-	private List<EventFilter> _eventFilters = new ArrayList<EventFilter>();
+	private List<EventFilter> _eventFilters;
 	private Integer _expCache;
 	private boolean _facesPortlet;
 	private LiferayPortletConfig _liferayPortletConfig;
@@ -749,12 +784,73 @@ public class InvokerPortletImpl implements InvokerPortlet {
 	private Portlet _portlet;
 	private String _portletId;
 	private com.liferay.portal.model.Portlet _portletModel;
-	private List<RenderFilter> _renderFilters = new ArrayList<RenderFilter>();
+	private List<RenderFilter> _renderFilters;
 	private List<ResourceFilter> _resourceFilters =
 		new ArrayList<ResourceFilter>();
 	private boolean _strutsBridgePortlet;
 	private boolean _strutsPortlet;
 	private List<PortletFilter> _systemPortletFilters =
 		new ArrayList<PortletFilter>();
+
+	private class PortletFilterCustomizer<T extends PortletFilter>
+		implements ServiceTrackerCustomizer<T, T> {
+
+		public PortletFilterCustomizer(PortletContext portletContext) {
+			_portletContext = portletContext;
+		}
+
+		@Override
+		public T addingService(ServiceReference<T> serviceReference) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			T portletFilter = registry.getService(serviceReference);
+
+			String filterName = GetterUtil.getString(
+				serviceReference.getProperty("service.pid"),
+				portletFilter.getClass().getName());
+
+			Map<String, String> initParams = new HashMap<String, String>();
+
+			for (String key : serviceReference.getPropertyKeys()) {
+				String value = GetterUtil.getString(
+					serviceReference.getProperty(key));
+
+				initParams.put(key, value);
+			}
+
+			FilterConfig filterConfig = new FilterConfigImpl(
+				filterName, _portletContext, initParams);
+
+			try {
+				portletFilter.init(filterConfig);
+			}
+			catch (PortletException e) {
+				_log.error(e, e);
+
+				return null;
+			}
+
+			return portletFilter;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<T> serviceReference, T portletFilter) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<T> serviceReference, T portletFilter) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			portletFilter.destroy();
+		}
+
+		private PortletContext _portletContext;
+
+	}
 
 }

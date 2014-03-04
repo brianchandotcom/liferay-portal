@@ -368,7 +368,7 @@
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_MESSAGE</td>
-	<td>//div[@class=&quot;alert alert-info&quot;]</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>

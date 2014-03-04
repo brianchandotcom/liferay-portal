@@ -24,7 +24,7 @@ import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
+import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
@@ -46,8 +46,13 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
 		return JournalTestUtil.addArticle(
-			group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			group.getGroupId(), _folder.getFolderId());
+	}
+
+	@Override
+	protected void addContainerModel() throws Exception {
+		_folder = JournalTestUtil.addFolder(
+			group.getGroupId(), ServiceTestUtil.randomString());
 	}
 
 	@Override
@@ -58,8 +63,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 	@Override
 	protected void subscribeToContainer() throws Exception {
 		JournalFolderLocalServiceUtil.subscribe(
-			user.getUserId(), group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			user.getUserId(), group.getGroupId(), _folder.getFolderId());
 	}
 
 	@Override
@@ -69,5 +73,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		return JournalTestUtil.updateArticle(
 			(JournalArticle)baseModel, ServiceTestUtil.randomString());
 	}
+
+	private JournalFolder _folder;
 
 }

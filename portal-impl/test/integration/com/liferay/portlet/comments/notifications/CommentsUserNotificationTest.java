@@ -16,8 +16,6 @@ package com.liferay.portlet.comments.notifications;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.User;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -25,7 +23,6 @@ import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
@@ -50,21 +47,15 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		User siteAdmin = UserTestUtil.addGroupUser(
-			group, RoleConstants.SITE_ADMINISTRATOR);
-
-		_commentedEntry = BlogsTestUtil.addEntry(
-			siteAdmin.getUserId(), group, true);
-
-		siteMember = UserTestUtil.addGroupUser(
-			group, RoleConstants.SITE_MEMBER);
+		_entry = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
 	}
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
 		return MBTestUtil.addDiscussionMessage(
-			siteMember, group.getGroupId(), BlogsEntry.class.getName(),
-			_commentedEntry.getEntryId());
+			TestPropsValues.getUser(), group.getGroupId(),
+			BlogsEntry.class.getName(), _entry.getEntryId());
 	}
 
 	@Override
@@ -76,7 +67,7 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 	protected void subscribeToContainer() throws Exception {
 		MBDiscussionLocalServiceUtil.subscribeDiscussion(
 			user.getUserId(), group.getGroupId(), BlogsEntry.class.getName(),
-			_commentedEntry.getEntryId());
+			_entry.getEntryId());
 	}
 
 	@Override
@@ -86,10 +77,9 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 		return MBTestUtil.updateDiscussionMessage(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			(Long)baseModel.getPrimaryKeyObj(), BlogsEntry.class.getName(),
-			_commentedEntry.getEntryId());
+			_entry.getEntryId());
 	}
 
-	private BlogsEntry _commentedEntry;
-	private User siteMember;
+	private BlogsEntry _entry;
 
 }

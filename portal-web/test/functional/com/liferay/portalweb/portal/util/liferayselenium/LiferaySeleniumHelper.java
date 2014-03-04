@@ -776,6 +776,35 @@ public class LiferaySeleniumHelper {
 			liferaySelenium.getOutputDir() + slash + value);
 	}
 
+	public static void typeAceEditor(
+		LiferaySelenium liferaySelenium, String locator, String value) {
+
+		int x = 0;
+		int y = value.indexOf("${line.separator}");
+
+		String line = value.substring(x, y);
+
+		liferaySelenium.typeKeys(locator, line.trim(), true);
+
+		liferaySelenium.keyPress(locator, "\\13");
+
+		while (y != -1) {
+			x = value.indexOf("}", x) + 1;
+			y = value.indexOf("${line.separator}", x);
+
+			if (y != -1) {
+				line = value.substring(x, y);
+			}
+			else {
+				line = value.substring(x, value.length());
+			}
+
+			liferaySelenium.typeKeys(locator, line.trim(), true);
+
+			liferaySelenium.keyPress(locator, "\\13");
+		}
+	}
+
 	public static void typeFrame(
 		LiferaySelenium liferaySelenium, String locator, String value) {
 

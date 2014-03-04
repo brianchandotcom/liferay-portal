@@ -595,12 +595,22 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void typeAceEditor(String locator, String value) {
+		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
+	}
+
+	@Override
 	public void typeFrame(String locator, String value) {
 		LiferaySeleniumHelper.typeFrame(this, locator, value);
 	}
 
 	@Override
 	public void typeKeys(String locator, String value) {
+		typeKeys(locator, value, false);
+	}
+
+	@Override
+	public void typeKeys(String locator, String value, boolean typeAceEditor) {
 		sendKeys(locator, value);
 	}
 

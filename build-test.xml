@@ -1256,7 +1256,6 @@ ${custom.properties}</echo>
 						jdbc.two.password=${database.password}
 
 						shard.default.name=default
-						shard.available.names=default,one,two
 						shard.selector=com.liferay.portal.dao.shard.ManualShardSelector
 
 						spring.configs=\

@@ -1228,6 +1228,12 @@ $editLayoutPanelWidth: 460px;
 						text-decoration: none;
 					}
 				}
+
+				&.open {
+					.info-link {
+						background-color: #555;
+					}
+				}
 			}
 		}
 

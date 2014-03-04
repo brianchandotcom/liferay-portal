@@ -4,6 +4,9 @@
 @include respond-to(phone, tablet) {
 	.aui {
 		.dockbar .navbar-inner .container {
+			@include box-sizing(border-box);
+
+			padding: 0 5px;
 
 			#_145_navAddControlsNavbarBtn, #_145_navSiteNavigationNavbarBtn {
 				display: none;

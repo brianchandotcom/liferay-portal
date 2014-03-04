@@ -102,6 +102,12 @@
 
 .dockbar .navbar-inner {
 	.container .nav-collapse > .nav {
+		@include respond-to(phone, tablet) {
+			&.nav-account-controls .info-link-container .info-link {
+				@include border-radius(3px);
+			}
+		}
+
 		> li {
 			> a, .info-button > a {
 				@include text-shadow(none);

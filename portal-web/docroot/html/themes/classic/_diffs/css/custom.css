@@ -120,13 +120,33 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.info-button {
-			top: 9px;
+			margin-right: 5px;
+			right: auto;
+			top: auto;
 
 			a {
-				margin-top: -4px;
+				display: block;
+				font-size: 20px;
+				padding: 12px 15px;
+				position: relative;
 
-				&:hover {
+				&:focus, &:hover {
+					background-color: #2FA4F5;
 					color: #FFF;
+				}
+			}
+
+			.diamond {
+				display: none;
+			}
+		}
+
+		.info-link-container {
+			width: auto;
+
+			&.open .info-button {
+				a {
+					background-color: #0EA6F9;
 				}
 			}
 		}
@@ -175,14 +195,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 
 				@include respond-to(phone, tablet) {
-					&.nav-account-controls .info-link-container {
+					&.nav-account-controls li.info-link-container {
 						float: right;
+
+						&.open {
+							.info-link {
+								background-color: #3EA9DB;
+							}
+						}
 
 						.info-link {
 							color: #FFF;
 							font-size: 26px;
 							margin-left: 0;
-							padding: 11px 18px 12px;
+							padding: 11px 16px 12px;
 
 							&:focus, &:hover {
 								background-color: #5BBAE8;
@@ -205,7 +231,39 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.dockbar-split .dockbar {
 		.info-button {
+			margin-right: 0;
+			right: 12px;
 			top: 9px;
+
+			a {
+				display: inline;
+				font-size: 14px;
+				margin-top: -4px;
+				padding: 2px 10px;
+				position: absolute;
+
+				&:focus, &:hover {
+					background-color: transparent;
+				}
+			}
+
+			.diamond {
+				display: block;
+
+				@include respond-to(phone, tablet) {
+					display: none;
+				}
+			}
+		}
+
+		.info-link-container {
+			width: 0;
+
+			&.open .info-button {
+				a {
+					background-color: transparent;
+				}
+			}
 		}
 
 		.nav > li.staging-toggle > a {

@@ -272,7 +272,6 @@
 		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute action="CPSitemembershipsAssignuserrolesUser#click" locator-key1="CURRENT" />
-		<execute action="CPSitemembershipsAssignuserrolesUser#assertChecked" locator-key1="USER_TABLE_CHECKBOX" />
 
 		<if>
 			<isset var="userMiddleName" />

@@ -1,4 +1,6 @@
 <definition component-name="portal-wcm">
+	<var name="globalSiteName" value="Global" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
@@ -10,7 +12,9 @@
 
 		<execute macro="WebContentTemplates#tearDownCP" />
 
-		<execute macro="WebContentStructures#tearDownCP" />
+		<execute macro="WebContentStructures#tearDownCP">
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
@@ -84,6 +88,69 @@
 		<execute action="BasePortlet#assertTextNotPresent" locator-key1="TITLE" value1="${portletName}" />
 
 		<execute action="PGWebcontentdisplay#assertTextNotPresent" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+	</command>
+
+	<command name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="5">
+		<var name="pageName" value="Web Content Display Page" />
+		<var name="structureDescription" value="Global WC Structure Description" />
+		<var name="structureFieldNames" value="Text,Image,Text Box" />
+		<var name="structureName" value="Global WC Structure Name" />
+		<var name="templateDescription" value="Local WC Template Description" />
+		<var name="templateLanguage" value="ftl" />
+		<var name="templateName" value="Local WC Template Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureFieldNames" value="${structureFieldNames}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateFieldNames" value="${structureFieldNames}" />
+			<var name="templateLanguage" value="${templateLanguage}" />
+			<var name="templateName" value="${templateName}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute action="PGWebcontentdisplay#click" locator-key1="ADD_WEB_CONTENT" value1="Add" />
+
+		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
+		<execute action="PGWebcontentdisplayAddwebcontent#assertClick" locator-key1="SELECT_STRUCTURE" value1="Select" />
+		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" value1="relative=top" />
+
+		<execute action="PGWebcontentdisplayAddwebcontentStructures#selectFrame" locator-key1="STRUCTURE_IFRAME" />
+
+		<var name="key_structureName" value="${structureName}" />
+
+		<execute action="PGWebcontentdisplayAddwebcontentStructures#assertClick" locator-key1="STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="PGWebcontentdisplayAddwebcontentStructures#confirm" locator-key1="CONFIRMATION" value1="Selecting a new structure will change the available input fields and available templates? Do you want to proceed?" />
+		<execute action="PGWebcontentdisplayAddwebcontentStructures#selectFrame" value1="relative=top" />
+
+		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
+		<execute action="PGWebcontentdisplayAddwebcontent#assertTextEquals" locator-key1="STRUCTURE_NAME" value1="${structureName}" />
+		<execute action="PGWebcontentdisplayAddwebcontent#assertTextEquals" locator-key1="TEMPLATE_NAME" value1="${templateName}" />
 	</command>
 
 	<command name="WebContentAdministrationDataValidation" priority="5">

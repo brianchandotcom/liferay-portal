@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH_ADVANCED</td>
-	<td>//button[@id='toggle_id_users_admin_user_searchtoggleAdvanced'] | //span[@id='toggle_id_users_admin_user_searchtoggleAdvanced']</td>
+	<td>//a[@id='toggle_id_users_admin_user_searchtoggleAdvanced']</td>
 	<td></td>
 </tr>
 <tr>

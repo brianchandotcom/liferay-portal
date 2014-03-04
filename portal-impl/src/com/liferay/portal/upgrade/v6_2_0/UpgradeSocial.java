@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -30,6 +31,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Sergio Sanchez
@@ -89,6 +93,27 @@ public class UpgradeSocial extends UpgradeProcess {
 		updateJournalActivities();
 		updateSOSocialActivities();
 		updateWikiPageActivities();
+	}
+
+	protected String generateEntryKey(
+		long groupId, long companyId, Timestamp modifiedDate, long classNameId,
+		long resourcePrimKey, double type) {
+
+		StringBundler sb = new StringBundler(11);
+
+		sb.append(groupId);
+		sb.append(StringPool.DASH);
+		sb.append(companyId);
+		sb.append(StringPool.DASH);
+		sb.append(modifiedDate);
+		sb.append(StringPool.DASH);
+		sb.append(classNameId);
+		sb.append(StringPool.DASH);
+		sb.append(resourcePrimKey);
+		sb.append(StringPool.DASH);
+		sb.append(type);
+
+		return sb.toString();
 	}
 
 	protected void updateJournalActivities() throws Exception {
@@ -167,6 +192,8 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
+			Set<String> entryKeySet = new HashSet<String>();
+
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
@@ -186,10 +213,24 @@ public class UpgradeSocial extends UpgradeProcess {
 
 				extraDataJSONObject.put("version", version);
 
+				String entryKey = generateEntryKey(
+					groupId, companyId, modifiedDate, classNameId,
+					resourcePrimKey, type);
+
+				while (entryKeySet.contains(entryKey)) {
+					modifiedDate = new Timestamp(modifiedDate.getTime() + 1);
+
+					entryKey = generateEntryKey(
+						groupId, companyId, modifiedDate, classNameId,
+						resourcePrimKey, type);
+				}
+
 				addActivity(
 					increment(), groupId, companyId, userId, modifiedDate, 0,
 					classNameId, resourcePrimKey, type,
 					extraDataJSONObject.toString(), 0);
+
+				entryKeySet.add(entryKey);
 			}
 		}
 		finally {

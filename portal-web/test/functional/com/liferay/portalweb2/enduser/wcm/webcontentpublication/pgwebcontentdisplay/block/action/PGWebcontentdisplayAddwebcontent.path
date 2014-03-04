@@ -19,13 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_WEB_CONTENT_IFRAME</td>
+	<td>WEB_CONTENT_IFRAME</td>
 	<td>//iframe[contains(@id,'editAsset_iframe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NEW_WEB_CONTENT_IFRAME</td>
-	<td>//iframe[contains(@id,'editAsset_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -19,8 +19,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT_WEB_CONTENT_IFRAME</td>
-	<td>//iframe[contains(@id,'editAsset_iframe')]</td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGWebcontentdisplayAddwebcontent</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>

@@ -1451,6 +1451,13 @@ tck.url=true</echo>
 		</if>
 
 		<if>
+			<equals arg1="${blank.portal.ext}" arg2="true" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties" />
+			</then>
+		</if>
+
+		<if>
 			<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
 			<then>
 				<tstamp>

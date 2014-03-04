@@ -953,7 +953,7 @@
 		<!-- Other fields -->
 
 		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" />
+		<column name="description" type="String" localized="true" />
 		<column name="settings" type="String" />
 		<column name="active" type="boolean" />
 

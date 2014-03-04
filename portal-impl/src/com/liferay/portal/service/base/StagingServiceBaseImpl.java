@@ -28,6 +28,7 @@ import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.LayoutFinder;
 import com.liferay.portal.service.persistence.LayoutPersistence;
+import com.liferay.portal.service.persistence.LayoutRevisionPersistence;
 import com.liferay.portal.service.persistence.LayoutSetBranchPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.util.PortalUtil;
@@ -260,6 +261,63 @@ public abstract class StagingServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the layout revision local service.
+	 *
+	 * @return the layout revision local service
+	 */
+	public com.liferay.portal.service.LayoutRevisionLocalService getLayoutRevisionLocalService() {
+		return layoutRevisionLocalService;
+	}
+
+	/**
+	 * Sets the layout revision local service.
+	 *
+	 * @param layoutRevisionLocalService the layout revision local service
+	 */
+	public void setLayoutRevisionLocalService(
+		com.liferay.portal.service.LayoutRevisionLocalService layoutRevisionLocalService) {
+		this.layoutRevisionLocalService = layoutRevisionLocalService;
+	}
+
+	/**
+	 * Returns the layout revision remote service.
+	 *
+	 * @return the layout revision remote service
+	 */
+	public com.liferay.portal.service.LayoutRevisionService getLayoutRevisionService() {
+		return layoutRevisionService;
+	}
+
+	/**
+	 * Sets the layout revision remote service.
+	 *
+	 * @param layoutRevisionService the layout revision remote service
+	 */
+	public void setLayoutRevisionService(
+		com.liferay.portal.service.LayoutRevisionService layoutRevisionService) {
+		this.layoutRevisionService = layoutRevisionService;
+	}
+
+	/**
+	 * Returns the layout revision persistence.
+	 *
+	 * @return the layout revision persistence
+	 */
+	public LayoutRevisionPersistence getLayoutRevisionPersistence() {
+		return layoutRevisionPersistence;
+	}
+
+	/**
+	 * Sets the layout revision persistence.
+	 *
+	 * @param layoutRevisionPersistence the layout revision persistence
+	 */
+	public void setLayoutRevisionPersistence(
+		LayoutRevisionPersistence layoutRevisionPersistence) {
+		this.layoutRevisionPersistence = layoutRevisionPersistence;
+	}
+
+	/**
 	 * Returns the layout set local service.
 	 *
 	 * @return the layout set local service
@@ -445,6 +503,12 @@ public abstract class StagingServiceBaseImpl extends BaseServiceImpl
 	protected LayoutPersistence layoutPersistence;
 	@BeanReference(type = LayoutFinder.class)
 	protected LayoutFinder layoutFinder;
+	@BeanReference(type = com.liferay.portal.service.LayoutRevisionLocalService.class)
+	protected com.liferay.portal.service.LayoutRevisionLocalService layoutRevisionLocalService;
+	@BeanReference(type = com.liferay.portal.service.LayoutRevisionService.class)
+	protected com.liferay.portal.service.LayoutRevisionService layoutRevisionService;
+	@BeanReference(type = LayoutRevisionPersistence.class)
+	protected LayoutRevisionPersistence layoutRevisionPersistence;
 	@BeanReference(type = com.liferay.portal.service.LayoutSetLocalService.class)
 	protected com.liferay.portal.service.LayoutSetLocalService layoutSetLocalService;
 	@BeanReference(type = com.liferay.portal.service.LayoutSetService.class)

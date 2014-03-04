@@ -51,6 +51,17 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	}
 
 	@Override
+	public void checkDefaultLayoutSetBranches(long userId,
+		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
+		boolean branchingPrivate, boolean remote,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_stagingLocalService.checkDefaultLayoutSetBranches(userId, liveGroup,
+			branchingPublic, branchingPrivate, remote, serviceContext);
+	}
+
+	@Override
 	public void cleanUpStagingRequest(long stagingRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

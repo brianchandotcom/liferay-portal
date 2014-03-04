@@ -62,7 +62,7 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="Organization#addPrivatePageinSiteCP">
+		<execute macro="Organization#addPrivatePageToSiteViaSiteTemplateCP">
 			<var name="organizationSite" value="Intranet Site" />
 			<var name="orgName" value="${orgName}" />
 			<var name="sitePagePrivacy" value="Private" />

@@ -134,7 +134,7 @@
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="PHONE_NUMBERS_NUMBER_FIELD" value1="${orgPhoneNumber}" />
 	</command>
 
-	<command name="addPrivatePageinSiteCP">
+	<command name="addPrivatePageToSiteViaSiteTemplateCP">
 		<execute macro="Organization#gotoActionsCmd" />
 
 		<var name="key_orgName" value="${orgName}" />

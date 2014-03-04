@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
@@ -346,6 +348,97 @@ public class MBUtil {
 		}
 
 		return classPKs;
+	}
+
+	public static Map<String, String> getEmailDefinitionTerms(
+		RenderRequest request, String emailFromAddress, String emailFromName,
+		boolean showMailingListTerm, boolean showBulkTerms) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, String> definitionTerms = new HashMap<String, String>();
+
+		definitionTerms.put(
+			"[$CATEGORY_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-category-in-which-the-message-has-been-posted"));
+		definitionTerms.put(
+			"[$COMPANY_ID$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-id-associated-with-the-message-board"));
+		definitionTerms.put(
+			"[$COMPANY_MX$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-mx-associated-with-the-message-board"));
+		definitionTerms.put(
+			"[$COMPANY_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-name-associated-with-the-message-board"));
+		definitionTerms.put(
+			"[$FROM_ADDRESS$]", HtmlUtil.escape(emailFromAddress));
+		definitionTerms.put("[$FROM_NAME$]", HtmlUtil.escape(emailFromName));
+
+		if (showMailingListTerm) {
+			definitionTerms.put(
+				"[$MAILING_LIST_ADDRESS$]",
+				LanguageUtil.get(
+					themeDisplay.getLocale(),
+					"the-email-address-of-the-mailing-list"));
+		}
+
+		definitionTerms.put(
+			"[$MESSAGE_BODY$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-message-body"));
+		definitionTerms.put(
+			"[$MESSAGE_ID$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-message-id"));
+		definitionTerms.put(
+			"[$MESSAGE_SUBJECT$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-message-subject"));
+		definitionTerms.put(
+			"[$MESSAGE_URL$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-message-url"));
+		definitionTerms.put(
+			"[$MESSAGE_USER_ADDRESS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-email-address-of-the-user-who-added-the-message"));
+		definitionTerms.put(
+			"[$MESSAGE_USER_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-user-who-added-the-message"));
+
+		Company company = themeDisplay.getCompany();
+
+		definitionTerms.put("[$PORTAL_URL$]", company.getVirtualHostname());
+
+		definitionTerms.put(
+			"[$PORTLET_NAME$]", PortalUtil.getPortletTitle(request));
+		definitionTerms.put(
+			"[$SITE_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-site-name-associated-with-the-message-board"));
+
+		if (showBulkTerms) {
+			definitionTerms.put(
+				"[$TO_ADDRESS$]",
+				LanguageUtil.get(
+					themeDisplay.getLocale(),
+					"the-address-of-the-email-recipient"));
+			definitionTerms.put(
+				"[$TO_NAME$]",
+				LanguageUtil.get(
+					themeDisplay.getLocale(),
+					"the-name-of-the-email-recipient"));
+		}
+
+		return definitionTerms;
 	}
 
 	public static Map<String, String> getEmailFromDefinitionTerms(

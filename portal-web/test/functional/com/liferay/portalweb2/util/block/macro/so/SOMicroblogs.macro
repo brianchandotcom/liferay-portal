@@ -357,6 +357,15 @@
 	<command name="viewMicroblogsEntryNone">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
+		<if>
+			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
+			<then>
+				<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
+			</then>
+		</if>
+
+		<execute action="SODashboard#assertTextNotPresent" value1="${microblogsEntryContent}" />
+
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
 		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntryContent}" />
@@ -366,7 +375,14 @@
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 
-		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntryContent}" />
+		<if>
+			<condition action="SOMicroblogs#isElementNotPresent" locator-key1="MICROBLOGS_ENTRY_CONTENT_GENERAL" />
+			<then>
+				<execute action="SOMicroblogs#assertTextEquals" locator-key1="INFO_MESSAGE" value1="You do not have any microblog entries." />
+			</then>
+		</if>
+
+		<execute action="SOMicroblogs#assertTextNotPresent" value1="${microblogsEntryContent}" />
 	</command>
 
 	<command name="viewMicroblogsEntryNotViewableByEveryone">

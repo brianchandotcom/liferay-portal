@@ -75,20 +75,18 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 
 	<liferay-ui:tabs
 		names="<%= tabs2Names %>"
-		param="tabs2"
-		url="<%= portletURL %>"
-	/>
+		refresh="<%= false %>"
+	>
 
-	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
-	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
-	<liferay-ui:error key="emailMessageAddedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailMessageAddedSubject" message="please-enter-a-valid-subject" />
-	<liferay-ui:error key="emailMessageUpdatedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailMessageUpdatedSubject" message="please-enter-a-valid-subject" />
-	<liferay-ui:error key="userRank" message="please-enter-valid-user-ranks" />
+		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
+		<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
+		<liferay-ui:error key="emailMessageAddedBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailMessageAddedSubject" message="please-enter-a-valid-subject" />
+		<liferay-ui:error key="emailMessageUpdatedBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailMessageUpdatedSubject" message="please-enter-a-valid-subject" />
+		<liferay-ui:error key="userRank" message="please-enter-valid-user-ranks" />
 
-	<c:choose>
-		<c:when test='<%= tabs2.equals("general") %>'>
+		<liferay-ui:section>
 			<aui:fieldset>
 				<aui:input name="preferences--allowAnonymousPosting--" type="checkbox" value="<%= mbSettings.isAllowAnonymousPosting() %>" />
 
@@ -123,8 +121,9 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 					<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", "365", false) %>' value="365" />
 				</aui:select>
 			</aui:fieldset>
-		</c:when>
-		<c:when test='<%= tabs2.equals("email-from") %>'>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
 			<aui:fieldset>
 				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />
 
@@ -193,17 +192,11 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 					</dd>
 				</dl>
 			</aui:fieldset>
-		</c:when>
-		<c:when test='<%= tabs2.startsWith("message-") %>'>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
 			<aui:fieldset>
-				<c:choose>
-					<c:when test='<%= tabs2.equals("message-added-email") %>'>
-						<aui:input label="enabled" name="preferences--emailMessageAddedEnabled--" type="checkbox" value="<%= emailMessageAddedEnabled %>" />
-					</c:when>
-					<c:when test='<%= tabs2.equals("message-updated-email") %>'>
-						<aui:input label="enabled" name="preferences--emailMessageUpdatedEnabled--" type="checkbox" value="<%= emailMessageUpdatedEnabled %>" />
-					</c:when>
-				</c:choose>
+				<aui:input label="enabled" name="preferences--emailMessageAddedEnabled--" type="checkbox" value="<%= emailMessageAddedEnabled %>" />
 
 				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
 
@@ -333,8 +326,143 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 					</c:if>
 				</dl>
 			</aui:fieldset>
-		</c:when>
-		<c:when test='<%= tabs2.equals("thread-priorities") %>'>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
+			<aui:fieldset>
+				<aui:input label="enabled" name="preferences--emailMessageUpdatedEnabled--" type="checkbox" value="<%= emailMessageUpdatedEnabled %>" />
+
+				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
+
+				<aui:input cssClass="lfr-textarea-container" label="body" name='<%= "preferences--" + emailBodyParam + "--" %>' type="textarea" value="<%= emailBody %>" warp="soft" />
+			</aui:fieldset>
+
+			<aui:fieldset cssClass="definition-of-terms">
+				<legend>
+					<liferay-ui:message key="definition-of-terms" />
+				</legend>
+
+				<dl>
+					<dt>
+						[$CATEGORY_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-category-in-which-the-message-has-been-posted" />
+					</dd>
+					<dt>
+						[$COMPANY_ID$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-company-id-associated-with-the-message-board" />
+					</dd>
+					<dt>
+						[$COMPANY_MX$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-company-mx-associated-with-the-message-board" />
+					</dd>
+					<dt>
+						[$COMPANY_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-company-name-associated-with-the-message-board" />
+					</dd>
+					<dt>
+						[$FROM_ADDRESS$]
+					</dt>
+					<dd>
+						<%= HtmlUtil.escape(emailFromAddress) %>
+					</dd>
+					<dt>
+						[$FROM_NAME$]
+					</dt>
+					<dd>
+						<%= HtmlUtil.escape(emailFromName) %>
+					</dd>
+
+					<c:if test="<%= PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED %>">
+						<dt>
+							[$MAILING_LIST_ADDRESS$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-email-address-of-the-mailing-list" />
+						</dd>
+					</c:if>
+
+					<dt>
+						[$MESSAGE_BODY$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-message-body" />
+					</dd>
+					<dt>
+						[$MESSAGE_ID$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-message-id" />
+					</dd>
+					<dt>
+						[$MESSAGE_SUBJECT$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-message-subject" />
+					</dd>
+					<dt>
+						[$MESSAGE_URL$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-message-url" />
+					</dd>
+					<dt>
+						[$MESSAGE_USER_ADDRESS$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-email-address-of-the-user-who-added-the-message" />
+					</dd>
+					<dt>
+						[$MESSAGE_USER_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-user-who-added-the-message" />
+					</dd>
+					<dt>
+						[$PORTAL_URL$]
+					</dt>
+					<dd>
+						<%= company.getVirtualHostname() %>
+					</dd>
+					<dt>
+						[$PORTLET_NAME$]
+					</dt>
+					<dd>
+						<%= PortalUtil.getPortletTitle(renderResponse) %>
+					</dd>
+					<dt>
+						[$SITE_NAME$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
+					</dd>
+
+					<c:if test="<%= !PropsValues.MESSAGE_BOARDS_EMAIL_BULK %>">
+						<dt>
+							[$TO_ADDRESS$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-address-of-the-email-recipient" />
+						</dd>
+						<dt>
+							[$TO_NAME$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-name-of-the-email-recipient" />
+						</dd>
+					</c:if>
+				</dl>
+			</aui:fieldset>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
 			<div class="alert alert-info">
 				<liferay-ui:message key="enter-the-name,-image,-and-priority-level-in-descending-order" />
 			</div>
@@ -590,8 +718,9 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 
 				<portlet:namespace />updateLanguageTemps(lastLanguageId);
 			</aui:script>
-		</c:when>
-		<c:when test='<%= tabs2.equals("user-ranks") %>'>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
 			<div class="alert alert-info">
 				<liferay-ui:message key="enter-rank-and-minimum-post-pairs-per-line" />
 			</div>
@@ -714,16 +843,19 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 
 				<portlet:namespace />updateLanguageTemps(lastLanguageId);
 			</aui:script>
-		</c:when>
-		<c:when test='<%= tabs2.equals("rss") %>'>
-			<liferay-ui:rss-settings
-				delta="<%= rssDelta %>"
-				displayStyle="<%= rssDisplayStyle %>"
-				enabled="<%= enableRSS %>"
-				feedType="<%= rssFeedType %>"
-			/>
-		</c:when>
-	</c:choose>
+		</liferay-ui:section>
+
+		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+			<liferay-ui:section>
+				<liferay-ui:rss-settings
+					delta="<%= rssDelta %>"
+					displayStyle="<%= rssDisplayStyle %>"
+					enabled="<%= enableRSS %>"
+					feedType="<%= rssFeedType %>"
+				/>
+			</liferay-ui:section>
+		</c:if>
+	</liferay-ui:tabs>
 
 	<aui:button-row>
 		<aui:button type="submit" />

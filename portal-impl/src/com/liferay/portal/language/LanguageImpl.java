@@ -833,8 +833,7 @@ public class LanguageImpl implements Language {
 	}
 
 	private String _get(
-		ResourceBundle resourceBundle, String key, String defaultValue)
-
+			ResourceBundle resourceBundle, String key, String defaultValue)
 		throws Exception {
 
 		Locale locale = resourceBundle.getLocale();
@@ -890,6 +889,27 @@ public class LanguageImpl implements Language {
 		return _localesMap.get(languageCode);
 	}
 
+	private ResourceBundle _getResourceBundleFromConfiguratingPortlet(
+			PageContext pageContext, Locale locale)
+		throws SystemException {
+
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		String portletResource = ParamUtil.getString(
+			request, "portletResource");
+
+		long companyId = PortalUtil.getCompanyId(request);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			companyId, portletResource);
+
+		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+			portlet, pageContext.getServletContext());
+
+		return portletConfig.getResourceBundle(locale);
+	}
+
 	private ResourceBundle _getResourceBundleFromPageContext(
 		PageContext pageContext) {
 
@@ -925,7 +945,6 @@ public class LanguageImpl implements Language {
 			String portletName = configPortletConfig.getPortletName();
 
 			if (portletName.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-
 				try {
 					ResourceBundle resourceBundle =
 						_getResourceBundleFromConfiguratingPortlet(
@@ -942,29 +961,9 @@ public class LanguageImpl implements Language {
 			}
 
 			return configResourceBundle;
-
 		}
 
 		return null;
-
-	}
-
-	private ResourceBundle _getResourceBundleFromConfiguratingPortlet(PageContext pageContext, Locale locale) throws SystemException {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		String portletResource = ParamUtil.getString(
-			request, "portletResource");
-
-		long companyId = PortalUtil.getCompanyId(request);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			companyId, portletResource);
-
-		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-			portlet, pageContext.getServletContext());
-
-		return portletConfig.getResourceBundle(locale);
 	}
 
 	private void _initGroupLocales(long groupId) {

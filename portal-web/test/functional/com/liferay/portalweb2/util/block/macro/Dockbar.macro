@@ -1,11 +1,4 @@
 <definition>
-	<command name="gotoSite">
-		<var name="key_siteName" value="${siteName}" />
-
-		<execute action="Dockbar#click" locator-key1="MY_SITES" />
-		<execute action="Dockbar#assertClick" locator-key1="MY_SITES_PUBLIC_SITE" value1="${siteName}" />
-	</command>
-
 	<command name="showEditField">
 		<if>
 			<condition action="Dockbar#isElementNotPresent" locator1="//div[@id='_145_${fieldLabel}Content']" value1="${fieldName}" />

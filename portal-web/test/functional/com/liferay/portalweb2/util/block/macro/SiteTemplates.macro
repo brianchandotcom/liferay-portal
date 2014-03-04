@@ -23,6 +23,65 @@
 		<execute action="CPSitetemplatesConfiguration#assertTextEquals" locator-key1="SITE_TEMPLATE_NAME" value1="${siteTemplateName}" />
 	</command>
 
+	<command name="addSitePageViaSiteTemplateCP">
+		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+		<execute action="CPSitetemplates#click" locator-key1="SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
+		<execute action="CPSitetemplates#click" locator-key1="SITE_TEMPLATE_MENULIST_MANAGE" />
+
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_ADD_PAGE" value1="Add Page" />
+
+		<if>
+			<isset var="pageType" />
+			<then>
+				<var name="key_pageType" value="${pageType}" />
+
+				<execute action="CPSitepagesAddpage#assertTextEquals" locator-key1="PAGE_TYPE_LABEL" value1="${pageType}" />
+
+				<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_RADIO" value1="${pageType}" />
+				<execute action="CPSitepagesAddpage#assertTextEquals" locator-key1="PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
+				<if>
+					<equals arg1="${pageTemplateAutoApplyChanges}" arg2="true" />
+					<then>
+						<execute action="CPSitepagesAddpage#check" locator-key1="PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" value1="${pageType}" />
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
+		<execute action="CPSitepagesAddpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+	</command>
+
+	<command name="allowChangesToPageTemplateCP">
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName" />
+
+		<if>
+			<equals arg1="${allow}" arg2="true" />
+			<then>
+				<execute action="CPSitepages#check" locator-key1="DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX" />
+				<execute action="CPSitepages#click" locator-key1="SAVE_BUTTON" />
+			</then>
+			<else>
+				<execute action="CPSitepages#uncheck" locator-key1="DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX" />
+				<execute action="CPSitepages#click" locator-key1="SAVE_BUTTON" />
+			</else>
+		</if>
+	</command>
+
+	<command name="allowSiteAdminsToEditThisPageCP">
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName" />
+
+		<execute action="CPSitepages#check" locator-key1="DETAILS_PAGE_TEMPLATE_UPDATEABLE_CHECKBOX" />
+		<execute action="CPSitepages#click" locator-key1="SAVE_BUTTON" />
+	</command>
+
 	<command name="deleteCP">
 
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
@@ -67,17 +126,13 @@
 		</if>
 
 		<if>
-			<isset var="allowSiteAdminsToModifyPages" />
+			<equals arg1="${allowSiteAdminsToModifyPages}" arg2="true" />
 			<then>
 				<execute action="CPSitetemplateSettings#check" locator-key1="ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
 			</then>
-		</if>
-
-		<if>
-			<isset var="notAllowSiteAdminsToModifyPages" />
-			<then>
+			<else>
 				<execute action="CPSitetemplateSettings#uncheck" locator-key1="ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
-			</then>
+			</else>
 		</if>
 
 		<execute action="CPSitetemplateSettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />

@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>WHATS_HAPPENING_CONTENT_COUNTDOWN</td>
-	<td>//span[@class='microblogs-countdown']</td>
+	<td>//span[contains(@class,'microblogs-countdown')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -219,32 +219,17 @@
 </tr>
 <tr>
 	<td>TASK_DESCRIPTION_NORMAL</td>
-	<td>//li[@class='tasks-title normal']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TASK_DESCRIPTION_NORMAL_INCREMENT</td>
-	<td>xpath=(//li[@class='tasks-title normal']/a)[contains(.,'${number}')]</td>
+	<td>xpath=(//li[@class='tasks-title normal']/a)[contains(.,'${key_taskDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TASK_DESCRIPTION_HIGH</td>
-	<td>//li[@class='tasks-title high']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TASK_DESCRIPTION_HIGH_INCREMENT</td>
-	<td>xpath=(//li[@class='tasks-title high']/a)[contains(.,'${key_number}')]</td>
+	<td>xpath=(//li[@class='tasks-title high']/a)[contains(.,'${key_taskDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TASK_DESCRIPTION_LOW</td>
-	<td>//li[@class='tasks-title low']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TASK_DESCRIPTION_LOW_INCREMENT</td>
-	<td>xpath=(//li[@class='tasks-title low']/a)[contains(.,'${number}')]</td>
+	<td>xpath=(//li[@class='tasks-title low']/a)[contains(.,'${key_taskDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -265,32 +250,42 @@
 </tr>
 <tr>
 	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE</td>
+	<td>//div[@class='today-events']//tr[contains(.,'${key_eventTitle}')]//span[@class='event-name']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC</td>
 	<td>//div[@class='today-events']//span[@class='event-name']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_CREATOR</td>
-	<td>//div[@class='today-events']//span[@class='event-site']/a</td>
+	<td>//div[@class='today-events']//tr[contains(.,'${key_eventTitle}')]//span[@class='event-site']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME</td>
-	<td>//div[@class='today-events']//span[@class='event-time']</td>
+	<td>//div[@class='today-events']//tr[contains(.,'${key_eventTitle}')]//span[@class='event-time']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE</td>
+	<td>//div[@class='upcoming-events']//tr[contains(.,'${key_eventTitle}')]//span[@class='event-name']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC</td>
 	<td>//div[@class='upcoming-events']//span[@class='event-name']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_CREATOR</td>
-	<td>//div[@class='upcoming-events']//span[@class='event-site']/a</td>
+	<td>//div[@class='upcoming-events']//tr[contains(.,'${key_eventTitle}')]//span[@class='event-site']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME</td>
-	<td>//div[@class='upcoming-events']//span[@class='event-time']</td>
+	<td>//div[@class='upcoming-events']//tr[contains(.,'${key_eventTitle}')]//span[@class='event-time']</td>
 	<td></td>
 </tr>
 <tr>

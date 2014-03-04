@@ -272,15 +272,6 @@ public class LayoutPrototypeLocalServiceImpl
 
 		layoutPrototypePersistence.update(layoutPrototype);
 
-		// Group
-
-		Group group = groupLocalService.getLayoutPrototypeGroup(
-			layoutPrototype.getCompanyId(), layoutPrototypeId);
-
-		group.setName(layoutPrototype.getName(LocaleUtil.getDefault()));
-
-		groupPersistence.update(group);
-
 		// Layout
 
 		Layout layout = layoutPrototype.getLayout();

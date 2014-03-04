@@ -29,9 +29,9 @@ import org.objectweb.asm.tree.MethodNode;
 /**
  * @author Shuyang Zhou
  */
-public class FirstPassMethodInstrumenter extends MethodVisitor {
+public class OutlineMethodVisitor extends MethodVisitor {
 
-	public FirstPassMethodInstrumenter(
+	public OutlineMethodVisitor(
 		ClassData classData, MethodVisitor methodVisitor, String owner,
 		int access, String name, String desc, String signature,
 		String[] exceptions) {
@@ -42,12 +42,8 @@ public class FirstPassMethodInstrumenter extends MethodVisitor {
 				access, name, desc, signature, exceptions));
 
 		_classData = classData;
-
-		this.methodVisitor = methodVisitor;
-		this.owner = owner;
-		this.access = access;
-		this.name = name;
-		this.desc = desc;
+		_methodVisitor = methodVisitor;
+		_owner = owner;
 
 		_methodNode = (MethodNode)mv;
 	}
@@ -56,10 +52,12 @@ public class FirstPassMethodInstrumenter extends MethodVisitor {
 	public void visitEnd() {
 		super.visitEnd();
 
-		MethodVisitor methodVisitor = this.methodVisitor;
+		MethodVisitor methodVisitor = _methodVisitor;
 
-		if (!lineLabels.isEmpty()) {
-			methodVisitor = new SecondPassMethodInstrumenter(this);
+		if (!_lineLabels.isEmpty()) {
+			methodVisitor = new TouchMethodVisitor(
+				_owner, _methodNode, _methodVisitor, _jumpLabels, _lineLabels,
+				_switchLabels);
 		}
 
 		_methodNode.accept(methodVisitor);
@@ -67,19 +65,13 @@ public class FirstPassMethodInstrumenter extends MethodVisitor {
 
 	@Override
 	public void visitJumpInsn(int opcode, Label label) {
-
-		// Ignore any jump instructions in the "class init" method. When
-		// initializing static variables, the JVM first checks that the variable
-		// is null before attempting to set it. This check contains an IFNONNULL
-		// jump instruction which would confuse people if it showed up in the
-		// reports.
-
-		if (!name.equals("<clinit>") && (opcode != Opcodes.GOTO) &&
-			(opcode != Opcodes.JSR) && (_currentLine != 0)) {
+		if ((_currentLine != 0) && !"<clinit>".equals(_methodNode.name) &&
+			(opcode != Opcodes.GOTO) && (opcode != Opcodes.JSR)) {
 
 			_classData.addLineJump(_currentLine, _currentJump);
 
-			jumpLabels.put(label, new JumpHolder(_currentLine, _currentJump++));
+			_jumpLabels.put(
+				label, new JumpHolder(_currentLine, _currentJump++));
 		}
 
 		super.visitJumpInsn(opcode, label);
@@ -88,13 +80,12 @@ public class FirstPassMethodInstrumenter extends MethodVisitor {
 	@Override
 	public void visitLineNumber(int line, Label start) {
 		_currentLine = line;
-
-		_classData.addLine(_currentLine, name, desc);
-
 		_currentJump = 0;
 		_currentSwitch = 0;
 
-		lineLabels.put(start, new Integer(line));
+		_classData.addLine(_currentLine, _methodNode.name, _methodNode.desc);
+
+		_lineLabels.put(start, line);
 	}
 
 	@Override
@@ -102,11 +93,11 @@ public class FirstPassMethodInstrumenter extends MethodVisitor {
 		super.visitLookupSwitchInsn(dflt, keys, labels);
 
 		if (_currentLine != 0) {
-			switchLabels.put(
+			_switchLabels.put(
 				dflt, new SwitchHolder(_currentLine, _currentSwitch, -1));
 
 			for (int i = labels.length -1; i >= 0; i--) {
-				switchLabels.put(
+				_switchLabels.put(
 					labels[i],
 					new SwitchHolder(_currentLine, _currentSwitch, i));
 			}
@@ -122,11 +113,11 @@ public class FirstPassMethodInstrumenter extends MethodVisitor {
 		super.visitTableSwitchInsn(min, max, dflt, labels);
 
 		if (_currentLine != 0) {
-			switchLabels.put(
+			_switchLabels.put(
 				dflt, new SwitchHolder(_currentLine, _currentSwitch, -1));
 
 			for (int i = labels.length -1; i >= 0; i--) {
-				switchLabels.put(
+				_switchLabels.put(
 					labels[i],
 					new SwitchHolder(_currentLine, _currentSwitch, i));
 			}
@@ -135,21 +126,18 @@ public class FirstPassMethodInstrumenter extends MethodVisitor {
 		}
 	}
 
-	protected int access;
-	protected String desc;
-	protected Map<Label, JumpHolder> jumpLabels =
-		new HashMap<Label, JumpHolder>();
-	protected Map<Label, Integer> lineLabels = new HashMap<Label, Integer>();
-	protected MethodVisitor methodVisitor;
-	protected String name;
-	protected final String owner;
-	protected Map<Label, SwitchHolder> switchLabels =
-		new HashMap<Label, SwitchHolder>();
-
 	private final ClassData _classData;
 	private int _currentJump;
 	private int _currentLine;
 	private int _currentSwitch;
+	private final Map<Label, JumpHolder> _jumpLabels =
+		new HashMap<Label, JumpHolder>();
+	private final Map<Label, Integer> _lineLabels =
+		new HashMap<Label, Integer>();
 	private final MethodNode _methodNode;
+	private final MethodVisitor _methodVisitor;
+	private final String _owner;
+	private final Map<Label, SwitchHolder> _switchLabels =
+		new HashMap<Label, SwitchHolder>();
 
 }

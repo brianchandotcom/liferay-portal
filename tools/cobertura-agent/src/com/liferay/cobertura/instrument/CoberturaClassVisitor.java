@@ -76,7 +76,7 @@ public class CoberturaClassVisitor extends ClassVisitor {
 			return methodVisitor;
 		}
 
-		return new FirstPassMethodInstrumenter(
+		return new OutlineMethodVisitor(
 			_classData, methodVisitor, _classData.getName(), access, name, desc,
 			signature, exceptions);
 	}

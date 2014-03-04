@@ -23,37 +23,42 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
+import org.objectweb.asm.tree.MethodNode;
 
 /**
  * @author Shuyang Zhou
  */
-public class SecondPassMethodInstrumenter extends MethodVisitor {
+public class TouchMethodVisitor extends MethodVisitor {
 
-	public SecondPassMethodInstrumenter(
-		FirstPassMethodInstrumenter firstPassMethodInstrumenter) {
+	public TouchMethodVisitor(
+		String owner, MethodNode methodNode, MethodVisitor methodVisitor,
+		Map<Label, JumpHolder> jumpLabels, Map<Label, Integer> lineLabels,
+		Map<Label, SwitchHolder> switchLabels) {
 
-		super(Opcodes.ASM4, firstPassMethodInstrumenter.methodVisitor);
+		super(Opcodes.ASM4, methodVisitor);
 
-		int stackVariableCount = 0;
+		_owner = owner;
+		_jumpLabels = jumpLabels;
+		_lineLabels = lineLabels;
+		_switchLabels = switchLabels;
+		_name = methodNode.name;
 
-		if ((Opcodes.ACC_STATIC & firstPassMethodInstrumenter.access) == 0) {
-			stackVariableCount++;
+		int variableCount = 0;
+
+		if ((Opcodes.ACC_STATIC & methodNode.access) == 0) {
+			variableCount++;
 		}
 
-		for (Type type : Type.getArgumentTypes(
-				firstPassMethodInstrumenter.desc)) {
-
-			stackVariableCount += type.getSize();
+		for (Type type : Type.getArgumentTypes(methodNode.desc)) {
+			variableCount += type.getSize();
 		}
 
-		_stackVariableCount = stackVariableCount;
-
-		_firstPassMethodInstrumenter = firstPassMethodInstrumenter;
+		_variableCount = variableCount;
 	}
 
 	@Override
 	public void visitCode() {
-		_methodStarted = true;
+		_started = true;
 
 		super.visitCode();
 	}
@@ -62,16 +67,16 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 	public void visitFieldInsn(
 		int opcode, String owner, String name, String desc) {
 
-		touchBranchFalse();
+		_touchBranch();
 
 		super.visitFieldInsn(opcode, owner, name, desc);
 	}
 
 	@Override
 	public void visitIincInsn(int var, int increment) {
-		touchBranchFalse();
+		_touchBranch();
 
-		if (var >= _stackVariableCount) {
+		if (var >= _variableCount) {
 			var += 2;
 		}
 
@@ -80,31 +85,24 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 
 	@Override
 	public void visitInsn(int opcode) {
-		touchBranchFalse();
+		_touchBranch();
 
 		super.visitInsn(opcode);
 	}
 
 	@Override
 	public void visitIntInsn(int opcode, int operand) {
-		touchBranchFalse();
+		_touchBranch();
 
 		super.visitIntInsn(opcode, operand);
 	}
 
 	@Override
 	public void visitJumpInsn(int opcode, Label label) {
-		touchBranchFalse();
+		_touchBranch();
 
-		// Ignore any jump instructions in the "class init" method. When
-		// initializing static variables, the JVM first checks that the variable
-		// is null before attempting to set it. This check contains an IFNONNULL
-		// jump instruction which would confuse people if it showed up in the
-		// reports.
-
-		if (!"<clinit>".equals(_firstPassMethodInstrumenter.name) &&
-			(opcode != Opcodes.GOTO) && (opcode != Opcodes.JSR) &&
-			(_currentLine != 0)) {
+		if ((_currentLine != 0) && !"<clinit>".equals(_name) &&
+			(opcode != Opcodes.GOTO) && (opcode != Opcodes.JSR)) {
 
 			_lastJump = new JumpHolder(_currentLine, _currentJump++);
 
@@ -119,9 +117,9 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 
 	@Override
 	public void visitLabel(Label label) {
-		if (_methodStarted) {
-			_methodStarted = false;
-			_variableIndex = _stackVariableCount;
+		if (_started) {
+			_started = false;
+			_variableIndex = _variableCount;
 
 			mv.visitInsn(Opcodes.ICONST_0);
 			mv.visitVarInsn(Opcodes.ISTORE, _variableIndex);
@@ -135,19 +133,11 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 
 		super.visitLabel(label);
 
-		Map<Label, JumpHolder> jumpLables =
-			_firstPassMethodInstrumenter.jumpLabels;
-
-		if (jumpLables.containsKey(label)) {
+		if (_jumpLabels.containsKey(label)) {
 			if (_lastJump != null) {
-				Label label1 = instrumentIsLastJump();
+				Label label1 = _lastJump();
 
-				instrumentOwnerClass();
-				instrumentPutLineAndBranchNumbers();
-
-				mv.visitInsn(_BOOLEAN_FALSE);
-
-				instrumentInvokeTouchJump();
+				_touchJump(false);
 
 				Label label2 = new Label();
 
@@ -156,12 +146,7 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 				mv.visitVarInsn(Opcodes.ILOAD, _variableIndex + 1);
 				mv.visitJumpInsn(Opcodes.IFLT, label2);
 
-				instrumentOwnerClass();
-				instrumentPutLineAndBranchNumbers();
-
-				mv.visitInsn(_BOOLEAN_TRUE);
-
-				instrumentInvokeTouchJump();
+				_touchJump(true);
 
 				mv.visitLabel(label2);
 			}
@@ -172,45 +157,39 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 
 				mv.visitJumpInsn(Opcodes.IFLT, label1);
 
-				instrumentJumpHit(true);
+				_touchJump(true);
 
 				mv.visitLabel(label1);
 			}
 		}
 		else if (_lastJump != null) {
-			Label label1 = instrumentIsLastJump();
+			Label label1 = _lastJump();
 
-			instrumentJumpHit(false);
+			_touchJump(false);
 
 			mv.visitLabel(label1);
 		}
 
 		_lastJump = null;
 
-		Map<Label, SwitchHolder> switchLabels =
-			_firstPassMethodInstrumenter.switchLabels;
-
-		SwitchHolder switchHolder = switchLabels.get(label);
+		SwitchHolder switchHolder = _switchLabels.get(label);
 
 		if (switchHolder != null) {
-			instrumentSwitchHit(
+			_touchSwitch(
 				switchHolder.getLineNumber(), switchHolder.getSwitchNumber(),
 				switchHolder.getBranch());
 		}
 
-		Map<Label, Integer> lineLabels =
-			_firstPassMethodInstrumenter.lineLabels;
-
-		Integer line = lineLabels.get(label);
+		Integer line = _lineLabels.get(label);
 
 		if (line != null) {
-			visitLineNumber(line.intValue(), label);
+			visitLineNumber(line, label);
 		}
 	}
 
 	@Override
 	public void visitLdcInsn(Object cst) {
-		touchBranchFalse();
+		_touchBranch();
 
 		super.visitLdcInsn(cst);
 	}
@@ -220,8 +199,7 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 		_currentLine = line;
 		_currentJump = 0;
 
-		instrumentOwnerClass();
-
+		mv.visitLdcInsn(_owner);
 		mv.visitIntInsn(Opcodes.SIPUSH, line);
 		mv.visitMethodInsn(
 			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touch",
@@ -235,7 +213,7 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 		String name, String desc, String signature, Label start, Label end,
 		int index) {
 
-		if (index >= _stackVariableCount) {
+		if (index >= _variableCount) {
 			index += 2;
 		}
 
@@ -244,7 +222,7 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 
 	@Override
 	public void visitLookupSwitchInsn(Label dflt, int[] keys, Label[] labels) {
-		touchBranchFalse();
+		_touchBranch();
 
 		super.visitLookupSwitchInsn(dflt, keys, labels);
 	}
@@ -266,14 +244,14 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 	public void visitMethodInsn(
 		int opcode, String owner, String name, String desc) {
 
-		touchBranchFalse();
+		_touchBranch();
 
 		super.visitMethodInsn(opcode, owner, name, desc);
 	}
 
 	@Override
 	public void visitMultiANewArrayInsn(String desc, int dims) {
-		touchBranchFalse();
+		_touchBranch();
 
 		super.visitMultiANewArrayInsn(desc, dims);
 	}
@@ -282,7 +260,7 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 	public void visitTableSwitchInsn(
 		int min, int max, Label dflt, Label... labels) {
 
-		touchBranchFalse();
+		_touchBranch();
 
 		super.visitTableSwitchInsn(min, max, dflt, labels);
 	}
@@ -291,45 +269,30 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 	public void visitTryCatchBlock(
 		Label start, Label end, Label handler, String type) {
 
-		touchBranchFalse();
+		_touchBranch();
 
 		super.visitTryCatchBlock(start, end, handler, type);
 	}
 
 	@Override
 	public void visitTypeInsn(int opcode, String desc) {
-		touchBranchFalse();
+		_touchBranch();
 
 		super.visitTypeInsn(opcode, desc);
 	}
 
 	@Override
 	public void visitVarInsn(int opcode, int var) {
-		touchBranchFalse();
+		_touchBranch();
 
-		if (var >= _stackVariableCount) {
+		if (var >= _variableCount) {
 			var += 2;
 		}
 
 		mv.visitVarInsn(opcode, var);
 	}
 
-	private void instrumentInvokeTouchJump() {
-		mv.visitMethodInsn(
-			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touchJump",
-			"(Ljava/lang/String;IIZ)V");
-
-		mv.visitIntInsn(Opcodes.SIPUSH, -1);
-		mv.visitVarInsn(Opcodes.ISTORE, _variableIndex + 1);
-	}
-
-	private void instrumentInvokeTouchSwitch() {
-		mv.visitMethodInsn(
-			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touchSwitch",
-			"(Ljava/lang/String;III)V");
-	}
-
-	private Label instrumentIsLastJump() {
+	private Label _lastJump() {
 		mv.visitVarInsn(Opcodes.ILOAD, _variableIndex);
 		mv.visitIntInsn(Opcodes.SIPUSH, _lastJump.getLineNumber());
 
@@ -343,47 +306,46 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 		return label;
 	}
 
-	private void instrumentJumpHit(boolean branch) {
-		instrumentOwnerClass();
+	private void _touchBranch() {
+		if (_lastJump != null) {
+			_lastJump = null;
 
-		instrumentPutLineAndBranchNumbers();
-
-		mv.visitInsn(branch ? _BOOLEAN_TRUE : _BOOLEAN_FALSE);
-
-		instrumentInvokeTouchJump();
+			_touchJump(false);
+		}
 	}
 
-	private void instrumentOwnerClass() {
-		mv.visitLdcInsn(_firstPassMethodInstrumenter.owner);
-	}
+	private void _touchJump(boolean branch) {
+		mv.visitLdcInsn(_owner);
 
-	private void instrumentPutLineAndBranchNumbers() {
 		mv.visitVarInsn(Opcodes.ILOAD, _variableIndex);
 		mv.visitVarInsn(Opcodes.ILOAD, _variableIndex + 1);
+
+		if (branch) {
+			mv.visitInsn(Opcodes.ICONST_0);
+		}
+		else {
+			mv.visitInsn(Opcodes.ICONST_1);
+		}
+
+		mv.visitMethodInsn(
+			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touchJump",
+			"(Ljava/lang/String;IIZ)V");
+
+		mv.visitIntInsn(Opcodes.SIPUSH, -1);
+		mv.visitVarInsn(Opcodes.ISTORE, _variableIndex + 1);
 	}
 
-	private void instrumentSwitchHit(
-		int lineNumber, int switchNumber, int branch) {
-
-		instrumentOwnerClass();
+	private void _touchSwitch(int lineNumber, int switchNumber, int branch) {
+		mv.visitLdcInsn(_owner);
 
 		mv.visitIntInsn(Opcodes.SIPUSH, lineNumber);
 		mv.visitIntInsn(Opcodes.SIPUSH, switchNumber);
 		mv.visitIntInsn(Opcodes.SIPUSH, branch);
 
-		instrumentInvokeTouchSwitch();
+		mv.visitMethodInsn(
+			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touchSwitch",
+			"(Ljava/lang/String;III)V");
 	}
-
-	private void touchBranchFalse() {
-		if (_lastJump != null) {
-			_lastJump = null;
-			instrumentJumpHit(false);
-		}
-	}
-
-	private static final int _BOOLEAN_FALSE = Opcodes.ICONST_1;
-
-	private static final int _BOOLEAN_TRUE = Opcodes.ICONST_0;
 
 	private static final String _TOUCH_COLLECTOR_CLASS =
 		"net/sourceforge/cobertura/coveragedata/TouchCollector";
@@ -391,11 +353,15 @@ public class SecondPassMethodInstrumenter extends MethodVisitor {
 	private int _currentJump;
 	private int _currentLine;
 	private Label _endLabel;
-	private final FirstPassMethodInstrumenter _firstPassMethodInstrumenter;
+	private final Map<Label, JumpHolder> _jumpLabels;
 	private JumpHolder _lastJump;
-	private boolean _methodStarted;
-	private final int _stackVariableCount;
+	private final Map<Label, Integer> _lineLabels;
+	private final String _name;
+	private final String _owner;
+	private boolean _started;
 	private Label _startLabel;
+	private final Map<Label, SwitchHolder> _switchLabels;
+	private final int _variableCount;
 	private int _variableIndex;
 
 }

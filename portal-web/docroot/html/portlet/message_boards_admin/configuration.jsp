@@ -132,64 +132,26 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 				<aui:input label="html-format" name="preferences--emailHtmlFormat--" type="checkbox" value="<%= mbSettings.isEmailHtmlFormat() %>" />
 			</aui:fieldset>
 
-			<aui:fieldset cssClass="definition-of-terms">
-				<legend>
-					<liferay-ui:message key="definition-of-terms" />
-				</legend>
-
+			<aui:fieldset cssClass="definition-of-terms" label="definition-of-terms">
 				<dl>
-					<dt>
-						[$COMPANY_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-id-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$COMPANY_MX$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-mx-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$COMPANY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-name-associated-with-the-message-board" />
-					</dd>
 
-					<c:if test="<%= PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED %>">
+					<%
+					Map<String, String> emailDefinitionTerms = MBUtil.getEmailFromDefinitionTerms(renderRequest, emailFromAddress, emailFromName, PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED);
+
+					for (Map.Entry<String, String> entry : emailDefinitionTerms.entrySet()) {
+					%>
+
 						<dt>
-							[$MAILING_LIST_ADDRESS$]
+							<%= entry.getKey() %>
 						</dt>
 						<dd>
-							<liferay-ui:message key="the-email-address-of-the-mailing-list" />
+							<%= entry.getValue() %>
 						</dd>
-					</c:if>
 
-					<dt>
-						[$MESSAGE_USER_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-user-who-added-the-message" />
-					</dd>
-					<dt>
-						[$MESSAGE_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-added-the-message" />
-					</dd>
-					<dt>
-						[$PORTLET_NAME$]
-					</dt>
-					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
-					</dd>
-					<dt>
-						[$SITE_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
-					</dd>
+					<%
+					}
+					%>
+
 				</dl>
 			</aui:fieldset>
 		</liferay-ui:section>

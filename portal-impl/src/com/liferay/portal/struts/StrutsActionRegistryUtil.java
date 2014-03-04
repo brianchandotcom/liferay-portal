@@ -16,8 +16,16 @@ package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.struts.action.Action;
 
@@ -28,37 +36,152 @@ import org.apache.struts.action.Action;
 public class StrutsActionRegistryUtil {
 
 	public static Action getAction(String path) {
-		return getStrutsActionRegistry().getAction(path);
+		return _instance._getAction(path);
 	}
 
 	public static Map<String, Action> getActions() {
-		return getStrutsActionRegistry().getActions();
-	}
-
-	public static StrutsActionRegistry getStrutsActionRegistry() {
-		return _strutsActionRegistry;
+		return _instance._getActions();
 	}
 
 	public static void register(String path, StrutsAction strutsAction) {
-		getStrutsActionRegistry().register(path, strutsAction);
+		_instance._register(path, strutsAction);
 	}
 
 	public static void register(
 		String path, StrutsPortletAction strutsPortletAction) {
 
-		getStrutsActionRegistry().register(path, strutsPortletAction);
+		_instance._register(path, strutsPortletAction);
 	}
 
 	public static void unregister(String path) {
-		getStrutsActionRegistry().unregister(path);
+		_instance._unregister(path);
 	}
 
-	public void setStrutsActionRegistry(
-		StrutsActionRegistry strutsActionRegistry) {
+	private Action _getAction(String path) {
+		Action action = _actions.get(path);
 
-		_strutsActionRegistry = strutsActionRegistry;
+		if (action != null) {
+			return action;
+		}
+
+		for (Map.Entry<String, Action> entry : _actions.entrySet()) {
+			if (path.startsWith(entry.getKey())) {
+				return entry.getValue();
+			}
+		}
+
+		return null;
 	}
 
-	private static StrutsActionRegistry _strutsActionRegistry;
+	private Map<String, Action> _getActions() {
+		return _actions;
+	}
+
+	private void _register(String path, StrutsAction strutsAction) {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("path", path);
+
+		ServiceRegistration<?> serviceRegistration = registry.registerService(
+			StrutsAction.class, strutsAction, map);
+
+		_serviceRegistrations.put(path, serviceRegistration);
+	}
+
+	private void _register(
+		String path, StrutsPortletAction strutsPortletAction) {
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("path", path);
+
+		ServiceRegistration<?> serviceRegistration = registry.registerService(
+			StrutsPortletAction.class, strutsPortletAction, map);
+
+		_serviceRegistrations.put(path, serviceRegistration);
+	}
+
+	private void _unregister(String path) {
+		ServiceRegistration<?> serviceRegistration =
+			_serviceRegistrations.remove(path);
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
+	}
+
+	private StrutsActionRegistryUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			_FILTER_STRING, new DefaultServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	private static final String _KEY_PATH = "path";
+
+	private static final String _FILTER_STRING =
+		"(&(|(objectClass=" + StrutsAction.class.getName() + ")(objectClass=" +
+			StrutsPortletAction.class.getName() + "))(path=*))";
+
+	private static StrutsActionRegistryUtil _instance =
+		new StrutsActionRegistryUtil();
+
+	private final Map<String, Action> _actions =
+		new ConcurrentHashMap<String, Action>();
+	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
+		new ConcurrentHashMap<String, ServiceRegistration<?>>();
+	private final ServiceTracker<?, Action> _serviceTracker;
+
+	private class DefaultServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<Object, Action> {
+
+		@Override
+		public Action addingService(ServiceReference<Object> serviceReference) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			Object service = registry.getService(serviceReference);
+
+			Action action = null;
+
+			if (service instanceof StrutsAction) {
+				action = new ActionAdapter((StrutsAction)service);
+			}
+			else if (service instanceof StrutsPortletAction) {
+				action = new PortletActionAdapter(
+					(StrutsPortletAction)service);
+			}
+
+			String path = (String)serviceReference.getProperty(_KEY_PATH);
+
+			_actions.put(path, action);
+
+			return action;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Object> serviceReference, Action service) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Object> serviceReference, Action service) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			String path = (String)serviceReference.getProperty("path");
+
+			_actions.remove(path);
+		}
+
+	}
 
 }

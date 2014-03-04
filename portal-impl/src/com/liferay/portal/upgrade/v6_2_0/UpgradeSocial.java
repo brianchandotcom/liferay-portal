@@ -97,7 +97,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	protected Timestamp getUniqueModifiedDate(
 		long groupId, long userId, Timestamp modifiedDate, long classNameId,
-		long resourcePrimKey, double type) {
+		long resourcePrimKey, double type, Set<String> keys) {
 
 		while (true) {
 			StringBundler sb = new StringBundler(11);
@@ -118,7 +118,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			modifiedDate = new Timestamp(modifiedDate.getTime() + 1);
 
-			if (_keys.contains(key)) {
+			if (keys.contains(key)) {
 				continue;
 			}
 
@@ -202,6 +202,8 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
+			Set<String> keys = new HashSet<String>();
+
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
@@ -218,7 +220,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 				modifiedDate = getUniqueModifiedDate(
 					groupId, userId, modifiedDate, classNameId, resourcePrimKey,
-					type);
+					type, keys);
 
 				JSONObject extraDataJSONObject =
 					JSONFactoryUtil.createJSONObject();
@@ -237,7 +239,5 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
-
-	private Set<String> _keys = new HashSet<String>();
 
 }

@@ -686,6 +686,37 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void typeAceEditor(String locator, String value) {
+		int x = 0;
+		int y = value.indexOf("${line.separator}");
+
+		String line = value.substring(x, y);
+
+		line = line.trim();
+
+		typeKeys(locator, line, true);
+
+		keyPress(locator, "\\13");
+
+		while (y != value.length()) {
+			x = value.indexOf("}", x) + 1;
+			y = value.indexOf("${line.separator}", x);
+
+			if (y == -1) {
+				y = value.length();
+			}
+
+			line = value.substring(x, y);
+
+			line = line.trim();
+
+			typeKeys(locator, line, true);
+
+			keyPress(locator, "\\13");
+		}
+	}
+
+	@Override
 	public void typeFrame(String locator, String value) {
 		LiferaySeleniumHelper.typeFrame(this, locator, value);
 	}

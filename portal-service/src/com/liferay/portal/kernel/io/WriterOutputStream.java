@@ -100,8 +100,6 @@ public class WriterOutputStream extends OutputStream {
 			_writer.write(
 				_outputCharBuffer.array(), 0, _outputCharBuffer.position());
 
-			_writer.flush();
-
 			_outputCharBuffer.rewind();
 		}
 	}

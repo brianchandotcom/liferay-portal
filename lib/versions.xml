@@ -1370,7 +1370,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/closure-compiler.jar</file-name>
-		<version>v20131118</version>
+		<version>v20131014</version>
 		<project-name>Closure Compiler</project-name>
 		<project-url>https://code.google.com/p/closure-compiler</project-url>
 		<licenses>
@@ -1379,6 +1379,9 @@
 				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 			</license>
 		</licenses>
+		<comments>
+			Removed META-INF/beans.xml to prevent CDI.
+		</comments>
 	</library>
 	<library>
 		<file-name>lib/portal/commons-beanutils.jar</file-name>

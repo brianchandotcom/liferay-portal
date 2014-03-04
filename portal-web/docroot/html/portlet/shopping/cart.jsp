@@ -32,7 +32,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	var itemsInStock = true;
 
 	function <portlet:namespace />checkout() {
-		if (<%= ShoppingUtil.meetsMinOrder(shoppingPrefs, items) ? "true" : "false" %>) {
+		if (<%= ShoppingUtil.meetsMinOrder(shoppingSettings, items) ? "true" : "false" %>) {
 			if (!itemsInStock) {
 				if (confirm("<%= UnicodeLanguageUtil.get(pageContext, "your-cart-has-items-that-are-out-of-stock") %>")) {
 					document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.CHECKOUT %>";
@@ -47,7 +47,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			}
 		}
 		else {
-			alert("<%= UnicodeLanguageUtil.format(pageContext, "your-order-cannot-be-processed-because-it-falls-below-the-minimum-required-amount-of-x", currencyFormat.format(shoppingPrefs.getMinOrder()), false) %>");
+			alert("<%= UnicodeLanguageUtil.format(pageContext, "your-order-cannot-be-processed-because-it-falls-below-the-minimum-required-amount-of-x", currencyFormat.format(shoppingSettings.getMinOrder()), false) %>");
 		}
 	}
 
@@ -439,7 +439,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		</c:if>
 
 		<c:choose>
-			<c:when test="<%= !shoppingPrefs.useAlternativeShipping() %>">
+			<c:when test="<%= !shoppingSettings.useAlternativeShipping() %>">
 				<aui:field-wrapper label="shipping">
 					<liferay-ui:input-resource url="<%= currencyFormat.format(ShoppingUtil.calculateShipping(items)) %>" />
 				</aui:field-wrapper>
@@ -448,7 +448,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 				<aui:select label="shipping" name="alternativeShipping">
 
 					<%
-					String[][] alternativeShipping = shoppingPrefs.getAlternativeShipping();
+					String[][] alternativeShipping = shoppingSettings.getAlternativeShipping();
 
 					for (int i = 0; i < 10; i++) {
 						String altShippingName = alternativeShipping[0][i];
@@ -503,9 +503,9 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	</aui:fieldset>
 
 	<%
-	String[] ccTypes = shoppingPrefs.getCcTypes();
+	String[] ccTypes = shoppingSettings.getCcTypes();
 
-	if (shoppingPrefs.usePayPal()) {
+	if (shoppingSettings.usePayPal()) {
 	%>
 
 		<img alt="paypal" src="<%= themeDisplay.getPathThemeImages() %>/shopping/cc_paypal.png" />
@@ -514,7 +514,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 
 	<%
 	}
-	else if (!shoppingPrefs.usePayPal() && (ccTypes.length > 0)) {
+	else if (!shoppingSettings.usePayPal() && (ccTypes.length > 0)) {
 		for (int i = 0; i < ccTypes.length; i++) {
 	%>
 

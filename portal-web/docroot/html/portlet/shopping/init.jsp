@@ -72,6 +72,7 @@ page import="com.liferay.portlet.shopping.model.ShoppingCart" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCartItem" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCategory" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCategoryConstants" %><%@
+page import="com.liferay.portlet.shopping.model.ShoppingConstants" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCoupon" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCouponConstants" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingItem" %><%@
@@ -105,9 +106,9 @@ page import="com.liferay.portlet.shopping.util.ShoppingUtil" %>
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-ShoppingSettings shoppingPrefs = ShoppingSettings.getInstance(company.getCompanyId(), scopeGroupId);
+ShoppingSettings shoppingSettings = ShoppingUtil.getShoppingSettings(themeDisplay.getSiteGroupId());
 
-Currency currency = Currency.getInstance(shoppingPrefs.getCurrencyId());
+Currency currency = Currency.getInstance(shoppingSettings.getCurrencyId());
 
 NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
 

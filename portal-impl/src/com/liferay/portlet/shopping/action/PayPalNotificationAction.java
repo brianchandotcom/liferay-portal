@@ -153,14 +153,14 @@ public class PayPalNotificationAction extends Action {
 
 		ShoppingOrder order = ShoppingOrderLocalServiceUtil.getOrder(ppInvoice);
 
-		ShoppingSettings shoppingPrefs = ShoppingSettings.getInstance(
-				order.getCompanyId(), order.getGroupId());
+		ShoppingSettings shoppingSettings = ShoppingUtil.getShoppingSettings(
+			order.getGroupId());
 
 		// Receiver email address
 
 		String ppReceiverEmail = ParamUtil.getString(request, "receiver_email");
 
-		String payPalEmailAddress = shoppingPrefs.getPayPalEmailAddress();
+		String payPalEmailAddress = shoppingSettings.getPayPalEmailAddress();
 
 		if (!payPalEmailAddress.equals(ppReceiverEmail)) {
 			return false;
@@ -180,7 +180,7 @@ public class PayPalNotificationAction extends Action {
 
 		String ppCurrency = ParamUtil.getString(request, "mc_currency");
 
-		String currencyId = shoppingPrefs.getCurrencyId();
+		String currencyId = shoppingSettings.getCurrencyId();
 
 		if (!currencyId.equals(ppCurrency)) {
 			return false;

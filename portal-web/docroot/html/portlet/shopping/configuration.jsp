@@ -17,20 +17,21 @@
 <%@ include file="/html/portlet/shopping/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String emailFromName = ParamUtil.getString(request, "emailFromName", shoppingPrefs.getEmailFromName(company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shoppingPrefs.getEmailFromAddress(company.getCompanyId()));
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", shoppingSettings.getEmailFromName());
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", shoppingSettings.getEmailFromAddress());
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
+	<portlet:param name="serviceName" value="<%= ShoppingConstants.SERVICE_NAME %>" />
+	<portlet:param name="settingsScope" value="group" />
+</liferay-portlet:actionURL>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="ccTypes" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input name="preferences--ccTypes--" type="hidden" />
 
 	<liferay-ui:tabs
 		names="payment-settings,shipping-calculation,insurance-calculation,email-from,confirmation-email,shipping-email"
@@ -56,13 +57,13 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 			</div>
 
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="paypal-email-address" name="payPalEmailAddress" type="text" value="<%= shoppingPrefs.getPayPalEmailAddress() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="paypal-email-address" name="preferences--paypalEmailAddress--" type="text" value="<%= shoppingSettings.getPayPalEmailAddress() %>" />
 
 				<aui:field-wrapper label="credit-cards">
 
 					<%
 					String[] ccTypes1 = ShoppingSettings.CC_TYPES;
-					String[] ccTypes2 = shoppingPrefs.getCcTypes();
+					String[] ccTypes2 = shoppingSettings.getCcTypes();
 
 					// Left list
 
@@ -94,13 +95,13 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 					/>
 				</aui:field-wrapper>
 
-				<aui:select label="currency" name="currencyId">
+				<aui:select label="currency" name="preferences--currencyId--">
 
 					<%
 					for (int i = 0; i < ShoppingSettings.CURRENCY_IDS.length; i++) {
 					%>
 
-						<aui:option label="<%= ShoppingSettings.CURRENCY_IDS[i] %>" selected="<%= shoppingPrefs.getCurrencyId().equals(ShoppingSettings.CURRENCY_IDS[i]) %>" />
+						<aui:option label="<%= ShoppingSettings.CURRENCY_IDS[i] %>" selected="<%= shoppingSettings.getCurrencyId().equals(ShoppingSettings.CURRENCY_IDS[i]) %>" />
 
 					<%
 					}
@@ -108,13 +109,13 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 
 				</aui:select>
 
-				<aui:select name="taxState">
+				<aui:select label="tax-state" name="preferences--taxState--">
 
 					<%
 					for (int i = 0; i < StateUtil.STATES.length; i++) {
 					%>
 
-						<aui:option label="<%= StateUtil.STATES[i].getName() %>" selected="<%= shoppingPrefs.getTaxState().equals(StateUtil.STATES[i].getId()) %>" value="<%= StateUtil.STATES[i].getId() %>" />
+						<aui:option label="<%= StateUtil.STATES[i].getName() %>" selected="<%= shoppingSettings.getTaxState().equals(StateUtil.STATES[i].getId()) %>" value="<%= StateUtil.STATES[i].getId() %>" />
 
 					<%
 					}
@@ -122,9 +123,9 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 
 				</aui:select>
 
-				<aui:input maxlength="7" name="taxRate" size="7" type="text" value="<%= taxFormat.format(shoppingPrefs.getTaxRate()) %>" />
+				<aui:input maxlength="7" name="taxRate" size="7" type="text" value="<%= taxFormat.format(shoppingSettings.getTaxRate()) %>" />
 
-				<aui:input label="minimum-order" maxlength="7" name="minOrder" size="7" type="text" value="<%= doubleFormat.format(shoppingPrefs.getMinOrder()) %>" />
+				<aui:input label="minimum-order" maxlength="7" name="preferences--minOrder--" size="7" type="text" value="<%= doubleFormat.format(shoppingSettings.getMinOrder()) %>" />
 			</aui:fieldset>
 		</liferay-ui:section>
 
@@ -134,9 +135,9 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 			</div>
 
 			<aui:fieldset>
-				<aui:select label="formula" name="shippingFormula">
-					<aui:option label="flat-amount" selected='<%= shoppingPrefs.getShippingFormula().equals("flat") %>' value="flat" />
-					<aui:option label="percentage" selected='<%= shoppingPrefs.getShippingFormula().equals("percentage") %>' />
+				<aui:select label="formula" name="preferences--shippingFormula--">
+					<aui:option label="flat-amount" selected='<%= shoppingSettings.getShippingFormula().equals("flat") %>' value="flat" />
+					<aui:option label="percentage" selected='<%= shoppingSettings.getShippingFormula().equals("percentage") %>' />
 				</aui:select>
 
 				<aui:field-wrapper label="values">
@@ -159,7 +160,7 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 						and over
 					</c:if>
 
-					<aui:input label="" maxlength="6" name='<%= "shipping" + i %>' size="6" type="text" value="<%= GetterUtil.getString(shoppingPrefs.getShipping()[i]) %>" />
+					<aui:input label="" maxlength="6" name='<%= "shipping" + i %>' size="6" type="text" value="<%= GetterUtil.getString(shoppingSettings.getShipping()[i]) %>" />
 
 					<%
 					}
@@ -175,9 +176,9 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 			</div>
 
 			<aui:fieldset>
-				<aui:select label="formula" name="insuranceFormula">
-					<aui:option label="flat-amount" selected='<%= shoppingPrefs.getInsuranceFormula().equals("flat") %>' value="flat" />
-					<aui:option label="percentage" selected='<%= shoppingPrefs.getInsuranceFormula().equals("percentage") %>' />
+				<aui:select label="formula" name="preferences--insuranceFormula--">
+					<aui:option label="flat-amount" selected='<%= shoppingSettings.getInsuranceFormula().equals("flat") %>' value="flat" />
+					<aui:option label="percentage" selected='<%= shoppingSettings.getInsuranceFormula().equals("percentage") %>' />
 				</aui:select>
 
 				<aui:field-wrapper label="values">
@@ -200,7 +201,7 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 						and over
 					</c:if>
 
-					<aui:input label="" maxlength="6" name='<%= "insurance" + i %>' size="6" type="text" value="<%= GetterUtil.getString(shoppingPrefs.getInsurance()[i]) %>" />
+					<aui:input label="" maxlength="6" name='<%= "insurance" + i %>' size="6" type="text" value="<%= GetterUtil.getString(shoppingSettings.getInsurance()[i]) %>" />
 
 					<%
 					}
@@ -212,9 +213,9 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", shopp
 
 		<liferay-ui:section>
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="emailFromName" type="text" value="<%= emailFromName %>" />
+				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= emailFromName %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="emailFromAddress" type="text" value="<%= emailFromAddress %>" />
+				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" type="text" value="<%= emailFromAddress %>" />
 			</aui:fieldset>
 		</liferay-ui:section>
 

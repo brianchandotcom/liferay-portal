@@ -24,7 +24,7 @@ Map<ShoppingCartItem, Integer> items = cart.getItems();
 ShoppingCoupon coupon = cart.getCoupon();
 
 int altShipping = cart.getAltShipping();
-String altShippingName = shoppingPrefs.getAlternativeShippingName(altShipping);
+String altShippingName = shoppingSettings.getAlternativeShippingName(altShipping);
 
 ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER);
 %>
@@ -248,7 +248,7 @@ ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER
 		</div>
 	</div>
 
-	<c:if test="<%= !shoppingPrefs.usePayPal() %>">
+	<c:if test="<%= !shoppingSettings.usePayPal() %>">
 		<div class="well">
 			<h4><liferay-ui:message key="credit-card" /></h4>
 
@@ -491,6 +491,6 @@ ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER
 	</div>
 
 	<aui:button-row>
-		<aui:button type="submit" value='<%= shoppingPrefs.usePayPal() ? "continue" : "finished" %>' />
+		<aui:button type="submit" value='<%= shoppingSettings.usePayPal() ? "continue" : "finished" %>' />
 	</aui:button-row>
 </aui:form>

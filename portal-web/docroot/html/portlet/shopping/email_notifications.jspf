@@ -21,9 +21,9 @@ Map<String, String> emailDefinitionTerms = ShoppingUtil.getEmailDefinitionTerms(
 <liferay-ui:section>
 
 	<%
-	boolean emailEnabled = shoppingPrefs.getEmailOrderConfirmationEnabled();
-	String emailSubject = ParamUtil.getString(request, "emailOrderConfirmationSubject", shoppingPrefs.getEmailOrderConfirmationSubject());
-	String emailBody = ParamUtil.getString(request, "emailOrderConfirmationBody", shoppingPrefs.getEmailOrderConfirmationBody());
+	boolean emailEnabled = shoppingSettings.getEmailOrderConfirmationEnabled();
+	String emailSubject = ParamUtil.getString(request, "preferences--emailOrderConfirmationSubject--", shoppingSettings.getEmailOrderConfirmationSubject());
+	String emailBody = ParamUtil.getString(request, "preferences--emailOrderConfirmationBody--", shoppingSettings.getEmailOrderConfirmationBody());
 	%>
 
 	<liferay-ui:email-notifications-settings
@@ -38,9 +38,9 @@ Map<String, String> emailDefinitionTerms = ShoppingUtil.getEmailDefinitionTerms(
 <liferay-ui:section>
 
 	<%
-	boolean emailEnabled = shoppingPrefs.getEmailOrderShippingEnabled();
-	String emailSubject = ParamUtil.getString(request, "emailOrderShippingSubject", shoppingPrefs.getEmailOrderShippingSubject());
-	String emailBody = ParamUtil.getString(request, "emailOrderShippingBody", shoppingPrefs.getEmailOrderShippingBody());
+	boolean emailEnabled = shoppingSettings.getEmailOrderShippingEnabled();
+	String emailSubject = ParamUtil.getString(request, "preferences--emailOrderShippingSubject--", shoppingSettings.getEmailOrderShippingSubject());
+	String emailBody = ParamUtil.getString(request, "preferences--emailOrderShippingBody--", shoppingSettings.getEmailOrderShippingBody());
 	%>
 
 	<liferay-ui:email-notifications-settings

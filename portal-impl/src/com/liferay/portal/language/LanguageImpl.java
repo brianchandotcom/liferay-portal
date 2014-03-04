@@ -37,17 +37,13 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletConfigFactoryUtil;
 
 import java.text.MessageFormat;
 
@@ -498,6 +494,11 @@ public class LanguageImpl implements Language {
 	}
 
 	@Override
+	public Set<String> getKeys(Locale locale) {
+		return LanguageResources.getKeys(locale);
+	}
+
+	@Override
 	public String getLanguageId(HttpServletRequest request) {
 		String languageId = ParamUtil.getString(request, "languageId");
 
@@ -748,11 +749,6 @@ public class LanguageImpl implements Language {
 		languageIdCookie.setMaxAge(CookieKeys.MAX_AGE);
 
 		CookieKeys.addCookie(request, response, languageIdCookie);
-	}
-
-	@Override
-	public Set<String> getKeys(Locale locale) {
-		return LanguageResources.getKeys(locale);
 	}
 
 	private static LanguageImpl _getInstance() {

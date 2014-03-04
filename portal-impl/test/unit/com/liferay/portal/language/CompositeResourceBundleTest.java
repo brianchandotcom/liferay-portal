@@ -14,7 +14,8 @@
 
 package com.liferay.portal.language;
 
-import java.util.HashSet;
+import com.liferay.portal.kernel.util.SetUtil;
+
 import java.util.ListResourceBundle;
 import java.util.ResourceBundle;
 
@@ -27,7 +28,7 @@ import org.junit.Test;
 public class CompositeResourceBundleTest {
 
 	@Test
-	public void testGetKeys() {
+	public void testGetKeyFromFirstBundle() {
 		ResourceBundle resourceBundleA = _createResourceBundle(
 			"keyA", "valueA");
 		ResourceBundle resourceBundleB = _createResourceBundle(
@@ -38,16 +39,39 @@ public class CompositeResourceBundleTest {
 
 		Assert.assertEquals(
 			"valueA", compositeResourceBundle.getString("keyA"));
+
+		Assert.assertEquals(
+			SetUtil.fromArray(new String[] {"keyA", "keyB"}),
+			compositeResourceBundle.keySet());
+	}
+
+	@Test
+	public void testGetKeyFromSecondBundle() {
+		ResourceBundle resourceBundleA = _createResourceBundle(
+			"keyA", "valueA");
+		ResourceBundle resourceBundleB = _createResourceBundle(
+			"keyB", "valueB");
+
+		CompositeResourceBundle compositeResourceBundle =
+			new CompositeResourceBundle(resourceBundleA, resourceBundleB);
+
 		Assert.assertEquals(
 			"valueB", compositeResourceBundle.getString("keyB"));
+	}
+
+	@Test
+	public void testKeySet() {
+		ResourceBundle resourceBundleA = _createResourceBundle(
+			"keyA", "valueA");
+		ResourceBundle resourceBundleB = _createResourceBundle(
+			"keyB", "valueB");
+
+		CompositeResourceBundle compositeResourceBundle =
+			new CompositeResourceBundle(resourceBundleA, resourceBundleB);
 
 		Assert.assertEquals(
-			new HashSet<String>(){{
-				add("keyA");
-				add("keyB");
-			}},
+			SetUtil.fromArray(new String[] {"keyA", "keyB"}),
 			compositeResourceBundle.keySet());
-
 	}
 
 	private ResourceBundle _createResourceBundle(

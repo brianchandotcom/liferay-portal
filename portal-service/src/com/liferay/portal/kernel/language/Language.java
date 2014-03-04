@@ -114,6 +114,8 @@ public interface Language {
 
 	public String getCharset(Locale locale);
 
+	public Set<String> getKeys(Locale locale);
+
 	public String getLanguageId(HttpServletRequest request);
 
 	public String getLanguageId(Locale locale);
@@ -167,5 +169,4 @@ public interface Language {
 		HttpServletRequest request, HttpServletResponse response,
 		Locale locale);
 
-	public Set<String> getKeys(Locale locale);
 }

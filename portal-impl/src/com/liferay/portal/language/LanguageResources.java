@@ -70,6 +70,16 @@ public class LanguageResources {
 		}
 	}
 
+	public static Set<String> getKeys(Locale locale) {
+		Map<String, String> languageMap = _languageMaps.get(locale);
+
+		if (languageMap != null) {
+			return languageMap.keySet();
+		}
+
+		return null;
+	}
+
 	public static String getMessage(Locale locale, String key) {
 		if (locale == null) {
 			return null;
@@ -237,13 +247,4 @@ public class LanguageResources {
 	private static Map<Locale, Map<String, String>> _languageMaps =
 		new ConcurrentHashMap<Locale, Map<String, String>>(64);
 
-	public static Set<String> getKeys(Locale locale) {
-		Map<String, String> languageMap = _languageMaps.get(locale);
-
-		if (languageMap != null) {
-			return languageMap.keySet();
-		}
-
-		return null;
-	}
 }

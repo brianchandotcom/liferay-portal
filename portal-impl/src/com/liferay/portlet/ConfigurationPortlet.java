@@ -15,12 +15,18 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.language.CompositeResourceBundle;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+
+import java.io.IOException;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -33,10 +39,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * @author Carlos Sierra Andrés
@@ -44,62 +48,14 @@ import java.util.ResourceBundle;
 public class ConfigurationPortlet extends StrutsPortlet {
 
 	@Override
-	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortletException {
-
-		_portletRequestThreadLocal.set(actionRequest);
-		actionRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
-
-		super.processAction(actionRequest, actionResponse);
-	}
-
-	@Override
-	public void render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException, IOException {
-
-		_portletRequestThreadLocal.set(renderRequest);
-		renderRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
-
-		super.render(renderRequest, renderResponse);
-	}
-
-	@Override
-	public void serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws IOException, PortletException {
-
-		_portletRequestThreadLocal.set(resourceRequest);
-		resourceRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
-
-		super.serveResource(resourceRequest, resourceResponse);
-	}
-
-	@Override
-	public void processEvent(
-			EventRequest eventRequest, EventResponse eventResponse)
-		throws IOException, PortletException {
-
-		_portletRequestThreadLocal.set(eventRequest);
-		eventRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
-
-		super.processEvent(eventRequest, eventResponse);
-	}
-
-	@Override
 	public void init(PortletConfig portletConfig) throws PortletException {
 
 		if (portletConfig instanceof PortletConfigImpl) {
-			ConfigurationPortletPortletConfig cppc =
+			ConfigurationPortletPortletConfig confPortletConfig =
 				new ConfigurationPortletPortletConfig(
-					(PortletConfigImpl) portletConfig);
+					(PortletConfigImpl)portletConfig);
 
-			super.init(cppc);
+			super.init(confPortletConfig);
 		}
 		else {
 			super.init(portletConfig);
@@ -148,10 +104,58 @@ public class ConfigurationPortlet extends StrutsPortlet {
 	}
 
 	@Override
-	public PortletConfig getPortletConfig() {
-		return super.getPortletConfig();
+	public void processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException, PortletException {
+
+		_portletRequestThreadLocal.set(actionRequest);
+
+		actionRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
+
+		super.processAction(actionRequest, actionResponse);
 	}
 
-	ThreadLocal<PortletRequest> _portletRequestThreadLocal =
-		new ThreadLocal<PortletRequest>();
+	@Override
+	public void processEvent(
+			EventRequest eventRequest, EventResponse eventResponse)
+		throws IOException, PortletException {
+
+		_portletRequestThreadLocal.set(eventRequest);
+
+		eventRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
+
+		super.processEvent(eventRequest, eventResponse);
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		_portletRequestThreadLocal.set(renderRequest);
+
+		renderRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Override
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		_portletRequestThreadLocal.set(resourceRequest);
+
+		resourceRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
+
+		super.serveResource(resourceRequest, resourceResponse);
+	}
+
+	private ThreadLocal<PortletRequest> _portletRequestThreadLocal =
+		new AutoResetThreadLocal<PortletRequest>("portletRequest");
+
 }

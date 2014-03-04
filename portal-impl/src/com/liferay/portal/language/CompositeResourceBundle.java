@@ -14,8 +14,7 @@
 
 package com.liferay.portal.language;
 
-import edu.emory.mathcs.backport.java.util.Collections;
-
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.MissingResourceException;
@@ -27,8 +26,6 @@ import java.util.Set;
  */
 public class CompositeResourceBundle extends ResourceBundle {
 
-	private final HashSet<String> _keySet;
-
 	public CompositeResourceBundle(ResourceBundle ... delegateResourceBundles) {
 		_delegateResourceBundles = delegateResourceBundles;
 		_keySet = new HashSet<String>();
@@ -38,11 +35,6 @@ public class CompositeResourceBundle extends ResourceBundle {
 
 			_keySet.addAll(delegateKeySet);
 		}
-	}
-
-	@Override
-	protected Set<String> handleKeySet() {
-		return _keySet;
 	}
 
 	@Override
@@ -72,6 +64,12 @@ public class CompositeResourceBundle extends ResourceBundle {
 			key);
 	}
 
+	@Override
+	protected Set<String> handleKeySet() {
+		return _keySet;
+	}
+
 	private ResourceBundle[] _delegateResourceBundles;
+	private final HashSet<String> _keySet;
 
 }

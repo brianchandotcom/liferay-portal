@@ -103,14 +103,13 @@ public class MBTestUtil {
 	}
 
 	public static MBMessage addDiscussionMessage(
-			User user, long groupId, String commentedModelClassName,
-			long commentedModelPK)
+			User user, long groupId, String className, long classPK)
 		throws Exception {
 
 		MBMessageDisplay messageDisplay =
 			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				user.getUserId(), groupId, commentedModelClassName,
-				commentedModelPK, WorkflowConstants.STATUS_APPROVED);
+				user.getUserId(), groupId, className, classPK,
+				WorkflowConstants.STATUS_APPROVED);
 
 		MBThread thread =  messageDisplay.getThread();
 
@@ -121,10 +120,10 @@ public class MBTestUtil {
 		serviceContext.setLayoutFullURL("http://localhost");
 
 		return MBMessageLocalServiceUtil.addDiscussionMessage(
-			user.getUserId(), user.getFullName(), groupId,
-			commentedModelClassName, commentedModelPK, thread.getThreadId(),
-			thread.getRootMessageId(), ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(50), serviceContext);
+			user.getUserId(), user.getFullName(), groupId, className, classPK,
+			thread.getThreadId(), thread.getRootMessageId(),
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
+			serviceContext);
 	}
 
 	public static MBMessage addMessage(long groupId) throws Exception {

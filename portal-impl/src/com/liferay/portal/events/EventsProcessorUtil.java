@@ -17,6 +17,18 @@ package com.liferay.portal.events;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.LifecycleEvent;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.InstancePool;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,13 +37,14 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Brian Wing Shun Chan
  * @author Michael Young
+ * @author Raymond Augé
  */
 public class EventsProcessorUtil {
 
 	public static void process(String key, String[] classes)
 		throws ActionException {
 
-		_instance.process(key, classes, new LifecycleEvent());
+		_instance._process(key, classes, new LifecycleEvent());
 	}
 
 	public static void process(
@@ -39,48 +52,128 @@ public class EventsProcessorUtil {
 			HttpServletResponse response)
 		throws ActionException {
 
-		_instance.process(key, classes, new LifecycleEvent(request, response));
+		_instance._process(key, classes, new LifecycleEvent(request, response));
 	}
 
 	public static void process(
 			String key, String[] classes, HttpSession session)
 		throws ActionException {
 
-		_instance.process(key, classes, new LifecycleEvent(session));
+		_instance._process(key, classes, new LifecycleEvent(session));
 	}
 
 	public static void process(
 			String key, String[] classes, LifecycleEvent lifecycleEvent)
 		throws ActionException {
 
-		_instance.process(key, classes, lifecycleEvent);
+		_instance._process(key, classes, lifecycleEvent);
 	}
 
 	public static void process(String key, String[] classes, String[] ids)
 		throws ActionException {
 
-		_instance.process(key, classes, new LifecycleEvent(ids));
+		_instance._process(key, classes, new LifecycleEvent(ids));
 	}
 
 	public static void processEvent(
 			LifecycleAction lifecycleAction, LifecycleEvent lifecycleEvent)
 		throws ActionException {
 
-		_instance.processEvent(lifecycleAction, lifecycleEvent);
+		_instance._processEvent(lifecycleAction, lifecycleEvent);
 	}
 
 	public static void registerEvent(String key, Object event) {
-		_instance.registerEvent(key, event);
-	}
-
-	public static void setEventsProcessor(EventsProcessor eventsProcessor) {
-		_instance = eventsProcessor;
+		_instance._registerEvent(key, event);
 	}
 
 	public static void unregisterEvent(String key, Object event) {
-		_instance.unregisterEvent(key, event);
+		_instance._unregisterEvent(key, event);
 	}
 
-	private static EventsProcessor _instance = new EventsProcessorImpl();
+	private void _process(
+			String key, String[] classes, LifecycleEvent lifecycleEvent)
+		throws ActionException {
+
+		for (String className : classes) {
+			if (Validator.isNull(className)) {
+				return;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Process event " + className);
+			}
+
+			LifecycleAction lifecycleAction = (LifecycleAction)InstancePool.get(
+				className);
+
+			lifecycleAction.processLifecycleEvent(lifecycleEvent);
+		}
+
+		if (Validator.isNull(key)) {
+			return;
+		}
+
+		for (LifecycleAction lifecycleAction : _instance._getLifecycleActions(
+				key)) {
+
+			lifecycleAction.processLifecycleEvent(lifecycleEvent);
+		}
+	}
+
+	private void _processEvent(
+			LifecycleAction lifecycleAction, LifecycleEvent lifecycleEvent)
+		throws ActionException {
+
+		lifecycleAction.processLifecycleEvent(lifecycleEvent);
+	}
+
+	private void _registerEvent(String key, Object event) {
+		Collection<LifecycleAction> lifecycleActions =
+			_instance._getLifecycleActions(key);
+
+		lifecycleActions.add((LifecycleAction)event);
+	}
+
+	private void _unregisterEvent(String key, Object event) {
+		Collection<LifecycleAction> lifecycleActions =
+			_instance._getLifecycleActions(key);
+
+		lifecycleActions.remove(event);
+	}
+
+	private Collection<LifecycleAction> _getLifecycleActions(String key) {
+		Collection<LifecycleAction> lifecycleActions = _lifecycleActions.get(
+			key);
+
+		if (lifecycleActions == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append("(key=");
+			sb.append(key);
+			sb.append(")");
+
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			map.put("key", key);
+
+			lifecycleActions = ServiceTrackerCollections.list(
+				LifecycleAction.class, sb.toString(), map);
+
+			_lifecycleActions.putIfAbsent(key, lifecycleActions);
+		}
+
+		return lifecycleActions;
+	}
+
+	private EventsProcessorUtil() {
+	}
+
+	private static EventsProcessorUtil _instance = new EventsProcessorUtil();
+
+	private static Log _log = LogFactoryUtil.getLog(EventsProcessorUtil.class);
+
+	private ConcurrentMap<String, Collection<LifecycleAction>>
+		_lifecycleActions =
+			new ConcurrentHashMap<String, Collection<LifecycleAction>>();
 
 }

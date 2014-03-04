@@ -103,7 +103,7 @@ public class MBDiscussionLocalServiceImpl
 			long userId, long groupId, String className, long classPK)
 		throws PortalException, SystemException {
 
-		SubscriptionLocalServiceUtil.addSubscription(
+		subscriptionLocalService.addSubscription(
 			userId, groupId, className, classPK);
 	}
 
@@ -111,8 +111,7 @@ public class MBDiscussionLocalServiceImpl
 			long userId, String className, long classPK)
 		throws PortalException, SystemException {
 
-		SubscriptionLocalServiceUtil.deleteSubscription(
-			userId, className, classPK);
+		subscriptionLocalService.deleteSubscription(userId, className, classPK);
 	}
 
 }

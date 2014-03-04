@@ -273,11 +273,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		boolean exportCurPortletArchivedSetups = exportPortletConfiguration;
+		boolean exportCurPortletConfiguration = exportPortletConfiguration;
 		boolean exportCurPortletSetup = exportPortletConfiguration;
 		boolean exportCurPortletUserPreferences = exportPortletConfiguration;
 
 		if (exportPortletConfigurationAll ||
 			(exportPortletConfiguration && type.equals("layout-prototype"))) {
+
+			exportCurPortletConfiguration = true;
 
 			exportCurPortletArchivedSetups =
 				MapUtil.getBoolean(
@@ -292,7 +295,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
 		}
 		else if (rootPortletId != null) {
-			boolean exportCurPortletConfiguration =
+			exportCurPortletConfiguration =
 				exportPortletConfiguration &&
 				MapUtil.getBoolean(
 					parameterMap,
@@ -321,9 +324,16 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		return new boolean[] {
 			exportCurPortletArchivedSetups, exportCurPortletData,
-			exportCurPortletSetup, exportCurPortletUserPreferences};
+			exportCurPortletSetup, exportCurPortletUserPreferences,
+			exportCurPortletConfiguration};
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getImportPortletControls(long, String, Map, Element,
+	 *             ManifestSummary)}
+	 */
+	@Deprecated
 	@Override
 	public boolean[] getImportPortletControls(
 			long companyId, String portletId,
@@ -377,11 +387,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		boolean importCurPortletArchivedSetups = importPortletConfiguration;
+		boolean importCurPortletConfiguration = importPortletConfiguration;
 		boolean importCurPortletSetup = importPortletConfiguration;
 		boolean importCurPortletUserPreferences = importPortletConfiguration;
 
 		if (importPortletConfigurationAll) {
-			boolean importCurPortletConfiguration = true;
+			importCurPortletConfiguration = true;
 
 			if ((manifestSummary != null) &&
 				(manifestSummary.getConfigurationPortletOptions(
@@ -406,7 +417,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
 		}
 		else if (rootPortletId != null) {
-			boolean importCurPortletConfiguration =
+			importCurPortletConfiguration =
 				importPortletConfiguration &&
 				MapUtil.getBoolean(
 					parameterMap,
@@ -435,7 +446,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		return new boolean[] {
 			importCurPortletArchivedSetups, importCurPortletData,
-			importCurPortletSetup, importCurPortletUserPreferences};
+			importCurPortletSetup, importCurPortletUserPreferences,
+			importCurPortletConfiguration};
 	}
 
 	@Override

@@ -115,6 +115,12 @@ public interface ExportImportHelper {
 			Map<String, String[]> parameterMap, String type)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getImportPortletControls(long, String, Map, Element,
+	 *             ManifestSummary)}
+	 */
+	@Deprecated
 	public boolean[] getImportPortletControls(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, Element portletDataElement)

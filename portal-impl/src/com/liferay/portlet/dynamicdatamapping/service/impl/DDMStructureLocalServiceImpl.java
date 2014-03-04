@@ -154,7 +154,9 @@ public class DDMStructureLocalServiceImpl
 
 		Date now = new Date();
 
-		validate(groupId, classNameId, structureKey, nameMap, xsd);
+		validate(
+			groupId, parentStructureId, classNameId, structureKey, nameMap,
+			xsd);
 
 		long structureId = counterLocalService.increment();
 
@@ -1472,7 +1474,16 @@ public class DDMStructureLocalServiceImpl
 			throw new StructureXsdException();
 		}
 
-		validate(nameMap, xsd);
+		String parentXsd = StringPool.BLANK;
+
+		DDMStructure parentStructure =
+			ddmStructurePersistence.fetchByPrimaryKey(parentStructureId);
+
+		if (parentStructure != null) {
+			parentXsd = parentStructure.getCompleteXsd();
+		}
+
+		validate(nameMap, parentXsd, xsd);
 
 		structure.setModifiedDate(serviceContext.getModifiedDate(null));
 		structure.setParentStructureId(parentStructureId);
@@ -1523,6 +1534,38 @@ public class DDMStructureLocalServiceImpl
 		structureIds.add(0, structureId);
 
 		return structureIds;
+	}
+
+	protected Set<String> getElementNames(Document document)
+		throws PortalException {
+
+		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
+
+		List<Node> nodes = xPathSelector.selectNodes(document);
+
+		Set<String> elementNames = new HashSet<String>();
+
+		for (Node node : nodes) {
+			Element element = (Element)node;
+
+			String name = element.attributeValue("name");
+
+			Element parentElement = element.getParent();
+
+			while (!parentElement.isRootElement()) {
+				name =
+					parentElement.attributeValue("name") + StringPool.SLASH +
+						name;
+
+				parentElement = parentElement.getParent();
+			}
+
+			name = StringUtil.toLowerCase(name);
+
+			elementNames.add(name);
+		}
+
+		return elementNames;
 	}
 
 	protected String getStructureKey(String structureKey) {
@@ -1665,9 +1708,21 @@ public class DDMStructureLocalServiceImpl
 		}
 	}
 
+	protected void validate(Document parentDocument, Document childDocument)
+		throws PortalException {
+
+		Set<String> parentNames = getElementNames(parentDocument);
+
+		for (String childName : getElementNames(childDocument)) {
+			if (parentNames.contains(childName)) {
+				throw new StructureDuplicateElementException();
+			}
+		}
+	}
+
 	protected void validate(
-			long groupId, long classNameId, String structureKey,
-			Map<Locale, String> nameMap, String xsd)
+			long groupId, long parentStructureId, long classNameId,
+			String structureKey, Map<Locale, String> nameMap, String xsd)
 		throws PortalException, SystemException {
 
 		structureKey = getStructureKey(structureKey);
@@ -1684,7 +1739,16 @@ public class DDMStructureLocalServiceImpl
 			throw sdske;
 		}
 
-		validate(nameMap, xsd);
+		String parentXsd = StringPool.BLANK;
+
+		DDMStructure parentStructure =
+			ddmStructurePersistence.fetchByPrimaryKey(parentStructureId);
+
+		if (parentStructure != null) {
+			parentXsd = parentStructure.getCompleteXsd();
+		}
+
+		validate(nameMap, parentXsd, xsd);
 	}
 
 	protected void validate(
@@ -1714,11 +1778,12 @@ public class DDMStructureLocalServiceImpl
 		}
 	}
 
-	protected void validate(Map<Locale, String> nameMap, String xsd)
+	protected void validate(
+			Map<Locale, String> nameMap, String parentXsd, String childXsd)
 		throws PortalException {
 
 		try {
-			Document document = SAXReaderUtil.read(xsd);
+			Document document = SAXReaderUtil.read(childXsd);
 
 			Element rootElement = document.getRootElement();
 
@@ -1728,6 +1793,12 @@ public class DDMStructureLocalServiceImpl
 			validate(nameMap, contentDefaultLocale);
 
 			validate(document);
+
+			if (Validator.isNotNull(parentXsd)) {
+				Document parentDocument = SAXReaderUtil.read(parentXsd);
+
+				validate(parentDocument, document);
+			}
 		}
 		catch (LocaleException le) {
 			throw le;

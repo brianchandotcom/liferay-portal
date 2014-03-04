@@ -1,9 +1,11 @@
 AUI.add(
 	'liferay-input-move-boxes-touch',
 	function(A) {
-		var EDIT_SELECTION_TPL = '<button class=\'btn edit-selection\' type=\'button\'><i class=\'icon-edit\'></i> ' + Liferay.Language.get('edit') + ' </button>';
+		var EDIT_SELECTION_TPL = '<button class="btn edit-selection" type="button"><i class="icon-edit"></i> ' + Liferay.Language.get('edit') + ' </button>';
 
-		var SORTABLE_CONTAINER_TPL = '<div class=\'sortable-container\'></div>';
+		var CSS_MOVE_OPTION_CLASS = '.move-option';
+
+		var SORTABLE_CONTAINER_TPL = '<div class="sortable-container"></div>';
 
 		var STR_CLICK = 'click';
 
@@ -15,27 +17,25 @@ AUI.add(
 
 		var STR_ICON_CHECK_EMPTY = 'icon-check-empty';
 
-		var STR_MOVE_OPTION_SELECTOR = '.move-option';
-
 		var STR_NODE = 'node';
 
 		var STR_SELECTED = 'selected';
 
 		var MOVE_OPTION_TPL = '{{#each options}}' +
-			'<div class=\'move-option ' +
+			'<div class="move-option ' +
 				'{{#if selected}}' +
 					STR_SELECTED +
 				'{{/if}}' +
-			'\' data-value=\'{{value}}\'>' +
-				'<i class=\'handle icon-reorder\'></i>' +
-				'<i data-value=\'{{value}}\' data-selected=\'{{selected}}\' class=\'checkbox ' +
+			'" data-value="{{value}}"">' +
+				'<i class="handle icon-reorder"></i>' +
+				'<i data-value="{{value}}" data-selected="{{selected}}" class="checkbox ' +
 					'{{#if selected}}' +
 						STR_ICON_CHECK +
 					'{{else}}' +
 						STR_ICON_CHECK_EMPTY +
 					'{{/if}}' +
-				'\'></i>' +
-				'<div class=\'title\'>{{name}}</div>' +
+				'"></i>' +
+				'<div class="title">{{name}}</div>' +
 			'</div>' +
 		'{{/each}}';
 
@@ -50,6 +50,7 @@ AUI.add(
 					instance._contentBox = instance.get('contentBox');
 
 					instance._sortableContainer = A.Node.create(SORTABLE_CONTAINER_TPL);
+
 					instance._contentBox.append(instance._sortableContainer);
 
 					instance._renderBoxes();
@@ -62,12 +63,28 @@ AUI.add(
 				bindUI: function() {
 					var instance = this;
 
-					instance._editSelection.on(STR_CLICK, A.bind(instance._onEditSelectionClick, instance));
+					var dd = instance._sortable.delegate.dd;
 
-					instance._sortable.delegate.dd.after('drag:drophit', A.bind(instance._afterDropHit, instance));
-					instance._sortable.delegate.dd.after('drag:start', A.bind(instance._afterDragStart, instance));
+					instance._editSelection.on(
+						STR_CLICK,
+						A.bind('_onEditSelectionClick', instance)
+					);
 
-					instance._sortableContainer.delegate(STR_CLICK, A.bind(instance._onCheckBoxClick, instance), '.checkbox');
+					dd.after(
+						'drag:drophit',
+						A.bind('_afterDropHit', instance)
+					);
+
+					dd.after(
+						'drag:start',
+						A.bind('_afterDragStart', instance)
+					);
+
+					instance._sortableContainer.delegate(
+						STR_CLICK,
+						A.bind('_onCheckBoxClick', instance),
+						'.checkbox'
+					);
 				},
 
 				_afterDragStart: function(event) {
@@ -102,15 +119,21 @@ AUI.add(
 					var dropNode = event.dropNode;
 					var value = event.value;
 
-					var moveOption = instance._sortableContainer.one(STR_MOVE_OPTION_SELECTOR + '[data-value="' + value + '"]');
+					var moveOption = instance._sortableContainer.one(CSS_MOVE_OPTION_CLASS + '[data-value="' + value + '"]');
 
 					var dragNodeIndex = instance._selectedSortList.indexOf(moveOption);
 					var dropNodeIndex = instance._selectedSortList.indexOf(dropNode);
 
 					var leftBoxOptions = instance._leftBox.all('option');
-					var referenceNodeIndex = ((dropNodeIndex > dragNodeIndex) ? dragNodeIndex : (dragNodeIndex + 1));
+
+					var referenceNodeIndex = (dragNodeIndex + 1);
+
+					if (dropNodeIndex > dragNodeIndex) {
+						referenceNodeIndex = dragNodeIndex;
+					}
 
 					var item = instance._getOption(instance._leftBox, value);
+
 					var referenceNode = leftBoxOptions.item(referenceNodeIndex);
 
 					instance._leftBox.insertBefore(item, referenceNode);
@@ -128,16 +151,12 @@ AUI.add(
 					var selected = (currentTarget.attr(STR_DATA_SELECTED) === STR_TRUE);
 					var value = currentTarget.attr(STR_DATA_VALUE);
 
-					var from;
-					var to;
+					var from = instance._rightBox;
+					var to = instance._leftBox;
 
 					if (selected) {
 						from = instance._leftBox;
 						to = instance._rightBox;
-					}
-					else {
-						from = instance._rightBox;
-						to = instance._leftBox;
 					}
 
 					var option = instance._getOption(from, value);
@@ -156,9 +175,7 @@ AUI.add(
 				_onEditSelectionClick: function(event) {
 					var instance = this;
 
-					var currentTarget = event.currentTarget;
-
-					currentTarget.toggleClass('active');
+					event.currentTarget.toggleClass('active');
 
 					instance._sortableContainer.toggleClass('edit-list-active');
 				},
@@ -175,6 +192,8 @@ AUI.add(
 					var instance = this;
 
 					var options = instance._contentBox.all('.choice-selector option');
+
+					var sortableContainer = instance._sortableContainer;
 
 					var template = A.Handlebars.compile(MOVE_OPTION_TPL);
 
@@ -198,13 +217,13 @@ AUI.add(
 
 					var html = template(data);
 
-					instance._sortableContainer.append(html);
+					sortableContainer.append(html);
 
 					instance._sortable = new A.Sortable(
 						{
-							container: instance._sortableContainer,
-							handles: [instance._sortableContainer.all('.handle')],
-							nodes: STR_MOVE_OPTION_SELECTOR,
+							container: sortableContainer,
+							handles: [sortableContainer.all('.handle')],
+							nodes: CSS_MOVE_OPTION_CLASS,
 							opacity: '0.2'
 						}
 					);
@@ -215,13 +234,13 @@ AUI.add(
 				_syncSelectedSortList: function() {
 					var instance = this;
 
-					instance._selectedSortList = instance._sortableContainer.all(STR_MOVE_OPTION_SELECTOR + '.' + STR_SELECTED);
+					instance._selectedSortList = instance._sortableContainer.all(CSS_MOVE_OPTION_CLASS + '.' + STR_SELECTED);
 				},
 
 				_toggleMoveOption: function(checkbox) {
 					var instance = this;
 
-					var moveOption = checkbox.ancestor(STR_MOVE_OPTION_SELECTOR);
+					var moveOption = checkbox.ancestor(CSS_MOVE_OPTION_CLASS);
 
 					moveOption.toggleClass(STR_SELECTED);
 
@@ -230,7 +249,7 @@ AUI.add(
 
 					var lastItem = instance._selectedSortList.last();
 
-					if (lastItem != null) {
+					if (lastItem) {
 						lastItem.placeAfter(moveOption);
 					}
 					else {

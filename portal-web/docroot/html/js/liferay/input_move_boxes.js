@@ -107,15 +107,12 @@ AUI.add(
 
 						var from = instance._leftBox;
 						var to = instance._rightBox;
-						var sort;
+						var sort = !instance.get('leftReorder');
 
 						if (cssClass.indexOf('move-right') !== -1) {
 							from = instance._rightBox;
 							to = instance._leftBox;
 							sort = !instance.get('rightReorder');
-						}
-						else {
-							sort = !instance.get('leftReorder');
 						}
 
 						instance._moveItem(from, to, sort);
@@ -170,10 +167,9 @@ AUI.add(
 						var instance = this;
 
 						var contentBox = instance.get('contentBox');
+						var strings = instance.get('strings');
 
 						var moveButtonsColumn = contentBox.one('.move-arrow-buttons');
-
-						var strings = instance.get('strings');
 
 						if (moveButtonsColumn) {
 							instance._moveToolbar = new A.Toolbar(

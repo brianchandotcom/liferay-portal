@@ -66,7 +66,7 @@ List rightList = (List)request.getAttribute("liferay-ui:input-move-boxes:rightLi
 					KeyValuePair kvp = (KeyValuePair)rightList.get(i);
 				%>
 
-					<option data-selected="<%= false %>" value="<%= kvp.getKey() %>"><%= kvp.getValue() %></option>
+					<aui:option data-selected="<%= false %>" label="<%= kvp.getValue() %>" value="<%= kvp.getKey() %>" />
 
 				<%
 				}

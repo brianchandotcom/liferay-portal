@@ -224,6 +224,16 @@
 		margin: 10px 0 0 10px;
 	}
 
+	.plugin-thumbnail {
+		float: left;
+		margin-right: 10px;
+	}
+
+	.site-icon, .organization-icon {
+		float: left;
+		margin-right: 5px;
+	}
+
 	.lfr-permission-navigation-container {
 		.search {
 			margin: 20px 0;

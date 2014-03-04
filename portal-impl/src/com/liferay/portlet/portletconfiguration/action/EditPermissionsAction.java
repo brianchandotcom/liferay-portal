@@ -19,18 +19,15 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionPropagator;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PermissionServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
-import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
@@ -40,7 +37,6 @@ import com.liferay.portlet.portletconfiguration.util.ConfigurationActionRequest;
 import com.liferay.portlet.portletconfiguration.util.ConfigurationRenderRequest;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -187,36 +183,6 @@ public class EditPermissionsAction extends PortletAction {
 		return actionIds;
 	}
 
-	protected void updateLayoutModifiedDate(
-			String selResource, String resourcePrimKey)
-		throws Exception {
-
-		long plid = 0;
-
-		int pos = resourcePrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
-
-		if (pos != -1) {
-			plid = GetterUtil.getLong(resourcePrimKey.substring(0, pos));
-		}
-		else if (selResource.equals(Layout.class.getName())) {
-			plid = GetterUtil.getLong(resourcePrimKey);
-		}
-
-		if (plid <= 0) {
-			return;
-		}
-
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
-
-		if (layout != null) {
-			layout.setModifiedDate(new Date());
-
-			LayoutLocalServiceUtil.updateLayout(layout);
-
-			CacheUtil.clearCache(layout.getCompanyId());
-		}
-	}
-
 	protected void updateRolePermissions(ActionRequest actionRequest)
 		throws Exception {
 
@@ -268,8 +234,6 @@ public class EditPermissionsAction extends PortletAction {
 				resourceGroupId, themeDisplay.getCompanyId(), selResource,
 				resourcePrimKey, roleIdsToActionIds);
 		}
-
-		updateLayoutModifiedDate(selResource, resourcePrimKey);
 
 		if (PropsValues.PERMISSIONS_PROPAGATION_ENABLED) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(

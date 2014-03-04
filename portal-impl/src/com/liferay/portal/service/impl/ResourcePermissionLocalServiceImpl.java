@@ -26,10 +26,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.ResourceConstants;
@@ -41,7 +44,9 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.base.ResourcePermissionLocalServiceBaseImpl;
+import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.ResourcePermissionsThreadLocal;
@@ -50,6 +55,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1250,6 +1256,8 @@ public class ResourcePermissionLocalServiceImpl
 					companyId, name, scope, primKey, ownerId, roleId, actionIds,
 					ResourcePermissionConstants.OPERATOR_SET, false);
 			}
+
+			updateLayoutModifiedDate(name, primKey);
 		}
 		finally {
 			PermissionThreadLocal.setIndexEnabled(flushEnabled);
@@ -1271,6 +1279,35 @@ public class ResourcePermissionLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	protected void updateLayoutModifiedDate(String name, String primKey)
+		throws SystemException {
+
+		long plid = 0;
+
+		int pos = primKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
+
+		if (pos != -1) {
+			plid = GetterUtil.getLong(primKey.substring(0, pos));
+		}
+		else if (name.equals(Layout.class.getName())) {
+			plid = GetterUtil.getLong(primKey);
+		}
+
+		if (plid <= 0) {
+			return;
+		}
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+
+		if (layout != null) {
+			layout.setModifiedDate(new Date());
+
+			LayoutLocalServiceUtil.updateLayout(layout);
+
+			CacheUtil.clearCache(layout.getCompanyId());
+		}
 	}
 
 	/**

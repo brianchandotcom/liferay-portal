@@ -1504,6 +1504,10 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void typeKeys(String locator, String value) {
+		typeKeys(locator, value, false);
+	}
+
+	public void typeKeys(String locator, String value, boolean typeAceEditor) {
 		WebElement webElement = getWebElement(locator);
 
 		if (!webElement.isEnabled()) {
@@ -1523,7 +1527,7 @@ public class WebDriverToSeleniumBridge
 
 		sb.append("]*.*");
 
-		if (value.matches(sb.toString())) {
+		if (value.matches(sb.toString()) || typeAceEditor) {
 			char[] chars = value.toCharArray();
 
 			for (char c : chars) {
@@ -1534,6 +1538,14 @@ public class WebDriverToSeleniumBridge
 				}
 				else {
 					webElement.sendKeys(s);
+				}
+
+				if (typeAceEditor) {
+					if (s.equals("(") || s.equals("\"")) {
+						keyPress(locator, "\\46");
+					}
+
+					keyPress(locator, "\\27");
 				}
 			}
 		}
@@ -1784,13 +1796,15 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected void initKeysSpecialChars() {
-		_keysSpecialChars.put("&", "7");
+		_keysSpecialChars.put("!", "1");
+		_keysSpecialChars.put("#", "3");
 		_keysSpecialChars.put("$", "4");
 		_keysSpecialChars.put("%", "5");
-		_keysSpecialChars.put("<", ",");
-		_keysSpecialChars.put(">", ".");
+		_keysSpecialChars.put("&", "7");
 		_keysSpecialChars.put("(", "9");
 		_keysSpecialChars.put(")", "0");
+		_keysSpecialChars.put("<", ",");
+		_keysSpecialChars.put(">", ".");
 	}
 
 	protected void scrollWebElementIntoView(WebElement webElement) {

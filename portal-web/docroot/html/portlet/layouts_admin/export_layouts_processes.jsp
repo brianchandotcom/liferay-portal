@@ -141,21 +141,32 @@ OrderByComparator orderByComparator = BackgroundTaskComparatorFactoryUtil.getBac
 
 		<liferay-ui:search-container-column-text>
 			<c:if test="<%= !backgroundTask.isInProgress() %>">
-				<portlet:actionURL var="deleteBackgroundTaskURL">
-					<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
-					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-					<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-				</portlet:actionURL>
+				<liferay-ui:icon-menu>
+					<portlet:actionURL var="deleteBackgroundTaskURL">
+						<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
+						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+					</portlet:actionURL>
 
-				<%
-				Date completionDate = backgroundTask.getCompletionDate();
-				%>
+					<%
+					Date completionDate = backgroundTask.getCompletionDate();
+					%>
 
-				<liferay-ui:icon-delete
-					label="true"
-					message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
-					url="<%= deleteBackgroundTaskURL %>"
-				/>
+					<liferay-ui:icon-delete
+						label="true"
+						message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
+						url="<%= deleteBackgroundTaskURL %>"
+					/>
+
+					<portlet:actionURL var="relaunchURL">
+						<portlet:param name="struts_action" value="/group_pages/edit_export_configuration" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
+						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+					</portlet:actionURL>
+
+					<liferay-ui:icon image="submit" message='<%= LanguageUtil.get(pageContext, "relaunch") %>' url="<%= relaunchURL %>" />
+				</liferay-ui:icon-menu>
 			</c:if>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>

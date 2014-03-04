@@ -17,28 +17,21 @@
 <%@ include file="/html/portlet/message_boards/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "general");
-
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", mbSettings.getEmailFromName());
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", mbSettings.getEmailFromAddress());
 %>
 
-<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="portletURL">
-	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-</liferay-portlet:renderURL>
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="portletURL" />
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
 	<portlet:param name="serviceName" value="<%= MBConstants.SERVICE_NAME %>" />
 	<portlet:param name="settingsScope" value="group" />
 </liferay-portlet:actionURL>
 
-<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL">
-	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-</liferay-portlet:renderURL>
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<%
@@ -171,7 +164,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 					</aui:field-wrapper>
 				</td>
 				<td>
-					<aui:select label="localized-language" name="languageId" onClick='<%= renderResponse.getNamespace() + "updateLanguage();" %>' showEmptyOption="<%= true %>">
+					<aui:select label="localized-language" name="prioritiesLanguageId" onClick='<%= renderResponse.getNamespace() + "updatePrioritiesLanguage();" %>' showEmptyOption="<%= true %>">
 
 						<%
 						for (int i = 0; i < locales.length; i++) {
@@ -272,13 +265,13 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 						<tr>
 							<td>
-								<aui:input label="" name='<%= "priorityName" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onChanged();" %>' size="15" />
+								<aui:input label="" name='<%= "priorityName" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="15" />
 							</td>
 							<td>
-								<aui:input label="" name='<%= "priorityImage" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onChanged();" %>' size="40" />
+								<aui:input label="" name='<%= "priorityImage" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="40" />
 							</td>
 							<td>
-								<aui:input label="" name='<%= "priorityValue" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onChanged();" %>' size="4" />
+								<aui:input label="" name='<%= "priorityValue" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="4" />
 							</td>
 						</tr>
 
@@ -334,41 +327,41 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 			<br />
 
 			<aui:script>
-				var changed = false;
-				var lastLanguageId = "<%= currentLanguageId %>";
+				var prioritiesChanged = false;
+				var prioritiesLastLanguageId = "<%= currentLanguageId %>";
 
-				function <portlet:namespace />onChanged() {
-					changed = true;
+				function <portlet:namespace />onPrioritiesChanged() {
+					prioritiesChanged = true;
 				}
 
 				Liferay.provide(
 					window,
-					'<portlet:namespace />updateLanguage',
+					'<portlet:namespace />updatePrioritiesLanguage',
 					function() {
 						var A = AUI();
 
-						if (lastLanguageId != '<%= defaultLanguageId %>') {
-							if (changed) {
+						if (prioritiesLastLanguageId != '<%= defaultLanguageId %>') {
+							if (prioritiesChanged) {
 								for (var i = 0; i < 10; i++) {
 									var priorityName = A.one('#<portlet:namespace />priorityName' + i + '_temp').val();
 									var priorityImage = A.one('#<portlet:namespace />priorityImage' + i + '_temp').val();
 									var priorityValue = A.one('#<portlet:namespace />priorityValue' + i + '_temp').val();
 
-									A.one('#<portlet:namespace />priorityName' + i + '_' + lastLanguageId).val(priorityName);
-									A.one('#<portlet:namespace />priorityImage' + i + '_' + lastLanguageId).val(priorityImage);
-									A.one('#<portlet:namespace />priorityValue' + i + '_' + lastLanguageId).val(priorityValue);
+									A.one('#<portlet:namespace />priorityName' + i + '_' + prioritiesLastLanguageId).val(priorityName);
+									A.one('#<portlet:namespace />priorityImage' + i + '_' + prioritiesLastLanguageId).val(priorityImage);
+									A.one('#<portlet:namespace />priorityValue' + i + '_' + prioritiesLastLanguageId).val(priorityValue);
 								}
 
-								changed = false;
+								prioritiesChanged = false;
 							}
 						}
 
-						var selLanguageId = A.one(document.<portlet:namespace />fm.<portlet:namespace />languageId).val();
+						var selLanguageId = A.one(document.<portlet:namespace />fm.<portlet:namespace />prioritiesLanguageId).val();
 
 						var localizedPriorityTable = A.one('#<portlet:namespace />localized-priorities-table');
 
 						if ((selLanguageId != '') && (selLanguageId != 'null')) {
-							<portlet:namespace />updateLanguageTemps(selLanguageId);
+							<portlet:namespace />updatePrioritiesLanguageTemps(selLanguageId);
 
 							localizedPriorityTable.show();
 						}
@@ -376,14 +369,14 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 							localizedPriorityTable.hide();
 						}
 
-						lastLanguageId = selLanguageId;
+						prioritiesLastLanguageId = selLanguageId;
 					},
 					['aui-base']
 				);
 
 				Liferay.provide(
 					window,
-					'<portlet:namespace />updateLanguageTemps',
+					'<portlet:namespace />updatePrioritiesLanguageTemps',
 					function(lang) {
 						var A = AUI();
 
@@ -410,7 +403,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 					['aui-base']
 				);
 
-				<portlet:namespace />updateLanguageTemps(lastLanguageId);
+				<portlet:namespace />updatePrioritiesLanguageTemps(prioritiesLastLanguageId);
 			</aui:script>
 		</liferay-ui:section>
 
@@ -428,7 +421,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 						</aui:field-wrapper>
 					</td>
 					<td class="lfr-label">
-						<aui:select label="localized-language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage();" %>' showEmptyOption="<%= true %>">
+						<aui:select label="localized-language" name="ranksLanguageId" onChange='<%= renderResponse.getNamespace() + "updateRanksLanguage();" %>' showEmptyOption="<%= true %>">
 
 							<%
 							for (int i = 0; i < locales.length; i++) {
@@ -473,7 +466,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 			<aui:script>
 				var ranksChanged = false;
-				var lastLanguageId = '<%= currentLanguageId %>';
+				var ranksLastLanguageId = '<%= currentLanguageId %>';
 
 				function <portlet:namespace />onRanksChanged() {
 					ranksChanged = true;
@@ -481,11 +474,11 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 				Liferay.provide(
 					window,
-					'<portlet:namespace />updateLanguage',
+					'<portlet:namespace />updateRanksLanguage',
 					function() {
 						var A = AUI();
 
-						if (lastLanguageId != '<%= defaultLanguageId %>') {
+						if (ranksLastLanguageId != '<%= defaultLanguageId %>') {
 							if (ranksChanged) {
 								var ranksValue = A.one('#<portlet:namespace />ranks_temp').val();
 
@@ -493,18 +486,18 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 									ranksValue = '';
 								}
 
-								A.one('#<portlet:namespace />ranks_' + lastLanguageId).val(ranksValue);
+								A.one('#<portlet:namespace />ranks_' + ranksLastLanguageId).val(ranksValue);
 
 								ranksChanged = false;
 							}
 						}
 
-						var selLanguageId = A.one(document.<portlet:namespace />fm.<portlet:namespace />languageId).val();
+						var selLanguageId = A.one(document.<portlet:namespace />fm.<portlet:namespace />ranksLanguageId).val();
 
 						var ranksTemp = A.one('#<portlet:namespace />ranks_temp');
 
 						if ((selLanguageId != '') && (selLanguageId != 'null')) {
-							<portlet:namespace />updateLanguageTemps(selLanguageId);
+							<portlet:namespace />updateRanksLanguageTemps(selLanguageId);
 
 							ranksTemp.show();
 						}
@@ -512,14 +505,14 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 							ranksTemp.hide();
 						}
 
-						lastLanguageId = selLanguageId;
+						ranksLastLanguageId = selLanguageId;
 					},
 					['aui-base']
 				);
 
 				Liferay.provide(
 					window,
-					'<portlet:namespace />updateLanguageTemps',
+					'<portlet:namespace />updateRanksLanguageTemps',
 					function(lang) {
 						var A = AUI();
 
@@ -535,7 +528,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 					['aui-base']
 				);
 
-				<portlet:namespace />updateLanguageTemps(lastLanguageId);
+				<portlet:namespace />updateRanksLanguageTemps(ranksLastLanguageId);
 			</aui:script>
 		</liferay-ui:section>
 
@@ -559,10 +552,8 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 <aui:script>
 	function <portlet:namespace />saveConfiguration() {
 		<portlet:namespace />saveEmails();
-
-		<c:if test='<%= tabs2.equals("user-ranks") || tabs2.equals("thread-priorities") %>'>
-			<portlet:namespace />updateLanguage();
-		</c:if>
+		<portlet:namespace />updatePrioritiesLanguage();
+		<portlet:namespace />updateRanksLanguage();
 
 		submitForm(document.<portlet:namespace />fm);
 	}

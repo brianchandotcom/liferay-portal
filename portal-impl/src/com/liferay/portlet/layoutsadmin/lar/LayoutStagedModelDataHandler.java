@@ -1167,12 +1167,12 @@ public class LayoutStagedModelDataHandler
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			// Remove portlets with unchecked setup from the target layout
+			// Remove unchecked portlets from the target layout
 
 			List<String> sourcePortletIds = layoutTypePortlet.getPortletIds();
 
 			for (String portletId : sourcePortletIds) {
-				boolean importPortletSetup = false;
+				boolean importPortletConfiguration = false;
 
 				try {
 					boolean[] importPortletControls =
@@ -1181,12 +1181,12 @@ public class LayoutStagedModelDataHandler
 							portletDataContext.getParameterMap(), null,
 							portletDataContext.getManifestSummary());
 
-					importPortletSetup = importPortletControls[2];
+					importPortletConfiguration = importPortletControls[4];
 				}
 				catch (Exception e) {
 				}
 
-				if (!importPortletSetup &&
+				if (!importPortletConfiguration &&
 					!importedPortletIds.contains(portletId)) {
 
 					removePortletFromLayoutTypePortlet(

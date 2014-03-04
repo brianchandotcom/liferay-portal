@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.NumericalStringComparator;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -137,7 +137,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				ParamUtil.getString(actionRequest, "ranks_" + languageId));
 
 			Map<String, String> map = new TreeMap<String, String>(
-				new NumericalStringComparator());
+				new NaturalOrderStringComparator());
 
 			for (String rank : ranks) {
 				if (!isValidUserRank(rank)) {

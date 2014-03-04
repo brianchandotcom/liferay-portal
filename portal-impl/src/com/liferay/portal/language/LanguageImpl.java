@@ -847,50 +847,8 @@ public class LanguageImpl implements Language {
 
 		String value = null;
 
-		if (pageContext != null) {
-			HttpServletRequest request =
-				(HttpServletRequest)pageContext.getRequest();
-
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			if (themeDisplay != null) {
-				locale = themeDisplay.getLocale();
-			}
-			else {
-				locale = request.getLocale();
-
-				if (!isAvailableLocale(locale)) {
-					locale = LocaleUtil.getDefault();
-				}
-			}
-
-			portletConfig = (PortletConfig)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
-		}
-
 		if (resourceBundle != null) {
 			value = ResourceBundleUtil.getString(resourceBundle, key);
-
-			if (value != null) {
-				value = LanguageResources.fixValue(value);
-			}
-		}
-
-		if (portletConfig != null) {
-			resourceBundle = portletConfig.getResourceBundle(locale);
-
-			value = ResourceBundleUtil.getString(resourceBundle, key);
-
-			// LEP-7393
-
-			String portletName = portletConfig.getPortletName();
-
-			if (((value == null) || value.equals(defaultValue)) &&
-				portletName.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-
-				value = _getPortletConfigurationValue(pageContext, locale, key);
-			}
 
 			if (value != null) {
 				value = LanguageResources.fixValue(value);
@@ -932,14 +890,66 @@ public class LanguageImpl implements Language {
 		return _localesMap.get(languageCode);
 	}
 
-	private String _getPortletConfigurationValue(
-			PageContext pageContext, Locale locale, String key)
-		throws Exception {
+	private ResourceBundle _getResourceBundleFromPageContext(
+		PageContext pageContext) {
 
-		if (PropsValues.TRANSLATIONS_DISABLED) {
-			return key;
+		Locale locale = null;
+		PortletConfig configPortletConfig = null;
+
+		if (pageContext != null) {
+			HttpServletRequest request =
+				(HttpServletRequest)pageContext.getRequest();
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			if (themeDisplay != null) {
+				locale = themeDisplay.getLocale();
+			}
+			else {
+				locale = request.getLocale();
+
+				if (!isAvailableLocale(locale)) {
+					locale = LocaleUtil.getDefault();
+		}
+			}
+
+			configPortletConfig = (PortletConfig)request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
 		}
 
+		if (configPortletConfig != null) {
+			ResourceBundle configResourceBundle =
+				configPortletConfig.getResourceBundle(locale);
+
+			String portletName = configPortletConfig.getPortletName();
+
+			if (portletName.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+
+				try {
+					ResourceBundle resourceBundle =
+						_getResourceBundleFromConfiguratingPortlet(
+							pageContext, locale);
+
+					return new CompositeResourceBundle(
+						configResourceBundle, resourceBundle);
+				}
+				catch (SystemException e) {
+					if (_log.isErrorEnabled()) {
+						_log.error(e.getMessage(), e);
+					}
+				}
+			}
+
+			return configResourceBundle;
+
+		}
+
+		return null;
+
+	}
+
+	private ResourceBundle _getResourceBundleFromConfiguratingPortlet(PageContext pageContext, Locale locale) throws SystemException {
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 

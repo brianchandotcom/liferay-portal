@@ -34,6 +34,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutPrototypeLocalServiceBaseImpl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -46,26 +47,11 @@ import java.util.Map;
 public class LayoutPrototypeLocalServiceImpl
 	extends LayoutPrototypeLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(long,
-	 *             long, Map, String, boolean, ServiceContext)}
-	 */
-	@Deprecated
 	@Override
 	public LayoutPrototype addLayoutPrototype(
 			long userId, long companyId, Map<Locale, String> nameMap,
-			String description, boolean active)
-		throws PortalException, SystemException {
-
-		return addLayoutPrototype(
-			userId, companyId, nameMap, description, active,
-			new ServiceContext());
-	}
-
-	@Override
-	public LayoutPrototype addLayoutPrototype(
-			long userId, long companyId, Map<Locale, String> nameMap,
-			String description, boolean active, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Layout prototype
@@ -85,7 +71,7 @@ public class LayoutPrototypeLocalServiceImpl
 		layoutPrototype.setCreateDate(serviceContext.getCreateDate(now));
 		layoutPrototype.setModifiedDate(serviceContext.getModifiedDate(now));
 		layoutPrototype.setNameMap(nameMap);
-		layoutPrototype.setDescription(description);
+		layoutPrototype.setDescriptionMap(descriptionMap);
 		layoutPrototype.setActive(active);
 
 		layoutPrototypePersistence.update(layoutPrototype);
@@ -123,6 +109,36 @@ public class LayoutPrototypeLocalServiceImpl
 		}
 
 		return layoutPrototype;
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(long,
+	 *             long, Map, String, boolean, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public LayoutPrototype addLayoutPrototype(
+			long userId, long companyId, Map<Locale, String> nameMap,
+			String description, boolean active)
+		throws PortalException, SystemException {
+
+		return addLayoutPrototype(
+			userId, companyId, nameMap, description, active,
+			new ServiceContext());
+	}
+
+	@Override
+	public LayoutPrototype addLayoutPrototype(
+			long userId, long companyId, Map<Locale, String> nameMap,
+			String description, boolean active, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+		descriptionMap.put(LocaleUtil.getDefault(), description);
+
+		return addLayoutPrototype(
+			userId, companyId, nameMap, descriptionMap, active, serviceContext);
 	}
 
 	@Override
@@ -238,6 +254,38 @@ public class LayoutPrototypeLocalServiceImpl
 		}
 	}
 
+	@Override
+	public LayoutPrototype updateLayoutPrototype(
+			long layoutPrototypeId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		// Layout prototype
+
+		LayoutPrototype layoutPrototype =
+			layoutPrototypePersistence.findByPrimaryKey(layoutPrototypeId);
+
+		layoutPrototype.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		layoutPrototype.setNameMap(nameMap);
+		layoutPrototype.setDescriptionMap(descriptionMap);
+		layoutPrototype.setActive(active);
+
+		layoutPrototypePersistence.update(layoutPrototype);
+
+		// Layout
+
+		Layout layout = layoutPrototype.getLayout();
+
+		layout.setModifiedDate(layoutPrototype.getModifiedDate());
+		layout.setNameMap(nameMap);
+
+		layoutPersistence.update(layout);
+
+		return layoutPrototype;
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #updateLayoutPrototype(long,
 	 *             Map, String, boolean, ServiceContext)}
@@ -259,29 +307,12 @@ public class LayoutPrototypeLocalServiceImpl
 			String description, boolean active, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		// Layout prototype
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-		LayoutPrototype layoutPrototype =
-			layoutPrototypePersistence.findByPrimaryKey(layoutPrototypeId);
+		descriptionMap.put(LocaleUtil.getDefault(), description);
 
-		layoutPrototype.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
-		layoutPrototype.setNameMap(nameMap);
-		layoutPrototype.setDescription(description);
-		layoutPrototype.setActive(active);
-
-		layoutPrototypePersistence.update(layoutPrototype);
-
-		// Layout
-
-		Layout layout = layoutPrototype.getLayout();
-
-		layout.setModifiedDate(layoutPrototype.getModifiedDate());
-		layout.setNameMap(nameMap);
-
-		layoutPersistence.update(layout);
-
-		return layoutPrototype;
+		return updateLayoutPrototype(
+			layoutPrototypeId, nameMap, descriptionMap, active, null);
 	}
 
 }

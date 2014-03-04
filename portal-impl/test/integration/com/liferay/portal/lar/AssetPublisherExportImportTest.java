@@ -40,8 +40,11 @@ import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.asset.util.AssetTestUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisher;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -144,6 +147,43 @@ public class AssetPublisherExportImportTest
 		Assert.assertEquals(
 			anyClassTypeDLFileEntryAssetRendererFactory,
 			String.valueOf(Boolean.TRUE));
+	}
+
+	@Test
+	public void testAssetCategories() throws Exception {
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			group.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
+
+		preferenceMap.put("queryName0", new String[] {"assetCategories"});
+
+		preferenceMap.put(
+			"queryValues0",
+			new String[] {String.valueOf(assetCategory.getCategoryId())});
+
+		PortletPreferences portletPreferences = getImportedPortletPreferences(
+			preferenceMap);
+
+		long importedAssetCategoryId = GetterUtil.getLong(
+			portletPreferences.getValue("queryValues0", null));
+
+		Assert.assertNotEquals(importedAssetCategoryId, 0L);
+
+		Assert.assertNotEquals(
+			assetCategory.getCategoryId(), importedAssetCategoryId);
+
+		AssetCategory importedAssetCategory =
+			AssetCategoryLocalServiceUtil.fetchAssetCategory(
+				importedAssetCategoryId);
+
+		Assert.assertNotNull(importedAssetCategory);
+
+		Assert.assertEquals(
+			assetCategory.getUuid(), importedAssetCategory.getUuid());
 	}
 
 	@Test

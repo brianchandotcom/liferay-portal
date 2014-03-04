@@ -24,12 +24,6 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -120,33 +114,10 @@ public class DLFileShortcutStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected void validateAssets(
-			String classUuid, StagedModelAssets stagedModelAssets, Group group)
+	protected StagedModelAssets updateAssetEntry(StagedModel stagedModel)
 		throws Exception {
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			group.getGroupId(), classUuid);
-
-		List<AssetCategory> assetCategories =
-			AssetCategoryLocalServiceUtil.getEntryCategories(
-				assetEntry.getEntryId());
-
-		Assert.assertEquals(1, assetCategories.size());
-
-		AssetCategory assetCategory = stagedModelAssets.getAssetCategory();
-		AssetCategory importedAssetCategory = assetCategories.get(0);
-
-		Assert.assertEquals(
-			assetCategory.getUuid(), importedAssetCategory.getUuid());
-
-		AssetVocabulary assetVocabulary =
-			stagedModelAssets.getAssetVocabulary();
-		AssetVocabulary importedAssetVocabulary =
-			AssetVocabularyLocalServiceUtil.getVocabulary(
-				importedAssetCategory.getVocabularyId());
-
-		Assert.assertEquals(
-			assetVocabulary.getUuid(), importedAssetVocabulary.getUuid());
+		return null;
 	}
 
 	@Override

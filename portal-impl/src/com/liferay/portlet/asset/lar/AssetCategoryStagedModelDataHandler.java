@@ -143,6 +143,22 @@ public class AssetCategoryStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid, long categoryId)
+		throws Exception {
+
+		AssetCategory existingCategory =
+			AssetCategoryLocalServiceUtil.fetchAssetCategoryByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> categoryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				AssetCategory.class);
+
+		categoryIds.put(categoryId, existingCategory.getCategoryId());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, AssetCategory category)
 		throws Exception {

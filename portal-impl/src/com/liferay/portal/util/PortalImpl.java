@@ -2196,7 +2196,8 @@ public class PortalImpl implements Portal {
 			String[] values = portletRequest.getParameterValues(name);
 
 			if (displayType.equals(
-					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) {
+					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
+				!ArrayUtil.isEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}
@@ -2210,7 +2211,8 @@ public class PortalImpl implements Portal {
 			String[] values = portletRequest.getParameterValues(name);
 
 			if (displayType.equals(
-					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) {
+					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
+				!ArrayUtil.isEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}
@@ -2224,7 +2226,8 @@ public class PortalImpl implements Portal {
 			String[] values = portletRequest.getParameterValues(name);
 
 			if (displayType.equals(
-					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) {
+					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
+				!ArrayUtil.isEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}
@@ -2238,7 +2241,8 @@ public class PortalImpl implements Portal {
 			String[] values = portletRequest.getParameterValues(name);
 
 			if (displayType.equals(
-					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) {
+					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
+				!ArrayUtil.isEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}
@@ -2252,7 +2256,8 @@ public class PortalImpl implements Portal {
 			String[] values = portletRequest.getParameterValues(name);
 
 			if (displayType.equals(
-					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) {
+					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
+				!ArrayUtil.isEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}
@@ -2266,7 +2271,8 @@ public class PortalImpl implements Portal {
 			String[] values = portletRequest.getParameterValues(name);
 
 			if (displayType.equals(
-					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) {
+					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
+				!ArrayUtil.isEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}
@@ -2277,7 +2283,8 @@ public class PortalImpl implements Portal {
 			String[] values = portletRequest.getParameterValues(name);
 
 			if (displayType.equals(
-					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) {
+					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
+				!ArrayUtil.isEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}

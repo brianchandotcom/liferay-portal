@@ -49,7 +49,7 @@ import com.liferay.portlet.shopping.ShippingZipException;
 import com.liferay.portlet.shopping.model.ShoppingCart;
 import com.liferay.portlet.shopping.model.ShoppingOrder;
 import com.liferay.portlet.shopping.service.ShoppingOrderLocalServiceUtil;
-import com.liferay.portlet.shopping.util.ShoppingPreferences;
+import com.liferay.portlet.shopping.ShoppingPreferences;
 import com.liferay.portlet.shopping.util.ShoppingUtil;
 
 import javax.portlet.ActionRequest;

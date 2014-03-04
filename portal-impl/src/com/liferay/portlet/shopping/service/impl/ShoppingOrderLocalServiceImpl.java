@@ -56,7 +56,7 @@ import com.liferay.portlet.shopping.model.ShoppingOrderConstants;
 import com.liferay.portlet.shopping.model.ShoppingOrderItem;
 import com.liferay.portlet.shopping.model.impl.ShoppingCartItemImpl;
 import com.liferay.portlet.shopping.service.base.ShoppingOrderLocalServiceBaseImpl;
-import com.liferay.portlet.shopping.util.ShoppingPreferences;
+import com.liferay.portlet.shopping.ShoppingPreferences;
 import com.liferay.portlet.shopping.util.ShoppingUtil;
 import com.liferay.portlet.shopping.util.comparator.OrderDateComparator;
 import com.liferay.util.CreditCard;

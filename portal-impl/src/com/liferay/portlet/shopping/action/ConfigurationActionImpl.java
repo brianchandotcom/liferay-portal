@@ -25,7 +25,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.shopping.util.ShoppingPreferences;
+import com.liferay.portlet.shopping.ShoppingPreferences;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

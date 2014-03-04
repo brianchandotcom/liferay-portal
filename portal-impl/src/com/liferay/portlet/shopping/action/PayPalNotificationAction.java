@@ -26,7 +26,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.shopping.NoSuchOrderException;
 import com.liferay.portlet.shopping.model.ShoppingOrder;
 import com.liferay.portlet.shopping.service.ShoppingOrderLocalServiceUtil;
-import com.liferay.portlet.shopping.util.ShoppingPreferences;
+import com.liferay.portlet.shopping.ShoppingPreferences;
 import com.liferay.portlet.shopping.util.ShoppingUtil;
 
 import java.io.InputStreamReader;

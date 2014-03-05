@@ -89,6 +89,10 @@ public class PortalUtil {
 	/**
 	 * Adds the description for a page. This appends to the existing page
 	 * description.
+	 * 
+	 * @param description the description to append to the current meta
+	 *        description
+	 * @param request the servlet request for the page
 	 */
 	public static void addPageDescription(
 		String description, HttpServletRequest request) {
@@ -98,6 +102,10 @@ public class PortalUtil {
 
 	/**
 	 * Adds the keywords for a page. This appends to the existing page keywords.
+	 *
+	 * @param keywords the keywords to add to the current meta keywords
+	 *        (comma-separated)
+	 * @param request the servlet request for the page
 	 */
 	public static void addPageKeywords(
 		String keywords, HttpServletRequest request) {
@@ -106,7 +114,10 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Adds the subtitle for a page. This appends to the existing page subtitle.
+	 * Appends the subtitle to the current subtitle of the page.
+	 *
+	 * @param subtitle the subtitle to append to the current subtitle
+	 * @param request the servlet request for the page
 	 */
 	public static void addPageSubtitle(
 		String subtitle, HttpServletRequest request) {
@@ -115,8 +126,10 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Adds the whole title for a page. This appends to the existing page whole
-	 * title.
+	 * Appends the title to the current title of the page.
+	 *
+	 * @param title the title to append to the current title
+	 * @param request the servlet request for the page
 	 */
 	public static void addPageTitle(String title, HttpServletRequest request) {
 		getPortal().addPageTitle(title, request);
@@ -146,12 +159,27 @@ public class PortalUtil {
 		getPortal().addPortalPortEventListener(portalPortEventListener);
 	}
 
+	/**
+	 * Adds an entry to the portlet breadcrumbs for the page.
+	 *
+	 * @param request the servlet request for the page
+	 * @param title the title of the new breakcrumb entry
+	 * @param url the URL of the new breadcrumb entry
+	 */
 	public static void addPortletBreadcrumbEntry(
 		HttpServletRequest request, String title, String url) {
 
 		getPortal().addPortletBreadcrumbEntry(request, title, url);
 	}
 
+	/**
+	 * Adds an entry to the portlet breadcrumbs for the page.
+	 *
+	 * @param request the servlet request for the page
+	 * @param title the title of the new breakcrumb entry
+	 * @param url the URL of the new breadcrumb entry
+	 * @param data the HTML5 data parameters of the new breadcrumb entry
+	 */
 	public static void addPortletBreadcrumbEntry(
 		HttpServletRequest request, String title, String url,
 		Map<String, Object> data) {
@@ -159,6 +187,14 @@ public class PortalUtil {
 		getPortal().addPortletBreadcrumbEntry(request, title, url, data);
 	}
 
+	/**
+	 * Adds the default resource permissions for the portlet to the page.
+	 *
+	 * @param  request the servlet request for the page
+	 * @param  portlet the portlet
+	 * @throws PortalException if adding the default resource permissions failed
+	 * @throws SystemException if a system exception occurred
+	 */
 	public static void addPortletDefaultResource(
 			HttpServletRequest request, Portlet portlet)
 		throws PortalException, SystemException {
@@ -174,10 +210,21 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Adds preserved parameters such as doAsGroupId, doAsUserId,
-	 * doAsUserLanguageId, and referrerPlid that should always be preserved as
-	 * the user navigates through the portal. If doAsUser is <code>false</code>,
-	 * then doAsUserId and doAsUserLanguageId will never be added.
+	 * Adds the preserved parameters doAsGroupId and refererPlid to the URL,
+	 * optionally adding doAsUserId and doAsUserLanguageId as well.
+	 *
+	 * <p>
+	 * Preserved parameters are parameters that should be sent with every
+	 * request as the user navigates the portal.
+	 * </p>
+	 *
+	 * @param  themeDisplay the current theme display
+	 * @param  layout the current layout
+	 * @param  url the URL
+	 * @param  doAsUser whether to include doAsUserId and doAsLanguageId in the
+	 *         URL if they are available. If <code>false</code>, doAsUserId and
+	 *         doAsUserLanguageId will never be added.
+	 * @return the URL with the preserved parameters added
 	 */
 	public static String addPreservedParameters(
 		ThemeDisplay themeDisplay, Layout layout, String url,
@@ -188,9 +235,12 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Adds preserved parameters such as doAsGroupId, doAsUserId,
-	 * doAsUserLanguageId, and referrerPlid that should always be preserved as
-	 * the user navigates through the portal.
+	 * Adds the preserved parameters doAsUserId, doAsUserLanguageId,
+	 * doAsGroupId, refererPlid, and controlPanelCategory to the URL.
+	 *
+	 * @param  themeDisplay the current theme display
+	 * @param  url the URL
+	 * @return the URL with the preserved parameters added
 	 */
 	public static String addPreservedParameters(
 		ThemeDisplay themeDisplay, String url) {
@@ -202,20 +252,48 @@ public class PortalUtil {
 		getPortal().addUserLocaleOptionsMessage(request);
 	}
 
+	/**
+	 * Clears the render parameters in the request if the portlet is in the
+	 * action phase.
+	 *
+	 * @param renderRequest the render request
+	 */
 	public static void clearRequestParameters(RenderRequest renderRequest) {
 		getPortal().clearRequestParameters(renderRequest);
 	}
 
+	/**
+	 * Copies the request parameters to the render parameters, unless a
+	 * parameter with that name already exists in the render parameters.
+	 *
+	 * @param actionRequest the request from which to get the request parameters
+	 * @param actionResponse the response to receive the render parameters
+	 */
 	public static void copyRequestParameters(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		getPortal().copyRequestParameters(actionRequest, actionResponse);
 	}
 
+	/**
+	 * Escapes the URL for use in a redirect and checks that security settings
+	 * allow the URL is allowed for redirects.
+	 *
+	 * @param  url the URL to escape
+	 * @return the escaped URL, or <code>null</code> if the URL is not an
+	 *         allowed for redirects
+	 */
 	public static String escapeRedirect(String url) {
 		return getPortal().escapeRedirect(url);
 	}
 
+	/**
+	 * Generates a random key to identify the request based on the input string.
+	 *
+	 * @param  request the servlet request for the page
+	 * @param  input the input string
+	 * @return the generated key
+	 */
 	public static String generateRandomKey(
 		HttpServletRequest request, String input) {
 
@@ -302,7 +380,18 @@ public class PortalUtil {
 	public static Set<String> getAuthTokenIgnorePortlets() {
 		return getPortal().getAuthTokenIgnorePortlets();
 	}
-
+	
+	/**
+	 * Returns the base model instance for the resource permission.
+	 *
+	 * @param  resourcePermission the resource permission
+	 * @return the base model instance, or <code>null</code> if the resource
+	 *         permission does not have a base model instance (such as if its a
+	 *         portlet)
+	 * @throws PortalException if a base model instance for the resource
+	 *         permission could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public static BaseModel<?> getBaseModel(
 			ResourcePermission resourcePermission)
 		throws PortalException, SystemException {
@@ -310,18 +399,52 @@ public class PortalUtil {
 		return getPortal().getBaseModel(resourcePermission);
 	}
 
+	/**
+	 * Returns the base model instance for the model name and primary key.
+	 *
+	 * @param  modelName the fully qualified class name of the model
+	 * @param  primKey the primary key of the model instance to get
+	 * @return the base model instance, or <code>null</code> if the model does
+	 *         not have a base model instance (such as if its a portlet)
+	 * @throws PortalException if a base model instance with the primary key
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public static BaseModel<?> getBaseModel(String modelName, String primKey)
 		throws PortalException, SystemException {
 
 		return getPortal().getBaseModel(modelName, primKey);
 	}
 
+	/**
+	 * Returns the user's ID from the HTTP authentication headers after
+	 * validating their credentials.
+	 *
+	 * @param  request the servlet request from which to retrieve the HTTP
+	 *         authentication headers
+	 * @return the user's ID if HTTP authentication headers are present and
+	 *         their credentials are valid; 0 otherwise
+	 * @throws PortalException if an authentication exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public static long getBasicAuthUserId(HttpServletRequest request)
 		throws PortalException, SystemException {
 
 		return getPortal().getBasicAuthUserId(request);
 	}
 
+	/**
+	 * Returns the user's ID from the HTTP authentication headers after
+	 * validation their credentials.
+	 *
+	 * @param  request the servlet request to retrieve the HTTP authentication
+	 *         headers from
+	 * @param  companyId unused
+	 * @return the user's ID if HTTP authentication headers are present and
+	 *         their credentials are valid; 0 otherwise
+	 * @throws PortalException if an authentication exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public static long getBasicAuthUserId(
 			HttpServletRequest request, long companyId)
 		throws PortalException, SystemException {
@@ -358,6 +481,21 @@ public class PortalUtil {
 		return getPortal().getCanonicalURL(completeURL, themeDisplay, layout);
 	}
 
+	/**
+	 * Returns the canonical URL of the page, to distinguish it among its
+	 * translations.
+	 *
+	 * @param  completeURL the complete URL of the page
+	 * @param  themeDisplay the current theme display
+	 * @param  layout the layout. If it is <code>null</code>, then it is
+	 *         generated for the current layout
+	 * @param  forceLayoutFriendlyURL adds the page friendly URL to the
+	 *         canonical URL even if it is not needed
+	 * @return the canonical URL
+	 * @throws PortalException if a friendly URL or the group could not be
+	 *         retrieved
+	 * @throws SystemException if a system exception occurred
+	 */
 	public static String getCanonicalURL(
 			String completeURL, ThemeDisplay themeDisplay, Layout layout,
 			boolean forceLayoutFriendlyURL)
@@ -375,6 +513,13 @@ public class PortalUtil {
 		return getPortal().getCDNHost();
 	}
 
+	/**
+	 * Returns the secure (HTTPS) or insecure (HTTP) content distribution
+	 * network (CDN) host address for this portal.
+	 *
+	 * @param  secure whether to get the secure or insecure CDN host address
+	 * @return the CDN host address
+	 */
 	public static String getCDNHost(boolean secure) {
 		return getPortal().getCDNHost(secure);
 	}
@@ -385,26 +530,68 @@ public class PortalUtil {
 		return getPortal().getCDNHost(request);
 	}
 
+	/**
+	 * Returns the insecure (HTTP) content distribution network (CDN) host
+	 * address
+	 *
+	 * @param  companyId the company ID of a site
+	 * @return the CDN host address
+	 */
 	public static String getCDNHostHttp(long companyId) {
 		return getPortal().getCDNHostHttp(companyId);
 	}
 
+	/**
+	 * Returns the secure (HTTPS) content distribution network (CDN) host
+	 * address
+	 *
+	 * @param  companyId the company ID of a site
+	 * @return the CDN host address
+	 */
 	public static String getCDNHostHttps(long companyId) {
 		return getPortal().getCDNHostHttps(companyId);
 	}
 
+	/**
+	 * Returns the fully qualified name of the class from its ID.
+	 *
+	 * @param  classNameId the ID of the class
+	 * @return the fully qualified name of the class
+	 */
 	public static String getClassName(long classNameId) {
 		return getPortal().getClassName(classNameId);
 	}
 
+	/**
+	 * Returns the ID of the class from its class object.
+	 *
+	 * @param  clazz the class object
+	 * @return the ID of the class
+	 */
 	public static long getClassNameId(Class<?> clazz) {
 		return getPortal().getClassNameId(clazz);
 	}
 
+	/**
+	 * Returns the ID of the class from its fully qualified name.
+	 *
+	 * @param  value the fully qualified name of the class
+	 * @return the ID of the class
+	 */
 	public static long getClassNameId(String value) {
 		return getPortal().getClassNameId(value);
 	}
 
+	/**
+	 * Returns the ID of certain portlets from the fully qualified name of one
+	 * of their classes. The portlets this method supports are: blogs,
+	 * bookmarks, calendar, document library, image gallery, journal, message
+	 * boards, and wiki.
+	 *
+	 * @param  className the fully qualified name of a class in a portlet
+	 * @return the ID of the portlet the class is a part of, or an empty string
+	 *         if the class is not supported
+	 */
 	public static String getClassNamePortletId(String className) {
 		return getPortal().getClassNamePortletId(className);
 	}
@@ -530,11 +717,34 @@ public class PortalUtil {
 	public static String getCustomSQLFunctionIsNull() {
 		return getPortal().getCustomSQLFunctionIsNull();
 	}
-
+	
+	/**
+	 * Returns the date object for the specified month, day, and year.
+	 *
+	 * @param  month the month (0-based, meaning 0 for January)
+	 * @param  day the day of the month
+	 * @param  year the year
+	 * @return the date object. <code>null</code> for invalid dates
+	 */
 	public static Date getDate(int month, int day, int year) {
 		return getPortal().getDate(month, day, year);
 	}
 
+	/**
+	 * Returns the date object for the specified month, day, and year,
+	 * optionally throwing an exception if the date is invalid.
+	 *
+	 * @param  month the month (0-based, meaning 0 for January)
+	 * @param  day the day of the month
+	 * @param  year the year
+	 * @param  clazz the exception class to throw if the date is invalid. If
+	 *         <code>null</code>, no exception will be thrown for an invalid
+	 *         date.
+	 * @return the date object, or <code>null</code> if the date is invalid and
+	 *         no exception to throw was provided
+	 * @throws PortalException if the date was invalid and <code>pe</code> was
+	 *         not <code>null</code>
+	 */
 	public static Date getDate(
 			int month, int day, int year,
 			Class<? extends PortalException> clazz)
@@ -543,6 +753,23 @@ public class PortalUtil {
 		return getPortal().getDate(month, day, year, clazz);
 	}
 
+	/**
+	 * Returns the date object for the specified month, day, year, hour, and
+	 * minute, optionally throwing an exception if the date is invalid.
+	 *
+	 * @param  month the month (0-based, meaning 0 for January)
+	 * @param  day the day of the month
+	 * @param  year the year
+	 * @param  hour the hour (0-24)
+	 * @param  min the minute of the hour
+	 * @param  clazz the exception class to throw if the date is invalid. If
+	 *         <code>null</code>, no exception will be thrown for an invalid
+	 *         date.
+	 * @return the date object, or <code>null</code> if the date is invalid and
+	 *         no exception to throw was provided
+	 * @throws PortalException if the date was invalid and <code>clazz</code> was
+	 *         not <code>null</code>
+	 */
 	public static Date getDate(
 			int month, int day, int year, int hour, int min,
 			Class<? extends PortalException> clazz)
@@ -551,6 +778,24 @@ public class PortalUtil {
 		return getPortal().getDate(month, day, year, hour, min, clazz);
 	}
 
+	/**
+	 * Returns the date object for the specified month, day, year, hour, minute,
+	 * and time zone, optionally throwing an exception if the date is invalid.
+	 *
+	 * @param  month the month (0-based, meaning 0 for January)
+	 * @param  day the day of the month
+	 * @param  year the year
+	 * @param  hour the hour (0-24)
+	 * @param  min the minute of the hour
+	 * @param  timeZone the time zone of the date
+	 * @param  clazz the exception class to throw if the date is invalid. If
+	 *         <code>null</code>, no exception will be thrown for an invalid
+	 *         date.
+	 * @return the date object, or <code>null</code> if the date is invalid and
+	 *         no exception to throw was provided
+	 * @throws PortalException if the date was invalid and <code>clazz</code> was
+	 *         not <code>null</code>
+	 */
 	public static Date getDate(
 			int month, int day, int year, int hour, int min, TimeZone timeZone,
 			Class<? extends PortalException> clazz)
@@ -560,6 +805,22 @@ public class PortalUtil {
 			month, day, year, hour, min, timeZone, clazz);
 	}
 
+	/**
+	 * Returns the date object for the specified month, day, year, and time
+	 * zone, optionally throwing an exception if the date is invalid.
+	 *
+	 * @param  month the month (0-based, meaning 0 for January)
+	 * @param  day the day of the month
+	 * @param  year the year
+	 * @param  timeZone the time zone of the date
+	 * @param  clazz the exception class to throw if the date is invalid. If
+	 *         <code>null</code>, no exception will be thrown for an invalid
+	 *         date.
+	 * @return the date object, or <code>null</code> if the date is invalid and
+	 *         no exception to throw was provided
+	 * @throws PortalException if the date was invalid and <code>clazz</code> was
+	 *         not <code>null</code>
+	 */
 	public static Date getDate(
 			int month, int day, int year, TimeZone timeZone,
 			Class<? extends PortalException> clazz)

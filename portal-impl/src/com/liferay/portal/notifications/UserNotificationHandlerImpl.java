@@ -33,6 +33,11 @@ public class UserNotificationHandlerImpl implements UserNotificationHandler {
 	}
 
 	@Override
+	public boolean getOpenDialog() {
+		return _userNotificationHandler.getOpenDialog();
+	}
+
+	@Override
 	public String getPortletId() {
 		return _userNotificationHandler.getPortletId();
 	}

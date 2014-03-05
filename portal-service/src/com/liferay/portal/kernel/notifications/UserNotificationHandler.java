@@ -24,6 +24,8 @@ import com.liferay.portal.service.ServiceContext;
  */
 public interface UserNotificationHandler {
 
+	public boolean getOpenDialog();
+
 	public String getPortletId();
 
 	public String getSelector();

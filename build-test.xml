@@ -1247,13 +1247,13 @@ ${custom.properties}</echo>
 					<![CDATA[
 						jdbc.one.driverClassName=com.mysql.jdbc.Driver
 						jdbc.one.url=jdbc:mysql://${database.host}/lportal1?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
-						jdbc.one.username=
-						jdbc.one.password=
+						jdbc.one.username=${database.username}
+						jdbc.one.password=${database.password}
 
 						jdbc.two.driverClassName=com.mysql.jdbc.Driver
 						jdbc.two.url=jdbc:mysql://${database.host}/lportal2?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
-						jdbc.two.username=
-						jdbc.two.password=
+						jdbc.two.username=${database.username}
+						jdbc.two.password=${database.password}
 
 						shard.default.name=default
 						shard.available.names=default,one,two

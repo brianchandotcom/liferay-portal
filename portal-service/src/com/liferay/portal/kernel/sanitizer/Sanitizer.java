@@ -20,11 +20,14 @@ import java.io.OutputStream;
 import java.util.Map;
 
 /**
- * Provides constants and methods for sanitizing offensive vocabulary or
- * malicious HTML content. This interface is implemented by dynamically
- * configurable sanitizer components that can be deployed as a hook, customizing
- * the portal property <code>sanitizer.impl</code>. All installed sanitizers are
- * chained.
+ * Provides an interface and constants for sanitizer component implementations.
+ * Commonly, sanitizers are implemented for stripping offensive vocabulary from
+ * content or for removing malicious HTML content, such as cross-site scripting
+ * (CSS). Multiple implementations can be deployed in a hook plugin and
+ * specified in a comma separated list of values for the
+ * <code>sanitizer.impl</code> portal property (see <a
+ * href="http://docs.liferay.com/portal/6.2/propertiesdoc/portal.properties.html#Sanitizer">Sanitizer</a>).
+ * All installed sanitizers are chained.
  *
  * @author Zsolt Balogh
  * @author Brian Wing Shun Chan
@@ -38,9 +41,10 @@ public interface Sanitizer {
 	public static final String MODE_XSS = "XSS";
 
 	/**
-	 * Returns the sanitized content as a byte array.
+	 * Returns the sanitized content as a byte array. Implementations may modify
+	 * the input byte array.
 	 *
-	 * @param  companyId the primary key of the company
+	 * @param  companyId the primary key of the portal instance
 	 * @param  groupId the primary key of the site's group
 	 * @param  userId the user who changed the content
 	 * @param  className the class name of the content model implementation
@@ -48,9 +52,10 @@ public interface Sanitizer {
 	 *         <code>0</code> if not available
 	 * @param  contentType the content type. For more information, see {@link
 	 *         com.liferay.portal.kernel.util.ContentTypes}.
-	 * @param  modes the sanitizer modes
+	 * @param  modes ways in which to run the sanitizer, such as {@link
+	 *         #MODE_ALL}, {@link #MODE_BAD_WORDS}, and/or {@link #MODE_XSS}
 	 * @param  bytes the content to be sanitized
-	 * @param  options the options map
+	 * @param  options a map of options for the sanitizer
 	 * @return the sanitized content
 	 * @throws SanitizerException if a sanitizer exception occurred
 	 */
@@ -61,10 +66,10 @@ public interface Sanitizer {
 		throws SanitizerException;
 
 	/**
-	 * Sanitizes the input stream content and streams the result as the output
+	 * Sanitizes the input stream content, assigning the results to the output
 	 * stream.
 	 *
-	 * @param  companyId the primary key of the company
+	 * @param  companyId the primary key of the portal instance
 	 * @param  groupId the primary key of the site's group
 	 * @param  userId the user who changed the content
 	 * @param  className the class name of the content model implementation
@@ -72,10 +77,11 @@ public interface Sanitizer {
 	 *         <code>0</code> if not available
 	 * @param  contentType the content type. For more information, see {@link
 	 *         com.liferay.portal.kernel.util.ContentTypes}.
-	 * @param  modes the sanitizer modes
+	 * @param  modes ways in which to run the sanitizer, such as {@link
+	 *         #MODE_ALL}, {@link #MODE_BAD_WORDS}, and/or {@link #MODE_XSS}
 	 * @param  inputStream the content to be sanitized
 	 * @param  outputStream the result of the sanitizing process
-	 * @param  options the options map
+	 * @param  options a map of options for the sanitizer
 	 * @throws SanitizerException if a sanitizer exception occurred
 	 */
 	public void sanitize(
@@ -88,7 +94,7 @@ public interface Sanitizer {
 	/**
 	 * Returns the sanitized content as a string.
 	 *
-	 * @param  companyId the primary key of the company
+	 * @param  companyId the primary key of the portal instance
 	 * @param  groupId the primary key of the site's group
 	 * @param  userId the user who changed the content
 	 * @param  className the class name of the content model implementation
@@ -96,7 +102,8 @@ public interface Sanitizer {
 	 *         <code>0</code> if not available
 	 * @param  contentType the content type. For more information, see {@link
 	 *         com.liferay.portal.kernel.util.ContentTypes}.
-	 * @param  modes the sanitizer modes
+	 * @param  modes ways in which to run the sanitizer, such as {@link
+	 *         #MODE_ALL}, {@link #MODE_BAD_WORDS}, and/or {@link #MODE_XSS}
 	 * @param  s the content to sanitize
 	 * @param  options the options map
 	 * @return the sanitized content

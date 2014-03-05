@@ -106,32 +106,6 @@ public class PortletURLImpl
 		_secure = PortalUtil.isSecure(request);
 		_wsrp = ParamUtil.getBoolean(request, "wsrp");
 
-		Portlet portlet = getPortlet();
-
-		if (portlet != null) {
-			Set<String> autopropagatedParameters =
-				portlet.getAutopropagatedParameters();
-
-			for (String autopropagatedParameter : autopropagatedParameters) {
-				if (PortalUtil.isReservedParameter(autopropagatedParameter)) {
-					continue;
-				}
-
-				String value = request.getParameter(autopropagatedParameter);
-
-				if (value != null) {
-					setParameter(autopropagatedParameter, value);
-				}
-			}
-
-			PortletApp portletApp = portlet.getPortletApp();
-
-			_escapeXml = MapUtil.getBoolean(
-				portletApp.getContainerRuntimeOptions(),
-				LiferayPortletConfig.RUNTIME_OPTION_ESCAPE_XML,
-				PropsValues.PORTLET_URL_ESCAPE_XML);
-		}
-
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
 		if ((layout != null) && (layout.getPlid() == _plid) &&
@@ -388,7 +362,28 @@ public class PortletURLImpl
 
 	@Override
 	public boolean isEscapeXml() {
-		return _escapeXml;
+		if (_escapeXml != null) {
+			return _escapeXml.booleanValue();
+		}
+
+		Portlet portlet = getPortlet();
+
+		if (portlet == null) {
+			return PropsValues.PORTLET_URL_ESCAPE_XML;
+		}
+
+		if (_portletAppEscapeXML != null) {
+			return _portletAppEscapeXML.booleanValue();
+		}
+
+		PortletApp portletApp = portlet.getPortletApp();
+
+		_portletAppEscapeXML = MapUtil.getBoolean(
+			portletApp.getContainerRuntimeOptions(),
+			LiferayPortletConfig.RUNTIME_OPTION_ESCAPE_XML,
+			PropsValues.PORTLET_URL_ESCAPE_XML);
+
+		return _portletAppEscapeXML;
 	}
 
 	@Override
@@ -412,28 +407,7 @@ public class PortletURLImpl
 			throw new IllegalArgumentException();
 		}
 
-		Portlet portlet = getPortlet();
-
-		if (portlet == null) {
-			return;
-		}
-
-		PublicRenderParameter publicRenderParameter =
-			portlet.getPublicRenderParameter(name);
-
-		if (publicRenderParameter == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Public parameter " + name + "does not exist");
-			}
-
-			return;
-		}
-
-		QName qName = publicRenderParameter.getQName();
-
-		_removePublicRenderParameters.put(
-			PortletQNameUtil.getRemovePublicRenderParameterName(qName),
-			new String[] {"1"});
+		_removePublicRenderParameters.put(name, new String[] {"1"});
 	}
 
 	@Override
@@ -527,7 +501,7 @@ public class PortletURLImpl
 
 	@Override
 	public void setEscapeXml(boolean escapeXml) {
-		_escapeXml = escapeXml;
+		_escapeXml = Boolean.valueOf(escapeXml);
 
 		clearCache();
 	}
@@ -627,12 +601,18 @@ public class PortletURLImpl
 	public void setPlid(long plid) {
 		_plid = plid;
 
+		_layout = null;
+		_layoutFriendlyURL = null;
+
 		clearCache();
 	}
 
 	@Override
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
+
+		_portlet = null;
+		_portletAppEscapeXML = null;
 
 		clearCache();
 	}
@@ -744,14 +724,14 @@ public class PortletURLImpl
 
 	@Override
 	public void write(Writer writer) throws IOException {
-		write(writer, _escapeXml);
+		write(writer, isEscapeXml());
 	}
 
 	@Override
 	public void write(Writer writer, boolean escapeXml) throws IOException {
 		String toString = toString();
 
-		if (escapeXml && !_escapeXml) {
+		if (escapeXml && !isEscapeXml()) {
 			toString = HtmlUtil.escape(toString);
 		}
 
@@ -1052,6 +1032,8 @@ public class PortletURLImpl
 			sb.append(StringPool.AMPERSAND);
 		}
 
+		Portlet portlet = getPortlet();
+
 		for (Map.Entry<String, String[]> entry :
 				_removePublicRenderParameters.entrySet()) {
 
@@ -1063,19 +1045,42 @@ public class PortletURLImpl
 				sb.append(StringPool.AMPERSAND);
 			}
 
-			sb.append(HttpUtil.encodeURL(entry.getKey()));
+			String name = entry.getKey();
+
+			PublicRenderParameter publicRenderParameter =
+				portlet.getPublicRenderParameter(name);
+
+			if (publicRenderParameter == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Public parameter " + name + "does not exist");
+				}
+
+				continue;
+			}
+
+			String removePublicRenderParameterName =
+				PortletQNameUtil.getRemovePublicRenderParameterName(
+					publicRenderParameter.getQName());
+
+			sb.append(HttpUtil.encodeURL(removePublicRenderParameterName));
+
 			sb.append(StringPool.EQUAL);
 			sb.append(processValue(key, entry.getValue()[0]));
 			sb.append(StringPool.AMPERSAND);
 		}
 
+		Map<String, String[]> params = new LinkedHashMap<String, String[]>(
+			_params);
+
 		if (_copyCurrentRenderParameters) {
-			mergeRenderParameters();
+			mergeRenderParameters(params);
 		}
+
+		mergeAutopropagatedParameters(params);
 
 		int previousSbIndex = sb.index();
 
-		for (Map.Entry<String, String[]> entry : _params.entrySet()) {
+		for (Map.Entry<String, String[]> entry : params.entrySet()) {
 			String name = entry.getKey();
 			String[] values = entry.getValue();
 
@@ -1163,7 +1168,7 @@ public class PortletURLImpl
 				result, _request.getSession().getId());
 		}
 
-		if (_escapeXml) {
+		if (isEscapeXml()) {
 			result = HtmlUtil.escape(result);
 		}
 
@@ -1236,15 +1241,20 @@ public class PortletURLImpl
 			}
 		}
 
+		Map<String, String[]> params = new LinkedHashMap<String, String[]>(
+			_params);
+
 		if (_copyCurrentRenderParameters) {
-			mergeRenderParameters();
+			mergeRenderParameters(params);
 		}
+
+		mergeAutopropagatedParameters(params);
 
 		StringBundler parameterSb = new StringBundler();
 
 		int previousSbIndex = sb.index();
 
-		for (Map.Entry<String, String[]> entry : _params.entrySet()) {
+		for (Map.Entry<String, String[]> entry : params.entrySet()) {
 			String name = entry.getKey();
 			String[] values = entry.getValue();
 
@@ -1330,13 +1340,47 @@ public class PortletURLImpl
 		}
 	}
 
-	protected void mergeRenderParameters() {
+	protected void mergeAutopropagatedParameters(Map<String, String[]> params) {
+		Portlet portlet = getPortlet();
+
+		Set<String> autopropagatedParameters =
+			portlet.getAutopropagatedParameters();
+
+		for (String autopropagatedParameter : autopropagatedParameters) {
+			if (PortalUtil.isReservedParameter(autopropagatedParameter)) {
+				continue;
+			}
+
+			String value = _request.getParameter(autopropagatedParameter);
+
+			if (value == null) {
+				continue;
+			}
+
+			String[] originalValue = new String[]{value};
+			String[] updatedValue = params.get(autopropagatedParameter);
+
+			if (updatedValue == null) {
+				params.put(autopropagatedParameter, originalValue);
+			}
+			else if (PropsValues.PORTLET_URL_APPEND_PARAMETERS) {
+				String[] newValues = ArrayUtil.append(
+					originalValue, updatedValue);
+
+				params.put(autopropagatedParameter, newValues);
+			}
+		}
+	}
+
+	protected void mergeRenderParameters(Map<String, String[]> params) {
 		String namespace = getNamespace();
 
 		Layout layout = getLayout();
 
+		Portlet portlet = getPortlet();
+
 		Map<String, String[]> renderParameters = RenderParametersPool.get(
-			_request, layout.getPlid(), getPortlet().getPortletId());
+			_request, layout.getPlid(), portlet.getPortletId());
 
 		for (Map.Entry<String, String[]> entry : renderParameters.entrySet()) {
 			String name = entry.getKey();
@@ -1353,18 +1397,18 @@ public class PortletURLImpl
 			}
 
 			String[] oldValues = entry.getValue();
-			String[] newValues = _params.get(name);
+			String[] newValues = params.get(name);
 
 			if (newValues == null) {
-				_params.put(name, oldValues);
+				params.put(name, oldValues);
 			}
 			else if (isBlankValue(newValues)) {
-				_params.remove(name);
+				params.remove(name);
 			}
 			else {
 				newValues = ArrayUtil.append(newValues, oldValues);
 
-				_params.put(name, newValues);
+				params.put(name, newValues);
 			}
 		}
 	}
@@ -1465,7 +1509,7 @@ public class PortletURLImpl
 	private long _doAsUserId;
 	private String _doAsUserLanguageId;
 	private boolean _encrypt;
-	private boolean _escapeXml = PropsValues.PORTLET_URL_ESCAPE_XML;
+	private Boolean _escapeXml;
 	private Layout _layout;
 	private String _layoutFriendlyURL;
 	private String _lifecycle;
@@ -1474,6 +1518,7 @@ public class PortletURLImpl
 	private Map<String, String[]> _params;
 	private long _plid;
 	private Portlet _portlet;
+	private Boolean _portletAppEscapeXML;
 	private String _portletId;
 	private String _portletModeString;
 	private PortletRequest _portletRequest;

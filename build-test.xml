@@ -54,6 +54,85 @@
 		</catch>
 	</trycatch>
 
+	<macrodef name="prepare-fix-pack-bundle" >
+		<sequential>
+			<if>
+				<and>
+					<isset property="test.fix.pack.base.url" />
+					<isset property="test.fix.pack.zip.name" />
+				</and>
+				<then>
+					<property name="test.build.fix.pack.zip.url" value="${test.fix.pack.base.url}${test.fix.pack.zip.name}" />
+				</then>
+			</if>
+
+			<if>
+				<and>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<matches pattern="http" string="${test.build.fix.pack.zip.url}" />
+				</and>
+				<then>
+					<path id="app.server.dir">
+						<dirset dir="${app.server.parent.dir}">
+							<include name="*${app.server.type}-*" />
+						</dirset>
+					</path>
+
+					<property name="app.server.dir" refid="app.server.dir" />
+
+					<delete dir="${app.server.dir}/patching-tool" />
+
+					<get
+						dest="${basedir}"
+						src="${test.build.patching.tool.zip.url}"
+					/>
+
+					<unzip dest="${app.server.dir}">
+						<fileset
+							dir="${basedir}"
+							includes="patching-tool*"
+						/>
+					</unzip>
+
+					<chmod perm="a+x">
+						<fileset dir="${app.server.dir}/patching-tool">
+							<include name="*.sh" />
+						</fileset>
+					</chmod>
+
+					<get
+						dest="${app.server.dir}/patching-tool/patches"
+						src="${test.build.fix.pack.zip.url}"
+					/>
+
+					<propertyregex
+						input="${test.build.fix.pack.zip.url}"
+						property="test.build.fix.pack.zip.file.name"
+						regexp=".+/"
+						replace=""
+					/>
+
+					<check-fix-pack-requirements
+						fix.pack.dir="${app.server.dir}/patching-tool/patches"
+						fix.pack.file.name="${test.build.fix.pack.zip.file.name}"
+					/>
+
+					<execute dir="${app.server.dir}/patching-tool">
+						patching-tool${file.suffix.bat} auto-discovery
+						patching-tool${file.suffix.bat} install -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+
+					<antelope:stringutil property="patching.tool.zip.file.name" string="${test.build.patching.tool.zip.url}">
+						<antelope:replace regex=".+/patching-tool-" replacement="patching-tool-" />
+					</antelope:stringutil>
+
+					<delete file="${basedir}/${patching.tool.zip.file.name}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-test-cluster-bundle">
 		<sequential>
 			<copy todir="${app.server.parent.dir}-node-2">
@@ -1090,6 +1169,8 @@ create database lportal2 character set utf8;</echo>
 	</target>
 
 	<target name="prepare-portal-ext-properties" depends="generate-test-properties">
+		<prepare-fix-pack-bundle />
+
 		<echo file="portal-impl/src/portal-ext.properties">liferay.home=${liferay.home}
 
 plugin.notifications.enabled=false
@@ -1945,72 +2026,7 @@ tck.url=true</echo>
 					</then>
 				</if>
 
-				<if>
-					<and>
-						<equals arg1="${app.server.type}" arg2="tomcat" />
-						<matches pattern="http" string="${test.build.fix.pack.zip.url}" />
-					</and>
-					<then>
-						<path id="app.server.dir">
-							<dirset dir="${app.server.parent.dir}">
-								<include name="*${app.server.type}-*" />
-							</dirset>
-						</path>
-
-						<property name="app.server.dir" refid="app.server.dir" />
-
-						<delete dir="${app.server.dir}/patching-tool" />
-
-						<get
-							dest="${basedir}"
-							src="${test.build.patching.tool.zip.url}"
-						/>
-
-						<unzip dest="${app.server.dir}">
-							<fileset
-								dir="${basedir}"
-								includes="patching-tool*"
-							/>
-						</unzip>
-
-						<chmod perm="a+x">
-							<fileset dir="${app.server.dir}/patching-tool">
-								<include name="*.sh" />
-							</fileset>
-						</chmod>
-
-						<get
-							dest="${app.server.dir}/patching-tool/patches"
-							src="${test.build.fix.pack.zip.url}"
-						/>
-
-						<propertyregex
-							input="${test.build.fix.pack.zip.url}"
-							property="test.build.fix.pack.zip.file.name"
-							regexp=".+/"
-							replace=""
-						/>
-
-						<check-fix-pack-requirements
-							fix.pack.dir="${app.server.dir}/patching-tool/patches"
-							fix.pack.file.name="${test.build.fix.pack.zip.file.name}"
-						/>
-
-						<execute dir="${app.server.dir}/patching-tool">
-							patching-tool${file.suffix.bat} auto-discovery
-							patching-tool${file.suffix.bat} install -force
-							patching-tool${file.suffix.bat} update-plugins
-						</execute>
-
-						<antelope:stringutil property="patching.tool.zip.file.name" string="${test.build.patching.tool.zip.url}">
-							<antelope:replace regex=".+/patching-tool-" replacement="patching-tool-" />
-						</antelope:stringutil>
-
-						<delete file="${basedir}/${patching.tool.zip.file.name}" />
-					</then>
-				</if>
-
-				<delete file="${tstamp.value}.zip" />
+				<prepare-fix-pack-bundle />
 			</else>
 		</if>
 	</target>

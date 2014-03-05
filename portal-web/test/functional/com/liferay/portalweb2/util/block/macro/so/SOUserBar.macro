@@ -1,8 +1,40 @@
 <definition>
 	<command name="addSOSite">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-		<execute action="SOUserBar#selectFrameTop" />
-		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+
+		<if>
+			<condition action="SOUserBar#isElementPresent" locator-key1="GO_TO_ADD_SITE_BUTTON" />
+			<then>
+				<var name="goToMenuClickAttemptNumber" value="0" />
+
+				<while>
+					<not>
+						<condition action="SOUserBar#isVisible" locator-key1="GO_TO_ADD_SITE_BUTTON" />
+						<equals arg1="${goToMenuClickAttemptNumber}" arg2="5" />
+					</not>
+					<then>
+						<var name="goToMenuClickAttemptNumber" value="${goToMenuClickAttemptNumber?increment()}" />
+
+						<execute action="SOUserBar#selectFrameTop" />
+						<execute action="SOUserBar#click" locator-key1="GO_TO" />
+					</then>
+				</while>
+
+				<if>
+					<and>
+						<condition action="SOUserBar#isNotVisible" locator-key1="GO_TO_ADD_SITE_BUTTON" />
+						<equals arg1="${goToMenuClickAttemptNumber}" arg2="5" />
+					</and>
+					<then>
+						<fail message="Exceeded number of attempts to click on Go To menu successfully" />
+					</then>
+				</if>
+			</then>
+			<else>
+				<fail message="Add Site Button is either missing or using a different path from what the test is currently using.  Please investigate." />
+			</else>
+		</if>
+
 		<execute action="SOUserBar#click" locator-key1="GO_TO_ADD_SITE_BUTTON" />
 
 		<execute action="SOUserBarAddSite#selectFrameTop" />

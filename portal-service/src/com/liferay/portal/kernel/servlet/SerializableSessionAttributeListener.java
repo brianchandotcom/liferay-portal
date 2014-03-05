@@ -17,8 +17,6 @@ package com.liferay.portal.kernel.servlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.io.Serializable;
 
@@ -33,19 +31,9 @@ import javax.servlet.http.HttpSessionBindingEvent;
 public class SerializableSessionAttributeListener
 	implements HttpSessionAttributeListener {
 
-	public static void initialize() {
-		_SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE),
-			true);
-	}
-
 	@Override
 	public void attributeAdded(
 		HttpSessionBindingEvent httpSessionBindingEvent) {
-
-		if (!_SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE) {
-			return;
-		}
 
 		String name = httpSessionBindingEvent.getName();
 		Object value = httpSessionBindingEvent.getValue();
@@ -93,8 +81,6 @@ public class SerializableSessionAttributeListener
 
 	private static Log _log = LogFactoryUtil.getLog(
 		SerializableSessionAttributeListener.class);
-
-	private static boolean _SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE;
 
 	private Boolean _requiresSerializable;
 

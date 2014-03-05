@@ -17,7 +17,6 @@ package com.liferay.portlet.messageboards;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.Settings;
@@ -43,14 +42,12 @@ public class MBSettings implements Settings {
 
 	public String getEmailFromAddress() {
 		return _settings.getValue(
-			PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS,
-			PropsValues.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS);
+			"emailFromAddress", PropsValues.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS);
 	}
 
 	public String getEmailFromName() {
 		return _settings.getValue(
-			PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_NAME,
-			PropsValues.MESSAGE_BOARDS_EMAIL_FROM_NAME);
+			"emailFromName", PropsValues.MESSAGE_BOARDS_EMAIL_FROM_NAME);
 	}
 
 	public String getEmailMessageAddedBody() {

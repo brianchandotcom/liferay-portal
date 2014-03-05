@@ -26,6 +26,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.journal.lar.JournalArticleStagedModelDataHandlerTest;
@@ -50,8 +51,7 @@ public class ManifestSummaryTest
 	}
 
 	@Override
-	protected StagedModelAssets updateAssetEntry(
-			StagedModel stagedModel, Group group)
+	protected AssetEntry fetchAssetEntry(StagedModel stagedModel, Group group)
 		throws Exception {
 
 		return null;

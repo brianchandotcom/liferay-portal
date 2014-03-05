@@ -35,6 +35,7 @@ import java.util.Set;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -152,6 +153,13 @@ public class DLUtil {
 		return getDL().getDLFolderControlPanelLink(portletRequest, folderId);
 	}
 
+	public static Map<String, String> getEmailDefinitionTerms(
+		RenderRequest request, String emailFromAddress, String emailFromName) {
+
+		return getDL().getEmailDefinitionTerms(
+			request, emailFromAddress, emailFromName);
+	}
+
 	public static Map<Locale, String> getEmailFileEntryAddedBodyMap(
 		PortletPreferences preferences) {
 
@@ -200,6 +208,13 @@ public class DLUtil {
 		throws SystemException {
 
 		return getDL().getEmailFromAddress(preferences, companyId);
+	}
+
+	public static Map<String, String> getEmailFromDefinitionTerms(
+		RenderRequest request, String emailFromAddress, String emailFromName) {
+
+		return getDL().getEmailFromDefinitionTerms(
+			request, emailFromAddress, emailFromName);
 	}
 
 	public static String getEmailFromName(

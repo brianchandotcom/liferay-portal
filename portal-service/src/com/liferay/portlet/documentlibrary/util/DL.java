@@ -35,6 +35,7 @@ import java.util.Set;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -111,6 +112,9 @@ public interface DL {
 			PortletRequest portletRequest, long folderId)
 		throws PortalException, SystemException;
 
+	public Map<String, String> getEmailDefinitionTerms(
+		RenderRequest request, String emailFromAddress, String emailFromName);
+
 	public Map<Locale, String> getEmailFileEntryAddedBodyMap(
 		PortletPreferences preferences);
 
@@ -132,6 +136,9 @@ public interface DL {
 	public String getEmailFromAddress(
 			PortletPreferences preferences, long companyId)
 		throws SystemException;
+
+	public Map<String, String> getEmailFromDefinitionTerms(
+		RenderRequest request, String emailFromAddress, String emailFromName);
 
 	public String getEmailFromName(
 			PortletPreferences preferences, long companyId)

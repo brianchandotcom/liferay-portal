@@ -273,6 +273,8 @@ public class VerifyProperties extends VerifyProcess {
 		"dynamic.data.mapping.template.language.types",
 		"editor.wysiwyg.portal-web.docroot.html.portlet.blogs.configuration." +
 			"jsp",
+		"editor.wysiwyg.portal-web.docroot.html.portlet.document_library." +
+			"configuration.jsp",
 		"editor.wysiwyg.portal-web.docroot.html.portlet.login.configuration." +
 			"jsp",
 		"ehcache.statistics.enabled", "index.filter.search.limit",

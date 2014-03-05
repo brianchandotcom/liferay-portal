@@ -46,7 +46,7 @@ public class UpgradePortletSettings extends UpgradeProcess {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append("update PortletPreferences portletId = '");
+		sb.append("update PortletPreferences set portletId = '");
 		sb.append(serviceName);
 		sb.append("' where ownerType = ");
 		sb.append(PortletKeys.PREFS_OWNER_TYPE_GROUP);

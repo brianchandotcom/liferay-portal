@@ -15,11 +15,8 @@
 package com.liferay.portlet.sitesadmin.lar;
 
 import com.liferay.portal.kernel.lar.StagedModelType;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.impl.GroupImpl;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
@@ -40,18 +37,8 @@ public class StagedGroupImpl extends GroupImpl implements StagedGroup {
 	}
 
 	@Override
-	public long getCompanyId() {
-		return CompanyThreadLocal.getCompanyId();
-	}
-
-	@Override
 	public Date getCreateDate() {
 		return new Date();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return null;
 	}
 
 	@Override
@@ -70,18 +57,8 @@ public class StagedGroupImpl extends GroupImpl implements StagedGroup {
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _group.getPrimaryKeyObj();
-	}
-
-	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(StagedGroup.class);
-	}
-
-	@Override
-	public String getUuid() {
-		return StringPool.BLANK;
 	}
 
 	@Override

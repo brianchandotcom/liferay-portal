@@ -24,6 +24,7 @@ public class BookmarksUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public BookmarksUserNotificationHandler() {
+		setOpenDialog(false);
 		setPortletId(PortletKeys.BOOKMARKS);
 	}
 

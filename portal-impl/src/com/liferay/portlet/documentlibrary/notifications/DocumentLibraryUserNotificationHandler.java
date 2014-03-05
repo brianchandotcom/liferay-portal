@@ -24,6 +24,7 @@ public class DocumentLibraryUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public DocumentLibraryUserNotificationHandler() {
+		setOpenDialog(false);
 		setPortletId(PortletKeys.DOCUMENT_LIBRARY);
 	}
 

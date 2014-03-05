@@ -24,6 +24,7 @@ public class JournalUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public JournalUserNotificationHandler() {
+		setOpenDialog(false);
 		setPortletId(PortletKeys.JOURNAL);
 	}
 

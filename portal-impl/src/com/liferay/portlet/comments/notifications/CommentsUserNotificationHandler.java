@@ -35,6 +35,7 @@ public class CommentsUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public CommentsUserNotificationHandler() {
+		setOpenDialog(false);
 		setPortletId(PortletKeys.COMMENTS);
 	}
 

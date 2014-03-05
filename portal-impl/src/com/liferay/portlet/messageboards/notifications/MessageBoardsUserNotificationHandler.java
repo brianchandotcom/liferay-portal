@@ -24,6 +24,7 @@ public class MessageBoardsUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public MessageBoardsUserNotificationHandler() {
+		setOpenDialog(false);
 		setPortletId(PortletKeys.MESSAGE_BOARDS);
 	}
 

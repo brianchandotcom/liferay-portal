@@ -24,6 +24,7 @@ public class BlogsUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public BlogsUserNotificationHandler() {
+		setOpenDialog(false);
 		setPortletId(PortletKeys.BLOGS);
 	}
 

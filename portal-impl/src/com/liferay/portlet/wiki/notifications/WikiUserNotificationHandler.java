@@ -24,6 +24,7 @@ public class WikiUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public WikiUserNotificationHandler() {
+		setOpenDialog(false);
 		setPortletId(PortletKeys.WIKI);
 	}
 

@@ -107,7 +107,7 @@ public class UploadImageAction extends PortletAction {
 				long maxFileSize = ParamUtil.getLong(
 					actionRequest, "maxFileSize");
 
-				if (fileEntry.getSize() > (maxFileSize * 1024)) {
+				if (fileEntry.getSize() > maxFileSize) {
 					throw new FileSizeException();
 				}
 

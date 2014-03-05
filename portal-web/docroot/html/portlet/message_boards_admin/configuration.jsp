@@ -104,7 +104,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 				<dl>
 
 					<%
-					Map<String, String> emailDefinitionTerms = MBUtil.getEmailFromDefinitionTerms(renderRequest, emailFromAddress, emailFromName, PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED);
+					Map<String, String> emailDefinitionTerms = MBUtil.getEmailFromDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
 
 					for (Map.Entry<String, String> entry : emailDefinitionTerms.entrySet()) {
 					%>
@@ -125,7 +125,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		</liferay-ui:section>
 
 		<%
-		Map<String, String> emailDefinitionTerms = MBUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED, !PropsValues.MESSAGE_BOARDS_EMAIL_BULK);
+		Map<String, String> emailDefinitionTerms = MBUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
 		%>
 
 		<liferay-ui:section>

@@ -351,8 +351,7 @@ public class MBUtil {
 	}
 
 	public static Map<String, String> getEmailDefinitionTerms(
-		RenderRequest request, String emailFromAddress, String emailFromName,
-		boolean showMailingListTerm, boolean showBulkTerms) {
+		RenderRequest request, String emailFromAddress, String emailFromName) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -383,7 +382,7 @@ public class MBUtil {
 			"[$FROM_ADDRESS$]", HtmlUtil.escape(emailFromAddress));
 		definitionTerms.put("[$FROM_NAME$]", HtmlUtil.escape(emailFromName));
 
-		if (showMailingListTerm) {
+		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
 			definitionTerms.put(
 				"[$MAILING_LIST_ADDRESS$]",
 				LanguageUtil.get(
@@ -425,7 +424,7 @@ public class MBUtil {
 				themeDisplay.getLocale(),
 				"the-site-name-associated-with-the-message-board"));
 
-		if (showBulkTerms) {
+		if (!PropsValues.MESSAGE_BOARDS_EMAIL_BULK) {
 			definitionTerms.put(
 				"[$TO_ADDRESS$]",
 				LanguageUtil.get(
@@ -442,8 +441,7 @@ public class MBUtil {
 	}
 
 	public static Map<String, String> getEmailFromDefinitionTerms(
-		RenderRequest request, String emailFromAddress, String emailFromName,
-		boolean showMailingListTerm) {
+		RenderRequest request, String emailFromAddress, String emailFromName) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -466,7 +464,7 @@ public class MBUtil {
 				themeDisplay.getLocale(),
 				"the-company-name-associated-with-the-message-board"));
 
-		if (showMailingListTerm) {
+		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
 			definitionTerms.put(
 				"[$MAILING_LIST_ADDRESS$]",
 				LanguageUtil.get(

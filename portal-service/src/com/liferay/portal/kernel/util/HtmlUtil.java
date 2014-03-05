@@ -33,7 +33,8 @@ public class HtmlUtil {
 	 * Escapes the HTML text so that it is safe to use in an HTML context.
 	 *
 	 * @param  html the HTML text to escape
-	 * @return the escaped HTML text
+	 * @return the escaped HTML text, or <code>null</code> if the HTML text is
+	 *         <code>null</code>
 	 */
 	public static String escape(String html) {
 		return getHtml().escape(html);
@@ -52,7 +53,7 @@ public class HtmlUtil {
 	 *         types and their corresponding integer values, visit {@link
 	 *         HtmlImpl}.
 	 * @return the escaped hexadecimal value of the input text, based on the
-	 *         mode
+	 *         mode, or <code>null</code> if the HTML text is <code>null</code>
 	 */
 	public static String escape(String html, int mode) {
 		return getHtml().escape(html, mode);
@@ -62,7 +63,8 @@ public class HtmlUtil {
 	 * Escapes the attribute value so that it is safe to use in an HTML context.
 	 *
 	 * @param  attribute the HTML attribute to escape
-	 * @return the escaped attribute value
+	 * @return the escaped attribute value, or <code>null</code> if the
+	 *         attribute value is <code>null</code>
 	 */
 	public static String escapeAttribute(String attribute) {
 		return getHtml().escapeAttribute(attribute);
@@ -72,7 +74,8 @@ public class HtmlUtil {
 	 * Escapes the CSS value so that it is safe to use in a CSS context.
 	 *
 	 * @param  css the CSS value to escape
-	 * @return the escaped CSS value
+	 * @return the escaped CSS value, or <code>null</code> if the CSS value is
+	 *         <code>null</code>
 	 */
 	public static String escapeCSS(String css) {
 		return getHtml().escapeCSS(css);
@@ -82,7 +85,8 @@ public class HtmlUtil {
 	 * Escapes the HREF attribute so that it is safe to use as a URL.
 	 *
 	 * @param  href the HREF attribute to escape
-	 * @return the escaped HREF attribute
+	 * @return the escaped HREF attribute, or <code>null</code> if the HREF
+	 *         attribute is <code>null</code>
 	 */
 	public static String escapeHREF(String href) {
 		return getHtml().escapeHREF(href);
@@ -93,7 +97,8 @@ public class HtmlUtil {
 	 * context.
 	 *
 	 * @param  js the JavaScript value to escape
-	 * @return the escaped JavaScript value
+	 * @return the escaped JavaScript value, or <code>null</code> if the
+	 *         JavaScript value is <code>null</code>
 	 */
 	public static String escapeJS(String js) {
 		return getHtml().escapeJS(js);
@@ -103,7 +108,8 @@ public class HtmlUtil {
 	 * Escapes the URL value so that it is safe to use as a URL.
 	 *
 	 * @param  url the URL value to escape
-	 * @return the escaped URL value
+	 * @return the escaped URL value, or <code>null</code> if the URL value is
+	 *         <code>null</code>
 	 */
 	public static String escapeURL(String url) {
 		return getHtml().escapeURL(url);
@@ -127,7 +133,8 @@ public class HtmlUtil {
 	 * </p>
 	 *
 	 * @param  html the HTML text
-	 * @return the raw text from the HTML input
+	 * @return the raw text from the HTML input, or <code>null</code> if the
+	 *         HTML input is <code>null</code>
 	 */
 	public static String extractText(String html) {
 		return getHtml().extractText(html);
@@ -156,7 +163,8 @@ public class HtmlUtil {
 	 * </p>
 	 *
 	 * @param  html the HTML text
-	 * @return the rendered HTML text
+	 * @return the rendered HTML text, or <code>null</code> if the HTML text is
+	 *         <code>null</code>
 	 */
 	public static String render(String html) {
 		return getHtml().render(html);
@@ -167,7 +175,8 @@ public class HtmlUtil {
 	 * or characters.
 	 *
 	 * @param  html the HTML text
-	 * @return the converted HTML text
+	 * @return the converted HTML text, or <code>null</code> if the HTML text is
+	 *         <code>null</code>
 	 */
 	public static String replaceMsWordCharacters(String html) {
 		return getHtml().replaceMsWordCharacters(html);
@@ -178,7 +187,8 @@ public class HtmlUtil {
 	 * HTML tag.
 	 *
 	 * @param  html the HTML text
-	 * @return the converted HTML text
+	 * @return the converted HTML text, or <code>null</code> if the HTML text is
+	 *         <code>null</code>
 	 */
 	public static String replaceNewLine(String html) {
 		return getHtml().replaceNewLine(html);
@@ -197,7 +207,8 @@ public class HtmlUtil {
 	 * @param  html the HTML text
 	 * @param  tag the tag used for delimiting, which should only be the tag's
 	 *         name (e.g. no &lt;)
-	 * @return the HTML text, without the stripped tag and its contents
+	 * @return the HTML text, without the stripped tag and its contents, or
+	 *         <code>null</code> if the HTML text is <code>null</code>
 	 */
 	public static String stripBetween(String html, String tag) {
 		return getHtml().stripBetween(html, tag);
@@ -207,7 +218,8 @@ public class HtmlUtil {
 	 * Strips all XML comments out of the HTML text.
 	 *
 	 * @param  html the HTML text
-	 * @return the HTML text, without the stripped XML comments
+	 * @return the HTML text, without the stripped XML comments, or
+	 *         <code>null</code> if the HTML text is <code>null</code>
 	 */
 	public static String stripComments(String html) {
 		return getHtml().stripComments(html);
@@ -226,7 +238,8 @@ public class HtmlUtil {
 	 * </p>
 	 *
 	 * @param  html the HTML text
-	 * @return the encoded text that is safe to use as an input field value
+	 * @return the encoded text that is safe to use as an input field value, or
+	 *         <code>null</code> if the HTML text is <code>null</code>
 	 */
 	public static String toInputSafe(String html) {
 		return getHtml().toInputSafe(html);

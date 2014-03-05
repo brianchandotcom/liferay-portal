@@ -60,7 +60,8 @@ public class HtmlImpl implements Html {
 	 * Escapes the HTML text so that it is safe to use in an HTML context.
 	 *
 	 * @param  text the HTML text to escape
-	 * @return the escaped HTML text
+	 * @return the escaped HTML text, or <code>null</code> if the text is
+	 *         <code>null</code>
 	 */
 	@Override
 	public String escape(String text) {
@@ -165,7 +166,7 @@ public class HtmlImpl implements Html {
 	 * @param  type the encoding type, which can be chosen from the
 	 *         <code>ESCAPE_MODE_*</code> constants in this class
 	 * @return the escaped hexadecimal value of the input text, based on the
-	 *         mode
+	 *         mode, or <code>null</code> if the text is <code>null</code>
 	 */
 	@Override
 	public String escape(String text, int type) {
@@ -233,7 +234,8 @@ public class HtmlImpl implements Html {
 	 * Escapes the attribute value so that it is safe to use in an HTML context.
 	 *
 	 * @param  attribute the HTML attribute to escape
-	 * @return the escaped attribute value
+	 * @return the escaped attribute value, or <code>null</code> if the
+	 *         attribute value is <code>null</code>
 	 */
 	@Override
 	public String escapeAttribute(String attribute) {
@@ -244,7 +246,8 @@ public class HtmlImpl implements Html {
 	 * Escapes the CSS value so that it is safe to use in a CSS context.
 	 *
 	 * @param  css the CSS value to escape
-	 * @return the escaped CSS value
+	 * @return the escaped CSS value, or <code>null</code> if the css value is
+	 *         <code>null</code>
 	 */
 	@Override
 	public String escapeCSS(String css) {
@@ -255,7 +258,8 @@ public class HtmlImpl implements Html {
 	 * Escapes the HREF attribute so that it is safe to use as a URL.
 	 *
 	 * @param  href the HREF attribute to escape
-	 * @return the escaped HREF attribute
+	 * @return the escaped HREF attribute, or <code>null</code> if the HREF
+	 *         attribute is <code>null</code>
 	 */
 	@Override
 	public String escapeHREF(String href) {
@@ -283,7 +287,8 @@ public class HtmlImpl implements Html {
 	 * context.
 	 *
 	 * @param  js the JavaScript value to escape
-	 * @return the escaped JavaScript value
+	 * @return the escaped JavaScript value, or <code>null</code> if the
+	 *         JavaScript value is <code>null</code>
 	 */
 	@Override
 	public String escapeJS(String js) {
@@ -294,7 +299,8 @@ public class HtmlImpl implements Html {
 	 * Escapes the URL value so that it is safe to use as a URL.
 	 *
 	 * @param  url the URL value to escape
-	 * @return the escaped URL value
+	 * @return the escaped URL value, or <code>null</code> if the URL value is
+	 *         <code>null</code>
 	 */
 	@Override
 	public String escapeURL(String url) {
@@ -363,7 +369,8 @@ public class HtmlImpl implements Html {
 	 * </p>
 	 *
 	 * @param  html the HTML text
-	 * @return the raw text from the HTML input
+	 * @return the raw text from the HTML input, or <code>null</code> if the
+	 *         HTML input is <code>null</code>
 	 */
 	@Override
 	public String extractText(String html) {
@@ -396,7 +403,8 @@ public class HtmlImpl implements Html {
 	 * </p>
 	 *
 	 * @param  html the HTML text
-	 * @return the rendered HTML text
+	 * @return the rendered HTML text, or <code>null</code> if the HTML text is
+	 *         <code>null</code>
 	 */
 	@Override
 	public String render(String html) {
@@ -415,7 +423,9 @@ public class HtmlImpl implements Html {
 	 * Replaces the Microsoft Word unicode characters with plain HTML entities
 	 * or characters.
 	 *
-	 * @return the converted HTML text
+	 * @param  text the HTML text
+	 * @return the converted HTML text, or <code>null</code> if the text is
+	 *         <code>null</code>
 	 */
 	@Override
 	public String replaceMsWordCharacters(String text) {
@@ -426,7 +436,9 @@ public class HtmlImpl implements Html {
 	 * Replaces all new lines or carriage returns with the <code><br /></code>
 	 * HTML tag.
 	 *
-	 * @return the converted HTML text
+	 * @param  text the HTML text
+	 * @return the converted HTML text, or <code>null</code> if the text is
+	 *         <code>null</code>
 	 */
 	@Override
 	public String replaceNewLine(String text) {
@@ -447,9 +459,11 @@ public class HtmlImpl implements Html {
 	 * Self-closing tags remain in the result.
 	 * </p>
 	 *
+	 * @param  text the HTML text
 	 * @param  tag the tag used for delimiting, which should only be the tag's
 	 *         name (e.g. no &lt;)
-	 * @return the HTML text, without the stripped tag and its contents
+	 * @return the HTML text, without the stripped tag and its contents, or
+	 *         <code>null</code> if the text is <code>null</code>
 	 */
 	@Override
 	public String stripBetween(String text, String tag) {
@@ -459,7 +473,9 @@ public class HtmlImpl implements Html {
 	/**
 	 * Strips all XML comments out of the HTML text.
 	 *
-	 * @return the HTML text, without the stripped XML comments
+	 * @param  text the HTML text
+	 * @return the HTML text, without the stripped XML comments, or
+	 *         <code>null</code> if the text is <code>null</code>
 	 */
 	@Override
 	public String stripComments(String text) {
@@ -525,7 +541,9 @@ public class HtmlImpl implements Html {
 	 * <code>&amp;amp;</code>.
 	 * </p>
 	 *
-	 * @return the encoded text that is safe to use as an input field value
+	 * @param  text the HTML text
+	 * @return the encoded text that is safe to use as an input field value, or
+	 *         <code>null</code> if the text is <code>null</code>
 	 */
 	@Override
 	public String toInputSafe(String text) {

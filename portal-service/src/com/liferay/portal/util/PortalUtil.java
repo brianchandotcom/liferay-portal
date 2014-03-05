@@ -87,7 +87,8 @@ import javax.servlet.jsp.PageContext;
 public class PortalUtil {
 
 	/**
-	 * Appends the description to the current meta description of the page.
+	 * Appends the description to the current meta description of the page in
+	 * the request.
 	 *
 	 * @param description the description to append to the current meta
 	 *        description
@@ -100,7 +101,8 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Appends the keywords to the current meta keywords of the page.
+	 * Appends the keywords to the current meta keywords of the page in the
+	 * request.
 	 *
 	 * @param keywords the keywords to add to the current meta keywords
 	 *        (comma-separated)
@@ -113,7 +115,7 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Appends the subtitle to the current subtitle of the page.
+	 * Appends the subtitle to the current subtitle of the page in the request.
 	 *
 	 * @param subtitle the subtitle to append to the current subtitle
 	 * @param request the servlet request for the page
@@ -125,7 +127,7 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Appends the title to the current title of the page.
+	 * Appends the title to the current title of the page in the request.
 	 *
 	 * @param title the title to append to the current title
 	 * @param request the servlet request for the page
@@ -143,7 +145,7 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Adds the portal port event listener to the portal. The listener will be
+	 * Adds the portal port event listener to the portal. The listener is
 	 * notified whenever the portal port is set.
 	 *
 	 * @param      portalPortEventListener the portal port event listener to add
@@ -159,10 +161,10 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Adds an entry to the portlet breadcrumbs for the page.
+	 * Adds an entry to the portlet breadcrumbs for the page in the request.
 	 *
 	 * @param request the servlet request for the page
-	 * @param title the title of the new breakcrumb entry
+	 * @param title the title of the new breadcrumb entry
 	 * @param url the URL of the new breadcrumb entry
 	 */
 	public static void addPortletBreadcrumbEntry(
@@ -172,10 +174,10 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Adds an entry to the portlet breadcrumbs for the page.
+	 * Adds an entry to the portlet breadcrumbs for the page in the request.
 	 *
 	 * @param request the servlet request for the page
-	 * @param title the title of the new breakcrumb entry
+	 * @param title the title of the new breadcrumb entry
 	 * @param url the URL of the new breadcrumb entry
 	 * @param data the HTML5 data parameters of the new breadcrumb entry
 	 */
@@ -187,7 +189,8 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Adds the default resource permissions for the portlet to the page.
+	 * Adds the default resource permissions for the portlet to the page in the
+	 * request.
 	 *
 	 * @param  request the servlet request for the page
 	 * @param  portlet the portlet
@@ -218,7 +221,7 @@ public class PortalUtil {
 	 * </p>
 	 *
 	 * @param  themeDisplay the current theme display
-	 * @param  layout the current layout
+	 * @param  layout the current page
 	 * @param  url the URL
 	 * @param  doAsUser whether to include doAsUserId and doAsLanguageId in the
 	 *         URL if they are available. If <code>false</code>, doAsUserId and
@@ -279,8 +282,8 @@ public class PortalUtil {
 	 * allow the URL is allowed for redirects.
 	 *
 	 * @param  url the URL to escape
-	 * @return the escaped URL, or <code>null</code> if the URL is not an
-	 *         allowed for redirects
+	 * @return the escaped URL, or <code>null</code> if the URL is not allowed
+	 *         for redirects
 	 */
 	public static String escapeRedirect(String url) {
 		return getPortal().escapeRedirect(url);
@@ -389,7 +392,7 @@ public class PortalUtil {
 	 *
 	 * @param  resourcePermission the resource permission
 	 * @return the base model instance, or <code>null</code> if the resource
-	 *         permission does not have a base model instance (such as if its a
+	 *         permission does not have a base model instance (such as if it's a
 	 *         portlet)
 	 * @throws PortalException if a base model instance for the resource
 	 *         permission could not be found
@@ -408,7 +411,7 @@ public class PortalUtil {
 	 * @param  modelName the fully qualified class name of the model
 	 * @param  primKey the primary key of the model instance to get
 	 * @return the base model instance, or <code>null</code> if the model does
-	 *         not have a base model instance (such as if its a portlet)
+	 *         not have a base model instance (such as if it's a portlet)
 	 * @throws PortalException if a base model instance with the primary key
 	 *         could not be found
 	 * @throws SystemException if a system exception occurred
@@ -421,12 +424,12 @@ public class PortalUtil {
 
 	/**
 	 * Returns the user's ID from the HTTP authentication headers after
-	 * validating their credentials.
+	 * validating his credentials.
 	 *
 	 * @param  request the servlet request from which to retrieve the HTTP
 	 *         authentication headers
-	 * @return the user's ID if HTTP authentication headers are present and
-	 *         their credentials are valid; 0 otherwise
+	 * @return the user's ID if HTTP authentication headers are present and his
+	 *         credentials are valid; <code>0</code> otherwise
 	 * @throws PortalException if an authentication exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -438,13 +441,13 @@ public class PortalUtil {
 
 	/**
 	 * Returns the user's ID from the HTTP authentication headers after
-	 * validation their credentials.
+	 * validating his credentials.
 	 *
-	 * @param  request the servlet request to retrieve the HTTP authentication
-	 *         headers from
-	 * @param  companyId unused
-	 * @return the user's ID if HTTP authentication headers are present and
-	 *         their credentials are valid; 0 otherwise
+	 * @param  request the servlet request from which to retrieve the HTTP
+	 *         authentication headers
+	 * @param  companyId the company's ID. This parameter is not used.
+	 * @return the user's ID if HTTP authentication headers are present and his
+	 *         credentials are valid; <code>0</code> otherwise
 	 * @throws PortalException if an authentication exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -456,24 +459,26 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Returns the canonical URL for the requested complete URL. A canonical URL
-	 * for the page is the preferred version of a set of pages with similar or
-	 * identical content.
+	 * Returns the canonical URL for the page. The canonical URL is often used
+	 * to distinguish a preferred page from its translations.
 	 *
 	 * <p>
-	 * The canonical URL is used to inform search engines that several URLs
-	 * point to the same page using the tag <code>&#60;link rel="canonical"
-	 * /></code>. It is also used to generate the URLs for site maps, the URLs
-	 * that social bookmarks publish (Twitter, Facebook links, etc.), and the
-	 * URLs in sent email. For more information, see <a
+	 * A canonical URL for the page is the preferred URL to specify for a set of
+	 * pages with similar or identical content. The canonical URL is used to
+	 * inform search engines that several URLs point to the same page. It is
+	 * also used to generate the URLs for site maps, the URLs that social
+	 * bookmarks publish (Twitter, Facebook links, etc.), and the URLs in sent
+	 * email. For more information, see <a
 	 * href="https://support.google.com/webmasters/answer/139394?hl=en">https://support.google.com/webmasters/answer/139394?hl=en</a>.
 	 * </p>
 	 *
-	 * @param  completeURL the original URL being requested
+	 * @param  completeURL the complete URL of the page
 	 * @param  themeDisplay the theme display
-	 * @param  layout the page being requested
-	 * @return the canonical URL for the requested complete URL
-	 * @throws PortalException if a friendly URL could not be retrieved or if a
+	 * @param  layout the page being requested (optionally <code>null</code>).
+	 *         If <code>null</code> is specified, the current page is used.
+	 * @return the canonical URL for the page
+	 * @throws PortalException if a group for the page could not be found, if a
+	 *         group friendly URL could not be retrieved for the page, or if a
 	 *         portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -485,18 +490,30 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Returns the canonical URL of the page, to distinguish it among its
-	 * translations.
+	 * Returns the canonical URL of the page, optionally including the page's
+	 * friendly URL. The canonical URL is often used to distinguish a preferred
+	 * page from its translations.
+	 *
+	 * <p>
+	 * A canonical URL for the page is the preferred URL to specify for a set of
+	 * pages with similar or identical content. The canonical URL is used to
+	 * inform search engines that several URLs point to the same page. It is
+	 * also used to generate the URLs for site maps, the URLs that social
+	 * bookmarks publish (Twitter, Facebook links, etc.), and the URLs in sent
+	 * email. For more information, see <a
+	 * href="https://support.google.com/webmasters/answer/139394?hl=en">https://support.google.com/webmasters/answer/139394?hl=en</a>.
+	 * </p>
 	 *
 	 * @param  completeURL the complete URL of the page
 	 * @param  themeDisplay the current theme display
-	 * @param  layout the layout. If it is <code>null</code>, then it is
-	 *         generated for the current layout
-	 * @param  forceLayoutFriendlyURL adds the page friendly URL to the
-	 *         canonical URL even if it is not needed
-	 * @return the canonical URL
-	 * @throws PortalException if a friendly URL or the group could not be
-	 *         retrieved
+	 * @param  layout the page. If it is <code>null</code>, then it is generated
+	 *         for the current page.
+	 * @param  forceLayoutFriendlyURL whether to add the page's friendly URL to
+	 *         the canonical URL
+	 * @return the canonical URL of the page
+	 * @throws PortalException if a group for the page could not be found, if a
+	 *         group friendly URL could not be retrieved for the page, or if a
+	 *         portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public static String getCanonicalURL(
@@ -520,7 +537,7 @@ public class PortalUtil {
 	 * Returns the secure (HTTPS) or insecure (HTTP) content distribution
 	 * network (CDN) host address for this portal.
 	 *
-	 * @param  secure whether to get the secure or insecure CDN host address
+	 * @param  secure whether to get the secure CDN host address
 	 * @return the CDN host address
 	 */
 	public static String getCDNHost(boolean secure) {

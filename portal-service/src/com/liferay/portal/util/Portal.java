@@ -297,7 +297,7 @@ public interface Portal {
 	 * @param  canonicalURL the canonical URL being requested. For more
 	 *         information, see {@link #getCanonicalURL}.
 	 * @param  themeDisplay the theme display
-	 * @param  locale the locale of the alternate URL being generated
+	 * @param  locale the locale of the alternate (translated) page
 	 * @param  layout the page being requested
 	 * @return the alternate URL for the requested canonical URL in the given
 	 *         locale

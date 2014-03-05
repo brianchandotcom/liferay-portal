@@ -16,6 +16,7 @@ package com.liferay.portlet.blogs.notifications;
 
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Sergio González
@@ -24,7 +25,7 @@ public class BlogsUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public BlogsUserNotificationHandler() {
-		setOpenDialog(false);
+		setOpenDialog(PropsValues.BLOGS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED);
 		setPortletId(PortletKeys.BLOGS);
 	}
 

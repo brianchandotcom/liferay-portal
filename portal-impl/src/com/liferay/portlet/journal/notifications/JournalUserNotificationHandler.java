@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.notifications;
 
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Iván Zaera
@@ -24,7 +25,8 @@ public class JournalUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public JournalUserNotificationHandler() {
-		setOpenDialog(false);
+		setOpenDialog(
+			PropsValues.JOURNAL_USER_NOTIFICATION_OPEN_DIALOG_ENABLED);
 		setPortletId(PortletKeys.JOURNAL);
 	}
 

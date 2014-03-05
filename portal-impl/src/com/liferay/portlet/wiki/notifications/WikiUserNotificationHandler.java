@@ -16,6 +16,7 @@ package com.liferay.portlet.wiki.notifications;
 
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Roberto Díaz
@@ -24,7 +25,7 @@ public class WikiUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public WikiUserNotificationHandler() {
-		setOpenDialog(false);
+		setOpenDialog(PropsValues.WIKI_USER_NOTIFICATION_OPEN_DIALOG_ENABLED);
 		setPortletId(PortletKeys.WIKI);
 	}
 

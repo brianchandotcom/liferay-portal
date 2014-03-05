@@ -28,13 +28,13 @@ public class SearchUtilTest {
 	public void testHighlight() throws Exception {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append(SearchUtil.HIGHLIGHT_1);
+		sb.append(SearchUtil.HIGHLIGHTS[0]);
 		sb.append("Hello");
-		sb.append(SearchUtil.HIGHLIGHT_2);
+		sb.append(SearchUtil.HIGHLIGHTS[1]);
 		sb.append(" World ");
-		sb.append(SearchUtil.HIGHLIGHT_1);
+		sb.append(SearchUtil.HIGHLIGHTS[0]);
 		sb.append("Liferay");
-		sb.append(SearchUtil.HIGHLIGHT_2);
+		sb.append(SearchUtil.HIGHLIGHTS[1]);
 
 		Assert.assertEquals(
 			sb.toString(),

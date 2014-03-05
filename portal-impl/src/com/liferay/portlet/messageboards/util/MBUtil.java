@@ -441,7 +441,7 @@ public class MBUtil {
 	}
 
 	public static Map<String, String> getEmailFromDefinitionTerms(
-		RenderRequest request, String emailFromAddress, String emailFromName) {
+		RenderRequest request) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

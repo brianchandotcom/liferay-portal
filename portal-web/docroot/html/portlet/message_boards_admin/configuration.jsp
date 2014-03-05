@@ -104,7 +104,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 				<dl>
 
 					<%
-					Map<String, String> emailDefinitionTerms = MBUtil.getEmailFromDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+					Map<String, String> emailDefinitionTerms = MBUtil.getEmailFromDefinitionTerms(renderRequest);
 
 					for (Map.Entry<String, String> entry : emailDefinitionTerms.entrySet()) {
 					%>

@@ -2685,6 +2685,8 @@ public interface PropsKeys {
 
 	public static final String WIKI_PAGE_TITLES_REMOVE_REGEXP = "wiki.page.titles.remove.regexp";
 
+	public static final String WIKI_PARSERS_CREOLE_SUPPORTED_PROTOCOLS = "wiki.parsers.creole.supported.protocols";
+
 	public static final String WIKI_RSS_ABSTRACT_LENGTH = "wiki.rss.abstract.length";
 
 	public static final String XML_VALIDATION_ENABLED = "xml.validation.enabled";

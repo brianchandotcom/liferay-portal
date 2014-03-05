@@ -585,6 +585,18 @@
 			.nobr {
 				white-space: normal;
 			}
+
+			&.tabbable-content {
+				position: relative;
+			}
+		}
+
+		ul.form-navigator.well {
+			.button-holder {
+				padding-bottom: 20px;
+				position: absolute;
+				top: 100%;
+			}
 		}
 	}
 

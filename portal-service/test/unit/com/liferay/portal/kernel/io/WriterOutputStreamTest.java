@@ -144,6 +144,55 @@ public class WriterOutputStreamTest {
 	}
 
 	@Test
+	public void testFlush() throws IOException {
+		final AtomicBoolean flushed = new AtomicBoolean();
+
+		CharArrayWriter charArrayWriter = new CharArrayWriter() {
+
+			@Override
+			public void flush() {
+				flushed.set(true);
+			}
+
+		};
+
+		WriterOutputStream writerOutputStream = new WriterOutputStream(
+			charArrayWriter, StringPool.UTF8, 2);
+
+		Assert.assertFalse(flushed.get());
+
+		writerOutputStream.write('a');
+
+		Assert.assertFalse(flushed.get());
+
+		Assert.assertEquals(0, charArrayWriter.size());
+
+		writerOutputStream.write('b');
+
+		Assert.assertFalse(flushed.get());
+
+		Assert.assertEquals(0, charArrayWriter.size());
+
+		writerOutputStream.write('c');
+
+		Assert.assertFalse(flushed.get());
+
+		Assert.assertEquals("ab", charArrayWriter.toString());
+
+		writerOutputStream.write('d');
+
+		Assert.assertFalse(flushed.get());
+
+		Assert.assertEquals("ab", charArrayWriter.toString());
+
+		writerOutputStream.flush();
+
+		Assert.assertTrue(flushed.get());
+
+		Assert.assertEquals("abcd", charArrayWriter.toString());
+	}
+
+	@Test
 	public void testWrite() throws IOException {
 		CharArrayWriter charArrayWriter = new CharArrayWriter();
 

@@ -96,7 +96,7 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 
 			_servletOutputStream = new ServletOutputStreamAdapter(
 				new WriterOutputStream(
-					_printWriter, getCharacterEncoding(), true));
+					_printWriter, getCharacterEncoding(), getBufferSize()));
 		}
 
 		return _servletOutputStream;

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.util;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -98,6 +99,30 @@ public class MBTestUtil {
 		return MBCategoryServiceUtil.addCategory(
 			TestPropsValues.getUserId(), parentCategoryId, name,
 			ServiceTestUtil.randomString(), serviceContext);
+	}
+
+	public static MBMessage addDiscussionMessage(
+			long groupId, String className, long classPK, String body)
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		List<MBMessage> messages = MBMessageLocalServiceUtil.getMessages(
+			className, classPK, WorkflowConstants.STATUS_ANY);
+
+		if (ListUtil.isEmpty(messages)) {
+			return null;
+		}
+
+		MBMessage rootMessage = messages.get(0);
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId, user.getUserId());
+
+		return MBMessageLocalServiceUtil.addDiscussionMessage(
+			user.getUserId(), user.getFullName(), groupId, className, classPK,
+			rootMessage.getThreadId(), rootMessage.getMessageId(),
+			rootMessage.getSubject(), body, serviceContext);
 	}
 
 	public static MBMessage addMessage(long groupId) throws Exception {

@@ -26,6 +26,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.journal.lar.JournalArticleStagedModelDataHandlerTest;
@@ -43,6 +44,18 @@ import org.junit.Assert;
 @Sync
 public class ManifestSummaryTest
 	extends JournalArticleStagedModelDataHandlerTest {
+
+	@Override
+	protected void addComments(StagedModel stagedModel) throws Exception {
+		return;
+	}
+
+	@Override
+	protected AssetEntry fetchAssetEntry(StagedModel stagedModel, Group group)
+		throws Exception {
+
+		return null;
+	}
 
 	@Override
 	protected void validateExport(

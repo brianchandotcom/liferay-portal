@@ -1,45 +1,33 @@
 AUI.add(
 	'liferay-input-move-boxes-touch',
 	function(A) {
-		var EDIT_SELECTION_TPL = '<button class="btn edit-selection" type="button"><i class="icon-edit"></i> ' + Liferay.Language.get('edit') + ' </button>';
-
 		var CSS_MOVE_OPTION_CLASS = '.move-option';
 
-		var SORTABLE_CONTAINER_TPL = '<div class="sortable-container"></div>';
+		var CSS_SORT_LIST_ACTIVE = 'sort-list-active';
+
+		var STR_CHECKED = 'checked';
 
 		var STR_CLICK = 'click';
-
-		var STR_DATA_SELECTED = 'data-selected';
-
-		var STR_DATA_VALUE = 'data-value';
-
-		var STR_ICON_CHECK = 'icon-check';
-
-		var STR_ICON_CHECK_EMPTY = 'icon-check-empty';
 
 		var STR_NODE = 'node';
 
 		var STR_SELECTED = 'selected';
 
-		var MOVE_OPTION_TPL = '{{#each options}}' +
-			'<div class="move-option ' +
-				'{{#if selected}}' +
-					STR_SELECTED +
-				'{{/if}}' +
-			'" data-value="{{value}}"">' +
-				'<i class="handle icon-reorder"></i>' +
-				'<i data-value="{{value}}" data-selected="{{selected}}" class="checkbox ' +
-					'{{#if selected}}' +
-						STR_ICON_CHECK +
-					'{{else}}' +
-						STR_ICON_CHECK_EMPTY +
-					'{{/if}}' +
-				'"></i>' +
-				'<div class="title">{{name}}</div>' +
-			'</div>' +
-		'{{/each}}';
-
 		var STR_TRUE = 'true';
+
+		var TPL_EDIT_SELECTION = '<button class="btn edit-selection" type="button"><i class="icon-edit"></i> ' + Liferay.Language.get('edit') + ' </button>';
+
+		var TPL_MOVE_OPTION = new A.Template(
+			'<tpl for="options">',
+				'<div class="move-option {[ values.selected ? "', STR_SELECTED, '" : "" ]}" data-value="{value}">',
+					'<i class="handle icon-reorder"></i>',
+					'<input {[ values.selected ? "', STR_CHECKED, '" : "" ]} class="checkbox" id="{value}CheckBox" type="checkbox" value="{value}" />',
+					'<label class="title" for="{value}CheckBox" title="{name}">{name}</label>',
+				'</div>',
+			'</tpl>'
+		);
+
+		var TPL_SORTABLE_CONTAINER = '<div class="sortable-container ' + CSS_SORT_LIST_ACTIVE + '"></div>';
 
 		A.mix(
 			Liferay.InputMoveBoxes.prototype,
@@ -49,7 +37,7 @@ AUI.add(
 
 					instance._contentBox = instance.get('contentBox');
 
-					instance._sortableContainer = A.Node.create(SORTABLE_CONTAINER_TPL);
+					instance._sortableContainer = A.Node.create(TPL_SORTABLE_CONTAINER);
 
 					instance._contentBox.append(instance._sortableContainer);
 
@@ -80,9 +68,17 @@ AUI.add(
 						A.bind('_afterDragStart', instance)
 					);
 
-					instance._sortableContainer.delegate(
+					instance._contentBox.delegate(
 						STR_CLICK,
-						A.bind('_onCheckBoxClick', instance),
+						function(event) {
+							event.preventDefault();
+						},
+						'.sort-list-active .title'
+					);
+
+					instance._sortableContainer.delegate(
+						'change',
+						A.bind('_onCheckBoxChange', instance),
 						'.checkbox'
 					);
 				},
@@ -101,7 +97,7 @@ AUI.add(
 					var dragNode = event.drag.get(STR_NODE);
 					var dropNode = event.drop.get(STR_NODE);
 
-					var value = dragNode.attr(STR_DATA_VALUE);
+					var value = dragNode.attr('data-value');
 
 					instance._afterDropHitTask(
 						{
@@ -124,8 +120,6 @@ AUI.add(
 					var dragNodeIndex = instance._selectedSortList.indexOf(moveOption);
 					var dropNodeIndex = instance._selectedSortList.indexOf(dropNode);
 
-					var leftBoxOptions = instance._leftBox.all('option');
-
 					var referenceNodeIndex = (dragNodeIndex + 1);
 
 					if (dropNodeIndex > dragNodeIndex) {
@@ -134,22 +128,20 @@ AUI.add(
 
 					var item = instance._getOption(instance._leftBox, value);
 
-					var referenceNode = leftBoxOptions.item(referenceNodeIndex);
-
-					instance._leftBox.insertBefore(item, referenceNode);
+					instance._sortLeftBox(item, referenceNodeIndex);
 				},
 
 				_getOption: function(box, value) {
 					return box.one('option[value="' + value + '"]');
 				},
 
-				_onCheckBoxClick: function(event) {
+				_onCheckBoxChange: function(event) {
 					var instance = this;
 
 					var currentTarget = event.currentTarget;
 
-					var selected = (currentTarget.attr(STR_DATA_SELECTED) === STR_TRUE);
-					var value = currentTarget.attr(STR_DATA_VALUE);
+					var selected = !currentTarget.attr(STR_CHECKED);
+					var value = currentTarget.attr('value');
 
 					var from = instance._rightBox;
 					var to = instance._leftBox;
@@ -165,11 +157,11 @@ AUI.add(
 
 					instance._moveItem(from, to);
 
-					instance._getOption(to, value).attr(STR_SELECTED, false);
+					option = instance._getOption(to, value);
 
-					currentTarget.attr(STR_DATA_SELECTED, !selected);
+					option.attr(STR_SELECTED, false);
 
-					instance._toggleMoveOption(currentTarget);
+					instance._toggleMoveOption(currentTarget, option);
 				},
 
 				_onEditSelectionClick: function(event) {
@@ -178,12 +170,13 @@ AUI.add(
 					event.currentTarget.toggleClass('active');
 
 					instance._sortableContainer.toggleClass('edit-list-active');
+					instance._sortableContainer.toggleClass(CSS_SORT_LIST_ACTIVE);
 				},
 
 				_renderButtons: function() {
 					var instance = this;
 
-					instance._editSelection = A.Node.create(EDIT_SELECTION_TPL);
+					instance._editSelection = A.Node.create(TPL_EDIT_SELECTION);
 
 					instance._sortableContainer.placeBefore(instance._editSelection);
 				},
@@ -195,17 +188,13 @@ AUI.add(
 
 					var sortableContainer = instance._sortableContainer;
 
-					var template = A.Handlebars.compile(MOVE_OPTION_TPL);
-
-					var data = {
-						options: []
-					};
+					var data = [];
 
 					options.each(
 						function(item, index, collection) {
-							var selected = (item.attr(STR_DATA_SELECTED) === STR_TRUE);
+							var selected = (item.attr('data-selected') === STR_TRUE);
 
-							data.options.push(
+							data.push(
 								{
 									name: item.html(),
 									selected: selected,
@@ -215,9 +204,15 @@ AUI.add(
 						}
 					);
 
-					var html = template(data);
-
-					sortableContainer.append(html);
+					TPL_MOVE_OPTION.render(
+						{
+							name: data.name,
+							options: data,
+							selected: data.selected,
+							value: data.value
+						},
+						sortableContainer
+					);
 
 					instance._sortable = new A.Sortable(
 						{
@@ -231,32 +226,36 @@ AUI.add(
 					instance._syncSelectedSortList();
 				},
 
+				_sortLeftBox: function(item, index) {
+					var instance = this;
+
+					var leftBoxOptions = instance._leftBox.all('option');
+
+					var referenceNode = leftBoxOptions.item(index);
+
+					instance._leftBox.insertBefore(item, referenceNode);
+				},
+
 				_syncSelectedSortList: function() {
 					var instance = this;
 
 					instance._selectedSortList = instance._sortableContainer.all(CSS_MOVE_OPTION_CLASS + '.' + STR_SELECTED);
 				},
 
-				_toggleMoveOption: function(checkbox) {
+				_toggleMoveOption: function(checkbox, option) {
 					var instance = this;
 
 					var moveOption = checkbox.ancestor(CSS_MOVE_OPTION_CLASS);
 
 					moveOption.toggleClass(STR_SELECTED);
 
-					checkbox.toggleClass(STR_ICON_CHECK);
-					checkbox.toggleClass(STR_ICON_CHECK_EMPTY);
-
-					var lastItem = instance._selectedSortList.last();
-
-					if (lastItem) {
-						lastItem.placeAfter(moveOption);
-					}
-					else {
-						instance._sortableContainer.prepend(moveOption);
-					}
-
 					instance._syncSelectedSortList();
+
+					if (moveOption.hasClass(STR_SELECTED)) {
+						var index = instance._selectedSortList.indexOf(moveOption);
+
+						instance._sortLeftBox(option, index);
+					}
 				}
 			},
 			true
@@ -264,6 +263,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'handlebars', 'liferay-input-move-boxes', 'sortable']
+		requires: ['aui-base', 'aui-template-deprecated', 'liferay-input-move-boxes', 'sortable']
 	}
 );

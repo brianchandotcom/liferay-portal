@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_ICON</td>
-	<td>//div[contains(@id,'ddm_structure')]/div/a</td>
+	<td>//div[contains(@id,'ddm_structure')]/div[@class='advanced-search']/a</td>
 	<td></td>
 </tr>
 <tr>

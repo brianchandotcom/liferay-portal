@@ -197,17 +197,17 @@
 </tr>
 <tr>
 	<td>ENTRY_COMMENT_1</td>
-	<td>xpath=(//div[@class='stats']/span[@class='comments'])[1]</td>
+	<td>xpath=(//div[@class='stats']/span[@class='comments']/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_COMMENT_2</td>
-	<td>xpath=(//div[@class='stats']/span[@class='comments'])[2]</td>
+	<td>xpath=(//div[@class='stats']/span[@class='comments']/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_COMMENT_3</td>
-	<td>xpath=(//div[@class='stats']/span[@class='comments'])[3]</td>
+	<td>xpath=(//div[@class='stats']/span[@class='comments']/a)[3]</td>
 	<td></td>
 </tr>
 <tr>

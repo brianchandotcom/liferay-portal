@@ -62,4 +62,10 @@
 			<execute function="Click#textClickAt" value1="Import" />
 		</case>
 	</command>
+
+	<command name="close">
+		<default>
+			<execute function="Close#closeWindow" />
+		</default>
+	</command>
 </definition>

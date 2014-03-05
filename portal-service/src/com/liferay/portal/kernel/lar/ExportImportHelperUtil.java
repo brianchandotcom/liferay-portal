@@ -199,6 +199,13 @@ public class ExportImportHelperUtil {
 			groupId, userId, folderName);
 	}
 
+	public static boolean isReferenceWithinExportScope(
+		PortletDataContext portletDataContext, StagedModel stagedModel) {
+
+		return getExportImportHelper().isReferenceWithinExportScope(
+			portletDataContext, stagedModel);
+	}
+
 	public static String replaceExportContentReferences(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, Element entityElement,

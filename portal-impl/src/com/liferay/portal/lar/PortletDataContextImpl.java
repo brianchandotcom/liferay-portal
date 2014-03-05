@@ -2026,6 +2026,31 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 			referenceElement.addAttribute(
 				"group-id", String.valueOf(stagedGroupedModel.getGroupId()));
+
+			try {
+				Group group = GroupLocalServiceUtil.getGroup(
+					stagedGroupedModel.getGroupId());
+
+				long liveGroupId = group.getLiveGroupId();
+
+				if (group.isStagedRemotely()) {
+					liveGroupId = group.getRemoteLiveGroupId();
+				}
+
+				if (liveGroupId == GroupConstants.DEFAULT_LIVE_GROUP_ID) {
+					liveGroupId = group.getGroupId();
+				}
+
+				referenceElement.addAttribute(
+					"live-group-id", String.valueOf(liveGroupId));
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to find group " +
+							stagedGroupedModel.getGroupId());
+				}
+			}
 		}
 
 		if (Validator.isNotNull(binPath)) {

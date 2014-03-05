@@ -91,6 +91,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public int getPublicLayoutsPageCount();
 
+	public long getRemoteLiveGroupId();
+
 	public java.lang.String getScopeDescriptiveName(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException,

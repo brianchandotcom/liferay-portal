@@ -446,6 +446,39 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return;
 	}
 
+	protected void checkRegexPattern(
+		String regexPattern, String fileName, int lineCount) {
+
+		int i = regexPattern.indexOf("Pattern.compile(");
+
+		if (i == -1) {
+			return;
+		}
+
+		regexPattern = regexPattern.substring(i + 16);
+
+		regexPattern = stripQuotes(regexPattern, CharPool.QUOTE);
+
+		i = regexPattern.indexOf(StringPool.COMMA);
+
+		if (i != -1) {
+			regexPattern = regexPattern.substring(0, i);
+		}
+		else {
+			regexPattern = StringUtil.replaceLast(
+				regexPattern, ");", StringPool.BLANK);
+		}
+
+		regexPattern = StringUtil.replace(
+			regexPattern, StringPool.PLUS, StringPool.BLANK);
+
+		if (Validator.isNull(regexPattern)) {
+			processErrorMessage(
+				fileName,
+				"create pattern as global var: " + fileName + " " + lineCount);
+		}
+	}
+
 	protected void checkTestAnnotations(JavaTerm javaTerm, String fileName) {
 		int methodType = javaTerm.getType();
 
@@ -1167,6 +1200,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String ifClause = StringPool.BLANK;
 
+		String regexPattern = StringPool.BLANK;
+
 		String packageName = StringPool.BLANK;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
@@ -1318,6 +1353,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 				else if (line.endsWith(StringPool.SEMICOLON)) {
 					ifClause = StringPool.BLANK;
+				}
+			}
+
+			if (trimmedLine.startsWith("Pattern ") ||
+				Validator.isNotNull(regexPattern)) {
+
+				regexPattern = regexPattern + trimmedLine;
+
+				if (trimmedLine.endsWith(");")) {
+
+					// LPS-41084
+
+					checkRegexPattern(regexPattern, fileName, lineCount);
+
+					regexPattern = StringPool.BLANK;
 				}
 			}
 

@@ -2392,6 +2392,37 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Replaces the substring between the given beginning and ending strings,
+	 * based on the key-value map values.
+	 *
+	 * <p>
+	 * For example, with the following initialized variables:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * String s = "http://www.example-url/${userId}";
+	 * String begin = "${";
+	 * String end = "}";
+	 * Map<String, String> values =  new HashMap&#60;String, String&#62;();
+	 * values.put("userId", "jbloggs");
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * <p>
+	 * <code>replace(s, begin, end, values)</code> returns
+	 * <code>"http://www.example-url/jbloggs"</code>
+	 * </p>
+	 *
+	 * @param  s the original string
+	 * @param  begin the beginning characters of the substring to be removed
+	 * @param  end the ending characters of the substring to be removed
+	 * @param  values the key-value map values
+	 * @return the replaced substring
+	 */
 	public static String replace(
 		String s, String begin, String end, Map<String, String> values) {
 
@@ -2549,6 +2580,23 @@ public class StringUtil {
 		return replaceFirst(s, oldSub, newSub, 0);
 	}
 
+	/**
+	 * Replaces the first occurrences of the elements of the string array with
+	 * the corresponding elements of the new string array, beginning the element
+	 * search from the index position.
+	 *
+	 * @param  s the original string
+	 * @param  oldSub the strings whose first occurrences are to be searched for
+	 *         and replaced in the original string
+	 * @param  newSub the strings with which to replace the first occurrences of
+	 *         the <code>oldSubs</code> strings
+	 * @param  fromIndex the index from which to start the search
+	 * @return the string representing the original string with the first
+	 *         occurrences of the <code>oldSubs</code> strings replaced with the
+	 *         corresponding <code>newSubs</code> strings, or <code>null</code>
+	 *         if the original string, the <code>oldSubs</code> string, or the
+	 *         <code>newSubs</code> string is <code>null</code>
+	 */
 	public static String replaceFirst(
 		String s, String oldSub, String newSub, int fromIndex) {
 
@@ -2710,6 +2758,17 @@ public class StringUtil {
 		return s;
 	}
 
+	/**
+	 * Replaces the substring between the given beginning and ending strings,
+	 * based on the key-value map values, and returned as a {@link
+	 * StringBundler}.
+	 *
+	 * @param  s the original string
+	 * @param  begin the beginning characters of the substring to be removed
+	 * @param  end the ending characters of the substring to be removed
+	 * @param  values the key-value map values
+	 * @return the replaced substring
+	 */
 	public static StringBundler replaceToStringBundler(
 		String s, String begin, String end, Map<String, String> values) {
 
@@ -2752,6 +2811,19 @@ public class StringUtil {
 		return sb;
 	}
 
+	/**
+	 * Replaces the substring between the given beginning and ending strings,
+	 * based on the key-value map values, and returned as a {@link
+	 * StringBundler}.
+	 *
+	 * @param  s the original string
+	 * @param  begin the beginning characters of the substring to be removed
+	 * @param  end the ending characters of the substring to be removed
+	 * @param  values the key-value map values, which has a string key and
+	 *         {@link StringBundler} value
+	 * @return the replaced substring
+	 * @see    #replaceToStringBundler(String, String, String, Map)
+	 */
 	public static StringBundler replaceWithStringBundler(
 		String s, String begin, String end, Map<String, StringBundler> values) {
 
@@ -3850,10 +3922,27 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Converts all of the characters in the string to lower case, based on the
+	 * portal instance's default locale.
+	 *
+	 * @param  s the string to convert
+	 * @return the string, converted to lower case, or <code>null</code> if the
+	 *         string is <code>null</code>
+	 */
 	public static String toLowerCase(String s) {
 		return toLowerCase(s, null);
 	}
 
+	/**
+	 * Converts all of the characters in the string to lower case, based on the
+	 * locale.
+	 *
+	 * @param  s the string to convert
+	 * @param  locale the string's locale
+	 * @return the string, converted to lower case, or <code>null</code> if the
+	 *         string is <code>null</code>
+	 */
 	public static String toLowerCase(String s, Locale locale) {
 		if (s == null) {
 			return null;
@@ -3891,10 +3980,27 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * Converts all of the characters in the string to upper case, based on the
+	 * portal instance's default locale.
+	 *
+	 * @param  s the string to convert
+	 * @return the string, converted to upper case, or <code>null</code> if the
+	 *         string is <code>null</code>
+	 */
 	public static String toUpperCase(String s) {
 		return toUpperCase(s, null);
 	}
 
+	/**
+	 * Converts all of the characters in the string to upper case, based on the
+	 * locale.
+	 *
+	 * @param  s the string to convert
+	 * @param  locale the string's locale
+	 * @return the string, converted to upper case, or <code>null</code> if the
+	 *         string is <code>null</code>
+	 */
 	public static String toUpperCase(String s, Locale locale) {
 		if (s == null) {
 			return null;
@@ -4466,10 +4572,28 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Wraps the text when it exceeds the <code>80</code> column width limit,
+	 * and begins the subsequent text on a new line.
+	 *
+	 * @param  text the text to wrap
+	 * @return the wrapped text following the column width limit, or
+	 *         <code>null</code> if the text is <code>null</code>
+	 */
 	public static String wrap(String text) {
 		return wrap(text, 80, StringPool.NEW_LINE);
 	}
 
+	/**
+	 * Wraps the text when it exceeds the column width limit, and inserts a line
+	 * separator after each wrapped line.
+	 *
+	 * @param  text the text to wrap
+	 * @param  width the column width limit for the text
+	 * @param  lineSeparator the string to input after a wrapped row of text
+	 * @return the wrapped text and line separators, following the column width
+	 *         limit, or <code>null</code> if the text is <code>null</code>
+	 */
 	public static String wrap(String text, int width, String lineSeparator) {
 		try {
 			return _wrap(text, width, lineSeparator);

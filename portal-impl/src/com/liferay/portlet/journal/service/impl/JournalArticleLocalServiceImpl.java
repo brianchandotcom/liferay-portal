@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -6244,6 +6245,28 @@ public class JournalArticleLocalServiceImpl
 		dateInterval[1] = latestExpirationDate;
 
 		return dateInterval;
+	}
+
+	protected String getFullArticleURL(
+		String articleURL, long groupId, long folderId, String articleId) {
+
+		StringBundler sb = new StringBundler(13);
+
+		sb.append(articleURL);
+		sb.append("&_");
+		sb.append(PortletKeys.JOURNAL);
+		sb.append("_groupId=");
+		sb.append(groupId);
+		sb.append("&_");
+		sb.append(PortletKeys.JOURNAL);
+		sb.append("_folderId=");
+		sb.append(folderId);
+		sb.append("&_");
+		sb.append(PortletKeys.JOURNAL);
+		sb.append("_articleId=");
+		sb.append(articleId);
+
+		return sb.toString();
 	}
 
 	protected String getUniqueUrlTitle(

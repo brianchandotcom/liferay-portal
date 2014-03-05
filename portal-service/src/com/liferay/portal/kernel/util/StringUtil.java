@@ -1460,7 +1460,7 @@ public class StringUtil {
 	 * Converts all of the characters in the string to lower case.
 	 *
 	 * @param  s the string to convert
-	 * @return the string, converted to lowercase, or <code>null</code> if the
+	 * @return the string, converted to lower case, or <code>null</code> if the
 	 *         string is <code>null</code>
 	 * @see    String#toLowerCase()
 	 */
@@ -2421,7 +2421,9 @@ public class StringUtil {
 	 * @param  begin the beginning characters of the substring to be removed
 	 * @param  end the ending characters of the substring to be removed
 	 * @param  values the key-value map values
-	 * @return the replaced substring
+	 * @return the replaced substring, or <code>null</code> if the original
+	 *         string, the beginning string, the ending string, or the key-map
+	 *         values are <code>null</code>
 	 */
 	public static String replace(
 		String s, String begin, String end, Map<String, String> values) {
@@ -2499,7 +2501,7 @@ public class StringUtil {
 	 *         all occurrences of the <code>oldSubs</code> strings replaced with
 	 *         the corresponding <code>newSubs</code> strings, or
 	 *         <code>null</code> if the original string, the
-	 *         <code>oldSubs</code> array, or the <code>newSubs</code is
+	 *         <code>oldSubs</code> array, or the <code>newSubs</code> is
 	 *         <code>null</code>
 	 */
 	public static String replace(
@@ -2591,7 +2593,7 @@ public class StringUtil {
 	 * @param  newSub the strings with which to replace the first occurrences of
 	 *         the <code>oldSubs</code> strings
 	 * @param  fromIndex the index from which to start the search
-	 * @return the string representing the original string with the first
+	 * @return a string representing the original string with the first
 	 *         occurrences of the <code>oldSubs</code> strings replaced with the
 	 *         corresponding <code>newSubs</code> strings, or <code>null</code>
 	 *         if the original string, the <code>oldSubs</code> string, or the
@@ -2632,7 +2634,7 @@ public class StringUtil {
 	 *         occurrences of the <code>oldSubs</code> strings replaced with the
 	 *         corresponding <code>newSubs</code> strings, or <code>null</code>
 	 *         if the original string, the <code>oldSubs</code> array, or the
-	 *         <code>newSubs</code is <code>null</code>
+	 *         <code>newSubs</code> is <code>null</code>
 	 */
 	public static String replaceFirst(
 		String s, String[] oldSubs, String[] newSubs) {
@@ -2738,7 +2740,7 @@ public class StringUtil {
 	 *         occurrences of the <code>oldSubs</code> strings replaced with the
 	 *         corresponding <code>newSubs</code> strings, or <code>null</code>
 	 *         if the original string, the <code>oldSubs</code> array, or the
-	 *         <code>newSubs</code is <code>null</code>
+	 *         <code>newSubs</code> is <code>null</code>
 	 */
 	public static String replaceLast(
 		String s, String[] oldSubs, String[] newSubs) {
@@ -2767,7 +2769,10 @@ public class StringUtil {
 	 * @param  begin the beginning characters of the substring to be removed
 	 * @param  end the ending characters of the substring to be removed
 	 * @param  values the key-value map values
-	 * @return the replaced substring
+	 * @return the replaced substring, or <code>null</code> if the original
+	 *         string, the beginning string, the ending string, or the key-map
+	 *         values are <code>null</code>
+	 * @see    #replace(String, String, String, Map)
 	 */
 	public static StringBundler replaceToStringBundler(
 		String s, String begin, String end, Map<String, String> values) {
@@ -2821,8 +2826,10 @@ public class StringUtil {
 	 * @param  end the ending characters of the substring to be removed
 	 * @param  values the key-value map values, which has a string key and
 	 *         {@link StringBundler} value
-	 * @return the replaced substring
-	 * @see    #replaceToStringBundler(String, String, String, Map)
+	 * @return the replaced substring, or <code>null</code> if the original
+	 *         string, the beginning string, the ending string, or the key-map
+	 *         values are <code>null</code>
+	 * @see    #replace(String, String, String, Map)
 	 */
 	public static StringBundler replaceWithStringBundler(
 		String s, String begin, String end, Map<String, StringBundler> values) {

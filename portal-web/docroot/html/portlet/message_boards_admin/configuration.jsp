@@ -17,52 +17,21 @@
 <%@ include file="/html/portlet/message_boards/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "general");
-
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", mbSettings.getEmailFromName());
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", mbSettings.getEmailFromAddress());
-
-boolean emailMessageAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageAddedEnabled--", mbSettings.isEmailMessageAddedEnabled());
-boolean emailMessageUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailMessageUpdatedEnabled--", mbSettings.isEmailMessageUpdatedEnabled());
-
-String emailParam = StringPool.BLANK;
-String defaultEmailSubject = StringPool.BLANK;
-String defaultEmailBody = StringPool.BLANK;
-
-if (tabs2.equals("message-added-email")) {
-	emailParam = "emailMessageAdded";
-	defaultEmailSubject = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT);
-	defaultEmailBody = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY);
-}
-else if (tabs2.equals("message-updated-email")) {
-	emailParam = "emailMessageUpdated";
-	defaultEmailSubject = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT);
-	defaultEmailBody = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY);
-}
-
-String emailSubjectParam = emailParam + "Subject";
-String emailBodyParam = emailParam + "Body";
-
-String emailSubject = SettingsParamUtil.getString(mbSettings, request, emailSubjectParam, defaultEmailSubject);
-String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyParam, defaultEmailBody);
 %>
 
-<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="portletURL">
-	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-</liferay-portlet:renderURL>
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="portletURL" />
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
 	<portlet:param name="serviceName" value="<%= MBConstants.SERVICE_NAME %>" />
 	<portlet:param name="settingsScope" value="group" />
 </liferay-portlet:actionURL>
 
-<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL">
-	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-</liferay-portlet:renderURL>
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<%
@@ -75,20 +44,17 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 
 	<liferay-ui:tabs
 		names="<%= tabs2Names %>"
-		param="tabs2"
-		url="<%= portletURL %>"
-	/>
+		refresh="<%= false %>"
+	>
+		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
+		<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
+		<liferay-ui:error key="emailMessageAddedBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailMessageAddedSubject" message="please-enter-a-valid-subject" />
+		<liferay-ui:error key="emailMessageUpdatedBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailMessageUpdatedSubject" message="please-enter-a-valid-subject" />
+		<liferay-ui:error key="userRank" message="please-enter-valid-user-ranks" />
 
-	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
-	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
-	<liferay-ui:error key="emailMessageAddedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailMessageAddedSubject" message="please-enter-a-valid-subject" />
-	<liferay-ui:error key="emailMessageUpdatedBody" message="please-enter-a-valid-body" />
-	<liferay-ui:error key="emailMessageUpdatedSubject" message="please-enter-a-valid-subject" />
-	<liferay-ui:error key="userRank" message="please-enter-valid-user-ranks" />
-
-	<c:choose>
-		<c:when test='<%= tabs2.equals("general") %>'>
+		<liferay-ui:section>
 			<aui:fieldset>
 				<aui:input name="preferences--allowAnonymousPosting--" type="checkbox" value="<%= mbSettings.isAllowAnonymousPosting() %>" />
 
@@ -123,8 +89,9 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 					<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", "365", false) %>' value="365" />
 				</aui:select>
 			</aui:fieldset>
-		</c:when>
-		<c:when test='<%= tabs2.equals("email-from") %>'>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
 			<aui:fieldset>
 				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />
 
@@ -133,208 +100,55 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 				<aui:input label="html-format" name="preferences--emailHtmlFormat--" type="checkbox" value="<%= mbSettings.isEmailHtmlFormat() %>" />
 			</aui:fieldset>
 
-			<aui:fieldset cssClass="definition-of-terms">
-				<legend>
-					<liferay-ui:message key="definition-of-terms" />
-				</legend>
-
+			<aui:fieldset cssClass="definition-of-terms" label="definition-of-terms">
 				<dl>
-					<dt>
-						[$COMPANY_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-id-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$COMPANY_MX$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-mx-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$COMPANY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-name-associated-with-the-message-board" />
-					</dd>
 
-					<c:if test="<%= PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED %>">
+					<%
+					Map<String, String> emailDefinitionTerms = MBUtil.getEmailFromDefinitionTerms(renderRequest);
+
+					for (Map.Entry<String, String> entry : emailDefinitionTerms.entrySet()) {
+					%>
+
 						<dt>
-							[$MAILING_LIST_ADDRESS$]
+							<%= entry.getKey() %>
 						</dt>
 						<dd>
-							<liferay-ui:message key="the-email-address-of-the-mailing-list" />
+							<%= entry.getValue() %>
 						</dd>
-					</c:if>
 
-					<dt>
-						[$MESSAGE_USER_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-user-who-added-the-message" />
-					</dd>
-					<dt>
-						[$MESSAGE_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-added-the-message" />
-					</dd>
-					<dt>
-						[$PORTLET_NAME$]
-					</dt>
-					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
-					</dd>
-					<dt>
-						[$SITE_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
-					</dd>
+					<%
+					}
+					%>
+
 				</dl>
 			</aui:fieldset>
-		</c:when>
-		<c:when test='<%= tabs2.startsWith("message-") %>'>
-			<aui:fieldset>
-				<c:choose>
-					<c:when test='<%= tabs2.equals("message-added-email") %>'>
-						<aui:input label="enabled" name="preferences--emailMessageAddedEnabled--" type="checkbox" value="<%= emailMessageAddedEnabled %>" />
-					</c:when>
-					<c:when test='<%= tabs2.equals("message-updated-email") %>'>
-						<aui:input label="enabled" name="preferences--emailMessageUpdatedEnabled--" type="checkbox" value="<%= emailMessageUpdatedEnabled %>" />
-					</c:when>
-				</c:choose>
+		</liferay-ui:section>
 
-				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
+		<%
+		Map<String, String> emailDefinitionTerms = MBUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+		%>
 
-				<aui:input cssClass="lfr-textarea-container" label="body" name='<%= "preferences--" + emailBodyParam + "--" %>' type="textarea" value="<%= emailBody %>" warp="soft" />
-			</aui:fieldset>
+		<liferay-ui:section>
+			<liferay-ui:email-notifications-settings
+				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailMessageAddedBody", ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY)) %>'
+				emailDefinitionTerms="<%= emailDefinitionTerms %>"
+				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailMessageAddedEnabled--", mbSettings.isEmailMessageAddedEnabled()) %>'
+				emailParam="emailMessageAdded"
+				emailSubject='<%= PrefsParamUtil.getString(portletPreferences, request, "emailMessageAddedSubject", ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT)) %>'
+			/>
+		</liferay-ui:section>
 
-			<aui:fieldset cssClass="definition-of-terms">
-				<legend>
-					<liferay-ui:message key="definition-of-terms" />
-				</legend>
+		<liferay-ui:section>
+			<liferay-ui:email-notifications-settings
+				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailMessageUpdatedBody", ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY)) %>'
+				emailDefinitionTerms="<%= emailDefinitionTerms %>"
+				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailMessageUpdatedEnabled--", mbSettings.isEmailMessageUpdatedEnabled()) %>'
+				emailParam="emailMessageUpdated"
+				emailSubject='<%= PrefsParamUtil.getString(portletPreferences, request, "emailMessageUpdatedSubject", ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT)) %>'
+			/>
+		</liferay-ui:section>
 
-				<dl>
-					<dt>
-						[$CATEGORY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-category-in-which-the-message-has-been-posted" />
-					</dd>
-					<dt>
-						[$COMPANY_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-id-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$COMPANY_MX$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-mx-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$COMPANY_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-company-name-associated-with-the-message-board" />
-					</dd>
-					<dt>
-						[$FROM_ADDRESS$]
-					</dt>
-					<dd>
-						<%= HtmlUtil.escape(emailFromAddress) %>
-					</dd>
-					<dt>
-						[$FROM_NAME$]
-					</dt>
-					<dd>
-						<%= HtmlUtil.escape(emailFromName) %>
-					</dd>
-
-					<c:if test="<%= PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED %>">
-						<dt>
-							[$MAILING_LIST_ADDRESS$]
-						</dt>
-						<dd>
-							<liferay-ui:message key="the-email-address-of-the-mailing-list" />
-						</dd>
-					</c:if>
-
-					<dt>
-						[$MESSAGE_BODY$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-message-body" />
-					</dd>
-					<dt>
-						[$MESSAGE_ID$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-message-id" />
-					</dd>
-					<dt>
-						[$MESSAGE_SUBJECT$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-message-subject" />
-					</dd>
-					<dt>
-						[$MESSAGE_URL$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-message-url" />
-					</dd>
-					<dt>
-						[$MESSAGE_USER_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-user-who-added-the-message" />
-					</dd>
-					<dt>
-						[$MESSAGE_USER_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-user-who-added-the-message" />
-					</dd>
-					<dt>
-						[$PORTAL_URL$]
-					</dt>
-					<dd>
-						<%= company.getVirtualHostname() %>
-					</dd>
-					<dt>
-						[$PORTLET_NAME$]
-					</dt>
-					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
-					</dd>
-					<dt>
-						[$SITE_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
-					</dd>
-
-					<c:if test="<%= !PropsValues.MESSAGE_BOARDS_EMAIL_BULK %>">
-						<dt>
-							[$TO_ADDRESS$]
-						</dt>
-						<dd>
-							<liferay-ui:message key="the-address-of-the-email-recipient" />
-						</dd>
-						<dt>
-							[$TO_NAME$]
-						</dt>
-						<dd>
-							<liferay-ui:message key="the-name-of-the-email-recipient" />
-						</dd>
-					</c:if>
-				</dl>
-			</aui:fieldset>
-		</c:when>
-		<c:when test='<%= tabs2.equals("thread-priorities") %>'>
+		<liferay-ui:section>
 			<div class="alert alert-info">
 				<liferay-ui:message key="enter-the-name,-image,-and-priority-level-in-descending-order" />
 			</div>
@@ -349,7 +163,7 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 					</aui:field-wrapper>
 				</td>
 				<td>
-					<aui:select label="localized-language" name="languageId" onClick='<%= renderResponse.getNamespace() + "updateLanguage();" %>' showEmptyOption="<%= true %>">
+					<aui:select label="localized-language" name="prioritiesLanguageId" onClick='<%= renderResponse.getNamespace() + "updatePrioritiesLanguage();" %>' showEmptyOption="<%= true %>">
 
 						<%
 						for (int i = 0; i < locales.length; i++) {
@@ -450,13 +264,13 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 
 						<tr>
 							<td>
-								<aui:input label="" name='<%= "priorityName" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onChanged();" %>' size="15" />
+								<aui:input label="" name='<%= "priorityName" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="15" />
 							</td>
 							<td>
-								<aui:input label="" name='<%= "priorityImage" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onChanged();" %>' size="40" />
+								<aui:input label="" name='<%= "priorityImage" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="40" />
 							</td>
 							<td>
-								<aui:input label="" name='<%= "priorityValue" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onChanged();" %>' size="4" />
+								<aui:input label="" name='<%= "priorityValue" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="4" />
 							</td>
 						</tr>
 
@@ -512,41 +326,41 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 			<br />
 
 			<aui:script>
-				var changed = false;
-				var lastLanguageId = "<%= currentLanguageId %>";
+				var prioritiesChanged = false;
+				var prioritiesLastLanguageId = "<%= currentLanguageId %>";
 
-				function <portlet:namespace />onChanged() {
-					changed = true;
+				function <portlet:namespace />onPrioritiesChanged() {
+					prioritiesChanged = true;
 				}
 
 				Liferay.provide(
 					window,
-					'<portlet:namespace />updateLanguage',
+					'<portlet:namespace />updatePrioritiesLanguage',
 					function() {
 						var A = AUI();
 
-						if (lastLanguageId != '<%= defaultLanguageId %>') {
-							if (changed) {
+						if (prioritiesLastLanguageId != '<%= defaultLanguageId %>') {
+							if (prioritiesChanged) {
 								for (var i = 0; i < 10; i++) {
 									var priorityName = A.one('#<portlet:namespace />priorityName' + i + '_temp').val();
 									var priorityImage = A.one('#<portlet:namespace />priorityImage' + i + '_temp').val();
 									var priorityValue = A.one('#<portlet:namespace />priorityValue' + i + '_temp').val();
 
-									A.one('#<portlet:namespace />priorityName' + i + '_' + lastLanguageId).val(priorityName);
-									A.one('#<portlet:namespace />priorityImage' + i + '_' + lastLanguageId).val(priorityImage);
-									A.one('#<portlet:namespace />priorityValue' + i + '_' + lastLanguageId).val(priorityValue);
+									A.one('#<portlet:namespace />priorityName' + i + '_' + prioritiesLastLanguageId).val(priorityName);
+									A.one('#<portlet:namespace />priorityImage' + i + '_' + prioritiesLastLanguageId).val(priorityImage);
+									A.one('#<portlet:namespace />priorityValue' + i + '_' + prioritiesLastLanguageId).val(priorityValue);
 								}
 
-								changed = false;
+								prioritiesChanged = false;
 							}
 						}
 
-						var selLanguageId = A.one(document.<portlet:namespace />fm.<portlet:namespace />languageId).val();
+						var selLanguageId = A.one(document.<portlet:namespace />fm.<portlet:namespace />prioritiesLanguageId).val();
 
 						var localizedPriorityTable = A.one('#<portlet:namespace />localized-priorities-table');
 
 						if ((selLanguageId != '') && (selLanguageId != 'null')) {
-							<portlet:namespace />updateLanguageTemps(selLanguageId);
+							<portlet:namespace />updatePrioritiesLanguageTemps(selLanguageId);
 
 							localizedPriorityTable.show();
 						}
@@ -554,14 +368,14 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 							localizedPriorityTable.hide();
 						}
 
-						lastLanguageId = selLanguageId;
+						prioritiesLastLanguageId = selLanguageId;
 					},
 					['aui-base']
 				);
 
 				Liferay.provide(
 					window,
-					'<portlet:namespace />updateLanguageTemps',
+					'<portlet:namespace />updatePrioritiesLanguageTemps',
 					function(lang) {
 						var A = AUI();
 
@@ -588,10 +402,11 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 					['aui-base']
 				);
 
-				<portlet:namespace />updateLanguageTemps(lastLanguageId);
+				<portlet:namespace />updatePrioritiesLanguageTemps(prioritiesLastLanguageId);
 			</aui:script>
-		</c:when>
-		<c:when test='<%= tabs2.equals("user-ranks") %>'>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
 			<div class="alert alert-info">
 				<liferay-ui:message key="enter-rank-and-minimum-post-pairs-per-line" />
 			</div>
@@ -605,7 +420,7 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 						</aui:field-wrapper>
 					</td>
 					<td class="lfr-label">
-						<aui:select label="localized-language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage();" %>' showEmptyOption="<%= true %>">
+						<aui:select label="localized-language" name="ranksLanguageId" onChange='<%= renderResponse.getNamespace() + "updateRanksLanguage();" %>' showEmptyOption="<%= true %>">
 
 							<%
 							for (int i = 0; i < locales.length; i++) {
@@ -650,7 +465,7 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 
 			<aui:script>
 				var ranksChanged = false;
-				var lastLanguageId = '<%= currentLanguageId %>';
+				var ranksLastLanguageId = '<%= currentLanguageId %>';
 
 				function <portlet:namespace />onRanksChanged() {
 					ranksChanged = true;
@@ -658,11 +473,11 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 
 				Liferay.provide(
 					window,
-					'<portlet:namespace />updateLanguage',
+					'<portlet:namespace />updateRanksLanguage',
 					function() {
 						var A = AUI();
 
-						if (lastLanguageId != '<%= defaultLanguageId %>') {
+						if (ranksLastLanguageId != '<%= defaultLanguageId %>') {
 							if (ranksChanged) {
 								var ranksValue = A.one('#<portlet:namespace />ranks_temp').val();
 
@@ -670,18 +485,18 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 									ranksValue = '';
 								}
 
-								A.one('#<portlet:namespace />ranks_' + lastLanguageId).val(ranksValue);
+								A.one('#<portlet:namespace />ranks_' + ranksLastLanguageId).val(ranksValue);
 
 								ranksChanged = false;
 							}
 						}
 
-						var selLanguageId = A.one(document.<portlet:namespace />fm.<portlet:namespace />languageId).val();
+						var selLanguageId = A.one(document.<portlet:namespace />fm.<portlet:namespace />ranksLanguageId).val();
 
 						var ranksTemp = A.one('#<portlet:namespace />ranks_temp');
 
 						if ((selLanguageId != '') && (selLanguageId != 'null')) {
-							<portlet:namespace />updateLanguageTemps(selLanguageId);
+							<portlet:namespace />updateRanksLanguageTemps(selLanguageId);
 
 							ranksTemp.show();
 						}
@@ -689,14 +504,14 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 							ranksTemp.hide();
 						}
 
-						lastLanguageId = selLanguageId;
+						ranksLastLanguageId = selLanguageId;
 					},
 					['aui-base']
 				);
 
 				Liferay.provide(
 					window,
-					'<portlet:namespace />updateLanguageTemps',
+					'<portlet:namespace />updateRanksLanguageTemps',
 					function(lang) {
 						var A = AUI();
 
@@ -712,18 +527,21 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 					['aui-base']
 				);
 
-				<portlet:namespace />updateLanguageTemps(lastLanguageId);
+				<portlet:namespace />updateRanksLanguageTemps(ranksLastLanguageId);
 			</aui:script>
-		</c:when>
-		<c:when test='<%= tabs2.equals("rss") %>'>
-			<liferay-ui:rss-settings
-				delta="<%= rssDelta %>"
-				displayStyle="<%= rssDisplayStyle %>"
-				enabled="<%= enableRSS %>"
-				feedType="<%= rssFeedType %>"
-			/>
-		</c:when>
-	</c:choose>
+		</liferay-ui:section>
+
+		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+			<liferay-ui:section>
+				<liferay-ui:rss-settings
+					delta="<%= rssDelta %>"
+					displayStyle="<%= rssDisplayStyle %>"
+					enabled="<%= enableRSS %>"
+					feedType="<%= rssFeedType %>"
+				/>
+			</liferay-ui:section>
+		</c:if>
+	</liferay-ui:tabs>
 
 	<aui:button-row>
 		<aui:button type="submit" />
@@ -732,10 +550,24 @@ String emailBody = SettingsParamUtil.getString(mbSettings, request, emailBodyPar
 
 <aui:script>
 	function <portlet:namespace />saveConfiguration() {
-		<c:if test='<%= tabs2.equals("user-ranks") || tabs2.equals("thread-priorities") %>'>
-			<portlet:namespace />updateLanguage();
-		</c:if>
+		<portlet:namespace />saveEmails();
+		<portlet:namespace />updatePrioritiesLanguage();
+		<portlet:namespace />updateRanksLanguage();
 
 		submitForm(document.<portlet:namespace />fm);
+	}
+
+	function <portlet:namespace />saveEmails() {
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailMessageAddedBody--'].value = window['<portlet:namespace />emailMessageAdded'].getHTML();
+		}
+		catch (e) {
+		}
+
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailMessageUpdatedBody--'].value = window['<portlet:namespace />emailMessageUpdated'].getHTML();
+		}
+		catch (e) {
+		}
 	}
 </aui:script>

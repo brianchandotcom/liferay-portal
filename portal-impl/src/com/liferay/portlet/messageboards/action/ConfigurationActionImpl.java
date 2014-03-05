@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
@@ -51,21 +52,11 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
 
-		if (tabs2.equals("email-from")) {
-			validateEmailFrom(actionRequest);
-		}
-		else if (tabs2.equals("message-added-email")) {
-			validateEmailMessageAdded(actionRequest);
-		}
-		else if (tabs2.equals("message-updated-email")) {
-			validateEmailMessageUpdated(actionRequest);
-		}
-		else if (tabs2.equals("thread-priorities")) {
-			updateThreadPriorities(actionRequest);
-		}
-		else if (tabs2.equals("user-ranks")) {
-			updateUserRanks(actionRequest);
-		}
+		validateEmailFrom(actionRequest);
+		validateEmailMessageAdded(actionRequest);
+		validateEmailMessageUpdated(actionRequest);
+		updateThreadPriorities(actionRequest);
+		updateUserRanks(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
@@ -192,32 +183,40 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	protected void validateEmailMessageAdded(ActionRequest actionRequest)
 		throws Exception {
 
+		boolean emailMessageAddedEnabled = GetterUtil.getBoolean(
+			getParameter(actionRequest, "emailMessageAddedEnabled"));
 		String emailMessageAddedSubject = getParameter(
 			actionRequest, "emailMessageAddedSubject");
 		String emailMessageAddedBody = getParameter(
 			actionRequest, "emailMessageAddedBody");
 
-		if (Validator.isNull(emailMessageAddedSubject)) {
-			SessionErrors.add(actionRequest, "emailMessageAddedSubject");
-		}
-		else if (Validator.isNull(emailMessageAddedBody)) {
-			SessionErrors.add(actionRequest, "emailMessageAddedBody");
+		if (emailMessageAddedEnabled) {
+			if (Validator.isNull(emailMessageAddedSubject)) {
+				SessionErrors.add(actionRequest, "emailMessageAddedSubject");
+			}
+			else if (Validator.isNull(emailMessageAddedBody)) {
+				SessionErrors.add(actionRequest, "emailMessageAddedBody");
+			}
 		}
 	}
 
 	protected void validateEmailMessageUpdated(ActionRequest actionRequest)
 		throws Exception {
 
+		boolean emailMessageUpdatedEnabled = GetterUtil.getBoolean(
+			getParameter(actionRequest, "emailMessageUpdatedEnabled"));
 		String emailMessageUpdatedSubject = getParameter(
 			actionRequest, "emailMessageUpdatedSubject");
 		String emailMessageUpdatedBody = getParameter(
 			actionRequest, "emailMessageUpdatedBody");
 
-		if (Validator.isNull(emailMessageUpdatedSubject)) {
-			SessionErrors.add(actionRequest, "emailMessageUpdatedSubject");
-		}
-		else if (Validator.isNull(emailMessageUpdatedBody)) {
-			SessionErrors.add(actionRequest, "emailMessageUpdatedBody");
+		if (emailMessageUpdatedEnabled) {
+			if (Validator.isNull(emailMessageUpdatedSubject)) {
+				SessionErrors.add(actionRequest, "emailMessageUpdatedSubject");
+			}
+			else if (Validator.isNull(emailMessageUpdatedBody)) {
+				SessionErrors.add(actionRequest, "emailMessageUpdatedBody");
+			}
 		}
 	}
 

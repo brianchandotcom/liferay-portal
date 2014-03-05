@@ -40,10 +40,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.quick-access-nav {
 		a {
-			@include box-shadow(rgba(0, 0, 0, .1) 1px 1px 1px);
+			@include box-shadow(rgba(0, 0, 0, 0.1) 1px 1px 1px);
 
 			background: #009AE5;
-			background: rgba(0, 154, 229, .9);
+			background: rgba(0, 154, 229, 0.9);
 			border: 1px solid #FFF;
 			color: #FFF;
 			left: 0;

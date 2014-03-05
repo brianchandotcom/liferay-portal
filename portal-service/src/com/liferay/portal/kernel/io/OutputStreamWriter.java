@@ -86,6 +86,8 @@ public class OutputStreamWriter extends Writer {
 			_outputStream.write(
 				_outputByteBuffer.array(), 0, _outputByteBuffer.position());
 
+			_outputStream.flush();
+
 			_outputByteBuffer.rewind();
 		}
 	}

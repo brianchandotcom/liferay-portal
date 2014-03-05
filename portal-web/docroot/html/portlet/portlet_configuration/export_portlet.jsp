@@ -22,6 +22,8 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 PortletURL portletURL = currentURLObj;
 
 portletURL.setParameter("tabs3", "current-and-previous");
+
+Group group = themeDisplay.getScopeGroup();
 %>
 
 <liferay-ui:tabs
@@ -384,17 +386,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 					</c:if>
 
 					<aui:fieldset cssClass="options-group" label="permissions">
-						<ul class="lfr-tree unstyled">
-							<li class="tree-item">
-								<aui:input helpMessage="export-import-portlet-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
-
-								<ul id="<portlet:namespace />permissionsUl">
-									<li class="tree-item">
-										<aui:input label="permissions-assigned-to-roles" name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
-									</li>
-								</ul>
-							</li>
-						</ul>
+						<%@ include file="/html/portlet/layouts_admin/export_configuration/permissions.jspf" %>
 					</aui:fieldset>
 				</c:if>
 
@@ -453,8 +445,6 @@ portletURL.setParameter("tabs3", "current-and-previous");
 </aui:script>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>Checkbox', '<portlet:namespace />permissionsUl');
-
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', ['<portlet:namespace />startEndDate', '<portlet:namespace />rangeLastInputs']);
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeDateRange', '<portlet:namespace />startEndDate', '<portlet:namespace />rangeLastInputs');
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeLast', '<portlet:namespace />rangeLastInputs', ['<portlet:namespace />startEndDate']);

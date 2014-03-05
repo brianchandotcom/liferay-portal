@@ -179,32 +179,14 @@ if (!cmd.equals(Constants.ADD)) {
 						</aui:fieldset>
 					</c:if>
 
-					<aui:input name="layoutIds" type="hidden" />
-
 					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 						<aui:fieldset cssClass="options-group" label="pages">
-							<span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
-
-							<aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
-
-							<div class="hide" id="<portlet:namespace />pages">
-								<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
-									<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
-										<liferay-util:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
-										<liferay-util:param name="treeId" value="<%= treeId %>" />
-										<liferay-util:param name="defaultStateChecked" value="1" />
-										<liferay-util:param name="selectableTree" value="1" />
-									</liferay-util:include>
-
-									<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= true %>" />
-								</aui:fieldset>
-
-								<aui:fieldset cssClass="portlet-data-section" label="look-and-feel">
-									<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
-
-									<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
-								</aui:fieldset>
-							</div>
+							<liferay-util:include page="/html/portlet/layouts_admin/export_configuration/select_pages.jsp">
+								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+								<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
+								<liferay-util:param name="treeId" value="<%= treeId %>" />
+							</liferay-util:include>
 						</aui:fieldset>
 					</c:if>
 
@@ -617,21 +599,7 @@ if (!cmd.equals(Constants.ADD)) {
 					</c:if>
 
 					<aui:fieldset cssClass="options-group" label="permissions">
-						<ul class="lfr-tree unstyled">
-							<li class="tree-item">
-								<aui:input label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
-
-								<ul id="<portlet:namespace />selectPermissions">
-									<li>
-										<aui:input label="permissions-assigned-to-roles" name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
-									</li>
-								</ul>
-
-								<aui:script>
-									Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>Checkbox', '<portlet:namespace />selectPermissions');
-								</aui:script>
-							</li>
-						</ul>
+						<%@ include file="/html/portlet/layouts_admin/export_configuration/permissions.jspf" %>
 					</aui:fieldset>
 				</div>
 
@@ -654,6 +622,7 @@ if (!cmd.equals(Constants.ADD)) {
 
 		<div <%= exportNav.equals("export-configurations") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportConfigurations">
 			<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_configurations.jsp">
+				<liferay-util:param name="exportImportConfigurationType" value="<%= String.valueOf(ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) %>" />
 				<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 				<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -746,15 +715,17 @@ if (!cmd.equals(Constants.ADD)) {
 	};
 
 	var processDataValue = function(dataValue) {
-		var exportOptions = A.one('#<portlet:namespace />exportOptions');
 		var exportConfigurations = A.one('#<portlet:namespace />exportConfigurations');
+		var exportOptions = A.one('#<portlet:namespace />exportOptions');
 
 		if (dataValue === 'custom') {
 			exportConfigurations.hide();
+
 			exportOptions.show();
 		}
 		else if (dataValue === 'export-configurations') {
 			exportOptions.hide();
+
 			exportConfigurations.show();
 		}
 	};

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Address;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -32,6 +33,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.OrganizationServiceUtil;
 import com.liferay.portal.service.RoleServiceUtil;
@@ -252,10 +254,15 @@ public class MembershipPolicyTestUtil {
 
 			serviceContext.setAssetTagNames(new String[] {tag.getName()});
 
+			Company company = CompanyLocalServiceUtil.getCompany(
+				TestPropsValues.getCompanyId());
+
+			serviceContext.setScopeGroupId(company.getGroupId());
+
 			AssetVocabulary vocabulary =
 				AssetVocabularyLocalServiceUtil.addVocabulary(
 					TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-					new ServiceContext());
+					serviceContext);
 
 			AssetCategory category = AssetCategoryLocalServiceUtil.addCategory(
 				TestPropsValues.getUserId(), ServiceTestUtil.randomString(),

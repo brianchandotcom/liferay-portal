@@ -93,6 +93,11 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
+		if (_dateFormat == null) {
+			_dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+				_INDEX_DATE_FORMAT_PATTERN);
+		}
+
 		String[] dates = new String[values.length];
 		String[] datesTime = new String[values.length];
 
@@ -810,9 +815,7 @@ public class DocumentImpl implements Document {
 
 	private static final String _UID_PORTLET = "_PORTLET_";
 
-	private static Format _dateFormat =
-		FastDateFormatFactoryUtil.getSimpleDateFormat(
-			_INDEX_DATE_FORMAT_PATTERN);
+	private static Format _dateFormat;
 	private static Set<String> _defaultSortableTextFields = SetUtil.fromArray(
 		PropsUtil.getArray(PropsKeys.INDEX_SORTABLE_TEXT_FIELDS));
 

@@ -382,15 +382,19 @@ public class PortletExporter {
 		portletDataContext.setMissingReferencesElement(
 			missingReferencesElement);
 
-		boolean[] exportPortletControls =
-			ExportImportHelperUtil.getExportPortletControls(
+		Map<String, Boolean> exportPortletControlsMap =
+			ExportImportHelperUtil.getExportPortletControlsMap(
 				layout.getCompanyId(), portletId, parameterMap);
 
 		exportPortlet(
 			portletDataContext, layoutCache, portletId, layout, rootElement,
-			exportPermissions, exportPortletControls[0],
-			exportPortletControls[1], exportPortletControls[2],
-			exportPortletControls[3]);
+			exportPermissions,
+			exportPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
+			exportPortletControlsMap.get(PortletDataHandlerKeys.PORTLET_DATA),
+			exportPortletControlsMap.get(PortletDataHandlerKeys.PORTLET_SETUP),
+			exportPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_USER_PREFERENCES));
 
 		exportAssetLinks(portletDataContext);
 		exportAssetTags(portletDataContext);

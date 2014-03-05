@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -60,9 +65,22 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	}
 
 	protected void updatePayment(ActionRequest actionRequest) throws Exception {
-		double taxRate = ParamUtil.getDouble(actionRequest, "taxRate") / 100;
+		String taxRatePercent = ParamUtil.getString(actionRequest, "taxRate");
 
-		setPreference(actionRequest, "taxRate", String.valueOf(taxRate));
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		NumberFormat percentFormat = NumberFormat.getPercentInstance(
+				themeDisplay.getLocale());
+
+		try {
+			double taxRate = percentFormat.parse(taxRatePercent).doubleValue();
+
+			setPreference(actionRequest, "taxRate", String.valueOf(taxRate));
+		}
+		catch (ParseException pe) {
+			SessionErrors.add(actionRequest, "taxRate");
+		}
 	}
 
 	protected void updateShippingCalculation(ActionRequest actionRequest)

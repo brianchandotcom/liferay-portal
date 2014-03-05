@@ -1583,9 +1583,11 @@ public class SeleniumBuilderFileUtil {
 
 		List<Element> elements = rootElement.elements();
 
-		if (elements.isEmpty()) {
-			throwValidationException(
-				1001, fileName, rootElement, new String[] {"command"});
+		if (Validator.isNull(extendedTestCase)) {
+			if (elements.isEmpty()) {
+				throwValidationException(
+					1001, fileName, rootElement, new String[] {"command"});
+			}
 		}
 
 		for (Element element : elements) {

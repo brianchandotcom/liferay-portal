@@ -1172,21 +1172,22 @@ public class LayoutStagedModelDataHandler
 			List<String> sourcePortletIds = layoutTypePortlet.getPortletIds();
 
 			for (String portletId : sourcePortletIds) {
-				boolean importPortletSetup = false;
+				boolean importPortletConfiguration = false;
 
 				try {
-					boolean[] importPortletControls =
-						ExportImportHelperUtil.getImportPortletControls(
+					Map<String, Boolean> importPortletControlsMap =
+						ExportImportHelperUtil.getImportPortletControlsMap(
 							portletDataContext.getCompanyId(), portletId,
 							portletDataContext.getParameterMap(), null,
 							portletDataContext.getManifestSummary());
 
-					importPortletSetup = importPortletControls[2];
+					importPortletConfiguration = importPortletControlsMap.get(
+						PortletDataHandlerKeys.PORTLET_CONFIGURATION);
 				}
 				catch (Exception e) {
 				}
 
-				if (!importPortletSetup &&
+				if (!importPortletConfiguration &&
 					!importedPortletIds.contains(portletId)) {
 
 					removePortletFromLayoutTypePortlet(

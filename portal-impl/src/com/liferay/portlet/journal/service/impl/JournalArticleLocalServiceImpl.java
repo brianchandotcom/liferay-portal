@@ -337,6 +337,8 @@ public class JournalArticleLocalServiceImpl
 			articleId = String.valueOf(counterLocalService.increment());
 		}
 
+		serviceContext.setAttribute("articleId", articleId);
+
 		long id = counterLocalService.increment();
 
 		long resourcePrimKey =
@@ -459,6 +461,8 @@ public class JournalArticleLocalServiceImpl
 
 		String fullArticleURL = getFullArticleURL(
 			articleURL, groupId, folderId, articleId);
+
+		serviceContext.setAttribute("articleURL", fullArticleURL);
 
 		sendEmail(
 			article, fullArticleURL, preferences, "requested", serviceContext);
@@ -4872,6 +4876,8 @@ public class JournalArticleLocalServiceImpl
 
 			String fullArticleURL = getFullArticleURL(
 				articleURL, groupId, folderId, articleId);
+
+			serviceContext.setAttribute("articleURL", fullArticleURL);
 
 			sendEmail(
 				article, fullArticleURL, preferences, "requested",

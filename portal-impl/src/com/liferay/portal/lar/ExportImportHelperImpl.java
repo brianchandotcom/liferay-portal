@@ -221,6 +221,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return PortletConstants.getRootPortletId(portletId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getExportPortletControlsMap(long, String, Map)}
+	 */
+	@Deprecated
 	@Override
 	public boolean[] getExportPortletControls(
 			long companyId, String portletId,
@@ -231,6 +236,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			companyId, portletId, parameterMap, "layout-set");
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getExportPortletControlsMap(long, String, Map, String)}
+	 */
+	@Deprecated
 	@Override
 	public boolean[] getExportPortletControls(
 			long companyId, String portletId,
@@ -375,6 +385,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return exportPortletControlsMap;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getImportPortletControlsMap(long, String, Map, Element,
+	 *             ManifestSummary)}
+	 */
+	@Deprecated
 	@Override
 	public boolean[] getImportPortletControls(
 			long companyId, String portletId,
@@ -385,6 +401,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			companyId, portletId, parameterMap, portletDataElement, null);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getImportPortletControlsMap(long, String, Map, Element,
+	 *             ManifestSummary)}
+	 */
+	@Deprecated
 	@Override
 	public boolean[] getImportPortletControls(
 			long companyId, String portletId,

@@ -83,15 +83,12 @@
 	</command>
 
 	<command name="ViewMessageBoardsThreadStatistics" priority="4">
-		<var name="threadBody" value="MB Thread Message Body" />
-		<var name="threadBody2" value="MB Thread Message Body" />
-		<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
-		<var name="threadPostNumber0" value="0" />
-		<var name="threadPostNumber1" value="1" />
-		<var name="threadPostNumber2" value="2" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-		<var name="threadSubject2" value="MB Thread Message Subject 2" />
-		<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
+		<var name="threadBody" value="MB Thread1 Message Body" />
+		<var name="threadBody2" value="MB Thread2 Message Body" />
+		<var name="threadBodyEdit" value="MB Thread1 Message Body Edit" />
+		<var name="threadSubject" value="MB Thread1 Message Subject" />
+		<var name="threadSubject2" value="MB Thread2 Message Subject" />
+		<var name="threadSubjectEdit" value="MB Thread1 Message Subject Edit" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -119,14 +116,16 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
-			<var name="threadPostNumber" value="${threadPostNumber1}" />
+			<var name="threadPostNumber" value="1" />
+			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#editAsDraftPG">
+		<execute macro="MessageboardsThread#editPG">
+			<var name="saveAsDraft" value="true" />
 			<var name="threadBodyEdit" value="${threadBodyEdit}" />
 			<var name="threadSubjectEdit" value="${threadSubjectEdit}" />
 		</execute>
@@ -135,11 +134,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
-			<var name="threadPostNumber" value="${threadPostNumber0}" />
-		</execute>
+		<execute macro="MessageboardsThread#viewStatisticsPostsCountDefaultPG" />
 
-		<execute macro="MessageboardsThread#publishDraftViaMyPosts">
+		<execute macro="MessageboardsThread#editViaMyPosts">
 			<var name="threadSubject" value="${threadSubjectEdit}" />
 			<var name="threadSubjectEdit" value="true" />
 		</execute>
@@ -149,7 +146,8 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
-			<var name="threadPostNumber" value="${threadPostNumber1}" />
+			<var name="threadPostNumber" value="1" />
+			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -166,7 +164,8 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
-			<var name="threadPostNumber" value="${threadPostNumber2}" />
+			<var name="threadPostNumber" value="2" />
+			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -178,7 +177,8 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
-			<var name="threadPostNumber" value="${threadPostNumber1}" />
+			<var name="threadPostNumber" value="1" />
+			<var name="userName" value="Test Test" />
 		</execute>
 	</command>
 

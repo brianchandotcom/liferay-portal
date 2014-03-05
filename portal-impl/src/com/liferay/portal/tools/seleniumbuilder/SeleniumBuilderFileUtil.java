@@ -264,9 +264,7 @@ public class SeleniumBuilderFileUtil {
 		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			Pattern pattern = Pattern.compile("<[a-z\\-]+");
-
-			Matcher matcher = pattern.matcher(line);
+			Matcher matcher = _tagPattern.matcher(line);
 
 			if (matcher.find()) {
 				for (String reservedTag : _reservedTags) {
@@ -1439,17 +1437,15 @@ public class SeleniumBuilderFileUtil {
 				throwValidationException(2004, fileName, description);
 			}
 
-			Pattern statementPattern = Pattern.compile("[A-Z0-9].*");
-
-			Matcher statmentMatcher = statementPattern.matcher(description);
+			Matcher statmentMatcher = _pathTrElementStatementPattern.matcher(
+				description);
 
 			if (!statmentMatcher.find()) {
 				throwValidationException(2004, fileName, description);
 			}
 
-			Pattern wordPattern1 = Pattern.compile("[A-Za-z0-9\\-]+");
-
-			Matcher wordMatcher1 = wordPattern1.matcher(description);
+			Matcher wordMatcher1 = _pathTrElementWordPattern1.matcher(
+				description);
 
 			while (wordMatcher1.find()) {
 				String word = wordMatcher1.group();
@@ -1464,10 +1460,7 @@ public class SeleniumBuilderFileUtil {
 					continue;
 				}
 
-				Pattern wordPattern2 = Pattern.compile(
-					"[A-Z0-9][A-Za-z0-9\\-]*");
-
-				Matcher wordMatcher2 = wordPattern2.matcher(word);
+				Matcher wordMatcher2 = _pathTrElementWordPattern2.matcher(word);
 
 				if (!wordMatcher2.find()) {
 					throwValidationException(2004, fileName, description);
@@ -1760,17 +1753,13 @@ public class SeleniumBuilderFileUtil {
 				varValue = varText;
 			}
 
-			Pattern pattern = Pattern.compile("\\$\\{([^\\}]*?)\\}");
-
-			Matcher matcher = pattern.matcher(varValue);
+			Matcher matcher = _varElementPattern.matcher(varValue);
 
 			while (matcher.find()) {
 				String statement = matcher.group(1);
 
-				Pattern statementPattern = Pattern.compile(
-					"(.*)\\?(.*)\\(([^\\)]*?)\\)");
-
-				Matcher statementMatcher = statementPattern.matcher(statement);
+				Matcher statementMatcher = _varElementStatementPattern.matcher(
+					statement);
 
 				if (statementMatcher.find()) {
 					String operand = statementMatcher.group(1);
@@ -1850,5 +1839,15 @@ public class SeleniumBuilderFileUtil {
 		});
 
 	private String _baseDir;
+	private Pattern _pathTrElementStatementPattern = Pattern.compile(
+		"[A-Z0-9].*");
+	private Pattern _pathTrElementWordPattern1 = Pattern.compile(
+		"[A-Za-z0-9\\-]+");
+	private Pattern _pathTrElementWordPattern2 = Pattern.compile(
+		"[A-Z0-9][A-Za-z0-9\\-]*");
+	private Pattern _tagPattern = Pattern.compile("<[a-z\\-]+");
+	private Pattern _varElementPattern = Pattern.compile("\\$\\{([^\\}]*?)\\}");
+	private Pattern _varElementStatementPattern = Pattern.compile(
+		"(.*)\\?(.*)\\(([^\\)]*?)\\)");
 
 }

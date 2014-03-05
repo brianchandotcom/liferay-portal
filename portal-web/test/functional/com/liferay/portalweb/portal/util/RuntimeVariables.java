@@ -72,17 +72,13 @@ public class RuntimeVariables {
 
 		String varValue = value;
 
-		Pattern pattern = Pattern.compile("\\$\\{([^}]*?)\\}");
-
-		Matcher matcher = pattern.matcher(varValue);
-
-		Pattern statementPattern = Pattern.compile(
-			"(.*)\\?(.*)\\(([^\\)]*?)\\)");
+		Matcher matcher = _variablePattern.matcher(varValue);
 
 		while (matcher.find()) {
 			String statement = matcher.group(1);
 
-			Matcher statementMatcher = statementPattern.matcher(statement);
+			Matcher statementMatcher = _variableStatementPattern.matcher(
+				statement);
 
 			if (statementMatcher.find()) {
 				String operand = statementMatcher.group(1);
@@ -286,6 +282,11 @@ public class RuntimeVariables {
 	}
 
 	private static RuntimeVariables _instance = new RuntimeVariables();
+
+	private static Pattern _variablePattern = Pattern.compile(
+		"\\$\\{([^}]*?)\\}");
+	private static Pattern _variableStatementPattern = Pattern.compile(
+		"(.*)\\?(.*)\\(([^\\)]*?)\\)");
 
 	private ContextReplace _contextReplace;
 	private Map<String, String> _runtimeVariables =

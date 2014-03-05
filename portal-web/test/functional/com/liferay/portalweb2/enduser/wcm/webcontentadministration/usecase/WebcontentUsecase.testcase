@@ -20,10 +20,13 @@
 	</tear-down>
 
 	<command name="AddWebContentRemoveGuestViewPermission" priority="5">
-		<var name="pageName" value="Web Content Display Page" />
+		<property name="custom.properties" value="journal.article.view.permission.check.enabled=true" />
+
+		<var name="pageName" value="WCD Page" />
 		<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 		<var name="portletName" value="Web Content Display" />
 		<var name="portletOption" value="Configuration" />
+		<var name="portletTitleName" value="Web Content Display" />
 		<var name="roleName" value="Guest" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
@@ -85,7 +88,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="BasePortlet#assertTextNotPresent" locator-key1="TITLE" value1="${portletName}" />
+		<var name="key_portletTitleName" value="${portletTitleName}" />
+
+		<execute action="BasePortlet#assertTextNotPresent" locator-key1="SPECIFIC_TITLE" value1="${portletTitleName}" />
 
 		<execute action="PGWebcontentdisplay#assertTextNotPresent" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 	</command>

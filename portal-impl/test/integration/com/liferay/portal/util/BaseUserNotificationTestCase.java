@@ -52,7 +52,7 @@ public abstract class BaseUserNotificationTestCase extends BaseMailTestCase {
 		logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
-		user = TestPropsValues.getUser();
+		user = UserTestUtil.addOmniAdmin();
 
 		group = GroupTestUtil.addGroup();
 

@@ -58,11 +58,11 @@
 		<sequential>
 			<if>
 				<and>
-					<isset property="test.build.fix.pack.base.url" />
-					<isset property="test.build.fix.pack.zip.name" />
+					<isset property="test.fix.pack.base.url" />
+					<isset property="test.fix.pack.zip.name" />
 				</and>
 				<then>
-					<property name="test.build.fix.pack.zip.url" value="${test.build.fix.pack.base.url}${test.build.fix.pack.zip.name}" />
+					<property name="test.build.fix.pack.zip.url" value="${test.fix.pack.base.url}${test.fix.pack.zip.name}" />
 				</then>
 			</if>
 

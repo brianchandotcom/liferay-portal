@@ -31,7 +31,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public void assertConfirmation(String pattern) throws Exception;
 
-	public void assertConsoleContentPresent(String text) throws Exception;
+	public void assertConsoleTextPresent(String text) throws Exception;
 
 	public void assertElementNotPresent(String locator) throws Exception;
 

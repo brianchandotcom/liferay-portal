@@ -94,8 +94,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void assertConsoleContentPresent(String text) throws Exception {
-		LiferaySeleniumHelper.assertConsoleContentPresent(text);
+	public void assertConsoleTextPresent(String text) throws Exception {
+		LiferaySeleniumHelper.assertConsoleTextPresent(text);
 	}
 
 	@Override

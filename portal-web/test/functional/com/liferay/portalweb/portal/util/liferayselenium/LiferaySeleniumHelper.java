@@ -136,9 +136,7 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
-	public static void assertConsoleContentPresent(String text)
-		throws Exception {
-
+	public static void assertConsoleTextPresent(String text) throws Exception {
 		String currentDate = DateUtil.getCurrentDate(
 			"yyyy-MM-dd", LocaleUtil.getDefault());
 
@@ -148,9 +146,10 @@ public class LiferaySeleniumHelper {
 		String content = FileUtil.read(log4jXMLFile);
 
 		Pattern pattern = Pattern.compile(text);
+
 		Matcher matcher = pattern.matcher(content);
 
-		while (!matcher.find()) {
+		if (!matcher.find()) {
 			throw new Exception("\"" + text + "\" is not present in console");
 		}
 	}

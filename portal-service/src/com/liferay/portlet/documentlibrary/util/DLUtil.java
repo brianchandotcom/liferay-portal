@@ -213,7 +213,8 @@ public class DLUtil {
 	public static Map<String, String> getEmailFromDefinitionTerms(
 		RenderRequest request, String emailFromAddress, String emailFromName) {
 
-		return getDL().getEmailFromDefinitionTerms(request, emailFromAddress, emailFromName);
+		return getDL().getEmailFromDefinitionTerms(
+			request, emailFromAddress, emailFromName);
 	}
 
 	public static String getEmailFromName(

@@ -469,7 +469,8 @@ public class DLImpl implements DL {
 
 		definitionTerms.put(
 			"[$COMPANY_ID$]",
-			LanguageUtil.get(themeDisplay.getLocale(),
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
 				"the-company-id-associated-with-the-document"));
 		definitionTerms.put(
 			"[$COMPANY_MX$]",
@@ -478,7 +479,8 @@ public class DLImpl implements DL {
 				"the-company-mx-associated-with-the-document"));
 		definitionTerms.put(
 			"[$COMPANY_NAME$]",
-			LanguageUtil.get(themeDisplay.getLocale(),
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
 				"the-company-name-associated-with-the-document"));
 		definitionTerms.put(
 			"[$DOCUMENT_TITLE$]",
@@ -673,7 +675,8 @@ public class DLImpl implements DL {
 
 		definitionTerms.put(
 			"[$COMPANY_ID$]",
-			LanguageUtil.get(themeDisplay.getLocale(),
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
 				"the-company-id-associated-with-the-document"));
 		definitionTerms.put(
 			"[$COMPANY_MX$]",
@@ -682,7 +685,8 @@ public class DLImpl implements DL {
 				"the-company-mx-associated-with-the-document"));
 		definitionTerms.put(
 			"[$COMPANY_NAME$]",
-			LanguageUtil.get(themeDisplay.getLocale(),
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
 				"the-company-name-associated-with-the-document"));
 		definitionTerms.put(
 			"[$DOCUMENT_STATUS_BY_USER_NAME$]",

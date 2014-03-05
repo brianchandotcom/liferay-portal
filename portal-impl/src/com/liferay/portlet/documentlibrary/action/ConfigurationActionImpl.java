@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -99,7 +97,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		if (emailFileEntryUpdatedEnabled) {
 			if (Validator.isNull(emailFileEntryUpdatedSubject)) {
-				SessionErrors.add(actionRequest, "emailFileEntryUpdatedSubject");
+				SessionErrors.add(
+					actionRequest, "emailFileEntryUpdatedSubject");
 			}
 			else if (Validator.isNull(emailFileEntryUpdatedBody)) {
 				SessionErrors.add(actionRequest, "emailFileEntryUpdatedBody");

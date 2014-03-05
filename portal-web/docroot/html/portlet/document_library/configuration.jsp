@@ -60,7 +60,6 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 		names="<%= tabs2Names %>"
 		refresh="<%= false %>"
 	>
-
 		<liferay-ui:error key="displayViewsInvalid" message="display-style-views-cannot-be-empty" />
 		<liferay-ui:error key="emailFileEntryAddedBody" message="please-enter-a-valid-body" />
 		<liferay-ui:error key="emailFileEntryAddedSubject" message="please-enter-a-valid-subject" />

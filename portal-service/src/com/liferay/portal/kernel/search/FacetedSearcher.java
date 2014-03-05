@@ -24,16 +24,13 @@ import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
 
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import javax.portlet.PortletURL;
 
 /**
  * @author Raymond Augé
  */
-public class FacetedSearcher extends BaseIndexer {
+public class FacetedSearcher extends BaseSearcher {
 
 	public static Indexer getInstance() {
 		return new FacetedSearcher();
@@ -42,30 +39,6 @@ public class FacetedSearcher extends BaseIndexer {
 	@Override
 	public String[] getClassNames() {
 		return null;
-	}
-
-	@Override
-	public IndexerPostProcessor[] getIndexerPostProcessors() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getPortletId() {
-		return null;
-	}
-
-	@Override
-	public void registerIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void unregisterIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor) {
-
-		throw new UnsupportedOperationException();
 	}
 
 	protected void addSearchExpandoKeywords(
@@ -201,40 +174,6 @@ public class FacetedSearcher extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected Summary doGetSummary(
-			Document document, Locale locale, String snippet,
-			PortletURL portletURL)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected void doReindex(Object obj) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	protected Hits doSearch(SearchContext searchContext)
 		throws SearchException {
 
@@ -259,11 +198,6 @@ public class FacetedSearcher extends BaseIndexer {
 		catch (Exception e) {
 			throw new SearchException(e);
 		}
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return null;
 	}
 
 	@Override

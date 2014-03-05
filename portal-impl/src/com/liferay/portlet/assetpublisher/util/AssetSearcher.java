@@ -14,17 +14,14 @@
 
 package com.liferay.portlet.assetpublisher.util;
 
-import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -37,14 +34,11 @@ import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-import javax.portlet.PortletURL;
 
 /**
  * @author Eudaldo Alonso
  */
-public class AssetSearcher extends BaseIndexer {
+public class AssetSearcher extends BaseSearcher {
 
 	public static Indexer getInstance() {
 		return new AssetSearcher();
@@ -68,23 +62,6 @@ public class AssetSearcher extends BaseIndexer {
 		}
 
 		return classNames;
-	}
-
-	@Override
-	public IndexerPostProcessor[] getIndexerPostProcessors() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getPortletId() {
-		return null;
-	}
-
-	@Override
-	public void registerIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor) {
-
-		throw new UnsupportedOperationException();
 	}
 
 	public void setAssetEntryQuery(AssetEntryQuery assetEntryQuery) {
@@ -449,45 +426,6 @@ public class AssetSearcher extends BaseIndexer {
 		}
 
 		contextQuery.add(tagIdsQuery, BooleanClauseOccur.MUST_NOT);
-	}
-
-	@Override
-	protected void doDelete(Object obj) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected Summary doGetSummary(
-			Document document, Locale locale, String snippet,
-			PortletURL portletURL)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected void doReindex(Object obj) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return null;
 	}
 
 	private AssetEntryQuery _assetEntryQuery;

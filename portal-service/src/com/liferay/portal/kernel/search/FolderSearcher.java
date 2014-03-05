@@ -18,14 +18,10 @@ import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.journal.model.JournalFolder;
 
-import java.util.Locale;
-
-import javax.portlet.PortletURL;
-
 /**
  * @author Eduardo Garcia
  */
-public class FolderSearcher extends BaseIndexer {
+public class FolderSearcher extends BaseSearcher {
 
 	public static final String[] CLASS_NAMES = {
 		BookmarksFolder.class.getName(), DLFolder.class.getName(),
@@ -47,23 +43,6 @@ public class FolderSearcher extends BaseIndexer {
 	}
 
 	@Override
-	public IndexerPostProcessor[] getIndexerPostProcessors() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getPortletId() {
-		return null;
-	}
-
-	@Override
-	public void registerIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	protected BooleanQuery createFullQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
@@ -80,45 +59,6 @@ public class FolderSearcher extends BaseIndexer {
 		contextQuery.add(entryClassPKQuery, BooleanClauseOccur.MUST);
 
 		return super.createFullQuery(contextQuery, searchContext);
-	}
-
-	@Override
-	protected void doDelete(Object obj) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected Summary doGetSummary(
-			Document document, Locale locale, String snippet,
-			PortletURL portletURL)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected void doReindex(Object obj) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return null;
 	}
 
 }

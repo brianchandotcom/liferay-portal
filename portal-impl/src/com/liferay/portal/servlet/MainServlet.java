@@ -1002,7 +1002,7 @@ public class MainServlet extends ActionServlet {
 
 		User user = UserLocalServiceUtil.getUserById(userId);
 
-		if (!user.isDefaultUser() && PropsValues.USERS_UPDATE_LAST_LOGIN) {
+		if (PropsValues.USERS_UPDATE_LAST_LOGIN && !user.isDefaultUser()) {
 			UserLocalServiceUtil.updateLastLogin(
 				userId, request.getRemoteAddr());
 		}

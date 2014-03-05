@@ -457,8 +457,11 @@ public class JournalArticleLocalServiceImpl
 		PortletPreferences preferences =
 			ServiceContextUtil.getPortletPreferences(serviceContext);
 
+		String fullArticleURL = getFullArticleURL(
+			articleURL, groupId, folderId, articleId);
+
 		sendEmail(
-			article, articleURL, preferences, "requested", serviceContext);
+			article, fullArticleURL, preferences, "requested", serviceContext);
 
 		// Workflow
 
@@ -938,8 +941,13 @@ public class JournalArticleLocalServiceImpl
 					article.getGroupId(), article.getArticleId(),
 					article.getVersion())) {
 
+				String fullArticleURL = getFullArticleURL(
+					articleURL, article.getGroupId(), article.getFolderId(),
+					article.getArticleId());
+
 				sendEmail(
-					article, articleURL, preferences, "denied", serviceContext);
+					article, fullArticleURL, preferences, "denied",
+						serviceContext);
 			}
 		}
 
@@ -4862,8 +4870,12 @@ public class JournalArticleLocalServiceImpl
 		if (serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_PUBLISH) {
 
+			String fullArticleURL = getFullArticleURL(
+				articleURL, groupId, folderId, articleId);
+
 			sendEmail(
-				article, articleURL, preferences, "requested", serviceContext);
+				article, fullArticleURL, preferences, "requested",
+					serviceContext);
 
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				user.getCompanyId(), groupId, userId,
@@ -5389,8 +5401,13 @@ public class JournalArticleLocalServiceImpl
 						ServiceContextUtil.getPortletPreferences(
 							serviceContext);
 
+					String fullArticleURL = getFullArticleURL(
+						articleURL, article.getGroupId(), article.getFolderId(),
+						article.getArticleId());
+
 					sendEmail(
-						article, articleURL, preferences, msg, serviceContext);
+						article, fullArticleURL, preferences, msg,
+							serviceContext);
 				}
 				catch (Exception e) {
 					_log.error(
@@ -6526,12 +6543,6 @@ public class JournalArticleLocalServiceImpl
 			article.getCompanyId());
 
 		User user = userPersistence.findByPrimaryKey(article.getUserId());
-
-		articleURL +=
-			"&_" + PortletKeys.JOURNAL + "_groupId=" + article.getGroupId() +
-				"&_" + PortletKeys.JOURNAL + "_folderId=" +
-					article.getFolderId() + "&_" + PortletKeys.JOURNAL +
-						"_articleId=" + article.getArticleId();
 
 		String fromName = JournalUtil.getEmailFromName(
 			preferences, article.getCompanyId());

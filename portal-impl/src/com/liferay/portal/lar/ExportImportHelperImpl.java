@@ -237,6 +237,38 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			Map<String, String[]> parameterMap, String type)
 		throws Exception {
 
+		Map<String, Boolean> exportPortletControlsMap =
+			getExportPortletControlsMap(
+				companyId, portletId, parameterMap, type);
+
+		return new boolean[] {
+			exportPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
+			exportPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_DATA),
+			exportPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_SETUP),
+			exportPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_USER_PREFERENCES),
+		};
+	}
+
+	@Override
+	public Map<String, Boolean> getExportPortletControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap)
+		throws Exception {
+
+		return getExportPortletControlsMap(
+			companyId, portletId, parameterMap, "layout-set");
+	}
+
+	@Override
+	public Map<String, Boolean> getExportPortletControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, String type)
+		throws Exception {
+
 		boolean exportPortletConfiguration = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION);
 		boolean exportPortletConfigurationAll = MapUtil.getBoolean(
@@ -274,11 +306,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		boolean exportCurPortletArchivedSetups = exportPortletConfiguration;
+		boolean exportCurPortletConfiguration = exportPortletConfiguration;
 		boolean exportCurPortletSetup = exportPortletConfiguration;
 		boolean exportCurPortletUserPreferences = exportPortletConfiguration;
 
 		if (exportPortletConfigurationAll ||
 			(exportPortletConfiguration && type.equals("layout-prototype"))) {
+
+			exportCurPortletConfiguration = true;
 
 			exportCurPortletArchivedSetups =
 				MapUtil.getBoolean(
@@ -293,7 +328,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
 		}
 		else if (rootPortletId != null) {
-			boolean exportCurPortletConfiguration =
+			exportCurPortletConfiguration =
 				exportPortletConfiguration &&
 				MapUtil.getBoolean(
 					parameterMap,
@@ -320,9 +355,24 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 						StringPool.UNDERLINE + rootPortletId);
 		}
 
-		return new boolean[] {
-			exportCurPortletArchivedSetups, exportCurPortletData,
-			exportCurPortletSetup, exportCurPortletUserPreferences};
+		Map<String, Boolean> exportPortletControlsMap =
+			new HashMap<String, Boolean>();
+
+		exportPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
+			exportCurPortletArchivedSetups);
+		exportPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
+			exportCurPortletConfiguration);
+		exportPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA, exportCurPortletData);
+		exportPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_SETUP, exportCurPortletSetup);
+		exportPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_USER_PREFERENCES,
+			exportCurPortletUserPreferences);
+
+		return exportPortletControlsMap;
 	}
 
 	@Override
@@ -337,6 +387,30 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
 	public boolean[] getImportPortletControls(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement,
+			ManifestSummary manifestSummary)
+		throws Exception {
+
+		Map<String, Boolean> importPortletControlsMap =
+			getImportPortletControlsMap(
+				companyId, portletId, parameterMap, portletDataElement,
+				manifestSummary);
+
+		return new boolean[] {
+			importPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
+			importPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_DATA),
+			importPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_SETUP),
+			importPortletControlsMap.get(
+				PortletDataHandlerKeys.PORTLET_USER_PREFERENCES),
+		};
+	}
+
+	@Override
+	public Map<String, Boolean> getImportPortletControlsMap(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, Element portletDataElement,
 			ManifestSummary manifestSummary)
@@ -378,11 +452,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		boolean importCurPortletArchivedSetups = importPortletConfiguration;
+		boolean importCurPortletConfiguration = importPortletConfiguration;
 		boolean importCurPortletSetup = importPortletConfiguration;
 		boolean importCurPortletUserPreferences = importPortletConfiguration;
 
 		if (importPortletConfigurationAll) {
-			boolean importCurPortletConfiguration = true;
+			importCurPortletConfiguration = true;
 
 			if ((manifestSummary != null) &&
 				(manifestSummary.getConfigurationPortletOptions(
@@ -407,7 +482,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
 		}
 		else if (rootPortletId != null) {
-			boolean importCurPortletConfiguration =
+			importCurPortletConfiguration =
 				importPortletConfiguration &&
 				MapUtil.getBoolean(
 					parameterMap,
@@ -434,9 +509,24 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 						StringPool.UNDERLINE + rootPortletId);
 		}
 
-		return new boolean[] {
-			importCurPortletArchivedSetups, importCurPortletData,
-			importCurPortletSetup, importCurPortletUserPreferences};
+		Map<String, Boolean> importPortletControlsMap =
+			new HashMap<String, Boolean>();
+
+		importPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
+			importCurPortletArchivedSetups);
+		importPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
+			importCurPortletConfiguration);
+		importPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA, importCurPortletData);
+		importPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_SETUP, importCurPortletSetup);
+		importPortletControlsMap.put(
+			PortletDataHandlerKeys.PORTLET_USER_PREFERENCES,
+			importCurPortletUserPreferences);
+
+		return importPortletControlsMap;
 	}
 
 	@Override

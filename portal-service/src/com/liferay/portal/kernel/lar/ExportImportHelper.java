@@ -115,12 +115,28 @@ public interface ExportImportHelper {
 			Map<String, String[]> parameterMap, String type)
 		throws Exception;
 
+	public Map<String, Boolean> getExportPortletControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap)
+		throws Exception;
+
+	public Map<String, Boolean> getExportPortletControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, String type)
+		throws Exception;
+
 	public boolean[] getImportPortletControls(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, Element portletDataElement)
 		throws Exception;
 
 	public boolean[] getImportPortletControls(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement,
+			ManifestSummary manifestSummary)
+		throws Exception;
+
+	public Map<String, Boolean> getImportPortletControlsMap(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, Element portletDataElement,
 			ManifestSummary manifestSummary)

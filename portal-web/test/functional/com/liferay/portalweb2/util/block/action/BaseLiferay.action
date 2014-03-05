@@ -37,6 +37,22 @@
 		</default>
 	</command>
 
+	<command name="assertConsoleTextNotPresent">
+		<default>
+			<description message="Assert that the text ${value1} is NOT present within the console output." />
+
+			<execute function="AssertConsoleTextNotPresent#assertConsoleTextNotPresent" />
+		</default>
+	</command>
+
+	<command name="assertConsoleTextPresent">
+		<default>
+			<description message="Assert that the text ${value1} is present within the console output." />
+
+			<execute function="AssertConsoleTextPresent#assertConsoleTextPresent" />
+		</default>
+	</command>
+
 	<command name="assertElementNotPresent">
 		<default>
 			<description message="Assert that the ${locator1} is NOT present." />

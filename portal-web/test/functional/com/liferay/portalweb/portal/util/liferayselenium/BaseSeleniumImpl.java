@@ -80,6 +80,16 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void assertConsoleTextNotPresent(String text) throws Exception {
+		LiferaySeleniumHelper.assertConsoleTextNotPresent(text);
+	}
+
+	@Override
+	public void assertConsoleTextPresent(String text) throws Exception {
+		LiferaySeleniumHelper.assertConsoleTextPresent(text);
+	}
+
+	@Override
 	public void assertElementNotPresent(String locator) throws Exception {
 		LiferaySeleniumHelper.assertElementNotPresent(this, locator);
 	}

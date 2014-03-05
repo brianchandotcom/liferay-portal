@@ -40,6 +40,8 @@ import java.io.File;
 import java.io.InputStreamReader;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
@@ -131,6 +133,20 @@ public class LiferaySeleniumHelper {
 			throw new Exception(
 				"Pattern \"" + pattern + "\" does not match \"" + confirmation +
 					"\"");
+		}
+	}
+
+	public static void assertConsoleTextNotPresent(String text)
+		throws Exception {
+
+		if (isConsoleTextPresent(text)) {
+			throw new Exception("\"" + text + "\" is present in console");
+		}
+	}
+
+	public static void assertConsoleTextPresent(String text) throws Exception {
+		if (!isConsoleTextPresent(text)) {
+			throw new Exception("\"" + text + "\" is not present in console");
 		}
 	}
 
@@ -453,6 +469,22 @@ public class LiferaySeleniumHelper {
 		String confirmation = liferaySelenium.getConfirmation();
 
 		return pattern.equals(confirmation);
+	}
+
+	public static boolean isConsoleTextPresent(String text) throws Exception {
+		String currentDate = DateUtil.getCurrentDate(
+			"yyyy-MM-dd", LocaleUtil.getDefault());
+
+		String log4jXMLFile =
+			PropsValues.LIFERAY_HOME + "/logs/liferay." + currentDate + ".log";
+
+		String content = FileUtil.read(log4jXMLFile);
+
+		Pattern pattern = Pattern.compile(text);
+
+		Matcher matcher = pattern.matcher(content);
+
+		return matcher.find();
 	}
 
 	public static boolean isElementNotPresent(

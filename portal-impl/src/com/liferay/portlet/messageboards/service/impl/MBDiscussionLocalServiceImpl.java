@@ -98,4 +98,19 @@ public class MBDiscussionLocalServiceImpl
 		return mbDiscussionPersistence.findByThreadId(threadId);
 	}
 
+	public void subscribeDiscussion(
+			long userId, long groupId, String className, long classPK)
+		throws PortalException, SystemException {
+
+		subscriptionLocalService.addSubscription(
+			userId, groupId, className, classPK);
+	}
+
+	public void unsubscribeDiscussion(
+			long userId, String className, long classPK)
+		throws PortalException, SystemException {
+
+		subscriptionLocalService.deleteSubscription(userId, className, classPK);
+	}
+
 }

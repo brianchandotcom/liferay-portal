@@ -398,6 +398,24 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 		return _mbDiscussionLocalService.getThreadDiscussion(threadId);
 	}
 
+	@Override
+	public void subscribeDiscussion(long userId, long groupId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbDiscussionLocalService.subscribeDiscussion(userId, groupId,
+			className, classPK);
+	}
+
+	@Override
+	public void unsubscribeDiscussion(long userId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbDiscussionLocalService.unsubscribeDiscussion(userId, className,
+			classPK);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

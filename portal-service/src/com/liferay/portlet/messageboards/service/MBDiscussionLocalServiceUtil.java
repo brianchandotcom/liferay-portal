@@ -374,6 +374,20 @@ public class MBDiscussionLocalServiceUtil {
 		return getService().getThreadDiscussion(threadId);
 	}
 
+	public static void subscribeDiscussion(long userId, long groupId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().subscribeDiscussion(userId, groupId, className, classPK);
+	}
+
+	public static void unsubscribeDiscussion(long userId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsubscribeDiscussion(userId, className, classPK);
+	}
+
 	public static MBDiscussionLocalService getService() {
 		if (_service == null) {
 			_service = (MBDiscussionLocalService)PortalBeanLocatorUtil.locate(MBDiscussionLocalService.class.getName());

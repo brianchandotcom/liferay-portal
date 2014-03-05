@@ -14,7 +14,7 @@
 
 <body class="$css_class">
 
-#quickAccess("#main-content")
+#quick_access("#main-content")
 
 $theme.include($body_top_include)
 

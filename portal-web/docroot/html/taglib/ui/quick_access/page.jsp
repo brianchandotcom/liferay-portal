@@ -16,8 +16,12 @@
 
 <%@ include file="/html/taglib/ui/quick_access/init.jsp" %>
 
+<%
+String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
+%>
+
 <c:if test="<%= ((quickAccessEntries != null) && !quickAccessEntries.isEmpty()) || Validator.isNotNull(contentId) %>">
-	<nav class="quick-access-nav" id="quickAccessNav">
+	<nav class="quick-access-nav" id='<%= randomNamespace + "quickAccessNav" %>'>
 		<h1 class="hide-accessible"><liferay-ui:message key="navigation" /></h1>
 
 		<ul>
@@ -31,7 +35,7 @@
 			%>
 
 				<li>
-					<a href="<%= quickAccessEntry.getURL() %>" id="<%= quickAccessEntry.getId() %>"><%= quickAccessEntry.getContent() %></a>
+					<a href="<%= quickAccessEntry.getURL() %>" id="<%= randomNamespace + quickAccessEntry.getId() %>"><%= quickAccessEntry.getContent() %></a>
 				</li>
 
 			<%
@@ -53,7 +57,7 @@
 				if (Validator.isNotNull(onClick)) {
 			%>
 
-					callbacks['<%= quickAccessEntry.getId() %>'] = function() {
+					callbacks['<%= randomNamespace + quickAccessEntry.getId() %>'] = function() {
 						<%= onClick %>
 					};
 
@@ -62,10 +66,10 @@
 			}
 			%>
 
-			A.one('#quickAccessNav').delegate(
+			A.one('#<%= randomNamespace %>quickAccessNav').delegate(
 				'click',
 				function(event) {
-					var callbackFn = callbacks[event.currentTarget.getAttribute('id')];
+					var callbackFn = callbacks[event.currentTarget.attr('id')];
 
 					if (A.Lang.isFunction(callbackFn)) {
 						callbackFn();

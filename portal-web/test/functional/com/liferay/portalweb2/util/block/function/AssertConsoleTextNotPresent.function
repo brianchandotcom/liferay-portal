@@ -1,0 +1,5 @@
+<definition>
+	<command name="assertConsoleTextNotPresent">
+		<execute selenium="assertConsoleTextNotPresent" />
+	</command>
+</definition>

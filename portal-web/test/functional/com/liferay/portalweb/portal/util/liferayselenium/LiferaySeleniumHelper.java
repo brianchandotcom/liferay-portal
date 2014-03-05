@@ -136,20 +136,16 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	public static void assertConsoleTextNotPresent(String text)
+		throws Exception {
+
+		if (isConsoleTextPresent(text)) {
+			throw new Exception("\"" + text + "\" is present in console");
+		}
+	}
+
 	public static void assertConsoleTextPresent(String text) throws Exception {
-		String currentDate = DateUtil.getCurrentDate(
-			"yyyy-MM-dd", LocaleUtil.getDefault());
-
-		String log4jXMLFile =
-			PropsValues.LIFERAY_HOME + "/logs/liferay." + currentDate + ".log";
-
-		String content = FileUtil.read(log4jXMLFile);
-
-		Pattern pattern = Pattern.compile(text);
-
-		Matcher matcher = pattern.matcher(content);
-
-		if (!matcher.find()) {
+		if (!isConsoleTextPresent(text)) {
 			throw new Exception("\"" + text + "\" is not present in console");
 		}
 	}
@@ -473,6 +469,22 @@ public class LiferaySeleniumHelper {
 		String confirmation = liferaySelenium.getConfirmation();
 
 		return pattern.equals(confirmation);
+	}
+
+	public static boolean isConsoleTextPresent(String text) throws Exception {
+		String currentDate = DateUtil.getCurrentDate(
+			"yyyy-MM-dd", LocaleUtil.getDefault());
+
+		String log4jXMLFile =
+			PropsValues.LIFERAY_HOME + "/logs/liferay." + currentDate + ".log";
+
+		String content = FileUtil.read(log4jXMLFile);
+
+		Pattern pattern = Pattern.compile(text);
+
+		Matcher matcher = pattern.matcher(content);
+
+		return matcher.find();
 	}
 
 	public static boolean isElementNotPresent(

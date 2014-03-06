@@ -19,14 +19,14 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 
-long groupId = ParamUtil.getLong(request, "groupId");
+long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
 String typeSelection = ParamUtil.getString(request, "typeSelection");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(typeSelection);
 
-Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), themeDisplay.getScopeGroupId()}, locale);
+Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), groupId}, locale);
 %>
 
 <aui:nav-item href="<%= portletURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
@@ -35,7 +35,7 @@ Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {th
 	<c:when test="<%= classTypes.isEmpty() %>">
 
 		<%
-		PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, typeSelection, 0, null, null, portletURL.toString());
+		PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, groupId, typeSelection, 0, null, null, portletURL.toString());
 		%>
 
 		<c:if test="<%= addPortletURL != null %>">
@@ -56,7 +56,7 @@ Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {th
 		<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>'>
 
 			<%
-			PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, typeSelection, 0, null, null, portletURL.toString());
+			PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, groupId, typeSelection, 0, null, null, portletURL.toString());
 			%>
 
 			<c:if test="<%= addPortletURL != null %>">
@@ -75,7 +75,7 @@ Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {th
 
 			<%
 			for (long classTypeId : classTypes.keySet()) {
-				addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, typeSelection, classTypeId, null, null, portletURL.toString());
+				addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, groupId, typeSelection, classTypeId, null, null, portletURL.toString());
 
 				if (addPortletURL == null) {
 					continue;

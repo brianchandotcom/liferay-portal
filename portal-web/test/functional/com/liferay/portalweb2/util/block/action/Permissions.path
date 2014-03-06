@@ -167,6 +167,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PERMISSIONS_ADD_VOTE_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_VOTE']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_PERMISSIONS_DELETE_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_DELETE']</td>
 	<td></td>

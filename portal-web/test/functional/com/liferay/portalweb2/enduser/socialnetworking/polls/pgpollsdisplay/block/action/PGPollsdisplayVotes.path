@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>PGPollsdisplayVotes</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGPollsdisplayVotes</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGPollsdisplayVotes</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLLS_CHOICE_VOTES_PERCENTAGE</td>
+	<td>//tr[contains(.,'${key_pollsQuestionChoice}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLLS_CHOICE_VOTES_NUMBER</td>
+	<td>//tr[contains(.,'${key_pollsQuestionChoice}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLLS_TOTAL_VOTES</td>
+	<td>//form[contains(@id,'_59_INSTANCE')]/div</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

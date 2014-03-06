@@ -39,6 +39,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHOICE_C_FIELD</td>
+	<td>//input[contains(@id,'choiceDescriptionc')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOICE_D_FIELD</td>
+	<td>//input[contains(@id,'choiceDescriptiond')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOICE_E_FIELD</td>
+	<td>//input[contains(@id,'choiceDescriptione')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CHOICE_BUTTON</td>
+	<td>//button[contains(@class,'add-choice')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>

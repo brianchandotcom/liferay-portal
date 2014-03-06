@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -406,7 +407,14 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		dlAppHelperLocalService.deleteFileEntry(fileEntry);
 
-		localRepository.deleteFileEntry(fileEntryId);
+		SystemEventHierarchyEntryThreadLocal.push(FileEntry.class);
+
+		try {
+			localRepository.deleteFileEntry(fileEntryId);
+		}
+		finally {
+			SystemEventHierarchyEntryThreadLocal.pop(FileEntry.class);
+		}
 	}
 
 	/**
@@ -1322,6 +1330,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			LocalRepository toLocalRepository)
 		throws PortalException, SystemException {
 
+		SystemEventHierarchyEntryThreadLocal.push(FileEntry.class);
+
 		try {
 			FileEntry fileEntry = fromLocalRepository.getFileEntry(
 				oldFileEntryId);
@@ -1339,6 +1349,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			dlAppHelperLocalService.deleteFileEntry(fileEntry);
 
 			throw pe;
+		}
+		finally {
+			SystemEventHierarchyEntryThreadLocal.pop(FileEntry.class);
 		}
 	}
 

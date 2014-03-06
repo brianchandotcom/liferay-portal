@@ -14,10 +14,12 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.cache.CacheRegistryImpl;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.dao.db.DBFactoryImpl;
 import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
+import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.spring.util.SpringUtil;
@@ -188,9 +191,27 @@ public class InitUtil {
 			_neverInitialized = false;
 		}
 
-		init();
+		try {
+			PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR =
+				System.getProperty(SystemProperties.TMP_DIR);
 
-		SpringUtil.loadContext(extraConfigLocations);
+			init();
+
+			ModuleFrameworkUtilAdapter.startFramework();
+
+			SpringUtil.loadContext(extraConfigLocations);
+
+			BeanLocatorImpl beanLocatorImpl =
+				(BeanLocatorImpl)PortalBeanLocatorUtil.getBeanLocator();
+
+			ModuleFrameworkUtilAdapter.registerContext(
+				beanLocatorImpl.getApplicationContext());
+
+			ModuleFrameworkUtilAdapter.startRuntime();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 
 		_initialized = true;
 	}

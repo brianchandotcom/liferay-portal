@@ -108,8 +108,6 @@
 
 		<execute action="CPSitetemplateSettings#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Site Template Settings" />
 
-		<execute action="CPSitetemplateSettings#type" locator-key1="NAME_FIELD" value1="${siteTemplateName} Edit" />
-
 		<if>
 			<isset var="siteTemplateActiveEdit" />
 			<then>
@@ -130,8 +128,14 @@
 			<then>
 				<execute action="CPSitetemplateSettings#check" locator-key1="ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
 			</then>
+			<elseif>
+				<equals arg1="${allowSiteAdminsToModifyPages}" arg2="false" />
+				<then>
+					<execute action="CPSitetemplateSettings#uncheck" locator-key1="ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
+				</then>
+			</elseif>
 			<else>
-				<execute action="CPSitetemplateSettings#uncheck" locator-key1="ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
+				<execute action="CPSitetemplateSettings#type" locator-key1="NAME_FIELD" value1="${siteTemplateName} Edit" />
 			</else>
 		</if>
 

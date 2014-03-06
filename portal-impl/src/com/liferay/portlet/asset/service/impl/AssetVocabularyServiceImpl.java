@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -307,6 +308,45 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 		return getGroupVocabulariesDisplay(
 			groupId, name, start, end, false, obc);
+	}
+
+	@Override
+	public AssetVocabularyDisplay getGroupVocabulariesDisplayByTitle(
+			long groupId, String title, int start, int end,
+			boolean addDefaultVocabulary)
+		throws PortalException, SystemException {
+
+		List<AssetVocabulary> vocabularies = null;
+
+		if (Validator.isNotNull(title)) {
+			BaseModelSearchResult<AssetVocabulary> results =
+				assetVocabularyLocalService.searchVocabularies(
+					groupId, title, start, end);
+
+			vocabularies = results.getBaseModels();
+		}
+		else {
+			vocabularies = getGroupVocabularies(groupId, start, end, null);
+		}
+
+		int total = vocabularies.size();
+
+		if (addDefaultVocabulary && (total == 0)) {
+			total = assetVocabularyPersistence.countByGroupId(groupId);
+
+			if (total == 0) {
+				vocabularies = new ArrayList<AssetVocabulary>(1);
+
+				AssetVocabulary defaultVocabulary =
+					assetVocabularyLocalService.addDefaultVocabulary(groupId);
+
+				vocabularies.add(defaultVocabulary);
+
+				total = 1;
+			}
+		}
+
+		return new AssetVocabularyDisplay(vocabularies, total, start, end);
 	}
 
 	/**

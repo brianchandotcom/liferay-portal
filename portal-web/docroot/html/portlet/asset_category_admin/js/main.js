@@ -177,8 +177,6 @@ AUI.add(
 
 		var TPL_MESSAGES_VOCABULARY = '<div class="hide lfr-message-response" id="vocabularyMessages" />';
 
-		var TPL_SEARCH_QUERY = '%{0}%';
-
 		var TPL_VOCABULARY_LIST_CONTAINER = '<ul class="nav nav-pills nav-stacked">';
 
 		var TPL_VOCABULARY_LIST =
@@ -1522,27 +1520,40 @@ AUI.add(
 
 						instance._showLoading(instance._categoryContainerSelector);
 
-						var defaultParams = {
-							vocabularyId: vocabularyId,
-							start: -1,
-							end: -1,
-						};
-
 						var query = instance._liveSearch.get(STR_QUERY);
 
-						var params = defaultParams;
-
 						if (query && instance._searchType.val() != STR_VOCABULARIES) {
-							params = A.mix(
+							Liferay.Service(
 								{
-									groupId: themeDisplay.getSiteGroupId(),
-									title: Lang.sub(TPL_SEARCH_QUERY, [query])
+									'$display = /assetcategory/get-vocabulary-categories-display-by-title': {
+										groupId: themeDisplay.getSiteGroupId(),
+										title: query,
+										vocabularyId: vocabularyId,
+										start: -1,
+										end: -1,
+										'categories.$path = /assetcategory/get-category-path': {
+											'@categoryId': '$display.categories.categoryId'
+										}
+									}
 								},
-								defaultParams
+								callback
 							);
 						}
-
-						Liferay.Service('/assetcategory/get-json-vocabulary-categories', params, callback);
+						else {
+							Liferay.Service(
+								{
+									'$display = /assetcategory/get-vocabulary-categories-display': {
+										vocabularyId: vocabularyId,
+										start: -1,
+										end: -1,
+										'categories.$path = /assetcategory/get-category-path': {
+											'@categoryId': '$display.categories.categoryId'
+										}
+									}
+								},
+								callback
+							);
+						}
 					},
 
 					_getVocabularyCategoriesTree: function(vocabularyId, callback) {

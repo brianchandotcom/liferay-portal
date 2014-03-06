@@ -160,6 +160,9 @@ public interface ExportImportHelper {
 			long groupId, long userId, String folderName)
 		throws PortalException, SystemException;
 
+	public boolean isReferenceWithinExportScope(
+		PortletDataContext portletDataContext, StagedModel stagedModel);
+
 	public String replaceExportContentReferences(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, Element entityElement,

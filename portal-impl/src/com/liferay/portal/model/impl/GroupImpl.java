@@ -382,6 +382,15 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
+	public long getRemoteLiveGroupId() {
+		if (!isStagedRemotely()) {
+			return GroupConstants.DEFAULT_LIVE_GROUP_ID;
+		}
+
+		return GetterUtil.getLong(getTypeSettingsProperty("remoteGroupId"));
+	}
+
+	@Override
 	public String getScopeDescriptiveName(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 

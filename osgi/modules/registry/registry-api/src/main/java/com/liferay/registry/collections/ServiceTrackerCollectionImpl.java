@@ -113,6 +113,13 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 	}
 
 	@Override
+	public void close() {
+		clear();
+
+		_serviceTracker.close();
+	}
+
+	@Override
 	public boolean contains(Object service) {
 		return _services.contains(service);
 	}

@@ -30,7 +30,7 @@ if (assetVocabularyId > 0) {
 	assetVocabularies.add(assetVocabulary);
 }
 else {
-	assetVocabularies = AssetVocabularyServiceUtil.getGroupsVocabularies(new long[] {themeDisplay.getScopeGroupId(), themeDisplay.getSiteGroupId()});
+	assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId));
 }
 
 if (assetVocabularies.isEmpty()) {

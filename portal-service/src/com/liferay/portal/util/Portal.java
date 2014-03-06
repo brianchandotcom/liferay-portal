@@ -309,6 +309,9 @@ public interface Portal {
 			Layout layout)
 		throws PortalException, SystemException;
 
+	public long[] getAncestorSiteGroupIds(long groupId)
+		throws PortalException, SystemException;
+
 	/**
 	 * Returns the set of struts actions that should not be checked for an
 	 * authentication token.
@@ -552,6 +555,9 @@ public interface Portal {
 	public String getCreateAccountURL(
 			HttpServletRequest request, ThemeDisplay themeDisplay)
 		throws Exception;
+
+	public long[] getCurrentAndAncestorSiteGroupIds(long groupId)
+		throws PortalException, SystemException;
 
 	public String getCurrentCompleteURL(HttpServletRequest request);
 
@@ -1105,9 +1111,19 @@ public interface Portal {
 		PortletResponse portletResponse, ThemeDisplay themeDisplay,
 		String portletName);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getCurrentAndAncestorSiteGroupIds(long)}
+	 */
+	@Deprecated
 	public long[] getSiteAndCompanyGroupIds(long groupId)
 		throws PortalException, SystemException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getCurrentAndAncestorSiteGroupIds(long)}
+	 */
+	@Deprecated
 	public long[] getSiteAndCompanyGroupIds(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
 

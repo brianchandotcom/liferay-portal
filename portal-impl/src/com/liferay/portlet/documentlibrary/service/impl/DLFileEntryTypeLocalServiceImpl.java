@@ -372,7 +372,8 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 
 		List<DLFileEntryType> dlFileEntryTypes = getFolderFileEntryTypes(
-			PortalUtil.getSiteAndCompanyGroupIds(groupId), folderId, true);
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId,
+			true);
 
 		List<Long> fileEntryTypeIds = getFileEntryTypeIds(dlFileEntryTypes);
 

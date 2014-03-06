@@ -113,7 +113,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 					List<DLFileEntryType> fileEntryTypes = Collections.emptyList();
 
 					if ((folder == null) || folder.isSupportsMetadata()) {
-						fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, true);
+						fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, true);
 					}
 					%>
 

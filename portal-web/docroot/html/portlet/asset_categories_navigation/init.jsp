@@ -19,7 +19,7 @@
 <%@ page import="com.liferay.portlet.asset.NoSuchVocabularyException" %>
 
 <%
-List<AssetVocabulary> assetVocabularies = AssetVocabularyServiceUtil.getGroupsVocabularies(new long[] {scopeGroupId, themeDisplay.getCompanyGroupId()});
+List<AssetVocabulary> assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId));
 
 long[] availableAssetVocabularyIds = new long[assetVocabularies.size()];
 

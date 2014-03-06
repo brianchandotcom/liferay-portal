@@ -680,19 +680,19 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 
 	/**
 	* Returns the template matching the group and template key, optionally in
-	* the global scope.
+	* the parent sites.
 	*
 	* <p>
 	* This method first searches in the group. If the template is still not
-	* found and <code>includeGlobalTemplates</code> is set to
-	* <code>true</code>, this method searches the global group.
+	* found and <code>includeAncestorTemplates</code> is set to
+	* <code>true</code>, this method searches the parent sites.
 	* </p>
 	*
 	* @param groupId the primary key of the group
 	* @param classNameId the primary key of the class name for the template's
 	related model
 	* @param templateKey the unique string identifying the template
-	* @param includeGlobalTemplates whether to include the global scope in the
+	* @param includeAncestorTemplates whether to include the parent sites in the
 	search
 	* @return the matching template
 	* @throws PortalException if a matching template could not be found
@@ -701,11 +701,11 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
 		long groupId, long classNameId, java.lang.String templateKey,
-		boolean includeGlobalTemplates)
+		boolean includeAncestorTemplates)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateLocalService.getTemplate(groupId, classNameId,
-			templateKey, includeGlobalTemplates);
+			templateKey, includeAncestorTemplates);
 	}
 
 	@Override

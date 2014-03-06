@@ -25,7 +25,7 @@ long categoryId = ParamUtil.getLong(request, "categoryId");
 List<AssetVocabulary> vocabularies = null;
 
 if (vocabularyIds == null) {
-	vocabularies = AssetVocabularyServiceUtil.getGroupsVocabularies(new long[] {scopeGroupId, themeDisplay.getCompanyGroupId()});
+	vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId));
 }
 else {
 	vocabularies = new ArrayList<AssetVocabulary>();

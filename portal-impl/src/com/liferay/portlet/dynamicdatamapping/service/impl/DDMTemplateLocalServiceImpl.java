@@ -34,6 +34,7 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.ImageUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.RequiredTemplateException;
@@ -577,19 +578,19 @@ public class DDMTemplateLocalServiceImpl
 
 	/**
 	 * Returns the template matching the group and template key, optionally in
-	 * the global scope.
+	 * the parent sites.
 	 *
 	 * <p>
 	 * This method first searches in the group. If the template is still not
-	 * found and <code>includeGlobalTemplates</code> is set to
-	 * <code>true</code>, this method searches the global group.
+	 * found and <code>includeAncestorTemplates</code> is set to
+	 * <code>true</code>, this method searches the parent sites.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the class name for the template's
 	 *         related model
 	 * @param  templateKey the unique string identifying the template
-	 * @param  includeGlobalTemplates whether to include the global scope in the
+	 * @param  includeAncestorTemplates whether to include the parent sites in the
 	 *         search
 	 * @return the matching template
 	 * @throws PortalException if a matching template could not be found
@@ -598,7 +599,7 @@ public class DDMTemplateLocalServiceImpl
 	@Override
 	public DDMTemplate getTemplate(
 			long groupId, long classNameId, String templateKey,
-			boolean includeGlobalTemplates)
+			boolean includeAncestorTemplates)
 		throws PortalException, SystemException {
 
 		templateKey = StringUtil.toUpperCase(templateKey.trim());
@@ -610,18 +611,23 @@ public class DDMTemplateLocalServiceImpl
 			return template;
 		}
 
-		if (!includeGlobalTemplates) {
+		if (!includeAncestorTemplates) {
 			throw new NoSuchTemplateException(
 				"No DDMTemplate exists with the template key " + templateKey);
 		}
 
-		Group group = groupPersistence.findByPrimaryKey(groupId);
+		for (long curGroupId : PortalUtil.getAncestorSiteGroupIds(groupId)) {
+			template = ddmTemplatePersistence.fetchByG_C_T(
+				curGroupId, classNameId, templateKey);
 
-		Group companyGroup = groupLocalService.getCompanyGroup(
-			group.getCompanyId());
+			if (template != null) {
+				return template;
+			}
+		}
 
-		return ddmTemplatePersistence.findByG_C_T(
-			companyGroup.getGroupId(), classNameId, templateKey);
+		throw new NoSuchTemplateException(
+			"No DDMTemplate exists with the template key " + templateKey +
+				" in the ancestor groups");
 	}
 
 	@Override

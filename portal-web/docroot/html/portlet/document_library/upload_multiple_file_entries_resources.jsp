@@ -46,7 +46,7 @@ if ((folder != null) && (folder.getModel() instanceof DLFolder)) {
 	inherited = !dlFolder.isOverrideFileEntryTypes();
 }
 
-List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, inherited);
+List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, inherited);
 
 FileVersion fileVersion = null;
 

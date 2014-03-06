@@ -278,13 +278,13 @@ public class JournalTemplateLocalServiceImpl
 
 	@Override
 	public List<JournalTemplate> getStructureTemplates(
-			long groupId, String structureId, boolean includeGlobalTemplates)
+			long groupId, String structureId, boolean includeAncestorTemplates)
 		throws PortalException, SystemException {
 
 		long[] groupIds = new long[] {groupId};
 
-		if (includeGlobalTemplates) {
-			groupIds = PortalUtil.getSiteAndCompanyGroupIds(groupId);
+		if (includeAncestorTemplates) {
+			groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId);
 		}
 
 		JournalStructure structure = journalStructureLocalService.getStructure(

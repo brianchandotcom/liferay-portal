@@ -369,6 +369,12 @@ public class PortalUtil {
 			canonicalURL, themeDisplay, locale, layout);
 	}
 
+	public static long[] getAncestorSiteGroupIds(long groupId)
+		throws PortalException, SystemException {
+
+		return getPortal().getAncestorSiteGroupIds(groupId);
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelistActions}
@@ -716,6 +722,12 @@ public class PortalUtil {
 		throws Exception {
 
 		return getPortal().getCreateAccountURL(request, themeDisplay);
+	}
+
+	public static long[] getCurrentAndAncestorSiteGroupIds(long groupId)
+		throws PortalException, SystemException {
+
+		return getPortal().getCurrentAndAncestorSiteGroupIds(groupId);
 	}
 
 	public static String getCurrentCompleteURL(HttpServletRequest request) {
@@ -1760,12 +1772,22 @@ public class PortalUtil {
 			portletResponse, themeDisplay, portletName);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getCurrentAndAncestorSiteGroupIds(long)}
+	 */
+	@Deprecated
 	public static long[] getSiteAndCompanyGroupIds(long groupId)
 		throws PortalException, SystemException {
 
 		return getPortal().getSiteAndCompanyGroupIds(groupId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getCurrentAndAncestorSiteGroupIds(long)}
+	 */
+	@Deprecated
 	public static long[] getSiteAndCompanyGroupIds(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 

@@ -45,6 +45,7 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
@@ -757,19 +758,19 @@ public class DDMStructureLocalServiceImpl
 
 	/**
 	 * Returns the structure matching the class name ID, structure key, and
-	 * group, optionally in the global scope.
+	 * group, optionally in the parent site.
 	 *
 	 * <p>
 	 * This method first searches in the group. If the structure is still not
-	 * found and <code>includeGlobalStructures</code> is set to
-	 * <code>true</code>, this method searches the global group.
+	 * found and <code>includeAncestorStructures</code> is set to
+	 * <code>true</code>, this method searches the parent sites.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the structure's group
 	 * @param  classNameId the primary key of the class name for the structure's
 	 *         related model
 	 * @param  structureKey the unique string identifying the structure
-	 * @param  includeGlobalStructures whether to include the global scope in
+	 * @param  includeAncestorStructures whether to include the parent sites in
 	 *         the search
 	 * @return the matching structure
 	 * @throws PortalException if a matching structure could not be found
@@ -778,7 +779,7 @@ public class DDMStructureLocalServiceImpl
 	@Override
 	public DDMStructure getStructure(
 			long groupId, long classNameId, String structureKey,
-			boolean includeGlobalStructures)
+			boolean includeAncestorStructures)
 		throws PortalException, SystemException {
 
 		structureKey = getStructureKey(structureKey);
@@ -790,19 +791,24 @@ public class DDMStructureLocalServiceImpl
 			return structure;
 		}
 
-		if (!includeGlobalStructures) {
+		if (!includeAncestorStructures) {
 			throw new NoSuchStructureException(
 				"No DDMStructure exists with the structure key " +
 					structureKey);
 		}
 
-		Group group = groupPersistence.findByPrimaryKey(groupId);
+		for (long curGroupId : PortalUtil.getAncestorSiteGroupIds(groupId)) {
+			structure = ddmStructurePersistence.fetchByG_C_S(
+				curGroupId, classNameId, structureKey);
 
-		Group companyGroup = groupLocalService.getCompanyGroup(
-			group.getCompanyId());
+			if (structure != null) {
+				return structure;
+			}
+		}
 
-		return ddmStructurePersistence.findByG_C_S(
-			companyGroup.getGroupId(), classNameId, structureKey);
+		throw new NoSuchStructureException(
+			"No DDMStructure exists with the structure key " +
+				structureKey + " in the ancestor groups");
 	}
 
 	/**

@@ -75,7 +75,8 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 
 		List<DLFileEntryType> dlFileEntryTypes =
 			DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(
-				PortalUtil.getSiteAndCompanyGroupIds(group.getGroupId()));
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					group.getGroupId()));
 
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
 			String name = dlFileEntryType.getName(LocaleUtil.getSiteDefault());

@@ -47,8 +47,6 @@
 			</else>
 		</if>
 
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
-
 		<var name="key_entryComment" value="${entryComment}" />
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />

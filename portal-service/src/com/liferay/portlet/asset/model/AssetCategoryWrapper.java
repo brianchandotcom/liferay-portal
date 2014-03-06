@@ -886,6 +886,13 @@ public class AssetCategoryWrapper implements AssetCategory,
 	}
 
 	@Override
+	public java.lang.String getPath(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategory.getPath(locale);
+	}
+
+	@Override
 	public boolean isRootCategory() {
 		return _assetCategory.isRootCategory();
 	}

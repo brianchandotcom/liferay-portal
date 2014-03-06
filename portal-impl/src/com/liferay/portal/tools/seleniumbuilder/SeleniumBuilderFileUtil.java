@@ -632,7 +632,8 @@ public class SeleniumBuilderFileUtil {
 						}
 					}
 					else if (attributeName.startsWith("locator") ||
-							 attributeName.startsWith("locator-key")) {
+							 attributeName.startsWith("locator-key") ||
+							 attributeName.startsWith("value")) {
 
 						String attributeValue = attribute.getValue();
 
@@ -647,14 +648,16 @@ public class SeleniumBuilderFileUtil {
 					if (!attributeName.equals("comparator") &&
 						!attributeName.equals("line-number") &&
 						!attributeName.startsWith("locator") &&
-						!attributeName.startsWith("locator-key")) {
+						!attributeName.startsWith("locator-key") &&
+						!attributeName.startsWith("value")) {
 
 						throwValidationException(
 							1005, fileName, element, attributeName);
 					}
 
 					if (attributeName.equals("locator") ||
-						attributeName.equals("locator-key")) {
+						attributeName.equals("locator-key") ||
+						attributeName.equals("value")) {
 
 						throwValidationException(
 							1005, fileName, element, attributeName);
@@ -664,7 +667,7 @@ public class SeleniumBuilderFileUtil {
 				if (!hasNeededAttributeName) {
 					throwValidationException(
 						1004, fileName, element,
-						new String[] {"locator1", "locator-key1"});
+						new String[] {"locator1", "locator-key1", "value1"});
 				}
 
 				validateBlockElement(

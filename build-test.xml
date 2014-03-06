@@ -1197,6 +1197,33 @@ axis.servlet.hosts.allowed=
 tunnel.servlet.hosts.allowed=</echo>
 
 		<if>
+			<equals arg1="${cluster.enabled}" arg2="true" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+cluster.link.enabled=true
+
+cluster.link.channel.system.properties=\
+	#
+	# Common
+	#
+	\
+	jgroups.bind_addr:${cluster.link.bind.addr["cluster-link-udp"]},\
+	jgroups.bind_interface:127.0.0.1,\
+	\
+	#
+	# Multicast
+	#
+	\
+	jgroups.mping.mcast_addr:${multicast.group.address["cluster-link-mping"]},\
+	jgroups.mping.mcast_port:${multicast.group.port["cluster-link-mping"]},\
+	jgroups.mping.ip_ttl:8
+
+web.server.display.node=true</echo>
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${database.type}" arg2="db2" />
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
@@ -2439,7 +2466,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 	</target>
 
-	<target name="run-simple-server" depends="generate-test-properties">
+	<target name="run-simple-server" depends="prepare-portal-ext-properties">
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>

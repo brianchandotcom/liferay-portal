@@ -1,5 +1,40 @@
 <definition>
-	<command name="addQuestionPG">
+	<command name="addPollCP">
+		<execute action="CPPolls#click" locator-key1="ADD_POLL" value1="Add Poll" />
+
+		<execute action="CPPollsAddquestion#type" locator-key1="TITLE_FIELD" value1="${pollsQuestionTitle}" />
+		<execute action="CPPollsAddquestion#type" locator-key1="POLLS_QUESTION_FIELD" value1="${pollsQuestion}" />
+		<execute action="CPPollsAddquestion#type" locator-key1="CHOICE_A_FIELD" value1="${pollsQuestionChoiceA}" />
+		<execute action="CPPollsAddquestion#type" locator-key1="CHOICE_B_FIELD" value1="${pollsQuestionChoiceB}" />
+
+		<if>
+			<isset var="pollsQuestionChoiceC" />
+			<then>
+				<execute action="CPPollsAddquestion#assertClick" locator-key1="ADD_CHOICE_BUTTON" value1="Add Choice" />
+				<execute action="CPPollsAddquestion#type" locator-key1="CHOICE_C_FIELD" value1="${pollsQuestionChoiceC}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="pollsQuestionChoiceD" />
+			<then>
+				<execute action="CPPollsAddquestion#assertClick" locator-key1="ADD_CHOICE_BUTTON" value1="Add Choice" />
+				<execute action="CPPollsAddquestion#type" locator-key1="CHOICE_D_FIELD" value1="${pollsQuestionChoiceD}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="pollsQuestionChoiceE" />
+			<then>
+				<execute action="CPPollsAddquestion#assertClick" locator-key1="ADD_CHOICE_BUTTON" value1="Add Choice" />
+				<execute action="CPPollsAddquestion#type" locator-key1="CHOICE_E_FIELD" value1="${pollsQuestionChoiceE}" />
+			</then>
+		</if>
+
+		<execute action="CPPollsAddquestion#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="addPollPG">
 		<execute action="PGPollsdisplay#click" locator-key1="ADD_QUESTION" value1="Add Question" />
 
 		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
@@ -13,7 +48,43 @@
 		<execute action="BasePortlet#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="viewQuestionPG">
+	<command name="configureAddVoteAsGuestViaPollsCP">
+		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
+
+		<execute action="CPPolls#assertClick" locator-key1="POLLS_TABLE_ACTION" value1="Actions" />
+		<execute action="CPPolls#assertClick" locator-key1="POLLS_MENULIST_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+
+		<execute macro="Role#definePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_ADD_VOTE_CHECKBOX" />
+			<var name="roleName" value="Guest" />
+		</execute>
+
+		<execute action="Permissions#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="selectPollPG">
+		<execute action="PGPollsdisplay#assertClick" locator-key1="SELECT_QUESTION" />
+
+		<execute action="BasePortlet#selectFrame" locator-key1="IFRAME" />
+
+		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
+
+		<execute action="PGPollsdisplayConfiguration#click" locator-key1="TITLE_DROPDOWN" />
+		<execute action="PGPollsdisplayConfiguration#doubleClick" locator-key1="TITLE_DROPDOWN_SELECTION" value1="${pollsQuestionTitle}" />
+		<execute action="PGPollsdisplayConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="BasePortlet#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewPollAsGuestPG">
+		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
+
+		<execute action="PGPollsdisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Please sign in to vote." />
+	</command>
+
+	<command name="viewPollPG">
 		<var name="key_pollsQuestion" value="${pollsQuestion}" />
 
 		<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION" value1="${pollsQuestion}" />
@@ -25,6 +96,48 @@
 		<var name="key_pollsQuestionChoice" value="${pollsQuestionChoiceB}" />
 
 		<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoiceB}" />
+
+		<if>
+			<isset var="${pollsQuestionChoiceC}" />
+			<then>
+				<var name="key_pollsQuestionChoice" value="${pollsQuestionChoiceC}" />
+
+				<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoiceC}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="${pollsQuestionChoiceD}" />
+			<then>
+				<var name="key_pollsQuestionChoice" value="${pollsQuestionChoiceD}" />
+
+				<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoiceD}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="${pollsQuestionChoiceE}" />
+			<then>
+				<var name="key_pollsQuestionChoice" value="${pollsQuestionChoiceE}" />
+
+				<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoiceE}" />
+			</then>
+		</if>
+
 		<execute action="PGPollsdisplay#assertTextEquals" locator-key1="VOTE_BUTTON" value1="Vote" />
+	</command>
+
+	<command name="votePollPG">
+		<var name="key_pollsQuestionChoice" value="${pollsQuestionChoice}" />
+
+		<execute action="PGPollsdisplay#assertClick" locator-key1="POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoice}" />
+		<execute action="PGPollsdisplay#assertClick" locator-key1="VOTE_BUTTON" value1="Vote" />
+
+		<var name="key_pollsQuestionTotalVotes" value="${pollsQuestionTotalVotes}" />
+
+		<execute action="PGPollsdisplayVotes#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Thank you for your vote." />
+		<execute action="PGPollsdisplayVotes#assertTextEquals" locator-key1="POLLS_CHOICE_VOTES_PERCENTAGE" value1="${pollsQuestionVotePercent}" />
+		<execute action="PGPollsdisplayVotes#assertTextEquals" locator-key1="POLLS_CHOICE_VOTES_NUMBER" value1="${pollsQuestionVoteCount}" />
+		<execute action="PGPollsdisplayVotes#assertTextEquals" locator-key1="POLLS_TOTAL_VOTES" value1="Total Votes: ${pollsQuestionTotalVotes}" />
 	</command>
 </definition>

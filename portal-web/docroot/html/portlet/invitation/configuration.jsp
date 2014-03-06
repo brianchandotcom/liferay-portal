@@ -48,7 +48,3 @@
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>
-
-<%!
-public static final String EDITOR_WYSIWYG_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.invitation.configuration.jsp";
-%>

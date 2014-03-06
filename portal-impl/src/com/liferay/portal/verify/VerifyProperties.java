@@ -276,6 +276,7 @@ public class VerifyProperties extends VerifyProcess {
 		"editor.wysiwyg.portal-web.docroot.html.portlet.bookmarks." +
 			"configuration.jsp",
 		"editor.wysiwyg.portal-web.docroot.html.portlet.document_library." +
+		"editor.wysiwyg.portal-web.docroot.html.portlet.invitation." +
 			"configuration.jsp",
 		"editor.wysiwyg.portal-web.docroot.html.portlet.login.configuration." +
 			"jsp",

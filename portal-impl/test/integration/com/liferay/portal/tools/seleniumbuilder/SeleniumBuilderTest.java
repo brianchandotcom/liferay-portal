@@ -57,7 +57,7 @@ public class SeleniumBuilderTest {
 	public void testActionCaseElement1004_1() throws Exception {
 		test(
 			"ActionCaseElement1004_1.action",
-			"Error 1004: Missing (locator1|locator-key1) attribute in " +
+			"Error 1004: Missing (locator1|locator-key1|value1) attribute in " +
 				_DIR_NAME + "/ActionCaseElement1004_1.action:3");
 	}
 
@@ -65,7 +65,7 @@ public class SeleniumBuilderTest {
 	public void testActionCaseElement1004_2() throws Exception {
 		test(
 			"ActionCaseElement1004_2.action",
-			"Error 1004: Missing (locator1|locator-key1) attribute in " +
+			"Error 1004: Missing (locator1|locator-key1|value1) attribute in " +
 				_DIR_NAME + "/ActionCaseElement1004_2.action:3");
 	}
 

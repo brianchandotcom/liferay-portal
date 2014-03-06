@@ -118,6 +118,10 @@ public class ${actionSimpleClassName} extends
 									<#assign caseLocatorKey1 = caseElement.attributeValue("locator-key1")>
 
 									locatorKey1.${caseComparator}("${caseLocatorKey1}")
+								<#elseif caseElement.attributeValue("value1")??>
+									<#assign caseValue1 = caseElement.attributeValue("value1")>
+
+									value1.${caseComparator}("${caseValue1}")
 								<#else>
 									false
 								</#if>

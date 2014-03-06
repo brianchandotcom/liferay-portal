@@ -30,22 +30,22 @@
 </tr>
 <tr>
 	<td>SETUP_LINK</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li[contains(.,'Setup')]/a</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li[contains(.,'Setup')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_LINK</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li[contains(.,'Permissions')]/a</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li[contains(.,'Permissions')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMUNICATION_LINK</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li[contains(.,'Communication')]/a</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li[contains(.,'Communication')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SHARING_LINK</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li[contains(.,'Sharing')]/a</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li[contains(.,'Sharing')]/a</td>
 	<td></td>
 </tr>
 <tr>

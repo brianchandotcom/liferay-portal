@@ -280,6 +280,8 @@ public class VerifyProperties extends VerifyProcess {
 			"configuration.jsp",
 		"editor.wysiwyg.portal-web.docroot.html.portlet.login.configuration." +
 			"jsp",
+		"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards." +
+			"configuration.jsp",
 		"ehcache.statistics.enabled", "index.filter.search.limit",
 		"javax.persistence.validation.mode", "jbi.workflow.url",
 		"journal.template.language.parser[css]",

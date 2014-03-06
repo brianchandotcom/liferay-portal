@@ -66,12 +66,12 @@
 </tr>
 <tr>
 	<td>SITE_TEMPLATE_TABLE_ACTIVE</td>
-	<td>//tr[contains(.,'${key_siteTemplateName}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_siteTemplateName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TEMPLATE_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_siteTemplateName}')]/td[3]/div/a</td>
+	<td>//tr[contains(.,'${key_siteTemplateName}')]/td[4]/div/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -260,6 +262,45 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	@Override
+	public JSONObject getJSONVocabularyCategoriesByTitle(
+			long groupId, String title, long vocabularyId, int start, int end)
+		throws PortalException, SystemException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		int page = 0;
+
+		if ((end > 0) && (start > 0)) {
+			page = end / (end - start);
+		}
+
+		jsonObject.put("page", page);
+
+		List<AssetCategory> categories;
+		int total = 0;
+
+		if (Validator.isNotNull(title)) {
+			BaseModelSearchResult<AssetCategory> results =
+				assetCategoryLocalService.searchCategories(
+					CompanyThreadLocal.getCompanyId(), groupId, title,
+					vocabularyId, start, end);
+
+			categories = results.getBaseModels();
+			total = results.getLength();
+		}
+		else {
+			categories = getVocabularyCategories(
+				vocabularyId, start, end, null);
+			total = getVocabularyCategoriesCount(groupId, vocabularyId);
+		}
+
+		jsonObject.put("categories", toJSONArray(categories));
+		jsonObject.put("total", total);
+
+		return jsonObject;
+	}
+
+	@Override
 	public List<AssetCategory> getVocabularyCategories(
 			long vocabularyId, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
@@ -466,6 +507,20 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		}
 
 		return jsonArray;
+	}
+
+	@Override
+	public JSONArray searchTitle(
+			long[] groupIds, String title, long[] vocabularyIds, int start,
+			int end)
+		throws PortalException, SystemException {
+
+		BaseModelSearchResult<AssetCategory> categories =
+			assetCategoryLocalService.searchCategories(
+				CompanyThreadLocal.getCompanyId(), groupIds, title,
+				vocabularyIds, start, end);
+
+		return toJSONArray(categories.getBaseModels());
 	}
 
 	@Override

@@ -570,6 +570,10 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		if (line.contains("Table 'lportal.Lock_' doesn't exist")) {
+			return true;
+		}
+
 		// LPS-22821
 
 		if (line.contains(

@@ -580,14 +580,14 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Polls#addQuestionPG">
+		<execute macro="Polls#addPollPG">
 			<var name="pollsQuestion" value="${pollsQuestion}" />
 			<var name="pollsQuestionChoiceA" value="${pollsQuestionChoiceA}" />
 			<var name="pollsQuestionChoiceB" value="${pollsQuestionChoiceB}" />
 			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
 		</execute>
 
-		<execute macro="Polls#viewQuestionPG">
+		<execute macro="Polls#viewPollPG">
 			<var name="pollsQuestion" value="${pollsQuestion}" />
 			<var name="pollsQuestionChoiceA" value="${pollsQuestionChoiceA}" />
 			<var name="pollsQuestionChoiceB" value="${pollsQuestionChoiceB}" />

@@ -2,11 +2,13 @@
 	<var name="password" value="test" />
 
 	<command name="sendMessage">
+		<var name="key_recipientName" value="${recipientName}" />
+
 		<execute action="SOMessages#assertClick" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
 
 		<execute action="SOMessagesAdd#selectFrame" locator-key1="NEW_MESSAGE_IFRAME" />
 		<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="${recipientName}" />
-		<execute action="SOMessagesAdd#assertClick" locator-key1="TO_FIELD_DROPDOWN_LIST" value1="${key_recipientName}" />
+		<execute action="SOMessagesAdd#assertClick" locator-key1="TO_FIELD_DROPDOWN_LIST" value1="${recipientName}" />
 		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD" value1="${recipientName} &lt;${recipientScreenName}&gt;, " />
 		<execute action="SOMessagesAdd#type" locator-key1="SUBJECT_FIELD" value1="${messageSubject}" />
 		<execute action="SOMessagesAdd#type" locator-key1="BODY_FIELD" value1="${messageBody}" />

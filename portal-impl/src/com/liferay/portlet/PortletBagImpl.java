@@ -136,6 +136,10 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
+	public void destroy() {
+	}
+
+	@Override
 	public List<AssetRendererFactory> getAssetRendererFactoryInstances() {
 		return _assetRendererFactoryInstances;
 	}

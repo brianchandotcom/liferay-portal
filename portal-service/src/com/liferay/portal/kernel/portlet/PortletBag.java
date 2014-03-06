@@ -52,6 +52,8 @@ public interface PortletBag extends Cloneable {
 
 	public Object clone();
 
+	public void destroy();
+
 	public List<AssetRendererFactory> getAssetRendererFactoryInstances();
 
 	public List<AtomCollectionAdapter<?>> getAtomCollectionAdapterInstances();

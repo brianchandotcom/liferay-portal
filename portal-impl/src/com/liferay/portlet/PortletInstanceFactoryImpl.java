@@ -69,7 +69,11 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		PortletApp portletApp = portlet.getPortletApp();
 
 		if (resetRemotePortletBag && portletApp.isWARFile()) {
-			PortletBagPool.remove(rootPortletId);
+			PortletBag portletBag = PortletBagPool.remove(rootPortletId);
+
+			if (portletBag != null) {
+				portletBag.destroy();
+			}
 		}
 	}
 

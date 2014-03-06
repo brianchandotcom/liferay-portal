@@ -698,7 +698,6 @@
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="YOUR_RATING_STAR_2" />
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="YOUR_RATING_STAR_3" />
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="YOUR_RATING_STAR_4" />
-		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_5" />
 		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_EMPTY_1" />
 		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_EMPTY_2" />
 
@@ -706,7 +705,7 @@
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="AVERAGE_STAR_2" />
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="AVERAGE_STAR_3" />
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="AVERAGE_STAR_4" />
-		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="AVERAGE_STAR_5" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="AVERAGE_STAR_EMPTY_5" />
 		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="AVERAGE_STAR_EMPTY_1" />
 		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="AVERAGE_STAR_EMPTY_2" />
 	</command>

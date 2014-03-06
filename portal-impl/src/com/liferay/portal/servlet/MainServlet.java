@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
-import com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -195,12 +194,6 @@ public class MainServlet extends ActionServlet {
 		servletContext.setAttribute(MainServlet.class.getName(), Boolean.TRUE);
 
 		callParentInit();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Initialize listeners");
-		}
-
-		initListeners(servletContext);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Process startup events");
@@ -809,13 +802,6 @@ public class MainServlet extends ActionServlet {
 
 		servletContext.setAttribute(
 			WebKeys.PLUGIN_LAYOUT_TEMPLATES, layoutTemplates);
-	}
-
-	protected void initListeners(ServletContext servletContext) {
-		if (PropsValues.SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE) {
-			servletContext.addListener(
-				SerializableSessionAttributeListener.class);
-		}
 	}
 
 	protected PluginPackage initPluginPackage() throws Exception {

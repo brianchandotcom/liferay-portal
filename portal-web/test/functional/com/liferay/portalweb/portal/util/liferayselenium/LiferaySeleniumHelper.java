@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -655,7 +656,9 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
-		if (line.contains(TestPropsValues.IGNORE_ERROR)) {
+		if (Validator.isNotNull(TestPropsValues.IGNORE_ERROR) &&
+			line.contains(TestPropsValues.IGNORE_ERROR)) {
+
 			return true;
 		}
 

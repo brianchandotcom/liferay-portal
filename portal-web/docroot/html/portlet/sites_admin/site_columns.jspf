@@ -25,16 +25,16 @@
 	if (curGroup.isOrganization()) {
 		Organization organization = OrganizationLocalServiceUtil.getOrganization(curGroup.getOrganizationId());
 
-		buffer.append("<img align=\"left\" alt=\"");
+		buffer.append("<img class=\"site-icon\" alt=\"");
 		buffer.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", organization.getType()));
-		buffer.append("\" border=\"0\" style=\"margin: 0px 5px 0px 0px;\" src=\"");
+		buffer.append("\" src=\"");
 		buffer.append(curGroup.getIconURL(themeDisplay));
 		buffer.append("\" title=\"");
 		buffer.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", organization.getType()));
 		buffer.append("\">");
 	}
 	else {
-		buffer.append("<img align=\"left\" border=\"0\" style=\"margin: 0px 5px 0px 0px;\" src=\"");
+		buffer.append("<img class=\"site-icon\" src=\"");
 		buffer.append(curGroup.getIconURL(themeDisplay));
 		buffer.append("\">");
 	}

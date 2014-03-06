@@ -27,7 +27,7 @@
 		buffer.append("\">");
 	}
 
-	buffer.append("<img align=\"left\" alt=\"\" border=\"0\" style=\"margin: 0px 5px 0px 0px;\" src=\"");
+	buffer.append("<img class=\"organization-icon\" alt=\"\" src=\"");
 	buffer.append(themeDisplay.getPathThemeImages());
 	buffer.append("/common/organization_icon.png\">");
 	buffer.append("<strong>");

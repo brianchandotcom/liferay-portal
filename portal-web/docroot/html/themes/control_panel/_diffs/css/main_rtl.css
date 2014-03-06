@@ -10,4 +10,8 @@
 			}
 		}
 	}
+
+	.table-data tr.lfr-role .first {
+		background-position: 95% 50%;
+	}
 }

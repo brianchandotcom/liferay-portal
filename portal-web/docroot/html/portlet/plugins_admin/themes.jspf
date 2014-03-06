@@ -77,10 +77,10 @@ for (int i = 0; i < results.size(); i++) {
 		sb.append("\">");
 	}
 
-	sb.append("<img align=\"left\" src=\"");
+	sb.append("<img class=\"plugin-thumbnail\" src=\"");
 	sb.append(theme2.getStaticResourcePath());
 	sb.append(HtmlUtil.escapeAttribute(theme2.getImagesPath()));
-	sb.append("/thumbnail.png\" style=\"margin-right: 10px\" />");
+	sb.append("/thumbnail.png\" />");
 	sb.append(HtmlUtil.escape(theme2.getName()));
 
 	if (showEditPluginHREF) {

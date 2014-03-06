@@ -109,6 +109,14 @@ import org.springframework.context.ApplicationContext;
  */
 public class ModuleFrameworkImpl implements ModuleFramework {
 
+	public ModuleFrameworkImpl() {
+		_serviceLoaderCondition = new ModuleFrameworkServiceLoaderCondition();
+	}
+
+	public ModuleFrameworkImpl(ServiceLoaderCondition serviceLoaderCondition) {
+		_serviceLoaderCondition = serviceLoaderCondition;
+	}
+
 	@Override
 	public Object addBundle(String location) throws PortalException {
 		return addBundle(location, null);
@@ -370,11 +378,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	@Override
 	public void startFramework() throws Exception {
-		ServiceLoaderCondition serviceLoaderCondition =
-			new ModuleFrameworkServiceLoaderCondition();
-
 		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
-			FrameworkFactory.class, serviceLoaderCondition);
+			FrameworkFactory.class, _serviceLoaderCondition);
 
 		if (frameworkFactories.isEmpty()) {
 			return;
@@ -1143,6 +1148,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private Map<String, List<URL>> _extraPackageMap;
 	private List<URL> _extraPackageURLs;
 	private Framework _framework;
+	private ServiceLoaderCondition _serviceLoaderCondition;
 
 	private class ModuleFrameworkServiceLoaderCondition
 		implements ServiceLoaderCondition {

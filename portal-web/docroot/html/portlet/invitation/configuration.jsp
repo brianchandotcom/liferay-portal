@@ -16,14 +16,6 @@
 
 <%@ include file="/html/portlet/invitation/init.jsp" %>
 
-<%
-String emailMessageSubject = ParamUtil.getString(request, "emailMessageSubject", InvitationUtil.getEmailMessageSubject(portletPreferences));
-String emailMessageBody = ParamUtil.getString(request, "emailMessageBody", InvitationUtil.getEmailMessageBody(portletPreferences));
-
-String editorParam = "emailMessageBody";
-String editorContent = emailMessageBody;
-%>
-
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
@@ -32,48 +24,13 @@ String editorContent = emailMessageBody;
 	<liferay-ui:error key="emailMessageBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailMessageSubject" message="please-enter-a-valid-subject" />
 
-	<aui:fieldset>
-		<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailMessageSubject--" type="text" value="<%= emailMessageSubject %>" />
-
-		<aui:field-wrapper label="body">
-			<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
-
-			<aui:input name='<%= "preferences--" + editorParam + "--" %>' type="hidden" />
-		</aui:field-wrapper>
-	</aui:fieldset>
-
-	<aui:fieldset cssClass="definition-of-terms">
-		<legend>
-			<liferay-ui:message key="definition-of-terms" />
-		</legend>
-
-		<dl>
-			<dt>
-				[$FROM_ADDRESS$]
-			</dt>
-			<dd>
-				<liferay-ui:message key="the-address-of-the-email-sender" />
-			</dd>
-			<dt>
-				[$FROM_NAME$]
-			</dt>
-			<dd>
-				<liferay-ui:message key="the-name-of-the-email-sender" />
-			</dd>
-			<dt>
-				[$PAGE_URL$]
-			</dt>
-			<dd>
-				<%= PortalUtil.getLayoutFullURL(layout, themeDisplay) %>
-			</dd>
-			<dt>
-				[$PORTAL_URL$]
-			</dt>
-			<dd>
-				<%= company.getVirtualHostname() %>
-			</dd>
-		</dl>
-	</aui:fieldset>
+	<liferay-ui:email-notifications-settings
+		emailBody='<%= ParamUtil.getString(request, "emailMessageBody", InvitationUtil.getEmailMessageBody(portletPreferences)) %>'
+		emailDefinitionTerms="<%= InvitationUtil.getEmailDefinitionTerms(renderRequest) %>"
+		emailParam="emailMessage"
+		emailSubject='<%= ParamUtil.getString(request, "emailMessageSubject", InvitationUtil.getEmailMessageSubject(portletPreferences)) %>'
+		showEmailEnabled="<%= false %>"
+	/>
 
 	<aui:button-row>
 		<aui:button type="submit" />
@@ -81,12 +38,12 @@ String editorContent = emailMessageBody;
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(editorContent) %>";
-	}
-
 	function <portlet:namespace />saveConfiguration() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= editorParam %>.value = window.<portlet:namespace />editor.getHTML();
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailMessageBody--'].value = window['<portlet:namespace />emailMessage'].getHTML();
+		}
+		catch (e) {
+		}
 
 		submitForm(document.<portlet:namespace />fm);
 	}

@@ -19,6 +19,8 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -102,6 +104,12 @@ public class IndexerWrapper implements Indexer {
 		return _indexer.getSortField(orderByCol, sortType);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getSummary(Document, Locale, String, PortletURL,
+	 *             PortletRequest, PortletResponse)}
+	 */
+	@Deprecated
 	@Override
 	public Summary getSummary(
 			Document document, Locale locale, String snippet,
@@ -109,6 +117,18 @@ public class IndexerWrapper implements Indexer {
 		throws SearchException {
 
 		return _indexer.getSummary(document, locale, snippet, portletURL);
+	}
+
+	@Override
+	public Summary getSummary(
+			Document document, Locale locale, String snippet,
+			PortletURL portletURL, PortletRequest portletRequest,
+			PortletResponse portletResponse)
+		throws SearchException {
+
+		return _indexer.getSummary(
+			document, locale, snippet, portletURL, portletRequest,
+			portletResponse);
 	}
 
 	@Override

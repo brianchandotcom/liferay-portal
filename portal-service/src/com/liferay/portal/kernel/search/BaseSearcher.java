@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -78,7 +80,8 @@ public abstract class BaseSearcher extends BaseIndexer {
 	@Override
 	protected Summary doGetSummary(
 			Document document, Locale locale, String snippet,
-			PortletURL portletURL)
+			PortletURL portletURL, PortletRequest portletRequest,
+			PortletResponse portletResponse)
 		throws Exception {
 
 		throw new UnsupportedOperationException();

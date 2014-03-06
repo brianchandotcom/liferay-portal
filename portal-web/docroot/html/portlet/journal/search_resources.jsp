@@ -242,7 +242,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 
 						PortletURL hitURL = liferayPortletResponse.createRenderURL();
 
-						List<SearchResult> searchResultsList = SearchResultUtil.getSearchResults(hits, locale, hitURL);
+						List<SearchResult> searchResultsList = SearchResultUtil.getSearchResults(hits, locale, hitURL, liferayPortletRequest, liferayPortletResponse);
 
 						emptySearchResults = searchResultsList.isEmpty();
 

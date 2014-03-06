@@ -41,6 +41,8 @@ import com.liferay.portlet.blogs.service.persistence.BlogsEntryActionableDynamic
 import java.util.Date;
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -119,8 +121,8 @@ public class BlogsIndexer extends BaseIndexer {
 
 	@Override
 	protected Summary doGetSummary(
-		Document document, Locale locale, String snippet,
-		PortletURL portletURL) {
+		Document document, Locale locale, String snippet, PortletURL portletURL,
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		String entryId = document.get(Field.ENTRY_CLASS_PK);
 

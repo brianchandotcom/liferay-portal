@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -43,6 +45,13 @@ public class SearchResultUtil {
 
 	public static List<SearchResult> getSearchResults(
 		Hits hits, Locale locale, PortletURL portletURL) {
+
+		return getSearchResults(hits, locale, portletURL, null, null);
+	}
+
+	public static List<SearchResult> getSearchResults(
+		Hits hits, Locale locale, PortletURL portletURL,
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		List<SearchResult> searchResults = new ArrayList<SearchResult>();
 
@@ -103,7 +112,8 @@ public class SearchResultUtil {
 				if (fileEntry != null) {
 					Summary summary = getSummary(
 						document, DLFileEntry.class.getName(),
-						fileEntry.getFileEntryId(), locale, portletURL);
+						fileEntry.getFileEntryId(), locale, portletURL,
+						portletRequest, portletResponse);
 
 					searchResult.addFileEntry(fileEntry, summary);
 				}
@@ -120,7 +130,8 @@ public class SearchResultUtil {
 
 				if ((mbMessage == null) && (fileEntry == null)) {
 					Summary summary = getSummary(
-						document, className, classPK, locale, portletURL);
+						document, className, classPK, locale, portletURL,
+						portletRequest, portletResponse);
 
 					searchResult.setSummary(summary);
 				}
@@ -147,7 +158,8 @@ public class SearchResultUtil {
 
 	protected static Summary getSummary(
 			Document document, String className, long classPK, Locale locale,
-			PortletURL portletURL)
+			PortletURL portletURL, PortletRequest portletRequest,
+			PortletResponse portletResponse)
 		throws PortalException, SystemException {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(className);
@@ -155,7 +167,9 @@ public class SearchResultUtil {
 		if (indexer != null) {
 			String snippet = document.get(Field.SNIPPET);
 
-			return indexer.getSummary(document, locale, snippet, portletURL);
+			return indexer.getSummary(
+				document, locale, snippet, portletURL, portletRequest,
+				portletResponse);
 		}
 
 		return getSummary(className, classPK, locale, portletURL);

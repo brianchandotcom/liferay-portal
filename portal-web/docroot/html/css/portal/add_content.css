@@ -122,6 +122,10 @@
 				position: absolute;
 				right: 0;
 				top: 0;
+
+				@include respond-to(phone, tablet) {
+					display: inline;
+				}
 			}
 
 			.lfr-portlet-used {

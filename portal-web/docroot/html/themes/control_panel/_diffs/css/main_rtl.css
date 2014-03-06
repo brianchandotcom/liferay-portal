@@ -11,7 +11,7 @@
 		}
 	}
 
-	.table-data tr.lfr-role .table-cell.first {
-		background-position: 97% 50%;
+	.table-data tr.lfr-role .first {
+		background-position: 95% 50%;
 	}
 }

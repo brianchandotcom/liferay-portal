@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -192,7 +194,20 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		}
 
 		sb.append(StringPool.SLASH);
-		sb.append("@group_id@");
+
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(getLayoutGroupId());
+
+			String name = group.getFriendlyURL();
+
+			name = name.substring(1);
+
+			sb.append(name);
+		}
+		catch (Exception e) {
+			sb.append("@group_id@");
+		}
+
 		sb.append(StringPool.SLASH);
 		sb.append(getLayoutId());
 

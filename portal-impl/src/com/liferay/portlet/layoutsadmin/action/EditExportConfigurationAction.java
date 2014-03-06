@@ -25,12 +25,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.ExportImportConfigurationServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
@@ -89,6 +92,9 @@ public class EditExportConfigurationAction extends PortletAction {
 			}
 			else if (Validator.isNull(cmd)) {
 				addSessionMessages(actionRequest);
+			}
+			else if (cmd.equals(Constants.RELAUNCH)) {
+				relaunchExportLayoutConfiguration(actionRequest);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -219,6 +225,24 @@ public class EditExportConfigurationAction extends PortletAction {
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
+	}
+
+	protected void relaunchExportLayoutConfiguration(
+			ActionRequest actionRequest)
+		throws Exception {
+
+		long backgroundTaskId = ParamUtil.getLong(
+			actionRequest, "backgroundTaskId");
+
+		BackgroundTask backgroundTask =
+			BackgroundTaskLocalServiceUtil.getBackgroundTask(backgroundTaskId);
+
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		ExportImportConfigurationHelper.
+			exportLayoutsByExportImportConfiguration(
+				MapUtil.getLong(taskContextMap, "exportImportConfigurationId"));
 	}
 
 	protected ExportImportConfiguration updateExportConfiguration(

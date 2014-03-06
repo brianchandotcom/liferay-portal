@@ -44,7 +44,7 @@ public class UpgradePortletSettings extends UpgradeProcess {
 	protected void upgradePortletSettings(String portletId, String serviceName)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("update PortletPreferences set portletId = '");
 		sb.append(serviceName);

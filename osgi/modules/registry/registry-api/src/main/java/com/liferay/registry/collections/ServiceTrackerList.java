@@ -24,4 +24,6 @@ public interface ServiceTrackerList<S> extends List<S> {
 
 	public boolean add(S service, Map<String, Object> properties);
 
+	public void close();
+
 }

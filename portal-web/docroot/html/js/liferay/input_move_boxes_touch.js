@@ -1,17 +1,25 @@
 AUI.add(
 	'liferay-input-move-boxes-touch',
 	function(A) {
-		var CSS_MOVE_OPTION_CLASS = '.move-option';
+		var STR_DOT = '.';
 
-		var CSS_SORT_LIST_ACTIVE = 'sort-list-active';
+		var STR_SELECTED = 'selected';
+
+		var STR_SORT_LIST_ACTIVE = 'sort-list-active';
+
+		var SELECTOR_MOVE_OPTION = STR_DOT + 'move-option';
+
+		var SELECTOR_SELECTED = STR_DOT + STR_SELECTED;
+
+		var SELECTOR_SORT_LIST_ACTIVE = STR_DOT + STR_SORT_LIST_ACTIVE;
+
+		var SELECTOR_TITLE = STR_DOT + 'title';
 
 		var STR_CHECKED = 'checked';
 
 		var STR_CLICK = 'click';
 
 		var STR_NODE = 'node';
-
-		var STR_SELECTED = 'selected';
 
 		var STR_TRUE = 'true';
 
@@ -27,7 +35,7 @@ AUI.add(
 			'</tpl>'
 		);
 
-		var TPL_SORTABLE_CONTAINER = '<div class="sortable-container ' + CSS_SORT_LIST_ACTIVE + '"></div>';
+		var TPL_SORTABLE_CONTAINER = '<div class="sortable-container ' + STR_SORT_LIST_ACTIVE + '"></div>';
 
 		A.mix(
 			Liferay.InputMoveBoxes.prototype,
@@ -73,7 +81,7 @@ AUI.add(
 						function(event) {
 							event.preventDefault();
 						},
-						'.sort-list-active .title'
+						SELECTOR_SORT_LIST_ACTIVE + SELECTOR_TITLE
 					);
 
 					instance._sortableContainer.delegate(
@@ -115,7 +123,7 @@ AUI.add(
 					var dropNode = event.dropNode;
 					var value = event.value;
 
-					var moveOption = instance._sortableContainer.one(CSS_MOVE_OPTION_CLASS + '[data-value="' + value + '"]');
+					var moveOption = instance._sortableContainer.one(SELECTOR_MOVE_OPTION + '[data-value="' + value + '"]');
 
 					var dragNodeIndex = instance._selectedSortList.indexOf(moveOption);
 					var dropNodeIndex = instance._selectedSortList.indexOf(dropNode);
@@ -170,7 +178,7 @@ AUI.add(
 					event.currentTarget.toggleClass('active');
 
 					instance._sortableContainer.toggleClass('edit-list-active');
-					instance._sortableContainer.toggleClass(CSS_SORT_LIST_ACTIVE);
+					instance._sortableContainer.toggleClass(STR_SORT_LIST_ACTIVE);
 				},
 
 				_renderButtons: function() {
@@ -218,7 +226,7 @@ AUI.add(
 						{
 							container: sortableContainer,
 							handles: [sortableContainer.all('.handle')],
-							nodes: CSS_MOVE_OPTION_CLASS,
+							nodes: SELECTOR_MOVE_OPTION,
 							opacity: '0.2'
 						}
 					);
@@ -239,13 +247,13 @@ AUI.add(
 				_syncSelectedSortList: function() {
 					var instance = this;
 
-					instance._selectedSortList = instance._sortableContainer.all(CSS_MOVE_OPTION_CLASS + '.' + STR_SELECTED);
+					instance._selectedSortList = instance._sortableContainer.all(SELECTOR_MOVE_OPTION + SELECTOR_SELECTED);
 				},
 
 				_toggleMoveOption: function(checkbox, option) {
 					var instance = this;
 
-					var moveOption = checkbox.ancestor(CSS_MOVE_OPTION_CLASS);
+					var moveOption = checkbox.ancestor(SELECTOR_MOVE_OPTION);
 
 					moveOption.toggleClass(STR_SELECTED);
 

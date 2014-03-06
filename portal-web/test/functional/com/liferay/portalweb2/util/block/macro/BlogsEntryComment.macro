@@ -12,7 +12,6 @@
 		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
 
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
-		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENT" value1="${entryComment}" />
 	</command>
 
 	<command name="addPG">
@@ -47,10 +46,7 @@
 			</else>
 		</if>
 
-		<var name="key_entryComment" value="${entryComment}" />
-
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT" value1="${entryComment}" />
 	</command>
 
 	<command name="deleteCP">

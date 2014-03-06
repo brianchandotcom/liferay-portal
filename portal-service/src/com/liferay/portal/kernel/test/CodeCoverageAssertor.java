@@ -163,7 +163,7 @@ public class CodeCoverageAssertor implements TestRule {
 
 		try {
 			Class<?> instrumentationAgentClass = systemClassLoader.loadClass(
-				"net.sourceforge.cobertura.instrument.InstrumentationAgent");
+				"com.liferay.cobertura.instrument.InstrumentationAgent");
 
 			_assertCoverageMethod = instrumentationAgentClass.getMethod(
 				"assertCoverage", boolean.class, Class[].class);

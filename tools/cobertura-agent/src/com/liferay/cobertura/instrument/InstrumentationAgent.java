@@ -12,7 +12,7 @@
  * details.
  */
 
-package net.sourceforge.cobertura.instrument;
+package com.liferay.cobertura.instrument;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 

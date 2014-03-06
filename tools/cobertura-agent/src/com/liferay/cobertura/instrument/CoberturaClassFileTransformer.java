@@ -12,7 +12,9 @@
  * details.
  */
 
-package net.sourceforge.cobertura.instrument;
+package com.liferay.cobertura.instrument;
+
+import com.liferay.portal.kernel.util.CharPool;
 
 import java.io.File;
 
@@ -20,11 +22,7 @@ import java.lang.instrument.ClassFileTransformer;
 
 import java.security.ProtectionDomain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
@@ -33,11 +31,9 @@ import java.util.regex.Pattern;
 import net.sourceforge.cobertura.coveragedata.CoverageDataFileHandler;
 import net.sourceforge.cobertura.coveragedata.ProjectData;
 
-import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodAdapter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -138,16 +134,11 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 				ClassWriter classWriter = new ClassWriter(
 					ClassWriter.COMPUTE_MAXS);
 
-				ClassVisitor classVisitor = classWriter;
+				String name = className.replace(
+					CharPool.SLASH, CharPool.PERIOD);
 
-				if (!InstrumentationAgent.isStaticallyInstrumented()) {
-					classVisitor = new RemoveHasBeenInstrumentedClassVisitor(
-						classVisitor);
-				}
-
-				classVisitor = new ClassInstrumenter(
-					projectData, classVisitor, Collections.emptyList(),
-					Collections.emptyList());
+				ClassVisitor classVisitor = new CoberturaClassVisitor(
+					projectData.getOrCreateClassData(name), classWriter);
 
 				ClassReader classReader = new ClassReader(classfileBuffer);
 
@@ -187,53 +178,15 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 		return null;
 	}
 
-	private static final String _HAS_BEEN_INSTRUMENTED_CLASS_NAME =
-		"net/sourceforge/cobertura/coveragedata/HasBeenInstrumented";
-
 	private Pattern[] _excludePatterns;
 	private Pattern[] _includePatterns;
 	private ConcurrentMap<ClassLoader, ProjectData> _projectDatas =
 		new ConcurrentHashMap<ClassLoader, ProjectData>();
 
-	private static class RemoveHasBeenInstrumentedClassVisitor
-		extends ClassAdapter {
-
-		public RemoveHasBeenInstrumentedClassVisitor(
-			ClassVisitor classVisitor) {
-
-			super(classVisitor);
-		}
-
-		@Override
-		public void visit(
-			int version, int access, String name, String signature,
-			String superName, String[] interfaces) {
-
-			if ((access & Opcodes.ACC_SUPER) != 0) {
-				List<String> interfacesList = new ArrayList<String>(
-					Arrays.asList(interfaces));
-
-				if (interfacesList.remove(_HAS_BEEN_INSTRUMENTED_CLASS_NAME)) {
-					interfaces = interfacesList.toArray(
-						new String[interfacesList.size()]);
-
-					super.visit(
-						version, access, name, signature, superName,
-						interfaces);
-
-					return;
-				}
-			}
-
-			super.visit(
-				version, access, name, signature, superName, interfaces);
-		}
-	}
-
-	private static class TouchCollectorClassVisitor extends ClassAdapter {
+	private static class TouchCollectorClassVisitor extends ClassVisitor {
 
 		public TouchCollectorClassVisitor(ClassVisitor classVisitor) {
-			super(classVisitor);
+			super(Opcodes.ASM4, classVisitor);
 		}
 
 		@Override
@@ -253,10 +206,10 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
 	}
 
-	private static class TouchCollectorCLINITVisitor extends MethodAdapter {
+	private static class TouchCollectorCLINITVisitor extends MethodVisitor {
 
 		public TouchCollectorCLINITVisitor(MethodVisitor methodVisitor) {
-			super(methodVisitor);
+			super(Opcodes.ASM4, methodVisitor);
 		}
 
 		@Override
@@ -268,8 +221,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 					"net/sourceforge/cobertura/coveragedata/ProjectData") &&
 				name.equals("initialize") && desc.equals("()V")) {
 
-				owner =
-					"net/sourceforge/cobertura/instrument/InstrumentationAgent";
+				owner = "com/liferay/cobertura/instrument/InstrumentationAgent";
 			}
 
 			super.visitMethodInsn(opcode, owner, name, desc);

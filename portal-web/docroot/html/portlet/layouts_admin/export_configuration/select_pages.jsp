@@ -31,9 +31,9 @@ long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
-long[] selectedLayoutIds = StringUtil.split(ParamUtil.getString(request, "selectedLayoutIds"), 0L);
-
 String treeId = ParamUtil.getString(request, "treeId");
+
+long[] selectedLayoutIds = StringUtil.split(ParamUtil.getString(request, "selectedLayoutIds"), 0L);
 %>
 
 <aui:input name="layoutIds" type="hidden" />

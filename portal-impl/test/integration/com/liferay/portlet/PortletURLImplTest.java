@@ -117,7 +117,7 @@ public class PortletURLImplTest {
 		_targetLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), "Destination Layout", true);
 
-		LayoutTestUtil.addPortletToLayout(_targetLayout, PORTLET_WIKI_ID);
+		LayoutTestUtil.addPortletToLayout(_targetLayout, _PORTLET_ID_WIKI);
 
 		_request = new MockHttpServletRequest();
 
@@ -210,11 +210,11 @@ public class PortletURLImplTest {
 		renderParameters.put("a", new String[]{"a0"});
 		renderParameters.put("b", new String[]{"b0", "b1"});
 		renderParameters.put(
-			namespace("c", PORTLET_DDM_ID), new String[]{"c0"});
+			namespace("c", _PORTLET_ID_DDM), new String[]{"c0"});
 		renderParameters.put("d", new String[]{"d0"});
 
 		RenderParametersPool.put(
-			_request, _targetLayout.getPlid(), PORTLET_DDM_ID,
+			_request, _targetLayout.getPlid(), _PORTLET_ID_DDM,
 			renderParameters);
 
 		Set<String> removedParameterNames = new HashSet<String>();
@@ -222,7 +222,7 @@ public class PortletURLImplTest {
 		removedParameterNames.add("d");
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			_request, PORTLET_DDM_ID, _targetLayout.getPlid(),
+			_request, _PORTLET_ID_DDM, _targetLayout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setCopyCurrentRenderParameters(true);
@@ -235,21 +235,21 @@ public class PortletURLImplTest {
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
 		_addExpectedURLPart(
-			"p_p_id", PORTLET_DDM_ID, false, false, expectedURLParts);
+			"p_p_id", _PORTLET_ID_DDM, false, false, expectedURLParts);
 
 		_addExpectedURLPart(
 			"p_p_lifecycle", "0", false, false, expectedURLParts);
 
 		_addExpectedURLPart(
-			"a", new String[]{"a1", "a0"}, false, false, PORTLET_DDM_ID,
+			"a", new String[]{"a1", "a0"}, false, false, _PORTLET_ID_DDM,
 			expectedURLParts);
 
 		_addExpectedURLPart(
-			"b", new String[]{"b2", "b0", "b1"}, false, false, PORTLET_DDM_ID,
+			"b", new String[]{"b2", "b0", "b1"}, false, false, _PORTLET_ID_DDM,
 			expectedURLParts);
 
 		_addExpectedURLPart(
-			"c", "c0", false, false, PORTLET_DDM_ID, expectedURLParts);
+			"c", "c0", false, false, _PORTLET_ID_DDM, expectedURLParts);
 
 		expectedURLParts.remove(_AMPERSAND);
 
@@ -259,7 +259,7 @@ public class PortletURLImplTest {
 		expectedURLParts.clear();
 
 		portletURL = new PortletURLImpl(
-			_request, PORTLET_DDM_ID, _targetLayout.getPlid(),
+			_request, _PORTLET_ID_DDM, _targetLayout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
 		portletURL.setCopyCurrentRenderParameters(true);
@@ -272,7 +272,7 @@ public class PortletURLImplTest {
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
 		_addExpectedURLPart(
-			"p_p_id", PORTLET_DDM_ID, false, false, expectedURLParts);
+			"p_p_id", _PORTLET_ID_DDM, false, false, expectedURLParts);
 
 		_addExpectedURLPart(
 			"p_p_lifecycle", "2", false, false, expectedURLParts);
@@ -282,18 +282,18 @@ public class PortletURLImplTest {
 			expectedURLParts);
 
 		_addExpectedURLPart(
-			"a", new String[]{"a1", "a0"}, false, false, PORTLET_DDM_ID,
+			"a", new String[]{"a1", "a0"}, false, false, _PORTLET_ID_DDM,
 			expectedURLParts);
 
 		_addExpectedURLPart(
-			"b", new String[]{"b2", "b0", "b1"}, false, false, PORTLET_DDM_ID,
+			"b", new String[]{"b2", "b0", "b1"}, false, false, _PORTLET_ID_DDM,
 			expectedURLParts);
 
 		_addExpectedURLPart(
-			"c", "c0", false, false, PORTLET_DDM_ID, expectedURLParts);
+			"c", "c0", false, false, _PORTLET_ID_DDM, expectedURLParts);
 
 		_addExpectedURLPart(
-			"d", "d0", false, false, PORTLET_DDM_ID, expectedURLParts);
+			"d", "d0", false, false, _PORTLET_ID_DDM, expectedURLParts);
 
 		expectedURLParts.remove(_AMPERSAND);
 
@@ -312,7 +312,7 @@ public class PortletURLImplTest {
 	@Test
 	public void testEscapeXMLContainerRuntimeOption() throws Exception {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PORTLET_DDM_ID);
+			_PORTLET_ID_DDM);
 
 		PortletApp portletApp = portlet.getPortletApp();
 
@@ -323,7 +323,7 @@ public class PortletURLImplTest {
 		List<String[]> expectedURLParts = new ArrayList<String[]>();
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			_request, PORTLET_DDM_ID, _targetLayout.getPlid(),
+			_request, _PORTLET_ID_DDM, _targetLayout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		_addExpectedURLPart(
@@ -333,12 +333,12 @@ public class PortletURLImplTest {
 			"p_p_lifecycle", "0", false, false, expectedURLParts);
 
 		_addExpectedURLPart(
-			"p_p_id", PORTLET_DDM_ID, false, false, expectedURLParts);
+			"p_p_id", _PORTLET_ID_DDM, false, false, expectedURLParts);
 
 		portletURL.setParameter("test&name", "test&value");
 
 		_addExpectedURLPart(
-			"test&name", "test&value", false, false, PORTLET_DDM_ID,
+			"test&name", "test&value", false, false, _PORTLET_ID_DDM,
 			expectedURLParts);
 
 		expectedURLParts.remove(_AMPERSAND);
@@ -353,7 +353,7 @@ public class PortletURLImplTest {
 		expectedURLParts.clear();
 
 		portletURL = new PortletURLImpl(
-			_request, PORTLET_DDM_ID, _targetLayout.getPlid(),
+			_request, _PORTLET_ID_DDM, _targetLayout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		_addExpectedURLPart(
@@ -363,12 +363,12 @@ public class PortletURLImplTest {
 			"p_p_lifecycle", "0", false, true, expectedURLParts);
 
 		_addExpectedURLPart(
-			"p_p_id", PORTLET_DDM_ID, false, true, expectedURLParts);
+			"p_p_id", _PORTLET_ID_DDM, false, true, expectedURLParts);
 
 		portletURL.setParameter("test&name", "test&value");
 
 		_addExpectedURLPart(
-			"test&name", "test&value", false, true, PORTLET_DDM_ID,
+			"test&name", "test&value", false, true, _PORTLET_ID_DDM,
 			expectedURLParts);
 
 		expectedURLParts.remove(_AMPERSAND_ESCAPED);
@@ -382,7 +382,7 @@ public class PortletURLImplTest {
 		_portletUrlEscapeXMLField.set(null, false);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PORTLET_DDM_ID);
+			_PORTLET_ID_DDM);
 
 		PortletApp portletApp = portlet.getPortletApp();
 
@@ -392,7 +392,7 @@ public class PortletURLImplTest {
 		List<String[]> expectedURLParts = new ArrayList<String[]>();
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			_request, PORTLET_DDM_ID, _targetLayout.getPlid(),
+			_request, _PORTLET_ID_DDM, _targetLayout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		_addExpectedURLPart(
@@ -402,12 +402,12 @@ public class PortletURLImplTest {
 			"p_p_lifecycle", "0", false, false, expectedURLParts);
 
 		_addExpectedURLPart
-			("p_p_id", PORTLET_DDM_ID, false, false, expectedURLParts);
+			("p_p_id", _PORTLET_ID_DDM, false, false, expectedURLParts);
 
 		portletURL.setParameter("test&name", "test&value");
 
 		_addExpectedURLPart(
-			"test&name", "test&value", false, false, PORTLET_DDM_ID,
+			"test&name", "test&value", false, false, _PORTLET_ID_DDM,
 			expectedURLParts);
 
 		expectedURLParts.remove(_AMPERSAND);
@@ -420,7 +420,7 @@ public class PortletURLImplTest {
 		expectedURLParts.clear();
 
 		portletURL = new PortletURLImpl(
-			_request, PORTLET_DDM_ID, _targetLayout.getPlid(),
+			_request, _PORTLET_ID_DDM, _targetLayout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		_addExpectedURLPart(
@@ -430,12 +430,12 @@ public class PortletURLImplTest {
 			"p_p_lifecycle", "0", false, true, expectedURLParts);
 
 		_addExpectedURLPart(
-			"p_p_id", PORTLET_DDM_ID, false, true, expectedURLParts);
+			"p_p_id", _PORTLET_ID_DDM, false, true, expectedURLParts);
 
 		portletURL.setParameter("test&name", "test&value");
 
 		_addExpectedURLPart(
-			"test&name", "test&value", false, true, PORTLET_DDM_ID,
+			"test&name", "test&value", false, true, _PORTLET_ID_DDM,
 			expectedURLParts);
 
 		expectedURLParts.remove(_AMPERSAND_ESCAPED);
@@ -455,7 +455,7 @@ public class PortletURLImplTest {
 
 		try {
 			PortletURLImpl portletURL = new PortletURLImpl(
-				_request, PORTLET_DDM_ID, _targetLayout.getPlid(),
+				_request, _PORTLET_ID_DDM, _targetLayout.getPlid(),
 				PortletRequest.RENDER_PHASE);
 
 			_addExpectedURLPart(
@@ -467,12 +467,12 @@ public class PortletURLImplTest {
 				"p_p_lifecycle", "0", false, false, expectedURLParts);
 
 			_addExpectedURLPart(
-				"p_p_id", PORTLET_DDM_ID, false, false, expectedURLParts);
+				"p_p_id", _PORTLET_ID_DDM, false, false, expectedURLParts);
 
 			portletURL.setParameter("test&name", "test&value");
 
 			_addExpectedURLPart(
-				"test&name", "test&value", false, false, PORTLET_DDM_ID,
+				"test&name", "test&value", false, false, _PORTLET_ID_DDM,
 				expectedURLParts);
 
 			expectedURLParts.remove(_AMPERSAND);
@@ -489,10 +489,10 @@ public class PortletURLImplTest {
 	public void testPortletFriendlyURL() throws Exception {
 		List<String[]> expectedURLParts = new ArrayList<String[]>();
 
-		LayoutTestUtil.addPortletToLayout(_targetLayout, PORTLET_JOURNAL_ID);
+		LayoutTestUtil.addPortletToLayout(_targetLayout, _PORTLET_ID_JOURNAL);
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			_request, PORTLET_JOURNAL_ID, _targetLayout.getPlid(),
+			_request, _PORTLET_ID_JOURNAL, _targetLayout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
 		portletURL.setParameter("struts_action", "/journal/rss");
@@ -500,7 +500,7 @@ public class PortletURLImplTest {
 		portletURL.setParameter("test&name", "test&value");
 
 		_addExpectedURLPart(
-			"test&name", "test&value", false, false, PORTLET_JOURNAL_ID,
+			"test&name", "test&value", false, false, _PORTLET_ID_JOURNAL,
 			expectedURLParts);
 
 		portletURL.setWindowState(WindowState.NORMAL);
@@ -523,17 +523,17 @@ public class PortletURLImplTest {
 		// DDM is whitelisted, see portlet.add.default.resource.check.whitelist
 
 		testPortletURL(
-			PORTLET_DDM_ID, PortletRequest.RENDER_PHASE, false, false,
+			_PORTLET_ID_DDM, PortletRequest.RENDER_PHASE, false, false,
 			expectedURLParts);
 
 		_addExpectedURLPart(
 			"p_p_auth",
 			AuthTokenUtil.getToken(
-				_request, _targetLayout.getPlid(), PORTLET_MY_ACCOUNT_ID),
+				_request, _targetLayout.getPlid(), _PORTLET_ID_MY_ACCOUNT),
 			false, false, null, expectedURLParts);
 
 		testPortletURL(
-			PORTLET_MY_ACCOUNT_ID, PortletRequest.RENDER_PHASE, false, false,
+			_PORTLET_ID_MY_ACCOUNT, PortletRequest.RENDER_PHASE, false, false,
 			expectedURLParts);
 	}
 
@@ -626,14 +626,14 @@ public class PortletURLImplTest {
 		List<String[]> expectedURLParts = new ArrayList<String[]>();
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			_request, PORTLET_WIKI_ID, _targetLayout.getPlid(),
+			_request, _PORTLET_ID_WIKI, _targetLayout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		_addExpectedURLPart(
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
 		_addExpectedURLPart(
-			"p_p_id", PORTLET_WIKI_ID, false, false, expectedURLParts);
+			"p_p_id", _PORTLET_ID_WIKI, false, false, expectedURLParts);
 
 		_addExpectedURLPart(
 			"p_p_lifecycle", "0", false, false, expectedURLParts);
@@ -653,11 +653,11 @@ public class PortletURLImplTest {
 		_addExpectedURLPart(
 			"p_p_auth",
 			AuthTokenUtil.getToken(
-				_request, _sourceLayout.getPlid(), PORTLET_WIKI_ID),
+				_request, _sourceLayout.getPlid(), _PORTLET_ID_WIKI),
 			false, false, null, expectedURLParts);
 
 		_addExpectedURLPart(
-			"p_p_id", PORTLET_WIKI_ID, false, false, expectedURLParts);
+			"p_p_id", _PORTLET_ID_WIKI, false, false, expectedURLParts);
 
 		_addExpectedURLPart(
 			"p_p_lifecycle", "0", false, false, expectedURLParts);
@@ -675,13 +675,13 @@ public class PortletURLImplTest {
 		List<String[]> expectedURLParts = new ArrayList<String[]>();
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PORTLET_DDM_ID);
+			_PORTLET_ID_DDM);
 
 		Set<String> autopropagatedParameters =
 			portlet.getAutopropagatedParameters();
 
 		Assert.assertTrue(
-			"Portlet " + PORTLET_DDM_ID +
+			"Portlet " + _PORTLET_ID_DDM +
 				" should have at least two autopropagated parameters!",
 			autopropagatedParameters.size() > 1);
 
@@ -694,9 +694,9 @@ public class PortletURLImplTest {
 			PortletRequest.RENDER_PHASE);
 
 		preparePortletURL(
-			PORTLET_DDM_ID, portletURL, expectedURLParts, false, false);
+			_PORTLET_ID_DDM, portletURL, expectedURLParts, false, false);
 
-		portletURL.setPortletId(PORTLET_DDM_ID);
+		portletURL.setPortletId(_PORTLET_ID_DDM);
 
 		compareURLsPartiallyOrdered(
 			expectedURLParts, portletURL.generateToString());
@@ -719,7 +719,7 @@ public class PortletURLImplTest {
 			new String[]{"true"});
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PortalUtil.getCompanyId(_request), PORTLET_DDM_ID);
+			PortalUtil.getCompanyId(_request), _PORTLET_ID_DDM);
 
 		PortletApp portletAppBackup = portlet.getPortletApp();
 
@@ -737,17 +737,17 @@ public class PortletURLImplTest {
 				"p_p_lifecycle", "0", false, true, expectedURLParts);
 
 			_addExpectedURLPart(
-				"p_p_id", PORTLET_DDM_ID, false, true, expectedURLParts);
+				"p_p_id", _PORTLET_ID_DDM, false, true, expectedURLParts);
 
 			portletURL.setParameter("test&name", "test&value");
 
 			_addExpectedURLPart(
-				"test&name", "test&value", false, true, PORTLET_DDM_ID,
+				"test&name", "test&value", false, true, _PORTLET_ID_DDM,
 				expectedURLParts);
 
 			expectedURLParts.remove(_AMPERSAND_ESCAPED);
 
-			portletURL.setPortletId(PORTLET_DDM_ID);
+			portletURL.setPortletId(_PORTLET_ID_DDM);
 
 			compareURLsPartiallyOrdered(
 				expectedURLParts, portletURL.generateToString());
@@ -766,13 +766,13 @@ public class PortletURLImplTest {
 			PortletRequest.RENDER_PHASE);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PORTLET_WIKI_ID);
+			_PORTLET_ID_WIKI);
 
 		Set<PublicRenderParameter> publicRenderParameters =
 			portlet.getPublicRenderParameters();
 
 		Assert.assertTrue(
-			"Portlet " + PORTLET_WIKI_ID +
+			"Portlet " + _PORTLET_ID_WIKI +
 				" should have at least one public render parameter!",
 			publicRenderParameters.size() > 0);
 
@@ -800,13 +800,13 @@ public class PortletURLImplTest {
 				tagPRPNameRemove, "1", false, false, expectedURLParts);
 		}
 
-		portletURL.setPortletId(PORTLET_WIKI_ID);
+		portletURL.setPortletId(_PORTLET_ID_WIKI);
 
 		_addExpectedURLPart(
 			"http://domain2.net/destination-layout?", expectedURLParts);
 
 		_addExpectedURLPart(
-			"p_p_id", PORTLET_WIKI_ID, false, false, expectedURLParts);
+			"p_p_id", _PORTLET_ID_WIKI, false, false, expectedURLParts);
 
 		_addExpectedURLPart(
 			"p_p_lifecycle", "0", false, false, expectedURLParts);
@@ -1321,13 +1321,13 @@ public class PortletURLImplTest {
 		throws Exception {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PORTLET_DDM_ID);
+			_PORTLET_ID_DDM);
 
 		Set<String> autopropagatedParameters =
 			portlet.getAutopropagatedParameters();
 
 		Assert.assertTrue(
-			"Portlet " + PORTLET_DDM_ID +
+			"Portlet " + _PORTLET_ID_DDM +
 				" should have at least two autopropagated parameters!",
 			autopropagatedParameters.size() > 1);
 
@@ -1336,7 +1336,7 @@ public class PortletURLImplTest {
 		}
 
 		testPortletURL(
-			PORTLET_DDM_ID, lifecycle, encrypt, escapeXML, expectedURLParts);
+			_PORTLET_ID_DDM, lifecycle, encrypt, escapeXML, expectedURLParts);
 	}
 
 	protected void testGetPublicRenderParametersInPortlet(
@@ -1345,18 +1345,18 @@ public class PortletURLImplTest {
 		throws Exception {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PORTLET_WIKI_ID);
+			_PORTLET_ID_WIKI);
 
 		Set<PublicRenderParameter> publicRenderParameters =
 			portlet.getPublicRenderParameters();
 
 		Assert.assertTrue(
-			"Portlet " + PORTLET_WIKI_ID +
+			"Portlet " + _PORTLET_ID_WIKI +
 				" should have at least one public render parameter!",
 			publicRenderParameters.size() > 0);
 
 		testPortletURL(
-			PORTLET_WIKI_ID, lifecycle, encrypt, escapeXML, expectedURLParts);
+			_PORTLET_ID_WIKI, lifecycle, encrypt, escapeXML, expectedURLParts);
 	}
 
 	protected void testPortletURL(
@@ -1725,6 +1725,15 @@ public class PortletURLImplTest {
 			"AAlhbGdvcml0aG10ABJMamF2YS9sYW5nL1N0cmluZztbAANrZXl0AAJbQnhwdAAD" +
 			"QUVTdXIAAltCrPMX+AYIVOACAAB4cAAAABDAkqmOGU4a6Kq2rZgmKMJj";
 
+	private static final String _PORTLET_ID_DDM =
+		PortletKeys.DYNAMIC_DATA_MAPPING;
+
+	private static final String _PORTLET_ID_JOURNAL = PortletKeys.JOURNAL;
+
+	private static final String _PORTLET_ID_MY_ACCOUNT = PortletKeys.MY_ACCOUNT;
+
+	private static final String _PORTLET_ID_WIKI = PortletKeys.WIKI;
+
 	private static final int _RENDER_URL_TYPE = 2;
 
 	private static final int _RESOURCE_URL_TYPE = 3;
@@ -1735,15 +1744,6 @@ public class PortletURLImplTest {
 		"wsrp-navigationalState=";
 
 	private static final String _WSRP_REWRITE = "/wsrp_rewrite";
-
-	private static final String PORTLET_DDM_ID =
-		PortletKeys.DYNAMIC_DATA_MAPPING;
-
-	private static final String PORTLET_JOURNAL_ID = PortletKeys.JOURNAL;
-
-	private static final String PORTLET_MY_ACCOUNT_ID = PortletKeys.MY_ACCOUNT;
-
-	private static final String PORTLET_WIKI_ID = PortletKeys.WIKI;
 
 	private Group _group;
 	private Key _key;

@@ -88,7 +88,7 @@
 <!--ADD_CONTENT_ADD_NEW_MENULIST-->
 <tr>
 	<td>ADD_CONTENT_ADD_NEW_MENULIST</td>
-	<td>//ul[@class='dropdown-menu ']/li/a[contains(.,'${key_assetType}')]/span</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'${key_assetType}')]/span</td>
 	<td></td>
 </tr>
 <tr>

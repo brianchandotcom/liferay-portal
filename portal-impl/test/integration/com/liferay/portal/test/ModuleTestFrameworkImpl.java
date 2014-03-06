@@ -16,6 +16,7 @@ package com.liferay.portal.test;
 
 import com.liferay.osgi.bootstrap.ModuleFrameworkImpl;
 import com.liferay.portal.kernel.util.ServiceLoaderCondition;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Manuel de la Peña
@@ -30,7 +31,7 @@ public class ModuleTestFrameworkImpl extends ModuleFrameworkImpl {
 
 	@Override
 	protected String getSystemPackagesExtra() {
-		return "";
+		return StringPool.BLANK;
 	}
 
 }

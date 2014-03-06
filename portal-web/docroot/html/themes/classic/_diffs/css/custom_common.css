@@ -580,6 +580,12 @@
 						padding: 0.1em 1em;
 					}
 				}
+
+				.button-holder {
+					padding-bottom: 20px;
+					position: absolute;
+					top: 100%;
+				}
 			}
 
 			.nobr {
@@ -588,14 +594,6 @@
 
 			&.tabbable-content {
 				position: relative;
-			}
-		}
-
-		ul.form-navigator.well {
-			.button-holder {
-				padding-bottom: 20px;
-				position: absolute;
-				top: 100%;
 			}
 		}
 	}

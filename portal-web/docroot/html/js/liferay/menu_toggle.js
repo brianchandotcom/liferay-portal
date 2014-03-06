@@ -44,6 +44,7 @@ AUI.add(
 						instance._content = A.all(instance.get('content'));
 
 						A.Event.defineOutside('touchend');
+						A.Event.defineOutside('touchstart');
 
 						instance._bindUI();
 					},

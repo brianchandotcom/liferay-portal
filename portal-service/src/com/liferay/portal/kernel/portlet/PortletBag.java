@@ -106,7 +106,7 @@ public interface PortletBag extends Cloneable {
 
 	public List<TrashHandler> getTrashHandlerInstances();
 
-	public URLEncoder getURLEncoderInstance();
+	public List<URLEncoder> getURLEncoderInstances();
 
 	public List<UserNotificationHandler>
 		getUserNotificationHandlerInstances();

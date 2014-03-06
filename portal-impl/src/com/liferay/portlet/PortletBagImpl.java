@@ -62,7 +62,7 @@ public class PortletBagImpl implements PortletBag {
 		List<ConfigurationAction> configurationActionInstances,
 		List<Indexer> indexerInstances, List<OpenSearch> openSearchInstances,
 		List<FriendlyURLMapper> friendlyURLMapperInstances,
-		URLEncoder urlEncoderInstance,
+		List<URLEncoder> urlEncoderInstances,
 		PortletDataHandler portletDataHandlerInstance,
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances,
 		TemplateHandler templateHandlerInstance,
@@ -90,7 +90,7 @@ public class PortletBagImpl implements PortletBag {
 		_indexerInstances = indexerInstances;
 		_openSearchInstances = openSearchInstances;
 		_friendlyURLMapperInstances = friendlyURLMapperInstances;
-		_urlEncoderInstance = urlEncoderInstance;
+		_urlEncoderInstances = urlEncoderInstances;
 		_portletDataHandlerInstance = portletDataHandlerInstance;
 		_stagedModelDataHandlerInstances = stagedModelDataHandlerInstances;
 		_templateHandlerInstance = templateHandlerInstance;
@@ -120,7 +120,7 @@ public class PortletBagImpl implements PortletBag {
 			getPortletName(), getServletContext(), getPortletInstance(),
 			getConfigurationActionInstances(), getIndexerInstances(),
 			getOpenSearchInstances(), getFriendlyURLMapperInstances(),
-			getURLEncoderInstance(), getPortletDataHandlerInstance(),
+			getURLEncoderInstances(), getPortletDataHandlerInstance(),
 			getStagedModelDataHandlerInstances(), getTemplateHandlerInstance(),
 			getPortletLayoutListenerInstance(), getPollerProcessorInstance(),
 			getPopMessageListenerInstance(),
@@ -161,6 +161,11 @@ public class PortletBagImpl implements PortletBag {
 			(ServiceTrackerList<OpenSearch>)_openSearchInstances;
 
 		openSearchInstancesServiceTrackerList.close();
+
+		ServiceTrackerList<URLEncoder> urlEncoderInstancesServiceTrackerList =
+			(ServiceTrackerList<URLEncoder>)_urlEncoderInstances;
+
+		urlEncoderInstancesServiceTrackerList.close();
 	}
 
 	@Override
@@ -300,8 +305,8 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public URLEncoder getURLEncoderInstance() {
-		return _urlEncoderInstance;
+	public List<URLEncoder> getURLEncoderInstances() {
+		return _urlEncoderInstances;
 	}
 
 	@Override
@@ -359,7 +364,7 @@ public class PortletBagImpl implements PortletBag {
 	private List<StagedModelDataHandler<?>> _stagedModelDataHandlerInstances;
 	private TemplateHandler _templateHandlerInstance;
 	private List<TrashHandler> _trashHandlerInstances;
-	private URLEncoder _urlEncoderInstance;
+	private List<URLEncoder> _urlEncoderInstances;
 	private List<UserNotificationHandler>
 		_userNotificationHandlerInstances;
 	private WebDAVStorage _webDAVStorageInstance;

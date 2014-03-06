@@ -63,6 +63,19 @@ public interface LayoutSetPrototypeService extends BaseService {
 
 	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, boolean layoutsUpdateable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #addLayoutSetPrototype(Map,
+	Map, boolean, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
 		boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -86,6 +99,20 @@ public interface LayoutSetPrototypeService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
+		long layoutSetPrototypeId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, boolean layoutsUpdateable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateLayoutSetPrototype(
+	long, Map, Map, boolean, boolean, ServiceContext)}
+	*/
+	@Deprecated
 	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
 		long layoutSetPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

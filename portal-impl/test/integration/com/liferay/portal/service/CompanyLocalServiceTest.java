@@ -301,8 +301,8 @@ public class CompanyLocalServiceTest {
 
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
-				userId, companyId, nameMap, StringPool.BLANK, true, true,
-				getServiceContext(companyId));
+				userId, companyId, nameMap, new HashMap<Locale, String>(), true,
+				true, getServiceContext(companyId));
 
 		return layoutSetPrototype;
 	}

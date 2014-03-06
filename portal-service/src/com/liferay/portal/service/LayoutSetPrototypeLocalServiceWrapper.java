@@ -322,6 +322,25 @@ public class LayoutSetPrototypeLocalServiceWrapper
 	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
 		long userId, long companyId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, boolean layoutsUpdateable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetPrototypeLocalService.addLayoutSetPrototype(userId,
+			companyId, nameMap, descriptionMap, active, layoutsUpdateable,
+			serviceContext);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #addLayoutSetPrototype(long,
+	long, Map, Map, boolean, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
+		long userId, long companyId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
 		boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -374,6 +393,24 @@ public class LayoutSetPrototypeLocalServiceWrapper
 		return _layoutSetPrototypeLocalService.searchCount(companyId, active);
 	}
 
+	@Override
+	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
+		long layoutSetPrototypeId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, boolean layoutsUpdateable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetPrototypeLocalService.updateLayoutSetPrototype(layoutSetPrototypeId,
+			nameMap, descriptionMap, active, layoutsUpdateable, serviceContext);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateLayoutSetPrototype(
+	long, Map, Map, boolean, boolean, ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
 		long layoutSetPrototypeId,

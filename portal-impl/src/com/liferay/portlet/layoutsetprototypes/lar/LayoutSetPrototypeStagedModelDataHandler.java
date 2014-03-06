@@ -136,7 +136,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 					LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
 						userId, portletDataContext.getCompanyId(),
 						layoutSetPrototype.getNameMap(),
-						layoutSetPrototype.getDescription(),
+						layoutSetPrototype.getDescriptionMap(),
 						layoutSetPrototype.isActive(), layoutsUpdateable,
 						serviceContext);
 			}
@@ -145,7 +145,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 					LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
 						existingLayoutSetPrototype.getLayoutSetPrototypeId(),
 						layoutSetPrototype.getNameMap(),
-						layoutSetPrototype.getDescription(),
+						layoutSetPrototype.getDescriptionMap(),
 						layoutSetPrototype.isActive(), layoutsUpdateable,
 						serviceContext);
 			}
@@ -155,7 +155,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 				LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
 					userId, portletDataContext.getCompanyId(),
 					layoutSetPrototype.getNameMap(),
-					layoutSetPrototype.getDescription(),
+					layoutSetPrototype.getDescriptionMap(),
 					layoutSetPrototype.isActive(), layoutsUpdateable,
 					serviceContext);
 		}

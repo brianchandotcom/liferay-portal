@@ -70,6 +70,37 @@ import java.util.Map;
 public class LayoutSetPrototypeServiceSoap {
 	public static com.liferay.portal.model.LayoutSetPrototypeSoap addLayoutSetPrototype(
 		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, boolean active,
+		boolean layoutsUpdateable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portal.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.addLayoutSetPrototype(nameMap,
+					descriptionMap, active, layoutsUpdateable, serviceContext);
+
+			return com.liferay.portal.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #addLayoutSetPrototype(Map,
+	Map, boolean, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	public static com.liferay.portal.model.LayoutSetPrototypeSoap addLayoutSetPrototype(
+		java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, java.lang.String description,
 		boolean active, boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -133,6 +164,38 @@ public class LayoutSetPrototypeServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.LayoutSetPrototypeSoap updateLayoutSetPrototype(
+		long layoutSetPrototypeId, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, boolean active,
+		boolean layoutsUpdateable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.portal.model.LayoutSetPrototype returnValue = LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(layoutSetPrototypeId,
+					nameMap, descriptionMap, active, layoutsUpdateable,
+					serviceContext);
+
+			return com.liferay.portal.model.LayoutSetPrototypeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateLayoutSetPrototype(
+	long, Map, Map, boolean, boolean, ServiceContext)}
+	*/
+	@Deprecated
 	public static com.liferay.portal.model.LayoutSetPrototypeSoap updateLayoutSetPrototype(
 		long layoutSetPrototypeId, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, java.lang.String description,

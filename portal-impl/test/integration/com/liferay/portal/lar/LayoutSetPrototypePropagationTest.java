@@ -466,7 +466,7 @@ public class LayoutSetPrototypePropagationTest
 			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
 				_layoutSetPrototype.getLayoutSetPrototypeId(),
 				_layoutSetPrototype.getNameMap(),
-				_layoutSetPrototype.getDescription(),
+				_layoutSetPrototype.getDescriptionMap(),
 				_layoutSetPrototype.getActive(), layoutsUpdateable,
 				ServiceTestUtil.getServiceContext());
 	}

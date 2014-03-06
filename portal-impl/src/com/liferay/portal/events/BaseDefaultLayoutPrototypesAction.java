@@ -15,6 +15,8 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -28,6 +30,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -38,7 +42,7 @@ import javax.portlet.PortletPreferences;
 public abstract class BaseDefaultLayoutPrototypesAction extends SimpleAction {
 
 	protected Layout addLayout(
-			LayoutSet layoutSet, String name, String friendlyURL,
+			LayoutSet layoutSet, String nameKey, String friendlyURL,
 			String layouteTemplateId)
 		throws Exception {
 
@@ -46,12 +50,24 @@ public abstract class BaseDefaultLayoutPrototypesAction extends SimpleAction {
 
 		ServiceContext serviceContext = new ServiceContext();
 
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		for (Locale locale : locales) {
+			nameMap.put(locale, LanguageUtil.get(locale, nameKey));
+		}
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.getDefault(), friendlyURL);
+
 		Layout layout = LayoutLocalServiceUtil.addLayout(
 			group.getCreatorUserId(), group.getGroupId(),
 			layoutSet.isPrivateLayout(),
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
-			serviceContext);
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, null, null, null,
+			null, LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,
+			friendlyURLMap, serviceContext);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -42,6 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
+@ProviderType
 public interface DL {
 
 	public static final String MANUAL_CHECK_IN_REQUIRED =

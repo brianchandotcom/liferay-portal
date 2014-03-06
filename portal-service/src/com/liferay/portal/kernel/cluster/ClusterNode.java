@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.cluster;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -25,6 +27,7 @@ import java.net.InetSocketAddress;
 /**
  * @author Tina Tian
  */
+@ProviderType
 public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 
 	public ClusterNode(String clusterNodeId, InetAddress bindInetAddress) {

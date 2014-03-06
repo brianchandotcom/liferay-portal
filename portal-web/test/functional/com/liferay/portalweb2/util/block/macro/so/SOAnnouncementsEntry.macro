@@ -62,8 +62,6 @@
 	</command>
 
 	<command name="markAsUnreadPG">
-		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
 		<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" value1="Read Entries" />
 		<execute action="SODashboard#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_EXPANDED" />
 		<execute action="SODashboard#assertElementNotPresent" locator-key1="ANNOUNCEMENTS_ENTRY_COLLAPSED" />
@@ -89,6 +87,17 @@
 
 		<execute action="SODashboard#pause" value1="1000" />
 		<execute action="SODashboard#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_SECTION" />
+
+		<if>
+			<and>
+				<condition action="SODashboard#isElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_COLLAPSED" />
+				<condition action="SODashboard#isElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" />
+			</and>
+			<then>
+				<execute action="SODashboard#click" locator-key1="ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN" />
+				<execute action="SODashboard#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_EXPANDED" />
+			</then>
+		</if>
 
 		<while>
 			<condition action="SODashboard#isElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" />

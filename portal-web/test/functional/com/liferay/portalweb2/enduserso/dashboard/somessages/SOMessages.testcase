@@ -6,59 +6,58 @@
 
 	<var name="adminEmailAddress" value="test@liferay.com" />
 	<var name="adminName" value="Test Test" />
-	<var name="attachmentFile" value="Document_1.jpg" />
-	<var name="messageBody" value="Message Body" />
-	<var name="messageReplyBody" value="Message Reply Body" />
-	<var name="messageSubject" value="Message Subject" />
-	<var name="pageName" value="Private Messaging Page" />
-	<var name="password" value="test" />
-	<var name="portletName" value="Private Messaging" />
-	<var name="userEmailAddress" value="socialoffice01@liferay.com" />
-	<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
-	<var name="userFirstName" value="Social01" />
-	<var name="userFirstName2" value="Social02" />
-	<var name="userLastName" value="User01" />
-	<var name="userLastName2" value="User02" />
-	<var name="userListName" value="User01, Social01" />
-	<var name="userListName2" value="User02, Social02" />
-	<var name="userMiddleName" value="Office01" />
-	<var name="userMiddleName2" value="Office02" />
-	<var name="userName" value="Social01 Office01 User01" />
-	<var name="userName2" value="Social02 Office02 User02" />
-	<var name="userScreenName" value="socialoffice01" />
-	<var name="userScreenName2" value="socialoffice02" />
 
 	<set-up>
 		<execute macro="SOUser#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="SOUserBar#tearDownNotifications" />
+
+		<execute macro="SOMessages#tearDownPG" />
+
+		<execute macro="SOUser#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="DeleteMessage" priority="5">
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
 
 		<execute macro="SOUser#addUserWithSORole">
-			<var name="adminEmailAddress" value="${adminEmailAddress}" />
-			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
-	</set-up>
 
-	<command name="DeleteMessage" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessageList">
 			<var name="connectionName" value="${userName}" />
@@ -75,17 +74,36 @@
 	</command>
 
 	<command name="DeleteMessageBySOUser" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -93,16 +111,16 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${adminName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute action="SOMessagesMessage#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
@@ -114,6 +132,33 @@
 	</command>
 
 	<command name="DeleteMessageBySOUser2" priority="5">
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userFirstName2" value="Social02" />
+		<var name="userLastName" value="User01" />
+		<var name="userLastName2" value="User02" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userListName2" value="User02, Social02" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userMiddleName2" value="Office02" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userName2" value="Social02 Office02 User02" />
+		<var name="userScreenName" value="socialoffice01" />
+		<var name="userScreenName2" value="socialoffice02" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
 			<var name="password" value="${password}" />
@@ -129,17 +174,16 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName2}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName2}" />
 			<var name="recipientScreenName" value="${userScreenName2}" />
-			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -147,9 +191,10 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${userName}" />
@@ -159,9 +204,10 @@
 			<var name="userName" value="${userName2}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessageList">
 			<var name="connectionName" value="${userName}" />
@@ -178,9 +224,10 @@
 		<execute action="SOMessages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
 		<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
 		<execute action="SOMessages#assertTextNotPresent" value1="Message Subject" />
@@ -196,43 +243,62 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${userName2}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${userName}" />
-			<var name="userName" value="${userName}" />
 		</execute>
 	</command>
 
 	<command name="DeleteMessageDetails" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute action="SOMessagesMessage#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
@@ -244,65 +310,87 @@
 	</command>
 
 	<command name="DeleteMessagesAll" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<var name="messageBody1" value="Message1 Body" />
+		<var name="messageBody2" value="Message2 Body" />
+		<var name="messageBody3" value="Message3 Body" />
+		<var name="messageSubject1" value="Message1 Subject" />
+		<var name="messageSubject2" value="Message2 Subject" />
+		<var name="messageSubject3" value="Message3 Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
-
-		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
-			<var name="messageBody" value="${messageBody}01" />
-			<var name="messageSubject" value="${messageSubject}01" />
-			<var name="recipientName" value="${userName}" />
-			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
-
-		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
-			<var name="messageBody" value="${messageBody}02" />
-			<var name="messageSubject" value="${messageSubject}02" />
-			<var name="recipientName" value="${userName}" />
-			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
-
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
-			<var name="messageBody" value="${messageBody}03" />
-			<var name="messageSubject" value="${messageSubject}03" />
+			<var name="messageBody" value="${messageBody1}" />
+			<var name="messageSubject" value="${messageSubject1}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody2}" />
+			<var name="messageSubject" value="${messageSubject2}" />
+			<var name="recipientName" value="${userName}" />
+			<var name="recipientScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody3}" />
+			<var name="messageSubject" value="${messageSubject3}" />
+			<var name="recipientName" value="${userName}" />
+			<var name="recipientScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessageList">
 			<var name="connectionName" value="${userName}" />
-			<var name="messageBody" value="${messageBody}01" />
-			<var name="messageSubject" value="${messageSubject}01" />
+			<var name="messageBody" value="${messageBody1}" />
+			<var name="messageSubject" value="${messageSubject1}" />
 		</execute>
 
 		<execute macro="SOMessages#viewMessageList">
 			<var name="connectionName" value="${userName}" />
-			<var name="messageBody" value="${messageBody}02" />
-			<var name="messageSubject" value="${messageSubject}02" />
+			<var name="messageBody" value="${messageBody2}" />
+			<var name="messageSubject" value="${messageSubject2}" />
 		</execute>
 
 		<execute macro="SOMessages#viewMessageList">
 			<var name="connectionName" value="${userName}" />
-			<var name="messageBody" value="${messageBody}03" />
-			<var name="messageSubject" value="${messageSubject}03" />
+			<var name="messageBody" value="${messageBody3}" />
+			<var name="messageSubject" value="${messageSubject3}" />
 		</execute>
 
 		<execute action="SOMessages#check" locator-key1="SELECT_ALL_CHECKBOX" />
@@ -312,17 +400,36 @@
 	</command>
 
 	<command name="MarkAsUnreadMessage" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -330,9 +437,10 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessageList">
 			<var name="connectionName" value="${adminName}" />
@@ -349,17 +457,36 @@
 	</command>
 
 	<command name="MarkAsUnreadMessageDetails" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -367,16 +494,16 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${adminName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute action="SOMessagesMessage#assertClick" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
@@ -397,114 +524,275 @@
 	</command>
 
 	<command name="MarkAsUnreadMessagesAll" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<var name="messageBody1" value="Message1 Body" />
+		<var name="messageBody2" value="Message2 Body" />
+		<var name="messageBody3" value="Message3 Body" />
+		<var name="messageSubject1" value="Message1 Subject" />
+		<var name="messageSubject2" value="Message2 Subject" />
+		<var name="messageSubject3" value="Message3 Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
-
-		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
-			<var name="messageBody" value="${messageBody}01" />
-			<var name="messageSubject" value="${messageSubject}01" />
-			<var name="recipientName" value="${userName}" />
-			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
-
-		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
-			<var name="messageBody" value="${messageBody}02" />
-			<var name="messageSubject" value="${messageSubject}02" />
-			<var name="recipientName" value="${userName}" />
-			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
-
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
-			<var name="messageBody" value="${messageBody}03" />
-			<var name="messageSubject" value="${messageSubject}03" />
+			<var name="messageBody" value="${messageBody1}" />
+			<var name="messageSubject" value="${messageSubject1}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody2}" />
+			<var name="messageSubject" value="${messageSubject2}" />
+			<var name="recipientName" value="${userName}" />
+			<var name="recipientScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody3}" />
+			<var name="messageSubject" value="${messageSubject3}" />
+			<var name="recipientName" value="${userName}" />
+			<var name="recipientScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${userName}" />
-			<var name="messageBody" value="${messageBody}01" />
-			<var name="messageSubject" value="${messageSubject}01" />
+			<var name="messageBody" value="${messageBody1}" />
+			<var name="messageSubject" value="${messageSubject1}" />
 			<var name="senderName" value="${adminName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
-
-		<execute macro="SOMessages#viewMessageList">
-			<var name="connectionName" value="${userName}" />
-			<var name="messageBody" value="${messageBody}02" />
-			<var name="messageSubject" value="${messageSubject}02" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
 		</execute>
 
 		<execute macro="SOMessages#viewMessageList">
 			<var name="connectionName" value="${userName}" />
-			<var name="messageBody" value="${messageBody}03" />
-			<var name="messageSubject" value="${messageSubject}03" />
+			<var name="messageBody" value="${messageBody2}" />
+			<var name="messageSubject" value="${messageSubject2}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageList">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody3}" />
+			<var name="messageSubject" value="${messageSubject3}" />
 		</execute>
 
 		<execute action="SOMessages#check" locator-key1="SELECT_ALL_CHECKBOX" />
 		<execute action="SOMessages#assertClick" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
 		<execute action="SOMessages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the selected messages as unread?" />
 
-		<var name="key_messageBody" value="${messageBody}01" />
+		<var name="key_messageBody" value="${messageBody1}" />
 
 		<execute action="SOMessages#assertElementPresent" locator-key1="MESSAGE_UNREAD" />
 
-		<var name="key_messageBody" value="${messageBody}02" />
+		<var name="key_messageBody" value="${messageBody2}" />
 
 		<execute action="SOMessages#assertElementPresent" locator-key1="MESSAGE_UNREAD" />
 
-		<var name="key_messageBody" value="${messageBody}03" />
+		<var name="key_messageBody" value="${messageBody3}" />
 
 		<execute action="SOMessages#assertElementPresent" locator-key1="MESSAGE_UNREAD" />
 	</command>
 
-	<command name="SendMessage" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+	<command name="SelectMessagesAll" priority="4">
+		<var name="messageBody1" value="Message1 Body" />
+		<var name="messageBody2" value="Message2 Body" />
+		<var name="messageBody3" value="Message3 Body" />
+		<var name="messageSubject1" value="Message1 Subject" />
+		<var name="messageSubject2" value="Message2 Subject" />
+		<var name="messageSubject3" value="Message3 Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
+			<var name="messageBody" value="${messageBody1}" />
+			<var name="messageSubject" value="${messageSubject1}" />
+			<var name="recipientName" value="${userName}" />
+			<var name="recipientScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody2}" />
+			<var name="messageSubject" value="${messageSubject2}" />
+			<var name="recipientName" value="${userName}" />
+			<var name="recipientScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody3}" />
+			<var name="messageSubject" value="${messageSubject3}" />
+			<var name="recipientName" value="${userName}" />
+			<var name="recipientScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageList">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody1}" />
+			<var name="messageSubject" value="${messageSubject1}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageList">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody2}" />
+			<var name="messageSubject" value="${messageSubject2}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageList">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody3}" />
+			<var name="messageSubject" value="${messageSubject3}" />
+		</execute>
+
+		<execute action="SOMessages#check" locator-key1="SELECT_ALL_CHECKBOX" />
+
+		<var name="key_messageBody" value="${messageBody1}" />
+
+		<execute action="SOMessages#assertChecked" locator-key1="MESSAGE_CHECKBOX" />
+
+		<var name="key_messageBody" value="${messageBody2}" />
+
+		<execute action="SOMessages#assertChecked" locator-key1="MESSAGE_CHECKBOX" />
+
+		<var name="key_messageBody" value="${messageBody3}" />
+
+		<execute action="SOMessages#assertChecked" locator-key1="MESSAGE_CHECKBOX" />
+		<execute action="SOMessages#uncheck" locator-key1="SELECT_ALL_CHECKBOX" />
+
+		<var name="key_messageBody" value="${messageBody1}" />
+
+		<execute action="SOMessages#assertNotChecked" locator-key1="MESSAGE_CHECKBOX" />
+
+		<var name="key_messageBody" value="${messageBody2}" />
+
+		<execute action="SOMessages#assertNotChecked" locator-key1="MESSAGE_CHECKBOX" />
+
+		<var name="key_messageBody" value="${messageBody3}" />
+
+		<execute action="SOMessages#assertNotChecked" locator-key1="MESSAGE_CHECKBOX" />
+	</command>
+
+	<command name="SendMessage" priority="5">
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-			<var name="userName" value="${adminName}" />
+		</execute>
+
+		<execute action="SOMessagesMessage#click" locator-key1="BACK_BUTTON" />
+
+		<execute macro="SOMessages#viewMessageList">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -512,45 +800,72 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${adminName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute action="SOMessagesMessage#click" locator-key1="BACK_BUTTON" />
+
+		<execute macro="SOMessages#viewMessageList">
+			<var name="connectionName" value="${adminName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
 		</execute>
 	</command>
 
 	<command name="SendMessageAttachment" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<var name="messageAttachmentFile" value="Document_1.jpg" />
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
-			<var name="messageAttachmentFile" value="${attachmentFile}" />
+			<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessage">
-			<var name="connectionName" value="${userName}" />
-			<var name="messageAttachmentFile" value="${attachmentFile}" />
+			<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -558,21 +873,121 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${adminName}" />
-			<var name="messageAttachmentFile" value="${attachmentFile}" />
+			<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-			<var name="userName" value="${userName}" />
 		</execute>
 	</command>
 
+	<command name="SendMessageAttachmentLarge" priority="4">
+		<property name="custom.properties" value="com.liferay.portal.upload.UploadServletRequestImpl.max.size=1048576" />
+
+		<var name="messageAttachmentFile" value="Document_1.mp3" />
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<var name="recipientName" value="${userName}" />
+		<var name="recipientScreenName" value="${userScreenName}" />
+
+		<execute action="SOMessages#assertClick" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
+
+		<var name="key_recipientName" value="${recipientName}" />
+
+		<execute action="SOMessagesAdd#selectFrame" locator-key1="NEW_MESSAGE_IFRAME" />
+		<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="${recipientName}" />
+		<execute action="SOMessagesAdd#assertClick" locator-key1="TO_FIELD_DROPDOWN_LIST" value1="${recipientName}" />
+		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD" value1="${recipientName} &lt;${recipientScreenName}&gt;, " />
+		<execute action="SOMessagesAdd#type" locator-key1="SUBJECT_FIELD" value1="${messageSubject}" />
+		<execute action="SOMessagesAdd#type" locator-key1="BODY_FIELD" value1="${messageBody}" />
+		<execute action="SOMessagesAdd#uploadCommonFile" locator-key1="ATTACHMENTS_FIELD" value1="${messageAttachmentFile}" />
+		<execute action="SOMessagesAdd#click" locator-key1="SEND_BUTTON" />
+		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
+		<execute action="SOMessages#assertTextNotPresent" value1="${messageSubject}" />
+		<execute action="SOMessages#assertTextNotPresent" value1="${messageBody}" />
+	</command>
+
+	<command name="SendMessageNonUser" priority="4">
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute action="SOMessages#assertClick" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
+
+		<execute action="SOMessagesAdd#selectFrame" locator-key1="NEW_MESSAGE_IFRAME" />
+		<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="Social01 Office01 User01 &lt;socialoffice01&gt;" />
+		<execute action="SOMessagesAdd#type" locator-key1="SUBJECT_FIELD" value1="${messageSubject}" />
+		<execute action="SOMessagesAdd#type" locator-key1="BODY_FIELD" value1="${messageBody}" />
+		<execute action="SOMessagesAdd#click" locator-key1="SEND_BUTTON" />
+
+		<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
+		<execute action="SOMessages#assertTextNotPresent" value1="${messageSubject}" />
+		<execute action="SOMessages#assertTextNotPresent" value1="${messageBody}" />
+	</command>
+
 	<command name="SendMessagePortal" priority="5">
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Private Messaging Page" />
+		<var name="portletName" value="Private Messaging" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -587,12 +1002,10 @@
 		</execute>
 
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -604,7 +1017,6 @@
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -621,22 +1033,139 @@
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-			<var name="userName" value="${userName}" />
+		</execute>
+	</command>
+
+	<command name="SendMessages" priority="4">
+		<var name="messageBody1" value="Message1 Body" />
+		<var name="messageBody2" value="Message2 Body" />
+		<var name="messageBody3" value="Message3 Body" />
+		<var name="messageSubject1" value="Message1 Subject" />
+		<var name="messageSubject2" value="Message2 Subject" />
+		<var name="messageSubject3" value="Message3 Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody1}" />
+			<var name="messageSubject" value="${messageSubject1}" />
+			<var name="recipientName" value="${userName}" />
+			<var name="recipientScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody2}" />
+			<var name="messageSubject" value="${messageSubject2}" />
+			<var name="recipientName" value="${userName}" />
+			<var name="recipientScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody3}" />
+			<var name="messageSubject" value="${messageSubject3}" />
+			<var name="recipientName" value="${userName}" />
+			<var name="recipientScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessage">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody1}" />
+			<var name="messageSubject" value="${messageSubject1}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessage">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody2}" />
+			<var name="messageSubject" value="${messageSubject2}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessage">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody3}" />
+			<var name="messageSubject" value="${messageSubject3}" />
+			<var name="senderName" value="${adminName}" />
 		</execute>
 	</command>
 
 	<command name="SendReplyMessage" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<var name="messageBody" value="Message Body" />
+		<var name="messageReplyBody" value="Message Reply Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -649,25 +1178,26 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${adminName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOMessages#sendReplyMessage">
 			<var name="messageReplyBody" value="${messageReplyBody}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
 			<var name="connectionName" value="${adminName}" />
@@ -688,9 +1218,10 @@
 			<var name="senderName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
 			<var name="connectionName" value="${userName}" />
@@ -703,17 +1234,38 @@
 	</command>
 
 	<command name="SendReplyMessageAttachment" priority="5">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<var name="messageAttachmentFile" value="Document_1.jpg" />
+		<var name="messageBody" value="Message Body" />
+		<var name="messageReplyBody" value="Message Reply Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
 
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -726,31 +1278,32 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${adminName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOMessages#sendReplyMessage">
-			<var name="messageReplyAttachmentFile" value="${attachmentFile}" />
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageReplyBody" value="${messageReplyBody}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
 			<var name="connectionName" value="${adminName}" />
 			<var name="messageBody" value="${messageBody}" />
-			<var name="messageReplyAttachmentFile" value="${attachmentFile}" />
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageReplyBody" value="${messageReplyBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="replySenderName" value="${userName}" />
@@ -767,14 +1320,15 @@
 			<var name="senderName" value="${userName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
 			<var name="connectionName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
-			<var name="messageReplyAttachmentFile" value="${attachmentFile}" />
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageReplyBody" value="${messageReplyBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="replySenderName" value="${userName}" />
@@ -783,6 +1337,28 @@
 	</command>
 
 	<command name="SendReplyMessageAttachmentPortal" priority="5">
+		<var name="messageAttachmentFile" value="Document_1.jpg" />
+		<var name="messageBody" value="Message Body" />
+		<var name="messageReplyBody" value="Message Reply Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Private Messaging Page" />
+		<var name="portletName" value="Private Messaging" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -797,12 +1373,10 @@
 		</execute>
 
 		<execute macro="SOMessages#sendMessage">
-			<var name="key_recipientName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -824,11 +1398,10 @@
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOMessages#sendReplyMessage">
-			<var name="messageReplyAttachmentFile" value="${attachmentFile}" />
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageReplyBody" value="${messageReplyBody}" />
 		</execute>
 
@@ -839,7 +1412,7 @@
 		<execute macro="SOMessages#viewReplyMessage">
 			<var name="connectionName" value="${adminName}" />
 			<var name="messageBody" value="${messageBody}" />
-			<var name="messageReplyAttachmentFile" value="${attachmentFile}" />
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageReplyBody" value="${messageReplyBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="replySenderName" value="${userName}" />
@@ -863,21 +1436,11 @@
 		<execute macro="SOMessages#viewReplyMessage">
 			<var name="connectionName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
-			<var name="messageReplyAttachmentFile" value="${attachmentFile}" />
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageReplyBody" value="${messageReplyBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="replySenderName" value="${userName}" />
 			<var name="senderName" value="${adminName}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="SOUserBar#tearDownNotifications" />
-
-		<execute macro="SOMessages#tearDownPG" />
-
-		<execute macro="SOUser#tearDownCP" />
-
-		<execute macro="Page#tearDownPG" />
-	</tear-down>
 </definition>

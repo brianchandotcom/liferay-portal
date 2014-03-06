@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BACK_BUTTON</td>
+	<td>//a[@id='_1_WAR_privatemessagingportlet_TabsBack']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE_BUTTON</td>
 	<td>//button[contains(.,'Delete')]</td>
 	<td></td>

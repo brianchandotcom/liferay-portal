@@ -23,16 +23,18 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -49,9 +51,7 @@ import com.liferay.portlet.journal.util.JournalTestUtil;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -118,41 +118,27 @@ public class LayoutSetPrototypePropagationTest
 	public void testLayoutPermissionPropagationWithLinkEnabled()
 		throws Exception {
 
-		LayoutSet layoutSet = _layoutSetPrototype.getLayoutSet();
+		setLinkEnabled(true);
 
-		layout = LayoutTestUtil.addLayout(
-			layoutSet.getGroupId(), ServiceTestUtil.randomString(),
-			layoutSet.getPrivateLayout());
-
-		LayoutSetLocalServiceUtil.updateLayoutSetPrototypeLinkEnabled(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-			layoutSet.isLayoutSetPrototypeLinkEnabled(),
-			_layoutSetPrototype.getUuid());
-
-		User user = TestPropsValues.getUser();
-
-		long roleIds[] = user.getRoleIds();
-
-		List<String> resourceActions =
-			ResourceActionsUtil.getModelResourceActions(Layout.class.getName());
-
-		Map<Long, String[]> roleIdsToActionIds = new HashMap<Long, String[]>();
-
-		for (long roleId : roleIds) {
-			roleIdsToActionIds.put(
-				roleId,
-				resourceActions.toArray(new String[resourceActions.size()]));
-		}
-
-		Date modifiedDate = layout.getModifiedDate();
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.POWER_USER);
 
 		ResourcePermissionServiceUtil.setIndividualResourcePermissions(
-			layout.getGroupId(), layout.getCompanyId(), Layout.class.getName(),
-			String.valueOf(layout.getPrimaryKey()), roleIdsToActionIds);
+			prototypeLayout.getGroupId(), prototypeLayout.getCompanyId(),
+			Layout.class.getName(),
+			String.valueOf(prototypeLayout.getPrimaryKey()), role.getRoleId(),
+			new String[] {ActionKeys.CUSTOMIZE});
 
-		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+		propagateChanges(group);
 
-		Assert.assertNotEquals(modifiedDate, layout.getModifiedDate());
+		boolean hasCustomizePermission =
+			ResourcePermissionLocalServiceUtil.hasResourcePermission(
+				layout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPrimaryKey()), role.getRoleId(),
+				ActionKeys.CUSTOMIZE);
+
+		Assert.assertTrue(hasCustomizePermission);
 	}
 
 	@Test

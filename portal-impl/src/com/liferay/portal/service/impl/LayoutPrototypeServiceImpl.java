@@ -37,6 +37,22 @@ import java.util.Map;
  */
 public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 
+	@Override
+	public LayoutPrototype addLayoutPrototype(
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			boolean active, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(), ActionKeys.ADD_LAYOUT_PROTOTYPE);
+
+		User user = getUser();
+
+		return layoutPrototypeLocalService.addLayoutPrototype(
+			user.getUserId(), user.getCompanyId(), nameMap, descriptionMap,
+			active, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(Map,
 	 *             String, boolean, ServiceContext)}
@@ -57,6 +73,11 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 			active);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(Map,
+	 *             Map, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPrototype addLayoutPrototype(
 			Map<Locale, String> nameMap, String description, boolean active,
@@ -118,6 +139,20 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 		return filteredLayoutPrototypes;
 	}
 
+	@Override
+	public LayoutPrototype updateLayoutPrototype(
+			long layoutPrototypeId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		LayoutPrototypePermissionUtil.check(
+			getPermissionChecker(), layoutPrototypeId, ActionKeys.UPDATE);
+
+		return layoutPrototypeLocalService.updateLayoutPrototype(
+			layoutPrototypeId, nameMap, descriptionMap, active, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #updateLayoutPrototype(long,
 	 *             Map, String, boolean, ServiceContext)}
@@ -136,6 +171,11 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 			layoutPrototypeId, nameMap, description, active);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateLayoutPrototype(long,
+	 *             Map, Map, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPrototype updateLayoutPrototype(
 			long layoutPrototypeId, Map<Locale, String> nameMap,

@@ -208,12 +208,12 @@ public class ExportImportConfigurationPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_S() {
+	public void testCountByG_T() {
 		try {
-			_persistence.countByG_S(ServiceTestUtil.nextLong(),
+			_persistence.countByG_T(ServiceTestUtil.nextLong(),
 				ServiceTestUtil.nextInt());
 
-			_persistence.countByG_S(0L, 0);
+			_persistence.countByG_T(0L, 0);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -221,12 +221,12 @@ public class ExportImportConfigurationPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_T() {
+	public void testCountByG_S() {
 		try {
-			_persistence.countByG_T(ServiceTestUtil.nextLong(),
+			_persistence.countByG_S(ServiceTestUtil.nextLong(),
 				ServiceTestUtil.nextInt());
 
-			_persistence.countByG_T(0L, 0);
+			_persistence.countByG_S(0L, 0);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());

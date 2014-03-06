@@ -138,7 +138,8 @@ public class LayoutTestUtil {
 
 		return LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			nameMap, null, true, ServiceTestUtil.getServiceContext());
+			nameMap, (Map<Locale, String>)null, true,
+			ServiceTestUtil.getServiceContext());
 	}
 
 	public static LayoutSetPrototype addLayoutSetPrototype(String name)

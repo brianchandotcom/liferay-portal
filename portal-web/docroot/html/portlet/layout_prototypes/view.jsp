@@ -76,7 +76,11 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
+				name="description"
+				value="<%= layoutPrototype.getDescription(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
 				name="active"
 			>
 				<%= LanguageUtil.get(pageContext, layoutPrototype.isActive()? "yes" : "no") %>

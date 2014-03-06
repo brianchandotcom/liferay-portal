@@ -166,11 +166,11 @@ public class DDMXSDImpl implements DDMXSD {
 
 			fieldStructure.put("children", childrenHTML);
 
-            boolean disabled = GetterUtil.getBoolean(fieldStructure.get("disabled"), false);
+			boolean disabled = GetterUtil.getBoolean(fieldStructure.get("disabled"), false);
 
-            if (disabled) {
-                readOnly = true;
-            }
+			if (disabled) {
+				readOnly = true;
+			}
 
 			sb.append(
 				processFTL(

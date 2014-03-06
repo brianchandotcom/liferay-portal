@@ -517,6 +517,100 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
+	protected String getSystemPackagesExtra() {
+		String[] systemPackagesExtra =
+			PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA;
+
+		String hashcode = _getHashcode(systemPackagesExtra);
+
+		File coreDir = new File(
+			PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR, "osgi");
+
+		File cacheFile = new File(coreDir, "system-packages.txt");
+		File hashcodeFile = new File(coreDir, "system-packages.hash");
+
+		if (cacheFile.exists() && hashcodeFile.exists() &&
+			_hasMatchingHashcode(hashcodeFile, hashcode)) {
+
+			try {
+				return FileUtil.read(cacheFile);
+			}
+			catch (IOException ioe) {
+				_log.error(ioe, ioe);
+			}
+		}
+
+		_extraPackageMap = new TreeMap<String, List<URL>>();
+
+		StringBundler sb = new StringBundler();
+
+		for (String extraPackage : systemPackagesExtra) {
+			sb.append(extraPackage);
+			sb.append(StringPool.COMMA);
+		}
+
+		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
+
+		PrintStream err = System.err;
+
+		try {
+			System.setErr(
+				new PrintStream(err) {
+
+					@Override
+					public void println(String string) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(string);
+						}
+					}
+
+				}
+			);
+
+			Enumeration<URL> enu = classLoader.getResources(
+				"META-INF/MANIFEST.MF");
+
+			while (enu.hasMoreElements()) {
+				URL url = enu.nextElement();
+
+				_processURL(
+					sb, url,
+					PropsValues.
+						MODULE_FRAMEWORK_SYSTEM_BUNDLE_IGNORED_FRAGMENTS);
+			}
+		}
+		catch (IOException ioe) {
+			_log.error(ioe, ioe);
+		}
+		finally {
+			System.setErr(err);
+		}
+
+		_extraPackageMap = Collections.unmodifiableMap(_extraPackageMap);
+
+		sb.setIndex(sb.index() - 1);
+
+		if (_log.isTraceEnabled()) {
+			String s = sb.toString();
+
+			s = s.replace(",", "\n");
+
+			_log.trace(
+				"The portal's system bundle is exporting the following " +
+					"packages:\n" +s);
+		}
+
+		try {
+			FileUtil.write(cacheFile, sb.toString());
+			FileUtil.write(hashcodeFile, hashcode);
+		}
+		catch (IOException ioe) {
+			_log.error(ioe, ioe);
+		}
+
+		return sb.toString();
+	}
+
 	private Map<String, String> _buildFrameworkProperties(Class<?> clazz) {
 		Map<String, String> properties = new HashMap<String, String>();
 
@@ -585,7 +679,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			properties.put(key, value);
 		}
 
-		String systemPackagesExtra = _getSystemPackagesExtra();
+		String systemPackagesExtra = getSystemPackagesExtra();
 
 		properties.put(
 			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA, systemPackagesExtra);
@@ -730,100 +824,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		return interfaces;
-	}
-
-	private String _getSystemPackagesExtra() {
-		String[] systemPackagesExtra =
-			PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA;
-
-		String hashcode = _getHashcode(systemPackagesExtra);
-
-		File coreDir = new File(
-			PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR, "osgi");
-
-		File cacheFile = new File(coreDir, "system-packages.txt");
-		File hashcodeFile = new File(coreDir, "system-packages.hash");
-
-		if (cacheFile.exists() && hashcodeFile.exists() &&
-			_hasMatchingHashcode(hashcodeFile, hashcode)) {
-
-			try {
-				return FileUtil.read(cacheFile);
-			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
-			}
-		}
-
-		_extraPackageMap = new TreeMap<String, List<URL>>();
-
-		StringBundler sb = new StringBundler();
-
-		for (String extraPackage : systemPackagesExtra) {
-			sb.append(extraPackage);
-			sb.append(StringPool.COMMA);
-		}
-
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		PrintStream err = System.err;
-
-		try {
-			System.setErr(
-				new PrintStream(err) {
-
-					@Override
-					public void println(String string) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(string);
-						}
-					}
-
-				}
-			);
-
-			Enumeration<URL> enu = classLoader.getResources(
-				"META-INF/MANIFEST.MF");
-
-			while (enu.hasMoreElements()) {
-				URL url = enu.nextElement();
-
-				_processURL(
-					sb, url,
-					PropsValues.
-						MODULE_FRAMEWORK_SYSTEM_BUNDLE_IGNORED_FRAGMENTS);
-			}
-		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
-		}
-		finally {
-			System.setErr(err);
-		}
-
-		_extraPackageMap = Collections.unmodifiableMap(_extraPackageMap);
-
-		sb.setIndex(sb.index() - 1);
-
-		if (_log.isTraceEnabled()) {
-			String s = sb.toString();
-
-			s = s.replace(",", "\n");
-
-			_log.trace(
-				"The portal's system bundle is exporting the following " +
-					"packages:\n" +s);
-		}
-
-		try {
-			FileUtil.write(cacheFile, sb.toString());
-			FileUtil.write(hashcodeFile, hashcode);
-		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
-		}
-
-		return sb.toString();
 	}
 
 	private boolean _hasLazyActivationPolicy(Bundle bundle) {

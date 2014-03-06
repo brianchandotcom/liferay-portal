@@ -49,37 +49,11 @@ public class LiferayIntegrationJUnitTestRunner
 	public void initApplicationContext() {
 		System.setProperty("catalina.base", ".");
 
-		// Properties
-
-		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
-
-		try {
-			ServiceLoaderCondition serviceLoaderCondition =
-				new ServiceLoaderCondition() {
-
-				@Override
-				public boolean isLoad(URL url) {
-
-					// there is only one module framework implementation in
-					// whole classpath
-
-					return true;
-				}
-
-			};
-
-			ModuleFramework moduleFramework = new ModuleTestFrameworkImpl(
-				serviceLoaderCondition);
-
-			ModuleFrameworkUtil.setModuleFramework(moduleFramework);
-
-			ModuleFrameworkUtil.startFramework();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_startModuleFramework();
 
 		InitUtil.initWithSpring();
+
+		_startModuleFrameworkRuntime();
 	}
 
 	@Override
@@ -117,6 +91,48 @@ public class LiferayIntegrationJUnitTestRunner
 			}
 
 		};
+	}
+
+	private void _startModuleFramework() {
+
+		// Properties
+
+		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
+
+		try {
+			ServiceLoaderCondition serviceLoaderCondition =
+				new ServiceLoaderCondition() {
+
+					@Override
+					public boolean isLoad(URL url) {
+
+						// there is only one module framework implementation in
+						// whole classpath
+
+						return true;
+					}
+
+				};
+
+			ModuleFramework moduleFramework = new ModuleTestFrameworkImpl(
+				serviceLoaderCondition);
+
+			ModuleFrameworkUtil.setModuleFramework(moduleFramework);
+
+			ModuleFrameworkUtil.startFramework();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void _startModuleFrameworkRuntime() {
+		try {
+			ModuleFrameworkUtil.startRuntime();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private static final Method _createInheritedMapMethod;

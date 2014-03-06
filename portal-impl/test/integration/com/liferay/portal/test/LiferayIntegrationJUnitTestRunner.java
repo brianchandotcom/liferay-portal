@@ -14,12 +14,18 @@
 
 package com.liferay.portal.test;
 
+import com.liferay.osgi.bootstrap.ModuleFrameworkUtil;
 import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ServiceLoaderCondition;
+import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsImpl;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
+import java.net.URL;
 
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.InitializationError;
@@ -42,6 +48,36 @@ public class LiferayIntegrationJUnitTestRunner
 	@Override
 	public void initApplicationContext() {
 		System.setProperty("catalina.base", ".");
+
+		// Properties
+
+		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
+
+		try {
+			ServiceLoaderCondition serviceLoaderCondition =
+				new ServiceLoaderCondition() {
+
+				@Override
+				public boolean isLoad(URL url) {
+
+					// there is only one module framework implementation in
+					// whole classpath
+
+					return true;
+				}
+
+			};
+
+			ModuleFramework moduleFramework = new ModuleTestFrameworkImpl(
+				serviceLoaderCondition);
+
+			ModuleFrameworkUtil.setModuleFramework(moduleFramework);
+
+			ModuleFrameworkUtil.startFramework();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 
 		InitUtil.initWithSpring();
 	}

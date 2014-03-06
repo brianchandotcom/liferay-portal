@@ -281,6 +281,7 @@
 	</command>
 
 	<command name="LocalizeWebContent" priority="5">
+		<var name="languageKey" value="zh_CN" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="webContentTranslationContent" value="世界您好 Content" />
@@ -302,6 +303,7 @@
 		</execute>
 
 		<execute macro="WebContent#addTranslationPGViaWCD">
+			<var name="languageKey" value="${languageKey}" />
 			<var name="webContentTranslationContent" value="${webContentTranslationContent}" />
 			<var name="webContentTranslationLanguage" value="${webContentTranslationLanguage}" />
 			<var name="webContentTranslationTitle" value="${webContentTranslationTitle}" />
@@ -449,6 +451,7 @@
 	</command>
 
 	<command name="ViewPortletWCDShowAvailableLocales" priority="5">
+		<var name="languageKey" value="zh_CN" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="webContentTranslationContent" value="世界您好 Content" />
@@ -470,6 +473,7 @@
 		</execute>
 
 		<execute macro="WebContent#addTranslationPGViaWCD">
+			<var name="languageKey" value="${languageKey}" />
 			<var name="webContentTranslationContent" value="${webContentTranslationContent}" />
 			<var name="webContentTranslationLanguage" value="${webContentTranslationLanguage}" />
 			<var name="webContentTranslationTitle" value="${webContentTranslationTitle}" />

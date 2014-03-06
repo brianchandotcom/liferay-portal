@@ -64,6 +64,7 @@
 		<pathelement path="${imported.classpath}" />
 		<pathelement path="${project.dir}/osgi/bootstrap/classes" />
 		<pathelement path="${project.dir}/osgi/modules/registry/registry-api/build/classes/main" />
+		<pathelement path="${project.dir}/osgi/modules/registry/registry-impl/build/classes/main" />
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" excludes="ant.jar" />

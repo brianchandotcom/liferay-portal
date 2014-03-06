@@ -9,6 +9,12 @@
 		</case>
 	</command>
 
+	<command name="assertElementPresent">
+		<case locator-key1="ASSET_ABSTRACT_BOOKMARK_LIFERAY_LOGO">
+			<execute function="AssertElementPresent#assertElementPresent" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="ASSET_ABSTRACT_DESCRIPTION">
 			<execute function="AssertTextEquals#assertPartialText" />

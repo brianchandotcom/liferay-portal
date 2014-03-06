@@ -68,7 +68,7 @@
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" excludes="ant.jar" />
-		<fileset dir="${project.dir}/osgi/lib/common/core" includes="*.jar" />
+		<fileset dir="${project.dir}/osgi/lib/equinox/core" includes="*.jar" />
 	</path>
 
 	<path id="web.classpath">

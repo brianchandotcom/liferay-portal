@@ -555,6 +555,8 @@
 
 	@include respond-to(phone, tablet) {
 		.taglib-form-navigator {
+			position: relative;
+
 			.form-navigator-content {
 				clear: both;
 				float: none;
@@ -590,10 +592,6 @@
 
 			.nobr {
 				white-space: normal;
-			}
-
-			&.tabbable-content {
-				position: relative;
 			}
 		}
 	}

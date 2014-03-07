@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-input-move-boxes-touch',
 	function(A) {
+		var Lang = A.Lang;
+
 		var STR_DOT = '.';
 
 		var STR_SELECTED = 'selected';
@@ -23,7 +25,7 @@ AUI.add(
 
 		var STR_TRUE = 'true';
 
-		var TPL_EDIT_SELECTION = '<button class="btn edit-selection" type="button"><i class="icon-edit"></i> ' + Liferay.Language.get('edit') + ' </button>';
+		var TPL_EDIT_SELECTION = '<button class="btn edit-selection" type="button"><i class="icon-edit"></i> <span class="btn-text">{0}</span></button>';
 
 		var TPL_MOVE_OPTION = new A.Template(
 			'<tpl for="options">',
@@ -53,7 +55,7 @@ AUI.add(
 					instance._renderButtons();
 					instance._renderSortList();
 
-					instance._afterDropHitTask = A.debounce(instance._afterDropHitFn, 50, instance);
+					instance._afterDropHitTask = A.debounce('_afterDropHitFn', 50, instance);
 				},
 
 				bindUI: function() {
@@ -125,8 +127,10 @@ AUI.add(
 
 					var moveOption = instance._sortableContainer.one(SELECTOR_MOVE_OPTION + '[data-value="' + value + '"]');
 
-					var dragNodeIndex = instance._selectedSortList.indexOf(moveOption);
-					var dropNodeIndex = instance._selectedSortList.indexOf(dropNode);
+					var selectedSortList = instance._selectedSortList;
+
+					var dragNodeIndex = selectedSortList.indexOf(moveOption);
+					var dropNodeIndex = selectedSortList.indexOf(dropNode);
 
 					var referenceNodeIndex = (dragNodeIndex + 1);
 
@@ -149,7 +153,7 @@ AUI.add(
 					var currentTarget = event.currentTarget;
 
 					var selected = !currentTarget.attr(STR_CHECKED);
-					var value = currentTarget.attr('value');
+					var value = currentTarget.val();
 
 					var from = instance._rightBox;
 					var to = instance._leftBox;
@@ -162,12 +166,11 @@ AUI.add(
 					var option = instance._getOption(from, value);
 
 					option.attr(STR_SELECTED, true);
+					option.attr('data-selected', !selected);
 
 					instance._moveItem(from, to);
 
-					option = instance._getOption(to, value);
-
-					option.attr(STR_SELECTED, false);
+					to.attr('selectedIndex', -1);
 
 					instance._toggleMoveOption(currentTarget, option);
 				},
@@ -175,16 +178,30 @@ AUI.add(
 				_onEditSelectionClick: function(event) {
 					var instance = this;
 
-					event.currentTarget.toggleClass('active');
+					var btn = event.currentTarget;
 
-					instance._sortableContainer.toggleClass('edit-list-active');
-					instance._sortableContainer.toggleClass(STR_SORT_LIST_ACTIVE);
+					btn.toggleClass('active');
+
+					var btnText = Liferay.Language.get('edit');
+
+					if (btn.hasClass('active')) {
+						btnText = Liferay.Language.get('stop-editing');
+					}
+
+					btn.one('.btn-text').text(btnText);
+
+					var sortableContainer = instance._sortableContainer;
+
+					sortableContainer.toggleClass('edit-list-active');
+					sortableContainer.toggleClass(STR_SORT_LIST_ACTIVE);
 				},
 
 				_renderButtons: function() {
 					var instance = this;
 
-					instance._editSelection = A.Node.create(TPL_EDIT_SELECTION);
+					var buttonTpl = Lang.sub(TPL_EDIT_SELECTION, [Liferay.Language.get('edit')]);
+
+					instance._editSelection = A.Node.create(buttonTpl);
 
 					instance._sortableContainer.placeBefore(instance._editSelection);
 				},
@@ -200,12 +217,10 @@ AUI.add(
 
 					options.each(
 						function(item, index, collection) {
-							var selected = (item.attr('data-selected') === STR_TRUE);
-
 							data.push(
 								{
 									name: item.html(),
-									selected: selected,
+									selected: (item.attr('data-selected') === STR_TRUE),
 									value: item.val()
 								}
 							);
@@ -214,10 +229,7 @@ AUI.add(
 
 					TPL_MOVE_OPTION.render(
 						{
-							name: data.name,
-							options: data,
-							selected: data.selected,
-							value: data.value
+							options: data
 						},
 						sortableContainer
 					);
@@ -237,11 +249,11 @@ AUI.add(
 				_sortLeftBox: function(item, index) {
 					var instance = this;
 
-					var leftBoxOptions = instance._leftBox.all('option');
+					var leftBox = instance._leftBox;
 
-					var referenceNode = leftBoxOptions.item(index);
+					var referenceNode = leftBox.all('option').item(index);
 
-					instance._leftBox.insertBefore(item, referenceNode);
+					leftBox.insertBefore(item, referenceNode);
 				},
 
 				_syncSelectedSortList: function() {

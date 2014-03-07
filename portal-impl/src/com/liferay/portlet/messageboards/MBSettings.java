@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.Settings;
@@ -139,7 +140,19 @@ public class MBSettings implements Settings {
 
 	@Override
 	public String getValue(String key, String defaultValue) {
-		return _settings.getValue(key, defaultValue);
+		String value = _settings.getValue(key, defaultValue);
+
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		String fallbackKey = getFallbackKey(key);
+
+		if (fallbackKey != null) {
+			return _settings.getValue(fallbackKey, value);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -225,6 +238,19 @@ public class MBSettings implements Settings {
 	@Override
 	public void store() throws IOException, ValidatorException {
 		_settings.store();
+	}
+
+	protected String getFallbackKey(String key) {
+		String fallbackKey = null;
+
+		if (key.equals("emailFromAddress")) {
+			fallbackKey = PropsKeys.ADMIN_EMAIL_FROM_ADDRESS;
+		}
+		else if (key.equals("emailFromName")) {
+			fallbackKey = PropsKeys.ADMIN_EMAIL_FROM_NAME;
+		}
+
+		return fallbackKey;
 	}
 
 	private Settings _settings;

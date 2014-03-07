@@ -37,6 +37,8 @@ AUI.add(
 
 		var TPL_ELEMENT = '<{nodeName}{attributeList}></{nodeName}>';
 
+		var UNLOCALIZABLE_FIELD_ATTRS = ['indexType', 'name', 'required', 'repeatable', 'showLabel'];
+
 		var XML_ATTRIBUTES_FIELD_ATTRS = {
 			dataType: 1,
 			indexType: 1,
@@ -261,11 +263,7 @@ AUI.add(
 					_afterEditingLocaleChange: function(event) {
 						var instance = this;
 
-						var editingField = instance.editingField;
-
-						if (editingField) {
-							editingField.set('readOnlyAttributes', instance._getReadOnlyFieldAttributes(editingField));
-						}
+						instance._syncFieldsReadOnlyAttributes();
 
 						instance._updateFieldsLocalizationMap(event.prevVal);
 
@@ -470,18 +468,24 @@ AUI.add(
 
 						var translationManager = instance.translationManager;
 
+						var defaultLocale = translationManager.get('defaultLocale');
 						var editingLocale = translationManager.get('editingLocale');
 
 						var readOnlyAttributes = field.get('readOnlyAttributes');
 
-						if (editingLocale === translationManager.get('defaultLocale')) {
-							AArray.removeItem(readOnlyAttributes, 'name');
-						}
-						else if (AArray.indexOf(readOnlyAttributes, 'name') === -1) {
-							readOnlyAttributes.push('name');
-						}
+						AArray.each(
+							UNLOCALIZABLE_FIELD_ATTRS,
+							function(item, index, collection) {
+								if (defaultLocale === editingLocale) {
+									AArray.removeItem(readOnlyAttributes, item);
+								}
+								else {
+									readOnlyAttributes.push(item);
+								}
+							}
+						);
 
-						return readOnlyAttributes;
+						return AArray.dedupe(readOnlyAttributes);
 					},
 
 					_onPropertyModelChange: function(event) {
@@ -613,6 +617,20 @@ AUI.add(
 						);
 					},
 
+					_syncFieldsReadOnlyAttributes: function(fields) {
+						var instance = this;
+
+						fields = fields || instance.get('fields');
+
+						fields.each(
+							function(field) {
+								field.set('readOnlyAttributes', instance._getReadOnlyFieldAttributes(field));
+
+								instance._syncFieldsReadOnlyAttributes(field.get('fields'));
+							}
+						);
+					},
+
 					_toggleInputDirection: function(locale) {
 						var rtl = (Liferay.Language.direction[locale] === 'rtl');
 
@@ -678,7 +696,7 @@ AUI.add(
 					A.each(
 						str,
 						function(item, index, collection) {
-							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item,'Pd')) {
+							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
 								str = str.replace(item, STR_SPACE);
 							}
 						}

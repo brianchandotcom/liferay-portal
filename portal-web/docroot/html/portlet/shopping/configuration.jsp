@@ -219,7 +219,43 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 			</aui:fieldset>
 		</liferay-ui:section>
 
-		<%@ include file="/html/portlet/shopping/email_notifications.jspf" %>
+		<%
+		Map<String, String> emailDefinitionTerms = ShoppingUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+		%>
+
+		<liferay-ui:section>
+
+			<%
+			boolean emailEnabled = shoppingSettings.getEmailOrderConfirmationEnabled();
+			String emailSubject = ParamUtil.getString(request, "preferences--emailOrderConfirmationSubject--", shoppingSettings.getEmailOrderConfirmationSubject());
+			String emailBody = ParamUtil.getString(request, "preferences--emailOrderConfirmationBody--", shoppingSettings.getEmailOrderConfirmationBody());
+			%>
+
+			<liferay-ui:email-notifications-settings
+				emailBody="<%= emailBody %>"
+				emailDefinitionTerms="<%= emailDefinitionTerms %>"
+				emailEnabled="<%= emailEnabled %>"
+				emailParam="emailOrderConfirmation"
+				emailSubject="<%= emailSubject %>"
+			/>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
+
+			<%
+			boolean emailEnabled = shoppingSettings.getEmailOrderShippingEnabled();
+			String emailSubject = ParamUtil.getString(request, "preferences--emailOrderShippingSubject--", shoppingSettings.getEmailOrderShippingSubject());
+			String emailBody = ParamUtil.getString(request, "preferences--emailOrderShippingBody--", shoppingSettings.getEmailOrderShippingBody());
+			%>
+
+			<liferay-ui:email-notifications-settings
+				emailBody="<%= emailBody %>"
+				emailDefinitionTerms="<%= emailDefinitionTerms %>"
+				emailEnabled="<%= emailEnabled %>"
+				emailParam="emailOrderShipping"
+				emailSubject="<%= emailSubject %>"
+			/>
+		</liferay-ui:section>
 	</liferay-ui:tabs>
 
 	<aui:button-row>
@@ -240,4 +276,18 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		},
 		['liferay-util-list-fields']
 	);
+
+	function <portlet:namespace />saveEmails() {
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailOrderConfirmationBody--'].value = window['<portlet:namespace />emailOrderConfirmation'].getHTML();
+		}
+		catch (e) {
+		}
+
+		try {
+			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailOrderShippingBody--'].value = window['<portlet:namespace />emailOrderShipping'].getHTML();
+		}
+		catch (e) {
+		}
+	}
 </aui:script>

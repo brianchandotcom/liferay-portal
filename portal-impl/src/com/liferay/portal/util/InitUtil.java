@@ -222,7 +222,7 @@ public class InitUtil {
 		initWithSpring(false, extraConfigLocations);
 	}
 
-	public synchronized static void stopModuleFramework() throws Exception {
+	public synchronized static void stopModuleFramework() {
 		try {
 			ModuleFrameworkUtilAdapter.stopFramework();
 		}

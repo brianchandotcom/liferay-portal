@@ -21,12 +21,14 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -42,6 +44,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -875,6 +878,62 @@ public class AssetPublisherImpl implements AssetPublisher {
 		);
 
 		return map;
+	}
+
+	@Override
+	public Map<String, String> getEmailDefinitionTerms(
+		PortletRequest portletRequest, String emailFromAddress,
+		String emailFromName) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, String> definitionTerms = new HashMap<String, String>();
+
+		definitionTerms.put(
+			"[$ASSET_ENTRIES$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-list-of-assets"));
+		definitionTerms.put(
+			"[$COMPANY_ID$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-id-associated-with-the-assets"));
+		definitionTerms.put(
+			"[$COMPANY_MX$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-mx-associated-with-the-assets"));
+		definitionTerms.put(
+			"[$COMPANY_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-company-name-associated-with-the-assets"));
+		definitionTerms.put(
+			"[$FROM_ADDRESS$]", HtmlUtil.escape(emailFromAddress));
+		definitionTerms.put("[$FROM_NAME$]", HtmlUtil.escape(emailFromName));
+
+		Company company = themeDisplay.getCompany();
+
+		definitionTerms.put("[$PORTAL_URL$]", company.getVirtualHostname());
+
+		definitionTerms.put(
+			"[$PORTLET_NAME$]", PortalUtil.getPortletTitle(portletRequest));
+		definitionTerms.put(
+			"[$SITE_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-site-name-associated-with-the-assets"));
+		definitionTerms.put(
+			"[$TO_ADDRESS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-address-of-the-email-recipient"));
+		definitionTerms.put(
+			"[$TO_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-name-of-the-email-recipient"));
+
+		return definitionTerms;
 	}
 
 	@Override

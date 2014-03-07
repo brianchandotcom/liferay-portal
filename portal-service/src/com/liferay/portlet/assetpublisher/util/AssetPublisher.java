@@ -156,6 +156,10 @@ public interface AssetPublisher {
 	public Map<Locale, String> getEmailAssetEntryAddedSubjectMap(
 		PortletPreferences portletPreferences);
 
+	public Map<String, String> getEmailDefinitionTerms(
+		PortletRequest portletRequest, String emailFromAddress,
+		String emailFromName);
+
 	public String getEmailFromAddress(
 			PortletPreferences portletPreferences, long companyId)
 		throws SystemException;

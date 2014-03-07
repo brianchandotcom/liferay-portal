@@ -25,12 +25,7 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectSite";
 
 List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<AssetRendererFactory>();
 
-String emailParam = "emailAssetEntryAdded";
-
 String currentLanguageId = LanguageUtil.getLanguageId(request);
-
-String emailSubjectParam = emailParam + "Subject_" + currentLanguageId;
-String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
@@ -250,9 +245,6 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 	<%
 	request.setAttribute("configuration.jsp-classTypesAssetRendererFactories", classTypesAssetRendererFactories);
 	request.setAttribute("configuration.jsp-configurationRenderURL", configurationRenderURL);
-	request.setAttribute("configuration.jsp-emailBodyParam", emailBodyParam);
-	request.setAttribute("configuration.jsp-emailParam", emailParam);
-	request.setAttribute("configuration.jsp-emailSubjectParam", emailSubjectParam);
 	request.setAttribute("configuration.jsp-redirect", redirect);
 	request.setAttribute("configuration.jsp-rootPortletId", rootPortletId);
 	request.setAttribute("configuration.jsp-selectScope", selectScope);
@@ -344,7 +336,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 			%>
 
 			document.<portlet:namespace />fm.<portlet:namespace />metadataFields.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentMetadataFields);
-			document.<portlet:namespace />fm.<portlet:namespace /><%= emailBodyParam %>.value = window.<portlet:namespace />editor.getHTML();
+			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailAssetEntryAddedBody_<%= currentLanguageId %>--'].value = window['<portlet:namespace />emailAssetEntryAdded'].getHTML();
 
 			submitForm(document.<portlet:namespace />fm);
 		},

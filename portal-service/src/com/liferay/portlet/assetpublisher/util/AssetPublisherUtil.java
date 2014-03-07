@@ -238,6 +238,14 @@ public class AssetPublisherUtil {
 			portletPreferences);
 	}
 
+	public static Map<String, String> getEmailDefinitionTerms(
+		PortletRequest portletRequest, String emailFromAddress,
+		String emailFromName) {
+
+		return getAssetPublisher().getEmailDefinitionTerms(
+			portletRequest, emailFromAddress, emailFromName);
+	}
+
 	public static String getEmailFromAddress(
 			PortletPreferences portletPreferences, long companyId)
 		throws SystemException {

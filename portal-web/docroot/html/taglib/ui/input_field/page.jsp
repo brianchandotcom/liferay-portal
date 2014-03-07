@@ -417,6 +417,7 @@ if (hints != null) {
 						<c:when test="<%= localized %>">
 							<liferay-ui:input-localized
 								autoFocus="<%= autoFocus %>"
+								availableLocales="<%= availableLocales %>"
 								cssClass='<%= cssClass + " lfr-input-text" %>'
 								defaultLanguageId="<%= defaultLanguageId %>"
 								disabled="<%= disabled %>"

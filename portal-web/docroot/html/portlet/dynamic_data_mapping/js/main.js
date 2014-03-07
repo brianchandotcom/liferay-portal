@@ -468,22 +468,25 @@ AUI.add(
 
 						var translationManager = instance.translationManager;
 
+						var defaultLocale = translationManager.get('defaultLocale');
+
 						var editingLocale = translationManager.get('editingLocale');
 
 						var readOnlyAttributes = field.get('readOnlyAttributes');
 
 						AArray.each(
 							UNLOCALIZABLE_FIELD_ATTRS,
-							function(item) {
-								if (editingLocale === translationManager.get('defaultLocale')) {
+							function(item, index, collection) {
+								if (defaultLocale === editingLocale) {
 									AArray.removeItem(readOnlyAttributes, item);
-								} else if (AArray.indexOf(readOnlyAttributes, item) === -1) {
+								}
+								else {
 									readOnlyAttributes.push(item);
 								}
 							}
 						);
 
-						return readOnlyAttributes;
+						return AArray.dedupe(readOnlyAttributes);
 					},
 
 					_onPropertyModelChange: function(event) {
@@ -622,8 +625,7 @@ AUI.add(
 
 						fields.each(
 							function(field) {
-								field.set('readOnlyAttributes', 
-									instance._getReadOnlyFieldAttributes(field));
+								field.set('readOnlyAttributes', instance._getReadOnlyFieldAttributes(field));
 
 								instance._syncFieldsReadOnlyAttributes(field.get('fields'));
 							}

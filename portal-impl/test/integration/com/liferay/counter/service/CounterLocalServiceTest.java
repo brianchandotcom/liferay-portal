@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
@@ -143,9 +142,11 @@ public class CounterLocalServiceTest {
 			finally {
 				try {
 					SchedulerEngineHelperUtil.shutdown();
+
+					InitUtil.stopModuleFramework();
 				}
-				catch (SchedulerException se) {
-					throw new ProcessException(se);
+				catch (Exception e) {
+					throw new ProcessException(e);
 				}
 			}
 

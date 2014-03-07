@@ -222,6 +222,10 @@ public class InitUtil {
 		initWithSpring(false, extraConfigLocations);
 	}
 
+	public synchronized static void stopModuleFramework() throws Exception {
+		ModuleFrameworkUtilAdapter.stopFramework();
+	}
+
 	private static final boolean _PRINT_TIME = false;
 
 	private static boolean _initialized;

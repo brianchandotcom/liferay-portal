@@ -405,6 +405,8 @@ public class ResourceActionsImpl implements ResourceActions {
 			if (layoutManagerActions == null) {
 				layoutManagerActions = new UniqueList<String>();
 
+				//checkPortletActions(name, actions);
+
 				checkPortletLayoutManagerActions(layoutManagerActions);
 
 				_portletResourceLayoutManagerActions.put(

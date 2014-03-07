@@ -122,6 +122,8 @@ public class UpgradeSocial extends UpgradeProcess {
 				continue;
 			}
 
+			keys.add(key);
+
 			return modifiedDate;
 		}
 	}

@@ -14,7 +14,18 @@
 
 package com.liferay.portal.kernel.lar.exportimportconfiguration;
 
+import com.liferay.portal.kernel.lar.ExportImportDateUtil;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
+import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.DateRange;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.Serializable;
 
@@ -23,6 +34,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Daniel Kocsis
@@ -105,6 +118,96 @@ public class ExportImportConfigurationSettingsMapFactory {
 		settingsMap.put("userId", userId);
 
 		return settingsMap;
+	}
+
+	public static Map<String, Serializable> buildSettingsMap(
+			ThemeDisplay themeDisplay, PortletRequest portletRequest,
+			long groupId, int type)
+		throws Exception {
+
+		boolean privateLayout = ParamUtil.getBoolean(
+			portletRequest, "privateLayout");
+
+		Map<Long, Boolean> layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(
+			portletRequest);
+
+		String defaultDateRange =
+			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE;
+
+		if (type == ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) {
+			defaultDateRange = ExportImportDateUtil.RANGE_ALL;
+		}
+
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
+			portletRequest, groupId, privateLayout, 0, null, defaultDateRange);
+
+		if (type == ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) {
+			return buildSettingsMap(
+				themeDisplay.getUserId(), groupId, privateLayout, layoutIdMap,
+				portletRequest.getParameterMap(), dateRange.getStartDate(),
+				dateRange.getEndDate(), themeDisplay.getLocale(),
+				themeDisplay.getTimeZone());
+		}
+
+		Group stagingGroup = GroupLocalServiceUtil.getGroup(groupId);
+
+		Group liveGroup = stagingGroup.getLiveGroup();
+
+		Map<String, String[]> parameterMap = StagingUtil.getStagingParameters(
+			portletRequest);
+
+		if (liveGroup != null) {
+			return buildSettingsMap(
+				themeDisplay.getUserId(), stagingGroup.getGroupId(),
+				liveGroup.getGroupId(), privateLayout, layoutIdMap,
+				parameterMap, dateRange.getStartDate(), dateRange.getEndDate(),
+				themeDisplay.getLocale(), themeDisplay.getTimeZone());
+		}
+
+		if (liveGroup == null) {
+			parameterMap.put(
+				PortletDataHandlerKeys.PUBLISH_TO_REMOTE,
+				new String[] {Boolean.TRUE.toString()});
+		}
+
+		UnicodeProperties groupTypeSettingsProperties =
+			stagingGroup.getTypeSettingsProperties();
+
+		String remoteAddress = ParamUtil.getString(
+			portletRequest, "remoteAddress",
+			groupTypeSettingsProperties.getProperty("remoteAddress"));
+
+		remoteAddress = StagingUtil.stripProtocolFromRemoteAddress(
+			remoteAddress);
+
+		int remotePort = ParamUtil.getInteger(
+			portletRequest, "remotePort",
+			GetterUtil.getInteger(
+				groupTypeSettingsProperties.getProperty("remotePort")));
+		String remotePathContext = ParamUtil.getString(
+			portletRequest, "remotePathContext",
+			groupTypeSettingsProperties.getProperty("remotePathContext"));
+		boolean secureConnection = ParamUtil.getBoolean(
+			portletRequest, "secureConnection",
+			GetterUtil.getBoolean(
+				groupTypeSettingsProperties.getProperty("secureConnection")));
+		long remoteGroupId = ParamUtil.getLong(
+			portletRequest, "remoteGroupId",
+			GetterUtil.getLong(
+				groupTypeSettingsProperties.getProperty("remoteGroupId")));
+		boolean remotePrivateLayout = ParamUtil.getBoolean(
+			portletRequest, "remotePrivateLayout");
+
+		StagingUtil.validateRemote(
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			remoteGroupId);
+
+		return buildSettingsMap(
+			themeDisplay.getUserId(), groupId, privateLayout, layoutIdMap,
+			parameterMap, remoteAddress, remotePort, remotePathContext,
+			secureConnection, remoteGroupId, remotePrivateLayout,
+			dateRange.getStartDate(), dateRange.getEndDate(),
+			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 	}
 
 }

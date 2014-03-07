@@ -24,6 +24,7 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -98,6 +99,13 @@ public class DLFileShortcutStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected AssetEntry fetchAssetEntry(StagedModel stagedModel, Group group)
+		throws Exception {
+
+		return null;
+	}
+
+	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return DLFileShortcutLocalServiceUtil.
@@ -111,13 +119,6 @@ public class DLFileShortcutStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return DLFileShortcut.class;
-	}
-
-	@Override
-	protected StagedModelAssets updateAssetEntry(StagedModel stagedModel)
-		throws Exception {
-
-		return null;
 	}
 
 	@Override

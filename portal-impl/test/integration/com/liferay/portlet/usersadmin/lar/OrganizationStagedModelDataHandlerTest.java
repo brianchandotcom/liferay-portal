@@ -154,7 +154,7 @@ public class OrganizationStagedModelDataHandlerTest
 			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
 				stagedModel.getUuid(), group.getCompanyId());
 
-		validateAssets(organization.getUuid(), stagedModelAssets, group);
+		validateAssets(organization, stagedModelAssets, group);
 
 		List<StagedModel> addressDependentStagedModels =
 			dependentStagedModelsMap.get(Address.class.getSimpleName());

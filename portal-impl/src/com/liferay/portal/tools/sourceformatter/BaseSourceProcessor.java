@@ -195,7 +195,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void checkInefficientStringMethods(
 		String line, String fileName, int lineCount) {
 
-		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0)) {
+		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
+			isSharedPluginFile(fileName)) {
+
 			return;
 		}
 
@@ -915,6 +917,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return false;
+	}
+
+	protected boolean isSharedPluginFile(String fileName) {
+		if (!portalSource && fileName.contains("-shared/")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	protected void processErrorMessage(String fileName, String message) {

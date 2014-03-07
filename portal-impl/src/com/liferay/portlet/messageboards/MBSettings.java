@@ -41,17 +41,17 @@ public class MBSettings implements Settings {
 	}
 
 	public String getEmailFromAddress() {
-		return _settings.getValue(
+		return getValue(
 			"emailFromAddress", PropsValues.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS);
 	}
 
 	public String getEmailFromName() {
-		return _settings.getValue(
+		return getValue(
 			"emailFromName", PropsValues.MESSAGE_BOARDS_EMAIL_FROM_NAME);
 	}
 
 	public String getEmailMessageAddedBody() {
-		String emailMessageAddedBody = _settings.getValue(
+		String emailMessageAddedBody = getValue(
 			"emailMessageAddedBody", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageAddedBody)) {
@@ -63,7 +63,7 @@ public class MBSettings implements Settings {
 	}
 
 	public String getEmailMessageAddedSubject() {
-		String emailMessageAddedSubject = _settings.getValue(
+		String emailMessageAddedSubject = getValue(
 			"emailMessageAddedSubject", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageAddedSubject)) {
@@ -75,7 +75,7 @@ public class MBSettings implements Settings {
 	}
 
 	public String getEmailMessageUpdatedBody() {
-		String emailMessageUpdatedBody = _settings.getValue(
+		String emailMessageUpdatedBody = getValue(
 			"emailMessageUpdatedBody", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageUpdatedBody)) {
@@ -87,7 +87,7 @@ public class MBSettings implements Settings {
 	}
 
 	public String getEmailMessageUpdatedSubject() {
-		String emailMessageUpdatedSubject = _settings.getValue(
+		String emailMessageUpdatedSubject = getValue(
 			"emailMessageUpdatedSubject", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageUpdatedSubject)) {
@@ -99,7 +99,7 @@ public class MBSettings implements Settings {
 	}
 
 	public String getMessageFormat() {
-		String messageFormat = _settings.getValue(
+		String messageFormat = getValue(
 			"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
 
 		if (MBUtil.isValidMessageFormat(messageFormat)) {
@@ -120,22 +120,21 @@ public class MBSettings implements Settings {
 	}
 
 	public String getRecentPostsDateOffset() {
-		return _settings.getValue("recentPostsDateOffset", "7");
+		return getValue("recentPostsDateOffset", "7");
 	}
 
 	public int getRSSDelta() {
 		return GetterUtil.getInteger(
-			_settings.getValue("rssDelta", StringPool.BLANK),
+			getValue("rssDelta", StringPool.BLANK),
 			SearchContainer.DEFAULT_DELTA);
 	}
 
 	public String getRSSDisplayStyle() {
-		return _settings.getValue(
-			"rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+		return getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 	}
 
 	public String getRSSFeedType() {
-		return _settings.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+		return getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
 	}
 
 	@Override
@@ -150,13 +149,12 @@ public class MBSettings implements Settings {
 
 	public boolean isAllowAnonymousPosting() {
 		return GetterUtil.getBoolean(
-			_settings.getValue("allowAnonymousPosting", null),
+			getValue("allowAnonymousPosting", null),
 			PropsValues.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
 	}
 
 	public boolean isEmailHtmlFormat() {
-		String emailHtmlFormat = _settings.getValue(
-			"emailHtmlFormat", StringPool.BLANK);
+		String emailHtmlFormat = getValue("emailHtmlFormat", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailHtmlFormat)) {
 			return GetterUtil.getBoolean(emailHtmlFormat);
@@ -166,7 +164,7 @@ public class MBSettings implements Settings {
 	}
 
 	public boolean isEmailMessageAddedEnabled() {
-		String emailMessageAddedEnabled = _settings.getValue(
+		String emailMessageAddedEnabled = getValue(
 			"emailMessageAddedEnabled", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageAddedEnabled)) {
@@ -177,7 +175,7 @@ public class MBSettings implements Settings {
 	}
 
 	public boolean isEmailMessageUpdatedEnabled() {
-		String emailMessageUpdatedEnabled = _settings.getValue(
+		String emailMessageUpdatedEnabled = getValue(
 			"emailMessageUpdatedEnabled", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailMessageUpdatedEnabled)) {
@@ -188,19 +186,16 @@ public class MBSettings implements Settings {
 	}
 
 	public boolean isEnableFlags() {
-		return GetterUtil.getBoolean(
-			_settings.getValue("enableFlags", null), true);
+		return GetterUtil.getBoolean(getValue("enableFlags", null), true);
 	}
 
 	public boolean isEnableRatings() {
-		return GetterUtil.getBoolean(
-			_settings.getValue("enableRatings", null), true);
+		return GetterUtil.getBoolean(getValue("enableRatings", null), true);
 	}
 
 	public boolean isEnableRSS() {
 		if (PortalUtil.isRSSFeedsEnabled()) {
-			return GetterUtil.getBoolean(
-				_settings.getValue("enableRss", null), true);
+			return GetterUtil.getBoolean(getValue("enableRss", null), true);
 		}
 
 		return false;
@@ -208,13 +203,13 @@ public class MBSettings implements Settings {
 
 	public boolean isSubscribeByDefault() {
 		return GetterUtil.getBoolean(
-			_settings.getValue("subscribeByDefault", null),
+			getValue("subscribeByDefault", null),
 			PropsValues.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT);
 	}
 
 	public boolean isThreadAsQuestionByDefault() {
 		return GetterUtil.getBoolean(
-			_settings.getValue("threadAsQuestionByDefault", null));
+			getValue("threadAsQuestionByDefault", null));
 	}
 
 	@Override

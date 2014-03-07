@@ -1,3 +1,5 @@
+@import "compass";
+
 .lfr-image-gallery-actions {
 	font-size: 11px;
 	text-align: right;
@@ -83,8 +85,10 @@
 	.image-title {
 		clear: both;
 		display: block;
-		padding: 0 10px;
-		word-wrap: break-word;
+
+		@include ellipsis;
+
+		padding: 0 6px;
 	}
 }
 

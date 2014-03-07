@@ -24,4 +24,10 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
+
+	<command name="type">
+		<case locator-key1="PANEL_DUE_DATE">
+			<execute function="Type#clickAtSendKeys" />
+		</case>
+	</command>
 </definition>

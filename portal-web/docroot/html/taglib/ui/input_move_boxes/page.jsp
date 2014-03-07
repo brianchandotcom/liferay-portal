@@ -35,19 +35,23 @@ boolean rightReorder = GetterUtil.getBoolean((String)request.getAttribute("lifer
 
 List leftList = (List)request.getAttribute("liferay-ui:input-move-boxes:leftList");
 List rightList = (List)request.getAttribute("liferay-ui:input-move-boxes:rightList");
+
+Map<String, Object> data = new HashMap<String, Object>();
 %>
 
 <div class="taglib-move-boxes <%= cssClass %> <%= leftReorder ? "left-reorder" : StringPool.BLANK %> <%= rightReorder ? "right-reorder" : StringPool.BLANK %>" id="<%= randomNamespace + "input-move-boxes" %>">
-	<aui:row>
+	<aui:row cssClass="selector-container">
 		<aui:col cssClass="left-selector-column" width="<%= 30 %>">
 			<aui:select cssClass="choice-selector left-selector" label="<%= leftTitle %>" multiple="<%= true %>" name="<%= leftBoxName %>" onChange="<%= Validator.isNotNull(leftOnChange) ? leftOnChange : StringPool.BLANK %>" size="10">
 
 				<%
+				data.put("selected", true);
+
 				for (int i = 0; i < leftList.size(); i++) {
 					KeyValuePair kvp = (KeyValuePair)leftList.get(i);
 				%>
 
-					<aui:option label="<%= kvp.getValue() %>" value="<%= kvp.getKey() %>" />
+					<aui:option data="<%= data %>" label="<%= kvp.getValue() %>" value="<%= kvp.getKey() %>" />
 
 				<%
 				}
@@ -62,11 +66,13 @@ List rightList = (List)request.getAttribute("liferay-ui:input-move-boxes:rightLi
 			<aui:select cssClass="choice-selector right-selector" label="<%= rightTitle %>" multiple="<%= true %>" name="<%= rightBoxName %>" onChange="<%= Validator.isNotNull(rightOnChange) ? rightOnChange : StringPool.BLANK %>" size="10">
 
 				<%
+				data.put("selected", false);
+
 				for (int i = 0; i < rightList.size(); i++) {
 					KeyValuePair kvp = (KeyValuePair)rightList.get(i);
 				%>
 
-					<option value="<%= kvp.getKey() %>"><%= kvp.getValue() %></option>
+					<aui:option data="<%= data %>" label="<%= kvp.getValue() %>" value="<%= kvp.getKey() %>" />
 
 				<%
 				}

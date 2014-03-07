@@ -409,9 +409,29 @@
 					},
 					'liferay-input-move-boxes': {
 						path: 'input_move_boxes.js',
+						plugins: {
+							'liferay-input-move-boxes-touch': {
+								condition: {
+									name: 'liferay-input-move-boxes-touch',
+									test: function(A) {
+										return A.UA.touch;
+									},
+									trigger: 'liferay-input-move-boxes'
+								}
+							}
+						},
 						requires: [
 							'aui-base',
 							'aui-toolbar'
+						]
+					},
+					'liferay-input-move-boxes-touch': {
+						path: 'input_move_boxes_touch.js',
+						requires: [
+							'aui-base',
+							'aui-template-deprecated',
+							'liferay-input-move-boxes',
+							'sortable'
 						]
 					},
 					'liferay-layout': {

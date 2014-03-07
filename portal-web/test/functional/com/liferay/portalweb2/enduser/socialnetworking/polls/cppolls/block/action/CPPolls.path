@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_POLL</td>
 	<td>//button[contains(.,'Add Poll')]</td>
 	<td></td>
@@ -26,6 +36,11 @@
 <tr>
 	<td>PERMISSIONS_BUTTON</td>
 	<td>//button[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -57,6 +72,11 @@
 <tr>
 	<td>POLLS_TABLE_ACTION</td>
 	<td>//tr[contains(.,'${key_pollsQuestionTitle}')]/td[5]/div/a[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLLS_TABLE_ACTIONS_GENERIC</td>
+	<td>//tr/td[5]//a[@title='Actions']/span</td>
 	<td></td>
 </tr>
 <tr>

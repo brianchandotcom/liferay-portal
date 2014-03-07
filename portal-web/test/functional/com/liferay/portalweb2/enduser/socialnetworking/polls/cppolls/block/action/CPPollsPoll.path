@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>POLL_QUESTION</td>
-	<td>//fieldset[@class='fieldset ']/div/span[contains(.,'${key_pollsQuestion}')]</td>
+	<td>//fieldset[contains(@class,'fieldset')]/div/span[contains(.,'${key_pollsQuestion}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>POLLS_QUESTION_CHOICE</td>
-	<td>//label[@class='radio' and contains(.,'${key_pollsQuestionChoice}')]</td>
+	<td>//label[@class='radio' and contains(.,'${key_pollsQuestionChoice}')]/input</td>
 	<td></td>
 </tr>
 <tr>

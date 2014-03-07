@@ -644,7 +644,7 @@
 
 		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
 
-		<execute action="BasePortlet#assertTextEquals" locator-key1="INFO_MESSSAGE" value1="Please sign in to vote." />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Please sign in to vote." />
 
 		<execute action="PGSearch#assertElementPresent" locator-key1="SEARCH_FIELD" />
 

@@ -48,22 +48,6 @@
 		<execute action="BasePortlet#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="configureAddVoteAsGuestViaPollsCP">
-		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
-
-		<execute action="CPPolls#assertClick" locator-key1="POLLS_TABLE_ACTION" value1="Actions" />
-		<execute action="CPPolls#assertClick" locator-key1="POLLS_MENULIST_PERMISSIONS" value1="Permissions" />
-
-		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
-
-		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_ADD_VOTE_CHECKBOX" />
-			<var name="roleName" value="Guest" />
-		</execute>
-
-		<execute action="Permissions#selectFrame" value1="relative=top" />
-	</command>
-
 	<command name="selectPollPG">
 		<execute action="PGPollsdisplay#assertClick" locator-key1="SELECT_QUESTION" />
 
@@ -78,53 +62,66 @@
 		<execute action="BasePortlet#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="viewPollAsGuestPG">
-		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
+	<command name="tearDownCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Polls" />
+		</execute>
 
+		<while>
+			<condition action="CPPolls#isElementPresent" locator-key1="POLLS_TABLE_ACTIONS_GENERIC" />
+			<then>
+				<execute action="CPPolls#assertClick" locator-key1="POLLS_TABLE_ACTIONS_GENERIC" value1="Actions" />
+				<execute action="CPPolls#assertClick" locator-key1="POLLS_MENULIST_DELETE" value1="Delete" />
+				<execute action="CPPolls#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+				<execute action="CPPolls#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</then>
+		</while>
+	</command>
+
+	<command name="viewPollAsGuestPG">
+		<var name="key_pollsQuestion" value="${pollsQuestion}" />
+
+		<execute action="PGPollsdisplay#assertTextEquals" locator-key1="POLLS_QUESTION" value1="What is your favorite Liferay portlet?" />
+
+		<for list="${pollsQuestionChoiceList}" param="questionChoiceList" >
+			<var name="key_pollsQuestionChoice" value="${questionChoiceList}" />
+
+			<execute action="PGPollsdisplay#assertElementNotPresent" locator-key1="POLLS_QUESTION_CHOICE" />
+		</for>
+
+		<execute action="PGPollsdisplay#assertElementNotPresent" locator-key1="VOTE_BUTTON" />
 		<execute action="PGPollsdisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Please sign in to vote." />
 	</command>
 
 	<command name="viewPollPG">
 		<var name="key_pollsQuestion" value="${pollsQuestion}" />
 
-		<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION" value1="${pollsQuestion}" />
+		<execute action="PGPollsdisplay#assertTextEquals" locator-key1="POLLS_QUESTION" value1="${pollsQuestion}" />
 
-		<var name="key_pollsQuestionChoice" value="${pollsQuestionChoiceA}" />
+		<for list="${pollsQuestionChoiceList}" param="questionChoiceList" >
+			<var name="key_pollsQuestionChoice" value="${questionChoiceList}" />
 
-		<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoiceA}" />
-
-		<var name="key_pollsQuestionChoice" value="${pollsQuestionChoiceB}" />
-
-		<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoiceB}" />
-
-		<if>
-			<isset var="${pollsQuestionChoiceC}" />
-			<then>
-				<var name="key_pollsQuestionChoice" value="${pollsQuestionChoiceC}" />
-
-				<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoiceC}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="${pollsQuestionChoiceD}" />
-			<then>
-				<var name="key_pollsQuestionChoice" value="${pollsQuestionChoiceD}" />
-
-				<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoiceD}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="${pollsQuestionChoiceE}" />
-			<then>
-				<var name="key_pollsQuestionChoice" value="${pollsQuestionChoiceE}" />
-
-				<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoiceE}" />
-			</then>
-		</if>
+			<if>
+				<contains string="${questionChoiceList}" substring="" />
+				<then>
+					<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" />
+				</then>
+				<else>
+					<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${questionChoiceList}" />
+				</else>
+			</if>
+		</for>
 
 		<execute action="PGPollsdisplay#assertTextEquals" locator-key1="VOTE_BUTTON" value1="Vote" />
+	</command>
+
+	<command name="viewVotedPollPG">
+		<var name="key_pollsQuestionChoice" value="${pollsQuestionChoice}" />
+
+		<execute action="PGPollsdisplayVotes#assertTextEquals" locator-key1="POLLS_CHOICE_VOTES_PERCENTAGE" value1="${pollsQuestionVotePercent}" />
+		<execute action="PGPollsdisplayVotes#assertTextEquals" locator-key1="POLLS_CHOICE_VOTES_NUMBER" value1="${pollsQuestionVoteCount}" />
+		<execute action="PGPollsdisplayVotes#assertTextEquals" locator-key1="POLLS_TOTAL_VOTES" value1="Total Votes: ${pollsQuestionTotalVotes}" />
 	</command>
 
 	<command name="votePollPG">
@@ -133,11 +130,6 @@
 		<execute action="PGPollsdisplay#assertClick" locator-key1="POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoice}" />
 		<execute action="PGPollsdisplay#assertClick" locator-key1="VOTE_BUTTON" value1="Vote" />
 
-		<var name="key_pollsQuestionTotalVotes" value="${pollsQuestionTotalVotes}" />
-
 		<execute action="PGPollsdisplayVotes#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Thank you for your vote." />
-		<execute action="PGPollsdisplayVotes#assertTextEquals" locator-key1="POLLS_CHOICE_VOTES_PERCENTAGE" value1="${pollsQuestionVotePercent}" />
-		<execute action="PGPollsdisplayVotes#assertTextEquals" locator-key1="POLLS_CHOICE_VOTES_NUMBER" value1="${pollsQuestionVoteCount}" />
-		<execute action="PGPollsdisplayVotes#assertTextEquals" locator-key1="POLLS_TOTAL_VOTES" value1="Total Votes: ${pollsQuestionTotalVotes}" />
 	</command>
 </definition>

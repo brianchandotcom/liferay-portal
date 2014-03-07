@@ -108,7 +108,7 @@ public class DDMStructureStagedModelDataHandler
 		throws PortletDataException {
 
 		String uuid = referenceElement.attributeValue("uuid");
-		long groupId = GetterUtil.getLong(
+		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 		long classNameId = PortalUtil.getClassNameId(
 			referenceElement.attributeValue("referenced-class-name"));
@@ -122,13 +122,13 @@ public class DDMStructureStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		groupId = MapUtil.getLong(groupIds, groupId, groupId);
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
 
 		DDMStructure existingStructure = null;
 
 		try {
 			existingStructure = fetchExistingStructure(
-				uuid, groupId, classNameId, structureKey, preloaded);
+				uuid, liveGroupId, classNameId, structureKey, preloaded);
 		}
 		catch (SystemException se) {
 			throw new PortletDataException(se);

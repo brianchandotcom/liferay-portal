@@ -118,7 +118,7 @@ public class DDMTemplateStagedModelDataHandler
 		throws PortletDataException {
 
 		String uuid = referenceElement.attributeValue("uuid");
-		long groupId = GetterUtil.getLong(
+		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 		long classNameId = PortalUtil.getClassNameId(
 			referenceElement.attributeValue("referenced-class-name"));
@@ -132,13 +132,13 @@ public class DDMTemplateStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		groupId = MapUtil.getLong(groupIds, groupId, groupId);
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
 
 		DDMTemplate existingTemplate = null;
 
 		try {
 			existingTemplate = fetchExistingTemplate(
-				uuid, groupId, classNameId, templateKey, preloaded);
+				uuid, liveGroupId, classNameId, templateKey, preloaded);
 		}
 		catch (SystemException se) {
 			throw new PortletDataException(se);
@@ -165,7 +165,7 @@ public class DDMTemplateStagedModelDataHandler
 		PortletDataContext portletDataContext, Element referenceElement) {
 
 		String uuid = referenceElement.attributeValue("uuid");
-		long groupId = GetterUtil.getLong(
+		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 		long classNameId = PortalUtil.getClassNameId(
 			referenceElement.attributeValue("referenced-class-name"));
@@ -183,11 +183,11 @@ public class DDMTemplateStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		groupId = MapUtil.getLong(groupIds, groupId, groupId);
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
 
 		try {
 			DDMTemplate existingTemplate = fetchExistingTemplate(
-				uuid, groupId, classNameId, templateKey, preloaded);
+				uuid, liveGroupId, classNameId, templateKey, preloaded);
 
 			if (existingTemplate == null) {
 				return false;

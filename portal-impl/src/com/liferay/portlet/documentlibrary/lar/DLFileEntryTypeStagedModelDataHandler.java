@@ -103,7 +103,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 		throws PortletDataException {
 
 		String uuid = referenceElement.attributeValue("uuid");
-		long groupId = GetterUtil.getLong(
+		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 		String fileEntryTypeKey = referenceElement.attributeValue(
 			"file-entry-type-key");
@@ -116,13 +116,13 @@ public class DLFileEntryTypeStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		groupId = MapUtil.getLong(groupIds, groupId, groupId);
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
 
 		DLFileEntryType existingFileEntryType = null;
 
 		try {
 			existingFileEntryType = fetchExistingFileEntryType(
-				uuid, groupId, fileEntryTypeKey, preloaded);
+				uuid, liveGroupId, fileEntryTypeKey, preloaded);
 		}
 		catch (SystemException se) {
 			throw new PortletDataException(se);

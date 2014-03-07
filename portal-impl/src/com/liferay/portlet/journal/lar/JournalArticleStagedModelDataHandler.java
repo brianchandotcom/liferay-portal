@@ -171,7 +171,7 @@ public class JournalArticleStagedModelDataHandler
 
 		String articleResourceUuid = referenceElement.attributeValue(
 			"article-resource-uuid");
-		long groupId = GetterUtil.getLong(
+		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 		String articleArticleId = referenceElement.attributeValue("article-id");
 		boolean preloaded = GetterUtil.getBoolean(
@@ -183,13 +183,13 @@ public class JournalArticleStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		groupId = MapUtil.getLong(groupIds, groupId, groupId);
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
 
 		JournalArticle existingArticle = null;
 
 		try {
 			existingArticle = fetchExistingArticle(
-				articleResourceUuid, groupId, articleArticleId, null, 0.0,
+				articleResourceUuid, liveGroupId, articleArticleId, null, 0.0,
 				preloaded);
 		}
 		catch (SystemException se) {

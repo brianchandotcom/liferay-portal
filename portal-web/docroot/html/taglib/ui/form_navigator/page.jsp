@@ -82,7 +82,7 @@ if (Validator.isNotNull(historyKey)) {
 				</liferay-util:buffer>
 
 				<ul class="form-navigator nav nav-list span4 well">
-					<%= Validator.isNotNull(htmlTop) ? "<li class=\"nav-section-top\">" + htmlTop + "</li>" : StringPool.BLANK %>
+					<%= Validator.isNotNull(htmlTop) ? htmlTop : StringPool.BLANK %>
 
 					<%
 					String[] modifiedSections = StringUtil.split(ParamUtil.getString(request, "modifiedSections"));
@@ -166,7 +166,7 @@ if (Validator.isNotNull(historyKey)) {
 						</aui:button-row>
 					</c:if>
 
-					<%= Validator.isNotNull(htmlBottom) ? "<li class=\"nav-section-bottom\">" + htmlBottom + "</li>" : StringPool.BLANK %>
+					<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK %>
 				</ul>
 
 				<%= formSectionsBuffer %>

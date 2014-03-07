@@ -318,6 +318,8 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.spring_xml=" + _TPL_ROOT + "spring_xml.ftl\n"+
 				"\t-Dservice.tpl.spring_xml_session=" + _TPL_ROOT + "spring_xml_session.ftl");
 
+			InitUtil.stop();
+
 			throw re;
 		}
 
@@ -327,6 +329,8 @@ public class ServiceBuilder {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		InitUtil.stop();
 
 		Introspector.flushCaches();
 	}

@@ -20,6 +20,13 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,12 +54,30 @@ public class ActionCommandCache {
 
 	};
 
-	public ActionCommandCache(String packagePrefix) {
-		if (!packagePrefix.endsWith(StringPool.PERIOD)) {
+	public ActionCommandCache(String packagePrefix, String portletName) {
+		if (Validator.isNotNull(packagePrefix) &&
+			!packagePrefix.endsWith(StringPool.PERIOD)) {
+
 			packagePrefix = packagePrefix + StringPool.PERIOD;
 		}
 
 		_packagePrefix = packagePrefix;
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(&(objectClass=" + ActionCommand.class.getName() +
+				")(javax.portlet.name=" + portletName +
+					")(action.command.name=*))");
+
+		_serviceTracker = registry.trackServices(
+			filter, new ActionCommandServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	public void close() {
+		_serviceTracker.close();
 	}
 
 	public ActionCommand getActionCommand(String actionCommandName) {
@@ -64,6 +89,10 @@ public class ActionCommandCache {
 
 			if (actionCommand != null) {
 				return actionCommand;
+			}
+
+			if (Validator.isNull(_packagePrefix)) {
+				return EMPTY;
 			}
 
 			StringBundler sb = new StringBundler(4);
@@ -139,5 +168,54 @@ public class ActionCommandCache {
 	private Map<String, List<ActionCommand>> _actionCommandChainCache =
 		new ConcurrentHashMap<String, List<ActionCommand>>();
 	private String _packagePrefix;
+	private ServiceTracker<ActionCommand, ActionCommand> _serviceTracker;
+
+	private class ActionCommandServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<ActionCommand, ActionCommand> {
+
+		@Override
+		public ActionCommand addingService(
+			ServiceReference<ActionCommand> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			ActionCommand actionCommand = registry.getService(serviceReference);
+
+			String actionCommandName = (String)serviceReference.getProperty(
+				"action.command.name");
+
+			_actionCommandCache.put(actionCommandName, actionCommand);
+
+			return actionCommand;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ActionCommand> serviceReference,
+			ActionCommand actionCommand) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<ActionCommand> serviceReference,
+			ActionCommand actionCommand) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			String actionCommandName = (String)serviceReference.getProperty(
+				"action.command.name");
+
+			_actionCommandCache.remove(actionCommandName);
+
+			for (List<ActionCommand> chains :
+					_actionCommandChainCache.values()) {
+
+				chains.remove(actionCommand);
+			}
+		}
+
+	}
 
 }

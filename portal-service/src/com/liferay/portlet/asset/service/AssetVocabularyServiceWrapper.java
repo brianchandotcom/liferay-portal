@@ -228,6 +228,16 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 			name, start, end, obc);
 	}
 
+	@Override
+	public com.liferay.portlet.asset.model.AssetVocabularyDisplay getGroupVocabulariesDisplayByTitle(
+		long groupId, java.lang.String title, int start, int end,
+		boolean addDefaultVocabulary)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabularyService.getGroupVocabulariesDisplayByTitle(groupId,
+			title, start, end, addDefaultVocabulary);
+	}
+
 	/**
 	* @deprecated As of 6.2.0, with no direct replacement
 	*/

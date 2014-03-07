@@ -216,6 +216,16 @@ public class AssetVocabularyServiceUtil {
 				   .getGroupVocabulariesDisplay(groupId, name, start, end, obc);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay getGroupVocabulariesDisplayByTitle(
+		long groupId, java.lang.String title, int start, int end,
+		boolean addDefaultVocabulary)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getGroupVocabulariesDisplayByTitle(groupId, title, start,
+			end, addDefaultVocabulary);
+	}
+
 	/**
 	* @deprecated As of 6.2.0, with no direct replacement
 	*/

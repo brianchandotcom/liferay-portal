@@ -239,6 +239,26 @@ public class AssetCategoryServiceUtil {
 			start, end, obc);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetCategoryDisplay getVocabularyCategoriesDisplayByTitle(
+		long groupId, java.lang.String title, long vocabularyId, int start,
+		int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getVocabularyCategoriesDisplayByTitle(groupId, title,
+			vocabularyId, start, end);
+	}
+
+	public static com.liferay.portlet.asset.model.AssetCategoryDisplay getVocabularyCategoriesDisplayByTitle(
+		long[] groupIds, java.lang.String title, long[] vocabularyIds,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getVocabularyCategoriesDisplayByTitle(groupIds, title,
+			vocabularyIds, start, end);
+	}
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getVocabularyRootCategories(long, long, int, int,
@@ -315,6 +335,12 @@ public class AssetCategoryServiceUtil {
 		return getService()
 				   .updateCategory(categoryId, parentCategoryId, titleMap,
 			descriptionMap, vocabularyId, categoryProperties, serviceContext);
+	}
+
+	public static java.lang.String getCategoryPath(long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCategoryPath(categoryId);
 	}
 
 	public static AssetCategoryService getService() {

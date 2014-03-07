@@ -19,10 +19,12 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -307,6 +309,39 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 		return getGroupVocabulariesDisplay(
 			groupId, name, start, end, false, obc);
+	}
+
+	@Override
+	public AssetVocabularyDisplay getGroupVocabulariesDisplayByTitle(
+			long groupId, String title, int start, int end,
+			boolean addDefaultVocabulary)
+		throws PortalException, SystemException {
+
+		User user = getUser();
+
+		BaseModelSearchResult<AssetVocabulary> results =
+			assetVocabularyLocalService.searchVocabularies(
+				user.getCompanyId(), groupId, title, start, end);
+
+		List<AssetVocabulary> vocabularies = results.getBaseModels();
+		int total = results.getLength();
+
+		if (addDefaultVocabulary && (total == 0)) {
+			total = assetVocabularyPersistence.countByGroupId(groupId);
+
+			if (total == 0) {
+				vocabularies = new ArrayList<AssetVocabulary>(1);
+
+				AssetVocabulary defaultVocabulary =
+					assetVocabularyLocalService.addDefaultVocabulary(groupId);
+
+				vocabularies.add(defaultVocabulary);
+
+				total = 1;
+			}
+		}
+
+		return new AssetVocabularyDisplay(vocabularies, total, start, end);
 	}
 
 	/**

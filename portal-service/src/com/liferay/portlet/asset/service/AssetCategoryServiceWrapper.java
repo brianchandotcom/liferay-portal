@@ -250,6 +250,26 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 			name, vocabularyId, start, end, obc);
 	}
 
+	@Override
+	public com.liferay.portlet.asset.model.AssetCategoryDisplay getVocabularyCategoriesDisplayByTitle(
+		long groupId, java.lang.String title, long vocabularyId, int start,
+		int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryService.getVocabularyCategoriesDisplayByTitle(groupId,
+			title, vocabularyId, start, end);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetCategoryDisplay getVocabularyCategoriesDisplayByTitle(
+		long[] groupIds, java.lang.String title, long[] vocabularyIds,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryService.getVocabularyCategoriesDisplayByTitle(groupIds,
+			title, vocabularyIds, start, end);
+	}
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getVocabularyRootCategories(long, long, int, int,
@@ -332,6 +352,13 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 		return _assetCategoryService.updateCategory(categoryId,
 			parentCategoryId, titleMap, descriptionMap, vocabularyId,
 			categoryProperties, serviceContext);
+	}
+
+	@Override
+	public java.lang.String getCategoryPath(long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryService.getCategoryPath(categoryId);
 	}
 
 	/**

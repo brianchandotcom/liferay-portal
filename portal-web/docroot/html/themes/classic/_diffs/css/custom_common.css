@@ -555,6 +555,8 @@
 
 	@include respond-to(phone, tablet) {
 		.taglib-form-navigator {
+			position: relative;
+
 			.form-navigator-content {
 				clear: both;
 				float: none;
@@ -579,6 +581,12 @@
 						margin: 0;
 						padding: 0.1em 1em;
 					}
+				}
+
+				.button-holder {
+					padding-bottom: 20px;
+					position: absolute;
+					top: 100%;
 				}
 			}
 

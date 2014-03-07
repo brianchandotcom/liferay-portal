@@ -1064,14 +1064,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			display: inline-block;
 		}
 
-		ul.form-navigator.well {
-			.button-holder {
-				padding-bottom: 20px;
-				position: absolute;
-				top: 100%;
-			}
-		}
-
 		.portlet-journal {
 			.journal-article-header-edit {
 				border-top-width: 1px;
@@ -1081,10 +1073,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.nav-list .nav-header {
 			margin-left: 0;
 			margin-right: 0;
-		}
-
-		.tabbable-content.taglib-form-navigator {
-			position: relative;
 		}
 
 		.taglib-form-navigator .nav.form-navigator.well {

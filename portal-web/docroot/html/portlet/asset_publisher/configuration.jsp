@@ -282,7 +282,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 					dialog: {
 						constrain: true,
 						destroyOnHide: true,
-						modal: true,
+						modal: true
 					},
 					eventName: '<%= eventName %>',
 					id: '<%= eventName %>' + currentTarget.attr('id'),

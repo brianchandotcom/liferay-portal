@@ -581,6 +581,10 @@
 						margin: 0;
 						padding: 0.1em 1em;
 					}
+
+					&.nav-section-top, &.nav-section-bottom {
+						display: block;
+					}
 				}
 
 				.button-holder {

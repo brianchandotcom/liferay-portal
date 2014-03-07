@@ -1,10 +1,12 @@
-.portlet-blogs .entry-navigation {
-	span.previous, .previous {
-		background-image: url(@theme_image_path@/arrows/paging_next.png);
-		background-position: 100% 100%;
-	}
+.portlet-blogs {
+	.entry-navigation {
+		span.previous, .previous {
+			background-image: url(@theme_image_path@/arrows/paging_next.png);
+			background-position: 100% 100%;
+		}
 
-	.next {
-		background-image: url(@theme_image_path@/arrows/paging_previous.png);
+		.next {
+			background-image: url(@theme_image_path@/arrows/paging_previous.png);
+		}
 	}
 }

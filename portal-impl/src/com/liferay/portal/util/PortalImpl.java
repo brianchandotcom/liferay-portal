@@ -6888,7 +6888,7 @@ public class PortalImpl implements Portal {
 			}
 		}
 		else if ((e instanceof NoSuchGroupException) &&
-				Validator.isNotNull(
+				 Validator.isNotNull(
 					PropsValues.SITES_FRIENDLY_URL_PAGE_NOT_FOUND)) {
 
 			response.setStatus(status);

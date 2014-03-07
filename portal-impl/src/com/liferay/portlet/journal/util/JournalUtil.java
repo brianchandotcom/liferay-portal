@@ -1176,6 +1176,18 @@ public class JournalUtil {
 			JournalArticle.class.getName(), "urlTitle", title);
 	}
 
+	public static boolean isSubscribedToStructure(
+		long companyId, long groupId, long userId, long structureId)
+		throws PortalException, SystemException {
+
+		if (structureId == 0) {
+			structureId = groupId;
+		}
+
+		return SubscriptionLocalServiceUtil.isSubscribed(
+			companyId, userId, DDMStructure.class.getName(), structureId);
+	}
+
 	public static boolean isSubscribedToFolder(
 			long companyId, long groupId, long userId, long folderId)
 		throws PortalException, SystemException {

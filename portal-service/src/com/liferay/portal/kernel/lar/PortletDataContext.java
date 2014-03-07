@@ -377,7 +377,7 @@ public interface PortletDataContext extends Serializable {
 	public Map<?, ?> getNewPrimaryKeysMap(String className);
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public long getOldPlid();
@@ -418,7 +418,7 @@ public interface PortletDataContext extends Serializable {
 		String uuid);
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public List<Element> getReferenceDataElements(
@@ -451,7 +451,7 @@ public interface PortletDataContext extends Serializable {
 	public String getRootPath();
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public Set<String> getScopedPrimaryKeys();
@@ -502,7 +502,7 @@ public interface PortletDataContext extends Serializable {
 	public long getUserPersonalSiteGroupId();
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public List<String> getZipEntries();
@@ -518,7 +518,7 @@ public interface PortletDataContext extends Serializable {
 	public String getZipEntryAsString(String path);
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public List<String> getZipFolderEntries();
@@ -614,7 +614,7 @@ public interface PortletDataContext extends Serializable {
 	public boolean isPathExportedInScope(String path);
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public boolean isPathNotExportedInScope(String path);

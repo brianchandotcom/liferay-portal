@@ -26,7 +26,15 @@ import org.junit.Assume;
 public class FixedIssuesUtils {
 
 	public static void assumeIssueIsFixed(String issue) {
-		Assume.assumeTrue(ArrayUtil.contains(_instance._fixedIssues, issue));
+		Assume.assumeTrue(isIssueFixed(issue));
+	}
+
+	public static void assumeIssueIsNotFixed(String issue) {
+		Assume.assumeFalse(isIssueFixed(issue));
+	}
+
+	public static boolean isIssueFixed(String issue) {
+		return ArrayUtil.contains(_instance._fixedIssues, issue);
 	}
 
 	private FixedIssuesUtils() {

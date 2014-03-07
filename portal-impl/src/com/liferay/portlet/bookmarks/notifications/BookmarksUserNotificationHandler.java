@@ -16,6 +16,7 @@ package com.liferay.portlet.bookmarks.notifications;
 
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Roberto Díaz
@@ -24,6 +25,8 @@ public class BookmarksUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public BookmarksUserNotificationHandler() {
+		setOpenDialog(
+			PropsValues.BOOKMARKS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED);
 		setPortletId(PortletKeys.BOOKMARKS);
 	}
 

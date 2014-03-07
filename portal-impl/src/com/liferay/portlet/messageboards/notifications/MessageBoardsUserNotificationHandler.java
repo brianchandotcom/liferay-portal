@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.notifications;
 
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Sergio González
@@ -24,6 +25,8 @@ public class MessageBoardsUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public MessageBoardsUserNotificationHandler() {
+		setOpenDialog(
+			PropsValues.MESSAGE_BOARDS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED);
 		setPortletId(PortletKeys.MESSAGE_BOARDS);
 	}
 

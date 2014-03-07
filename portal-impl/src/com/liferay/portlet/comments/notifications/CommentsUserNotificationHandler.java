@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -35,6 +36,8 @@ public class CommentsUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public CommentsUserNotificationHandler() {
+		setOpenDialog(
+			PropsValues.COMMENTS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED);
 		setPortletId(PortletKeys.COMMENTS);
 	}
 

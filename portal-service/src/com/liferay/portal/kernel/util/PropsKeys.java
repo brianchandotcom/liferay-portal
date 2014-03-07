@@ -293,6 +293,8 @@ public interface PropsKeys {
 
 	public static final String BLOGS_TRACKBACK_ENABLED = "blogs.trackback.enabled";
 
+	public static final String BLOGS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = "blogs.user.notifications.open.dialog.enabled";
+
 	public static final String BOOKMARKS_EMAIL_ENTRY_ADDED_BODY = "bookmarks.email.entry.added.body";
 
 	public static final String BOOKMARKS_EMAIL_ENTRY_ADDED_ENABLED = "bookmarks.email.entry.added.enabled";
@@ -310,6 +312,8 @@ public interface PropsKeys {
 	public static final String BOOKMARKS_EMAIL_FROM_NAME = "bookmarks.email.from.name";
 
 	public static final String BOOKMARKS_PUBLISH_TO_LIVE_BY_DEFAULT = "bookmarks.publish.to.live.by.default";
+
+	public static final String BOOKMARKS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = "bookmarks.user.notifications.open.dialog.enabled";
 
 	public static final String BREADCRUMB_DISPLAY_STYLE_DEFAULT = "breadcrumb.display.style.default";
 
@@ -440,6 +444,8 @@ public interface PropsKeys {
 	public static final String COMBO_CHECK_TIMESTAMP = "combo.check.timestamp";
 
 	public static final String COMBO_CHECK_TIMESTAMP_INTERVAL = "combo.check.timestamp.interval";
+
+	public static final String COMMENTS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = "comments.user.notifications.open.dialog.enabled";
 
 	public static final String COMMUNITIES_CONTROL_PANEL_MEMBERS_VISIBLE = "communities.control.panel.members.visible";
 
@@ -788,6 +794,8 @@ public interface PropsKeys {
 	public static final String DL_STORE_S3_TEMP_DIR_CLEAN_UP_EXPUNGE = "dl.store.s3.temp.dir.clean.up.expunge";
 
 	public static final String DL_STORE_S3_TEMP_DIR_CLEAN_UP_FREQUENCY = "dl.store.s3.temp.dir.clean.up.frequency";
+
+	public static final String DL_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = "dl.user.notifications.open.dialog.enabled";
 
 	public static final String DOCKBAR_ADD_PORTLETS = "dockbar.add.portlets";
 
@@ -1208,6 +1216,8 @@ public interface PropsKeys {
 	public static final String JOURNAL_TEMPLATE_LANGUAGE_CONTENT = "journal.template.language.content";
 
 	public static final String JOURNAL_TRANSFORMER_LISTENER = "journal.transformer.listener";
+
+	public static final String JOURNAL_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = "journal.user.notifications.open.dialog.enabled";
 
 	public static final String JSON_DESERIALIZER_STRICT_MODE = "json.deserializer.strict.mode";
 
@@ -1646,6 +1656,8 @@ public interface PropsKeys {
 	public static final String MESSAGE_BOARDS_THREAD_VIEWS = "message.boards.thread.views";
 
 	public static final String MESSAGE_BOARDS_THREAD_VIEWS_DEFAULT = "message.boards.thread.views.default";
+
+	public static final String MESSAGE_BOARDS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = "message.boards.user.notifications.open.dialog.enabled";
 
 	public static final String MICROSOFT_TRANSLATOR_CLIENT_ID = "microsoft.translator.client.id";
 
@@ -2690,6 +2702,8 @@ public interface PropsKeys {
 	public static final String WIKI_PARSERS_CREOLE_SUPPORTED_PROTOCOLS = "wiki.parsers.creole.supported.protocols";
 
 	public static final String WIKI_RSS_ABSTRACT_LENGTH = "wiki.rss.abstract.length";
+
+	public static final String WIKI_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = "wiki.user.notifications.open.dialog.enabled";
 
 	public static final String XML_VALIDATION_ENABLED = "xml.validation.enabled";
 

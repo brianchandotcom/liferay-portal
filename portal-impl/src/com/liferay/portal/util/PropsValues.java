@@ -266,6 +266,8 @@ public class PropsValues {
 
 	public static final boolean BLOGS_TRACKBACK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BLOGS_TRACKBACK_ENABLED));
 
+	public static final boolean BLOGS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BLOGS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED));
+
 	public static final String BOOKMARKS_EMAIL_ENTRY_ADDED_BODY = PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_BODY);
 
 	public static final String BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT = PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT);
@@ -279,6 +281,8 @@ public class PropsValues {
 	public static final String BOOKMARKS_EMAIL_FROM_NAME = PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_FROM_NAME);
 
 	public static final boolean BOOKMARKS_PUBLISH_TO_LIVE_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BOOKMARKS_PUBLISH_TO_LIVE_BY_DEFAULT));
+
+	public static final boolean BOOKMARKS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BOOKMARKS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED));
 
 	public static final String BREADCRUMB_DISPLAY_STYLE_DEFAULT = PropsUtil.get(PropsKeys.BREADCRUMB_DISPLAY_STYLE_DEFAULT);
 
@@ -393,6 +397,8 @@ public class PropsValues {
 	public static final boolean COMBO_CHECK_TIMESTAMP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMBO_CHECK_TIMESTAMP));
 
 	public static final long COMBO_CHECK_TIMESTAMP_INTERVAL = GetterUtil.getLong(PropsUtil.get(PropsKeys.COMBO_CHECK_TIMESTAMP_INTERVAL));
+
+	public static final boolean COMMENTS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMMENTS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED));
 
 	public static final String COMPANY_DEFAULT_HOME_URL = PropsUtil.get(PropsKeys.COMPANY_DEFAULT_HOME_URL);
 
@@ -686,6 +692,8 @@ public class PropsValues {
 
 	public static final int DL_STORE_S3_TEMP_DIR_CLEAN_UP_FREQUENCY = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_STORE_S3_TEMP_DIR_CLEAN_UP_FREQUENCY));
 
+	public static final boolean DL_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_USER_NOTIFICATION_OPEN_DIALOG_ENABLED));
+
 	public static String[] DOCKBAR_ADD_PORTLETS = PropsUtil.getArray(PropsKeys.DOCKBAR_ADD_PORTLETS);
 
 	public static final boolean DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP));
@@ -935,6 +943,8 @@ public class PropsValues {
 	public static final boolean JOURNAL_PUBLISH_TO_LIVE_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_PUBLISH_TO_LIVE_BY_DEFAULT));
 
 	public static final boolean JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT));
+
+	public static final boolean JOURNAL_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_USER_NOTIFICATION_OPEN_DIALOG_ENABLED));
 
 	public static final boolean JSON_DESERIALIZER_STRICT_MODE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JSON_DESERIALIZER_STRICT_MODE));
 
@@ -1221,6 +1231,8 @@ public class PropsValues {
 	public static final String[] MESSAGE_BOARDS_THREAD_VIEWS = PropsUtil.getArray(PropsKeys.MESSAGE_BOARDS_THREAD_VIEWS);
 
 	public static final String MESSAGE_BOARDS_THREAD_VIEWS_DEFAULT = PropsUtil.get(PropsKeys.MESSAGE_BOARDS_THREAD_VIEWS_DEFAULT);
+
+	public static final boolean MESSAGE_BOARDS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_USER_NOTIFICATION_OPEN_DIALOG_ENABLED));
 
 	public static final String MICROSOFT_TRANSLATOR_CLIENT_ID = PropsUtil.get(PropsKeys.MICROSOFT_TRANSLATOR_CLIENT_ID);
 
@@ -2033,6 +2045,8 @@ public class PropsValues {
 	public static final String[] WIKI_PARSERS_CREOLE_SUPPORTED_PROTOCOLS = PropsUtil.getArray(PropsKeys.WIKI_PARSERS_CREOLE_SUPPORTED_PROTOCOLS);
 
 	public static final int WIKI_RSS_ABSTRACT_LENGTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.WIKI_RSS_ABSTRACT_LENGTH));
+
+	public static final boolean WIKI_USER_NOTIFICATION_OPEN_DIALOG_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WIKI_USER_NOTIFICATION_OPEN_DIALOG_ENABLED));
 
 	public static final boolean XML_VALIDATION_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.XML_VALIDATION_ENABLED));
 

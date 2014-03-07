@@ -76,6 +76,10 @@ public interface AssetRenderer {
 
 	public String getSummary(Locale locale);
 
+	public String getSummary(
+		Locale locale, PortletRequest portletRequest,
+		PortletResponse portletResponse);
+
 	public String getThumbnailPath(PortletRequest portletRequest)
 		throws Exception;
 

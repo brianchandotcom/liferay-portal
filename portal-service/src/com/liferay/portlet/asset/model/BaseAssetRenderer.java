@@ -128,6 +128,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	}
 
 	@Override
+	public String getSummary(Locale locale) {
+		return getSummary(locale, null, null);
+	}
+
+	@Override
 	public String getThumbnailPath(PortletRequest portletRequest)
 		throws Exception {
 

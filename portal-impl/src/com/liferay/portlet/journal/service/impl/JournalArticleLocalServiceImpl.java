@@ -99,6 +99,7 @@ import com.liferay.portlet.dynamicdatamapping.StorageFieldNameException;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
@@ -6471,6 +6472,22 @@ public class JournalArticleLocalServiceImpl
 
 		subscriptionSender.addPersistedSubscribers(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
+
+		if (article.getStructureId().equals(StringPool.BLANK) ||
+			article.getStructureId().equals("0")) {
+
+			subscriptionSender.addPersistedSubscribers(
+				DDMStructure.class.getName(), article.getGroupId());
+		}
+		else {
+			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+				article.getGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class),
+				article.getStructureId());
+
+			subscriptionSender.addPersistedSubscribers(
+				DDMStructure.class.getName(), structure.getStructureId());
+		}
 
 		subscriptionSender.flushNotificationsAsync();
 	}

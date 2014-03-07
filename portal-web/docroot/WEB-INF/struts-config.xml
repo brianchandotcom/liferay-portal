@@ -888,6 +888,11 @@
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
 
+		<action path="/journal/edit_structure" type="com.liferay.portlet.dynamicdatamapping.action.EditStructureAction">
+			<forward name="portlet.journal.edit_structure" path="portlet.journal.view_article" />
+			<forward name="portlet.journal.error" path="portlet.journal.error" />
+		</action>
+
 		<action path="/journal/find_folder" type="com.liferay.portlet.journal.action.FindFolderAction" />
 
 		<action path="/journal/get_article" type="com.liferay.portlet.journal.action.GetArticleAction" />

@@ -82,6 +82,18 @@ public class BaseDDMServiceTestCase {
 			DDMTemplateConstants.TEMPLATE_MODE_CREATE, "xsd", xsd);
 	}
 
+	protected DDMStructure addStructure(
+			long parentStructureId, long classNameId, String structureKey,
+			String name, String xsd, String storageType, int type)
+		throws Exception {
+
+		return DDMStructureLocalServiceUtil.addStructure(
+			TestPropsValues.getUserId(), group.getGroupId(), parentStructureId,
+			classNameId, structureKey, getDefaultLocaleMap(name), null, xsd,
+			storageType, type,
+			ServiceTestUtil.getServiceContext(group.getGroupId()));
+	}
+
 	protected DDMStructure addStructure(long classNameId, String name)
 		throws Exception {
 
@@ -97,11 +109,9 @@ public class BaseDDMServiceTestCase {
 			String storageType, int type)
 		throws Exception {
 
-		return DDMStructureLocalServiceUtil.addStructure(
-			TestPropsValues.getUserId(), group.getGroupId(),
+		return addStructure(
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
-			structureKey, getDefaultLocaleMap(name), null, xsd, storageType,
-			type, ServiceTestUtil.getServiceContext(group.getGroupId()));
+			structureKey, name, xsd, storageType, type);
 	}
 
 	protected DDMTemplate addTemplate(

@@ -122,6 +122,30 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
+	public void testAddStructureWithXsdContainingDuplicateElementNameInParent()
+		throws Exception {
+
+		String storageType = StorageType.XML.getValue();
+
+		try {
+			DDMStructure parentStructure = addStructure(
+				_classNameId, null, "Test Parent Structure",
+				readText("ddm-structure-duplicate-element-name.xsd"),
+				storageType, DDMStructureConstants.TYPE_DEFAULT);
+
+			addStructure(
+				parentStructure.getStructureId(), _classNameId, null,
+				"Test Structure",
+				readText("ddm-structure-duplicate-element-name.xsd"),
+				storageType, DDMStructureConstants.TYPE_DEFAULT);
+
+			Assert.fail();
+		}
+		catch (StructureDuplicateElementException sdee) {
+		}
+	}
+
+	@Test
 	public void testAddStructureWithXsdContainingInvalidElementAttribute()
 		throws Exception {
 

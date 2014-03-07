@@ -13,6 +13,10 @@
 		<execute selenium="pause" argument1="1000" />
 
 		<execute selenium="sendKeys" />
+
+		<execute selenium="clickAt" />
+
+		<execute selenium="pause" argument1="1000" />
 	</command>
 
 	<command name="sendKeys">

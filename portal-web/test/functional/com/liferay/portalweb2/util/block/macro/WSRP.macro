@@ -69,6 +69,15 @@
 		<execute action="CPWSRPProducers#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no producers." />
 		<execute action="CPWSRPProducers#assertClick" locator-key1="CONSUMERS_NAVIGATION" value1="Consumers" />
 
+		<while>
+			<condition action="CPWSRP#isElementPresent" locator-key1="CONSUMER_TABLE_ACTIONS_BUTTON_GENERIC" />
+			<then>
+				<execute action="CPWSRP#assertClick" locator-key1="CONSUMER_TABLE_ACTIONS_BUTTON_GENERIC" value1="Actions" />
+				<execute action="CPWSRP#assertClick" locator-key1="CONSUMER_MENULIST_DELETE" value1="Delete" />
+				<execute action="CPWSRP#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+			</then>
+		</while>
+
 		<execute action="CPWSRP#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no consumers." />
 	</command>
 

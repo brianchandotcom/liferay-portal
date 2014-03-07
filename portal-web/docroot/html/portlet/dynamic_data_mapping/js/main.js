@@ -469,7 +469,6 @@ AUI.add(
 						var translationManager = instance.translationManager;
 
 						var defaultLocale = translationManager.get('defaultLocale');
-
 						var editingLocale = translationManager.get('editingLocale');
 
 						var readOnlyAttributes = field.get('readOnlyAttributes');
@@ -697,7 +696,7 @@ AUI.add(
 					A.each(
 						str,
 						function(item, index, collection) {
-							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item,'Pd')) {
+							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
 								str = str.replace(item, STR_SPACE);
 							}
 						}

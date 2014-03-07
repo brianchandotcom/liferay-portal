@@ -37,6 +37,7 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 }
 
 String ddmStructureName = LanguageUtil.get(pageContext, "basic-web-content");
+long ddmStructureId = 0;
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
@@ -87,6 +88,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId(), true);
 
 		ddmStructureName = ddmStructure.getName(locale);
+		ddmStructureId = ddmStructure.getStructureId();
 	}
 	catch (NoSuchStructureException nsse) {
 	}
@@ -207,13 +209,22 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 		<%
 		boolean subscribed = false;
 		boolean unsubscribable = true;
+		String subscribeAction;
 
-		subscribed = JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);
+		if (Validator.isNull(displayTerms.getStructureId())) {
+			subscribed = JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);
 
-		if (subscribed) {
-			if (!JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId, false)) {
-				unsubscribable = false;
+			if (subscribed) {
+				if (!JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId, false)) {
+					unsubscribable = false;
+				}
 			}
+
+			subscribeAction = "/journal/edit_folder";
+		}
+		else {
+			subscribed = JournalUtil.isSubscribedToStructure(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), ddmStructureId);
+			subscribeAction = "/journal/edit_structure";
 		}
 		%>
 
@@ -222,10 +233,18 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 				<c:choose>
 					<c:when test="<%= unsubscribable %>">
 						<portlet:actionURL var="unsubscribeURL">
-							<portlet:param name="struts_action" value="/journal/edit_folder" />
+							<portlet:param name="struts_action" value="<%= subscribeAction %>" />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+
+							<c:choose>
+								<c:when test="<%= Validator.isNull(displayTerms.getStructureId()) %>">
+									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+								</c:when>
+								<c:otherwise>
+									<portlet:param name="structureId" value="<%= String.valueOf(ddmStructureId) %>" />
+								</c:otherwise>
+							</c:choose>
 						</portlet:actionURL>
 
 						<liferay-ui:icon
@@ -245,10 +264,18 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 			</c:when>
 			<c:otherwise>
 				<portlet:actionURL var="subscribeURL">
-					<portlet:param name="struts_action" value="/journal/edit_folder" />
+					<portlet:param name="struts_action" value="<%= subscribeAction %>" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+
+					<c:choose>
+						<c:when test="<%= Validator.isNull(displayTerms.getStructureId()) %>">
+							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+						</c:when>
+						<c:otherwise>
+							<portlet:param name="structureId" value="<%= String.valueOf(ddmStructureId) %>" />
+						</c:otherwise>
+					</c:choose>
 				</portlet:actionURL>
 
 				<liferay-ui:icon
@@ -264,7 +291,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 <c:if test="<%= results.isEmpty() %>">
 	<div class="entries-empty alert alert-info">
 		<c:choose>
-			<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
+			<c:when test="<%= Validator.isNotNull(ddmStructureId) %>">
 				<c:if test="<%= total == 0 %>">
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(ddmStructureName) %>" key="there-is-no-web-content-with-structure-x" translateArguments="<%= false %>" />
 				</c:if>

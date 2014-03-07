@@ -43,6 +43,7 @@ import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
+import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -50,6 +51,7 @@ import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -131,11 +133,20 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
-	public String getSummary(Locale locale) {
+	public String getSummary(
+		Locale locale, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
+
 		String summary = _article.getDescription(locale);
 
-		if (Validator.isNull(summary)) {
-			try {
+		if (Validator.isNotNull(summary)) {
+			return summary;
+		}
+
+		try {
+			if ((portletRequest == null) || (portletResponse == null) ||
+				Validator.isNull(_article.getStructureId())) {
+
 				JournalArticleDisplay articleDisplay =
 					JournalArticleLocalServiceUtil.getArticleDisplay(
 						_article, null, null,
@@ -143,12 +154,33 @@ public class JournalArticleAssetRenderer
 
 				summary = StringUtil.shorten(
 					HtmlUtil.stripHtml(articleDisplay.getContent()), 200);
+
+				return summary;
 			}
-			catch (Exception e) {
+			else {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)portletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+					String xmlRequest = PortletRequestUtil.toXML(
+						portletRequest, portletResponse);
+
+				JournalArticleDisplay articleDisplay =
+					JournalArticleLocalServiceUtil.getArticleDisplay(
+						_article, null, null,
+						LanguageUtil.getLanguageId(locale), 1, xmlRequest,
+						themeDisplay);
+
+				summary = StringUtil.shorten(
+					HtmlUtil.stripHtml(articleDisplay.getContent()), 200);
+
+				return summary;
 			}
 		}
+		catch (Exception e) {
+		}
 
-		return summary;
+		return null;
 	}
 
 	@Override

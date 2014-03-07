@@ -655,7 +655,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	protected void restoreDependentFromTrash(long nodeId, long trashEntryId)
 		throws PortalException, SystemException {
 
-		List<WikiPage> pages = wikiPagePersistence.findByNodeId(nodeId);
+		List<WikiPage> pages = wikiPagePersistence.findByN_H(nodeId, true);
 
 		for (WikiPage page : pages) {
 

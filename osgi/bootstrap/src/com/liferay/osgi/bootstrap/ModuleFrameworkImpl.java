@@ -370,8 +370,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	@Override
 	public void startFramework() throws Exception {
+		List<ServiceLoaderCondition> serviceLoaderConditions =
+			ServiceLoader.load(ServiceLoaderCondition.class);
+
 		ServiceLoaderCondition serviceLoaderCondition =
-			new ModuleFrameworkServiceLoaderCondition();
+			serviceLoaderConditions.get(0);
 
 		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
 			FrameworkFactory.class, serviceLoaderCondition);
@@ -1143,19 +1146,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private Map<String, List<URL>> _extraPackageMap;
 	private List<URL> _extraPackageURLs;
 	private Framework _framework;
-
-	private class ModuleFrameworkServiceLoaderCondition
-		implements ServiceLoaderCondition {
-
-		@Override
-		public boolean isLoad(URL url) {
-			String path = url.getPath();
-
-			return path.contains(
-				PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR);
-		}
-
-	}
 
 	private class StartupFrameworkListener implements FrameworkListener {
 

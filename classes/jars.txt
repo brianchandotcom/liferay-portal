@@ -1,0 +1,1 @@
+osgi/lib/equinox/core/org.eclipse.osgi.jar,osgi/bootstrap/osgi-bootstrap.jar,osgi/modules/registry/registry-impl/build/libs/registry-impl.jar

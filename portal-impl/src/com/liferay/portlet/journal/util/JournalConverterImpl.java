@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.util;
 
-import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -744,18 +743,16 @@ public class JournalConverterImpl implements JournalConverter {
 			sb.append(StringPool.AT);
 
 			if (privateLayout) {
-				try {
-					Group group = GroupLocalServiceUtil.getGroup(groupId);
+				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-					if (group.isUser()) {
-						sb.append("private-user");
-					}
-					else {
-						sb.append("private-group");
-					}
-				}
-				catch (NoSuchGroupException nsge) {
+				if (group == null) {
 					sb.append("private");
+				}
+				else if (group.isUser()) {
+					sb.append("private-user");
+				}
+				else {
+					sb.append("private-group");
 				}
 			}
 			else {

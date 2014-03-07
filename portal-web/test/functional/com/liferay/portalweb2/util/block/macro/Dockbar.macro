@@ -7,6 +7,6 @@
 			</then>
 		</if>
 
-		<execute action="Dockbar#assertElementPresent" locator1="_145_${fieldLabel}Content" />
+		<execute action="Dockbar#assertElementPresent" locator1="//div[@id='_145_${fieldLabel}Content']" />
 	</command>
 </definition>

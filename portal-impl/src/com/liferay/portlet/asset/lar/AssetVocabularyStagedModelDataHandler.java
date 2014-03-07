@@ -102,6 +102,7 @@ public class AssetVocabularyStagedModelDataHandler
 		portletDataContext.addZipEntry(vocabularyPath, vocabulary);
 	}
 
+	@Override
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
 			long vocabularyId)

@@ -223,7 +223,12 @@ public class InitUtil {
 	}
 
 	public synchronized static void stopModuleFramework() throws Exception {
-		ModuleFrameworkUtilAdapter.stopFramework();
+		try {
+			ModuleFrameworkUtilAdapter.stopFramework();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private static final boolean _PRINT_TIME = false;

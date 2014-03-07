@@ -244,12 +244,12 @@ public class StagedModelDataHandlerUtil {
 				continue;
 			}
 
-			long classPK = GetterUtil.getLong(
-				referenceElement.attributeValue("class-pk"));
-
 			long groupId = GetterUtil.getLong(
 				referenceElement.attributeValue("group-id"),
 				portletDataContext.getSourceGroupId());
+
+			long classPK = GetterUtil.getLong(
+				referenceElement.attributeValue("class-pk"));
 
 			String stagedModelPath = ExportImportPathUtil.getModelPath(
 				groupId, stagedModelClass.getName(), classPK);

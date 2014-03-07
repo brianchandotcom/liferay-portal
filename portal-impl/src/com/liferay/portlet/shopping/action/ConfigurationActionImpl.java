@@ -68,10 +68,10 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String taxRatePercent = ParamUtil.getString(actionRequest, "taxRate");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			WebKeys.THEME_DISPLAY);
 
 		NumberFormat percentFormat = NumberFormat.getPercentInstance(
-				themeDisplay.getLocale());
+			themeDisplay.getLocale());
 
 		try {
 			double taxRate = percentFormat.parse(taxRatePercent).doubleValue();
@@ -101,7 +101,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		String emailFromName = getParameter(actionRequest, "emailFromName");
 		String emailFromAddress = getParameter(
-				actionRequest, "emailFromAddress");
+			actionRequest, "emailFromAddress");
 
 		if (Validator.isNull(emailFromName)) {
 			SessionErrors.add(actionRequest, "emailFromName");
@@ -115,11 +115,11 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		throws Exception {
 
 		boolean emailOrderConfirmationEnabled = GetterUtil.getBoolean(
-				getParameter(actionRequest, "emailOrderConfirmationEnabled"));
+			getParameter(actionRequest, "emailOrderConfirmationEnabled"));
 		String emailOrderConfirmationSubject = getParameter(
-				actionRequest, "emailOrderConfirmationSubject");
+			actionRequest, "emailOrderConfirmationSubject");
 		String emailOrderConfirmationBody = getParameter(
-				actionRequest, "emailOrderConfirmationBody");
+			actionRequest, "emailOrderConfirmationBody");
 
 		if (emailOrderConfirmationEnabled) {
 			if (Validator.isNull(emailOrderConfirmationSubject)) {
@@ -136,11 +136,11 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		throws Exception {
 
 		boolean emailOrderShippingEnabled = GetterUtil.getBoolean(
-				getParameter(actionRequest, "emailOrderShippingEnabled"));
+			getParameter(actionRequest, "emailOrderShippingEnabled"));
 		String emailOrderShippingSubject = getParameter(
-				actionRequest, "emailOrderShippingSubject");
+			actionRequest, "emailOrderShippingSubject");
 		String emailOrderShippingBody = getParameter(
-				actionRequest, "emailOrderShippingBody");
+			actionRequest, "emailOrderShippingBody");
 
 		if (emailOrderShippingEnabled) {
 			if (Validator.isNull(emailOrderShippingSubject)) {

@@ -95,6 +95,10 @@ public class AutoLoginFilter extends BasePortalFilter {
 			return null;
 		}
 
+		if (!PropsValues.AUTH_SIMULTANEOUS_LOGINS) {
+			LoginUtil.signOutSimultaneousLogins(userId);
+		}
+
 		if (PropsValues.SESSION_ENABLE_PHISHING_PROTECTION) {
 			session = LoginUtil.renewSession(request, session);
 		}

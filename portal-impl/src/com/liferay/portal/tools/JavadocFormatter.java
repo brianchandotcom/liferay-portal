@@ -107,6 +107,8 @@ public class JavadocFormatter {
 		System.out.println("Input directory is " + _inputDir);
 
 		String limit = arguments.get("javadoc.limit");
+	
+		String[] classLimits = StringUtil.split(limit, ",");
 
 		_outputFilePrefix = GetterUtil.getString(
 			arguments.get("javadoc.output.file.prefix"));
@@ -127,64 +129,70 @@ public class JavadocFormatter {
 		directoryScanner.setExcludes(
 			new String[] {"**\\classes\\**", "**\\portal-client\\**"});
 
-		List<String> includes = new ArrayList<String>();
+		for (int i = 0; i < classLimits.length; i++) {
 
-		if (Validator.isNotNull(limit) && !limit.startsWith("$")) {
-			System.out.println("Limit on " + limit);
+			List<String> includes = new ArrayList<String>();
+			
+			if (Validator.isNotNull(classLimits[i]) && !classLimits[i].startsWith("$")) {
+				System.out.println("Limit on " + classLimits[i]);
 
-			String[] limitArray = StringUtil.split(limit, '/');
+				String[] limitArray = StringUtil.split(classLimits[i], '/');
 
-			for (String curLimit : limitArray) {
-				includes.add(
-					"**\\" + StringUtil.replace(curLimit, ".", "\\") +
-						"\\**\\*.java");
-				includes.add("**\\" + curLimit + ".java");
-			}
-		}
-		else {
-			includes.add("**\\*.java");
-		}
-
-		directoryScanner.setIncludes(
-			includes.toArray(new String[includes.size()]));
-
-		directoryScanner.scan();
-
-		String[] fileNames = directoryScanner.getIncludedFiles();
-
-		if ((fileNames.length == 0) && Validator.isNotNull(limit) &&
-			!limit.startsWith("$")) {
-
-			StringBundler sb = new StringBundler("Limit file not found: ");
-
-			sb.append(limit);
-
-			if (limit.contains(".")) {
-				sb.append(" Specify limit filename without package path or ");
-				sb.append("file type suffix.");
+				for (String curLimit : limitArray) {
+					includes.add(
+							"**\\" + StringUtil.replace(curLimit, ".", "\\") +
+							"\\**\\*.java");
+					includes.add("**\\" + curLimit + ".java");
+				}
 			}
 
-			System.out.println(sb.toString());
-		}
-
-		_languagePropertiesFile = new File("src/content/Language.properties");
-
-		if (_languagePropertiesFile.exists()) {
-			_languageProperties = new Properties();
-
-			_languageProperties.load(
-				new FileInputStream(_languagePropertiesFile.getAbsolutePath()));
-		}
-
-		for (String fileName : fileNames) {
-			fileName = StringUtil.replace(fileName, "\\", "/");
-
-			try {
-				_format(fileName);
+			else {
+				includes.add("**\\*.java");
 			}
-			catch (Exception e) {
-				throw new RuntimeException(
-					"Unable to format file " + fileName, e);
+
+			directoryScanner.setIncludes(
+					includes.toArray(new String[includes.size()]));
+
+			directoryScanner.scan();
+			
+			String[] fileNames = StringPool.EMPTY_ARRAY;
+
+			fileNames = directoryScanner.getIncludedFiles();
+
+			if ((fileNames.length == 0) && Validator.isNotNull(classLimits[i]) &&
+					!classLimits[i].startsWith("$")) {
+
+				StringBundler sb = new StringBundler("Limit file not found: ");
+
+				sb.append(classLimits[i]);
+
+				if (classLimits[i].contains(".")) {
+					sb.append(" Specify limit filename without package path or ");
+					sb.append("file type suffix.");
+				}
+
+				System.out.println(sb.toString());
+			}
+
+			_languagePropertiesFile = new File("src/content/Language.properties");
+
+			if (_languagePropertiesFile.exists()) {
+				_languageProperties = new Properties();
+
+				_languageProperties.load(
+						new FileInputStream(_languagePropertiesFile.getAbsolutePath()));
+			}
+
+			for (String fileName : fileNames) {
+				fileName = StringUtil.replace(fileName, "\\", "/");
+
+				try {
+					_format(fileName);
+				}
+				catch (Exception e) {
+					throw new RuntimeException(
+							"Unable to format file " + fileName, e);
+				}
 			}
 		}
 

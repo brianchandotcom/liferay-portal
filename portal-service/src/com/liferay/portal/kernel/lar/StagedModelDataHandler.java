@@ -69,8 +69,8 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 		throws PortletDataException;
 
 	public void importMissingReference(
-			PortletDataContext portletDataContext, String uuid,
-			long liveGroupId, long classPK)
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long classPK)
 		throws PortletDataException;
 
 	public void importStagedModel(

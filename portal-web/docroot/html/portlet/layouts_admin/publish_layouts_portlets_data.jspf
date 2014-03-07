@@ -31,7 +31,7 @@ ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 		<aui:input checked="<%= true %>" helpMessage="all-content-publish-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= true %>" />
 
-		<c:if test="<%= selGroup.isStagingGroup() && localPublishing %>">
+		<c:if test="<%= group.isStagingGroup() && localPublishing %>">
 			<div class="hide" id="<portlet:namespace />globalContent">
 				<aui:fieldset cssClass="portlet-data-section" label="all-content">
 					<aui:input label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />

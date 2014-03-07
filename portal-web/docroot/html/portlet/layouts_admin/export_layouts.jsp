@@ -19,7 +19,7 @@
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD);
 
-String exportNav = ParamUtil.getString(request, "exportNav", "custom");
+String exportConfigurationButtons = ParamUtil.getString(request, "exportConfigurationButtons", "custom");
 
 long groupId = ParamUtil.getLong(request, "groupId");
 
@@ -81,7 +81,7 @@ portletURL.setParameter(Constants.CMD, Constants.EXPORT);
 
 if (cmd.equals(Constants.ADD)) {
 	portletURL.setParameter("tabs2", "new-export-process");
-	portletURL.setParameter("exportNav", "export-configurations");
+	portletURL.setParameter("exportConfigurationButtons", "saved");
 }
 else {
 	portletURL.setParameter("tabs2", "current-and-previous");
@@ -129,7 +129,7 @@ if (!cmd.equals(Constants.ADD)) {
 	<liferay-ui:section>
 		<div <%= !cmd.equals(Constants.ADD) ? StringPool.BLANK : "class=\"hide\"" %>>
 			<aui:nav-bar>
-				<aui:nav id="exportNav">
+				<aui:nav id="exportConfigurationButtons">
 					<aui:nav-item
 						data-value="custom"
 						iconCssClass="icon-puzzle"
@@ -137,7 +137,7 @@ if (!cmd.equals(Constants.ADD)) {
 					/>
 
 					<aui:nav-item
-						data-value="export-configurations"
+						data-value="saved"
 						iconCssClass="icon-archive"
 						label="export-templates"
 					/>
@@ -145,7 +145,7 @@ if (!cmd.equals(Constants.ADD)) {
 			</aui:nav-bar>
 		</div>
 
-		<div <%= exportNav.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportOptions">
+		<div <%= exportConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
 			<portlet:actionURL var="addExportConfigurationURL">
 				<portlet:param name="struts_action" value="/layouts_admin/edit_export_configuration" />
 				<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
@@ -179,32 +179,14 @@ if (!cmd.equals(Constants.ADD)) {
 						</aui:fieldset>
 					</c:if>
 
-					<aui:input name="layoutIds" type="hidden" />
-
 					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 						<aui:fieldset cssClass="options-group" label="pages">
-							<span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
-
-							<aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
-
-							<div class="hide" id="<portlet:namespace />pages">
-								<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
-									<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
-										<liferay-util:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
-										<liferay-util:param name="treeId" value="<%= treeId %>" />
-										<liferay-util:param name="defaultStateChecked" value="1" />
-										<liferay-util:param name="selectableTree" value="1" />
-									</liferay-util:include>
-
-									<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= true %>" />
-								</aui:fieldset>
-
-								<aui:fieldset cssClass="portlet-data-section" label="look-and-feel">
-									<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
-
-									<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
-								</aui:fieldset>
-							</div>
+							<liferay-util:include page="/html/portlet/layouts_admin/export_configuration/select_pages.jsp">
+								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+								<liferay-util:param name="treeId" value="<%= treeId %>" />
+								<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
+							</liferay-util:include>
 						</aui:fieldset>
 					</c:if>
 
@@ -617,21 +599,7 @@ if (!cmd.equals(Constants.ADD)) {
 					</c:if>
 
 					<aui:fieldset cssClass="options-group" label="permissions">
-						<ul class="lfr-tree unstyled">
-							<li class="tree-item">
-								<aui:input label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
-
-								<ul id="<portlet:namespace />selectPermissions">
-									<li>
-										<aui:input label="permissions-assigned-to-roles" name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
-									</li>
-								</ul>
-
-								<aui:script>
-									Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>Checkbox', '<portlet:namespace />selectPermissions');
-								</aui:script>
-							</li>
-						</ul>
+						<%@ include file="/html/portlet/layouts_admin/export_configuration/permissions.jspf" %>
 					</aui:fieldset>
 				</div>
 
@@ -652,8 +620,9 @@ if (!cmd.equals(Constants.ADD)) {
 			</aui:form>
 		</div>
 
-		<div <%= exportNav.equals("export-configurations") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportConfigurations">
+		<div <%= exportConfigurationButtons.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />savedConfigurations">
 			<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_configurations.jsp">
+				<liferay-util:param name="exportImportConfigurationType" value="<%= String.valueOf(ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) %>" />
 				<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 				<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -746,20 +715,22 @@ if (!cmd.equals(Constants.ADD)) {
 	};
 
 	var processDataValue = function(dataValue) {
-		var exportOptions = A.one('#<portlet:namespace />exportOptions');
-		var exportConfigurations = A.one('#<portlet:namespace />exportConfigurations');
+		var customConfiguration = A.one('#<portlet:namespace />customConfiguration');
+		var savedConfigurations = A.one('#<portlet:namespace />savedConfigurations');
 
 		if (dataValue === 'custom') {
-			exportConfigurations.hide();
-			exportOptions.show();
+			savedConfigurations.hide();
+
+			customConfiguration.show();
 		}
-		else if (dataValue === 'export-configurations') {
-			exportOptions.hide();
-			exportConfigurations.show();
+		else if (dataValue === 'saved') {
+			customConfiguration.hide();
+
+			savedConfigurations.show();
 		}
 	};
 
-	A.one('#<portlet:namespace />exportNav').delegate('click', clickHandler, 'li a');
+	A.one('#<portlet:namespace />exportConfigurationButtons').delegate('click', clickHandler, 'li a');
 </aui:script>
 
 <aui:script>

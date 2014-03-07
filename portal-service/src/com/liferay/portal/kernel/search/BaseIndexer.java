@@ -625,6 +625,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		document.addLocalizedKeyword(
 			"localized_title", assetEntry.getTitleMap(), true);
+		document.addKeyword("visible", assetEntry.isVisible());
 	}
 
 	/**

@@ -273,7 +273,7 @@
 
 		<var name="key_tagName" value="${tagName1}" />
 
-		<execute action="PGBlogsEdit#click" locator-key1="TAG_ENTRY_REMOVE" />
+		<execute action="PGBlogsEdit#click" locator-key1="CATEGORIZATION_TAG_REMOVE" />
 		<execute action="PGBlogsEdit#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH_ADVANCED</td>
-	<td>//div[@class='advanced-search']/span</td>
+	<td>//div[@class='advanced-search']/a</td>
 	<td></td>
 </tr>
 <tr>

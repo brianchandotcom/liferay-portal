@@ -888,6 +888,12 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<name>toggleTouch</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
 				<name>useDialog</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>

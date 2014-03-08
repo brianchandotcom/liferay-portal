@@ -66,7 +66,7 @@ if (Validator.isNull(title)) {
 					{
 						content: '#<%= id %>',
 						toggle: <%= toggle %>,
-						toggleTouch: true,
+						toggleTouch: <%= toggleTouch %>,
 						trigger: '#<%= id %> a'
 					}
 				);

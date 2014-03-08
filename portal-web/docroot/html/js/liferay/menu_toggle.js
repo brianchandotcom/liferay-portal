@@ -87,7 +87,11 @@ AUI.add(
 					},
 
 					_isTouchEvent: function(event) {
-						return (event._event.type === 'touchend' && Liferay.Util.isTablet());
+						var eventType = event._event.type;
+
+						var touchEvent = ((eventType === 'touchend') || (eventType === 'touchstart'));
+
+						return (touchEvent && Liferay.Util.isTablet());
 					},
 
 					_toggleContent: function(force) {

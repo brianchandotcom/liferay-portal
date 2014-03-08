@@ -36,6 +36,8 @@ request.setAttribute("addresses.classPK", company.getAccountId());
 request.setAttribute("emailAddresses.classPK", company.getAccountId());
 request.setAttribute("phones.classPK", company.getAccountId());
 request.setAttribute("websites.classPK", company.getAccountId());
+
+PermissionChecker permissionChecker = themeDisplay.getPermissionChecker();
 %>
 
 <portlet:actionURL var="editCompanyURL">
@@ -61,7 +63,7 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		categorySections="<%= categorySections %>"
 		htmlTop="<%= htmlTop %>"
 		jspPath="/html/portlet/portal_settings/"
-		showButtons="<%= RoleLocalServiceUtil.hasUserRole(user.getUserId(), company.getCompanyId(), RoleConstants.ADMINISTRATOR, true) %>"
+		showButtons="<%= permissionChecker.isOmniadmin() %>"
 	/>
 </aui:form>
 

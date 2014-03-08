@@ -120,7 +120,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_156_description']</td>
+	<td>//textarea[@id='_156_descriptionUrl']</td>
 	<td></td>
 </tr>
 </tbody>

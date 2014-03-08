@@ -21,22 +21,27 @@
 <!--RECENT_BLOGS-->
 <tr>
 	<td>RECENT_BLOGS_ENTRY_TITLE</td>
-	<td>//span[@class='entry-title']</td>
+	<td>//div[@class='entry-info' and contains(.,'${key_entryTitle}')]/span[@class='entry-title']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECENT_BLOGS_ENTRY_AUTHOR</td>
-	<td>//span[@class='entry-author']</td>
+	<td>//div[@class='entry-info' and contains(.,'${key_entryTitle}')]/span[@class='entry-author']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECENT_BLOGS_ENTRY_DATE</td>
-	<td>//span[@class='entry-date']</td>
+	<td>//div[@class='entry-info' and contains(.,'${key_entryTitle}')]/span[@class='entry-date']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECENT_BLOGS_ENTRY_READ_MORE_LINK</td>
-	<td>//div[@class='comments']/a</td>
+	<td>//div[@class='comments']/a[contains(.,'About ${key_entryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECENT_BLOGS_ENTRY_NO_ENTRIES</td>
+	<td>//div[@class='portlet-body' and contains(.,'There are no blogs.')]</td>
 	<td></td>
 </tr>
 <tr>

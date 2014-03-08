@@ -46,6 +46,7 @@
 			</else>
 		</if>
 
+		<execute action="PGBlogsEntry#pause" value1="1000" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
 	</command>
 

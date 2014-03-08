@@ -134,6 +134,10 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="User#advancedSearchViaFriendsDirectoryPG">
 			<var name="searchField" value="First Name" />
 			<var name="searchNoResults" value="true" />
@@ -153,6 +157,10 @@
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="User#advancedSearchViaFriendsDirectoryPG">
@@ -176,6 +184,10 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="User#advancedSearchViaFriendsDirectoryPG">
 			<var name="searchField" value="Last Name" />
 			<var name="searchNoResults" value="true" />
@@ -197,6 +209,10 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="User#advancedSearchViaFriendsDirectoryPG">
 			<var name="searchField" value="Screen Name" />
 			<var name="searchNoResults" value="true" />
@@ -216,6 +232,10 @@
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="User#advancedSearchViaFriendsDirectoryPG">

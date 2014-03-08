@@ -194,6 +194,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ABSTRACT_GENERIC</td>
+	<td>//div[contains(@class,'asset-abstract')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -232,15 +232,29 @@
 		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
-		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGAssetpublisherAddnewwebcontent#pause" locator1="5000" />
 
-		<execute action="PGAssetpublisher#selectFrame" />
+		<if>
+			<equals arg1="${saveAsDraft}" arg2="true" />
+			<then>
+				<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+				<execute action="PGAssetpublisherAddnewwebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<var name="key_assetTitle" value="${webContentTitle}" />
+				<execute action="PGAssetpublisher#pause" locator1="5000" />
+				<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
+				<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_GENERIC" />
+			</then>
+			<else>
+				<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentContent}" />
+				<execute action="PGAssetpublisher#pause" locator1="5000" />
+				<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
+
+				<var name="key_assetTitle" value="${webContentTitle}" />
+
+				<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+				<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${webContentContent}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="addPGViaPanel">

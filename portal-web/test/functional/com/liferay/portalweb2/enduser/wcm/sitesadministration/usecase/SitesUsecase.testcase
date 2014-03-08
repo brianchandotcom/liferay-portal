@@ -539,10 +539,18 @@
 			<var name="roleList" value="${roleList}" />
 		</execute>
 
+		<execute macro="Page#openURL">
+			<var name="pageName" value="${sitePageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="${portlet3Name}" />
 		</execute>
 
+		<execute action="Home#refresh" />
+		
 		<var name="key_portletName" value="${portlet3Name}" />
 
 		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet3Name}" />

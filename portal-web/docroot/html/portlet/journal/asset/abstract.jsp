@@ -30,13 +30,13 @@ boolean workflowAssetPreview = GetterUtil.getBoolean((Boolean)request.getAttribu
 
 JournalArticleDisplay articleDisplay = null;
 
-if (!workflowAssetPreview && article.isApproved()) {
-	String xmlRequest = PortletRequestUtil.toXML(renderRequest, renderResponse);
+String xmlRequest = PortletRequestUtil.toXML(renderRequest, renderResponse);
 
+if (!workflowAssetPreview && article.isApproved()) {
 	articleDisplay = JournalContentUtil.getDisplay(articleResource.getGroupId(), articleResource.getArticleId(), null, null, languageId, themeDisplay, 1, xmlRequest);
 }
 else {
-	articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(article, null, null, languageId, 1, null, themeDisplay);
+	articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(article, null, null, languageId, 1, xmlRequest, themeDisplay);
 }
 %>
 

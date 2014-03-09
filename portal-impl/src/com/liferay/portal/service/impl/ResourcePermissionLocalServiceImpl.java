@@ -44,7 +44,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.base.ResourcePermissionLocalServiceBaseImpl;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -1299,12 +1298,12 @@ public class ResourcePermissionLocalServiceImpl
 			return;
 		}
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+		Layout layout = layoutLocalService.fetchLayout(plid);
 
 		if (layout != null) {
 			layout.setModifiedDate(new Date());
 
-			LayoutLocalServiceUtil.updateLayout(layout);
+			layoutLocalService.updateLayout(layout);
 
 			CacheUtil.clearCache(layout.getCompanyId());
 		}

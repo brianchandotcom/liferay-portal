@@ -1211,6 +1211,8 @@ public class ResourcePermissionLocalServiceImpl
 
 		resourcePermissionPersistence.update(resourcePermission);
 
+		updateLayoutModifiedDate(name, primKey);
+
 		PermissionCacheUtil.clearCache();
 
 		SearchEngineUtil.updatePermissionFields(name, primKey);

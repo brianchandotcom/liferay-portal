@@ -57,7 +57,7 @@ if (assetCategoryId != 0) {
 			</portlet:renderURL>
 
 			<a href="<%= viewURLWithoutCategory %>" title="<liferay-ui:message key="remove" />">
-				<span class="icon icon-close textboxlistentry-close"></span>
+				<span class="icon icon-remove textboxlistentry-remove"></span>
 			</a>
 		</span>
 	</c:if>
@@ -73,7 +73,7 @@ if (assetCategoryId != 0) {
 			</liferay-portlet:renderURL>
 
 			<a href="<%= viewURLWithoutTag %>" title="<liferay-ui:message key="remove" />">
-				<span class="icon icon-close textboxlistentry-close"></span>
+				<span class="icon icon-remove textboxlistentry-remove"></span>
 			</a>
 		</span>
 	</c:if>

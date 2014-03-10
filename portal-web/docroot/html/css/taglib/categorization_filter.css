@@ -1,7 +1,7 @@
 .taglib-categorization-filter .asset-entry {
 	border: 1px solid transparent;
 	margin-right: .5em;
-	padding: 3px 18px 3px 7px;
+	padding: 3px 7px;
 	position: relative;
 }
 
@@ -18,8 +18,12 @@
 		background-color: #DEE7F8;
 		border-color: #CAD8F3;
 
-		&:hover .icon-close {
-			background-color: #CAD8F3;
+		&:hover a {
+			text-decoration: none;
+
+			.icon-remove {
+				background-color: #CAD8F3;
+			}
 		}
 	}
 }

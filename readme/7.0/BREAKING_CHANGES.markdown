@@ -12,13 +12,15 @@ Here are some of the types of changes documented in this file:
 * Changes to context variables available to templates
 * Changes in CSS classes available to Liferay themes and portlets
 * Configuration changes: Changes in configuration files, like
- portal.properties`, `system.properties`, etc.
+ `portal.properties`, `system.properties`, etc.
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain
 feature or API will be dropped in an upcoming version.
 * Recommendations: For example, recommending using a newly introduced API that
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
+
+*This document has been reviewed through commit `69f89fd`.*
 
 ## Breaking Changes
 
@@ -38,7 +40,8 @@ only affected people are those using a certain feature or API, say so.
 applicable, justify why the breaking change was made instead of following a
 deprecation process.
 
-Here's the template to use for each breaking change (note how it ends with a horizontal rule):
+Here's the template to use for each breaking change (note how it ends with a
+horizontal rule):
 
 ```
 ### [Title]
@@ -57,21 +60,22 @@ Here's the template to use for each breaking change (note how it ends with a hor
 ```
 ---------------------------------------
 
-### Removal of Methods get and format which use the PortletConfig in LanguageUtil and UnicodeLanguageUtil
+### Removal of Methods `get` and `format`, which use the PortletConfig
 * Date: 7th March 2014
 * Jira Ticket: LPS-44342
 
 #### What changed?
-All the methods get() and format() which had the PortletConfig as a parameter
-have been removed.
+All the methods `get()` and `format()` which had the PortletConfig as a
+parameter have been removed.
 
 #### Who is affected?
-Any invocations from Java classes or JSPs to these methods in LanguageUtil and
-UnicodeLanguageUtil
+Any invocations from Java classes or JSPs to these methods in `LanguageUtil` and
+`UnicodeLanguageUtil` are affected.
 
 #### How should I update my code?
-Replace the invocation to those methods with the ones with the same name that
-take ResourceBundle as a parameter instead.
+Replace invocations to these methods with invocations to methods of the same
+name that take a `ResourceBundle` parameter, instead of taking a
+`PortletConfig` parameter.
 
 **Example**
 
@@ -86,9 +90,9 @@ LanguageUtil.get(portletConfig.getResourceBundle(locale), key);
 ```
 
 #### Why was this change made?
-The removed methods didn't work properly and they would never do since they
-didn't have all the information required in order to work. Since we expect them
-to be rarely used we considered it was better to remove them without deprecation
-than to leave buggy methods in the API.
+The removed methods didn't work properly and would never work properly, since
+they didn't have all the information they required. Since we expected the
+methods were rarely used, we thought it better to remove them without
+deprecation than to leave them as buggy methods in the API.
 
 ---------------------------------------

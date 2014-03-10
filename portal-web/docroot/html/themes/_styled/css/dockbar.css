@@ -85,26 +85,6 @@ $editLayoutPanelWidth: 460px;
 			color: #FFF;
 		}
 
-		.diamond {
-			border: $diamondSize solid transparent;
-			border-bottom-color: #1485EB;
-			height: 0;
-			position: relative;
-			top: -$diamondSize;
-			width: 0;
-
-			&:after {
-				border: $diamondSize solid transparent;
-				border-top-color: #1485EB;
-				content: '';
-				height: 0;
-				left: -$diamondSize;
-				position: absolute;
-				top: $diamondSize;
-				width: 0;
-			}
-		}
-
 		.impersonating-user {
 			.alert-icon{
 				margin-right: 9px;
@@ -114,15 +94,6 @@ $editLayoutPanelWidth: 460px;
 				border-width: 0;
 				margin-bottom: 6px;
 			}
-		}
-
-		.info-button {
-			top: 9px;
-		}
-
-		.info-link-container {
-			position: relative;
-			width: 0;
 		}
 
 		.navbar-inner {
@@ -505,6 +476,38 @@ $editLayoutPanelWidth: 460px;
 			vertical-align: middle;
 			width: 20px;
 		}
+
+		.diamond {
+			display: none;
+		}
+
+		.info-button {
+			margin-right: 5px;
+			right: auto;
+			top: auto;
+
+			a {
+				color: #555;
+				display: block;
+				font-size: 20px;
+				padding: 10px 15px;
+				position: relative;
+
+				&:focus, &:hover {
+					background-color: #FFF;
+					color: #0077B3;
+					text-decoration: none;
+				}
+			}
+		}
+
+		.info-link-container {
+			width: auto;
+
+			&.open .info-button a {
+				background-color: #FFF;
+			}
+		}
 	}
 
 	.dockbar-split {
@@ -517,10 +520,61 @@ $editLayoutPanelWidth: 460px;
 				position: relative;
 			}
 
-			.staging-controls .staging-bar li.dropdown .dropdown-menu {
-				left: 0;
-				margin-left: 0;
-				width: 100%;
+			.diamond {
+				border: $diamondSize solid transparent;
+				border-bottom-color: #1485EB;
+				display: block;
+				height: 0;
+				position: relative;
+				top: -$diamondSize;
+				width: 0;
+
+				&:after {
+					border: $diamondSize solid transparent;
+					border-top-color: #1485EB;
+					content: '';
+					height: 0;
+					left: -$diamondSize;
+					position: absolute;
+					top: $diamondSize;
+					width: 0;
+				}
+			}
+
+			.info-button {
+				right: 12px;
+				top: 10px;
+
+				a {
+					color: #FFF;
+					display: inline;
+					font-size: 14px;
+					padding: 2px 10px;
+					position: absolute;
+
+					&:focus, &:hover {
+						background-color: transparent;
+					}
+				}
+			}
+
+			.info-link-container {
+				position: relative;
+				width: 0;
+
+				&.open .info-button a {
+					background-color: transparent;
+				}
+			}
+
+			.staging-controls {
+				.staging-bar {
+					li.dropdown .dropdown-menu {
+						left: 0;
+						margin-left: 0;
+						width: 100%;
+					}
+				}
 			}
 
 			&.navbar-static-top {
@@ -539,10 +593,6 @@ $editLayoutPanelWidth: 460px;
 
 			.divider-vertical {
 				display: none;
-			}
-
-			.info-button {
-				top: $diamondSize;
 			}
 
 			.info-items {
@@ -1226,12 +1276,6 @@ $editLayoutPanelWidth: 460px;
 					&:focus, &:hover {
 						background-color: #555;
 						text-decoration: none;
-					}
-				}
-
-				&.open {
-					.info-link {
-						background-color: #555;
 					}
 				}
 			}

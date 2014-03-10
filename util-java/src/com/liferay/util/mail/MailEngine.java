@@ -337,7 +337,7 @@ public class MailEngine {
 
 			message.setSentDate(new Date());
 
-			if (replyTo != null) {
+			if (ArrayUtil.isNotEmpty(replyTo)) {
 				message.setReplyTo(replyTo);
 			}
 

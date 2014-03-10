@@ -13,5 +13,9 @@
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+
+		<case locator-key1="ERROR_MESSAGE_DOCUMENT_LOCKED">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 </definition>

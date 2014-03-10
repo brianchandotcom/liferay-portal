@@ -63,6 +63,11 @@ public class UserNotificationHandlerImpl implements UserNotificationHandler {
 			serviceContext);
 	}
 
+	@Override
+	public boolean isOpenDialog() {
+		return _userNotificationHandler.isOpenDialog();
+	}
+
 	private UserNotificationHandler _userNotificationHandler;
 
 }

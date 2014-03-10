@@ -39,6 +39,10 @@ public class UserNotificationFeedEntry {
 		return _portletId;
 	}
 
+	public boolean isOpenDialog() {
+		return _openDialog;
+	}
+
 	public void setBody(String body) {
 		_body = GetterUtil.getString(body);
 	}
@@ -47,12 +51,17 @@ public class UserNotificationFeedEntry {
 		_link = GetterUtil.getString(link);
 	}
 
+	public void setOpenDialog(boolean openDialog) {
+		_openDialog = openDialog;
+	}
+
 	public void setPortletId(String portletId) {
 		_portletId = GetterUtil.getString(portletId);
 	}
 
 	private String _body;
 	private String _link;
+	private boolean _openDialog;
 	private String _portletId = StringPool.BLANK;
 
 }

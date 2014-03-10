@@ -54,6 +54,7 @@ public abstract class BaseUserNotificationHandler
 				userNotificationEvent, serviceContext);
 
 			if (userNotificationFeedEntry != null) {
+				userNotificationFeedEntry.setOpenDialog(isOpenDialog());
 				userNotificationFeedEntry.setPortletId(getPortletId());
 			}
 
@@ -97,6 +98,11 @@ public abstract class BaseUserNotificationHandler
 		return userNotificationDelivery.isDeliver();
 	}
 
+	@Override
+	public boolean isOpenDialog() {
+		return _openDialog;
+	}
+
 	protected UserNotificationFeedEntry doInterpret(
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
@@ -129,6 +135,10 @@ public abstract class BaseUserNotificationHandler
 		return StringPool.BLANK;
 	}
 
+	protected void setOpenDialog(boolean openDialog) {
+		_openDialog = openDialog;
+	}
+
 	protected void setPortletId(String portletId) {
 		_portletId = portletId;
 	}
@@ -140,6 +150,7 @@ public abstract class BaseUserNotificationHandler
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseUserNotificationHandler.class);
 
+	private boolean _openDialog = false;
 	private String _portletId;
 	private String _selector = StringPool.BLANK;
 

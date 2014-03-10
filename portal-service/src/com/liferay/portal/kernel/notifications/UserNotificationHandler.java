@@ -38,4 +38,6 @@ public interface UserNotificationHandler {
 			int deliveryType, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public boolean isOpenDialog();
+
 }

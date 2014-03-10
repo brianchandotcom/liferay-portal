@@ -35,6 +35,7 @@ public class WorkflowTasksUserNotificationHandler
 	extends BaseUserNotificationHandler {
 
 	public WorkflowTasksUserNotificationHandler() {
+		setOpenDialog(true);
 		setPortletId(PortletKeys.MY_WORKFLOW_TASKS);
 	}
 

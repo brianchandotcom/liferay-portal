@@ -29,22 +29,15 @@ List<WikiPage> allPages = WikiPageLocalServiceUtil.getPages(nodeId, title, Query
 List<WikiPage> intermediatePages = new ArrayList<WikiPage>();
 
 for (WikiPage wikiPage : allPages) {
-	if ((wikiPage.getVersion() < sourceVersion) &&
-		(wikiPage.getVersion() > previousVersion)) {
-
+	if ((wikiPage.getVersion() < sourceVersion) && (wikiPage.getVersion() > previousVersion)) {
 		previousVersion = wikiPage.getVersion();
 	}
 
-	if ((wikiPage.getVersion() > targetVersion) &&
-		((wikiPage.getVersion() < nextVersion) ||
-		 (nextVersion == 0))) {
-
+	if ((wikiPage.getVersion() > targetVersion) && ((wikiPage.getVersion() < nextVersion) || (nextVersion == 0))) {
 		nextVersion = wikiPage.getVersion();
 	}
 
-	if ((wikiPage.getVersion() > sourceVersion) &&
-		(wikiPage.getVersion() <= targetVersion)) {
-
+	if ((wikiPage.getVersion() > sourceVersion) && (wikiPage.getVersion() <= targetVersion)) {
 		intermediatePages.add(wikiPage);
 	}
 }

@@ -89,14 +89,16 @@ public class WriterOutputStream extends OutputStream {
 	public void close() throws IOException {
 		_doDecode(_inputByteBuffer, true);
 
-		_flush(true);
+		_flushBuffer();
 
 		_writer.close();
 	}
 
 	@Override
 	public void flush() throws IOException {
-		_flush(true);
+		_flushBuffer();
+
+		_writer.flush();
 	}
 
 	public String getEncoding() {
@@ -154,11 +156,11 @@ public class WriterOutputStream extends OutputStream {
 				inputByteBuffer, _outputCharBuffer, endOfInput);
 
 			if (coderResult.isOverflow()) {
-				_flush(false);
+				_flushBuffer();
 			}
 			else if (coderResult.isUnderflow()) {
 				if (_autoFlush) {
-					_flush(true);
+					_flushBuffer();
 				}
 
 				break;
@@ -169,14 +171,10 @@ public class WriterOutputStream extends OutputStream {
 		}
 	}
 
-	private void _flush(boolean flushWriter) throws IOException {
+	private void _flushBuffer() throws IOException {
 		if (_outputCharBuffer.position() > 0) {
 			_writer.write(
 				_outputCharBuffer.array(), 0, _outputCharBuffer.position());
-
-			if (flushWriter) {
-				_writer.flush();
-			}
 
 			_outputCharBuffer.rewind();
 		}

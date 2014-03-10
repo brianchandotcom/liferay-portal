@@ -151,11 +151,9 @@ public class ShoppingSettings implements Settings {
 		if (Validator.isNotNull(emailOrderConfirmationBody)) {
 			return emailOrderConfirmationBody;
 		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(
-					PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_BODY));
-		}
+
+		return ContentUtil.get(
+			PropsUtil.get(PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_BODY));
 	}
 
 	public boolean getEmailOrderConfirmationEnabled() {
@@ -165,11 +163,9 @@ public class ShoppingSettings implements Settings {
 		if (Validator.isNotNull(emailOrderConfirmationEnabled)) {
 			return GetterUtil.getBoolean(emailOrderConfirmationEnabled);
 		}
-		else {
-			return GetterUtil.getBoolean(
-				PropsUtil.get(
-					PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_ENABLED));
-		}
+
+		return GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_ENABLED));
 	}
 
 	public String getEmailOrderConfirmationSubject() {
@@ -179,11 +175,9 @@ public class ShoppingSettings implements Settings {
 		if (Validator.isNotNull(emailOrderConfirmationSubject)) {
 			return emailOrderConfirmationSubject;
 		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(
-					PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_SUBJECT));
-		}
+
+		return ContentUtil.get(
+			PropsUtil.get(PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_SUBJECT));
 	}
 
 	public String getEmailOrderShippingBody() {
@@ -193,10 +187,9 @@ public class ShoppingSettings implements Settings {
 		if (Validator.isNotNull(emailOrderShippingBody)) {
 			return emailOrderShippingBody;
 		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_BODY));
-		}
+
+		return ContentUtil.get(
+			PropsUtil.get(PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_BODY));
 	}
 
 	public boolean getEmailOrderShippingEnabled() {
@@ -206,10 +199,9 @@ public class ShoppingSettings implements Settings {
 		if (Validator.isNotNull(emailOrderShippingEnabled)) {
 			return GetterUtil.getBoolean(emailOrderShippingEnabled);
 		}
-		else {
-			return GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_ENABLED));
-		}
+
+		return GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_ENABLED));
 	}
 
 	public String getEmailOrderShippingSubject() {
@@ -219,10 +211,9 @@ public class ShoppingSettings implements Settings {
 		if (Validator.isNotNull(emailOrderShippingSubject)) {
 			return emailOrderShippingSubject;
 		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_SUBJECT));
-		}
+
+		return ContentUtil.get(
+			PropsUtil.get(PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_SUBJECT));
 	}
 
 	public String[] getInsurance() {
@@ -231,9 +222,8 @@ public class ShoppingSettings implements Settings {
 		if (value == null) {
 			return new String[5];
 		}
-		else {
-			return StringUtil.split(value);
-		}
+
+		return StringUtil.split(value);
 	}
 
 	public String getInsuranceFormula() {
@@ -254,9 +244,8 @@ public class ShoppingSettings implements Settings {
 		if (value == null) {
 			return new String[5];
 		}
-		else {
-			return StringUtil.split(value);
-		}
+
+		return StringUtil.split(value);
 	}
 
 	public String getShippingFormula() {

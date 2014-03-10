@@ -39,12 +39,12 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateEmailOrderConfirmation(actionRequest);
+		validateEmail(actionRequest, "emailOrderConfirmation");
 		validateEmailFrom(actionRequest);
 		updateInsuranceCalculation(actionRequest);
 		updatePayment(actionRequest);
 		updateShippingCalculation(actionRequest);
-		validateEmailOrderShipping(actionRequest);
+		validateEmail(actionRequest, "emailOrderShipping");
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
@@ -92,18 +92,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 
 		setPreference(actionRequest, "shipping", StringUtil.merge(shipping));
-	}
-
-	protected void validateEmailOrderConfirmation(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailOrderConfirmation");
-	}
-
-	protected void validateEmailOrderShipping(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailOrderShipping");
 	}
 
 }

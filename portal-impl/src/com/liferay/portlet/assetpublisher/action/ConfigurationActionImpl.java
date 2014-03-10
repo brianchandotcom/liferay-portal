@@ -99,7 +99,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			try {
-				validateEmailAssetEntryAdded(actionRequest);
+				validateEmail(actionRequest, "emailAssetEntryAdded");
 				validateEmailFrom(actionRequest);
 
 				updateDisplaySettings(actionRequest);
@@ -695,12 +695,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 			values = preferences.getValues("queryValues" + i, new String[0]);
 		}
-	}
-
-	protected void validateEmailAssetEntryAdded(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailAssetEntryAdded");
 	}
 
 	protected void validateQueryRule(

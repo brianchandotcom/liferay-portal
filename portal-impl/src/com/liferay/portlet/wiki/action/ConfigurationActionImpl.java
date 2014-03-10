@@ -35,8 +35,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		validateDisplaySettings(actionRequest);
 		validateEmailFrom(actionRequest);
-		validateEmailPageAdded(actionRequest);
-		validateEmailPageUpdated(actionRequest);
+		validateEmail(actionRequest, "emailPageAdded");
+		validateEmail(actionRequest, "emailPageUpdated");
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
@@ -49,18 +49,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		if (Validator.isNull(visibleNodes)) {
 			SessionErrors.add(actionRequest, "visibleNodesCount");
 		}
-	}
-
-	protected void validateEmailPageAdded(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailPageAdded");
-	}
-
-	protected void validateEmailPageUpdated(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailPageUpdated");
 	}
 
 }

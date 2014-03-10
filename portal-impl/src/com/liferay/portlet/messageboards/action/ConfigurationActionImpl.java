@@ -50,8 +50,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		throws Exception {
 
 		validateEmailFrom(actionRequest);
-		validateEmailMessageAdded(actionRequest);
-		validateEmailMessageUpdated(actionRequest);
+		validateEmail(actionRequest, "emailMessageAdded");
+		validateEmail(actionRequest, "emailMessageUpdated");
 		updateThreadPriorities(actionRequest);
 		updateUserRanks(actionRequest);
 
@@ -158,18 +158,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 			setPreference(actionRequest, preferenceName, ranks);
 		}
-	}
-
-	protected void validateEmailMessageAdded(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailMessageAdded");
-	}
-
-	protected void validateEmailMessageUpdated(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailMessageUpdated");
 	}
 
 }

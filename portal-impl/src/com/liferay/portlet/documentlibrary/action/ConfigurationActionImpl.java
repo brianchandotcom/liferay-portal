@@ -45,8 +45,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		if (Validator.isNotNull(cmd)) {
 			validateDisplayStyleViews(actionRequest);
-			validateEmailFileEntryAdded(actionRequest);
-			validateEmailFileEntryUpdated(actionRequest);
+			validateEmail(actionRequest, "emailFileEntryAdded");
+			validateEmail(actionRequest, "emailFileEntryUpdated");
 			validateEmailFrom(actionRequest);
 			validateRootFolder(actionRequest);
 		}
@@ -63,18 +63,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		if (Validator.isNull(displayViews)) {
 			SessionErrors.add(actionRequest, "displayViewsInvalid");
 		}
-	}
-
-	protected void validateEmailFileEntryAdded(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailFileEntryAdded");
-	}
-
-	protected void validateEmailFileEntryUpdated(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailFileEntryUpdated");
 	}
 
 	protected void validateRootFolder(ActionRequest actionRequest)

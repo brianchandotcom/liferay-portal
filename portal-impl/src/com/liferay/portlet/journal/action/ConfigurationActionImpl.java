@@ -32,53 +32,14 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		throws Exception {
 
 		validateEmailFrom(actionRequest);
-		validateEmailArticleAdded(actionRequest);
-		validateEmailArticleApprovalDenied(actionRequest);
-		validateEmailArticleApprovalGranted(actionRequest);
-		validateEmailArticleApprovalRequested(actionRequest);
-		validateEmailArticleReview(actionRequest);
-		validateEmailArticleUpdated(actionRequest);
+		validateEmail(actionRequest, "emailArticleAdded");
+		validateEmail(actionRequest, "emailArticleApprovalDenied");
+		validateEmail(actionRequest, "emailArticleApprovalGranted");
+		validateEmail(actionRequest, "emailArticleApprovalRequested");
+		validateEmail(actionRequest, "emailArticleReview");
+		validateEmail(actionRequest, "emailArticleUpdated");
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	protected void validateEmailArticleAdded(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailArticleAdded");
-	}
-
-	protected void validateEmailArticleApprovalDenied(
-			ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailArticleApprovalDenied");
-	}
-
-	protected void validateEmailArticleApprovalGranted(
-			ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailArticleApprovalGranted");
-	}
-
-	protected void validateEmailArticleApprovalRequested(
-			ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailArticleApprovalRequested");
-	}
-
-	protected void validateEmailArticleReview(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailArticleReview");
-	}
-
-	protected void validateEmailArticleUpdated(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailArticleUpdated");
 	}
 
 }

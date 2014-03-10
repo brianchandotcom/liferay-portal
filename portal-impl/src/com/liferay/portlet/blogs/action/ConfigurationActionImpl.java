@@ -39,23 +39,11 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		if (Validator.isNotNull(cmd)) {
 			validateEmailFrom(actionRequest);
-			validateEmailEntryAdded(actionRequest);
-			validateEmailEntryUpdated(actionRequest);
+			validateEmail(actionRequest, "emailEntryAdded");
+			validateEmail(actionRequest, "emailEntryUpdated");
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	protected void validateEmailEntryAdded(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailEntryAdded");
-	}
-
-	protected void validateEmailEntryUpdated(ActionRequest actionRequest)
-		throws Exception {
-
-		validateEmail(actionRequest, "emailEntryUpdated");
 	}
 
 }

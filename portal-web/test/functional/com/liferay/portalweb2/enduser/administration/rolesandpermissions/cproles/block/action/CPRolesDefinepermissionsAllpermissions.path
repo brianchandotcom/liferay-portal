@@ -351,6 +351,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_VIEW</td>
+	<td>//input[@value='com.liferay.portlet.documentlibrary.model.DLFileEntryVIEW']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -485,6 +490,54 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SITE_ADMIN_CONTENT_MESSAGE_BOARDS_MESSAGES-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_MESSAGES_ADD_CATEGORY_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.messageboardsADD_CATEGORY']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_MESSAGES_ADD_MESSAGE_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.messageboardsADD_MESSAGE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_MESSAGES_VIEW_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.messageboardsVIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_MESSAGE_BOARDS_CATEGORY-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_CATEGORY_ADD_MESSAGE_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_MESSAGE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_CATEGORY_VIEW_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryVIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_MESSAGE_BOARDS_MESSAGE-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_MESSAGE_VIEW_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.messageboards.model.MBMessageVIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_CONTENT_WIKI_GENERAL-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_WIKI_GENERAL_ALL_CHECKBOX</td>
@@ -550,10 +603,69 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_ADD_RECORD_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.dynamicdatalists.model.DDLRecordSetADD_RECORD']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_UPDATE_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.dynamicdatalists.model.DDLRecordSetUPDATE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_VIEW_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.dynamicdatalists.model.DDLRecordSetVIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_USERS_SITE_MEMBERSHIPS_GENERAL-->
+<tr>
+	<td>SITE_ADMIN_USERS_SITE_MEMBERSHIPS_GENERAL_ALL_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_USERS_SITE_MEMBERSHIPS_TEAM-->
+<tr>
+	<td>SITE_ADMIN_USERS_SITE_MEMBERSHIPS_TEAM_ALL_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY_APPLICATIONS_PERMISSIONS_ACTION</td>
 	<td>//input[@name='_128_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER-->
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_ADD_TO_PAGE_CHECKBOX</td>
+	<td>//input[contains(@value,'ADD_TO_PAGE')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_VIEW_CHECKBOX</td>
+	<td>//input[contains(@value,'VIEW')]</td>
 	<td></td>
 </tr>
 </tbody>

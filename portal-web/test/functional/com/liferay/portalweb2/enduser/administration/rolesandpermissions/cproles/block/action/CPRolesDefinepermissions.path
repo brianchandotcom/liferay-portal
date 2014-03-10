@@ -181,13 +181,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS</td>
+	<td>//div[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Dynamic Data Lists')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--SITE_ADMIN_USERS-->
+<tr>
+	<td>SITE_ADMIN_USERS_SITE_MEMBERSHIPS</td>
+	<td>//div[contains(.,'Users') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Site Memberships')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_CONFIGURATION-->
 <!--SITE_ADMIN_APPLICATIONS-->
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER</td>
+	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Asset Publisher')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_BLOGS</td>
 	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Blogs')]</td>

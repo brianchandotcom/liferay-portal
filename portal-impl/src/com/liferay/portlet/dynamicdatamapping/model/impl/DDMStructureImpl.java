@@ -292,7 +292,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			fieldsMap = getLocalizedPersistentFieldsMap();
 		}
 
-		return Collections.unmodifiableMap(fieldsMap.get(locale));
+		return fieldsMap.get(locale);
 	}
 
 	@Override

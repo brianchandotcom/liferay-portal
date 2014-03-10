@@ -21,8 +21,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 
 import java.util.Locale;
-
-import javax.portlet.PortletConfig;
+import java.util.ResourceBundle;
 
 import javax.servlet.jsp.PageContext;
 
@@ -137,40 +136,37 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 
 	@Override
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object argument) {
+		ResourceBundle resourceBundle, String pattern, Object argument) {
 
 		return UnicodeFormatter.toString(
-			LanguageUtil.format(portletConfig, locale, pattern, argument));
+			LanguageUtil.format(resourceBundle, pattern, argument));
 	}
 
 	@Override
-	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
+	public String format(ResourceBundle resourceBundle, String pattern,
 		Object argument, boolean translateArguments) {
 
 		return UnicodeFormatter.toString(
 			LanguageUtil.format(
-				portletConfig, locale, pattern, argument, translateArguments));
+				resourceBundle, pattern, argument, translateArguments));
 	}
 
 	@Override
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object[] arguments) {
+		ResourceBundle resourceBundle, String pattern, Object[] arguments) {
 
 		return UnicodeFormatter.toString(
-			LanguageUtil.format(portletConfig, locale, pattern, arguments));
+			LanguageUtil.format(resourceBundle, pattern, arguments));
 	}
 
 	@Override
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object[] arguments, boolean translateArguments) {
+		ResourceBundle resourceBundle, String pattern, Object[] arguments,
+		boolean translateArguments) {
 
 		return UnicodeFormatter.toString(
 			LanguageUtil.format(
-				portletConfig, locale, pattern, arguments, translateArguments));
+				resourceBundle, pattern, arguments, translateArguments));
 	}
 
 	@Override
@@ -198,18 +194,18 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	}
 
 	@Override
-	public String get(PortletConfig portletConfig, Locale locale, String key) {
+	public String get(ResourceBundle resourceBundle, String key) {
 		return UnicodeFormatter.toString(
-			LanguageUtil.get(portletConfig, locale, key));
+			LanguageUtil.get(resourceBundle, resourceBundle.getLocale(), key));
 	}
 
 	@Override
 	public String get(
-		PortletConfig portletConfig, Locale locale, String key,
-		String defaultValue) {
+		ResourceBundle resourceBundle, String key, String defaultValue) {
 
 		return UnicodeFormatter.toString(
-			LanguageUtil.get(portletConfig, locale, key, defaultValue));
+			LanguageUtil.get(
+				resourceBundle, resourceBundle.getLocale(), key, defaultValue));
 	}
 
 	@Override

@@ -15,8 +15,7 @@
 package com.liferay.portal.kernel.language;
 
 import java.util.Locale;
-
-import javax.portlet.PortletConfig;
+import java.util.ResourceBundle;
 
 import javax.servlet.jsp.PageContext;
 
@@ -66,20 +65,18 @@ public interface UnicodeLanguage {
 		boolean translateArguments);
 
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object argument);
+		ResourceBundle resourceBundle, String pattern, Object argument);
 
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object argument, boolean translateArguments);
+		ResourceBundle resourceBundlee, String pattern, Object argument,
+		boolean translateArguments);
 
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object[] arguments);
+		ResourceBundle resourceBundle, String pattern, Object[] arguments);
 
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object[] arguments, boolean translateArguments);
+		ResourceBundle resourceBundle, String pattern, Object[] arguments,
+		boolean translateArguments);
 
 	public String get(Locale locale, String key);
 
@@ -89,11 +86,10 @@ public interface UnicodeLanguage {
 
 	public String get(PageContext pageContext, String key, String defaultValue);
 
-	public String get(PortletConfig portletConfig, Locale locale, String key);
+	public String get(ResourceBundle resourceBundle, String key);
 
 	public String get(
-		PortletConfig portletConfig, Locale locale, String key,
-		String defaultValue);
+		ResourceBundle resourceBundle, String key, String defaultValue);
 
 	public String getTimeDescription(
 		PageContext pageContext, long milliseconds);

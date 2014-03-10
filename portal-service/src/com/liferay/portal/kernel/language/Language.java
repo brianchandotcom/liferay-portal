@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,20 +75,18 @@ public interface Language {
 		boolean translateArguments);
 
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object argument);
+		ResourceBundle resourceBundle, String pattern, Object argument);
 
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object argument, boolean translateArguments);
+		ResourceBundle resourceBundle, String pattern, Object argument,
+		boolean translateArguments);
 
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object[] arguments);
+		ResourceBundle resourceBundle, String pattern, Object[] arguments);
 
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object[] arguments, boolean translateArguments);
+		ResourceBundle resourceBundle, String pattern, Object[] arguments,
+		boolean translateArguments);
 
 	public String get(Locale locale, String key);
 
@@ -98,11 +96,10 @@ public interface Language {
 
 	public String get(PageContext pageContext, String key, String defaultValue);
 
-	public String get(PortletConfig portletConfig, Locale locale, String key);
+	public String get(ResourceBundle resourceBundle, String key);
 
 	public String get(
-		PortletConfig portletConfig, Locale locale, String key,
-		String defaultValue);
+		ResourceBundle resourceBundle, String key, String defaultValue);
 
 	public Locale[] getAvailableLocales();
 

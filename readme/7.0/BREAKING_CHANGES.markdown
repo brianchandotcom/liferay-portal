@@ -38,11 +38,12 @@ only affected people are those using a certain feature or API, say so.
 applicable, justify why the breaking change was made instead of following a
 deprecation process.
 
-Here's the template to use for each breaking change:
+Here's the template to use for each breaking change (note how it ends with a horizontal rule):
 
+```
 ### [Title]
-Date:
-Jira Ticket:
+* Date:
+* Jira Ticket:
 
 #### What changed?
 
@@ -52,4 +53,42 @@ Jira Ticket:
 
 #### Why was this change made?
 
+---------------------------------------
+```
+---------------------------------------
 
+### Removal of Methods get and format which use the PortletConfig in LanguageUtil and UnicodeLanguageUtil
+* Date: 7th March 2014
+* Jira Ticket: LPS-44342
+
+#### What changed?
+All the methods get() and format() which had the PortletConfig as a parameter
+have been removed.
+
+#### Who is affected?
+Any invocations from Java classes or JSPs to these methods in LanguageUtil and
+UnicodeLanguageUtil
+
+#### How should I update my code?
+Replace the invocation to those methods with the ones with the same name that
+take ResourceBundle as a parameter instead.
+
+**Example**
+
+Replace:
+```
+LanguageUtil.get(portletConfig, locale, key);
+```
+
+With:
+```
+LanguageUtil.get(portletConfig.getResourceBundle(locale), key);
+```
+
+#### Why was this change made?
+The removed methods didn't work properly and they would never do since they
+didn't have all the information required in order to work. Since we expect them
+to be rarely used we considered it was better to remove them without deprecation
+than to leave buggy methods in the API.
+
+---------------------------------------

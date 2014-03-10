@@ -121,7 +121,8 @@ public class LanguageFilter extends BasePortalFilter {
 			String value = null;
 
 			if (_portletConfig != null) {
-				value = UnicodeLanguageUtil.get(_portletConfig, locale, key);
+				value = UnicodeLanguageUtil.get(
+					_portletConfig.getResourceBundle(locale), key);
 			}
 			else {
 				value = UnicodeLanguageUtil.get(locale, key);

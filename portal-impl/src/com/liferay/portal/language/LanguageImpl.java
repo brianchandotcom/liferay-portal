@@ -290,35 +290,32 @@ public class LanguageImpl implements Language {
 
 	@Override
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object argument) {
+		ResourceBundle resourceBundle, String pattern, Object argument) {
 
-		return format(
-			portletConfig, locale, pattern, new Object[] {argument}, true);
+		return format(resourceBundle, pattern, new Object[]{argument}, true);
 	}
 
 	@Override
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object argument, boolean translateArguments) {
+		ResourceBundle resourceBundle, String pattern, Object argument,
+		boolean translateArguments) {
 
 		return format(
-			portletConfig, locale, pattern, new Object[] {argument},
+			resourceBundle, pattern, new Object[] {argument},
 			translateArguments);
 	}
 
 	@Override
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object[] arguments) {
+		ResourceBundle resourceBundle, String pattern, Object[] arguments) {
 
-		return format(portletConfig, locale, pattern, arguments, true);
+		return format(resourceBundle, pattern, arguments, true);
 	}
 
 	@Override
 	public String format(
-		PortletConfig portletConfig, Locale locale, String pattern,
-		Object[] arguments, boolean translateArguments) {
+		ResourceBundle resourceBundle, String pattern, Object[] arguments,
+		boolean translateArguments) {
 
 		if (PropsValues.TRANSLATIONS_DISABLED) {
 			return pattern;
@@ -327,7 +324,7 @@ public class LanguageImpl implements Language {
 		String value = null;
 
 		try {
-			pattern = get(portletConfig, locale, pattern);
+			pattern = get(resourceBundle, pattern);
 
 			if (ArrayUtil.isNotEmpty(arguments)) {
 				pattern = _escapePattern(pattern);
@@ -337,7 +334,7 @@ public class LanguageImpl implements Language {
 				for (int i = 0; i < arguments.length; i++) {
 					if (translateArguments) {
 						formattedArguments[i] = get(
-							locale, arguments[i].toString());
+							resourceBundle, arguments[i].toString());
 					}
 					else {
 						formattedArguments[i] = arguments[i];
@@ -411,7 +408,7 @@ public class LanguageImpl implements Language {
 		PageContext pageContext, String key, String defaultValue) {
 
 		try {
-			return _get(pageContext, null, null, key, defaultValue);
+			return _get(pageContext, null, null, null, key, defaultValue);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -423,17 +420,18 @@ public class LanguageImpl implements Language {
 	}
 
 	@Override
-	public String get(PortletConfig portletConfig, Locale locale, String key) {
-		return get(portletConfig, locale, key, key);
+	public String get(ResourceBundle resourceBundle, String key) {
+		return get(resourceBundle, key, key);
 	}
 
 	@Override
 	public String get(
-		PortletConfig portletConfig, Locale locale, String key,
-		String defaultValue) {
+		ResourceBundle resourceBundle, String key, String defaultValue) {
 
 		try {
-			return _get(null, portletConfig, locale, key, defaultValue);
+			return _get(
+				null, null, resourceBundle, resourceBundle.getLocale(), key,
+				defaultValue);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -834,8 +832,9 @@ public class LanguageImpl implements Language {
 	}
 
 	private String _get(
-			PageContext pageContext, PortletConfig portletConfig, Locale locale,
-			String key, String defaultValue)
+			PageContext pageContext, PortletConfig portletConfig,
+			ResourceBundle resourceBundle, Locale locale, String key,
+			String defaultValue)
 		throws Exception {
 
 		if (PropsValues.TRANSLATIONS_DISABLED) {
@@ -870,9 +869,16 @@ public class LanguageImpl implements Language {
 				JavaConstants.JAVAX_PORTLET_CONFIG);
 		}
 
+		if (resourceBundle != null) {
+			value = ResourceBundleUtil.getString(resourceBundle, key);
+
+			if (value != null) {
+				value = LanguageResources.fixValue(value);
+			}
+		}
+
 		if (portletConfig != null) {
-			ResourceBundle resourceBundle = portletConfig.getResourceBundle(
-				locale);
+			resourceBundle = portletConfig.getResourceBundle(locale);
 
 			value = ResourceBundleUtil.getString(resourceBundle, key);
 
@@ -905,7 +911,8 @@ public class LanguageImpl implements Language {
 					key = key.substring(0, pos);
 
 					return _get(
-						pageContext, portletConfig, locale, key, defaultValue);
+						pageContext, portletConfig, resourceBundle, locale, key,
+						defaultValue);
 				}
 			}
 		}

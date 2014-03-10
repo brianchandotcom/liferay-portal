@@ -166,9 +166,12 @@
 
 			if (instance._skipParse) {
 				newLineCharacter = NEW_LINE;
-			}
 
-			listTagsIn.push(newLineCharacter);
+				listTagsIn.push(newLineCharacter);
+			}
+			else if (!element.previousSibling) {
+				listTagsIn.push(newLineCharacter);
+			}
 		},
 
 		_handleData: function(data, element) {

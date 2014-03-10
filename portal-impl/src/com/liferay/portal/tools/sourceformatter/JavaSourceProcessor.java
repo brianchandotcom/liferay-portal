@@ -1598,6 +1598,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
+				int x = strippedQuotesLine.indexOf(", ");
+
+				if (x != -1) {
+					String linePart = strippedQuotesLine.substring(0, x);
+
+					int closeParenthesisCount = StringUtil.count(
+						linePart, StringPool.CLOSE_PARENTHESIS);
+					int openParenthesisCount = StringUtil.count(
+						linePart, StringPool.OPEN_PARENTHESIS);
+
+					if (closeParenthesisCount > openParenthesisCount) {
+						processErrorMessage(
+							fileName,
+							"line break: " + fileName + " " + lineCount);
+					}
+				}
+
 				if (line.contains(StringPool.COMMA) &&
 					!line.contains(StringPool.CLOSE_PARENTHESIS) &&
 					!line.contains(StringPool.GREATER_THAN) &&
@@ -1611,7 +1628,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (line.endsWith(" +") || line.endsWith(" -") ||
 					line.endsWith(" *") || line.endsWith(" /")) {
 
-					int x = line.indexOf(" = ");
+					x = line.indexOf(" = ");
 
 					if (x != -1) {
 						int y = line.indexOf(StringPool.QUOTE);

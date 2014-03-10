@@ -631,9 +631,12 @@ public class SeleniumBuilderFileUtil {
 								1006, fileName, element, attributeName);
 						}
 					}
-					else if (attributeName.startsWith("locator") ||
-							 attributeName.startsWith("locator-key") ||
-							 attributeName.startsWith("value")) {
+					else if (attributeName.equals("locator1") ||
+							 attributeName.equals("locator2") ||
+							 attributeName.equals("locator-key1") ||
+							 attributeName.equals("locator-key2") ||
+							 attributeName.equals("value1") ||
+							 attributeName.equals("value2")) {
 
 						String attributeValue = attribute.getValue();
 
@@ -647,9 +650,12 @@ public class SeleniumBuilderFileUtil {
 
 					if (!attributeName.equals("comparator") &&
 						!attributeName.equals("line-number") &&
-						!attributeName.startsWith("locator") &&
-						!attributeName.startsWith("locator-key") &&
-						!attributeName.startsWith("value")) {
+						!attributeName.equals("locator1") &&
+						!attributeName.equals("locator2") &&
+						!attributeName.equals("locator-key1") &&
+						!attributeName.equals("locator-key2") &&
+						!attributeName.equals("value1") &&
+						!attributeName.equals("value2")) {
 
 						throwValidationException(
 							1005, fileName, element, attributeName);
@@ -854,9 +860,12 @@ public class SeleniumBuilderFileUtil {
 
 				if (!attributeName.equals("action") &&
 					!attributeName.equals("line-number") &&
-					!attributeName.startsWith("locator") &&
-					!attributeName.startsWith("locator-key") &&
-					!attributeName.startsWith("value")) {
+					!attributeName.equals("locator1") &&
+					!attributeName.equals("locator2") &&
+					!attributeName.equals("locator-key1") &&
+					!attributeName.equals("locator-key2") &&
+					!attributeName.equals("value1") &&
+					!attributeName.equals("value2")) {
 
 					throwValidationException(
 						1005, fileName, executeElement, attributeName);

@@ -644,41 +644,34 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		Map<String, Map<String, Map<String, String>>> localizedFieldsMap =
 			getLocalizedFieldsMap();
 
-		Map<String, Map<String, String>> fieldsMap = localizedFieldsMap.get(
-			locale);
-
-		Map<String, Map<String, Map<String, String>>>
-			localizedPersistentFieldsMap = getLocalizedPersistentFieldsMap();
-
-		Map<String, Map<String, String>> persistentFieldsMap =
-			localizedPersistentFieldsMap.get(locale);
-
-		Map<String, Map<String, Map<String, String>>>
-			localizedTransientFieldsMap = getLocalizedTransientFieldsMap();
-
-		Map<String, Map<String, String>> transientFieldsMap =
-			localizedTransientFieldsMap.get(locale);
-
-		if (fieldsMap != null) {
+		if (localizedFieldsMap.containsKey(locale)) {
 			return;
 		}
+
+		Map<String, Map<String, Map<String, String>>>
+				localizedPersistentFieldsMap = getLocalizedPersistentFieldsMap();
+
+		Map<String, Map<String, Map<String, String>>>
+				localizedTransientFieldsMap = getLocalizedTransientFieldsMap();
+
+		Map<String, Map<String, String>> fieldsMap =
+				new LinkedHashMap<String, Map<String, String>>();
+
+		Map<String, Map<String, String>> persistentFieldsMap =
+				new LinkedHashMap<String, Map<String, String>>();
+
+		Map<String, Map<String, String>> transientFieldsMap =
+				new LinkedHashMap<String, Map<String, String>>();
 
 		if (getParentStructureId() > 0) {
 			DDMStructure parentStructure =
 				DDMStructureLocalServiceUtil.getStructure(
 					getParentStructureId());
 
-			fieldsMap = parentStructure.getFieldsMap(locale, true);
-			persistentFieldsMap = parentStructure.getPersistentFieldsMap(
-				locale);
-			transientFieldsMap = parentStructure.getTransientFieldsMap(locale);
-		}
-		else {
-			fieldsMap = new LinkedHashMap<String, Map<String, String>>();
-			persistentFieldsMap =
-				new LinkedHashMap<String, Map<String, String>>();
-			transientFieldsMap =
-				new LinkedHashMap<String, Map<String, String>>();
+			fieldsMap.putAll(parentStructure.getFieldsMap(locale, true));
+			persistentFieldsMap.putAll(
+				parentStructure.getPersistentFieldsMap(locale));
+			transientFieldsMap.putAll(parentStructure.getTransientFieldsMap(locale));
 		}
 
 		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");

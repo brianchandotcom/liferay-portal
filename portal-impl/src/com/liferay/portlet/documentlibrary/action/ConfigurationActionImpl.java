@@ -106,23 +106,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 	}
 
-	protected void validateEmailFrom(ActionRequest actionRequest)
-		throws Exception {
-
-		String emailFromName = getParameter(actionRequest, "emailFromName");
-		String emailFromAddress = getParameter(
-			actionRequest, "emailFromAddress");
-
-		if (Validator.isNull(emailFromName)) {
-			SessionErrors.add(actionRequest, "emailFromName");
-		}
-		else if (!Validator.isEmailAddress(emailFromAddress) &&
-				 !Validator.isVariableTerm(emailFromAddress)) {
-
-			SessionErrors.add(actionRequest, "emailFromAddress");
-		}
-	}
-
 	protected void validateRootFolder(ActionRequest actionRequest)
 		throws Exception {
 

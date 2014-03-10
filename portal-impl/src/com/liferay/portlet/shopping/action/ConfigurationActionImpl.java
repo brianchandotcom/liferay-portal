@@ -96,21 +96,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		setPreference(actionRequest, "shipping", StringUtil.merge(shipping));
 	}
 
-	protected void validateEmailFrom(ActionRequest actionRequest)
-		throws Exception {
-
-		String emailFromName = getParameter(actionRequest, "emailFromName");
-		String emailFromAddress = getParameter(
-			actionRequest, "emailFromAddress");
-
-		if (Validator.isNull(emailFromName)) {
-			SessionErrors.add(actionRequest, "emailFromName");
-		}
-		else if (!Validator.isEmailAddress(emailFromAddress)) {
-			SessionErrors.add(actionRequest, "emailFromAddress");
-		}
-	}
-
 	protected void validateEmailOrderConfirmation(ActionRequest actionRequest)
 		throws Exception {
 

@@ -146,7 +146,8 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 		try {
 			ServletFileUpload servletFileUpload = new LiferayFileUpload(
 				new LiferayFileItemFactory(
-					UploadServletRequestImpl.getTempDir()), request);
+					UploadServletRequestImpl.getTempDir()),
+				request);
 
 			servletFileUpload.setFileSizeMax(
 				PrefsPropsUtil.getLong(

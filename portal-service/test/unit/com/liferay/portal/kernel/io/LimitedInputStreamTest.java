@@ -42,8 +42,8 @@ public class LimitedInputStreamTest {
 	@Test
 	public void testClose() throws IOException {
 		LimitedInputStream limitedInputStream = new LimitedInputStream(
-			new BufferedInputStream(
-				new ByteArrayInputStream(new byte[10])), 5, 3);
+			new BufferedInputStream(new ByteArrayInputStream(new byte[10])), 5,
+			3);
 
 		limitedInputStream.close();
 

@@ -358,7 +358,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 				content);
 			document.addText(
 				Field.DESCRIPTION.concat(StringPool.UNDERLINE).concat(
-					languageId), description);
+					languageId),
+				description);
 			document.addText(
 				Field.TITLE.concat(StringPool.UNDERLINE).concat(languageId),
 				title);

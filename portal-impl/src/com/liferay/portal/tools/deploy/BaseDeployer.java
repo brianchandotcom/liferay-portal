@@ -1599,7 +1599,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		if (!GetterUtil.getBoolean(
 				properties.getProperty(
-					"servlet-context-include-filters-enabled"), true)) {
+					"servlet-context-include-filters-enabled"),
+				true)) {
 
 			return StringPool.BLANK;
 		}

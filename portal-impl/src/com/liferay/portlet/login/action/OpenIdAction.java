@@ -446,7 +446,8 @@ public class OpenIdAction extends PortletAction {
 				openIdAXType,
 				PropsUtil.get(
 					_OPEN_ID_AX_TYPE.concat(openIdAXType),
-					new Filter(openIdProvider)), true);
+					new Filter(openIdProvider)),
+				true);
 		}
 
 		authRequest.addExtension(fetchRequest);

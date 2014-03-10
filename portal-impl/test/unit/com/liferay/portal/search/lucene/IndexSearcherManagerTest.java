@@ -109,7 +109,7 @@ public class IndexSearcherManagerTest {
 
 		_indexSearcherManager.invalidate();
 
-		Thread thread = new Thread() {
+		Thread thread = new Thread("Double check locking") {
 
 			@Override
 			public void run() {
@@ -149,7 +149,7 @@ public class IndexSearcherManagerTest {
 
 			});
 
-		thread = new Thread(futureTask1);
+		thread = new Thread(futureTask1, "Concurrent reopen 1");
 
 		thread.start();
 
@@ -169,7 +169,7 @@ public class IndexSearcherManagerTest {
 
 			});
 
-		thread = new Thread(futureTask2);
+		thread = new Thread(futureTask2, "Concurrent reopen 2");
 
 		thread.start();
 

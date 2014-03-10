@@ -140,6 +140,8 @@
 
 		<execute action="PGDocumentsandmedia#click" locator-key1="FILTER_HOME_ACTIONS" />
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="HOME_MENULIST_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="gotoPagePG">

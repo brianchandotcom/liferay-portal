@@ -196,10 +196,12 @@
 		<if>
 			<equals arg1="${checkedOut}" arg2="true" />
 			<then>
-				<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="ERROR_MESSAGE_DOCUMENT_LOCKED" />
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You cannot modify this document because it was locked by ${userName}" />
 			</then>
 			<else>
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
+				<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
+			</else>
+		</if>
 
 		<if>
 			<not>
@@ -254,8 +256,6 @@
 					</else>
 				</if>
 			</then>
-		</if>
-			</else>
 		</if>
 	</command>
 
@@ -366,6 +366,7 @@
 		</execute>
 
 		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="moveToFolderCP">

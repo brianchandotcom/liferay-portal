@@ -34,9 +34,3 @@ String backURL = ParamUtil.getString(request, "backURL");
 />
 
 <liferay-util:include page="/html/portlet/wiki/history_navigation.jsp" />
-
-<%
-String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS);
-%>
-
-<liferay-ui:diff-html diffHtmlResults="<%= diffHtmlResults %>" />

@@ -49,7 +49,6 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;

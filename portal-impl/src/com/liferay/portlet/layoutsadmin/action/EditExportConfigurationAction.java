@@ -202,18 +202,11 @@ public class EditExportConfigurationAction extends PortletAction {
 		long exportImportConfigurationId = ParamUtil.getLong(
 			actionRequest, "exportImportConfigurationId");
 
-		if (exportImportConfigurationId > 0) {
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					"exportImportConfigurationId",
-				exportImportConfigurationId);
-
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) + "editedAfterFirstEdit",
-				true);
-		}
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				"exportImportConfigurationId",
+			exportImportConfigurationId);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 

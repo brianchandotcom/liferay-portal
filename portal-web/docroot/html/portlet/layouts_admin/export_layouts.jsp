@@ -23,33 +23,36 @@ if (Validator.isNull(cmd)) {
 	cmd = Constants.EXPORT;
 }
 
-long exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
-
-if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId")) {
-	exportImportConfigurationId = (Long)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId");
-}
+long exportImportConfigurationId = 0;
 
 ExportImportConfiguration exportImportConfiguration = null;
 Map<String, Serializable> exportImportConfigurationSettingsMap = Collections.EMPTY_MAP;
 Map<String, String[]> parameterMap = Collections.EMPTY_MAP;
 Map<Long, Boolean> layoutIdMap = Collections.EMPTY_MAP;
 
-boolean editedAfterFirstEdit = SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "editedAfterFirstEdit");
+if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId")) {
+	exportImportConfigurationId = (Long)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId");
 
-if ((exportImportConfigurationId > 0) && !editedAfterFirstEdit) {
-	exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
-	exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
-	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
-	layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
-}
-else if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "settingsMap")) {
 	if (exportImportConfigurationId > 0) {
 		exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 	}
 
 	exportImportConfigurationSettingsMap = (Map<String, Serializable>)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "settingsMap");
+
 	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
 	layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
+}
+else {
+	exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
+
+	if (exportImportConfigurationId > 0) {
+		exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
+
+		exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
+
+		parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
+		layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
+	}
 }
 
 String exportNav = ParamUtil.getString(request, "exportNav", "custom");

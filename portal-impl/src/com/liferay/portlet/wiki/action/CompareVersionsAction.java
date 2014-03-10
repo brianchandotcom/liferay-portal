@@ -14,11 +14,7 @@
 
 package com.liferay.portlet.wiki.action;
 
-import com.liferay.portal.kernel.diff.DiffResult;
-import com.liferay.portal.kernel.diff.DiffUtil;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -28,8 +24,6 @@ import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import com.liferay.portlet.wiki.util.WikiUtil;
-
-import java.util.List;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletURL;
@@ -88,61 +82,33 @@ public class CompareVersionsAction extends PortletAction {
 			renderRequest, "sourceVersion");
 		double targetVersion = ParamUtil.getDouble(
 			renderRequest, "targetVersion");
-		String type = ParamUtil.getString(renderRequest, "type", "escape");
 
 		WikiPage sourcePage = WikiPageServiceUtil.getPage(
 			nodeId, title, sourceVersion);
 		WikiPage targetPage = WikiPageServiceUtil.getPage(
 			nodeId, title, targetVersion);
 
-		if (type.equals("html")) {
-			WikiNode sourceNode = sourcePage.getNode();
+		WikiNode sourceNode = sourcePage.getNode();
 
-			PortletURL viewPageURL = renderResponse.createRenderURL();
+		PortletURL viewPageURL = renderResponse.createRenderURL();
 
-			viewPageURL.setParameter("struts_action", "/wiki/view");
-			viewPageURL.setParameter("nodeName", sourceNode.getName());
+		viewPageURL.setParameter("struts_action", "/wiki/view");
+		viewPageURL.setParameter("nodeName", sourceNode.getName());
 
-			PortletURL editPageURL = renderResponse.createRenderURL();
+		PortletURL editPageURL = renderResponse.createRenderURL();
 
-			editPageURL.setParameter("struts_action", "/wiki/edit_page");
-			editPageURL.setParameter("nodeId", String.valueOf(nodeId));
-			editPageURL.setParameter("title", title);
+		editPageURL.setParameter("struts_action", "/wiki/edit_page");
+		editPageURL.setParameter("nodeId", String.valueOf(nodeId));
+		editPageURL.setParameter("title", title);
 
-			String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
-				themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId,
-				title);
+		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
+			themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId, title);
 
-			String htmlDiffResult = WikiUtil.diffHtml(
-				sourcePage, targetPage, viewPageURL, editPageURL,
-				attachmentURLPrefix);
+		String htmlDiffResult = WikiUtil.diffHtml(
+			sourcePage, targetPage, viewPageURL, editPageURL,
+		attachmentURLPrefix);
 
-			renderRequest.setAttribute(
-				WebKeys.DIFF_HTML_RESULTS, htmlDiffResult);
-		}
-		else {
-			String sourceContent = sourcePage.getContent();
-			String targetContent = targetPage.getContent();
-
-			sourceContent = WikiUtil.processContent(sourceContent);
-			targetContent = WikiUtil.processContent(targetContent);
-
-			if (type.equals("strip")) {
-				sourceContent = HtmlUtil.extractText(sourceContent);
-				targetContent = HtmlUtil.extractText(targetContent);
-			}
-			else {
-				sourceContent = HtmlUtil.escape(sourceContent);
-				targetContent = HtmlUtil.escape(targetContent);
-			}
-
-			List<DiffResult>[] diffResults = DiffUtil.diff(
-				new UnsyncStringReader(sourceContent),
-				new UnsyncStringReader(targetContent));
-
-			renderRequest.setAttribute(WebKeys.DIFF_RESULTS, diffResults);
-		}
-
+		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, htmlDiffResult);
 		renderRequest.setAttribute(WebKeys.WIKI_NODE_ID, nodeId);
 		renderRequest.setAttribute(WebKeys.TITLE, title);
 		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);

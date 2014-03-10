@@ -138,7 +138,8 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 					String snippet = results.snippet(i);
 
 					Summary summary = indexer.getSummary(
-						result, themeDisplay.getLocale(), snippet, portletURL);
+						result, themeDisplay.getLocale(), snippet, portletURL,
+						null, null);
 
 					title = summary.getTitle();
 					url = portletURL.toString();

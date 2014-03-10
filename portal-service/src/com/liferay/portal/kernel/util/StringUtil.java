@@ -1468,6 +1468,12 @@ public class StringUtil {
 		return toLowerCase(s);
 	}
 
+	/**
+	 * Converts all of the characters in the arbitrary number of strings to
+	 * lower case.
+	 *
+	 * @param array the array or sequence of string arguments
+	 */
 	public static void lowerCase(String... array) {
 		if (array != null) {
 			for (int i = 0; i < array.length; i++) {
@@ -1620,10 +1626,28 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * Merges the elements of the collection by returning a string representing
+	 * a comma delimited list of its values.
+	 *
+	 * @param  col the collection of objects
+	 * @return the merged collection elements, or <code>null</code> if the
+	 *         collection is <code>null</code>
+	 */
 	public static String merge(Collection<?> col) {
 		return merge(col, StringPool.COMMA);
 	}
 
+	/**
+	 * Merges the elements of the collection by returning a string representing
+	 * a delimited list of its values.
+	 *
+	 * @param  col the collection of objects
+	 * @param  delimiter the string whose last index in the string marks where
+	 *         to begin the substring
+	 * @return the merged collection elements, or <code>null</code> if the
+	 *         collection is <code>null</code>
+	 */
 	public static String merge(Collection<?> col, String delimiter) {
 		if (col == null) {
 			return null;

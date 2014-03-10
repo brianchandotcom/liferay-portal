@@ -392,32 +392,6 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		return new AssetCategoryDisplay(categories, total, start, end);
 	}
 
-	@Override
-	public AssetCategoryDisplay getVocabularyCategoriesDisplayByTitle(
-			long groupId, String title, long vocabularyId, int start, int end)
-		throws PortalException, SystemException {
-
-		return getVocabularyCategoriesDisplayByTitle(
-			new long[]{groupId}, title, new long[]{vocabularyId}, start, end);
-	}
-
-	@Override
-	public AssetCategoryDisplay getVocabularyCategoriesDisplayByTitle(
-			long[] groupIds, String title, long[] vocabularyIds, int start,
-			int end)
-		throws PortalException, SystemException {
-
-		User user = getUser();
-
-		BaseModelSearchResult<AssetCategory> results =
-			assetCategoryLocalService.searchCategories(
-				user.getCompanyId(), groupIds, title, vocabularyIds, start,
-				end);
-
-		return new AssetCategoryDisplay(
-			results.getBaseModels(), results.getLength(), start, end);
-	}
-
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getVocabularyRootCategories(long, long, int, int,
@@ -529,6 +503,32 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		}
 
 		return jsonArray;
+	}
+
+	@Override
+	public AssetCategoryDisplay searchCategoriesDisplay(
+			long groupId, String title, long vocabularyId, int start, int end)
+		throws PortalException, SystemException {
+
+		return searchCategoriesDisplay(
+			new long[]{groupId}, title, new long[]{vocabularyId}, start, end);
+	}
+
+	@Override
+	public AssetCategoryDisplay searchCategoriesDisplay(
+			long[] groupIds, String title, long[] vocabularyIds, int start,
+			int end)
+		throws PortalException, SystemException {
+
+		User user = getUser();
+
+		BaseModelSearchResult<AssetCategory> results =
+			assetCategoryLocalService.searchCategories(
+				user.getCompanyId(), groupIds, title, vocabularyIds, start,
+				end);
+
+		return new AssetCategoryDisplay(
+			results.getBaseModels(), results.getLength(), start, end);
 	}
 
 	@Override

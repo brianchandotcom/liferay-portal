@@ -23,6 +23,8 @@ import com.liferay.portlet.journal.model.JournalStructure;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @deprecated As of 6.2.0, since Web Content Administration now uses the
+ *             Dynamic Data Mapping framework to handle structures
  */
 public class JournalStructurePermission {
 

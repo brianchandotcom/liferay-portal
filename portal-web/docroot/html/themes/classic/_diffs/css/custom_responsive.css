@@ -52,17 +52,17 @@
 				width: auto;
 
 				.container {
+					.site-navigation-btn.open {
+						background-color: #F5AF45;
+					}
+
 					.btn-navbar {
 						background: transparent;
 						border-width: 0;
 						font-size: 24px;
 
-						&:hover, &.nav-account-controls-btn.open, &.nav-add-controls-btn.open, &.nav-navigation-btn:focus {
+						&:hover, &.nav-account-controls-btn.open, &.nav-add-controls-btn.open {
 							background-color: #5BBAE8;
-						}
-
-						&.nav-navigation-btn.active {
-							background-color: #F5AF45;
 						}
 					}
 
@@ -157,6 +157,7 @@
 									color: #FFF;
 									font-size: 16px;
 									line-height: 20px;
+									margin-bottom: 5px;
 									padding: 12px;
 
 									&:focus, &:hover {

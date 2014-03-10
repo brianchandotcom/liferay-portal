@@ -23,7 +23,7 @@ AUI.add(
 					},
 
 					trigger: {
-						validator: Lang.isString
+						setter: A.one
 					}
 				},
 
@@ -35,11 +35,17 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						var triggerId = instance.get('trigger');
+						var trigger = instance.get('trigger');
+
+						var triggerId = trigger.attr('id');
+
+						if (!triggerId) {
+							triggerId = A.guid();
+						}
 
 						instance._handleId = triggerId + 'Handle';
 
-						instance._triggerNode = A.one(triggerId);
+						instance._triggerNode = trigger;
 
 						instance._content = A.all(instance.get('content'));
 

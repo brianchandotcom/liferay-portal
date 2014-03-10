@@ -309,48 +309,25 @@ AUI.add(
 
 				instance._registerPanels();
 
-				var btnNavigation = A.oneNS(namespace, '#navSiteNavigationNavbarBtn');
+				var btnNavigation = A.oneNS(namespace, '#navSiteNavigation');
 
 				var navigation = A.one(Liferay.Data.NAV_SELECTOR);
-
-				var handle;
 
 				if (btnNavigation && navigation) {
 					btnNavigation.setData('menuItem', navigation);
 
-					btnNavigation.on(
-						EVENT_CLICK,
-						function(event) {
-							var open = navigation.hasClass(STR_OPEN);
-
-							if (open && handle) {
-								handle.detach();
-
-								handle = null;
-							}
-							else {
-								handle = navigation.on(
-									EVENT_MOUSEDOWN_OUTSIDE,
-									function(event) {
-										if (!btnNavigation.contains(event.target)) {
-											handle.detach();
-
-											btnNavigation.removeClass(STR_ACTIVE);
-											navigation.removeClass(STR_OPEN);
-										}
-									}
-								);
-							}
-
-							btnNavigation.toggleClass(STR_ACTIVE);
-							navigation.toggleClass(STR_OPEN);
+					var toggleMenu = new Liferay.MenuToggle(
+						{
+							content: [btnNavigation, navigation],
+							toggleTouch: false,
+							trigger: btnNavigation
 						}
 					);
 				}
 
 				Liferay.fire('dockbarLoaded');
 			},
-			['aui-io-request', 'liferay-node', 'liferay-store', 'node-focusmanager']
+			['aui-io-request', 'liferay-menu-toggle', 'liferay-node', 'liferay-store', 'node-focusmanager']
 		);
 
 		Liferay.provide(

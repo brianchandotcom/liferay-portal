@@ -43,7 +43,7 @@ public class LiferayIntegrationJUnitTestRunner
 	public void initApplicationContext() {
 		System.setProperty("catalina.base", ".");
 
-		InitUtil.initWithSpring();
+		InitUtil.initWithSpringAndModuleFramework();
 	}
 
 	@Override

@@ -191,6 +191,47 @@ public class InitUtil {
 			_neverInitialized = false;
 		}
 
+		init();
+
+		SpringUtil.loadContext(extraConfigLocations);
+
+		_initialized = true;
+	}
+
+	public synchronized static void initWithSpring(
+		List<String> extraConfigLocations) {
+
+		initWithSpring(false, extraConfigLocations);
+	}
+
+	public synchronized static void initWithSpringAndModuleFramework() {
+		initWithSpringAndModuleFramework(false, null);
+	}
+
+	public synchronized static void initWithSpringAndModuleFramework(
+			List<String> extraConfigLocations) {
+
+		initWithSpringAndModuleFramework(false, extraConfigLocations);
+	}
+
+	public synchronized static void initWithSpringAndModuleFramework(
+			boolean force, List<String> extraConfigLocations) {
+
+		if (force) {
+			_initialized = false;
+		}
+
+		if (_initialized) {
+			return;
+		}
+
+		if (!_neverInitialized) {
+			PropsUtil.reload();
+		}
+		else {
+			_neverInitialized = false;
+		}
+
 		try {
 			PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR = System.getProperty(
 				SystemProperties.TMP_DIR);
@@ -214,12 +255,6 @@ public class InitUtil {
 		}
 
 		_initialized = true;
-	}
-
-	public synchronized static void initWithSpring(
-		List<String> extraConfigLocations) {
-
-		initWithSpring(false, extraConfigLocations);
 	}
 
 	public synchronized static void stopModuleFramework() throws Exception {

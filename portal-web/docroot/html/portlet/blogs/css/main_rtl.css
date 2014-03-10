@@ -1,7 +1,11 @@
 .portlet-blogs {
 	.entry-navigation {
-		span.previous, .previous {
+		.previous {
 			background-image: url(@theme_image_path@/arrows/paging_next.png);
+			background-position: 100% 0%;
+		}
+
+		span.previous {
 			background-position: 100% 100%;
 		}
 

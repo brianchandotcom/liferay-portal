@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -336,6 +337,8 @@ public class JournalArticleLocalServiceImpl
 			articleId = String.valueOf(counterLocalService.increment());
 		}
 
+		serviceContext.setAttribute("articleId", articleId);
+
 		long id = counterLocalService.increment();
 
 		long resourcePrimKey =
@@ -455,6 +458,10 @@ public class JournalArticleLocalServiceImpl
 
 		PortletPreferences preferences =
 			ServiceContextUtil.getPortletPreferences(serviceContext);
+
+		articleURL = buildArticleURL(articleURL, groupId, folderId, articleId);
+
+		serviceContext.setAttribute("articleURL", articleURL);
 
 		sendEmail(
 			article, articleURL, preferences, "requested", serviceContext);
@@ -936,6 +943,10 @@ public class JournalArticleLocalServiceImpl
 				isLatestVersion(
 					article.getGroupId(), article.getArticleId(),
 					article.getVersion())) {
+
+				articleURL = buildArticleURL(
+					articleURL, article.getGroupId(), article.getFolderId(),
+					article.getArticleId());
 
 				sendEmail(
 					article, articleURL, preferences, "denied", serviceContext);
@@ -4861,6 +4872,11 @@ public class JournalArticleLocalServiceImpl
 		if (serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_PUBLISH) {
 
+			articleURL = buildArticleURL(
+				articleURL, groupId, folderId, articleId);
+
+			serviceContext.setAttribute("articleURL", articleURL);
+
 			sendEmail(
 				article, articleURL, preferences, "requested", serviceContext);
 
@@ -5388,6 +5404,10 @@ public class JournalArticleLocalServiceImpl
 						ServiceContextUtil.getPortletPreferences(
 							serviceContext);
 
+					articleURL = buildArticleURL(
+						articleURL, article.getGroupId(), article.getFolderId(),
+						article.getArticleId());
+
 					sendEmail(
 						article, articleURL, preferences, msg, serviceContext);
 				}
@@ -5508,6 +5528,28 @@ public class JournalArticleLocalServiceImpl
 
 			journalArticlePersistence.update(article);
 		}
+	}
+
+	protected String buildArticleURL(
+		String articleURL, long groupId, long folderId, String articleId) {
+
+		StringBundler sb = new StringBundler(13);
+
+		sb.append(articleURL);
+		sb.append("&_");
+		sb.append(PortletKeys.JOURNAL);
+		sb.append("_groupId=");
+		sb.append(groupId);
+		sb.append("&_");
+		sb.append(PortletKeys.JOURNAL);
+		sb.append("_folderId=");
+		sb.append(folderId);
+		sb.append("&_");
+		sb.append(PortletKeys.JOURNAL);
+		sb.append("_articleId=");
+		sb.append(articleId);
+
+		return sb.toString();
 	}
 
 	protected SearchContext buildSearchContext(
@@ -6503,10 +6545,6 @@ public class JournalArticleLocalServiceImpl
 			article.getCompanyId());
 
 		User user = userPersistence.findByPrimaryKey(article.getUserId());
-
-		articleURL +=
-			"&groupId=" + article.getGroupId() + "&articleId=" +
-				article.getArticleId() + "&version=" + article.getVersion();
 
 		String fromName = JournalUtil.getEmailFromName(
 			preferences, article.getCompanyId());

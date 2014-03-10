@@ -36,20 +36,21 @@ import org.apache.tools.ant.DirectoryScanner;
  */
 public class SeleniumBuilderContext {
 
-	public SeleniumBuilderContext(String baseDir) throws Exception {
-		this(baseDir, "com/liferay/portalweb/portal/util/liferayselenium/");
+	public SeleniumBuilderContext(String baseDirName) throws Exception {
+		this(baseDirName, "com/liferay/portalweb/portal/util/liferayselenium/");
 	}
 
-	public SeleniumBuilderContext(String baseDir, String liferaySeleniumDir)
+	public SeleniumBuilderContext(
+			String baseDirName, String liferaySeleniumDirName)
 		throws Exception {
 
-		_baseDir = baseDir;
+		_baseDirName = baseDirName;
 
-		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(_baseDir);
+		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(_baseDirName);
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
-		directoryScanner.setBasedir(_baseDir);
+		directoryScanner.setBasedir(_baseDirName);
 		directoryScanner.setIncludes(
 			new String[] {
 				"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
@@ -65,8 +66,8 @@ public class SeleniumBuilderContext {
 		}
 
 		String[] seleniumFileNames = {
-			liferaySeleniumDir + "LiferaySelenium.java",
-			liferaySeleniumDir + "SeleniumWrapper.java"
+			liferaySeleniumDirName + "LiferaySelenium.java",
+			liferaySeleniumDirName + "SeleniumWrapper.java"
 		};
 
 		for (String seleniumFileName : seleniumFileNames) {
@@ -272,8 +273,8 @@ public class SeleniumBuilderContext {
 		return _actionSimpleClassNames.get(actionName);
 	}
 
-	public String getBaseDir() {
-		return _baseDir;
+	public String getBaseDirName() {
+		return _baseDirName;
 	}
 
 	public String getFunctionClassName(String functionName) {
@@ -1239,7 +1240,7 @@ public class SeleniumBuilderContext {
 		new HashMap<String, Element>();
 	private Map<String, String> _actionSimpleClassNames =
 		new HashMap<String, String>();
-	private String _baseDir;
+	private String _baseDirName;
 	private Map<String, String> _functionClassNames =
 		new HashMap<String, String>();
 	private Map<String, String> _functionFileNames =

@@ -23,9 +23,9 @@ import com.thoughtworks.selenium.DefaultSelenium;
  */
 public class DefaultSeleniumImpl extends BaseSeleniumImpl {
 
-	public DefaultSeleniumImpl(String projectDir, String browserURL) {
+	public DefaultSeleniumImpl(String projectDirName, String browserURL) {
 		super(
-			projectDir,
+			projectDirName,
 			new DefaultSelenium(
 				TestPropsValues.SELENIUM_HOST, TestPropsValues.SELENIUM_PORT,
 				TestPropsValues.BROWSER_TYPE, browserURL));

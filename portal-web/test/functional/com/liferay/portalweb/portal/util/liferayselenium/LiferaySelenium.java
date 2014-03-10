@@ -108,7 +108,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public String getCurrentYear();
 
-	public String getDependenciesDir();
+	public String getDependenciesDirName();
 
 	public String getEmailBody(String index) throws Exception;
 
@@ -122,13 +122,13 @@ public interface LiferaySelenium extends Selenium {
 
 	public String getNumberIncrement(String value);
 
-	public String getOutputDir();
+	public String getOutputDirName();
 
 	public String getPrimaryTestSuiteName();
 
-	public String getProjectDir();
+	public String getProjectDirName();
 
-	public String getSikuliImagesDir();
+	public String getSikuliImagesDirName();
 
 	public void goBackAndWait();
 

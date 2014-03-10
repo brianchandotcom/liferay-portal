@@ -107,7 +107,7 @@ public class SeleniumUtil extends TestPropsValues {
 			else if (BROWSER_TYPE.equals("*googlechrome")) {
 				System.setProperty(
 					"webdriver.chrome.driver",
-					TestPropsValues.SELENIUM_EXECUTABLE_DIR +
+					TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
 						"\\chromedriver.exe");
 
 				if (SELENIUM_LOGGER_ENABLED) {
@@ -123,7 +123,7 @@ public class SeleniumUtil extends TestPropsValues {
 
 				System.setProperty(
 					"webdriver.ie.driver",
-					TestPropsValues.SELENIUM_EXECUTABLE_DIR +
+					TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
 						"\\IEDriverServer.exe");
 
 				if (SELENIUM_LOGGER_ENABLED) {

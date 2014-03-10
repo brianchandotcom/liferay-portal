@@ -27,8 +27,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  */
 public class ChromeWebDriverImpl extends BaseWebDriverImpl {
 
-	public ChromeWebDriverImpl(String projectDir, String browserURL) {
-		super(projectDir, browserURL, new ChromeDriver(_desiredCapabilities));
+	public ChromeWebDriverImpl(String projectDirName, String browserURL) {
+		super(
+			projectDirName, browserURL, new ChromeDriver(_desiredCapabilities));
 	}
 
 	private static DesiredCapabilities _desiredCapabilities = null;
@@ -39,7 +40,7 @@ public class ChromeWebDriverImpl extends BaseWebDriverImpl {
 		Map<String, Object> preferences = new HashMap<String, Object>();
 
 		preferences.put(
-			"download.default_directory", TestPropsValues.OUTPUT_DIR);
+			"download.default_directory", TestPropsValues.OUTPUT_DIR_NAME);
 		preferences.put("download.prompt_for_download", false);
 
 		_desiredCapabilities.setCapability("chrome.prefs", preferences);

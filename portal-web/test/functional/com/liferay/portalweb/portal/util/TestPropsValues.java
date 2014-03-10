@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 
-	public static final String BROWSER_COMMANDS_DIR = TestPropsUtil.get(
+	public static final String BROWSER_COMMANDS_DIR_NAME = TestPropsUtil.get(
 		"browser.commands.dir");
 
 	public static final String BROWSER_TYPE = TestPropsUtil.get("browser.type");
@@ -50,7 +50,8 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 
 	public static final String IGNORE_ERROR = TestPropsUtil.get("ignore.error");
 
-	public static final String OUTPUT_DIR = TestPropsUtil.get("output.dir");
+	public static final String OUTPUT_DIR_NAME = TestPropsUtil.get(
+		"output.dir");
 
 	public static final String PORTAL_URL = TestPropsUtil.get("portal.url");
 
@@ -60,7 +61,7 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 	public static final boolean SAVE_SOURCE = GetterUtil.getBoolean(
 		TestPropsUtil.get("save.source"));
 
-	public static final String SELENIUM_EXECUTABLE_DIR = TestPropsUtil.get(
+	public static final String SELENIUM_EXECUTABLE_DIR_NAME = TestPropsUtil.get(
 		"selenium.executable.dir");
 
 	public static final String SELENIUM_HOST = TestPropsUtil.get(
@@ -85,7 +86,8 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 		GetterUtil.getBoolean(
 			TestPropsUtil.get("test.assert.javascript.errors"));
 
-	public static final String TEST_BASEDIR = TestPropsUtil.get("test.basedir");
+	public static final String TEST_BASEDIR_NAME = TestPropsUtil.get(
+		"test.basedir");
 
 	public static final boolean TEST_DATABASE_MINIMAL = GetterUtil.getBoolean(
 		TestPropsUtil.get("test.database.minimal"));

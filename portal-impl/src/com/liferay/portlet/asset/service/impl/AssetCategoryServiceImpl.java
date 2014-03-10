@@ -19,11 +19,14 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -160,6 +163,40 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			getPermissionChecker(), categoryId, ActionKeys.VIEW);
 
 		return assetCategoryLocalService.getCategory(categoryId);
+	}
+
+	@Override
+	public String getCategoryPath(long categoryId)
+		throws PortalException, SystemException {
+
+		Locale locale = LocaleUtil.getMostRelevantLocale();
+
+		List<String> titles = new ArrayList<String>();
+
+		AssetCategory category = getCategory(categoryId);
+
+		while (category.getParentCategoryId() > 0) {
+			AssetCategory parentCategory = getCategory(
+				category.getParentCategoryId());
+
+			titles.add(parentCategory.getTitle(locale));
+			titles.add(
+				StringPool.SPACE + StringPool.GREATER_THAN + StringPool.SPACE);
+
+			category = parentCategory;
+		}
+
+		Collections.reverse(titles);
+
+		AssetVocabulary vocabulary = assetVocabularyService.getVocabulary(
+			category.getVocabularyId());
+
+		StringBundler sb = new StringBundler(1 + titles.size());
+
+		sb.append(vocabulary.getTitle(locale));
+		sb.append(titles.toArray(new String[titles.size()]));
+
+		return sb.toString();
 	}
 
 	@Override
@@ -469,6 +506,32 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	@Override
+	public AssetCategoryDisplay searchCategoriesDisplay(
+			long groupId, String title, long vocabularyId, int start, int end)
+		throws PortalException, SystemException {
+
+		return searchCategoriesDisplay(
+			new long[]{groupId}, title, new long[]{vocabularyId}, start, end);
+	}
+
+	@Override
+	public AssetCategoryDisplay searchCategoriesDisplay(
+			long[] groupIds, String title, long[] vocabularyIds, int start,
+			int end)
+		throws PortalException, SystemException {
+
+		User user = getUser();
+
+		BaseModelSearchResult<AssetCategory> results =
+			assetCategoryLocalService.searchCategories(
+				user.getCompanyId(), groupIds, title, vocabularyIds, start,
+				end);
+
+		return new AssetCategoryDisplay(
+			results.getBaseModels(), results.getLength(), start, end);
+	}
+
+	@Override
 	public AssetCategory updateCategory(
 			long categoryId, long parentCategoryId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
@@ -518,33 +581,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			JSONObject categoryJSONObject = JSONFactoryUtil.createJSONObject(
 				categoryJSON);
 
-			List<String> names = new ArrayList<String>();
-
-			AssetCategory curCategory = category;
-
-			while (curCategory.getParentCategoryId() > 0) {
-				AssetCategory parentCategory = getCategory(
-					curCategory.getParentCategoryId());
-
-				names.add(parentCategory.getName());
-				names.add(
-					StringPool.SPACE + StringPool.GREATER_THAN +
-						StringPool.SPACE);
-
-				curCategory = parentCategory;
-			}
-
-			Collections.reverse(names);
-
-			AssetVocabulary vocabulary = assetVocabularyService.getVocabulary(
-				category.getVocabularyId());
-
-			StringBundler sb = new StringBundler(1 + names.size());
-
-			sb.append(vocabulary.getName());
-			sb.append(names.toArray(new String[names.size()]));
-
-			categoryJSONObject.put("path", sb.toString());
+			categoryJSONObject.put(
+				"path", getCategoryPath(category.getCategoryId()));
 
 			jsonArray.put(categoryJSONObject);
 		}

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
@@ -108,7 +109,20 @@ public class AssetCategoryIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, true);
+		String title = (String)searchContext.getAttribute(Field.TITLE);
+
+		if (Validator.isNotNull(title)) {
+			BooleanQuery localizedQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
+
+			localizedQuery.addTerm(Field.TITLE, title, true);
+			localizedQuery.addTerm(
+				DocumentImpl.getLocalizedName(
+					searchContext.getLocale(), Field.TITLE),
+				title, true);
+
+			searchQuery.add(localizedQuery, BooleanClauseOccur.SHOULD);
+		}
 	}
 
 	@Override

@@ -454,6 +454,22 @@ public class AssetVocabularyServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay searchVocabulariesDisplay(
+		long groupId, java.lang.String title, int start, int end,
+		boolean addDefaultVocabulary) throws RemoteException {
+		try {
+			com.liferay.portlet.asset.model.AssetVocabularyDisplay returnValue = AssetVocabularyServiceUtil.searchVocabulariesDisplay(groupId,
+					title, start, end, addDefaultVocabulary);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* @deprecated As of 6.1.0, {@link #updateVocabulary(long, String, Map, Map,
 	String, ServiceContext)}

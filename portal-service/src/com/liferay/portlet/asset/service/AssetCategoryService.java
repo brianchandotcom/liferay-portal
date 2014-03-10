@@ -109,6 +109,11 @@ public interface AssetCategoryService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getCategoryPath(long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getChildCategories(
 		long parentCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -247,6 +252,20 @@ public interface AssetCategoryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.json.JSONArray search(long[] groupIds,
 		java.lang.String name, long[] vocabularyIds, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.asset.model.AssetCategoryDisplay searchCategoriesDisplay(
+		long groupId, java.lang.String title, long vocabularyId, int start,
+		int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.asset.model.AssetCategoryDisplay searchCategoriesDisplay(
+		long[] groupIds, java.lang.String title, long[] vocabularyIds,
+		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -248,6 +248,16 @@ public class AssetVocabularyServiceUtil {
 		return getService().getVocabulary(vocabularyId);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay searchVocabulariesDisplay(
+		long groupId, java.lang.String title, int start, int end,
+		boolean addDefaultVocabulary)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .searchVocabulariesDisplay(groupId, title, start, end,
+			addDefaultVocabulary);
+	}
+
 	/**
 	* @deprecated As of 6.1.0, {@link #updateVocabulary(long, String, Map, Map,
 	String, ServiceContext)}

@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
@@ -85,7 +88,20 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, true);
+		String title = (String)searchContext.getAttribute(Field.TITLE);
+
+		if (Validator.isNotNull(title)) {
+			BooleanQuery localizedQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
+
+			localizedQuery.addTerm(Field.TITLE, title, true);
+			localizedQuery.addTerm(
+				DocumentImpl.getLocalizedName(
+					searchContext.getLocale(), Field.TITLE),
+				title, true);
+
+			searchQuery.add(localizedQuery, BooleanClauseOccur.SHOULD);
+		}
 	}
 
 	@Override

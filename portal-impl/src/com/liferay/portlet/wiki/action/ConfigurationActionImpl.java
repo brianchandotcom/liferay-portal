@@ -41,9 +41,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	protected void validateDisplaySettings(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void validateDisplaySettings(ActionRequest actionRequest) {
 		String visibleNodes = getParameter(actionRequest, "visibleNodes");
 
 		if (Validator.isNull(visibleNodes)) {

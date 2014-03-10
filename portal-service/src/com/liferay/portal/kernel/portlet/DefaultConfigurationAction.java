@@ -291,8 +291,8 @@ public class DefaultConfigurationAction
 		return selPortletConfig;
 	}
 
-	protected void validateEmail(ActionRequest actionRequest, String emailParam)
-		throws Exception {
+	protected void validateEmail(
+		ActionRequest actionRequest, String emailParam) {
 
 		boolean emailEnabled = GetterUtil.getBoolean(
 			getParameter(actionRequest, emailParam + "Enabled"));
@@ -310,9 +310,7 @@ public class DefaultConfigurationAction
 		}
 	}
 
-	protected void validateEmailFrom(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void validateEmailFrom(ActionRequest actionRequest) {
 		String emailFromName = getParameter(actionRequest, "emailFromName");
 		String emailFromAddress = getParameter(
 			actionRequest, "emailFromAddress");

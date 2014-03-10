@@ -54,9 +54,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	protected void validateDisplayStyleViews(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void validateDisplayStyleViews(ActionRequest actionRequest) {
 		String displayViews = GetterUtil.getString(
 			getParameter(actionRequest, "displayViews"));
 

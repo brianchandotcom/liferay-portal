@@ -287,9 +287,11 @@ public class IndexSearcherManagerTest {
 		}
 
 		public static void unblock(int permits) {
-			_semaphore.release(permits);
+			Semaphore semaphore = _semaphore;
 
 			_semaphore = null;
+
+			semaphore.release(permits);
 		}
 
 		public static void waitUntilBlock(int threadCount) {

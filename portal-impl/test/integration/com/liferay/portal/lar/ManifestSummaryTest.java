@@ -51,6 +51,11 @@ public class ManifestSummaryTest
 	}
 
 	@Override
+	protected void addRatings(StagedModel stagedModel) throws Exception {
+		return;
+	}
+
+	@Override
 	protected AssetEntry fetchAssetEntry(StagedModel stagedModel, Group group)
 		throws Exception {
 

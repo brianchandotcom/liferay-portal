@@ -216,23 +216,23 @@ public class MailEngine {
 		try {
 			InternetAddressUtil.validateAddress(from);
 
-			if (to != null) {
+			if (ArrayUtil.isNotEmpty(to)) {
 				InternetAddressUtil.validateAddresses(to);
 			}
 
-			if (cc != null) {
+			if (ArrayUtil.isNotEmpty(cc)) {
 				InternetAddressUtil.validateAddresses(cc);
 			}
 
-			if (bcc != null) {
+			if (ArrayUtil.isNotEmpty(bcc)) {
 				InternetAddressUtil.validateAddresses(bcc);
 			}
 
-			if (replyTo != null) {
+			if (ArrayUtil.isNotEmpty(replyTo)) {
 				InternetAddressUtil.validateAddresses(replyTo);
 			}
 
-			if (bulkAddresses != null) {
+			if (ArrayUtil.isNotEmpty(bulkAddresses)) {
 				InternetAddressUtil.validateAddresses(bulkAddresses);
 			}
 

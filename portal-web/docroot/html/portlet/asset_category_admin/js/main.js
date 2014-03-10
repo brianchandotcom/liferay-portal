@@ -1480,7 +1480,7 @@ AUI.add(
 
 						Liferay.Service(
 							{
-								'$display = /assetvocabulary/get-group-vocabularies-display-by-title': {
+								'$display = /assetvocabulary/search-vocabularies-display': {
 									groupId: parentGroupId,
 									title: query,
 									start: start,
@@ -1525,7 +1525,7 @@ AUI.add(
 						if (query && instance._searchType.val() != STR_VOCABULARIES) {
 							Liferay.Service(
 								{
-									'$display = /assetcategory/get-vocabulary-categories-display-by-title': {
+									'$display = /assetcategory/search-categories-display': {
 										groupId: themeDisplay.getSiteGroupId(),
 										title: query,
 										vocabularyId: vocabularyId,

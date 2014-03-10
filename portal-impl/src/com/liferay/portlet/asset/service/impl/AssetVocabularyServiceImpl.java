@@ -311,39 +311,6 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			groupId, name, start, end, false, obc);
 	}
 
-	@Override
-	public AssetVocabularyDisplay getGroupVocabulariesDisplayByTitle(
-			long groupId, String title, int start, int end,
-			boolean addDefaultVocabulary)
-		throws PortalException, SystemException {
-
-		User user = getUser();
-
-		BaseModelSearchResult<AssetVocabulary> results =
-			assetVocabularyLocalService.searchVocabularies(
-				user.getCompanyId(), groupId, title, start, end);
-
-		List<AssetVocabulary> vocabularies = results.getBaseModels();
-		int total = results.getLength();
-
-		if (addDefaultVocabulary && (total == 0)) {
-			total = assetVocabularyPersistence.countByGroupId(groupId);
-
-			if (total == 0) {
-				vocabularies = new ArrayList<AssetVocabulary>(1);
-
-				AssetVocabulary defaultVocabulary =
-					assetVocabularyLocalService.addDefaultVocabulary(groupId);
-
-				vocabularies.add(defaultVocabulary);
-
-				total = 1;
-			}
-		}
-
-		return new AssetVocabularyDisplay(vocabularies, total, start, end);
-	}
-
 	/**
 	 * @deprecated As of 6.2.0, with no direct replacement
 	 */
@@ -407,6 +374,39 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			getPermissionChecker(), vocabularyId, ActionKeys.VIEW);
 
 		return assetVocabularyLocalService.getVocabulary(vocabularyId);
+	}
+
+	@Override
+	public AssetVocabularyDisplay searchVocabulariesDisplay(
+			long groupId, String title, int start, int end,
+			boolean addDefaultVocabulary)
+		throws PortalException, SystemException {
+
+		User user = getUser();
+
+		BaseModelSearchResult<AssetVocabulary> results =
+			assetVocabularyLocalService.searchVocabularies(
+				user.getCompanyId(), groupId, title, start, end);
+
+		List<AssetVocabulary> vocabularies = results.getBaseModels();
+		int total = results.getLength();
+
+		if (addDefaultVocabulary && (total == 0)) {
+			total = assetVocabularyPersistence.countByGroupId(groupId);
+
+			if (total == 0) {
+				vocabularies = new ArrayList<AssetVocabulary>(1);
+
+				AssetVocabulary defaultVocabulary =
+					assetVocabularyLocalService.addDefaultVocabulary(groupId);
+
+				vocabularies.add(defaultVocabulary);
+
+				total = 1;
+			}
+		}
+
+		return new AssetVocabularyDisplay(vocabularies, total, start, end);
 	}
 
 	/**

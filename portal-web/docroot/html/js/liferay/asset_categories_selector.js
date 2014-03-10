@@ -583,7 +583,7 @@ AUI.add(
 
 							Liferay.Service(
 								{
-									'$display = /assetcategory/get-vocabulary-categories-display-by-title': {
+									'$display = /assetcategory/search-categories-display': {
 										groupIds: vocabularyGroupIds,
 										title: searchValue,
 										vocabularyIds: vocabularyIds,

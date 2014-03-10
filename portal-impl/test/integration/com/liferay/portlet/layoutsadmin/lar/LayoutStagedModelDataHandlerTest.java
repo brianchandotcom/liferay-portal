@@ -233,6 +233,11 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected boolean isCommentableStagedModel() {
+		return true;
+	}
+
+	@Override
 	protected void validateImport(
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)

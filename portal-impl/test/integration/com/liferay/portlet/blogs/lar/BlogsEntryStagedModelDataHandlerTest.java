@@ -84,4 +84,9 @@ public class BlogsEntryStagedModelDataHandlerTest
 		return BlogsEntry.class;
 	}
 
+	@Override
+	protected boolean isCommentableStagedModel() {
+		return true;
+	}
+
 }

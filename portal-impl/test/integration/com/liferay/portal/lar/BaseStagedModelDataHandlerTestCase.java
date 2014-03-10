@@ -147,6 +147,10 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	}
 
 	protected void addComments(StagedModel stagedModel) throws Exception {
+		if (!isCommentableStagedModel()) {
+			return;
+		}
+
 		MBTestUtil.addDiscussionMessage(
 			TestPropsValues.getUser(), stagingGroup.getGroupId(),
 			ExportImportClassedModelUtil.getClassName(stagedModel),
@@ -287,6 +291,10 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		portletImporter.readAssetTags(portletDataContext);
 	}
 
+	protected boolean isCommentableStagedModel() {
+		return false;
+	}
+
 	protected StagedModel readExportedStagedModel(StagedModel stagedModel) {
 		String stagedModelPath = ExportImportPathUtil.getModelPath(stagedModel);
 
@@ -403,6 +411,10 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			StagedModel stagedModel, StagedModel importedStagedModel,
 			Group group)
 		throws Exception {
+
+		if (!isCommentableStagedModel()) {
+			return;
+		}
 
 		List<MBMessage> discussionMBMessages =
 			MBMessageLocalServiceUtil.getMessages(

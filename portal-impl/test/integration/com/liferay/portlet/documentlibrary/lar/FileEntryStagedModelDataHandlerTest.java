@@ -188,6 +188,11 @@ public class FileEntryStagedModelDataHandlerTest
 		return DLFileEntry.class;
 	}
 
+	@Override
+	protected boolean isCommentableStagedModel() {
+		return true;
+	}
+
 	protected void validateCompanyDependenciesImport(
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)

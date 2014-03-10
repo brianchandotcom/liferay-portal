@@ -91,7 +91,7 @@ public class ShoppingSettings implements Settings {
 	}
 
 	public String[][] getAlternativeShipping() {
-		String value = _settings.getValue("alternativeShipping", null);
+		String value = getValue("alternativeShipping", null);
 
 		if (value == null) {
 			return new String[0][0];
@@ -121,8 +121,7 @@ public class ShoppingSettings implements Settings {
 	}
 
 	public String[] getCcTypes() {
-		String ccTypes = _settings.getValue(
-			"ccTypes", StringUtil.merge(CC_TYPES));
+		String ccTypes = getValue("ccTypes", StringUtil.merge(CC_TYPES));
 
 		if (ccTypes.equals(CC_NONE)) {
 			return new String[0];
@@ -133,21 +132,20 @@ public class ShoppingSettings implements Settings {
 	}
 
 	public String getCurrencyId() {
-		return _settings.getValue("currencyId", "USD");
+		return getValue("currencyId", "USD");
 	}
 
 	public String getEmailFromAddress() {
-		return _settings.getValue(
+		return getValue(
 			"emailFromAddress", PropsValues.SHOPPING_EMAIL_FROM_ADDRESS);
 	}
 
 	public String getEmailFromName() {
-		return _settings.getValue(
-			"emailFromName", PropsValues.SHOPPING_EMAIL_FROM_NAME);
+		return getValue("emailFromName", PropsValues.SHOPPING_EMAIL_FROM_NAME);
 	}
 
 	public String getEmailOrderConfirmationBody() {
-		String emailOrderConfirmationBody = _settings.getValue(
+		String emailOrderConfirmationBody = getValue(
 			"emailOrderConfirmationBody", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailOrderConfirmationBody)) {
@@ -161,7 +159,7 @@ public class ShoppingSettings implements Settings {
 	}
 
 	public boolean getEmailOrderConfirmationEnabled() {
-		String emailOrderConfirmationEnabled = _settings.getValue(
+		String emailOrderConfirmationEnabled = getValue(
 			"emailOrderConfirmationEnabled", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailOrderConfirmationEnabled)) {
@@ -175,7 +173,7 @@ public class ShoppingSettings implements Settings {
 	}
 
 	public String getEmailOrderConfirmationSubject() {
-		String emailOrderConfirmationSubject = _settings.getValue(
+		String emailOrderConfirmationSubject = getValue(
 			"emailOrderConfirmationSubject", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailOrderConfirmationSubject)) {
@@ -189,7 +187,7 @@ public class ShoppingSettings implements Settings {
 	}
 
 	public String getEmailOrderShippingBody() {
-		String emailOrderShippingBody = _settings.getValue(
+		String emailOrderShippingBody = getValue(
 			"emailOrderShippingBody", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailOrderShippingBody)) {
@@ -202,7 +200,7 @@ public class ShoppingSettings implements Settings {
 	}
 
 	public boolean getEmailOrderShippingEnabled() {
-		String emailOrderShippingEnabled = _settings.getValue(
+		String emailOrderShippingEnabled = getValue(
 			"emailOrderShippingEnabled", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailOrderShippingEnabled)) {
@@ -215,7 +213,7 @@ public class ShoppingSettings implements Settings {
 	}
 
 	public String getEmailOrderShippingSubject() {
-		String emailOrderShippingSubject = _settings.getValue(
+		String emailOrderShippingSubject = getValue(
 			"emailOrderShippingSubject", StringPool.BLANK);
 
 		if (Validator.isNotNull(emailOrderShippingSubject)) {
@@ -228,7 +226,7 @@ public class ShoppingSettings implements Settings {
 	}
 
 	public String[] getInsurance() {
-		String value = _settings.getValue("insurance", null);
+		String value = getValue("insurance", null);
 
 		if (value == null) {
 			return new String[5];
@@ -239,20 +237,19 @@ public class ShoppingSettings implements Settings {
 	}
 
 	public String getInsuranceFormula() {
-		return _settings.getValue("insuranceFormula", "flat");
+		return getValue("insuranceFormula", "flat");
 	}
 
 	public double getMinOrder() {
-		return GetterUtil.getDouble(
-			_settings.getValue("minOrder", StringPool.BLANK));
+		return GetterUtil.getDouble(getValue("minOrder", StringPool.BLANK));
 	}
 
 	public String getPayPalEmailAddress() {
-		return _settings.getValue("paypalEmailAddress", StringPool.BLANK);
+		return getValue("paypalEmailAddress", StringPool.BLANK);
 	}
 
 	public String[] getShipping() {
-		String value = _settings.getValue("shipping", null);
+		String value = getValue("shipping", null);
 
 		if (value == null) {
 			return new String[5];
@@ -263,21 +260,32 @@ public class ShoppingSettings implements Settings {
 	}
 
 	public String getShippingFormula() {
-		return _settings.getValue("shippingFormula", "flat");
+		return getValue("shippingFormula", "flat");
 	}
 
 	public double getTaxRate() {
-		return GetterUtil.getDouble(
-			_settings.getValue("taxRate", StringPool.BLANK));
+		return GetterUtil.getDouble(getValue("taxRate", StringPool.BLANK));
 	}
 
 	public String getTaxState() {
-		return _settings.getValue("taxState", "CA");
+		return getValue("taxState", "CA");
 	}
 
 	@Override
 	public String getValue(String key, String defaultValue) {
-		return _settings.getValue(key, defaultValue);
+		String value = _settings.getValue(key, defaultValue);
+
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		String fallbackKey = getFallbackKey(key);
+
+		if (fallbackKey != null) {
+			return _settings.getValue(fallbackKey, value);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -320,6 +328,19 @@ public class ShoppingSettings implements Settings {
 
 	public boolean usePayPal() {
 		return Validator.isNotNull(getPayPalEmailAddress());
+	}
+
+	protected String getFallbackKey(String key) {
+		String fallbackKey = null;
+
+		if (key.equals("emailFromAddress")) {
+			fallbackKey = PropsKeys.ADMIN_EMAIL_FROM_ADDRESS;
+		}
+		else if (key.equals("emailFromName")) {
+			fallbackKey = PropsKeys.ADMIN_EMAIL_FROM_NAME;
+		}
+
+		return fallbackKey;
 	}
 
 	private Settings _settings;

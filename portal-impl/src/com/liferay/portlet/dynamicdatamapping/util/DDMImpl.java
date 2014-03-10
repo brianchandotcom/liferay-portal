@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -34,7 +35,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -56,7 +59,6 @@ import com.liferay.portlet.dynamicdatamapping.util.comparator.TemplateIdComparat
 import com.liferay.portlet.dynamicdatamapping.util.comparator.TemplateModifiedDateComparator;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -522,30 +524,52 @@ public class DDMImpl implements DDM {
 		return fieldValues;
 	}
 
-	protected String getImageFieldValue(
-		UploadRequest uploadRequest, String fieldNameValue) {
+	protected byte[] getImageBytes(
+			UploadRequest uploadRequest, String fieldNameValue)
+		throws Exception {
 
-		File file = uploadRequest.getFile(fieldNameValue);
+		File file = uploadRequest.getFile(fieldNameValue + "File");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		byte[] bytes = FileUtil.getBytes(file);
 
-		try {
-			byte[] bytes = FileUtil.getBytes(file);
-
-			if (ArrayUtil.isNotEmpty(bytes)) {
-				jsonObject.put("data", UnicodeFormatter.bytesToHex(bytes));
-			}
-			else {
-				jsonObject.put("data", "update");
-			}
+		if (ArrayUtil.isNotEmpty(bytes)) {
+			return bytes;
 		}
-		catch (IOException ioe) {
+
+		String url = uploadRequest.getParameter(fieldNameValue + "URL");
+
+		long imageId = GetterUtil.getLong(
+			HttpUtil.getParameter(url, "img_id", false));
+
+		Image image = ImageLocalServiceUtil.fetchImage(imageId);
+
+		if (image == null) {
 			return null;
 		}
 
-		String alt = uploadRequest.getParameter(fieldNameValue + "Alt");
+		return image.getTextObj();
+	}
 
-		jsonObject.put("alt", alt);
+	protected String getImageFieldValue(
+		UploadRequest uploadRequest, String fieldNameValue) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("alt", StringPool.BLANK);
+		jsonObject.put("data", StringPool.BLANK);
+
+		try {
+			byte[] bytes = getImageBytes(uploadRequest, fieldNameValue);
+
+			if (ArrayUtil.isNotEmpty(bytes)) {
+				jsonObject.put("data", UnicodeFormatter.bytesToHex(bytes));
+
+				jsonObject.put(
+					"alt", uploadRequest.getParameter(fieldNameValue + "Alt"));
+			}
+		}
+		catch (Exception e) {
+		}
 
 		return jsonObject.toString();
 	}

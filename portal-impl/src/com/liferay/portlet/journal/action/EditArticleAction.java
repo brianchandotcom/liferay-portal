@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -68,7 +67,6 @@ import com.liferay.portlet.journal.DuplicateArticleIdException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalConverterUtil;
@@ -554,25 +552,9 @@ public class EditArticleAction extends PortletAction {
 				languageId = defaultLanguageId;
 			}
 
-			long id = 0;
-			boolean inherited = false;
-
-			if (cmd.equals(Constants.TRANSLATE)) {
-				JournalArticle article =
-					JournalArticleLocalServiceUtil.getArticle(
-						groupId, articleId, version);
-
-				if (!ArrayUtil.contains(
-						article.getAvailableLanguageIds(), languageId)) {
-
-					id = article.getId();
-					inherited = true;
-				}
-			}
-
 			Object[] contentAndImages = ActionUtil.getContentAndImages(
-				ddmStructure, id, LocaleUtil.fromLanguageId(languageId),
-				defaultLocale, inherited, serviceContext);
+				ddmStructure, LocaleUtil.fromLanguageId(languageId),
+				serviceContext);
 
 			content = (String)contentAndImages[0];
 			images = (HashMap<String, byte[]>)contentAndImages[1];

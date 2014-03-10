@@ -16,10 +16,8 @@ package com.liferay.portlet.shopping.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 
@@ -99,42 +97,13 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	protected void validateEmailOrderConfirmation(ActionRequest actionRequest)
 		throws Exception {
 
-		boolean emailOrderConfirmationEnabled = GetterUtil.getBoolean(
-			getParameter(actionRequest, "emailOrderConfirmationEnabled"));
-		String emailOrderConfirmationSubject = getParameter(
-			actionRequest, "emailOrderConfirmationSubject");
-		String emailOrderConfirmationBody = getParameter(
-			actionRequest, "emailOrderConfirmationBody");
-
-		if (emailOrderConfirmationEnabled) {
-			if (Validator.isNull(emailOrderConfirmationSubject)) {
-				SessionErrors.add(
-					actionRequest, "emailOrderConfirmationSubject");
-			}
-			else if (Validator.isNull(emailOrderConfirmationBody)) {
-				SessionErrors.add(actionRequest, "emailOrderConfirmationBody");
-			}
-		}
+		validateEmail(actionRequest, "emailOrderConfirmation");
 	}
 
 	protected void validateEmailOrderShipping(ActionRequest actionRequest)
 		throws Exception {
 
-		boolean emailOrderShippingEnabled = GetterUtil.getBoolean(
-			getParameter(actionRequest, "emailOrderShippingEnabled"));
-		String emailOrderShippingSubject = getParameter(
-			actionRequest, "emailOrderShippingSubject");
-		String emailOrderShippingBody = getParameter(
-			actionRequest, "emailOrderShippingBody");
-
-		if (emailOrderShippingEnabled) {
-			if (Validator.isNull(emailOrderShippingSubject)) {
-				SessionErrors.add(actionRequest, "emailOrderShippingSubject");
-			}
-			else if (Validator.isNull(emailOrderShippingBody)) {
-				SessionErrors.add(actionRequest, "emailOrderShippingBody");
-			}
-		}
+		validateEmail(actionRequest, "emailOrderShipping");
 	}
 
 }

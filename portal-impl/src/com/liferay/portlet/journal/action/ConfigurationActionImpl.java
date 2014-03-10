@@ -15,9 +15,6 @@
 package com.liferay.portlet.journal.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -48,132 +45,40 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	protected void validateEmailArticleAdded(ActionRequest actionRequest)
 		throws Exception {
 
-		boolean emailArticleAddedEnabled = GetterUtil.getBoolean(
-			getParameter(actionRequest, "emailArticleAddedEnabled"));
-		String emailArticleAddedSubject = getParameter(
-			actionRequest, "emailArticleAddedSubject");
-		String emailArticleAddedBody = getParameter(
-			actionRequest, "emailArticleAddedBody");
-
-		if (emailArticleAddedEnabled) {
-			if (Validator.isNull(emailArticleAddedSubject)) {
-				SessionErrors.add(actionRequest, "emailArticleAddedSubject");
-			}
-			else if (Validator.isNull(emailArticleAddedBody)) {
-				SessionErrors.add(actionRequest, "emailArticleAddedBody");
-			}
-		}
+		validateEmail(actionRequest, "emailArticleAdded");
 	}
 
 	protected void validateEmailArticleApprovalDenied(
 			ActionRequest actionRequest)
 		throws Exception {
 
-		boolean emailArticleApprovalDeniedEnabled = GetterUtil.getBoolean(
-			getParameter(actionRequest, "emailArticleApprovalDeniedEnabled"));
-		String emailArticleApprovalDeniedSubject = getParameter(
-			actionRequest, "emailArticleApprovalDeniedSubject");
-		String emailArticleApprovalDeniedBody = getParameter(
-			actionRequest, "emailArticleApprovalDeniedBody");
-
-		if (emailArticleApprovalDeniedEnabled) {
-			if (Validator.isNull(emailArticleApprovalDeniedSubject)) {
-				SessionErrors.add(
-					actionRequest, "emailArticleApprovalDeniedSubject");
-			}
-			else if (Validator.isNull(emailArticleApprovalDeniedBody)) {
-				SessionErrors.add(
-					actionRequest, "emailArticleApprovalDeniedBody");
-			}
-		}
+		validateEmail(actionRequest, "emailArticleApprovalDenied");
 	}
 
 	protected void validateEmailArticleApprovalGranted(
 			ActionRequest actionRequest)
 		throws Exception {
 
-		boolean emailArticleApprovalGrantedEnabled = GetterUtil.getBoolean(
-			getParameter(actionRequest, "emailArticleApprovalGrantedEnabled"));
-		String emailArticleApprovalGrantedSubject = getParameter(
-			actionRequest, "emailArticleApprovalGrantedSubject");
-		String emailArticleApprovalGrantedBody = getParameter(
-			actionRequest, "emailArticleApprovalGrantedBody");
-
-		if (emailArticleApprovalGrantedEnabled) {
-			if (Validator.isNull(emailArticleApprovalGrantedSubject)) {
-				SessionErrors.add(
-					actionRequest, "emailArticleApprovalGrantedSubject");
-			}
-			else if (Validator.isNull(emailArticleApprovalGrantedBody)) {
-				SessionErrors.add(
-					actionRequest, "emailArticleApprovalGrantedBody");
-			}
-		}
+		validateEmail(actionRequest, "emailArticleApprovalGranted");
 	}
 
 	protected void validateEmailArticleApprovalRequested(
 			ActionRequest actionRequest)
 		throws Exception {
 
-		boolean emailArticleApprovalRequestedEnabled =
-			GetterUtil.getBoolean(
-				getParameter(
-					actionRequest, "emailArticleApprovalRequestedEnabled"));
-		String emailArticleApprovalRequestedSubject = getParameter(
-			actionRequest, "emailArticleApprovalRequestedSubject");
-		String emailArticleApprovalRequestedBody = getParameter(
-			actionRequest, "emailArticleApprovalRequestedBody");
-
-		if (emailArticleApprovalRequestedEnabled) {
-			if (Validator.isNull(emailArticleApprovalRequestedSubject)) {
-				SessionErrors.add(
-					actionRequest, "emailArticleApprovalRequestedSubject");
-			}
-			else if (Validator.isNull(emailArticleApprovalRequestedBody)) {
-				SessionErrors.add(
-					actionRequest, "emailArticleApprovalRequestedBody");
-			}
-		}
+		validateEmail(actionRequest, "emailArticleApprovalRequested");
 	}
 
 	protected void validateEmailArticleReview(ActionRequest actionRequest)
 		throws Exception {
 
-		boolean emailArticleReviewEnabled = GetterUtil.getBoolean(
-			getParameter(actionRequest, "emailArticleReviewEnabled"));
-		String emailArticleReviewSubject = getParameter(
-			actionRequest, "emailArticleReviewSubject");
-		String emailArticleReviewBody = getParameter(
-			actionRequest, "emailArticleReviewBody");
-
-		if (emailArticleReviewEnabled) {
-			if (Validator.isNull(emailArticleReviewSubject)) {
-				SessionErrors.add(actionRequest, "emailArticleReviewSubject");
-			}
-			else if (Validator.isNull(emailArticleReviewBody)) {
-				SessionErrors.add(actionRequest, "emailArticleReviewBody");
-			}
-		}
+		validateEmail(actionRequest, "emailArticleReview");
 	}
 
 	protected void validateEmailArticleUpdated(ActionRequest actionRequest)
 		throws Exception {
 
-		boolean emailArticleUpdatedEnabled = GetterUtil.getBoolean(
-			getParameter(actionRequest, "emailArticleUpdatedEnabled"));
-		String emailArticleUpdatedSubject = getParameter(
-			actionRequest, "emailArticleUpdatedSubject");
-		String emailArticleUpdatedBody = getParameter(
-			actionRequest, "emailArticleUpdatedBody");
-
-		if (emailArticleUpdatedEnabled) {
-			if (Validator.isNull(emailArticleUpdatedSubject)) {
-				SessionErrors.add(actionRequest, "emailArticleUpdatedSubject");
-			}
-			else if (Validator.isNull(emailArticleUpdatedBody)) {
-				SessionErrors.add(actionRequest, "emailArticleUpdatedBody");
-			}
-		}
+		validateEmail(actionRequest, "emailArticleUpdated");
 	}
 
 }

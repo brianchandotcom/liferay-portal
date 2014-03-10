@@ -700,17 +700,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	protected void validateEmailAssetEntryAdded(ActionRequest actionRequest)
 		throws Exception {
 
-		String emailAssetEntryAddedSubject = getLocalizedParameter(
-			actionRequest, "emailAssetEntryAddedSubject");
-		String emailAssetEntryAddedBody = getLocalizedParameter(
-			actionRequest, "emailAssetEntryAddedBody");
-
-		if (Validator.isNull(emailAssetEntryAddedSubject)) {
-			SessionErrors.add(actionRequest, "emailAssetEntryAddedSubject");
-		}
-		else if (Validator.isNull(emailAssetEntryAddedBody)) {
-			SessionErrors.add(actionRequest, "emailAssetEntryAddedBody");
-		}
+		validateEmail(actionRequest, "emailAssetEntryAdded");
 	}
 
 	protected void validateQueryRule(

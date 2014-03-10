@@ -10,13 +10,15 @@
 }
 
 .form-search .input-append {
-	padding-left: 40px;
 	position: relative;
 
 	.advanced-search {
+		.search-query {
+			padding-left: 40px;
+		}
+
 		.toggle-advanced {
 			cursor: pointer;
-			left: 40px;
 			line-height: 1;
 			padding: 8px 10px;
 			position: absolute;
@@ -30,10 +32,6 @@
 			.icon-search {
 				font-size: 14px;
 			}
-		}
-
-		.search-query {
-			padding-left: 40px;
 		}
 	}
 }

@@ -1,3 +1,6 @@
+@import "compass";
+@import "mixins";
+
 .taglib-search-toggle-advanced-wrapper .taglib-search-toggle-advanced {
 	border: 1px solid transparent;
 	margin-top: 5px;
@@ -37,4 +40,23 @@
 .taglib-search-toggle-advanced-wrapper .taglib-search-toggle-advanced {
 	background-color: #FCFCFC;
 	border-color: #DDD;
+}
+
+@include respond-to(phone) {
+	.taglib-search-toggle .input-append {
+		width: 100%;
+
+		.advanced-search {
+			.btn {
+				clip: rect(0, 0, 0, 0);
+				position: absolute;
+			}
+
+			.search-query {
+				width: 100%;
+
+				@include border-radius(14px);
+			}
+		}
+	}
 }

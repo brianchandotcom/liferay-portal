@@ -522,6 +522,8 @@ public class SubscriptionSender implements Serializable {
 			}
 
 			_bulkAddresses.add(bulkAddress);
+
+			sendNotification(user);
 		}
 		else {
 			sendNotification(user);
@@ -727,7 +729,7 @@ public class SubscriptionSender implements Serializable {
 		MailServiceUtil.sendEmail(mailMessage);
 	}
 
-	protected void sendNotification(User user) {
+	protected void sendEmailNotification(User user) {
 		try {
 			if (UserNotificationManagerUtil.isDeliver(
 					user.getUserId(), portletId, _notificationClassNameId,
@@ -743,7 +745,14 @@ public class SubscriptionSender implements Serializable {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
 
+	protected void sendNotification(User user) {
+		sendEmailNotification(user);
+		sendWebsiteNotification(user);
+	}
+
+	protected void sendWebsiteNotification(User user) {
 		try {
 			if (UserNotificationManagerUtil.isDeliver(
 					user.getUserId(), portletId, _notificationClassNameId,

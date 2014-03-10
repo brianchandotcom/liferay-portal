@@ -148,7 +148,7 @@ public class SubscriptionSender implements Serializable {
 
 				for (Subscription subscription : subscriptions) {
 					try {
-						notifySubscriber(
+						notifyPersistedSubscriber(
 							subscription, inferredClassName, inferredClassPK);
 					}
 					catch (PortalException pe) {
@@ -200,7 +200,7 @@ public class SubscriptionSender implements Serializable {
 
 				InternetAddress to = new InternetAddress(toAddress, toName);
 
-				sendEmail(to, LocaleUtil.getDefault());
+				notifyRuntimeSubscriber(to, LocaleUtil.getDefault());
 			}
 
 			_runtimeSubscribersOVPs.clear();
@@ -449,18 +449,7 @@ public class SubscriptionSender implements Serializable {
 		return hasPermission(subscription, null, 0, user);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #notifySubscriber(Subscription, String, long)}
-	 */
-	@Deprecated
-	protected void notifySubscriber(Subscription subscription)
-		throws Exception {
-
-		notifySubscriber(subscription, null, 0);
-	}
-
-	protected void notifySubscriber(
+	protected void notifyPersistedSubscriber(
 			Subscription subscription, String inferredClassName,
 			long inferredClassPK)
 		throws Exception {
@@ -535,55 +524,30 @@ public class SubscriptionSender implements Serializable {
 			_bulkAddresses.add(bulkAddress);
 		}
 		else {
-			try {
-				if (UserNotificationManagerUtil.isDeliver(
-						user.getUserId(), portletId, _notificationClassNameId,
-						_notificationType,
-						UserNotificationDeliveryConstants.TYPE_EMAIL)) {
-
-					InternetAddress to = new InternetAddress(
-						user.getEmailAddress(), user.getFullName());
-
-					sendEmail(to, user.getLocale());
-				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-
-			try {
-				if (UserNotificationManagerUtil.isDeliver(
-						user.getUserId(), portletId, _notificationClassNameId,
-						_notificationType,
-						UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
-
-					JSONObject notificationEventJSONObject =
-						JSONFactoryUtil.createJSONObject();
-
-					notificationEventJSONObject.put("className", _className);
-					notificationEventJSONObject.put("classPK", _classPK);
-					notificationEventJSONObject.put("entryTitle", _entryTitle);
-					notificationEventJSONObject.put("entryURL", _entryURL);
-					notificationEventJSONObject.put(
-						"notificationType", _notificationType);
-					notificationEventJSONObject.put("userId", user.getUserId());
-
-					NotificationEvent notificationEvent =
-						NotificationEventFactoryUtil.createNotificationEvent(
-							System.currentTimeMillis(), portletId,
-							notificationEventJSONObject);
-
-					notificationEvent.setDeliveryRequired(0);
-
-					UserNotificationEventLocalServiceUtil.
-						addUserNotificationEvent(
-							user.getUserId(), notificationEvent);
-				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			sendNotification(user);
 		}
+	}
+
+	protected void notifyRuntimeSubscriber(InternetAddress to, Locale locale)
+		throws Exception {
+
+		String emailAddress = to.getAddress();
+
+		User user = UserLocalServiceUtil.getUserByEmailAddress(
+			companyId, emailAddress);
+
+		sendNotification(user);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #notifyPersistedSubscriber(Subscription, String, long)}
+	 */
+	@Deprecated
+	protected void notifySubscriber(Subscription subscription)
+		throws Exception {
+
+		notifyPersistedSubscriber(subscription, null, 0);
 	}
 
 	protected void processMailMessage(MailMessage mailMessage, Locale locale)
@@ -761,6 +725,56 @@ public class SubscriptionSender implements Serializable {
 		processMailMessage(mailMessage, locale);
 
 		MailServiceUtil.sendEmail(mailMessage);
+	}
+
+	protected void sendNotification(User user) {
+		try {
+			if (UserNotificationManagerUtil.isDeliver(
+					user.getUserId(), portletId, _notificationClassNameId,
+					_notificationType,
+					UserNotificationDeliveryConstants.TYPE_EMAIL)) {
+
+				InternetAddress to = new InternetAddress(
+					user.getEmailAddress(), user.getFullName());
+
+				sendEmail(to, user.getLocale());
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		try {
+			if (UserNotificationManagerUtil.isDeliver(
+					user.getUserId(), portletId, _notificationClassNameId,
+					_notificationType,
+					UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
+
+				JSONObject notificationEventJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				notificationEventJSONObject.put("className", _className);
+				notificationEventJSONObject.put("classPK", _classPK);
+				notificationEventJSONObject.put("entryTitle", _entryTitle);
+				notificationEventJSONObject.put("entryURL", _entryURL);
+				notificationEventJSONObject.put(
+					"notificationType", _notificationType);
+				notificationEventJSONObject.put("userId", user.getUserId());
+
+				NotificationEvent notificationEvent =
+					NotificationEventFactoryUtil.createNotificationEvent(
+						System.currentTimeMillis(), portletId,
+						notificationEventJSONObject);
+
+				notificationEvent.setDeliveryRequired(0);
+
+				UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
+					user.getUserId(), notificationEvent);
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
 	protected String body;

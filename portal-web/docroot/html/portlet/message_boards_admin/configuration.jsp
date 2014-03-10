@@ -130,21 +130,21 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 		<liferay-ui:section>
 			<liferay-ui:email-notifications-settings
-				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailMessageAddedBody", ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY)) %>'
+				emailBody='<%= ParamUtil.getString(request, "preferences--emailMessageAddedBody--", mbSettings.getEmailMessageAddedBody()) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailMessageAddedEnabled--", mbSettings.isEmailMessageAddedEnabled()) %>'
 				emailParam="emailMessageAdded"
-				emailSubject='<%= PrefsParamUtil.getString(portletPreferences, request, "emailMessageAddedSubject", ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT)) %>'
+				emailSubject='<%= ParamUtil.getString(request, "preferences--emailMessageAddedSubject--", mbSettings.getEmailMessageAddedSubject()) %>'
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notifications-settings
-				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailMessageUpdatedBody", ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY)) %>'
+				emailBody='<%= ParamUtil.getString(request, "preferences--emailMessageUpdatedBody--", mbSettings.getEmailMessageUpdatedBody()) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailMessageUpdatedEnabled--", mbSettings.isEmailMessageUpdatedEnabled()) %>'
 				emailParam="emailMessageUpdated"
-				emailSubject='<%= PrefsParamUtil.getString(portletPreferences, request, "emailMessageUpdatedSubject", ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT)) %>'
+				emailSubject='<%= ParamUtil.getString(request, "preferences--emailMessageUpdatedSubject--", mbSettings.getEmailMessageUpdatedSubject()) %>'
 			/>
 		</liferay-ui:section>
 

@@ -225,21 +225,21 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 		<liferay-ui:section>
 			<liferay-ui:email-notifications-settings
-				emailBody="<%= ParamUtil.getString(request, "preferences--emailOrderConfirmationBody--", shoppingSettings.getEmailOrderConfirmationBody()) %>"
+				emailBody='<%= ParamUtil.getString(request, "preferences--emailOrderConfirmationBody--", shoppingSettings.getEmailOrderConfirmationBody()) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= shoppingSettings.getEmailOrderConfirmationEnabled() %>"
+				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailOrderConfirmationEnabled--", shoppingSettings.getEmailOrderConfirmationEnabled()) %>'
 				emailParam="emailOrderConfirmation"
-				emailSubject="<%= ParamUtil.getString(request, "preferences--emailOrderConfirmationSubject--", shoppingSettings.getEmailOrderConfirmationSubject()) %>"
+				emailSubject='<%= ParamUtil.getString(request, "preferences--emailOrderConfirmationSubject--", shoppingSettings.getEmailOrderConfirmationSubject()) %>'
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notifications-settings
-				emailBody="<%= ParamUtil.getString(request, "preferences--emailOrderShippingBody--", shoppingSettings.getEmailOrderShippingBody()) %>"
+				emailBody='<%= ParamUtil.getString(request, "preferences--emailOrderShippingBody--", shoppingSettings.getEmailOrderShippingBody()) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= shoppingSettings.getEmailOrderShippingEnabled() %>"
+				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailOrderConfirmationEnabled--", shoppingSettings.getEmailOrderShippingEnabled()) %>'
 				emailParam="emailOrderShipping"
-				emailSubject="<%= ParamUtil.getString(request, "preferences--emailOrderShippingSubject--", shoppingSettings.getEmailOrderShippingSubject()) %>"
+				emailSubject='<%= ParamUtil.getString(request, "preferences--emailOrderShippingSubject--", shoppingSettings.getEmailOrderShippingSubject()) %>'
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

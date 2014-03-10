@@ -463,3 +463,9 @@ body:first-of-type {
 .upload-drop-intent .lfr-upload-container .upload-target {
 	@include experimental(animation, lfr-drop-active 1s ease 0.2s infinite);
 }
+
+.quick-access-nav {
+	a {
+		@include box-shadow(rgba(0, 0, 0, 0.1) 1px 1px 1px);
+	}
+}

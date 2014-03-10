@@ -1,6 +1,5 @@
 @import "compass";
 @import "mixins";
-@import "variables";
 
 @import url(custom_common.css);
 @import url(color_schemes/common.css);
@@ -35,27 +34,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		.site-name {
 			display: inline-block;
-		}
-	}
-
-	.quick-access-nav {
-		a {
-			@include box-shadow(rgba(0, 0, 0, 0.1) 1px 1px 1px);
-
-			background: #009AE5;
-			background: rgba(0, 154, 229, 0.9);
-			border: 1px solid #FFF;
-			color: #FFF;
-			left: 0;
-			outline: none;
-			padding: 8px;
-			position: absolute;
-			right: 0;
-			text-align: center;
-
-			&:focus {
-				top: $quickAccessNavOffset;
-			}
 		}
 	}
 

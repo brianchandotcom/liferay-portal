@@ -16,7 +16,6 @@ package com.liferay.portlet.shopping;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,7 +31,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
 /**
@@ -285,135 +283,6 @@ public class ShoppingSettings implements Settings {
 	@Override
 	public String[] getValues(String key, String[] defaultValue) {
 		return _settings.getValues(key, defaultValue);
-	}
-
-	public void setAlternativeShipping(String[][] alternativeShipping)
-		throws ReadOnlyException {
-
-		if (alternativeShipping.length == 0) {
-			_settings.setValue("alternativeShipping", StringPool.BLANK);
-		}
-
-		StringBundler sb = new StringBundler(
-			alternativeShipping.length * 2 - 1);
-
-		for (int i = 0; i < alternativeShipping.length; i++) {
-			sb.append(StringUtil.merge(alternativeShipping[i]));
-
-			if ((i + 1) < alternativeShipping.length) {
-				sb.append("[$_ARRAY_$]");
-			}
-		}
-
-		_settings.setValue("alternativeShipping", sb.toString());
-	}
-
-	public void setCcTypes(String[] ccTypes) throws ReadOnlyException {
-		if (ccTypes.length == 0) {
-			_settings.setValue("ccTypes", CC_NONE);
-		}
-		else {
-			_settings.setValue("ccTypes", StringUtil.merge(ccTypes));
-		}
-	}
-
-	public void setCurrencyId(String currencyId) throws ReadOnlyException {
-		_settings.setValue("currencyId", currencyId);
-	}
-
-	public void setEmailFromAddress(String emailFromAddress)
-		throws ReadOnlyException {
-
-		_settings.setValue("emailFromAddress", emailFromAddress);
-	}
-
-	public void setEmailFromName(String emailFromName)
-		throws ReadOnlyException {
-
-		_settings.setValue("emailFromName", emailFromName);
-	}
-
-	public void setEmailOrderConfirmationBody(String emailOrderConfirmationBody)
-		throws ReadOnlyException {
-
-		_settings.setValue(
-			"emailOrderConfirmationBody", emailOrderConfirmationBody);
-	}
-
-	public void setEmailOrderConfirmationEnabled(
-			boolean emailOrderConfirmationEnabled)
-		throws ReadOnlyException {
-
-		_settings.setValue(
-			"emailOrderConfirmationEnabled",
-			String.valueOf(emailOrderConfirmationEnabled));
-	}
-
-	public void setEmailOrderConfirmationSubject(
-			String emailOrderConfirmationSubject)
-		throws ReadOnlyException {
-
-		_settings.setValue(
-			"emailOrderConfirmationSubject", emailOrderConfirmationSubject);
-	}
-
-	public void setEmailOrderShippingBody(String emailOrderShippingBody)
-		throws ReadOnlyException {
-
-		_settings.setValue("emailOrderShippingBody", emailOrderShippingBody);
-	}
-
-	public void setEmailOrderShippingEnabled(boolean emailOrderShippingEnabled)
-		throws ReadOnlyException {
-
-		_settings.setValue(
-			"emailOrderShippingEnabled",
-			String.valueOf(emailOrderShippingEnabled));
-	}
-
-	public void setEmailOrderShippingSubject(String emailOrderShippingSubject)
-		throws ReadOnlyException {
-
-		_settings.setValue(
-			"emailOrderShippingSubject", emailOrderShippingSubject);
-	}
-
-	public void setInsurance(String[] insurance) throws ReadOnlyException {
-		_settings.setValue("insurance", StringUtil.merge(insurance));
-	}
-
-	public void setInsuranceFormula(String insuranceFormula)
-		throws ReadOnlyException {
-
-		_settings.setValue("insuranceFormula", insuranceFormula);
-	}
-
-	public void setMinOrder(double minOrder) throws ReadOnlyException {
-		_settings.setValue("minOrder", String.valueOf(minOrder));
-	}
-
-	public void setPayPalEmailAddress(String payPalEmailAddress)
-		throws ReadOnlyException {
-
-		_settings.setValue("paypalEmailAddress", payPalEmailAddress);
-	}
-
-	public void setShipping(String[] shipping) throws ReadOnlyException {
-		_settings.setValue("shipping", StringUtil.merge(shipping));
-	}
-
-	public void setShippingFormula(String shippingFormula)
-		throws ReadOnlyException {
-
-		_settings.setValue("shippingFormula", shippingFormula);
-	}
-
-	public void setTaxRate(double taxRate) throws ReadOnlyException {
-		_settings.setValue("taxRate", String.valueOf(taxRate));
-	}
-
-	public void setTaxState(String taxState) throws ReadOnlyException {
-		_settings.setValue("taxState", taxState);
 	}
 
 	@Override

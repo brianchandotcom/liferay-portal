@@ -269,7 +269,6 @@ public class EditStructureAction extends PortletAction {
 			structureId);
 	}
 
-
 	protected DDMStructure updateStructure(ActionRequest actionRequest)
 		throws Exception {
 

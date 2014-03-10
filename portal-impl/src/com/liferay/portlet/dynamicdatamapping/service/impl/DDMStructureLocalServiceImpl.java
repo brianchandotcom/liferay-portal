@@ -1287,8 +1287,9 @@ public class DDMStructureLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void unsubscribeStructure(long groupId, long userId, long structureId)
-		throws PortalException, SystemException {
+	public void unsubscribeStructure(
+		long groupId, long userId, long structureId) throws PortalException,
+		SystemException {
 
 		getSubscriptionLocalService().deleteSubscription(
 			userId, DDMStructure.class.getName(), structureId);

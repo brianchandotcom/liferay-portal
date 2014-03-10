@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.permission.SubscriptionPermission;
 import com.liferay.portal.service.permission.SubscriptionPermissionUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureServiceBaseImpl;
@@ -587,8 +586,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void unsubscribeStructure(long groupId, long userId, long structureId)
-		throws PortalException, SystemException {
+	public void unsubscribeStructure(
+		long groupId, long userId, long structureId) throws PortalException,
+		SystemException {
 
 		if (structureId == 0) {
 			structureId = groupId;

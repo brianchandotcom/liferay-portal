@@ -6436,7 +6436,7 @@ public class JournalArticleLocalServiceImpl
 		else {
 			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
 				article.getGroupId(),
-				PortalUtil.getClassNameId(JournalArticle.class),
+				classNameLocalService.getClassNameId(JournalArticle.class),
 				article.getStructureId());
 
 			subscriptionSender.addPersistedSubscribers(

@@ -1176,29 +1176,16 @@ public class JournalUtil {
 			JournalArticle.class.getName(), "urlTitle", title);
 	}
 
-	public static boolean isSubscribedToStructure(
-		long companyId, long groupId, long userId, long structureId)
-		throws PortalException, SystemException {
-
-		if (structureId == 0) {
-			structureId = groupId;
-		}
-
-		return SubscriptionLocalServiceUtil.isSubscribed(
-			companyId, userId, DDMStructure.class.getName(), structureId);
-	}
-
 	public static boolean isSubscribedToFolder(
-			long companyId, long groupId, long userId, long folderId)
-		throws PortalException, SystemException {
+		long companyId, long groupId, long userId, long folderId)
+			throws PortalException, SystemException {
 
 		return isSubscribedToFolder(companyId, groupId, userId, folderId, true);
 	}
 
 	public static boolean isSubscribedToFolder(
-			long companyId, long groupId, long userId, long folderId,
-			boolean recursive)
-		throws PortalException, SystemException {
+		long companyId, long groupId, long userId, long folderId,
+		boolean recursive) throws PortalException, SystemException {
 
 		List<Long> ancestorFolderIds = new ArrayList<Long>();
 
@@ -1221,6 +1208,18 @@ public class JournalUtil {
 		return SubscriptionLocalServiceUtil.isSubscribed(
 			companyId, userId, JournalFolder.class.getName(),
 			ArrayUtil.toLongArray(ancestorFolderIds));
+	}
+
+	public static boolean isSubscribedToStructure(
+		long companyId, long groupId, long userId, long structureId)
+			throws PortalException, SystemException {
+
+		if (structureId == 0) {
+			structureId = groupId;
+		}
+
+		return SubscriptionLocalServiceUtil.isSubscribed(
+			companyId, userId, DDMStructure.class.getName(), structureId);
 	}
 
 	public static String mergeArticleContent(

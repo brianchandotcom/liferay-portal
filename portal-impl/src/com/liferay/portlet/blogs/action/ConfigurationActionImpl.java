@@ -15,9 +15,7 @@
 package com.liferay.portlet.blogs.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -41,68 +39,11 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		if (Validator.isNotNull(cmd)) {
 			validateEmailFrom(actionRequest);
-			validateEmailEntryAdded(actionRequest);
-			validateEmailEntryUpdated(actionRequest);
+			validateEmail(actionRequest, "emailEntryAdded");
+			validateEmail(actionRequest, "emailEntryUpdated");
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	protected void validateEmailEntryAdded(ActionRequest actionRequest)
-		throws Exception {
-
-		boolean emailEntryAddedEnabled = GetterUtil.getBoolean(
-			getParameter(actionRequest, "emailEntryAddedEnabled"));
-		String emailEntryAddedSubject = getLocalizedParameter(
-			actionRequest, "emailEntryAddedSubject");
-		String emailEntryAddedBody = getLocalizedParameter(
-			actionRequest, "emailEntryAddedBody");
-
-		if (emailEntryAddedEnabled) {
-			if (Validator.isNull(emailEntryAddedSubject)) {
-				SessionErrors.add(actionRequest, "emailEntryAddedSubject");
-			}
-			else if (Validator.isNull(emailEntryAddedBody)) {
-				SessionErrors.add(actionRequest, "emailEntryAddedBody");
-			}
-		}
-	}
-
-	protected void validateEmailEntryUpdated(ActionRequest actionRequest)
-		throws Exception {
-
-		boolean emailEntryUpdatedEnabled = GetterUtil.getBoolean(
-			getParameter(actionRequest, "emailEntryUpdatedEnabled"));
-		String emailEntryUpdatedSubject = getLocalizedParameter(
-			actionRequest, "emailEntryUpdatedSubject");
-		String emailEntryUpdatedBody = getLocalizedParameter(
-			actionRequest, "emailEntryUpdatedBody");
-
-		if (emailEntryUpdatedEnabled) {
-			if (Validator.isNull(emailEntryUpdatedSubject)) {
-				SessionErrors.add(actionRequest, "emailEntryUpdatedSubject");
-			}
-			else if (Validator.isNull(emailEntryUpdatedBody)) {
-				SessionErrors.add(actionRequest, "emailEntryUpdatedBody");
-			}
-		}
-	}
-
-	protected void validateEmailFrom(ActionRequest actionRequest)
-		throws Exception {
-
-		String emailFromName = getParameter(actionRequest, "emailFromName");
-		String emailFromAddress = getParameter(
-			actionRequest, "emailFromAddress");
-
-		if (Validator.isNull(emailFromName)) {
-			SessionErrors.add(actionRequest, "emailFromName");
-		}
-		else if (!Validator.isEmailAddress(emailFromAddress) &&
-				 !Validator.isVariableTerm(emailFromAddress)) {
-
-			SessionErrors.add(actionRequest, "emailFromAddress");
-		}
 	}
 
 }

@@ -67,10 +67,12 @@ page import="com.liferay.portlet.shopping.ShippingPhoneException" %><%@
 page import="com.liferay.portlet.shopping.ShippingStateException" %><%@
 page import="com.liferay.portlet.shopping.ShippingStreetException" %><%@
 page import="com.liferay.portlet.shopping.ShippingZipException" %><%@
+page import="com.liferay.portlet.shopping.ShoppingSettings" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCart" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCartItem" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCategory" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCategoryConstants" %><%@
+page import="com.liferay.portlet.shopping.model.ShoppingConstants" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCoupon" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingCouponConstants" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingItem" %><%@
@@ -99,15 +101,14 @@ page import="com.liferay.portlet.shopping.service.permission.ShoppingCategoryPer
 page import="com.liferay.portlet.shopping.service.permission.ShoppingItemPermission" %><%@
 page import="com.liferay.portlet.shopping.service.permission.ShoppingOrderPermission" %><%@
 page import="com.liferay.portlet.shopping.service.permission.ShoppingPermission" %><%@
-page import="com.liferay.portlet.shopping.util.ShoppingPreferences" %><%@
 page import="com.liferay.portlet.shopping.util.ShoppingUtil" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-ShoppingPreferences shoppingPrefs = ShoppingPreferences.getInstance(company.getCompanyId(), scopeGroupId);
+ShoppingSettings shoppingSettings = ShoppingUtil.getShoppingSettings(themeDisplay.getSiteGroupId());
 
-Currency currency = Currency.getInstance(shoppingPrefs.getCurrencyId());
+Currency currency = Currency.getInstance(shoppingSettings.getCurrencyId());
 
 NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
 

@@ -45,8 +45,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		if (Validator.isNotNull(cmd)) {
 			validateDisplayStyleViews(actionRequest);
-			validateEmailFileEntryAdded(actionRequest);
-			validateEmailFileEntryUpdated(actionRequest);
+			validateEmail(actionRequest, "emailFileEntryAdded");
+			validateEmail(actionRequest, "emailFileEntryUpdated");
 			validateEmailFrom(actionRequest);
 			validateRootFolder(actionRequest);
 		}
@@ -54,72 +54,12 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	protected void validateDisplayStyleViews(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void validateDisplayStyleViews(ActionRequest actionRequest) {
 		String displayViews = GetterUtil.getString(
 			getParameter(actionRequest, "displayViews"));
 
 		if (Validator.isNull(displayViews)) {
 			SessionErrors.add(actionRequest, "displayViewsInvalid");
-		}
-	}
-
-	protected void validateEmailFileEntryAdded(ActionRequest actionRequest)
-		throws Exception {
-
-		boolean emailFileEntryAddedEnabled = GetterUtil.getBoolean(
-			getParameter(actionRequest, "emailFileEntryAddedEnabled"));
-		String emailFileEntryAddedSubject = getLocalizedParameter(
-			actionRequest, "emailFileEntryAddedSubject");
-		String emailFileEntryAddedBody = getLocalizedParameter(
-			actionRequest, "emailFileEntryAddedBody");
-
-		if (emailFileEntryAddedEnabled) {
-			if (Validator.isNull(emailFileEntryAddedSubject)) {
-				SessionErrors.add(actionRequest, "emailFileEntryAddedSubject");
-			}
-			else if (Validator.isNull(emailFileEntryAddedBody)) {
-				SessionErrors.add(actionRequest, "emailFileEntryAddedBody");
-			}
-		}
-	}
-
-	protected void validateEmailFileEntryUpdated(ActionRequest actionRequest)
-		throws Exception {
-
-		boolean emailFileEntryUpdatedEnabled = GetterUtil.getBoolean(
-			getParameter(actionRequest, "emailFileEntryUpdatedEnabled"));
-		String emailFileEntryUpdatedSubject = getLocalizedParameter(
-			actionRequest, "emailFileEntryUpdatedSubject");
-		String emailFileEntryUpdatedBody = getLocalizedParameter(
-			actionRequest, "emailFileEntryUpdatedBody");
-
-		if (emailFileEntryUpdatedEnabled) {
-			if (Validator.isNull(emailFileEntryUpdatedSubject)) {
-				SessionErrors.add(
-					actionRequest, "emailFileEntryUpdatedSubject");
-			}
-			else if (Validator.isNull(emailFileEntryUpdatedBody)) {
-				SessionErrors.add(actionRequest, "emailFileEntryUpdatedBody");
-			}
-		}
-	}
-
-	protected void validateEmailFrom(ActionRequest actionRequest)
-		throws Exception {
-
-		String emailFromName = getParameter(actionRequest, "emailFromName");
-		String emailFromAddress = getParameter(
-			actionRequest, "emailFromAddress");
-
-		if (Validator.isNull(emailFromName)) {
-			SessionErrors.add(actionRequest, "emailFromName");
-		}
-		else if (!Validator.isEmailAddress(emailFromAddress) &&
-				 !Validator.isVariableTerm(emailFromAddress)) {
-
-			SessionErrors.add(actionRequest, "emailFromAddress");
 		}
 	}
 

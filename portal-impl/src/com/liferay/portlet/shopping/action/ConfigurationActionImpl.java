@@ -16,16 +16,13 @@ package com.liferay.portlet.shopping.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.shopping.util.ShoppingPreferences;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -42,136 +39,18 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		validateEmail(actionRequest, "emailOrderConfirmation");
+		validateEmailFrom(actionRequest);
+		updateInsuranceCalculation(actionRequest);
+		updatePayment(actionRequest);
+		updateShippingCalculation(actionRequest);
+		validateEmail(actionRequest, "emailOrderShipping");
 
-		if (!cmd.equals(Constants.UPDATE)) {
-			return;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ShoppingPreferences preferences = ShoppingPreferences.getInstance(
-			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
-
-		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
-		String tabs3 = ParamUtil.getString(actionRequest, "tabs3");
-
-		if (tabs2.equals("payment-settings")) {
-			updatePayment(actionRequest, preferences);
-		}
-		else if (tabs2.equals("shipping-calculation")) {
-			updateShippingCalculation(actionRequest, preferences);
-		}
-		else if (tabs2.equals("insurance-calculation")) {
-			updateInsuranceCalculation(actionRequest, preferences);
-		}
-		else if (tabs2.equals("emails")) {
-			if (tabs3.equals("email-from")) {
-				updateEmailFrom(actionRequest, preferences);
-			}
-			else if (tabs3.equals("confirmation-email")) {
-				updateEmailOrderConfirmation(actionRequest, preferences);
-			}
-			else if (tabs3.equals("shipping-email")) {
-				updateEmailOrderShipping(actionRequest, preferences);
-			}
-		}
-
-		if (SessionErrors.isEmpty(actionRequest)) {
-			preferences.store();
-
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
-				PortletKeys.SHOPPING);
-
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
-		}
+		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	protected void updateEmailFrom(
-			ActionRequest actionRequest, ShoppingPreferences preferences)
+	protected void updateInsuranceCalculation(ActionRequest actionRequest)
 		throws Exception {
-
-		String emailFromName = ParamUtil.getString(
-			actionRequest, "emailFromName");
-		String emailFromAddress = ParamUtil.getString(
-			actionRequest, "emailFromAddress");
-
-		if (Validator.isNull(emailFromName)) {
-			SessionErrors.add(actionRequest, "emailFromName");
-		}
-		else if (!Validator.isEmailAddress(emailFromAddress)) {
-			SessionErrors.add(actionRequest, "emailFromAddress");
-		}
-		else {
-			preferences.setEmailFromName(emailFromName);
-			preferences.setEmailFromAddress(emailFromAddress);
-		}
-	}
-
-	protected void updateEmailOrderConfirmation(
-			ActionRequest actionRequest, ShoppingPreferences preferences)
-		throws Exception {
-
-		boolean emailOrderConfirmationEnabled = ParamUtil.getBoolean(
-			actionRequest, "emailOrderConfirmationEnabled");
-		String emailOrderConfirmationSubject = ParamUtil.getString(
-			actionRequest, "emailOrderConfirmationSubject");
-		String emailOrderConfirmationBody = ParamUtil.getString(
-			actionRequest, "emailOrderConfirmationBody");
-
-		if (Validator.isNull(emailOrderConfirmationSubject)) {
-			SessionErrors.add(actionRequest, "emailOrderConfirmationSubject");
-		}
-		else if (Validator.isNull(emailOrderConfirmationBody)) {
-			SessionErrors.add(actionRequest, "emailOrderConfirmationBody");
-		}
-		else {
-			preferences.setEmailOrderConfirmationEnabled(
-				emailOrderConfirmationEnabled);
-			preferences.setEmailOrderConfirmationSubject(
-				emailOrderConfirmationSubject);
-			preferences.setEmailOrderConfirmationBody(
-				emailOrderConfirmationBody);
-		}
-	}
-
-	protected void updateEmailOrderShipping(
-			ActionRequest actionRequest, ShoppingPreferences preferences)
-		throws Exception {
-
-		boolean emailOrderShippingEnabled = ParamUtil.getBoolean(
-			actionRequest, "emailOrderShippingEnabled");
-		String emailOrderShippingSubject = ParamUtil.getString(
-			actionRequest, "emailOrderShippingSubject");
-		String emailOrderShippingBody = ParamUtil.getString(
-			actionRequest, "emailOrderShippingBody");
-
-		if (Validator.isNull(emailOrderShippingSubject)) {
-			SessionErrors.add(actionRequest, "emailOrderShippingSubject");
-		}
-		else if (Validator.isNull(emailOrderShippingBody)) {
-			SessionErrors.add(actionRequest, "emailOrderShippingBody");
-		}
-		else {
-			preferences.setEmailOrderShippingEnabled(emailOrderShippingEnabled);
-			preferences.setEmailOrderShippingSubject(emailOrderShippingSubject);
-			preferences.setEmailOrderShippingBody(emailOrderShippingBody);
-		}
-	}
-
-	protected void updateInsuranceCalculation(
-			ActionRequest actionRequest, ShoppingPreferences preferences)
-		throws Exception {
-
-		String insuranceFormula = ParamUtil.getString(
-			actionRequest, "insuranceFormula");
 
 		String[] insurance = new String[5];
 
@@ -180,37 +59,30 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				ParamUtil.getDouble(actionRequest, "insurance" + i));
 		}
 
-		preferences.setInsuranceFormula(insuranceFormula);
-		preferences.setInsurance(insurance);
+		setPreference(actionRequest, "insurance", StringUtil.merge(insurance));
 	}
 
-	protected void updatePayment(
-			ActionRequest actionRequest, ShoppingPreferences preferences)
-		throws Exception {
+	protected void updatePayment(ActionRequest actionRequest) throws Exception {
+		String taxRatePercent = ParamUtil.getString(actionRequest, "taxRate");
 
-		String payPalEmailAddress = ParamUtil.getString(
-			actionRequest, "payPalEmailAddress");
-		String[] ccTypes = StringUtil.split(
-			ParamUtil.getString(actionRequest, "ccTypes"));
-		String currencyId = ParamUtil.getString(actionRequest, "currencyId");
-		String taxState = ParamUtil.getString(actionRequest, "taxState");
-		double taxRate = ParamUtil.getDouble(actionRequest, "taxRate") / 100;
-		double minOrder = ParamUtil.getDouble(actionRequest, "minOrder");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		preferences.setPayPalEmailAddress(payPalEmailAddress);
-		preferences.setCcTypes(ccTypes);
-		preferences.setCurrencyId(currencyId);
-		preferences.setTaxState(taxState);
-		preferences.setTaxRate(taxRate);
-		preferences.setMinOrder(minOrder);
+		NumberFormat percentFormat = NumberFormat.getPercentInstance(
+			themeDisplay.getLocale());
+
+		try {
+			double taxRate = percentFormat.parse(taxRatePercent).doubleValue();
+
+			setPreference(actionRequest, "taxRate", String.valueOf(taxRate));
+		}
+		catch (ParseException pe) {
+			SessionErrors.add(actionRequest, "taxRate");
+		}
 	}
 
-	protected void updateShippingCalculation(
-			ActionRequest actionRequest, ShoppingPreferences preferences)
+	protected void updateShippingCalculation(ActionRequest actionRequest)
 		throws Exception {
-
-		String shippingFormula = ParamUtil.getString(
-			actionRequest, "shippingFormula");
 
 		String[] shipping = new String[5];
 
@@ -219,8 +91,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				ParamUtil.getDouble(actionRequest, "shipping" + i));
 		}
 
-		preferences.setShippingFormula(shippingFormula);
-		preferences.setShipping(shipping);
+		setPreference(actionRequest, "shipping", StringUtil.merge(shipping));
 	}
 
 }

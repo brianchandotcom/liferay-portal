@@ -15,8 +15,6 @@
 package com.liferay.portlet.login.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -37,23 +35,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		validateEmailFrom(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	protected void validateEmailFrom(ActionRequest actionRequest)
-		throws Exception {
-
-		String emailFromName = getParameter(actionRequest, "emailFromName");
-		String emailFromAddress = getParameter(
-			actionRequest, "emailFromAddress");
-
-		if (Validator.isNull(emailFromName)) {
-			SessionErrors.add(actionRequest, "emailFromName");
-		}
-		else if (!Validator.isEmailAddress(emailFromAddress) &&
-				 !Validator.isVariableTerm(emailFromAddress)) {
-
-			SessionErrors.add(actionRequest, "emailFromAddress");
-		}
 	}
 
 }

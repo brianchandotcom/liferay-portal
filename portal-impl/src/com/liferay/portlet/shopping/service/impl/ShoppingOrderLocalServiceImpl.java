@@ -47,6 +47,7 @@ import com.liferay.portlet.shopping.ShippingPhoneException;
 import com.liferay.portlet.shopping.ShippingStateException;
 import com.liferay.portlet.shopping.ShippingStreetException;
 import com.liferay.portlet.shopping.ShippingZipException;
+import com.liferay.portlet.shopping.ShoppingSettings;
 import com.liferay.portlet.shopping.model.ShoppingCart;
 import com.liferay.portlet.shopping.model.ShoppingCartItem;
 import com.liferay.portlet.shopping.model.ShoppingItem;
@@ -56,7 +57,6 @@ import com.liferay.portlet.shopping.model.ShoppingOrderConstants;
 import com.liferay.portlet.shopping.model.ShoppingOrderItem;
 import com.liferay.portlet.shopping.model.impl.ShoppingCartItemImpl;
 import com.liferay.portlet.shopping.service.base.ShoppingOrderLocalServiceBaseImpl;
-import com.liferay.portlet.shopping.util.ShoppingPreferences;
 import com.liferay.portlet.shopping.util.ShoppingUtil;
 import com.liferay.portlet.shopping.util.comparator.OrderDateComparator;
 import com.liferay.util.CreditCard;
@@ -318,10 +318,10 @@ public class ShoppingOrderLocalServiceImpl
 		Map<ShoppingCartItem, Integer> items = cart.getItems();
 		Date now = new Date();
 
-		ShoppingPreferences shoppingPrefs = ShoppingPreferences.getInstance(
-			cart.getCompanyId(), cart.getGroupId());
+		ShoppingSettings shoppingSettings = ShoppingUtil.getShoppingSettings(
+			cart.getGroupId());
 
-		if (!ShoppingUtil.meetsMinOrder(shoppingPrefs, items)) {
+		if (!ShoppingUtil.meetsMinOrder(shoppingSettings, items)) {
 			throw new CartMinOrderException();
 		}
 
@@ -371,7 +371,7 @@ public class ShoppingOrderLocalServiceImpl
 			ShoppingUtil.calculateAlternativeShipping(
 				items, cart.getAltShipping()));
 		order.setAltShipping(
-			shoppingPrefs.getAlternativeShippingName(cart.getAltShipping()));
+			shoppingSettings.getAlternativeShippingName(cart.getAltShipping()));
 		order.setRequiresShipping(requiresShipping);
 		order.setInsure(cart.isInsure());
 		order.setInsurance(ShoppingUtil.calculateInsurance(items));
@@ -438,20 +438,20 @@ public class ShoppingOrderLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		ShoppingPreferences shoppingPrefs = ShoppingPreferences.getInstance(
-			order.getCompanyId(), order.getGroupId());
+		ShoppingSettings shoppingSettings = ShoppingUtil.getShoppingSettings(
+			order.getGroupId());
 
 		if (emailType.equals("confirmation") &&
-			shoppingPrefs.getEmailOrderConfirmationEnabled()) {
+			shoppingSettings.getEmailOrderConfirmationEnabled()) {
 		}
 		else if (emailType.equals("shipping") &&
-				 shoppingPrefs.getEmailOrderShippingEnabled()) {
+				 shoppingSettings.getEmailOrderShippingEnabled()) {
 		}
 		else {
 			return;
 		}
 
-		notifyUser(order, emailType, shoppingPrefs, serviceContext);
+		notifyUser(order, emailType, shoppingSettings, serviceContext);
 
 		if (emailType.equals("confirmation") && order.isSendOrderEmail()) {
 			order.setSendOrderEmail(false);
@@ -530,11 +530,11 @@ public class ShoppingOrderLocalServiceImpl
 		ShoppingOrder order = shoppingOrderPersistence.findByPrimaryKey(
 			orderId);
 
-		ShoppingPreferences shoppingPrefs = ShoppingPreferences.getInstance(
-			order.getCompanyId(), order.getGroupId());
+		ShoppingSettings shoppingSettings = ShoppingUtil.getShoppingSettings(
+			order.getGroupId());
 
 		validate(
-			shoppingPrefs, billingFirstName, billingLastName,
+			shoppingSettings, billingFirstName, billingLastName,
 			billingEmailAddress, billingStreet, billingCity, billingState,
 			billingZip, billingCountry, billingPhone, shipToBilling,
 			shippingFirstName, shippingLastName, shippingEmailAddress,
@@ -608,12 +608,13 @@ public class ShoppingOrderLocalServiceImpl
 
 	protected void notifyUser(
 			ShoppingOrder order, String emailType,
-			ShoppingPreferences shoppingPrefs, ServiceContext serviceContext)
+			ShoppingSettings shoppingSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(order.getUserId());
 
-		Currency currency = Currency.getInstance(shoppingPrefs.getCurrencyId());
+		Currency currency = Currency.getInstance(
+			shoppingSettings.getCurrencyId());
 
 		String billingAddress =
 			order.getBillingFirstName() + " " + order.getBillingLastName() +
@@ -639,9 +640,8 @@ public class ShoppingOrderLocalServiceImpl
 
 		double total = ShoppingUtil.calculateTotal(order);
 
-		String fromName = shoppingPrefs.getEmailFromName(order.getCompanyId());
-		String fromAddress = shoppingPrefs.getEmailFromAddress(
-			order.getCompanyId());
+		String fromName = shoppingSettings.getEmailFromName();
+		String fromAddress = shoppingSettings.getEmailFromAddress();
 
 		String toName = user.getFullName();
 		String toAddress = user.getEmailAddress();
@@ -650,12 +650,12 @@ public class ShoppingOrderLocalServiceImpl
 		String body = null;
 
 		if (emailType.equals("confirmation")) {
-			subject = shoppingPrefs.getEmailOrderConfirmationSubject();
-			body = shoppingPrefs.getEmailOrderConfirmationBody();
+			subject = shoppingSettings.getEmailOrderConfirmationSubject();
+			body = shoppingSettings.getEmailOrderConfirmationBody();
 		}
 		else if (emailType.equals("shipping")) {
-			subject = shoppingPrefs.getEmailOrderShippingSubject();
-			body = shoppingPrefs.getEmailOrderShippingBody();
+			subject = shoppingSettings.getEmailOrderShippingSubject();
+			body = shoppingSettings.getEmailOrderShippingBody();
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
@@ -682,7 +682,7 @@ public class ShoppingOrderLocalServiceImpl
 	}
 
 	protected void validate(
-			ShoppingPreferences shoppingPrefs, String billingFirstName,
+			ShoppingSettings shoppingPrefs, String billingFirstName,
 			String billingLastName, String billingEmailAddress,
 			String billingStreet, String billingCity, String billingState,
 			String billingZip, String billingCountry, String billingPhone,

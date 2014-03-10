@@ -116,6 +116,16 @@
 		<execute action="BasePortletConfiguration#assertClick" locator-key1="NAVIGATION_PERMISSIONS" value1="Permissions" />
 	</command>
 
+	<command name="gotoDMDocumentPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_PERMISSIONS_BUTTON" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+	</command>
+
 	<command name="gotoDMFolderPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

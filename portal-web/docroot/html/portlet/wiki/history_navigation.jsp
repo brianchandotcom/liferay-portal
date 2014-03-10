@@ -51,24 +51,7 @@ for (WikiPage wikiPage : allPages) {
 
 String sourceVersionString = (previousVersion != 0) ? String.valueOf(sourceVersion) : String.valueOf(sourceVersion) + " (" + LanguageUtil.get(pageContext, "first-version") + ")";
 String targetVersionString = (nextVersion != 0) ? String.valueOf(targetVersion) : String.valueOf(targetVersion) + " (" + LanguageUtil.get(pageContext, "last-version") + ")";
-
-String type = ParamUtil.getString(request, "type", "text");
-
-boolean htmlMode = false;
-
-if (type.equals("html")) {
-	htmlMode = true;
-}
 %>
-
-<portlet:renderURL var="changeMode">
-	<portlet:param name="struts_action" value="/wiki/compare_versions" />
-	<portlet:param name="nodeId" value="<%= String.valueOf(nodeId) %>" />
-	<portlet:param name="title" value="<%= title %>" />
-	<portlet:param name="sourceVersion" value="<%= String.valueOf(sourceVersion) %>" />
-	<portlet:param name="targetVersion" value="<%= String.valueOf(targetVersion) %>" />
-	<portlet:param name="type" value='<%= htmlMode ? "text" : "html" %>' />
-</portlet:renderURL>
 
 <portlet:renderURL var="previousChange">
 	<portlet:param name="struts_action" value="/wiki/compare_versions" />
@@ -76,7 +59,6 @@ if (type.equals("html")) {
 	<portlet:param name="title" value="<%= title %>" />
 	<portlet:param name="sourceVersion" value="<%= String.valueOf(previousVersion) %>" />
 	<portlet:param name="targetVersion" value="<%= String.valueOf(sourceVersion) %>" />
-	<portlet:param name="type" value="<%= type %>" />
 </portlet:renderURL>
 
 <portlet:renderURL var="nextChange">
@@ -85,7 +67,6 @@ if (type.equals("html")) {
 	<portlet:param name="title" value="<%= title %>" />
 	<portlet:param name="sourceVersion" value="<%= String.valueOf(targetVersion) %>" />
 	<portlet:param name="targetVersion" value="<%= String.valueOf(nextVersion) %>" />
-	<portlet:param name="type" value="<%= type %>" />
 </portlet:renderURL>
 
 <div class="history-navigation">
@@ -105,26 +86,6 @@ if (type.equals("html")) {
 			label="<%= true %>"
 			message='<%= LanguageUtil.format(pageContext, "comparing-versions-x-and-x", new Object[] {sourceVersionString, targetVersionString}, false) %>'
 		/>
-
-		<c:choose>
-			<c:when test="<%= !htmlMode %>">
-				<aui:a cssClass="change-mode" href="<%= changeMode %>" label="html-mode" />
-			</c:when>
-			<c:otherwise>
-				<span class="change-mode"><liferay-ui:message key="html-mode" /></span>
-			</c:otherwise>
-		</c:choose>
-
-		<%= StringPool.PIPE %>
-
-		<c:choose>
-			<c:when test="<%= htmlMode %>">
-				<aui:a cssClass="change-mode" href="<%= changeMode %>" label="text-mode" />
-			</c:when>
-			<c:otherwise>
-				<span class="change-mode"><liferay-ui:message key="text-mode" /></span>
-			</c:otherwise>
-		</c:choose>
 
 		<div class="central-author">
 			<c:choose>

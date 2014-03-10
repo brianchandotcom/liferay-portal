@@ -118,11 +118,11 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			modifiedDate = new Timestamp(modifiedDate.getTime() + 1);
 
-			if (keys.contains(key)) {
-				continue;
-			}
+			if (!keys.contains(key)) {
+				keys.add(key);
 
-			return modifiedDate;
+				return modifiedDate;
+			}
 		}
 	}
 

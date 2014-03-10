@@ -1644,7 +1644,8 @@ public class PortalImpl implements Portal {
 
 		sb.append(
 			getPortalURL(
-				company.getVirtualHostname(), getPortalPort(false), false));
+				company.getVirtualHostname(), getPortalServerPort(false),
+				false));
 		sb.append(getPathFriendlyURLPrivateGroup());
 		sb.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
 		sb.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
@@ -3133,7 +3134,7 @@ public class PortalImpl implements Portal {
 		}
 
 		String portalURL = getPortalURL(
-			virtualHostname, getPortalPort(secure), secure);
+			virtualHostname, getPortalServerPort(secure), secure);
 
 		sb.append(portalURL);
 
@@ -4040,12 +4041,7 @@ public class PortalImpl implements Portal {
 	@Deprecated
 	@Override
 	public int getPortalPort(boolean secure) {
-		if (secure) {
-			return _securePortalPort.get();
-		}
-		else {
-			return _portalPort.get();
-		}
+		return getPortalServerPort(secure);
 	}
 
 	@Override

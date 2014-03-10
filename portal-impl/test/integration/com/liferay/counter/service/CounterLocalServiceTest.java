@@ -127,7 +127,7 @@ public class CounterLocalServiceTest {
 
 			PropsUtil.set(PropsValues.COUNTER_INCREMENT + _COUNTER_NAME, "1");
 
-			InitUtil.initWithSpring();
+			InitUtil.initWithSpringAndModuleFramework();
 
 			List<Long> ids = new ArrayList<Long>();
 

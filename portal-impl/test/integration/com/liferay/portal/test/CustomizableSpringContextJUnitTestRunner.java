@@ -40,7 +40,7 @@ public abstract class CustomizableSpringContextJUnitTestRunner
 	public void initApplicationContext() {
 		System.setProperty("catalina.base", ".");
 
-		InitUtil.initWithSpring(getExtraConfigLocations());
+		InitUtil.initWithSpringAndModuleFramework(getExtraConfigLocations());
 	}
 
 }

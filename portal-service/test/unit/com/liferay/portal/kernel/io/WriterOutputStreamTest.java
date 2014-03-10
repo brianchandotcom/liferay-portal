@@ -324,7 +324,16 @@ public class WriterOutputStreamTest {
 	}
 
 	private void _testWriteBlock(boolean autoFlush) throws IOException {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+		final AtomicBoolean flushedFlag = new AtomicBoolean();
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter() {
+
+			@Override
+			public void flush() {
+				flushedFlag.set(true);
+			}
+
+		};
 
 		WriterOutputStream writerOutputStream = new WriterOutputStream(
 			unsyncStringWriter, "US-ASCII", 2, autoFlush);
@@ -335,13 +344,19 @@ public class WriterOutputStreamTest {
 				(byte)'f', (byte)'g'},
 			1, 5);
 
+		Assert.assertFalse(flushedFlag.get());
+
 		if (!autoFlush) {
 			writerOutputStream.flush();
+
+			Assert.assertTrue(flushedFlag.get());
+
+			flushedFlag.set(false);
 		}
 
 		Assert.assertEquals("bcdef", unsyncStringWriter.toString());
 
-		unsyncStringWriter = new UnsyncStringWriter();
+		unsyncStringWriter.reset();
 
 		writerOutputStream = new WriterOutputStream(
 			unsyncStringWriter, "US-ASCII", 4, autoFlush);
@@ -352,21 +367,33 @@ public class WriterOutputStreamTest {
 				(byte)'f', (byte)'g'},
 			1, 5);
 
+		Assert.assertFalse(flushedFlag.get());
+
 		if (!autoFlush) {
 			writerOutputStream.flush();
+
+			Assert.assertTrue(flushedFlag.get());
+
+			flushedFlag.set(false);
 		}
 
 		Assert.assertEquals("bcdef", unsyncStringWriter.toString());
 
-		unsyncStringWriter = new UnsyncStringWriter();
+		unsyncStringWriter.reset();
 
 		writerOutputStream = new WriterOutputStream(
 			unsyncStringWriter, "US-ASCII", autoFlush);
 
 		writerOutputStream.write(new byte[]{(byte)'a', (byte)'b', (byte)'c'});
 
+		Assert.assertFalse(flushedFlag.get());
+
 		if (!autoFlush) {
 			writerOutputStream.flush();
+
+			Assert.assertTrue(flushedFlag.get());
+
+			flushedFlag.set(false);
 		}
 
 		Assert.assertEquals("abc", unsyncStringWriter.toString());

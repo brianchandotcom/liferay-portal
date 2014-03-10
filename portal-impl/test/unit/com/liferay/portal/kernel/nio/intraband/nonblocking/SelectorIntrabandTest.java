@@ -718,7 +718,8 @@ public class SelectorIntrabandTest {
 		try {
 			_selectorIntraband.registerChannel(
 				IntrabandTestUtil.<ScatteringByteChannel>createProxy(
-					ScatteringByteChannel.class), null);
+					ScatteringByteChannel.class),
+				null);
 
 			Assert.fail();
 		}

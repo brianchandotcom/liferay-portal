@@ -57,10 +57,12 @@ public class LiferayVideoConverter extends LiferayConverter {
 
 		_height = GetterUtil.getInteger(
 			videoProperties.getProperty(
-				PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT), _height);
+				PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT),
+			_height);
 		_width = GetterUtil.getInteger(
 			videoProperties.getProperty(
-				PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH), _width);
+				PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH),
+			_width);
 
 		initVideoBitRate(videoProperties);
 		initVideoFrameRate(videoProperties);

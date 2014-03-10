@@ -293,8 +293,8 @@ public class AssetTagFinderTest {
 				siteGroup.getGroupId(), assetTagName);
 
 			Assert.assertEquals(
-				StringUtil.toLowerCase(
-					assetTagName), siteGroupAssetTag.getName());
+				StringUtil.toLowerCase(assetTagName),
+				siteGroupAssetTag.getName());
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(

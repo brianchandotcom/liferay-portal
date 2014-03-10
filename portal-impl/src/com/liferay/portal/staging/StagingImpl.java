@@ -1219,8 +1219,8 @@ public class StagingImpl implements Staging {
 						"the-original-x-does-not-exist-in-the-current-" +
 							"environment",
 						ResourceActionsUtil.getModelResource(
-							locale, missingReference.getClassName()
-						), false));
+							locale, missingReference.getClassName()),
+						false));
 			}
 
 			errorMessageJSONObject.put("size", referrers.size());

@@ -310,7 +310,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		setFinalStaticField(
 			ExportImportHelperImpl.class.getDeclaredField(
-				"_PRIVATE_USER_SERVLET_MAPPING"), "/en/");
+				"_PRIVATE_USER_SERVLET_MAPPING"),
+			"/en/");
 
 		Element rootElement =
 			_portletDataContextExport.getExportDataRootElement();

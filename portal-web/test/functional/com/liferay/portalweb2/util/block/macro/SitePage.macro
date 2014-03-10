@@ -188,7 +188,6 @@
 	</command>
 
 	<command name="expandRootCP">
-		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
 		<execute action="CPSitepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
 
 		<if>

@@ -30,6 +30,10 @@
 			<execute function="AssertClick#assertTextClickAtClickDockbar" />
 		</case>
 
+		<case comparator="startsWith" locator-key1="EDIT_">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
 		<case locator-key1="USER_MY_DASHBOARD">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
@@ -54,6 +58,12 @@
 	<command name="assertElementNotPresent">
 		<case comparator="startsWith" locator1="//span[@data-title='">
 			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+	</command>
+
+	<command name="assertElementPresent">
+		<case comparator="contains" locator1="//div[@id='_145_embeddedPortletsContent']">
+			<execute function="AssertElementPresent#pauseAssertVisible" />
 		</case>
 	</command>
 

@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_IFRAME</td>
-	<td>//iframe[contains(@src,'editAsset_iframe')]</td>
+	<td>//iframe[contains(@id,'editAsset_iframe')]</td>
 	<td></td>
 </tr>
 <tr>

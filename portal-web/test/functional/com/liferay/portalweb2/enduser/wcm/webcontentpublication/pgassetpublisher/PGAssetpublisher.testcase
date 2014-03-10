@@ -23,6 +23,8 @@
 
 		<execute macro="Bookmark#tearDownCP" />
 
+		<execute macro="BookmarksFolder#tearDownCP" />
+
 		<execute macro="WebContent#tearDownCP" />
 
 		<execute macro="BlogsEntry#tearDownCP" />

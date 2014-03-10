@@ -330,52 +330,52 @@
 </tr>
 <tr>
 	<td>AVERAGE_STAR_1</td>
-	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]//a[1][@class='rating-element icon-star']</td>
+	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]/span[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_2</td>
-	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]//a[2][@class='rating-element icon-star']</td>
+	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]/span[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_3</td>
-	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]//a[3][@class='rating-element icon-star']</td>
+	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]/span[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_4</td>
-	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]//a[4][@class='rating-element icon-star']</td>
+	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]/span[contains(@title,'4 stars out of 5')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_5</td>
-	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]//a[5][@class='rating-element icon-star']</td>
+	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]/span[5]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_1</td>
-	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]//a[1][@class='rating-element icon-star-empty']</td>
+	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]/span[1][contains(@class,'rating-element icon-star-empty')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_2</td>
-	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]//a[2][@class='rating-element icon-star-empty']</td>
+	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]/span[2][contains(@class,'rating-element icon-star-empty')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_3</td>
-	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]//a[3][@class='rating-element icon-star-empty']</td>
+	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]/span[3][contains(@class,'rating-element icon-star-empty')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_4</td>
-	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]//a[4][@class='rating-element icon-star-empty']</td>
+	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]/span[4][contains(@class,'rating-element icon-star-empty')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_5</td>
-	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]//a[5][@class='rating-element icon-star-empty']</td>
+	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]/span[5][contains(@class,'rating-element icon-star-empty')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -401,12 +401,12 @@
 </tr>
 <tr>
 	<td>DISPLAY_ICON_TWITTER</td>
-	<td>//li[@class='taglib-social-bookmark-twitter']</td>
+	<td>//span[@class='social-bookmark']//span[contains(.,'Twitter')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_ICON_GOOGLE_PLUS</td>
-	<td>//li[@class='taglib-social-bookmark-plusone']</td>
+	<td>//span[@class='social-bookmark']//span[contains(.,'Google+')]</td>
 	<td></td>
 </tr>
 <tr>

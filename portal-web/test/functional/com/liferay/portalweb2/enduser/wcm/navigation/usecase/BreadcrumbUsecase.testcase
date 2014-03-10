@@ -88,12 +88,12 @@
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkSetupName" value="Show Current Site,Show Current Application,Show Guest Site,Show Application Breadcrumb" />
-			<var name="uncheckSetupName" value="Show Page,Show Parent Sites" />
+			<var name="checkSetupName" value="Show Current Application,Show Guest Site,Show Application Breadcrumb" />
+			<var name="uncheckSetupName" value="Show Current Site,Show Page,Show Parent Sites" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">
-			<var name="breadcrumbListNotVisible" value="Parent Page Name,Child Page Name,Site Name" />
+			<var name="breadcrumbListNotVisible" value="Site Name,Parent Page Name,Child Page Name" />
 			<var name="breadcrumbListVisible" value="Liferay" />
 		</execute>
 
@@ -119,7 +119,7 @@
 		</execute>
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">
-			<var name="breadcrumbListNotVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
+			<var name="breadcrumbListNotVisible" value="Parent Page Name,Child Page Name" />
 		</execute>
 
 		<execute macro="Page#gotoChildPagePG">
@@ -130,7 +130,7 @@
 		</execute>
 
 		<execute macro="Breadcrumb#viewPG">
-			<var name="breadcrumbListNotVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
+			<var name="breadcrumbListNotVisible" value="Parent Page Name,Child Page Name" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">

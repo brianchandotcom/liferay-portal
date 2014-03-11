@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -96,7 +97,8 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 
 			_servletOutputStream = new ServletOutputStreamAdapter(
 				new WriterOutputStream(
-					_printWriter, getCharacterEncoding(), getBufferSize()));
+					_printWriter, getCharacterEncoding(), getBufferSize(),
+					true));
 		}
 
 		return _servletOutputStream;

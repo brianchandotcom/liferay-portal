@@ -75,21 +75,16 @@ public class OutputStreamWriter extends Writer {
 
 	@Override
 	public void close() throws IOException {
-		flush();
+		_flushBuffer();
 
 		_outputStream.close();
 	}
 
 	@Override
 	public void flush() throws IOException {
-		if (_outputByteBuffer.position() > 0) {
-			_outputStream.write(
-				_outputByteBuffer.array(), 0, _outputByteBuffer.position());
+		_flushBuffer();
 
-			_outputStream.flush();
-
-			_outputByteBuffer.rewind();
-		}
+		_outputStream.flush();
 	}
 
 	public String getEncoding() {
@@ -133,11 +128,11 @@ public class OutputStreamWriter extends Writer {
 				inputCharBuffer, _outputByteBuffer, true);
 
 			if (coderResult.isOverflow()) {
-				flush();
+				_flushBuffer();
 			}
 			else if (coderResult.isUnderflow()) {
 				if (_autoFlush) {
-					flush();
+					_flushBuffer();
 				}
 
 				break;
@@ -145,6 +140,15 @@ public class OutputStreamWriter extends Writer {
 			else {
 				throw new IOException("Unexcepted coder result " + coderResult);
 			}
+		}
+	}
+
+	private void _flushBuffer() throws IOException {
+		if (_outputByteBuffer.position() > 0) {
+			_outputStream.write(
+				_outputByteBuffer.array(), 0, _outputByteBuffer.position());
+
+			_outputByteBuffer.rewind();
 		}
 	}
 

@@ -30,12 +30,6 @@ public class ServletOutputStreamAdapter extends ServletOutputStream {
 
 	@Override
 	public void close() throws IOException {
-		try {
-			flush();
-		}
-		catch (IOException ioe) {
-		}
-
 		outputStream.close();
 	}
 

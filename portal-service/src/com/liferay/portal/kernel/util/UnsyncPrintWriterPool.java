@@ -37,7 +37,7 @@ public class UnsyncPrintWriterPool {
 	public static UnsyncPrintWriter borrow(
 		OutputStream outputStream, String charsetName) {
 
-		return borrow(new OutputStreamWriter(outputStream, charsetName));
+		return borrow(new OutputStreamWriter(outputStream, charsetName, true));
 	}
 
 	public static UnsyncPrintWriter borrow(Writer writer) {

@@ -118,8 +118,8 @@ public abstract class RepositoryModelProxyBean {
 			fileEntryProxyBeans.add(newFileEntryProxyBean(fileEntry));
 		}
 
-		if (fileEntries instanceof UnmodifiableList) {
-			return new UnmodifiableList<FileEntry>(fileEntries);
+		if (ListUtil.isUnmodifiableList(fileEntries)) {
+			return Collections.unmodifiableList(fileEntryProxyBeans);
 		}
 
 		return fileEntryProxyBeans;
@@ -139,8 +139,8 @@ public abstract class RepositoryModelProxyBean {
 			fileVersionProxyBeans.add(newFileVersionProxyBean(fileVersion));
 		}
 
-		if (fileVersions instanceof UnmodifiableList) {
-			return new UnmodifiableList<FileVersion>(fileVersions);
+		if (ListUtil.isUnmodifiableList(fileVersions)) {
+			return Collections.unmodifiableList(fileVersionProxyBeans);
 		}
 
 		return fileVersionProxyBeans;

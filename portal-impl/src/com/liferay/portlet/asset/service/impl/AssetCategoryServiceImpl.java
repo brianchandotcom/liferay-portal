@@ -169,6 +169,9 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	public String getCategoryPath(long categoryId)
 		throws PortalException, SystemException {
 
+		AssetCategoryPermission.check(
+			getPermissionChecker(), categoryId, ActionKeys.VIEW);
+
 		AssetCategory category = getCategory(categoryId);
 
 		return category.getPath(LocaleUtil.getMostRelevantLocale());

@@ -21,5 +21,7 @@ portalRequestDataSample.setDescription("Portal Request");
 
 portalRequestDataSample.prepare();
 
+DataSampleThreadLocal.initialize();
+
 request.setAttribute(WebKeys.PORTAL_REQUEST_DATA_SAMPLE, portalRequestDataSample);
 %>

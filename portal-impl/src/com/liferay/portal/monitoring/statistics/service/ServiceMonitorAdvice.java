@@ -115,6 +115,8 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 
 		_serviceRequestDataSampleThreadLocal.set(serviceRequestDataSample);
 
+		DataSampleThreadLocal.initialize();
+
 		return null;
 	}
 

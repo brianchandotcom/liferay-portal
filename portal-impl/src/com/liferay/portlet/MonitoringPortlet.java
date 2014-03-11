@@ -174,6 +174,8 @@ public class MonitoringPortlet implements InvokerPortlet {
 				portletRequestDataSample.setTimeout(_actionTimeout);
 
 				portletRequestDataSample.prepare();
+
+				DataSampleThreadLocal.initialize();
 			}
 
 			_invokerPortlet.processAction(actionRequest, actionResponse);
@@ -206,6 +208,8 @@ public class MonitoringPortlet implements InvokerPortlet {
 					PortletRequestType.EVENT, eventRequest, eventResponse);
 
 				portletRequestDataSample.prepare();
+
+				DataSampleThreadLocal.initialize();
 			}
 
 			_invokerPortlet.processEvent(eventRequest, eventResponse);
@@ -240,6 +244,8 @@ public class MonitoringPortlet implements InvokerPortlet {
 				portletRequestDataSample.setTimeout(_renderTimeout);
 
 				portletRequestDataSample.prepare();
+
+				DataSampleThreadLocal.initialize();
 			}
 
 			_invokerPortlet.render(renderRequest, renderResponse);
@@ -273,6 +279,8 @@ public class MonitoringPortlet implements InvokerPortlet {
 					resourceResponse);
 
 				portletRequestDataSample.prepare();
+
+				DataSampleThreadLocal.initialize();
 			}
 
 			_invokerPortlet.serveResource(resourceRequest, resourceResponse);

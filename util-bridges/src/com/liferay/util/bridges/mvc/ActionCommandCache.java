@@ -66,9 +66,8 @@ public class ActionCommandCache {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
-			"(&(objectClass=" + ActionCommand.class.getName() +
-				")(javax.portlet.name=" + portletName +
-					")(action.command.name=*))");
+			"(&(action.command.name=*)(javax.portlet.name=" + portletName +
+				")(objectClass=" + ActionCommand.class.getName() + "))");
 
 		_serviceTracker = registry.trackServices(
 			filter, new ActionCommandServiceTrackerCustomizer());

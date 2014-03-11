@@ -135,7 +135,7 @@
 }
 
 @include respond-to(phone, tablet) {
-	.navbar .navbar-search .form-search .search-query {
+	.form-search .input-append input[type="text"].search-query {
 		@include border-radius(14px);
 	}
 }

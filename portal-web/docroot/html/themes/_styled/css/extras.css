@@ -192,8 +192,10 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	@include border-radius(5px);
 }
 
-.portlet-journal .lfr-ddm-container .field-wrapper {
-	@include border-radius(6px);
+.portlet-journal, .portlet-dynamic-data-list-display {
+	.lfr-ddm-container .field-wrapper {
+		@include border-radius(6px);
+	}
 }
 
 .portlet-journal .display-page-item-container .display-page-item, .portlet-journal .display-page-item-container .display-page-item .display-page-item-remove, .taglib-categorization-filter .asset-entry {

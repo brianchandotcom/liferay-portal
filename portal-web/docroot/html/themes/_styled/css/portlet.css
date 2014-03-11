@@ -314,6 +314,24 @@ body.portlet {
 	}
 }
 
+/* ---------- Dynamic Data List Display portlet ---------- */
+
+.portlet-dynamic-data-list-display .lfr-ddm-container .field-wrapper {
+	&[data-repeatable="true"], .field-wrapper {
+		border: 1px solid #D0D0D0;
+		border-left-width: 10px;
+		padding: 7px 10px 10px;
+
+		&[data-repeatable="true"]:nth-of-type(even) {
+			background-color: #F5F5F5;
+		}
+
+		&, .field-wrapper {
+			margin: 15px 0 0;
+		}
+	}
+}
+
 /* ---------- Panel page ---------- */
 
 .lfr-panel-page {

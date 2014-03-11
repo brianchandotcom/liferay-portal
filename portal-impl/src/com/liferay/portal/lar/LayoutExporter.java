@@ -515,15 +515,21 @@ public class LayoutExporter {
 			portletDataContext.setScopeType(scopeType);
 			portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
 
-			boolean[] exportPortletControls =
-				ExportImportHelperUtil.getExportPortletControls(
+			Map<String, Boolean> exportPortletControlsMap =
+				ExportImportHelperUtil.getExportPortletControlsMap(
 					companyId, portletId, parameterMap, type);
 
 			_portletExporter.exportPortlet(
 				portletDataContext, layoutCache, portletId, layout,
-				portletsElement, exportPermissions, exportPortletControls[0],
-				exportPortletControls[1], exportPortletControls[2],
-				exportPortletControls[3]);
+				portletsElement, exportPermissions,
+				exportPortletControlsMap.get(
+					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
+				exportPortletControlsMap.get(
+					PortletDataHandlerKeys.PORTLET_DATA),
+				exportPortletControlsMap.get(
+					PortletDataHandlerKeys.PORTLET_SETUP),
+				exportPortletControlsMap.get(
+					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES));
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);

@@ -592,8 +592,8 @@ public class LayoutImporter {
 
 			Element portletDataElement = portletElement.element("portlet-data");
 
-			boolean[] importPortletControls =
-				ExportImportHelperUtil.getImportPortletControls(
+			Map<String, Boolean> importPortletControlsMap =
+				ExportImportHelperUtil.getImportPortletControlsMap(
 					companyId, portletId, parameterMap, portletDataElement,
 					manifestSummary);
 
@@ -607,12 +607,21 @@ public class LayoutImporter {
 				_portletImporter.importPortletPreferences(
 					portletDataContext, layoutSet.getCompanyId(),
 					portletPreferencesGroupId, layout, null, portletElement,
-					false, importPortletControls[0], importPortletControls[1],
-					importPortletControls[2], importPortletControls[3]);
+					false,
+					importPortletControlsMap.get(
+						PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
+					importPortletControlsMap.get(
+						PortletDataHandlerKeys.PORTLET_DATA),
+					importPortletControlsMap.get(
+						PortletDataHandlerKeys.PORTLET_SETUP),
+					importPortletControlsMap.get(
+						PortletDataHandlerKeys.PORTLET_USER_PREFERENCES));
 
 				// Portlet data
 
-				if (importPortletControls[1]) {
+				if (importPortletControlsMap.get(
+						PortletDataHandlerKeys.PORTLET_DATA)) {
+
 					_portletImporter.importPortletData(
 						portletDataContext, portletId, plid,
 						portletDataElement);
@@ -635,9 +644,15 @@ public class LayoutImporter {
 
 			_portletImporter.importPortletPreferences(
 				portletDataContext, layoutSet.getCompanyId(), groupId, null,
-				null, portletElement, false, importPortletControls[0],
-				importPortletControls[1], importPortletControls[2],
-				importPortletControls[3]);
+				null, portletElement, false,
+				importPortletControlsMap.get(
+					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
+				importPortletControlsMap.get(
+					PortletDataHandlerKeys.PORTLET_DATA),
+				importPortletControlsMap.get(
+					PortletDataHandlerKeys.PORTLET_SETUP),
+				importPortletControlsMap.get(
+					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES));
 		}
 
 		if (importPermissions) {

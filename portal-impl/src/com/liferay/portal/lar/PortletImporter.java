@@ -463,8 +463,8 @@ public class PortletImporter {
 
 		Element portletDataElement = portletElement.element("portlet-data");
 
-		boolean[] importPortletControls =
-			ExportImportHelperUtil.getImportPortletControls(
+		Map<String, Boolean> importPortletControlsMap =
+			ExportImportHelperUtil.getImportPortletControlsMap(
 				layout.getCompanyId(), portletId, parameterMap,
 				portletDataElement, manifestSummary);
 
@@ -474,13 +474,21 @@ public class PortletImporter {
 
 			importPortletPreferences(
 				portletDataContext, layout.getCompanyId(), groupId, layout,
-				portletId, portletElement, true, importPortletControls[0],
-				importPortletControls[1], importPortletControls[2],
-				importPortletControls[3]);
+				portletId, portletElement, true,
+				importPortletControlsMap.get(
+					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
+				importPortletControlsMap.get(
+					PortletDataHandlerKeys.PORTLET_DATA),
+				importPortletControlsMap.get(
+					PortletDataHandlerKeys.PORTLET_SETUP),
+				importPortletControlsMap.get(
+					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES));
 
 			// Portlet data
 
-			if (importPortletControls[1]) {
+			if (importPortletControlsMap.get(
+					PortletDataHandlerKeys.PORTLET_DATA)) {
+
 				if (_log.isDebugEnabled()) {
 					_log.debug("Importing portlet data");
 				}

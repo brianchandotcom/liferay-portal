@@ -94,6 +94,11 @@ public class ExportImportHelperUtil {
 		return _exportImportHelper;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getExportPortletControlsMap(long, String, Map)}
+	 */
+	@Deprecated
 	public static boolean[] getExportPortletControls(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap)
@@ -103,6 +108,11 @@ public class ExportImportHelperUtil {
 			companyId, portletId, parameterMap);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getExportPortletControlsMap(long, String, Map, String)}
+	 */
+	@Deprecated
 	public static boolean[] getExportPortletControls(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, String type)
@@ -112,6 +122,30 @@ public class ExportImportHelperUtil {
 			companyId, portletId, parameterMap, type);
 	}
 
+	public static Map<String, Boolean> getExportPortletControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap)
+		throws Exception {
+
+		return getExportImportHelper().getExportPortletControlsMap(
+			companyId, portletId, parameterMap);
+	}
+
+	public static Map<String, Boolean> getExportPortletControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, String type)
+		throws Exception {
+
+		return getExportImportHelper().getExportPortletControlsMap(
+			companyId, portletId, parameterMap, type);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getImportPortletControlsMap(long, String, Map, Element,
+	 *             ManifestSummary)}
+	 */
+	@Deprecated
 	public static boolean[] getImportPortletControls(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, Element portletDataElement)
@@ -121,6 +155,12 @@ public class ExportImportHelperUtil {
 			companyId, portletId, parameterMap, portletDataElement);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getImportPortletControlsMap(long, String, Map, Element,
+	 *             ManifestSummary)}
+	 */
+	@Deprecated
 	public static boolean[] getImportPortletControls(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, Element portletDataElement,
@@ -128,6 +168,17 @@ public class ExportImportHelperUtil {
 		throws Exception {
 
 		return getExportImportHelper().getImportPortletControls(
+			companyId, portletId, parameterMap, portletDataElement,
+			manifestSummary);
+	}
+
+	public static Map<String, Boolean> getImportPortletControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement,
+			ManifestSummary manifestSummary)
+		throws Exception {
+
+		return getExportImportHelper().getImportPortletControlsMap(
 			companyId, portletId, parameterMap, portletDataElement,
 			manifestSummary);
 	}

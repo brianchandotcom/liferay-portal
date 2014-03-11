@@ -105,22 +105,60 @@ public interface ExportImportHelper {
 	public String getExportableRootPortletId(long companyId, String portletId)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getExportPortletControlsMap(long, String, Map)}
+	 */
+	@Deprecated
 	public boolean[] getExportPortletControls(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getExportPortletControlsMap(long, String, Map, String)}
+	 */
+	@Deprecated
 	public boolean[] getExportPortletControls(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, String type)
 		throws Exception;
 
+	public Map<String, Boolean> getExportPortletControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap)
+		throws Exception;
+
+	public Map<String, Boolean> getExportPortletControlsMap(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, String type)
+		throws Exception;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getImportPortletControlsMap(long, String, Map, Element,
+	 *             ManifestSummary)}
+	 */
+	@Deprecated
 	public boolean[] getImportPortletControls(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, Element portletDataElement)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getImportPortletControlsMap(long, String, Map, Element,
+	 *             ManifestSummary)}
+	 */
+	@Deprecated
 	public boolean[] getImportPortletControls(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement,
+			ManifestSummary manifestSummary)
+		throws Exception;
+
+	public Map<String, Boolean> getImportPortletControlsMap(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, Element portletDataElement,
 			ManifestSummary manifestSummary)

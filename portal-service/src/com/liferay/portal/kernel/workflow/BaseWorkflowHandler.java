@@ -85,7 +85,7 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 			AssetRenderer assetRenderer = getAssetRenderer(classPK);
 
 			if (assetRenderer != null) {
-				return assetRenderer.getSummary(locale);
+				return assetRenderer.getSummary(locale, null, null);
 			}
 		}
 		catch (Exception e) {

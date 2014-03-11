@@ -342,15 +342,16 @@ public class ExportImportConfigurationLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.ExportImportConfiguration updateExportImportConfiguration(
-		long exportImportConfigurationId, java.lang.String name,
+		long userId, long exportImportConfigurationId, java.lang.String name,
 		java.lang.String description,
 		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateExportImportConfiguration(exportImportConfigurationId,
-			name, description, settingsMap, serviceContext);
+				   .updateExportImportConfiguration(userId,
+			exportImportConfigurationId, name, description, settingsMap,
+			serviceContext);
 	}
 
 	public static com.liferay.portal.model.ExportImportConfiguration updateStatus(

@@ -211,15 +211,19 @@ public class ExportImportConfigurationLocalServiceImpl
 
 	@Override
 	public ExportImportConfiguration updateExportImportConfiguration(
-			long exportImportConfigurationId, String name, String description,
-			Map<String, Serializable> settingsMap,
+			long userId, long exportImportConfigurationId, String name,
+			String description, Map<String, Serializable> settingsMap,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationPersistence.findByPrimaryKey(
 				exportImportConfigurationId);
 
+		exportImportConfiguration.setUserId(userId);
+		exportImportConfiguration.setUserName(user.getFullName());
 		exportImportConfiguration.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		exportImportConfiguration.setName(name);

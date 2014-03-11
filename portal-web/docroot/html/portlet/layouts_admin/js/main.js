@@ -855,6 +855,27 @@ AUI.add(
 
 						var cmdNode = instance.byId('cmd');
 
+						if (cmdNode.val() === 'update' || cmdNode.val() === 'add') {
+							var groupIdNode = instance.byId('groupId');
+							var liveGroupIdNode = instance.byId('liveGroupId');
+							var privateLayoutNode = instance.byId('privateLayout');
+							var redirectNode = instance.byId('redirect');
+							var rootNodeNameNode = instance.byId('rootNodeName');
+
+							var portletURL = Liferay.PortletURL.createURL(redirectNode.val());
+
+							portletURL.setParameter("struts_action", "/group_pages/edit_export_configuration");
+							portletURL.setParameter("cmd", cmdNode.val());
+							portletURL.setParameter("exportNav", "custom");
+							portletURL.setParameter("groupId", groupIdNode.val());
+							portletURL.setParameter("liveGroupId", liveGroupIdNode.val());
+							portletURL.setParameter("privateLayout", privateLayoutNode.val());
+							portletURL.setParameter("rootNodeName", rootNodeNameNode.val());
+							portletURL.setParameter("tabs2", "new-export-process");
+
+							redirectNode.val(portletURL.toString());
+						}
+
 						if (cmdNode) {
 							cmdNode.val(STR_EMPTY);
 
@@ -1253,6 +1274,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-dialog-iframe-deprecated', 'aui-io-request', 'aui-modal', 'aui-parse-content', 'aui-toggler', 'aui-tree-view', 'liferay-notice', 'liferay-portlet-base', 'liferay-store', 'liferay-util-window']
+		requires: ['aui-dialog-iframe-deprecated', 'aui-io-request', 'aui-modal', 'aui-parse-content', 'aui-toggler', 'aui-tree-view', 'liferay-notice', 'liferay-portlet-base', 'liferay-portlet-url', 'liferay-store', 'liferay-util-window']
 	}
 );

@@ -29,7 +29,6 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-	<portlet:param name="redirect" value="<%= String.valueOf(privateLayout) %>" />
 	<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 </portlet:renderURL>
 
@@ -72,7 +71,19 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 			/>
 		</liferay-ui:search-container-column-text>
 
+		<liferay-portlet:renderURL varImpl="rowURL">
+			<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
+			<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+			<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
+		</liferay-portlet:renderURL>
+
 		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
 			name="name"
 			value="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>"
 		/>

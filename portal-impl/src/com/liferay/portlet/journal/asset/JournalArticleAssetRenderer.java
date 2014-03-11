@@ -144,43 +144,31 @@ public class JournalArticleAssetRenderer
 		}
 
 		try {
-			if ((portletRequest == null) || (portletResponse == null) ||
-				Validator.isNull(_article.getStructureId())) {
+			ThemeDisplay themeDisplay = null;
+			String xmlRequest = null;
 
-				JournalArticleDisplay articleDisplay =
-					JournalArticleLocalServiceUtil.getArticleDisplay(
-						_article, null, null,
-						LanguageUtil.getLanguageId(locale), 1, null, null);
+			if ((portletRequest != null) && (portletResponse != null) &&
+				Validator.isNotNull(_article.getStructureId())) {
 
-				summary = StringUtil.shorten(
-					HtmlUtil.stripHtml(articleDisplay.getContent()), 200);
+				themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-				return summary;
+				xmlRequest = PortletRequestUtil.toXML(
+					portletRequest, portletResponse);
 			}
-			else {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)portletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
 
-					String xmlRequest = PortletRequestUtil.toXML(
-						portletRequest, portletResponse);
+			JournalArticleDisplay articleDisplay =
+				JournalArticleLocalServiceUtil.getArticleDisplay(
+					_article, null, null, LanguageUtil.getLanguageId(locale), 1,
+					xmlRequest, themeDisplay);
 
-				JournalArticleDisplay articleDisplay =
-					JournalArticleLocalServiceUtil.getArticleDisplay(
-						_article, null, null,
-						LanguageUtil.getLanguageId(locale), 1, xmlRequest,
-						themeDisplay);
-
-				summary = StringUtil.shorten(
-					HtmlUtil.stripHtml(articleDisplay.getContent()), 200);
-
-				return summary;
-			}
+			summary = StringUtil.shorten(
+				HtmlUtil.stripHtml(articleDisplay.getContent()), 200);
 		}
 		catch (Exception e) {
 		}
 
-		return null;
+		return summary;
 	}
 
 	@Override

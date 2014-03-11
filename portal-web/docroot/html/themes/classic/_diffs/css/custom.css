@@ -378,6 +378,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		.breadcrumb {
 			margin-bottom: 0;
+
+			.active {
+				max-width: 100%;
+				word-wrap: break-word;
+			}
 		}
 	}
 

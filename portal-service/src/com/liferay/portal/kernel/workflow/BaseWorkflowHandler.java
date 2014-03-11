@@ -79,6 +79,11 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 		return getIconPath(themeDisplay);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(long, Locale,
+	 *             PortletRequest, PortletResponse)}
+	 */
+	@Deprecated
 	@Override
 	public String getSummary(long classPK, Locale locale) {
 		try {

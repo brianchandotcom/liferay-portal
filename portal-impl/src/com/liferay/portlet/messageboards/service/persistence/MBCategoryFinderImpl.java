@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
@@ -41,6 +40,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -259,7 +259,7 @@ public class MBCategoryFinderImpl
 			catch (NoSuchSubscriptionException nsse) {
 			}
 
-			return new UnmodifiableList<MBCategory>(
+			return Collections.unmodifiableList(
 				ListUtil.subList(
 					list, queryDefinition.getStart(),
 					queryDefinition.getEnd()));

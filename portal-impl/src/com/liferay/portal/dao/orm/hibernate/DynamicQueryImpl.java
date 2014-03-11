@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -94,7 +94,7 @@ public class DynamicQueryImpl implements DynamicQuery {
 		List list = _criteria.list();
 
 		if (unmodifiable) {
-			return new UnmodifiableList(list);
+			return Collections.unmodifiableList(list);
 		}
 		else {
 			return ListUtil.copy(list);

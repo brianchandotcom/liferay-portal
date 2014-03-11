@@ -17,7 +17,7 @@ package com.liferay.portal.repository.liferayrepository.util;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
@@ -26,6 +26,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -46,8 +47,8 @@ public abstract class LiferayBase {
 			fileEntries.add(fileEntry);
 		}
 
-		if (dlFileEntries instanceof UnmodifiableList) {
-			return new UnmodifiableList<FileEntry>(fileEntries);
+		if (ListUtil.isUnmodifiableList(dlFileEntries)) {
+			return Collections.unmodifiableList(fileEntries);
 		}
 		else {
 			return fileEntries;
@@ -80,8 +81,8 @@ public abstract class LiferayBase {
 			}
 		}
 
-		if (dlFileEntriesAndDLFolders instanceof UnmodifiableList) {
-			return new UnmodifiableList<Object>(fileEntriesAndFolders);
+		if (ListUtil.isUnmodifiableList(dlFileEntriesAndDLFolders)) {
+			return Collections.unmodifiableList(fileEntriesAndFolders);
 		}
 		else {
 			return fileEntriesAndFolders;
@@ -100,8 +101,8 @@ public abstract class LiferayBase {
 			fileVersions.add(fileVersion);
 		}
 
-		if (dlFileVersions instanceof UnmodifiableList) {
-			return new UnmodifiableList<FileVersion>(fileVersions);
+		if (ListUtil.isUnmodifiableList(dlFileVersions)) {
+			return Collections.unmodifiableList(fileVersions);
 		}
 		else {
 			return fileVersions;
@@ -117,8 +118,8 @@ public abstract class LiferayBase {
 			folders.add(folder);
 		}
 
-		if (dlFolders instanceof UnmodifiableList) {
-			return new UnmodifiableList<Folder>(folders);
+		if (ListUtil.isUnmodifiableList(dlFolders)) {
+			return Collections.unmodifiableList(folders);
 		}
 		else {
 			return folders;

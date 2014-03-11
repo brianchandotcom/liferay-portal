@@ -28,13 +28,13 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -64,6 +64,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -579,8 +580,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			fileEntries.add(fileEntry);
 		}
 
-		if (dlFileEntries instanceof UnmodifiableList) {
-			return new UnmodifiableList<FileEntry>(fileEntries);
+		if (ListUtil.isUnmodifiableList(dlFileEntries)) {
+			return Collections.unmodifiableList(fileEntries);
 		}
 		else {
 			return fileEntries;

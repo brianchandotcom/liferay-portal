@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentType;
@@ -384,7 +383,7 @@ public class ResourceActionsImpl implements ResourceActions {
 				checkPortletGroupDefaultActions(groupDefaultActions);
 
 				_portletResourceGroupDefaultActions.put(
-					name, new UnmodifiableList<String>(groupDefaultActions));
+					name, Collections.unmodifiableList(groupDefaultActions));
 			}
 
 			List<String> guestDefaultActions =
@@ -396,7 +395,7 @@ public class ResourceActionsImpl implements ResourceActions {
 				checkPortletGuestDefaultActions(guestDefaultActions);
 
 				_portletResourceGuestDefaultActions.put(
-					name, new UnmodifiableList<String>(guestDefaultActions));
+					name, Collections.unmodifiableList(guestDefaultActions));
 			}
 
 			List<String> layoutManagerActions =
@@ -408,7 +407,7 @@ public class ResourceActionsImpl implements ResourceActions {
 				checkPortletLayoutManagerActions(layoutManagerActions);
 
 				_portletResourceLayoutManagerActions.put(
-					name, new UnmodifiableList<String>(layoutManagerActions));
+					name, Collections.unmodifiableList(layoutManagerActions));
 			}
 
 			actions = setActions(_portletResourceActions, name, actions);
@@ -1130,7 +1129,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		Map<String, List<String>> actionsMap, String name,
 		List<String> actions) {
 
-		actions = new UnmodifiableList<String>(actions);
+		actions = Collections.unmodifiableList(actions);
 
 		actionsMap.put(name, actions);
 

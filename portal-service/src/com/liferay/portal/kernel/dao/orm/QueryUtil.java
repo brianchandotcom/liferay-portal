@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -226,7 +225,7 @@ public class QueryUtil {
 		}
 
 		if (unmodifiable) {
-			return new UnmodifiableList<Object>(list);
+			return Collections.unmodifiableList(list);
 		}
 		else {
 			return list;
@@ -283,7 +282,7 @@ public class QueryUtil {
 		}
 
 		if (unmodifiable) {
-			return new UnmodifiableList<Object>(list);
+			return Collections.unmodifiableList(list);
 		}
 		else {
 			return list;

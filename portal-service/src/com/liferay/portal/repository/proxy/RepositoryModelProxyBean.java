@@ -19,10 +19,11 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -156,8 +157,8 @@ public abstract class RepositoryModelProxyBean {
 			folderProxyBeans.add(newFolderProxyBean(folder));
 		}
 
-		if (folders instanceof UnmodifiableList) {
-			return new UnmodifiableList<Folder>(folderProxyBeans);
+		if (ListUtil.isUnmodifiableList(folders)) {
+			return Collections.unmodifiableList(folderProxyBeans);
 		}
 
 		return folderProxyBeans;
@@ -174,8 +175,8 @@ public abstract class RepositoryModelProxyBean {
 			objectProxyBeans.add(newProxyBean(object));
 		}
 
-		if (objects instanceof UnmodifiableList) {
-			return new UnmodifiableList<Object>(objectProxyBeans);
+		if (ListUtil.isUnmodifiableList(objects)) {
+			return Collections.unmodifiableList(objectProxyBeans);
 		}
 
 		return objectProxyBeans;

@@ -79,12 +79,6 @@ public class EditStructureAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteStructures(actionRequest);
 			}
-			else if (cmd.equals(Constants.SUBSCRIBE)) {
-				subscribeStructure(actionRequest);
-			}
-			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-				unsubscribeStructure(actionRequest);
-			}
 
 			if (Validator.isNotNull(cmd)) {
 				String redirect = ParamUtil.getString(
@@ -241,32 +235,6 @@ public class EditStructureAction extends PortletAction {
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
-	}
-
-	protected void subscribeStructure(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long structureId = ParamUtil.getLong(actionRequest, "structureId");
-
-		DDMStructureServiceUtil.subscribeStructure(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-			structureId);
-	}
-
-	protected void unsubscribeStructure(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long structureId = ParamUtil.getLong(actionRequest, "structureId");
-
-		DDMStructureServiceUtil.unsubscribeStructure(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-			structureId);
 	}
 
 	protected DDMStructure updateStructure(ActionRequest actionRequest)

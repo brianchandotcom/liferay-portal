@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.permission.SubscriptionPermissionUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureServiceBaseImpl;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission;
@@ -546,56 +545,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		return ddmStructureFinder.filterCountByC_G_C_N_D_S_T(
 			companyId, groupIds, classNameIds, name, description, storageType,
 			type, andOperator);
-	}
-
-	/**
-	 * Subscribe the user to changes in elements that belongs to specified
-	 * structure.
-	 *
-	 * @param  groupId the primary key of the folder's group
-	 * @param  userId the primary key of the user to be subscribed
-	 * @param structureId the primary key of the structure to subscribe to
-	 * @throws PortalException if the user, group os structure could not be
-	 * 		   found, or if subscribing was not permissible
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void subscribeStructure(long groupId, long userId, long structureId)
-		throws PortalException, SystemException {
-
-		if (structureId == 0) {
-			structureId = groupId;
-		}
-
-		SubscriptionPermissionUtil.check(
-			getPermissionChecker(), DDMStructure.class.getName(), structureId);
-
-		ddmStructureLocalService.subscribeStructure(
-			groupId, userId, structureId);
-	}
-
-	/**
-	 * Unsubscribe the user from changes in elements that belongs to specified
-	 * structure.
-	 *
-	 * @param  groupId the primary key of the folder's group
-	 * @param  userId the primary key of the user to be subscribed
-	 * @param structureId the primary key of the structure to subscribe to
-	 * @throws PortalException if the user, group os structure could not be
-	 * 		   found, or if subscribing was not permissible
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void unsubscribeStructure(
-		long groupId, long userId, long structureId) throws PortalException,
-		SystemException {
-
-		if (structureId == 0) {
-			structureId = groupId;
-		}
-
-		ddmStructureLocalService.unsubscribeStructure(
-			groupId, userId, structureId);
 	}
 
 	/**

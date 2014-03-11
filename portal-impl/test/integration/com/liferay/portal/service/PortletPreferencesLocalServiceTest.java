@@ -971,7 +971,7 @@ public class PortletPreferencesLocalServiceTest {
 	public void testGetNotStrictPortletPreferences() throws Exception {
 		MockPortletPreferencesLocalServiceImpl
 			mockPortletPreferencesLocalServiceImpl =
-			getMockPortletPreferencesServiceImpl(false);
+				new MockPortletPreferencesLocalServiceImpl(false);
 
 		javax.portlet.PortletPreferences jxPortletPreferences =
 			mockPortletPreferencesLocalServiceImpl.getStrictPreferences(
@@ -1250,7 +1250,7 @@ public class PortletPreferencesLocalServiceTest {
 	public void testGetStrictPreferences() throws Exception {
 		MockPortletPreferencesLocalServiceImpl
 			mockPortletPreferencesLocalServiceImpl =
-				getMockPortletPreferencesServiceImpl(true);
+				new MockPortletPreferencesLocalServiceImpl(true);
 
 		javax.portlet.PortletPreferences jxPortletPreferences =
 			mockPortletPreferencesLocalServiceImpl.getStrictPreferences(
@@ -1268,7 +1268,7 @@ public class PortletPreferencesLocalServiceTest {
 
 		MockPortletPreferencesLocalServiceImpl
 			mockPortletPreferencesLocalServiceImpl =
-				getMockPortletPreferencesServiceImpl(true);
+				new MockPortletPreferencesLocalServiceImpl(true);
 
 		PortletPreferencesIds portletPreferencesIds =
 			new PortletPreferencesIds(
@@ -1290,7 +1290,7 @@ public class PortletPreferencesLocalServiceTest {
 
 		MockPortletPreferencesLocalServiceImpl
 			mockPortletPreferencesLocalServiceImpl =
-				getMockPortletPreferencesServiceImpl(true);
+				new MockPortletPreferencesLocalServiceImpl(true);
 
 		String portletPreferencesXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(
@@ -1420,27 +1420,6 @@ public class PortletPreferencesLocalServiceTest {
 		assertValues(currentJxPortletPreferences, _NAME, _MULTIPLE_VALUES);
 	}
 
-	protected MockPortletPreferencesLocalServiceImpl
-		getMockPortletPreferencesServiceImpl(boolean strict) {
-
-		MockPortletPreferencesLocalServiceImpl
-			mockPortletPreferencesLocalServiceImpl =
-				new MockPortletPreferencesLocalServiceImpl(strict);
-
-		mockPortletPreferencesLocalServiceImpl.setPortletLocalService(
-			(PortletLocalService)PortalBeanLocatorUtil.locate(
-				PortletLocalService.class.getName()));
-		mockPortletPreferencesLocalServiceImpl.
-			setPortletPreferencesLocalService(
-				(PortletPreferencesLocalService)PortalBeanLocatorUtil.locate(
-					PortletPreferencesLocalService.class.getName()));
-		mockPortletPreferencesLocalServiceImpl.setPortletPreferencesPersistence(
-			(PortletPreferencesPersistence)PortalBeanLocatorUtil.locate(
-				PortletPreferencesPersistence.class.getName()));
-
-		return mockPortletPreferencesLocalServiceImpl;
-	}
-
 	protected void assertEmptyPortletPreferencesMap(
 			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws Exception {
@@ -1531,6 +1510,18 @@ public class PortletPreferencesLocalServiceTest {
 
 		public MockPortletPreferencesLocalServiceImpl(boolean strict) {
 			_strict = strict;
+
+			setPortletLocalService(
+				(PortletLocalService)PortalBeanLocatorUtil.locate(
+					PortletLocalService.class.getName()));
+
+			setPortletPreferencesLocalService(
+				(PortletPreferencesLocalService)PortalBeanLocatorUtil.locate(
+					PortletPreferencesLocalService.class.getName()));
+
+			setPortletPreferencesPersistence(
+				(PortletPreferencesPersistence)PortalBeanLocatorUtil.locate(
+					PortletPreferencesPersistence.class.getName()));
 		}
 
 		@Override

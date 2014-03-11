@@ -89,6 +89,7 @@ public class SynchronousDestinationExecutionTestListener
 			replaceDestination(DestinationNames.BACKGROUND_TASK);
 			replaceDestination(
 				DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);
+			replaceDestination(DestinationNames.MAIL);
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
 		}
 

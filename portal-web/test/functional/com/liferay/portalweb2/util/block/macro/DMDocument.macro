@@ -193,7 +193,15 @@
 
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
+		<if>
+			<equals arg1="${checkedOut}" arg2="true" />
+			<then>
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You cannot modify this document because it was locked by ${userName}" />
+			</then>
+			<else>
+				<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
+			</else>
+		</if>
 
 		<if>
 			<not>
@@ -358,17 +366,7 @@
 		</execute>
 
 		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<if>
-			<equals arg1="${checkedOut}" arg2="true" />
-			<then>
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator1="//h3[@class='header-title']" value1="Error" />
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You cannot modify this document because it was locked by ${userName}" />
-			</then>
-			<else>
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-			</else>
-		</if>
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="moveToFolderCP">

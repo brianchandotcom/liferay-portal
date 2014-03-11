@@ -99,15 +99,12 @@
 		<execute action="CPMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
 
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBodyEdit}" />
-		<execute action="CPMessageboardsThread#assertTextNotEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 
 	<command name="editPG">
-		<var name="key_threadSubject" value="${threadSubject}" />
-
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 
 		<if>
 			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_EDIT_1" />
@@ -128,11 +125,44 @@
 		</if>
 
 		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBodyEdit}" />
-		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
+
+		<if>
+			<equals arg1="${saveAsDraft}" arg2="true" />
+			<then>
+				<execute action="PGMessageboardsPostthread#click" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+			</then>
+			<else>
+				<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
+			</else>
+		</if>
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBodyEdit}" />
-		<execute action="PGMessageboardsThread#assertTextNotEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
+	</command>
+
+	<command name="editViaMyPosts">
+		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_MY_POSTS" value1="My Posts" />
+
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<if>
+			<equals arg1="threadSubjectEdit" arg2="true" />
+			<then>
+				<var name="key_threadSubject" value="${threadSubjectEdit}" />
+			</then>
+		</if>
+
+		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboardsMyposts#assertClick" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGMessageboardsMyposts#assertClick" locator-key1="THREAD_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="gotoPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 	</command>
 
 	<command name="movePG">
@@ -191,10 +221,9 @@
 	</command>
 
 	<command name="replyPG">
-		<var name="key_threadSubject" value="${threadSubject}" />
-
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 
 		<if>
 			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_REPLY_1" />
@@ -214,10 +243,9 @@
 	</command>
 
 	<command name="splitThreadPG">
-		<var name="key_threadSubject" value="${threadSubject}" />
-
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 
 		<var name="key_threadBody" value="${threadReplyBody}" />
 
@@ -436,6 +464,40 @@
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadReplyBody}" />
 		<execute action="PGMessageboardsThread#assertElementNotPresent" locator-key1="MESSAGE_SUBJECT_2" />
 		<execute action="PGMessageboardsThread#assertElementNotPresent" locator-key1="MESSAGE_BODY_2" />
+	</command>
+
+	<command name="viewStatisticsPostsCountDefaultPG">
+		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_STATISTICS" value1="Statistics" />
+
+		<if>
+			<condition action="PGMessageboardsStatistics#isElementPresent" locator-key1="GENERAL_DROPDOWN_COLLAPSED" />
+			<then>
+				<execute action="PGMessageboardsStatistics#assertClick" locator-key1="GENERAL_DROPDOWN" value1="General" />>
+			</then>
+		</if>
+
+		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="GENERAL_NUMBER_OF_CATEGORIES" value1="0" />
+		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="GENERAL_NUMBER_OF_POSTS" value1="0" />
+		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="GENERAL_NUMBER_OF_PARTICIPANTS" value1="0" />
+		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no top posters." />
+	</command>
+
+	<command name="viewStatisticsPostsCountPG">
+		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_STATISTICS" value1="Statistics" />
+
+		<if>
+			<condition action="PGMessageboardsStatistics#isElementPresent" locator-key1="GENERAL_DROPDOWN_COLLAPSED" />
+			<then>
+				<execute action="PGMessageboardsStatistics#assertClick" locator-key1="GENERAL_DROPDOWN" value1="General" />>
+			</then>
+		</if>
+
+		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="GENERAL_NUMBER_OF_POSTS" value1="${threadPostNumber}" />
+
+		<var name="key_userName" value="${userName}" />
+
+		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="TOP_POSTERS_AUTHOR_NAME" value1="${userName}" />
+		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="TOP_POSTERS_AUTHOR_POSTS" value1="Posts: ${threadPostNumber}" />
 	</command>
 
 	<command name="viewWithWorkflowPG">

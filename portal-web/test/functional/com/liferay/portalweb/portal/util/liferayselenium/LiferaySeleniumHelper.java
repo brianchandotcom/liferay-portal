@@ -656,6 +656,18 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		if (Validator.equals(
+				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||
+			Validator.equals(
+				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.2")) {
+
+			if (line.contains(
+					"org.apache.lucene.store.AlreadyClosedException")) {
+
+				return true;
+			}
+		}
+
 		if (Validator.isNotNull(TestPropsValues.IGNORE_ERROR) &&
 			line.contains(TestPropsValues.IGNORE_ERROR)) {
 
@@ -1172,6 +1184,8 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	private static String _liferayPortalBundle =
+		TestPropsValues.LIFERAY_PORTAL_BUNDLE;
 	private static int _screenshotCount = 0;
 
 }

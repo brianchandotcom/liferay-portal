@@ -14,6 +14,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -25,15 +26,19 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalContentSearch;
@@ -47,6 +52,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -62,8 +68,37 @@ public class VerifyJournal extends VerifyProcess {
 
 	public static final int NUM_OF_ARTICLES = 5;
 
+	protected void checkDDMStructure() throws Exception {
+		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.fetchStructure(
+				0, classNameId, JournalArticleConstants.NAME_BASIC_WEB_CONTENT);
+
+		if (ddmStructure != null) {
+			return;
+		}
+
+		Date now = new Date();
+
+		ddmStructure = DDMStructureLocalServiceUtil.createDDMStructure(
+			CounterLocalServiceUtil.increment());
+
+		ddmStructure.setClassName(JournalArticle.class.getName());
+		ddmStructure.setCreateDate(now);
+		ddmStructure.setModifiedDate(now);
+		ddmStructure.setStructureKey(
+			JournalArticleConstants.NAME_BASIC_WEB_CONTENT);
+		ddmStructure.setName(
+			JournalArticleConstants.NAME_BASIC_WEB_CONTENT,
+			LocaleUtil.getDefault());
+
+		DDMStructureLocalServiceUtil.updateDDMStructure(ddmStructure);
+	}
+
 	@Override
 	protected void doVerify() throws Exception {
+		checkDDMStructure();
 		updateFolderAssets();
 		verifyOracleNewLine();
 		verifyPermissionsAndAssets();

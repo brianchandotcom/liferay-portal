@@ -172,20 +172,21 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 
 	@Override
 	protected void indexKeyword(
-			long companyId, long groupId, String languageId, String keyword,
-			float weight, String keywordFieldName, String typeFieldValue,
-			int maxNGramLength)
+			SearchContext searchContext, long groupId, String languageId,
+			String keyword, float weight, String keywordFieldName,
+			String typeFieldValue, int maxNGramLength)
 		throws Exception {
 
 		IndexAccessor indexAccessor = LuceneHelperUtil.getIndexAccessor(
-			companyId);
+			searchContext.getCompanyId());
 
 		IndexSearcher indexSearcher = null;
 
 		try {
 			List<IndexReader> indexReaders = new ArrayList<IndexReader>();
 
-			indexSearcher = LuceneHelperUtil.getIndexSearcher(companyId);
+			indexSearcher = LuceneHelperUtil.getIndexSearcher(
+				searchContext.getCompanyId());
 
 			if (indexSearcher.maxDoc() > 0) {
 				ReaderUtil.gatherSubReaders(
@@ -209,14 +210,16 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			}
 
 			Document document = createDocument(
-				companyId, groupId, languageId, localizedFieldName, keyword,
-				weight, typeFieldValue, maxNGramLength);
+				searchContext.getCompanyId(), groupId, languageId,
+				localizedFieldName, keyword, weight, typeFieldValue,
+				maxNGramLength);
 
 			indexAccessor.addDocument(document);
 		}
 		finally {
 			try {
-				LuceneHelperUtil.releaseIndexSearcher(companyId, indexSearcher);
+				LuceneHelperUtil.releaseIndexSearcher(
+					searchContext.getCompanyId(), indexSearcher);
 			}
 			catch (IOException ioe) {
 				_log.error("Unable to release searcher", ioe);
@@ -226,13 +229,13 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 
 	@Override
 	protected void indexKeywords(
-			long companyId, long groupId, String languageId,
+			SearchContext searchContext, long groupId, String languageId,
 			InputStream inputStream, String keywordFieldName,
 			String typeFieldValue, int maxNGramLength)
 		throws Exception {
 
 		IndexAccessor indexAccessor = LuceneHelperUtil.getIndexAccessor(
-			companyId);
+			searchContext.getCompanyId());
 
 		IndexSearcher indexSearcher = null;
 
@@ -240,7 +243,8 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			String localizedFieldName = DocumentImpl.getLocalizedName(
 				languageId, keywordFieldName);
 
-			indexSearcher = LuceneHelperUtil.getIndexSearcher(companyId);
+			indexSearcher = LuceneHelperUtil.getIndexSearcher(
+				searchContext.getCompanyId());
 
 			List<IndexReader> indexReaders = new ArrayList<IndexReader>();
 
@@ -276,9 +280,9 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 				}
 
 				Document document = createDocument(
-					companyId, groupId, languageId, localizedFieldName, word,
-					dictionaryEntry.getWeight(), typeFieldValue,
-					maxNGramLength);
+					searchContext.getCompanyId(), groupId, languageId,
+					localizedFieldName, word, dictionaryEntry.getWeight(),
+					typeFieldValue, maxNGramLength);
 
 				documents.add(document);
 			}
@@ -287,7 +291,8 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 		}
 		finally {
 			try {
-				LuceneHelperUtil.releaseIndexSearcher(companyId, indexSearcher);
+				LuceneHelperUtil.releaseIndexSearcher(
+					searchContext.getCompanyId(), indexSearcher);
 			}
 			catch (IOException ioe) {
 				_log.error("Unable to release searcher", ioe);

@@ -21,6 +21,7 @@ import com.liferay.portal.util.PortletKeys;
 
 import java.io.InputStream;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -41,9 +42,14 @@ public abstract class BaseGenericSpellCheckIndexWriter
 		_documentPrototype = documentPrototype;
 	}
 
-	public void setIndexWriter(IndexWriter indexWriter) {
-		_indexWriter = indexWriter;
-	}
+	protected abstract void addDocument(
+			String documentType, SearchContext searchContext, Document document)
+		throws SearchException;
+
+	protected abstract void addDocuments(
+			String documentType, SearchContext searchContext,
+			Collection<Document> documents)
+		throws SearchException;
 
 	protected void addNGramFields(
 		Document document, Map<String, String> nGrams) {
@@ -53,13 +59,17 @@ public abstract class BaseGenericSpellCheckIndexWriter
 		}
 	}
 
+	protected Document createDocument() {
+		return (Document)_documentPrototype.clone();
+	}
+
 	protected Document createDocument(
 			long companyId, long groupId, String languageId, String keywords,
 			float weight, String keywordFieldName, String typeFieldValue,
 			int maxNGramLength)
 		throws SearchException {
 
-		Document document = (Document)_documentPrototype.clone();
+		Document document = createDocument();
 
 		document.addKeyword(Field.COMPANY_ID, companyId);
 		document.addKeyword(Field.GROUP_ID, groupId);
@@ -92,21 +102,21 @@ public abstract class BaseGenericSpellCheckIndexWriter
 
 	@Override
 	protected void indexKeyword(
-			long companyId, long groupId, String languageId, String keyword,
-			float weight, String keywordFieldName, String typeFieldValue,
-			int maxNGramLength)
+			SearchContext searchContext, long groupId, String languageId,
+			String keyword, float weight, String keywordFieldName,
+			String typeFieldValue, int maxNGramLength)
 		throws Exception {
 
 		Document document = createDocument(
-			companyId, groupId, languageId, keyword, weight, keywordFieldName,
-			typeFieldValue, maxNGramLength);
+			searchContext.getCompanyId(), groupId, languageId, keyword, weight,
+			keywordFieldName, typeFieldValue, maxNGramLength);
 
-		_indexWriter.addDocument(null, document);
+		addDocument(typeFieldValue, searchContext, document);
 	}
 
 	@Override
 	protected void indexKeywords(
-			long companyId, long groupId, String languageId,
+			SearchContext searchContext, long groupId, String languageId,
 			InputStream inputStream, String keywordFieldName,
 			String typeFieldValue, int maxNGramLength)
 		throws Exception {
@@ -128,14 +138,14 @@ public abstract class BaseGenericSpellCheckIndexWriter
 				DictionaryEntry dictionaryEntry = iterator.next();
 
 				Document document = createDocument(
-					companyId, groupId, languageId, dictionaryEntry.getWord(),
-					dictionaryEntry.getWeight(), keywordFieldName,
-					typeFieldValue, maxNGramLength);
+					searchContext.getCompanyId(), groupId, languageId,
+					dictionaryEntry.getWord(), dictionaryEntry.getWeight(),
+					keywordFieldName, typeFieldValue, maxNGramLength);
 
 				documents.add(document);
 
 				if ((counter == _batchSize) || !iterator.hasNext()) {
-					_indexWriter.addDocuments(null, documents);
+					addDocuments(typeFieldValue, searchContext, documents);
 
 					documents.clear();
 
@@ -159,6 +169,5 @@ public abstract class BaseGenericSpellCheckIndexWriter
 
 	private int _batchSize = _DEFAULT_BATCH_SIZE;
 	private Document _documentPrototype = new DocumentImpl();
-	private IndexWriter _indexWriter;
 
 }

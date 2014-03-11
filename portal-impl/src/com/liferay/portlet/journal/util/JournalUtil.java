@@ -1184,8 +1184,9 @@ public class JournalUtil {
 	}
 
 	public static boolean isSubscribedToFolder(
-		long companyId, long groupId, long userId, long folderId,
-		boolean recursive) throws PortalException, SystemException {
+			long companyId, long groupId, long userId, long folderId,
+			boolean recursive)
+		throws PortalException, SystemException {
 
 		List<Long> ancestorFolderIds = new ArrayList<Long>();
 

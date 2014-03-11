@@ -86,20 +86,7 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 	@Deprecated
 	@Override
 	public String getSummary(long classPK, Locale locale) {
-		try {
-			AssetRenderer assetRenderer = getAssetRenderer(classPK);
-
-			if (assetRenderer != null) {
-				return assetRenderer.getSummary(locale, null, null);
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-		}
-
-		return null;
+		return getSummary(classPK, locale, null, null);
 	}
 
 	@Override

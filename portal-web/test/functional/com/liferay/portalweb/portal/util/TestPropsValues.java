@@ -50,6 +50,12 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 
 	public static final String IGNORE_ERROR = TestPropsUtil.get("ignore.error");
 
+	public static final String LIFERAY_PORTAL_BRANCH = TestPropsUtil.get(
+		"liferay.portal.branch");
+
+	public static final String LIFERAY_PORTAL_BUNDLE = TestPropsUtil.get(
+		"liferay.portal.bundle");
+
 	public static final String OUTPUT_DIR_NAME = TestPropsUtil.get(
 		"output.dir");
 

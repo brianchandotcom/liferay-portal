@@ -656,6 +656,16 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		if (TestPropsValues.LIFERAY_PORTAL_BUNDLE.equals("6.2.10.1") ||
+			TestPropsValues.LIFERAY_PORTAL_BUNDLE.equals("6.2.10.2")) {
+
+			if (line.contains(
+					"org.apache.lucene.store.AlreadyClosedException")) {
+
+				return true;
+			}
+		}
+
 		if (Validator.isNotNull(TestPropsValues.IGNORE_ERROR) &&
 			line.contains(TestPropsValues.IGNORE_ERROR)) {
 

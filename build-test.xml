@@ -1685,6 +1685,24 @@ tck.url=true</echo>
 		</if>
 
 		<if>
+			<isset property="liferay.portal.branch" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					liferay.portal.branch=${liferay.portal.branch}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="liferay.portal.bundle" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					liferay.portal.bundle=${liferay.portal.bundle}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="legacy.theme.ids" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">

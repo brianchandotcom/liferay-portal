@@ -132,14 +132,16 @@ public class JavadocFormatter {
 		for (int i = 0; i < classLimits.length; i++) {
 			List<String> includes = new ArrayList<String>();
 
-			if (Validator.isNotNull(classLimits[i]) && !classLimits[i].startsWith("$")) {
+			if (Validator.isNotNull(classLimits[i]) &&
+				!classLimits[i].startsWith("$")) {
+
 				System.out.println("Limit on " + classLimits[i]);
 
 				String[] limitArray = StringUtil.split(classLimits[i], '/');
 
 				for (String curLimit : limitArray) {
 					includes.add(
-							"**\\" + StringUtil.replace(curLimit, ".", "\\") +
+						"**\\" + StringUtil.replace(curLimit, ".", "\\") +
 							"\\**\\*.java");
 					includes.add("**\\" + curLimit + ".java");
 				}
@@ -150,7 +152,7 @@ public class JavadocFormatter {
 			}
 
 			directoryScanner.setIncludes(
-					includes.toArray(new String[includes.size()]));
+				includes.toArray(new String[includes.size()]));
 
 			directoryScanner.scan();
 
@@ -158,7 +160,8 @@ public class JavadocFormatter {
 
 			fileNames = directoryScanner.getIncludedFiles();
 
-			if ((fileNames.length == 0) && Validator.isNotNull(classLimits[i]) &&
+			if ((fileNames.length == 0) &&
+				Validator.isNotNull(classLimits[i]) &&
 				!classLimits[i].startsWith("$")) {
 
 				StringBundler sb = new StringBundler("Limit file not found: ");
@@ -166,20 +169,23 @@ public class JavadocFormatter {
 				sb.append(classLimits[i]);
 
 				if (classLimits[i].contains(".")) {
-					sb.append(" Specify limit filename without package path or ");
+					sb.append(
+						" Specify limit filename without package path or ");
 					sb.append("file type suffix.");
 				}
 
 				System.out.println(sb.toString());
 			}
 
-			_languagePropertiesFile = new File("src/content/Language.properties");
+			_languagePropertiesFile =
+				new File("src/content/Language.properties");
 
 			if (_languagePropertiesFile.exists()) {
 				_languageProperties = new Properties();
 
 				_languageProperties.load(
-						new FileInputStream(_languagePropertiesFile.getAbsolutePath()));
+					new FileInputStream(
+						_languagePropertiesFile.getAbsolutePath()));
 			}
 
 			for (String fileName : fileNames) {
@@ -190,7 +196,7 @@ public class JavadocFormatter {
 				}
 				catch (Exception e) {
 					throw new RuntimeException(
-							"Unable to format file " + fileName, e);
+						"Unable to format file " + fileName, e);
 				}
 			}
 		}

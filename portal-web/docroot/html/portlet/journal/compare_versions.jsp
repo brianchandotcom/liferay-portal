@@ -24,38 +24,7 @@ String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS)
 double sourceVersion = (Double)request.getAttribute(WebKeys.SOURCE_VERSION);
 double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 
-double previousVersion = 0;
-double nextVersion = 0;
-
-List<JournalArticle> articles = JournalArticleServiceUtil.getArticlesByArticleId(groupId, articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new ArticleVersionComparator());
-List<JournalArticle> intermediateArticles = new ArrayList<JournalArticle>();
-
-for (JournalArticle article : articles) {
-	if ((article.getVersion() < sourceVersion) && (article.getVersion() > previousVersion)) {
-		previousVersion = article.getVersion();
-	}
-
-	if ((article.getVersion() > targetVersion) && ((article.getVersion() < nextVersion) || (nextVersion == 0))) {
-		nextVersion = article.getVersion();
-	}
-	if ((article.getVersion() > sourceVersion) && (article.getVersion() <= targetVersion)) {
-		intermediateArticles.add(article);
-	}
-}
-
-List<Tuple> versionsInfo = new ArrayList<Tuple>();
-
-for (JournalArticle article : intermediateArticles) {
-	String description = StringPool.BLANK;
-
-	if (intermediateArticles.size() > 1) {
-		description = StringPool.OPEN_PARENTHESIS + String.valueOf(article.getVersion()) + StringPool.CLOSE_PARENTHESIS;
-	}
-
-	Tuple versionInfo = new Tuple(article.getUserName(), description);
-
-	versionsInfo.add(versionInfo);
-}
+Object[] returnValue = JournalUtil.getJournalVersionsInfo(groupId, articleId, sourceVersion, targetVersion);
 %>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
@@ -67,9 +36,9 @@ for (JournalArticle article : intermediateArticles) {
 <liferay-ui:version-comparator
 	diffHtmlResults="<%= diffHtmlResults %>"
 	iteratorURL="<%= iteratorURL %>"
-	nextVersion="<%= nextVersion %>"
-	previousVersion="<%= previousVersion %>"
+	nextVersion="<%= (Double)returnValue[2] %>"
+	previousVersion="<%= (Double)returnValue[1] %>"
 	sourceVersion="<%= sourceVersion %>"
 	targetVersion="<%= targetVersion %>"
-	versionsInfo="<%= versionsInfo %>"
+	versionsInfo="<%= (List<Tuple>)returnValue[0] %>"
 />

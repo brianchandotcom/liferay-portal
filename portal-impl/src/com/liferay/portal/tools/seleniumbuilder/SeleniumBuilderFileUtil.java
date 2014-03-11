@@ -55,8 +55,8 @@ import org.apache.commons.lang.StringEscapeUtils;
  */
 public class SeleniumBuilderFileUtil {
 
-	public SeleniumBuilderFileUtil(String baseDir) {
-		_baseDir = baseDir;
+	public SeleniumBuilderFileUtil(String baseDirName) {
+		_baseDirName = baseDirName;
 	}
 
 	public String escapeHtml(String input) {
@@ -92,8 +92,8 @@ public class SeleniumBuilderFileUtil {
 		return allChildElements;
 	}
 
-	public String getBaseDir() {
-		return _baseDir;
+	public String getBaseDirName() {
+		return _baseDirName;
 	}
 
 	public Set<String> getChildElementAttributeValues(
@@ -250,7 +250,7 @@ public class SeleniumBuilderFileUtil {
 			if (!content.equals(newContent)) {
 				content = newContent;
 
-				writeFile(getBaseDir(), fileName, newContent, false);
+				writeFile(getBaseDirName(), fileName, newContent, false);
 			}
 		}
 
@@ -361,20 +361,20 @@ public class SeleniumBuilderFileUtil {
 	}
 
 	public String readFile(String fileName) throws Exception {
-		return FileUtil.read(getBaseDir() + "/" + fileName);
+		return FileUtil.read(getBaseDirName() + "/" + fileName);
 	}
 
 	public void writeFile(String fileName, String content, boolean format)
 		throws Exception {
 
-		writeFile(getBaseDir() + "-generated", fileName, content, format);
+		writeFile(getBaseDirName() + "-generated", fileName, content, format);
 	}
 
 	public void writeFile(
-			String baseDir, String fileName, String content, boolean format)
+			String baseDirName, String fileName, String content, boolean format)
 		throws Exception {
 
-		File file = new File(baseDir + "/" + fileName);
+		File file = new File(baseDirName + "/" + fileName);
 
 		if (format) {
 			ServiceBuilder.writeFile(file, content);
@@ -1850,7 +1850,7 @@ public class SeleniumBuilderFileUtil {
 			"while", "var"
 		});
 
-	private String _baseDir;
+	private String _baseDirName;
 	private Pattern _pathTrElementStatementPattern = Pattern.compile(
 		"[A-Z0-9].*");
 	private Pattern _pathTrElementWordPattern1 = Pattern.compile(

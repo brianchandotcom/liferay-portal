@@ -21,8 +21,8 @@ import org.openqa.selenium.safari.SafariDriver;
  */
 public class SafariWebDriverImpl extends BaseWebDriverImpl {
 
-	public SafariWebDriverImpl(String projectDir, String browserURL) {
-		super(projectDir, browserURL, new SafariDriver());
+	public SafariWebDriverImpl(String projectDirName, String browserURL) {
+		super(projectDirName, browserURL, new SafariDriver());
 	}
 
 }

@@ -38,7 +38,7 @@ public class BrowserCommands {
 
 			Runtime runtime = Runtime.getRuntime();
 
-			String command = _BROWSER_COMMANDS_DIR + "download_file.exe";
+			String command = _BROWSER_COMMANDS_DIR_NAME + "download_file.exe";
 
 			runtime.exec(command);
 
@@ -78,7 +78,8 @@ public class BrowserCommands {
 			Runtime runtime = Runtime.getRuntime();
 
 			String[] commands = {
-				_BROWSER_COMMANDS_DIR + "set_browser_option.exe", _OUTPUT_DIR
+				_BROWSER_COMMANDS_DIR_NAME + "set_browser_option.exe",
+				_OUTPUT_DIR_NAME
 			};
 
 			runtime.exec(commands);
@@ -90,12 +91,13 @@ public class BrowserCommands {
 		}
 	}
 
-	private static final String _BROWSER_COMMANDS_DIR =
-		TestPropsValues.BROWSER_COMMANDS_DIR;
+	private static final String _BROWSER_COMMANDS_DIR_NAME =
+		TestPropsValues.BROWSER_COMMANDS_DIR_NAME;
 
 	private static final String _BROWSER_TYPE = TestPropsValues.BROWSER_TYPE;
 
-	private static final String _OUTPUT_DIR = TestPropsValues.OUTPUT_DIR;
+	private static final String _OUTPUT_DIR_NAME =
+		TestPropsValues.OUTPUT_DIR_NAME;
 
 	private static final String _SELENIUM_IMPLEMENTATION =
 		TestPropsValues.SELENIUM_IMPLEMENTATION;

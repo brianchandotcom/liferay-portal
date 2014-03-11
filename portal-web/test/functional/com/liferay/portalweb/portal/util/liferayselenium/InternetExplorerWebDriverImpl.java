@@ -21,8 +21,10 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
  */
 public class InternetExplorerWebDriverImpl extends BaseWebDriverImpl {
 
-	public InternetExplorerWebDriverImpl(String projectDir, String browserURL) {
-		super(projectDir, browserURL, new InternetExplorerDriver());
+	public InternetExplorerWebDriverImpl(
+		String projectDirName, String browserURL) {
+
+		super(projectDirName, browserURL, new InternetExplorerDriver());
 	}
 
 }

@@ -49,10 +49,10 @@ public class SeleniumBuilder {
 	public SeleniumBuilder(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		String baseDir = arguments.get("selenium.base.dir");
+		String baseDirName = arguments.get("selenium.base.dir");
 
-		_seleniumBuilderContext = new SeleniumBuilderContext(baseDir);
-		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(baseDir);
+		_seleniumBuilderContext = new SeleniumBuilderContext(baseDirName);
+		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(baseDirName);
 
 		Set<String> types = SetUtil.fromArray(
 			StringUtil.split(arguments.get("selenium.types")));

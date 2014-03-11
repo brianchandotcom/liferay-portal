@@ -907,13 +907,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public FriendlyURLMapper getFriendlyURLMapperInstance() {
-		if (Validator.isNull(getFriendlyURLMapperClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<FriendlyURLMapper> friendlyURLMapperInstances =
+			portletBag.getFriendlyURLMapperInstances();
+
+		if (friendlyURLMapperInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getFriendlyURLMapperInstance();
+		return friendlyURLMapperInstances.get(0);
 	}
 
 	/**

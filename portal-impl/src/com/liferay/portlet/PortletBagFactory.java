@@ -131,8 +131,8 @@ public class PortletBagFactory {
 
 		List<OpenSearch> openSearchInstances = newOpenSearches(portlet);
 
-		FriendlyURLMapper friendlyURLMapperInstance = newFriendlyURLMapper(
-			portlet);
+		List<FriendlyURLMapper> friendlyURLMapperInstances =
+			newFriendlyURLMappers(portlet);
 
 		URLEncoder urlEncoderInstance = newURLEncoder(portlet);
 
@@ -320,7 +320,7 @@ public class PortletBagFactory {
 		PortletBag portletBag = new PortletBagImpl(
 			portlet.getPortletId(), _servletContext, portletInstance,
 			configurationActionInstances, indexerInstances, openSearchInstances,
-			friendlyURLMapperInstance, urlEncoderInstance,
+			friendlyURLMapperInstances, urlEncoderInstance,
 			portletDataHandlerInstance, stagedModelDataHandlerInstances,
 			templateHandlerInstance, portletLayoutListenerInstance,
 			pollerProcessorInstance, popMessageListenerInstance,
@@ -741,25 +741,30 @@ public class PortletBagFactory {
 			DDMDisplay.class, portlet.getDDMDisplayClass());
 	}
 
-	protected FriendlyURLMapper newFriendlyURLMapper(Portlet portlet)
+	protected List<FriendlyURLMapper> newFriendlyURLMappers(Portlet portlet)
 		throws Exception {
 
-		if (Validator.isNull(portlet.getFriendlyURLMapperClass())) {
-			return null;
+		ServiceTrackerList<FriendlyURLMapper> friendlyURLMapperInstances =
+			getServiceTrackerList(FriendlyURLMapper.class, portlet);
+
+		if (Validator.isNotNull(portlet.getFriendlyURLMapperClass())) {
+			FriendlyURLMapper friendlyURLMapper =
+				(FriendlyURLMapper)newInstance(
+					FriendlyURLMapper.class,
+					portlet.getFriendlyURLMapperClass());
+
+			friendlyURLMapper.setMapping(portlet.getFriendlyURLMapping());
+			friendlyURLMapper.setPortletId(portlet.getPortletId());
+			friendlyURLMapper.setPortletInstanceable(portlet.isInstanceable());
+
+			Router router = newFriendlyURLRouter(portlet);
+
+			friendlyURLMapper.setRouter(router);
+
+			friendlyURLMapperInstances.add(friendlyURLMapper);
 		}
 
-		FriendlyURLMapper friendlyURLMapper = (FriendlyURLMapper)newInstance(
-			FriendlyURLMapper.class, portlet.getFriendlyURLMapperClass());
-
-		friendlyURLMapper.setMapping(portlet.getFriendlyURLMapping());
-		friendlyURLMapper.setPortletId(portlet.getPortletId());
-		friendlyURLMapper.setPortletInstanceable(portlet.isInstanceable());
-
-		Router router = newFriendlyURLRouter(portlet);
-
-		friendlyURLMapper.setRouter(router);
-
-		return friendlyURLMapper;
+		return friendlyURLMapperInstances;
 	}
 
 	protected Router newFriendlyURLRouter(Portlet portlet) throws Exception {

@@ -239,9 +239,9 @@ public class EditPermissionsAction extends PortletAction {
 				resourcePrimKey, roleIdsToActionIds);
 		}
 
-		int pos = resourcePrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
-
 		long plid = 0;
+
+		int pos = resourcePrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
 
 		if (pos != -1) {
 			plid = GetterUtil.getLong(resourcePrimKey.substring(0, pos));

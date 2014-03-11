@@ -16,12 +16,17 @@ package com.liferay.portlet.asset.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Brian Wing Shun Chan
@@ -47,6 +52,28 @@ public class AssetCategoryImpl extends AssetCategoryBaseImpl {
 		}
 
 		return categories;
+	}
+
+	@Override
+	public String getPath(Locale locale)
+		throws PortalException, SystemException {
+
+		List<AssetCategory> categories = getAncestors();
+
+		StringBundler sb = new StringBundler((categories.size() * 2) + 1);
+
+		AssetVocabulary vocabulary =
+			AssetVocabularyLocalServiceUtil.getVocabulary(getVocabularyId());
+
+		sb.append(vocabulary.getTitle(locale));
+
+		for (AssetCategory category : categories) {
+			sb.append(
+				StringPool.SPACE + StringPool.GREATER_THAN + StringPool.SPACE);
+			sb.append(category.getTitle(locale));
+		}
+
+		return sb.toString();
 	}
 
 	@Override

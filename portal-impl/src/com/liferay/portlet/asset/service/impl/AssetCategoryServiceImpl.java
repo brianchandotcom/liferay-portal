@@ -169,34 +169,9 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	public String getCategoryPath(long categoryId)
 		throws PortalException, SystemException {
 
-		Locale locale = LocaleUtil.getMostRelevantLocale();
-
-		List<String> titles = new ArrayList<String>();
-
 		AssetCategory category = getCategory(categoryId);
 
-		while (category.getParentCategoryId() > 0) {
-			AssetCategory parentCategory = getCategory(
-				category.getParentCategoryId());
-
-			titles.add(parentCategory.getTitle(locale));
-			titles.add(
-				StringPool.SPACE + StringPool.GREATER_THAN + StringPool.SPACE);
-
-			category = parentCategory;
-		}
-
-		Collections.reverse(titles);
-
-		AssetVocabulary vocabulary = assetVocabularyService.getVocabulary(
-			category.getVocabularyId());
-
-		StringBundler sb = new StringBundler(1 + titles.size());
-
-		sb.append(vocabulary.getTitle(locale));
-		sb.append(titles.toArray(new String[titles.size()]));
-
-		return sb.toString();
+		return category.getPath(LocaleUtil.getMostRelevantLocale());
 	}
 
 	@Override

@@ -781,7 +781,7 @@
 			Liferay.Util.openWindow(
 				{
 					cache: false,
-					title: Liferay.Util.escapeHTML(event.title),
+					title: event.title,
 					uri: event.uri
 				}
 			);

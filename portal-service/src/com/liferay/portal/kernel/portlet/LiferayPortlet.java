@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
@@ -33,6 +35,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.ActionRequest;
@@ -351,6 +354,28 @@ public class LiferayPortlet extends GenericPortlet {
 		if (Validator.isNotNull(redirect)) {
 			actionResponse.sendRedirect(redirect);
 		}
+	}
+
+	protected String translate(PortletRequest portletRequest, String key) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ResourceBundle resourceBundle =
+			getResourceBundle(themeDisplay.getLocale());
+
+		return LanguageUtil.get(resourceBundle, themeDisplay.getLocale(), key);
+	}
+
+	protected String translate(
+		PortletRequest portletRequest, String key, Object... arguments) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ResourceBundle resourceBundle =
+			getResourceBundle(themeDisplay.getLocale());
+
+		return LanguageUtil.format(resourceBundle, key, arguments);
 	}
 
 	protected void writeJSON(

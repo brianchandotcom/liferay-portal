@@ -60,7 +60,7 @@ public class PortletBagImpl implements PortletBag {
 		String portletName, ServletContext servletContext,
 		Portlet portletInstance,
 		List<ConfigurationAction> configurationActionInstances,
-		List<Indexer> indexerInstances, OpenSearch openSearchInstance,
+		List<Indexer> indexerInstances, List<OpenSearch> openSearchInstances,
 		FriendlyURLMapper friendlyURLMapperInstance,
 		URLEncoder urlEncoderInstance,
 		PortletDataHandler portletDataHandlerInstance,
@@ -88,7 +88,7 @@ public class PortletBagImpl implements PortletBag {
 		_portletInstance = portletInstance;
 		_configurationActionInstances = configurationActionInstances;
 		_indexerInstances = indexerInstances;
-		_openSearchInstance = openSearchInstance;
+		_openSearchInstances = openSearchInstances;
 		_friendlyURLMapperInstance = friendlyURLMapperInstance;
 		_urlEncoderInstance = urlEncoderInstance;
 		_portletDataHandlerInstance = portletDataHandlerInstance;
@@ -119,7 +119,7 @@ public class PortletBagImpl implements PortletBag {
 		return new PortletBagImpl(
 			getPortletName(), getServletContext(), getPortletInstance(),
 			getConfigurationActionInstances(), getIndexerInstances(),
-			getOpenSearchInstance(), getFriendlyURLMapperInstance(),
+			getOpenSearchInstances(), getFriendlyURLMapperInstance(),
 			getURLEncoderInstance(), getPortletDataHandlerInstance(),
 			getStagedModelDataHandlerInstances(), getTemplateHandlerInstance(),
 			getPortletLayoutListenerInstance(), getPollerProcessorInstance(),
@@ -149,6 +149,11 @@ public class PortletBagImpl implements PortletBag {
 			(ServiceTrackerList<Indexer>)_indexerInstances;
 
 		indexerInstancesServiceTrackerList.close();
+
+		ServiceTrackerList<OpenSearch> openSearchInstancesServiceTrackerList =
+			(ServiceTrackerList<OpenSearch>)_openSearchInstances;
+
+		openSearchInstancesServiceTrackerList.close();
 	}
 
 	@Override
@@ -187,8 +192,8 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public OpenSearch getOpenSearchInstance() {
-		return _openSearchInstance;
+	public List<OpenSearch> getOpenSearchInstances() {
+		return _openSearchInstances;
 	}
 
 	@Override
@@ -331,7 +336,7 @@ public class PortletBagImpl implements PortletBag {
 	private List<CustomAttributesDisplay> _customAttributesDisplayInstances;
 	private FriendlyURLMapper _friendlyURLMapperInstance;
 	private List<Indexer> _indexerInstances;
-	private OpenSearch _openSearchInstance;
+	private List<OpenSearch> _openSearchInstances;
 	private PermissionPropagator _permissionPropagatorInstance;
 	private PollerProcessor _pollerProcessorInstance;
 	private MessageListener _popMessageListenerInstance;

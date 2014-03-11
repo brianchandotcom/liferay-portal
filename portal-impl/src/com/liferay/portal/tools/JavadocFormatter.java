@@ -107,7 +107,7 @@ public class JavadocFormatter {
 		System.out.println("Input directory is " + _inputDir);
 
 		String limit = arguments.get("javadoc.limit");
-	
+
 		String[] classLimits = StringUtil.split(limit, ",");
 
 		_outputFilePrefix = GetterUtil.getString(
@@ -130,9 +130,8 @@ public class JavadocFormatter {
 			new String[] {"**\\classes\\**", "**\\portal-client\\**"});
 
 		for (int i = 0; i < classLimits.length; i++) {
-
 			List<String> includes = new ArrayList<String>();
-			
+
 			if (Validator.isNotNull(classLimits[i]) && !classLimits[i].startsWith("$")) {
 				System.out.println("Limit on " + classLimits[i]);
 
@@ -154,13 +153,13 @@ public class JavadocFormatter {
 					includes.toArray(new String[includes.size()]));
 
 			directoryScanner.scan();
-			
+
 			String[] fileNames = StringPool.EMPTY_ARRAY;
 
 			fileNames = directoryScanner.getIncludedFiles();
 
 			if ((fileNames.length == 0) && Validator.isNotNull(classLimits[i]) &&
-					!classLimits[i].startsWith("$")) {
+				!classLimits[i].startsWith("$")) {
 
 				StringBundler sb = new StringBundler("Limit file not found: ");
 

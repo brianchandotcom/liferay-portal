@@ -30,6 +30,7 @@ import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 
 import java.util.List;
@@ -69,8 +70,6 @@ public class PortletPreferencesLocalServiceTest {
 	public void testAddPortletPreferencesWithDefaultMultipleXML()
 		throws Exception {
 
-		assertNullLayoutJxPortletPreferences(_layout, _portlet);
-
 		String portletPreferencesXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(
 				_NAME, _MULTIPLE_VALUES);
@@ -89,8 +88,6 @@ public class PortletPreferencesLocalServiceTest {
 
 	@Test
 	public void testAddPortletPreferencesWithDefaultNullXML() throws Exception {
-		assertNullLayoutJxPortletPreferences(_layout, _portlet);
-
 		PortletPreferences portletPreferences =
 			PortletPreferencesTestUtil.addLayoutPortletPreferences(
 				_layout, _portlet, null);
@@ -114,8 +111,6 @@ public class PortletPreferencesLocalServiceTest {
 	public void testAddPortletPreferencesWithDefaultNullXMLAndNullPortlet()
 		throws Exception {
 
-		assertNullLayoutJxPortletPreferences(_layout, _portlet);
-
 		PortletPreferences portletPreferences =
 			PortletPreferencesLocalServiceUtil.addPortletPreferences(
 				TestPropsValues.getCompanyId(),
@@ -135,8 +130,6 @@ public class PortletPreferencesLocalServiceTest {
 	public void testAddPortletPreferencesWithDefaultSingleXML()
 		throws Exception {
 
-		assertNullLayoutJxPortletPreferences(_layout, _portlet);
-
 		String portletPreferencesXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(
 				_NAME, _SINGLE_VALUE);
@@ -155,8 +148,6 @@ public class PortletPreferencesLocalServiceTest {
 
 	@Test
 	public void testAddPortletPreferencesWithPortlet() throws Exception {
-		assertNullLayoutJxPortletPreferences(_layout, _portlet);
-
 		String portletPreferencesXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(
 				_NAME, _SINGLE_VALUE);
@@ -348,7 +339,7 @@ public class PortletPreferencesLocalServiceTest {
 	@Test
 	public void testDeleteOriginalPortletPreferencesByPlid() throws Exception {
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
-				_layout, _portlet);
+			_layout, _portlet);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			TestPropsValues.getCompanyId(), String.valueOf(_PORTLET_ID + 1));
@@ -395,10 +386,16 @@ public class PortletPreferencesLocalServiceTest {
 				portletPreferences.getPortletPreferencesId()));
 	}
 
+	public void testFetchLayoutJxPortletPreferences() throws Exception {
+				PortletPreferencesImpl portletPreferencesImpl =
+						(PortletPreferencesImpl)PortletPreferencesTestUtil.
+								fetchLayoutJxPortletPreferences(_layout, _portlet);
+
+				Assert.assertNull(portletPreferencesImpl);
+			}
+
 	@Test
 	public void testFetchNonexistentPreferences() throws Exception {
-		assertNullLayoutJxPortletPreferences(_layout, _portlet);
-
 		String portletPreferencesXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(
 				_NAME, _SINGLE_VALUE);
@@ -423,8 +420,6 @@ public class PortletPreferencesLocalServiceTest {
 
 	@Test
 	public void testFetchPreferences() throws Exception {
-		assertNullLayoutJxPortletPreferences(_layout, _portlet);
-
 		String portletPreferencesXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(
 				_NAME, _SINGLE_VALUE);
@@ -444,8 +439,6 @@ public class PortletPreferencesLocalServiceTest {
 
 	@Test
 	public void testFetchPreferencesByPortletPreferencesIds() throws Exception {
-		assertNullLayoutJxPortletPreferences(_layout, _portlet);
-
 		String portletPreferencesXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(
 				_NAME, _SINGLE_VALUE);
@@ -1067,17 +1060,6 @@ public class PortletPreferencesLocalServiceTest {
 			portletPreferencesImpl.getMap();
 
 		Assert.assertTrue(portletPreferencesMap.isEmpty());
-	}
-
-	protected void assertNullLayoutJxPortletPreferences(
-			Layout layout, Portlet portlet)
-		throws Exception {
-
-		PortletPreferencesImpl portletPreferencesImpl =
-			(PortletPreferencesImpl)PortletPreferencesTestUtil.
-				fetchLayoutJxPortletPreferences(layout, portlet);
-
-		Assert.assertNull(portletPreferencesImpl);
 	}
 
 	protected void assertOwner(

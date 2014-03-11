@@ -249,7 +249,7 @@
 </tr>
 <tr>
 	<td>VERSION_HISTORY_TABLE_DROPDOWN</td>
-	<td>//tr[contains(.,'${key_dmDocumentVersionNumber}')]/td[5]/div/a/i[@class='caret']</td>
+	<td>//tr[contains(.,'${key_dmDocumentVersionNumber}')]/td[5]/div/a/i</td>
 	<td></td>
 </tr>
 <tr>

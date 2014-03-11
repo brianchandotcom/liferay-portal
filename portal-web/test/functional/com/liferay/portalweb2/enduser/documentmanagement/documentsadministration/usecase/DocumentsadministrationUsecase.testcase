@@ -80,6 +80,10 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile}" />
@@ -130,10 +134,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMDocument#editSavePG">
+		<execute macro="DMDocument#editCmdPG">
 			<var name="checkedOut" value="true" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit2}" />
 			<var name="userName" value="${userFirstName} ${userLastName}" />
 		</execute>
 

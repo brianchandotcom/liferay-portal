@@ -29,7 +29,7 @@ String sourceVersionString = (previousVersion != 0) ? String.valueOf(sourceVersi
 String targetVersionString = (nextVersion != 0) ? String.valueOf(targetVersion) : String.valueOf(targetVersion) + " (" + LanguageUtil.get(pageContext, "last-version") + ")";
 %>
 
-<div class="history-navigation">
+<div class="version-comparator">
 	<c:choose>
 		<c:when test="<%= previousVersion != 0 %>">
 

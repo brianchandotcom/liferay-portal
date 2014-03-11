@@ -229,8 +229,8 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 			message.put("defaultLocale", LocaleThreadLocal.getDefaultLocale());
 		}
 
-		if (!message.contains("groupId")) {
-			message.put("groupId", GroupThreadLocal.getGroupId());
+		if (!message.contains("groupIdThreadLocal")) {
+			message.put("groupIdThreadLocal", GroupThreadLocal.getGroupId());
 		}
 
 		if (!message.contains("permissionChecker")) {
@@ -273,7 +273,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 			LocaleThreadLocal.setDefaultLocale(defaultLocale);
 		}
 
-		long groupId = message.getLong("groupId");
+		long groupId = message.getLong("groupIdThreadLocal");
 
 		if (groupId > 0) {
 			GroupThreadLocal.setGroupId(groupId);

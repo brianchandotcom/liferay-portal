@@ -241,9 +241,16 @@ public class EditPermissionsAction extends PortletAction {
 
 		int pos = resourcePrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
 
-		if (pos != -1) {
-			long plid = GetterUtil.getLong(resourcePrimKey.substring(0, pos));
+		long plid = 0;
 
+		if (pos != -1) {
+			plid = GetterUtil.getLong(resourcePrimKey.substring(0, pos));
+		}
+		else if (selResource.equals(Layout.class.getName())) {
+			plid = GetterUtil.getLong(resourcePrimKey);
+		}
+
+		if (plid > 0) {
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
 			if (layout != null) {

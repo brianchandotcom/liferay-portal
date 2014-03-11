@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -223,7 +222,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<AssetTagStats>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<AssetTagStats>)QueryUtil.list(q, getDialect(),
@@ -715,7 +714,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<AssetTagStats>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<AssetTagStats>)QueryUtil.list(q, getDialect(),
@@ -1849,7 +1848,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<AssetTagStats>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<AssetTagStats>)QueryUtil.list(q, getDialect(),

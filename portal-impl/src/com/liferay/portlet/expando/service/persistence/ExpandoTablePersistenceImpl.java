@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
@@ -235,7 +234,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ExpandoTable>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ExpandoTable>)QueryUtil.list(q, getDialect(),
@@ -1439,7 +1438,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ExpandoTable>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ExpandoTable>)QueryUtil.list(q, getDialect(),

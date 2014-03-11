@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
@@ -244,7 +243,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<JournalFolder>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<JournalFolder>)QueryUtil.list(q, getDialect(),
@@ -1057,7 +1056,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<JournalFolder>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<JournalFolder>)QueryUtil.list(q, getDialect(),
@@ -1604,7 +1603,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<JournalFolder>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<JournalFolder>)QueryUtil.list(q, getDialect(),
@@ -2463,7 +2462,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<JournalFolder>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<JournalFolder>)QueryUtil.list(q, getDialect(),
@@ -2970,7 +2969,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<JournalFolder>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<JournalFolder>)QueryUtil.list(q, getDialect(),
@@ -4138,7 +4137,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<JournalFolder>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<JournalFolder>)QueryUtil.list(q, getDialect(),
@@ -4677,7 +4676,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<JournalFolder>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<JournalFolder>)QueryUtil.list(q, getDialect(),
@@ -5402,7 +5401,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<JournalFolder>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<JournalFolder>)QueryUtil.list(q, getDialect(),
@@ -6359,7 +6358,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<JournalFolder>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<JournalFolder>)QueryUtil.list(q, getDialect(),
@@ -7909,7 +7908,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<JournalFolder>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<JournalFolder>)QueryUtil.list(q, getDialect(),

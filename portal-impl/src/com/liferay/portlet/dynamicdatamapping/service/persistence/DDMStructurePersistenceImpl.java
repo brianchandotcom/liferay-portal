@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
@@ -244,7 +243,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<DDMStructure>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -1053,7 +1052,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<DDMStructure>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -1601,7 +1600,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<DDMStructure>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -2472,7 +2471,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<DDMStructure>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -2897,7 +2896,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<DDMStructure>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -3393,7 +3392,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<DDMStructure>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -3905,7 +3904,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<DDMStructure>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -4441,7 +4440,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<DDMStructure>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -5358,7 +5357,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<DDMStructure>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -6285,7 +6284,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<DDMStructure>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -6754,7 +6753,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<DDMStructure>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -7620,7 +7619,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<DDMStructure>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),
@@ -9352,7 +9351,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<DDMStructure>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<DDMStructure>)QueryUtil.list(q, getDialect(),

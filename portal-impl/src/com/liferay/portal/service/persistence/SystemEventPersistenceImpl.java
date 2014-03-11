@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ModelListener;
@@ -223,7 +222,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<SystemEvent>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<SystemEvent>)QueryUtil.list(q, getDialect(),
@@ -726,7 +725,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<SystemEvent>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<SystemEvent>)QueryUtil.list(q, getDialect(),
@@ -1269,7 +1268,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<SystemEvent>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<SystemEvent>)QueryUtil.list(q, getDialect(),
@@ -1850,7 +1849,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<SystemEvent>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<SystemEvent>)QueryUtil.list(q, getDialect(),
@@ -2821,7 +2820,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<SystemEvent>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<SystemEvent>)QueryUtil.list(q, getDialect(),

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.MVCCModel;
@@ -230,7 +229,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ExportImportConfiguration>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ExportImportConfiguration>)QueryUtil.list(q,
@@ -727,7 +726,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ExportImportConfiguration>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ExportImportConfiguration>)QueryUtil.list(q,
@@ -1238,7 +1237,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ExportImportConfiguration>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ExportImportConfiguration>)QueryUtil.list(q,
@@ -1769,7 +1768,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ExportImportConfiguration>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ExportImportConfiguration>)QueryUtil.list(q,
@@ -2316,7 +2315,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ExportImportConfiguration>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ExportImportConfiguration>)QueryUtil.list(q,
@@ -3301,7 +3300,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ExportImportConfiguration>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ExportImportConfiguration>)QueryUtil.list(q,

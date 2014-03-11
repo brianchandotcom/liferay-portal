@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
@@ -244,7 +243,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<Role>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<Role>)QueryUtil.list(q, getDialect(), start,
@@ -1188,7 +1187,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<Role>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<Role>)QueryUtil.list(q, getDialect(), start,
@@ -2155,7 +2154,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<Role>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<Role>)QueryUtil.list(q, getDialect(), start,
@@ -3012,7 +3011,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<Role>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<Role>)QueryUtil.list(q, getDialect(), start,
@@ -3923,7 +3922,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<Role>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<Role>)QueryUtil.list(q, getDialect(), start,
@@ -4777,7 +4776,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<Role>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<Role>)QueryUtil.list(q, getDialect(), start,
@@ -5974,7 +5973,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<Role>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<Role>)QueryUtil.list(q, getDialect(), start,
@@ -6884,7 +6883,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<Role>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<Role>)QueryUtil.list(q, getDialect(), start,
@@ -7359,7 +7358,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<Role>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<Role>)QueryUtil.list(q, getDialect(), start,
@@ -9138,7 +9137,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<Role>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<Role>)QueryUtil.list(q, getDialect(), start,

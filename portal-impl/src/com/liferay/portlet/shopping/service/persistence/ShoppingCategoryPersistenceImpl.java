@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
@@ -228,7 +227,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ShoppingCategory>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ShoppingCategory>)QueryUtil.list(q,
@@ -1099,7 +1098,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ShoppingCategory>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ShoppingCategory>)QueryUtil.list(q,
@@ -2360,7 +2359,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ShoppingCategory>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ShoppingCategory>)QueryUtil.list(q,

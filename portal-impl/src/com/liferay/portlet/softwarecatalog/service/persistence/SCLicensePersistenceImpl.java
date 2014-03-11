@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
@@ -229,7 +228,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<SCLicense>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<SCLicense>)QueryUtil.list(q, getDialect(),
@@ -1091,7 +1090,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<SCLicense>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<SCLicense>)QueryUtil.list(q, getDialect(),
@@ -2339,7 +2338,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<SCLicense>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<SCLicense>)QueryUtil.list(q, getDialect(),

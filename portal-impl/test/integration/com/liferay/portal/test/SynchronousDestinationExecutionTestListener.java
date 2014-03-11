@@ -38,12 +38,12 @@ public class SynchronousDestinationExecutionTestListener
 
 	@Override
 	public void runAfterClass(TestContext testContext) {
-		_classSyncHandler.restorePreviousSync();
+		classSyncHandler.restorePreviousSync();
 	}
 
 	@Override
 	public void runAfterTest(TestContext testContext) {
-		_methodSyncHandler.restorePreviousSync();
+		methodSyncHandler.restorePreviousSync();
 	}
 
 	@Override
@@ -52,10 +52,10 @@ public class SynchronousDestinationExecutionTestListener
 
 		Sync sync = AnnotationLocator.locate(testClass, Sync.class);
 
-		_classSyncHandler.setSync(sync);
-		_classSyncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());
+		classSyncHandler.setSync(sync);
+		classSyncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());
 
-		_classSyncHandler.enableSync();
+		classSyncHandler.enableSync();
 	}
 
 	@Override
@@ -65,18 +65,16 @@ public class SynchronousDestinationExecutionTestListener
 
 		Sync sync = AnnotationLocator.locate(method, testClass, Sync.class);
 
-		_methodSyncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());
-		_methodSyncHandler.setSync(sync);
+		methodSyncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());
+		methodSyncHandler.setSync(sync);
 
-		_methodSyncHandler.enableSync();
+		methodSyncHandler.enableSync();
 	}
 
-	private List<Destination> _asyncServiceDestinations =
-		new ArrayList<Destination>();
-	private SyncHandler _classSyncHandler = new SyncHandler();
-	private SyncHandler _methodSyncHandler = new SyncHandler();
+	protected SyncHandler classSyncHandler = new SyncHandler();
+	protected SyncHandler methodSyncHandler = new SyncHandler();
 
-	private class SyncHandler {
+	protected class SyncHandler {
 
 		public void enableSync() {
 			if (_sync == null) {
@@ -89,7 +87,6 @@ public class SynchronousDestinationExecutionTestListener
 			replaceDestination(DestinationNames.BACKGROUND_TASK);
 			replaceDestination(
 				DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);
-			replaceDestination(DestinationNames.MAIL);
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
 		}
 
@@ -137,7 +134,10 @@ public class SynchronousDestinationExecutionTestListener
 			_sync = sync;
 		}
 
+		private List<Destination> _asyncServiceDestinations =
+			new ArrayList<Destination>();
 		private boolean _forceSync;
+
 		private Sync _sync;
 
 	}

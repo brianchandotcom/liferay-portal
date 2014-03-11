@@ -14,7 +14,7 @@
 
 package com.liferay.portal.test;
 
-import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.util.MailServiceTestUtil;
 
@@ -22,16 +22,30 @@ import com.liferay.portal.util.MailServiceTestUtil;
  * @author Manuel de la Peña
  * @author Roberto Díaz
  */
-public class MailExecutionTestListener extends AbstractExecutionTestListener {
+public class SynchronousMailExecutionTestListener
+	extends SynchronousDestinationExecutionTestListener {
 
 	@Override
 	public void runAfterTest(TestContext testContext) {
 		MailServiceTestUtil.stop();
+
+		super.runAfterTest(testContext);
+	}
+
+	@Override
+	public void runBeforeClass(TestContext testContext) {
+		super.runBeforeClass(testContext);
+
+		classSyncHandler.replaceDestination(DestinationNames.MAIL);
 	}
 
 	@Override
 	public void runBeforeTest(TestContext testContext) {
+		super.runBeforeTest(testContext);
+
 		MailServiceTestUtil.start();
+
+		methodSyncHandler.replaceDestination(DestinationNames.MAIL);
 	}
 
 }

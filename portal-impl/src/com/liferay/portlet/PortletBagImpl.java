@@ -61,7 +61,7 @@ public class PortletBagImpl implements PortletBag {
 		Portlet portletInstance,
 		List<ConfigurationAction> configurationActionInstances,
 		List<Indexer> indexerInstances, List<OpenSearch> openSearchInstances,
-		FriendlyURLMapper friendlyURLMapperInstance,
+		List<FriendlyURLMapper> friendlyURLMapperInstances,
 		URLEncoder urlEncoderInstance,
 		PortletDataHandler portletDataHandlerInstance,
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances,
@@ -89,7 +89,7 @@ public class PortletBagImpl implements PortletBag {
 		_configurationActionInstances = configurationActionInstances;
 		_indexerInstances = indexerInstances;
 		_openSearchInstances = openSearchInstances;
-		_friendlyURLMapperInstance = friendlyURLMapperInstance;
+		_friendlyURLMapperInstances = friendlyURLMapperInstances;
 		_urlEncoderInstance = urlEncoderInstance;
 		_portletDataHandlerInstance = portletDataHandlerInstance;
 		_stagedModelDataHandlerInstances = stagedModelDataHandlerInstances;
@@ -119,7 +119,7 @@ public class PortletBagImpl implements PortletBag {
 		return new PortletBagImpl(
 			getPortletName(), getServletContext(), getPortletInstance(),
 			getConfigurationActionInstances(), getIndexerInstances(),
-			getOpenSearchInstances(), getFriendlyURLMapperInstance(),
+			getOpenSearchInstances(), getFriendlyURLMapperInstances(),
 			getURLEncoderInstance(), getPortletDataHandlerInstance(),
 			getStagedModelDataHandlerInstances(), getTemplateHandlerInstance(),
 			getPortletLayoutListenerInstance(), getPollerProcessorInstance(),
@@ -144,6 +144,13 @@ public class PortletBagImpl implements PortletBag {
 					_configurationActionInstances;
 
 		configurationActionInstancesServiceTrackerList.close();
+
+		ServiceTrackerList<FriendlyURLMapper>
+			friendlyURLMapperInstancesServiceTrackerList =
+				(ServiceTrackerList<FriendlyURLMapper>)
+					_friendlyURLMapperInstances;
+
+		friendlyURLMapperInstancesServiceTrackerList.close();
 
 		ServiceTrackerList<Indexer> indexerInstancesServiceTrackerList =
 			(ServiceTrackerList<Indexer>)_indexerInstances;
@@ -182,8 +189,8 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public FriendlyURLMapper getFriendlyURLMapperInstance() {
-		return _friendlyURLMapperInstance;
+	public List<FriendlyURLMapper> getFriendlyURLMapperInstances() {
+		return _friendlyURLMapperInstances;
 	}
 
 	@Override
@@ -334,7 +341,7 @@ public class PortletBagImpl implements PortletBag {
 	private List<ConfigurationAction> _configurationActionInstances;
 	private ControlPanelEntry _controlPanelEntryInstance;
 	private List<CustomAttributesDisplay> _customAttributesDisplayInstances;
-	private FriendlyURLMapper _friendlyURLMapperInstance;
+	private List<FriendlyURLMapper> _friendlyURLMapperInstances;
 	private List<Indexer> _indexerInstances;
 	private List<OpenSearch> _openSearchInstances;
 	private PermissionPropagator _permissionPropagatorInstance;

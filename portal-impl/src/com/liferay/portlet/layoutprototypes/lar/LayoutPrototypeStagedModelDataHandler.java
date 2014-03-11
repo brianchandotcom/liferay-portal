@@ -150,13 +150,13 @@ public class LayoutPrototypeStagedModelDataHandler
 			LayoutPrototype layoutPrototype)
 		throws Exception {
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			layoutPrototype.getGroupId(), true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
 		long groupId = portletDataContext.getGroupId();
 		boolean privateLayout = portletDataContext.isPrivateLayout();
 		long scopeGroupId = portletDataContext.getScopeGroupId();
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			layoutPrototype.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		try {
 			portletDataContext.setGroupId(layoutPrototype.getGroupId());

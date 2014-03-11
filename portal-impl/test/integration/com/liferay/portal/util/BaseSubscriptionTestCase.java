@@ -14,13 +14,8 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -31,30 +26,21 @@ import org.junit.Test;
  * @author Sergio González
  * @author Roberto Díaz
  */
-public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
+public abstract class BaseSubscriptionTestCase {
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		group = GroupTestUtil.addGroup();
 	}
 
 	@After
-	@Override
 	public void tearDown() throws Exception {
-		super.tearDown();
-
 		GroupLocalServiceUtil.deleteGroup(group);
 	}
 
 	@Test
 	public void testSubscriptionBaseModelWhenInContainerModel()
 		throws Exception {
-
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
 		long containerModelId = addContainerModel(
 			_PARENT_CONTAINER_MODEL_ID_DEFAULT);
@@ -65,19 +51,12 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 
 		updateEntry(baseModelId);
 
-		Assert.assertEquals(1, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
 
 	@Test
 	public void testSubscriptionBaseModelWhenInRootContainerModel()
 		throws Exception {
-
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
 		long baseModelId = addBaseModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
@@ -85,20 +64,13 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 
 		updateEntry(baseModelId);
 
-		Assert.assertEquals(1, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
 
 	@Test
 	public void testSubscriptionContainerModelWhenInContainerModel()
 		throws Exception {
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
-
 		long containerModelId = addContainerModel(
 			_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
@@ -106,20 +78,13 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 
 		addBaseModel(containerModelId);
 
-		Assert.assertEquals(1, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
 
 	@Test
 	public void testSubscriptionContainerModelWhenInRootContainerModel()
 		throws Exception {
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
-
 		long containerModelId = addContainerModel(
 			_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
@@ -127,15 +92,12 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 
 		addBaseModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		Assert.assertEquals(0, logRecords.size());
+		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 	}
 
 	@Test
 	public void testSubscriptionContainerModelWhenInSubcontainerModel()
 		throws Exception {
-
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
 		long containerModelId = addContainerModel(
 			_PARENT_CONTAINER_MODEL_ID_DEFAULT);
@@ -146,19 +108,12 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 
 		addBaseModel(subcontainerModelId);
 
-		Assert.assertEquals(1, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
 
 	@Test
 	public void testSubscriptionRootContainerModelWhenInContainerModel()
 		throws Exception {
-
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
 		addSubscriptionContainerModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
@@ -167,37 +122,23 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 
 		addBaseModel(containerModelId);
 
-		Assert.assertEquals(1, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
 
 	@Test
 	public void testSubscriptionRootContainerModelWhenInRootContainerModel()
 		throws Exception {
 
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
-
 		addSubscriptionContainerModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		addBaseModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		Assert.assertEquals(1, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
 
 	@Test
 	public void testSubscriptionRootContainerModelWhenInSubcontainerModel()
 		throws Exception {
-
-		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
-			LoggerMockMailServiceImpl.class.getName(), Level.INFO);
 
 		addSubscriptionContainerModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
@@ -208,11 +149,7 @@ public abstract class BaseSubscriptionTestCase extends BaseMailTestCase {
 
 		addBaseModel(subcontainerModelId);
 
-		Assert.assertEquals(1, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals("Sending email", logRecord.getMessage());
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
 
 	protected abstract long addBaseModel(long containerModelId)

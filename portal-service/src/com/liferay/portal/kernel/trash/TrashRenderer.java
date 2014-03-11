@@ -37,9 +37,8 @@ public interface TrashRenderer {
 	public String getPortletId();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link#getSummary(Locale locale,
-	 *             PortletRequest portletRequest,
-	 *             PortletResponse portletResponse)}
+	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(Locale,
+	 *             PortletRequest, PortletResponse)}
 	 */
 	@Deprecated
 	public String getSummary(Locale locale);

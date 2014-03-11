@@ -129,8 +129,8 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * 				#getSummary(Locale locale, PortletRequest portletRequest,
-	 * 				PortletResponse portletResponse)}
+	 *             AssetRenderer#getSummary(Locale, PortletRequest,
+	 *             PortletResponse)}
 	 */
 	@Deprecated
 	@Override

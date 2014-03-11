@@ -27,6 +27,9 @@ backwards compatibility.
 Each change must have a brief descriptive title and contain the following
 information:
 
+* **[Title]** Provide a brief descriptive title. Use past tense and follow
+the capitalization rules from 
+<http://en.wikibooks.org/wiki/Basic_Book_Design/Capitalizing_Words_in_Titles>.
 * **Date:** Specify the date you submitted the change. Format the date as
 *YYYY-MMM* (e.g. 2014-Mar) or *YYYY-MMM-DD* (e.g., 2014-Feb-25).
 * **Jira Ticket:** Reference the related Jira ticket (e.g., LPS-123456)
@@ -45,8 +48,8 @@ horizontal rule):
 
 ```
 ### [Title]
-* Date:
-* Jira Ticket:
+- **Date:**
+- **Jira Ticket:**
 
 #### What changed?
 
@@ -60,9 +63,9 @@ horizontal rule):
 ```
 ---------------------------------------
 
-### Removal of Methods `get` and `format`, which use the PortletConfig
-* Date: 7th March 2014
-* Jira Ticket: LPS-44342
+### Removed `get` and `format` Methods That Used `PortletConfig` Parameters
+- **Date:** 7th March 2014
+- **Jira Ticket:** LPS-44342
 
 #### What changed?
 All the methods `get()` and `format()` which had the PortletConfig as a

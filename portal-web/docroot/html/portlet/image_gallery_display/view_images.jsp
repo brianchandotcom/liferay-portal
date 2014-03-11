@@ -22,9 +22,6 @@ String[] mediaGalleryMimeTypes = (String[])request.getAttribute("view.jsp-mediaG
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("view.jsp-searchContainer");
 
 List results = searchContainer.getResults();
-
-int imageMaxHeight = PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT;
-int imageMaxWidth = PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH;
 %>
 
 <c:choose>
@@ -110,8 +107,8 @@ int imageMaxWidth = PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH;
 
 					<div class="image-icon">
 						<a class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= href %>" thumbnailId="<%= thumbnailId %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
-							<span class="image-thumbnail" style="<%= DLUtil.getThumbnailStyle(false, 4) %>">
-								<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" style="max-height: <%= imageMaxHeight %>px; max-width: <%= imageMaxWidth %>px;" />
+							<span class="image-thumbnail">
+								<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
 
 								<c:if test="<%= fileShortcut != null %>">
 									<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
@@ -122,7 +119,7 @@ int imageMaxWidth = PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH;
 								</c:if>
 							</span>
 
-							<span class="image-title" style="max-width: <%= imageMaxWidth %>px;"><%= HtmlUtil.escape(fileVersion.getTitle()) %></span>
+							<span class="image-title"><%= HtmlUtil.escape(fileVersion.getTitle()) %></span>
 						</a>
 					</div>
 
@@ -174,10 +171,10 @@ int imageMaxWidth = PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH;
 							<div class="image-icon">
 								<a class="image-link" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escape(curFolder.getName()) + " - " + HtmlUtil.escape(curFolder.getDescription()) %>">
 									<span class="image-thumbnail">
-										<img alt="" border="no" src="<%= folderImageSrc %>" style="max-height: <%= imageMaxHeight %>px; max-width: <%= imageMaxWidth %>px;" />
+										<img alt="" border="no" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
 									</span>
 
-									<span class="image-title" style="max-width: <%= imageMaxWidth %>px;"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
+									<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
 								</a>
 							</div>
 
@@ -189,9 +186,9 @@ int imageMaxWidth = PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH;
 
 							<div class="image-icon">
 								<span class="image-thumbnail error" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
-									<img alt="" border="no" src="<%= folderImageSrc %>" style="max-height: <%= imageMaxHeight %>px; max-width: <%= imageMaxWidth %>px;" />
+									<img alt="" border="no" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
 
-									<span class="image-title" style="max-width: <%= imageMaxWidth %>px;"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
+									<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
 								</span>
 							</div>
 
@@ -224,10 +221,10 @@ int imageMaxWidth = PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH;
 								%>
 
 								<span class="image-thumbnail">
-									<img alt="" border="no" src="<%= folderImageSrc %>" style="max-height: <%= imageMaxHeight %>px; max-width: <%= imageMaxWidth %>px;" />
+									<img alt="" border="no" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
 								</span>
 
-								<span class="image-title" style="max-width: <%= imageMaxWidth %>px;"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
+								<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
 							</a>
 						</div>
 					</c:otherwise>

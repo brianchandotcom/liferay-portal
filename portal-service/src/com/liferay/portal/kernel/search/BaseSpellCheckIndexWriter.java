@@ -80,9 +80,9 @@ public abstract class BaseSpellCheckIndexWriter
 
 		try {
 			indexKeyword(
-				searchContext.getCompanyId(), groupId,
-				searchContext.getLanguageId(), searchContext.getKeywords(),
-				weight, keywordFieldName, typeFieldValue, maxNGramLength);
+				searchContext, groupId, searchContext.getLanguageId(),
+				searchContext.getKeywords(), weight, keywordFieldName,
+				typeFieldValue, maxNGramLength);
 		}
 		catch (Exception e) {
 			throw new SearchException(e);
@@ -96,7 +96,7 @@ public abstract class BaseSpellCheckIndexWriter
 		try {
 			for (String languageId : _SUPPORTED_LOCALES) {
 				indexKeywords(
-					searchContext.getCompanyId(), languageId,
+					searchContext, languageId,
 					PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_DICTIONARY,
 					Field.KEYWORD_SEARCH,
 					SuggestionConstants.TYPE_QUERY_SUGGESTION,
@@ -114,7 +114,7 @@ public abstract class BaseSpellCheckIndexWriter
 
 		try {
 			indexKeywords(
-				searchContext.getCompanyId(), searchContext.getLanguageId(),
+				searchContext, searchContext.getLanguageId(),
 				PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_DICTIONARY,
 				Field.KEYWORD_SEARCH, SuggestionConstants.TYPE_QUERY_SUGGESTION,
 				_querySuggestionMaxNGramLength);
@@ -131,7 +131,7 @@ public abstract class BaseSpellCheckIndexWriter
 		try {
 			for (String languageId : _SUPPORTED_LOCALES) {
 				indexKeywords(
-					searchContext.getCompanyId(), languageId,
+					searchContext, languageId,
 					PropsKeys.INDEX_SEARCH_SPELL_CHECKER_DICTIONARY,
 					Field.SPELL_CHECK_WORD,
 					SuggestionConstants.TYPE_SPELL_CHECKER, 0);
@@ -148,7 +148,7 @@ public abstract class BaseSpellCheckIndexWriter
 
 		try {
 			indexKeywords(
-				searchContext.getCompanyId(), searchContext.getLanguageId(),
+				searchContext, searchContext.getLanguageId(),
 				PropsKeys.INDEX_SEARCH_SPELL_CHECKER_DICTIONARY,
 				Field.SPELL_CHECK_WORD, SuggestionConstants.TYPE_SPELL_CHECKER,
 				0);
@@ -231,19 +231,19 @@ public abstract class BaseSpellCheckIndexWriter
 	}
 
 	protected abstract void indexKeyword(
-			long companyId, long groupId, String languageId, String keyword,
-			float weight, String keywordFieldName, String typeFieldValue,
-			int maxNGramLength)
+			SearchContext searchContext, long groupId, String languageId,
+			String keyword, float weight, String keywordFieldName,
+			String typeFieldValue, int maxNGramLength)
 		throws Exception;
 
 	protected abstract void indexKeywords(
-			long companyId, long groupId, String languageId,
+			SearchContext searchContext, long groupId, String languageId,
 			InputStream inputStream, String keywordFieldName,
 			String typeFieldValue, int maxNGramLength)
 		throws Exception;
 
 	protected void indexKeywords(
-			long companyId, long groupId, String languageId,
+			SearchContext searchContext, long groupId, String languageId,
 			String[] dictionaryFileNames, String keywordFieldName,
 			String typeFieldValue, int maxNGramLength)
 		throws Exception {
@@ -278,7 +278,7 @@ public abstract class BaseSpellCheckIndexWriter
 				}
 
 				indexKeywords(
-					companyId, groupId, languageId, inputStream,
+					searchContext, groupId, languageId, inputStream,
 					keywordFieldName, typeFieldValue, maxNGramLength);
 			}
 			finally {
@@ -293,7 +293,7 @@ public abstract class BaseSpellCheckIndexWriter
 	}
 
 	protected void indexKeywords(
-			long companyId, String languageId, String propsKey,
+			SearchContext searchContext, String languageId, String propsKey,
 			String keywordFieldName, String typeFieldValue, int maxNGramLength)
 		throws Exception {
 
@@ -301,7 +301,7 @@ public abstract class BaseSpellCheckIndexWriter
 			propsKey, new Filter(languageId));
 
 		indexKeywords(
-			companyId, 0, languageId, dictionaryFileNames, keywordFieldName,
+			searchContext, 0, languageId, dictionaryFileNames, keywordFieldName,
 			typeFieldValue, maxNGramLength);
 
 		List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
@@ -316,7 +316,7 @@ public abstract class BaseSpellCheckIndexWriter
 			}
 
 			indexKeywords(
-				companyId, group.getGroupId(), languageId,
+				searchContext, group.getGroupId(), languageId,
 				groupDictionaryFileNames, keywordFieldName, typeFieldValue,
 				maxNGramLength);
 		}

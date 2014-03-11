@@ -4031,7 +4031,7 @@ public class PortalImpl implements Portal {
 	@Deprecated
 	@Override
 	public int getPortalPort() {
-		return _portalPort.get();
+		return getPortalServerPort();
 	}
 
 	/**
@@ -8238,6 +8238,11 @@ public class PortalImpl implements Portal {
 	private final AtomicReference<InetSocketAddress>
 		_portalLocalInetSocketAddress =
 			new AtomicReference<InetSocketAddress>();
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #_portalServerInetSocketAddress}
+	 */
 	private final AtomicInteger _portalPort = new AtomicInteger(-1);
 
 	/**

@@ -83,12 +83,16 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	<%
 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 
+	// LPS-44780
+
+	contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
+
 	String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 	%>
 
 	config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>';
 
-	config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.replace("iw_", "he_")) %>';
+	config.contentsLanguage = '<%= contentsLanguageId.replace("iw_", "he_") %>';
 
 	config.entities = false;
 
@@ -96,7 +100,15 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.height = 265;
 
-	config.language = '<%= HtmlUtil.escapeJS(languageId.replace("iw_", "he_")) %>';
+	<%
+	Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+	// LPS-44780
+
+	languageId = LocaleUtil.toLanguageId(locale);
+	%>
+
+	config.language = '<%= languageId.replace("iw_", "he_") %>';
 
 	config.pasteFromWordRemoveFontStyles = false;
 

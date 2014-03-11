@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ImageLocalServiceUtil;
@@ -164,22 +165,32 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, Element element)
+	public void importMissingReference(
+			PortletDataContext portletDataContext, Element referenceElement)
 		throws PortletDataException {
 
-		String articleResourceUuid = element.attributeValue(
+		String articleResourceUuid = referenceElement.attributeValue(
 			"article-resource-uuid");
-		String articleArticleId = element.attributeValue("article-id");
+		long liveGroupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
+		String articleArticleId = referenceElement.attributeValue("article-id");
 		boolean preloaded = GetterUtil.getBoolean(
-			element.attributeValue("preloaded"));
+			referenceElement.attributeValue("preloaded"));
+
+		importMissingGroupReference(portletDataContext, referenceElement);
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
 
 		JournalArticle existingArticle = null;
 
 		try {
 			existingArticle = fetchExistingArticle(
-				articleResourceUuid, portletDataContext.getCompanyGroupId(),
-				articleArticleId, null, 0.0, preloaded);
+				articleResourceUuid, liveGroupId, articleArticleId, null, 0.0,
+				preloaded);
 		}
 		catch (Exception e) {
 			if (e instanceof SystemException) {
@@ -199,7 +210,8 @@ public class JournalArticleStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				JournalArticle.class);
 
-		long articleId = GetterUtil.getLong(element.attributeValue("class-pk"));
+		long articleId = GetterUtil.getLong(
+			referenceElement.attributeValue("class-pk"));
 
 		articleIds.put(articleId, existingArticle.getId());
 	}
@@ -210,20 +222,28 @@ public class JournalArticleStagedModelDataHandler
 
 		String articleResourceUuid = referenceElement.attributeValue(
 			"article-resource-uuid");
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
 		String articleArticleId = referenceElement.attributeValue("article-id");
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
+		if (!validateMissingGroupReference(
+				portletDataContext, referenceElement)) {
+
+			return false;
+		}
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		groupId = MapUtil.getLong(groupIds, groupId, groupId);
+
 		try {
 			JournalArticle existingArticle = fetchExistingArticle(
-				articleResourceUuid, portletDataContext.getScopeGroupId(),
-				articleArticleId, null, 0.0, preloaded);
-
-			if (existingArticle == null) {
-				existingArticle = fetchExistingArticle(
-					articleResourceUuid, portletDataContext.getCompanyGroupId(),
-					articleArticleId, null, 0.0, preloaded);
-			}
+				articleResourceUuid, groupId, articleArticleId, null, 0.0,
+				preloaded);
 
 			if (existingArticle == null) {
 				return false;

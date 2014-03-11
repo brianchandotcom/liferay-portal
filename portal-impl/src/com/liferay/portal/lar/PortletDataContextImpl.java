@@ -549,6 +549,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 			_missingReferences.add(referenceKey);
 
+			referenceElement.addAttribute("missing", Boolean.TRUE.toString());
+
 			doAddReferenceElement(
 				referrerClassedModel, null, classedModel, className, binPath,
 				referenceType, true);
@@ -563,6 +565,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 					classedModel);
 
 				_missingReferencesElement.remove(missingReferenceElement);
+
+				referenceElement.addAttribute(
+					"missing", Boolean.FALSE.toString());
 			}
 		}
 
@@ -1455,6 +1460,28 @@ public class PortletDataContextImpl implements PortletDataContext {
 			(Map<Long, Long>)getNewPrimaryKeysMap(clazz);
 
 		newPrimaryKeysMap.put(classPK, newClassPK);
+
+		// For complete group mapping during the import process make sure the
+		// currently imported group's id is also mapped
+
+		if (classedModel instanceof StagedGroupedModel &&
+			newClassedModel instanceof StagedGroupedModel) {
+
+			Map<Long, Long> groupIds = (Map<Long, Long>)getNewPrimaryKeysMap(
+				Group.class);
+
+			StagedGroupedModel stagedGroupedModel =
+				(StagedGroupedModel)classedModel;
+
+			if (!groupIds.containsKey(stagedGroupedModel.getGroupId())) {
+				StagedGroupedModel newStagedGroupedModel =
+					(StagedGroupedModel)newClassedModel;
+
+				groupIds.put(
+					stagedGroupedModel.getGroupId(),
+					newStagedGroupedModel.getGroupId());
+			}
+		}
 
 		importLocks(clazz, String.valueOf(classPK), String.valueOf(newClassPK));
 		importPermissions(clazz, classPK, newClassPK);

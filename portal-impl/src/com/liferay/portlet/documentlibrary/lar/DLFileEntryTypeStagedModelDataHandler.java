@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -97,21 +98,31 @@ public class DLFileEntryTypeStagedModelDataHandler
 	}
 
 	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, Element element)
+	public void importMissingReference(
+			PortletDataContext portletDataContext, Element referenceElement)
 		throws PortletDataException {
 
-		String uuid = element.attributeValue("uuid");
-		String fileEntryTypeKey = element.attributeValue("file-entry-type-key");
+		String uuid = referenceElement.attributeValue("uuid");
+		long liveGroupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
+		String fileEntryTypeKey = referenceElement.attributeValue(
+			"file-entry-type-key");
 		boolean preloaded = GetterUtil.getBoolean(
-			element.attributeValue("preloaded"));
+			referenceElement.attributeValue("preloaded"));
+
+		importMissingGroupReference(portletDataContext, referenceElement);
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
 
 		DLFileEntryType existingFileEntryType = null;
 
 		try {
 			existingFileEntryType = fetchExistingFileEntryType(
-				uuid, portletDataContext.getCompanyGroupId(), fileEntryTypeKey,
-				preloaded);
+				uuid, liveGroupId, fileEntryTypeKey, preloaded);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -122,7 +133,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 				DLFileEntryType.class);
 
 		long fileEntryTypeId = GetterUtil.getLong(
-			element.attributeValue("class-pk"));
+			referenceElement.attributeValue("class-pk"));
 
 		fileEntryTypeIds.put(
 			fileEntryTypeId, existingFileEntryType.getFileEntryTypeId());
@@ -133,22 +144,28 @@ public class DLFileEntryTypeStagedModelDataHandler
 		PortletDataContext portletDataContext, Element referenceElement) {
 
 		String uuid = referenceElement.attributeValue("uuid");
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
 		String fileEntryTypeKey = referenceElement.attributeValue(
 			"file-entry-type-key");
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		try {
-			DLFileEntryType existingFileEntryType =
-				fetchExistingFileEntryType(
-					uuid, portletDataContext.getScopeGroupId(),
-					fileEntryTypeKey, preloaded);
+		if (!validateMissingGroupReference(
+				portletDataContext, referenceElement)) {
 
-			if (existingFileEntryType == null) {
-				existingFileEntryType = fetchExistingFileEntryType(
-					uuid, portletDataContext.getCompanyGroupId(),
-					fileEntryTypeKey, preloaded);
-			}
+			return false;
+		}
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		groupId = MapUtil.getLong(groupIds, groupId, groupId);
+
+		try {
+			DLFileEntryType existingFileEntryType = fetchExistingFileEntryType(
+				uuid, groupId, fileEntryTypeKey, preloaded);
 
 			if (existingFileEntryType == null) {
 				return false;

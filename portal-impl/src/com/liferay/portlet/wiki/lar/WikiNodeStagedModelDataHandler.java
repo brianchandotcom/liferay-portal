@@ -68,13 +68,13 @@ public class WikiNodeStagedModelDataHandler
 	}
 
 	@Override
-	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid, long nodeId)
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long nodeId)
 		throws Exception {
 
 		WikiNode existingNode =
-			WikiNodeLocalServiceUtil.fetchNodeByUuidAndGroupId(
-				uuid, portletDataContext.getCompanyGroupId());
+			WikiNodeLocalServiceUtil.fetchNodeByUuidAndGroupId(uuid, groupId);
 
 		Map<Long, Long> nodeIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

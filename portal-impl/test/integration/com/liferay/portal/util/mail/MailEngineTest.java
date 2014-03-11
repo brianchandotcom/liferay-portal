@@ -17,7 +17,9 @@ package com.liferay.portal.util.mail;
 import com.dumbster.smtp.SmtpMessage;
 
 import com.liferay.portal.kernel.mail.MailMessage;
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.MailServiceTestUtil;
 import com.liferay.util.mail.MailEngine;
 
@@ -25,27 +27,19 @@ import java.util.List;
 
 import javax.mail.internet.InternetAddress;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
  */
+@ExecutionTestListeners(
+	listeners = {
+		SynchronousMailExecutionTestListener.class
+})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class MailEngineTest {
-
-	@Before
-	public void setUp() {
-		MailServiceTestUtil.start();
-	}
-
-	@After
-	public void tearDown() {
-		MailServiceTestUtil.stop();
-	}
 
 	@Test
 	public void testSendMail() throws Exception {

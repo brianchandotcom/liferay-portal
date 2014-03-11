@@ -36,8 +36,8 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 	displayStyle = displayViews[0];
 }
 
-String ddmStructureName = LanguageUtil.get(pageContext, "basic-web-content");
 long ddmStructureId = 0;
+String ddmStructureName = LanguageUtil.get(pageContext, "basic-web-content");
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
@@ -213,7 +213,6 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 		<%
 		boolean subscribed = false;
 		boolean unsubscribable = true;
-		String subscribeAction;
 
 		if (Validator.isNull(displayTerms.getStructureId())) {
 			subscribed = JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);
@@ -223,12 +222,9 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 					unsubscribable = false;
 				}
 			}
-
-			subscribeAction = "/journal/edit_folder";
 		}
 		else {
 			subscribed = JournalUtil.isSubscribedToStructure(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), ddmStructureId);
-			subscribeAction = "/journal/edit_structure";
 		}
 		%>
 
@@ -237,7 +233,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 				<c:choose>
 					<c:when test="<%= unsubscribable %>">
 						<portlet:actionURL var="unsubscribeURL">
-							<portlet:param name="struts_action" value="<%= subscribeAction %>" />
+							<portlet:param name="struts_action" value='<%= Validator.isNull(displayTerms.getStructureId()) ? "/journal/edit_folder" : "/journal/edit_structure" %>' />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 
@@ -268,7 +264,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 			</c:when>
 			<c:otherwise>
 				<portlet:actionURL var="subscribeURL">
-					<portlet:param name="struts_action" value="<%= subscribeAction %>" />
+					<portlet:param name="struts_action" value='<%= Validator.isNull(displayTerms.getStructureId()) ? "/journal/edit_folder" : "/journal/edit_structure" %>' />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 
@@ -295,7 +291,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 <c:if test="<%= results.isEmpty() %>">
 	<div class="entries-empty alert alert-info">
 		<c:choose>
-			<c:when test="<%= Validator.isNotNull(ddmStructureId) %>">
+			<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
 				<c:if test="<%= total == 0 %>">
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(ddmStructureName) %>" key="there-is-no-web-content-with-structure-x" translateArguments="<%= false %>" />
 				</c:if>

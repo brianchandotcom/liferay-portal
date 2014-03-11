@@ -99,7 +99,6 @@ import com.liferay.portlet.dynamicdatamapping.StorageFieldNameException;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
@@ -6457,6 +6456,9 @@ public class JournalArticleLocalServiceImpl
 
 		JournalFolder folder = article.getFolder();
 
+		subscriptionSender.addPersistedSubscribers(
+			JournalFolder.class.getName(), article.getGroupId());
+
 		if (folder != null) {
 			subscriptionSender.addPersistedSubscribers(
 				JournalFolder.class.getName(), folder.getFolderId());
@@ -6467,27 +6469,22 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		subscriptionSender.addPersistedSubscribers(
-			JournalFolder.class.getName(), article.getGroupId());
-
-		subscriptionSender.addPersistedSubscribers(
-			JournalArticle.class.getName(), article.getResourcePrimKey());
-
-		if (article.getStructureId().equals(StringPool.BLANK) ||
-			article.getStructureId().equals("0")) {
-
+		if (!article.isTemplateDriven()) {
 			subscriptionSender.addPersistedSubscribers(
 				DDMStructure.class.getName(), article.getGroupId());
 		}
 		else {
-			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+			DDMStructure structure = ddmStructureLocalService.getStructure(
 				article.getGroupId(),
 				classNameLocalService.getClassNameId(JournalArticle.class),
-				article.getStructureId());
+				article.getStructureId(), true);
 
 			subscriptionSender.addPersistedSubscribers(
 				DDMStructure.class.getName(), structure.getStructureId());
 		}
+
+		subscriptionSender.addPersistedSubscribers(
+			JournalArticle.class.getName(), article.getId());
 
 		subscriptionSender.flushNotificationsAsync();
 	}

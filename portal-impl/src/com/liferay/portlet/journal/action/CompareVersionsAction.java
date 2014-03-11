@@ -100,8 +100,7 @@ public class CompareVersionsAction extends PortletAction {
 
 		double sourceVersion = GetterUtil.getDouble(sourceArticleId);
 
-		pos = targetArticleId.lastIndexOf(
-			EditArticleAction.VERSION_SEPARATOR);
+		pos = targetArticleId.lastIndexOf(EditArticleAction.VERSION_SEPARATOR);
 
 		if (pos != -1) {
 			targetArticleId =

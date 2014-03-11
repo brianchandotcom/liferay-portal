@@ -61,7 +61,7 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		categorySections="<%= categorySections %>"
 		htmlTop="<%= htmlTop %>"
 		jspPath="/html/portlet/portal_settings/"
-		showButtons="<%= permissionChecker.isOmniadmin() %>"
+		showButtons="<%= RoleLocalServiceUtil.hasUserRole(user.getUserId(), company.getCompanyId(), RoleConstants.ADMINISTRATOR, true) %>"
 	/>
 </aui:form>
 

@@ -18,6 +18,14 @@
 
 <%
 String backURL = ParamUtil.getString(request, "backURL");
+
+String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS);
+long nodeId = (Long)request.getAttribute(WebKeys.WIKI_NODE_ID);
+String title = (String)request.getAttribute(WebKeys.TITLE);
+double sourceVersion = (Double)request.getAttribute(WebKeys.SOURCE_VERSION);
+double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
+
+Object[] returnValue = WikiUtil.getWikiPageVersionsInfo(nodeId, title, sourceVersion, targetVersion, pageContext);
 %>
 
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
@@ -33,4 +41,18 @@ String backURL = ParamUtil.getString(request, "backURL");
 	title="compare-versions"
 />
 
-<liferay-util:include page="/html/portlet/wiki/history_navigation.jsp" />
+<liferay-portlet:renderURL varImpl="iteratorURL">
+	<portlet:param name="struts_action" value="/wiki/compare_versions" />
+	<portlet:param name="nodeId" value="<%= String.valueOf(nodeId) %>" />
+	<portlet:param name="title" value="<%= title %>" />
+</liferay-portlet:renderURL>
+
+<liferay-ui:version-comparator
+	diffHtmlResults="<%= diffHtmlResults %>"
+	iteratorURL="<%= iteratorURL %>"
+	nextVersion="<%= (Double)returnValue[2] %>"
+	previousVersion="<%= (Double)returnValue[1] %>"
+	sourceVersion="<%= sourceVersion %>"
+	targetVersion="<%= targetVersion %>"
+	versionsInfo="<%= (List<Tuple>)returnValue[0] %>"
+/>

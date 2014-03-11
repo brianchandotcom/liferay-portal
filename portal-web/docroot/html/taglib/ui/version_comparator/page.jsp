@@ -56,22 +56,32 @@ String targetVersionString = (nextVersion != 0) ? String.valueOf(targetVersion) 
 		<div class="central-author">
 
 			<%
-			for (int i = 0; i < versionsInfo.size(); i++) {
-				Tuple versionInfo = versionsInfo.get(i);
+			for (Tuple versionInfo : versionsInfo) {
+				long userId = (Long)versionInfo.getObject(0);
+				double versionNumber = (Double)versionInfo.getObject(1);
+				String summary = (String)versionInfo.getObject(2);
+				String extraInfo = (String)versionInfo.getObject(3);
 
-				String userName = (String)versionInfo.getObject(0);
-				String description = (String)versionInfo.getObject(1);
+				User author = UserLocalServiceUtil.getUser(userId);
 			%>
 
 				<liferay-ui:icon
 					image="user_icon"
 					label="<%= true %>"
-					message="<%= HtmlUtil.escape(userName) %>"
+					message="<%= HtmlUtil.escape(author.getFullName()) %>"
 					toolTip="author"
 				/>
 
-				<c:if test="<%= Validator.isNotNull(description) %>">
-					<%= description %>
+				(<%= versionNumber %>)
+
+				<c:if test="<%= versionsInfo.size() == 1 %>">
+					<c:if test="<%= Validator.isNotNull(summary) %>">
+						<%= summary %>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(extraInfo) %>">
+						<%= extraInfo %>
+					</c:if>
 				</c:if>
 
 			<%

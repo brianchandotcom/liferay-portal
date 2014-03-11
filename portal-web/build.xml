@@ -748,9 +748,12 @@
 								alert( 'An internal server error occured.' );
 								break ;
 							case 210:
-								alert( 'You cannot upload a video file if video preview generation is disabled.' );
+								alert( 'You cannot upload a file if category is required.' );
 								break ;
 							case 211:
+								alert( 'You cannot upload a video file if video preview generation is disabled.' );
+								break ;
+							case 212:
 								alert( 'You cannot upload an audio file if audio preview generation is disabled.' );
 								break ;
 							default :

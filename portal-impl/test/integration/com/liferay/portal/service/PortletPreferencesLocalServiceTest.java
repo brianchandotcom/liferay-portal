@@ -1306,6 +1306,141 @@ public class PortletPreferencesLocalServiceTest {
 		assertStrictPortletPreferences(jxPortletPreferences);
 	}
 
+	@Test
+	public void testUpdatePortletPreferences() throws Exception {
+		String singleValuePortletPreferencesXML =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _SINGLE_VALUE);
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesTestUtil.addLayoutPortletPreferences(
+				_layout, _portlet, singleValuePortletPreferencesXML);
+
+		String multipleValuesPortletPreferencesAsXML =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _MULTIPLE_VALUES);
+
+		portletPreferences.setPreferences(
+			multipleValuesPortletPreferencesAsXML);
+
+		PortletPreferencesLocalServiceUtil.updatePortletPreferences(
+			portletPreferences);
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			PortletPreferencesLocalServiceUtil.getPreferences(
+				_layout.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				_portlet.getPortletId());
+
+		assertValues(jxPortletPreferences, _NAME, _MULTIPLE_VALUES);
+	}
+
+	@Test
+	public void testUpdatePreferences() throws Exception {
+		String singleValuePortletPreferencesXML =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _SINGLE_VALUE);
+
+		PortletPreferencesTestUtil.addLayoutPortletPreferences(
+			_layout, _portlet, singleValuePortletPreferencesXML);
+
+		String multipleValuesPortletPreferencesAsXML =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _MULTIPLE_VALUES);
+
+		PortletPreferencesLocalServiceUtil.updatePreferences(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+			_portlet.getPortletId(), multipleValuesPortletPreferencesAsXML);
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			PortletPreferencesLocalServiceUtil.getPreferences(
+				_layout.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				_portlet.getPortletId());
+
+		assertValues(jxPortletPreferences, _NAME, _MULTIPLE_VALUES);
+	}
+
+	@Test
+	public void testUpdatePreferencesAutoAdd() throws Exception {
+		String portletPreferencesXML =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _SINGLE_VALUE);
+
+		PortletPreferencesLocalServiceUtil.updatePreferences(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+			_portlet.getPortletId(), portletPreferencesXML);
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			PortletPreferencesLocalServiceUtil.getPreferences(
+				_layout.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				_portlet.getPortletId());
+
+		assertValues(jxPortletPreferences, _NAME, _SINGLE_VALUE);
+	}
+
+	@Test
+	public void testUpdatePreferencesByJxPortletPreferences() throws Exception {
+		String singleValuePortletPreferences =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _SINGLE_VALUE);
+
+		PortletPreferencesTestUtil.addLayoutPortletPreferences(
+			_layout, _portlet, singleValuePortletPreferences);
+
+		String multipleValuesPortletPreferencesXML =
+			PortletPreferencesTestUtil.getPortletPreferencesXML(
+				_NAME, _MULTIPLE_VALUES);
+
+		javax.portlet.PortletPreferences initialJxPortletPreferences =
+			PortletPreferencesFactoryUtil.fromXML(
+				_layout.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				_portlet.getPortletId(), multipleValuesPortletPreferencesXML);
+
+		PortletPreferencesLocalServiceUtil.updatePreferences(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+			_portlet.getPortletId(), initialJxPortletPreferences);
+
+		javax.portlet.PortletPreferences currentJxPortletPreferences =
+			PortletPreferencesLocalServiceUtil.getPreferences(
+				_layout.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				_portlet.getPortletId());
+
+		assertValues(currentJxPortletPreferences, _NAME, _MULTIPLE_VALUES);
+	}
+
+	protected MockPortletPreferencesLocalServiceImpl
+		getMockPortletPreferencesServiceImpl(boolean strict) {
+
+		MockPortletPreferencesLocalServiceImpl
+			mockPortletPreferencesLocalServiceImpl =
+				new MockPortletPreferencesLocalServiceImpl(strict);
+
+		mockPortletPreferencesLocalServiceImpl.setPortletLocalService(
+			(PortletLocalService)PortalBeanLocatorUtil.locate(
+				PortletLocalService.class.getName()));
+		mockPortletPreferencesLocalServiceImpl.
+			setPortletPreferencesLocalService(
+				(PortletPreferencesLocalService)PortalBeanLocatorUtil.locate(
+					PortletPreferencesLocalService.class.getName()));
+		mockPortletPreferencesLocalServiceImpl.setPortletPreferencesPersistence(
+			(PortletPreferencesPersistence)PortalBeanLocatorUtil.locate(
+				PortletPreferencesPersistence.class.getName()));
+
+		return mockPortletPreferencesLocalServiceImpl;
+	}
+
 	protected void assertEmptyPortletPreferencesMap(
 			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws Exception {
@@ -1351,27 +1486,6 @@ public class PortletPreferencesLocalServiceTest {
 			strictPortletPreferencesImpl.getMap();
 
 		Assert.assertTrue(strictPortletPreferencesMap.isEmpty());
-	}
-
-	protected MockPortletPreferencesLocalServiceImpl
-		getMockPortletPreferencesServiceImpl(boolean strict) {
-
-		MockPortletPreferencesLocalServiceImpl
-			mockPortletPreferencesLocalServiceImpl =
-				new MockPortletPreferencesLocalServiceImpl(strict);
-
-		mockPortletPreferencesLocalServiceImpl.setPortletLocalService(
-			(PortletLocalService)PortalBeanLocatorUtil.locate(
-				PortletLocalService.class.getName()));
-		mockPortletPreferencesLocalServiceImpl.
-			setPortletPreferencesLocalService(
-				(PortletPreferencesLocalService)PortalBeanLocatorUtil.locate(
-					PortletPreferencesLocalService.class.getName()));
-		mockPortletPreferencesLocalServiceImpl.setPortletPreferencesPersistence(
-			(PortletPreferencesPersistence)PortalBeanLocatorUtil.locate(
-				PortletPreferencesPersistence.class.getName()));
-
-		return mockPortletPreferencesLocalServiceImpl;
 	}
 
 	protected void assertValues(

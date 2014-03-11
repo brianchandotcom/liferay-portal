@@ -54,6 +54,9 @@ import com.liferay.portlet.asset.util.AssetTestUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.MBTestUtil;
+import com.liferay.portlet.ratings.model.RatingsEntry;
+import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+import com.liferay.portlet.ratings.util.RatingsTestUtil;
 
 import java.io.Serializable;
 
@@ -120,6 +123,10 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		addComments(stagedModel);
 
+		// Ratings
+
+		addRatings(stagedModel);
+
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, stagedModel);
 
@@ -181,6 +188,12 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		throws Exception {
 
 		return new HashMap<String, List<StagedModel>>();
+	}
+
+	protected void addRatings(StagedModel stagedModel) throws Exception {
+		RatingsTestUtil.addEntry(
+			ExportImportClassedModelUtil.getClassName(stagedModel),
+			ExportImportClassedModelUtil.getClassPK(stagedModel));
 	}
 
 	protected abstract StagedModel addStagedModel(
@@ -497,17 +510,18 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 				Assert.assertNotNull(path);
 
-				Iterator<StagedModel> iterator =
+				Iterator<StagedModel> dependentStagedModelsIterator =
 					dependentStagedModels.iterator();
 
-				while (iterator.hasNext()) {
-					StagedModel dependentStagedModel = iterator.next();
+				while (dependentStagedModelsIterator.hasNext()) {
+					StagedModel dependentStagedModel =
+						dependentStagedModelsIterator.next();
 
 					String dependentStagedModelPath =
 						ExportImportPathUtil.getModelPath(dependentStagedModel);
 
 					if (path.equals(dependentStagedModelPath)) {
-						iterator.remove();
+						dependentStagedModelsIterator.remove();
 					}
 				}
 			}
@@ -540,6 +554,48 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		validateComments(stagedModel, importedStagedModel, group);
 
 		validateImport(dependentStagedModelsMap, group);
+
+		validateRatings(stagedModel, importedStagedModel);
+	}
+
+	protected void validateRatings(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		List<RatingsEntry> ratingsEntries =
+			RatingsEntryLocalServiceUtil.getEntries(
+				ExportImportClassedModelUtil.getClassName(stagedModel),
+				ExportImportClassedModelUtil.getClassPK(stagedModel),
+				WorkflowConstants.STATUS_ANY);
+
+		List<RatingsEntry> importedRatingsEntries =
+			RatingsEntryLocalServiceUtil.getEntries(
+				ExportImportClassedModelUtil.getClassName(importedStagedModel),
+				ExportImportClassedModelUtil.getClassPK(importedStagedModel),
+				WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			ratingsEntries.size(), importedRatingsEntries.size());
+
+		for (RatingsEntry ratingsEntry : ratingsEntries) {
+			Iterator<RatingsEntry> importedRatingsEntriesIterator =
+				importedRatingsEntries.iterator();
+
+			while (importedRatingsEntriesIterator.hasNext()) {
+				RatingsEntry importedRatingsEntry =
+					importedRatingsEntriesIterator.next();
+
+				if (ratingsEntry.getScore() ==
+						importedRatingsEntry.getScore()) {
+
+					importedRatingsEntriesIterator.remove();
+
+					break;
+				}
+			}
+		}
+
+		Assert.assertTrue(importedRatingsEntries.isEmpty());
 	}
 
 	protected Group liveGroup;

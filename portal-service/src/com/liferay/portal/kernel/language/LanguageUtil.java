@@ -172,7 +172,6 @@ public class LanguageUtil {
 	}
 
 	public static String get(ResourceBundle resourceBundle, String key) {
-
 		return getLanguage().get(resourceBundle, key);
 	}
 

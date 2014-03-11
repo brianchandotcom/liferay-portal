@@ -196,8 +196,7 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 
 	@Override
 	public String get(ResourceBundle resourceBundle, String key) {
-		return UnicodeFormatter.toString(
-			LanguageUtil.get(resourceBundle, key));
+		return UnicodeFormatter.toString(LanguageUtil.get(resourceBundle, key));
 	}
 
 	@Override

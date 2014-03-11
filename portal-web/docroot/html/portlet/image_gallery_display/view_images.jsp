@@ -107,8 +107,8 @@ List results = searchContainer.getResults();
 
 					<div class="image-icon">
 						<a class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= href %>" thumbnailId="<%= thumbnailId %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
-							<span class="image-thumbnail" style="<%= DLUtil.getThumbnailStyle(false, 4) %>">
-								<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
+							<span class="image-thumbnail">
+								<img alt="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>" border="no" src="<%= src %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
 
 								<c:if test="<%= fileShortcut != null %>">
 									<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
@@ -171,7 +171,7 @@ List results = searchContainer.getResults();
 							<div class="image-icon">
 								<a class="image-link" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escape(curFolder.getName()) + " - " + HtmlUtil.escape(curFolder.getDescription()) %>">
 									<span class="image-thumbnail">
-										<img alt="" border="no" src="<%= folderImageSrc %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
+										<img alt="" border="no" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
 									</span>
 
 									<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
@@ -186,7 +186,7 @@ List results = searchContainer.getResults();
 
 							<div class="image-icon">
 								<span class="image-thumbnail error" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
-									<img alt="" border="no" src="<%= folderImageSrc %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
+									<img alt="" border="no" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
 
 									<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>
 								</span>
@@ -221,7 +221,7 @@ List results = searchContainer.getResults();
 								%>
 
 								<span class="image-thumbnail">
-									<img alt="" border="no" src="<%= folderImageSrc %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
+									<img alt="" border="no" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
 								</span>
 
 								<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>

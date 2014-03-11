@@ -1,3 +1,5 @@
+@import "compass";
+
 .lfr-image-gallery-actions {
 	font-size: 11px;
 	text-align: right;
@@ -26,6 +28,7 @@
 		margin: 10px 4px;
 		padding: 5px 15px 0;
 		text-align: center;
+		width: 150px;
 
 		&:hover, &.hover {
 			background-color: #D3E8F1;
@@ -83,8 +86,8 @@
 	.image-title {
 		clear: both;
 		display: block;
-		padding: 0 10px;
-		word-wrap: break-word;
+
+		@include ellipsis;
 	}
 }
 

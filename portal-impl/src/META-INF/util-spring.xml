@@ -293,11 +293,6 @@
 			</bean>
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.search.IndexerRegistryUtil" class="com.liferay.portal.kernel.search.IndexerRegistryUtil">
-		<property name="indexerRegistry">
-			<bean class="com.liferay.portal.search.IndexerRegistryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" class="com.liferay.portal.kernel.servlet.BrowserSnifferUtil">
 		<property name="browserSniffer">
 			<bean class="com.liferay.portal.servlet.BrowserSnifferImpl" />

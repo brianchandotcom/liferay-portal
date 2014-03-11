@@ -41,13 +41,13 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -92,6 +92,8 @@ import com.liferay.portlet.social.model.impl.SocialActivityInterpreterImpl;
 import com.liferay.portlet.social.model.impl.SocialRequestInterpreterImpl;
 import com.liferay.portlet.social.service.SocialActivityInterpreterLocalServiceUtil;
 import com.liferay.portlet.social.service.SocialRequestInterpreterLocalServiceUtil;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 import com.liferay.util.portlet.PortletProps;
 
 import java.io.InputStream;
@@ -476,6 +478,26 @@ public class PortletBagFactory {
 		return inputStream;
 	}
 
+	@SuppressWarnings("unchecked")
+	protected <S> ServiceTrackerList<S> getServiceTrackinList(
+		Portlet portlet, Class<S> clazz) {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("(javax.portlet.name=");
+		sb.append(portlet.getPortletId());
+		sb.append(")");
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("javax.portlet.name", portlet.getPortletId());
+
+		ServiceTrackerList<S> list = ServiceTrackerCollections.list(
+			clazz, sb.toString(), map);
+
+		return list;
+	}
+
 	protected void initResourceBundle(
 		Map<String, ResourceBundle> resourceBundles, Portlet portlet,
 		Locale locale) {
@@ -798,7 +820,8 @@ public class PortletBagFactory {
 	}
 
 	protected List<Indexer> newIndexers(Portlet portlet) throws Exception {
-		List<Indexer> indexerInstances = new ArrayList<Indexer>();
+		ServiceTrackerList<Indexer> indexerInstances =
+			getServiceTrackinList(portlet, Indexer.class);
 
 		List<String> indexerClasses = portlet.getIndexerClasses();
 
@@ -806,9 +829,15 @@ public class PortletBagFactory {
 			Indexer indexerInstance = (Indexer)newInstance(
 				Indexer.class, indexerClass);
 
-			IndexerRegistryUtil.register(indexerInstance);
+			String[] classNames = ArrayUtil.append(
+				indexerInstance.getClassNames(),
+				indexerInstance.getClass().getName());
 
-			indexerInstances.add(indexerInstance);
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			map.put("indexer.classNames", classNames);
+
+			indexerInstances.add(indexerInstance , map);
 		}
 
 		return indexerInstances;

@@ -38,6 +38,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
+import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.util.List;
 import java.util.Locale;
@@ -137,6 +138,10 @@ public class PortletBagImpl implements PortletBag {
 
 	@Override
 	public void destroy() {
+		ServiceTrackerList<Indexer> indexerInstancesTrackerList =
+			(ServiceTrackerList<Indexer>)_indexerInstances;
+
+		indexerInstancesTrackerList.close();
 	}
 
 	@Override

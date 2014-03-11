@@ -70,11 +70,9 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
-import com.liferay.util.bridges.alloy.AlloyPortlet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -1026,12 +1024,6 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public List<Indexer> getIndexerInstances() {
-		if (_indexerClasses.isEmpty() &&
-			!_portletClass.contains(AlloyPortlet.class.getSimpleName())) {
-
-			return Collections.emptyList();
-		}
-
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
 		return portletBag.getIndexerInstances();

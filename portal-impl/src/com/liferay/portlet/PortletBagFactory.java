@@ -124,8 +124,8 @@ public class PortletBagFactory {
 
 		javax.portlet.Portlet portletInstance = getPortletInstance(portlet);
 
-		ConfigurationAction configurationActionInstance =
-			newConfigurationAction(portlet);
+		List<ConfigurationAction> configurationActionInstances =
+			newConfigurationActions(portlet);
 
 		List<Indexer> indexerInstances = newIndexers(portlet);
 
@@ -319,7 +319,7 @@ public class PortletBagFactory {
 
 		PortletBag portletBag = new PortletBagImpl(
 			portlet.getPortletId(), _servletContext, portletInstance,
-			configurationActionInstance, indexerInstances, openSearchInstance,
+			configurationActionInstances, indexerInstances, openSearchInstance,
 			friendlyURLMapperInstance, urlEncoderInstance,
 			portletDataHandlerInstance, stagedModelDataHandlerInstances,
 			templateHandlerInstance, portletLayoutListenerInstance,
@@ -714,15 +714,22 @@ public class PortletBagFactory {
 		return atomCollectionAdapterInstances;
 	}
 
-	protected ConfigurationAction newConfigurationAction(Portlet portlet)
+	protected List<ConfigurationAction> newConfigurationActions(Portlet portlet)
 		throws Exception {
 
-		if (Validator.isNull(portlet.getConfigurationActionClass())) {
-			return null;
+		ServiceTrackerList<ConfigurationAction> configurationActionInstances =
+			getServiceTrackerList(ConfigurationAction.class, portlet);
+
+		if (Validator.isNotNull(portlet.getConfigurationActionClass())) {
+			ConfigurationAction configurationAction =
+				(ConfigurationAction)newInstance(
+					ConfigurationAction.class,
+					portlet.getConfigurationActionClass());
+
+			configurationActionInstances.add(configurationAction);
 		}
 
-		return (ConfigurationAction)newInstance(
-			ConfigurationAction.class, portlet.getConfigurationActionClass());
+		return configurationActionInstances;
 	}
 
 	protected DDMDisplay newDDMDisplay(Portlet portlet) throws Exception {

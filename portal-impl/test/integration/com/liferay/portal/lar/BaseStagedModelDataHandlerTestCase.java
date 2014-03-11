@@ -510,17 +510,18 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 				Assert.assertNotNull(path);
 
-				Iterator<StagedModel> iterator =
+				Iterator<StagedModel> dependentStagedModelsIterator =
 					dependentStagedModels.iterator();
 
-				while (iterator.hasNext()) {
-					StagedModel dependentStagedModel = iterator.next();
+				while (dependentStagedModelsIterator.hasNext()) {
+					StagedModel dependentStagedModel =
+						dependentStagedModelsIterator.next();
 
 					String dependentStagedModelPath =
 						ExportImportPathUtil.getModelPath(dependentStagedModel);
 
 					if (path.equals(dependentStagedModelPath)) {
-						iterator.remove();
+						dependentStagedModelsIterator.remove();
 					}
 				}
 			}

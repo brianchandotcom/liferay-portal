@@ -1,4 +1,20 @@
 <definition>
+	<command name="addBlogsEntryPG">
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_BLOGS_ENTRY_BUTTON" value1="Add Blogs Entry" />
+
+		<execute action="PGAssetpublisherAddnewblogsentry#selectFrame" locator-key1="BLOGS_ENTRY_IFRAME" />
+		<execute action="PGAssetpublisherAddnewblogsentry#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="PGAssetpublisherAddnewblogsentry#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="PGAssetpublisherAddnewblogsentry#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGAssetpublisherAddnewblogsentry#pause" locator1="5000" />
+		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
+
+		<var name="key_assetTitle" value="${entryTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${entryContent}" />
+	</command>
+
 	<command name="configureAddSiteScopes">
 		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
 

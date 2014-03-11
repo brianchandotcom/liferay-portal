@@ -7,7 +7,1966 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Role#tearDownCP" />
+
+		<execute macro="List#tearDownCP" />
+
+		<execute macro="DataDefinition#tearDownCP" />
+
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="UserGroup#tearDownCP" />
+
+		<execute macro="Organization#tearDownCP" />
+
+		<execute macro="Team#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+
+		<execute macro="DMDocument#tearDownCP">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#tearDownPG" />
 	</tear-down>
+
+	<command name="EditTeamPermissions" priority="4">
+		<var name="siteName" value="Site Name" />
+		<var name="teamName" value="Site Team Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL" />
+			<var name="permissionDefinitionValue" value="Go to Control Panel" />
+			<var name="permissionNavigationKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
+			<var name="permissionNavigationValue" value="General Permissions" />
+			<var name="roleName" value="Authenticated" />
+			<var name="roleUser" value="User" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_SITE_ACTION" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+			<var name="permissionNavigationValue" value="Site Pages" />
+			<var name="roleName" value="Roles Siterole Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_USERS_SITE_MEMBERSHIPS_TEAM_ALL_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_USERS_SITE_MEMBERSHIPS" />
+			<var name="permissionNavigationValue" value="Site Memberships" />
+			<var name="roleName" value="Roles Siterole Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_USERS_SITE_MEMBERSHIPS_GENERAL_ALL_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_USERS_SITE_MEMBERSHIPS" />
+			<var name="permissionNavigationValue" value="Site Memberships" />
+			<var name="roleName" value="Roles Siterole Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY_APPLICATIONS_PERMISSIONS_ACTION" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY" />
+			<var name="permissionNavigationValue" value="Web Content Display" />
+			<var name="roleName" value="Roles Siterole Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="Site Name" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignSiteRoleCP">
+			<var name="siteRoleName" value="Roles Siterole Name" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP" />
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
+
+		<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_USERS" value1="Users" />
+		<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_USERS_SITE_TEAMS" value1="Site Teams" />
+
+		<execute macro="Team#addCP">
+			<var name="teamDescription" value="Site Team Description" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoConfigurationPG">
+			<var name="portletName" value="Web Content Display" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<var name="key_teamName" value="${teamName}" />
+
+		<execute action="Permissions#assertTextEquals" locator-key1="CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME" value1="${teamName}" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoConfigurationPG">
+			<var name="portletName" value="Web Content Display" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<var name="key_teamName" value="${teamName}" />
+
+		<execute action="Permissions#assertTextEquals" locator-key1="CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME" value1="${teamName}" />
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Team#viewPermissionsCP">
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Role#definePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_ASSIGN_MEMBERS_CHECKBOX" />
+			<var name="roleName" value="roles-siterole-name" />
+		</execute>
+
+		<execute macro="Role#definePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DEFINE_PERMISSIONS_CHECKBOX" />
+			<var name="roleName" value="roles-siterole-name" />
+		</execute>
+
+		<execute macro="Role#definePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
+			<var name="roleName" value="roles-siterole-name" />
+		</execute>
+
+		<execute macro="Role#definePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_MANAGE_ANNOUNCEMENTS_CHECKBOX" />
+			<var name="roleName" value="roles-siterole-name" />
+		</execute>
+
+		<execute macro="Role#definePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX" />
+			<var name="roleName" value="roles-siterole-name" />
+		</execute>
+
+		<execute macro="Role#definePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_UPDATE_CHECKBOX" />
+			<var name="roleName" value="roles-siterole-name" />
+		</execute>
+
+		<execute macro="Role#definePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="roles-siterole-name" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP" />
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
+
+		<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_USERS" value1="Users" />
+		<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_USERS_SITE_TEAMS" value1="Site Teams" />
+
+		<execute macro="Team#editCP">
+			<var name="teamDescriptionEdit" value="Site Team Description Edit" />
+			<var name="teamNameEdit" value="Site Team Name Edit" />
+		</execute>
+
+		<execute macro="Team#assignMembersCP">
+			<var name="teamName" value="Site Team Name Edit" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+	</command>
+
+	<command name="RolesOrganizationSearch" priority="4">
+		<var name="searchAssetTitle" value="Test Document" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Roles Orgrole Name" />
+			<var name="roleType" value="Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_VIEW" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
+			<var name="permissionNavigationValue" value="Documents and Media" />
+			<var name="roleName" value="Roles Orgrole Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="organizationSite" value="Community Site" />
+			<var name="orgName" value="Organization Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserOrganizationCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserOrganizationCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignOrgRoleCP">
+			<var name="roleName" value="Roles Orgrole Name" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="This is a test document." />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Test Document" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoDMDocumentPG">
+			<var name="dmDocumentTitle" value="Test Document" />
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="guest" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="owner" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="site-member" />
+		</execute>
+
+		<execute macro="Role#viewPermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="permissionFlagged" value="false" />
+			<var name="roleName" value="organization-user" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="Test Document" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="Test Document" />
+		</execute>
+
+		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+
+		<execute action="PGSearchResults#assertClick" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+
+		<execute macro="DMDocument#viewPGViaSearch">
+			<var name="dmDocumentDescription" value="This is a test document." />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Test Document" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="Test Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Test Document" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="This is a test document." />
+			<var name="dmDocumentTitle" value="Test Document" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="Test Document" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="Test Document" />
+		</execute>
+
+		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+
+		<execute action="PGSearchResults#assertClick" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+
+		<execute macro="DMDocument#viewPGViaSearch">
+			<var name="dmDocumentDescription" value="This is a test document." />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Test Document" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
+	<command name="RolesPermissionsDynamicDataLists" priority="4">
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionFormTemplateName" value="Data Definition Form Template Name" />
+		<var name="dataDefinitionName" value="Employee Profile Data Definition" />
+		<var name="listDescription" value="Liferay Employee Profiles" />
+		<var name="listName" value="Employees" />
+		<var name="pageName" value="Dynamic Data Lists Page" />
+		<var name="portletName" value="Dynamic Data List Display" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Data Recorder Name" />
+			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_ADD_RECORD_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Record" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
+			<var name="permissionNavigationValue" value="Dynamic Data Lists" />
+			<var name="roleName" value="Data Recorder Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
+			<var name="permissionNavigationValue" value="Dynamic Data Lists" />
+			<var name="roleName" value="Data Recorder Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Records Manager Name" />
+			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_UPDATE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Update" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
+			<var name="permissionNavigationValue" value="Dynamic Data Lists" />
+			<var name="roleName" value="Records Manager Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
+			<var name="permissionNavigationValue" value="Dynamic Data Lists" />
+			<var name="roleName" value="Records Manager Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignSiteRoleCP">
+			<var name="siteRoleName" value="Data Recorder Name" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignSiteRoleCP">
+			<var name="siteRoleName" value="Records Manager Name" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="List#addPG">
+			<var name="listDescription" value="${listDescription}" />
+			<var name="listName" value="${listName}" />
+		</execute>
+
+		<execute macro="DataDefinition#addPG">
+			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Boolean" />
+			<var name="fieldFieldLabel" value="Employee" />
+			<var name="fieldName" value="Employee" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Date" />
+			<var name="fieldFieldLabel" value="Start Date" />
+			<var name="fieldName" value="Start_Date" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Decimal" />
+			<var name="fieldFieldLabel" value="Salary" />
+			<var name="fieldName" value="Salary" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Profile Picture" />
+			<var name="fieldName" value="Profile_Picture" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Resume" />
+			<var name="fieldName" value="Resume" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Integer" />
+			<var name="fieldFieldLabel" value="Age" />
+			<var name="fieldName" value="Age" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Number" />
+			<var name="fieldFieldLabel" value="Weekly Hours" />
+			<var name="fieldName" value="Weekly_Hours" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Radio" />
+			<var name="fieldFieldLabel" value="Department" />
+			<var name="fieldName" value="Department" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldOptions">
+			<var name="field" value="Radio" />
+			<var name="fieldFieldLabel" value="Department" />
+			<var name="fieldName" value="Department" />
+			<var name="fieldOptionsNames" value="Core Engineer,QA Engineer,Support Engineer" />
+			<var name="fieldOptionsValues" value="1,2,3" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="Years Worked" />
+			<var name="fieldName" value="Years_Worked" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldOptions">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="Years Worked" />
+			<var name="fieldName" value="Years_Worked" />
+			<var name="fieldOptionsNames" value="1-2,3-5,5+" />
+			<var name="fieldOptionsValues" value="1,2,3" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Name" />
+			<var name="fieldName" value="Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Description" />
+			<var name="fieldName" value="Description" />
+		</execute>
+
+		<execute macro="DataDefinition#savePG" />
+
+		<execute macro="List#selectDataDefinitionPG">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="List#savePG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="ListRecord#addPG">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Boolean" />
+			<var name="fieldFieldLabel" value="Employee" />
+			<var name="fieldName" value="Employee" />
+			<var name="recordFieldData" value="true" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Date" />
+			<var name="fieldFieldLabel" value="Start Date" />
+			<var name="fieldName" value="Start_Date" />
+			<var name="recordFieldData" value="04/01/2015" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Decimal" />
+			<var name="fieldFieldLabel" value="Salary" />
+			<var name="fieldName" value="Salary" />
+			<var name="recordFieldData" value="35000" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="document" value="Document_1.txt" />
+			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Resume" />
+			<var name="fieldName" value="Resume" />
+			<var name="recordFieldData" value="Document Title" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Integer" />
+			<var name="fieldFieldLabel" value="Age" />
+			<var name="fieldName" value="Age" />
+			<var name="recordFieldData" value="30" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Number" />
+			<var name="fieldFieldLabel" value="Weekly Hours" />
+			<var name="fieldName" value="Weekly_Hours" />
+			<var name="recordFieldData" value="40" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Radio" />
+			<var name="fieldFieldLabel" value="Department" />
+			<var name="fieldName" value="Department" />
+			<var name="recordFieldData" value="QA Engineer" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="Years Worked" />
+			<var name="fieldName" value="Years_Worked" />
+			<var name="recordFieldData" value="5+" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Name" />
+			<var name="fieldName" value="Name" />
+			<var name="recordFieldData" value="Joe Engineer" />
+		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Description" />
+			<var name="fieldName" value="Description" />
+			<var name="recordFieldData" value="Joe Engineer works in QA" />
+		</execute>
+
+		<execute macro="ListRecord#publishPG" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="ADD_RECORD_BUTTON" value1="Add ${dataDefinitionName}" />
+		<execute action="PGDynamicdatalists#assertElementNotPresent" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGDynamicdatalists#assertElementNotPresent" locator-key1="ADD_RECORD_BUTTON" value1="Add ${dataDefinitionName}" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+		</execute>
+	</command>
+
+	<command name="RolesSiteSearch" priority="4">
+		<var name="searchAssetTitle" value="Test Document" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_VIEW" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
+			<var name="permissionNavigationValue" value="Documents and Media" />
+			<var name="roleName" value="Roles Siterole Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignSiteRoleCP">
+			<var name="siteRoleName" value="Roles Siterole Name" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="This is a test document." />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Test Document" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoDMDocumentPG">
+			<var name="dmDocumentTitle" value="Test Document" />
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="guest" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="owner" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="site-member" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="Test Document" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="Test Document" />
+		</execute>
+
+		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+
+		<execute action="PGSearchResults#assertClick" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+
+		<execute macro="DMDocument#viewPGViaSearch">
+			<var name="dmDocumentDescription" value="This is a test document." />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Test Document" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="Test Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Test Document" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="This is a test document." />
+			<var name="dmDocumentTitle" value="Test Document" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="Test Document" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="Test Document" />
+		</execute>
+
+		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+
+		<execute action="PGSearchResults#assertClick" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+
+		<execute macro="DMDocument#viewPGViaSearch">
+			<var name="dmDocumentDescription" value="This is a test document." />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Test Document" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
+	<command name="RolesSitesPermissionsInheritance" priority="4">
+		<var name="portlet1Name" value="Message Boards" />
+		<var name="portlet2Name" value="Asset Publisher" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea3@liferay.com" />
+			<var name="userFirstName" value="userfn3" />
+			<var name="userLastName" value="userln3" />
+			<var name="userScreenName" value="usersn3" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea3@liferay.com" />
+			<var name="userScreenName" value="usersn3" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Organization Name 1" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Organization Name 2" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="organizationSite" value="Community Site" />
+			<var name="orgName" value="Organization Name 2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Organization Name 3" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Organization Name 1" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Organization Name 2" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#assignOrgRoleCP">
+			<var name="orgName" value="Organization Name 2" />
+			<var name="roleName" value="Organization Administrator" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Organization Name 3" />
+			<var name="userFirstName" value="userfn3" />
+			<var name="userLastName" value="userln3" />
+			<var name="userScreenName" value="usersn3" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="UG UserGroup1 Name" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="UG UserGroup2 Name" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="UG UserGroup3 Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#assignMemberCP">
+			<var name="userGroupName" value="UG UserGroup1 Name" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#assignMemberCP">
+			<var name="userGroupName" value="UG UserGroup2 Name" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#assignMemberCP">
+			<var name="userGroupName" value="UG UserGroup3 Name" />
+			<var name="userScreenName" value="usersn3" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Asset Publisher Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Movie Blogger Name" />
+			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Entry" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="roleName" value="Movie Blogger Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="roleName" value="Movie Blogger Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_ADD_TO_PAGE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add to Page" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER" />
+			<var name="permissionNavigationValue" value="Asset Publisher" />
+			<var name="roleName" value="Movie Blogger Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER" />
+			<var name="permissionNavigationValue" value="Asset Publisher" />
+			<var name="roleName" value="Movie Blogger Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Music Fan Name" />
+			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_MESSAGES_ADD_CATEGORY_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Category" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />
+			<var name="permissionNavigationValue" value="Message Boards" />
+			<var name="roleName" value="Music Fan Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_MESSAGES_ADD_MESSAGE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Message" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />
+			<var name="permissionNavigationValue" value="Message Boards" />
+			<var name="roleName" value="Music Fan Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_MESSAGES_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />
+			<var name="permissionNavigationValue" value="Message Boards" />
+			<var name="roleName" value="Music Fan Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_CATEGORY_ADD_MESSAGE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Message" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />
+			<var name="permissionNavigationValue" value="Message Boards" />
+			<var name="roleName" value="Music Fan Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_CATEGORY_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />
+			<var name="permissionNavigationValue" value="Message Boards" />
+			<var name="roleName" value="Music Fan Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_MESSAGE_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />
+			<var name="permissionNavigationValue" value="Message Boards" />
+			<var name="roleName" value="Music Fan Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_ADD_TO_PAGE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add to Page" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER" />
+			<var name="permissionNavigationValue" value="Asset Publisher" />
+			<var name="roleName" value="Music Fan Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER" />
+			<var name="permissionNavigationValue" value="Asset Publisher" />
+			<var name="roleName" value="Music Fan Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Sports Journalist Name" />
+			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_ACTION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
+			<var name="permissionNavigationValue" value="Web Content" />
+			<var name="roleName" value="Sports Journalist Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ACTION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+			<var name="permissionNavigationValue" value="Site Pages" />
+			<var name="roleName" value="Sports Journalist Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_ADD_TO_PAGE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add to Page" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER" />
+			<var name="permissionNavigationValue" value="Asset Publisher" />
+			<var name="roleName" value="Sports Journalist Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER" />
+			<var name="permissionNavigationValue" value="Asset Publisher" />
+			<var name="roleName" value="Sports Journalist Name" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#addMemberOrganizationCP">
+			<var name="orgName" value="Organization Name 2" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#addMemberUserGroupCP">
+			<var name="userGroupName" value="UG UserGroup3 Name" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="roleName" value="Music Fan Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="roleName" value="Movie Blogger Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#assignSiteRolesUserGroupsCP">
+			<var name="roleName" value="Sports Journalist Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="userFirstName" value="userfn3" />
+			<var name="userGroupName" value="UG UserGroup3 Name" />
+			<var name="userLastName" value="userln3" />
+			<var name="userScreenName" value="usersn3" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_portletName" value="${portlet1Name}" />
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
+
+		<var name="key_portletName" value="${portlet2Name}" />
+
+		<execute action="BasePortlet#assertElementNotPresent" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet2Name}" />
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="This is a thread by usersn1" />
+			<var name="threadSubject" value="Music Thread 1" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_portletName" value="${portlet1Name}" />
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
+
+		<var name="key_portletName" value="${portlet2Name}" />
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet2Name}" />
+
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="ADD_CATEGORY_BUTTON" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="PERMISSIONS_BUTTON" />
+
+		<execute macro="AssetPublisherPortlet#addBlogsEntryPG">
+			<var name="entryContent" value="This is a movie blog by usersn2" />
+			<var name="entryTitle" value="Movie Blog" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Organization Name 2" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_portletName" value="${portlet1Name}" />
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="ADD_CATEGORY_BUTTON" value1="Add Category" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea3@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_portletName" value="${portlet1Name}" />
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
+
+		<var name="key_portletName" value="${portlet2Name}" />
+
+		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet2Name}" />
+
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="ADD_CATEGORY_BUTTON" />
+
+		<execute macro="WebContent#addPGViaAP">
+			<var name="webContentContent" value="This article is by usersn3, a member of user group 3 but not site name 1" />
+			<var name="webContentTitle" value="User Group Article" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
+	<command name="TeamPermissionsSite" priority="4">
+		<var name="pageName" value="USA Ice Hockey Team Blog" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamDescription" value="Site Team Description" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#assignMembersCP">
+			<var name="teamName" value="Site Team Name" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute action="CPSiteteams#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No teams were found." />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="USA Ice Hockey Team Blog" />
+			<var name="pageTemplateName" value="Blog" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="USA Ice Hockey Team Blog" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoPagePG">
+			<var name="pageName" value="USA Ice Hockey Team Blog" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="guest" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX" />
+			<var name="roleName" value="site-member" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="site-member" />
+		</execute>
+
+		<execute macro="Team#definePermissionPG">
+			<var name="permissionDefinitionKey" value="ACTION_ADD_DISCUSSION" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#definePermissionPG">
+			<var name="permissionDefinitionKey" value="ACTION_ADD_LAYOUT" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#definePermissionPG">
+			<var name="permissionDefinitionKey" value="ACTION_CONFIGURE_PORTLETS" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#definePermissionPG">
+			<var name="permissionDefinitionKey" value="ACTION_CUSTOMIZE" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#definePermissionPG">
+			<var name="permissionDefinitionKey" value="ACTION_DELETE" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#definePermissionPG">
+			<var name="permissionDefinitionKey" value="ACTION_DELETE_DISCUSSION" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#definePermissionPG">
+			<var name="permissionDefinitionKey" value="ACTION_PERMISSIONS" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#definePermissionPG">
+			<var name="permissionDefinitionKey" value="ACTION_UPDATE" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#definePermissionPG">
+			<var name="permissionDefinitionKey" value="ACTION_UPDATE_DISCUSSION" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#definePermissionPG">
+			<var name="permissionDefinitionKey" value="ACTION_VIEW" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="USA Ice Hockey Team Blog" />
+		</execute>
+
+		<for list="Blogs,Tag Cloud,Recent Bloggers" param="portletTitleName">
+			<var name="key_portletTitleName" value="${portletTitleName}" />
+
+			<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_TITLE" value1="${portletTitleName}" />
+		</for>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+		</execute>
+
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="Home#assertTextNotPresent" locator-key1="PAGE" value1="${pageName}" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
 
 	<command name="ViewAutomaticAssignedRoles" priority="5">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_ACCESS_IN_CONTROL_PANEL" />

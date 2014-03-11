@@ -477,6 +477,31 @@
 		</if>
 	</command>
 
+	<command name="assignOrgRoleCP">
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_USER_INFORMATION_ROLES" value1="Roles" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="ROLES_ORGANIZATION_ROLES_SELECT_LINK" value1="Select" />
+		<execute action="CPUsersandorganizationsUser#selectFrame" locator-key1="ROLES_ORGANIZATION_SELECT_IFRAME" />
+
+		<var name="key_roleName" value="${roleName}" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="ROLES_ORGANIZATION_SELECT_ROLE_IFRAME_TITLE" value1="${roleName}" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="ROLES_ORGANIZATION_SELECT_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="CPUsersandorganizationsUser#selectFrame" value1="relative=top" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="ROLES_ORGANIZATION_ROLES_TABLE_TITLE" value1="${roleName}" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="assignRegularRoleCP">
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
 
@@ -781,6 +806,34 @@
 		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 		<execute action="CPUsersandorganizationsUser#type" locator-key1="DETAILS_MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="editUserOrganizationCP">
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_USER_INFORMATION_ORGANIZATIONS" value1="Organizations" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="ORGANIZATIONS_SELECT_LINK" value1="Select" />
+		<execute action="CPUsersandorganizationsUser#selectFrame" locator-key1="ORGANIZATION_SELECT_IFRAME" />
+
+		<execute action="CPUsersandorganizationsUser#type" locator-key1="ORGANIZATION_SELECT_SEARCH_FIELD" value1="${orgName}" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="ORGANIZATION_SELECT_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="ORGANIZATION_SELECT_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="ORGANIZATION_SELECT_CHOOSE_BUTTON" value1="Choose" />
+
+		<execute action="CPUsersandorganizationsUser#selectFrame" value1="relative=top" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="ORGANIZATIONS_TABLE_NAME" value1="${orgName}" />
 		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>

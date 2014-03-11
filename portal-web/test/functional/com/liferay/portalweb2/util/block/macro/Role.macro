@@ -354,4 +354,22 @@
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_REMOVE" value1="Remove" />
 	</command>
+
+	<command name="viewPermissionPG">
+		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+		<if>
+			<equals arg1="${permissionFlagged}" arg2="true" />
+			<then>
+				<execute action="Permissions#assertChecked" locator-key1="${permissionDefinitionKey}" />
+			</then>
+			<elseif>
+				<equals arg1="${permissionFlagged}" arg2="false" />
+				<then>
+					<execute action="Permissions#assertNotChecked" locator-key1="${permissionDefinitionKey}" />
+				</then>
+			</elseif>
+		</if>
+	</command>
 </definition>

@@ -855,6 +855,18 @@
 		<execute action="PGMediagalleryFolder#assertElementPresent" locator-key1="ENTRY_TITLE" value1="${mgDocumentTitle}" />
 	</command>
 
+	<command name="viewPGViaSearch">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute macro="DMDocument#viewDocumentTitleCmdPG">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_THUMBNAIL" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_RATING" value1="Rating" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
+	</command>
+
 	<command name="viewPGviaStagingLocalLive">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 

@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS_BUTTON</td>
+	<td>//button[contains(.,'Add Category')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>POST_NEW_THREAD_BUTTON</td>
 	<td>//button[contains(.,'Post New Thread')]</td>
 	<td></td>

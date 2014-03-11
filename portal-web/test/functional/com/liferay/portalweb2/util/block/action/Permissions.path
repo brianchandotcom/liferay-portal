@@ -50,6 +50,11 @@
 </tr>
 <!--CONFIGURATION_PERMISSIONS-->
 <tr>
+	<td>CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME</td>
+	<td>//tr[contains(.,'${key_teamName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_DISPLAY_TEMPLATE_CHECKBOX</td>
 	<td>//input[contains(@id,'${key_roleName}') and contains (@id,'ADD_PORTLET_DISPLAY_TEMPLATE')]</td>
 	<td></td>
@@ -132,8 +137,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PERMISSIONS_ASSIGN_MEMBERS_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_ASSIGN_MEMBERS']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_ADD_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_ADD_PAGE_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_LAYOUT']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_CONFIGURE_APPLICATIONS_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_CONFIGURE_PORTLETS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_CUSTOMIZE_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_CUSTOMIZE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_DEFINE_PERMISSIONS_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_DEFINE_PERMISSIONS']</td>
 	<td></td>
 </tr>
 <tr>
@@ -144,6 +174,11 @@
 <tr>
 	<td>CONTENT_PERMISSIONS_DELETE_DISCUSSION_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_DELETE_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_MANAGE_ANNOUNCEMENTS_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_MANAGE_ANNOUNCEMENTS']</td>
 	<td></td>
 </tr>
 <tr>

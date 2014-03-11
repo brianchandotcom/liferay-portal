@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_BLOGS_ENTRY_BUTTON</td>
+	<td>//ul[@aria-label='Asset Publisher']/li/a[@title='Add Blogs Entry']/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>

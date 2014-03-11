@@ -576,10 +576,10 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		Assert.assertEquals(
 			ratingsEntries.size(), importedRatingsEntries.size());
 
-		Iterator<RatingsEntry> importedRatingsEntriesIterator =
-			importedRatingsEntries.iterator();
-
 		for (RatingsEntry ratingsEntry : ratingsEntries) {
+			Iterator<RatingsEntry> importedRatingsEntriesIterator =
+				importedRatingsEntries.iterator();
+
 			while (importedRatingsEntriesIterator.hasNext()) {
 				RatingsEntry importedRatingsEntry =
 					importedRatingsEntriesIterator.next();

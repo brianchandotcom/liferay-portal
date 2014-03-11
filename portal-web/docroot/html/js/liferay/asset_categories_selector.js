@@ -28,10 +28,10 @@ AUI.add(
 		var TPL_CHECKED = ' checked="checked" ';
 
 		var TPL_INPUT =
-			'<label title="{name}">' +
-				'<span class="lfr-categories-selector-category-name" title="{name}">' +
-					'<input data-categoryId="{categoryId}" data-vocabularyid="{vocabularyId}" name="{inputName}" type="{type}" value="{name}" {checked} />' +
-					'{name}' +
+			'<label title="{titleCurrentValue}">' +
+				'<span class="lfr-categories-selector-category-name" title="{titleCurrentValue}">' +
+					'<input data-categoryId="{categoryId}" data-vocabularyid="{vocabularyId}" name="{inputName}" type="{type}" value="{titleCurrentValue}" {checked} />' +
+					'{titleCurrentValue}' +
 				'</span>' +
 				'<span class="lfr-categories-selector-search-results-path" title="{path}">{path}</span>' +
 			'</label>';
@@ -43,8 +43,6 @@ AUI.add(
 		var TPL_RADIO_ID = ' id="{0}" ';
 
 		var TPL_RADIO_IMAGE = '<div class="lfr-categories-selector-radio-image category{0}"></div>';
-
-		var TPL_SEARCH_QUERY = '%{0}%';
 
 		var TPL_SEARCH_RESULTS = '<div class="lfr-categories-selector-search-results"></div>';
 
@@ -514,7 +512,9 @@ AUI.add(
 
 						buffer.length = 0;
 
-						if (results.length > 0) {
+						var categories = results.categories;
+
+						if (categories.length > 0) {
 							var inputType = 'checkbox';
 
 							if (instance.get('singleSelect')) {
@@ -524,7 +524,7 @@ AUI.add(
 							var inputName = A.guid();
 
 							A.each(
-								results,
+								categories,
 								function(item, index, collection) {
 									item.checked = instance.entries.findIndexBy('categoryId', item.categoryId) > -1 ? TPL_CHECKED : '';
 
@@ -582,13 +582,17 @@ AUI.add(
 							searchResults.addClass('loading-animation');
 
 							Liferay.Service(
-								'/assetcategory/search',
 								{
-									groupIds: vocabularyGroupIds,
-									name: Lang.sub(TPL_SEARCH_QUERY, [searchValue]),
-									vocabularyIds: vocabularyIds,
-									start: -1,
-									end: -1
+									'$display = /assetcategory/search-categories-display': {
+										groupIds: vocabularyGroupIds,
+										title: searchValue,
+										vocabularyIds: vocabularyIds,
+										start: -1,
+										end: -1,
+										'categories.$path = /assetcategory/get-category-path': {
+											'@categoryId': '$display.categories.categoryId'
+										}
+									}
 								},
 								callback
 							);

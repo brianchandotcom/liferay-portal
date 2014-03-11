@@ -189,6 +189,20 @@ public class AssetCategoryServiceSoap {
 		}
 	}
 
+	public static java.lang.String getCategoryPath(long categoryId)
+		throws RemoteException {
+		try {
+			java.lang.String returnValue = AssetCategoryServiceUtil.getCategoryPath(categoryId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.asset.model.AssetCategorySoap[] getChildCategories(
 		long parentCategoryId) throws RemoteException {
 		try {
@@ -523,6 +537,38 @@ public class AssetCategoryServiceSoap {
 					name, vocabularyIds, start, end);
 
 			return returnValue.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.asset.model.AssetCategoryDisplay searchCategoriesDisplay(
+		long groupId, java.lang.String title, long vocabularyId, int start,
+		int end) throws RemoteException {
+		try {
+			com.liferay.portlet.asset.model.AssetCategoryDisplay returnValue = AssetCategoryServiceUtil.searchCategoriesDisplay(groupId,
+					title, vocabularyId, start, end);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.asset.model.AssetCategoryDisplay searchCategoriesDisplay(
+		long[] groupIds, java.lang.String title, long[] vocabularyIds,
+		int start, int end) throws RemoteException {
+		try {
+			com.liferay.portlet.asset.model.AssetCategoryDisplay returnValue = AssetCategoryServiceUtil.searchCategoriesDisplay(groupIds,
+					title, vocabularyIds, start, end);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

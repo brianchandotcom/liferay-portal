@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.ratings.util;
 
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.ratings.model.RatingsEntry;
@@ -35,11 +34,9 @@ public class RatingsTestUtil {
 			String className, long classPK, double score)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
 		return RatingsEntryLocalServiceUtil.updateEntry(
 			TestPropsValues.getUserId(), className, classPK, score,
-			serviceContext);
+			ServiceTestUtil.getServiceContext());
 	}
 
 }

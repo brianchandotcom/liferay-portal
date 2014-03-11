@@ -79,7 +79,7 @@ public class BrowserCommands {
 
 			String[] commands = {
 				_BROWSER_COMMANDS_DIR_NAME + "set_browser_option.exe",
-					_OUTPUT_DIR_NAME
+				_OUTPUT_DIR_NAME
 			};
 
 			runtime.exec(commands);

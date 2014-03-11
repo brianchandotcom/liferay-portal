@@ -86,7 +86,7 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 		GetterUtil.getBoolean(
 			TestPropsUtil.get("test.assert.javascript.errors"));
 
-	public static final String TEST_BASEDIR_NAME = TestPropsUtil.get(
+	public static final String TEST_BASE_DIR_NAME = TestPropsUtil.get(
 		"test.basedir");
 
 	public static final boolean TEST_DATABASE_MINIMAL = GetterUtil.getBoolean(

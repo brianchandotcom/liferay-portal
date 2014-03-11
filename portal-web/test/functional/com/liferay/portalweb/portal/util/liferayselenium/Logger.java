@@ -381,7 +381,7 @@ public class Logger {
 			_liferaySelenium.getPrimaryTestSuiteName();
 
 		String htmlFileName =
-			_TEST_BASEDIR_NAME + "/test/functional-generated/" +
+			_TEST_BASE_DIR_NAME + "/test/functional-generated/" +
 				StringUtil.replace(primaryTestSuiteName, ".", "/") + ".html";
 
 		if (_loggerStarted) {
@@ -393,7 +393,7 @@ public class Logger {
 		}
 		else {
 			_webDriver.get(
-				"file:///" + _TEST_BASEDIR_NAME + "/test/functional/com/" +
+				"file:///" + _TEST_BASE_DIR_NAME + "/test/functional/com/" +
 					"liferay/portalweb/portal/util/liferayselenium/" +
 						"dependencies/Logger.html");
 		}
@@ -411,7 +411,7 @@ public class Logger {
 					"outerHTML;");
 
 			String fileName =
-				_TEST_BASEDIR_NAME + "/test-results/functional/report.html";
+				_TEST_BASE_DIR_NAME + "/test-results/functional/report.html";
 
 			File file = new File(fileName);
 
@@ -631,8 +631,8 @@ public class Logger {
 		_javascriptExecutor.executeScript(sb.toString());
 	}
 
-	private static final String _TEST_BASEDIR_NAME =
-		TestPropsValues.TEST_BASEDIR_NAME;
+	private static final String _TEST_BASE_DIR_NAME =
+		TestPropsValues.TEST_BASE_DIR_NAME;
 
 	private int _actionCount;
 	private int _actionStepCount = 1;

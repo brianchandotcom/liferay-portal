@@ -283,7 +283,14 @@ else {
 
 						<c:if test="<%= !group.isCompany() %>">
 							<aui:fieldset cssClass="options-group" label="pages">
-								<%@ include file="/html/portlet/layouts_admin/publish_layouts_select_pages.jspf" %>
+								<liferay-util:include page="/html/portlet/layouts_admin/export_configuration/select_pages.jsp">
+									<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
+									<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+									<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
+									<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+									<liferay-util:param name="treeId" value="<%= treeId %>" />
+									<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
+								</liferay-util:include>
 							</aui:fieldset>
 						</c:if>
 

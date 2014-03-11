@@ -1116,13 +1116,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public OpenSearch getOpenSearchInstance() {
-		if (Validator.isNull(getOpenSearchClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<OpenSearch> openSearchInstances =
+			portletBag.getOpenSearchInstances();
+
+		if (openSearchInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getOpenSearchInstance();
+		return openSearchInstances.get(0);
 	}
 
 	/**

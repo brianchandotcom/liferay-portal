@@ -129,7 +129,7 @@ public class PortletBagFactory {
 
 		List<Indexer> indexerInstances = newIndexers(portlet);
 
-		OpenSearch openSearchInstance = newOpenSearch(portlet);
+		List<OpenSearch> openSearchInstances = newOpenSearchs(portlet);
 
 		FriendlyURLMapper friendlyURLMapperInstance = newFriendlyURLMapper(
 			portlet);
@@ -319,7 +319,7 @@ public class PortletBagFactory {
 
 		PortletBag portletBag = new PortletBagImpl(
 			portlet.getPortletId(), _servletContext, portletInstance,
-			configurationActionInstances, indexerInstances, openSearchInstance,
+			configurationActionInstances, indexerInstances, openSearchInstances,
 			friendlyURLMapperInstance, urlEncoderInstance,
 			portletDataHandlerInstance, stagedModelDataHandlerInstances,
 			templateHandlerInstance, portletLayoutListenerInstance,
@@ -864,13 +864,18 @@ public class PortletBagFactory {
 		}
 	}
 
-	protected OpenSearch newOpenSearch(Portlet portlet) throws Exception {
-		if (Validator.isNull(portlet.getOpenSearchClass())) {
-			return null;
+	protected List<OpenSearch> newOpenSearchs(Portlet portlet) throws Exception {
+		ServiceTrackerList<OpenSearch> openSearchInstances =
+			getServiceTrackerList(OpenSearch.class, portlet);
+
+		if (Validator.isNotNull(portlet.getOpenSearchClass())) {
+			OpenSearch openSearch = (OpenSearch)newInstance(
+				OpenSearch.class, portlet.getOpenSearchClass());
+
+			openSearchInstances.add(openSearch);
 		}
 
-		return (OpenSearch)newInstance(
-			OpenSearch.class, portlet.getOpenSearchClass());
+		return openSearchInstances;
 	}
 
 	protected PermissionPropagator newPermissionPropagator(Portlet portlet)

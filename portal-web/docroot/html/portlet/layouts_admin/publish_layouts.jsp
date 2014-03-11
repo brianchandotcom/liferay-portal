@@ -288,8 +288,8 @@ else {
 									<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 									<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
 									<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-									<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
 									<liferay-util:param name="treeId" value="<%= treeId %>" />
+									<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
 								</liferay-util:include>
 							</aui:fieldset>
 						</c:if>

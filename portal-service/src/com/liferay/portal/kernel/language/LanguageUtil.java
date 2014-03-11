@@ -171,15 +171,12 @@ public class LanguageUtil {
 		return getLanguage().get(pageContext, key, defaultValue);
 	}
 
-	public static String get(
-		ResourceBundle resourceBundle, Locale locale, String key) {
-
+	public static String get(ResourceBundle resourceBundle, String key) {
 		return getLanguage().get(resourceBundle, key);
 	}
 
 	public static String get(
-		ResourceBundle resourceBundle, Locale locale, String key,
-		String defaultValue) {
+		ResourceBundle resourceBundle, String key, String defaultValue) {
 
 		return getLanguage().get(resourceBundle, key, defaultValue);
 	}

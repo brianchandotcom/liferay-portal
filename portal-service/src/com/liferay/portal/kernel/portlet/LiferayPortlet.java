@@ -363,7 +363,7 @@ public class LiferayPortlet extends GenericPortlet {
 		ResourceBundle resourceBundle = getResourceBundle(
 			themeDisplay.getLocale());
 
-		return LanguageUtil.get(resourceBundle, themeDisplay.getLocale(), key);
+		return LanguageUtil.get(resourceBundle, key);
 	}
 
 	protected String translate(

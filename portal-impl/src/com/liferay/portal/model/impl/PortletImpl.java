@@ -633,13 +633,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public ConfigurationAction getConfigurationActionInstance() {
-		if (Validator.isNull(getConfigurationActionClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<ConfigurationAction> configurationActionInstances =
+			portletBag.getConfigurationActionInstances();
+
+		if (configurationActionInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getConfigurationActionInstance();
+		return configurationActionInstances.get(0);
 	}
 
 	/**
@@ -2271,8 +2274,8 @@ public class PortletImpl extends PortletBaseImpl {
 			return false;
 		}
 
-		for (int i = 0; i < _rolesArray.length; i++) {
-			if (StringUtil.equalsIgnoreCase(_rolesArray[i], roleName)) {
+		for (String element : _rolesArray) {
+			if (StringUtil.equalsIgnoreCase(element, roleName)) {
 				return true;
 			}
 		}

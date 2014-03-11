@@ -58,7 +58,7 @@ public interface PortletBag extends Cloneable {
 
 	public List<AtomCollectionAdapter<?>> getAtomCollectionAdapterInstances();
 
-	public ConfigurationAction getConfigurationActionInstance();
+	public List<ConfigurationAction> getConfigurationActionInstances();
 
 	public ControlPanelEntry getControlPanelEntryInstance();
 

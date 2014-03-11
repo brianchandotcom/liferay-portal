@@ -30,6 +30,7 @@ import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.base.JournalArticleServiceBaseImpl;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
+import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import java.io.File;
 import java.io.Serializable;
@@ -1818,6 +1819,60 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			title, description, content, type, ddmStructureKeys,
 			ddmTemplateKeys, displayDateGT, displayDateLT, reviewDate,
 			andOperator, new QueryDefinition(status));
+	}
+
+	/**
+	 * Subscribe the user to changes in elements that belongs to specified
+	 * structure.
+	 *
+	 * @param  groupId the primary key of the folder's group
+	 * @param  userId the primary key of the user to be subscribed
+	 * @param ddmStructureId the primary key of the structure to subscribe to
+	 * @throws PortalException if the user, group os structure could not be
+	 * 		   found, or if subscribing was not permissible
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void subscribeStructure(
+			long groupId, long userId, long ddmStructureId)
+		throws PortalException, SystemException {
+
+		if (ddmStructureId == 0) {
+			ddmStructureId = groupId;
+		}
+
+		JournalPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
+
+		journalArticleLocalService.subscribeStructure(
+			groupId, userId, ddmStructureId);
+	}
+
+	/**
+	 * Unsubscribe the user from changes in elements that belongs to specified
+	 * structure.
+	 *
+	 * @param  groupId the primary key of the folder's group
+	 * @param  userId the primary key of the user to be subscribed
+	 * @param ddmStructureId the primary key of the structure to subscribe to
+	 * @throws PortalException if the user, group os structure could not be
+	 * 		   found, or if subscribing was not permissible
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void unsubscribeStructure(
+		long groupId, long userId, long ddmStructureId) throws PortalException,
+		SystemException {
+
+		if (ddmStructureId == 0) {
+			ddmStructureId = groupId;
+		}
+
+		JournalPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
+
+		journalArticleLocalService.unsubscribeStructure(
+			groupId, userId, ddmStructureId);
 	}
 
 	/**

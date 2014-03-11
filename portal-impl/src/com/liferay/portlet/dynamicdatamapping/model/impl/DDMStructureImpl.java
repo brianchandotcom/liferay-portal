@@ -649,19 +649,19 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		}
 
 		Map<String, Map<String, Map<String, String>>>
-				localizedPersistentFieldsMap = getLocalizedPersistentFieldsMap();
+			localizedPersistentFieldsMap = getLocalizedPersistentFieldsMap();
 
 		Map<String, Map<String, Map<String, String>>>
-				localizedTransientFieldsMap = getLocalizedTransientFieldsMap();
+			localizedTransientFieldsMap = getLocalizedTransientFieldsMap();
 
 		Map<String, Map<String, String>> fieldsMap =
-				new LinkedHashMap<String, Map<String, String>>();
+			new LinkedHashMap<String, Map<String, String>>();
 
 		Map<String, Map<String, String>> persistentFieldsMap =
-				new LinkedHashMap<String, Map<String, String>>();
+			new LinkedHashMap<String, Map<String, String>>();
 
 		Map<String, Map<String, String>> transientFieldsMap =
-				new LinkedHashMap<String, Map<String, String>>();
+			new LinkedHashMap<String, Map<String, String>>();
 
 		if (getParentStructureId() > 0) {
 			DDMStructure parentStructure =
@@ -671,7 +671,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			fieldsMap.putAll(parentStructure.getFieldsMap(locale, true));
 			persistentFieldsMap.putAll(
 				parentStructure.getPersistentFieldsMap(locale));
-			transientFieldsMap.putAll(parentStructure.getTransientFieldsMap(locale));
+			transientFieldsMap.putAll(
+				parentStructure.getTransientFieldsMap(locale));
 		}
 
 		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");

@@ -1837,10 +1837,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			long groupId, long userId, long ddmStructureId)
 		throws PortalException, SystemException {
 
-		if (ddmStructureId == 0) {
-			ddmStructureId = groupId;
-		}
-
 		JournalPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
 
@@ -1863,10 +1859,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public void unsubscribeStructure(
 		long groupId, long userId, long ddmStructureId) throws PortalException,
 		SystemException {
-
-		if (ddmStructureId == 0) {
-			ddmStructureId = groupId;
-		}
 
 		JournalPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);

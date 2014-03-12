@@ -153,6 +153,7 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>0</render-weight>
+		<header-portlet-css>/html/portlet/currency_converter/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-currency-converter</css-class-wrapper>
 	</portlet>
 	<portlet>

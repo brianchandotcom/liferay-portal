@@ -16,7 +16,6 @@ package com.liferay.portlet;
 
 import com.liferay.portal.dao.shard.ShardPollerProcessorWrapper;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
-import com.liferay.portal.kernel.atom.AtomCollectionAdapterRegistryUtil;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
@@ -637,12 +636,16 @@ public class PortletBagFactory {
 		return assetRendererFactoryInstances;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected List<AtomCollectionAdapter<?>> newAtomCollectionAdapterInstances(
 			Portlet portlet)
 		throws Exception {
 
-		List<AtomCollectionAdapter<?>> atomCollectionAdapterInstances =
-			new ArrayList<AtomCollectionAdapter<?>>();
+		ServiceTrackerList<AtomCollectionAdapter<?>>
+			atomCollectionAdapterInstances =
+				getServiceTrackerList(
+					(Class<AtomCollectionAdapter<?>>)(Class<?>)
+						AtomCollectionAdapter.class, portlet);
 
 		for (String atomCollectionAdapterClass :
 				portlet.getAtomCollectionAdapterClasses()) {
@@ -650,9 +653,6 @@ public class PortletBagFactory {
 			AtomCollectionAdapter<?> atomCollectionAdapterInstance =
 				(AtomCollectionAdapter<?>)newInstance(
 					AtomCollectionAdapter.class, atomCollectionAdapterClass);
-
-			AtomCollectionAdapterRegistryUtil.register(
-				atomCollectionAdapterInstance);
 
 			atomCollectionAdapterInstances.add(atomCollectionAdapterInstance);
 		}

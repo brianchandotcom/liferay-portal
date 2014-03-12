@@ -142,6 +142,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public void destroy() {
 		close(_assetRendererFactoryInstances);
+		close(_atomCollectionAdapterInstances);
 		close(_configurationActionInstances);
 		close(_controlPanelEntryInstances);
 		close(_friendlyURLMapperInstances);

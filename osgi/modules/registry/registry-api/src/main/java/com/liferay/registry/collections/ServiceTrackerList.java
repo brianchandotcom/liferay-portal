@@ -14,16 +14,19 @@
 
 package com.liferay.registry.collections;
 
+import java.io.Closeable;
+
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author Raymond Augé
  */
-public interface ServiceTrackerList<S> extends List<S> {
+public interface ServiceTrackerList<S> extends Closeable, List<S> {
 
 	public boolean add(S service, Map<String, Object> properties);
 
+	@Override
 	public void close();
 
 }

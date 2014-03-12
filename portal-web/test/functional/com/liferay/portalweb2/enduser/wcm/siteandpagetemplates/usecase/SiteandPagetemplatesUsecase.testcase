@@ -460,7 +460,7 @@
 			<var name="portletName" value="Site Templates" />
 		</execute>
 
-		<execute macro="SiteTemplates#editCP">
+		<execute macro="SiteTemplates#editAllowSiteAdminToModifyPageCP">
 			<var name="allowSiteAdminsToModifyPages" value="false" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
@@ -514,7 +514,7 @@
 			<var name="portletName" value="Site Templates" />
 		</execute>
 
-		<execute macro="SiteTemplates#editCP">
+		<execute macro="SiteTemplates#editAllowSiteAdminToModifyPageCP">
 			<var name="allowSiteAdminsToModifyPages" value="true" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>

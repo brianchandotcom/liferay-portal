@@ -116,7 +116,7 @@ public interface PortletBag extends Cloneable {
 
 	public List<WorkflowHandler> getWorkflowHandlerInstances();
 
-	public Method getXmlRpcMethodInstance();
+	public List<Method> getXmlRpcMethodInstances();
 
 	public void setPortletInstance(Portlet portletInstance);
 

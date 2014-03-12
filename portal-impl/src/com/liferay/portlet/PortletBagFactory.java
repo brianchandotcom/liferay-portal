@@ -76,7 +76,6 @@ import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.JavaFieldsParser;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.xmlrpc.XmlRpcServlet;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
@@ -161,14 +160,7 @@ public class PortletBagFactory {
 		List<WebDAVStorage> webDAVStorageInstances = newWebDAVStorageInstances(
 			portlet);
 
-		Method xmlRpcMethodInstance = null;
-
-		if (Validator.isNotNull(portlet.getXmlRpcMethodClass())) {
-			xmlRpcMethodInstance = (Method)newInstance(
-				Method.class, portlet.getXmlRpcMethodClass());
-
-			XmlRpcServlet.registerMethod(xmlRpcMethodInstance);
-		}
+		List<Method> xmlRpcMethodInstances = newXmlRpcMethodInstances(portlet);
 
 		ControlPanelEntry controlPanelEntryInstance = null;
 
@@ -297,7 +289,7 @@ public class PortletBagFactory {
 			pollerProcessorInstances, popMessageListenerInstances,
 			socialActivityInterpreterInstances,
 			socialRequestInterpreterInstances, userNotificationHandlerInstances,
-			webDAVStorageInstances, xmlRpcMethodInstance,
+			webDAVStorageInstances, xmlRpcMethodInstances,
 			controlPanelEntryInstance, assetRendererFactoryInstances,
 			atomCollectionAdapterInstances, customAttributesDisplayInstances,
 			permissionPropagatorInstance, trashHandlerInstances,
@@ -1099,6 +1091,22 @@ public class PortletBagFactory {
 		}
 
 		return webDAVStorageInstances;
+	}
+
+	protected List<Method> newXmlRpcMethodInstances(Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<Method> xmlRpcMethodInstances =
+			getServiceTrackerList(Method.class, portlet);
+
+		if (Validator.isNotNull(portlet.getXmlRpcMethodClass())) {
+			Method xmlRpcMethodInstance = (Method)newInstance(
+				Method.class, portlet.getXmlRpcMethodClass());
+
+			xmlRpcMethodInstances.add(xmlRpcMethodInstance);
+		}
+
+		return xmlRpcMethodInstances;
 	}
 
 	protected void validate() {

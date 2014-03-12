@@ -2160,13 +2160,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public Method getXmlRpcMethodInstance() {
-		if (Validator.isNull(getXmlRpcMethodClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<Method> xmlRpcMethodInstances =
+			portletBag.getXmlRpcMethodInstances();
+
+		if (xmlRpcMethodInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getXmlRpcMethodInstance();
+		return xmlRpcMethodInstances.get(0);
 	}
 
 	/**

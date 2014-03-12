@@ -74,7 +74,8 @@ public class PortletBagImpl implements PortletBag {
 		List<SocialActivityInterpreter> socialActivityInterpreterInstances,
 		List<SocialRequestInterpreter> socialRequestInterpreterInstances,
 		List<UserNotificationHandler> userNotificationHandlerInstances,
-		List<WebDAVStorage> webDAVStorageInstances, Method xmlRpcMethodInstance,
+		List<WebDAVStorage> webDAVStorageInstances,
+		List<Method> xmlRpcMethodInstances,
 		ControlPanelEntry controlPanelEntryInstance,
 		List<AssetRendererFactory> assetRendererFactoryInstances,
 		List<AtomCollectionAdapter<?>> atomCollectionAdapters,
@@ -104,7 +105,7 @@ public class PortletBagImpl implements PortletBag {
 		_socialRequestInterpreterInstances = socialRequestInterpreterInstances;
 		_userNotificationHandlerInstances = userNotificationHandlerInstances;
 		_webDAVStorageInstances = webDAVStorageInstances;
-		_xmlRpcMethodInstance = xmlRpcMethodInstance;
+		_xmlRpcMethodInstances = xmlRpcMethodInstances;
 		_controlPanelEntryInstance = controlPanelEntryInstance;
 		_assetRendererFactoryInstances = assetRendererFactoryInstances;
 		_atomCollectionAdapterInstances = atomCollectionAdapters;
@@ -129,7 +130,7 @@ public class PortletBagImpl implements PortletBag {
 			getSocialActivityInterpreterInstances(),
 			getSocialRequestInterpreterInstances(),
 			getUserNotificationHandlerInstances(), getWebDAVStorageInstances(),
-			getXmlRpcMethodInstance(), getControlPanelEntryInstance(),
+			getXmlRpcMethodInstances(), getControlPanelEntryInstance(),
 			getAssetRendererFactoryInstances(),
 			getAtomCollectionAdapterInstances(),
 			getCustomAttributesDisplayInstances(),
@@ -154,6 +155,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_urlEncoderInstances);
 		close(_userNotificationHandlerInstances);
 		close(_webDAVStorageInstances);
+		close(_xmlRpcMethodInstances);
 	}
 
 	@Override
@@ -317,8 +319,8 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public Method getXmlRpcMethodInstance() {
-		return _xmlRpcMethodInstance;
+	public List<Method> getXmlRpcMethodInstances() {
+		return _xmlRpcMethodInstances;
 	}
 
 	@Override
@@ -371,6 +373,6 @@ public class PortletBagImpl implements PortletBag {
 		_userNotificationHandlerInstances;
 	private List<WebDAVStorage> _webDAVStorageInstances;
 	private List<WorkflowHandler> _workflowHandlerInstances;
-	private Method _xmlRpcMethodInstance;
+	private List<Method> _xmlRpcMethodInstances;
 
 }

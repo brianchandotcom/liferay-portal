@@ -70,7 +70,7 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portal.xmlrpc.XmlRpcServlet;
+import com.liferay.portal.xmlrpc.XmlRpcMethodUtil;
 import com.liferay.portlet.CustomUserAttributes;
 import com.liferay.portlet.InvokerPortlet;
 import com.liferay.portlet.PortletBagFactory;
@@ -278,7 +278,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		WebDAVUtil.deleteStorage(portlet.getWebDAVStorageInstance());
 
-		XmlRpcServlet.unregisterMethod(portlet.getXmlRpcMethodInstance());
+		XmlRpcMethodUtil.unregisterMethod(portlet.getXmlRpcMethodInstance());
 
 		List<AssetRendererFactory> assetRendererFactories =
 			portlet.getAssetRendererFactoryInstances();

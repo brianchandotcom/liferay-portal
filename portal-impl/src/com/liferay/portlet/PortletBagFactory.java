@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.atom.AtomCollectionAdapterRegistryUtil;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
@@ -136,8 +135,8 @@ public class PortletBagFactory {
 
 		List<URLEncoder> urlEncoderInstances = newURLEncoders(portlet);
 
-		PortletDataHandler portletDataHandlerInstance = newPortletDataHandler(
-			portlet);
+		List<PortletDataHandler> portletDataHandlerInstances =
+			newPortletDataHandlers(portlet);
 
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances =
 			newStagedModelDataHandler(portlet);
@@ -321,7 +320,7 @@ public class PortletBagFactory {
 			portlet.getPortletId(), _servletContext, portletInstance,
 			configurationActionInstances, indexerInstances, openSearchInstances,
 			friendlyURLMapperInstances, urlEncoderInstances,
-			portletDataHandlerInstance, stagedModelDataHandlerInstances,
+			portletDataHandlerInstances, stagedModelDataHandlerInstances,
 			templateHandlerInstance, portletLayoutListenerInstance,
 			pollerProcessorInstance, popMessageListenerInstance,
 			socialActivityInterpreterInstances,
@@ -933,20 +932,24 @@ public class PortletBagFactory {
 		return popMessageListenerInstance;
 	}
 
-	protected PortletDataHandler newPortletDataHandler(Portlet portlet)
+	protected List<PortletDataHandler> newPortletDataHandlers(Portlet portlet)
 		throws Exception {
 
-		if (Validator.isNull(portlet.getPortletDataHandlerClass())) {
-			return null;
+		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
+			getServiceTrackerList(PortletDataHandler.class, portlet);
+
+		if (Validator.isNotNull(portlet.getPortletDataHandlerClass())) {
+			PortletDataHandler portletDataHandlerInstance =
+				(PortletDataHandler)newInstance(
+					PortletDataHandler.class,
+					portlet.getPortletDataHandlerClass());
+
+			portletDataHandlerInstance.setPortletId(portlet.getPortletId());
+
+			portletDataHandlerInstances.add(portletDataHandlerInstance);
 		}
 
-		PortletDataHandler portletDataHandlerInstance =
-			(PortletDataHandler)newInstance(
-				PortletDataHandler.class, portlet.getPortletDataHandlerClass());
-
-		portletDataHandlerInstance.setPortletId(portlet.getPortletId());
-
-		return portletDataHandlerInstance;
+		return portletDataHandlerInstances;
 	}
 
 	protected PortletLayoutListener newPortletLayoutListener(Portlet portlet)
@@ -1004,8 +1007,11 @@ public class PortletBagFactory {
 			Portlet portlet)
 		throws Exception {
 
-		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances =
-			new ArrayList<StagedModelDataHandler<?>>();
+		ServiceTrackerList<StagedModelDataHandler<?>>
+			stagedModelDataHandlerInstances =
+				getServiceTrackerList(
+					(Class<StagedModelDataHandler<?>>)(Class<?>)
+						StagedModelDataHandler.class, portlet);
 
 		List<String> stagedModelDataHandlerClasses =
 			portlet.getStagedModelDataHandlerClasses();
@@ -1018,8 +1024,6 @@ public class PortletBagFactory {
 					StagedModelDataHandler.class, stagedModelDataHandlerClass);
 
 			stagedModelDataHandlerInstances.add(stagedModelDataHandler);
-
-			StagedModelDataHandlerRegistryUtil.register(stagedModelDataHandler);
 		}
 
 		return stagedModelDataHandlerInstances;

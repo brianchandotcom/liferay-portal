@@ -79,7 +79,7 @@ public interface PortletBag extends Cloneable {
 
 	public MessageListener getPopMessageListenerInstance();
 
-	public PortletDataHandler getPortletDataHandlerInstance();
+	public List<PortletDataHandler> getPortletDataHandlerInstances();
 
 	public Portlet getPortletInstance();
 

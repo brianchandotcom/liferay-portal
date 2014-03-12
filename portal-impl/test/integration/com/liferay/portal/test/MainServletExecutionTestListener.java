@@ -36,6 +36,10 @@ public class MainServletExecutionTestListener
 	public void runBeforeClass(TestContext testContext) {
 		super.runBeforeClass(testContext);
 
+		if (mainServlet != null) {
+			return;
+		}
+
 		MockServletContext mockServletContext =
 			new AutoDeployMockServletContext(
 				getResourceBasePath(), new FileSystemResourceLoader());
@@ -60,7 +64,7 @@ public class MainServletExecutionTestListener
 		return "file:" + file.getAbsolutePath();
 	}
 
-	protected MainServlet mainServlet;
+	protected static MainServlet mainServlet;
 
 	protected class AutoDeployMockServletContext extends MockServletContext {
 

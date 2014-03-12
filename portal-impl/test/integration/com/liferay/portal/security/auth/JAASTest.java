@@ -329,27 +329,31 @@ public class JAASTest extends MainServletExecutionTestListener {
 			}
 		);
 
-		_mockServletContext = new AutoDeployMockServletContext(
-			getResourceBasePath(), new FileSystemResourceLoader());
+		if (mainServlet == null) {
+			MockServletContext mockServletContext =
+				new AutoDeployMockServletContext(
+					getResourceBasePath(), new FileSystemResourceLoader());
 
-		MockServletConfig mockServletConfig = new MockServletConfig(
-			_mockServletContext);
+			MockServletConfig mockServletConfig = new MockServletConfig(
+				mockServletContext);
 
-		mainServlet = new MainServlet();
+			MainServlet mainServlet = new MainServlet();
 
-		try {
-			mainServlet.init(mockServletConfig);
-		}
-		catch (ServletException se) {
-			throw new RuntimeException(
-				"The main servlet could not be initialized");
+			try {
+				mainServlet.init(mockServletConfig);
+			}
+			catch (ServletException se) {
+				throw new RuntimeException(
+					"The main servlet could not be initialized");
+			}
 		}
 
 		Date lastLoginDate = _user.getLastLoginDate();
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(
-				_mockServletContext, HttpMethods.GET, StringPool.SLASH);
+				mainServlet.getServletContext(), HttpMethods.GET,
+				StringPool.SLASH);
 
 		mockHttpServletRequest.setRemoteUser(String.valueOf(_user.getUserId()));
 
@@ -421,7 +425,6 @@ public class JAASTest extends MainServletExecutionTestListener {
 	private Field _jaasAuthTypeField;
 	private Boolean _jaasEnabled;
 	private Field _jaasEnabledField;
-	private MockServletContext _mockServletContext;
 	private User _user;
 
 	private class JAASAction extends Action {

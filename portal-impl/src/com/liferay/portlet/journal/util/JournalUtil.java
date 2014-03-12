@@ -959,7 +959,7 @@ public class JournalUtil {
 		return portletURL.toString();
 	}
 
-	public static Object[] getJournalVersionsInfo(
+	public static Object[] getJournalArticleVersionsInfo(
 			long groupId, String articleId, double sourceVersion,
 			double targetVersion)
 		throws SystemException {

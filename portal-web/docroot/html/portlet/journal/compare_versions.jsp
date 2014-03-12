@@ -24,7 +24,7 @@ String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS)
 double sourceVersion = (Double)request.getAttribute(WebKeys.SOURCE_VERSION);
 double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 
-Object[] returnValue = JournalUtil.getJournalVersionsInfo(groupId, articleId, sourceVersion, targetVersion);
+Object[] returnValue = JournalUtil.getJournalArticleVersionsInfo(groupId, articleId, sourceVersion, targetVersion);
 %>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">

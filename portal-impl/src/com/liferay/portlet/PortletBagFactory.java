@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
-import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -141,11 +140,8 @@ public class PortletBagFactory {
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances =
 			newStagedModelDataHandler(portlet);
 
-		TemplateHandler templateHandlerInstance = newTemplateHandler(portlet);
-
-		if (templateHandlerInstance != null) {
-			TemplateHandlerRegistryUtil.register(templateHandlerInstance);
-		}
+		List<TemplateHandler> templateHandlerInstances = newTemplateHandlers(
+			portlet);
 
 		PortletLayoutListener portletLayoutListenerInstance =
 			newPortletLayoutListener(portlet);
@@ -321,7 +317,7 @@ public class PortletBagFactory {
 			configurationActionInstances, indexerInstances, openSearchInstances,
 			friendlyURLMapperInstances, urlEncoderInstances,
 			portletDataHandlerInstances, stagedModelDataHandlerInstances,
-			templateHandlerInstance, portletLayoutListenerInstance,
+			templateHandlerInstances, portletLayoutListenerInstance,
 			pollerProcessorInstance, popMessageListenerInstance,
 			socialActivityInterpreterInstances,
 			socialRequestInterpreterInstance, userNotificationHandlerInstances,
@@ -1029,15 +1025,20 @@ public class PortletBagFactory {
 		return stagedModelDataHandlerInstances;
 	}
 
-	protected TemplateHandler newTemplateHandler(Portlet portlet)
+	protected List<TemplateHandler> newTemplateHandlers(Portlet portlet)
 		throws Exception {
 
-		if (Validator.isNull(portlet.getTemplateHandlerClass())) {
-			return null;
+		ServiceTrackerList<TemplateHandler> templateHandlerInstances =
+			getServiceTrackerList(TemplateHandler.class, portlet);
+
+		if (Validator.isNotNull(portlet.getTemplateHandlerClass())) {
+			TemplateHandler templateHandler = (TemplateHandler)newInstance(
+				TemplateHandler.class, portlet.getTemplateHandlerClass());
+
+			templateHandlerInstances.add(templateHandler);
 		}
 
-		return (TemplateHandler)newInstance(
-			TemplateHandler.class, portlet.getTemplateHandlerClass());
+		return templateHandlerInstances;
 	}
 
 	protected List<URLEncoder> newURLEncoders(Portlet portlet)

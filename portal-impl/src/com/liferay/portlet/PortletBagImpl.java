@@ -145,6 +145,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_atomCollectionAdapterInstances);
 		close(_configurationActionInstances);
 		close(_controlPanelEntryInstances);
+		close(_customAttributesDisplayInstances);
 		close(_friendlyURLMapperInstances);
 		close(_indexerInstances);
 		close(_openSearchInstances);

@@ -170,25 +170,7 @@ public class PortletBagFactory {
 			newAtomCollectionAdapterInstances(portlet);
 
 		List<CustomAttributesDisplay> customAttributesDisplayInstances =
-			new ArrayList<CustomAttributesDisplay>();
-
-		for (String customAttributesDisplayClass :
-				portlet.getCustomAttributesDisplayClasses()) {
-
-			CustomAttributesDisplay customAttributesDisplayInstance =
-				(CustomAttributesDisplay)newInstance(
-					CustomAttributesDisplay.class,
-					customAttributesDisplayClass);
-
-			customAttributesDisplayInstance.setClassNameId(
-				PortalUtil.getClassNameId(
-					customAttributesDisplayInstance.getClassName()));
-			customAttributesDisplayInstance.setPortletId(
-				portlet.getPortletId());
-
-			customAttributesDisplayInstances.add(
-				customAttributesDisplayInstance);
-		}
+			newCustomAttributesDisplayInstances(portlet);
 
 		DDMDisplay ddmDisplayInstance = newDDMDisplay(portlet);
 
@@ -695,6 +677,35 @@ public class PortletBagFactory {
 		}
 
 		return controlPanelEntryInstances;
+	}
+
+	protected List<CustomAttributesDisplay> newCustomAttributesDisplayInstances(
+			Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<CustomAttributesDisplay>
+			customAttributesDisplayInstances =
+				getServiceTrackerList(CustomAttributesDisplay.class, portlet);
+
+		for (String customAttributesDisplayClass :
+				portlet.getCustomAttributesDisplayClasses()) {
+
+			CustomAttributesDisplay customAttributesDisplayInstance =
+				(CustomAttributesDisplay)newInstance(
+					CustomAttributesDisplay.class,
+					customAttributesDisplayClass);
+
+			customAttributesDisplayInstance.setClassNameId(
+				PortalUtil.getClassNameId(
+					customAttributesDisplayInstance.getClassName()));
+			customAttributesDisplayInstance.setPortletId(
+				portlet.getPortletId());
+
+			customAttributesDisplayInstances.add(
+				customAttributesDisplayInstance);
+		}
+
+		return customAttributesDisplayInstances;
 	}
 
 	protected DDMDisplay newDDMDisplay(Portlet portlet) throws Exception {

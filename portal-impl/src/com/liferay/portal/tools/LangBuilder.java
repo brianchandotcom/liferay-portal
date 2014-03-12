@@ -447,7 +447,9 @@ public class LangBuilder {
 		if (value.contains(" this ")) {
 			if (value.contains(".") || value.contains("?") ||
 				value.contains(":") ||
-				key.equals("the-url-of-the-page-comparing-this-page-content-with-the-previous-version")) {
+				key.equals("the-url-of-the-page-comparing-this-page-content-with-the-previous-version") ||
+				key.equals("allow-site-administrators-to-modify-pages-associated-with-this-site-template") ||
+				key.equals("allow-site-administrators-to-modify-this-page-for-their-site")) {
 			}
 			else {
 				value = StringUtil.replace(value, " this ", " This ");

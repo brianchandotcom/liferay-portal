@@ -83,7 +83,7 @@ public interface PortletBag extends Cloneable {
 
 	public Portlet getPortletInstance();
 
-	public PortletLayoutListener getPortletLayoutListenerInstance();
+	public List<PortletLayoutListener> getPortletLayoutListenerInstances();
 
 	public String getPortletName();
 

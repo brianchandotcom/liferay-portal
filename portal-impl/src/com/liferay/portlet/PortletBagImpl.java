@@ -66,7 +66,7 @@ public class PortletBagImpl implements PortletBag {
 		List<PortletDataHandler> portletDataHandlerInstances,
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances,
 		List<TemplateHandler> templateHandlerInstances,
-		PortletLayoutListener portletLayoutListenerInstance,
+		List<PortletLayoutListener> portletLayoutListenerInstances,
 		PollerProcessor pollerProcessorInstance,
 		MessageListener popMessageListenerInstance,
 		List<SocialActivityInterpreter> socialActivityInterpreterInstances,
@@ -94,7 +94,7 @@ public class PortletBagImpl implements PortletBag {
 		_portletDataHandlerInstances = portletDataHandlerInstances;
 		_stagedModelDataHandlerInstances = stagedModelDataHandlerInstances;
 		_templateHandlerInstances = templateHandlerInstances;
-		_portletLayoutListenerInstance = portletLayoutListenerInstance;
+		_portletLayoutListenerInstances = portletLayoutListenerInstances;
 		_pollerProcessorInstance = pollerProcessorInstance;
 		_popMessageListenerInstance = popMessageListenerInstance;
 		_socialActivityInterpreterInstances =
@@ -122,7 +122,7 @@ public class PortletBagImpl implements PortletBag {
 			getOpenSearchInstances(), getFriendlyURLMapperInstances(),
 			getURLEncoderInstances(), getPortletDataHandlerInstances(),
 			getStagedModelDataHandlerInstances(), getTemplateHandlerInstances(),
-			getPortletLayoutListenerInstance(), getPollerProcessorInstance(),
+			getPortletLayoutListenerInstances(), getPollerProcessorInstance(),
 			getPopMessageListenerInstance(),
 			getSocialActivityInterpreterInstances(),
 			getSocialRequestInterpreterInstance(),
@@ -168,6 +168,13 @@ public class PortletBagImpl implements PortletBag {
 					_portletDataHandlerInstances;
 
 		portletDataHandlerInstancesServiceTrackerList.close();
+
+		ServiceTrackerList<PortletLayoutListener>
+			portletLayoutListenerInstancesServiceTrackerList =
+				(ServiceTrackerList<PortletLayoutListener>)
+					_portletLayoutListenerInstances;
+
+		portletLayoutListenerInstancesServiceTrackerList.close();
 
 		ServiceTrackerList<TemplateHandler>
 			templateHandlerInstancesServiceTrackerList =
@@ -247,8 +254,8 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public PortletLayoutListener getPortletLayoutListenerInstance() {
-		return _portletLayoutListenerInstance;
+	public List<PortletLayoutListener> getPortletLayoutListenerInstances() {
+		return _portletLayoutListenerInstances;
 	}
 
 	@Override
@@ -367,7 +374,7 @@ public class PortletBagImpl implements PortletBag {
 	private MessageListener _popMessageListenerInstance;
 	private List<PortletDataHandler> _portletDataHandlerInstances;
 	private Portlet _portletInstance;
-	private PortletLayoutListener _portletLayoutListenerInstance;
+	private List<PortletLayoutListener> _portletLayoutListenerInstances;
 	private String _portletName;
 	private PreferencesValidator _preferencesValidatorInstance;
 	private Map<String, ResourceBundle> _resourceBundles;

@@ -1347,13 +1347,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public PortletLayoutListener getPortletLayoutListenerInstance() {
-		if (Validator.isNull(getPortletLayoutListenerClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<PortletLayoutListener> portletLayoutListenerInstances =
+			portletBag.getPortletLayoutListenerInstances();
+
+		if (portletLayoutListenerInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getPortletLayoutListenerInstance();
+		return portletLayoutListenerInstances.get(0);
 	}
 
 	/**

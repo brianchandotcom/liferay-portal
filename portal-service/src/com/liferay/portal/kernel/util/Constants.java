@@ -93,6 +93,10 @@ public interface Constants {
 
 	public static final String PUBLISH = "publish";
 
+	public static final String PUBLISH_TO_LIVE = "publish_to_live";
+
+	public static final String PUBLISH_TO_REMOTE = "publish_to_remote";
+
 	public static final String READ = "read";
 
 	public static final String REDO = "redo";

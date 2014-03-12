@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -81,6 +80,7 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -563,7 +563,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		events.addAll(getRepeatingEvents(groupId, cal, types));
 
-		events = new UnmodifiableList<CalEvent>(events);
+		events = Collections.unmodifiableList(events);
 
 		eventsPool.put(key, events);
 
@@ -648,7 +648,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				events = calEventPersistence.findByG_R(groupId, true);
 			}
 
-			events = new UnmodifiableList<CalEvent>(events);
+			events = Collections.unmodifiableList(events);
 
 			eventsPool.put(key, events);
 		}
@@ -697,7 +697,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				}
 			}
 
-			events = new UnmodifiableList<CalEvent>(repeatingEvents);
+			events = Collections.unmodifiableList(repeatingEvents);
 		}
 
 		return events;

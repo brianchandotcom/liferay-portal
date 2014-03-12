@@ -287,7 +287,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<${entity.name}>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
@@ -1612,7 +1612,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 						Collections.sort(list);
 
-						list = new UnmodifiableList<${entity.name}>(list);
+						list = Collections.unmodifiableList(list);
 					}
 					else {
 						list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);

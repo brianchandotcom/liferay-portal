@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Company;
@@ -927,7 +926,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<Company>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<Company>)QueryUtil.list(q, getDialect(),
@@ -1856,7 +1855,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<Company>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<Company>)QueryUtil.list(q, getDialect(),

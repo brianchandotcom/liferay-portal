@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -518,7 +517,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<Counter>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<Counter>)QueryUtil.list(q, getDialect(),

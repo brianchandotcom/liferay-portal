@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -1404,7 +1403,7 @@ public class JournalUtil {
 			structures.add(structure);
 		}
 
-		return new UnmodifiableList<JournalStructure>(structures);
+		return Collections.unmodifiableList(structures);
 	}
 
 	public static List<JournalTemplate> toJournalTemplates(
@@ -1418,7 +1417,7 @@ public class JournalUtil {
 			templates.add(template);
 		}
 
-		return new UnmodifiableList<JournalTemplate>(templates);
+		return Collections.unmodifiableList(templates);
 	}
 
 	public static String transform(

@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerType;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.pop.messaging.POPNotificationsMessageListener;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -123,7 +123,7 @@ public class POPServerUtil {
 			_log.debug("Listeners size " + _listeners.size());
 		}
 
-		return new UnmodifiableList<MessageListener>(_listeners);
+		return Collections.unmodifiableList(_listeners);
 	}
 
 	private void _start() {

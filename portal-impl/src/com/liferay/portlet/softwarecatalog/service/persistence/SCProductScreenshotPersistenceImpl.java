@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -232,7 +231,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<SCProductScreenshot>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<SCProductScreenshot>)QueryUtil.list(q,
@@ -1892,7 +1891,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<SCProductScreenshot>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<SCProductScreenshot>)QueryUtil.list(q,

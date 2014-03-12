@@ -22,13 +22,13 @@ import com.liferay.portal.kernel.dao.orm.ScrollableResults;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 
 import java.io.Serializable;
 
 import java.sql.Timestamp;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -113,7 +113,7 @@ public class QueryImpl implements Query {
 			List<?> list = _query.list();
 
 			if (unmodifiable) {
-				list = new UnmodifiableList<Object>(list);
+				list = Collections.unmodifiableList(list);
 			}
 			else if (copy) {
 				list = ListUtil.copy(list);

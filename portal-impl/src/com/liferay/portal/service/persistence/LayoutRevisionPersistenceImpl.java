@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.MVCCModel;
@@ -232,7 +231,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<LayoutRevision>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<LayoutRevision>)QueryUtil.list(q,
@@ -729,7 +728,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<LayoutRevision>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<LayoutRevision>)QueryUtil.list(q,
@@ -1234,7 +1233,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<LayoutRevision>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<LayoutRevision>)QueryUtil.list(q,
@@ -1767,7 +1766,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<LayoutRevision>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<LayoutRevision>)QueryUtil.list(q,
@@ -2298,7 +2297,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<LayoutRevision>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<LayoutRevision>)QueryUtil.list(q,
@@ -2823,7 +2822,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<LayoutRevision>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<LayoutRevision>)QueryUtil.list(q,
@@ -3331,7 +3330,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<LayoutRevision>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<LayoutRevision>)QueryUtil.list(q,
@@ -3875,7 +3874,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<LayoutRevision>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<LayoutRevision>)QueryUtil.list(q,
@@ -4453,7 +4452,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<LayoutRevision>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<LayoutRevision>)QueryUtil.list(q,
@@ -5301,7 +5300,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<LayoutRevision>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<LayoutRevision>)QueryUtil.list(q,
@@ -6440,7 +6439,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<LayoutRevision>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<LayoutRevision>)QueryUtil.list(q,

@@ -206,13 +206,6 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 				permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(DLFileEntry.class.getName())) {
-			DLFileVersion fileVersion =
-				DLFileVersionLocalServiceUtil.fetchDLFileVersion(classPK);
-
-			if (fileVersion != null) {
-				classPK = fileVersion.getFileEntryId();
-			}
-
 			return DLFileEntryPermission.contains(
 				permissionChecker, classPK, actionId);
 		}

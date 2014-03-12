@@ -136,8 +136,8 @@ public class PortletBagFactory {
 
 		List<URLEncoder> urlEncoderInstances = newURLEncoders(portlet);
 
-		PortletDataHandler portletDataHandlerInstance = newPortletDataHandler(
-			portlet);
+		List<PortletDataHandler> portletDataHandlerInstances =
+			newPortletDataHandlers(portlet);
 
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances =
 			newStagedModelDataHandler(portlet);
@@ -321,7 +321,7 @@ public class PortletBagFactory {
 			portlet.getPortletId(), _servletContext, portletInstance,
 			configurationActionInstances, indexerInstances, openSearchInstances,
 			friendlyURLMapperInstances, urlEncoderInstances,
-			portletDataHandlerInstance, stagedModelDataHandlerInstances,
+			portletDataHandlerInstances, stagedModelDataHandlerInstances,
 			templateHandlerInstance, portletLayoutListenerInstance,
 			pollerProcessorInstance, popMessageListenerInstance,
 			socialActivityInterpreterInstances,
@@ -933,20 +933,24 @@ public class PortletBagFactory {
 		return popMessageListenerInstance;
 	}
 
-	protected PortletDataHandler newPortletDataHandler(Portlet portlet)
+	protected List<PortletDataHandler> newPortletDataHandlers(Portlet portlet)
 		throws Exception {
 
-		if (Validator.isNull(portlet.getPortletDataHandlerClass())) {
-			return null;
+		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
+			getServiceTrackerList(PortletDataHandler.class, portlet);
+
+		if (Validator.isNotNull(portlet.getPortletDataHandlerClass())) {
+			PortletDataHandler portletDataHandlerInstance =
+				(PortletDataHandler)newInstance(
+					PortletDataHandler.class,
+					portlet.getPortletDataHandlerClass());
+
+			portletDataHandlerInstance.setPortletId(portlet.getPortletId());
+
+			portletDataHandlerInstances.add(portletDataHandlerInstance);
 		}
 
-		PortletDataHandler portletDataHandlerInstance =
-			(PortletDataHandler)newInstance(
-				PortletDataHandler.class, portlet.getPortletDataHandlerClass());
-
-		portletDataHandlerInstance.setPortletId(portlet.getPortletId());
-
-		return portletDataHandlerInstance;
+		return portletDataHandlerInstances;
 	}
 
 	protected PortletLayoutListener newPortletLayoutListener(Portlet portlet)

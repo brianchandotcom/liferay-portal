@@ -652,7 +652,7 @@ public class AssetCategoryLocalServiceImpl
 			new HashMap<String, Serializable>();
 
 		attributes.put(Field.TITLE, title);
-		attributes.put("vocabularyIds", vocabularyIds);
+		attributes.put(Field.ASSET_VOCABULARY_IDS, vocabularyIds);
 
 		searchContext.setAttributes(attributes);
 

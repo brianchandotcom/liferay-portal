@@ -2230,7 +2230,6 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Layout" />
 		<reference package-path="com.liferay.portal" entity="Permission" />
 		<reference package-path="com.liferay.portal" entity="ResourceAction" />
 		<reference package-path="com.liferay.portal" entity="Role" />

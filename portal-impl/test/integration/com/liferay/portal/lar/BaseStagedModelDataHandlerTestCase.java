@@ -53,7 +53,6 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetTestUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.MBTestUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 import com.liferay.portlet.ratings.util.RatingsTestUtil;
@@ -119,10 +118,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		StagedModelAssets stagedModelAssets = updateAssetEntry(
 			stagedModel, stagingGroup);
 
-		// Comments
-
-		addComments(stagedModel);
-
 		// Ratings
 
 		addRatings(stagedModel);
@@ -151,17 +146,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		validateImport(
 			stagedModel, stagedModelAssets, dependentStagedModelsMap,
 			liveGroup);
-	}
-
-	protected void addComments(StagedModel stagedModel) throws Exception {
-		if (!isCommentableStagedModel()) {
-			return;
-		}
-
-		MBTestUtil.addDiscussionMessage(
-			TestPropsValues.getUser(), stagingGroup.getGroupId(),
-			ExportImportClassedModelUtil.getClassName(stagedModel),
-			ExportImportClassedModelUtil.getClassPK(stagedModel));
 	}
 
 	protected List<StagedModel> addDependentStagedModel(

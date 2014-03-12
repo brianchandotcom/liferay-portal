@@ -41,6 +41,10 @@
 				<input id="pauseButton" name="log" onchange="pauseButtonCheck()" type="checkbox">
 					<label for="pauseButton" id="pause">&nbsp;&nbsp;Pause&nbsp;&nbsp;&nbsp;</label>
 				</input>
+
+				<input id="pauseErrorButton" name="log" onchange="pauseErrorButtonCheck()" type="checkbox">
+					<label for="pauseErrorButton" id="pauseError">Enable Pause After Error&nbsp;</label>
+				</input>
 			</form>
 		</div>
 

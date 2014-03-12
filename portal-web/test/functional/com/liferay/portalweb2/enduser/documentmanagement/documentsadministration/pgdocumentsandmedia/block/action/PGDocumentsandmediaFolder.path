@@ -231,6 +231,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BREADCRUMB_SUBFOLDER</td>
+	<td>//div[@id='_20_breadcrumbContainer']/ul/li[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -265,6 +270,11 @@
 <tr>
 	<td>FOLDER_ENTRIES_DOCUMENT_LOCKED</td>
 	<td>//div[@class='entry-thumbnail']/img[@alt='Locked']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_ENTRIES_SUBFOLDER_THUMBNAIL</td>
+	<td>//div[contains(.,'${key_dmSubFolderName}') and a[@data-folder='true']]//div[@class='entry-thumbnail']</td>
 	<td></td>
 </tr>
 <tr>

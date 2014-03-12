@@ -24,6 +24,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert-error')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNIQUE_FOLDER_ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert alert-error') and contains(.,'Please enter a unique folder name.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALID_FOLDER_NAME_ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert alert-error') and contains(.,'Please enter a valid name.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[@class='portlet-msg-info']</td>
 	<td></td>

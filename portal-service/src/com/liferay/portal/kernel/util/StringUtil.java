@@ -386,6 +386,29 @@ public class StringUtil {
 		}
 	}
 
+	public static boolean equalsIgnoreBreakLine(String s1, String s2) {
+		if (s1 == s2) {
+			return true;
+		}
+
+		if ((s1 == null) || (s2 == null)) {
+			return false;
+		}
+
+		s1 = replace(
+			s1, new String[] {StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE},
+			new String[] {StringPool.BLANK, StringPool.BLANK});
+		s2 = replace(
+			s2, new String[] {StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE},
+			new String[] {StringPool.BLANK, StringPool.BLANK});
+
+		if (s1.length() != s2.length()) {
+			return false;
+		}
+
+		return s1.equals(s2);
+	}
+
 	/**
 	 * Returns <code>true</code> if the strings are equal, ignoring case.
 	 *

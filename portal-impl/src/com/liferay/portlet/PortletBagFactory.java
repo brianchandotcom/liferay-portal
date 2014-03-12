@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.atom.AtomCollectionAdapterRegistryUtil;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
@@ -1004,12 +1003,16 @@ public class PortletBagFactory {
 		return socialActivityInterpreterInstances;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected List<StagedModelDataHandler<?>> newStagedModelDataHandler(
 			Portlet portlet)
 		throws Exception {
 
-		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances =
-			new ArrayList<StagedModelDataHandler<?>>();
+		ServiceTrackerList<StagedModelDataHandler<?>>
+			stagedModelDataHandlerInstances =
+				getServiceTrackerList(
+					(Class<StagedModelDataHandler<?>>)(Class<?>)
+						StagedModelDataHandler.class, portlet);
 
 		List<String> stagedModelDataHandlerClasses =
 			portlet.getStagedModelDataHandlerClasses();
@@ -1022,8 +1025,6 @@ public class PortletBagFactory {
 					StagedModelDataHandler.class, stagedModelDataHandlerClass);
 
 			stagedModelDataHandlerInstances.add(stagedModelDataHandler);
-
-			StagedModelDataHandlerRegistryUtil.register(stagedModelDataHandler);
 		}
 
 		return stagedModelDataHandlerInstances;

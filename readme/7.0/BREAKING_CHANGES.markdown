@@ -106,11 +106,8 @@ inside the body and there was no real benefit in having both things separated.
 
 ---------------------------------------
 
-### Removal of Methods `get` and `format`, which use the PortletConfig
-* Date: 7th March 2014
-* JIRA Ticket: LPS-44342
 ### Removed `get` and `format` Methods That Used `PortletConfig` Parameters
-- **Date:** 7th March 2014
+- **Date:** 2014-Mar-07
 - **JIRA Ticket:** LPS-44342
 
 #### What changed?

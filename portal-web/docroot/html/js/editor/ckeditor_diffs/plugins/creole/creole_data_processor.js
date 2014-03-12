@@ -169,7 +169,7 @@
 
 				listTagsIn.push(newLineCharacter);
 			}
-			else if (!element.previousSibling) {
+			else if (element.previousSibling && element.nextSibling && element.nextSibling !== NEW_LINE) {
 				listTagsIn.push(newLineCharacter);
 			}
 		},

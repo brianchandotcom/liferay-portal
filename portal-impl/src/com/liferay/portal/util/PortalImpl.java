@@ -4031,7 +4031,7 @@ public class PortalImpl implements Portal {
 	@Deprecated
 	@Override
 	public int getPortalPort() {
-		return getPortalServerPort();
+		return getPortalServerPort(false);
 	}
 
 	/**

@@ -1682,7 +1682,7 @@ public class StagingImpl implements Staging {
 
 		String cmd = MapUtil.getString(parameterMap, Constants.CMD);
 
-		if (!cmd.equals("publish_to_live")) {
+		if (!cmd.equals(Constants.PUBLISH_TO_LIVE)) {
 			return;
 		}
 

@@ -20,7 +20,7 @@
 String cmd = ParamUtil.getString(request, Constants.CMD);
 
 if (Validator.isNull(cmd)) {
-	cmd = ParamUtil.getString(request, "originalCmd", "publish_to_live");
+	cmd = ParamUtil.getString(request, "originalCmd", Constants.PUBLISH_TO_LIVE);
 }
 
 String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
@@ -71,7 +71,7 @@ if (liveGroup.isStaged()) {
 		localPublishing = false;
 	}
 }
-else if (cmd.equals("publish_to_remote")) {
+else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
 	localPublishing = false;
 }
 
@@ -93,7 +93,7 @@ String publishActionKey = "copy";
 if (liveGroup.isStaged()) {
 	publishActionKey = "publish";
 }
-else if (cmd.equals("publish_to_remote")) {
+else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
 	publishActionKey = "publish";
 }
 
@@ -138,7 +138,7 @@ UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 PortletURL portletURL = renderResponse.createActionURL();
 
 if (group.isStaged() && group.isStagedRemotely()) {
-	cmd = "publish_to_remote";
+	cmd = Constants.PUBLISH_TO_REMOTE;
 }
 
 portletURL.setParameter("struts_action", "/layouts_admin/publish_layouts");

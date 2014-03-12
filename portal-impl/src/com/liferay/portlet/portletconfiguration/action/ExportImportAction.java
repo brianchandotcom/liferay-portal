@@ -135,7 +135,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 
 					sendRedirect(actionRequest, actionResponse, redirect);
 				}
-				else if (cmd.equals("publish_to_live")) {
+				else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
 					hideDefaultSuccessMessage(actionRequest);
 
 					StagingUtil.publishToLive(actionRequest, portlet);

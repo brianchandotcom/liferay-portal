@@ -105,7 +105,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 				</portlet:actionURL>
 
 				<aui:form action="<%= publishPortletURL %>" cssClass="lfr-export-dialog" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishToLive();" %>'>
-					<aui:input name="<%= Constants.CMD %>" type="hidden" value="publish_to_live" />
+					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.PUBLISH_TO_LIVE %>" />
 					<aui:input name="tabs1" type="hidden" value="export_import" />
 					<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 					<aui:input name="redirect" type="hidden" value="<%= portletURL %>" />

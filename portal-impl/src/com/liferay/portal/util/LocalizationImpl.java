@@ -491,7 +491,7 @@ public class LocalizationImpl implements Localization {
 				parameter + StringPool.UNDERLINE + languageId;
 
 			String value = PrefsParamUtil.getString(
-				preferences, portletRequest, localParameter, defaultValue);
+				preferences, portletRequest, localParameter);
 
 			if (Validator.isNotNull(value)) {
 				xml = updateLocalization(xml, parameter, value, languageId);

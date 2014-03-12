@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
@@ -147,8 +148,10 @@ public class JournalArticleAssetRenderer
 			ThemeDisplay themeDisplay = null;
 			String xmlRequest = null;
 
-			if ((portletRequest != null) && (portletResponse != null) &&
-				Validator.isNotNull(_article.getStructureId())) {
+			if (_article.isTemplateDriven()) {
+				if ((portletRequest == null) || (portletResponse == null)) {
+					return StringPool.BLANK;
+				}
 
 				themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);

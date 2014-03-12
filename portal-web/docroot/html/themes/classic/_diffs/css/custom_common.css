@@ -493,6 +493,10 @@
 		padding: 3px 15px 2px;
 
 		li {
+			@include ellipsis;
+
+			max-width: 300px;
+
 			a {
 				display: inline-block;
 

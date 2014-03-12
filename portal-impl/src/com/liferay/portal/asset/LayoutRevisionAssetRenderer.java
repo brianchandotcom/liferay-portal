@@ -33,6 +33,8 @@ import com.liferay.portlet.asset.model.BaseAssetRenderer;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -72,7 +74,10 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 	}
 
 	@Override
-	public String getSummary(Locale locale) {
+	public String getSummary(
+		Locale locale, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
+
 		StringBundler sb = new StringBundler(16);
 
 		sb.append("<strong>");

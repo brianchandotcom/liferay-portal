@@ -124,7 +124,18 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	@Override
 	public String getSearchSummary(Locale locale) {
-		return getSummary(locale);
+		return getSummary(locale, null, null);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetRenderer#getSummary(Locale, PortletRequest,
+	 *             PortletResponse)}
+	 */
+	@Deprecated
+	@Override
+	public String getSummary(Locale locale) {
+		return getSummary(locale, null, null);
 	}
 
 	@Override

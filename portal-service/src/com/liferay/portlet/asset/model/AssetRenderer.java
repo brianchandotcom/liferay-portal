@@ -74,7 +74,16 @@ public interface AssetRenderer {
 
 	public String getSearchSummary(Locale locale);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(Locale,
+	 *             PortletRequest, PortletResponse)}
+	 */
+	@Deprecated
 	public String getSummary(Locale locale);
+
+	public String getSummary(
+		Locale locale, PortletRequest portletRequest,
+		PortletResponse portletResponse);
 
 	public String getThumbnailPath(PortletRequest portletRequest)
 		throws Exception;

@@ -36,6 +36,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -87,11 +88,14 @@ public class MBMessageAssetRenderer
 				BBCodeTranslatorUtil.getHTML(_message.getBody()));
 		}
 
-		return getSummary(locale);
+		return getSummary(locale, null, null);
 	}
 
 	@Override
-	public String getSummary(Locale locale) {
+	public String getSummary(
+		Locale locale, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
+
 		return _message.getBody();
 	}
 

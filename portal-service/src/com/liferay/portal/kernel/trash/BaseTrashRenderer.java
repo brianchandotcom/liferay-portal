@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.util.Locale;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -42,6 +44,17 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 	@Override
 	public String getNewName(String oldName, String token) {
 		return TrashUtil.getNewName(oldName, token);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             TrashRenderer#getSummary(Locale, PortletRequest,
+	 *             javax.portlet.PortletResponse)}
+	 */
+	@Deprecated
+	@Override
+	public String getSummary(Locale locale) {
+		return getSummary(locale, null, null);
 	}
 
 	@Override

@@ -74,7 +74,7 @@ public class PortletBagImpl implements PortletBag {
 		List<SocialActivityInterpreter> socialActivityInterpreterInstances,
 		List<SocialRequestInterpreter> socialRequestInterpreterInstances,
 		List<UserNotificationHandler> userNotificationHandlerInstances,
-		WebDAVStorage webDAVStorageInstance, Method xmlRpcMethodInstance,
+		List<WebDAVStorage> webDAVStorageInstances, Method xmlRpcMethodInstance,
 		ControlPanelEntry controlPanelEntryInstance,
 		List<AssetRendererFactory> assetRendererFactoryInstances,
 		List<AtomCollectionAdapter<?>> atomCollectionAdapters,
@@ -103,7 +103,7 @@ public class PortletBagImpl implements PortletBag {
 			socialActivityInterpreterInstances;
 		_socialRequestInterpreterInstances = socialRequestInterpreterInstances;
 		_userNotificationHandlerInstances = userNotificationHandlerInstances;
-		_webDAVStorageInstance = webDAVStorageInstance;
+		_webDAVStorageInstances = webDAVStorageInstances;
 		_xmlRpcMethodInstance = xmlRpcMethodInstance;
 		_controlPanelEntryInstance = controlPanelEntryInstance;
 		_assetRendererFactoryInstances = assetRendererFactoryInstances;
@@ -128,7 +128,7 @@ public class PortletBagImpl implements PortletBag {
 			getPopMessageListenerInstances(),
 			getSocialActivityInterpreterInstances(),
 			getSocialRequestInterpreterInstances(),
-			getUserNotificationHandlerInstances(), getWebDAVStorageInstance(),
+			getUserNotificationHandlerInstances(), getWebDAVStorageInstances(),
 			getXmlRpcMethodInstance(), getControlPanelEntryInstance(),
 			getAssetRendererFactoryInstances(),
 			getAtomCollectionAdapterInstances(),
@@ -153,6 +153,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_templateHandlerInstances);
 		close(_urlEncoderInstances);
 		close(_userNotificationHandlerInstances);
+		close(_webDAVStorageInstances);
 	}
 
 	@Override
@@ -306,8 +307,8 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public WebDAVStorage getWebDAVStorageInstance() {
-		return _webDAVStorageInstance;
+	public List<WebDAVStorage> getWebDAVStorageInstances() {
+		return _webDAVStorageInstances;
 	}
 
 	@Override
@@ -368,7 +369,7 @@ public class PortletBagImpl implements PortletBag {
 	private List<URLEncoder> _urlEncoderInstances;
 	private List<UserNotificationHandler>
 		_userNotificationHandlerInstances;
-	private WebDAVStorage _webDAVStorageInstance;
+	private List<WebDAVStorage> _webDAVStorageInstances;
 	private List<WorkflowHandler> _workflowHandlerInstances;
 	private Method _xmlRpcMethodInstance;
 

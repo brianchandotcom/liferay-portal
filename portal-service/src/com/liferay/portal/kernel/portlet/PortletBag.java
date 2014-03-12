@@ -112,7 +112,7 @@ public interface PortletBag extends Cloneable {
 	public List<UserNotificationHandler>
 		getUserNotificationHandlerInstances();
 
-	public WebDAVStorage getWebDAVStorageInstance();
+	public List<WebDAVStorage> getWebDAVStorageInstances();
 
 	public List<WorkflowHandler> getWorkflowHandlerInstances();
 

@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
-import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -159,16 +158,8 @@ public class PortletBagFactory {
 
 		initUserNotificationDefinition(portlet);
 
-		WebDAVStorage webDAVStorageInstance = null;
-
-		if (Validator.isNotNull(portlet.getWebDAVStorageClass())) {
-			webDAVStorageInstance = (WebDAVStorage)newInstance(
-				WebDAVStorage.class, portlet.getWebDAVStorageClass());
-
-			webDAVStorageInstance.setToken(portlet.getWebDAVStorageToken());
-
-			WebDAVUtil.addStorage(webDAVStorageInstance);
-		}
+		List<WebDAVStorage> webDAVStorageInstances = newWebDAVStorageInstances(
+			portlet);
 
 		Method xmlRpcMethodInstance = null;
 
@@ -306,7 +297,7 @@ public class PortletBagFactory {
 			pollerProcessorInstances, popMessageListenerInstances,
 			socialActivityInterpreterInstances,
 			socialRequestInterpreterInstances, userNotificationHandlerInstances,
-			webDAVStorageInstance, xmlRpcMethodInstance,
+			webDAVStorageInstances, xmlRpcMethodInstance,
 			controlPanelEntryInstance, assetRendererFactoryInstances,
 			atomCollectionAdapterInstances, customAttributesDisplayInstances,
 			permissionPropagatorInstance, trashHandlerInstances,
@@ -1090,6 +1081,24 @@ public class PortletBagFactory {
 		}
 
 		return userNotificationHandlerInstances;
+	}
+
+	protected List<WebDAVStorage> newWebDAVStorageInstances(Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<WebDAVStorage> webDAVStorageInstances =
+			getServiceTrackerList(WebDAVStorage.class, portlet);
+
+		if (Validator.isNotNull(portlet.getWebDAVStorageClass())) {
+			WebDAVStorage webDAVStorageInstance = (WebDAVStorage)newInstance(
+				WebDAVStorage.class, portlet.getWebDAVStorageClass());
+
+			webDAVStorageInstance.setToken(portlet.getWebDAVStorageToken());
+
+			webDAVStorageInstances.add(webDAVStorageInstance);
+		}
+
+		return webDAVStorageInstances;
 	}
 
 	protected void validate() {

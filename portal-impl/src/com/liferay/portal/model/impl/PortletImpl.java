@@ -2083,13 +2083,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public WebDAVStorage getWebDAVStorageInstance() {
-		if (Validator.isNull(getWebDAVStorageClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<WebDAVStorage> webDAVStorageInstances =
+			portletBag.getWebDAVStorageInstances();
+
+		if (webDAVStorageInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getWebDAVStorageInstance();
+		return webDAVStorageInstances.get(0);
 	}
 
 	/**

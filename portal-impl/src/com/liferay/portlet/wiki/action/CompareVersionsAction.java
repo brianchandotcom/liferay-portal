@@ -75,9 +75,7 @@ public class CompareVersionsAction extends PortletAction {
 			WebKeys.THEME_DISPLAY);
 
 		long nodeId = ParamUtil.getLong(renderRequest, "nodeId");
-
 		String title = ParamUtil.getString(renderRequest, "title");
-
 		double sourceVersion = ParamUtil.getDouble(
 			renderRequest, "sourceVersion");
 		double targetVersion = ParamUtil.getDouble(
@@ -106,7 +104,7 @@ public class CompareVersionsAction extends PortletAction {
 
 		String htmlDiffResult = WikiUtil.diffHtml(
 			sourcePage, targetPage, viewPageURL, editPageURL,
-		attachmentURLPrefix);
+			attachmentURLPrefix);
 
 		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, htmlDiffResult);
 		renderRequest.setAttribute(WebKeys.WIKI_NODE_ID, nodeId);

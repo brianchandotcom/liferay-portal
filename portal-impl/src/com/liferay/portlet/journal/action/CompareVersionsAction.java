@@ -80,32 +80,32 @@ public class CompareVersionsAction extends PortletAction {
 			WebKeys.THEME_DISPLAY);
 
 		long groupId = ParamUtil.getLong(renderRequest, "groupId");
-
 		String articleId = ParamUtil.getString(renderRequest, "articleId");
 
 		String sourceArticleId = ParamUtil.getString(
 			renderRequest, "sourceVersion");
-		String targetArticleId = ParamUtil.getString(
-			renderRequest, "targetVersion");
 
-		int pos = sourceArticleId.lastIndexOf(
+		int index = sourceArticleId.lastIndexOf(
 			EditArticleAction.VERSION_SEPARATOR);
 
-		if (pos != -1) {
+		if (index != -1) {
 			sourceArticleId =
 				sourceArticleId.substring(
-					pos + EditArticleAction.VERSION_SEPARATOR.length(),
+					index + EditArticleAction.VERSION_SEPARATOR.length(),
 					sourceArticleId.length());
 		}
 
 		double sourceVersion = GetterUtil.getDouble(sourceArticleId);
 
-		pos = targetArticleId.lastIndexOf(EditArticleAction.VERSION_SEPARATOR);
+		String targetArticleId = ParamUtil.getString(
+			renderRequest, "targetVersion");
 
-		if (pos != -1) {
+		index = targetArticleId.lastIndexOf(EditArticleAction.VERSION_SEPARATOR);
+
+		if (index != -1) {
 			targetArticleId =
 				targetArticleId.substring(
-					pos + EditArticleAction.VERSION_SEPARATOR.length(),
+					index + EditArticleAction.VERSION_SEPARATOR.length(),
 					targetArticleId.length());
 		}
 
@@ -122,10 +122,10 @@ public class CompareVersionsAction extends PortletAction {
 		}
 
 		if (sourceVersion > targetVersion) {
-			double tmpVersion = targetVersion;
+			double tempVersion = targetVersion;
 
 			targetVersion = sourceVersion;
-			sourceVersion = tmpVersion;
+			sourceVersion = tempVersion;
 		}
 
 		String xmlRequest = PortletRequestUtil.toXML(

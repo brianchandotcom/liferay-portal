@@ -243,7 +243,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 				JournalArticleLocalServiceUtil.getArticle(classPK);
 
 			return JournalArticlePermission.contains(
-				permissionChecker, article.getResourcePrimKey(), actionId);
+				permissionChecker, article, actionId);
 		}
 		else if (className.equals(JournalFolder.class.getName())) {
 			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
@@ -291,7 +291,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			WikiPage page = WikiPageLocalServiceUtil.getPageByPageId(classPK);
 
 			return WikiPagePermission.contains(
-				permissionChecker, page.getResourcePrimKey(), actionId);
+				permissionChecker, page, actionId);
 		}
 
 		return null;

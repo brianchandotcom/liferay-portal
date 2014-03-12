@@ -196,12 +196,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 
 			if (group == null) {
 				BookmarksFolder folder =
-					BookmarksFolderLocalServiceUtil.fetchBookmarksFolder(
-						classPK);
-
-				if (folder == null) {
-					return null;
-				}
+					BookmarksFolderLocalServiceUtil.getFolder(classPK);
 
 				return BookmarksFolderPermission.contains(
 					permissionChecker, folder, actionId);
@@ -235,32 +230,17 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
 
 			if (group == null) {
-				try {
-					Folder folder = DLAppLocalServiceUtil.getFolder(classPK);
+				Folder folder = DLAppLocalServiceUtil.getFolder(classPK);
 
-					if (folder.getModelClassName().equals(
-							DLFolder.class.getName())) {
-
-						return DLFolderPermission.contains(
-							permissionChecker, folder, actionId);
-					}
-
-					return true;
-				}
-				catch (Exception e) {
-					return false;
-				}
+				return DLFolderPermission.contains(
+					permissionChecker, folder, actionId);
 			}
 
 			return DLPermission.contains(permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(JournalArticle.class.getName())) {
 			JournalArticle article =
-				JournalArticleLocalServiceUtil.fetchJournalArticle(classPK);
-
-			if (article == null) {
-				return false;
-			}
+				JournalArticleLocalServiceUtil.getArticle(classPK);
 
 			return JournalArticlePermission.contains(
 				permissionChecker, article.getResourcePrimKey(), actionId);
@@ -270,11 +250,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 
 			if (group == null) {
 				JournalFolder folder =
-					JournalFolderLocalServiceUtil.fetchFolder(classPK);
-
-				if (folder == null) {
-					return null;
-				}
+					JournalFolderLocalServiceUtil.getFolder(classPK);
 
 				return JournalFolderPermission.contains(
 					permissionChecker, folder, actionId);
@@ -312,11 +288,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 				permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(WikiPage.class.getName())) {
-			WikiPage page = WikiPageLocalServiceUtil.fetchWikiPage(classPK);
-
-			if (page == null) {
-				return null;
-			}
+			WikiPage page = WikiPageLocalServiceUtil.getPageByPageId(classPK);
 
 			return WikiPagePermission.contains(
 				permissionChecker, page.getResourcePrimKey(), actionId);

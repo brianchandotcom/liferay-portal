@@ -32,165 +32,203 @@ decimalFormat.setMaximumFractionDigits(2);
 decimalFormat.setMinimumFractionDigits(2);
 %>
 
-<form action="<portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>"><portlet:param name="struts_action" value="/currency_converter/view" /></portlet:renderURL>" method="post" name="<portlet:namespace />fm" onSubmit="submitForm(this); return false;">
+<portlet:renderURL var="convertURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+	<portlet:param name="struts_action" value="/currency_converter/view" />
+</portlet:renderURL>
 
-<input type="submit" value="<liferay-ui:message key="convert" />" />
+<aui:form action="<%= convertURL %>" cssClass="form-inline" method="post" name="fm">
+	<aui:button primary="<%= false %>" type="submit" value="convert" />
 
-<input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<portlet:namespace />number" size="3" type="text" value="<%= number %>" />
+	<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="number" size="3" type="text" value="<%= number %>" />
 
-<select name="<portlet:namespace />from">
-
-	<%
-	for (Map.Entry<String, String> entry : allSymbols.entrySet()) {
-		String symbol = entry.getValue();
-		String currencyValue = entry.getKey();
-	%>
-
-		<option <%= symbol.equals(from) ? "selected" : "" %> value="<%= symbol %>"><%= currencyValue %></option value>
-
-	<%
-	}
-	%>
-
-</select>
-
-<strong><liferay-ui:message key="to" /></strong>
-
-<select name="<portlet:namespace />to">
-
-	<%
-	for (Map.Entry<String, String> entry : allSymbols.entrySet()) {
-		String symbol = entry.getValue();
-		String currencyValue = entry.getKey();
-	%>
-
-		<option <%= symbol.equals(to) ? "selected" : "" %> value="<%= symbol %>"><%= currencyValue %></option value>
-
-	<%
-	}
-	%>
-
-</select>
-
-<br /><br />
-
-<c:choose>
-	<c:when test="<%= windowState.equals(WindowState.NORMAL) %>">
-		<table class="table table-bordered table-hover table-striped">
-		<thead class="table-columns">
-		<tr>
-			<th class="table-header">
-				<strong><liferay-ui:message key="currency" /></strong>
-			</th>
-
-			<%
-			for (int i = 0; i < symbols.length; i++) {
-				String symbol = symbols[i];
-			%>
-
-				<th class="table-header">
-					<liferay-ui:message key='<%= "currency." + symbol %>' /><br />
-					(<%= symbol %>)
-				</th>
-
-			<%
-			}
-			%>
-
-		</tr>
-		</thead>
-
-		<tbody class="table-data">
+	<aui:select inlineField="<%= true %>" label="" name="from">
 
 		<%
-		for (int i = 0; i < symbols.length; i++) {
-			String symbol = symbols[i];
+		for (Map.Entry<String, String> entry : allSymbols.entrySet()) {
+			String symbol = entry.getValue();
+			String currencyValue = entry.getKey();
 		%>
 
-			<tr>
-				<td class="table-cell">
-					<%= symbol %>
-				</td>
-
-		<%
-				for (int j = 0; j < symbols.length; j++) {
-					String symbol2 = symbols[j];
-
-					currency = CurrencyUtil.getCurrency(symbol2 + symbol);
-
-					if (currency != null) {
-		%>
-
-						<c:if test="<%= i != j %>">
-							<td class="table-cell"><%= currency.getRate() %></td>
-						</c:if>
-
-						<c:if test="<%= i == j %>">
-							<td class="table-cell">1</td>
-						</c:if>
-
-		<%
-					}
-				}
-		%>
-
-			</tr>
+			<aui:option label="<%= currencyValue %>" selected="<%= symbol.equals(from) %>" value="<%= symbol %>" />
 
 		<%
 		}
 		%>
 
-		</tbody>
-		</table>
-	</c:when>
-	<c:otherwise>
-		<table border="1" cellpadding="0" cellspacing="0" width="520">
-		<tr>
-			<td align="center" width="33%">
-				<%= currency.getFromSymbol() %><br />
-				<strong><%= number %></strong>
-			</td>
-			<td align="center" width="33%">
-				<%= currency.getToSymbol() %><br />
-				<strong><%= decimalFormat.format(number * currency.getRate()) %></strong>
-			</td>
-			<td align="center" width="34%">
-				<liferay-ui:message key="historical-charts" /><br />
+	</aui:select>
 
-				<%
-				PortletURL portletURL = renderResponse.createRenderURL();
+	<aui:select inlineField="<%= true %>" label="to" name="to">
 
-				portletURL.setParameter("struts_action", "/currency_converter/view");
-				portletURL.setParameter("number", String.valueOf(number));
-				portletURL.setParameter("from", currency.getFromSymbol());
-				portletURL.setParameter("to", currency.getToSymbol());
-				%>
+		<%
+		for (Map.Entry<String, String> entry : allSymbols.entrySet()) {
+			String symbol = entry.getValue();
+			String currencyValue = entry.getKey();
+		%>
 
-				<c:if test='<%= chartId.equals("3m") %>'>
-					3<liferay-ui:message key="month-abbreviation" />, <a href="<% portletURL.setParameter("chartId", "1y"); %><%= portletURL.toString() %>">1<liferay-ui:message key="year-abbreviation" /></a>, <a href="<% portletURL.setParameter("chartId", "2y"); %><%= portletURL.toString() %>">2<liferay-ui:message key="year-abbreviation" /></a>
-				</c:if>
+			<aui:option label="<%= currencyValue %>" selected="<%= symbol.equals(to) %>" value="<%= symbol %>" />
 
-				<c:if test='<%= chartId.equals("1y") %>'>
-					<a href="<% portletURL.setParameter("chartId", "3m"); %><%= portletURL.toString() %>">3<liferay-ui:message key="month-abbreviation" /></a>, 1<liferay-ui:message key="year-abbreviation" />, <a href="<% portletURL.setParameter("chartId", "2y"); %><%= portletURL.toString() %>">2<liferay-ui:message key="year-abbreviation" /></a>
-				</c:if>
+		<%
+		}
+		%>
 
-				<c:if test='<%= chartId.equals("2y") %>'>
-					<a href="<% portletURL.setParameter("chartId", "3m"); %><%= portletURL.toString() %>">3<liferay-ui:message key="month-abbreviation" /></a>, <a href="<% portletURL.setParameter("chartId", "1y"); %><%= portletURL.toString() %>">1<liferay-ui:message key="year-abbreviation" /></a>, 2<liferay-ui:message key="year-abbreviation" />
-				</c:if>
-			</td>
-		</tr>
-		</table>
+	</aui:select>
 
-		<br />
+	<c:choose>
+		<c:when test="<%= windowState.equals(WindowState.NORMAL) %>">
+			<c:choose>
+				<c:when test="<%= (symbols.length > 0) %>">
+					<table class="table table-bordered table-hover table-striped">
+					<thead class="table-columns">
+					<tr>
+						<th class="table-header">
+							<liferay-ui:message key="currency" />
+						</th>
 
-		<table border="1" cellpadding="2" cellspacing="0">
-		<tr>
-			<td>
-				<img height="288" src="http://ichart.yahoo.com/z?s=<%= currency.getSymbol() %>=X&t=<%= HtmlUtil.escape(chartId) %>?" width="512" />
-			</td>
-		</tr>
-		</table>
-	</c:otherwise>
-</c:choose>
+						<%
+						for (int i = 0; i < symbols.length; i++) {
+							String symbol = symbols[i];
+						%>
 
-</form>
+							<th class="table-header">
+								<liferay-ui:message key='<%= "currency." + symbol %>' /><br />
+								(<%= symbol %>)
+							</th>
+
+						<%
+						}
+						%>
+
+					</tr>
+					</thead>
+
+					<tbody class="table-data">
+
+						<%
+						for (int i = 0; i < symbols.length; i++) {
+							String symbol = symbols[i];
+						%>
+
+							<tr>
+								<td class="table-cell">
+									<%= symbol %>
+								</td>
+
+								<%
+								for (int j = 0; j < symbols.length; j++) {
+									String symbol2 = symbols[j];
+
+									currency = CurrencyUtil.getCurrency(symbol2 + symbol);
+
+									if (currency != null) {
+								%>
+
+								<td class="table-cell">
+									<c:if test="<%= i != j %>">
+										<%= currency.getRate() %>
+									</c:if>
+
+									<c:if test="<%= i == j %>">
+										1
+									</c:if>
+								</td>
+
+								<%
+									}
+								}
+								%>
+
+							</tr>
+
+						<%
+						}
+						%>
+
+					</tbody>
+					</table>
+				</c:when>
+				<c:otherwise>
+					<div class="alert alert-info">
+						<liferay-ui:message key="please-select-a-currency" />
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</c:when>
+		<c:otherwise>
+			<div class="conversion-data">
+				<div class="conversion-header row-fluid">
+					<div class="conversion-value span4">
+						<span class="currency-header"><%= currency.getFromSymbol() %></span>
+						<span class="currency-value"><%= number %></span>
+					</div>
+
+					<div class="conversion-value span4">
+						<span class="currency-header"><%= currency.getToSymbol() %></span>
+						<span class="currency-value"><%= decimalFormat.format(number * currency.getRate()) %></span>
+					</div>
+
+					<div class="conversion-value span4">
+						<span class="currency-header"><liferay-ui:message key="historical-charts" /></span>
+						<span class="currency-value">
+
+							<%
+							PortletURL portletURL = renderResponse.createRenderURL();
+
+							portletURL.setParameter("struts_action", "/currency_converter/view");
+							portletURL.setParameter("number", String.valueOf(number));
+							portletURL.setParameter("from", currency.getFromSymbol());
+							portletURL.setParameter("to", currency.getToSymbol());
+							%>
+
+							<c:choose>
+								<c:when test='<%= chartId.equals("3m") %>'>
+									3<liferay-ui:message key="month-abbreviation" />,
+								</c:when>
+								<c:otherwise>
+
+									<%
+									portletURL.setParameter("chartId", "3m");
+									%>
+
+									<aui:a href="<%= portletURL.toString() %>">3<liferay-ui:message key="month-abbreviation" /></aui:a>,
+								</c:otherwise>
+							</c:choose>
+
+							<c:choose>
+								<c:when test='<%= chartId.equals("1y") %>'>
+									1<liferay-ui:message key="year-abbreviation" />,
+								</c:when>
+								<c:otherwise>
+
+									<%
+									portletURL.setParameter("chartId", "1y");
+									%>
+
+									<aui:a href="<%= portletURL.toString() %>">1<liferay-ui:message key="year-abbreviation" /></aui:a>,
+								</c:otherwise>
+							</c:choose>
+
+
+							<c:choose>
+								<c:when test='<%= chartId.equals("2y") %>'>
+									2<liferay-ui:message key="year-abbreviation" />
+								</c:when>
+								<c:otherwise>
+
+									<%
+									portletURL.setParameter("chartId", "2y");
+									%>
+
+									<aui:a href="<%= portletURL.toString() %>">2<liferay-ui:message key="year-abbreviation" /></aui:a>
+								</c:otherwise>
+							</c:choose>
+						</span>
+					</div>
+				</div>
+
+				<div class="conversion-graph">
+					<img class="currency-graph" height="288" src="http://ichart.yahoo.com/z?s=<%= currency.getSymbol() %>=X&t=<%= HtmlUtil.escape(chartId) %>?" width="512" />
+				</div>
+			</div>
+		</c:otherwise>
+	</c:choose>
+</aui:form>

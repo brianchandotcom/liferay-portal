@@ -42,8 +42,8 @@ AUI.add(
 		var XML_ATTRIBUTES_FIELD_ATTRS = {
 			dataType: 1,
 			indexType: 1,
-			multiple: 1,
 			localizable: 1,
+			multiple: 1,
 			name: 1,
 			options: 1,
 			readOnly: 1,

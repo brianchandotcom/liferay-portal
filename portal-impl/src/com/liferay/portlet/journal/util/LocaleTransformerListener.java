@@ -55,21 +55,16 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 		return filterByLanguage(xml, languageId);
 	}
 
-	/**
-	 * Filters an XML element's children, removing elements with language-ids that are not languageId. If an element with
-	 * defaultLanguageId as it's language-id is found, it will be used as a fallback in the case no other element is left.
-	 * @param root Element that will have it's children filtered.
-	 * @param languageId The expected language-id of the children that must be kept.
-	 * @param defaultLanguageId The language-id that will be used as a fallback.
-	 */
-	protected void filterByLanguage(Element root, String languageId, String defaultLanguageId) {
+	protected void filterByLanguage(
+		Element root, String languageId, String defaultLanguageId) {
+
 		List<Element> elements = root.elements();
 
 		int listIndex = elements.size() - 1;
 
 		Element defaultLanguageElement = null;
 
-		boolean foundValidChild = false;
+		boolean hasLanguageIdElement = false;
 
 		while (listIndex >= 0) {
 			Element element = elements.get(listIndex);
@@ -77,25 +72,29 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			String tempLanguageId = element.attributeValue(
 				"language-id", languageId);
 
-			if (!StringUtil.equalsIgnoreCase(tempLanguageId, languageId)) {
-				if (StringUtil.equalsIgnoreCase(tempLanguageId, defaultLanguageId)) {
+			if (StringUtil.equalsIgnoreCase(tempLanguageId, languageId)) {
+				hasLanguageIdElement = true;
+
+				filterByLanguage(element, languageId, defaultLanguageId);
+			}
+			else {
+				if (StringUtil.equalsIgnoreCase(
+						tempLanguageId, defaultLanguageId)) {
+
 					defaultLanguageElement = element;
 				}
 
 				root.remove(element);
 			}
-			else {
-				foundValidChild = true;
-
-				filterByLanguage(element, languageId, defaultLanguageId);
-			}
 
 			listIndex--;
 		}
 
-		if (!foundValidChild && defaultLanguageElement != null) {
+		if (!hasLanguageIdElement && (defaultLanguageElement != null)) {
 			root.add(defaultLanguageElement);
-			filterByLanguage(defaultLanguageElement, languageId, defaultLanguageId);
+
+			filterByLanguage(
+				defaultLanguageElement, languageId, defaultLanguageId);
 		}
 	}
 

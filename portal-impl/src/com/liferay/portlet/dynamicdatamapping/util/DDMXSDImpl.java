@@ -166,7 +166,8 @@ public class DDMXSDImpl implements DDMXSD {
 
 			fieldStructure.put("children", childrenHTML);
 
-			boolean disabled = GetterUtil.getBoolean(fieldStructure.get("disabled"), false);
+			boolean disabled = GetterUtil.getBoolean(
+				fieldStructure.get("disabled"), false);
 
 			if (disabled) {
 				readOnly = true;
@@ -624,11 +625,9 @@ public class DDMXSDImpl implements DDMXSD {
 
 		String editingLanguageId = LocaleUtil.toLanguageId(locale);
 
-		String structureLanguageId;
+		String structureLanguageId = editingLanguageId;
 
-		if (ArrayUtil.contains(availableLanguageIds, editingLanguageId)) {
-			structureLanguageId = editingLanguageId;
-		} else {
+		if (!ArrayUtil.contains(availableLanguageIds, editingLanguageId)) {
 			structureLanguageId = defaultLanguageId;
 		}
 
@@ -660,7 +659,7 @@ public class DDMXSDImpl implements DDMXSD {
 		}
 
 		boolean localizable = GetterUtil.getBoolean(
-				dynamicElementElement.attributeValue("localizable"), true);
+			dynamicElementElement.attributeValue("localizable"), true);
 
 		if (!localizable && !editingLanguageId.equals(defaultLanguageId)) {
 			fieldContext.put("disabled", Boolean.TRUE.toString());

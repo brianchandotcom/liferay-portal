@@ -63,7 +63,7 @@ public interface PortletBag extends Cloneable {
 
 	public List<ConfigurationAction> getConfigurationActionInstances();
 
-	public ControlPanelEntry getControlPanelEntryInstance();
+	public List<ControlPanelEntry> getControlPanelEntryInstances();
 
 	public List<CustomAttributesDisplay> getCustomAttributesDisplayInstances();
 

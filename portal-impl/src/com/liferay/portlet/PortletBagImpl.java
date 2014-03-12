@@ -76,7 +76,7 @@ public class PortletBagImpl implements PortletBag {
 		List<UserNotificationHandler> userNotificationHandlerInstances,
 		List<WebDAVStorage> webDAVStorageInstances,
 		List<Method> xmlRpcMethodInstances,
-		ControlPanelEntry controlPanelEntryInstance,
+		List<ControlPanelEntry> controlPanelEntryInstances,
 		List<AssetRendererFactory> assetRendererFactoryInstances,
 		List<AtomCollectionAdapter<?>> atomCollectionAdapters,
 		List<CustomAttributesDisplay> customAttributesDisplayInstances,
@@ -106,7 +106,7 @@ public class PortletBagImpl implements PortletBag {
 		_userNotificationHandlerInstances = userNotificationHandlerInstances;
 		_webDAVStorageInstances = webDAVStorageInstances;
 		_xmlRpcMethodInstances = xmlRpcMethodInstances;
-		_controlPanelEntryInstance = controlPanelEntryInstance;
+		_controlPanelEntryInstances = controlPanelEntryInstances;
 		_assetRendererFactoryInstances = assetRendererFactoryInstances;
 		_atomCollectionAdapterInstances = atomCollectionAdapters;
 		_customAttributesDisplayInstances = customAttributesDisplayInstances;
@@ -130,7 +130,7 @@ public class PortletBagImpl implements PortletBag {
 			getSocialActivityInterpreterInstances(),
 			getSocialRequestInterpreterInstances(),
 			getUserNotificationHandlerInstances(), getWebDAVStorageInstances(),
-			getXmlRpcMethodInstances(), getControlPanelEntryInstance(),
+			getXmlRpcMethodInstances(), getControlPanelEntryInstances(),
 			getAssetRendererFactoryInstances(),
 			getAtomCollectionAdapterInstances(),
 			getCustomAttributesDisplayInstances(),
@@ -142,6 +142,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public void destroy() {
 		close(_configurationActionInstances);
+		close(_controlPanelEntryInstances);
 		close(_friendlyURLMapperInstances);
 		close(_indexerInstances);
 		close(_openSearchInstances);
@@ -174,8 +175,8 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public ControlPanelEntry getControlPanelEntryInstance() {
-		return _controlPanelEntryInstance;
+	public List<ControlPanelEntry> getControlPanelEntryInstances() {
+		return _controlPanelEntryInstances;
 	}
 
 	@Override
@@ -348,7 +349,7 @@ public class PortletBagImpl implements PortletBag {
 	private List<AssetRendererFactory> _assetRendererFactoryInstances;
 	private List<AtomCollectionAdapter<?>> _atomCollectionAdapterInstances;
 	private List<ConfigurationAction> _configurationActionInstances;
-	private ControlPanelEntry _controlPanelEntryInstance;
+	private List<ControlPanelEntry> _controlPanelEntryInstances;
 	private List<CustomAttributesDisplay> _customAttributesDisplayInstances;
 	private List<FriendlyURLMapper> _friendlyURLMapperInstances;
 	private List<Indexer> _indexerInstances;

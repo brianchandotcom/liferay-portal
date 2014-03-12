@@ -715,13 +715,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public ControlPanelEntry getControlPanelEntryInstance() {
-		if (Validator.isNull(getControlPanelEntryClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<ControlPanelEntry> controlPanelEntryInstances =
+			portletBag.getControlPanelEntryInstances();
+
+		if (controlPanelEntryInstances.isEmpty()) {
 			return DefaultControlPanelEntryFactory.getInstance();
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getControlPanelEntryInstance();
+		return controlPanelEntryInstances.get(0);
 	}
 
 	/**

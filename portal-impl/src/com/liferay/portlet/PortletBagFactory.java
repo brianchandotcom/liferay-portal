@@ -162,12 +162,8 @@ public class PortletBagFactory {
 
 		List<Method> xmlRpcMethodInstances = newXmlRpcMethodInstances(portlet);
 
-		ControlPanelEntry controlPanelEntryInstance = null;
-
-		if (Validator.isNotNull(portlet.getControlPanelEntryClass())) {
-			controlPanelEntryInstance = (ControlPanelEntry)newInstance(
-				ControlPanelEntry.class, portlet.getControlPanelEntryClass());
-		}
+		List<ControlPanelEntry> controlPanelEntryInstances =
+			newControlPanelEntryInstances(portlet);
 
 		List<AssetRendererFactory> assetRendererFactoryInstances =
 			newAssetRendererFactoryInstances(portlet);
@@ -290,7 +286,7 @@ public class PortletBagFactory {
 			socialActivityInterpreterInstances,
 			socialRequestInterpreterInstances, userNotificationHandlerInstances,
 			webDAVStorageInstances, xmlRpcMethodInstances,
-			controlPanelEntryInstance, assetRendererFactoryInstances,
+			controlPanelEntryInstances, assetRendererFactoryInstances,
 			atomCollectionAdapterInstances, customAttributesDisplayInstances,
 			permissionPropagatorInstance, trashHandlerInstances,
 			workflowHandlerInstances, preferencesValidatorInstance,
@@ -693,6 +689,25 @@ public class PortletBagFactory {
 		}
 
 		return configurationActionInstances;
+	}
+
+	protected List<ControlPanelEntry> newControlPanelEntryInstances(
+			Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<ControlPanelEntry> controlPanelEntryInstances =
+			getServiceTrackerList(ControlPanelEntry.class, portlet);
+
+		if (Validator.isNotNull(portlet.getControlPanelEntryClass())) {
+			ControlPanelEntry controlPanelEntryInstance =
+				(ControlPanelEntry)newInstance(
+					ControlPanelEntry.class,
+					portlet.getControlPanelEntryClass());
+
+			controlPanelEntryInstances.add(controlPanelEntryInstance);
+		}
+
+		return controlPanelEntryInstances;
 	}
 
 	protected DDMDisplay newDDMDisplay(Portlet portlet) throws Exception {

@@ -76,7 +76,6 @@ import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.JavaFieldsParser;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
 import com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil;
@@ -594,29 +593,12 @@ public class PortletBagFactory {
 		}
 	}
 
-	protected AssetRendererFactory newAssetRendererFactoryInstance(
-			Portlet portlet, String assetRendererFactoryClass)
-		throws Exception {
-
-		AssetRendererFactory assetRendererFactoryInstance =
-			(AssetRendererFactory)newInstance(
-				AssetRendererFactory.class, assetRendererFactoryClass);
-
-		assetRendererFactoryInstance.setClassName(
-			assetRendererFactoryInstance.getClassName());
-		assetRendererFactoryInstance.setPortletId(portlet.getPortletId());
-
-		AssetRendererFactoryRegistryUtil.register(assetRendererFactoryInstance);
-
-		return assetRendererFactoryInstance;
-	}
-
 	protected List<AssetRendererFactory> newAssetRendererFactoryInstances(
 			Portlet portlet)
 		throws Exception {
 
-		List<AssetRendererFactory> assetRendererFactoryInstances =
-			new ArrayList<AssetRendererFactory>();
+		ServiceTrackerList<AssetRendererFactory> assetRendererFactoryInstances =
+			getServiceTrackerList(AssetRendererFactory.class, portlet);
 
 		for (String assetRendererFactoryClass :
 				portlet.getAssetRendererFactoryClasses()) {
@@ -640,8 +622,13 @@ public class PortletBagFactory {
 
 			if (assetRendererEnabledValue) {
 				AssetRendererFactory assetRendererFactoryInstance =
-					newAssetRendererFactoryInstance(
-						portlet, assetRendererFactoryClass);
+					(AssetRendererFactory)newInstance(
+						AssetRendererFactory.class, assetRendererFactoryClass);
+
+				assetRendererFactoryInstance.setClassName(
+					assetRendererFactoryInstance.getClassName());
+				assetRendererFactoryInstance.setPortletId(
+					portlet.getPortletId());
 
 				assetRendererFactoryInstances.add(assetRendererFactoryInstance);
 			}

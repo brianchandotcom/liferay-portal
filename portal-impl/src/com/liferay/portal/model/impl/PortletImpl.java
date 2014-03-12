@@ -1871,13 +1871,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public TemplateHandler getTemplateHandlerInstance() {
-		if (Validator.isNull(getTemplateHandlerClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<TemplateHandler> templateHandlerInstances =
+			portletBag.getTemplateHandlerInstances();
+
+		if (templateHandlerInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getTemplateHandlerInstance();
+		return templateHandlerInstances.get(0);
 	}
 
 	/**

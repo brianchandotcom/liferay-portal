@@ -230,6 +230,10 @@ public class FolderStagedModelDataHandler
 			Folder folder)
 		throws Exception {
 
+		if (!folder.isDefaultRepository()) {
+			return;
+		}
+
 		List<DLFileEntryType> dlFileEntryTypes =
 			DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(
 				new long[] {
@@ -301,6 +305,10 @@ public class FolderStagedModelDataHandler
 			PortletDataContext portletDataContext, Element folderElement,
 			Folder folder, Folder importedFolder, ServiceContext serviceContext)
 		throws Exception {
+
+		if (!folder.isDefaultRepository()) {
+			return;
+		}
 
 		List<Long> currentFolderFileEntryTypeIds = new ArrayList<Long>();
 

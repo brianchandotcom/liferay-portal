@@ -49,7 +49,6 @@ public class ConfigurationPortlet extends StrutsPortlet {
 
 	@Override
 	public void init(PortletConfig portletConfig) throws PortletException {
-
 		if (portletConfig instanceof PortletConfigImpl) {
 			ConfigurationPortletPortletConfig confPortletConfig =
 				new ConfigurationPortletPortletConfig(
@@ -63,7 +62,6 @@ public class ConfigurationPortlet extends StrutsPortlet {
 	}
 
 	class ConfigurationPortletPortletConfig extends PortletConfigImpl {
-
 		ConfigurationPortletPortletConfig(
 			PortletConfigImpl wrappedPortletConfig) {
 

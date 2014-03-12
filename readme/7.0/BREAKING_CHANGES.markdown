@@ -61,6 +61,10 @@ horizontal rule):
 
 ---------------------------------------
 ```
+
+**Important:** Titles, links, and tables should only exceed 80 columns *if
+necessary*; all other text **must NOT exceed 80 columns**.
+
 ---------------------------------------
 
 ### Merged Configured Email Signature Field into the Body of Email Messages from Message Boards and Wiki

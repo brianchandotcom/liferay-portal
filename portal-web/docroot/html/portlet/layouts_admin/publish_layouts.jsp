@@ -23,7 +23,7 @@ if (Validator.isNull(cmd)) {
 	cmd = ParamUtil.getString(request, "originalCmd", "publish_to_live");
 }
 
-String publishNav = ParamUtil.getString(request, "publishNav", "custom");
+String publishConfigurationButtons = ParamUtil.getString(request, "publishConfigurationButtons", "custom");
 
 String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
 
@@ -190,7 +190,7 @@ else {
 	<c:if test='<%= !cmd.equals("view_processes") %>'>
 		<liferay-ui:section>
 			<aui:nav-bar>
-				<aui:nav id="publishNav">
+				<aui:nav id="publishConfigurationButtons">
 					<aui:nav-item
 						data-value="custom"
 						iconCssClass="icon-puzzle"
@@ -198,14 +198,14 @@ else {
 					/>
 
 					<aui:nav-item
-						data-value="publish-configurations"
+						data-value="saved"
 						iconCssClass="icon-archive"
 						label="export-templates"
 					/>
 				</aui:nav>
 			</aui:nav-bar>
 
-			<div <%= publishNav.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />publishOptions">
+			<div <%= publishConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
 				<aui:form action='<%= portletURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" %>' >
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 					<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />
@@ -365,7 +365,7 @@ else {
 				</aui:form>
 			</div>
 
-			<div <%= publishNav.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />publishConfigurations">
+			<div <%= publishConfigurationButtons.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />savedConfigurations">
 
 			</div>
 		</liferay-ui:section>
@@ -500,19 +500,20 @@ else {
 	};
 
 	var processDataValue = function(dataValue) {
-		var publishOptions = A.one('#<portlet:namespace />publishOptions');
-		var publishConfigurations = A.one('#<portlet:namespace />publishConfigurations');
+		var customConfiguration = A.one('#<portlet:namespace />customConfiguration');
+		var savedConfigurations = A.one('#<portlet:namespace />savedConfigurations');
 
 		if (dataValue === 'custom') {
-			publishConfigurations.hide();
-			publishOptions.show();
+			savedConfigurations.hide();
+
+			customConfiguration.show();
 		}
-		else if (dataValue === 'publish-configurations') {
-			publishOptions.hide();
-			publishConfigurations.show();
+		else if (dataValue === 'saved') {
+			customConfiguration.hide();
+
+			savedConfigurations.show();
 		}
 	};
 
-	A.one('#<portlet:namespace />publishNav').delegate('click', clickHandler, 'li a');
-
+	A.one('#<portlet:namespace />publishConfigurationButtons').delegate('click', clickHandler, 'li a');
 </aui:script>

@@ -171,10 +171,6 @@
 		}
 	}
 
-	.nav-header {
-		word-wrap: break-word;
-	}
-
 	.lfr-tree .tree-node .tree-node-selected .tree-label {
 		background: #E4F5FC;
 	}
@@ -627,6 +623,8 @@
 		background-color: #E5E5E5;
 		border: solid #DDD;
 		border-width: 1px 0;
+
+		@include ellipsis;
 	}
 
 	.accordion .accordion-group {

@@ -16,18 +16,9 @@ package com.liferay.portal.kernel.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Provides a utility facade to the staged model data handler registry
@@ -50,7 +41,22 @@ public class StagedModelDataHandlerRegistryUtil {
 	public static StagedModelDataHandler<?> getStagedModelDataHandler(
 		String className) {
 
-		return _instance._getStagedModelDataHandler(className);
+		return getStagedModelDataHandlerRegistry().getStagedModelDataHandler(
+			className);
+	}
+
+	/**
+	 * Returns the staged model data handler registry.
+	 *
+	 * @return the staged model data handler registry
+	 */
+	public static StagedModelDataHandlerRegistry
+		getStagedModelDataHandlerRegistry() {
+
+		PortalRuntimePermission.checkGetBeanProperty(
+			StagedModelDataHandlerRegistryUtil.class);
+
+		return _stagedModelDataHandlerRegistry;
 	}
 
 	/**
@@ -59,7 +65,7 @@ public class StagedModelDataHandlerRegistryUtil {
 	 * @return the registered staged model data handlers
 	 */
 	public static List<StagedModelDataHandler<?>> getStagedModelDataHandlers() {
-		return _instance._getStagedModelDataHandlers();
+		return getStagedModelDataHandlerRegistry().getStagedModelDataHandlers();
 	}
 
 	/**
@@ -70,7 +76,7 @@ public class StagedModelDataHandlerRegistryUtil {
 	public static void register(
 		StagedModelDataHandler<?> stagedModelDataHandler) {
 
-		_instance._register(stagedModelDataHandler);
+		getStagedModelDataHandlerRegistry().register(stagedModelDataHandler);
 	}
 
 	/**
@@ -97,108 +103,24 @@ public class StagedModelDataHandlerRegistryUtil {
 	public static void unregister(
 		StagedModelDataHandler<?> stagedModelDataHandler) {
 
-		_instance._unregister(stagedModelDataHandler);
+		getStagedModelDataHandlerRegistry().unregister(stagedModelDataHandler);
 	}
 
-	private StagedModelDataHandlerRegistryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
+	/**
+	 * Sets the staged model data handler registry.
+	 *
+	 * @param stagedModelDataHandlerRegistry the staged model data handler
+	 *        registry
+	 */
+	public void setStagedModelDataHandlerRegistry(
+		StagedModelDataHandlerRegistry stagedModelDataHandlerRegistry) {
 
-		_serviceTracker = registry.trackServices(
-			(Class<StagedModelDataHandler<?>>)(Class<?>)
-				StagedModelDataHandler.class,
-			new StagedModelDataHandlerServiceTrackerCustomizer());
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_serviceTracker.open();
+		_stagedModelDataHandlerRegistry = stagedModelDataHandlerRegistry;
 	}
 
-	private StagedModelDataHandler<?> _getStagedModelDataHandler(
-		String className) {
-
-		return _stagedModelDataHandlers.get(className);
-	}
-
-	private List<StagedModelDataHandler<?>> _getStagedModelDataHandlers() {
-		Collection<StagedModelDataHandler<?>> values =
-			_stagedModelDataHandlers.values();
-
-		return ListUtil.fromCollection(values);
-	}
-
-	private void _register(StagedModelDataHandler<?> stagedModelDataHandler) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<StagedModelDataHandler<?>> serviceRegistration =
-			registry.registerService(
-				(Class<StagedModelDataHandler<?>>)(Class<?>)
-					StagedModelDataHandler.class, stagedModelDataHandler);
-
-		_serviceRegistrations.put(stagedModelDataHandler, serviceRegistration);
-	}
-
-	private void _unregister(StagedModelDataHandler<?> stagedModelDataHandler) {
-		ServiceRegistration<StagedModelDataHandler<?>> serviceRegistration =
-			_serviceRegistrations.remove(stagedModelDataHandler);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
-	private static StagedModelDataHandlerRegistryUtil _instance =
-		new StagedModelDataHandlerRegistryUtil();
-
-	private Map
-		<StagedModelDataHandler<?>,
-			ServiceRegistration<StagedModelDataHandler<?>>>
-				_serviceRegistrations = new ConcurrentHashMap
-					<StagedModelDataHandler<?>,
-						ServiceRegistration<StagedModelDataHandler<?>>>();
-
-	private ServiceTracker<StagedModelDataHandler<?>, StagedModelDataHandler<?>>
-		_serviceTracker;
-	private Map<String, StagedModelDataHandler<?>> _stagedModelDataHandlers =
-		new ConcurrentHashMap<String, StagedModelDataHandler<?>>();
-
-	private class StagedModelDataHandlerServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<StagedModelDataHandler<?>, StagedModelDataHandler<?>> {
-
-		@Override
-		public StagedModelDataHandler<?> addingService(
-			ServiceReference<StagedModelDataHandler<?>> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			StagedModelDataHandler<?> stagedModelDataHandler =
-				registry.getService(serviceReference);
-
-			for (String className : stagedModelDataHandler.getClassNames()) {
-				_stagedModelDataHandlers.put(className, stagedModelDataHandler);
-			}
-
-			return stagedModelDataHandler;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<StagedModelDataHandler<?>> serviceReference,
-			StagedModelDataHandler<?> stagedModelDataHandler) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<StagedModelDataHandler<?>> serviceReference,
-			StagedModelDataHandler<?> stagedModelDataHandler) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			for (String className : stagedModelDataHandler.getClassNames()) {
-				_stagedModelDataHandlers.remove(className);
-			}
-		}
-
-	}
+	private static StagedModelDataHandlerRegistry
+		_stagedModelDataHandlerRegistry;
 
 }

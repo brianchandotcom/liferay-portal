@@ -25,6 +25,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -34,7 +35,6 @@ import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
 import javax.portlet.ActionRequest;
@@ -179,12 +179,12 @@ public class EditDiscussionAction extends PortletAction {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		if (subscribe) {
-			MBDiscussionLocalServiceUtil.subscribeDiscussion(
+			SubscriptionLocalServiceUtil.addSubscription(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				className, classPK);
 		}
 		else {
-			MBDiscussionLocalServiceUtil.unsubscribeDiscussion(
+			SubscriptionLocalServiceUtil.deleteSubscription(
 				themeDisplay.getUserId(), className, classPK);
 		}
 	}
@@ -268,7 +268,7 @@ public class EditDiscussionAction extends PortletAction {
 		boolean subscribe = ParamUtil.getBoolean(actionRequest, "subscribe");
 
 		if (subscribe) {
-			MBDiscussionLocalServiceUtil.subscribeDiscussion(
+			SubscriptionLocalServiceUtil.addSubscription(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				className, classPK);
 		}

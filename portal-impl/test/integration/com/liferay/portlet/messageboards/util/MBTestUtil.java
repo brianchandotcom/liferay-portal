@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.util;
 
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,7 +28,6 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadFlag;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
@@ -100,30 +98,6 @@ public class MBTestUtil {
 		return MBCategoryServiceUtil.addCategory(
 			TestPropsValues.getUserId(), parentCategoryId, name,
 			ServiceTestUtil.randomString(), serviceContext);
-	}
-
-	public static MBMessage addDiscussionMessage(
-			User user, long groupId, String className, long classPK)
-		throws Exception {
-
-		MBMessageDisplay messageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				user.getUserId(), groupId, className, classPK,
-				WorkflowConstants.STATUS_APPROVED);
-
-		MBThread thread =  messageDisplay.getThread();
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			groupId);
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return MBMessageLocalServiceUtil.addDiscussionMessage(
-			user.getUserId(), user.getFullName(), groupId, className, classPK,
-			thread.getThreadId(), thread.getRootMessageId(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
-			serviceContext);
 	}
 
 	public static MBMessage addMessage(long groupId) throws Exception {
@@ -259,23 +233,6 @@ public class MBTestUtil {
 		inputStreamOVPs.add(inputStreamOVP);
 
 		return inputStreamOVPs;
-	}
-
-	public static MBMessage updateDiscussionMessage(
-			long userId, long groupId, long messageId, String className,
-			long classPK)
-		throws Exception {
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			groupId);
-
-		serviceContext.setCommand(Constants.UPDATE);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return MBMessageLocalServiceUtil.updateDiscussionMessage(
-			userId, messageId, className, classPK,
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
-			serviceContext);
 	}
 
 	protected static MBMessage addMessage(

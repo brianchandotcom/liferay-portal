@@ -191,6 +191,10 @@
 	<bean id="com.liferay.portal.kernel.lar.ExportImportHelperUtil" class="com.liferay.portal.kernel.lar.ExportImportHelperUtil">
 		<property name="exportImportHelper" ref="com.liferay.portal.kernel.lar.ExportImportHelper" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistry" class="com.liferay.portal.lar.StagedModelDataHandlerRegistryImpl" />
+	<bean id="com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil" class="com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil">
+		<property name="stagedModelDataHandlerRegistry" ref="com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistry" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.lock.LockListenerRegistryUtil" class="com.liferay.portal.kernel.lock.LockListenerRegistryUtil">
 		<property name="lockListenerRegistry">
 			<bean class="com.liferay.portal.util.LockListenerRegistryImpl" />

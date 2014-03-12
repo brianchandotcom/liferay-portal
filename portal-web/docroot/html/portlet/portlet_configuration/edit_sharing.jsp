@@ -114,9 +114,9 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 						</c:choose>
 					</div>
 
-					<label><liferay-ui:message key="callback-url" /></label>
-
-					<liferay-ui:input-resource url="<%= callbackURL %>" />
+					<aui:field-wrapper label="callback-url">
+						<liferay-ui:input-resource id="callbackUrl" url="<%= callbackURL %>" />
+					</aui:field-wrapper>
 
 					<aui:input label='<%= LanguageUtil.format(pageContext, "allow-users-to-add-x-to-facebook", portletDisplay.getTitle(), false) %>' name="facebookShowAddAppLink" type="checkbox" value="<%= facebookShowAddAppLink %>" />
 				</c:if>
@@ -134,9 +134,9 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 					<liferay-ui:message key="use-the-opensocial-gadget-url-to-create-an-opensocial-gadget" />
 				</div>
 
-				<label><liferay-ui:message key="opensocial-gadget-url" /></label>
-
-				<liferay-ui:input-resource url="<%= PortalUtil.getGoogleGadgetURL(portlet, themeDisplay) %>" />
+				<aui:field-wrapper label="opensocial-gadget-url">
+					<liferay-ui:input-resource id="opensocialGadgetUrl" url="<%= PortalUtil.getGoogleGadgetURL(portlet, themeDisplay) %>" />
+				</aui:field-wrapper>
 
 				<aui:input label='<%= LanguageUtil.format(pageContext, "allow-users-to-add-x-to-igoogle", portletDisplay.getTitle(), false) %>' name="iGoogleShowAddAppLink" type="checkbox" value="<%= iGoogleShowAddAppLink %>" />
 			</aui:fieldset>
@@ -153,9 +153,9 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 					<liferay-ui:message key="use-the-netvibes-widget-url-to-create-a-netvibes-widget" />
 				</div>
 
-				<label><liferay-ui:message key="netvibes-widget-url" /></label>
-
-				<liferay-ui:input-resource url="<%= PortalUtil.getNetvibesURL(portlet, themeDisplay) %>" />
+				<aui:field-wrapper label="netvibes-widget-url">
+					<liferay-ui:input-resource id="netvibesWidgetUrl" url="<%= PortalUtil.getNetvibesURL(portlet, themeDisplay) %>" />
+				</aui:field-wrapper>
 
 				<aui:input label='<%= LanguageUtil.format(pageContext, "allow-users-to-add-x-to-netvibes-pages", portletDisplay.getTitle(), false) %>' name="netvibesShowAddAppLink" type="checkbox" value="<%= netvibesShowAddAppLink %>" />
 			</aui:fieldset>

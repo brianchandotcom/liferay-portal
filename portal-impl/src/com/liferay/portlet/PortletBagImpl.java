@@ -38,7 +38,8 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
-import com.liferay.registry.collections.ServiceTrackerList;
+
+import java.io.Closeable;
 
 import java.util.List;
 import java.util.Locale;
@@ -138,54 +139,13 @@ public class PortletBagImpl implements PortletBag {
 
 	@Override
 	public void destroy() {
-		ServiceTrackerList<ConfigurationAction>
-			configurationActionInstancesServiceTrackerList =
-				(ServiceTrackerList<ConfigurationAction>)
-					_configurationActionInstances;
-
-		configurationActionInstancesServiceTrackerList.close();
-
-		ServiceTrackerList<FriendlyURLMapper>
-			friendlyURLMapperInstancesServiceTrackerList =
-				(ServiceTrackerList<FriendlyURLMapper>)
-					_friendlyURLMapperInstances;
-
-		friendlyURLMapperInstancesServiceTrackerList.close();
-
-		ServiceTrackerList<Indexer> indexerInstancesServiceTrackerList =
-			(ServiceTrackerList<Indexer>)_indexerInstances;
-
-		indexerInstancesServiceTrackerList.close();
-
-		ServiceTrackerList<OpenSearch> openSearchInstancesServiceTrackerList =
-			(ServiceTrackerList<OpenSearch>)_openSearchInstances;
-
-		openSearchInstancesServiceTrackerList.close();
-
-		ServiceTrackerList<PortletDataHandler>
-			portletDataHandlerInstancesServiceTrackerList =
-				(ServiceTrackerList<PortletDataHandler>)
-					_portletDataHandlerInstances;
-
-		portletDataHandlerInstancesServiceTrackerList.close();
-
-		ServiceTrackerList<PortletLayoutListener>
-			portletLayoutListenerInstancesServiceTrackerList =
-				(ServiceTrackerList<PortletLayoutListener>)
-					_portletLayoutListenerInstances;
-
-		portletLayoutListenerInstancesServiceTrackerList.close();
-
-		ServiceTrackerList<TemplateHandler>
-			templateHandlerInstancesServiceTrackerList =
-				(ServiceTrackerList<TemplateHandler>)_templateHandlerInstances;
-
-		templateHandlerInstancesServiceTrackerList.close();
-
-		ServiceTrackerList<URLEncoder> urlEncoderInstancesServiceTrackerList =
-			(ServiceTrackerList<URLEncoder>)_urlEncoderInstances;
-
-		urlEncoderInstancesServiceTrackerList.close();
+		close((Closeable)_configurationActionInstances);
+		close((Closeable)_friendlyURLMapperInstances);
+		close((Closeable)_indexerInstances);
+		close((Closeable)_openSearchInstances);
+		close((Closeable)_portletDataHandlerInstances);
+		close((Closeable)_templateHandlerInstances);
+		close((Closeable)_urlEncoderInstances);
 	}
 
 	@Override
@@ -359,6 +319,15 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public void setPortletName(String portletName) {
 		_portletName = portletName;
+	}
+
+	protected void close(Closeable closeable) {
+		try {
+			closeable.close();
+		}
+		catch (Exception e) {
+			throw new AssertionError("This should never happen!", e);
+		}
 	}
 
 	private List<AssetRendererFactory> _assetRendererFactoryInstances;

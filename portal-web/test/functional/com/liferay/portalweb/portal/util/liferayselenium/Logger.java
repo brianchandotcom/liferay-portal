@@ -182,6 +182,18 @@ public class Logger {
 
 		log("actionCommandLog", sb.toString(), "selenium");
 
+		WebElement webElement = _webDriver.findElement(By.id("pauseError"));
+
+		String webElementText = webElement.getText();
+
+		while (webElementText.equals("Disable Pause After Error")) {
+			webElement = _webDriver.findElement(By.id("pauseError"));
+
+			webElementText = webElement.getText();
+
+			Thread.sleep(1000);
+		}
+
 		_liferaySelenium.saveScreenshot();
 
 		_screenshotCount++;

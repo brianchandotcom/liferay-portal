@@ -9,6 +9,15 @@
 			}
 		}
 
+		function pauseErrorButtonCheck() {
+			if (document.getElementById("pauseErrorButton").checked) {
+				document.getElementById("pauseError").innerHTML = "Disable Pause After Error";
+			}
+			else {
+				document.getElementById("pauseError").innerHTML = "Enable Pause After Error&nbsp;";
+			}
+		}
+
 		function radioCheck () {
 			var actionCommandLogButtonChecked = document.getElementById("actionCommandLogButton").checked;
 			var descriptionLogButtonChecked = document.getElementById("descriptionLogButton").checked;

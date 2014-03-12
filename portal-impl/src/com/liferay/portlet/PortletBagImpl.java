@@ -65,7 +65,7 @@ public class PortletBagImpl implements PortletBag {
 		List<URLEncoder> urlEncoderInstances,
 		List<PortletDataHandler> portletDataHandlerInstances,
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances,
-		TemplateHandler templateHandlerInstance,
+		List<TemplateHandler> templateHandlerInstances,
 		PortletLayoutListener portletLayoutListenerInstance,
 		PollerProcessor pollerProcessorInstance,
 		MessageListener popMessageListenerInstance,
@@ -93,7 +93,7 @@ public class PortletBagImpl implements PortletBag {
 		_urlEncoderInstances = urlEncoderInstances;
 		_portletDataHandlerInstances = portletDataHandlerInstances;
 		_stagedModelDataHandlerInstances = stagedModelDataHandlerInstances;
-		_templateHandlerInstance = templateHandlerInstance;
+		_templateHandlerInstances = templateHandlerInstances;
 		_portletLayoutListenerInstance = portletLayoutListenerInstance;
 		_pollerProcessorInstance = pollerProcessorInstance;
 		_popMessageListenerInstance = popMessageListenerInstance;
@@ -121,7 +121,7 @@ public class PortletBagImpl implements PortletBag {
 			getConfigurationActionInstances(), getIndexerInstances(),
 			getOpenSearchInstances(), getFriendlyURLMapperInstances(),
 			getURLEncoderInstances(), getPortletDataHandlerInstances(),
-			getStagedModelDataHandlerInstances(), getTemplateHandlerInstance(),
+			getStagedModelDataHandlerInstances(), getTemplateHandlerInstances(),
 			getPortletLayoutListenerInstance(), getPollerProcessorInstance(),
 			getPopMessageListenerInstance(),
 			getSocialActivityInterpreterInstances(),
@@ -168,6 +168,12 @@ public class PortletBagImpl implements PortletBag {
 					_portletDataHandlerInstances;
 
 		portletDataHandlerInstancesServiceTrackerList.close();
+
+		ServiceTrackerList<TemplateHandler>
+			templateHandlerInstancesServiceTrackerList =
+				(ServiceTrackerList<TemplateHandler>)_templateHandlerInstances;
+
+		templateHandlerInstancesServiceTrackerList.close();
 
 		ServiceTrackerList<URLEncoder> urlEncoderInstancesServiceTrackerList =
 			(ServiceTrackerList<URLEncoder>)_urlEncoderInstances;
@@ -302,8 +308,8 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public TemplateHandler getTemplateHandlerInstance() {
-		return _templateHandlerInstance;
+	public List<TemplateHandler> getTemplateHandlerInstances() {
+		return _templateHandlerInstances;
 	}
 
 	@Override
@@ -369,7 +375,7 @@ public class PortletBagImpl implements PortletBag {
 	private List<SocialActivityInterpreter> _socialActivityInterpreterInstances;
 	private SocialRequestInterpreter _socialRequestInterpreterInstance;
 	private List<StagedModelDataHandler<?>> _stagedModelDataHandlerInstances;
-	private TemplateHandler _templateHandlerInstance;
+	private List<TemplateHandler> _templateHandlerInstances;
 	private List<TrashHandler> _trashHandlerInstances;
 	private List<URLEncoder> _urlEncoderInstances;
 	private List<UserNotificationHandler>

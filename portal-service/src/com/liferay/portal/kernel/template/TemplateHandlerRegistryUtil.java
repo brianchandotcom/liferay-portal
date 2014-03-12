@@ -14,9 +14,19 @@
 
 package com.liferay.portal.kernel.template;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Juan Fernández
@@ -24,44 +34,123 @@ import java.util.List;
 public class TemplateHandlerRegistryUtil {
 
 	public static long[] getClassNameIds() {
-		return getTemplateRegistry().getClassNameIds();
+		long[] classNameIds = new long[_instance._templateHandlers.size()];
+
+		int i = 0;
+
+		for (Map.Entry<String, TemplateHandler> entry :
+				_instance._templateHandlers.entrySet()) {
+
+			TemplateHandler templateHandler = entry.getValue();
+
+			classNameIds[i++] = PortalUtil.getClassNameId(
+				templateHandler.getClassName());
+		}
+
+		return classNameIds;
 	}
 
 	public static TemplateHandler getTemplateHandler(long classNameId) {
-		return getTemplateRegistry().getTemplateHandler(classNameId);
+		String className = PortalUtil.getClassName(classNameId);
+
+		return _instance._templateHandlers.get(className);
 	}
 
 	public static TemplateHandler getTemplateHandler(String className) {
-		return getTemplateRegistry().getTemplateHandler(className);
+		return _instance._templateHandlers.get(className);
 	}
 
 	public static List<TemplateHandler> getTemplateHandlers() {
-		return getTemplateRegistry().getTemplateHandlers();
-	}
+		List<TemplateHandler> templateHandlers = new ArrayList<TemplateHandler>(
+			_instance._templateHandlers.values());
 
-	public static TemplateHandlerRegistry getTemplateRegistry() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			TemplateHandlerRegistryUtil.class);
-
-		return _templateHandlerRegistry;
+		return Collections.unmodifiableList(templateHandlers);
 	}
 
 	public static void register(TemplateHandler templateHandler) {
-		getTemplateRegistry().register(templateHandler);
+		_instance._register(templateHandler);
 	}
 
 	public static void unregister(TemplateHandler templateHandler) {
-		getTemplateRegistry().unregister(templateHandler);
+		_instance._unregister(templateHandler);
 	}
 
-	public void setTemplateHandlerRegistry(
-		TemplateHandlerRegistry templateHandlerRegistry) {
+	private TemplateHandlerRegistryUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+		_serviceTracker = registry.trackServices(
+			TemplateHandler.class,
+			new TemplateHandlerServiceTrackerCustomizer());
 
-		_templateHandlerRegistry = templateHandlerRegistry;
+		_serviceTracker.open();
 	}
 
-	private static TemplateHandlerRegistry _templateHandlerRegistry;
+	private void _register(TemplateHandler templateHandler) {
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<TemplateHandler> serviceRegistration =
+			registry.registerService(TemplateHandler.class, templateHandler);
+
+		_serviceRegistrations.put(
+			templateHandler.getClassName(), serviceRegistration);
+	}
+
+	private void _unregister(TemplateHandler templateHandler) {
+		ServiceRegistration<TemplateHandler> serviceRegistration =
+			_serviceRegistrations.remove(templateHandler.getClassName());
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
+	}
+
+	private static TemplateHandlerRegistryUtil _instance =
+		new TemplateHandlerRegistryUtil();
+
+	private Map<String, ServiceRegistration<TemplateHandler>>
+		_serviceRegistrations =
+			new ConcurrentHashMap
+				<String, ServiceRegistration<TemplateHandler>>();
+	private ServiceTracker<TemplateHandler, TemplateHandler> _serviceTracker;
+	private Map<String, TemplateHandler> _templateHandlers =
+		new ConcurrentHashMap<String, TemplateHandler>();
+
+	private class TemplateHandlerServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<TemplateHandler, TemplateHandler> {
+
+		@Override
+		public TemplateHandler addingService(
+			ServiceReference<TemplateHandler> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			TemplateHandler templateHandler = registry.getService(
+				serviceReference);
+
+			_templateHandlers.put(
+				templateHandler.getClassName(), templateHandler);
+
+			return templateHandler;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<TemplateHandler> serviceReference,
+			TemplateHandler templateHandler) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<TemplateHandler> serviceReference,
+			TemplateHandler templateHandler) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_templateHandlers.remove(templateHandler.getClassName());
+		}
+
+	}
 
 }

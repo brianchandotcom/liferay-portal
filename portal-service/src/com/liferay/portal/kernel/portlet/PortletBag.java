@@ -102,7 +102,7 @@ public interface PortletBag extends Cloneable {
 
 	public List<StagedModelDataHandler<?>> getStagedModelDataHandlerInstances();
 
-	public TemplateHandler getTemplateHandlerInstance();
+	public List<TemplateHandler> getTemplateHandlerInstances();
 
 	public List<TrashHandler> getTrashHandlerInstances();
 

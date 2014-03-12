@@ -14,37 +14,23 @@
  */
 --%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
+String articleId = ParamUtil.getString(request, "articleId");
+long groupId = ParamUtil.getLong(request, "groupId");
 
 String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS);
-long nodeId = (Long)request.getAttribute(WebKeys.WIKI_NODE_ID);
-String title = (String)request.getAttribute(WebKeys.TITLE);
 double sourceVersion = (Double)request.getAttribute(WebKeys.SOURCE_VERSION);
 double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 
-Object[] returnValue = WikiUtil.getWikiPageVersionsInfo(nodeId, title, sourceVersion, targetVersion, pageContext);
+Object[] returnValue = JournalUtil.getJournalVersionsInfo(groupId, articleId, sourceVersion, targetVersion);
 %>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
-
-<liferay-util:include page="/html/portlet/wiki/page_tabs.jsp">
-	<liferay-util:param name="tabs1" value="history" />
-</liferay-util:include>
-
-<liferay-util:include page="/html/portlet/wiki/page_tabs_history.jsp" />
-
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title="compare-versions"
-/>
-
 <liferay-portlet:renderURL varImpl="iteratorURL">
-	<portlet:param name="struts_action" value="/wiki/compare_versions" />
-	<portlet:param name="nodeId" value="<%= String.valueOf(nodeId) %>" />
-	<portlet:param name="title" value="<%= title %>" />
+	<portlet:param name="struts_action" value="/journal/compare_versions" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="articleId" value="<%= articleId %>" />
 </liferay-portlet:renderURL>
 
 <liferay-ui:version-comparator

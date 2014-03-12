@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -84,6 +86,7 @@ import com.liferay.portlet.journal.model.JournalStructureConstants;
 import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.model.JournalTemplateAdapter;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleCreateDateComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleDisplayDateComparator;
@@ -954,6 +957,54 @@ public class JournalUtil {
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();
+	}
+
+	public static Object[] getJournalVersionsInfo(
+			long groupId, String articleId, double sourceVersion,
+			double targetVersion)
+		throws SystemException {
+
+		double previousVersion = 0;
+		double nextVersion = 0;
+
+		List<JournalArticle> articles =
+			JournalArticleServiceUtil.getArticlesByArticleId(
+				groupId, articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new ArticleVersionComparator());
+		List<JournalArticle> intermediateArticles =
+			new ArrayList<JournalArticle>();
+
+		for (JournalArticle article : articles) {
+			if ((article.getVersion() < sourceVersion) &&
+				(article.getVersion() > previousVersion)) {
+
+				previousVersion = article.getVersion();
+			}
+
+			if ((article.getVersion() > targetVersion) &&
+				((article.getVersion() < nextVersion) || (nextVersion == 0))) {
+
+				nextVersion = article.getVersion();
+			}
+
+			if ((article.getVersion() > sourceVersion) &&
+				(article.getVersion() <= targetVersion)) {
+
+				intermediateArticles.add(article);
+			}
+		}
+
+		List<Tuple> versionsInfo = new ArrayList<Tuple>();
+
+		for (JournalArticle article : intermediateArticles) {
+			Tuple versionInfo = new Tuple(
+				article.getUserId(), article.getVersion(), StringPool.BLANK,
+				StringPool.BLANK);
+
+			versionsInfo.add(versionInfo);
+		}
+
+		return new Object[] {versionsInfo, previousVersion, nextVersion};
 	}
 
 	public static long getPreviewPlid(

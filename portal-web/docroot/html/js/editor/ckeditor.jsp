@@ -180,6 +180,8 @@ if (!inlineEdit) {
 
 		setHTML: function(value) {
 			CKEDITOR.instances['<%= name %>'].setData(value);
+
+			window['<%= name %>']._setStyles();
 		}
 	};
 </aui:script>
@@ -207,6 +209,20 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 </script>
 
 <aui:script use="<%= modules %>">
+	window['<%= name %>']._setStyles = function() {
+		var iframe = A.one('#cke_<%= name %> iframe');
+
+		if (iframe) {
+			var iframeWin = iframe.getDOM().contentWindow;
+
+			if (iframeWin) {
+				var iframeDoc = iframeWin.document.documentElement;
+
+				A.one(iframeDoc).addClass('aui');
+			}
+		}
+	};
+
 	(function() {
 		var Util = Liferay.Util;
 
@@ -231,17 +247,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 				);
 			</c:if>
 
-			var iframe = A.one('#cke_<%= name %> iframe');
-
-			if (iframe) {
-				var iframeWin = iframe.getDOM().contentWindow;
-
-				if (iframeWin) {
-					var iframeDoc = iframeWin.document.documentElement;
-
-					A.one(iframeDoc).addClass('aui');
-				}
-			}
+			window['<%= name %>']._setStyles();
 		}
 
 		<%
@@ -347,6 +353,8 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 
 			}
 		);
+
+		ckEditor.on('dataReady', window['<%= name %>']._setStyles);
 
 		<%
 		if (toolbarSet.equals("creole")) {

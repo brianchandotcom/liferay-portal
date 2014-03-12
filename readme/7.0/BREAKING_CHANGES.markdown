@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `69f89fd`.*
+*This document has been reviewed through commit `cfd3f6a`.*
 
 ## Breaking Changes
 
@@ -63,46 +63,49 @@ horizontal rule):
 ```
 ---------------------------------------
 
-### Merge fields signature and body for message boards and wiki e-mail configuration
-* **Date**: 28th February 2014
-* **JIRA Ticket**: LPS-44599
+### Merged Configured Email Signature Field into the Body of Email Messages from Message Boards and Wiki
+- **Date**: 2014-Feb-28
+- **JIRA Ticket**: LPS-44599
 
 #### What changed?
-The configuration for e-mail signatures of notifications from message boards and
-wiki has been removed. An automatic update process has been developed to
-append the signatures into the bodies of the e-mail messages for wiki and
-message boards notifications. This process only applies if you have configured
-your signatures in database. In case your signatures were declared in
-portal.properties they should be updated manually as explained below.
+The configuration for email signatures of notifications from Message Boards and
+Wiki has been removed. An automatic update process is available that appends
+existing signatures into respective email message bodies for Message Boards and
+Wiki notifications. The upgrade process only applies to configured signatures in
+the database. In case you declared signatures in portal properties (e.g.,
+`portal-ext.properties`), you must make the manual changes explained below.
 
 #### Who is affected?
-Users who have configured e-mail signatures for wiki or message boards
-notifications. Especially those who have done it in their portal.properties
-file since manual changes are required.
+Users and system administrators who have configured email signatures for Message
+Boards or Wiki notifications are affected. System administrators who have
+configured portal properties (e.g., `portal-ext.properties`) must make the
+manual changes described below.
 
 #### How should I update my code?
-You should modify your portal.properties file to remove the properties
-message.boards.email.message.added.signature,
-message.boards.email.message.updated.signature, wiki.email.page.added.signature,
-and wiki.email.page.updated.signature. Then, you should append the contents of
-the signatures to the bodies you have configured in you portal.properties file.
+You should modify your `portal-ext.properties` file to remove the properties
+`message.boards.email.message.added.signature`,
+`message.boards.email.message.updated.signature`,
+`wiki.email.page.added.signature`, and `wiki.email.page.updated.signature`.
+Then, you should append the contents of the signatures to the bodies you had
+previously configured in your `portal-ext.properties` file.
 
 **Example**
 
 Replace:
 ```
 wiki.email.page.updated.body=A wiki page was updated.
-wiki.email.page.updated.signature=For any doubts e-mail the system administrator
+wiki.email.page.updated.signature=For any doubts email the system administrator
 ```
 
 With:
 ```
-wiki.email.page.updated.body=A wiki page was updated.\n--\nFor any doubts e-mail the system administrator
+wiki.email.page.updated.body=A wiki page was updated.\n--\nFor any doubts email the system administrator
 ```
 
 #### Why was this change made?
 This change helps simplify the user interface. The signatures can still be set
-inside the body and there was no real benefit in having both things separated.
+inside the message body. There was no real benefit in keeping the signature and
+body fields separate.
 
 ---------------------------------------
 

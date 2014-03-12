@@ -34,6 +34,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_BLOCKED_MESSAGE</td>
+	<td>//div[contains(@class,'alert-block')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNLOCK_BUTTON</td>
+	<td>//button[contains(.,'Unlock')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

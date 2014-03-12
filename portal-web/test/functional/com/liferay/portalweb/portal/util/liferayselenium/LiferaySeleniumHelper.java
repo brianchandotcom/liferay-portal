@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OSDetector;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -859,15 +860,21 @@ public class LiferaySeleniumHelper {
 	public static void typeFrame(
 		LiferaySelenium liferaySelenium, String locator, String value) {
 
-		liferaySelenium.selectFrame(locator);
+		String titleAttibute = liferaySelenium.getAttribute(locator + "@title");
+
+		int x = titleAttibute.indexOf(",");
 
 		value = value.replace("\\", "\\\\");
 		value = HtmlUtil.escapeJS(value);
 
-		liferaySelenium.runScript(
-			"document.body.innerHTML = \"" + value + "\"");
+		StringBundler sb = new StringBundler();
 
-		liferaySelenium.selectFrame("relative=parent");
+		sb.append(titleAttibute.substring(x + 1));
+		sb.append(".setHTML(\"");
+		sb.append(value);
+		sb.append("\")");
+
+		liferaySelenium.runScript(sb.toString());
 	}
 
 	public static void waitForElementNotPresent(

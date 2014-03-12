@@ -1953,13 +1953,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public URLEncoder getURLEncoderInstance() {
-		if (Validator.isNull(getURLEncoderClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<URLEncoder> urlEncoderInstances =
+			portletBag.getURLEncoderInstances();
+
+		if (urlEncoderInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getURLEncoderInstance();
+		return urlEncoderInstances.get(0);
 	}
 
 	/**

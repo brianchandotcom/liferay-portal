@@ -134,7 +134,7 @@ public class PortletBagFactory {
 		List<FriendlyURLMapper> friendlyURLMapperInstances =
 			newFriendlyURLMappers(portlet);
 
-		URLEncoder urlEncoderInstance = newURLEncoder(portlet);
+		List<URLEncoder> urlEncoderInstances = newURLEncoders(portlet);
 
 		PortletDataHandler portletDataHandlerInstance = newPortletDataHandler(
 			portlet);
@@ -320,7 +320,7 @@ public class PortletBagFactory {
 		PortletBag portletBag = new PortletBagImpl(
 			portlet.getPortletId(), _servletContext, portletInstance,
 			configurationActionInstances, indexerInstances, openSearchInstances,
-			friendlyURLMapperInstances, urlEncoderInstance,
+			friendlyURLMapperInstances, urlEncoderInstances,
 			portletDataHandlerInstance, stagedModelDataHandlerInstances,
 			templateHandlerInstance, portletLayoutListenerInstance,
 			pollerProcessorInstance, popMessageListenerInstance,
@@ -1036,13 +1036,20 @@ public class PortletBagFactory {
 			TemplateHandler.class, portlet.getTemplateHandlerClass());
 	}
 
-	protected URLEncoder newURLEncoder(Portlet portlet) throws Exception {
-		if (Validator.isNull(portlet.getURLEncoderClass())) {
-			return null;
+	protected List<URLEncoder> newURLEncoders(Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<URLEncoder> urlEncoderInstances =
+			getServiceTrackerList(URLEncoder.class, portlet);
+
+		if (Validator.isNotNull(portlet.getURLEncoderClass())) {
+			URLEncoder urlEncoder = (URLEncoder)newInstance(
+				URLEncoder.class, portlet.getURLEncoderClass());
+
+			urlEncoderInstances.add(urlEncoder);
 		}
 
-		return (URLEncoder)newInstance(
-			URLEncoder.class, portlet.getURLEncoderClass());
+		return urlEncoderInstances;
 	}
 
 	protected UserNotificationHandler newUserNotificationHandlerInstance(

@@ -107,16 +107,16 @@ public class DDMStructureStagedModelDataHandler
 			PortletDataContext portletDataContext, Element referenceElement)
 		throws PortletDataException {
 
-		String uuid = referenceElement.attributeValue("uuid");
-
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
-
 		importMissingGroupReference(portletDataContext, referenceElement);
+
+		String uuid = referenceElement.attributeValue("uuid");
 
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
+
+		long liveGroupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
 
 		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
 
@@ -164,12 +164,12 @@ public class DDMStructureStagedModelDataHandler
 
 		String uuid = referenceElement.attributeValue("uuid");
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
-
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
+
+		long liveGroupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
 
 		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
 

@@ -102,21 +102,23 @@ public class DLFileEntryTypeStagedModelDataHandler
 			PortletDataContext portletDataContext, Element referenceElement)
 		throws PortletDataException {
 
-		String uuid = referenceElement.attributeValue("uuid");
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
-		String fileEntryTypeKey = referenceElement.attributeValue(
-			"file-entry-type-key");
-		boolean preloaded = GetterUtil.getBoolean(
-			referenceElement.attributeValue("preloaded"));
-
 		importMissingGroupReference(portletDataContext, referenceElement);
+
+		String uuid = referenceElement.attributeValue("uuid");
 
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
+		long liveGroupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
+
 		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
+
+		String fileEntryTypeKey = referenceElement.attributeValue(
+			"file-entry-type-key");
+		boolean preloaded = GetterUtil.getBoolean(
+			referenceElement.attributeValue("preloaded"));
 
 		DLFileEntryType existingFileEntryType = null;
 
@@ -143,29 +145,31 @@ public class DLFileEntryTypeStagedModelDataHandler
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement) {
 
-		String uuid = referenceElement.attributeValue("uuid");
-		long groupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
-		String fileEntryTypeKey = referenceElement.attributeValue(
-			"file-entry-type-key");
-		boolean preloaded = GetterUtil.getBoolean(
-			referenceElement.attributeValue("preloaded"));
-
 		if (!validateMissingGroupReference(
 				portletDataContext, referenceElement)) {
 
 			return false;
 		}
 
+		String uuid = referenceElement.attributeValue("uuid");
+
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		groupId = MapUtil.getLong(groupIds, groupId, groupId);
+		long liveGroupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
+
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
+
+		String fileEntryTypeKey = referenceElement.attributeValue(
+			"file-entry-type-key");
+		boolean preloaded = GetterUtil.getBoolean(
+			referenceElement.attributeValue("preloaded"));
 
 		try {
 			DLFileEntryType existingFileEntryType = fetchExistingFileEntryType(
-				uuid, groupId, fileEntryTypeKey, preloaded);
+				uuid, liveGroupId, fileEntryTypeKey, preloaded);
 
 			if (existingFileEntryType == null) {
 				return false;

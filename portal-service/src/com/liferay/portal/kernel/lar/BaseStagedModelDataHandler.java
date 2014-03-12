@@ -162,12 +162,12 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		String uuid = referenceElement.attributeValue("uuid");
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
-
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
+
+		long liveGroupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
 
 		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
 
@@ -255,20 +255,20 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement) {
 
-		String uuid = referenceElement.attributeValue("uuid");
-
 		if (!validateMissingGroupReference(
 				portletDataContext, referenceElement)) {
 
 			return false;
 		}
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
+		String uuid = referenceElement.attributeValue("uuid");
 
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
+
+		long liveGroupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
 
 		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
 

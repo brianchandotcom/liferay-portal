@@ -58,6 +58,7 @@ import com.liferay.util.Encryptor;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -163,7 +164,8 @@ public class LoginUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms = new HashMap<String, String>();
+		Map<String, String> definitionTerms =
+			new LinkedHashMap<String, String>();
 
 		definitionTerms.put(
 			"[$FROM_ADDRESS$]", HtmlUtil.escape(emailFromAddress));

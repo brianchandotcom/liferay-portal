@@ -71,9 +71,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -203,7 +203,8 @@ public class WikiUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms = new HashMap<String, String>();
+		Map<String, String> definitionTerms =
+			new LinkedHashMap<String, String>();
 
 		definitionTerms.put(
 			"[$COMPANY_ID$]",
@@ -254,7 +255,8 @@ public class WikiUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms = new HashMap<String, String>();
+		Map<String, String> definitionTerms =
+			new LinkedHashMap<String, String>();
 
 		definitionTerms.put(
 			"[$COMPANY_ID$]",

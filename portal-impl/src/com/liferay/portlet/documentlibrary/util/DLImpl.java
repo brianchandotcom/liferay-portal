@@ -85,6 +85,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -465,7 +466,8 @@ public class DLImpl implements DL {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms = new HashMap<String, String>();
+		Map<String, String> definitionTerms =
+			new LinkedHashMap<String, String>();
 
 		definitionTerms.put(
 			"[$COMPANY_ID$]",
@@ -672,7 +674,8 @@ public class DLImpl implements DL {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms = new HashMap<String, String>();
+		Map<String, String> definitionTerms =
+			new LinkedHashMap<String, String>();
 
 		definitionTerms.put(
 			"[$COMPANY_ID$]",

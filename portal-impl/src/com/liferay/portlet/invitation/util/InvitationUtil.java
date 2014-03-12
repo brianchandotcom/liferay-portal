@@ -28,7 +28,7 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.util.ContentUtil;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -46,7 +46,8 @@ public class InvitationUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms = new HashMap<String, String>();
+		Map<String, String> definitionTerms =
+			new LinkedHashMap<String, String>();
 
 		definitionTerms.put(
 			"[$FROM_ADDRESS$]",

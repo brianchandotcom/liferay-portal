@@ -35,7 +35,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.util.ContentUtil;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -62,7 +62,8 @@ public class BlogsUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms = new HashMap<String, String>();
+		Map<String, String> definitionTerms =
+			new LinkedHashMap<String, String>();
 
 		definitionTerms.put(
 			"[$BLOGS_ENTRY_CONTENT$]",
@@ -268,7 +269,8 @@ public class BlogsUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms = new HashMap<String, String>();
+		Map<String, String> definitionTerms =
+			new LinkedHashMap<String, String>();
 
 		definitionTerms.put(
 			"[$BLOGS_ENTRY_USER_ADDRESS$]",

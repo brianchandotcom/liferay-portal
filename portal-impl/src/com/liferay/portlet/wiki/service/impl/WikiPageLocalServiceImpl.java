@@ -94,10 +94,13 @@ import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -217,9 +220,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), page.getGroupId(), userId,
-			WikiPage.class.getName(), page.getPageId(), page, serviceContext);
+		startWorkflowInstance(user, page, serviceContext);
 
 		return page;
 	}
@@ -2101,9 +2102,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), page.getGroupId(), userId,
-			WikiPage.class.getName(), page.getPageId(), page, serviceContext);
+		startWorkflowInstance(user, page, serviceContext);
 
 		return page;
 	}
@@ -2131,19 +2130,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				"{resourcePrimKey=" + resourcePrimKey + "}");
 		}
 
-		return updateStatus(userId, page, status, serviceContext);
+		return updateStatus(
+			userId, page, status, (Map)Collections.emptyMap(), serviceContext);
 	}
 
 	@Override
 	public WikiPage updateStatus(
 			long userId, WikiPage page, int status,
+			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Page
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		WikiNode node = wikiNodePersistence.findByPrimaryKey(page.getNodeId());
 
 		Date now = new Date();
 
@@ -2234,13 +2234,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				(!page.isMinorEdit() ||
 				 PropsValues.WIKI_PAGE_MINOR_EDIT_SEND_EMAIL)) {
 
-				boolean update = false;
-
-				if (page.getVersion() > WikiPageConstants.VERSION_DEFAULT) {
-					update = true;
-				}
-
-				notifySubscribers(node, page, serviceContext, update);
+				notifySubscribers(
+					page,
+					(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
+					serviceContext);
 			}
 
 			// Cache
@@ -2290,6 +2287,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		indexer.reindex(page);
 
 		return wikiPagePersistence.update(page);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, WikiPage,
+	 *             int, Map, ServiceContext)} )}
+	 */
+	@Deprecated
+	@Override
+	public WikiPage updateStatus(
+			long userId, WikiPage page, int status,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateStatus(
+			userId, page, status, (Map)Collections.emptyMap(), serviceContext);
 	}
 
 	@Override
@@ -2372,8 +2384,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return portletURL.toString();
 	}
 
-	protected String getPageURL(
-			WikiNode node, WikiPage page, ServiceContext serviceContext)
+	protected String getPageURL(WikiPage page, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		HttpServletRequest request = serviceContext.getRequest();
@@ -2383,11 +2394,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		String layoutFullURL = getLayoutURL(
-			node.getGroupId(), PortletKeys.WIKI, serviceContext);
+			page.getGroupId(), PortletKeys.WIKI, serviceContext);
 
 		if (Validator.isNotNull(layoutFullURL)) {
 			return layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
-				node.getNodeId() + StringPool.SLASH +
+				page.getNodeId() + StringPool.SLASH +
 					HttpUtil.encodeURL(WikiUtil.escapeName(page.getTitle()));
 		}
 		else {
@@ -2400,7 +2411,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			portletURL.setParameter(
 				"struts_action", "/wiki_admin/view_page_activities");
-			portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+			portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
 			portletURL.setParameter("title", page.getTitle());
 
 			return portletURL.toString();
@@ -2471,8 +2482,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void notifySubscribers(
-			WikiNode node, WikiPage page, ServiceContext serviceContext,
-			boolean update)
+			WikiPage page, String pageURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		String layoutFullURL = serviceContext.getLayoutFullURL();
@@ -2481,7 +2491,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return;
 		}
 
+		WikiNode node = wikiNodePersistence.findByPrimaryKey(page.getNodeId());
+
 		WikiSettings wikiSettings = WikiUtil.getWikiSettings(node.getGroupId());
+
+		boolean update = false;
+
+		if (page.getVersion() > WikiPageConstants.VERSION_DEFAULT) {
+			update = true;
+		}
 
 		if (!update && wikiSettings.getEmailPageAddedEnabled()) {
 		}
@@ -2522,7 +2540,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		String pageTitle = page.getTitle();
-		String pageURL = getPageURL(node, page, serviceContext);
 
 		String fromName = wikiSettings.getEmailFromName();
 		String fromAddress = wikiSettings.getEmailFromAddress();
@@ -2620,6 +2637,22 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		serviceContext.setExpandoBridgeAttributes(
 			expandoBridge.getAttributes());
+	}
+
+	protected void startWorkflowInstance(
+			User user, WikiPage page, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_URL, getPageURL(page, serviceContext));
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			user.getCompanyId(), page.getGroupId(), user.getUserId(),
+			WikiPage.class.getName(), page.getPageId(), page, serviceContext,
+			workflowContext);
 	}
 
 	protected void validate(long nodeId, String content, String format)

@@ -26,7 +26,6 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/asset_browser/view");
-portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("selectedGroupIds", StringUtil.merge(selectedGroupIds));
 portletURL.setParameter("refererAssetEntryId", String.valueOf(refererAssetEntryId));
 portletURL.setParameter("typeSelection", typeSelection);

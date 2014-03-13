@@ -34,7 +34,7 @@ public class DBBuilder {
 	public static void main(String[] args) {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		InitUtil.initWithSpring(true);
+		InitUtil.initWithSpringAndModuleFramework(true, null);
 
 		String databaseName = arguments.get("db.database.name");
 
@@ -100,9 +100,7 @@ public class DBBuilder {
 	}
 
 	private void _buildCreateFile(String sqlDir) throws IOException {
-		for (int i = 0; i < _databaseTypes.length; i++) {
-			String databaseType = _databaseTypes[i];
-
+		for (String databaseType : _databaseTypes) {
 			if (databaseType.equals(DB.TYPE_HYPERSONIC) ||
 				databaseType.equals(DB.TYPE_INTERBASE) ||
 				databaseType.equals(DB.TYPE_JDATASTORE) ||
@@ -111,7 +109,7 @@ public class DBBuilder {
 				continue;
 			}
 
-			DB db = DBFactoryUtil.getDB(_databaseTypes[i]);
+			DB db = DBFactoryUtil.getDB(databaseType);
 
 			if (db != null) {
 				if (!sqlDir.endsWith("/WEB-INF/sql")) {
@@ -131,8 +129,8 @@ public class DBBuilder {
 			return;
 		}
 
-		for (int i = 0; i < _databaseTypes.length; i++) {
-			DB db = DBFactoryUtil.getDB(_databaseTypes[i]);
+		for (String _databaseType : _databaseTypes) {
+			DB db = DBFactoryUtil.getDB(_databaseType);
 
 			if (db != null) {
 				db.buildSQLFile(sqlDir, fileName);

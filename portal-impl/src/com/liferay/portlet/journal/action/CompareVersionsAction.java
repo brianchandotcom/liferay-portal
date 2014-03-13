@@ -100,7 +100,8 @@ public class CompareVersionsAction extends PortletAction {
 		String targetArticleId = ParamUtil.getString(
 			renderRequest, "targetVersion");
 
-		index = targetArticleId.lastIndexOf(EditArticleAction.VERSION_SEPARATOR);
+		index = targetArticleId.lastIndexOf(
+			EditArticleAction.VERSION_SEPARATOR);
 
 		if (index != -1) {
 			targetArticleId =

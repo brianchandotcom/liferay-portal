@@ -941,24 +941,6 @@ public class JournalUtil {
 			preferences, companyId, PropsValues.JOURNAL_EMAIL_FROM_NAME);
 	}
 
-	public static String getJournalControlPanelLink(
-			PortletRequest portletRequest, long folderId)
-		throws PortalException, SystemException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletKeys.JOURNAL,
-			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("struts_action", "/journal/view");
-		portletURL.setParameter("folderId", String.valueOf(folderId));
-
-		return portletURL.toString();
-	}
-
 	public static Object[] getJournalArticleVersionsInfo(
 			long groupId, String articleId, double sourceVersion,
 			double targetVersion)
@@ -1004,6 +986,24 @@ public class JournalUtil {
 		}
 
 		return new Object[] {diffVersions, previousVersion, nextVersion};
+	}
+
+	public static String getJournalControlPanelLink(
+			PortletRequest portletRequest, long folderId)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, PortletKeys.JOURNAL,
+			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("struts_action", "/journal/view");
+		portletURL.setParameter("folderId", String.valueOf(folderId));
+
+		return portletURL.toString();
 	}
 
 	public static long getPreviewPlid(

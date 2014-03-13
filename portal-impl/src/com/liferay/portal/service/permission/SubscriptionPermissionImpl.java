@@ -209,16 +209,6 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			return DLFileEntryPermission.contains(
 				permissionChecker, classPK, actionId);
 		}
-		else if (className.equals(DLFileEntryType.class.getName())) {
-			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
-
-			if (group == null) {
-				return DLFileEntryTypePermission.contains(
-					permissionChecker, classPK, actionId);
-			}
-
-			return true;
-		}
 		else if (className.equals(Folder.class.getName())) {
 			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
 

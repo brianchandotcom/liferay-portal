@@ -12,6 +12,25 @@
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addCPWithAttachment">
+		<execute action="CPMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
+
+		<execute action="CPMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
+		<execute action="CPMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBody}" />
+
+		<if>
+			<condition action="CPMessageboardsPostthread#isElementPresent" locator-key1="ATTACHMENTS_BROWSE_FIELD" />
+			<then>
+				<execute action="CPMessageboardsPostthread#click" locator-key1="ATTACHMENTS_DROPDOWN" />
+			</then>
+		</if>
+
+		<execute action="CPMessageboardsPostthread#uploadCommonFile" locator-key1="ATTACHMENTS_BROWSE_FIELD" value1="${mbAttachmentFile}" />
+		<execute action="CPMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
+
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addPG">
 		<execute action="PGMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
 
@@ -86,6 +105,21 @@
 			<else>
 				<execute action="CPMessageboardsThread#click" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
 			</else>
+		</if>
+
+		<if>
+			<equals arg1="${threadAttachmentRemove}" arg2="true" />
+			<then>
+				<if>
+					<condition action="CPMessageboardsPostthread#isNotVisible" locator-key1="ATTACHMENTS_REMOVE_LINK" />
+					<then>
+						<execute action="CPMessageboardsPostthread#click" locator-key1="ATTACHMENTS_DROPDOWN" />
+					</then>
+				</if>
+
+				<execute action="CPMessageboardsPostthread#assertTextEquals" locator-key1="ATTACHMENTS_NAME" value1="${mbAttachmentFile}" />
+				<execute action="CPMessageboardsPostthread#assertClick" locator-key1="ATTACHMENTS_REMOVE_LINK" value1="Remove" />
+			</then>
 		</if>
 
 		<if>
@@ -220,6 +254,18 @@
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
 	</command>
 
+	<command name="replyCP">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="CPMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
+
+		<execute action="CPMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadReplyBody}" />
+		<execute action="CPMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
+
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="replyPG">
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="threadSubject" value="${threadSubject}" />
@@ -240,6 +286,17 @@
 		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="restoreMBAttachmentCP">
+		<execute action="CPMessageboardsThread#click" locator-key1="MESSAGE_BODY_ATTACHMENT_1" />
+
+		<var name="key_mbAttachmentFile" value="${mbAttachmentFile}" />
+
+		<execute action="CPMessageboardsRemovedAttachments#assertTextEquals" locator-key1="ATTACHMENT_TABLE_NAME" value1="${mbAttachmentFile}" />
+		<execute action="CPMessageboardsRemovedAttachments#assertClick" locator-key1="ATTACHMENT_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPMessageboardsRemovedAttachments#assertClick" locator-key1="ATTACHMENT_MENULIST_RESTORE" value1="Restore" />
+		<execute action="CPMessageboardsRemovedAttachments#assertTextEquals" locator-key1="INFO_MESSAGE" value1="This message does not have file attachments in the Recycle Bin." />
 	</command>
 
 	<command name="splitThreadPG">
@@ -320,7 +377,7 @@
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_FLAG" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="${userName}" />
-		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="1" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="${postsNumber}" />
 		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_VIEWS" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
@@ -330,6 +387,13 @@
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
+
+		<if>
+			<isset var="mbAttachmentFile" />
+			<then>
+				<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_ATTACHMENT_1" value1="${mbAttachmentFile}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewDefaultCP">
@@ -413,6 +477,36 @@
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${threadSubject}" />
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_MESSAGE_BOARDS_THREAD_SUBJECT" value1="${threadSubject}" />
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_MESSAGE_BOARDS_THREAD_BODY" value1="${threadBody}" />
+	</command>
+
+	<command name="viewReplyCP">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_CHECKBOX" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_FLAG" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="${userName}" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="${postsNumber}" />
+		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_VIEWS" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
+
+		<if>
+			<isset var="mbAttachmentFile" />
+			<then>
+				<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_ATTACHMENT_1" value1="${mbAttachmentFile}" />
+			</then>
+		</if>
+
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_2" value1="${userName2}" />
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_2" value1="RE: ${threadSubject}" />
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_2" value1="${threadBody2}" />
 	</command>
 
 	<command name="viewReplyPG">

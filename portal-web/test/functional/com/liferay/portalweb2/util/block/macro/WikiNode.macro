@@ -62,4 +62,12 @@
 
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
+
+	<command name="viewCP">
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TITLE" value1="${wikiNodeName}" />
+	</command>
 </definition>

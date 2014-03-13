@@ -200,7 +200,7 @@ else {
 					<aui:nav-item
 						data-value="saved"
 						iconCssClass="icon-archive"
-						label="export-templates"
+						label="publish-templates"
 					/>
 				</aui:nav>
 			</aui:nav-bar>
@@ -366,7 +366,11 @@ else {
 			</div>
 
 			<div <%= publishConfigurationButtons.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />savedConfigurations">
-
+				<liferay-util:include page="/html/portlet/layouts_admin/publish_layouts_configurations.jsp">
+					<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+					<liferay-util:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
+					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				</liferay-util:include>
 			</div>
 		</liferay-ui:section>
 	</c:if>

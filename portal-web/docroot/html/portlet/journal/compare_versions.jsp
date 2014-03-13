@@ -40,5 +40,5 @@ Object[] returnValue = JournalUtil.getJournalArticleVersionsInfo(groupId, articl
 	previousVersion="<%= (Double)returnValue[1] %>"
 	sourceVersion="<%= sourceVersion %>"
 	targetVersion="<%= targetVersion %>"
-	versionsInfo="<%= (List<Tuple>)returnValue[0] %>"
+	versionsInfo="<%= (List<DiffVersion>)returnValue[0] %>"
 />

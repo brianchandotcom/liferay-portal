@@ -118,6 +118,10 @@ public interface Localization {
 	public String getLocalization(
 		String xml, String requestedLanguageId, boolean useDefault);
 
+	public String getLocalization(
+		String xml, String requestedLanguageId, boolean useDefault,
+		String defaultValue);
+
 	/**
 	 * Returns a map of locales and localized strings for the parameter in the
 	 * request.

@@ -353,6 +353,14 @@ public class LocalizationUtil {
 			localized);
 	}
 
+	public String getLocalization(
+		String xml, String requestedLanguageId, boolean useDefault,
+		String defaultValue) {
+
+		return getLocalization().getLocalization(
+			xml, requestedLanguageId, useDefault, defaultValue);
+	}
+
 	public void setLocalization(Localization localization) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

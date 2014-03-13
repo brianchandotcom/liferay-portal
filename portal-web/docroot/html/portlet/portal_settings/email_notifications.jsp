@@ -99,8 +99,8 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 	</liferay-ui:section>
 
 	<liferay-ui:section>
-			<liferay-ui:error key="emailPasswordSentSubject" message="please-enter-a-valid-subject" />
-			<liferay-ui:error key="emailPasswordSentBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailPasswordSentSubject" message="please-enter-a-valid-subject" />
+		<liferay-ui:error key="emailPasswordSentBody" message="please-enter-a-valid-body" />
 
 		<liferay-ui:email-notifications-settings
 			emailBody='<%= PrefsParamUtil.getString(companyPortletPreferences, request, "adminEmailPasswordSentBody", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY)) %>'

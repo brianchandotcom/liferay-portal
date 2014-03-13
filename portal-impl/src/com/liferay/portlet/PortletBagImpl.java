@@ -161,6 +161,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_socialActivityInterpreterInstances);
 		close(_socialRequestInterpreterInstances);
 		close(_templateHandlerInstances);
+		close(_trashHandlerInstances);
 		close(_urlEncoderInstances);
 		close(_userNotificationHandlerInstances);
 		close(_webDAVStorageInstances);

@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -176,17 +175,8 @@ public class PortletBagFactory {
 		List<PermissionPropagator> permissionPropagatorInstances =
 			newPermissionPropagators(portlet);
 
-		List<TrashHandler> trashHandlerInstances =
-			new ArrayList<TrashHandler>();
-
-		for (String trashHandlerClass : portlet.getTrashHandlerClasses()) {
-			TrashHandler trashHandlerInstance = (TrashHandler)newInstance(
-				TrashHandler.class, trashHandlerClass);
-
-			trashHandlerInstances.add(trashHandlerInstance);
-
-			TrashHandlerRegistryUtil.register(trashHandlerInstance);
-		}
+		List<TrashHandler> trashHandlerInstances = newTrashHandlerInstances(
+			portlet);
 
 		List<WorkflowHandler> workflowHandlerInstances =
 			new ArrayList<WorkflowHandler>();
@@ -1054,6 +1044,22 @@ public class PortletBagFactory {
 		}
 
 		return templateHandlerInstances;
+	}
+
+	protected List<TrashHandler> newTrashHandlerInstances(Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<TrashHandler> trashHandlerInstances =
+			getServiceTrackerList(TrashHandler.class, portlet);
+
+		for (String trashHandlerClass : portlet.getTrashHandlerClasses()) {
+			TrashHandler trashHandlerInstance = (TrashHandler)newInstance(
+				TrashHandler.class, trashHandlerClass);
+
+			trashHandlerInstances.add(trashHandlerInstance);
+		}
+
+		return trashHandlerInstances;
 	}
 
 	protected List<URLEncoder> newURLEncoders(Portlet portlet)

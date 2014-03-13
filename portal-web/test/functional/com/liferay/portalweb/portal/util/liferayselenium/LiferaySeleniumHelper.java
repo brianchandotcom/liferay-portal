@@ -663,6 +663,13 @@ public class LiferaySeleniumHelper {
 				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.2")) {
 
 			if (line.contains(
+					"com.liferay.portal.kernel.search.SearchException: " +
+						"java.nio.channels.ClosedByInterruptException")) {
+
+				return true;
+			}
+
+			if (line.contains(
 					"org.apache.lucene.store.AlreadyClosedException")) {
 
 				return true;

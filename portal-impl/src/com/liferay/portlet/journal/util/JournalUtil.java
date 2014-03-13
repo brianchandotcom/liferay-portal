@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.diff.DiffVersion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -994,17 +994,16 @@ public class JournalUtil {
 			}
 		}
 
-		List<Tuple> versionsInfo = new ArrayList<Tuple>();
+		List<DiffVersion> diffVersions = new ArrayList<DiffVersion>();
 
 		for (JournalArticle article : intermediateArticles) {
-			Tuple versionInfo = new Tuple(
-				article.getUserId(), article.getVersion(), StringPool.BLANK,
-				StringPool.BLANK);
+			DiffVersion diffVersion = new DiffVersion(
+				article.getUserId(), article.getVersion());
 
-			versionsInfo.add(versionInfo);
+			diffVersions.add(diffVersion);
 		}
 
-		return new Object[] {versionsInfo, previousVersion, nextVersion};
+		return new Object[] {diffVersions, previousVersion, nextVersion};
 	}
 
 	public static long getPreviewPlid(

@@ -46,7 +46,7 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 </liferay-portlet:renderURL>
 
 <liferay-ui:search-container
-	emptyResultsMessage="there-are-no-export-templates"
+	emptyResultsMessage="there-are-no-saved-export-templates"
 	iteratorURL="<%= portletURL %>"
 	total="<%= ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(groupId, ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) %>"
 >

@@ -36,13 +36,8 @@ import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission
 import com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksPermission;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -222,8 +217,8 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			return DLPermission.contains(permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(JournalArticle.class.getName())) {
-			JournalArticle article =
-				JournalArticleLocalServiceUtil.getArticle(classPK);
+			JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
+				classPK);
 
 			return JournalArticlePermission.contains(
 				permissionChecker, article, actionId);
@@ -232,8 +227,8 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			Group group = GroupLocalServiceUtil.fetchGroup(classPK);
 
 			if (group == null) {
-				JournalFolder folder =
-					JournalFolderLocalServiceUtil.getFolder(classPK);
+				JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
+					classPK);
 
 				return JournalFolderPermission.contains(
 					permissionChecker, folder, actionId);

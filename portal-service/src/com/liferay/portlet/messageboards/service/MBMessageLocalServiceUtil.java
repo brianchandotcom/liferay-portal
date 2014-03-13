@@ -803,6 +803,22 @@ public class MBMessageLocalServiceUtil {
 
 	public static com.liferay.portlet.messageboards.model.MBMessage updateStatus(
 		long userId, long messageId, int status,
+		com.liferay.portal.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateStatus(userId, messageId, status, serviceContext,
+			workflowContext);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
+	int, ServiceContext, Map)}
+	*/
+	@Deprecated
+	public static com.liferay.portlet.messageboards.model.MBMessage updateStatus(
+		long userId, long messageId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

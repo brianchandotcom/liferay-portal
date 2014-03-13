@@ -929,12 +929,12 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateStatus(
 		long userId, long fileVersionId, int status,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.updateStatus(userId, fileVersionId,
-			status, workflowContext, serviceContext);
+			status, serviceContext, workflowContext);
 	}
 
 	@Override

@@ -1062,6 +1062,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	@include respond-to(phone, tablet) {
 		.portlet-title {
 			display: inline-block;
+			width: 85%;
 		}
 
 		.portlet-journal {

@@ -61,7 +61,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSiteTemplate" priority="5">
+	<command name="EditSiteTemplateStatus" priority="5">
 		<var name="siteTemplateActive" value="Yes" />
 		<var name="siteTemplateActiveEdit" value="No" />
 
@@ -86,7 +86,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="SiteTemplates#editCP">
+		<execute macro="SiteTemplates#editTemplateStatusCP">
 			<var name="siteTemplateActiveEdit" value="${siteTemplateActiveEdit}" />
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 		</execute>
@@ -95,7 +95,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="SiteTemplates#viewEditCP">
+		<execute macro="SiteTemplates#viewTemplateStatusCP">
 			<var name="siteTemplateActiveEdit" value="${siteTemplateActiveEdit}" />
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 		</execute>

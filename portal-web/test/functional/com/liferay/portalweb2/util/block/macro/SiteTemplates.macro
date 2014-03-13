@@ -93,22 +93,40 @@
 		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="editAllowSiteAdminToModifyPageCP">
+		<execute macro="SiteTemplates#gotoSettingsCP">
+			<var name="siteTemplateName" value="${siteTemplateName}" />
+		</execute>
+
+		<if>
+			<equals arg1="${allowSiteAdminsToModifyPages}" arg2="true" />
+			<then>
+				<execute action="CPSitetemplateSettings#check" locator-key1="ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
+			</then>
+			<elseif>
+				<equals arg1="${allowSiteAdminsToModifyPages}" arg2="false" />
+				<then>
+					<execute action="CPSitetemplateSettings#uncheck" locator-key1="ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="CPSitetemplateSettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="editCP">
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
-
-		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
-		<execute action="CPSitetemplates#assertClick" locator-key1="SITE_TEMPLATE_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPSitetemplates#assertClick" locator-key1="SITE_TEMPLATE_MENULIST_MANAGE" value1="Manage" />
-
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
-
-		<execute action="CPSitetemplatesConfiguration#assertTextEquals" locator-key1="SITE_TEMPLATE_NAME" value1="${siteTemplateName}" />
-		<execute action="CPSitetemplatesConfiguration#assertClick" locator-key1="CONFIGURATION" value1="Configuration" />
-		<execute action="CPSitetemplatesConfiguration#assertClick" locator-key1="CONFIGURATION_SITE_TEMPLATE_SETTINGS" value1="Site Template Settings" />
-
-		<execute action="CPSitetemplateSettings#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Site Template Settings" />
+		<execute macro="SiteTemplates#gotoSettingsCP">
+			<var name="siteTemplateName" value="${siteTemplateName}" />
+		</execute>
 
 		<execute action="CPSitetemplateSettings#type" locator-key1="NAME_FIELD" value1="${siteTemplateName} Edit" />
+		<execute action="CPSitetemplateSettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="editTemplateStatusCP">
+		<execute macro="SiteTemplates#gotoSettingsCP">
+			<var name="siteTemplateName" value="${siteTemplateName}" />
+		</execute>
 
 		<if>
 			<isset var="siteTemplateActiveEdit" />
@@ -125,17 +143,21 @@
 			</then>
 		</if>
 
-		<if>
-			<equals arg1="${allowSiteAdminsToModifyPages}" arg2="true" />
-			<then>
-				<execute action="CPSitetemplateSettings#check" locator-key1="ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
-			</then>
-			<else>
-				<execute action="CPSitetemplateSettings#uncheck" locator-key1="ALLOW_SITE_ADMINISTRATOR_MODIFY_PAGES_CHECKBOX" />
-			</else>
-		</if>
-
 		<execute action="CPSitetemplateSettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="gotoSettingsCP">
+		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+		<execute action="CPSitetemplates#assertClick" locator-key1="SITE_TEMPLATE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSitetemplates#assertClick" locator-key1="SITE_TEMPLATE_MENULIST_MANAGE" value1="Manage" />
+
+		<execute action="CPSitetemplatesConfiguration#assertTextEquals" locator-key1="SITE_TEMPLATE_NAME" value1="${siteTemplateName}" />
+		<execute action="CPSitetemplatesConfiguration#assertClick" locator-key1="CONFIGURATION" value1="Configuration" />
+		<execute action="CPSitetemplatesConfiguration#assertClick" locator-key1="CONFIGURATION_SITE_TEMPLATE_SETTINGS" value1="Site Template Settings" />
+
+		<execute action="CPSitetemplateSettings#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Site Template Settings" />
 	</command>
 
 	<command name="gotoViewPages">
@@ -175,6 +197,12 @@
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName} Edit" />
+	</command>
+
+	<command name="viewTemplateStatusCP">
+		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
 		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_ACTIVE" value1="${siteTemplateActiveEdit}" />
 	</command>
 </definition>

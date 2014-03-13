@@ -18,6 +18,8 @@
 
 <%
 String strutsAction = ParamUtil.getString(request, "struts_action");
+String navigation = ParamUtil.getString(request, "navigation");
+String browseBy = ParamUtil.getString(request, "browseBy");
 
 Folder folder = (com.liferay.portal.kernel.repository.model.Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
@@ -110,7 +112,9 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 			</div>
 
 			<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-				<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
+				<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
+					<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
+				</c:if>
 			</div>
 
 			<div class="hide" id="<portlet:namespace />syncNotification">

@@ -1073,13 +1073,8 @@ public class JournalUtil {
 			return DDMStructure.class.getName();
 		}
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(DDMStructure.class.getName());
-		sb.append(CharPool.POUND);
-		sb.append(JournalArticle.class.getName());
-
-		return sb.toString();
+		return DDMStructure.class.getName().concat(CharPool.POUND).concat(
+			JournalArticle.class.getName());
 	}
 
 	public static long getSubscriptionClassPK(

@@ -25,8 +25,7 @@ import com.liferay.portlet.journal.model.JournalTemplate;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
- * @deprecated As of 6.2.0, since Web Content Administration now uses the
- *             Dynamic Data Mapping framework to handle templates
+ * @deprecated As of 6.2.0
  */
 public class JournalTemplatePermission {
 

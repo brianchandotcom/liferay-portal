@@ -504,11 +504,6 @@
 	<bean id="com.liferay.portal.kernel.words.WordsUtil" class="com.liferay.portal.kernel.words.WordsUtil">
 		<property name="words" ref="com.liferay.portal.kernel.words.Words" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" class="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil">
-		<property name="workflowHandlerRegistry">
-			<bean class="com.liferay.portal.workflow.WorkflowHandlerRegistryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil" class="com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil">
 		<property name="workflowPermission">
 			<bean class="com.liferay.portal.workflow.permission.WorkflowPermissionImpl" />

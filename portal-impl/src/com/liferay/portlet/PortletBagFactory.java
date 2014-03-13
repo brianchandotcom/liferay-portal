@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -87,7 +86,6 @@ import com.liferay.util.portlet.PortletProps;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -179,19 +177,7 @@ public class PortletBagFactory {
 			portlet);
 
 		List<WorkflowHandler> workflowHandlerInstances =
-			new ArrayList<WorkflowHandler>();
-
-		for (String workflowHandlerClass :
-				portlet.getWorkflowHandlerClasses()) {
-
-			WorkflowHandler workflowHandlerInstance =
-				(WorkflowHandler)newInstance(
-					WorkflowHandler.class, workflowHandlerClass);
-
-			workflowHandlerInstances.add(workflowHandlerInstance);
-
-			WorkflowHandlerRegistryUtil.register(workflowHandlerInstance);
-		}
+			newWorkflowHandlerInstances(portlet);
 
 		PreferencesValidator preferencesValidatorInstance = null;
 
@@ -1120,6 +1106,26 @@ public class PortletBagFactory {
 		}
 
 		return webDAVStorageInstances;
+	}
+
+	protected List<WorkflowHandler> newWorkflowHandlerInstances(
+			Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<WorkflowHandler> workflowHandlerInstances =
+			getServiceTrackerList(WorkflowHandler.class, portlet);
+
+		for (String workflowHandlerClass :
+				portlet.getWorkflowHandlerClasses()) {
+
+			WorkflowHandler workflowHandlerInstance =
+				(WorkflowHandler)newInstance(
+					WorkflowHandler.class, workflowHandlerClass);
+
+			workflowHandlerInstances.add(workflowHandlerInstance);
+		}
+
+		return workflowHandlerInstances;
 	}
 
 	protected List<Method> newXmlRpcMethodInstances(Portlet portlet)

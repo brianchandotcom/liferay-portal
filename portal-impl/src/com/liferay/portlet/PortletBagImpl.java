@@ -165,6 +165,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_urlEncoderInstances);
 		close(_userNotificationHandlerInstances);
 		close(_webDAVStorageInstances);
+		close(_workflowHandlerInstances);
 		close(_xmlRpcMethodInstances);
 	}
 

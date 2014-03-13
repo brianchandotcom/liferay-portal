@@ -71,12 +71,27 @@ security-manager-enabled=true</echo>
 			<then>
 				<for list="${plugins.includes}" param="plugin.includes">
 					<sequential>
-						<copy todir="${liferay.home}/deploy">
-							<fileset
-								dir="plugins"
-								includes="@{plugin.includes}*.war"
-							/>
-						</copy>
+						<pathconvert property="plugin.war" setonempty="false">
+							<path>
+								<fileset
+									dir="plugins"
+									includes="@{plugin.includes}*.war"
+								/>
+							</path>
+						</pathconvert>
+
+						<if>
+							<isset property="plugin.war" />
+							<then>
+								<copy file="${plugin.war}" todir="${liferay.home}/deploy" />
+							</then>
+							<else>
+								<ant dir="${lp.plugins.dir}/${plugin.types}/@{plugin.includes}" inheritAll="false">
+									<target name="clean" />
+									<target name="deploy" />
+								</ant>
+							</else>
+						</if>
 					</sequential>
 				</for>
 			</then>

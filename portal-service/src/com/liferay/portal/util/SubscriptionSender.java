@@ -551,6 +551,20 @@ public class SubscriptionSender implements Serializable {
 		notifyPersistedSubscriber(subscription, null, 0);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #notifyPersistedSubscriber(Subscription, String, long)}
+	 */
+	@Deprecated
+	protected void notifySubscriber(
+			Subscription subscription, String inferredClassName,
+			long inferredClassPK)
+		throws Exception {
+
+		notifyPersistedSubscriber(
+			subscription, inferredClassName, inferredClassPK);
+	}
+
 	protected void processMailMessage(MailMessage mailMessage, Locale locale)
 		throws Exception {
 

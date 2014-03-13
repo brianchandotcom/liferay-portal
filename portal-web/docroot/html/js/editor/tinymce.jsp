@@ -30,6 +30,8 @@ if (Validator.isNotNull(onChangeMethod)) {
 
 boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
+
+String cssPath = themeDisplay.getPathThemeCss();
 %>
 
 <c:if test="<%= !skipEditorLoading %>">
@@ -51,7 +53,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	<textarea id="<%= name %>" name="<%= name %>" style="height: 100%; width: 100%;"></textarea>
 </div>
 
-<aui:script>
+<aui:script use="aui-node-base">
 	window['<%= name %>'] = {
 		onChangeCallbackCounter: 0,
 
@@ -84,6 +86,18 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			<c:if test="<%= Validator.isNotNull(initMethod) %>">
 				window['<%= name %>'].init(<%= HtmlUtil.escape(namespace + initMethod) %>());
 			</c:if>
+
+			var iframe = A.one('#<%= name %>_ifr');
+
+			if (iframe) {
+				var iframeWin = iframe.getDOM().contentWindow;
+
+				if (iframeWin) {
+					var iframeDoc = iframeWin.document.documentElement;
+
+					A.one(iframeDoc).addClass('aui');
+				}
+			}
 		},
 
 		<%
@@ -124,6 +138,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 	tinyMCE.init(
 		{
+			content_css: '<%= HtmlUtil.escapeJS(cssPath) %>/aui.css,<%= HtmlUtil.escapeJS(cssPath) %>/main.css',
 			convert_urls: false,
 			elements: '<%= name %>',
 			extended_valid_elements: 'a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|usemap],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]',

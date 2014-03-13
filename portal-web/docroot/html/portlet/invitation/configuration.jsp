@@ -24,7 +24,7 @@
 	<liferay-ui:error key="emailMessageBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailMessageSubject" message="please-enter-a-valid-subject" />
 
-	<liferay-ui:email-notifications-settings
+	<liferay-ui:email-notification-settings
 		emailBody='<%= ParamUtil.getString(request, "emailMessageBody", InvitationUtil.getEmailMessageBody(portletPreferences)) %>'
 		emailDefinitionTerms="<%= InvitationUtil.getEmailDefinitionTerms(renderRequest) %>"
 		emailParam="emailMessage"

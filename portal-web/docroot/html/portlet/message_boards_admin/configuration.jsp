@@ -129,7 +129,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		%>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notifications-settings
+			<liferay-ui:email-notification-settings
 				emailBody='<%= ParamUtil.getString(request, "preferences--emailMessageAddedBody--", mbSettings.getEmailMessageAddedBody()) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailMessageAddedEnabled--", mbSettings.isEmailMessageAddedEnabled()) %>'
@@ -139,7 +139,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notifications-settings
+			<liferay-ui:email-notification-settings
 				emailBody='<%= ParamUtil.getString(request, "preferences--emailMessageUpdatedBody--", mbSettings.getEmailMessageUpdatedBody()) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailMessageUpdatedEnabled--", mbSettings.isEmailMessageUpdatedEnabled()) %>'

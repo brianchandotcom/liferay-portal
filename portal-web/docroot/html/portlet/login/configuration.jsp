@@ -61,7 +61,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 			</div>
 
 			<aui:fieldset>
-				<liferay-ui:email-notifications-settings
+				<liferay-ui:email-notification-settings
 					emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordSentBody", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY)) %>'
 					emailDefinitionTerms="<%= LoginUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, false) %>"
 					emailParam="emailPasswordSent"
@@ -77,7 +77,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 			</div>
 
 			<aui:fieldset>
-				<liferay-ui:email-notifications-settings
+				<liferay-ui:email-notification-settings
 					emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordResetBody", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY)) %>'
 					emailDefinitionTerms="<%= LoginUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, true) %>"
 					emailParam="emailPasswordReset"

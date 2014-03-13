@@ -210,12 +210,12 @@ public class DDMImpl implements DDM {
 
 		Set<String> fieldNames = ddmStructure.getFieldNames();
 
+		boolean translating = true;
+
 		String defaultLanguageId = (String)serviceContext.getAttribute(
 			"defaultLanguageId");
 		String toLanguageId = (String)serviceContext.getAttribute(
 			"toLanguageId");
-
-		boolean translating = true;
 
 		if (Validator.isNull(toLanguageId) ||
 			Validator.equals(defaultLanguageId, toLanguageId)) {

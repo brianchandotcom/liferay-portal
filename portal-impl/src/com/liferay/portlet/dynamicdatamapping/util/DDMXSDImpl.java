@@ -649,6 +649,13 @@ public class DDMXSDImpl implements DDMXSD {
 			fieldContext.put(attribute.getName(), attribute.getValue());
 		}
 
+		boolean localizable = GetterUtil.getBoolean(
+			dynamicElementElement.attributeValue("localizable"), true);
+
+		if (!localizable && !editingLanguageId.equals(defaultLanguageId)) {
+			fieldContext.put("disabled", Boolean.TRUE.toString());
+		}
+
 		fieldContext.put("fieldNamespace", StringUtil.randomId());
 
 		boolean checkRequired = GetterUtil.getBoolean(
@@ -656,13 +663,6 @@ public class DDMXSDImpl implements DDMXSD {
 
 		if (!checkRequired) {
 			fieldContext.put("required", Boolean.FALSE.toString());
-		}
-
-		boolean localizable = GetterUtil.getBoolean(
-			dynamicElementElement.attributeValue("localizable"), true);
-
-		if (!localizable && !editingLanguageId.equals(defaultLanguageId)) {
-			fieldContext.put("disabled", Boolean.TRUE.toString());
 		}
 
 		fieldsContext.put(name, fieldContext);

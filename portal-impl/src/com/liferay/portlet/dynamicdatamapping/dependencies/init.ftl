@@ -77,6 +77,14 @@
 	<#assign fieldRawValue = field.getValue(requestedLocale, valueIndex)!>
 </#if>
 
+<#-- Disabled -->
+
+<#assign disabled = false>
+
+<#if fieldStructure.disabled?? && (fieldStructure.disabled == "true")>
+	<#assign disabled = true>
+</#if>
+
 <#-- Label -->
 
 <#assign label = fieldStructure.label!"">
@@ -91,14 +99,6 @@
 
 <#if fieldStructure.required?? && (fieldStructure.required == "true")>
 	<#assign required = true>
-</#if>
-
-<#-- Disabled -->
-
-<#assign disabled = false>
-
-<#if fieldStructure.disabled?? && (fieldStructure.disabled == "true")>
-	<#assign disabled = true>
 </#if>
 
 <#-- Util -->

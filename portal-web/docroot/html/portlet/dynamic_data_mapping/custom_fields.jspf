@@ -82,6 +82,11 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 					value: 'keyword'
 				},
 
+				localizable: {
+					seter: booleanParse,
+					value: true
+				},
+
 				name: {
 					setter: Liferay.FormBuilder.normalizeKey,
 					valueFn: function() {
@@ -94,11 +99,6 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 				repeatable: {
 					setter: booleanParse,
 					value: false
-				},
-
-				localizable: {
-					seter: booleanParse,
-					value: true
 				}
 			};
 

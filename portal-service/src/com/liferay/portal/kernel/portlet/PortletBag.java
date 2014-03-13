@@ -90,7 +90,7 @@ public interface PortletBag extends Cloneable {
 
 	public String getPortletName();
 
-	public PreferencesValidator getPreferencesValidatorInstance();
+	public List<PreferencesValidator> getPreferencesValidatorInstances();
 
 	public ResourceBundle getResourceBundle(Locale locale);
 

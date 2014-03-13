@@ -179,27 +179,8 @@ public class PortletBagFactory {
 		List<WorkflowHandler> workflowHandlerInstances =
 			newWorkflowHandlerInstances(portlet);
 
-		PreferencesValidator preferencesValidatorInstance = null;
-
-		if (Validator.isNotNull(portlet.getPreferencesValidator())) {
-			preferencesValidatorInstance = (PreferencesValidator)newInstance(
-				PreferencesValidator.class, portlet.getPreferencesValidator());
-
-			try {
-				if (PropsValues.PREFERENCE_VALIDATE_ON_STARTUP) {
-					preferencesValidatorInstance.validate(
-						PortletPreferencesFactoryUtil.fromDefaultXML(
-							portlet.getDefaultPreferences()));
-				}
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Portlet with the name " + portlet.getPortletId() +
-							" does not have valid default preferences");
-				}
-			}
-		}
+		List<PreferencesValidator> preferencesValidatorInstances =
+			newPreferencesValidatorInstances(portlet);
 
 		Map<String, ResourceBundle> resourceBundles = null;
 
@@ -240,7 +221,7 @@ public class PortletBagFactory {
 			controlPanelEntryInstances, assetRendererFactoryInstances,
 			atomCollectionAdapterInstances, customAttributesDisplayInstances,
 			permissionPropagatorInstances, trashHandlerInstances,
-			workflowHandlerInstances, preferencesValidatorInstance,
+			workflowHandlerInstances, preferencesValidatorInstances,
 			resourceBundles, ddmDisplayInstances);
 
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
@@ -936,6 +917,41 @@ public class PortletBagFactory {
 		}
 
 		return portletLayoutListenerInstances;
+	}
+
+	protected List<PreferencesValidator> newPreferencesValidatorInstances(
+			Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<PreferencesValidator>
+			preferencesValidatorInstances = getServiceTrackerList(
+				PreferencesValidator.class, portlet);
+
+		if (Validator.isNotNull(portlet.getPreferencesValidator())) {
+			PreferencesValidator preferencesValidatorInstance =
+				(PreferencesValidator)newInstance(
+					PreferencesValidator.class,
+					portlet.getPreferencesValidator());
+
+			try {
+				if (PropsValues.PREFERENCE_VALIDATE_ON_STARTUP) {
+					preferencesValidatorInstance.validate(
+						PortletPreferencesFactoryUtil.fromDefaultXML(
+							portlet.getDefaultPreferences()));
+				}
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Portlet with the name " + portlet.getPortletId() +
+							" does not have valid default preferences");
+				}
+			}
+
+			preferencesValidatorInstances.add(preferencesValidatorInstance);
+		}
+
+		return preferencesValidatorInstances;
 	}
 
 	protected List<SocialActivityInterpreter>

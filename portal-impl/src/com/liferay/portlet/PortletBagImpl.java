@@ -84,7 +84,7 @@ public class PortletBagImpl implements PortletBag {
 		List<PermissionPropagator> permissionPropagatorInstances,
 		List<TrashHandler> trashHandlerInstances,
 		List<WorkflowHandler> workflowHandlerInstances,
-		PreferencesValidator preferencesValidatorInstance,
+		List<PreferencesValidator> preferencesValidatorInstances,
 		Map<String, ResourceBundle> resourceBundles,
 		List<DDMDisplay> ddmDisplayInstances) {
 
@@ -115,7 +115,7 @@ public class PortletBagImpl implements PortletBag {
 		_permissionPropagatorInstances = permissionPropagatorInstances;
 		_trashHandlerInstances = trashHandlerInstances;
 		_workflowHandlerInstances = workflowHandlerInstances;
-		_preferencesValidatorInstance = preferencesValidatorInstance;
+		_preferencesValidatorInstances = preferencesValidatorInstances;
 		_resourceBundles = resourceBundles;
 		_ddmDisplayInstances = ddmDisplayInstances;
 	}
@@ -138,7 +138,7 @@ public class PortletBagImpl implements PortletBag {
 			getAtomCollectionAdapterInstances(),
 			getCustomAttributesDisplayInstances(),
 			getPermissionPropagatorInstances(), getTrashHandlerInstances(),
-			getWorkflowHandlerInstances(), getPreferencesValidatorInstance(),
+			getWorkflowHandlerInstances(), getPreferencesValidatorInstances(),
 			getResourceBundles(), getDdmDisplayInstances());
 	}
 
@@ -158,6 +158,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_popMessageListenerInstances);
 		close(_portletDataHandlerInstances);
 		close(_portletLayoutListenerInstances);
+		close(_preferencesValidatorInstances);
 		close(_socialActivityInterpreterInstances);
 		close(_socialRequestInterpreterInstances);
 		close(_templateHandlerInstances);
@@ -250,8 +251,8 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public PreferencesValidator getPreferencesValidatorInstance() {
-		return _preferencesValidatorInstance;
+	public List<PreferencesValidator> getPreferencesValidatorInstances() {
+		return _preferencesValidatorInstances;
 	}
 
 	@Override
@@ -377,7 +378,7 @@ public class PortletBagImpl implements PortletBag {
 	private Portlet _portletInstance;
 	private List<PortletLayoutListener> _portletLayoutListenerInstances;
 	private String _portletName;
-	private PreferencesValidator _preferencesValidatorInstance;
+	private List<PreferencesValidator> _preferencesValidatorInstances;
 	private Map<String, ResourceBundle> _resourceBundles;
 	private ServletContext _servletContext;
 	private List<SocialActivityInterpreter> _socialActivityInterpreterInstances;

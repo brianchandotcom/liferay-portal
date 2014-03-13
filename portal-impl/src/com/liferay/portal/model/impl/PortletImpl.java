@@ -1243,13 +1243,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public MessageListener getPopMessageListenerInstance() {
-		if (Validator.isNull(getPopMessageListenerClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<MessageListener> popMessageListenerInstances =
+			portletBag.getPopMessageListenerInstances();
+
+		if (popMessageListenerInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getPopMessageListenerInstance();
+		return popMessageListenerInstances.get(0);
 	}
 
 	/**

@@ -4381,17 +4381,6 @@ public class JournalArticleLocalServiceImpl
 		return searchJournalArticles(searchContext);
 	}
 
-	/**
-	 * Subscribe the user to changes in elements that belongs to specified
-	 * structure.
-	 *
-	 * @param  groupId the primary key of the folder's group
-	 * @param  userId the primary key of the user to be subscribed
-	 * @param ddmStructureId the primary key of the structure to subscribe to
-	 * @throws PortalException if the user, group os structure could not be
-	 * 		   found, or if subscribing was not permissible
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Override
 	public void subscribeStructure(
 			long groupId, long userId, long ddmStructureId)
@@ -4405,17 +4394,6 @@ public class JournalArticleLocalServiceImpl
 			userId, groupId, className, classPK);
 	}
 
-	/**
-	 * Unsubscribe the user from changes in elements that belongs to specified
-	 * structure.
-	 *
-	 * @param  groupId the primary key of the folder's group
-	 * @param  userId the primary key of the user to be subscribed
-	 * @param ddmStructureId the primary key of the structure to subscribe to
-	 * @throws PortalException if the user, group os structure could not be
-	 * 		   found, or if subscribing was not permissible
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Override
 	public void unsubscribeStructure(
 			long groupId, long userId, long ddmStructureId)

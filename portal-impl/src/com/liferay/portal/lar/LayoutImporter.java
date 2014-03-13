@@ -163,6 +163,7 @@ public class LayoutImporter {
 	}
 
 	protected void deleteMissingLayouts(
+			PortletDataContext portletDataContext,
 			List<String> sourceLayoutUuids, List<Layout> previousLayouts,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -171,8 +172,14 @@ public class LayoutImporter {
 			_log.debug("Delete missing layouts");
 		}
 
+		Map<Long, Long> layoutPlids =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class);
+
 		for (Layout layout : previousLayouts) {
-			if (!sourceLayoutUuids.contains(layout.getUuid())) {
+			if (!sourceLayoutUuids.contains(layout.getUuid()) &&
+				!layoutPlids.containsValue(layout.getPlid())) {
+
 				try {
 					LayoutLocalServiceUtil.deleteLayout(
 						layout, false, serviceContext);
@@ -672,7 +679,8 @@ public class LayoutImporter {
 
 		if (deleteMissingLayouts) {
 			deleteMissingLayouts(
-				sourceLayoutsUuids, previousLayouts, serviceContext);
+				portletDataContext, sourceLayoutsUuids, previousLayouts,
+				serviceContext);
 		}
 
 		// Page count

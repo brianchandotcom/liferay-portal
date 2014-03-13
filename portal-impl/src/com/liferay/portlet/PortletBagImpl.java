@@ -145,6 +145,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_indexerInstances);
 		close(_openSearchInstances);
 		close(_portletDataHandlerInstances);
+		close(_portletLayoutListenerInstances);
 		close(_templateHandlerInstances);
 		close(_urlEncoderInstances);
 	}

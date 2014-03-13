@@ -21,7 +21,10 @@
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewCP">
+			<var name="categoriesNumber" value="0" />
 			<var name="categoryName" value="${categoryName}" />
+			<var name="postsNumber" value="0" />
+			<var name="threadsNumber" value="0" />
 		</execute>
 	</command>
 
@@ -67,6 +70,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
+			<var name="postsNumber" value="1" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -101,6 +105,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
+			<var name="postsNumber" value="1" />
 			<var name="threadBody" value="${threadBodyEdit}" />
 			<var name="threadSubject" value="${threadSubjectEdit}" />
 		</execute>

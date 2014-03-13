@@ -106,6 +106,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
+			<var name="postsNumber" value="1" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>

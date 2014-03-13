@@ -311,7 +311,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 				var result = <%= parentGroup.getPublicLayoutsPageCount() > 0 %>;
 
 				if (tabView.size() >= 2) {
-					var index = tabView.getTabIndex(tabView.get('activeTab'));
+					var index = tabView.indexOf(tabView.get('selection'));
 
 					result = (index == 0);
 				}

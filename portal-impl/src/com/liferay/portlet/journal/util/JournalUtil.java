@@ -1068,23 +1068,28 @@ public class JournalUtil {
 		return ArrayUtil.toLongArray(classPKs);
 	}
 
-	public static long getSubscriptionToStructureClass(
-		long groupId, long ddmStructureId, StringBundler outClassName) {
-
-		long classPK;
-
-		outClassName.append(DDMStructure.class.getName());
-
-		if (ddmStructureId == 0) {
-			outClassName.append(CharPool.POUND);
-			outClassName.append(JournalArticle.class.getName());
-			classPK = groupId;
-		}
-		else {
-			classPK = ddmStructureId;
+	public static String getSubscriptionClassName(long ddmStructureId) {
+		if (ddmStructureId > 0) {
+			return DDMStructure.class.getName();
 		}
 
-		return classPK;
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(DDMStructure.class.getName());
+		sb.append(CharPool.POUND);
+		sb.append(JournalArticle.class.getName());
+
+		return sb.toString();
+	}
+
+	public static long getSubscriptionClassPK(
+		long groupId, long ddmStructureId) {
+
+		if (ddmStructureId > 0) {
+			return ddmStructureId;
+		}
+
+		return groupId;
 	}
 
 	public static String getTemplateScript(
@@ -1196,8 +1201,8 @@ public class JournalUtil {
 	}
 
 	public static boolean isSubscribedToFolder(
-		long companyId, long groupId, long userId, long folderId)
-			throws PortalException, SystemException {
+			long companyId, long groupId, long userId, long folderId)
+		throws PortalException, SystemException {
 
 		return isSubscribedToFolder(companyId, groupId, userId, folderId, true);
 	}
@@ -1234,12 +1239,9 @@ public class JournalUtil {
 		long companyId, long groupId, long userId, long ddmStructureId)
 			throws PortalException, SystemException {
 
-		StringBundler className = new StringBundler(128);
-		long classPK = getSubscriptionToStructureClass(
-			groupId, ddmStructureId, className);
-
 		return SubscriptionLocalServiceUtil.isSubscribed(
-			companyId, userId, className.toString(), classPK);
+			companyId, userId, getSubscriptionClassName(ddmStructureId),
+			getSubscriptionClassPK(groupId, ddmStructureId));
 	}
 
 	public static String mergeArticleContent(

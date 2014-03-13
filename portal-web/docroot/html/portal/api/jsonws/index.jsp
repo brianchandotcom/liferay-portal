@@ -22,7 +22,7 @@
 
 <div id="wrapper">
 	<header id="banner" role="banner">
-		<hgroup id="heading">
+		<div id="heading">
 			<h1 class="site-title">
 				<a class="logo" href="<%= HtmlUtil.escapeAttribute(jsonWSContextPath) %>" title="JSONWS API">
 					<img alt="JSONWS API" height="<%= themeDisplay.getCompanyLogoHeight() %>" src="<%= HtmlUtil.escape(themeDisplay.getCompanyLogo()) %>" width="<%= themeDisplay.getCompanyLogoWidth() %>" />
@@ -32,7 +32,7 @@
 					JSONWS API
 				</span>
 			</h1>
-		</hgroup>
+		</div>
 	</header>
 
 	<div id="content">

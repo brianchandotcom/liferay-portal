@@ -124,7 +124,7 @@ String cssPath = themeDisplay.getPathThemeCss();
 
 				}
 
-				onChangeCallbackCounter++;
+				window['<%= name %>'].onChangeCallbackCounter++;
 			},
 
 		<%

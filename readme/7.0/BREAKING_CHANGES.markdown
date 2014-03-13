@@ -22,7 +22,7 @@ backwards compatibility.
 
 *This document has been reviewed through commit `cfd3f6a`.*
 
-## Breaking Changes
+## Breaking Changes Contribution Guidelines
 
 Each change must have a brief descriptive title and contain the following
 information:
@@ -62,10 +62,16 @@ horizontal rule):
 ---------------------------------------
 ```
 
-**Important:** Titles, links, and tables should only exceed 80 columns *if
-necessary*; all other text **must NOT exceed 80 columns**.
+**80 Columns Rule:** Text should not exceed 80 columns. Keeping text within 80
+columns makes it easier to see the changes made between different versions of
+the document. Titles, links, and tables are exempt from this rule. Code samples
+must follow the column rules specified in Liferay's [Development
+Style](http://www.liferay.com/community/wiki/-/wiki/Main/Liferay+development+style).
 
----------------------------------------
+The remaining content of this document consists of the breaking changes listed
+in ascending chronological order.
+
+## Breaking Changes List
 
 ### Merged Configured Email Signature Field into the Body of Email Messages from Message Boards and Wiki
 - **Date**: 2014-Feb-28

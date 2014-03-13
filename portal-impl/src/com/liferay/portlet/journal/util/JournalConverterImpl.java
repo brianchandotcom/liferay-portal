@@ -560,9 +560,9 @@ public class JournalConverterImpl implements JournalConverter {
 
 		dynamicElementElement.addAttribute("index", String.valueOf(count));
 
-		if (!ddmStructure.isFieldTransient(fieldName)) {
-			Field ddmField = ddmFields.get(fieldName);
+		Field ddmField = ddmFields.get(fieldName);
 
+		if (!ddmStructure.isFieldTransient(fieldName) && (ddmField != null)) {
 			for (Locale locale : ddmField.getAvailableLocales()) {
 				Element dynamicContentElement =
 					dynamicElementElement.addElement("dynamic-content");

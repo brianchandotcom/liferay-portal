@@ -8,6 +8,7 @@
 		<xs:attribute name="dataType" type="data-type" />
 		<xs:attribute name="fieldNamespace" type="xs:string" />
 		<xs:attribute name="indexType" type="index-type" />
+		<xs:attribute name="localizable" type="xs:boolean" />
 		<xs:attribute name="multiple" type="xs:boolean" />
 		<xs:attribute name="name" type="name" use="required" />
 		<xs:attribute name="readOnly" type="xs:boolean" />

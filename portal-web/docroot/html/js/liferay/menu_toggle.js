@@ -37,11 +37,7 @@ AUI.add(
 
 						var trigger = instance.get('trigger');
 
-						var triggerId = trigger.attr('id');
-
-						if (!triggerId) {
-							triggerId = A.guid();
-						}
+						var triggerId = trigger.attr('id') || A.guid();
 
 						instance._handleId = triggerId + 'Handle';
 

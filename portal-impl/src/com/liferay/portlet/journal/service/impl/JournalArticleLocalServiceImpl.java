@@ -4421,15 +4421,15 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public void subscribeStructure(
-		long groupId, long userId, long ddmStructureId)
-			throws PortalException, SystemException {
+			long groupId, long userId, long ddmStructureId)
+		throws PortalException, SystemException {
 
-		StringBundler className = new StringBundler(128);
-		long classPK = JournalUtil.getSubscriptionToStructureClass(
-			groupId, ddmStructureId, className);
+		String className = JournalUtil.getSubscriptionClassName(ddmStructureId);
+		long classPK = JournalUtil.getSubscriptionClassPK(
+			groupId, ddmStructureId);
 
 		subscriptionLocalService.addSubscription(
-			userId, groupId, className.toString(), classPK);
+			userId, groupId, className, classPK);
 	}
 
 	/**
@@ -4445,15 +4445,14 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public void unsubscribeStructure(
-		long groupId, long userId, long ddmStructureId) throws PortalException,
-		SystemException {
+			long groupId, long userId, long ddmStructureId)
+		throws PortalException, SystemException {
 
-		StringBundler className = new StringBundler(128);
-		long classPK = JournalUtil.getSubscriptionToStructureClass(
-			groupId, ddmStructureId, className);
+		String className = JournalUtil.getSubscriptionClassName(ddmStructureId);
+		long classPK = JournalUtil.getSubscriptionClassPK(
+			groupId, ddmStructureId);
 
-		subscriptionLocalService.deleteSubscription(
-			userId, className.toString(), classPK);
+		subscriptionLocalService.deleteSubscription(userId, className, classPK);
 	}
 
 	/**
@@ -6517,23 +6516,21 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
+		long structureClassPK = 0;
+
 		if (article.isTemplateDriven()) {
 			DDMStructure structure = ddmStructureLocalService.getStructure(
 				article.getGroupId(),
 				classNameLocalService.getClassNameId(JournalArticle.class),
 				article.getStructureId(), true);
 
-			subscriptionSender.addPersistedSubscribers(
-				DDMStructure.class.getName(), structure.getStructureId());
+			structureClassPK = structure.getStructureId();
 		}
-		else {
-			StringBundler className = new StringBundler(128);
-			JournalUtil.getSubscriptionToStructureClass(
-				article.getGroupId(), 0, className);
 
-			subscriptionSender.addPersistedSubscribers(
-				className.toString(), article.getGroupId());
-		}
+		subscriptionSender.addPersistedSubscribers(
+			JournalUtil.getSubscriptionClassName(structureClassPK),
+			JournalUtil.getSubscriptionClassPK(
+				article.getGroupId(), structureClassPK));
 
 		subscriptionSender.addPersistedSubscribers(
 			JournalArticle.class.getName(), article.getResourcePrimKey());

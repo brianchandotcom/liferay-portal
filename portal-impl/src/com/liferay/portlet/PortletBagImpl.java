@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
@@ -84,7 +85,8 @@ public class PortletBagImpl implements PortletBag {
 		List<TrashHandler> trashHandlerInstances,
 		List<WorkflowHandler> workflowHandlerInstances,
 		PreferencesValidator preferencesValidatorInstance,
-		Map<String, ResourceBundle> resourceBundles) {
+		Map<String, ResourceBundle> resourceBundles,
+		List<DDMDisplay> ddmDisplayInstances) {
 
 		_portletName = portletName;
 		_servletContext = servletContext;
@@ -115,6 +117,7 @@ public class PortletBagImpl implements PortletBag {
 		_workflowHandlerInstances = workflowHandlerInstances;
 		_preferencesValidatorInstance = preferencesValidatorInstance;
 		_resourceBundles = resourceBundles;
+		_ddmDisplayInstances = ddmDisplayInstances;
 	}
 
 	@Override
@@ -136,7 +139,7 @@ public class PortletBagImpl implements PortletBag {
 			getCustomAttributesDisplayInstances(),
 			getPermissionPropagatorInstance(), getTrashHandlerInstances(),
 			getWorkflowHandlerInstances(), getPreferencesValidatorInstance(),
-			getResourceBundles());
+			getResourceBundles(), getDdmDisplayInstances());
 	}
 
 	@Override
@@ -146,6 +149,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_configurationActionInstances);
 		close(_controlPanelEntryInstances);
 		close(_customAttributesDisplayInstances);
+		close(_ddmDisplayInstances);
 		close(_friendlyURLMapperInstances);
 		close(_indexerInstances);
 		close(_openSearchInstances);
@@ -185,6 +189,11 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<CustomAttributesDisplay> getCustomAttributesDisplayInstances() {
 		return _customAttributesDisplayInstances;
+	}
+
+	@Override
+	public List<DDMDisplay> getDdmDisplayInstances() {
+		return _ddmDisplayInstances;
 	}
 
 	@Override
@@ -354,6 +363,7 @@ public class PortletBagImpl implements PortletBag {
 	private List<ConfigurationAction> _configurationActionInstances;
 	private List<ControlPanelEntry> _controlPanelEntryInstances;
 	private List<CustomAttributesDisplay> _customAttributesDisplayInstances;
+	private List<DDMDisplay> _ddmDisplayInstances;
 	private List<FriendlyURLMapper> _friendlyURLMapperInstances;
 	private List<Indexer> _indexerInstances;
 	private List<OpenSearch> _openSearchInstances;

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
@@ -66,6 +67,8 @@ public interface PortletBag extends Cloneable {
 	public List<ControlPanelEntry> getControlPanelEntryInstances();
 
 	public List<CustomAttributesDisplay> getCustomAttributesDisplayInstances();
+
+	public List<DDMDisplay> getDdmDisplayInstances();
 
 	public List<FriendlyURLMapper> getFriendlyURLMapperInstances();
 

@@ -77,7 +77,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
-import com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
@@ -172,11 +171,7 @@ public class PortletBagFactory {
 		List<CustomAttributesDisplay> customAttributesDisplayInstances =
 			newCustomAttributesDisplayInstances(portlet);
 
-		DDMDisplay ddmDisplayInstance = newDDMDisplay(portlet);
-
-		if (ddmDisplayInstance != null) {
-			DDMDisplayRegistryUtil.register(ddmDisplayInstance);
-		}
+		List<DDMDisplay> ddmDisplayInstances = newDDMDisplayInstances(portlet);
 
 		PermissionPropagator permissionPropagatorInstance =
 			newPermissionPropagator(portlet);
@@ -270,7 +265,7 @@ public class PortletBagFactory {
 			atomCollectionAdapterInstances, customAttributesDisplayInstances,
 			permissionPropagatorInstance, trashHandlerInstances,
 			workflowHandlerInstances, preferencesValidatorInstance,
-			resourceBundles);
+			resourceBundles, ddmDisplayInstances);
 
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
 
@@ -708,13 +703,20 @@ public class PortletBagFactory {
 		return customAttributesDisplayInstances;
 	}
 
-	protected DDMDisplay newDDMDisplay(Portlet portlet) throws Exception {
-		if (Validator.isNull(portlet.getDDMDisplayClass())) {
-			return null;
+	protected List<DDMDisplay> newDDMDisplayInstances(Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<DDMDisplay> ddmDisplayInstances =
+			getServiceTrackerList(DDMDisplay.class, portlet);
+
+		if (Validator.isNotNull(portlet.getDDMDisplayClass())) {
+			DDMDisplay ddmDisplayInstance = (DDMDisplay)newInstance(
+				DDMDisplay.class, portlet.getDDMDisplayClass());
+
+			ddmDisplayInstances.add(ddmDisplayInstance);
 		}
 
-		return (DDMDisplay)newInstance(
-			DDMDisplay.class, portlet.getDDMDisplayClass());
+		return ddmDisplayInstances;
 	}
 
 	protected List<FriendlyURLMapper> newFriendlyURLMappers(Portlet portlet)

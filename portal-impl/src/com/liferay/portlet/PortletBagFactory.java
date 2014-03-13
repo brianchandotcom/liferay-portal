@@ -87,7 +87,6 @@ import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
 import com.liferay.portlet.social.model.impl.SocialActivityInterpreterImpl;
 import com.liferay.portlet.social.model.impl.SocialRequestInterpreterImpl;
-import com.liferay.portlet.social.service.SocialActivityInterpreterLocalServiceUtil;
 import com.liferay.portlet.social.service.SocialRequestInterpreterLocalServiceUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
@@ -970,37 +969,25 @@ public class PortletBagFactory {
 		return portletLayoutListenerInstances;
 	}
 
-	protected SocialActivityInterpreter newSocialActivityInterpreterInstance(
-			Portlet portlet, String socialActivityInterpreterClass)
-		throws Exception {
-
-		SocialActivityInterpreter socialActivityInterpreterInstance =
-			(SocialActivityInterpreter)newInstance(
-				SocialActivityInterpreter.class,
-				socialActivityInterpreterClass);
-
-		socialActivityInterpreterInstance = new SocialActivityInterpreterImpl(
-			portlet.getPortletId(), socialActivityInterpreterInstance);
-
-		SocialActivityInterpreterLocalServiceUtil.addActivityInterpreter(
-			socialActivityInterpreterInstance);
-
-		return socialActivityInterpreterInstance;
-	}
-
 	protected List<SocialActivityInterpreter>
 			newSocialActivityInterpreterInstances(Portlet portlet)
 		throws Exception {
 
-		List<SocialActivityInterpreter> socialActivityInterpreterInstances =
-			new ArrayList<SocialActivityInterpreter>();
+		ServiceTrackerList<SocialActivityInterpreter>
+			socialActivityInterpreterInstances = getServiceTrackerList(
+				SocialActivityInterpreter.class, portlet);
 
 		for (String socialActivityInterpreterClass :
 				portlet.getSocialActivityInterpreterClasses()) {
 
 			SocialActivityInterpreter socialActivityInterpreterInstance =
-				newSocialActivityInterpreterInstance(
-					portlet, socialActivityInterpreterClass);
+				(SocialActivityInterpreter)newInstance(
+					SocialActivityInterpreter.class,
+					socialActivityInterpreterClass);
+
+			socialActivityInterpreterInstance =
+				new SocialActivityInterpreterImpl(
+					portlet.getPortletId(), socialActivityInterpreterInstance);
 
 			socialActivityInterpreterInstances.add(
 				socialActivityInterpreterInstance);

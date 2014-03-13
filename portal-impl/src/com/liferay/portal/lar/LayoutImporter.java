@@ -77,7 +77,6 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.sites.util.Sites;
 
@@ -695,55 +694,23 @@ public class LayoutImporter {
 		// Last merge time must be the same for merged layouts and the layout
 		// set
 
-		long lastMergeTime = System.currentTimeMillis();
+		if (layoutsImportMode.equals(
+				PortletDataHandlerKeys.
+					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
-		for (Layout layout : newLayouts) {
-			layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+			long lastMergeTime = System.currentTimeMillis();
 
-			boolean modifiedTypeSettingsProperties = false;
+			for (Layout layout : newLayoutsMap.values()) {
+				layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
 
-			UnicodeProperties typeSettingsProperties =
-				layout.getTypeSettingsProperties();
-
-			// Journal article layout type
-
-			String articleId = typeSettingsProperties.getProperty("article-id");
-
-			if (Validator.isNotNull(articleId)) {
-				Map<String, String> articleIds =
-					(Map<String, String>)portletDataContext.
-						getNewPrimaryKeysMap(
-							JournalArticle.class + ".articleId");
-
-				typeSettingsProperties.setProperty(
-					"article-id",
-					MapUtil.getString(articleIds, articleId, articleId));
-
-				modifiedTypeSettingsProperties = true;
-			}
-
-			// Last merge time for layout
-
-			if (layoutsImportMode.equals(
-					PortletDataHandlerKeys.
-						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+				UnicodeProperties typeSettingsProperties =
+					layout.getTypeSettingsProperties();
 
 				typeSettingsProperties.setProperty(
 					Sites.LAST_MERGE_TIME, String.valueOf(lastMergeTime));
 
-				modifiedTypeSettingsProperties = true;
-			}
-
-			if (modifiedTypeSettingsProperties) {
 				LayoutUtil.update(layout);
 			}
-		}
-
-		// Last merge time for layout set
-
-		if (layoutsImportMode.equals(
-				PortletDataHandlerKeys.
-					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
 			// The layout set may be stale because LayoutUtil#update(layout)
 			// triggers LayoutSetPrototypeLayoutListener and that may have

@@ -1303,7 +1303,10 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isXml(String s) {
-		if (s.startsWith(_XML_BEGIN) || s.startsWith(_XML_EMPTY)) {
+		if (isNull(s)) {
+			return false;
+		}
+		else if (s.startsWith(_XML_BEGIN) || s.startsWith(_XML_EMPTY)) {
 			return true;
 		}
 		else {

@@ -926,7 +926,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>email-notifications-settings</name>
+		<name>email-notification-settings</name>
 		<tag-class>com.liferay.taglib.ui.EmailNotificationSettingsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -961,6 +961,11 @@
 		</attribute>
 		<attribute>
 			<name>fieldPrefix</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>fieldPrefixSeparator</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1917,6 +1922,16 @@
 		</attribute>
 		<attribute>
 			<name>displayWidth</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>fieldPrefix</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>fieldPrefixSeparator</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

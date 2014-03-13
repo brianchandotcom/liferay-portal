@@ -223,7 +223,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		%>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notifications-settings
+			<liferay-ui:email-notification-settings
 				emailBody='<%= ParamUtil.getString(request, "preferences--emailOrderConfirmationBody--", shoppingSettings.getEmailOrderConfirmationBody()) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailOrderConfirmationEnabled--", shoppingSettings.getEmailOrderConfirmationEnabled()) %>'
@@ -233,7 +233,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notifications-settings
+			<liferay-ui:email-notification-settings
 				emailBody='<%= ParamUtil.getString(request, "preferences--emailOrderShippingBody--", shoppingSettings.getEmailOrderShippingBody()) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailOrderConfirmationEnabled--", shoppingSettings.getEmailOrderShippingEnabled()) %>'

@@ -15,16 +15,59 @@
 package com.liferay.portlet.login.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
+
+	@Override
+	public void postProcessPreferences(
+			long companyId, PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		removeDefaultValuePreference(
+			portletRequest, portletPreferences, "emailFromName",
+			PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME));
+		removeDefaultValuePreference(
+			portletRequest, portletPreferences, "emailFromAddress",
+			PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS));
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		removeDefaultValuePreference(
+			portletRequest, portletPreferences,
+			"emailPasswordSentBody_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY));
+		removeDefaultValuePreference(
+			portletRequest, portletPreferences,
+			"emailPasswordSentSubject_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT));
+		removeDefaultValuePreference(
+			portletRequest, portletPreferences,
+			"emailPasswordResetBody_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY));
+		removeDefaultValuePreference(
+			portletRequest, portletPreferences,
+			"emailPasswordResetSubject_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
+	}
 
 	@Override
 	public void processAction(

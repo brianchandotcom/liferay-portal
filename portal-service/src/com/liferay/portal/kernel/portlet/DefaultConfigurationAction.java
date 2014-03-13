@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -77,6 +78,12 @@ public class DefaultConfigurationAction
 		name = PREFERENCES_PREFIX.concat(name).concat(StringPool.DOUBLE_DASH);
 
 		return ParamUtil.getString(portletRequest, name);
+	}
+
+	public void postProcessPreferences(
+			long companyId, PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws Exception {
 	}
 
 	@Override
@@ -136,6 +143,9 @@ public class DefaultConfigurationAction
 					portletPreferences.setValues(name, values);
 				}
 			}
+
+			postProcessPreferences(
+				themeDisplay.getCompanyId(), actionRequest, portletPreferences);
 		}
 		else {
 			String serviceName = ParamUtil.getString(
@@ -289,6 +299,21 @@ public class DefaultConfigurationAction
 			selPortlet, servletContext);
 
 		return selPortletConfig;
+	}
+
+	protected void removeDefaultValuePreference(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences, String paramName,
+			String defaultValue)
+		throws Exception {
+
+		String value = getParameter(portletRequest, paramName);
+
+		if (defaultValue.equals(value) ||
+			StringUtil.equalsIgnoreBreakLine(defaultValue, value)) {
+
+			portletPreferences.reset(paramName);
+		}
 	}
 
 	protected void validateEmail(

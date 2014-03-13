@@ -156,6 +156,14 @@ public class LocalizationUtil {
 			preferences, portletRequest, parameter);
 	}
 
+	public static String getLocalizationXmlFromPreferences(
+		PortletPreferences preferences, PortletRequest portletRequest,
+		String parameter, String defaultValue) {
+
+		return getLocalization().getLocalizationXmlFromPreferences(
+			preferences, portletRequest, parameter, defaultValue);
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getLocalizationMap}
 	 */
@@ -343,6 +351,14 @@ public class LocalizationUtil {
 		return getLocalization().updateLocalization(
 			xml, key, value, requestedLanguageId, defaultLanguageId, cdata,
 			localized);
+	}
+
+	public String getLocalization(
+		String xml, String requestedLanguageId, boolean useDefault,
+		String defaultValue) {
+
+		return getLocalization().getLocalization(
+			xml, requestedLanguageId, useDefault, defaultValue);
 	}
 
 	public void setLocalization(Localization localization) {

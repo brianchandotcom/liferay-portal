@@ -169,6 +169,15 @@ public class LocalizationImpl implements Localization {
 	public String getLocalization(
 		String xml, String requestedLanguageId, boolean useDefault) {
 
+		return getLocalization(
+			xml, requestedLanguageId, useDefault, StringPool.BLANK);
+	}
+
+	@Override
+	public String getLocalization(
+		String xml, String requestedLanguageId, boolean useDefault,
+		String defaultValue) {
+
 		String systemDefaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getDefault());
 
@@ -179,7 +188,7 @@ public class LocalizationImpl implements Localization {
 				return xml;
 			}
 			else {
-				return StringPool.BLANK;
+				return defaultValue;
 			}
 		}
 
@@ -189,7 +198,7 @@ public class LocalizationImpl implements Localization {
 			return value;
 		}
 
-		value = StringPool.BLANK;
+		value = defaultValue;
 
 		String priorityLanguageId = null;
 
@@ -241,8 +250,7 @@ public class LocalizationImpl implements Localization {
 
 			// Find specified language and/or default language
 
-			String defaultValue = StringPool.BLANK;
-			String priorityValue = StringPool.BLANK;
+			String priorityValue = defaultValue;
 
 			while (xmlStreamReader.hasNext()) {
 				int event = xmlStreamReader.next();
@@ -469,7 +477,16 @@ public class LocalizationImpl implements Localization {
 		PortletPreferences preferences, PortletRequest portletRequest,
 		String parameter) {
 
-		String xml = StringPool.BLANK;
+		return getLocalizationXmlFromPreferences(
+			preferences, portletRequest, parameter, null);
+	}
+
+	@Override
+	public String getLocalizationXmlFromPreferences(
+		PortletPreferences preferences, PortletRequest portletRequest,
+		String parameter, String defaultValue) {
+
+		String xml = null;
 
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 		Locale defaultLocale = LocaleUtil.getDefault();
@@ -482,16 +499,16 @@ public class LocalizationImpl implements Localization {
 				parameter + StringPool.UNDERLINE + languageId;
 
 			String value = PrefsParamUtil.getString(
-				preferences, portletRequest, localParameter);
+				preferences, portletRequest, localParameter, null);
 
-			if (Validator.isNotNull(value)) {
+			if (value != null) {
 				xml = updateLocalization(xml, parameter, value, languageId);
 			}
 		}
 
-		if (Validator.isNull(getLocalization(xml, defaultLanguageId))) {
+		if (getLocalization(xml, defaultLanguageId, true, null) == null) {
 			String oldValue = PrefsParamUtil.getString(
-				preferences, portletRequest, parameter);
+				preferences, portletRequest, parameter, defaultValue);
 
 			if (Validator.isNotNull(oldValue)) {
 				xml = updateLocalization(xml, parameter, oldValue);

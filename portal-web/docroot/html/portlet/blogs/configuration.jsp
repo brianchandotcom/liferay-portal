@@ -115,7 +115,7 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 
 			</aui:select>
 
-			<liferay-ui:email-notifications-settings
+			<liferay-ui:email-notification-settings
 				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailEntryAddedBody_" + currentLanguageId, ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_ADDED_BODY)) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailEntryAddedEnabled--", BlogsUtil.getEmailEntryAddedEnabled(portletPreferences)) %>'
@@ -149,7 +149,7 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 
 			</aui:select>
 
-			<liferay-ui:email-notifications-settings
+			<liferay-ui:email-notification-settings
 				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailEntryUpdatedBody_" + currentLanguageId, ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_UPDATED_BODY)) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailEntryUpdatedEnabled--", BlogsUtil.getEmailEntryUpdatedEnabled(portletPreferences)) %>'

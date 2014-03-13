@@ -71,7 +71,6 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.LiferayResourceBundle;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.notifications.UserNotificationHandlerImpl;
-import com.liferay.portal.pop.POPServerUtil;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
@@ -148,8 +147,8 @@ public class PortletBagFactory {
 		List<PollerProcessor> pollerProcessorInstances = newPollerProcessors(
 			portlet);
 
-		MessageListener popMessageListenerInstance = newPOPMessageListener(
-			portlet);
+		List<MessageListener> popMessageListenerInstances =
+			newPOPMessageListeners(portlet);
 
 		List<SocialActivityInterpreter> socialActivityInterpreterInstances =
 			newSocialActivityInterpreterInstances(portlet);
@@ -318,7 +317,7 @@ public class PortletBagFactory {
 			friendlyURLMapperInstances, urlEncoderInstances,
 			portletDataHandlerInstances, stagedModelDataHandlerInstances,
 			templateHandlerInstances, portletLayoutListenerInstances,
-			pollerProcessorInstances, popMessageListenerInstance,
+			pollerProcessorInstances, popMessageListenerInstances,
 			socialActivityInterpreterInstances,
 			socialRequestInterpreterInstance, userNotificationHandlerInstances,
 			webDAVStorageInstance, xmlRpcMethodInstance,
@@ -913,20 +912,22 @@ public class PortletBagFactory {
 		return pollerProcessorInstances;
 	}
 
-	protected MessageListener newPOPMessageListener(Portlet portlet)
+	protected List<MessageListener> newPOPMessageListeners(Portlet portlet)
 		throws Exception {
 
-		if (Validator.isNull(portlet.getPopMessageListenerClass())) {
-			return null;
+		ServiceTrackerList<MessageListener> messageListenerInstances =
+			getServiceTrackerList(MessageListener.class, portlet);
+
+		if (Validator.isNotNull(portlet.getPopMessageListenerClass())) {
+			MessageListener popMessageListenerInstance =
+				(MessageListener)newInstance(
+					MessageListener.class,
+					portlet.getPopMessageListenerClass());
+
+			messageListenerInstances.add(popMessageListenerInstance);
 		}
 
-		MessageListener popMessageListenerInstance =
-			(MessageListener)newInstance(
-				MessageListener.class, portlet.getPopMessageListenerClass());
-
-		POPServerUtil.addListener(popMessageListenerInstance);
-
-		return popMessageListenerInstance;
+		return messageListenerInstances;
 	}
 
 	protected List<PortletDataHandler> newPortletDataHandlers(Portlet portlet)

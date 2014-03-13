@@ -14,6 +14,8 @@
 
 package com.liferay.portal.pop;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.pop.MessageListener;
@@ -24,6 +26,7 @@ import javax.mail.Message;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class MessageListenerWrapper implements MessageListener {
 
 	public MessageListenerWrapper(MessageListener listener) {
@@ -86,6 +89,10 @@ public class MessageListenerWrapper implements MessageListener {
 	@Override
 	public int hashCode() {
 		return _listener.getId().hashCode();
+	}
+
+	public MessageListener getMessageListener() {
+		return _listener;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

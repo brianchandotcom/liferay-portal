@@ -303,6 +303,11 @@
 <!---->
 <!--DOCUMENT_CONTAINER_DOCUMENT-->
 <tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT_GENERIC</td>
+	<td>//div[@id='_20_entriesContainer']//div[@class='entry-thumbnail']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_CONTAINER_DOCUMENT</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]</td>
 	<td></td>

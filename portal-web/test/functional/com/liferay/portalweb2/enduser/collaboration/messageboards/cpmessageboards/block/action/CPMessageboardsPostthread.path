@@ -38,6 +38,26 @@
 	<td>//button[@id='_162_publishButton' and contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ATTACHMENTS_DROPDOWN</td>
+	<td>//div[@id='mbMessageAttachmentsPanel']/div/div[@class='accordion-toggle']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_BROWSE_FIELD</td>
+	<td>//input[@id='_162_msgFile1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_NAME</td>
+	<td>//span[@id='_162_existingFile1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_REMOVE_LINK</td>
+	<td>//a[@id='_162_removeExisting1']/span</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

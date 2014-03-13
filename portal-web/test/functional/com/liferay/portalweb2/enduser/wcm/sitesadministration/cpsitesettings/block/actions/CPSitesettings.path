@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENU_BASIC_INFORMATION_RECYCLE_BIN</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

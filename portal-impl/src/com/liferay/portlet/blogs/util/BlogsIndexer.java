@@ -141,10 +141,6 @@ public class BlogsIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		BlogsEntry entry = (BlogsEntry)obj;
 
-		if (!entry.isApproved() && !entry.isInTrash()) {
-			return;
-		}
-
 		Document document = getDocument(entry);
 
 		SearchEngineUtil.updateDocument(

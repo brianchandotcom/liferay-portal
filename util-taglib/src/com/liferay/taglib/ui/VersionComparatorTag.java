@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.diff.DiffVersion;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -57,7 +57,7 @@ public class VersionComparatorTag extends IncludeTag {
 		_targetVersion = targetVersion;
 	}
 
-	public void setVersionsInfo(List<Tuple> versionsInfo) {
+	public void setVersionsInfo(List<DiffVersion> versionsInfo) {
 		_versionsInfo = versionsInfo;
 	}
 
@@ -111,6 +111,6 @@ public class VersionComparatorTag extends IncludeTag {
 	private double _previousVersion;
 	private double _sourceVersion;
 	private double _targetVersion;
-	private List<Tuple> _versionsInfo;
+	private List<DiffVersion> _versionsInfo;
 
 }

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/ui/version_comparator/init.jsp" %>
 
 <%
 String diffHtmlResults = (String)request.getAttribute("liferay-ui:version-comparator:diffHtmlResults");
@@ -23,7 +23,7 @@ double nextVersion = (Double)request.getAttribute("liferay-ui:version-comparator
 double previousVersion = (Double)request.getAttribute("liferay-ui:version-comparator:previousVersion");
 double sourceVersion = (Double)request.getAttribute("liferay-ui:version-comparator:sourceVersion");
 double targetVersion = (Double)request.getAttribute("liferay-ui:version-comparator:targetVersion");
-List<Tuple> versionsInfo = (List<Tuple>)request.getAttribute("liferay-ui:version-comparator:versionsInfo");
+List<DiffVersion> diffVersions = (List<DiffVersion>)request.getAttribute("liferay-ui:version-comparator:versionsInfo");
 
 String sourceVersionString = (previousVersion != 0) ? String.valueOf(sourceVersion) : String.valueOf(sourceVersion) + " (" + LanguageUtil.get(pageContext, "first-version") + ")";
 String targetVersionString = (nextVersion != 0) ? String.valueOf(targetVersion) : String.valueOf(targetVersion) + " (" + LanguageUtil.get(pageContext, "last-version") + ")";
@@ -56,13 +56,8 @@ String targetVersionString = (nextVersion != 0) ? String.valueOf(targetVersion) 
 		<div class="central-author">
 
 			<%
-			for (Tuple versionInfo : versionsInfo) {
-				long userId = (Long)versionInfo.getObject(0);
-				double versionNumber = (Double)versionInfo.getObject(1);
-				String summary = (String)versionInfo.getObject(2);
-				String extraInfo = (String)versionInfo.getObject(3);
-
-				User author = UserLocalServiceUtil.getUser(userId);
+			for (DiffVersion diffVersion : diffVersions) {
+				User author = UserLocalServiceUtil.getUser(diffVersion.getUserId());
 			%>
 
 				<liferay-ui:icon
@@ -72,9 +67,15 @@ String targetVersionString = (nextVersion != 0) ? String.valueOf(targetVersion) 
 					toolTip="author"
 				/>
 
-				(<%= versionNumber %>)
+				(<%= diffVersion.getVersion() %>)
 
-				<c:if test="<%= versionsInfo.size() == 1 %>">
+				<c:if test="<%= diffVersions.size() == 1 %>">
+
+					<%
+					String summary = diffVersion.getSummary();
+					String extraInfo = diffVersion.getExtraInfo();
+					%>
+
 					<c:if test="<%= Validator.isNotNull(summary) %>">
 						<%= summary %>
 					</c:if>

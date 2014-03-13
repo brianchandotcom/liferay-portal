@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.service;
 
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -23,18 +22,16 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseSubscriptionTestCase;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.util.JournalTestUtil;
-import com.liferay.portal.util.MailServiceTestUtil;
 
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,44 +48,6 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
-
-	@Test
-	public void testStructureSubscriptionWithSpecificStructure()
-		throws Exception {
-
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			JournalArticle.class.getName());
-
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM,
-			JournalTestUtil.getSampleTemplateXSL());
-
-		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
-			"<title>Test Article</title>",
-			ddmStructure.getStructureKey(),
-			ddmTemplate.getTemplateKey());
-
-		JournalArticleLocalServiceUtil.subscribeStructure(
-			group.getGroupId(), TestPropsValues.getUserId(),
-			ddmStructure.getStructureId());
-
-		updateEntry(article.getResourcePrimKey());
-
-		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
-	}
-
-	@Test
-	public void testStructureSubscriptionWithoutStructure() throws Exception {
-
-		long articleId = addBaseModel(0);
-
-		JournalArticleLocalServiceUtil.subscribeStructure(
-			group.getGroupId(), TestPropsValues.getUserId(), 0);
-
-		updateEntry(articleId);
-
-		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
-	}
 
 	@Ignore
 	@Override
@@ -111,6 +70,19 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
+	protected long addBaseModelWithType(long containerId, long typeId)
+		throws Exception {
+
+		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
+			group.getGroupId(), containerId,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			"<title>Test Article</title>", _ddmStructure.getStructureKey(),
+			_ddmTemplate.getTemplateKey());
+
+		return article.getResourcePrimKey();
+	}
+
+	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
 		JournalFolder folder = JournalTestUtil.addFolder(
 			group.getGroupId(), containerModelId,
@@ -128,6 +100,23 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
+	protected void addSubscriptionType(long typeId) throws Exception {
+		JournalArticleLocalServiceUtil.subscribeStructure(
+			group.getGroupId(), TestPropsValues.getUserId(), typeId);
+	}
+
+	@Override
+	protected long addType() throws Exception {
+		_ddmStructure = DDMStructureTestUtil.addStructure(
+			group.getGroupId(), JournalArticle.class.getName());
+
+		_ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			group.getGroupId(), _ddmStructure.getStructureId());
+
+		return _ddmStructure.getStructureId();
+	}
+
+	@Override
 	protected long updateEntry(long baseModelId) throws Exception {
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.getLatestArticle(
@@ -138,5 +127,8 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 
 		return article.getResourcePrimKey();
 	}
+
+	protected DDMStructure _ddmStructure;
+	protected DDMTemplate _ddmTemplate;
 
 }

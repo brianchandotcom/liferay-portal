@@ -667,6 +667,13 @@ public class LiferaySeleniumHelper {
 
 				return true;
 			}
+
+			if (line.contains(
+					"com.liferay.portal.kernel.search.SearchException: " +
+						"java.nio.channels.ClosedByInterruptException")) {
+
+				return true;
+			}
 		}
 
 		if (Validator.isNotNull(TestPropsValues.IGNORE_ERROR) &&

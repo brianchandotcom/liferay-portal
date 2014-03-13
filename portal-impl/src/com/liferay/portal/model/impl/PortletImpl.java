@@ -1732,13 +1732,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public SocialRequestInterpreter getSocialRequestInterpreterInstance() {
-		if (Validator.isNull(getSocialRequestInterpreterClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<SocialRequestInterpreter> socialRequestInterpreterInstances =
+			portletBag.getSocialRequestInterpreterInstances();
+
+		if (socialRequestInterpreterInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getSocialRequestInterpreterInstance();
+		return socialRequestInterpreterInstances.get(0);
 	}
 
 	/**

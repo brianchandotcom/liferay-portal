@@ -72,7 +72,7 @@ public class PortletBagImpl implements PortletBag {
 		List<PollerProcessor> pollerProcessorInstances,
 		List<MessageListener> popMessageListenerInstances,
 		List<SocialActivityInterpreter> socialActivityInterpreterInstances,
-		SocialRequestInterpreter socialRequestInterpreterInstance,
+		List<SocialRequestInterpreter> socialRequestInterpreterInstances,
 		List<UserNotificationHandler> userNotificationHandlerInstances,
 		WebDAVStorage webDAVStorageInstance, Method xmlRpcMethodInstance,
 		ControlPanelEntry controlPanelEntryInstance,
@@ -101,7 +101,7 @@ public class PortletBagImpl implements PortletBag {
 		_popMessageListenerInstances = popMessageListenerInstances;
 		_socialActivityInterpreterInstances =
 			socialActivityInterpreterInstances;
-		_socialRequestInterpreterInstance = socialRequestInterpreterInstance;
+		_socialRequestInterpreterInstances = socialRequestInterpreterInstances;
 		_userNotificationHandlerInstances = userNotificationHandlerInstances;
 		_webDAVStorageInstance = webDAVStorageInstance;
 		_xmlRpcMethodInstance = xmlRpcMethodInstance;
@@ -127,7 +127,7 @@ public class PortletBagImpl implements PortletBag {
 			getPortletLayoutListenerInstances(), getPollerProcessorInstances(),
 			getPopMessageListenerInstances(),
 			getSocialActivityInterpreterInstances(),
-			getSocialRequestInterpreterInstance(),
+			getSocialRequestInterpreterInstances(),
 			getUserNotificationHandlerInstances(), getWebDAVStorageInstance(),
 			getXmlRpcMethodInstance(), getControlPanelEntryInstance(),
 			getAssetRendererFactoryInstances(),
@@ -149,6 +149,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_portletDataHandlerInstances);
 		close(_portletLayoutListenerInstances);
 		close(_socialActivityInterpreterInstances);
+		close(_socialRequestInterpreterInstances);
 		close(_templateHandlerInstances);
 		close(_urlEncoderInstances);
 	}
@@ -268,8 +269,10 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public SocialRequestInterpreter getSocialRequestInterpreterInstance() {
-		return _socialRequestInterpreterInstance;
+	public List<SocialRequestInterpreter>
+		getSocialRequestInterpreterInstances() {
+
+		return _socialRequestInterpreterInstances;
 	}
 
 	@Override
@@ -357,7 +360,7 @@ public class PortletBagImpl implements PortletBag {
 	private Map<String, ResourceBundle> _resourceBundles;
 	private ServletContext _servletContext;
 	private List<SocialActivityInterpreter> _socialActivityInterpreterInstances;
-	private SocialRequestInterpreter _socialRequestInterpreterInstance;
+	private List<SocialRequestInterpreter> _socialRequestInterpreterInstances;
 	private List<StagedModelDataHandler<?>> _stagedModelDataHandlerInstances;
 	private List<TemplateHandler> _templateHandlerInstances;
 	private List<TrashHandler> _trashHandlerInstances;

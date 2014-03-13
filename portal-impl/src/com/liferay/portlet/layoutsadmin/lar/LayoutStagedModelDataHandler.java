@@ -641,7 +641,7 @@ public class LayoutStagedModelDataHandler
 			!portletDataContext.isPerformDirectBinaryImport() &&
 			!layout.isInheritLookAndFeel()) {
 
-			StagedTheme stagedTheme = new StagedTheme(layout.getTheme());
+			StagedTheme stagedTheme = new StagedThemeImpl(layout.getTheme());
 
 			Element layoutElement = portletDataContext.getExportDataElement(
 				layout);

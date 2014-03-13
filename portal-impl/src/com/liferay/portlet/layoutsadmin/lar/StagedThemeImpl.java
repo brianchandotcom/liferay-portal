@@ -16,7 +16,6 @@ package com.liferay.portlet.layoutsadmin.lar;
 
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.impl.ThemeImpl;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -29,9 +28,9 @@ import java.util.Date;
 /**
  * @author Mate Thurzo
  */
-public class StagedTheme extends ThemeImpl implements StagedModel {
+public class StagedThemeImpl extends ThemeImpl implements StagedTheme {
 
-	public StagedTheme(Theme theme) {
+	public StagedThemeImpl(Theme theme) {
 		super(theme.getThemeId());
 	}
 
@@ -39,7 +38,7 @@ public class StagedTheme extends ThemeImpl implements StagedModel {
 	public Object clone() {
 		ThemeImpl themeImpl = new ThemeImpl(getThemeId());
 
-		return new StagedTheme(themeImpl);
+		return new StagedThemeImpl(themeImpl);
 	}
 
 	@Override

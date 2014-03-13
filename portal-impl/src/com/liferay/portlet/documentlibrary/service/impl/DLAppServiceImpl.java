@@ -2699,8 +2699,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public void subscribeFolder(long groupId, long folderId)
 		throws PortalException, SystemException {
 
-		DLPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
 
 		dlAppLocalService.subscribeFolder(getUserId(), groupId, folderId);
 	}
@@ -2804,8 +2804,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public void unsubscribeFolder(long groupId, long folderId)
 		throws PortalException, SystemException {
 
-		DLPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
 
 		dlAppLocalService.unsubscribeFolder(getUserId(), groupId, folderId);
 	}

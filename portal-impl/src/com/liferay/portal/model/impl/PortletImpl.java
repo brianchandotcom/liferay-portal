@@ -1161,13 +1161,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public PermissionPropagator getPermissionPropagatorInstance() {
-		if (Validator.isNull(getPermissionPropagatorClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<PermissionPropagator> permissionPropagatorInstances =
+			portletBag.getPermissionPropagatorInstances();
+
+		if (permissionPropagatorInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getPermissionPropagatorInstance();
+		return permissionPropagatorInstances.get(0);
 	}
 
 	/**

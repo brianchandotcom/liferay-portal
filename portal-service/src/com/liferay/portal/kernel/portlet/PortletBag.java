@@ -76,7 +76,7 @@ public interface PortletBag extends Cloneable {
 
 	public List<OpenSearch> getOpenSearchInstances();
 
-	public PermissionPropagator getPermissionPropagatorInstance();
+	public List<PermissionPropagator> getPermissionPropagatorInstances();
 
 	public List<PollerProcessor> getPollerProcessorInstances();
 

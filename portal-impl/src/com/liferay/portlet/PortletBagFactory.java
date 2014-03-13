@@ -173,8 +173,8 @@ public class PortletBagFactory {
 
 		List<DDMDisplay> ddmDisplayInstances = newDDMDisplayInstances(portlet);
 
-		PermissionPropagator permissionPropagatorInstance =
-			newPermissionPropagator(portlet);
+		List<PermissionPropagator> permissionPropagatorInstances =
+			newPermissionPropagators(portlet);
 
 		List<TrashHandler> trashHandlerInstances =
 			new ArrayList<TrashHandler>();
@@ -263,7 +263,7 @@ public class PortletBagFactory {
 			webDAVStorageInstances, xmlRpcMethodInstances,
 			controlPanelEntryInstances, assetRendererFactoryInstances,
 			atomCollectionAdapterInstances, customAttributesDisplayInstances,
-			permissionPropagatorInstance, trashHandlerInstances,
+			permissionPropagatorInstances, trashHandlerInstances,
 			workflowHandlerInstances, preferencesValidatorInstance,
 			resourceBundles, ddmDisplayInstances);
 
@@ -863,15 +863,23 @@ public class PortletBagFactory {
 		return openSearchInstances;
 	}
 
-	protected PermissionPropagator newPermissionPropagator(Portlet portlet)
+	protected List<PermissionPropagator> newPermissionPropagators(
+			Portlet portlet)
 		throws Exception {
 
-		if (Validator.isNull(portlet.getPermissionPropagatorClass())) {
-			return null;
+		ServiceTrackerList<PermissionPropagator> permissionPropagatorInstances =
+			getServiceTrackerList(PermissionPropagator.class, portlet);
+
+		if (Validator.isNotNull(portlet.getPermissionPropagatorClass())) {
+			PermissionPropagator permissionPropagatorInstance =
+				(PermissionPropagator)newInstance(
+					PermissionPropagator.class,
+					portlet.getPermissionPropagatorClass());
+
+			permissionPropagatorInstances.add(permissionPropagatorInstance);
 		}
 
-		return (PermissionPropagator)newInstance(
-			PermissionPropagator.class, portlet.getPermissionPropagatorClass());
+		return permissionPropagatorInstances;
 	}
 
 	protected List<PollerProcessor> newPollerProcessors(Portlet portlet)

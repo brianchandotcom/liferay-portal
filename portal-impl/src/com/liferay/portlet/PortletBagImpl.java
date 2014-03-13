@@ -81,7 +81,7 @@ public class PortletBagImpl implements PortletBag {
 		List<AssetRendererFactory> assetRendererFactoryInstances,
 		List<AtomCollectionAdapter<?>> atomCollectionAdapters,
 		List<CustomAttributesDisplay> customAttributesDisplayInstances,
-		PermissionPropagator permissionPropagatorInstance,
+		List<PermissionPropagator> permissionPropagatorInstances,
 		List<TrashHandler> trashHandlerInstances,
 		List<WorkflowHandler> workflowHandlerInstances,
 		PreferencesValidator preferencesValidatorInstance,
@@ -112,7 +112,7 @@ public class PortletBagImpl implements PortletBag {
 		_assetRendererFactoryInstances = assetRendererFactoryInstances;
 		_atomCollectionAdapterInstances = atomCollectionAdapters;
 		_customAttributesDisplayInstances = customAttributesDisplayInstances;
-		_permissionPropagatorInstance = permissionPropagatorInstance;
+		_permissionPropagatorInstances = permissionPropagatorInstances;
 		_trashHandlerInstances = trashHandlerInstances;
 		_workflowHandlerInstances = workflowHandlerInstances;
 		_preferencesValidatorInstance = preferencesValidatorInstance;
@@ -137,7 +137,7 @@ public class PortletBagImpl implements PortletBag {
 			getAssetRendererFactoryInstances(),
 			getAtomCollectionAdapterInstances(),
 			getCustomAttributesDisplayInstances(),
-			getPermissionPropagatorInstance(), getTrashHandlerInstances(),
+			getPermissionPropagatorInstances(), getTrashHandlerInstances(),
 			getWorkflowHandlerInstances(), getPreferencesValidatorInstance(),
 			getResourceBundles(), getDdmDisplayInstances());
 	}
@@ -153,6 +153,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_friendlyURLMapperInstances);
 		close(_indexerInstances);
 		close(_openSearchInstances);
+		close(_permissionPropagatorInstances);
 		close(_pollerProcessorInstances);
 		close(_popMessageListenerInstances);
 		close(_portletDataHandlerInstances);
@@ -212,8 +213,8 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public PermissionPropagator getPermissionPropagatorInstance() {
-		return _permissionPropagatorInstance;
+	public List<PermissionPropagator> getPermissionPropagatorInstances() {
+		return _permissionPropagatorInstances;
 	}
 
 	@Override
@@ -367,7 +368,7 @@ public class PortletBagImpl implements PortletBag {
 	private List<FriendlyURLMapper> _friendlyURLMapperInstances;
 	private List<Indexer> _indexerInstances;
 	private List<OpenSearch> _openSearchInstances;
-	private PermissionPropagator _permissionPropagatorInstance;
+	private List<PermissionPropagator> _permissionPropagatorInstances;
 	private List<PollerProcessor> _pollerProcessorInstances;
 	private List<MessageListener> _popMessageListenerInstances;
 	private List<PortletDataHandler> _portletDataHandlerInstances;

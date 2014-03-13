@@ -113,11 +113,9 @@ public abstract class BaseSubscriptionTestCase {
 
 	@Test
 	public void testSubscriptionDefaultType() throws Exception {
-		long baseModelId = addBaseModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
-
 		addSubscriptionType(_TYPE_ID_DEFAULT);
 
-		updateEntry(baseModelId);
+		addBaseModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
@@ -167,12 +165,9 @@ public abstract class BaseSubscriptionTestCase {
 	public void testSubscriptionType() throws Exception {
 		long typeId = addType();
 
-		long baseModelId = addBaseModelWithType(
-			_PARENT_CONTAINER_MODEL_ID_DEFAULT, typeId);
-
 		addSubscriptionType(typeId);
 
-		updateEntry(baseModelId);
+		addBaseModelWithType(_PARENT_CONTAINER_MODEL_ID_DEFAULT, typeId);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}

@@ -30,10 +30,10 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 public class HtmlUtil {
 
 	/**
-	 * Escapes the HTML text so that it is safe to use in an HTML context.
+	 * Escapes the text so that it is safe to use in an HTML context.
 	 *
-	 * @param  html the HTML text to escape
-	 * @return the escaped HTML text, or <code>null</code> if the HTML text is
+	 * @param  html the text to escape
+	 * @return the escaped HTML text, or <code>null</code> if the text is
 	 *         <code>null</code>
 	 */
 	public static String escape(String html) {
@@ -41,28 +41,23 @@ public class HtmlUtil {
 	}
 
 	/**
-	 * Escapes the input text as a hexadecimal value, based on the mode.
-	 *
-	 * <p>
-	 * Note that <code>escape(html, 4)</code> (<code>ESCAPE_MODE_TEXT</code> =
-	 * 4) returns the same as <code>escape(html)</code>.
-	 * </p>
+	 * Escapes the input text as a hexadecimal value, based on the mode (type).
 	 *
 	 * @param  html the text to escape
-	 * @param  mode the encoding type. For more information on the escape mode
-	 *         types and their corresponding integer values, visit {@link
-	 *         HtmlImpl}.
+	 * @param  mode the encoding type
 	 * @return the escaped hexadecimal value of the input text, based on the
-	 *         mode, or <code>null</code> if the HTML text is <code>null</code>
+	 *         mode, or <code>null</code> if the text is <code>null</code>
+	 * @see    com.liferay.portal.util.HtmlImpl#escape(String, int)
 	 */
 	public static String escape(String html, int mode) {
 		return getHtml().escape(html, mode);
 	}
 
 	/**
-	 * Escapes the attribute value so that it is safe to use in an HTML context.
+	 * Escapes the attribute value so that it is safe to use as an attribute
+	 * value.
 	 *
-	 * @param  attribute the HTML attribute to escape
+	 * @param  attribute the attribute to escape
 	 * @return the escaped attribute value, or <code>null</code> if the
 	 *         attribute value is <code>null</code>
 	 */
@@ -82,7 +77,8 @@ public class HtmlUtil {
 	}
 
 	/**
-	 * Escapes the HREF attribute so that it is safe to use as a URL.
+	 * Escapes the HREF attribute so that it is safe to use as an HREF
+	 * attribute.
 	 *
 	 * @param  href the HREF attribute to escape
 	 * @return the escaped HREF attribute, or <code>null</code> if the HREF
@@ -124,8 +120,8 @@ public class HtmlUtil {
 	}
 
 	/**
-	 * Extracts the raw text from the HTML input. The raw text has compressed
-	 * whitespace and no attributes, scripts, or styles.
+	 * Extracts the raw text from the HTML input, compressing its whitespace and
+	 * removing all attributes, scripts, and styles.
 	 *
 	 * <p>
 	 * For example, raw text returned by this method can be stored in a search
@@ -171,11 +167,11 @@ public class HtmlUtil {
 	}
 
 	/**
-	 * Replaces the Microsoft Word unicode characters with plain HTML entities
+	 * Replaces all Microsoft Word Unicode characters with plain HTML entities
 	 * or characters.
 	 *
-	 * @param  html the HTML text
-	 * @return the converted HTML text, or <code>null</code> if the HTML text is
+	 * @param  html the text
+	 * @return the converted text, or <code>null</code> if the text is
 	 *         <code>null</code>
 	 */
 	public static String replaceMsWordCharacters(String html) {
@@ -186,8 +182,8 @@ public class HtmlUtil {
 	 * Replaces all new lines or carriage returns with the <code><br /></code>
 	 * HTML tag.
 	 *
-	 * @param  html the HTML text
-	 * @return the converted HTML text, or <code>null</code> if the HTML text is
+	 * @param  html the text
+	 * @return the converted text, or <code>null</code> if the HTML text is
 	 *         <code>null</code>
 	 */
 	public static String replaceNewLine(String html) {
@@ -195,7 +191,7 @@ public class HtmlUtil {
 	}
 
 	/**
-	 * Strips all content delimited by the tag out of the HTML text.
+	 * Strips all content delimited by the tag out of the text.
 	 *
 	 * <p>
 	 * If the tag appears multiple times, all occurrences (including the tag)
@@ -204,22 +200,22 @@ public class HtmlUtil {
 	 * Self-closing tags remain in the result.
 	 * </p>
 	 *
-	 * @param  html the HTML text
+	 * @param  html the text
 	 * @param  tag the tag used for delimiting, which should only be the tag's
 	 *         name (e.g. no &lt;)
-	 * @return the HTML text, without the stripped tag and its contents, or
-	 *         <code>null</code> if the HTML text is <code>null</code>
+	 * @return the text, without the stripped tag and its contents, or
+	 *         <code>null</code> if the text is <code>null</code>
 	 */
 	public static String stripBetween(String html, String tag) {
 		return getHtml().stripBetween(html, tag);
 	}
 
 	/**
-	 * Strips all XML comments out of the HTML text.
+	 * Strips all XML comments out of the text.
 	 *
-	 * @param  html the HTML text
-	 * @return the HTML text, without the stripped XML comments, or
-	 *         <code>null</code> if the HTML text is <code>null</code>
+	 * @param  html the text
+	 * @return the text, without the stripped XML comments, or <code>null</code>
+	 *         if the text is <code>null</code>
 	 */
 	public static String stripComments(String html) {
 		return getHtml().stripComments(html);
@@ -230,16 +226,16 @@ public class HtmlUtil {
 	}
 
 	/**
-	 * Encodes the HTML text so that it's safe to use as an input field value.
+	 * Encodes the text so that it's safe to use as an HTML input field value.
 	 *
 	 * <p>
 	 * For example, the <code>&</code> character is replaced by
 	 * <code>&amp;amp;</code>.
 	 * </p>
 	 *
-	 * @param  html the HTML text
-	 * @return the encoded text that is safe to use as an input field value, or
-	 *         <code>null</code> if the HTML text is <code>null</code>
+	 * @param  html the text
+	 * @return the encoded text that is safe to use as an HTML input field
+	 *         value, or <code>null</code> if the text is <code>null</code>
 	 */
 	public static String toInputSafe(String html) {
 		return getHtml().toInputSafe(html);

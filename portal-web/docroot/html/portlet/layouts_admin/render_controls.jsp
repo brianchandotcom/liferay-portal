@@ -17,11 +17,11 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-String action = (String)request.getAttribute("render_controls.jsp-action");
+String action = ParamUtil.getString(request, "render_controls.jsp-action");
 PortletDataHandlerControl[] controls = (PortletDataHandlerControl[])request.getAttribute("render_controls.jsp-controls");
 ManifestSummary manifestSummary = (ManifestSummary)request.getAttribute("render_controls.jsp-manifestSummary");
-Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("render_controls.jsp-parameterMap"), Collections.EMPTY_MAP);
-String portletId =(String)request.getAttribute("render_controls.jsp-portletId");
+Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("render_controls.jsp-parameterMap"), Collections.emptyMap());
+String portletId = ParamUtil.getString(request, "render_controls.jsp-portletId");
 
 control:
 for (int i = 0; i < controls.length; i++) {

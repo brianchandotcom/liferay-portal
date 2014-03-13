@@ -225,6 +225,8 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 			if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
 				groupFileEntriesUserId = user.getUserId();
+
+				status = WorkflowConstants.STATUS_ANY;
 			}
 			%>
 

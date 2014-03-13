@@ -71,7 +71,6 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.LiferayResourceBundle;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.notifications.UserNotificationHandlerImpl;
-import com.liferay.portal.poller.PollerProcessorUtil;
 import com.liferay.portal.pop.POPServerUtil;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -146,7 +145,8 @@ public class PortletBagFactory {
 		List<PortletLayoutListener> portletLayoutListenerInstances =
 			newPortletLayoutListeners(portlet);
 
-		PollerProcessor pollerProcessorInstance = newPollerProcessor(portlet);
+		List<PollerProcessor> pollerProcessorInstances = newPollerProcessors(
+			portlet);
 
 		MessageListener popMessageListenerInstance = newPOPMessageListener(
 			portlet);
@@ -318,7 +318,7 @@ public class PortletBagFactory {
 			friendlyURLMapperInstances, urlEncoderInstances,
 			portletDataHandlerInstances, stagedModelDataHandlerInstances,
 			templateHandlerInstances, portletLayoutListenerInstances,
-			pollerProcessorInstance, popMessageListenerInstance,
+			pollerProcessorInstances, popMessageListenerInstance,
 			socialActivityInterpreterInstances,
 			socialRequestInterpreterInstance, userNotificationHandlerInstances,
 			webDAVStorageInstance, xmlRpcMethodInstance,
@@ -891,25 +891,26 @@ public class PortletBagFactory {
 			PermissionPropagator.class, portlet.getPermissionPropagatorClass());
 	}
 
-	protected PollerProcessor newPollerProcessor(Portlet portlet)
+	protected List<PollerProcessor> newPollerProcessors(Portlet portlet)
 		throws Exception {
 
-		if (Validator.isNull(portlet.getPollerProcessorClass())) {
-			return null;
+		ServiceTrackerList<PollerProcessor> pollerProcessorInstances =
+			getServiceTrackerList(PollerProcessor.class, portlet);
+
+		if (Validator.isNotNull(portlet.getPollerProcessorClass())) {
+			PollerProcessor pollerProcessorInstance =
+				(PollerProcessor)newInstance(
+					PollerProcessor.class, portlet.getPollerProcessorClass());
+
+			if (ShardUtil.isEnabled()) {
+				pollerProcessorInstance = new ShardPollerProcessorWrapper(
+					pollerProcessorInstance);
+			}
+
+			pollerProcessorInstances.add(pollerProcessorInstance);
 		}
 
-		PollerProcessor pollerProcessorInstance = (PollerProcessor)newInstance(
-			PollerProcessor.class, portlet.getPollerProcessorClass());
-
-		if (ShardUtil.isEnabled()) {
-			pollerProcessorInstance = new ShardPollerProcessorWrapper(
-				pollerProcessorInstance);
-		}
-
-		PollerProcessorUtil.addPollerProcessor(
-			portlet.getPortletId(), pollerProcessorInstance);
-
-		return pollerProcessorInstance;
+		return pollerProcessorInstances;
 	}
 
 	protected MessageListener newPOPMessageListener(Portlet portlet)

@@ -1214,13 +1214,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public PollerProcessor getPollerProcessorInstance() {
-		if (Validator.isNull(getPollerProcessorClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<PollerProcessor> pollerProcessorInstances =
+			portletBag.getPollerProcessorInstances();
+
+		if (pollerProcessorInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getPollerProcessorInstance();
+		return pollerProcessorInstances.get(0);
 	}
 
 	/**

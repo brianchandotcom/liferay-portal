@@ -69,7 +69,7 @@ public class PortletBagImpl implements PortletBag {
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances,
 		List<TemplateHandler> templateHandlerInstances,
 		List<PortletLayoutListener> portletLayoutListenerInstances,
-		PollerProcessor pollerProcessorInstance,
+		List<PollerProcessor> pollerProcessorInstances,
 		MessageListener popMessageListenerInstance,
 		List<SocialActivityInterpreter> socialActivityInterpreterInstances,
 		SocialRequestInterpreter socialRequestInterpreterInstance,
@@ -97,7 +97,7 @@ public class PortletBagImpl implements PortletBag {
 		_stagedModelDataHandlerInstances = stagedModelDataHandlerInstances;
 		_templateHandlerInstances = templateHandlerInstances;
 		_portletLayoutListenerInstances = portletLayoutListenerInstances;
-		_pollerProcessorInstance = pollerProcessorInstance;
+		_pollerProcessorInstances = pollerProcessorInstances;
 		_popMessageListenerInstance = popMessageListenerInstance;
 		_socialActivityInterpreterInstances =
 			socialActivityInterpreterInstances;
@@ -124,7 +124,7 @@ public class PortletBagImpl implements PortletBag {
 			getOpenSearchInstances(), getFriendlyURLMapperInstances(),
 			getURLEncoderInstances(), getPortletDataHandlerInstances(),
 			getStagedModelDataHandlerInstances(), getTemplateHandlerInstances(),
-			getPortletLayoutListenerInstances(), getPollerProcessorInstance(),
+			getPortletLayoutListenerInstances(), getPollerProcessorInstances(),
 			getPopMessageListenerInstance(),
 			getSocialActivityInterpreterInstances(),
 			getSocialRequestInterpreterInstance(),
@@ -144,6 +144,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_friendlyURLMapperInstances);
 		close(_indexerInstances);
 		close(_openSearchInstances);
+		close(_pollerProcessorInstances);
 		close(_portletDataHandlerInstances);
 		close(_portletLayoutListenerInstances);
 		close(_templateHandlerInstances);
@@ -196,8 +197,8 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public PollerProcessor getPollerProcessorInstance() {
-		return _pollerProcessorInstance;
+	public List<PollerProcessor> getPollerProcessorInstances() {
+		return _pollerProcessorInstances;
 	}
 
 	@Override
@@ -344,7 +345,7 @@ public class PortletBagImpl implements PortletBag {
 	private List<Indexer> _indexerInstances;
 	private List<OpenSearch> _openSearchInstances;
 	private PermissionPropagator _permissionPropagatorInstance;
-	private PollerProcessor _pollerProcessorInstance;
+	private List<PollerProcessor> _pollerProcessorInstances;
 	private MessageListener _popMessageListenerInstance;
 	private List<PortletDataHandler> _portletDataHandlerInstances;
 	private Portlet _portletInstance;

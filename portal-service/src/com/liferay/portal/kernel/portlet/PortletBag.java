@@ -75,7 +75,7 @@ public interface PortletBag extends Cloneable {
 
 	public PermissionPropagator getPermissionPropagatorInstance();
 
-	public PollerProcessor getPollerProcessorInstance();
+	public List<PollerProcessor> getPollerProcessorInstances();
 
 	public MessageListener getPopMessageListenerInstance();
 

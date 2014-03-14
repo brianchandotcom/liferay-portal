@@ -916,11 +916,11 @@ public class LanguageImpl implements Language {
 			}
 		}
 
-		PortletConfig configPortletConfig = (PortletConfig)request.getAttribute(
+		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		if (configPortletConfig != null) {
-			return configPortletConfig.getResourceBundle(locale);
+		if (portletConfig != null) {
+			return portletConfig.getResourceBundle(locale);
 		}
 
 		return null;

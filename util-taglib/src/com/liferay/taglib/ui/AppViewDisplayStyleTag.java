@@ -38,6 +38,10 @@ public class AppViewDisplayStyleTag extends IncludeTag {
 		_displayStyles = displayStyles;
 	}
 
+	public void setEventName(String eventName) {
+		_eventName = eventName;
+	}
+
 	public void setRequestParams(Map<String, String> requestParams) {
 		_requestParams = requestParams;
 	}
@@ -46,6 +50,7 @@ public class AppViewDisplayStyleTag extends IncludeTag {
 	protected void cleanUp() {
 		_displayStyle = null;
 		_displayStyles = null;
+		_eventName = null;
 		_requestParams = null;
 	}
 
@@ -66,6 +71,8 @@ public class AppViewDisplayStyleTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-display-style:displayStyles", _displayStyles);
 		request.setAttribute(
+			"liferay-ui:app-view-display-style:eventName", _eventName);
+		request.setAttribute(
 			"liferay-ui:app-view-display-style:requestParams", _requestParams);
 	}
 
@@ -76,6 +83,7 @@ public class AppViewDisplayStyleTag extends IncludeTag {
 
 	private String _displayStyle;
 	private String[] _displayStyles;
+	private String _eventName;
 	private Map<String, String> _requestParams;
 
 }

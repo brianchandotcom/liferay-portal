@@ -81,7 +81,7 @@ String[] displayViews = {"icon", "descriptive", "list"};
 				redirectURL.setParameter("struts_action", "/dockbar/add_content_redirect");
 				redirectURL.setWindowState(LiferayWindowState.POP_UP);
 
-				Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId()), new long[0], new long[0], new String[0], redirectURL.toString());
+				Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, scopeGroupId, AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId()), new long[0], new long[0], new String[0], redirectURL.toString());
 				%>
 
 				<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>

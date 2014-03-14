@@ -21,6 +21,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_app_vi
 
 String displayStyle = (String)request.getAttribute("liferay-ui:app-view-display-style:displayStyle");
 String[] displayStyles = (String[])request.getAttribute("liferay-ui:app-view-display-style:displayStyles");
+String eventName = (String)request.getAttribute("liferay-ui:app-view-display-style:eventName");
 Map<String, String> requestParams = (Map<String, String>)request.getAttribute("liferay-ui:app-view-display-style:requestParams");
 %>
 
@@ -53,15 +54,17 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 			var config = {};
 
 			<%
-			Set<String> requestParamNames = requestParams.keySet();
+			if (requestParams != null) {
+				Set<String> requestParamNames = requestParams.keySet();
 
-			for (String requestParamName : requestParamNames) {
-				String requestParamValue = requestParams.get(requestParamName);
+				for (String requestParamName : requestParamNames) {
+					String requestParamValue = requestParams.get(requestParamName);
 			%>
 
-				config['<portlet:namespace /><%= requestParamName %>'] = '<%= HtmlUtil.escapeJS(requestParamValue) %>';
+					config['<portlet:namespace /><%= requestParamName %>'] = '<%= HtmlUtil.escapeJS(requestParamValue) %>';
 
 			<%
+				}
 			}
 			%>
 
@@ -83,7 +86,18 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 			function(link) {
 				var displayStyleItem = A.one(link);
 
-				changeDisplayStyle(displayStyleItem.attr('data-displayStyle'));
+				var displayStyle = displayStyleItem.attr('data-displayStyle');
+
+				if (<%= requestParams != null %>) {
+					changeDisplayStyle(displayStyle);
+				}
+				else if (<%= eventName != null %>) {
+					Liferay.fire('<%= eventName %>',
+						{
+							displayStyle: displayStyle
+						}
+					);
+				}
 			},
 			['aui-node']
 		);

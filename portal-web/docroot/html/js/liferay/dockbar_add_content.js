@@ -4,13 +4,7 @@ AUI.add(
 		var Dockbar = Liferay.Dockbar;
 		var Layout = Liferay.Layout;
 
-		var DATA_STYLE = 'data-style';
-
 		var SELECTOR_ADD_CONTENT_ITEM = '.add-content-item';
-
-		var SELECTOR_BUTTON = '.btn';
-
-		var STR_ACTION = 'action';
 
 		var STR_CLICK = 'click';
 
@@ -29,12 +23,11 @@ AUI.add(
 						var instance = this;
 
 						instance._config = config;
+						instance._displayStyle = config.displayStyle;
 
 						instance._addContentForm = instance.byId('addContentForm');
 						instance._entriesPanel = instance.byId('entriesContainer');
 						instance._numItems = instance.byId('numItems');
-						instance._styleButtonsList = instance.byId('styleButtons');
-						instance._styleButtons = instance._styleButtonsList.all(SELECTOR_BUTTON);
 
 						instance._bindUI();
 					},
@@ -50,8 +43,6 @@ AUI.add(
 
 						instance._numItems.on('change', instance._onChangeNumItems, instance);
 
-						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, SELECTOR_BUTTON, instance);
-
 						instance._entriesPanel.delegate(STR_CLICK, instance._addContent, SELECTOR_ADD_CONTENT_ITEM, instance);
 
 						Liferay.on(
@@ -61,6 +52,8 @@ AUI.add(
 							}
 						);
 
+						Liferay.on('AddContent:changeDisplayStyle', instance._onChangeDisplayStyle, instance);
+
 						Liferay.on('AddContent:refreshContentList', instance._refreshContentList, instance);
 
 						Liferay.on('showTab', instance._onShowTab, instance);
@@ -69,11 +62,9 @@ AUI.add(
 					_onChangeDisplayStyle: function(event) {
 						var instance = this;
 
-						var currentTarget = event.currentTarget;
+						var displayStyle = event.displayStyle;
 
-						currentTarget.radioClass('active');
-
-						var displayStyle = currentTarget.attr(DATA_STYLE);
+						instance._displayStyle = displayStyle;
 
 						Liferay.Store('liferay_addpanel_displaystyle', displayStyle);
 
@@ -101,10 +92,6 @@ AUI.add(
 					_refreshContentList: function(event) {
 						var instance = this;
 
-						var styleButton = instance._styleButtonsList.one('.active');
-
-						var displayStyle = styleButton.attr(DATA_STYLE);
-
 						A.io.request(
 							instance._addContentForm.getAttribute('action'),
 							{
@@ -114,7 +101,7 @@ AUI.add(
 								data: instance.ns(
 									{
 										delta: instance._numItems.val(),
-										displayStyle: displayStyle,
+										displayStyle: instance._displayStyle,
 										keywords: instance.get('inputNode').val(),
 										viewEntries: true,
 										viewPreview: false

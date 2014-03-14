@@ -37,10 +37,34 @@
 				.search-query, .aui-field-select {
 					margin-bottom: 0;
 				}
+
+				@include respond-to(phone, tablet) {
+					.search-query {
+						width: 65%;
+					}
+				}
 			}
 
 			.control-group-inline, .btn-group {
 				margin-right: 5px;
+			}
+		}
+
+		.display-style-buttons-container {
+			float: right;
+			margin-right: 0;
+
+			.lfr-icon-menu {
+				width: auto;
+
+				.lfr-icon-menu-arrow {
+					border-bottom-color: #333;
+					border-top-color: #333;
+				}
+
+				@include respond-to(phone, tablet) {
+					margin: 5px 0 0;
+				}
 			}
 		}
 

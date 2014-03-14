@@ -31,9 +31,15 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
@@ -55,6 +61,7 @@ import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
@@ -64,6 +71,8 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -397,6 +406,14 @@ public class EditMessageAction extends PortletAction {
 
 			serviceContext.setAttribute("preview", preview);
 
+			boolean quickReply = ParamUtil.get(
+				actionRequest, "quickReply", false);
+
+			if (quickReply) {
+				permissionInheritance(
+					themeDisplay, groupId, parentMessageId, serviceContext);
+			}
+
 			MBMessage message = null;
 
 			if (messageId <= 0) {
@@ -476,6 +493,56 @@ public class EditMessageAction extends PortletAction {
 
 				StreamUtil.cleanUp(inputStream);
 			}
+		}
+	}
+
+	private void permissionInheritance(
+			ThemeDisplay themeDisplay, long groupId, long parentMessageId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		MBMessage parentMessage = MBMessageLocalServiceUtil.getMBMessage(
+			parentMessageId);
+
+		Role guestRole = RoleLocalServiceUtil.getRole(
+			themeDisplay.getCompanyId(), RoleConstants.GUEST);
+
+		Role defaultGroupRole = RoleLocalServiceUtil.getDefaultGroupRole(
+			groupId);
+
+		long[] roleIds = new long[] {
+			guestRole.getRoleId(), defaultGroupRole.getRoleId()};
+
+		List<String> actionIds = ResourceActionsUtil.getModelResourceActions(
+			MBMessage.class.getName());
+
+		Map<Long, Set<String>> roleIdsToActionIds =
+			ResourcePermissionLocalServiceUtil.
+				getAvailableResourcePermissionActionIds(
+					themeDisplay.getCompanyId(), MBMessage.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(parentMessage.getMessageId()), roleIds,
+					actionIds);
+
+		Set<String> guestActionIds = roleIdsToActionIds.get(
+			guestRole.getRoleId());
+		Set<String> defaultGroupActionIds = roleIdsToActionIds.get(
+			defaultGroupRole.getRoleId());
+
+		if (guestActionIds == null) {
+			serviceContext.setGuestPermissions(new String[]{});
+		}
+		else {
+			serviceContext.setGuestPermissions(
+				guestActionIds.toArray(new String[]{}));
+		}
+
+		if (defaultGroupActionIds == null) {
+			serviceContext.setGroupPermissions(new String[]{});
+		}
+		else {
+			serviceContext.setGroupPermissions(
+				defaultGroupActionIds.toArray(new String[]{}));
 		}
 	}
 

@@ -85,7 +85,7 @@ public class ExportImportConfigurationHelper {
 		exportLayoutsByExportImportConfiguration(exportImportConfigurationId);
 	}
 
-	public static void publishLayoutsLocalByExportImportConfiguration(
+	public static void publishLayoutsByExportImportConfiguration(
 			long userId, long exportImportConfigurationId)
 		throws Exception {
 
@@ -95,9 +95,6 @@ public class ExportImportConfigurationHelper {
 
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
-
-		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)settingsMap.get("parameterMap");
 
 		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
 		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
@@ -109,37 +106,8 @@ public class ExportImportConfigurationHelper {
 
 		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
 
-		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			exportImportConfiguration);
-
-		StagingUtil.publishLayouts(
-			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
-			parameterMap, dateRange.getStartDate(), dateRange.getEndDate());
-	}
-
-	public static void publishLayoutsRemoteByExportImportConfiguration(
-			long userId, long exportImportConfigurationId)
-		throws Exception {
-
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(exportImportConfigurationId);
-
-		Map<String, Serializable> settingsMap =
-			exportImportConfiguration.getSettingsMap();
-
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
-
-		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
-		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-		boolean privateLayout = GetterUtil.getBoolean(
-			settingsMap.get("privateLayout"));
-
-		Map<Long, Boolean> layoutIdMap = (Map<Long, Boolean>)settingsMap.get(
-			"layoutIdMap");
-
-		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
 
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			exportImportConfiguration);

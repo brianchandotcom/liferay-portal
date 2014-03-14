@@ -88,14 +88,11 @@ public class EditPublishConfigurationAction extends PortletAction {
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteExportImportConfiguration(actionRequest, true);
 			}
-			else if (cmd.equals("publish_to_live")) {
+			else if (cmd.equals("publish_to_live") ||
+					 cmd.equals("publish_to_remote")) {
+
 				ExportImportConfigurationHelper.
-					publishLayoutsLocalByExportImportConfiguration(
-						themeDisplay.getUserId(), exportImportConfigurationId);
-			}
-			else if (cmd.equals("publish_to_remote")) {
-				ExportImportConfigurationHelper.
-					publishLayoutsRemoteByExportImportConfiguration(
+					publishLayoutsByExportImportConfiguration(
 						themeDisplay.getUserId(), exportImportConfigurationId);
 			}
 

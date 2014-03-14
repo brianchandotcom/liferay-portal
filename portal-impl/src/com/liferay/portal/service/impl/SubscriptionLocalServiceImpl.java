@@ -112,12 +112,12 @@ public class SubscriptionLocalServiceImpl
 		long classNameId = classNameLocalService.getClassNameId(className);
 		Date now = new Date();
 
-		long subscriptionId = counterLocalService.increment();
-
 		Subscription subscription = subscriptionPersistence.fetchByC_U_C_C(
 			user.getCompanyId(), userId, classNameId, classPK);
 
 		if (subscription == null) {
+			long subscriptionId = counterLocalService.increment();
+
 			subscription = subscriptionPersistence.create(subscriptionId);
 
 			subscription.setCompanyId(user.getCompanyId());

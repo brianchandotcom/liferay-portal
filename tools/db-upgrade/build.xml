@@ -3,6 +3,9 @@
 <project name="db-upgrade" basedir="." default="upgrade">
 	<target name="upgrade">
 		<path id="lib.classpath">
+			<fileset dir="../../lib/development" includes="*.jar" />
+			<fileset dir="../../lib/global" includes="*.jar" />
+			<fileset dir="../../lib/portal" includes="*.jar" />
 			<fileset dir="lib" includes="*.jar" />
 		</path>
 

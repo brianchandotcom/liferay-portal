@@ -1094,6 +1094,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-39508
 
 		if (!isExcluded(_secureRandomExclusions, fileName) &&
+			!fileName.contains("/sync-engine-shared/") &&
 			content.contains("java.security.SecureRandom") &&
 			!content.contains("javax.crypto.KeyGenerator")) {
 

@@ -920,10 +920,7 @@ public class LanguageImpl implements Language {
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		if (configPortletConfig != null) {
-			ResourceBundle configResourceBundle =
-				configPortletConfig.getResourceBundle(locale);
-
-			return configResourceBundle;
+			return configPortletConfig.getResourceBundle(locale);
 		}
 
 		return null;

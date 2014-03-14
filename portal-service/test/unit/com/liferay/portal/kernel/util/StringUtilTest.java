@@ -51,6 +51,33 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testEqualsIgnoreBreakLine() throws Exception {
+		Assert.assertTrue(
+			StringUtil.equalsIgnoreBreakLine("Hello\n World", "Hello World"));
+		Assert.assertTrue(
+			StringUtil.equalsIgnoreBreakLine("Hello\r\n World", "Hello World"));
+		Assert.assertTrue(
+			StringUtil.equalsIgnoreBreakLine("\nHello World", "Hello World"));
+		Assert.assertTrue(
+			StringUtil.equalsIgnoreBreakLine("Hello World\n", "Hello World"));
+
+		Assert.assertFalse(StringUtil.equalsIgnoreBreakLine("Hello World", ""));
+		Assert.assertFalse(
+			StringUtil.equalsIgnoreBreakLine("Hello World\n", null));
+	}
+
+	@Test
+	public void testEqualsIgnoreCase() throws Exception {
+		Assert.assertTrue(
+			StringUtil.equalsIgnoreCase("HELLO WORLD", "Hello World"));
+		Assert.assertTrue(
+			StringUtil.equalsIgnoreCase("Hello \n World", "hello \n worlD"));
+
+		Assert.assertFalse(StringUtil.equalsIgnoreCase("Hello \n World", ""));
+		Assert.assertFalse(StringUtil.equalsIgnoreCase("Hello \n World", null));
+	}
+
+	@Test
 	public void testIndexOfAny() throws Exception {
 		char[] chars = {CharPool.COLON, CharPool.COMMA};
 

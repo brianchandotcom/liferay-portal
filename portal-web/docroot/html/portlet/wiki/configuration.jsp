@@ -93,7 +93,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		%>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notifications-settings
+			<liferay-ui:email-notification-settings
 				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailPageAddedBody", ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_BODY)) %>'
 				emailDefinitionTerms="<%= definitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailPageAddedEnabled--", WikiUtil.getEmailPageAddedEnabled(portletPreferences)) %>'
@@ -103,7 +103,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notifications-settings
+			<liferay-ui:email-notification-settings
 				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailPageUpdatedBody", ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_BODY)) %>'
 				emailDefinitionTerms="<%= definitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailPageUpdatedEnabled--", WikiUtil.getEmailPageUpdatedEnabled(portletPreferences)) %>'

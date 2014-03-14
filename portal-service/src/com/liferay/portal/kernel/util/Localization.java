@@ -119,6 +119,23 @@ public interface Localization {
 		String xml, String requestedLanguageId, boolean useDefault);
 
 	/**
+	 * Returns the localized string from the localizations XML in the language,
+	 * optionally using the default language if the no localization exists for
+	 * the requested language.
+	 *
+	 * @param  xml the localizations XML
+	 * @param  requestedLanguageId the ID of the language
+	 * @param  useDefault whether to use the default language if no localization
+	 *         exists for the requested language
+	 * @return the localized string. If <code>useDefault</code> is
+	 *         <code>false</code> and no localization exists for the requested
+	 *         language, an empty string will be returned.
+	 */
+	public String getLocalization(
+		String xml, String requestedLanguageId, boolean useDefault,
+		String defaultValue);
+
+	/**
 	 * Returns a map of locales and localized strings for the parameter in the
 	 * request.
 	 *
@@ -199,6 +216,22 @@ public interface Localization {
 	public String getLocalizationXmlFromPreferences(
 		PortletPreferences preferences, PortletRequest portletRequest,
 		String parameter);
+
+	/**
+	 * Returns the localizations XML for the parameter in the portlet request,
+	 * attempting to get data from the preferences container when it is not
+	 * available in the portlet request.
+	 *
+	 * @param  preferences the preferences container
+	 * @param  portletRequest the portlet request
+	 * @param  parameter the prefix of the parameters containing the localized
+	 *         strings. Each localization will be loaded from a parameter with
+	 *         this prefix, followed by an underscore, and the language ID.
+	 * @return the locales and localized strings
+	 */
+	public String getLocalizationXmlFromPreferences(
+		PortletPreferences preferences, PortletRequest portletRequest,
+		String parameter, String defaultValue);
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link

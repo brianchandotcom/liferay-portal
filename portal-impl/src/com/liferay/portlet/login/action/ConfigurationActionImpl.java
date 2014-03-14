@@ -15,16 +15,59 @@
 package com.liferay.portlet.login.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
+
+	@Override
+	public void postProcessPortletPreferences(
+			long companyId, PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		removeDefaultValue(
+			portletRequest, portletPreferences, "emailFromAddress",
+			PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS));
+		removeDefaultValue(
+			portletRequest, portletPreferences, "emailFromName",
+			PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME));
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailPasswordResetBody_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailPasswordResetSubject_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailPasswordSentBody_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailPasswordSentSubject_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT));
+	}
 
 	@Override
 	public void processAction(

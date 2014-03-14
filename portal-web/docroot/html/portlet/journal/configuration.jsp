@@ -69,7 +69,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		%>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notifications-settings
+			<liferay-ui:email-notification-settings
 				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailArticleAddedBody", ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_ADDED_BODY)) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailArticleAddedEnabled--", JournalUtil.getEmailArticleAddedEnabled(portletPreferences)) %>'
@@ -79,7 +79,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notifications-settings
+			<liferay-ui:email-notification-settings
 				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailArticleReviewBody", ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_REVIEW_BODY)) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailArticleReviewEnabled--", JournalUtil.getEmailArticleReviewEnabled(portletPreferences)) %>'
@@ -89,7 +89,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notifications-settings
+			<liferay-ui:email-notification-settings
 				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailArticleUpdatedBody", ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_UPDATED_BODY)) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailArticleUpdatedEnabled--", JournalUtil.getEmailArticleUpdatedEnabled(portletPreferences)) %>'
@@ -100,7 +100,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 		<c:if test="<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, JournalArticle.class.getName()) %>">
 			<liferay-ui:section>
-				<liferay-ui:email-notifications-settings
+				<liferay-ui:email-notification-settings
 					emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailArticleApprovalDeniedBody", ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_BODY)) %>'
 					emailDefinitionTerms="<%= emailDefinitionTerms %>"
 					emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailArticleApprovalDeniedEnabled--", JournalUtil.getEmailArticleApprovalDeniedEnabled(portletPreferences)) %>'
@@ -110,7 +110,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-ui:email-notifications-settings
+				<liferay-ui:email-notification-settings
 					emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailArticleApprovalGrantedBody", ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_BODY)) %>'
 					emailDefinitionTerms="<%= emailDefinitionTerms %>"
 					emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailArticleApprovalGrantedEnabled--", JournalUtil.getEmailArticleApprovalGrantedEnabled(portletPreferences)) %>'
@@ -120,7 +120,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-ui:email-notifications-settings
+				<liferay-ui:email-notification-settings
 					emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailArticleApprovalRequestedBody", ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_BODY)) %>'
 					emailDefinitionTerms="<%= emailDefinitionTerms %>"
 					emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailArticleApprovalRequestedEnabled--", JournalUtil.getEmailArticleApprovalRequestedEnabled(portletPreferences)) %>'

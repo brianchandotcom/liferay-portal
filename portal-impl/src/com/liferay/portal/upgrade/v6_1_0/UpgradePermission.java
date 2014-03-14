@@ -15,22 +15,15 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.model.GroupedModel;
-import com.liferay.portal.model.PermissionedModel;
-import com.liferay.portal.model.ResourceBlock;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
@@ -41,6 +34,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Alexander Chow
@@ -49,20 +43,117 @@ import java.util.List;
  */
 public class UpgradePermission extends UpgradeProcess {
 
-	protected ResourceBlock convertResourcePermissions(
-			long companyId, String name, long primKey)
-		throws PortalException, SystemException {
+	public void addResourceBlock(
+			long resourceBlockId, long companyId, long groupId, String name,
+			String permissionsHash,
+			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
+		throws Exception {
 
-		PermissionedModel permissionedModel =
-			ResourceBlockLocalServiceUtil.getPermissionedModel(name, primKey);
+		Connection con = null;
+		PreparedStatement ps = null;
 
-		long groupId = 0;
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
 
-		if (permissionedModel instanceof GroupedModel) {
-			GroupedModel groupedModel = (GroupedModel)permissionedModel;
+			ps = con.prepareStatement(
+				"insert into ResourceBlock (resourceBlockId, companyId, " +
+					"groupId, name, permissionsHash, referenceCount) values " +
+						"(?, ?, ?, ?, ?, ?)");
 
-			groupId = groupedModel.getGroupId();
+			ps.setLong(1, resourceBlockId);
+			ps.setLong(2, companyId);
+			ps.setLong(3, groupId);
+			ps.setString(4, name);
+			ps.setString(5, permissionsHash);
+			ps.setInt(6, 1);
+
+			ps.executeUpdate();
 		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+
+		addResourceBlockPermissions(
+			resourceBlockId, resourceBlockPermissionsContainer);
+	}
+
+	protected void addResourceBlockPermission(
+			long resourceBlockPermissionId, long resourceBlockId, long roleId,
+			long actionIds)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"insert into ResourceBlockPermission " +
+					"(resourceBlockPermissionId, resourceBlockId, roleId, " +
+						"actionIds) values (?, ?, ?, ?)");
+
+			ps.setLong(1, resourceBlockPermissionId);
+			ps.setLong(2, resourceBlockId);
+			ps.setLong(3, roleId);
+			ps.setLong(4, actionIds);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void addResourceBlockPermissions(
+			long resourceBlockId,
+			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
+		throws Exception {
+
+		Map<Long, Long> permissions =
+			resourceBlockPermissionsContainer.getPermissions();
+
+		for (Map.Entry<Long, Long> permission : permissions.entrySet()) {
+			addResourceBlockPermission(
+				increment(), resourceBlockId, permission.getKey(),
+				permission.getValue());
+		}
+	}
+
+	protected void addResourceTypePermission(
+			long resourceTypePermissionId, long companyId, String name,
+			long roleId, long actionIds)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"insert into ResourceTypePermission " +
+					"(resourceTypePermissionId, companyId, groupId, name, " +
+						"roleId, actionIds) values (?, ?, ?, ?, ?, ?)");
+
+			ps.setLong(1, resourceTypePermissionId);
+			ps.setLong(2, companyId);
+			ps.setLong(3, 0);
+			ps.setString(4, name);
+			ps.setLong(5, roleId);
+			ps.setLong(6, actionIds);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void convertResourcePermissions(
+			String tableName, String pkColumnName, long companyId, long groupId,
+			String name, long primKey)
+		throws Exception {
 
 		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer =
 			getResourceBlockPermissionsContainer(
@@ -71,12 +162,9 @@ public class UpgradePermission extends UpgradeProcess {
 		String permissionsHash =
 			resourceBlockPermissionsContainer.getPermissionsHash();
 
-		ResourceBlock resourceBlock =
-			ResourceBlockLocalServiceUtil.updateResourceBlockId(
-				companyId, groupId, name, permissionedModel, permissionsHash,
-				resourceBlockPermissionsContainer);
-
-		return resourceBlock;
+		updateResourceBlockId(
+			tableName, pkColumnName, primKey, companyId, groupId, name,
+			permissionsHash, resourceBlockPermissionsContainer);
 	}
 
 	protected void convertResourcePermissions(
@@ -88,24 +176,30 @@ public class UpgradePermission extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
+			int resourceBlocksProcessed = 0;
+
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select " + pkColumnName + ", companyId from " + tableName);
+				"select " + pkColumnName + ", groupId, companyId from " +
+					tableName);
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				long primKey = rs.getLong(pkColumnName);
+				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
 
-				ResourceBlock resourceBlock = convertResourcePermissions(
-					companyId, name, primKey);
+				convertResourcePermissions(
+					tableName, pkColumnName, companyId, groupId, name, primKey);
 
-				if (_log.isInfoEnabled() &&
-					((resourceBlock.getResourceBlockId() % 100) == 0)) {
+				if (_log.isInfoEnabled()) {
+					resourceBlocksProcessed ++;
 
-					_log.info("Processed 100 resource blocks for " + name);
+					if ((resourceBlocksProcessed % 100) == 0) {
+						_log.info("Processed 100 resource blocks for " + name);
+					}
 				}
 			}
 		}
@@ -113,33 +207,7 @@ public class UpgradePermission extends UpgradeProcess {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 
-		List<ResourcePermission> resourcePermissions =
-			ResourcePermissionLocalServiceUtil.getScopeResourcePermissions(
-				_SCOPES);
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			int scope = resourcePermission.getScope();
-
-			if (!name.equals(resourcePermission.getName())) {
-				continue;
-			}
-
-			if ((scope == ResourceConstants.SCOPE_COMPANY) ||
-				(scope == ResourceConstants.SCOPE_GROUP_TEMPLATE)) {
-
-				ResourceBlockLocalServiceUtil.setCompanyScopePermissions(
-					resourcePermission.getCompanyId(), name,
-					resourcePermission.getRoleId(),
-					resourcePermission.getActionIds());
-			}
-			else if (scope == ResourceConstants.SCOPE_GROUP) {
-				ResourceBlockLocalServiceUtil.setGroupScopePermissions(
-					resourcePermission.getCompanyId(),
-					GetterUtil.getLong(resourcePermission.getPrimaryKey()),
-					name, resourcePermission.getRoleId(),
-					resourcePermission.getActionIds());
-			}
-		}
+		updateScopeResourcePermissions(name);
 	}
 
 	@Override
@@ -161,25 +229,241 @@ public class UpgradePermission extends UpgradeProcess {
 			BookmarksFolder.class.getName(), "BookmarksFolder", "folderId");
 	}
 
+	protected long getResourceBlockId(
+			long companyId, long groupId, String name, String permissionsHash)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select resourceBlockId from ResourceBlock where companyId = " +
+					"? and groupId = ? and name = ? and permissionsHash = ?");
+
+			ps.setLong(1, companyId);
+			ps.setLong(2, groupId);
+			ps.setString(3, name);
+			ps.setString(4, permissionsHash);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return rs.getLong("resourceBlockId");
+			}
+
+			return 0;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected ResourceBlockPermissionsContainer
-			getResourceBlockPermissionsContainer(
-				long companyId, long groupId, String name, long primKey)
-		throws SystemException {
+			getResourceBlockPermissionsContainer(long resourceBlockId)
+		throws Exception {
 
 		ResourceBlockPermissionsContainer resourceBlockPermissionContainer =
 			new ResourceBlockPermissionsContainer();
 
-		List<ResourcePermission> resourcePermissions =
-			ResourcePermissionLocalServiceUtil.getResourceResourcePermissions(
-				companyId, groupId, name, String.valueOf(primKey));
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			resourceBlockPermissionContainer.addPermission(
-				resourcePermission.getRoleId(),
-				resourcePermission.getActionIds());
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select roleId, actionIds from ResourceBlockPermissions " +
+					"where resourceBlockId = " + resourceBlockId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long roleId = rs.getLong("roleId");
+				long actionIds = rs.getLong("actionIds");
+
+				resourceBlockPermissionContainer.addPermission(
+					roleId, actionIds);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
 		}
 
 		return resourceBlockPermissionContainer;
+	}
+
+	protected ResourceBlockPermissionsContainer
+			getResourceBlockPermissionsContainer(
+				long companyId, long groupId, String name, long primKey)
+		throws Exception {
+
+		ResourceBlockPermissionsContainer resourceBlockPermissionContainer =
+			new ResourceBlockPermissionsContainer();
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("select roleId, actionIds from ");
+			sb.append("resourcePermission where companyId = ? and name = ? ");
+			sb.append("and ((primKey = ? and scope = ?) or (primKey = ? and ");
+			sb.append("scope = ?) or scope = ? or scope = ?)");
+
+			ps = con.prepareStatement(sb.toString());
+
+			ps.setLong(1, companyId);
+			ps.setString(2, name);
+			ps.setString(3, String.valueOf(primKey));
+			ps.setInt(4, ResourceConstants.SCOPE_INDIVIDUAL);
+			ps.setString(5, String.valueOf(groupId));
+			ps.setInt(6, ResourceConstants.SCOPE_GROUP);
+			ps.setInt(7, ResourceConstants.SCOPE_COMPANY);
+			ps.setInt(8, ResourceConstants.SCOPE_GROUP_TEMPLATE);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long roleId = rs.getLong("roleId");
+				long actionIds = rs.getLong("actionIds");
+
+				resourceBlockPermissionContainer.addPermission(
+					roleId, actionIds);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return resourceBlockPermissionContainer;
+	}
+
+	protected void setCompanyScopePermissions(
+			long companyId, String name, long roleId, long actionIds)
+		throws Exception {
+
+		updateCompanyScopeResourceTypePermissions(
+			companyId, name, roleId, actionIds);
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select resourceBlockId from ResourceBlock where companyId = " +
+					"? and name = ?");
+
+			ps.setLong(1, companyId);
+			ps.setString(2, name);
+
+			ps.executeQuery();
+
+			while (rs.next()) {
+				long resourceBlockId = rs.getLong("resourceBlockId");
+
+				updateResourceBlockPermissions(
+					resourceBlockId, roleId, actionIds);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void setGroupScopePermissions(
+			long companyId, long groupId, String name, long roleId,
+			long actionIds)
+		throws Exception {
+
+		updateGroupScopeResourceTypePermissions(
+			companyId, groupId, name, roleId, actionIds);
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select resourceBlockId from ResourceBlock where companyId = " +
+					"? groupId = ? and name = ?");
+
+			ps.setLong(1, companyId);
+			ps.setLong(2, groupId);
+			ps.setString(3, name);
+
+			ps.executeQuery();
+
+			while (rs.next()) {
+				long resourceBlockId = rs.getLong("resourceBlockId");
+
+				updateResourceBlockPermissions(
+					resourceBlockId, roleId, actionIds);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateCompanyScopeResourceTypePermissions(
+			long companyId, String name, long roleId, long actionIds)
+		throws Exception {
+
+		updateGroupScopeResourceTypePermissions(
+			companyId, 0, name, roleId, actionIds);
+	}
+
+	protected void updateGroupScopeResourceTypePermissions(
+			long companyId, long groupId, String name, long roleId,
+			long actionIds)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select resourceTypePermissionId from ResourceTypePermission " +
+					"where companyId = ? and groupId = ? and name = ? and " +
+						"roleId = ?");
+
+			ps.setLong(1, companyId);
+			ps.setLong(2, groupId);
+			ps.setString(3, name);
+			ps.setLong(4, roleId);
+
+			if (rs.next()) {
+				long resourceTypePermissionId = rs.getLong(
+					"resourceTypePermissionId");
+
+				updateResourceTypePermission(
+					resourceTypePermissionId, actionIds);
+			}
+			else {
+				addResourceTypePermission(
+					increment(), companyId, name, roleId, actionIds);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	protected void updatePermissions(
@@ -210,10 +494,186 @@ public class UpgradePermission extends UpgradeProcess {
 			name, RoleConstants.OWNER, scope, actionIdsLong);
 	}
 
-	private static final int[] _SCOPES = {
-		ResourceConstants.SCOPE_COMPANY, ResourceConstants.SCOPE_GROUP,
-		ResourceConstants.SCOPE_GROUP_TEMPLATE
-	};
+	protected void updatePermissionsHash(long resourceBlockId)
+		throws Exception {
+
+		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer =
+			getResourceBlockPermissionsContainer(resourceBlockId);
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update ResourceBlock set permissionsHash = ? where " +
+					"resourceBlockId = ?");
+
+			ps.setString(
+				1, resourceBlockPermissionsContainer.getPermissionsHash());
+			ps.setLong(2, resourceBlockId);
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void updateResourceBlockId(
+			String tableName, String pkColumnName, long primKey, long companyId,
+			long groupId, String name, String permissionsHash,
+			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
+		throws Exception {
+
+		long resourceBlockId = getResourceBlockId(
+			companyId, groupId, name, permissionsHash);
+
+		if (resourceBlockId == 0) {
+			resourceBlockId = increment();
+
+			addResourceBlock(
+				resourceBlockId, companyId, groupId, name, permissionsHash,
+				resourceBlockPermissionsContainer);
+		}
+		else {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("update ResourceBlock set referenceCount = ");
+			sb.append("(referenceCount + 1) where referenceCount > 0 and ");
+			sb.append("resourceBlockId = ");
+			sb.append(resourceBlockId);
+
+			runSQL(sb.toString());
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("update ");
+		sb.append(tableName);
+		sb.append(" set resourceBlockId = ");
+		sb.append(resourceBlockId);
+		sb.append(" where ");
+		sb.append(pkColumnName);
+		sb.append(" = ");
+		sb.append(primKey);
+
+		runSQL(sb.toString());
+	}
+
+	protected void updateResourceBlockPermission(
+			long resourceBlockId, long roleId, long actionIds)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select resourceBlockPermissionId from " +
+					"ResourceBlockPermission where resourceBlockId = ? and " +
+						"roleId = ?");
+
+			ps.setLong(1, resourceBlockId);
+			ps.setLong(2, roleId);
+
+			if (rs.next()) {
+				long resourceBlockPermissionId = rs.getLong(
+					"resourceBlockPermissionId");
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("update ResourceBlockPermission set actionIds = ");
+				sb.append(actionIds);
+				sb.append(" where resourceBlockPermissionId = ");
+				sb.append(resourceBlockPermissionId);
+
+				runSQL(sb.toString());
+			}
+			else {
+				if (actionIds == 0) {
+					return;
+				}
+
+				addResourceBlockPermission(
+					increment(), resourceBlockId, roleId, actionIds);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateResourceBlockPermissions(
+			long resourceBlockId, long roleId, long actionIds)
+		throws Exception {
+
+		updateResourceBlockPermission(resourceBlockId, roleId, actionIds);
+
+		updatePermissionsHash(resourceBlockId);
+	}
+
+	protected void updateResourceTypePermission(
+			long resourceTypePermissionId, long actionIds)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("update ResourceTypePermissionId set actionIds = ");
+		sb.append(actionIds);
+		sb.append(" where resourcePermissionId = ");
+		sb.append(resourceTypePermissionId);
+
+		runSQL(sb.toString());
+	}
+
+	protected void updateScopeResourcePermissions(String name)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select companyId, scope, primKey, roleId, actionIds from " +
+					"ResourcePermission where name = ? and (scope = ? or " +
+						"scope = ? or scope = ?)");
+
+			ps.setString(1, name);
+			ps.setInt(2, ResourceConstants.SCOPE_COMPANY);
+			ps.setInt(3, ResourceConstants.SCOPE_GROUP);
+			ps.setInt(4, ResourceConstants.SCOPE_GROUP_TEMPLATE);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long companyId = rs.getLong("companyId");
+				int scope = rs.getInt("scope");
+				long primKey = rs.getLong("primKey");
+				long roleId = rs.getLong("roleId");
+				long actionIds = rs.getLong("actionIds");
+
+				if ((scope == ResourceConstants.SCOPE_COMPANY) ||
+					(scope == ResourceConstants.SCOPE_GROUP_TEMPLATE)) {
+
+					setCompanyScopePermissions(
+						companyId, name, roleId, actionIds);
+				}
+				else if (scope == ResourceConstants.SCOPE_GROUP) {
+					setGroupScopePermissions(
+						companyId, primKey, name, roleId, actionIds);
+				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
 
 	private static Log _log = LogFactoryUtil.getLog(UpgradePermission.class);
 

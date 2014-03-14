@@ -900,25 +900,25 @@ public class LanguageImpl implements Language {
 			return null;
 		}
 
-			HttpServletRequest request =
-				(HttpServletRequest)pageContext.getRequest();
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			if (themeDisplay != null) {
-				locale = themeDisplay.getLocale();
+		if (themeDisplay != null) {
+			locale = themeDisplay.getLocale();
+		}
+		else {
+			locale = request.getLocale();
+
+			if (!isAvailableLocale(locale)) {
+				locale = LocaleUtil.getDefault();
 			}
-			else {
-				locale = request.getLocale();
+		}
 
-				if (!isAvailableLocale(locale)) {
-					locale = LocaleUtil.getDefault();
-				}
-			}
-
-			configPortletConfig = (PortletConfig)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
+		configPortletConfig = (PortletConfig)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		if (configPortletConfig != null) {
 			ResourceBundle configResourceBundle =

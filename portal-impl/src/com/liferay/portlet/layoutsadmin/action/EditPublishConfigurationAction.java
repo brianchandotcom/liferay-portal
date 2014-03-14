@@ -15,28 +15,17 @@
 package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ExportImportConfiguration;
-import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.ExportImportConfigurationServiceUtil;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.sites.action.ActionUtil;
-import com.liferay.portlet.trash.util.TrashUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -54,8 +43,10 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Daniel Kocsis
+ * @author Mate Thurzo
  */
-public class EditPublishConfigurationAction extends PortletAction {
+public class EditPublishConfigurationAction
+	extends EditExportConfigurationAction {
 
 	@Override
 	public void processAction(
@@ -70,10 +61,6 @@ public class EditPublishConfigurationAction extends PortletAction {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		if (Validator.isNull(cmd)) {
-			return;
-		}
 
 		try {
 			long exportImportConfigurationId = ParamUtil.getLong(
@@ -153,52 +140,6 @@ public class EditPublishConfigurationAction extends PortletAction {
 				"/html/portlet/layouts_admin/publish_layouts_processes.jsp");
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
-	}
-
-	protected void deleteExportImportConfiguration(
-			ActionRequest actionRequest, boolean moveToTrash)
-		throws PortalException, SystemException {
-
-		long[] deleteExportImportConfigurationIds = null;
-
-		long exportImportConfigurationId = ParamUtil.getLong(
-			actionRequest, "exportImportConfigurationId");
-
-		if (exportImportConfigurationId > 0) {
-			deleteExportImportConfigurationIds =
-				new long[] {exportImportConfigurationId};
-		}
-		else {
-			deleteExportImportConfigurationIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteExportImportConfigurationIds"), 0L);
-		}
-
-		List<TrashedModel> trashedModels = new ArrayList<TrashedModel>();
-
-		for (long deleteExportImportConfigurationId :
-				deleteExportImportConfigurationIds) {
-
-			if (moveToTrash) {
-				ExportImportConfiguration exportImportConfiguration =
-					ExportImportConfigurationServiceUtil.
-						moveExportImportConfigurationToTrash(
-							deleteExportImportConfigurationId);
-
-				trashedModels.add(exportImportConfiguration);
-			}
-			else {
-				ExportImportConfigurationServiceUtil.
-					deleteExportImportConfiguration(
-						deleteExportImportConfigurationId);
-			}
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
-
-			hideDefaultSuccessMessage(actionRequest);
-		}
 	}
 
 	protected ExportImportConfiguration updatePublishConfiguration(

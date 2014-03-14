@@ -472,7 +472,7 @@ public class JournalArticleLocalServiceImpl
 		// Workflow
 
 		if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-			startWorkflowInstance(user, article, serviceContext);
+			startWorkflowInstance(userId, article, serviceContext);
 		}
 		else {
 			updateStatus(
@@ -4887,7 +4887,7 @@ public class JournalArticleLocalServiceImpl
 			sendEmail(
 				article, articleURL, preferences, "requested", serviceContext);
 
-			startWorkflowInstance(user, article, serviceContext);
+			startWorkflowInstance(userId, article, serviceContext);
 		}
 
 		return journalArticlePersistence.findByPrimaryKey(article.getId());
@@ -5386,11 +5386,6 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		if (Validator.isNull(articleURL)) {
-			articleURL = (String)workflowContext.get(
-				WorkflowConstants.CONTEXT_URL);
-		}
-
 		if ((article.getClassNameId() ==
 				JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
 			(oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
@@ -5430,7 +5425,10 @@ public class JournalArticleLocalServiceImpl
 
 			// Subscriptions
 
-			notifySubscribers(article, articleURL, serviceContext);
+			notifySubscribers(
+				article,
+				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
+				serviceContext);
 		}
 
 		return article;
@@ -6370,11 +6368,7 @@ public class JournalArticleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
-
-		if (!article.isApproved() || Validator.isNull(layoutFullURL) ||
-			Validator.isNull(articleURL)) {
-
+		if (!article.isApproved() || Validator.isNull(articleURL)) {
 			return;
 		}
 
@@ -6672,7 +6666,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void startWorkflowInstance(
-			User user, JournalArticle article, ServiceContext serviceContext)
+			long userId, JournalArticle article, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Map<String, Serializable> workflowContext =
@@ -6684,9 +6678,9 @@ public class JournalArticleLocalServiceImpl
 				serviceContext.getScopeGroupId(), PortletKeys.JOURNAL, null));
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), article.getGroupId(), user.getUserId(),
+			article.getCompanyId(), article.getGroupId(), userId,
 			JournalArticle.class.getName(), article.getId(), article,
-			serviceContext);
+			serviceContext, workflowContext);
 	}
 
 	protected void updateDDMStructureXSD(

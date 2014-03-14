@@ -401,7 +401,7 @@ public class DLFileEntryLocalServiceImpl
 		if ((serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_PUBLISH) && !keepFileVersionLabel) {
 
-			DLAppUtil.startWorkflowInstance(
+			DLUtil.startWorkflowInstance(
 				userId, latestDLFileVersion, DLSyncConstants.EVENT_UPDATE,
 				serviceContext);
 		}
@@ -2340,7 +2340,7 @@ public class DLFileEntryLocalServiceImpl
 					syncEvent = DLSyncConstants.EVENT_ADD;
 				}
 
-				DLAppUtil.startWorkflowInstance(
+				DLUtil.startWorkflowInstance(
 					userId, dlFileVersion, syncEvent, serviceContext);
 			}
 		}

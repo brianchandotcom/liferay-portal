@@ -390,7 +390,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Workflow
 
-		startWorkflowInstance(user, message, serviceContext);
+		startWorkflowInstance(userId, message, serviceContext);
 
 		return message;
 	}
@@ -1477,7 +1477,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Message
 
-		User user = userPersistence.findByPrimaryKey(userId);
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
 		int oldStatus = message.getStatus();
@@ -1514,6 +1513,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				message.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 				// Thread
+
+				User user = userPersistence.findByPrimaryKey(userId);
 
 				updateThreadStatus(
 					thread, message, user, oldStatus, modifiedDate);
@@ -1610,7 +1611,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Workflow
 
-		startWorkflowInstance(user, message, serviceContext);
+		startWorkflowInstance(userId, message, serviceContext);
 
 		return message;
 	}
@@ -1804,7 +1805,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
-	 *             int, Map, ServiceContext)} )}
+	 *             int, Map, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -1814,7 +1815,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return updateStatus(
-			userId, messageId, status, (Map)Collections.emptyMap(),
+			userId, messageId, status, new HashMap<String, Serializable>(),
 			serviceContext);
 	}
 
@@ -2001,9 +2002,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			MBMessage message, String messageURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
-
-		if (!message.isApproved() || Validator.isNull(layoutFullURL)) {
+		if (!message.isApproved() || Validator.isNull(messageURL)) {
 			return;
 		}
 
@@ -2247,7 +2246,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected void startWorkflowInstance(
-			User user, MBMessage message, ServiceContext serviceContext)
+			long userId, MBMessage message, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Map<String, Serializable> workflowContext =
@@ -2258,7 +2257,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			getMessageURL(message, serviceContext));
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), message.getGroupId(), user.getUserId(),
+			message.getCompanyId(), message.getGroupId(), userId,
 			message.getWorkflowClassName(), message.getMessageId(), message,
 			serviceContext, workflowContext);
 	}

@@ -77,7 +77,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -216,7 +215,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		startWorkflowInstance(user, entry, serviceContext);
+		startWorkflowInstance(userId, entry, serviceContext);
 
 		return entry;
 	}
@@ -1123,7 +1122,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		startWorkflowInstance(user, entry, serviceContext);
+		startWorkflowInstance(userId, entry, serviceContext);
 
 		return entry;
 	}
@@ -1292,7 +1291,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
-	 *             int, Map, ServiceContext)} )}
+	 *             int, Map, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -1302,7 +1301,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return updateStatus(
-			userId, entryId, status, (Map)Collections.emptyMap(),
+			userId, entryId, status, new HashMap<String, Serializable>(),
 			serviceContext);
 	}
 
@@ -1404,9 +1403,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry entry, String entryURL, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
-
-		if (!entry.isApproved() || Validator.isNull(layoutFullURL)) {
+		if (!entry.isApproved() || Validator.isNull(entryURL)) {
 			return;
 		}
 
@@ -1698,7 +1695,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	protected void startWorkflowInstance(
-			User user, BlogsEntry entry, ServiceContext serviceContext)
+			long userId, BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Map<String, Serializable> workflowContext =
@@ -1708,7 +1705,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			WorkflowConstants.CONTEXT_URL, getEntryURL(entry, serviceContext));
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), entry.getGroupId(), user.getUserId(),
+			entry.getCompanyId(), entry.getGroupId(), userId,
 			BlogsEntry.class.getName(), entry.getEntryId(), entry,
 			serviceContext, workflowContext);
 	}

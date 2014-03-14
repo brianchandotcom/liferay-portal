@@ -112,8 +112,20 @@ public abstract class BaseSubscriptionTestCase {
 	}
 
 	@Test
-	public void testSubscriptionDefaultType() throws Exception {
-		addSubscriptionType(_TYPE_ID_DEFAULT);
+	public void testSubscriptionContentType() throws Exception {
+		long contentTypeId = addContentType();
+
+		addSubscriptionContentType(contentTypeId);
+
+		addBaseModelWithContentType(
+			_PARENT_CONTAINER_MODEL_ID_DEFAULT, contentTypeId);
+
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+	}
+
+	@Test
+	public void testSubscriptionDefaultContentType() throws Exception {
+		addSubscriptionContentType(_CONTENT_TYPE_ID_DEFAULT);
 
 		addBaseModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
@@ -161,29 +173,22 @@ public abstract class BaseSubscriptionTestCase {
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
 
-	@Test
-	public void testSubscriptionType() throws Exception {
-		long typeId = addType();
-
-		addSubscriptionType(typeId);
-
-		addBaseModelWithType(_PARENT_CONTAINER_MODEL_ID_DEFAULT, typeId);
-
-		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
-	}
-
 	protected abstract long addBaseModel(long containerModelId)
 		throws Exception;
 
-	protected long addBaseModelWithType(long containerModelId, long typeId)
+	protected long addBaseModelWithContentType(
+			long containerModelId, long contentTypeId)
 		throws Exception {
-
 		return 0;
 	}
 
 	protected long addContainerModel(long containerModelId) throws Exception {
 		return 0;
 	};
+
+	protected long addContentType() throws Exception {
+		return 0;
+	}
 
 	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
 		return;
@@ -192,12 +197,9 @@ public abstract class BaseSubscriptionTestCase {
 	protected abstract void addSubscriptionContainerModel(long containerModelId)
 		throws Exception;
 
-	protected void addSubscriptionType(long baseModelId) throws Exception {
+	protected void addSubscriptionContentType(long baseModelId)
+		throws Exception {
 		return;
-	}
-
-	protected long addType() throws Exception {
-		return 0;
 	}
 
 	protected long updateEntry(long baseModelId) throws Exception {
@@ -206,8 +208,8 @@ public abstract class BaseSubscriptionTestCase {
 
 	protected Group group;
 
-	private static final long _PARENT_CONTAINER_MODEL_ID_DEFAULT = 0;
+	private static final long _CONTENT_TYPE_ID_DEFAULT = 0;
 
-	private static final long _TYPE_ID_DEFAULT = 0;
+	private static final long _PARENT_CONTAINER_MODEL_ID_DEFAULT = 0;
 
 }

@@ -1027,6 +1027,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "jodd.util.StringPool: " + fileName);
 		}
 
+		// LPS-45027
+
+		if (newContent.contains(
+				"com.liferay.portal.kernel.util.UnmodifiableList")) {
+
+			processErrorMessage(
+				fileName,
+				"Use java.util.Collections.unmodifiableList instead of " +
+					"com.liferay.portal.kernel.util.UnmodifiableList: " +
+						fileName);
+		}
+
 		// LPS-28266
 
 		for (int pos1 = -1;;) {

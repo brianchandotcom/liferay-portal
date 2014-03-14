@@ -112,7 +112,7 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 			}
 
 			assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
-			assetBrowserURL.setParameter("selectedGroupIds", themeDisplay.getCompanyGroupId() + "," + groupId);
+			assetBrowserURL.setParameter("selectedGroupIds", getSelectedGroupIdsParam(themeDisplay.getUser(), company.getGroupId(), groupId));
 			assetBrowserURL.setParameter("typeSelection", assetRendererFactory.getClassName());
 
 			Map<String, Object> data = new HashMap<String, Object>();
@@ -258,3 +258,37 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 		'.modify-link'
 	);
 </aui:script>
+
+<%!
+	String getSelectedGroupIdsParam(User user, long companyGroupId, long groupId)
+		throws PortalException, SystemException {
+
+		List<Long> groups = new UniqueList<Long>();
+
+		groups.add(companyGroupId);
+		groups.add(groupId);
+		addGroupIds(groups, user.getMySiteGroups());
+		addGroupIds(groups, user.getGroups());
+		addGroupIds(groups, user.getSiteGroups());
+
+		StringBundler sb = new StringBundler(2 * groups.size() - 1);
+		int size = groups.size();
+
+		for (int i = 0; i < size; ++i) {
+			sb.append(groups.get(i));
+
+			if ((i + 1) != size) {
+				sb.append(CharPool.COMMA);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	void addGroupIds(List<Long> holder, List<Group> groupsToAdd) {
+
+		for (Group g : groupsToAdd) {
+			holder.add(g.getPrimaryKey());
+		}
+	}
+%>

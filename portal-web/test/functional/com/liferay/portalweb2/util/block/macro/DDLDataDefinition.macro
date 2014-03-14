@@ -2,11 +2,11 @@
 	<command name="addCmd">
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#type" locator-key1="NAME_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsAdd#type" locator-key1="NAME_FIELD" value1="${ddlDataDefinitionName}" />
 
 		<execute macro="CPDynamicdatalistsDatadefinitionsAdd#showDetails" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescription}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsAdd#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescription}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
 	</command>
@@ -14,23 +14,23 @@
 	<command name="addCP">
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute macro="DataDefinition#addCmd">
-			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+		<execute macro="DDLDataDefinition#addCmd">
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 	</command>
 
-	<command name="addPG">
-		<execute macro="DataDefinition#addCmd">
-			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+	<command name="addPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#addCmd">
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 	</command>
 
 	<command name="copyCP">
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<var name="key_dataDefinitionName" value="${dataDefinitionName}" />
+		<var name="key_dataDefinitionName" value="${ddlDataDefinitionName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS" value1="Actions" />
@@ -38,7 +38,7 @@
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsCopy#selectFrame" locator-key1="COPY_STRUCTURE_IFRAME" />
-		<execute action="CPDynamicdatalistsDatadefinitionsCopy#type" locator-key1="NAME_FIELD" value1="${dataDefinitionCopyName}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsCopy#type" locator-key1="NAME_FIELD" value1="${ddlDataDefinitionCopyName}" />
 
 		<if>
 			<equals arg1="${copyFormTemplates}" arg2="true" />
@@ -61,9 +61,9 @@
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME_2" />
 
-		<var name="key_dataDefinitionName" value="${dataDefinitionCopyName}" />
+		<var name="key_dataDefinitionName" value="${ddlDataDefinitionCopyName}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="DATA_DEFINITION_TABLE_NAME" value1="${dataDefinitionCopyName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="DATA_DEFINITION_TABLE_NAME" value1="${ddlDataDefinitionCopyName}" />
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
 	</command>
 
@@ -71,7 +71,7 @@
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_DELETE" value1="Delete" />
@@ -85,9 +85,9 @@
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertTextNotPresent" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertTextNotPresent" value1="${ddlDataDefinitionName}" />
 
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
@@ -96,7 +96,7 @@
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_DELETE" value1="Delete" />
@@ -111,13 +111,13 @@
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="NAME_FIELD" value1="${dataDefinitionNameEdit}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescriptionEdit}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="NAME_FIELD" value1="${ddlDataDefinitionNameEdit}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescriptionEdit}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
 	</command>
@@ -132,11 +132,35 @@
 	</command>
 
 	<command name="saveCP">
-		<execute macro="DataDefinition#saveCmd" />
+		<execute macro="DDLDataDefinition#saveCmd" />
 	</command>
 
-	<command name="savePG">
-		<execute macro="DataDefinition#saveCmd" />
+	<command name="savePGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#saveCmd" />
+	</command>
+
+	<command name="selectCmd">
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#assertTextEquals" locator-key1="DATA_DEFINITION_TABLE_NAME_1" value1="${ddlDataDefinitionName}" />
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_CHOOSE_BUTTON_1" value1="Choose" />
+
+		<execute action="CPDynamicdatalists#selectFrameTop" />
+
+		<execute action="CPDynamicdatalistsAddlist#assertTextEquals" locator-key1="DATA_DEFINITION_NAME" value1="${ddlDataDefinitionName}" />
+	</command>
+
+	<command name="selectCP">
+		<execute macro="DDLDataDefinition#selectCmd">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+	</command>
+
+	<command name="selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectCmd">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
 	</command>
 
 	<command name="tearDownCP">
@@ -150,14 +174,14 @@
 
 		<if>
 			<not>
-				<isset var="dataDefinitionName" />
+				<isset var="ddlDataDefinitionName" />
 			</not>
 			<then>
-				<var name="dataDefinitionName" value="Data Definition" />
+				<var name="ddlDataDefinitionName" value="Data Definition" />
 			</then>
 		</if>
 
-		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
 
@@ -177,13 +201,13 @@
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
 
-		<var name="key_dataDefinitionName" value="${dataDefinitionName}" />
+		<var name="key_dataDefinitionName" value="${ddlDataDefinitionName}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_NAME" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_NAME" value1="${ddlDataDefinitionName}" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dataDefinitionName}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="NAME_FIELD" value1="${dataDefinitionName}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescription}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlDataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="NAME_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescription}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#selectFrame" value1="relative=top" />
 	</command>

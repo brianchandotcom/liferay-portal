@@ -271,7 +271,7 @@
 	</command>
 
 	<command name="viewDefaultNoTemplatesCP">
-		<execute macro="DataDefinitionTemplate#gotoManageTemplatesCmd">
+		<execute macro="DDLTemplate#gotoManageTemplatesCmd">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -281,7 +281,7 @@
 	</command>
 
 	<command name="viewDisplayTemplateCP">
-		<execute macro="DataDefinitionTemplate#gotoManageTemplatesCmd">
+		<execute macro="DDLTemplate#gotoManageTemplatesCmd">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -296,7 +296,7 @@
 	</command>
 
 	<command name="viewFormTemplateCP">
-		<execute macro="DataDefinitionTemplate#gotoManageTemplatesCmd">
+		<execute macro="DDLTemplate#gotoManageTemplatesCmd">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -311,7 +311,7 @@
 	</command>
 
 	<command name="viewNoTemplateCP">
-		<execute macro="DataDefinitionTemplate#gotoManageTemplatesCmd">
+		<execute macro="DDLTemplate#gotoManageTemplatesCmd">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 

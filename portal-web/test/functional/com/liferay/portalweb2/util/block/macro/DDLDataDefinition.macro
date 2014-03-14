@@ -14,14 +14,14 @@
 	<command name="addCP">
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute macro="DataDefinition#addCmd">
+		<execute macro="DDLDataDefinition#addCmd">
 			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 	</command>
 
 	<command name="addPGViaDDLDisplay">
-		<execute macro="DataDefinition#addCmd">
+		<execute macro="DDLDataDefinition#addCmd">
 			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
@@ -132,11 +132,11 @@
 	</command>
 
 	<command name="saveCP">
-		<execute macro="DataDefinition#saveCmd" />
+		<execute macro="DDLDataDefinition#saveCmd" />
 	</command>
 
 	<command name="savePGViaDDLDisplay">
-		<execute macro="DataDefinition#saveCmd" />
+		<execute macro="DDLDataDefinition#saveCmd" />
 	</command>
 
 	<command name="selectCmd">
@@ -152,13 +152,13 @@
 	</command>
 
 	<command name="selectCP">
-		<execute macro="DataDefinition#selectCmd">
+		<execute macro="DDLDataDefinition#selectCmd">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 	</command>
 
 	<command name="selectPGViaDDLDisplay">
-		<execute macro="DataDefinition#selectCmd">
+		<execute macro="DDLDataDefinition#selectCmd">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 	</command>

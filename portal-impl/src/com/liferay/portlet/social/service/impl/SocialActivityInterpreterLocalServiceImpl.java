@@ -103,8 +103,8 @@ public class SocialActivityInterpreterLocalServiceImpl
 			"(&(javax.portlet.name=*)(objectClass=" +
 				SocialActivityInterpreter.class.getName() + "))");
 
-		_serviceTracker = registry.trackServices(filter,
-			new SocialActivityInterpreterServiceTrackerCustomizer());
+		_serviceTracker = registry.trackServices(
+			filter, new SocialActivityInterpreterServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}

@@ -87,9 +87,13 @@ boolean hasAddPortletURLs = false;
 		}
 	%>
 
-		<div class="lfr-meta-actions add-asset-selector">
-			<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
-		</div>
+		<c:if test="<%= !addPortletURLs.isEmpty() %>">
+			<aui:nav-bar>
+				<div class="lfr-meta-actions add-asset-selector">
+					<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
+				</div>
+			</aui:nav-bar>
+		</c:if>
 
 	<%
 	}

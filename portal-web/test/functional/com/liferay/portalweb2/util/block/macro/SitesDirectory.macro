@@ -72,8 +72,4 @@
 
 		<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName3}" />
 	</command>
-
-	<command name="viewPortletTitlePG">
-		<execute action="BasePortlet#assertTextEquals" locator-key1="TITLE" value1="${portletName}" />
-	</command>
 </definition>

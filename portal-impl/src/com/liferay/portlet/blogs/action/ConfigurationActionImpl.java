@@ -38,8 +38,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (Validator.isNotNull(cmd)) {
-			validateEmail(actionRequest, "emailEntryAdded");
-			validateEmail(actionRequest, "emailEntryUpdated");
+			validateEmail(actionRequest, "emailEntryAdded", true);
+			validateEmail(actionRequest, "emailEntryUpdated", true);
 			validateEmailFrom(actionRequest);
 		}
 

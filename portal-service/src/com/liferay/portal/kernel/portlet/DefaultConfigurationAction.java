@@ -292,13 +292,23 @@ public class DefaultConfigurationAction
 	}
 
 	protected void validateEmail(
-		ActionRequest actionRequest, String emailParam) {
+		ActionRequest actionRequest, String emailParam, boolean localized) {
 
 		boolean emailEnabled = GetterUtil.getBoolean(
 			getParameter(actionRequest, emailParam + "Enabled"));
-		String emailSubject = getParameter(
-			actionRequest, emailParam + "Subject");
-		String emailBody = getParameter(actionRequest, emailParam + "Body");
+		String emailSubject = null;
+		String emailBody = null;
+
+		if (localized) {
+			emailSubject = getLocalizedParameter(
+				actionRequest, emailParam + "Subject");
+			emailBody = getLocalizedParameter(
+				actionRequest, emailParam + "Body");
+		}
+		else {
+			emailSubject = getParameter(actionRequest, emailParam + "Subject");
+			emailBody = getParameter(actionRequest, emailParam + "Body");
+		}
 
 		if (emailEnabled) {
 			if (Validator.isNull(emailSubject)) {

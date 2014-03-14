@@ -518,7 +518,7 @@ public class LayoutImporter {
 
 		// Delete portlet data
 
-		Map<Long, Layout> newLayoutsMap =
+		Map<Long, Layout> layouts =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
 				Layout.class + ".layout");
 
@@ -534,7 +534,7 @@ public class LayoutImporter {
 				long layoutId = GetterUtil.getLong(
 					portletElement.attributeValue("layout-id"));
 
-				Layout layout = newLayoutsMap.get(layoutId);
+				Layout layout = layouts.get(layoutId);
 
 				long plid = layout.getPlid();
 
@@ -568,7 +568,7 @@ public class LayoutImporter {
 				continue;
 			}
 
-			Layout layout = newLayoutsMap.get(layoutId);
+			Layout layout = layouts.get(layoutId);
 
 			long plid = LayoutConstants.DEFAULT_PLID;
 
@@ -697,7 +697,7 @@ public class LayoutImporter {
 
 			long lastMergeTime = System.currentTimeMillis();
 
-			for (Layout layout : newLayoutsMap.values()) {
+			for (Layout layout : layouts.values()) {
 				layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
 
 				UnicodeProperties typeSettingsProperties =

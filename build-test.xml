@@ -1129,43 +1129,6 @@ create database lportal2 character set utf8;</echo>
 				<property name="test.basedir" value="${basedir.unix}/portal-web" />
 			</then>
 		</if>
-
-		<for param="test.java.file">
-			<path>
-				<fileset dir="${test.basedir}/test/functional-generated">
-					<include name="**/${test.simple.class.name}.java" />
-				</fileset>
-			</path>
-			<sequential>
-				<var name="test.java.file" value="@{test.java.file}" />
-
-				<script classpathref="project.classpath" language="beanshell">
-					import com.liferay.portal.kernel.util.OSDetector;
-
-					String testJavaFile = project.getProperty("test.java.file");
-
-					int x;
-
-					if (OSDetector.isWindows()) {
-						x = testJavaFile.indexOf("\\com\\") + 1;
-					}
-					else {
-						x = testJavaFile.indexOf("/com/") + 1;
-					}
-
-					int y = testJavaFile.lastIndexOf(".");
-
-					testJavaFile = testJavaFile.substring(x, y);
-
-					if (OSDetector.isWindows()) {
-						project.setProperty("test.class.name", testJavaFile.replaceAll("\\\\", "."));
-					}
-					else {
-						project.setProperty("test.class.name", testJavaFile.replaceAll("/", "."));
-					}
-				</script>
-			</sequential>
-		</for>
 	</target>
 
 	<target name="prepare-portal-ext-properties" depends="generate-test-properties">
@@ -2430,16 +2393,14 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<if>
 			<contains string="${test.class}" substring="#" />
 			<then>
-				<antcallback return="test.class.name,test.method.name" target="parse-test-class" />
+				<antcallback return="test.method.name,test.simple.class.name" target="parse-test-class" />
 
 				<var name="test.class" unset="true" />
 				<var name="test.methods" unset="true" />
-				<var name="test.type" unset="true" />
 
 				<ant dir="portal-web" target="test-method">
-					<property name="test.class" value="${test.class.name}" />
+					<property name="test.class" value="${test.simple.class.name}" />
 					<property name="test.methods" value="${test.method.name}" />
-					<property name="test.type" value="functional" />
 				</ant>
 			</then>
 			<else>

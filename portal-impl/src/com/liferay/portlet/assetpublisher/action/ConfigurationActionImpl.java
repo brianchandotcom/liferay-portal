@@ -99,7 +99,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			try {
-				validateEmail(actionRequest, "emailAssetEntryAdded");
+				validateEmail(actionRequest, "emailAssetEntryAdded", true);
 				validateEmailFrom(actionRequest);
 
 				updateDisplaySettings(actionRequest);

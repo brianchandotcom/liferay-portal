@@ -45,8 +45,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		if (Validator.isNotNull(cmd)) {
 			validateDisplayStyleViews(actionRequest);
-			validateEmail(actionRequest, "emailFileEntryAdded");
-			validateEmail(actionRequest, "emailFileEntryUpdated");
+			validateEmail(actionRequest, "emailFileEntryAdded", true);
+			validateEmail(actionRequest, "emailFileEntryUpdated", true);
 			validateEmailFrom(actionRequest);
 			validateRootFolder(actionRequest);
 		}

@@ -40,8 +40,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateEmail(actionRequest, "emailOrderConfirmation");
-		validateEmail(actionRequest, "emailOrderShipping");
+		validateEmail(actionRequest, "emailOrderConfirmation", false);
+		validateEmail(actionRequest, "emailOrderShipping", false);
 		validateEmailFrom(actionRequest);
 
 		updateInsuranceCalculation(actionRequest);

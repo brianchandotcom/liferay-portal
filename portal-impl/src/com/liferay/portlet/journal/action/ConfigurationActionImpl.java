@@ -31,12 +31,12 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateEmail(actionRequest, "emailArticleAdded");
-		validateEmail(actionRequest, "emailArticleApprovalDenied");
-		validateEmail(actionRequest, "emailArticleApprovalGranted");
-		validateEmail(actionRequest, "emailArticleApprovalRequested");
-		validateEmail(actionRequest, "emailArticleReview");
-		validateEmail(actionRequest, "emailArticleUpdated");
+		validateEmail(actionRequest, "emailArticleAdded", false);
+		validateEmail(actionRequest, "emailArticleApprovalDenied", false);
+		validateEmail(actionRequest, "emailArticleApprovalGranted", false);
+		validateEmail(actionRequest, "emailArticleApprovalRequested", false);
+		validateEmail(actionRequest, "emailArticleReview", false);
+		validateEmail(actionRequest, "emailArticleUpdated", false);
 		validateEmailFrom(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);

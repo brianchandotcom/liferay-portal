@@ -3,6 +3,10 @@
 <project name="db-upgrade" basedir="." default="upgrade">
 	<target name="upgrade">
 		<path id="lib.classpath">
+			<pathelement location="../../portal-impl/classes" />
+			<pathelement location="../../portal-service/classes" />
+			<pathelement location="../../util-bridges/classes" />
+			<pathelement location="../../util-java/classes" />
 			<fileset dir="../../lib/development" includes="*.jar" />
 			<fileset dir="../../lib/global" includes="*.jar" />
 			<fileset dir="../../lib/portal" includes="*.jar" />

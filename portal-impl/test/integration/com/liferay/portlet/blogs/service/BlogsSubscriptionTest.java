@@ -74,7 +74,13 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionDefaultType() {
+	public void testSubscriptionContentType() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSubscriptionDefaultContentType() {
 	}
 
 	@Ignore
@@ -87,12 +93,6 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 	@Override
 	@Test
 	public void testSubscriptionRootContainerModelWhenInSubcontainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionType() {
 	}
 
 	@Override

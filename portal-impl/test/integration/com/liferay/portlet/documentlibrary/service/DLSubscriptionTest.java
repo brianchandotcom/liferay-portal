@@ -69,12 +69,13 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected long addBaseModelWithType(long containerModelId, long typeId)
+	protected long addBaseModelWithContentType(
+			long containerModelId, long contentTypeId)
 		throws Exception {
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			group.getGroupId(), containerModelId,
-			ServiceTestUtil.randomString(), typeId);
+			ServiceTestUtil.randomString(), contentTypeId);
 
 		return fileEntry.getFileEntryId();
 	}
@@ -89,6 +90,17 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
+	protected long addContentType() throws Exception {
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			DLFileEntry.class.getName());
+
+		DLFileEntryType fileEntryType = DLAppTestUtil.addDLFileEntryType(
+			group.getGroupId(), ddmStructure.getStructureId());
+
+		return fileEntryType.getFileEntryTypeId();
+	}
+
+	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
@@ -97,19 +109,8 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected void addSubscriptionType(long typeId) throws Exception {
+	protected void addSubscriptionContentType(long typeId) throws Exception {
 		DLAppServiceUtil.subscribeFileEntryType(group.getGroupId(), typeId);
-	}
-
-	@Override
-	protected long addType() throws Exception {
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			DLFileEntry.class.getName());
-
-		DLFileEntryType fileEntryType = DLAppTestUtil.addDLFileEntryType(
-			group.getGroupId(), ddmStructure.getStructureId());
-
-		return fileEntryType.getFileEntryTypeId();
 	}
 
 }

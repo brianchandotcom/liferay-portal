@@ -70,7 +70,8 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected long addBaseModelWithType(long containerId, long typeId)
+	protected long addBaseModelWithContentType(
+			long containerId, long contentTypeId)
 		throws Exception {
 
 		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
@@ -92,6 +93,17 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
+	protected long addContentType() throws Exception {
+		_ddmStructure = DDMStructureTestUtil.addStructure(
+			group.getGroupId(), JournalArticle.class.getName());
+
+		_ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			group.getGroupId(), _ddmStructure.getStructureId());
+
+		return _ddmStructure.getStructureId();
+	}
+
+	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
@@ -100,20 +112,9 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected void addSubscriptionType(long typeId) throws Exception {
+	protected void addSubscriptionContentType(long typeId) throws Exception {
 		JournalArticleLocalServiceUtil.subscribeStructure(
 			group.getGroupId(), TestPropsValues.getUserId(), typeId);
-	}
-
-	@Override
-	protected long addType() throws Exception {
-		_ddmStructure = DDMStructureTestUtil.addStructure(
-			group.getGroupId(), JournalArticle.class.getName());
-
-		_ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			group.getGroupId(), _ddmStructure.getStructureId());
-
-		return _ddmStructure.getStructureId();
 	}
 
 	@Override

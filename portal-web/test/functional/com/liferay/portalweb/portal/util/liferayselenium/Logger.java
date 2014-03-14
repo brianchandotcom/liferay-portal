@@ -203,6 +203,18 @@ public class Logger {
 
 		log("errorLog", sb.toString(), "errorLog");
 
+		WebElement webElement = _webDriver.findElement(By.id("pauseError"));
+
+		String webElementText = webElement.getText();
+
+		while (webElementText.equals("Disable Pause After Error")) {
+			webElement = _webDriver.findElement(By.id("pauseError"));
+
+			webElementText = webElement.getText();
+
+			Thread.sleep(1000);
+		}
+
 		sb = new StringBundler();
 
 		sb.append("Command failure \"");

@@ -80,9 +80,7 @@ public class EditPublishConfigurationAction extends PortletAction {
 				actionRequest, "exportImportConfigurationId");
 
 			if (cmd.equals(Constants.ADD)) {
-				ExportImportConfigurationHelper.
-					addPublishLayoutLocalExportImportConfiguration(
-						actionRequest);
+				updatePublishConfiguration(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteExportImportConfiguration(actionRequest, false);
@@ -203,6 +201,42 @@ public class EditPublishConfigurationAction extends PortletAction {
 			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
 			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
+
+	protected ExportImportConfiguration updatePublishConfiguration(
+			ActionRequest actionRequest)
+		throws Exception {
+
+		long exportImportConfigurationId = ParamUtil.getLong(
+			actionRequest, "exportImportConfigurationId");
+
+		boolean localPublishing = ParamUtil.getBoolean(
+			actionRequest, "localPublishing");
+
+		if (exportImportConfigurationId > 0) {
+			if (localPublishing) {
+				return ExportImportConfigurationHelper.
+					updatePublishLayoutLocalExportImportConfiguration(
+						actionRequest);
+			}
+			else {
+				return ExportImportConfigurationHelper.
+					updatePublishLayoutRemoteExportImportConfiguration(
+						actionRequest);
+			}
+		}
+		else {
+			if (localPublishing) {
+				return ExportImportConfigurationHelper.
+					addPublishLayoutLocalExportImportConfiguration(
+						actionRequest);
+			}
+			else {
+				return ExportImportConfigurationHelper.
+					addPublishLayoutRemoteExportImportConfiguration(
+						actionRequest);
+			}
 		}
 	}
 

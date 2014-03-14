@@ -60,8 +60,6 @@ public class PortletDataContextFactoryImpl
 		clonePortletDataContext.setManifestSummary(
 			(ManifestSummary)manifestSummary.clone());
 
-		clonePortletDataContext.setNewLayouts(
-			portletDataContext.getNewLayouts());
 		clonePortletDataContext.setParameterMap(
 			portletDataContext.getParameterMap());
 		clonePortletDataContext.setScopeGroupId(

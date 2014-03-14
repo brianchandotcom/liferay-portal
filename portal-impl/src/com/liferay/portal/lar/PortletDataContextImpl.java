@@ -999,6 +999,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _missingReferencesElement;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link #getNewPrimaryKeysMap(String)}
+	 */
+	@Deprecated
 	@Override
 	public List<Layout> getNewLayouts() {
 		return _newLayouts;

@@ -395,11 +395,11 @@ public class BlogsEntryLocalServiceUtil {
 		getService().deleteEntries(groupId);
 	}
 
-	public static void deleteEntry(
+	public static com.liferay.portlet.blogs.model.BlogsEntry deleteEntry(
 		com.liferay.portlet.blogs.model.BlogsEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteEntry(entry);
+		return getService().deleteEntry(entry);
 	}
 
 	public static void deleteEntry(long entryId)
@@ -782,10 +782,11 @@ public class BlogsEntryLocalServiceUtil {
 	counter could not be updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void restoreEntryFromTrash(long userId, long entryId)
+	public static com.liferay.portlet.blogs.model.BlogsEntry restoreEntryFromTrash(
+		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().restoreEntryFromTrash(userId, entryId);
+		return getService().restoreEntryFromTrash(userId, entryId);
 	}
 
 	public static void subscribe(long userId, long groupId)

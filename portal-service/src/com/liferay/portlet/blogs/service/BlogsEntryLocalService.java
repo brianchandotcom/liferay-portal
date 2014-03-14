@@ -344,7 +344,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteEntry(com.liferay.portlet.blogs.model.BlogsEntry entry)
+	public com.liferay.portlet.blogs.model.BlogsEntry deleteEntry(
+		com.liferay.portlet.blogs.model.BlogsEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -650,7 +651,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	counter could not be updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public void restoreEntryFromTrash(long userId, long entryId)
+	public com.liferay.portlet.blogs.model.BlogsEntry restoreEntryFromTrash(
+		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

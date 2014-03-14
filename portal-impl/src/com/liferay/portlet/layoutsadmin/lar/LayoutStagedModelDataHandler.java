@@ -220,10 +220,6 @@ public class LayoutStagedModelDataHandler
 
 		boolean privateLayout = portletDataContext.isPrivateLayout();
 
-		Map<Long, Layout> newLayoutsMap =
-			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
-				Layout.class + ".layout");
-
 		String action = layoutElement.attributeValue("action");
 
 		if (action.equals(Constants.DELETE)) {
@@ -231,18 +227,16 @@ public class LayoutStagedModelDataHandler
 				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 					layoutUuid, groupId, privateLayout);
 
-			if (layout != null) {
-				newLayoutsMap.put(oldLayoutId, layout);
-
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
-
-				LayoutLocalServiceUtil.deleteLayout(
-					deletingLayout, false, serviceContext);
-			}
+			LayoutLocalServiceUtil.deleteLayout(
+				deletingLayout, false,
+				ServiceContextThreadLocal.getServiceContext());
 
 			return;
 		}
+
+		Map<Long, Layout> newLayoutsMap =
+			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class + ".layout");
 
 		Layout existingLayout = null;
 		Layout importedLayout = null;
@@ -508,10 +502,6 @@ public class LayoutStagedModelDataHandler
 		LayoutLocalServiceUtil.updateLayout(importedLayout);
 
 		LayoutSetLocalServiceUtil.updatePageCount(groupId, privateLayout);
-
-		List<Layout> newLayouts = portletDataContext.getNewLayouts();
-
-		newLayouts.add(importedLayout);
 
 		Map<Long, Long> layoutPlids =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

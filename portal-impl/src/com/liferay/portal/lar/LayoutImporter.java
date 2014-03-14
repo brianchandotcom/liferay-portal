@@ -504,19 +504,16 @@ public class LayoutImporter {
 			}
 		}
 
-		List<String> sourceLayoutsUuids = new ArrayList<String>();
-		List<Layout> newLayouts = new ArrayList<Layout>();
-
 		if (_log.isDebugEnabled()) {
 			if (_layoutElements.size() > 0) {
 				_log.debug("Importing layouts");
 			}
 		}
 
+		List<String> sourceLayoutsUuids = new ArrayList<String>();
+
 		for (Element layoutElement : _layoutElements) {
-			importLayout(
-				portletDataContext, sourceLayoutsUuids, newLayouts,
-				layoutElement);
+			importLayout(portletDataContext, sourceLayoutsUuids, layoutElement);
 		}
 
 		// Delete portlet data
@@ -748,8 +745,7 @@ public class LayoutImporter {
 
 	protected void importLayout(
 			PortletDataContext portletDataContext,
-			List<String> sourceLayoutsUuids, List<Layout> newLayouts,
-			Element layoutElement)
+			List<String> sourceLayoutsUuids, Element layoutElement)
 		throws Exception {
 
 		String action = layoutElement.attributeValue("action");
@@ -757,13 +753,6 @@ public class LayoutImporter {
 		if (!action.equals(Constants.SKIP)) {
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, layoutElement);
-
-			List<Layout> portletDataContextNewLayouts =
-				portletDataContext.getNewLayouts();
-
-			newLayouts.addAll(portletDataContextNewLayouts);
-
-			portletDataContextNewLayouts.clear();
 		}
 
 		if (!action.equals(Constants.DELETE)) {

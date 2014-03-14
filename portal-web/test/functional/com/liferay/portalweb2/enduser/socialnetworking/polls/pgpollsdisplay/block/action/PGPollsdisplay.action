@@ -1,0 +1,13 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="POLLS_QUESTION_CHOICE">
+			<execute function="AssertClick#assertPartialTextClickAt" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="POLLS_QUESTION">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+</definition>

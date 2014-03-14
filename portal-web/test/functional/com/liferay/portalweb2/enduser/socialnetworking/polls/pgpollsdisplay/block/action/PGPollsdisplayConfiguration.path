@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>PGPollsdisplayConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGPollsdisplayConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGPollsdisplayConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_NAVIGATION</td>
+	<td>//li[contains(@class,'tab')]/a[contains(.,'Setup')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_NAVIGATION</td>
+	<td>//li[contains(@class,'tab')]/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARING_NAVIGATION</td>
+	<td>//li[contains(@class,'tab')]/a[contains(.,'Sharing')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETUP_NAVIGATION-->
+<tr>
+	<td>TITLE_DROPDOWN</td>
+	<td>//select[contains(@id,'questionId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_DROPDOWN_SELECTION</td>
+	<td>//select[contains(@id,'questionId')]/option[contains(.,'${key_pollsQuestionTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

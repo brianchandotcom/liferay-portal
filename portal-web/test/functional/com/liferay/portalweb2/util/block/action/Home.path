@@ -163,7 +163,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_1</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[1]/a</td>
+	<td>xpath=(//li[contains(@class,'lfr-nav-item')])[1]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -193,7 +193,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_2</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[2]/a</td>
+	<td>xpath=(//li[contains(@class,'lfr-nav-item')])[2]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -208,7 +208,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_3</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[3]/a</td>
+	<td>xpath=(//li[contains(@class,'lfr-nav-item')])[3]/a</td>
 	<td></td>
 </tr>
 <tr>

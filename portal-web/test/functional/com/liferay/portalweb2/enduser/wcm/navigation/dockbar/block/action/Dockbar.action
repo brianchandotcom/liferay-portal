@@ -84,6 +84,10 @@
 			<execute function="Click#textClickAtClickDockbar" value1="My Sites" />
 		</case>
 
+		<case locator-key1="USER_NAME">
+			<execute function="Click#clickAt" />
+		</case>
+
 		<case locator-key1="USER_SIGN_OUT">
 			<execute function="Click#clickAtAndWait" />
 		</case>

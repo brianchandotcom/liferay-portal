@@ -580,14 +580,14 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Polls#addQuestionPG">
+		<execute macro="Polls#addPollPG">
 			<var name="pollsQuestion" value="${pollsQuestion}" />
 			<var name="pollsQuestionChoiceA" value="${pollsQuestionChoiceA}" />
 			<var name="pollsQuestionChoiceB" value="${pollsQuestionChoiceB}" />
 			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
 		</execute>
 
-		<execute macro="Polls#viewQuestionPG">
+		<execute macro="Polls#viewPollPG">
 			<var name="pollsQuestion" value="${pollsQuestion}" />
 			<var name="pollsQuestionChoiceA" value="${pollsQuestionChoiceA}" />
 			<var name="pollsQuestionChoiceB" value="${pollsQuestionChoiceB}" />
@@ -644,7 +644,7 @@
 
 		<execute action="BasePortlet#assertTextEquals" locator-key1="SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
 
-		<execute action="BasePortlet#assertTextEquals" locator-key1="INFO_MESSSAGE" value1="Please sign in to vote." />
+		<execute action="BasePortlet#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Please sign in to vote." />
 
 		<execute action="PGSearch#assertElementPresent" locator-key1="SEARCH_FIELD" />
 

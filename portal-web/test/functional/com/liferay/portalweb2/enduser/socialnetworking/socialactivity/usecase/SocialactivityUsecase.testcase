@@ -12,8 +12,81 @@
 
 		<execute macro="BlogsEntry#tearDownCP" />
 
+		<execute macro="Polls#tearDownCP" />
+
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
+
+	<command name="AddPollsQuestionWithSpecialCharacters" priority="4">
+		<var name="pollsQuestionTitle"><![CDATA["Hair Color"]]></var>
+		<var name="pollsQuestion"><![CDATA["What is your hair color? Frank & John want to know."]]></var>
+		<var name="pollsQuestionChoiceA"><![CDATA["Black"]]></var>
+		<var name="pollsQuestionChoiceB"><![CDATA["Brown"]]></var>
+		<var name="pollsQuestionChoiceC"><![CDATA["Blonde"]]></var>
+		<var name="pollsQuestionChoiceD"><![CDATA["Red"]]></var>
+		<var name="pollsQuestionChoiceE"><![CDATA["Other"]]></var>
+		<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceA},${pollsQuestionChoiceB},${pollsQuestionChoiceC},${pollsQuestionChoiceD},${pollsQuestionChoiceE}" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Polls" />
+		</execute>
+
+		<execute macro="Polls#addPollCP">
+			<var name="pollsQuestion" value="${pollsQuestion}" />
+			<var name="pollsQuestionChoiceA" value="${pollsQuestionChoiceA}" />
+			<var name="pollsQuestionChoiceB" value="${pollsQuestionChoiceB}" />
+			<var name="pollsQuestionChoiceC" value="${pollsQuestionChoiceC}" />
+			<var name="pollsQuestionChoiceD" value="${pollsQuestionChoiceD}" />
+			<var name="pollsQuestionChoiceE" value="${pollsQuestionChoiceE}" />
+			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
+		</execute>
+
+		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
+
+		<execute action="CPPolls#assertTextEquals" locator-key1="POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Polls Display" />
+		</execute>
+
+		<execute macro="Polls#selectPollPG">
+			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
+		<execute macro="Polls#viewPollPG">
+			<var name="pollsQuestion" value="${pollsQuestion}" />
+			<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceList}" />
+		</execute>
+
+		<execute macro="Polls#votePollPG">
+			<var name="pollsQuestionChoice" value="${pollsQuestionChoiceC}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
+		<execute macro="Polls#viewVotedPollPG">
+			<var name="pollsQuestionChoice" value="${pollsQuestionChoiceC}" />
+			<var name="pollsQuestionTotalVotes" value="1" />
+			<var name="pollsQuestionVoteCount" value="1" />
+			<var name="pollsQuestionVotePercent" value="100%" />
+		</execute>
+	</command>
 
 	<command name="BlogsDemo" priority="5">
 		<var name="entryComment1" value="Blogs Entry Comment 1" />
@@ -309,5 +382,103 @@
 
 		<execute action="Myaccount#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
 		<execute action="Myaccount#assertSelectedLabel" locator-key1="LANGUAGE_SELECT" value1="English (United States)" />
+	</command>
+
+	<command name="VotePollsQuestionWithGuestPermissions" priority="4">
+		<var name="pollsQuestion" value="What is your favorite Liferay portlet?" />
+		<var name="pollsQuestionChoiceA" value="Blogs" />
+		<var name="pollsQuestionChoiceB" value="Wiki" />
+		<var name="pollsQuestionChoiceC" value="Message Boards" />
+		<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceA},${pollsQuestionChoiceB},${pollsQuestionChoiceC}" />
+		<var name="pollsQuestionTitle" value="Favorite Liferay Portlet" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Polls" />
+		</execute>
+
+		<execute macro="Polls#addPollCP">
+			<var name="pollsQuestion" value="${pollsQuestion}" />
+			<var name="pollsQuestionChoiceA" value="${pollsQuestionChoiceA}" />
+			<var name="pollsQuestionChoiceB" value="${pollsQuestionChoiceB}" />
+			<var name="pollsQuestionChoiceC" value="${pollsQuestionChoiceC}" />
+			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
+		</execute>
+
+		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
+
+		<execute action="CPPolls#assertTextEquals" locator-key1="POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Polls Display" />
+		</execute>
+
+		<execute macro="Polls#selectPollPG">
+			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
+		<execute macro="Polls#viewPollAsGuestPG">
+			<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceList}" />
+			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
+		</execute>
+
+		<execute action="PGPollsdisplay#assertClick" locator-key1="INFO_MESSAGE_LINK" value1="Please sign in to vote." />
+
+		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="test@liferay.com" />
+		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="test" />
+		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Polls" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoPollPermissionsCP">
+			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
+		</execute>
+
+		<execute macro="Role#definePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_ADD_VOTE_CHECKBOX" />
+			<var name="roleName" value="Guest" />
+		</execute>
+
+		<execute action="Permissions#selectFrame" value1="relative=top" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
+		<execute macro="Polls#votePollPG">
+			<var name="pollsQuestionChoice" value="${pollsQuestionChoiceA}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
+		<execute macro="Polls#viewVotedPollPG">
+			<var name="pollsQuestionChoice" value="${pollsQuestionChoiceA}" />
+			<var name="pollsQuestionTotalVotes" value="1" />
+			<var name="pollsQuestionVoteCount" value="1" />
+			<var name="pollsQuestionVotePercent" value="100%" />
+		</execute>
+
+		<execute macro="User#loginPG" />
 	</command>
 </definition>

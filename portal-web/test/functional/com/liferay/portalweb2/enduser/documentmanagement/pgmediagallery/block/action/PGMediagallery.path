@@ -34,7 +34,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INFO_MESSSAGE</td>
+	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>

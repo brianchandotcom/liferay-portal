@@ -88,6 +88,37 @@
 		<execute action="CPUsergroupsSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
 	</command>
 
+	<command name="addSiteCP">
+		<execute macro="UserGroup#gotoActionsCmd" />
+
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_EDIT" value1="Edit" />
+
+		<if>
+			<or>
+				<equals arg1="${userGroupSite}" arg2="Community Site" />
+				<equals arg1="${userGroupSite}" arg2="Intranet Site" />
+			</or>
+			<then>
+				<execute action="CPUsergroupsEditusergroup#select" locator-key1="USER_GROUP_SITE_PUBLIC_PAGES_SELECT" value1="${userGroupSite}" />
+
+				<if>
+					<equals arg1="${checkEnablePropagationCheckbox}" arg2="true" />
+					<then>
+						<execute action="CPUsergroupsEditusergroup#assertChecked" locator-key1="ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX" />
+					</then>
+					<else>
+						<execute action="CPUsergroupsEditusergroup#uncheck" locator-key1="ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX" />
+					</else>
+				</if>
+			</then>
+		</if>
+
+		<execute action="CPUsergroupsEditusergroup#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="assignAllMembersCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
@@ -181,6 +212,16 @@
 				<execute action="CPUsergroupsSitepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
 			</then>
 		</if>
+	</command>
+
+	<command name="gotoActionsCmd">
+		<execute action="CPUsergroups#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userGroupName}" />
+		<execute action="CPUsergroups#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
 	</command>
 
 	<command name="removeMemberCP">

@@ -120,8 +120,8 @@ public class DDMStructureStagedModelDataHandler
 				uuid, portletDataContext.getCompanyGroupId(), classNameId,
 				structureKey, preloaded);
 		}
-		catch (Exception e) {
-			throw new PortletDataException(e);
+		catch (SystemException se) {
+			throw new PortletDataException(se);
 		}
 
 		Map<Long, Long> structureIds =
@@ -168,7 +168,7 @@ public class DDMStructureStagedModelDataHandler
 
 			return true;
 		}
-		catch (Exception e) {
+		catch (SystemException se) {
 			return false;
 		}
 	}
@@ -288,7 +288,7 @@ public class DDMStructureStagedModelDataHandler
 	protected DDMStructure fetchExistingStructure(
 			String uuid, long groupId, long classNameId, String structureKey,
 			boolean preloaded)
-		throws Exception {
+		throws SystemException {
 
 		DDMStructure existingStructure = null;
 

@@ -181,12 +181,8 @@ public class JournalArticleStagedModelDataHandler
 				articleResourceUuid, portletDataContext.getCompanyGroupId(),
 				articleArticleId, null, 0.0, preloaded);
 		}
-		catch (Exception e) {
-			if (e instanceof SystemException) {
-				throw new PortletDataException(e);
-			}
-
-			return;
+		catch (SystemException se) {
+			throw new PortletDataException(se);
 		}
 
 		Map<String, String> articleArticleIds =
@@ -231,7 +227,7 @@ public class JournalArticleStagedModelDataHandler
 
 			return true;
 		}
-		catch (Exception e) {
+		catch (SystemException se) {
 			return false;
 		}
 	}
@@ -769,7 +765,7 @@ public class JournalArticleStagedModelDataHandler
 	protected JournalArticle fetchExistingArticle(
 			String articleResourceUuid, long groupId, String articleId,
 			String newArticleId, double version, boolean preloaded)
-		throws Exception {
+		throws SystemException {
 
 		JournalArticleResource existingArticleResource = null;
 

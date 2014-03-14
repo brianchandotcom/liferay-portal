@@ -31,8 +31,6 @@ public class JournalArticleConstants {
 
 	public static final long CLASSNAME_ID_DEFAULT = 0;
 
-	public static final String NAME_BASIC_WEB_CONTENT = "BASIC-WEB-CONTENT";
-
 	public static final String PORTLET = "portlet";
 
 	public static final String STAND_ALONE = "stand-alone";

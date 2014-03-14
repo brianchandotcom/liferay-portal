@@ -130,8 +130,8 @@ public class DDMTemplateStagedModelDataHandler
 				uuid, portletDataContext.getCompanyGroupId(), classNameId,
 				templateKey, preloaded);
 		}
-		catch (Exception e) {
-			throw new PortletDataException(e);
+		catch (SystemException se) {
+			throw new PortletDataException(se);
 		}
 
 		Map<Long, Long> templateIds =
@@ -178,7 +178,7 @@ public class DDMTemplateStagedModelDataHandler
 
 			return true;
 		}
-		catch (Exception e) {
+		catch (SystemException se) {
 			return false;
 		}
 	}
@@ -408,7 +408,7 @@ public class DDMTemplateStagedModelDataHandler
 	protected DDMTemplate fetchExistingTemplate(
 			String uuid, long groupId, long classNameId, String templateKey,
 			boolean preloaded)
-		throws Exception {
+		throws SystemException {
 
 		DDMTemplate existingTemplate = null;
 

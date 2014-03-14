@@ -113,8 +113,8 @@ public class DLFileEntryTypeStagedModelDataHandler
 				uuid, portletDataContext.getCompanyGroupId(), fileEntryTypeKey,
 				preloaded);
 		}
-		catch (Exception e) {
-			throw new PortletDataException(e);
+		catch (SystemException se) {
+			throw new PortletDataException(se);
 		}
 
 		Map<Long, Long> fileEntryTypeIds =
@@ -156,7 +156,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 			return true;
 		}
-		catch (Exception e) {
+		catch (SystemException se) {
 			return false;
 		}
 	}
@@ -316,7 +316,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 	protected DLFileEntryType fetchExistingFileEntryType(
 			String uuid, long groupId, String fileEntryTypeKey,
 			boolean preloaded)
-		throws Exception {
+		throws SystemException {
 
 		DLFileEntryType existingDLFileEntryType = null;
 

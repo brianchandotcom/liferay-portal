@@ -867,19 +867,27 @@ AUI.add(
 
 							var groupIdNode = instance.byId('groupId');
 
-							portletURL.setParameter("groupId", groupIdNode.val());
+							if (groupIdNode) {
+								portletURL.setParameter("groupId", groupIdNode.val());
+							}
 
 							var liveGroupIdNode = instance.byId('liveGroupId');
 
-							portletURL.setParameter("liveGroupId", liveGroupIdNode.val());
+							if (liveGroupIdNode) {
+								portletURL.setParameter("liveGroupId", liveGroupIdNode.val());
+							}
 
 							var privateLayoutNode = instance.byId('privateLayout');
 
-							portletURL.setParameter("privateLayout", privateLayoutNode.val());
+							if (privateLayoutNode) {
+								portletURL.setParameter("privateLayout", privateLayoutNode.val());
+							}
 
 							var rootNodeNameNode = instance.byId('rootNodeName');
 
-							portletURL.setParameter("rootNodeName", rootNodeNameNode.val());
+							if (rootNodeNameNode) {
+								portletURL.setParameter("rootNodeName", rootNodeNameNode.val());
+							}
 
 							redirectNode.val(portletURL.toString());
 						}

@@ -24,18 +24,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ERROR_MESSAGE</td>
-	<td>//div[contains(@class,'alert-error')]</td>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xPath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>UNIQUE_FOLDER_ERROR_MESSAGE</td>
-	<td>//div[contains(@class,'alert alert-error') and contains(.,'Please enter a unique folder name.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VALID_FOLDER_NAME_ERROR_MESSAGE</td>
-	<td>//div[contains(@class,'alert alert-error') and contains(.,'Please enter a valid name.')]</td>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xPath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[2]</td>
 	<td></td>
 </tr>
 <tr>

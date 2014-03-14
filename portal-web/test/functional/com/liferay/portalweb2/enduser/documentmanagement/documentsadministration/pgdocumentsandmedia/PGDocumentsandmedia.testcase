@@ -467,7 +467,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#addPGValidName">
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolder" value="Invalid" />
 			<var name="dmFolderDescription" value="DM Folder Description" />
 			<var name="dmFolderName" value="DM Folder Name?" />
 		</execute>
@@ -640,9 +641,8 @@
 			<var name="dmSubFolderName" value="Subfolder1 Name" />
 		</execute>
 
-		<execute macro="DMFolder#viewSubfolderPG">
+		<execute macro="DMFolder#viewPG">
 			<var name="dmFolderName" value="Subfolder1 Name" />
-			<var name="dmSubFolderName" value="Subfolder1 Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -658,9 +658,8 @@
 			<var name="dmSubFolderName" value="Subfolder2 Name" />
 		</execute>
 
-		<execute macro="DMFolder#viewSubfolderPG">
+		<execute macro="DMFolder#viewPG">
 			<var name="dmFolderName" value="Subfolder2 Name" />
-			<var name="dmSubFolderName" value="Subfolder2 Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -676,9 +675,8 @@
 			<var name="dmSubFolderName" value="Subfolder3 Name" />
 		</execute>
 
-		<execute macro="DMFolder#viewSubfolderPG">
+		<execute macro="DMFolder#viewPG">
 			<var name="dmFolderName" value="Subfolder3 Name" />
-			<var name="dmSubFolderName" value="Subfolder3 Name" />
 		</execute>
 	</command>
 

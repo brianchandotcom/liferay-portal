@@ -61,7 +61,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSiteTemplateStatus" priority="5">
+	<command name="EditSiteTemplateStatus" known-issues="LPS-44150" priority="5">
 		<var name="siteTemplateActive" value="Yes" />
 		<var name="siteTemplateActiveEdit" value="No" />
 

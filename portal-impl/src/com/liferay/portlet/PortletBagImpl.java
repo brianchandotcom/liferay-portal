@@ -152,6 +152,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_socialRequestInterpreterInstances);
 		close(_templateHandlerInstances);
 		close(_urlEncoderInstances);
+		close(_userNotificationHandlerInstances);
 	}
 
 	@Override

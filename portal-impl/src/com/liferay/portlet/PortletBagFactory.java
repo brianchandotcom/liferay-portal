@@ -1066,36 +1066,24 @@ public class PortletBagFactory {
 		return urlEncoderInstances;
 	}
 
-	protected UserNotificationHandler newUserNotificationHandlerInstance(
-			String userNotificationHandlerClass)
-		throws Exception {
-
-		UserNotificationHandler userNotificationHandlerInstance =
-			(UserNotificationHandler)newInstance(
-				UserNotificationHandler.class, userNotificationHandlerClass);
-
-		userNotificationHandlerInstance = new UserNotificationHandlerImpl(
-			userNotificationHandlerInstance);
-
-		UserNotificationManagerUtil.addUserNotificationHandler(
-			userNotificationHandlerInstance);
-
-		return userNotificationHandlerInstance;
-	}
-
 	protected List<UserNotificationHandler> newUserNotificationHandlerInstances(
 			Portlet portlet)
 		throws Exception {
 
-		List<UserNotificationHandler> userNotificationHandlerInstances =
-			new ArrayList<UserNotificationHandler>();
+		ServiceTrackerList<UserNotificationHandler>
+			userNotificationHandlerInstances = getServiceTrackerList(
+				UserNotificationHandler.class, portlet);
 
 		for (String userNotificationHandlerClass :
 				portlet.getUserNotificationHandlerClasses()) {
 
 			UserNotificationHandler userNotificationHandlerInstance =
-				newUserNotificationHandlerInstance(
+				(UserNotificationHandler)newInstance(
+					UserNotificationHandler.class,
 					userNotificationHandlerClass);
+
+			userNotificationHandlerInstance = new UserNotificationHandlerImpl(
+				userNotificationHandlerInstance);
 
 			userNotificationHandlerInstances.add(
 				userNotificationHandlerInstance);

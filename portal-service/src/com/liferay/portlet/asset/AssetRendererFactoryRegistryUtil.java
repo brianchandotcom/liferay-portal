@@ -16,10 +16,21 @@ package com.liferay.portlet.asset;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceRegistrationMap;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Bruno Farache
@@ -34,37 +45,25 @@ public class AssetRendererFactoryRegistryUtil {
 	 */
 	@Deprecated
 	public static List<AssetRendererFactory> getAssetRendererFactories() {
-		return getAssetRendererFactoryRegistry().getAssetRendererFactories();
+		return _instance._getAssetRendererFactories();
 	}
 
 	public static List<AssetRendererFactory> getAssetRendererFactories(
 		long companyId) {
 
-		return getAssetRendererFactoryRegistry().getAssetRendererFactories(
-			companyId);
+		return _instance._getAssetRendererFactories(companyId);
 	}
 
 	public static AssetRendererFactory getAssetRendererFactoryByClassName(
 		String className) {
 
-		return getAssetRendererFactoryRegistry().
-			getAssetRendererFactoryByClassName(className);
+		return _instance._getAssetRendererFactoryByClassName(className);
 	}
 
 	public static AssetRendererFactory getAssetRendererFactoryByType(
 		String type) {
 
-		return getAssetRendererFactoryRegistry().getAssetRendererFactoryByType(
-			type);
-	}
-
-	public static AssetRendererFactoryRegistry
-		getAssetRendererFactoryRegistry() {
-
-		PortalRuntimePermission.checkGetBeanProperty(
-			AssetRendererFactoryRegistryUtil.class);
-
-		return _assetRendererFactoryRegistry;
+		return _instance._getAssetRendererFactoryByType(type);
 	}
 
 	/**
@@ -72,22 +71,21 @@ public class AssetRendererFactoryRegistryUtil {
 	 */
 	@Deprecated
 	public static long[] getClassNameIds() {
-		return getAssetRendererFactoryRegistry().getClassNameIds();
+		return _instance._getClassNameIds(0, false);
 	}
 
 	public static long[] getClassNameIds(long companyId) {
-		return getAssetRendererFactoryRegistry().getClassNameIds(companyId);
+		return _instance._getClassNameIds(companyId, false);
 	}
 
 	public static long[] getClassNameIds(
 		long companyId, boolean filterSelectable) {
 
-		return getAssetRendererFactoryRegistry().getClassNameIds(
-			companyId, filterSelectable);
+		return _instance._getClassNameIds(companyId, filterSelectable);
 	}
 
 	public static void register(AssetRendererFactory assetRendererFactory) {
-		getAssetRendererFactoryRegistry().register(assetRendererFactory);
+		_instance._register(assetRendererFactory);
 	}
 
 	public static void register(
@@ -101,7 +99,7 @@ public class AssetRendererFactoryRegistryUtil {
 	}
 
 	public static void unregister(AssetRendererFactory assetRendererFactory) {
-		getAssetRendererFactoryRegistry().unregister(assetRendererFactory);
+		_instance._unregister(assetRendererFactory);
 	}
 
 	public static void unregister(
@@ -114,14 +112,186 @@ public class AssetRendererFactoryRegistryUtil {
 		}
 	}
 
-	public void setAssetRendererFactoryRegistry(
-		AssetRendererFactoryRegistry assetRendererFactoryRegistry) {
+	private AssetRendererFactoryRegistryUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+		_serviceTracker = registry.trackServices(
+			AssetRendererFactory.class,
+			new AssetRendererFactoryServiceTrackerCustomizer());
 
-		_assetRendererFactoryRegistry = assetRendererFactoryRegistry;
+		_serviceTracker.open();
 	}
 
-	private static AssetRendererFactoryRegistry _assetRendererFactoryRegistry;
+	private Map<String, AssetRendererFactory> _filterAssetRendererFactories(
+		long companyId,
+		Map<String, AssetRendererFactory> assetRendererFactories,
+		boolean filterSelectable) {
+
+		Map<String, AssetRendererFactory> filteredAssetRendererFactories =
+			new ConcurrentHashMap<String, AssetRendererFactory>();
+
+		for (String className : assetRendererFactories.keySet()) {
+			AssetRendererFactory assetRendererFactory =
+				assetRendererFactories.get(className);
+
+			if (assetRendererFactory.isActive(companyId) &&
+				(!filterSelectable || assetRendererFactory.isSelectable())) {
+
+				filteredAssetRendererFactories.put(
+					className, assetRendererFactory);
+			}
+		}
+
+		return filteredAssetRendererFactories;
+	}
+
+	private List<AssetRendererFactory> _getAssetRendererFactories() {
+		return ListUtil.fromMapValues(_assetRenderFactoriesMapByClassName);
+	}
+
+	private List<AssetRendererFactory> _getAssetRendererFactories(
+		long companyId) {
+
+		return ListUtil.fromMapValues(
+			_filterAssetRendererFactories(
+				companyId, _assetRenderFactoriesMapByClassName, false));
+	}
+
+	private AssetRendererFactory _getAssetRendererFactoryByClassName(
+		String className) {
+
+		return _assetRenderFactoriesMapByClassName.get(className);
+	}
+
+	private AssetRendererFactory _getAssetRendererFactoryByType(String type) {
+		return _assetRenderFactoriesMapByClassType.get(type);
+	}
+
+	private long[] _getClassNameIds(long companyId, boolean filterSelectable) {
+		Map<String, AssetRendererFactory> assetRenderFactories =
+			_assetRenderFactoriesMapByClassName;
+
+		if (companyId > 0) {
+			assetRenderFactories = _filterAssetRendererFactories(
+				companyId, _assetRenderFactoriesMapByClassName,
+				filterSelectable);
+		}
+
+		long[] classNameIds = new long[assetRenderFactories.size()];
+
+		int i = 0;
+
+		for (AssetRendererFactory assetRendererFactory :
+				assetRenderFactories.values()) {
+
+			classNameIds[i] = assetRendererFactory.getClassNameId();
+
+			i++;
+		}
+
+		return classNameIds;
+	}
+
+	private void _register(AssetRendererFactory assetRendererFactory) {
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<AssetRendererFactory> serviceRegistration =
+			registry.registerService(
+				AssetRendererFactory.class, assetRendererFactory);
+
+		_serviceRegistrations.put(assetRendererFactory, serviceRegistration);
+	}
+
+	private void _unregister(AssetRendererFactory assetRendererFactory) {
+		ServiceRegistration<AssetRendererFactory> serviceRegistration =
+			_serviceRegistrations.remove(assetRendererFactory);
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AssetRendererFactoryRegistryUtil.class);
+
+	private static AssetRendererFactoryRegistryUtil _instance =
+		new AssetRendererFactoryRegistryUtil();
+
+	private Map<String, AssetRendererFactory>
+		_assetRenderFactoriesMapByClassName =
+			new ConcurrentHashMap<String, AssetRendererFactory>();
+	private Map<String, AssetRendererFactory>
+		_assetRenderFactoriesMapByClassType =
+			new ConcurrentHashMap<String, AssetRendererFactory>();
+	private ServiceRegistrationMap<AssetRendererFactory> _serviceRegistrations =
+		new ServiceRegistrationMap<AssetRendererFactory>();
+	private ServiceTracker<AssetRendererFactory, AssetRendererFactory>
+		_serviceTracker;
+
+	private class AssetRendererFactoryServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<AssetRendererFactory, AssetRendererFactory> {
+
+		@Override
+		public AssetRendererFactory addingService(
+			ServiceReference<AssetRendererFactory> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			AssetRendererFactory assetRendererFactory = registry.getService(
+				serviceReference);
+
+			String className = assetRendererFactory.getClassName();
+
+			AssetRendererFactory classNameAssetRendererFactory =
+				_assetRenderFactoriesMapByClassName.put(
+					className, assetRendererFactory);
+
+			if (_log.isWarnEnabled() &&
+				(classNameAssetRendererFactory != null)) {
+
+				_log.warn(
+					"Replacing " + classNameAssetRendererFactory +
+						" for class name " + className + " with " +
+							assetRendererFactory);
+			}
+
+			String type = assetRendererFactory.getType();
+
+			AssetRendererFactory typeAssetRendererFactory =
+				_assetRenderFactoriesMapByClassType.put(
+					type, assetRendererFactory);
+
+			if (_log.isWarnEnabled() && (typeAssetRendererFactory != null)) {
+				_log.warn(
+					"Replacing " + typeAssetRendererFactory + " for type " +
+						type + " with " + assetRendererFactory);
+			}
+
+			return assetRendererFactory;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<AssetRendererFactory> serviceReference,
+			AssetRendererFactory assetRendererFactory) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<AssetRendererFactory> serviceReference,
+			AssetRendererFactory assetRendererFactory) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_assetRenderFactoriesMapByClassName.remove(
+				assetRendererFactory.getClassName());
+			_assetRenderFactoriesMapByClassType.remove(
+				assetRendererFactory.getType());
+		}
+
+	}
 
 }

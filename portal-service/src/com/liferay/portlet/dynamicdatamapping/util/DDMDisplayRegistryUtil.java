@@ -14,9 +14,19 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceRegistrationMap;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eduardo Garcia
@@ -24,38 +34,109 @@ import java.util.List;
 public class DDMDisplayRegistryUtil {
 
 	public static DDMDisplay getDDMDisplay(String portletId) {
-		return getDDMDisplayRegistry().getDDMDisplay(portletId);
-	}
-
-	public static DDMDisplayRegistry getDDMDisplayRegistry() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			DDMDisplayRegistryUtil.class);
-
-		return _ddmDisplayRegistry;
+		return _instance._getDDMDisplay(portletId);
 	}
 
 	public static List<DDMDisplay> getDDMDisplays() {
-		return getDDMDisplayRegistry().getDDMDisplays();
+		return _instance._getDDMDisplays();
 	}
 
 	public static String[] getPortletIds() {
-		return getDDMDisplayRegistry().getPortletIds();
+		return _instance._getPortletIds();
 	}
 
 	public static void register(DDMDisplay ddmDisplay) {
-		getDDMDisplayRegistry().register(ddmDisplay);
+		_instance._register(ddmDisplay);
 	}
 
 	public static void unregister(DDMDisplay ddmDisplay) {
-		getDDMDisplayRegistry().unregister(ddmDisplay);
+		_instance._unregister(ddmDisplay);
 	}
 
-	public void setDDMDisplayRegistry(DDMDisplayRegistry ddmDisplayRegistry) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	private DDMDisplayRegistryUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		_ddmDisplayRegistry = ddmDisplayRegistry;
+		_serviceTracker = registry.trackServices(
+			DDMDisplay.class, new DDMDisplayServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
-	private static DDMDisplayRegistry _ddmDisplayRegistry;
+	private DDMDisplay _getDDMDisplay(String portletId) {
+		return _ddmDisplays.get(portletId);
+	}
+
+	private List<DDMDisplay> _getDDMDisplays() {
+		return ListUtil.fromMapValues(_ddmDisplays);
+	}
+
+	private String[] _getPortletIds() {
+		Set<String> portletIds = _ddmDisplays.keySet();
+
+		return portletIds.toArray(new String[portletIds.size()]);
+	}
+
+	private void _register(DDMDisplay ddmDisplay) {
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<DDMDisplay> serviceRegistration =
+			registry.registerService(DDMDisplay.class, ddmDisplay);
+
+		_serviceRegistrations.put(ddmDisplay, serviceRegistration);
+	}
+
+	private void _unregister(DDMDisplay ddmDisplay) {
+		ServiceRegistration<DDMDisplay> serviceRegistration =
+			_serviceRegistrations.remove(ddmDisplay);
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
+	}
+
+	private static DDMDisplayRegistryUtil _instance =
+		new DDMDisplayRegistryUtil();
+
+	private Map<String, DDMDisplay> _ddmDisplays =
+		new ConcurrentHashMap<String, DDMDisplay>();
+	private ServiceRegistrationMap<DDMDisplay> _serviceRegistrations =
+		new ServiceRegistrationMap<DDMDisplay>();
+	private ServiceTracker<DDMDisplay, DDMDisplay> _serviceTracker;
+
+	private class DDMDisplayServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<DDMDisplay, DDMDisplay> {
+
+		@Override
+		public DDMDisplay addingService(
+			ServiceReference<DDMDisplay> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			DDMDisplay ddmDisplay = registry.getService(serviceReference);
+
+			_ddmDisplays.put(ddmDisplay.getPortletId(), ddmDisplay);
+
+			return ddmDisplay;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<DDMDisplay> serviceReference,
+			DDMDisplay ddmDisplay) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<DDMDisplay> serviceReference,
+			DDMDisplay ddmDisplay) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_ddmDisplays.remove(ddmDisplay.getPortletId());
+		}
+
+	}
 
 }

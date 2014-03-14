@@ -18,13 +18,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceRegistrationMap;
 
 import java.io.Serializable;
 
@@ -32,6 +39,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * @author Bruno Farache
@@ -40,22 +49,15 @@ import java.util.Map;
 public class WorkflowHandlerRegistryUtil {
 
 	public static List<WorkflowHandler> getScopeableWorkflowHandlers() {
-		return getWorkflowHandlerRegistry().getScopeableWorkflowHandlers();
+		return _instance._getScopeableWorkflowHandlers();
 	}
 
 	public static WorkflowHandler getWorkflowHandler(String className) {
-		return getWorkflowHandlerRegistry().getWorkflowHandler(className);
-	}
-
-	public static WorkflowHandlerRegistry getWorkflowHandlerRegistry() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			WorkflowHandlerRegistryUtil.class);
-
-		return _workflowHandlerRegistry;
+		return _instance._getWorkflowHandler(className);
 	}
 
 	public static List<WorkflowHandler> getWorkflowHandlers() {
-		return getWorkflowHandlerRegistry().getWorkflowHandlers();
+		return _instance._getWorkflowHandlers();
 	}
 
 	public static void register(List<WorkflowHandler> workflowHandlers) {
@@ -65,7 +67,7 @@ public class WorkflowHandlerRegistryUtil {
 	}
 
 	public static void register(WorkflowHandler workflowHandler) {
-		getWorkflowHandlerRegistry().register(workflowHandler);
+		_instance._register(workflowHandler);
 	}
 
 	public static void startWorkflowInstance(
@@ -204,7 +206,7 @@ public class WorkflowHandlerRegistryUtil {
 	}
 
 	public static void unregister(WorkflowHandler workflowHandler) {
-		getWorkflowHandlerRegistry().unregister(workflowHandler);
+		_instance._unregister(workflowHandler);
 	}
 
 	public static Object updateStatus(
@@ -223,17 +225,105 @@ public class WorkflowHandlerRegistryUtil {
 		return null;
 	}
 
-	public void setWorkflowHandlerRegistry(
-		WorkflowHandlerRegistry workflowHandlerRegistry) {
+	private WorkflowHandlerRegistryUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+		_serviceTracker = registry.trackServices(
+			WorkflowHandler.class,
+			new WorkflowHandlerServiceTrackerCustomizer());
 
-		_workflowHandlerRegistry = workflowHandlerRegistry;
+		_serviceTracker.open();
+	}
+
+	private List<WorkflowHandler> _getScopeableWorkflowHandlers() {
+		return ListUtil.fromMapValues(_scopeableWorkflowHandlerMap);
+	}
+
+	private WorkflowHandler _getWorkflowHandler(String className) {
+		return _workflowHandlerMap.get(className);
+	}
+
+	private List<WorkflowHandler> _getWorkflowHandlers() {
+		return ListUtil.fromMapValues(_workflowHandlerMap);
+	}
+
+	private void _register(WorkflowHandler workflowHandler) {
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<WorkflowHandler> serviceRegistration =
+			registry.registerService(WorkflowHandler.class, workflowHandler);
+
+		_serviceRegistrations.put(workflowHandler, serviceRegistration);
+	}
+
+	private void _unregister(WorkflowHandler workflowHandler) {
+		ServiceRegistration<WorkflowHandler> serviceRegistration =
+			_serviceRegistrations.remove(workflowHandler);
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		WorkflowHandlerRegistryUtil.class);
 
-	private static WorkflowHandlerRegistry _workflowHandlerRegistry;
+	private static WorkflowHandlerRegistryUtil _instance =
+		new WorkflowHandlerRegistryUtil();
 
+	private Map<String, WorkflowHandler> _scopeableWorkflowHandlerMap =
+		new ConcurrentSkipListMap<String, WorkflowHandler>();
+	private ServiceRegistrationMap<WorkflowHandler> _serviceRegistrations =
+		new ServiceRegistrationMap<WorkflowHandler>();
+	private ServiceTracker<WorkflowHandler, WorkflowHandler> _serviceTracker;
+	private Map<String, WorkflowHandler> _workflowHandlerMap =
+		new TreeMap<String, WorkflowHandler>();
+
+	private class WorkflowHandlerServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<WorkflowHandler, WorkflowHandler> {
+
+		@Override
+		public WorkflowHandler addingService(
+			ServiceReference<WorkflowHandler> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			WorkflowHandler workflowHandler = registry.getService(
+				serviceReference);
+
+			_workflowHandlerMap.put(
+				workflowHandler.getClassName(), workflowHandler);
+
+			if (workflowHandler.isScopeable()) {
+				_scopeableWorkflowHandlerMap.put(
+					workflowHandler.getClassName(), workflowHandler);
+			}
+
+			return workflowHandler;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<WorkflowHandler> serviceReference,
+			WorkflowHandler workflowHandler) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<WorkflowHandler> serviceReference,
+			WorkflowHandler workflowHandler) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_workflowHandlerMap.remove(workflowHandler.getClassName());
+
+			if (workflowHandler.isScopeable()) {
+				_scopeableWorkflowHandlerMap.remove(
+					workflowHandler.getClassName());
+			}
+		}
+
+	}
 }

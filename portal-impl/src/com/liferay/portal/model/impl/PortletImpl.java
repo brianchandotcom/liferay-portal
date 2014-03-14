@@ -715,13 +715,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public ControlPanelEntry getControlPanelEntryInstance() {
-		if (Validator.isNull(getControlPanelEntryClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<ControlPanelEntry> controlPanelEntryInstances =
+			portletBag.getControlPanelEntryInstances();
+
+		if (controlPanelEntryInstances.isEmpty()) {
 			return DefaultControlPanelEntryFactory.getInstance();
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getControlPanelEntryInstance();
+		return controlPanelEntryInstances.get(0);
 	}
 
 	/**
@@ -1158,13 +1161,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public PermissionPropagator getPermissionPropagatorInstance() {
-		if (Validator.isNull(getPermissionPropagatorClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<PermissionPropagator> permissionPropagatorInstances =
+			portletBag.getPermissionPropagatorInstances();
+
+		if (permissionPropagatorInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getPermissionPropagatorInstance();
+		return permissionPropagatorInstances.get(0);
 	}
 
 	/**
@@ -2083,13 +2089,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public WebDAVStorage getWebDAVStorageInstance() {
-		if (Validator.isNull(getWebDAVStorageClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<WebDAVStorage> webDAVStorageInstances =
+			portletBag.getWebDAVStorageInstances();
+
+		if (webDAVStorageInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getWebDAVStorageInstance();
+		return webDAVStorageInstances.get(0);
 	}
 
 	/**
@@ -2157,13 +2166,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public Method getXmlRpcMethodInstance() {
-		if (Validator.isNull(getXmlRpcMethodClass())) {
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		List<Method> xmlRpcMethodInstances =
+			portletBag.getXmlRpcMethodInstances();
+
+		if (xmlRpcMethodInstances.isEmpty()) {
 			return null;
 		}
 
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getXmlRpcMethodInstance();
+		return xmlRpcMethodInstances.get(0);
 	}
 
 	/**

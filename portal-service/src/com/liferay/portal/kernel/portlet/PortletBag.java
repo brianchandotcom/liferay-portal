@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
@@ -63,9 +64,11 @@ public interface PortletBag extends Cloneable {
 
 	public List<ConfigurationAction> getConfigurationActionInstances();
 
-	public ControlPanelEntry getControlPanelEntryInstance();
+	public List<ControlPanelEntry> getControlPanelEntryInstances();
 
 	public List<CustomAttributesDisplay> getCustomAttributesDisplayInstances();
+
+	public List<DDMDisplay> getDdmDisplayInstances();
 
 	public List<FriendlyURLMapper> getFriendlyURLMapperInstances();
 
@@ -73,7 +76,7 @@ public interface PortletBag extends Cloneable {
 
 	public List<OpenSearch> getOpenSearchInstances();
 
-	public PermissionPropagator getPermissionPropagatorInstance();
+	public List<PermissionPropagator> getPermissionPropagatorInstances();
 
 	public List<PollerProcessor> getPollerProcessorInstances();
 
@@ -87,7 +90,7 @@ public interface PortletBag extends Cloneable {
 
 	public String getPortletName();
 
-	public PreferencesValidator getPreferencesValidatorInstance();
+	public List<PreferencesValidator> getPreferencesValidatorInstances();
 
 	public ResourceBundle getResourceBundle(Locale locale);
 
@@ -112,11 +115,11 @@ public interface PortletBag extends Cloneable {
 	public List<UserNotificationHandler>
 		getUserNotificationHandlerInstances();
 
-	public WebDAVStorage getWebDAVStorageInstance();
+	public List<WebDAVStorage> getWebDAVStorageInstances();
 
 	public List<WorkflowHandler> getWorkflowHandlerInstances();
 
-	public Method getXmlRpcMethodInstance();
+	public List<Method> getXmlRpcMethodInstances();
 
 	public void setPortletInstance(Portlet portletInstance);
 

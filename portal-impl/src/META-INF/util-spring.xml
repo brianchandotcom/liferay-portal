@@ -15,11 +15,6 @@
 			<bean class="com.liferay.portal.events.StartupHelper" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.atom.AtomCollectionAdapterRegistryUtil" class="com.liferay.portal.kernel.atom.AtomCollectionAdapterRegistryUtil">
-		<property name="atomCollectionAdapterRegistry">
-			<bean class="com.liferay.portal.atom.AtomCollectionAdapterRegistryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.audit.AuditMessageFactoryUtil" class="com.liferay.portal.kernel.audit.AuditMessageFactoryUtil">
 		<property name="auditMessageFactory">
 			<bean class="com.liferay.portal.audit.AuditMessageFactoryImpl" />
@@ -218,11 +213,6 @@
 			<bean class="com.liferay.portal.microsofttranslator.MicrosoftTranslatorFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.notifications.UserNotificationManagerUtil" class="com.liferay.portal.kernel.notifications.UserNotificationManagerUtil">
-		<property name="userNotificationManager">
-			<bean class="com.liferay.portal.notifications.UserNotificationManagerImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.oauth.OAuthFactoryUtil" class="com.liferay.portal.kernel.oauth.OAuthFactoryUtil">
 		<property name="OAuthFactory">
 			<bean class="com.liferay.portal.oauth.OAuthFactoryImpl" />
@@ -364,11 +354,6 @@
 	<bean id="com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil" class="com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil">
 		<property name="transactionCallbackRegistry">
 			<bean class="com.liferay.portal.spring.transaction.TransactionCommitCallbackRegistryImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil" class="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil">
-		<property name="trashHandlerRegistry">
-			<bean class="com.liferay.portal.trash.TrashHandlerRegistryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil" class="com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil">
@@ -518,11 +503,6 @@
 	<bean id="com.liferay.portal.kernel.words.Words" class="com.liferay.portal.words.WordsImpl" />
 	<bean id="com.liferay.portal.kernel.words.WordsUtil" class="com.liferay.portal.kernel.words.WordsUtil">
 		<property name="words" ref="com.liferay.portal.kernel.words.Words" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" class="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil">
-		<property name="workflowHandlerRegistry">
-			<bean class="com.liferay.portal.workflow.WorkflowHandlerRegistryImpl" />
-		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil" class="com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil">
 		<property name="workflowPermission">
@@ -823,11 +803,6 @@
 	<bean id="com.liferay.portlet.RestrictPortletContainerWrapper" class="com.liferay.portlet.RestrictPortletContainerWrapper" factory-method="createRestrictPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.SecurityPortletContainerWrapper" />
 	</bean>
-	<bean id="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" class="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil">
-		<property name="assetRendererFactoryRegistry">
-			<bean class="com.liferay.portal.asset.AssetRendererFactoryRegistryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisher" class="com.liferay.portlet.assetpublisher.util.AssetPublisherImpl" />
 	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisherHelper" class="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperImpl" />
 	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil" class="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil">
@@ -913,11 +888,6 @@
 	<bean id="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryUtil" class="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryUtil">
 		<property name="conditionFactory">
 			<bean class="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryImpl" />
-		</property>
-	</bean>
-		<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil">
-		<property name="DDMDisplayRegistry">
-			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil">

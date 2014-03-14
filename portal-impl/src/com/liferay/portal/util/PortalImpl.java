@@ -4693,11 +4693,14 @@ public class PortalImpl implements Portal {
 	public PreferencesValidator getPreferencesValidator(Portlet portlet) {
 		PortletBag portletBag = PortletBagPool.get(portlet.getRootPortletId());
 
-		if (portletBag == null) {
+		List<PreferencesValidator> preferencesValidatorInstances =
+			portletBag.getPreferencesValidatorInstances();
+
+		if (preferencesValidatorInstances.isEmpty()) {
 			return null;
 		}
 
-		return portletBag.getPreferencesValidatorInstance();
+		return preferencesValidatorInstances.get(0);
 	}
 
 	@Override

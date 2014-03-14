@@ -331,6 +331,7 @@
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="PGBlogsEntry#pause" locator1="3000" />
 		<execute action="PGBlogsEntry#copy" locator-key1="COMMENTS_TRACKBACK_URL" />
 
 		<if>
@@ -353,6 +354,7 @@
 		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle2}" />
 		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent2}" />
 		<execute action="PGBlogsAdd#paste" locator-key1="TRACKBACKS_TO_SEND_FIELD" />
+		<execute action="PGBlogsAdd#pause" locator1="3000" />
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 	</command>
 

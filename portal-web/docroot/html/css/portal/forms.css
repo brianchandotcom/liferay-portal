@@ -36,15 +36,13 @@
 	}
 
 	@include respond-to(phone, tablet) {
-		width: 100%;
+		&, input.search-query {
+			width: 100%;
+		}
 
 		.btn {
 			clip: rect(0, 0, 0, 0);
 			position: absolute;
-		}
-
-		input.search-query {
-			width: 100%;
 		}
 	}
 }

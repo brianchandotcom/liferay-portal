@@ -412,15 +412,8 @@ public class LayoutStagedModelDataHandler
 		if ((parentLayoutId != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) &&
 			(parentLayoutElement != null)) {
 
-			String parentLayoutPath = parentLayoutElement.attributeValue(
-				"path");
-
-			Layout parentLayout =
-				(Layout)portletDataContext.getZipEntryAsObject(
-					parentLayoutPath);
-
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, parentLayout);
+				portletDataContext, parentLayoutElement);
 
 			Layout importedParentLayout = newLayoutsMap.get(parentLayoutId);
 

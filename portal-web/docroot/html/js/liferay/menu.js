@@ -634,7 +634,7 @@ AUI.add(
 									event.preventDefault();
 
 									instance._closeActiveMenu();
-								}, 
+								},
 								instance
 							)
 						);

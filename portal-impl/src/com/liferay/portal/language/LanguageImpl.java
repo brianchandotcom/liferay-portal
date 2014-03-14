@@ -898,7 +898,6 @@ public class LanguageImpl implements Language {
 		}
 
 		Locale locale = null;
-		PortletConfig configPortletConfig = null;
 
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
@@ -917,7 +916,7 @@ public class LanguageImpl implements Language {
 			}
 		}
 
-		configPortletConfig = (PortletConfig)request.getAttribute(
+		PortletConfig configPortletConfig = (PortletConfig)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		if (configPortletConfig != null) {

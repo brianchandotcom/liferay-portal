@@ -44,14 +44,19 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
@@ -894,6 +899,57 @@ public class MBUtil {
 		}
 
 		return true;
+	}
+
+	public static void permissionInheritance(
+			long companyId, long groupId, long parentMessageId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		MBMessage parentMessage = MBMessageLocalServiceUtil.getMBMessage(
+			parentMessageId);
+
+		Role guestRole = RoleLocalServiceUtil.getRole(
+			companyId, RoleConstants.GUEST);
+
+		Role defaultGroupRole = RoleLocalServiceUtil.getDefaultGroupRole(
+			groupId);
+
+		long[] roleIds = new long[] {
+			guestRole.getRoleId(), defaultGroupRole.getRoleId()};
+
+		List<String> actionIds = ResourceActionsUtil.getModelResourceActions(
+			MBMessage.class.getName());
+
+		Map<Long, Set<String>> roleIdsToActionIds =
+			ResourcePermissionLocalServiceUtil.
+				getAvailableResourcePermissionActionIds(
+					companyId, MBMessage.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(parentMessage.getMessageId()), roleIds,
+					actionIds);
+
+		Set<String> guestActionIds = roleIdsToActionIds.get(
+			guestRole.getRoleId());
+
+		Set<String> defaultGroupActionIds = roleIdsToActionIds.get(
+			defaultGroupRole.getRoleId());
+
+		if (guestActionIds == null) {
+			serviceContext.setGuestPermissions(new String[]{});
+		}
+		else {
+			serviceContext.setGuestPermissions(
+				guestActionIds.toArray(new String[]{}));
+		}
+
+		if (defaultGroupActionIds == null) {
+			serviceContext.setGroupPermissions(new String[]{});
+		}
+		else {
+			serviceContext.setGroupPermissions(
+				defaultGroupActionIds.toArray(new String[]{}));
+		}
 	}
 
 	public static String replaceMessageBodyPaths(

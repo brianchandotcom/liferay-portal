@@ -27,5 +27,9 @@
 		<case locator-key1="DISPLAY_DATE_TIME_INPUT">
 			<execute function="Type#clickAtSendKeys" />
 		</case>
+
+		<case locator-key1="CATEGORIZATION_TAGS_FIELD">
+			<execute function="Type#clickAtSendKeys" />
+		</case>
 	</command>
 </definition>

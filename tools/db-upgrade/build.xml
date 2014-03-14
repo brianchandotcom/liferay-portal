@@ -6,6 +6,7 @@
 			<fileset dir="../../lib/development" includes="*.jar" />
 			<fileset dir="../../lib/global" includes="*.jar" />
 			<fileset dir="../../lib/portal" includes="*.jar" />
+			<fileset dir="../../osgi/modules/registry/registry-api/build/libs" includes="registry-api.jar" />
 			<fileset dir="lib" includes="*.jar" />
 		</path>
 

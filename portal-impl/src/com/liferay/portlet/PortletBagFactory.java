@@ -87,7 +87,6 @@ import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
 import com.liferay.portlet.social.model.impl.SocialActivityInterpreterImpl;
 import com.liferay.portlet.social.model.impl.SocialRequestInterpreterImpl;
-import com.liferay.portlet.social.service.SocialRequestInterpreterLocalServiceUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 import com.liferay.util.portlet.PortletProps;
@@ -152,20 +151,8 @@ public class PortletBagFactory {
 		List<SocialActivityInterpreter> socialActivityInterpreterInstances =
 			newSocialActivityInterpreterInstances(portlet);
 
-		SocialRequestInterpreter socialRequestInterpreterInstance = null;
-
-		if (Validator.isNotNull(portlet.getSocialRequestInterpreterClass())) {
-			socialRequestInterpreterInstance =
-				(SocialRequestInterpreter)newInstance(
-					SocialRequestInterpreter.class,
-					portlet.getSocialRequestInterpreterClass());
-
-			socialRequestInterpreterInstance = new SocialRequestInterpreterImpl(
-				portlet.getPortletId(), socialRequestInterpreterInstance);
-
-			SocialRequestInterpreterLocalServiceUtil.addRequestInterpreter(
-				socialRequestInterpreterInstance);
-		}
+		List<SocialRequestInterpreter> socialRequestInterpreterInstances =
+			newSocialRequestInterpreterInstances(portlet);
 
 		List<UserNotificationHandler> userNotificationHandlerInstances =
 			newUserNotificationHandlerInstances(portlet);
@@ -318,7 +305,7 @@ public class PortletBagFactory {
 			templateHandlerInstances, portletLayoutListenerInstances,
 			pollerProcessorInstances, popMessageListenerInstances,
 			socialActivityInterpreterInstances,
-			socialRequestInterpreterInstance, userNotificationHandlerInstances,
+			socialRequestInterpreterInstances, userNotificationHandlerInstances,
 			webDAVStorageInstance, xmlRpcMethodInstance,
 			controlPanelEntryInstance, assetRendererFactoryInstances,
 			atomCollectionAdapterInstances, customAttributesDisplayInstances,
@@ -996,6 +983,31 @@ public class PortletBagFactory {
 		return socialActivityInterpreterInstances;
 	}
 
+	protected List<SocialRequestInterpreter>
+			newSocialRequestInterpreterInstances(Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<SocialRequestInterpreter>
+			socialRequestInterpreterInstances = getServiceTrackerList(
+				SocialRequestInterpreter.class, portlet);
+
+		if (Validator.isNotNull(portlet.getSocialRequestInterpreterClass())) {
+			SocialRequestInterpreter socialRequestInterpreterInstance =
+				(SocialRequestInterpreter)newInstance(
+					SocialRequestInterpreter.class,
+					portlet.getSocialRequestInterpreterClass());
+
+			socialRequestInterpreterInstance = new SocialRequestInterpreterImpl(
+				portlet.getPortletId(), socialRequestInterpreterInstance);
+
+			socialRequestInterpreterInstances.add(
+				socialRequestInterpreterInstance);
+		}
+
+		return socialRequestInterpreterInstances;
+	}
+
+	@SuppressWarnings("unchecked")
 	protected List<StagedModelDataHandler<?>> newStagedModelDataHandler(
 			Portlet portlet)
 		throws Exception {

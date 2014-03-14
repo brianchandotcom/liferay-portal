@@ -21,9 +21,19 @@ import com.liferay.portlet.social.model.SocialRequestFeedEntry;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
 import com.liferay.portlet.social.model.impl.SocialRequestInterpreterImpl;
 import com.liferay.portlet.social.service.base.SocialRequestInterpreterLocalServiceBaseImpl;
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceRegistrationMap;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * The social request interpreter local service. Social request interpreters are
@@ -46,6 +56,20 @@ import java.util.List;
 public class SocialRequestInterpreterLocalServiceImpl
 	extends SocialRequestInterpreterLocalServiceBaseImpl {
 
+	@Override
+	public void afterPropertiesSet() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(&(javax.portlet.name=*)(objectClass="
+				+ SocialRequestInterpreter.class.getName() + "))");
+
+		_serviceTracker = registry.trackServices(filter,
+			new SocialRequestInterpreterServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
 	/**
 	 * Adds the social request interpreter to the list of available
 	 * interpreters.
@@ -56,7 +80,22 @@ public class SocialRequestInterpreterLocalServiceImpl
 	public void addRequestInterpreter(
 		SocialRequestInterpreter requestInterpreter) {
 
-		_requestInterpreters.add(requestInterpreter);
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		SocialRequestInterpreterImpl requestInterpreterImpl =
+			(SocialRequestInterpreterImpl)requestInterpreter;
+
+		properties.put(
+			"javax.portlet.name", requestInterpreterImpl.getPortletId());
+
+		ServiceRegistration<SocialRequestInterpreter> serviceRegistration =
+			registry.registerService(
+				SocialRequestInterpreter.class, requestInterpreter,
+				properties);
+
+		_serviceRegistrations.put(requestInterpreter, serviceRegistration);
 	}
 
 	/**
@@ -69,8 +108,11 @@ public class SocialRequestInterpreterLocalServiceImpl
 	public void deleteRequestInterpreter(
 		SocialRequestInterpreter requestInterpreter) {
 
-		if (requestInterpreter != null) {
-			_requestInterpreters.remove(requestInterpreter);
+		ServiceRegistration<SocialRequestInterpreter> serviceRegistration =
+			_serviceRegistrations.remove(requestInterpreter);
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
 		}
 	}
 
@@ -188,6 +230,59 @@ public class SocialRequestInterpreterLocalServiceImpl
 	}
 
 	private List<SocialRequestInterpreter> _requestInterpreters =
-		new ArrayList<SocialRequestInterpreter>();
+		new CopyOnWriteArrayList<SocialRequestInterpreter>();
+	private ServiceRegistrationMap<SocialRequestInterpreter>
+		_serviceRegistrations =
+			new ServiceRegistrationMap<SocialRequestInterpreter>();
+	private ServiceTracker<SocialRequestInterpreter, SocialRequestInterpreter>
+		_serviceTracker;
+
+	private class SocialRequestInterpreterServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<SocialRequestInterpreter, SocialRequestInterpreter> {
+
+		@Override
+		public SocialRequestInterpreter addingService(
+			ServiceReference<SocialRequestInterpreter> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			SocialRequestInterpreter socialRequestInterpreter =
+				registry.getService(serviceReference);
+
+			String portletId = (String) serviceReference.getProperty(
+				"javax.portlet.name");
+
+			if (!(socialRequestInterpreter instanceof
+					SocialRequestInterpreterImpl)) {
+
+				socialRequestInterpreter = new SocialRequestInterpreterImpl(
+					portletId, socialRequestInterpreter);
+			}
+
+			_requestInterpreters.add(socialRequestInterpreter);
+
+			return socialRequestInterpreter;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<SocialRequestInterpreter> serviceReference,
+			SocialRequestInterpreter socialRequestInterpreter) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<SocialRequestInterpreter> serviceReference,
+			SocialRequestInterpreter socialRequestInterpreter) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_requestInterpreters.remove(socialRequestInterpreter);
+		}
+
+	}
 
 }

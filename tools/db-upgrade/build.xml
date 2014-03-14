@@ -3,6 +3,7 @@
 <project name="db-upgrade" basedir="." default="upgrade">
 	<target name="upgrade">
 		<path id="lib.classpath">
+			<pathelement location="../../classes" />
 			<pathelement location="../../portal-impl/classes" />
 			<pathelement location="../../portal-service/classes" />
 			<pathelement location="../../util-bridges/classes" />

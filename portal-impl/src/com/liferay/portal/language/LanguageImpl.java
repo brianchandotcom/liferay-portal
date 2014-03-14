@@ -893,12 +893,12 @@ public class LanguageImpl implements Language {
 	private ResourceBundle _getResourceBundleFromPageContext(
 		PageContext pageContext) {
 
-		Locale locale = null;
-		PortletConfig configPortletConfig = null;
-
 		if (pageContext == null) {
 			return null;
 		}
+
+		Locale locale = null;
+		PortletConfig configPortletConfig = null;
 
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();

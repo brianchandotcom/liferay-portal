@@ -245,7 +245,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 		}
 
 		<%
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(mainPath);
 		sb.append("/portal/fckeditor?p_p_id=");

@@ -179,26 +179,24 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 		<aui:script use="aui-base, liferay-store">
 			var infoLinkContainer = A.one('.info-link-container');
 
-			if (infoLinkContainer) {
-				infoLinkContainer.on(
-					'click',
-					function(event) {
-						event.preventDefault();
+			infoLinkContainer.on(
+				'click',
+				function(event) {
+					event.preventDefault();
 
-						var navAccountControls = event.currentTarget.ancestor('.nav-account-controls');
+					var navAccountControls = event.currentTarget.ancestor('.nav-account-controls');
 
-						var infoItems = navAccountControls.one('.info-items');
+					var infoItems = navAccountControls.one('.info-items');
 
-						if (infoItems) {
-							infoItems.toggleClass('hide');
+					if (infoItems) {
+						infoItems.toggleClass('hide');
 
-							infoLinkContainer.toggleClass('open');
-						}
-
-						Liferay.Store('dockbarMessagesHidden', infoItems.hasClass('hide'));
+						infoLinkContainer.toggleClass('open');
 					}
-				);
-			}
+
+					Liferay.Store('dockbarMessagesHidden', infoItems.hasClass('hide'));
+				}
+			);
 		</aui:script>
 	</aui:nav-item>
 </c:if>

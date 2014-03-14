@@ -3847,6 +3847,42 @@
 		</license>
 	</library>
 	<library>
+		<file-name>osgi/lib/common/portal/gemini-blueprint-core.jar</file-name>
+		<version>2.0.2.M02</version>
+		<project-name>Eclipse Gemini Blueprint Core</project-name>
+		<project-url>http://www.eclipse.org/gemini/blueprint</project-url>
+		<licenses>
+			<license>
+				<license-name>Eclipse Public License Version 1.0</license-name>
+				<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>osgi/lib/common/portal/gemini-blueprint-extender.jar</file-name>
+		<version>2.0.2.M02</version>
+		<project-name>Eclipse Gemini Blueprint Extender</project-name>
+		<project-url>http://www.eclipse.org/gemini/blueprint</project-url>
+		<licenses>
+			<license>
+				<license-name>Eclipse Public License Version 1.0</license-name>
+				<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>osgi/lib/common/portal/gemini-blueprint-io.jar</file-name>
+		<version>2.0.2.M02</version>
+		<project-name>Eclipse Gemini Blueprint IO</project-name>
+		<project-url>http://www.eclipse.org/gemini/blueprint</project-url>
+		<licenses>
+			<license>
+				<license-name>Eclipse Public License Version 1.0</license-name>
+				<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>osgi/lib/common/core/osgi.cmpn.jar</file-name>
 		<version>4.3.1.201210102024</version>
 		<project-name>OSGi Compendium Specification</project-name>

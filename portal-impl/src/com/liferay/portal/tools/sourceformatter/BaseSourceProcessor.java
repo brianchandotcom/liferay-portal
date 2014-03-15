@@ -196,7 +196,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String line, String fileName, int lineCount) {
 
 		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
-			fileName.contains("/sync-engine-shared/")) {
+			isRunsOutsidePortal(fileName)) {
 
 			return;
 		}
@@ -917,6 +917,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return false;
+	}
+
+	protected boolean isRunsOutsidePortal(String fileName) {
+		if (fileName.contains("/sync-engine-shared/")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	protected void processErrorMessage(String fileName, String message) {

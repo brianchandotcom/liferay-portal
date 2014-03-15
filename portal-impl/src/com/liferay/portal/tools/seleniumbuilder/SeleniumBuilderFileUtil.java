@@ -38,7 +38,6 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -61,21 +60,22 @@ public class SeleniumBuilderFileUtil {
 
 	public SeleniumBuilderFileUtil(String baseDirName) {
 		_baseDirName = baseDirName;
+
 		Properties properties = new Properties();
 
 		try {
-			String propertiesFile = readFile("../../../test.properties");
-			InputStream input = new ByteArrayInputStream(
-				propertiesFile.getBytes());
+			String content = readFile("../../../test.properties");
 
-			properties.load(input);
+			InputStream is = new ByteArrayInputStream(content.getBytes());
+
+			properties.load(is);
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 		}
 
-		String componentNames = properties.getProperty("component.names");
-		List componentNamesList = Arrays.asList(componentNames.split(","));
-		_componentNames = componentNamesList;
+		_componentNames = ListUtil.fromArray(
+			StringUtil.split(properties.getProperty("component.names")));
 	}
 
 	public String escapeHtml(String input) {

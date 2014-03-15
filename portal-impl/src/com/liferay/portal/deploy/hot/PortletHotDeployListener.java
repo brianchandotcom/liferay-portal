@@ -15,8 +15,6 @@
 package com.liferay.portal.deploy.hot;
 
 import com.liferay.portal.apache.bridges.struts.LiferayServletContextProvider;
-import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
-import com.liferay.portal.kernel.atom.AtomCollectionAdapterRegistryUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
@@ -24,24 +22,16 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.lar.StagedModelDataHandler;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.notifications.UserNotificationHandler;
-import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.StorageType;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.ServletContextProvider;
-import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -51,16 +41,11 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webdav.WebDAVUtil;
-import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletCategory;
 import com.liferay.portal.model.PortletFilter;
 import com.liferay.portal.model.PortletURLListener;
-import com.liferay.portal.poller.PollerProcessorUtil;
-import com.liferay.portal.pop.POPServerUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
@@ -70,7 +55,6 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portal.xmlrpc.XmlRpcMethodUtil;
 import com.liferay.portlet.CustomUserAttributes;
 import com.liferay.portlet.InvokerPortlet;
 import com.liferay.portlet.PortletBagFactory;
@@ -80,11 +64,6 @@ import com.liferay.portlet.PortletFilterFactory;
 import com.liferay.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portlet.PortletResourceBundles;
 import com.liferay.portlet.PortletURLListenerFactory;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.social.model.SocialActivityInterpreter;
-import com.liferay.portlet.social.service.SocialActivityInterpreterLocalServiceUtil;
-import com.liferay.portlet.social.service.SocialRequestInterpreterLocalServiceUtil;
 import com.liferay.util.bridges.php.PHPPortlet;
 
 import java.util.HashMap;
@@ -216,12 +195,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			PortletURLListenerFactory.destroy(portletURLListener);
 		}
 
-		List<Indexer> indexers = portlet.getIndexerInstances();
-
-		for (Indexer indexer : indexers) {
-			IndexerRegistryUtil.unregister(indexer);
-		}
-
 		if (PropsValues.SCHEDULER_ENABLED) {
 			List<SchedulerEntry> schedulerEntries =
 				portlet.getSchedulerEntries();
@@ -232,80 +205,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 						schedulerEntry, StorageType.MEMORY_CLUSTERED);
 				}
 			}
-		}
-
-		List<StagedModelDataHandler<?>> stagedModelDataHandlers =
-			portlet.getStagedModelDataHandlerInstances();
-
-		if (stagedModelDataHandlers != null) {
-			StagedModelDataHandlerRegistryUtil.unregister(
-				stagedModelDataHandlers);
-		}
-
-		PollerProcessorUtil.deletePollerProcessor(portlet.getPortletId());
-
-		POPServerUtil.deleteListener(portlet.getPopMessageListenerInstance());
-
-		List<SocialActivityInterpreter> socialActivityInterpreters =
-			portlet.getSocialActivityInterpreterInstances();
-
-		if (socialActivityInterpreters != null) {
-			for (SocialActivityInterpreter socialActivityInterpreter :
-					socialActivityInterpreters) {
-
-				SocialActivityInterpreterLocalServiceUtil.
-					deleteActivityInterpreter(socialActivityInterpreter);
-			}
-		}
-
-		SocialRequestInterpreterLocalServiceUtil.deleteRequestInterpreter(
-			portlet.getSocialRequestInterpreterInstance());
-
-		UserNotificationManagerUtil.deleteUserNotificationDefinitions(
-			portlet.getPortletId());
-
-		List<UserNotificationHandler> userNotificationHandlers =
-			portlet.getUserNotificationHandlerInstances();
-
-		if (userNotificationHandlers != null) {
-			for (UserNotificationHandler userNotificationHandler :
-					userNotificationHandlers) {
-
-				UserNotificationManagerUtil.deleteUserNotificationHandler(
-					userNotificationHandler);
-			}
-		}
-
-		WebDAVUtil.deleteStorage(portlet.getWebDAVStorageInstance());
-
-		XmlRpcMethodUtil.unregisterMethod(portlet.getXmlRpcMethodInstance());
-
-		List<AssetRendererFactory> assetRendererFactories =
-			portlet.getAssetRendererFactoryInstances();
-
-		if (assetRendererFactories != null) {
-			AssetRendererFactoryRegistryUtil.unregister(assetRendererFactories);
-		}
-
-		List<AtomCollectionAdapter<?>> atomCollectionAdapters =
-			portlet.getAtomCollectionAdapterInstances();
-
-		if (atomCollectionAdapters != null) {
-			AtomCollectionAdapterRegistryUtil.unregister(
-				atomCollectionAdapters);
-		}
-
-		List<TrashHandler> trashHandlers = portlet.getTrashHandlerInstances();
-
-		if (trashHandlers != null) {
-			TrashHandlerRegistryUtil.unregister(trashHandlers);
-		}
-
-		List<WorkflowHandler> workflowHandlers =
-			portlet.getWorkflowHandlerInstances();
-
-		if (workflowHandlers != null) {
-			WorkflowHandlerRegistryUtil.unregister(workflowHandlers);
 		}
 
 		PortletInstanceFactoryUtil.destroy(portlet);

@@ -52,7 +52,7 @@ public class OpenEntryAction extends Action {
 					request, "status", WorkflowConstants.STATUS_APPROVED);
 
 				if (status != WorkflowConstants.STATUS_IN_TRASH) {
-					throw new NoSuchEntryException();
+					throw new NoSuchEntryException("{entryId=" + entryId + "}");
 				}
 			}
 

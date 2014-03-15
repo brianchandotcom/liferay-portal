@@ -249,7 +249,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			List<AssetEntry> childEntries = getChildEntries(entryId);
 
 			if (childEntries.isEmpty()) {
-				throw new NoSuchEntryException();
+				throw new NoSuchEntryException("{entryId=" + entryId + "}");
 			}
 
 			return childEntries.get(0);
@@ -263,7 +263,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			if (link.getEntryId2() == entryId) {
 				if ((i + 1) >= links.size()) {
-					throw new NoSuchEntryException();
+					throw new NoSuchEntryException("{entryId=" + entryId + "}");
 				}
 				else {
 					AssetLink nextLink = links.get(i + 1);
@@ -273,7 +273,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			}
 		}
 
-		throw new NoSuchEntryException();
+		throw new NoSuchEntryException("{entryId=" + entryId + "}");
 	}
 
 	@Override
@@ -284,7 +284,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			entryId, AssetLinkConstants.TYPE_CHILD);
 
 		if (links.isEmpty()) {
-			throw new NoSuchEntryException();
+			throw new NoSuchEntryException("{entryId=" + entryId + "}");
 		}
 
 		AssetLink link = links.get(0);
@@ -306,7 +306,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			if (link.getEntryId2() == entryId) {
 				if (i == 0) {
-					throw new NoSuchEntryException();
+					throw new NoSuchEntryException("{entryId=" + entryId + "}");
 				}
 				else {
 					AssetLink nextAssetLink = links.get(i - 1);
@@ -316,7 +316,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			}
 		}
 
-		throw new NoSuchEntryException();
+		throw new NoSuchEntryException("{entryId=" + entryId + "}");
 	}
 
 	@Override

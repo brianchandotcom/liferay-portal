@@ -48,7 +48,8 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 		PollsChoice choice = pollsChoicePersistence.findByPrimaryKey(choiceId);
 
 		if (choice.getQuestionId() != questionId) {
-			throw new NoSuchQuestionException();
+			throw new NoSuchQuestionException(
+				"{questionId=" + questionId + "}");
 		}
 
 		// Question

@@ -72,6 +72,8 @@ public class CommandArgument {
 			if (group.getCompanyId() == getCompanyId()) {
 				return group;
 			}
+
+			throw new NoSuchGroupException("{groupId=" + groupId + "}");
 		}
 
 		throw new NoSuchGroupException();

@@ -296,7 +296,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				categoryId, message, serviceContext);
 		}
 		else if (thread == null) {
-			throw new NoSuchThreadException();
+			throw new NoSuchThreadException("{threadId=" + threadId + "}");
 		}
 
 		if ((priority != MBThreadConstants.PRIORITY_NOT_GIVEN) &&

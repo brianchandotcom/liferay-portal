@@ -444,7 +444,8 @@ public class DLFileShortcutLocalServiceImpl
 		FileEntry fileEntry = dlAppLocalService.getFileEntry(toFileEntryId);
 
 		if (user.getCompanyId() != fileEntry.getCompanyId()) {
-			throw new NoSuchFileEntryException();
+			throw new NoSuchFileEntryException(
+				"{fileEntryId=" + toFileEntryId + "}");
 		}
 	}
 

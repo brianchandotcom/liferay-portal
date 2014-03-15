@@ -120,7 +120,8 @@ public class ActionUtil {
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
 		if (fileEntry.isInTrash() && !cmd.equals(Constants.MOVE_FROM_TRASH)) {
-			throw new NoSuchFileEntryException();
+			throw new NoSuchFileEntryException(
+				"{fileEntryId=" + fileEntryId + "}");
 		}
 	}
 
@@ -213,7 +214,8 @@ public class ActionUtil {
 				DLFolder dlFolder = (DLFolder)folder.getModel();
 
 				if (dlFolder.isInTrash()) {
-					throw new NoSuchFolderException();
+					throw new NoSuchFolderException(
+						"{folderId=" + folderId + "}");
 				}
 			}
 		}

@@ -15,8 +15,9 @@
 		</if>
 
 		<execute action="PGDocumentsandmediaDocument#type" locator-key1="COMMENTS_COMMENT_FIELD" value1="${commentBody}" />
+		<execute action="PGDocumentsandmediaDocument#pause" locator1="3000" />
 		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
-
+		<execute action="PGDocumentsandmediaDocument#pause" locator1="3000" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 

@@ -41,7 +41,7 @@ refererURL.setParameter("updateLayout", "true");
 		List<Portlet> portlets = new ArrayList<Portlet>();
 
 		for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(user.getCompanyId(), portletId);
 
 			if ((portlet != null) && portlet.isInclude() && portlet.isActive() && PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.ADD_TO_PAGE)) {
 				portlets.add(portlet);

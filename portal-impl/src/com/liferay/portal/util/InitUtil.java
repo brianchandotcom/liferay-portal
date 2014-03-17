@@ -257,8 +257,13 @@ public class InitUtil {
 		initWithSpringAndModuleFramework(false, extraConfigLocations);
 	}
 
-	public synchronized static void stopModuleFramework() throws Exception {
-		ModuleFrameworkUtilAdapter.stopFramework();
+	public synchronized static void stopModuleFramework() {
+		try {
+			ModuleFrameworkUtilAdapter.stopFramework();
+		}
+		catch (Exception e) {
+			new RuntimeException(e);
+		}
 	}
 
 	private static final boolean _PRINT_TIME = false;

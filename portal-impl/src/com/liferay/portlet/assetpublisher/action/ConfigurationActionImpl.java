@@ -111,11 +111,13 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailAssetEntryAddedBody_" + defaultLanguageId,
-			ContentUtil.get(PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY));
+			ContentUtil.get(
+				PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailAssetEntryAddedSubject_" + defaultLanguageId,
-			ContentUtil.get(PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT));
+			ContentUtil.get(
+				PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT));
 	}
 
 	@Override

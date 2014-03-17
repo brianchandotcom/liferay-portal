@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -845,11 +846,19 @@ public class ShoppingItemLocalServiceImpl
 		if (item != null) {
 			if (itemId > 0) {
 				if (item.getItemId() != itemId) {
-					throw new DuplicateItemSKUException();
+					StringBundler sb = new StringBundler(5);
+
+					sb.append("{companyId=");
+					sb.append(companyId);
+					sb.append(", sku=");
+					sb.append(sku);
+					sb.append("}");
+
+					throw new DuplicateItemSKUException(sb.toString());
 				}
 			}
 			else {
-				throw new DuplicateItemSKUException();
+				throw new DuplicateItemSKUException("{itemId=" + itemId + "}");
 			}
 		}
 

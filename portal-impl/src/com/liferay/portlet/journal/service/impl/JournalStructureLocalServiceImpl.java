@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -183,7 +184,15 @@ public class JournalStructureLocalServiceImpl
 				groupId, newStructureId);
 
 			if (newStructure != null) {
-				throw new DuplicateStructureIdException();
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("{groupId=");
+				sb.append(groupId);
+				sb.append(", structureId=");
+				sb.append(newStructureId);
+				sb.append("}");
+
+				throw new DuplicateStructureIdException(sb.toString());
 			}
 		}
 

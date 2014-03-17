@@ -17,6 +17,7 @@ package com.liferay.portlet.expando.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.expando.ColumnNameException;
 import com.liferay.portlet.expando.ColumnTypeException;
@@ -430,7 +431,17 @@ public class ExpandoColumnLocalServiceImpl
 
 		if (column != null) {
 			if (column.getColumnId() != columnId) {
-				throw new DuplicateColumnNameException();
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("{tableId=");
+				sb.append(tableId);
+				sb.append(", columnId=");
+				sb.append(columnId);
+				sb.append(", name=");
+				sb.append(name);
+				sb.append("}");
+
+				throw new DuplicateColumnNameException(sb.toString());
 			}
 		}
 

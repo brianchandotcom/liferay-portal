@@ -16,6 +16,7 @@ package com.liferay.portlet.polls.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.polls.DuplicateVoteException;
@@ -70,7 +71,15 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 		PollsVote vote = pollsVotePersistence.fetchByQ_U(questionId, userId);
 
 		if (vote != null) {
-			throw new DuplicateVoteException();
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("{questionId=");
+			sb.append(questionId);
+			sb.append(", userId=");
+			sb.append(userId);
+			sb.append("}");
+
+			throw new DuplicateVoteException(sb.toString());
 		}
 		else {
 			String userName = null;

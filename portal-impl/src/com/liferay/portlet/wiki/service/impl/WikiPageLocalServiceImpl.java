@@ -2645,7 +2645,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		if (isUsedTitle(nodeId, title)) {
-			throw new DuplicatePageException();
+			throw new DuplicatePageException("{nodeId=" + nodeId + "}");
 		}
 
 		validateTitle(title);

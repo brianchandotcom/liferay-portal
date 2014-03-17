@@ -201,7 +201,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
 		if (team != null) {
 			if ((teamId <= 0) || (team.getTeamId() != teamId)) {
-				throw new DuplicateTeamException();
+				throw new DuplicateTeamException("{teamId=" + teamId + "}");
 			}
 		}
 	}

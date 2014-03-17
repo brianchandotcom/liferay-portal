@@ -84,7 +84,7 @@ security-manager-enabled=true</echo>
 							input="${plugin.war}"
 							override="true"
 							property="plugin.war"
-							regexp=",(.*)"
+							regexp=",.*"
 							replace=""
 						/>
 
@@ -92,6 +92,7 @@ security-manager-enabled=true</echo>
 							<isset property="plugin.war" />
 							<then>
 								<copy file="${plugin.war}" todir="${liferay.home}/deploy" />
+
 								<var name="plugin.war" unset="true" />
 							</then>
 							<else>

@@ -3686,6 +3686,57 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			defaultUserId, group.getGroupId(), false, parameterMap, larFile);
 	}
 
+	protected void addPortletData(Group group)
+		throws PortalException, SystemException {
+
+		List<Portlet> portlets = portletLocalService.getPortlets(
+			group.getCompanyId());
+
+		for (Portlet portlet : portlets) {
+			if (!portlet.isActive()) {
+				continue;
+			}
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if ((portletDataHandler == null) ||
+				portletDataHandler.isDataPortalLevel()) {
+
+				continue;
+			}
+
+			PortletDataContext portletDataContext =
+				PortletDataContextFactoryUtil.createExportPortletDataContext(
+					group.getCompanyId(), group.getGroupId(),
+					(Map<String, String[]>)null, (Date)null, (Date)null,
+					(ZipWriter)null);
+
+			// For now, we are going to throw an exception if one portlet data
+			// handler has an exception to ensure that the transaction is rolled
+			// back for data integrity. We may decide that this is not the best
+			// behavior in the future because a bad plugin could disallow
+			// creation of groups.
+
+			boolean rollbackCreationIfExceptionOccursAddingDefaultData = true;
+
+			try {
+				portletDataHandler.addDefaultData(
+					portletDataContext, portlet.getPortletId(), null);
+			}
+			catch (PortletDataHandler e) {
+				_log.error(
+					"Unable to add default data for portlet " +
+						portlet.getPortletId() + " in group " +
+							group.getGroupId());
+
+				if (rollbackCreationIfExceptionOccursAddingDefaultData) {
+					throw new PortalException(e);
+				}
+			}
+		}
+	}
+
 	protected void deletePortletData(Group group)
 		throws PortalException, SystemException {
 
@@ -3718,16 +3769,22 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// behavior in the future because a bad plugin could disallow
 			// deletion of groups.
 
-			//try {
+			boolean rollbackDeletionIfExceptionOccursDeletingData = true;
+
+			try {
 				portletDataHandler.deleteData(
 					portletDataContext, portlet.getPortletId(), null);
-			/*}
-			catch (Exception e) {
+			}
+			catch (PortletDataHandler e) {
 				_log.error(
 					"Unable to delete data for portlet " +
 						portlet.getPortletId() + " in group " +
 							group.getGroupId());
-			}*/
+
+				if (rollbackCreationIfExceptionOccursAddingDefaultData) {
+					throw new PortalException(e);
+				}
+			}
 		}
 	}
 

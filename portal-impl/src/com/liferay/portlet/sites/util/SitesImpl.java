@@ -516,7 +516,9 @@ public class SitesImpl implements Sites {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
-		if (group.isGuest() && (layoutSet.getPageCount() == 1)) {
+		if (group.isGuest() && !layoutSet.isPrivateLayout() &&
+			(layoutSet.getPageCount() == 1)) {
+
 			throw new RequiredLayoutException(
 				RequiredLayoutException.AT_LEAST_ONE);
 		}

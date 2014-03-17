@@ -350,10 +350,15 @@ public class DDLRecordSetLocalServiceImpl
 
 		ddlRecordSetPersistence.update(recordSet);
 
-		// Dynamic data mapping structure link
-
 		if (oldDDMStructureId != ddmStructureId) {
-			DDMStructureLink structureLink =
+
+			// Records
+
+			ddlRecordLocalService.deleteRecords(recordSet.getRecordSetId());
+
+			// Dynamic data mapping structure link
+
+			DDMStructureLink ddmStructureLink =
 				ddmStructureLinkLocalService.getClassStructureLink(
 					recordSet.getRecordSetId());
 
@@ -361,7 +366,7 @@ public class DDLRecordSetLocalServiceImpl
 				DDLRecordSet.class);
 
 			ddmStructureLinkLocalService.updateStructureLink(
-				structureLink.getStructureLinkId(), classNameId,
+				ddmStructureLink.getStructureLinkId(), classNameId,
 				recordSet.getRecordSetId(), ddmStructureId);
 		}
 

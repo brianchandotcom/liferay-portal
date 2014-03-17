@@ -24,6 +24,18 @@
 		<execute action="CPPortalinstances#assertElementPresent" locator-key1="SUCCESS_MESSAGE" />
 	</command>
 
+	<command name="deactivatePortalInstance">
+		<var name="key_virtualHost" value="${virtualHost}" />
+
+		<execute action="CPPortalinstances#assertClick" locator-key1="INSTANCE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPPortalinstances#assertClick" locator-key1="INSTANCE_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPPortalinstancesAdd#uncheck" locator-key1="ACTIVE_CHECKBOX" />
+		<execute action="CPPortalinstancesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPPortalinstances#assertTextEquals" locator-key1="INSTANCE_TABLE_ACTIVE" value1="No" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Instances" />

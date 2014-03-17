@@ -203,7 +203,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_INFO" value1="This site is inactive. Please contact the administrator." />
+		<execute action="Home#assertTextEquals" locator-key1="STATUS_MESSAGE" value1="This site is inactive. Please contact the administrator." />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />

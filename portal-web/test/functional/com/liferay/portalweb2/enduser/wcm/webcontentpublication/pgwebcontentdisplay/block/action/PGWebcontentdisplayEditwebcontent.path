@@ -39,6 +39,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STRUCTURE_NAME</td>
+	<td>//span[@id='_15_structureNameLabel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_NAME</td>
+	<td>//span[@id='_15_templateNameLabel']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_TRANSLATION_MENULIST</td>
 	<td>//span[@class='lfr-translation-manager-add-menu']/div/a</td>
 	<td></td>
@@ -46,6 +56,11 @@
 <tr>
 	<td>TITLE_FIELD</td>
 	<td>//input[@id='_15_title_en_US']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVAILABLE_TRANSLATIONS_LABEL</td>
+	<td>//label[contains(.,'Available Translations:')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -84,8 +99,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WEB_CONTENT_TRANSLATION_IFRAME</td>
-	<td>//iframe[contains(@id,'_iframe_')]</td>
+	<td>WEB_CONTENT_EDIT_IFRAME</td>
+	<td>//iframe[contains(@id,'editAsset_iframe')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -143,32 +158,6 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<!--WEB_CONTENT_TRANSLATION_IFRAME-->
-<tr>
-	<td>WEB_CONTENT_TRANSLATION_IFRAME_TITLE_FIELD</td>
-	<td>//input[contains(@id,'_15_title')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WEB_CONTENT_TRANSLATION_IFRAME_CONTENT_FIELD</td>
-	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WEB_CONTENT_TRANSLATION_IFRAME_SAVE_BUTTON</td>
-	<td>//button[@id='_15_translateButton']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WEB_CONTENT_TRANSLATION_IFRAME_REMOVE_TRANSLATION_BUTTON</td>
-	<td>//button[@id='_15_removeArticleLocaleButton']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WEB_CONTENT_TRANSLATION_IFRAME_CANCEL_BUTTON</td>
-	<td>//button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 </tbody>

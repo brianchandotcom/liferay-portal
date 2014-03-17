@@ -10,6 +10,26 @@
 		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
 		<execute action="CPWebcontentTemplatesAddtemplate#type" locator-key1="NAME_FIELD" value1="${templateName}" />
 
+		<if>
+			<isset var="localization1NameKey" />
+			<then>
+				<var name="key_localizationName" value="${localization1NameKey}" />
+
+				<execute action="CPWebcontentStructuresAddstructure#click" locator-key1="LOCALIZATION_NAME" />
+				<execute action="CPWebcontentStructuresAddstructure#type" locator-key1="NAME_FIELD" value1="${localization1Name}" />
+
+				<if>
+					<isset var="localization2NameKey" />
+					<then>
+						<var name="key_localizationName" value="${localization2NameKey}" />
+
+						<execute action="CPWebcontentStructuresAddstructure#click" locator-key1="LOCALIZATION_NAME" />
+						<execute action="CPWebcontentStructuresAddstructure#type" locator-key1="NAME_FIELD" value1="${localization2Name}" />
+					</then>
+				</if>
+			</then>
+		</if>
+
 		<execute macro="CPWebcontentTemplatesAddtemplate#showDetails" />
 
 		<execute action="CPWebcontentTemplatesAddtemplate#type" locator-key1="DESCRIPTION_FIELD" value1="${templateDescription}" />

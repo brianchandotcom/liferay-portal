@@ -23,13 +23,5 @@
 		<case locator-key1="CONTENT_FIELD">
 			<execute function="Type#typeFrameWaitForCKEditor" />
 		</case>
-
-		<case locator-key1="WEB_CONTENT_TRANSLATION_IFRAME_CONTENT_FIELD">
-			<execute function="Type#typeFrameWaitForCKEditor" />
-		</case>
-
-		<case locator-key1="WEB_CONTENT_TRANSLATION_IFRAME_TITLE_FIELD">
-			<execute function="Type#typeWaitForCKEditor" />
-		</case>
 	</command>
 </definition>

@@ -198,8 +198,6 @@ public class LocalizationImpl implements Localization {
 			return value;
 		}
 
-		value = defaultValue;
-
 		String priorityLanguageId = null;
 
 		Locale requestedLocale = LocaleUtil.fromLanguageId(requestedLanguageId);
@@ -250,7 +248,8 @@ public class LocalizationImpl implements Localization {
 
 			// Find specified language and/or default language
 
-			String priorityValue = defaultValue;
+			String priorityValue = null;
+			String defaultLocalizationValue = null;
 
 			while (xmlStreamReader.hasNext()) {
 				int event = xmlStreamReader.next();
@@ -270,7 +269,7 @@ public class LocalizationImpl implements Localization {
 						String text = xmlStreamReader.getElementText();
 
 						if (languageId.equals(defaultLanguageId)) {
-							defaultValue = text;
+							defaultLocalizationValue = text;
 						}
 
 						if (languageId.equals(priorityLanguageId)) {
@@ -298,6 +297,10 @@ public class LocalizationImpl implements Localization {
 			}
 
 			if (useDefault && Validator.isNull(value)) {
+				value = defaultLocalizationValue;
+			}
+
+			if (Validator.isNull(value)) {
 				value = defaultValue;
 			}
 		}

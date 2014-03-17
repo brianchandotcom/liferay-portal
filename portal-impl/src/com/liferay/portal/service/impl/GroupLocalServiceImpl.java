@@ -3697,8 +3697,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				(Map<String, String[]>)null, (Date)null, (Date)null,
 				(ZipWriter)null);
 
-		List<PortletDataHandler> portletDataHandlers =
-			getPortletDataHandlers(group);
+		List<PortletDataHandler> portletDataHandlers = getPortletDataHandlers(
+			group);
 
 		for (PortletDataHandler portletDataHandler : portletDataHandlers) {
 
@@ -3737,8 +3737,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				(Map<String, String[]>)null, (Date)null, (Date)null,
 				(ZipWriter)null);
 
-		List<PortletDataHandler> portletDataHandlers =
-			getPortletDataHandlers(group);
+		List<PortletDataHandler> portletDataHandlers = getPortletDataHandlers(
+			group);
 
 		for (PortletDataHandler portletDataHandler : portletDataHandlers) {
 
@@ -4151,7 +4151,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			PortletDataHandler portletDataHandler =
 				portlet.getPortletDataHandlerInstance();
 
-			if (portletDataHandler != null &&
+			if ((portletDataHandler != null) &&
 				!portletDataHandler.isDataPortalLevel()) {
 
 				portletDataHandlers.add(portletDataHandler);

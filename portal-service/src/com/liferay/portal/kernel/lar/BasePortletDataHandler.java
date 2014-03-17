@@ -50,8 +50,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	@Override
 	public void addDefaultData(
-		PortletDataContext portletDataContext, String portletId,
-		PortletPreferences portletPreferences)
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
 		long startTime = 0;
@@ -75,8 +75,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			if (_log.isInfoEnabled()) {
 				long duration = System.currentTimeMillis() - startTime;
 
-				_log.info("Added default data to portlet in " +
-					Time.getDuration(duration));
+				_log.info(
+					"Added default data to portlet in " +
+						Time.getDuration(duration));
 			}
 		}
 	}
@@ -727,10 +728,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	protected void doAddDefaultData(
-		PortletDataContext portletDataContext, String portletId,
-		PortletPreferences portletPreferences)
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
 		throws Exception {
-
 	}
 
 	protected PortletPreferences doDeleteData(

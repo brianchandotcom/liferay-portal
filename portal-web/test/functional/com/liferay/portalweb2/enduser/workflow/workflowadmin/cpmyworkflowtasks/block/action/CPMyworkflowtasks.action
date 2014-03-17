@@ -29,5 +29,9 @@
 		<case locator-key1="PANEL_DUE_DATE">
 			<execute function="Type#clickAtSendKeys" />
 		</case>
+
+		<case locator-key1="PANEL_DUE_DATE_TIME">
+			<execute function="Type#clickAtSendKeys" />
+		</case>
 	</command>
 </definition>

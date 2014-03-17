@@ -134,6 +134,45 @@ public class LocalizationImplTest {
 	}
 
 	@Test
+	public void testLocalizationsXMLDefaultValue() {
+		String xml = StringPool.BLANK;
+
+		xml = LocalizationUtil.updateLocalization(
+			xml, "greeting", _englishHello, _englishLanguageId,
+			_englishLanguageId);
+		xml = LocalizationUtil.updateLocalization(
+			xml, "greeting", _germanHello, _germanLanguageId,
+			_englishLanguageId);
+
+		String defaultValue = "Default Value";
+
+		Assert.assertEquals(
+			defaultValue,
+			LocalizationUtil.getLocalization(
+				xml, _spanishLanguageId, false, defaultValue));
+		Assert.assertEquals(
+			_englishHello,
+			LocalizationUtil.getLocalization(
+				xml, _spanishLanguageId, true, defaultValue));
+	}
+
+	@Test
+	public void testLocalizationsXMLUseDefault() {
+		String xml = StringPool.BLANK;
+
+		xml = LocalizationUtil.updateLocalization(
+			xml, "greeting", _englishHello, _englishLanguageId,
+			_englishLanguageId);
+		xml = LocalizationUtil.updateLocalization(
+			xml, "greeting", _germanHello, _germanLanguageId,
+			_englishLanguageId);
+
+		Assert.assertEquals(
+			_englishHello,
+			LocalizationUtil.getLocalization(xml, _spanishLanguageId, true));
+	}
+
+	@Test
 	public void testLongTranslationText() {
 		StringBundler sb = new StringBundler();
 

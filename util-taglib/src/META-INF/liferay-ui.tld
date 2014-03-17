@@ -975,11 +975,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>languageId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>showEmailEnabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

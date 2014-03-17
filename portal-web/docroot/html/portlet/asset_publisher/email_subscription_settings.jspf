@@ -19,8 +19,6 @@ String emailFromName = ParamUtil.getString(request, "preferences--emailFromName-
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", AssetPublisherUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
 
 boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailAssetEntryAddedEnabled--", AssetPublisherUtil.getEmailAssetEntryAddedEnabled(portletPreferences));
-
-String currentLanguageId = LanguageUtil.getLanguageId(request);
 %>
 
 <liferay-ui:error key="emailAssetEntryAddedBody" message="please-enter-a-valid-body" />
@@ -36,36 +34,12 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 
 		<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
 
-		<aui:select label="language" name="languageId">
-
-			<%
-			Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
-
-			for (int i = 0; i < locales.length; i++) {
-				String style = StringPool.BLANK;
-
-				if (Validator.isNotNull(portletPreferences.getValue("emailAssetEntryAddedSubject_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK)) ||
-					Validator.isNotNull(portletPreferences.getValue("emailAssetEntryAddedBody_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK))) {
-
-					style = "font-weight: bold;";
-				}
-			%>
-
-				<aui:option label="<%= locales[i].getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(locales[i])) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
-
-			<%
-			}
-			%>
-
-		</aui:select>
-
 		<liferay-ui:email-notification-settings
-			emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailAssetEntryAddedBody_" + currentLanguageId, ContentUtil.get(PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY)) %>'
+			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailAssetEntryAddedBody", ContentUtil.get(PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY)) %>'
 			emailDefinitionTerms="<%= AssetPublisherUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName) %>"
 			emailEnabled="<%= emailAssetEntryAddedEnabled %>"
 			emailParam="emailAssetEntryAdded"
-			emailSubject='<%= PrefsParamUtil.getString(portletPreferences, request, "emailAssetEntryAddedSubject_" + currentLanguageId, ContentUtil.get(PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT)) %>'
-			languageId="<%= currentLanguageId %>"
+			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailAssetEntryAddedSubject", ContentUtil.get(PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT)) %>'
 			showEmailEnabled="<%= false %>"
 		/>
 	</div>
@@ -80,31 +54,6 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 			var emailSubscriptionSettings = A.one('#<portlet:namespace />emailSubscriptionSettings');
 
 			emailSubscriptionSettings.toggle();
-		}
-	);
-
-	var languageSelector = A.one('#<portlet:namespace />languageId');
-
-	var currentLanguageIndex = languageSelector.attr('selectedIndex');
-
-	var subjectInput = A.one('#<portlet:namespace /><%= "emailAssetEntryAddedSubject_" + currentLanguageId %>');
-
-	var originalEmailSubject = subjectInput.val();
-
-	languageSelector.on(
-		'change',
-		function(event) {
-			if (CKEDITOR.instances.<portlet:namespace />emailAssetEntryAdded.checkDirty() || originalEmailSubject !== subjectInput.val()) {
-				if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-switch-the-languages-view") %>')) {
-					languageSelector.attr('selectedIndex', currentLanguageIndex);
-
-					return false;
-				}
-			}
-
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.TRANSLATE %>';
-
-			submitForm(document.<portlet:namespace />fm);
 		}
 	);
 </aui:script>

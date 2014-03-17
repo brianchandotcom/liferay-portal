@@ -39,8 +39,6 @@ try {
 catch (NoSuchFolderException nsfe) {
 	rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 }
-
-String currentLanguageId = LanguageUtil.getLanguageId(request);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
@@ -50,7 +48,6 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
-	<aui:input name="languageId" type="hidden" value="<%= currentLanguageId %>" />
 
 	<%
 	String tabs2Names = "display-settings,email-from,document-added-email,document-updated-email";
@@ -270,70 +267,22 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 		%>
 
 		<liferay-ui:section>
-			<aui:select label="language" name="emailFileEntryAddedlanguageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this.value);" %>'>
-
-				<%
-				Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
-
-				for (int i = 0; i < locales.length; i++) {
-					String style = StringPool.BLANK;
-
-					if (Validator.isNotNull(portletPreferences.getValue("emailFileEntryAddedSubject_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK)) ||
-						Validator.isNotNull(portletPreferences.getValue("emailFileEntryAddedBody_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK))) {
-
-						style = "font-weight: bold;";
-					}
-				%>
-
-					<aui:option label="<%= locales[i].getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(locales[i])) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
-
-				<%
-				}
-				%>
-
-			</aui:select>
-
 			<liferay-ui:email-notification-settings
-				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailFileEntryAddedBody_" + currentLanguageId, ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_BODY)) %>'
+				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryAddedBody", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_BODY)) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailFileEntryAddedEnabled--", DLUtil.getEmailFileEntryAddedEnabled(portletPreferences)) %>'
 				emailParam="emailFileEntryAdded"
-				emailSubject='<%= PrefsParamUtil.getString(portletPreferences, request, "emailFileEntryAddedSubject_" + currentLanguageId, ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT)) %>'
-				languageId="<%= currentLanguageId %>"
+				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryAddedSubject", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT)) %>'
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<aui:select label="language" name="emailFileEntryUpdatedlanguageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this.value);" %>'>
-
-				<%
-				Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
-
-				for (int i = 0; i < locales.length; i++) {
-					String style = StringPool.BLANK;
-
-					if (Validator.isNotNull(portletPreferences.getValue("emailFileEntryUpdatedSubject_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK)) ||
-						Validator.isNotNull(portletPreferences.getValue("emailFileEntryUpdatedBody_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK))) {
-
-						style = "font-weight: bold;";
-					}
-				%>
-
-					<aui:option label="<%= locales[i].getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(locales[i])) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
-
-				<%
-				}
-				%>
-
-			</aui:select>
-
 			<liferay-ui:email-notification-settings
-				emailBody='<%= PrefsParamUtil.getString(portletPreferences, request, "emailFileEntryUpdatedBody_" + currentLanguageId, ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_BODY)) %>'
+				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryUpdatedBody", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_BODY)) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailFileEntryUpdatedEnabled--", DLUtil.getEmailFileEntryUpdatedEnabled(portletPreferences)) %>'
 				emailParam="emailFileEntryUpdated"
-				emailSubject='<%= PrefsParamUtil.getString(portletPreferences, request, "emailFileEntryUpdatedSubject_" + currentLanguageId, ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT)) %>'
-				languageId="<%= currentLanguageId %>"
+				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryUpdatedSubject", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT)) %>'
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>
@@ -344,19 +293,10 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />updateLanguage(languageId) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '';
-		document.<portlet:namespace />fm.<portlet:namespace />languageId.value = languageId;
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveConfiguration',
 		function() {
-			<portlet:namespace />saveEmails();
-
 			document.<portlet:namespace />fm.<portlet:namespace />displayViews.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentDisplayViews);
 			document.<portlet:namespace />fm.<portlet:namespace />entryColumns.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentEntryColumns);
 
@@ -364,18 +304,4 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 		},
 		['liferay-util-list-fields']
 	);
-
-	function <portlet:namespace />saveEmails() {
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailFileEntryAddedBody_<%= currentLanguageId %>--'].value = window['<portlet:namespace />emailFileEntryAdded'].getHTML();
-		}
-		catch (e) {
-		}
-
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailFileEntryUpdatedBody_<%= currentLanguageId %>--'].value = window['<portlet:namespace />emailFileEntryUpdated'].getHTML();
-		}
-		catch (e) {
-		}
-	}
 </aui:script>

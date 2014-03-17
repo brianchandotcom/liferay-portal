@@ -16,18 +16,58 @@ package com.liferay.portlet.blogs.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.blogs.util.BlogsUtil;
+import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Jorge Ferrer
  * @author Thiago Moreira
  */
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
+
+	@Override
+	public void postProcessPortletPreferences(
+			long companyId, PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		removeDefaultValue(
+			portletRequest, portletPreferences, "emailFromAddress",
+			BlogsUtil.getEmailFromAddress(portletPreferences, companyId));
+		removeDefaultValue(
+			portletRequest, portletPreferences, "emailFromName",
+			BlogsUtil.getEmailFromName(portletPreferences, companyId));
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailEntryAddedBody_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_ADDED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailEntryAddedSubject_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailEntryUpdatedBody_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_UPDATED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailEntryUpdatedSubject_" + defaultLanguageId,
+			ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT));
+	}
 
 	@Override
 	public void processAction(

@@ -56,9 +56,7 @@ public class JournalArticleImageLocalServiceImpl
 
 			journalArticleImagePersistence.update(articleImage);
 		}
-		else if (articleImage.getArticleImageId() == articleImageId) {
-		}
-		else {
+		else if (articleImage.getArticleImageId() != articleImageId) {
 			throw new DuplicateArticleImageIdException(
 				"{articleImageId=" + articleImageId + "}");
 		}

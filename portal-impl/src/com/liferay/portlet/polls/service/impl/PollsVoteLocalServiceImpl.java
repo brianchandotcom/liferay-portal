@@ -81,35 +81,34 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 
 			throw new DuplicateVoteException(sb.toString());
 		}
-		else {
-			String userName = null;
 
-			User user = userPersistence.fetchByPrimaryKey(userId);
+		String userName = null;
 
-			if (user != null) {
-				userName = user.getFullName();
-			}
-			else {
-				userName = serviceContext.translate("anonymous");
-			}
+		User user = userPersistence.fetchByPrimaryKey(userId);
 
-			long voteId = counterLocalService.increment();
-
-			vote = pollsVotePersistence.create(voteId);
-
-			vote.setUuid(serviceContext.getUuid());
-			vote.setGroupId(serviceContext.getScopeGroupId());
-			vote.setCompanyId(serviceContext.getCompanyId());
-			vote.setUserId(userId);
-			vote.setUserName(userName);
-			vote.setCreateDate(serviceContext.getCreateDate(now));
-			vote.setModifiedDate(serviceContext.getModifiedDate(now));
-			vote.setQuestionId(questionId);
-			vote.setChoiceId(choiceId);
-			vote.setVoteDate(serviceContext.getCreateDate(now));
-
-			pollsVotePersistence.update(vote);
+		if (user != null) {
+			userName = user.getFullName();
 		}
+		else {
+			userName = serviceContext.translate("anonymous");
+		}
+
+		long voteId = counterLocalService.increment();
+
+		vote = pollsVotePersistence.create(voteId);
+
+		vote.setUuid(serviceContext.getUuid());
+		vote.setGroupId(serviceContext.getScopeGroupId());
+		vote.setCompanyId(serviceContext.getCompanyId());
+		vote.setUserId(userId);
+		vote.setUserName(userName);
+		vote.setCreateDate(serviceContext.getCreateDate(now));
+		vote.setModifiedDate(serviceContext.getModifiedDate(now));
+		vote.setQuestionId(questionId);
+		vote.setChoiceId(choiceId);
+		vote.setVoteDate(serviceContext.getCreateDate(now));
+
+		pollsVotePersistence.update(vote);
 
 		return vote;
 	}

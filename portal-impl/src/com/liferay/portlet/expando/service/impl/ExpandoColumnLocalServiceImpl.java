@@ -429,20 +429,18 @@ public class ExpandoColumnLocalServiceImpl
 		ExpandoColumn column = expandoColumnPersistence.fetchByT_N(
 			tableId, name);
 
-		if (column != null) {
-			if (column.getColumnId() != columnId) {
-				StringBundler sb = new StringBundler(7);
+		if ((column != null) && (column.getColumnId() != columnId)) {
+			StringBundler sb = new StringBundler(7);
 
-				sb.append("{tableId=");
-				sb.append(tableId);
-				sb.append(", columnId=");
-				sb.append(columnId);
-				sb.append(", name=");
-				sb.append(name);
-				sb.append("}");
+			sb.append("{tableId=");
+			sb.append(tableId);
+			sb.append(", columnId=");
+			sb.append(columnId);
+			sb.append(", name=");
+			sb.append(name);
+			sb.append("}");
 
-				throw new DuplicateColumnNameException(sb.toString());
-			}
+			throw new DuplicateColumnNameException(sb.toString());
 		}
 
 		if ((type != ExpandoColumnConstants.BOOLEAN) &&

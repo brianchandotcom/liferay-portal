@@ -844,22 +844,15 @@ public class ShoppingItemLocalServiceImpl
 		ShoppingItem item = shoppingItemPersistence.fetchByC_S(companyId, sku);
 
 		if (item != null) {
-			if (itemId > 0) {
-				if (item.getItemId() != itemId) {
-					StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(5);
 
-					sb.append("{companyId=");
-					sb.append(companyId);
-					sb.append(", sku=");
-					sb.append(sku);
-					sb.append("}");
+			sb.append("{companyId=");
+			sb.append(companyId);
+			sb.append(", sku=");
+			sb.append(sku);
+			sb.append("}");
 
-					throw new DuplicateItemSKUException(sb.toString());
-				}
-			}
-			else {
-				throw new DuplicateItemSKUException("{itemId=" + itemId + "}");
-			}
+			throw new DuplicateItemSKUException(sb.toString());
 		}
 
 		if (Validator.isNull(name)) {

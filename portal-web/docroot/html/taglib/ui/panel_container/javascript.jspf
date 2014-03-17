@@ -53,7 +53,7 @@
 							}
 						},
 						transition: {
-							duration: .3
+							duration: 0.3
 						}
 					}
 				);

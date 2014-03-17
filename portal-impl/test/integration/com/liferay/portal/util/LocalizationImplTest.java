@@ -15,6 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -24,6 +25,8 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.PortletPreferencesImpl;
 
+import java.lang.reflect.Field;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
@@ -31,8 +34,11 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
+import org.apache.commons.collections.map.ReferenceMap;
+
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,6 +50,15 @@ import org.springframework.mock.web.portlet.MockPortletRequest;
  */
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class LocalizationImplTest {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_cache = LocalizationImpl.class.getDeclaredField("_cache");
+
+		_cache.setAccessible(true);
+
+		_localization = LocalizationUtil.getLocalization();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -62,6 +77,10 @@ public class LocalizationImplTest {
 		sb.append("</root>");
 
 		_xml = sb.toString();
+
+		_cache.set(
+			_localization,
+			new ReferenceMap(ReferenceMap.SOFT, ReferenceMap.HARD));
 	}
 
 	@Test
@@ -283,6 +302,9 @@ public class LocalizationImplTest {
 			StringPool.BLANK,
 			LocalizationUtil.getLocalization(xml, _germanLanguageId, false));
 	}
+
+	private static Field _cache;
+	private static Localization _localization;
 
 	private String _englishHello = "Hello World";
 	private String _englishLanguageId = LocaleUtil.toLanguageId(LocaleUtil.US);

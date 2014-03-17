@@ -81,6 +81,8 @@ public class MediaWikiEngine implements WikiEngine {
 				}
 
 				if (pagesCount > 0) {
+					title = StringUtil.toLowerCase(title);
+
 					existsObj = Boolean.TRUE;
 				}
 				else {

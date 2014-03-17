@@ -413,6 +413,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				group.getGroupId(), false, false, false);
 		}
 
+		addPortletDefaultData(group);
+
 		return group;
 	}
 
@@ -3686,31 +3688,19 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			defaultUserId, group.getGroupId(), false, parameterMap, larFile);
 	}
 
-	protected void addPortletData(Group group)
+	protected void addPortletDefaultData(Group group)
 		throws PortalException, SystemException {
 
-		List<Portlet> portlets = portletLocalService.getPortlets(
-			group.getCompanyId());
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createExportPortletDataContext(
+				group.getCompanyId(), group.getGroupId(),
+				(Map<String, String[]>)null, (Date)null, (Date)null,
+				(ZipWriter)null);
 
-		for (Portlet portlet : portlets) {
-			if (!portlet.isActive()) {
-				continue;
-			}
+		List<PortletDataHandler> portletDataHandlers =
+			getPortletDataHandlers(group);
 
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
-
-			if ((portletDataHandler == null) ||
-				portletDataHandler.isDataPortalLevel()) {
-
-				continue;
-			}
-
-			PortletDataContext portletDataContext =
-				PortletDataContextFactoryUtil.createExportPortletDataContext(
-					group.getCompanyId(), group.getGroupId(),
-					(Map<String, String[]>)null, (Date)null, (Date)null,
-					(ZipWriter)null);
+		for (PortletDataHandler portletDataHandler : portletDataHandlers) {
 
 			// For now, we are going to throw an exception if one portlet data
 			// handler has an exception to ensure that the transaction is rolled
@@ -3718,19 +3708,20 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// behavior in the future because a bad plugin could disallow
 			// creation of groups.
 
-			boolean rollbackCreationIfExceptionOccursAddingDefaultData = true;
+			boolean rollbackIfExceptionOccursInDataHandler = true;
 
 			try {
 				portletDataHandler.addDefaultData(
-					portletDataContext, portlet.getPortletId(), null);
+					portletDataContext, portletDataHandler.getPortletId(),
+					null);
 			}
 			catch (PortletDataHandler e) {
 				_log.error(
 					"Unable to add default data for portlet " +
-						portlet.getPortletId() + " in group " +
-							group.getGroupId());
+						portletDataHandler.getPortletId() + " in group " +
+						group.getGroupId());
 
-				if (rollbackCreationIfExceptionOccursAddingDefaultData) {
+				if (rollbackIfExceptionOccursInDataHandler) {
 					throw new PortalException(e);
 				}
 			}
@@ -3740,28 +3731,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	protected void deletePortletData(Group group)
 		throws PortalException, SystemException {
 
-		List<Portlet> portlets = portletLocalService.getPortlets(
-			group.getCompanyId());
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createExportPortletDataContext(
+				group.getCompanyId(), group.getGroupId(),
+				(Map<String, String[]>)null, (Date)null, (Date)null,
+				(ZipWriter)null);
 
-		for (Portlet portlet : portlets) {
-			if (!portlet.isActive()) {
-				continue;
-			}
+		List<PortletDataHandler> portletDataHandlers =
+			getPortletDataHandlers(group);
 
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
-
-			if ((portletDataHandler == null) ||
-				portletDataHandler.isDataPortalLevel()) {
-
-				continue;
-			}
-
-			PortletDataContext portletDataContext =
-				PortletDataContextFactoryUtil.createExportPortletDataContext(
-					group.getCompanyId(), group.getGroupId(),
-					(Map<String, String[]>)null, (Date)null, (Date)null,
-					(ZipWriter)null);
+		for (PortletDataHandler portletDataHandler : portletDataHandlers) {
 
 			// For now, we are going to throw an exception if one portlet data
 			// handler has an exception to ensure that the transaction is rolled
@@ -3769,19 +3748,20 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// behavior in the future because a bad plugin could disallow
 			// deletion of groups.
 
-			boolean rollbackDeletionIfExceptionOccursDeletingData = true;
+			boolean rollbackIfExceptionOccursInDataHandler = true;
 
 			try {
 				portletDataHandler.deleteData(
-					portletDataContext, portlet.getPortletId(), null);
+					portletDataContext, portletDataHandler.getPortletId(),
+					null);
 			}
 			catch (PortletDataHandler e) {
 				_log.error(
 					"Unable to delete data for portlet " +
-						portlet.getPortletId() + " in group " +
+						portletDataHandler.getPortletId() + " in group " +
 							group.getGroupId());
 
-				if (rollbackCreationIfExceptionOccursAddingDefaultData) {
+				if (rollbackIfExceptionOccursInDataHandler) {
 					throw new PortalException(e);
 				}
 			}
@@ -4153,6 +4133,32 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	protected String getOrgGroupName(String name) {
 		return name + ORGANIZATION_NAME_SUFFIX;
+	}
+
+	protected List<PortletDataHandler> getPortletDataHandlers(Group group) {
+
+		List<Portlet> portlets = portletLocalService.getPortlets(
+			group.getCompanyId());
+
+		List<PortletDataHandler> portletDataHandlers =
+			new ArrayList<PortletDataHandler>(portlets.size());
+
+		for (Portlet portlet : portlets) {
+			if (!portlet.isActive()) {
+				continue;
+			}
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if (portletDataHandler != null &&
+				!portletDataHandler.isDataPortalLevel()) {
+
+				portletDataHandlers.add(portletDataHandler);
+			}
+		}
+
+		return portletDataHandlers;
 	}
 
 	protected String[] getSearchNames(long companyId, String name)

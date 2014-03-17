@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -68,6 +69,12 @@ public class DefaultConfigurationAction
 		PortletRequest portletRequest, String name) {
 
 		String languageId = ParamUtil.getString(portletRequest, "languageId");
+
+		return getLocalizedParameter(portletRequest, name, languageId);
+	}
+
+	public String getLocalizedParameter(
+		PortletRequest portletRequest, String name, String languageId) {
 
 		return getParameter(
 			portletRequest,
@@ -325,10 +332,13 @@ public class DefaultConfigurationAction
 		String emailBody = null;
 
 		if (localized) {
+			String defaultLanguageId = LocaleUtil.toLanguageId(
+				LocaleUtil.getSiteDefault());
+
 			emailSubject = getLocalizedParameter(
-				actionRequest, emailParam + "Subject");
+				actionRequest, emailParam + "Subject", defaultLanguageId);
 			emailBody = getLocalizedParameter(
-				actionRequest, emailParam + "Body");
+				actionRequest, emailParam + "Body", defaultLanguageId);
 		}
 		else {
 			emailSubject = getParameter(actionRequest, emailParam + "Subject");

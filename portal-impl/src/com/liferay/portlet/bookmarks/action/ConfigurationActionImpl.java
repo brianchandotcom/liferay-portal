@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
@@ -45,15 +44,10 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		removeDefaultValue(
 			portletRequest, portletPreferences, "emailFromAddress",
-			PrefsPropsUtil.getString(
-				companyId,
-				BookmarksUtil.getEmailFromAddress(
-					portletPreferences, companyId)));
+			BookmarksUtil.getEmailFromAddress(portletPreferences, companyId));
 		removeDefaultValue(
 			portletRequest, portletPreferences, "emailFromName",
-			PrefsPropsUtil.getString(
-				companyId,
-				BookmarksUtil.getEmailFromName(portletPreferences, companyId)));
+			BookmarksUtil.getEmailFromName(portletPreferences, companyId));
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());

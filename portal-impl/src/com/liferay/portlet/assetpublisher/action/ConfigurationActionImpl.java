@@ -43,7 +43,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -94,16 +93,11 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		removeDefaultValue(
 			portletRequest, portletPreferences, "emailFromAddress",
-			PrefsPropsUtil.getString(
-				companyId,
-				AssetPublisherUtil.getEmailFromAddress(
-					portletPreferences, companyId)));
+			AssetPublisherUtil.getEmailFromAddress(
+				portletPreferences, companyId));
 		removeDefaultValue(
 			portletRequest, portletPreferences, "emailFromName",
-			PrefsPropsUtil.getString(
-				companyId,
-				AssetPublisherUtil.getEmailFromName(
-					portletPreferences, companyId)));
+			AssetPublisherUtil.getEmailFromName(portletPreferences, companyId));
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());

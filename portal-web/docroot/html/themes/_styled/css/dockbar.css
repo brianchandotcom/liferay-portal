@@ -458,25 +458,21 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
-		.staging-controls {
-			.staging-bar {
-				li.dropdown {
-					&.live-link.open .dropdown-menu {
-						&:after {
-							left: 73px;
-						}
-
-						&:before {
-							left: 72px;
-						}
-					}
-
-					.dropdown-menu {
-						left: 0;
-						margin-left: 10px;
-						width: 100%;
-					}
+		.staging-controls .staging-bar li.dropdown {
+			&.live-link.open .dropdown-menu {
+				&:after {
+					left: 73px;
 				}
+
+				&:before {
+					left: 72px;
+				}
+			}
+
+			.dropdown-menu {
+				left: 0;
+				margin-left: 10px;
+				width: 100%;
 			}
 		}
 
@@ -506,21 +502,14 @@ $editLayoutPanelWidth: 460px;
 			position: absolute;
 
 			@include respond-to(phone, tablet) {
+				height: auto;
 				position: relative;
 			}
 
-			@include respond-to(phone, tablet) {
-				height: auto;
-			}
-
-			.staging-controls {
-				.staging-bar {
-					li.dropdown .dropdown-menu {
-						left: 0;
-						margin-left: 0;
-						width: 100%;
-					}
-				}
+			.staging-controls .staging-bar li.dropdown .dropdown-menu {
+				left: 0;
+				margin-left: 0;
+				width: 100%;
 			}
 
 			&.navbar-static-top {
@@ -550,11 +539,9 @@ $editLayoutPanelWidth: 460px;
 				position: static;
 			}
 
-			.nav > li.staging-toggle {
-				> a {
-					color: #FFF;
-					padding: 6px 10px;
-				}
+			.nav > li.staging-toggle > a {
+				color: #FFF;
+				padding: 6px 10px;
 			}
 
 			.navbar-inner {
@@ -1203,10 +1190,8 @@ $editLayoutPanelWidth: 460px;
 	}
 
 	@include respond-to(phone) {
-		.portlet-staging-bar .layout-revision-actions {
-			a.taglib-icon {
-				margin-left: -5px;
-			}
+		.portlet-staging-bar .layout-revision-actions a.taglib-icon {
+			margin-left: -5px;
 		}
 	}
 

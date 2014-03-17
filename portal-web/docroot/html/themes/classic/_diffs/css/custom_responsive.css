@@ -188,21 +188,17 @@
 			width: 100%;
 		}
 
-		.portlet-staging-bar {
-			.staging-toggle {
-				.variations-options {
-					.page-variations {
-						right: 0;
+		.portlet-staging-bar .staging-toggle .variations-options {
+			.page-variations {
+				right: 0;
 
-						a {
-							padding: 3px 6px;
-						}
-					}
-
-					.staging-variation-selector {
-						margin-right: 0;
-					}
+				a {
+					padding: 3px 6px;
 				}
+			}
+
+			.staging-variation-selector {
+				margin-right: 0;
 			}
 		}
 

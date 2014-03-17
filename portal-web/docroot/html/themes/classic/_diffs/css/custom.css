@@ -270,7 +270,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			.staging-bar {
 				margin: 6px 0;
 			}
-
 		}
 	}
 
@@ -606,8 +605,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.dockbar, .dockbar-split .dockbar {
-		.nav {
-			li.dropdown.open {
+		.nav li.dropdown {
+			&.open {
 				> .dropdown-toggle {
 					background-color: $dockbarOpenGradientStart;
 
@@ -616,7 +615,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 
-			li.dropdown.active {
+			&.active {
 				> .staging-link.dropdown-toggle {
 					background-color: #55B8EC;
 					background-image: none;
@@ -631,26 +630,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	.dockbar .staging-bar .staging-toggle > a {
-		@include border-radius(3px);
+	.dockbar-split .dockbar .navbar-inner .nav > li {
+		background-color: $dockbarGradientStart;
+
+		@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
+
+		@include respond-to(phone, tablet) {
+			background-color: transparent;
+
+			@include background-image(none);
+		}
 	}
 
-	.dockbar-split .dockbar {
-		.navbar-inner {
-			.nav {
-				> li {
-					background-color: $dockbarGradientStart;
-
-					@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
-
-					@include respond-to(phone, tablet) {
-						background-color: transparent;
-
-						@include background-image(none);
-					}
-				}
-			}
-		}
+	.dockbar .staging-bar .staging-toggle > a {
+		@include border-radius(3px);
 	}
 
 	.update-reminder-query .reminder-query-answer {

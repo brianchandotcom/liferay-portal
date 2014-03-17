@@ -901,7 +901,7 @@ public class MBUtil {
 		return true;
 	}
 
-	public static void permissionInheritance(
+	public static void propagatePermissions(
 			long companyId, long groupId, long parentMessageId,
 			ServiceContext serviceContext)
 		throws Exception {

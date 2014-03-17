@@ -212,7 +212,7 @@ public class MessageListenerImpl implements MessageListener {
 
 			ServiceContext serviceContext = new ServiceContext();
 
-			MBUtil.permissionInheritance(
+			MBUtil.propagatePermissions(
 				company.getCompanyId(), groupId, parentMessageId,
 				serviceContext);
 

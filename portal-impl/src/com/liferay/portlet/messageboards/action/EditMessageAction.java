@@ -402,7 +402,7 @@ public class EditMessageAction extends PortletAction {
 				actionRequest, "quickReply", false);
 
 			if (quickReply) {
-				MBUtil.permissionInheritance(
+				MBUtil.propagatePermissions(
 					themeDisplay.getCompanyId(), groupId, parentMessageId,
 					serviceContext);
 			}

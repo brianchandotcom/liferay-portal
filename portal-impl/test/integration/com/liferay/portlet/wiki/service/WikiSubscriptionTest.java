@@ -66,13 +66,13 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionContentType() {
+	public void testSubscriptionModelType() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionDefaultContentType() {
+	public void testSubscriptionDefaultModelType() {
 	}
 
 	@Ignore

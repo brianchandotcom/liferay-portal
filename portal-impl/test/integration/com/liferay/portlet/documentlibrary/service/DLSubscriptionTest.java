@@ -69,13 +69,13 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected long addBaseModelWithContentType(
-			long containerModelId, long contentTypeId)
+	protected long addBaseModelWithModelType(
+		long containerModelId, long modelTypeId)
 		throws Exception {
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			group.getGroupId(), containerModelId,
-			ServiceTestUtil.randomString(), contentTypeId);
+			ServiceTestUtil.randomString(), modelTypeId);
 
 		return fileEntry.getFileEntryId();
 	}
@@ -90,7 +90,7 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected long addContentType() throws Exception {
+	protected long addModelType() throws Exception {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			DLFileEntry.class.getName());
 
@@ -109,7 +109,7 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected void addSubscriptionContentType(long typeId) throws Exception {
+	protected void addSubscriptionModelType(long typeId) throws Exception {
 		DLAppServiceUtil.subscribeFileEntryType(group.getGroupId(), typeId);
 	}
 

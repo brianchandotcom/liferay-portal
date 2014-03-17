@@ -112,20 +112,20 @@ public abstract class BaseSubscriptionTestCase {
 	}
 
 	@Test
-	public void testSubscriptionContentType() throws Exception {
-		long contentTypeId = addContentType();
+	public void testSubscriptionModelType() throws Exception {
+		long modelTypeId = addModelType();
 
-		addSubscriptionContentType(contentTypeId);
+		addSubscriptionModelType(modelTypeId);
 
-		addBaseModelWithContentType(
-			_PARENT_CONTAINER_MODEL_ID_DEFAULT, contentTypeId);
+		addBaseModelWithModelType(
+			_PARENT_CONTAINER_MODEL_ID_DEFAULT, modelTypeId);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
 
 	@Test
-	public void testSubscriptionDefaultContentType() throws Exception {
-		addSubscriptionContentType(_CONTENT_TYPE_ID_DEFAULT);
+	public void testSubscriptionDefaultModelType() throws Exception {
+		addSubscriptionModelType(_MODEL_TYPE_ID_DEFAULT);
 
 		addBaseModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
@@ -176,8 +176,8 @@ public abstract class BaseSubscriptionTestCase {
 	protected abstract long addBaseModel(long containerModelId)
 		throws Exception;
 
-	protected long addBaseModelWithContentType(
-			long containerModelId, long contentTypeId)
+	protected long addBaseModelWithModelType(
+		long containerModelId, long modelTypeId)
 		throws Exception {
 		return 0;
 	}
@@ -186,7 +186,7 @@ public abstract class BaseSubscriptionTestCase {
 		return 0;
 	};
 
-	protected long addContentType() throws Exception {
+	protected long addModelType() throws Exception {
 		return 0;
 	}
 
@@ -197,7 +197,7 @@ public abstract class BaseSubscriptionTestCase {
 	protected abstract void addSubscriptionContainerModel(long containerModelId)
 		throws Exception;
 
-	protected void addSubscriptionContentType(long baseModelId)
+	protected void addSubscriptionModelType(long baseModelId)
 		throws Exception {
 		return;
 	}
@@ -208,7 +208,7 @@ public abstract class BaseSubscriptionTestCase {
 
 	protected Group group;
 
-	private static final long _CONTENT_TYPE_ID_DEFAULT = 0;
+	private static final long _MODEL_TYPE_ID_DEFAULT = 0;
 
 	private static final long _PARENT_CONTAINER_MODEL_ID_DEFAULT = 0;
 

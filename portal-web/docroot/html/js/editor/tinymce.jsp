@@ -132,7 +132,6 @@ String cssPath = themeDisplay.getPathThemeCss();
 		%>
 
 		setHTML: function(value) {
-		console.log(value);
 			tinyMCE.editors['<%= name %>'].setContent(value);
 		}
 	};

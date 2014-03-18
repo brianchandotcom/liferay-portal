@@ -149,17 +149,18 @@ public interface Localization {
 		HttpServletRequest request, String parameter);
 
 	/**
-	 * Returns a map of locales and localized strings for the parameter in the
+	 * Returns a map of locales and localized strings for the preference in the
 	 * preferences container.
 	 *
 	 * @param  preferences the preferences container
-	 * @param  parameter the prefix of the parameters containing the localized
-	 *         strings. Each localization will be loaded from a parameter with
-	 *         this prefix, followed by an underscore, and the language ID.
+	 * @param  preferenceName the prefix of the preference containing the
+	 *         localized strings. Each localization will be loaded from a
+	 *         preference with this prefix, followed by an underscore, and the
+	 *         language ID.
 	 * @return the locales and localized strings
 	 */
 	public Map<Locale, String> getLocalizationMap(
-		PortletPreferences preferences, String parameter);
+		PortletPreferences preferences, String preferenceName);
 
 	/**
 	 * Returns a map of locales and localized strings for the parameter in the

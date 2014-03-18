@@ -350,7 +350,7 @@ public class LocalizationImpl implements Localization {
 
 	@Override
 	public Map<Locale, String> getLocalizationMap(
-		PortletPreferences preferences, String parameter) {
+		PortletPreferences preferences, String preferenceName) {
 
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
@@ -359,7 +359,7 @@ public class LocalizationImpl implements Localization {
 		for (Locale locale : locales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			String localeParameter = parameter.concat(
+			String localeParameter = preferenceName.concat(
 				StringPool.UNDERLINE).concat(languageId);
 
 			map.put(

@@ -121,9 +121,10 @@ public class LocalizationUtil {
 	}
 
 	public static Map<Locale, String> getLocalizationMap(
-		PortletPreferences preferences, String parameter) {
+		PortletPreferences preferences, String preferenceName) {
 
-		return getLocalization().getLocalizationMap(preferences, parameter);
+		return getLocalization().getLocalizationMap(
+			preferences, preferenceName);
 	}
 
 	public static Map<Locale, String> getLocalizationMap(

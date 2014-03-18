@@ -37,6 +37,9 @@ public interface PortletDataHandler {
 	 * @param  portletDataContext the context of the data addition
 	 * @param  portletId the portlet ID of the portlet
 	 * @param  portletPreferences the portlet preferences of the portlet
+	 * @return A modified version of portlet preferences that should be saved.
+	 *         <code>Null</code> if the portlet preferences were unmodified by
+	 *         this data handler.
 	 * @throws PortletDataException if a portlet data exception occurred
 	 */
 	public PortletPreferences addDefaultData(

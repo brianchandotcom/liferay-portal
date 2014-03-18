@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil" %>
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -15,7 +17,26 @@
 --%>
 
 <%
-if (Validator.isNull(searchTerms.getKeywords())) {
+if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
+	AssetEntryQuery assetEntryQuery = new AssetEntryQuery(BlogsEntry.class.getName(), searchContainer);
+
+	assetEntryQuery.setExcludeZeroViewCount(false);
+	assetEntryQuery.setVisible(Boolean.TRUE);
+
+	total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+	searchContainer.setTotal(total);
+
+	assetEntryQuery.setEnd(searchContainer.getEnd());
+	assetEntryQuery.setStart(searchContainer.getStart());
+
+	List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+
+	for (AssetEntry assetEntry : assetEntries) {
+		results.add(BlogsEntryLocalServiceUtil.getBlogsEntry(assetEntry.getClassPK()));
+	}
+}
+else if (Validator.isNull(searchTerms.getKeywords())) {
 	total = BlogsEntryServiceUtil.getGroupEntriesCount(scopeGroupId, WorkflowConstants.STATUS_ANY);
 
 	searchContainer.setTotal(total);

@@ -168,10 +168,15 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 					// LEP-7540
 
+					String baseURL = _BASE_URL.concat(
+						importDirServletPaths.getResourcePath());
+
+					if (!baseURL.endsWith(StringPool.SLASH)) {
+						baseURL += StringPool.SLASH;
+					}
+
 					importContent = AggregateUtil.updateRelativeURLs(
-						importContent,
-						_BASE_URL.concat(
-							importDirServletPaths.getResourcePath()));
+						importContent, baseURL);
 				}
 
 				if (Validator.isNotNull(mediaQuery)) {

@@ -205,28 +205,6 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<portlet-preferences>
-			<preference>
-				<name>priorities</name>
-				<value>Urgent,/message_boards/priority_urgent.png,3.0</value>
-				<value>Sticky,/message_boards/priority_sticky.png,2.0</value>
-				<value>Announcement,/message_boards/priority_announcement.png,1.0</value>
-			</preference>
-			<preference>
-				<name>ranks</name>
-				<value>Youngling=0</value>
-				<value>Padawan=25</value>
-				<value>Jedi Knight=100</value>
-				<value>Jedi Master=250</value>
-				<value>Jedi Council Member=500</value>
-				<value>Yoda=1000</value>
-				<value>Moderator=organization:Message Boards Administrator</value>
-				<value>Moderator=organization-role:Message Boards Administrator</value>
-				<value>Moderator=regular-role:Message Boards Administrator</value>
-				<value>Moderator=site-role:Message Boards Administrator</value>
-				<value>Moderator=user-group:Message Boards Administrator</value>
-			</preference>
-		</portlet-preferences>
 		<security-role-ref>
 			<role-name>power-user</role-name>
 		</security-role-ref>

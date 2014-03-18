@@ -22,7 +22,7 @@ String message = (String)request.getAttribute("liferay-ui:success:message");
 boolean translateMessage = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:success:translateMessage"));
 %>
 
-<c:if test="<%= SessionMessages.contains(portletRequest, key) %>">
+<c:if test="<%= MultiSessionMessages.contains(portletRequest, key) %>">
 	<div class="alert alert-success">
 		<c:choose>
 			<c:when test="<%= translateMessage %>">

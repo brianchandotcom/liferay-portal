@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -34,6 +35,8 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -79,8 +82,18 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 
 	@Override
 	public String getSummary(long classPK, Locale locale) {
+		return getSummary(classPK, null, null);
+	}
+
+	@Override
+	public String getSummary(
+		long classPK, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
+
 		try {
 			AssetRenderer assetRenderer = getAssetRenderer(classPK);
+
+			Locale locale = LocaleUtil.getMostRelevantLocale();
 
 			if (assetRenderer != null) {
 				return assetRenderer.getSummary(locale);

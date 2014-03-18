@@ -102,15 +102,7 @@
 		<for list="${pollsQuestionChoiceList}" param="questionChoiceList" >
 			<var name="key_pollsQuestionChoice" value="${questionChoiceList}" />
 
-			<if>
-				<contains string="${questionChoiceList}" substring="" />
-				<then>
-					<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" />
-				</then>
-				<else>
-					<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${questionChoiceList}" />
-				</else>
-			</if>
+			<execute action="PGPollsdisplay#assertTextPresent" locator-key1="POLLS_QUESTION_CHOICE" value1="${questionChoiceList}" />
 		</for>
 
 		<execute action="PGPollsdisplay#assertTextEquals" locator-key1="VOTE_BUTTON" value1="Vote" />

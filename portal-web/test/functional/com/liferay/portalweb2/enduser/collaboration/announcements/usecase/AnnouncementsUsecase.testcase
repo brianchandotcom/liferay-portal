@@ -272,7 +272,7 @@
 			<var name="entryTitle" value="${entryTitle} 3" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
-		
+
 		<execute macro="AnnouncementsEntry#viewViaEntriesPG">
 			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryContent" value="${entryContent} 4" />
@@ -305,7 +305,7 @@
 
 		<execute action="PGAnnouncements#assertTextNotPresent" locator-key1="ENTRY_TITLE" value1="${entryTitle} 1" />
 		<execute action="PGAnnouncements#assertTextNotPresent" locator-key1="ENTRY_TITLE" value1="${entryTitle} 2" />
-		<execute action="PGAnnouncements#click" locator-key1="PAGINATION_NEXT" />
+		<execute action="PGAnnouncements#assertClick" locator-key1="PAGINATION_NEXT" value1="Next" />
 
 		<execute macro="AnnouncementsEntry#viewViaEntriesPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -328,7 +328,7 @@
 		<execute action="PGAnnouncements#assertTextNotPresent" locator-key1="ENTRY_TITLE" value1="${entryTitle} 5" />
 		<execute action="PGAnnouncements#assertTextNotPresent" locator-key1="ENTRY_TITLE" value1="${entryTitle} 6" />
 		<execute action="PGAnnouncements#assertTextNotPresent" locator-key1="ENTRY_TITLE" value1="${entryTitle} 7" />
-		<execute action="PGAnnouncements#click" locator-key1="PAGINATION_PREVIOUS" />
+		<execute action="PGAnnouncements#assertClick" locator-key1="PAGINATION_PREVIOUS" value1="Previous" />
 
 		<execute macro="AnnouncementsEntry#viewViaEntriesPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -336,7 +336,7 @@
 			<var name="entryTitle" value="${entryTitle} 3" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
-		
+
 		<execute macro="AnnouncementsEntry#viewViaEntriesPG">
 			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryContent" value="${entryContent} 4" />
@@ -374,7 +374,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGAnnouncements#click" locator-key1="NAVIGATION_MANAGE_ENTRIES" />
+		<execute action="PGAnnouncements#assertClick" locator-key1="NAVIGATION_MANAGE_ENTRIES" value1="Manage Entries" />
 
 		<execute macro="AnnouncementsPortlet#configurePaginationManageEntriesPG">
 			<var name="distributionScope" value="${distributionScope}" />

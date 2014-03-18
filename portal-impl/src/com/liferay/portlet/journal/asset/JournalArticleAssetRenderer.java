@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
@@ -43,6 +45,7 @@ import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
+import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -50,6 +53,7 @@ import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -131,21 +135,42 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
-	public String getSummary(Locale locale) {
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		Locale locale = LocaleUtil.getMostRelevantLocale();
+
 		String summary = _article.getDescription(locale);
 
-		if (Validator.isNull(summary)) {
-			try {
-				JournalArticleDisplay articleDisplay =
-					JournalArticleLocalServiceUtil.getArticleDisplay(
-						_article, null, null,
-						LanguageUtil.getLanguageId(locale), 1, null, null);
+		if (Validator.isNotNull(summary)) {
+			return summary;
+		}
 
-				summary = StringUtil.shorten(
-					HtmlUtil.stripHtml(articleDisplay.getContent()), 200);
+		try {
+			ThemeDisplay themeDisplay = null;
+			String xmlRequest = null;
+
+			if (_article.isTemplateDriven()) {
+				if ((portletRequest == null) || (portletResponse == null)) {
+					return StringPool.BLANK;
+				}
+
+				themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+				xmlRequest = PortletRequestUtil.toXML(
+					portletRequest, portletResponse);
 			}
-			catch (Exception e) {
-			}
+
+			JournalArticleDisplay articleDisplay =
+				JournalArticleLocalServiceUtil.getArticleDisplay(
+					_article, null, null, LanguageUtil.getLanguageId(locale), 1,
+					xmlRequest, themeDisplay);
+
+			summary = StringUtil.shorten(
+				HtmlUtil.stripHtml(articleDisplay.getContent()), 200);
+		}
+		catch (Exception e) {
 		}
 
 		return summary;

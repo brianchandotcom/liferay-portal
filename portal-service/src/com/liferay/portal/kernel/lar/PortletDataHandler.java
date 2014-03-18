@@ -97,6 +97,15 @@ public interface PortletDataHandler {
 			boolean privateLayout)
 		throws Exception;
 
+	/**
+	 * This flag controls whether an exception occurred in a data handler
+	 * will stop current operation and rollback the transaction or not.
+	 *
+	 * @return true if the current transaction should be rolled back when an
+	 * exception occurs in the data handler
+	 */
+	public boolean getExceptionWillRollback();
+
 	public PortletDataHandlerControl[] getExportConfigurationControls(
 			long companyId, long groupId, Portlet portlet, long plid,
 			boolean privateLayout)

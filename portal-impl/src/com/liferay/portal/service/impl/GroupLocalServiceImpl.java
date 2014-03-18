@@ -3744,23 +3744,21 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			getPortletDataHandlers(group);
 
 		for (PortletDataHandler portletDataHandler : portletDataHandlers) {
-
-			// For now, we are going to throw an exception if one portlet data
-			// handler has an exception to ensure that the transaction is rolled
-			// back for data integrity. We may decide that this is not the best
-			// behavior in the future because a bad plugin could disallow
-			// deletion of groups.
-
-			//try {
-			portletDataHandler.addDefaultData(
-				portletDataContext, portletDataHandler.getPortletId(), null);
-			/*}
+			try {
+				portletDataHandler.addDefaultData(
+					portletDataContext, portletDataHandler.getPortletId(),
+					null);
+			}
 			catch (Exception e) {
 				_log.error(
-					"Unable to delete data for portlet " +
-						portlet.getPortletId() + " in group " +
+					"Unable to add default data for portlet " +
+						portletDataHandler.getPortletId() + " in group " +
 							group.getGroupId());
-			}*/
+
+				if (portletDataHandler.getExceptionWillRollback()) {
+					throw new SystemException(e);
+				}
+			}
 		}
 	}
 
@@ -3775,23 +3773,21 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			getPortletDataHandlers(group);
 
 		for (PortletDataHandler portletDataHandler : portletDataHandlers) {
-
-			// For now, we are going to throw an exception if one portlet data
-			// handler has an exception to ensure that the transaction is rolled
-			// back for data integrity. We may decide that this is not the best
-			// behavior in the future because a bad plugin could disallow
-			// deletion of groups.
-
-			//try {
-			portletDataHandler.deleteData(
-				portletDataContext, portletDataHandler.getPortletId(), null);
-			/*}
+			try {
+				portletDataHandler.deleteData(
+					portletDataContext, portletDataHandler.getPortletId(),
+					null);
+			}
 			catch (Exception e) {
 				_log.error(
 					"Unable to delete data for portlet " +
-						portlet.getPortletId() + " in group " +
+						portletDataHandler.getPortletId() + " in group " +
 							group.getGroupId());
-			}*/
+
+				if (portletDataHandler.getExceptionWillRollback()) {
+					throw new SystemException(e);
+				}
+			}
 		}
 	}
 

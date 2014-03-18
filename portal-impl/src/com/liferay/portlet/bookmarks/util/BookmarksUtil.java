@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -52,7 +51,6 @@ import com.liferay.portlet.bookmarks.util.comparator.EntryNameComparator;
 import com.liferay.portlet.bookmarks.util.comparator.EntryPriorityComparator;
 import com.liferay.portlet.bookmarks.util.comparator.EntryURLComparator;
 import com.liferay.portlet.bookmarks.util.comparator.EntryVisitsComparator;
-import com.liferay.util.ContentUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -265,23 +263,9 @@ public class BookmarksUtil {
 	public static Map<Locale, String> getEmailEntryAddedBodyMap(
 		PortletPreferences preferences) {
 
-		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
-			preferences, "emailEntryAddedBody");
-
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-		String defaultValue = map.get(defaultLocale);
-
-		if (Validator.isNotNull(defaultValue)) {
-			return map;
-		}
-
-		map.put(
-			defaultLocale,
-			ContentUtil.get(
-				PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_BODY)));
-
-		return map;
+		return LocalizationUtil.getLocalizationMap(
+			preferences, "emailEntryAddedBody",
+			PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_BODY);
 	}
 
 	public static boolean getEmailEntryAddedEnabled(
@@ -302,45 +286,17 @@ public class BookmarksUtil {
 	public static Map<Locale, String> getEmailEntryAddedSubjectMap(
 		PortletPreferences preferences) {
 
-		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
-			preferences, "emailEntryAddedSubject");
-
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-		String defaultValue = map.get(defaultLocale);
-
-		if (Validator.isNotNull(defaultValue)) {
-			return map;
-		}
-
-		map.put(
-			defaultLocale,
-			ContentUtil.get(
-				PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT)));
-
-		return map;
+		return LocalizationUtil.getLocalizationMap(
+			preferences, "emailEntryAddedSubject",
+			PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT);
 	}
 
 	public static Map<Locale, String> getEmailEntryUpdatedBodyMap(
 		PortletPreferences preferences) {
 
-		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
-			preferences, "emailEntryUpdatedBody");
-
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-		String defaultValue = map.get(defaultLocale);
-
-		if (Validator.isNotNull(defaultValue)) {
-			return map;
-		}
-
-		map.put(
-			defaultLocale,
-			ContentUtil.get(
-				PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_BODY)));
-
-		return map;
+		return LocalizationUtil.getLocalizationMap(
+			preferences, "emailEntryUpdatedBody",
+			PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_BODY);
 	}
 
 	public static boolean getEmailEntryUpdatedEnabled(
@@ -361,24 +317,9 @@ public class BookmarksUtil {
 	public static Map<Locale, String> getEmailEntryUpdatedSubjectMap(
 		PortletPreferences preferences) {
 
-		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
-			preferences, "emailEntryUpdatedSubject");
-
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-		String defaultValue = map.get(defaultLocale);
-
-		if (Validator.isNotNull(defaultValue)) {
-			return map;
-		}
-
-		map.put(
-			defaultLocale,
-			ContentUtil.get(
-				PropsUtil.get(
-					PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_SUBJECT)));
-
-		return map;
+		return LocalizationUtil.getLocalizationMap(
+			preferences, "emailEntryUpdatedSubject",
+			PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_SUBJECT);
 	}
 
 	public static String getEmailFromAddress(

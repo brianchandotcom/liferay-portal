@@ -220,6 +220,11 @@
 	<command name="IPGeocoderPortletSmoke" priority="5">
 		<property name="portlet.plugins.includes" value="ip-geocoder-portlet" />
 
+		<property name="portlet.properties.ip-geocoder-portlet" value="maxmind.database.file=${selenium.output.dir}/GeoLiteCity.dat" />
+
+		<property name="test.dependency.extract" value="true" />
+		<property name="test.dependency.url" value="http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz" />
+
 		<var name="appName" value="IP Geocoder" />
 
 		<execute macro="Page#gotoPG">

@@ -413,6 +413,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				group.getGroupId(), false, false, false);
 		}
 
+		addPortletDefaultData(group);
+
 		return group;
 	}
 
@@ -1064,6 +1066,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return groupPersistence.fetchByC_F(companyId, friendlyURL);
 	}
 
+	@Override
+	public Group fetchCompanyGroup(long companyId)
+		throws PortalException, SystemException {
+
+		long classNameId = classNameLocalService.getClassNameId(Company.class);
+
+		return groupPersistence.fetchByC_C_C(companyId, classNameId, companyId);
+	}
+
 	/**
 	 * Returns the group with the matching group name by first searching the
 	 * system groups and then using the finder cache.
@@ -1087,6 +1098,18 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return groupLocalService.loadFetchGroup(companyId, name);
+	}
+
+	@Override
+	public Group fetchUserPersonalSiteGroup(long companyId)
+		throws PortalException, SystemException {
+
+		long classNameId = classNameLocalService.getClassNameId(
+			UserPersonalSite.class);
+		long defaultUserId = userLocalService.getDefaultUserId(companyId);
+
+		return groupPersistence.fetchByC_C_C(
+			companyId, classNameId, defaultUserId);
 	}
 
 	/**
@@ -3684,6 +3707,49 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		layoutLocalService.importLayouts(
 			defaultUserId, group.getGroupId(), false, parameterMap, larFile);
+	}
+
+	protected void addPortletDefaultData(Group group)
+		throws PortalException, SystemException {
+
+		List<Portlet> portlets = portletLocalService.getPortlets(
+			group.getCompanyId());
+
+		for (Portlet portlet : portlets) {
+			if (!portlet.isActive()) {
+				continue;
+			}
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if ((portletDataHandler == null) ||
+				portletDataHandler.isDataPortalLevel()) {
+
+				continue;
+			}
+
+			PortletDataContext portletDataContext =
+				PortletDataContextFactoryUtil.createPreparePortletDataContext(
+					group.getCompanyId(), group.getGroupId(), null, null);
+
+			// For now, we are going to throw an exception if one portlet data
+			// handler has an exception to ensure that the transaction is rolled
+			// back for data integrity. We may decide that this is not the best
+			// behavior in the future because a bad plugin could disallow
+			// deletion of groups.
+
+			//try {
+			portletDataHandler.addDefaultData(
+				portletDataContext, portlet.getPortletId(), null);
+			/*}
+			catch (Exception e) {
+				_log.error(
+					"Unable to delete data for portlet " +
+						portlet.getPortletId() + " in group " +
+							group.getGroupId());
+			}*/
+		}
 	}
 
 	protected void deletePortletData(Group group)

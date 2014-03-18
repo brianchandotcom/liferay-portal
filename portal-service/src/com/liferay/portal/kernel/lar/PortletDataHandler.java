@@ -31,6 +31,14 @@ import javax.portlet.PortletPreferences;
  */
 public interface PortletDataHandler {
 
+	/**
+	 * Adds default data for the portlet.
+	 *
+	 * @param  portletDataContext the context of the data addition
+	 * @param  portletId the portlet ID of the portlet
+	 * @param  portletPreferences the portlet preferences of the portlet
+	 * @throws PortletDataException if a portlet data exception occurred
+	 */
 	public void addDefaultData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)

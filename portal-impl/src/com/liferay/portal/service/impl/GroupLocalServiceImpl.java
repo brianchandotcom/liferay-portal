@@ -1066,6 +1066,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return groupPersistence.fetchByC_F(companyId, friendlyURL);
 	}
 
+	/**
+	 * Returns the company group, if exists
+	 *
+	 * @param  companyId the primary key of the company
+	 * @return the group associated with the company or null if it doesn't exist
+	 * @throws PortalException if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public Group fetchCompanyGroup(long companyId)
 		throws PortalException, SystemException {
@@ -1100,6 +1108,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return groupLocalService.loadFetchGroup(companyId, name);
 	}
 
+	/**
+	 * Returns the personal site group, if exists
+	 *
+	 * @param  companyId the primary key of the company
+	 * @return the personal site group or null if it doesn't exist
+	 * @throws PortalException if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public Group fetchUserPersonalSiteGroup(long companyId)
 		throws PortalException, SystemException {
@@ -1938,6 +1954,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return userOrgsGroups;
 	}
 
+	/**
+	 * Returns the personal site group
+	 *
+	 * @param  companyId the primary key of the company
+	 * @return the personal site group
+	 * @throws PortalException if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public Group getUserPersonalSiteGroup(long companyId)
 		throws PortalException, SystemException {

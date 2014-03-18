@@ -16,7 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.journal.service.permission.JournalArticlePermission" %><%@
+<%@ page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil" %><%@
+page import="com.liferay.portlet.journal.service.permission.JournalArticlePermission" %><%@
 page import="com.liferay.portlet.journal.service.permission.JournalPermission" %>
 
 <%

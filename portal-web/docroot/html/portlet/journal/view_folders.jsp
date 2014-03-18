@@ -235,7 +235,7 @@ else {
 					<c:if test="<%= total > 0 %>">
 
 						<%
-						List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getStructures(groupIds, PortalUtil.getClassNameId(JournalArticle.class), searchContainer.getStart(), searchContainer.getEnd());
+						List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getStructures(groupIds, PortalUtil.getClassNameId(JournalArticle.class), searchContainer.getStart(), searchContainer.getEnd());
 
 						for (DDMStructure ddmStructure : ddmStructures) {
 						%>

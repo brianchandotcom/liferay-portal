@@ -128,7 +128,7 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void assertJavaScriptErrors() throws Exception {
+	public void assertJavaScriptErrors(String error) throws Exception {
 		if (!TestPropsValues.TEST_ASSSERT_JAVASCRIPT_ERRORS) {
 			return;
 		}
@@ -167,6 +167,12 @@ public abstract class BaseWebDriverImpl
 				String javaScriptErrorValue = javaScriptError.toString();
 
 				System.out.println("JS_ERROR: " + javaScriptErrorValue);
+
+				if (Validator.isNotNull(error) &&
+					javaScriptErrorValue.contains(error)) {
+
+					continue;
+				}
 
 				// LPS-41634
 

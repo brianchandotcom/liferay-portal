@@ -114,7 +114,7 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void assertJavaScriptErrors() throws Exception {
+	public void assertJavaScriptErrors(String error) throws Exception {
 	}
 
 	@Override

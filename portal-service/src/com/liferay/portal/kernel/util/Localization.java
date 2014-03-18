@@ -164,6 +164,22 @@ public interface Localization {
 	public Map<Locale, String> getLocalizationMap(
 		PortletPreferences preferences, String preferenceName);
 
+	/**
+	 * Returns a map of locales and localized strings for the preference in the
+	 * preferences container. If no localization exists for the preference,
+	 * returns the value of the property.
+	 *
+	 * @param  preferences the preferences container
+	 * @param  preferenceName the prefix of the preference containing the
+	 *         localized strings. Each localization will be loaded from a
+	 *         preference with this prefix, followed by an underscore, and the
+	 *         language ID.
+	 * @param  propertyName the name of the property which value is returned if
+	 *         no localization exists for the preference
+	 * @return the locales and localized strings, or the value of the property
+	 *         <code>propertyName</code> if no localization exists for
+	 *         the preference.
+	 */
 	public Map<Locale, String> getLocalizationMap(
 		PortletPreferences preferences, String preferenceName,
 		String propertyName);
@@ -243,10 +259,34 @@ public interface Localization {
 		PortletPreferences preferences, PortletRequest portletRequest,
 		String parameter, String defaultValue);
 
+	/**
+	 * Returns the localizations XML for the prefixed parameter in the portlet
+	 * request, attempting to get data from the preferences container when it is
+	 * not available in the portlet request. If no localization exists, returns
+	 * the default value.
+	 *
+	 * @param  preferences the preferences container
+	 * @param  portletRequest the portlet request
+	 * @param  parameter the prefix of the parameters containing the localized
+	 *         strings. Each localization will be loaded from a parameter with
+	 *         this prefix, followed by an underscore, and the language ID.
+	 * @param  prefix value used in the request to prefix the parameter name
+	 * @param  defaultValue the return value if no localization exists
+	 * @return the locales and localized strings. If no localization exists, the
+	 *         <code>defaultDefault</code> will be returned.
+	 */
 	public String getLocalizationXmlFromPreferences(
 		PortletPreferences preferences, PortletRequest portletRequest,
 		String parameter, String prefix, String defaultValue);
 
+	/**
+	 * Returns the localized name in the language. This is just the name,
+	 * followed by an underscore, and the language ID.
+	 *
+	 * @param  name the name to be localized
+	 * @param  languageId the ID of the language
+	 * @return the localized name
+	 */
 	public String getLocalizedName(String name, String languageId);
 
 	/**

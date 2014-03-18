@@ -32,7 +32,7 @@ public class HtmlUtil {
 	/**
 	 * Escapes the text so that it is safe to use in an HTML context.
 	 *
-	 * @param  html the text to escape
+	 * @param  text the text to escape
 	 * @return the escaped HTML text, or <code>null</code> if the text is
 	 *         <code>null</code>
 	 */
@@ -43,7 +43,7 @@ public class HtmlUtil {
 	/**
 	 * Escapes the input text as a hexadecimal value, based on the mode (type).
 	 *
-	 * @param  html the text to escape
+	 * @param  text the text to escape
 	 * @param  mode the encoding type
 	 * @return the escaped hexadecimal value of the input text, based on the
 	 *         mode, or <code>null</code> if the text is <code>null</code>
@@ -170,7 +170,7 @@ public class HtmlUtil {
 	 * Replaces all Microsoft Word Unicode characters with plain HTML entities
 	 * or characters.
 	 *
-	 * @param  html the text
+	 * @param  text the text
 	 * @return the converted text, or <code>null</code> if the text is
 	 *         <code>null</code>
 	 */
@@ -200,7 +200,7 @@ public class HtmlUtil {
 	 * Self-closing tags remain in the result.
 	 * </p>
 	 *
-	 * @param  html the text
+	 * @param  text the text
 	 * @param  tag the tag used for delimiting, which should only be the tag's
 	 *         name (e.g. no &lt;)
 	 * @return the text, without the stripped tag and its contents, or
@@ -213,7 +213,7 @@ public class HtmlUtil {
 	/**
 	 * Strips all XML comments out of the text.
 	 *
-	 * @param  html the text
+	 * @param  text the text
 	 * @return the text, without the stripped XML comments, or <code>null</code>
 	 *         if the text is <code>null</code>
 	 */
@@ -233,7 +233,7 @@ public class HtmlUtil {
 	 * <code>&amp;amp;</code>.
 	 * </p>
 	 *
-	 * @param  html the text
+	 * @param  text the text
 	 * @return the encoded text that is safe to use as an HTML input field
 	 *         value, or <code>null</code> if the text is <code>null</code>
 	 */

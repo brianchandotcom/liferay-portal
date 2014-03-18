@@ -31,8 +31,8 @@ import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.TextExtractor;
 
 /**
- * Represents HTML content, providing the ability to escape, render, replace,
- * and strip HTML text. This class uses XSS recommendations from <a
+ * Provides the implementation for escaping, rendering, replacing, and stripping
+ * HTML text. This class uses XSS recommendations from <a
  * href="http://www.owasp.org/index.php/Cross_Site_Scripting#How_to_Protect_Yourself">http://www.owasp.org/index.php/Cross_Site_Scripting#How_to_Protect_Yourself</a>
  * when escaping HTML text.
  *
@@ -155,7 +155,7 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * Escapes the input text as a hexadecimal value, based on the type (mode).
+	 * Escapes the input text as a hexadecimal value, based on the mode (type).
 	 * The encoding types include: {@link #ESCAPE_MODE_ATTRIBUTE}, {@link
 	 * #ESCAPE_MODE_CSS}, {@link #ESCAPE_MODE_JS}, {@link #ESCAPE_MODE_TEXT},
 	 * and {@link #ESCAPE_MODE_URL}.
@@ -166,9 +166,9 @@ public class HtmlImpl implements Html {
 	 * </p>
 	 *
 	 * @param  text the text to escape
-	 * @param  type the encoding type
+	 * @param  mode the encoding type
 	 * @return the escaped hexadecimal value of the input text, based on the
-	 *         type, or <code>null</code> if the text is <code>null</code>
+	 *         mode, or <code>null</code> if the text is <code>null</code>
 	 */
 	@Override
 	public String escape(String text, int mode) {
@@ -440,7 +440,7 @@ public class HtmlImpl implements Html {
 	 * Replaces all new lines or carriage returns with the <code><br /></code>
 	 * HTML tag.
 	 *
-	 * @param  text the text
+	 * @param  html the text
 	 * @return the converted text, or <code>null</code> if the text is
 	 *         <code>null</code>
 	 */

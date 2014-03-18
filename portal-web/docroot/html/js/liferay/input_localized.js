@@ -149,7 +149,9 @@ AUI.add(
 
 						instance._eventHandles = eventHandles;
 
-						instance.get('boundingBox').plug(
+						var boundingBox = instance.get('boundingBox');
+
+						boundingBox.plug(
 							A.Plugin.NodeFocusManager,
 							{
 								descendants: '.palette-item a',
@@ -160,7 +162,7 @@ AUI.add(
 							}
 						);
 
-						instance._inputPlaceholderDescription = inputPlaceholder.get('parentNode').one('#' + inputPlaceholder.attr('id') + '_desc');
+						instance._inputPlaceholderDescription = boundingBox.one('#' + inputPlaceholder.attr('id') + '_desc');
 					},
 
 					destructor: function() {
@@ -212,7 +214,9 @@ AUI.add(
 							editor.setHTML(inputPlaceholder.val());
 						}
 
-						instance._inputPlaceholderDescription.text(instance._flags.one('[data-languageId="' + languageId + '"]').attr('alt'));
+						if (instance._inputPlaceholderDescription) {
+							instance._inputPlaceholderDescription.text(instance._flags.one('[data-languageId="' + languageId + '"]').attr('alt'));
+						}
 					},
 
 					updateInputLanguage: function(value) {

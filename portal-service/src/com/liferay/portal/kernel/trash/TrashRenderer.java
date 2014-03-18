@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.trash;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -36,6 +37,9 @@ public interface TrashRenderer {
 	public String getPortletId();
 
 	public String getSummary(Locale locale);
+
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse);
 
 	public String getTitle(Locale locale);
 

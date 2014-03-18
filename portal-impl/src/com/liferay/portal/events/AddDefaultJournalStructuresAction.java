@@ -23,10 +23,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
 /**
  * @author Eudaldo Alonso
  */
@@ -61,16 +57,6 @@ public class AddDefaultJournalStructuresAction
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			"basic-web-content-structure.xml", serviceContext);
-	}
-
-	protected Map<Locale, String> getLocalizationMap(
-		String content, Locale locale) {
-
-		Map<Locale, String> localizationMap = new HashMap<Locale, String>();
-
-		localizationMap.put(locale, content);
-
-		return localizationMap;
 	}
 
 }

@@ -272,7 +272,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 		try {
 			long resourcePermissionId = increment(
-					ResourcePermission.class.getName());
+				ResourcePermission.class.getName());
 
 			con = DataAccess.getUpgradeOptimizedConnection();
 
@@ -406,7 +406,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 		try {
 			currentShardName = ShardUtil.setTargetSource(
-					PropsUtil.get(PropsKeys.SHARD_DEFAULT_NAME));
+				PropsUtil.get(PropsKeys.SHARD_DEFAULT_NAME));
 
 			con = DataAccess.getUpgradeOptimizedConnection();
 
@@ -470,7 +470,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	protected String getContent(String fileName) {
 		return ContentUtil.get(
-				"com/liferay/portal/events/dependencies/" + fileName);
+			"com/liferay/portal/events/dependencies/" + fileName);
 	}
 
 	protected List<Element> getDDMStructures(Locale locale)

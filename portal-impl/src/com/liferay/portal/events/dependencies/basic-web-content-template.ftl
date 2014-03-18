@@ -1,1 +1,1 @@
-<p>${content.getData()}</p>
+${content.getData()}

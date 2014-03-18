@@ -172,6 +172,14 @@ public class LocalizationUtil {
 			preferences, portletRequest, parameter, defaultValue);
 	}
 
+	public static String getLocalizationXmlFromPreferences(
+		PortletPreferences preferences, PortletRequest portletRequest,
+		String parameter, String defaultValue, String prefix) {
+
+		return getLocalization().getLocalizationXmlFromPreferences(
+			preferences, portletRequest, parameter, defaultValue, prefix);
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getLocalizationMap}
 	 */

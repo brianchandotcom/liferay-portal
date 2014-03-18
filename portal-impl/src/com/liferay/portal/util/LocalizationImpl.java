@@ -481,13 +481,22 @@ public class LocalizationImpl implements Localization {
 		String parameter) {
 
 		return getLocalizationXmlFromPreferences(
-			preferences, portletRequest, parameter, null);
+			preferences, portletRequest, parameter, null, null);
 	}
 
 	@Override
 	public String getLocalizationXmlFromPreferences(
 		PortletPreferences preferences, PortletRequest portletRequest,
 		String parameter, String defaultValue) {
+
+		return getLocalizationXmlFromPreferences(
+			preferences, portletRequest, parameter, defaultValue, null);
+	}
+
+	@Override
+	public String getLocalizationXmlFromPreferences(
+		PortletPreferences preferences, PortletRequest portletRequest,
+		String parameter, String defaultValue, String prefix) {
 
 		String xml = null;
 
@@ -498,11 +507,19 @@ public class LocalizationImpl implements Localization {
 		for (Locale locale : locales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			String localParameter =
+			String localizedParameter =
 				parameter + StringPool.UNDERLINE + languageId;
 
-			String value = PrefsParamUtil.getString(
-				preferences, portletRequest, localParameter, null);
+			String prefixedLocalParameter = localizedParameter;
+
+			if (Validator.isNotNull(prefix)) {
+				prefixedLocalParameter =
+					prefix + "--" + localizedParameter + "--";
+			}
+
+			String value = ParamUtil.getString(
+				portletRequest, prefixedLocalParameter,
+				preferences.getValue(localizedParameter, null));
 
 			if (value != null) {
 				xml = updateLocalization(xml, parameter, value, languageId);

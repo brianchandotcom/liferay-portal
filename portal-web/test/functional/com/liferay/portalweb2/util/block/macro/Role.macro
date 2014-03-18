@@ -19,6 +19,21 @@
 		</if>
 
 		<execute action="CPRolesAddrole#type" locator-key1="NAME_FIELD" value1="${roleName}" />
+
+		<if>
+			<isset var="roleDescription" />
+			<then>
+				<execute action="CPRolesAddrole#type" locator-key1="DESCRIPTION_FIELD" value1="${roleDescription}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="roleTitle" />
+			<then>
+				<execute action="CPRolesAddrole#type" locator-key1="TITLE_FIELD" value1="${roleTitle}" />
+			</then>
+		</if>
+
 		<execute action="CPRolesAddrole#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPRoles#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -324,6 +339,14 @@
 
 		<execute action="CPRolesEdit#assertTextEquals" locator-key1="HEADER" value1="${roleName}" />
 		<execute action="CPRolesEdit#assertTextEquals" locator-key1="NAME_FIELD" value1="${roleName}" />
+	</command>
+
+	<command name="viewNoXSSCP">
+		<var name="key_roleName" value="${roleName}" />
+
+		<execute action="CPRoles#assertAlertNotPresent" />
+		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TITLE" value1="${roleName}" />
+		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_DESCRIPTION" value1="${roleDescription}" />
 	</command>
 
 	<command name="viewPermissionCP">

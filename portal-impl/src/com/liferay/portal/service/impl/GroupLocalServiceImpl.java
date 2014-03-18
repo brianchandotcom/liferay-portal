@@ -3736,26 +3736,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	protected void addPortletDefaultData(Group group)
 		throws PortalException, SystemException {
 
-		List<Portlet> portlets = portletLocalService.getPortlets(
-			group.getCompanyId());
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createPreparePortletDataContext(
+				group.getCompanyId(), group.getGroupId(), null, null);
 
-		for (Portlet portlet : portlets) {
-			if (!portlet.isActive()) {
-				continue;
-			}
+		List<PortletDataHandler> portletDataHandlers =
+			getPortletDataHandlers(group);
 
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
-
-			if ((portletDataHandler == null) ||
-				portletDataHandler.isDataPortalLevel()) {
-
-				continue;
-			}
-
-			PortletDataContext portletDataContext =
-				PortletDataContextFactoryUtil.createPreparePortletDataContext(
-					group.getCompanyId(), group.getGroupId(), null, null);
+		for (PortletDataHandler portletDataHandler : portletDataHandlers) {
 
 			// For now, we are going to throw an exception if one portlet data
 			// handler has an exception to ensure that the transaction is rolled
@@ -3765,7 +3753,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			//try {
 			portletDataHandler.addDefaultData(
-				portletDataContext, portlet.getPortletId(), null);
+				portletDataContext, portletDataHandler.getPortletId(), null);
 			/*}
 			catch (Exception e) {
 				_log.error(
@@ -3779,28 +3767,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	protected void deletePortletData(Group group)
 		throws PortalException, SystemException {
 
-		List<Portlet> portlets = portletLocalService.getPortlets(
-			group.getCompanyId());
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createPreparePortletDataContext(
+				group.getCompanyId(), group.getGroupId(), null, null);
 
-		for (Portlet portlet : portlets) {
-			if (!portlet.isActive()) {
-				continue;
-			}
+		List<PortletDataHandler> portletDataHandlers =
+			getPortletDataHandlers(group);
 
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
-
-			if ((portletDataHandler == null) ||
-				portletDataHandler.isDataPortalLevel()) {
-
-				continue;
-			}
-
-			PortletDataContext portletDataContext =
-				PortletDataContextFactoryUtil.createExportPortletDataContext(
-					group.getCompanyId(), group.getGroupId(),
-					(Map<String, String[]>)null, (Date)null, (Date)null,
-					(ZipWriter)null);
+		for (PortletDataHandler portletDataHandler : portletDataHandlers) {
 
 			// For now, we are going to throw an exception if one portlet data
 			// handler has an exception to ensure that the transaction is rolled
@@ -3809,8 +3783,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// deletion of groups.
 
 			//try {
-				portletDataHandler.deleteData(
-					portletDataContext, portlet.getPortletId(), null);
+			portletDataHandler.deleteData(
+				portletDataContext, portletDataHandler.getPortletId(), null);
 			/*}
 			catch (Exception e) {
 				_log.error(
@@ -4186,6 +4160,33 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	protected String getOrgGroupName(String name) {
 		return name + ORGANIZATION_NAME_SUFFIX;
+	}
+
+	protected List<PortletDataHandler> getPortletDataHandlers(Group group)
+	throws SystemException {
+
+		List<Portlet> portlets = portletLocalService.getPortlets(
+			group.getCompanyId());
+
+		List<PortletDataHandler> portletDataHandlers =
+			new ArrayList<PortletDataHandler>(portlets.size());
+
+		for (Portlet portlet : portlets) {
+			if (!portlet.isActive()) {
+				continue;
+			}
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if ((portletDataHandler != null) &&
+				!portletDataHandler.isDataPortalLevel()) {
+
+				portletDataHandlers.add(portletDataHandler);
+			}
+		}
+
+		return portletDataHandlers;
 	}
 
 	protected String[] getSearchNames(long companyId, String name)

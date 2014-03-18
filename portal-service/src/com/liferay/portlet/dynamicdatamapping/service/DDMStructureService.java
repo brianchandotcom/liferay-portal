@@ -327,6 +327,21 @@ public interface DDMStructureService extends BaseService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the structures matching class name ID and group that the user
+	* has permission to view.
+	*
+	* @param groupIds the primary key of the groups
+	* @param classNameId the primary key of the class name for the structure's
+	related model
+	* @return the structures in the groups that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructures(
+		long[] groupIds, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns an ordered range of all the structures matching the groups and
 	* class name IDs, and matching the keywords in the structure names and
 	* descriptions.

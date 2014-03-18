@@ -60,73 +60,71 @@ catch (NoSuchArticleException nsae) {
 	<c:if test="<%= article != null %>">
 
 		<%
-		if (Validator.isNotNull(article.getStructureId())) {
-			DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(article.getGroupId(), PortalUtil.getClassNameId(JournalArticle.class), article.getStructureId(), true);
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(article.getGroupId(), PortalUtil.getClassNameId(JournalArticle.class), article.getStructureId(), true);
 
-			List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
+		List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
 
-			if (ddmStructure != null) {
-				ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(ddmStructure.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
+		if (ddmStructure != null) {
+			ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(ddmStructure.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
 
-				if (article.getGroupId() != ddmStructure.getGroupId()) {
-					ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(article.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
-				}
+			if (article.getGroupId() != ddmStructure.getGroupId()) {
+				ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(article.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
 			}
+		}
 
-			if (!ddmTemplates.isEmpty()) {
-				if (Validator.isNull(ddmTemplateKey)) {
-					ddmTemplateKey = article.getTemplateId();
-				}
+		if (!ddmTemplates.isEmpty()) {
+			if (Validator.isNull(ddmTemplateKey)) {
+				ddmTemplateKey = article.getTemplateId();
+			}
 		%>
 
-				<aui:fieldset>
-					<liferay-ui:message key="override-default-template" />
+			<aui:fieldset>
+				<liferay-ui:message key="override-default-template" />
 
-					<liferay-ui:table-iterator
-						list="<%= ddmTemplates %>"
-						listType="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"
-						rowLength="3"
-						rowPadding="30"
-					>
+				<liferay-ui:table-iterator
+					list="<%= ddmTemplates %>"
+					listType="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"
+					rowLength="3"
+					rowPadding="30"
+				>
 
-						<%
-						boolean templateChecked = false;
+					<%
+					boolean templateChecked = false;
 
-						if (ddmTemplateKey.equals(tableIteratorObj.getTemplateKey())) {
-							templateChecked = true;
-						}
+					if (ddmTemplateKey.equals(tableIteratorObj.getTemplateKey())) {
+						templateChecked = true;
+					}
 
-						if ((tableIteratorPos.intValue() == 0) && Validator.isNull(ddmTemplateKey)) {
-							templateChecked = true;
-						}
-						%>
+					if ((tableIteratorPos.intValue() == 0) && Validator.isNull(ddmTemplateKey)) {
+						templateChecked = true;
+					}
+					%>
 
-						<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL">
-							<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL_CONTENT %>" />
-							<portlet:param name="groupId" value="<%= String.valueOf(tableIteratorObj.getGroupId()) %>" />
-							<portlet:param name="templateId" value="<%= String.valueOf(tableIteratorObj.getTemplateId()) %>" />
-						</liferay-portlet:renderURL>
+					<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL">
+						<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL_CONTENT %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(tableIteratorObj.getGroupId()) %>" />
+						<portlet:param name="templateId" value="<%= String.valueOf(tableIteratorObj.getTemplateId()) %>" />
+					</liferay-portlet:renderURL>
 
-						<liferay-util:buffer var="linkContent">
-							<aui:a href="<%= editTemplateURL %>" id="tableIteratorObjName"><%= HtmlUtil.escape(tableIteratorObj.getName(locale)) %></aui:a>
-						</liferay-util:buffer>
+					<liferay-util:buffer var="linkContent">
+						<aui:a href="<%= editTemplateURL %>" id="tableIteratorObjName"><%= HtmlUtil.escape(tableIteratorObj.getName(locale)) %></aui:a>
+					</liferay-util:buffer>
 
-						<aui:input checked="<%= templateChecked %>" label="<%= linkContent %>" name="overideTemplateId" onChange='<%= "if (this.checked) {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "ddmTemplateKey.value = this.value;}" %>' type="radio" value="<%= tableIteratorObj.getTemplateKey() %>" />
+					<aui:input checked="<%= templateChecked %>" label="<%= linkContent %>" name="overideTemplateId" onChange='<%= "if (this.checked) {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "ddmTemplateKey.value = this.value;}" %>' type="radio" value="<%= tableIteratorObj.getTemplateKey() %>" />
 
-						<c:if test="<%= tableIteratorObj.isSmallImage() %>">
-							<br />
+					<c:if test="<%= tableIteratorObj.isSmallImage() %>">
+						<br />
 
-							<img border="0" hspace="0" src="<%= Validator.isNotNull(tableIteratorObj.getSmallImageURL()) ? HtmlUtil.escapeHREF(tableIteratorObj.getSmallImageURL()) : themeDisplay.getPathImage() + "/journal/template?img_id=" + tableIteratorObj.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(tableIteratorObj.getSmallImageId()) %>" vspace="0" />
-						</c:if>
-					</liferay-ui:table-iterator>
+						<img border="0" hspace="0" src="<%= Validator.isNotNull(tableIteratorObj.getSmallImageURL()) ? HtmlUtil.escapeHREF(tableIteratorObj.getSmallImageURL()) : themeDisplay.getPathImage() + "/journal/template?img_id=" + tableIteratorObj.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(tableIteratorObj.getSmallImageId()) %>" vspace="0" />
+					</c:if>
+				</liferay-ui:table-iterator>
 
-					<br />
-				</aui:fieldset>
+				<br />
+			</aui:fieldset>
 
 		<%
-			}
 		}
 		%>
 

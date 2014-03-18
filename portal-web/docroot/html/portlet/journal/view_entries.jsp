@@ -83,16 +83,12 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 	<aui:input name="<%= displayTerms.STRUCTURE_ID %>" type="hidden" value="<%= displayTerms.getStructureId() %>" />
 
 	<%
-	if (!displayTerms.getStructureId().equals("0")) {
-		DDMStructure ddmStructure = null;
+	try {
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId(), true);
 
-		try {
-			ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId(), true);
-
-			ddmStructureName = ddmStructure.getName(locale);
-		}
-		catch (NoSuchStructureException nsse) {
-		}
+		ddmStructureName = ddmStructure.getName(locale);
+	}
+	catch (NoSuchStructureException nsse) {
 	}
 	%>
 

@@ -73,6 +73,31 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
+### Web Content Articles must have structure and template
+- **Date**: 2014-Mar-18
+- **JIRA Ticket**: LPS-45107
+
+#### What changed?
+The "Basic Web Content" is now another Structure (in the Global Scope) and
+therefore it can be modified or deleted. Web Content should always use a
+structure and a template from now on.
+
+#### Who is affected?
+Applications that were using the Journal API to create Web Content without
+Structure or Template.
+
+#### How should I update my code?
+You should always use an structure and template when you create web content.
+You can still use the "Basic Web Content" from the Global Scope (using the
+structureKey `basic-web-content`), but you should keep in mind that users can
+modify it or even delete it.
+
+#### Why was this change made?
+This change gives users the flexibility to modify the default structure and
+template.
+
+---------------------------------------
+
 ### Merged Configured Email Signature Field into the Body of Email Messages from Message Boards and Wiki
 - **Date**: 2014-Feb-28
 - **JIRA Ticket**: LPS-44599

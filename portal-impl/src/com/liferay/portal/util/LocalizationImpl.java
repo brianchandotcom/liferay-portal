@@ -496,7 +496,7 @@ public class LocalizationImpl implements Localization {
 	@Override
 	public String getLocalizationXmlFromPreferences(
 		PortletPreferences preferences, PortletRequest portletRequest,
-		String parameter, String defaultValue, String prefix) {
+		String parameter, String prefix, String defaultValue) {
 
 		String xml = null;
 

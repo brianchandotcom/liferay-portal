@@ -235,7 +235,7 @@ public interface Localization {
 
 	public String getLocalizationXmlFromPreferences(
 		PortletPreferences preferences, PortletRequest portletRequest,
-		String parameter, String defaultValue, String prefix);
+		String parameter, String prefix, String defaultValue);
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link

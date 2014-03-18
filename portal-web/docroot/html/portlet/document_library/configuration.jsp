@@ -268,21 +268,21 @@ catch (NoSuchFolderException nsfe) {
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryAddedBody", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_BODY), "preferences") %>'
+				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryAddedBody", "preferences", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_BODY)) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailFileEntryAddedEnabled--", DLUtil.getEmailFileEntryAddedEnabled(portletPreferences)) %>'
 				emailParam="emailFileEntryAdded"
-				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryAddedSubject", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT), "preferences") %>'
+				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryAddedSubject", "preferences", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT)) %>'
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryUpdatedBody", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_BODY), "preferences") %>'
+				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryUpdatedBody", "preferences", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_BODY)) %>'
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailFileEntryUpdatedEnabled--", DLUtil.getEmailFileEntryUpdatedEnabled(portletPreferences)) %>'
 				emailParam="emailFileEntryUpdated"
-				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryUpdatedSubject", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT), "preferences") %>'
+				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailFileEntryUpdatedSubject", "preferences", ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT)) %>'
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

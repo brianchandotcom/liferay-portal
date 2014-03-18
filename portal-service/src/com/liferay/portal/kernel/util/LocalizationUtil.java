@@ -174,10 +174,10 @@ public class LocalizationUtil {
 
 	public static String getLocalizationXmlFromPreferences(
 		PortletPreferences preferences, PortletRequest portletRequest,
-		String parameter, String defaultValue, String prefix) {
+		String parameter, String prefix, String defaultValue) {
 
 		return getLocalization().getLocalizationXmlFromPreferences(
-			preferences, portletRequest, parameter, defaultValue, prefix);
+			preferences, portletRequest, parameter, prefix, defaultValue);
 	}
 
 	/**

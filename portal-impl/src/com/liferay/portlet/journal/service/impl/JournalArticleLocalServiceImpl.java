@@ -6549,8 +6549,8 @@ public class JournalArticleLocalServiceImpl
 			localizedSubjectMap =
 				JournalUtil.getEmailArticleApprovalDeniedSubjectMap(
 					preferences);
-			localizedBodyMap =
-				JournalUtil.getEmailArticleApprovalDeniedBodyMap(preferences);
+			localizedBodyMap = JournalUtil.getEmailArticleApprovalDeniedBodyMap(
+				preferences);
 		}
 		else if (emailType.equals("granted")) {
 			localizedSubjectMap =

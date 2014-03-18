@@ -101,7 +101,8 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 			Locale locale = LocaleUtil.getMostRelevantLocale();
 
 			if (assetRenderer != null) {
-				return assetRenderer.getSummary(locale);
+				return assetRenderer.getSummary(
+					portletRequest, portletResponse);
 			}
 		}
 		catch (Exception e) {

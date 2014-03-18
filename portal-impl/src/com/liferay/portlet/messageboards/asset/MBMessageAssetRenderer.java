@@ -88,7 +88,7 @@ public class MBMessageAssetRenderer
 				BBCodeTranslatorUtil.getHTML(_message.getBody()));
 		}
 
-		return getSummary(locale);
+		return getSummary(null, null);
 	}
 
 	@Override

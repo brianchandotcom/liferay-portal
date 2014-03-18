@@ -124,7 +124,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	@Override
 	public String getSearchSummary(Locale locale) {
-		return getSummary(locale);
+		return getSummary(null, null);
 	}
 
 	/**

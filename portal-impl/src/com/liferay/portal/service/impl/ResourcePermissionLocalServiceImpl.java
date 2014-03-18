@@ -748,6 +748,8 @@ public class ResourcePermissionLocalServiceImpl
 			}
 		}
 		else {
+			Set<Long> roleIdsSet = SetUtil.fromArray(roleIds);
+
 			List<ResourcePermission> resourcePermissions =
 				resourcePermissionPersistence.findByC_N_S_P(
 					companyId, name, scope, primKey);
@@ -755,8 +757,6 @@ public class ResourcePermissionLocalServiceImpl
 			if (resourcePermissions.isEmpty()) {
 				return false;
 			}
-
-			Set<Long> roleIdsSet = SetUtil.fromArray(roleIds);
 
 			for (ResourcePermission resourcePermission : resourcePermissions) {
 				if (!roleIdsSet.contains(resourcePermission.getRoleId())) {

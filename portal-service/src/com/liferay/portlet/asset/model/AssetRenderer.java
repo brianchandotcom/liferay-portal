@@ -69,7 +69,7 @@ public interface AssetRenderer {
 	public String getNewName(String oldName, String token);
 
 	public String getPreviewPath(
-			PortletRequest portletRequest, PortletResponse PortletResponse)
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception;
 
 	public String getSearchSummary(Locale locale);

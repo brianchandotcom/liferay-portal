@@ -50,6 +50,11 @@ public interface WorkflowHandler {
 
 	public String getIconPath(LiferayPortletRequest liferayPortletRequest);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(long,
+	 *             PortletRequest, PortletResponse)}
+	 */
+	@Deprecated
 	public String getSummary(long classPK, Locale locale);
 
 	public String getSummary(

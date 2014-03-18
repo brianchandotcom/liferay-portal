@@ -64,10 +64,6 @@ refererURL.setParameter("updateLayout", "true");
 
 							<%
 							for (Portlet portlet : portlets) {
-								if (!PortletPermissionUtil.contains(permissionChecker, layout, portlet.getPortletId(), ActionKeys.ADD_TO_PAGE)) {
-									continue;
-								}
-
 								boolean portletInstanceable = portlet.isInstanceable();
 
 								boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());

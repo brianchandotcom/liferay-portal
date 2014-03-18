@@ -29,6 +29,11 @@ public class AddDefaultDataAction extends SimpleAction {
 
 		addDefaultDocumentLibraryStructuresAction.run(ids);
 
+		SimpleAction addDefaultJournalStructuresAction =
+			new AddDefaultJournalStructuresAction();
+
+		addDefaultJournalStructuresAction.run(ids);
+
 		SimpleAction addDefaultLayoutPrototypesAction =
 			new AddDefaultLayoutPrototypesAction();
 

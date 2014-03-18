@@ -142,7 +142,7 @@ body.portlet {
 
 		padding: 2px 7px;
 
-		.taglib-text {
+		.lfr-icon-menu-text, .taglib-text {
 			color: #FFF;
 			display: none;
 			font-weight: bold;

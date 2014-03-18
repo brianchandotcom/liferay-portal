@@ -299,7 +299,6 @@ AUI.add(
 						dialogStructureId: instance.getById('saveStructureStructureId'),
 						dialogStructureName: instance.getById('saveStructureStructureName'),
 						idInput: instance.getById('saveStructureStructureId'),
-						loadDefaultStructure: instance.getById('loadDefaultStructure'),
 						messageElement: instance.getById('saveStructureMessage'),
 						saveStructureAutogenerateId: instance.getById('saveStructureAutogenerateId'),
 						saveStructureAutogenerateIdCheckbox: instance.getById('saveStructureAutogenerateIdCheckbox'),
@@ -323,10 +322,6 @@ AUI.add(
 							dialogFields.dialogStructureId.val(message.structureId);
 							dialogFields.structureNameLabel.html(Liferay.Util.escapeHTML(dialogFields.dialogStructureName.val()));
 							dialogFields.saveStructureAutogenerateIdCheckbox.hide();
-
-							if (dialogFields.loadDefaultStructure) {
-								dialogFields.loadDefaultStructure.show();
-							}
 
 							dialogFields.dialogStructureId.attr('disabled', 'disabled');
 
@@ -445,20 +440,6 @@ AUI.add(
 				var templateId = instance.getByName(form, 'templateId');
 
 				return templateId && templateId.val();
-			},
-
-			loadDefaultStructure: function() {
-				var instance = this;
-
-				var form = instance.getPrincipalForm();
-
-				var structureIdInput = instance.getByName(form, 'structureId');
-				var templateIdInput = instance.getByName(form, 'templateId');
-
-				structureIdInput.val('');
-				templateIdInput.val('');
-
-				submitForm(form, null, false, false);
 			},
 
 			normalizeValue: function(value) {
@@ -1074,7 +1055,6 @@ AUI.add(
 
 				var changeStructureButton = instance.getById('changeStructureButton');
 				var editStructureLink = instance.getById('editStructureLink');
-				var loadDefaultStructureButton = instance.getById('loadDefaultStructure');
 				var publishButton = instance.getById('publishButton');
 				var saveButton = instance.getById('saveButton');
 				var translateButton = instance.getById('translateButton');
@@ -1105,17 +1085,6 @@ AUI.add(
 							instance._attachEditContainerEvents();
 
 							instance.enableEditMode();
-						}
-					);
-				}
-
-				if (loadDefaultStructureButton) {
-					loadDefaultStructureButton.detach('click');
-
-					loadDefaultStructureButton.on(
-						'click',
-						function() {
-							instance.loadDefaultStructure();
 						}
 					);
 				}

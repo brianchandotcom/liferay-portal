@@ -490,6 +490,31 @@ public class DDMStructureServiceSoap {
 	}
 
 	/**
+	* Returns all the structures matching class name ID and group that the user
+	* has permission to view.
+	*
+	* @param groupIds the primary key of the groups
+	* @param classNameId the primary key of the class name for the structure's
+	related model
+	* @return the structures in the groups that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap[] getStructures(
+		long[] groupIds, long classNameId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> returnValue =
+				DDMStructureServiceUtil.getStructures(groupIds, classNameId);
+
+			return com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns an ordered range of all the structures matching the groups and
 	* class name IDs, and matching the keywords in the structure names and
 	* descriptions.

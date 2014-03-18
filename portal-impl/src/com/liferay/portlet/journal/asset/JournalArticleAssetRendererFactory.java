@@ -32,6 +32,7 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -155,17 +156,14 @@ public class JournalArticleAssetRendererFactory
 
 		Map<Long, String> classTypes = new HashMap<Long, String>();
 
-		for (long groupId : groupIds) {
-			List<DDMStructure> ddmStructures =
-				DDMStructureLocalServiceUtil.getStructures(
-					groupId,
-					PortalUtil.getClassNameId(JournalArticle.class.getName()));
+		List<DDMStructure> ddmStructures =
+			DDMStructureServiceUtil.getStructures(
+				groupIds,
+				PortalUtil.getClassNameId(JournalArticle.class.getName()));
 
-			for (DDMStructure ddmStructure : ddmStructures) {
-				classTypes.put(
-					ddmStructure.getStructureId(),
-					ddmStructure.getName(locale));
-			}
+		for (DDMStructure ddmStructure : ddmStructures) {
+			classTypes.put(
+				ddmStructure.getStructureId(), ddmStructure.getName(locale));
 		}
 
 		return classTypes;
@@ -221,8 +219,11 @@ public class JournalArticleAssetRendererFactory
 			PermissionChecker permissionChecker, long groupId, long classTypeId)
 		throws Exception {
 
-		if ((classTypeId > 0) &&
-			!DDMStructurePermission.contains(
+		if (classTypeId == 0) {
+			return false;
+		}
+
+		if (!DDMStructurePermission.contains(
 				permissionChecker, classTypeId, ActionKeys.VIEW)) {
 
 			return false;

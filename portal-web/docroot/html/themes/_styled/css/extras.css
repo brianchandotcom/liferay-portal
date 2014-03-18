@@ -200,6 +200,11 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	@include border-radius(14px);
 }
 
+.portlet-journal-content .lfr-icon-actions .lfr-icon-action-add a {
+	@include box-shadow(none);
+	@include text-shadow(none);
+}
+
 .menu-content {
 	@include border-bottom-left-radius(4px);
 	@include border-bottom-right-radius(4px);
@@ -383,7 +388,7 @@ body:first-of-type {
 			.lfr-icon-actions {
 				@extend %portlet-action-bar-fx-hover;
 
-				.taglib-text {
+				.lfr-icon-menu-text, .taglib-text {
 					@extend %portlet-action-bar-fx-hover-text;
 
 					max-width: 200px;
@@ -394,7 +399,7 @@ body:first-of-type {
 		.lfr-icon-actions {
 			@extend %portlet-action-bar-fx;
 
-			.taglib-text {
+			.lfr-icon-menu-text, .taglib-text {
 				@extend %portlet-action-bar-fx-text;
 
 				@include respond-to(phone, tablet) {

@@ -837,7 +837,8 @@ public class JournalUtil {
 			defaultLocale,
 			ContentUtil.get(
 				PropsUtil.get(
-					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT)));
+					PropsKeys.
+						JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT)));
 
 		return map;
 	}

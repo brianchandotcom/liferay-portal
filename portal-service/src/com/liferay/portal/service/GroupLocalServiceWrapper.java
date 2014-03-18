@@ -1136,6 +1136,21 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	/**
+	* Returns the company group, if exists
+	*
+	* @param companyId the primary key of the company
+	* @return the group associated with the company or null if it doesn't exist
+	* @throws PortalException if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.Group fetchCompanyGroup(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.fetchCompanyGroup(companyId);
+	}
+
+	/**
 	* Returns the group with the matching friendly URL.
 	*
 	* @param companyId the primary key of the company
@@ -1166,6 +1181,22 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _groupLocalService.fetchGroup(companyId, name);
+	}
+
+	/**
+	* Returns the personal site group, if exists
+	*
+	* @param companyId the primary key of the company
+	* @return the personal site group or null if it doesn't exist
+	* @throws PortalException if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.Group fetchUserPersonalSiteGroup(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.fetchUserPersonalSiteGroup(companyId);
 	}
 
 	/**
@@ -1771,6 +1802,14 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.getUserOrganizationsGroups(userId, start, end);
 	}
 
+	/**
+	* Returns the personal site group
+	*
+	* @param companyId the primary key of the company
+	* @return the personal site group
+	* @throws PortalException if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public com.liferay.portal.model.Group getUserPersonalSiteGroup(
 		long companyId)

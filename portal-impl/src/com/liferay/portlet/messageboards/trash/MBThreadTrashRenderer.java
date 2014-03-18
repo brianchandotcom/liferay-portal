@@ -32,6 +32,8 @@ import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -72,7 +74,9 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 	}
 
 	@Override
-	public String getSummary(Locale locale) {
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return null;
 	}
 

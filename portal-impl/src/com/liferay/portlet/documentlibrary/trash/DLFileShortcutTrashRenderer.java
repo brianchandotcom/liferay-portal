@@ -29,6 +29,8 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -70,7 +72,9 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 	}
 
 	@Override
-	public String getSummary(Locale locale) {
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return HtmlUtil.stripHtml(_fileEntry.getDescription());
 	}
 

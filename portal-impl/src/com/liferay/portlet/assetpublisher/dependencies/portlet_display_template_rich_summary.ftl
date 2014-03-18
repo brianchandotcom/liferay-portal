@@ -38,7 +38,7 @@
 			<div class="asset-summary">
 				<@getMetadataField fieldName="author" />
 
-				${htmlUtil.escape(assetRenderer.getSummary(locale))}
+				${htmlUtil.escape(assetRenderer.getSummary(renderRequest, renderResponse))}
 
 				<a href="${viewURL}"><@liferay.language key="read-more" /><span class="hide-accessible"><@liferay.language key="about" />${entryTitle}</span> &raquo;</a>
 			</div>

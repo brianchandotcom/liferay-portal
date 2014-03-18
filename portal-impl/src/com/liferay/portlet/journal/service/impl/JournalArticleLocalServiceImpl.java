@@ -6381,21 +6381,24 @@ public class JournalArticleLocalServiceImpl
 		String fromAddress = JournalUtil.getEmailFromAddress(
 			preferences, article.getCompanyId());
 
-		String subject = null;
-		String body = null;
+		Map<Locale, String> localizedSubjectMap = null;
+		Map<Locale, String> localizedBodyMap = null;
 
 		if (article.getVersion() == 1.0) {
-			subject = JournalUtil.getEmailArticleAddedSubject(preferences);
-			body = JournalUtil.getEmailArticleAddedBody(preferences);
+			localizedSubjectMap = JournalUtil.getEmailArticleAddedSubjectMap(
+				preferences);
+			localizedBodyMap = JournalUtil.getEmailArticleAddedBodyMap(
+				preferences);
 		}
 		else {
-			subject = JournalUtil.getEmailArticleUpdatedSubject(preferences);
-			body = JournalUtil.getEmailArticleUpdatedBody(preferences);
+			localizedSubjectMap = JournalUtil.getEmailArticleUpdatedSubjectMap(
+				preferences);
+			localizedBodyMap = JournalUtil.getEmailArticleUpdatedBodyMap(
+				preferences);
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		subscriptionSender.setBody(body);
 		subscriptionSender.setClassName(article.getModelClassName());
 		subscriptionSender.setClassPK(article.getId());
 		subscriptionSender.setCompanyId(article.getCompanyId());
@@ -6408,6 +6411,8 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setEntryURL(articleURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
+		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("journal_article", article.getId());
 
 		int notificationType =
@@ -6424,7 +6429,6 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(article.getUserId());
 
 		JournalFolder folder = article.getFolder();
@@ -6546,33 +6550,40 @@ public class JournalArticleLocalServiceImpl
 			toAddress = tempToAddress;
 		}
 
-		String subject = null;
-		String body = null;
+		Map<Locale, String> localizedSubjectMap = null;
+		Map<Locale, String> localizedBodyMap = null;
 
 		if (emailType.equals("denied")) {
-			subject = JournalUtil.getEmailArticleApprovalDeniedSubject(
-				preferences);
-			body = JournalUtil.getEmailArticleApprovalDeniedBody(preferences);
+			localizedSubjectMap =
+				JournalUtil.getEmailArticleApprovalDeniedSubjectMap(
+					preferences);
+			localizedBodyMap =
+				JournalUtil.getEmailArticleApprovalDeniedBodyMap(preferences);
 		}
 		else if (emailType.equals("granted")) {
-			subject = JournalUtil.getEmailArticleApprovalGrantedSubject(
-				preferences);
-			body = JournalUtil.getEmailArticleApprovalGrantedBody(preferences);
+			localizedSubjectMap =
+				JournalUtil.getEmailArticleApprovalGrantedSubjectMap(
+					preferences);
+			localizedBodyMap =
+				JournalUtil.getEmailArticleApprovalGrantedBodyMap(preferences);
 		}
 		else if (emailType.equals("requested")) {
-			subject = JournalUtil.getEmailArticleApprovalRequestedSubject(
-				preferences);
-			body = JournalUtil.getEmailArticleApprovalRequestedBody(
-				preferences);
+			localizedSubjectMap =
+				JournalUtil.getEmailArticleApprovalRequestedSubjectMap(
+					preferences);
+			localizedBodyMap =
+				JournalUtil.getEmailArticleApprovalRequestedBodyMap(
+					preferences);
 		}
 		else if (emailType.equals("review")) {
-			subject = JournalUtil.getEmailArticleReviewSubject(preferences);
-			body = JournalUtil.getEmailArticleReviewBody(preferences);
+			localizedSubjectMap = JournalUtil.getEmailArticleReviewSubjectMap(
+				preferences);
+			localizedBodyMap = JournalUtil.getEmailArticleReviewBodyMap(
+				preferences);
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(company.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
@@ -6582,11 +6593,12 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
+		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("journal_article", article.getId());
 		subscriptionSender.setPortletId(PortletKeys.JOURNAL);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(article.getUserId());
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);

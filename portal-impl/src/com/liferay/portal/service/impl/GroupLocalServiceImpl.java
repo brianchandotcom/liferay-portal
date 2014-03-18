@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Company;
@@ -115,7 +114,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -412,6 +410,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				group.getCompanyId(), 0, 0, Group.class.getName(),
 				group.getGroupId(), false, false, false);
 		}
+
+		addPortletDefaultData(group);
 
 		return group;
 	}
@@ -1043,6 +1043,23 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the company group, if exists
+	 *
+	 * @param  companyId the primary key of the company
+	 * @return the group associated with the company or null if it doesn't exist
+	 * @throws PortalException if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Group fetchCompanyGroup(long companyId)
+		throws PortalException, SystemException {
+
+		long classNameId = classNameLocalService.getClassNameId(Company.class);
+
+		return groupPersistence.fetchByC_C_C(companyId, classNameId, companyId);
+	}
+
+	/**
 	 * Returns the group with the matching friendly URL.
 	 *
 	 * @param  companyId the primary key of the company
@@ -1087,6 +1104,26 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return groupLocalService.loadFetchGroup(companyId, name);
+	}
+
+	/**
+	 * Returns the personal site group, if exists
+	 *
+	 * @param  companyId the primary key of the company
+	 * @return the personal site group or null if it doesn't exist
+	 * @throws PortalException if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Group fetchUserPersonalSiteGroup(long companyId)
+		throws PortalException, SystemException {
+
+		long classNameId = classNameLocalService.getClassNameId(
+			UserPersonalSite.class);
+		long defaultUserId = userLocalService.getDefaultUserId(companyId);
+
+		return groupPersistence.fetchByC_C_C(
+			companyId, classNameId, defaultUserId);
 	}
 
 	/**
@@ -1915,6 +1952,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return userOrgsGroups;
 	}
 
+	/**
+	 * Returns the personal site group
+	 *
+	 * @param  companyId the primary key of the company
+	 * @return the personal site group
+	 * @throws PortalException if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public Group getUserPersonalSiteGroup(long companyId)
 		throws PortalException, SystemException {
@@ -3686,48 +3731,61 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			defaultUserId, group.getGroupId(), false, parameterMap, larFile);
 	}
 
+	protected void addPortletDefaultData(Group group)
+		throws PortalException, SystemException {
+
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createPreparePortletDataContext(
+				group.getCompanyId(), group.getGroupId(), null, null);
+
+		List<PortletDataHandler> portletDataHandlers = getPortletDataHandlers(
+			group);
+
+		for (PortletDataHandler portletDataHandler : portletDataHandlers) {
+			try {
+				portletDataHandler.addDefaultData(
+					portletDataContext, portletDataHandler.getPortletId(),
+					null);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Unable to add default data for portlet " +
+						portletDataHandler.getPortletId() + " in group " +
+							group.getGroupId());
+
+				if (portletDataHandler.getExceptionWillRollback()) {
+					throw new SystemException(e);
+				}
+			}
+		}
+	}
+
 	protected void deletePortletData(Group group)
 		throws PortalException, SystemException {
 
-		List<Portlet> portlets = portletLocalService.getPortlets(
-			group.getCompanyId());
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createPreparePortletDataContext(
+				group.getCompanyId(), group.getGroupId(), null, null);
 
-		for (Portlet portlet : portlets) {
-			if (!portlet.isActive()) {
-				continue;
-			}
+		List<PortletDataHandler> portletDataHandlers = getPortletDataHandlers(
+			group);
 
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
-
-			if ((portletDataHandler == null) ||
-				portletDataHandler.isDataPortalLevel()) {
-
-				continue;
-			}
-
-			PortletDataContext portletDataContext =
-				PortletDataContextFactoryUtil.createExportPortletDataContext(
-					group.getCompanyId(), group.getGroupId(),
-					(Map<String, String[]>)null, (Date)null, (Date)null,
-					(ZipWriter)null);
-
-			// For now, we are going to throw an exception if one portlet data
-			// handler has an exception to ensure that the transaction is rolled
-			// back for data integrity. We may decide that this is not the best
-			// behavior in the future because a bad plugin could disallow
-			// deletion of groups.
-
-			//try {
+		for (PortletDataHandler portletDataHandler : portletDataHandlers) {
+			try {
 				portletDataHandler.deleteData(
-					portletDataContext, portlet.getPortletId(), null);
-			/*}
+					portletDataContext, portletDataHandler.getPortletId(),
+					null);
+			}
 			catch (Exception e) {
 				_log.error(
 					"Unable to delete data for portlet " +
-						portlet.getPortletId() + " in group " +
+						portletDataHandler.getPortletId() + " in group " +
 							group.getGroupId());
-			}*/
+
+				if (portletDataHandler.getExceptionWillRollback()) {
+					throw new SystemException(e);
+				}
+			}
 		}
 	}
 
@@ -4096,6 +4154,33 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	protected String getOrgGroupName(String name) {
 		return name + ORGANIZATION_NAME_SUFFIX;
+	}
+
+	protected List<PortletDataHandler> getPortletDataHandlers(Group group)
+		throws SystemException {
+
+		List<Portlet> portlets = portletLocalService.getPortlets(
+			group.getCompanyId());
+
+		List<PortletDataHandler> portletDataHandlers =
+			new ArrayList<PortletDataHandler>(portlets.size());
+
+		for (Portlet portlet : portlets) {
+			if (!portlet.isActive()) {
+				continue;
+			}
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if ((portletDataHandler != null) &&
+				!portletDataHandler.isDataPortalLevel()) {
+
+				portletDataHandlers.add(portletDataHandler);
+			}
+		}
+
+		return portletDataHandlers;
 	}
 
 	protected String[] getSearchNames(long companyId, String name)

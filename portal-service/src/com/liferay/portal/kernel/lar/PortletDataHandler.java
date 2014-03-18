@@ -32,6 +32,22 @@ import javax.portlet.PortletPreferences;
 public interface PortletDataHandler {
 
 	/**
+	 * Adds default data for the portlet.
+	 *
+	 * @param  portletDataContext the context of the data addition
+	 * @param  portletId the portlet ID of the portlet
+	 * @param  portletPreferences the portlet preferences of the portlet
+	 * @return A modified version of portlet preferences that should be saved.
+	 *         <code>Null</code> if the portlet preferences were unmodified by
+	 *         this data handler.
+	 * @throws PortletDataException if a portlet data exception occurred
+	 */
+	public PortletPreferences addDefaultData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException;
+
+	/**
 	 * Deletes the data created by the portlet. Can optionally return a modified
 	 * version of <code>preferences</code> if it contains reference to data that
 	 * does not exist anymore.
@@ -78,6 +94,15 @@ public interface PortletDataHandler {
 	public String[] getDataPortletPreferences();
 
 	public StagedModelType[] getDeletionSystemEventStagedModelTypes();
+
+	/**
+	 * This flag controls whether an exception occurred in a data handler
+	 * will stop current operation and rollback the transaction or not.
+	 *
+	 * @return true if the current transaction should be rolled back when an
+	 * exception occurs in the data handler
+	 */
+	public boolean getExceptionWillRollback();
 
 	public PortletDataHandlerControl[] getExportConfigurationControls(
 			long companyId, long groupId, Portlet portlet,

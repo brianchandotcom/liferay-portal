@@ -49,7 +49,7 @@ import javax.portlet.PortletPreferences;
 public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	@Override
-	public void addDefaultData(
+	public PortletPreferences addDefaultData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
@@ -63,7 +63,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 
 		try {
-			doAddDefaultData(portletDataContext, portletId, portletPreferences);
+			return doAddDefaultData(
+				portletDataContext, portletId, portletPreferences);
 		}
 		catch (PortletDataException pde) {
 			throw pde;
@@ -741,10 +742,12 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 	}
 
-	protected void doAddDefaultData(
+	protected PortletPreferences doAddDefaultData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
+
+		return portletPreferences;
 	}
 
 	protected PortletPreferences doDeleteData(

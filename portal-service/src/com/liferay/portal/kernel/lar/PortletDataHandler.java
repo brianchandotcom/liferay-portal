@@ -39,7 +39,7 @@ public interface PortletDataHandler {
 	 * @param  portletPreferences the portlet preferences of the portlet
 	 * @throws PortletDataException if a portlet data exception occurred
 	 */
-	public void addDefaultData(
+	public PortletPreferences addDefaultData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws PortletDataException;

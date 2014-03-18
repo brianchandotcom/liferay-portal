@@ -6451,12 +6451,12 @@ public class JournalArticleLocalServiceImpl
 		long structureClassPK = 0;
 
 		if (article.isTemplateDriven()) {
-			DDMStructure structure = ddmStructureLocalService.getStructure(
+			DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
 				article.getGroupId(),
 				classNameLocalService.getClassNameId(JournalArticle.class),
 				article.getStructureId(), true);
 
-			structureClassPK = structure.getStructureId();
+			structureClassPK = ddmStructure.getStructureId();
 		}
 
 		subscriptionSender.addPersistedSubscribers(

@@ -15,6 +15,7 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -83,13 +84,16 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 
 			String xsd = structureElementRootElement.asXML();
 
+			Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
+
 			Map<Locale, String> nameMap = new HashMap<Locale, String>();
-
-			nameMap.put(locale, name);
-
 			Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-			descriptionMap.put(locale, description);
+			for (Locale curLocale : locales) {
+				nameMap.put(curLocale, LanguageUtil.get(curLocale, name));
+				descriptionMap.put(
+					curLocale, LanguageUtil.get(curLocale, description));
+			}
 
 			Attribute defaultLocaleAttribute =
 				structureElementRootElement.attribute("default-locale");

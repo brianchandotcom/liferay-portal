@@ -35,11 +35,14 @@ import java.util.TreeSet;
 public class SeleniumBuilder {
 
 	public static void main(String[] args) throws Exception {
-		InitUtil.initWithSpringAndModuleFramework();
+		try {
+			InitUtil.initWithSpringAndModuleFramework();
 
-		new SeleniumBuilder(args);
-
-		InitUtil.stopModuleFramework();
+			new SeleniumBuilder(args);
+		}
+		finally {
+			InitUtil.stopModuleFramework();
+		}
 	}
 
 	/**

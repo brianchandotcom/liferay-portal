@@ -860,6 +860,13 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.Group> getDescendants(
+		boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _group.getDescendants(site);
+	}
+
+	@Override
 	public java.lang.String getIconURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
 		return _group.getIconURL(themeDisplay);

@@ -4771,6 +4771,8 @@ public class JournalArticleLocalServiceImpl
 			user, groupId, articleId, article.getVersion(), addNewVersion,
 			content, ddmStructureKey, images);
 
+		article.setUserId(user.getUserId());
+		article.setUserName(user.getFullName());
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setFolderId(folderId);
 		article.setTreePath(article.buildTreePath());
@@ -4790,8 +4792,6 @@ public class JournalArticleLocalServiceImpl
 		article.setReviewDate(reviewDate);
 		article.setIndexable(indexable);
 		article.setSmallImage(smallImage);
-		article.setUserId(user.getUserId());
-		article.setUserName(user.getFullName());
 
 		if (smallImage) {
 			if ((smallImageFile != null) && (smallImageBytes != null)) {

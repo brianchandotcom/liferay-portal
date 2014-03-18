@@ -233,6 +233,10 @@ public interface Localization {
 		PortletPreferences preferences, PortletRequest portletRequest,
 		String parameter, String defaultValue);
 
+	public String getLocalizationXmlFromPreferences(
+		PortletPreferences preferences, PortletRequest portletRequest,
+		String parameter, String defaultValue, String prefix);
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getLocalizationMap(PortletRequest, String)}

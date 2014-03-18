@@ -432,6 +432,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 				top: 0;
 			}
 		}
+
+		.drag-handle {
+			color: #1273C7;
+		}
 	}
 
 	/* ---------- Breadcrumbs ---------- */

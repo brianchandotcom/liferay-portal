@@ -42,9 +42,33 @@
 		}
 	}
 
+	.drag-handle {
+		color: #555;
+		cursor: pointer;
+		font-size: 22px;
+
+		@include opacity(0.5);
+
+		padding: 4px 10px;
+		position: absolute;
+		right: 35px;
+
+		@include text-shadow(-1px -1px 2px #000, 1px 1px 2px #FFF);
+
+		top: 6px;
+
+		@include respond-to(desktop) {
+			display: none;
+		}
+	}
+
 	.lfr-nav-updateable.selected a:hover span {
 		cursor: text;
 	}
+}
+
+.controls-hidden .modify-pages .drag-handle {
+	display: none;
 }
 
 .nav {

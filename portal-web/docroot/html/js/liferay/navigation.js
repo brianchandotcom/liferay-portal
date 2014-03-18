@@ -167,6 +167,12 @@ AUI.add(
 						}
 					},
 
+					_afterMakeSortable: function(sortable) {
+						var instance = this;
+
+						sortable.delegate.dd.removeInvalid('a');
+					},
+
 					_cancelPage: function(event) {
 						var instance = this;
 
@@ -638,8 +644,6 @@ AUI.add(
 				var instance = this;
 
 				if (instance.get('isSortable')) {
-					var navBlock = instance.get('navBlock');
-
 					var sortable = new A.Sortable(
 						{
 							container: instance._navList,
@@ -672,7 +676,7 @@ AUI.add(
 						}
 					);
 
-					sortable.delegate.dd.removeInvalid('a');
+					instance._afterMakeSortable(sortable);
 				}
 			},
 			['dd-constrain', 'sortable'],

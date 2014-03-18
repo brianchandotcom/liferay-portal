@@ -18,6 +18,7 @@
 
 <%
 String navigation = ParamUtil.getString(request, "navigation");
+String browseBy = ParamUtil.getString(request, "browseBy");
 
 JournalFolder folder = (JournalFolder)request.getAttribute(WebKeys.JOURNAL_FOLDER);
 
@@ -72,7 +73,9 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			</liferay-ui:app-view-toolbar>
 
 			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-				<liferay-util:include page="/html/portlet/journal/breadcrumb.jsp" />
+				<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
+					<liferay-util:include page="/html/portlet/journal/breadcrumb.jsp" />
+				</c:if>
 			</div>
 
 			<%

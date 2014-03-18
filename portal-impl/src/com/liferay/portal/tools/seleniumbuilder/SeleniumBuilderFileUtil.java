@@ -66,10 +66,9 @@ public class SeleniumBuilderFileUtil {
 		try {
 			String content = readFile("../../../test.properties");
 
-			InputStream inputStream = new ByteArrayInputStream(
-				content.getBytes());
+			InputStream is = new ByteArrayInputStream(content.getBytes());
 
-			properties.load(inputStream);
+			properties.load(is);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

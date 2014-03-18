@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.UserGroupRole;
@@ -182,26 +183,29 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			group = GroupLocalServiceUtil.getGroup(groupId);
 		}
 
-		List<Role> roles = ListUtil.copy(
-			ResourceActionsUtil.getRoles(companyId, group, className, null));
-
-		if (groupId > 0) {
-			List<Role> teamRoles = RoleLocalServiceUtil.getTeamRoles(groupId);
-
-			roles.addAll(teamRoles);
-		}
-
-		long[] roleIdsArray = new long[roles.size()];
-
-		for (int i = 0; i < roleIdsArray.length; i++) {
-			Role role = roles.get(i);
-
-			roleIdsArray[i] = role.getRoleId();
-		}
-
-		boolean[] hasResourcePermissions = null;
+		List<Long> roleIds = new ArrayList<Long>();
+		List<String> groupRoleIds = new ArrayList<String>();
 
 		if (ResourceBlockLocalServiceUtil.isSupported(className)) {
+			List<Role> roles = ListUtil.copy(
+				ResourceActionsUtil.getRoles(
+					companyId, group, className, null));
+
+			if (groupId > 0) {
+				List<Role> teamRoles = RoleLocalServiceUtil.getTeamRoles(
+					groupId);
+
+				roles.addAll(teamRoles);
+			}
+
+			long[] roleIdsArray = new long[roles.size()];
+
+			for (int i = 0; i < roleIdsArray.length; i++) {
+				Role role = roles.get(i);
+
+				roleIdsArray[i] = role.getRoleId();
+			}
+
 			ResourceBlockIdsBag resourceBlockIdsBag =
 				ResourceBlockLocalServiceUtil.getResourceBlockIdsBag(
 					companyId, groupId, className, roleIdsArray);
@@ -212,8 +216,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			List<Long> resourceBlockIds =
 				resourceBlockIdsBag.getResourceBlockIds(actionId);
 
-			hasResourcePermissions = new boolean[roleIdsArray.length];
-
 			for (long resourceBlockId : resourceBlockIds) {
 				for (int i = 0; i < roleIdsArray.length; i++) {
 					int count =
@@ -221,34 +223,49 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 							getResourceBlockPermissionsCount(
 								resourceBlockId, roleIdsArray[i]);
 
-					hasResourcePermissions[i] = (count > 0);
+					if (count <= 0) {
+						continue;
+					}
+
+					Role role = roles.get(i);
+
+					if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
+						(role.getType() == RoleConstants.TYPE_SITE)) {
+
+						groupRoleIds.add(
+							groupId + StringPool.DASH + role.getRoleId());
+					}
+					else {
+						roleIds.add(role.getRoleId());
+					}
 				}
 			}
 		}
 		else {
-			hasResourcePermissions =
-				ResourcePermissionLocalServiceUtil.hasResourcePermissions(
+			List<ResourcePermission> resourcePermissions =
+				ResourcePermissionLocalServiceUtil.getResourcePermissions(
 					companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
-					classPK, roleIdsArray, ActionKeys.VIEW);
-		}
+					classPK);
 
-		List<Long> roleIds = new ArrayList<Long>();
-		List<String> groupRoleIds = new ArrayList<String>();
+			for (ResourcePermission resourcePermission : resourcePermissions) {
+				Role role = RoleLocalServiceUtil.fetchRole(
+					resourcePermission.getRoleId());
 
-		for (int i = 0; i < hasResourcePermissions.length; i++) {
-			if (!hasResourcePermissions[i]) {
-				continue;
-			}
+				if ((role == null) ||
+					!resourcePermission.hasActionId(ActionKeys.VIEW)) {
 
-			Role role = roles.get(i);
+					continue;
+				}
 
-			if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
-				(role.getType() == RoleConstants.TYPE_SITE)) {
+				if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
+					(role.getType() == RoleConstants.TYPE_SITE)) {
 
-				groupRoleIds.add(groupId + StringPool.DASH + role.getRoleId());
-			}
-			else {
-				roleIds.add(role.getRoleId());
+					groupRoleIds.add(
+						groupId + StringPool.DASH + role.getRoleId());
+				}
+				else {
+					roleIds.add(role.getRoleId());
+				}
 			}
 		}
 

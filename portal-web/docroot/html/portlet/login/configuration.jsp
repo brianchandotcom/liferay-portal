@@ -62,10 +62,10 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 			<aui:fieldset>
 				<liferay-ui:email-notification-settings
-					emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordSentBody", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY)) %>'
+					emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordSentBody", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY), "preferences") %>'
 					emailDefinitionTerms="<%= LoginUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, false) %>"
 					emailParam="emailPasswordSent"
-					emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordSentSubject", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT)) %>'
+					emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordSentSubject", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT), "preferences") %>'
 					showEmailEnabled="<%= false %>"
 				/>
 			</aui:fieldset>
@@ -78,10 +78,10 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 			<aui:fieldset>
 				<liferay-ui:email-notification-settings
-					emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordResetBody", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY)) %>'
+					emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordResetBody", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY), "preferences") %>'
 					emailDefinitionTerms="<%= LoginUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, true) %>"
 					emailParam="emailPasswordReset"
-					emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordResetSubject", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT)) %>'
+					emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordResetSubject", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT), "preferences") %>'
 					showEmailEnabled="<%= false %>"
 				/>
 			</aui:fieldset>

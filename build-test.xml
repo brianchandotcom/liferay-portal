@@ -2033,7 +2033,7 @@ tck.url=true</echo>
 				<if>
 					<equals arg1="${test.dependency.extract}" arg2="true" />
 					<then>
-						<basename property="test.dependency.file" file="${test.dependency.url}" />
+						<basename file="${test.dependency.url}" property="test.dependency.file" />
 						<if>
 							<or>
 								<contains string="${test.dependency.file}" substring=".war" />

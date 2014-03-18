@@ -36,8 +36,8 @@ public class HtmlUtil {
 	 * @return the escaped HTML text, or <code>null</code> if the text is
 	 *         <code>null</code>
 	 */
-	public static String escape(String html) {
-		return getHtml().escape(html);
+	public static String escape(String text) {
+		return getHtml().escape(text);
 	}
 
 	/**
@@ -49,8 +49,8 @@ public class HtmlUtil {
 	 *         mode, or <code>null</code> if the text is <code>null</code>
 	 * @see    com.liferay.portal.util.HtmlImpl#escape(String, int)
 	 */
-	public static String escape(String html, int mode) {
-		return getHtml().escape(html, mode);
+	public static String escape(String text, int mode) {
+		return getHtml().escape(text, mode);
 	}
 
 	/**
@@ -136,8 +136,8 @@ public class HtmlUtil {
 		return getHtml().extractText(html);
 	}
 
-	public static String fromInputSafe(String html) {
-		return getHtml().fromInputSafe(html);
+	public static String fromInputSafe(String text) {
+		return getHtml().fromInputSafe(text);
 	}
 
 	public static Html getHtml() {
@@ -174,8 +174,8 @@ public class HtmlUtil {
 	 * @return the converted text, or <code>null</code> if the text is
 	 *         <code>null</code>
 	 */
-	public static String replaceMsWordCharacters(String html) {
-		return getHtml().replaceMsWordCharacters(html);
+	public static String replaceMsWordCharacters(String text) {
+		return getHtml().replaceMsWordCharacters(text);
 	}
 
 	/**
@@ -206,8 +206,8 @@ public class HtmlUtil {
 	 * @return the text, without the stripped tag and its contents, or
 	 *         <code>null</code> if the text is <code>null</code>
 	 */
-	public static String stripBetween(String html, String tag) {
-		return getHtml().stripBetween(html, tag);
+	public static String stripBetween(String text, String tag) {
+		return getHtml().stripBetween(text, tag);
 	}
 
 	/**
@@ -217,12 +217,12 @@ public class HtmlUtil {
 	 * @return the text, without the stripped XML comments, or <code>null</code>
 	 *         if the text is <code>null</code>
 	 */
-	public static String stripComments(String html) {
-		return getHtml().stripComments(html);
+	public static String stripComments(String text) {
+		return getHtml().stripComments(text);
 	}
 
-	public static String stripHtml(String html) {
-		return getHtml().stripHtml(html);
+	public static String stripHtml(String text) {
+		return getHtml().stripHtml(text);
 	}
 
 	/**
@@ -237,20 +237,20 @@ public class HtmlUtil {
 	 * @return the encoded text that is safe to use as an HTML input field
 	 *         value, or <code>null</code> if the text is <code>null</code>
 	 */
-	public static String toInputSafe(String html) {
-		return getHtml().toInputSafe(html);
+	public static String toInputSafe(String text) {
+		return getHtml().toInputSafe(text);
 	}
 
-	public static String unescape(String html) {
-		return getHtml().unescape(html);
+	public static String unescape(String text) {
+		return getHtml().unescape(text);
 	}
 
-	public static String unescapeCDATA(String html) {
-		return getHtml().unescapeCDATA(html);
+	public static String unescapeCDATA(String text) {
+		return getHtml().unescapeCDATA(text);
 	}
 
-	public static String wordBreak(String html, int columns) {
-		return getHtml().wordBreak(html, columns);
+	public static String wordBreak(String text, int columns) {
+		return getHtml().wordBreak(text, columns);
 	}
 
 	public void setHtml(Html html) {

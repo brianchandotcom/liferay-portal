@@ -171,7 +171,7 @@ public class HtmlImpl implements Html {
 	 *         type, or <code>null</code> if the text is <code>null</code>
 	 */
 	@Override
-	public String escape(String text, int type) {
+	public String escape(String text, int mode) {
 		if (text == null) {
 			return null;
 		}
@@ -183,17 +183,17 @@ public class HtmlImpl implements Html {
 		String prefix = StringPool.BLANK;
 		String postfix = StringPool.BLANK;
 
-		if (type == ESCAPE_MODE_ATTRIBUTE) {
+		if (mode == ESCAPE_MODE_ATTRIBUTE) {
 			prefix = "&#x";
 			postfix = StringPool.SEMICOLON;
 		}
-		else if (type == ESCAPE_MODE_CSS) {
+		else if (mode == ESCAPE_MODE_CSS) {
 			prefix = StringPool.BACK_SLASH;
 		}
-		else if (type == ESCAPE_MODE_JS) {
+		else if (mode == ESCAPE_MODE_JS) {
 			prefix = "\\x";
 		}
-		else if (type == ESCAPE_MODE_URL) {
+		else if (mode == ESCAPE_MODE_URL) {
 			return HttpUtil.encodeURL(text, true);
 		}
 		else {
@@ -445,12 +445,12 @@ public class HtmlImpl implements Html {
 	 *         <code>null</code>
 	 */
 	@Override
-	public String replaceNewLine(String text) {
-		if (text == null) {
+	public String replaceNewLine(String html) {
+		if (html == null) {
 			return null;
 		}
 
-		return text.replaceAll("\r?\n", "<br />");
+		return html.replaceAll("\r?\n", "<br />");
 	}
 
 	/**

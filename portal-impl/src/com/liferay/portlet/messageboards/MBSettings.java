@@ -14,94 +14,90 @@
 
 package com.liferay.portlet.messageboards;
 
-import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.RSSUtil;
 
-import java.io.IOException;
-
-import javax.portlet.ValidatorException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Jorge Ferrer
  */
-public class MBSettings implements Settings {
+public class MBSettings extends BaseServiceSettings {
 
 	public MBSettings(Settings settings) {
-		_settings = settings;
+		super(settings, _FALLBACK_KEYS);
 	}
 
 	public String getEmailFromAddress() {
-		return getValue(
-			"emailFromAddress", PropsValues.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS);
+		return typedSettings.getValue("emailFromAddress");
 	}
 
 	public String getEmailFromName() {
-		return getValue(
-			"emailFromName", PropsValues.MESSAGE_BOARDS_EMAIL_FROM_NAME);
+		return typedSettings.getValue("emailFromName");
 	}
 
 	public String getEmailMessageAddedBody() {
-		String emailMessageAddedBody = getValue(
-			"emailMessageAddedBody", StringPool.BLANK);
+		String emailMessageAddedBody = typedSettings.getValue(
+			"emailMessageAddedBody");
 
 		if (Validator.isNotNull(emailMessageAddedBody)) {
 			return emailMessageAddedBody;
 		}
 
 		return ContentUtil.get(
-			PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY);
+			typedSettings.getValue(
+				PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY));
 	}
 
 	public String getEmailMessageAddedSubject() {
-		String emailMessageAddedSubject = getValue(
-			"emailMessageAddedSubject", StringPool.BLANK);
+		String emailMessageAddedSubject = typedSettings.getValue(
+			"emailMessageAddedSubject");
 
 		if (Validator.isNotNull(emailMessageAddedSubject)) {
 			return emailMessageAddedSubject;
 		}
 
 		return ContentUtil.get(
-			PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT);
+			typedSettings.getValue(
+				PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT));
 	}
 
 	public String getEmailMessageUpdatedBody() {
-		String emailMessageUpdatedBody = getValue(
-			"emailMessageUpdatedBody", StringPool.BLANK);
+		String emailMessageUpdatedBody = typedSettings.getValue(
+			"emailMessageUpdatedBody");
 
 		if (Validator.isNotNull(emailMessageUpdatedBody)) {
 			return emailMessageUpdatedBody;
 		}
 
 		return ContentUtil.get(
-			PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY);
+			typedSettings.getValue(
+				PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY));
 	}
 
 	public String getEmailMessageUpdatedSubject() {
-		String emailMessageUpdatedSubject = getValue(
-			"emailMessageUpdatedSubject", StringPool.BLANK);
+		String emailMessageUpdatedSubject = typedSettings.getValue(
+			"emailMessageUpdatedSubject");
 
 		if (Validator.isNotNull(emailMessageUpdatedSubject)) {
 			return emailMessageUpdatedSubject;
 		}
 
 		return ContentUtil.get(
-			PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT);
+			typedSettings.getValue(
+				PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT));
 	}
 
 	public String getMessageFormat() {
-		String messageFormat = getValue(
-			"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
+		String messageFormat = typedSettings.getValue("messageFormat");
 
 		if (MBUtil.isValidMessageFormat(messageFormat)) {
 			return messageFormat;
@@ -112,147 +108,134 @@ public class MBSettings implements Settings {
 
 	public String[] getPriorities(String currentLanguageId) {
 		return LocalizationUtil.getSettingsValues(
-			_settings, "priorities", currentLanguageId);
+			typedSettings, "priorities", currentLanguageId);
 	}
 
 	public String[] getRanks(String languageId) {
 		return LocalizationUtil.getSettingsValues(
-			_settings, "ranks", languageId);
+			typedSettings, "ranks", languageId);
 	}
 
 	public String getRecentPostsDateOffset() {
-		return getValue("recentPostsDateOffset", "7");
+		return typedSettings.getValue("recentPostsDateOffset");
 	}
 
 	public int getRSSDelta() {
-		return GetterUtil.getInteger(
-			getValue("rssDelta", StringPool.BLANK),
-			SearchContainer.DEFAULT_DELTA);
+		return typedSettings.getIntegerValue("rssDelta");
 	}
 
 	public String getRSSDisplayStyle() {
-		return getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+		return typedSettings.getValue(
+			"rssDisplayStyle", RSSUtil.DISPLAY_STYLE_FULL_CONTENT);
 	}
 
 	public String getRSSFeedType() {
-		return getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
-	}
-
-	@Override
-	public String getValue(String key, String defaultValue) {
-		String value = _settings.getValue(key, defaultValue);
-
-		if (Validator.isNotNull(value)) {
-			return value;
-		}
-
-		String fallbackKey = getFallbackKey(key);
-
-		if (fallbackKey != null) {
-			return _settings.getValue(fallbackKey, value);
-		}
-
-		return null;
-	}
-
-	@Override
-	public String[] getValues(String key, String[] defaultValue) {
-		return _settings.getValues(key, defaultValue);
+		return typedSettings.getValue(
+			"rssFeedType", RSSUtil.getFeedType(RSSUtil.ATOM, 1.0));
 	}
 
 	public boolean isAllowAnonymousPosting() {
-		return GetterUtil.getBoolean(
-			getValue("allowAnonymousPosting", null),
-			PropsValues.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
+		return typedSettings.getBooleanValue("allowAnonymousPosting");
 	}
 
 	public boolean isEmailHtmlFormat() {
-		String emailHtmlFormat = getValue("emailHtmlFormat", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailHtmlFormat)) {
-			return GetterUtil.getBoolean(emailHtmlFormat);
-		}
-
-		return PropsValues.MESSAGE_BOARDS_EMAIL_HTML_FORMAT;
+		return typedSettings.getBooleanValue("emailHtmlFormat");
 	}
 
 	public boolean isEmailMessageAddedEnabled() {
-		String emailMessageAddedEnabled = getValue(
-			"emailMessageAddedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailMessageAddedEnabled)) {
-			return GetterUtil.getBoolean(emailMessageAddedEnabled);
-		}
-
-		return PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_ENABLED;
+		return typedSettings.getBooleanValue("emailMessageAddedEnabled");
 	}
 
 	public boolean isEmailMessageUpdatedEnabled() {
-		String emailMessageUpdatedEnabled = getValue(
-			"emailMessageUpdatedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailMessageUpdatedEnabled)) {
-			return GetterUtil.getBoolean(emailMessageUpdatedEnabled);
-		}
-
-		return PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_ENABLED;
+		return typedSettings.getBooleanValue("emailMessageUpdatedEnabled");
 	}
 
 	public boolean isEnableFlags() {
-		return GetterUtil.getBoolean(getValue("enableFlags", null), true);
+		return typedSettings.getBooleanValue("enableFlags");
 	}
 
 	public boolean isEnableRatings() {
-		return GetterUtil.getBoolean(getValue("enableRatings", null), true);
+		return typedSettings.getBooleanValue("enableRatings");
 	}
 
 	public boolean isEnableRSS() {
-		if (PortalUtil.isRSSFeedsEnabled()) {
-			return GetterUtil.getBoolean(getValue("enableRss", null), true);
+		if (!PortalUtil.isRSSFeedsEnabled()) {
+			return false;
 		}
 
-		return false;
+		return typedSettings.getBooleanValue("enableRss");
 	}
 
 	public boolean isSubscribeByDefault() {
-		return GetterUtil.getBoolean(
-			getValue("subscribeByDefault", null),
-			PropsValues.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT);
+		return typedSettings.getBooleanValue("subscribeByDefault");
 	}
 
 	public boolean isThreadAsQuestionByDefault() {
-		return GetterUtil.getBoolean(
-			getValue("threadAsQuestionByDefault", null));
+		return typedSettings.getBooleanValue("threadAsQuestionByDefault");
 	}
 
-	@Override
-	public Settings setValue(String key, String value) {
-		return _settings.setValue(key, value);
+	private static final Map<String, String> _FALLBACK_KEYS =
+		new HashMap<String, String>();
+
+	static {
+		_FALLBACK_KEYS.put(
+			"allowAnonymousPosting",
+			PropsKeys.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
+
+		_FALLBACK_KEYS.put(
+			"emailFromAddress", PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS);
+		_FALLBACK_KEYS.put(
+			PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+
+		_FALLBACK_KEYS.put(
+			"emailFromName", PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_NAME);
+		_FALLBACK_KEYS.put(
+			PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+
+		_FALLBACK_KEYS.put(
+			"emailHtmlFormat", PropsKeys.MESSAGE_BOARDS_EMAIL_HTML_FORMAT);
+
+		_FALLBACK_KEYS.put(
+			"emailMessageAddedEnabled",
+			PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_ENABLED);
+
+		_FALLBACK_KEYS.put(
+			"emailMessageUpdatedEnabled",
+			PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_ENABLED);
+
+		_FALLBACK_KEYS.put(
+			"enableFlags", PropsKeys.MESSAGE_BOARDS_FLAGS_ENABLED);
+
+		_FALLBACK_KEYS.put(
+			"enableRatings", PropsKeys.MESSAGE_BOARDS_RATINGS_ENABLED);
+
+		_FALLBACK_KEYS.put("enableRss", PropsKeys.MESSAGE_BOARDS_RSS_ENABLED);
+
+		_FALLBACK_KEYS.put(
+			"messageFormat", PropsKeys.MESSAGE_BOARDS_MESSAGE_FORMATS_DEFAULT);
+
+		_FALLBACK_KEYS.put(
+			"priorities", PropsKeys.MESSAGE_BOARDS_THREAD_PRIORITIES);
+
+		_FALLBACK_KEYS.put("ranks", PropsKeys.MESSAGE_BOARDS_USER_RANKS);
+
+		_FALLBACK_KEYS.put(
+			"recentPostsDateOffset",
+			PropsKeys.MESSAGE_BOARDS_RECENT_POSTS_DATE_OFFSET);
+
+		_FALLBACK_KEYS.put(
+			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+
+		_FALLBACK_KEYS.put(
+			"rssDisplayStyle", PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT);
+
+		_FALLBACK_KEYS.put("rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT);
+
+		_FALLBACK_KEYS.put(
+			"subscribeByDefault",
+			PropsKeys.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT);
 	}
-
-	@Override
-	public Settings setValues(String key, String[] values) {
-		return _settings.setValues(key, values);
-	}
-
-	@Override
-	public void store() throws IOException, ValidatorException {
-		_settings.store();
-	}
-
-	protected String getFallbackKey(String key) {
-		String fallbackKey = null;
-
-		if (key.equals("emailFromAddress")) {
-			fallbackKey = PropsKeys.ADMIN_EMAIL_FROM_ADDRESS;
-		}
-		else if (key.equals("emailFromName")) {
-			fallbackKey = PropsKeys.ADMIN_EMAIL_FROM_NAME;
-		}
-
-		return fallbackKey;
-	}
-
-	private Settings _settings;
 
 }

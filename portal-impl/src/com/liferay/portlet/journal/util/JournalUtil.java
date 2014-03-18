@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -102,6 +103,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Pattern;
@@ -578,19 +580,26 @@ public class JournalUtil {
 		return articles;
 	}
 
-	public static String getEmailArticleAddedBody(
+	public static Map<Locale, String> getEmailArticleAddedBodyMap(
 		PortletPreferences preferences) {
 
-		String emailArticleAddedBody = preferences.getValue(
-			"emailArticleAddedBody", StringPool.BLANK);
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleAddedBody");
 
-		if (Validator.isNotNull(emailArticleAddedBody)) {
-			return emailArticleAddedBody;
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
 		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_ADDED_BODY));
-		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_ADDED_BODY)));
+
+		return map;
 	}
 
 	public static boolean getEmailArticleAddedEnabled(
@@ -608,19 +617,26 @@ public class JournalUtil {
 		}
 	}
 
-	public static String getEmailArticleAddedSubject(
+	public static Map<Locale, String> getEmailArticleAddedSubjectMap(
 		PortletPreferences preferences) {
 
-		String emailArticleAddedSubject = preferences.getValue(
-			"emailArticleAddedSubject", StringPool.BLANK);
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleAddedSubject");
 
-		if (Validator.isNotNull(emailArticleAddedSubject)) {
-			return emailArticleAddedSubject;
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
 		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_ADDED_SUBJECT));
-		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_ADDED_SUBJECT)));
+
+		return map;
 	}
 
 	public static boolean getEmailArticleAnyEventEnabled(
@@ -639,20 +655,27 @@ public class JournalUtil {
 		return false;
 	}
 
-	public static String getEmailArticleApprovalDeniedBody(
+	public static Map<Locale, String> getEmailArticleApprovalDeniedBodyMap(
 		PortletPreferences preferences) {
 
-		String emailArticleApprovalDeniedBody = preferences.getValue(
-			"emailArticleApprovalDeniedBody", StringPool.BLANK);
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleApprovalDeniedBody");
 
-		if (Validator.isNotNull(emailArticleApprovalDeniedBody)) {
-			return emailArticleApprovalDeniedBody;
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
 		}
-		else {
-			return ContentUtil.get(
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
 				PropsUtil.get(
-					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_BODY));
-		}
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_BODY)));
+
+		return map;
 	}
 
 	public static boolean getEmailArticleApprovalDeniedEnabled(
@@ -671,36 +694,50 @@ public class JournalUtil {
 		}
 	}
 
-	public static String getEmailArticleApprovalDeniedSubject(
+	public static Map<Locale, String> getEmailArticleApprovalDeniedSubjectMap(
 		PortletPreferences preferences) {
 
-		String emailArticleApprovalDeniedSubject = preferences.getValue(
-			"emailArticleApprovalDeniedSubject", StringPool.BLANK);
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleApprovalDeniedSubject");
 
-		if (Validator.isNotNull(emailArticleApprovalDeniedSubject)) {
-			return emailArticleApprovalDeniedSubject;
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
 		}
-		else {
-			return ContentUtil.get(
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
 				PropsUtil.get(
-					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_SUBJECT));
-		}
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_SUBJECT)));
+
+		return map;
 	}
 
-	public static String getEmailArticleApprovalGrantedBody(
+	public static Map<Locale, String> getEmailArticleApprovalGrantedBodyMap(
 		PortletPreferences preferences) {
 
-		String emailArticleApprovalGrantedBody = preferences.getValue(
-			"emailArticleApprovalGrantedBody", StringPool.BLANK);
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleApprovalGrantedBody");
 
-		if (Validator.isNotNull(emailArticleApprovalGrantedBody)) {
-			return emailArticleApprovalGrantedBody;
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
 		}
-		else {
-			return ContentUtil.get(
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
 				PropsUtil.get(
-					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_BODY));
-		}
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_BODY)));
+
+		return map;
 	}
 
 	public static boolean getEmailArticleApprovalGrantedEnabled(
@@ -719,36 +756,50 @@ public class JournalUtil {
 		}
 	}
 
-	public static String getEmailArticleApprovalGrantedSubject(
+	public static Map<Locale, String> getEmailArticleApprovalGrantedSubjectMap(
 		PortletPreferences preferences) {
 
-		String emailArticleApprovalGrantedSubject = preferences.getValue(
-			"emailArticleApprovalGrantedSubject", StringPool.BLANK);
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleApprovalGrantedSubject");
 
-		if (Validator.isNotNull(emailArticleApprovalGrantedSubject)) {
-			return emailArticleApprovalGrantedSubject;
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
 		}
-		else {
-			return ContentUtil.get(
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
 				PropsUtil.get(
-					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_SUBJECT));
-		}
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_SUBJECT)));
+
+		return map;
 	}
 
-	public static String getEmailArticleApprovalRequestedBody(
+	public static Map<Locale, String> getEmailArticleApprovalRequestedBodyMap(
 		PortletPreferences preferences) {
 
-		String emailArticleApprovalRequestedBody = preferences.getValue(
-			"emailArticleApprovalRequestedBody", StringPool.BLANK);
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleApprovalRequestedBody");
 
-		if (Validator.isNotNull(emailArticleApprovalRequestedBody)) {
-			return emailArticleApprovalRequestedBody;
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
 		}
-		else {
-			return ContentUtil.get(
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
 				PropsUtil.get(
-					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_BODY));
-		}
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_BODY)));
+
+		return map;
 	}
 
 	public static boolean getEmailArticleApprovalRequestedEnabled(
@@ -768,36 +819,49 @@ public class JournalUtil {
 		}
 	}
 
-	public static String getEmailArticleApprovalRequestedSubject(
+	public static Map<Locale, String> getEmailArticleApprovalRequestedSubjectMap(
 		PortletPreferences preferences) {
 
-		String emailArticleApprovalRequestedSubject = preferences.getValue(
-			"emailArticleApprovalRequestedSubject", StringPool.BLANK);
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleApprovalRequestedSubject");
 
-		if (Validator.isNotNull(emailArticleApprovalRequestedSubject)) {
-			return emailArticleApprovalRequestedSubject;
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
 		}
-		else {
-			return ContentUtil.get(
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
 				PropsUtil.get(
-					PropsKeys.
-						JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT));
-		}
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT)));
+
+		return map;
 	}
 
-	public static String getEmailArticleReviewBody(
+	public static Map<Locale, String> getEmailArticleReviewBodyMap(
 		PortletPreferences preferences) {
 
-		String emailArticleReviewBody = preferences.getValue(
-			"emailArticleReviewBody", StringPool.BLANK);
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleReviewBody");
 
-		if (Validator.isNotNull(emailArticleReviewBody)) {
-			return emailArticleReviewBody;
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
 		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_REVIEW_BODY));
-		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_REVIEW_BODY)));
+
+		return map;
 	}
 
 	public static boolean getEmailArticleReviewEnabled(
@@ -815,34 +879,48 @@ public class JournalUtil {
 		}
 	}
 
-	public static String getEmailArticleReviewSubject(
+	public static Map<Locale, String> getEmailArticleReviewSubjectMap(
 		PortletPreferences preferences) {
 
-		String emailArticleReviewSubject = preferences.getValue(
-			"emailArticleReviewSubject", StringPool.BLANK);
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleReviewSubject");
 
-		if (Validator.isNotNull(emailArticleReviewSubject)) {
-			return emailArticleReviewSubject;
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
 		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_REVIEW_SUBJECT));
-		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_REVIEW_SUBJECT)));
+
+		return map;
 	}
 
-	public static String getEmailArticleUpdatedBody(
+	public static Map<Locale, String> getEmailArticleUpdatedBodyMap(
 		PortletPreferences preferences) {
 
-		String emailArticleUpdatedBody = preferences.getValue(
-			"emailArticleUpdatedBody", StringPool.BLANK);
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleUpdatedBody");
 
-		if (Validator.isNotNull(emailArticleUpdatedBody)) {
-			return emailArticleUpdatedBody;
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
 		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_UPDATED_BODY));
-		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_UPDATED_BODY)));
+
+		return map;
 	}
 
 	public static boolean getEmailArticleUpdatedEnabled(
@@ -860,19 +938,27 @@ public class JournalUtil {
 		}
 	}
 
-	public static String getEmailArticleUpdatedSubject(
+	public static Map<Locale, String> getEmailArticleUpdatedSubjectMap(
 		PortletPreferences preferences) {
 
-		String emailArticleUpdatedSubject = preferences.getValue(
-			"emailArticleUpdatedSubject", StringPool.BLANK);
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailArticleUpdatedSubject");
 
-		if (Validator.isNotNull(emailArticleUpdatedSubject)) {
-			return emailArticleUpdatedSubject;
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
 		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_UPDATED_SUBJECT));
-		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(
+					PropsKeys.JOURNAL_EMAIL_ARTICLE_UPDATED_SUBJECT)));
+
+		return map;
 	}
 
 	public static Map<String, String> getEmailDefinitionTerms(

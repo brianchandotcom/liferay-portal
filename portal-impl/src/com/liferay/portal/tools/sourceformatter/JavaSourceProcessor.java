@@ -2802,7 +2802,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Properties _javaTermSortExclusions;
 	private Properties _lineLengthExclusions;
 	private Pattern _logPattern = Pattern.compile(
-		"Log _log = LogFactoryUtil.getLog\\(\n*\t*(.+)\\.class\\)");
+		"\n\tprivate static Log _log = LogFactoryUtil.getLog\\(\n*" +
+			"\t*(.+)\\.class\\)");
 	private Properties _secureRandomExclusions;
 	private Properties _staticLogVariableExclusions;
 	private Properties _upgradeServiceUtilExclusions;

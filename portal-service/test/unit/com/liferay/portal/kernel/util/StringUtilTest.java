@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -236,6 +239,22 @@ public class StringUtilTest {
 				new String[] {"Aloha", "ALOHA"}));
 	}
 
+	@Test(timeout = 1000)
+	public void testReplaceMap() throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+
+		map.put("Hallo", "Hello");
+		map.put("Wirld", "World");
+
+		Assert.assertEquals(
+			"Hello World",
+			StringUtil.replace("AB Hallo CD AB Wirld CD", "AB ", " CD", map));
+		Assert.assertEquals(
+			"Hello World",
+			StringUtil.replace(
+				"Hello World", StringPool.BLANK, StringPool.BLANK, map));
+	}
+
 	@Test
 	public void testReplaceSpaceString() throws Exception {
 		Assert.assertEquals(
@@ -260,6 +279,25 @@ public class StringUtilTest {
 				"Hello World HELLO WORLD Hello World",
 				new String[] {"Hello", "HELLO"},
 				new String[] {"Aloha", "ALOHA"}));
+	}
+
+	@Test(timeout = 1000)
+	public void testReplaceWithStringBundle() throws Exception {
+		Map<String, StringBundler> map = new HashMap<String, StringBundler>();
+
+		map.put("Hallo", new StringBundler("Hello"));
+		map.put("Wirld", new StringBundler("World"));
+
+		Assert.assertEquals(
+			"Hello World",
+			String.valueOf(
+				StringUtil.replaceWithStringBundler(
+					"AB Hallo CD AB Wirld CD", "AB ", " CD", map)));
+		Assert.assertEquals(
+			"Hello World",
+			String.valueOf(
+				StringUtil.replaceWithStringBundler(
+					"Hello World", StringPool.BLANK, StringPool.BLANK, map)));
 	}
 
 	@Test
@@ -327,6 +365,20 @@ public class StringUtilTest {
 		Assert.assertEquals("hijk", lines[2]);
 		Assert.assertEquals("", lines[3]);
 		Assert.assertEquals("lmn", lines[4]);
+	}
+
+	@Test(timeout = 1000)
+	public void testStripBetween() throws Exception {
+		Assert.assertEquals(
+			"One small leap for mankind",
+			StringUtil.stripBetween(
+				"One small step for man, one giant leap for mankind", "step",
+				"giant "));
+		Assert.assertEquals(
+			"One small step for man, one giant leap for mankind",
+			StringUtil.stripBetween(
+				"One small step for man, one giant leap for mankind",
+				StringPool.BLANK, StringPool.BLANK));
 	}
 
 	@Test

@@ -732,10 +732,6 @@ public class JournalArticleLocalServiceImpl
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		if (Validator.isNull(article.getStructureId())) {
-			return;
-		}
-
 		checkStructure(article);
 	}
 
@@ -1796,80 +1792,71 @@ public class JournalArticleLocalServiceImpl
 
 		String defaultDDMTemplateKey = article.getTemplateId();
 
-		if (article.isTemplateDriven()) {
-			if (Validator.isNull(ddmTemplateKey)) {
-				ddmTemplateKey = defaultDDMTemplateKey;
-			}
-
-			tokens.put("structure_id", article.getStructureId());
-			tokens.put("template_id", ddmTemplateKey);
+		if (Validator.isNull(ddmTemplateKey)) {
+			ddmTemplateKey = defaultDDMTemplateKey;
 		}
+
+		tokens.put("structure_id", article.getStructureId());
+		tokens.put("template_id", ddmTemplateKey);
 
 		String xml = article.getContent();
 
 		try {
-			Document document = null;
+			Document document = SAXReaderUtil.read(xml);
 
-			Element rootElement = null;
+			Element rootElement = document.getRootElement();
 
-			if (article.isTemplateDriven()) {
-				document = SAXReaderUtil.read(xml);
+			Document requestDocument = SAXReaderUtil.read(xmlRequest);
 
-				rootElement = document.getRootElement();
+			List<Element> pages = rootElement.elements("page");
 
-				Document requestDocument = SAXReaderUtil.read(xmlRequest);
+			if (!pages.isEmpty()) {
+				pageFlow = true;
 
-				List<Element> pages = rootElement.elements("page");
+				String targetPage = requestDocument.valueOf(
+					"/request/parameters/parameter[name='targetPage']/value");
 
-				if (!pages.isEmpty()) {
-					pageFlow = true;
+				Element pageElement = null;
 
-					String targetPage = requestDocument.valueOf(
-						"/request/parameters/parameter[name='targetPage']/" +
-							"value");
+				if (Validator.isNotNull(targetPage)) {
+					targetPage = HtmlUtil.escapeXPathAttribute(targetPage);
 
-					Element pageElement = null;
+					XPath xPathSelector = SAXReaderUtil.createXPath(
+						"/root/page[@id = " + targetPage + "]");
 
-					if (Validator.isNotNull(targetPage)) {
-						targetPage = HtmlUtil.escapeXPathAttribute(targetPage);
-
-						XPath xPathSelector = SAXReaderUtil.createXPath(
-							"/root/page[@id = " + targetPage + "]");
-
-						pageElement = (Element)xPathSelector.selectSingleNode(
-							document);
-					}
-
-					if (pageElement != null) {
-						document = SAXReaderUtil.createDocument(pageElement);
-
-						rootElement = document.getRootElement();
-
-						numberOfPages = pages.size();
-					}
-					else {
-						if (page > pages.size()) {
-							page = 1;
-						}
-
-						pageElement = pages.get(page - 1);
-
-						document = SAXReaderUtil.createDocument(pageElement);
-
-						rootElement = document.getRootElement();
-
-						numberOfPages = pages.size();
-						paginate = true;
-					}
+					pageElement = (Element)xPathSelector.selectSingleNode(
+						document);
 				}
 
-				rootElement.add(requestDocument.getRootElement().createCopy());
+				if (pageElement != null) {
+					document = SAXReaderUtil.createDocument(pageElement);
 
-				JournalUtil.addAllReservedEls(
-					rootElement, tokens, article, languageId, themeDisplay);
+					rootElement = document.getRootElement();
 
-				xml = DDMXMLUtil.formatXML(document);
+					numberOfPages = pages.size();
+				}
+				else {
+					if (page > pages.size()) {
+						page = 1;
+					}
+
+					pageElement = pages.get(page - 1);
+
+					document = SAXReaderUtil.createDocument(pageElement);
+
+					rootElement = document.getRootElement();
+
+					numberOfPages = pages.size();
+					paginate = true;
+				}
 			}
+
+			rootElement.add(requestDocument.getRootElement().createCopy());
+
+			JournalUtil.addAllReservedEls(
+				rootElement, tokens, article, languageId, themeDisplay);
+
+			xml = DDMXMLUtil.formatXML(document);
 		}
 		catch (DocumentException de) {
 			throw new SystemException(de);
@@ -1882,59 +1869,51 @@ public class JournalArticleLocalServiceImpl
 						article.getVersion() + " " + languageId);
 			}
 
-			String script = null;
-			String langType = null;
+			// Try with specified template first (in the current group and the
+			// global group). If a template is not specified, use the default
+			// one. If the specified template does not exist, use the default
+			// one. If the default one does not exist, throw an exception.
 
-			if (article.isTemplateDriven()) {
+			DDMTemplate ddmTemplate = null;
 
-				// Try with specified template first (in the current group and
-				// the global group). If a template is not specified, use the
-				// default one. If the specified template does not exist, use
-				// the default one. If the default one does not exist, throw an
-				// exception.
-
-				DDMTemplate ddmTemplate = null;
-
+			try {
+				ddmTemplate = ddmTemplatePersistence.findByG_C_T(
+					PortalUtil.getSiteGroupId(article.getGroupId()),
+					classNameLocalService.getClassNameId(DDMStructure.class),
+					ddmTemplateKey);
+			}
+			catch (NoSuchTemplateException nste1) {
 				try {
+					Group companyGroup = groupLocalService.getCompanyGroup(
+						article.getCompanyId());
+
 					ddmTemplate = ddmTemplatePersistence.findByG_C_T(
-						PortalUtil.getSiteGroupId(article.getGroupId()),
+						companyGroup.getGroupId(),
 						classNameLocalService.getClassNameId(
 							DDMStructure.class),
 						ddmTemplateKey);
-				}
-				catch (NoSuchTemplateException nste1) {
-					try {
-						Group companyGroup = groupLocalService.getCompanyGroup(
-							article.getCompanyId());
 
+					tokens.put(
+						"company_group_id",
+						String.valueOf(companyGroup.getGroupId()));
+				}
+				catch (NoSuchTemplateException nste2) {
+					if (!defaultDDMTemplateKey.equals(ddmTemplateKey)) {
 						ddmTemplate = ddmTemplatePersistence.findByG_C_T(
-							companyGroup.getGroupId(),
+							PortalUtil.getSiteGroupId(article.getGroupId()),
 							classNameLocalService.getClassNameId(
 								DDMStructure.class),
-							ddmTemplateKey);
-
-						tokens.put(
-							"company_group_id",
-							String.valueOf(companyGroup.getGroupId()));
+							defaultDDMTemplateKey);
 					}
-					catch (NoSuchTemplateException nste2) {
-						if (!defaultDDMTemplateKey.equals(ddmTemplateKey)) {
-							ddmTemplate = ddmTemplatePersistence.findByG_C_T(
-								PortalUtil.getSiteGroupId(article.getGroupId()),
-								classNameLocalService.getClassNameId(
-									DDMStructure.class),
-								defaultDDMTemplateKey);
-						}
-						else {
-							throw nste1;
-						}
+					else {
+						throw nste1;
 					}
 				}
-
-				script = ddmTemplate.getScript();
-				langType = ddmTemplate.getLanguage();
-				cacheable = ddmTemplate.isCacheable();
 			}
+
+			String script = ddmTemplate.getScript();
+			String langType = ddmTemplate.getLanguage();
+			cacheable = ddmTemplate.isCacheable();
 
 			content = JournalUtil.transform(
 				themeDisplay, tokens, viewMode, languageId, xml, script,
@@ -3555,13 +3534,7 @@ public class JournalArticleLocalServiceImpl
 
 		String content = article.getContent();
 
-		if (article.isTemplateDriven()) {
-			content = JournalUtil.removeArticleLocale(content, languageId);
-		}
-		else {
-			content = LocalizationUtil.removeLocalization(
-				content, "static-content", languageId, true);
-		}
+		content = JournalUtil.removeArticleLocale(content, languageId);
 
 		article.setContent(content);
 
@@ -5992,28 +5965,9 @@ public class JournalArticleLocalServiceImpl
 
 			Element rootElement = document.getRootElement();
 
-			if (Validator.isNotNull(ddmStructureKey)) {
-				format(
-					user, groupId, articleId, version, incrementVersion,
-					rootElement, images);
-			}
-			else {
-				List<Element> staticContentElements = rootElement.elements(
-					"static-content");
-
-				for (Element staticContentElement : staticContentElements) {
-					String staticContent = staticContentElement.getText();
-
-					staticContent = SanitizerUtil.sanitize(
-						user.getCompanyId(), groupId, user.getUserId(),
-						JournalArticle.class.getName(), 0,
-						ContentTypes.TEXT_HTML, staticContent);
-
-					staticContentElement.clearContent();
-
-					staticContentElement.addCDATA(staticContent);
-				}
-			}
+			format(
+				user, groupId, articleId, version, incrementVersion,
+				rootElement, images);
 
 			content = DDMXMLUtil.formatXML(document);
 		}
@@ -6744,30 +6698,25 @@ public class JournalArticleLocalServiceImpl
 
 		validateContent(content);
 
-		if (Validator.isNotNull(ddmStructureKey)) {
-			DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			PortalUtil.getSiteGroupId(groupId),
+			classNameLocalService.getClassNameId(JournalArticle.class),
+			ddmStructureKey, true);
+
+		validateDDMStructureFields(ddmStructure, classNameId, serviceContext);
+
+		if (Validator.isNotNull(ddmTemplateKey)) {
+			DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
 				PortalUtil.getSiteGroupId(groupId),
-				classNameLocalService.getClassNameId(JournalArticle.class),
-				ddmStructureKey, true);
+				classNameLocalService.getClassNameId(DDMStructure.class),
+				ddmTemplateKey, true);
 
-			validateDDMStructureFields(
-				ddmStructure, classNameId, serviceContext);
-
-			if (Validator.isNotNull(ddmTemplateKey)) {
-				DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
-					PortalUtil.getSiteGroupId(groupId),
-					classNameLocalService.getClassNameId(DDMStructure.class),
-					ddmTemplateKey, true);
-
-				if (ddmTemplate.getClassPK() != ddmStructure.getStructureId()) {
-					throw new NoSuchTemplateException();
-				}
-			}
-			else if (classNameId ==
-						JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-
+			if (ddmTemplate.getClassPK() != ddmStructure.getStructureId()) {
 				throw new NoSuchTemplateException();
 			}
+		}
+		else if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+			throw new NoSuchTemplateException();
 		}
 
 		if ((expirationDate != null) && expirationDate.before(new Date()) &&

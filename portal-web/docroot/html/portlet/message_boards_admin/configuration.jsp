@@ -210,7 +210,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 						String value = StringPool.BLANK;
 
 						if (priorities.length > i) {
-							String[] priority = StringUtil.split(priorities[i]);
+							String[] priority = StringUtil.split(priorities[i], StringPool.PIPE);
 
 							try {
 								name = priority[0];
@@ -286,7 +286,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 							continue;
 						}
 
-						String[] tempPriorities = LocalizationUtil.getSettingsValues(mbSettings, "priorities", LocaleUtil.toLanguageId(locales[i]));
+						String[] tempPriorities = mbSettings.getPriorities(LocaleUtil.toLanguageId(locales[i]));
 
 						for (int j = 0; j < 10; j++) {
 							String name = StringPool.BLANK;

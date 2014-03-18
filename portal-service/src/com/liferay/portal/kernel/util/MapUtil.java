@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.lang.reflect.Constructor;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -47,6 +48,24 @@ public class MapUtil {
 		}
 
 		return outputMap;
+	}
+
+	public static <T> Map<T, T> fromArray(T... array) {
+		if ((array.length % 2) != 0) {
+			throw new IllegalArgumentException(
+				"Array length is not an even number");
+		}
+
+		Map<T, T> map = new HashMap<T, T>();
+
+		for (int i = 0; i < array.length; i += 2) {
+			T key = array[i];
+			T value = array[i + 1];
+
+			map.put(key, value);
+		}
+
+		return null;
 	}
 
 	public static boolean getBoolean(Map<String, ?> map, String key) {

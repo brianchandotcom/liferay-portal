@@ -340,8 +340,9 @@ public abstract class DLAppTestUtil {
 			}
 		}
 
-		return DLAppServiceUtil.addFolder(
-			repositoryId, parentFolderId, name, description, serviceContext);
+		return DLAppLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), repositoryId, parentFolderId, name,
+			description, serviceContext);
 	}
 
 	public static Folder addFolder(

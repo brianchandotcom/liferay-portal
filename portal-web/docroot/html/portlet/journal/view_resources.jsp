@@ -18,6 +18,7 @@
 
 <%
 String navigation = ParamUtil.getString(request, "navigation", "home");
+String browseBy = ParamUtil.getString(request, "browseBy");
 
 JournalFolder folder = (JournalFolder)request.getAttribute(WebKeys.JOURNAL_FOLDER);
 
@@ -32,7 +33,6 @@ if ((folder == null) && (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDE
 	}
 }
 
-String browseBy = ParamUtil.getString(request, "browseBy");
 boolean viewEntries = ParamUtil.getBoolean(request, "viewEntries");
 boolean viewEntriesPage = ParamUtil.getBoolean(request, "viewEntriesPage");
 boolean viewFolders = ParamUtil.getBoolean(request, "viewFolders");

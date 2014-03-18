@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -57,7 +57,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Preston Crary
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLFileVersionTest extends BaseDLAppTestCase {
 
@@ -109,13 +109,13 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		super.tearDown();
-
 		ExpandoTable expandoTable =
 			ExpandoTableLocalServiceUtil.getDefaultTable(
 				PortalUtil.getDefaultCompanyId(), DLFileEntry.class.getName());
 
 		ExpandoTableLocalServiceUtil.deleteTable(expandoTable);
+
+		super.tearDown();
 	}
 
 	@Test

@@ -19,16 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-   <td>EXTEND_ACTION_PATH</td>
-   <td>CPWebcontentAddwebcontent</td>
-   <td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>WEB_CONTENT_TRANSLATION_IFRAME</td>
 	<td>//iframe[contains(@src,'_15_toLanguageId')]</td>
 	<td></td>
@@ -41,6 +31,71 @@
 <tr>
 	<td>CONTENT_FIELD</td>
 	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOLEAN_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/label[@class='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/span/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DECIMAL_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENTS_AND_MEDIA_FIELD_BUTTON</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/div/button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HTML_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMAGE_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input[contains(@type,'file')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INTEGER_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINK_TO_PAGE_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NUMBER_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RADIO_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/label[contains(.,'${key_radioValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_BOX_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
 	<td></td>
 </tr>
 <tr>

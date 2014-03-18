@@ -387,6 +387,22 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		return ddmStructurePersistence.filterFindByGroupId(groupIds);
 	}
 
+	@Override
+	public List<DDMStructure> getStructures(long[] groupIds, long classNameId)
+		throws SystemException {
+
+		return ddmStructurePersistence.filterFindByG_C(groupIds, classNameId);
+	}
+
+	@Override
+	public List<DDMStructure> getStructures(
+			long[] groupIds, long classNameId, int start, int end)
+		throws SystemException {
+
+		return ddmStructurePersistence.filterFindByG_C(
+			groupIds, classNameId, start, end);
+	}
+
 	/**
 	 * Returns an ordered range of all the structures matching the groups and
 	 * class name IDs, and matching the keywords in the structure names and

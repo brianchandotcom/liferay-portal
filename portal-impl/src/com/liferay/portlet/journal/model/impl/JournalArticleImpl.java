@@ -48,9 +48,18 @@ import java.util.Set;
  */
 public class JournalArticleImpl extends JournalArticleBaseImpl {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getContentByLocale(String,
+	 *             String}
+	 */
+	@Deprecated
 	public static String getContentByLocale(
 		String content, boolean templateDriven, String languageId) {
 
+		return getContentByLocale(content, languageId);
+	}
+
+	public static String getContentByLocale(String content, String languageId) {
 		TransformerListener transformerListener =
 			new LocaleTransformerListener();
 
@@ -137,14 +146,14 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public String getContentByLocale(String languageId) {
-		return getContentByLocale(getContent(), isTemplateDriven(), languageId);
+		return getContentByLocale(getContent(), languageId);
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
 		String defaultLanguageId = super.getDefaultLanguageId();
 
-		if (isTemplateDriven() && Validator.isNull(defaultLanguageId)) {
+		if (Validator.isNull(defaultLanguageId)) {
 			defaultLanguageId = LocaleUtil.toLanguageId(
 				LocaleUtil.getSiteDefault());
 		}
@@ -223,14 +232,13 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return true;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isTemplateDriven() {
-		if (Validator.isNull(getStructureId())) {
-			return false;
-		}
-		else {
-			return true;
-		}
+		return true;
 	}
 
 	/**

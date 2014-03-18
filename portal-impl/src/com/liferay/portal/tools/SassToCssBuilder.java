@@ -205,6 +205,10 @@ public class SassToCssBuilder {
 		throws Exception {
 
 		for (String fileName : fileNames) {
+			if (fileName.contains("_rtl")) {
+				continue;
+			}
+
 			fileName = _normalizeFileName(dirName, fileName);
 
 			File file = new File(fileName);

@@ -1764,6 +1764,77 @@
 		</execute>
 	</command>
 
+	<command name="RolesXSS" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleDescription" value="This is the role description field" />
+			<var name="roleName"><![CDATA[<script>alert("xss")</script>]]></var>
+			<var name="roleTitle" value="Role 1" />
+		</execute>
+
+		<execute macro="Role#viewNoXSSCP">
+			<var name="roleDescription" value="This is the role description field" />
+			<var name="roleName" value="Role 1" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleDescription" value="This is the role description field" />
+			<var name="roleName" value="Role 2" />
+			<var name="roleTitle"><![CDATA[<script>alert("xss")</script>]]></var>
+		</execute>
+
+		<execute macro="Role#viewNoXSSCP">
+			<var name="roleDescription" value="This is the role description field" />
+			<var name="roleName"><![CDATA[<script>alert("xss")</script>]]></var>
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleDescription"><![CDATA[<script>alert("xss")</script>]]></var>
+			<var name="roleName" value="Test Role" />
+			<var name="roleTitle" value="Role 3" />
+		</execute>
+
+		<execute macro="Role#viewNoXSSCP">
+			<var name="roleDescription"><![CDATA[<script>alert("xss")</script>]]></var>
+			<var name="roleName" value="Role 3" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleDescription"><![CDATA[<script>alert("xss")</script>]]></var>
+			<var name="roleName" value="Site Role" />
+			<var name="roleTitle" value="Role 4" />
+			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Role#viewNoXSSCP">
+			<var name="roleDescription"><![CDATA[<script>alert("xss")</script>]]></var>
+			<var name="roleName" value="Role 4" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleDescription"><![CDATA[<script>alert("xss")</script>]]></var>
+			<var name="roleName" value="Organization Role" />
+			<var name="roleTitle" value="Role 5" />
+			<var name="roleType" value="Organization" />
+		</execute>
+
+		<execute macro="Role#viewNoXSSCP">
+			<var name="roleDescription"><![CDATA[<script>alert("xss")</script>]]></var>
+			<var name="roleName" value="Role 5" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="PermissionsInline#gotoConfigurationPG">
+			<var name="portletName" value="Sign In" />
+		</execute>
+
+		<execute action="CPRoles#assertAlertNotPresent" />
+	</command>
+
 	<command name="TeamPermissionsSite" priority="4">
 		<var name="pageName" value="USA Ice Hockey Team Blog" />
 

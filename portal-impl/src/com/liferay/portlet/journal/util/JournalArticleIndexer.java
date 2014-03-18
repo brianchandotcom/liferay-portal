@@ -239,10 +239,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 			Document document, JournalArticle article)
 		throws Exception {
 
-		if (Validator.isNull(article.getStructureId())) {
-			return;
-		}
-
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
 			article.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
@@ -340,7 +336,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			defaultLanguageId, article.getContent());
 
 		for (String languageId : languageIds) {
-			String content = extractContent(article, languageId);
+			String content = extractDDMContent(article, languageId);
 
 			String description = article.getDescription(languageId);
 
@@ -438,17 +434,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 		String title = document.get(
 			snippetLocale, prefix + Field.TITLE, Field.TITLE);
 
-		String content = StringPool.BLANK;
-
-		String ddmStructureKey = document.get("ddmStructureKey");
-
-		if (Validator.isNotNull(ddmStructureKey)) {
-			content = getDDMContentSummary(
-				document, snippetLocale, portletRequest, portletResponse);
-		}
-		else {
-			content = getBasicContentSummary(document, snippetLocale);
-		}
+		String content = getDDMContentSummary(
+			document, snippetLocale, portletRequest, portletResponse);
 
 		String groupId = document.get(Field.GROUP_ID);
 		String articleId = document.get("articleId");
@@ -521,39 +508,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 		}
 	}
 
-	protected String extractBasicContent(
-		JournalArticle article, String languageId) {
-
-		String content = article.getContentByLocale(languageId);
-
-		content = StringUtil.replace(content, "<![CDATA[", StringPool.BLANK);
-		content = StringUtil.replace(content, "]]>", StringPool.BLANK);
-		content = StringUtil.replace(content, "&amp;", "&");
-		content = StringUtil.replace(content, "&lt;", "<");
-		content = StringUtil.replace(content, "&gt;", ">");
-
-		content = HtmlUtil.extractText(content);
-
-		return content;
-	}
-
-	protected String extractContent(JournalArticle article, String languageId)
-		throws Exception {
-
-		if (Validator.isNotNull(article.getStructureId())) {
-			return extractDDMContent(article, languageId);
-		}
-
-		return extractBasicContent(article, languageId);
-	}
-
 	protected String extractDDMContent(
 			JournalArticle article, String languageId)
 		throws Exception {
-
-		if (Validator.isNull(article.getStructureId())) {
-			return StringPool.BLANK;
-		}
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
 			article.getGroupId(),
@@ -599,26 +556,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 		}
 
 		return documents;
-	}
-
-	protected String getBasicContentSummary(
-		Document document, Locale snippetLocale) {
-
-		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
-
-		String content = document.get(
-			snippetLocale, prefix + Field.DESCRIPTION, prefix + Field.CONTENT);
-
-		if (Validator.isBlank(content)) {
-			content = document.get(
-				snippetLocale, Field.DESCRIPTION, Field.CONTENT);
-		}
-
-		if (content.length() > 200) {
-			content = StringUtil.shorten(content, 200);
-		}
-
-		return content;
 	}
 
 	protected String getDDMContentSummary(

@@ -61,7 +61,8 @@ import org.junit.Test;
 /**
  * @author Juan Fernández
  */
-public class BasePortletExportImportTestCase extends BaseExportImportTestCase {
+public abstract class BasePortletExportImportTestCase
+	extends BaseExportImportTestCase {
 
 	public String getNamespace() {
 		return null;

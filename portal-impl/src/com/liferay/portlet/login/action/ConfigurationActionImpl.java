@@ -16,9 +16,8 @@ package com.liferay.portlet.login.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.login.util.LoginUtil;
 import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
@@ -41,31 +40,29 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		removeDefaultValue(
 			portletRequest, portletPreferences, "emailFromAddress",
-			PrefsPropsUtil.getString(
-				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS));
+			LoginUtil.getEmailFromName(portletPreferences, companyId));
 		removeDefaultValue(
 			portletRequest, portletPreferences, "emailFromName",
-			PrefsPropsUtil.getString(
-				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME));
+			LoginUtil.getEmailFromName(portletPreferences, companyId));
 
-		String defaultLanguageId = LocaleUtil.toLanguageId(
+		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
 		removeDefaultValue(
 			portletRequest, portletPreferences,
-			"emailPasswordResetBody_" + defaultLanguageId,
+			"emailPasswordResetBody_" + languageId,
 			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
-			"emailPasswordResetSubject_" + defaultLanguageId,
+			"emailPasswordResetSubject_" + languageId,
 			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
-			"emailPasswordSentBody_" + defaultLanguageId,
+			"emailPasswordSentBody_" + languageId,
 			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
-			"emailPasswordSentSubject_" + defaultLanguageId,
+			"emailPasswordSentSubject_" + languageId,
 			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT));
 	}
 

@@ -75,6 +75,12 @@ if (ddmStructureId > 0) {
 	<aui:model-context bean="<%= recordSet %>" model="<%= DDLRecordSet.class %>" />
 
 	<aui:fieldset>
+		<c:if test="<%= (recordSet != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(recordSet.getDDMStructureId()) > 0) %>">
+			<div class="alert alert-warning">
+				<liferay-ui:message key="updating-the-data-definition-may-cause-data-loss" />
+			</div>
+		</c:if>
+
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
 		<aui:input name="description" />

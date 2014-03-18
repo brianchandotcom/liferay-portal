@@ -377,6 +377,12 @@
 		</while>
 	</command>
 
+	<command name="viewNoPG">
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="Home#assertElementNotPresent" locator-key1="PAGE" value1="${pageName}" />
+	</command>
+
 	<command name="viewPageLayoutColumn">
 		<execute action="Home#assertElementPresent" locator-key1="${pageColumnLayout}" />
 	</command>

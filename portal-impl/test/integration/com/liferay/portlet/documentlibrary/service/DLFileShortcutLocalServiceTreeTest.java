@@ -17,8 +17,11 @@ package com.liferay.portlet.documentlibrary.service;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -28,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,15 +44,14 @@ import org.testng.Assert;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLFileShortcutLocalServiceTreeTest {
 
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
+
 	@After
 	public void tearDown() throws Exception {
-		for (int i = _dlFileShortcuts.size() - 1; i >= 0; i--) {
-			DLFileShortcutLocalServiceUtil.deleteDLFileShortcut(
-				_dlFileShortcuts.get(i));
-		}
-
-		DLAppLocalServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
-		DLAppLocalServiceUtil.deleteFolder(_folder.getFolderId());
+		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -98,5 +101,6 @@ public class DLFileShortcutLocalServiceTreeTest {
 		new ArrayList<DLFileShortcut>();
 	private FileEntry _fileEntry;
 	private Folder _folder;
+	private Group _group;
 
 }

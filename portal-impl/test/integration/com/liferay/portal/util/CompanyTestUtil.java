@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 
@@ -70,6 +71,8 @@ public class CompanyTestUtil {
 		preferences.setValue(PropsKeys.LOCALES, languageIds);
 
 		preferences.store();
+
+		CompanyThreadLocal.setCompanyId(companyId);
 	}
 
 }

@@ -486,6 +486,7 @@
 		<var name="pollsQuestion" value="What is the most important issue for this election?" />
 		<var name="pollsQuestionChoiceA" value="The Economy" />
 		<var name="pollsQuestionChoiceB" value="The National Debt" />
+		<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceA},${pollsQuestionChoiceB}" />
 		<var name="pollsQuestionTitle" value="Election Poll" />
 		<var name="portlet1Name" value="Polls Display" />
 		<var name="portlet2Name" value="Message Boards" />

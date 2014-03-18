@@ -109,6 +109,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STATUS_MESSAGE</td>
+	<td>//tr[1]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_EXPIRED_SESSION</td>
+	<td>//div[contains(@class,'popup-alert-warning')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_MESSAGE_ALERT_INFO</td>
 	<td>//tr[contains(.,'This site is inactive. Please contact the administrator.')]/td[@align='center']</td>
 	<td></td>

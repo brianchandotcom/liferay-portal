@@ -1038,7 +1038,8 @@ public class MBUtil {
 		double value, ThemeDisplay themeDisplay, String[] priorities) {
 
 		for (int i = 0; i < priorities.length; i++) {
-			String[] priority = StringUtil.split(priorities[i]);
+			String[] priority = StringUtil.split(
+				priorities[i], StringPool.PIPE);
 
 			try {
 				String priorityName = priority[0];

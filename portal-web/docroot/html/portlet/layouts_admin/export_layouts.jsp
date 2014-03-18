@@ -23,7 +23,7 @@ if (Validator.isNull(cmd)) {
 	cmd = Constants.EXPORT;
 }
 
-String exportNav = ParamUtil.getString(request, "exportNav", "custom");
+String exportConfigurationButtons = ParamUtil.getString(request, "exportConfigurationButtons", "custom");
 
 long exportImportConfigurationId = 0;
 
@@ -124,7 +124,7 @@ portletURL.setParameter(Constants.CMD, Constants.EXPORT);
 
 if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 	portletURL.setParameter("tabs2", "new-export-process");
-	portletURL.setParameter("exportNav", "export-configurations");
+	portletURL.setParameter("exportConfigurationButtons", "saved");
 }
 else {
 	portletURL.setParameter("tabs2", "current-and-previous");
@@ -163,7 +163,7 @@ if (!cmd.equals(Constants.ADD)) {
 	int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(liveGroupId, LayoutExportBackgroundTaskExecutor.class.getName(), false);
 	%>
 
-	<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
+	<div class='<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>' id="<portlet:namespace />incompleteProcessMessage">
 		<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
 			<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 		</liferay-util:include>
@@ -172,7 +172,7 @@ if (!cmd.equals(Constants.ADD)) {
 	<liferay-ui:section>
 		<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
 			<aui:nav-bar>
-				<aui:nav id="exportNav">
+				<aui:nav id="exportConfigurationButtons">
 					<aui:nav-item
 						data-value="custom"
 						iconCssClass="icon-puzzle"
@@ -180,7 +180,7 @@ if (!cmd.equals(Constants.ADD)) {
 					/>
 
 					<aui:nav-item
-						data-value="export-configurations"
+						data-value="saved"
 						iconCssClass="icon-archive"
 						label="export-templates"
 					/>
@@ -188,7 +188,7 @@ if (!cmd.equals(Constants.ADD)) {
 			</aui:nav-bar>
 		</div>
 
-		<div <%= exportNav.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportOptions">
+		<div <%= exportConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
 			<portlet:actionURL var="updateExportConfigurationURL">
 				<portlet:param name="struts_action" value="/layouts_admin/edit_export_configuration" />
 			</portlet:actionURL>
@@ -675,7 +675,7 @@ if (!cmd.equals(Constants.ADD)) {
 			</aui:form>
 		</div>
 
-		<div <%= exportNav.equals("export-configurations") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />exportConfigurations">
+		<div <%= exportConfigurationButtons.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />savedConfigurations">
 			<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_configurations.jsp">
 				<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
@@ -769,20 +769,22 @@ if (!cmd.equals(Constants.ADD)) {
 	};
 
 	var processDataValue = function(dataValue) {
-		var exportOptions = A.one('#<portlet:namespace />exportOptions');
-		var exportConfigurations = A.one('#<portlet:namespace />exportConfigurations');
+		var customConfiguration = A.one('#<portlet:namespace />customConfiguration');
+		var savedConfigurations = A.one('#<portlet:namespace />savedConfigurations');
 
 		if (dataValue === 'custom') {
-			exportConfigurations.hide();
-			exportOptions.show();
+			savedConfigurations.hide();
+
+			customConfiguration.show();
 		}
-		else if (dataValue === 'export-configurations') {
-			exportOptions.hide();
-			exportConfigurations.show();
+		else if (dataValue === 'saved') {
+			customConfiguration.hide();
+
+			savedConfigurations.show();
 		}
 	};
 
-	A.one('#<portlet:namespace />exportNav').delegate('click', clickHandler, 'li a');
+	A.one('#<portlet:namespace />exportConfigurationButtons').delegate('click', clickHandler, 'li a');
 </aui:script>
 
 <aui:script>

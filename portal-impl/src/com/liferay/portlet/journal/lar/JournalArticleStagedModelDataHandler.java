@@ -260,28 +260,22 @@ public class JournalArticleStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
 
-		if (Validator.isNotNull(article.getStructureId())) {
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.getStructure(
-					article.getGroupId(),
-					PortalUtil.getClassNameId(JournalArticle.class),
-					article.getStructureId(), true);
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			article.getGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			article.getStructureId(), true);
 
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, article, ddmStructure,
-				PortletDataContext.REFERENCE_TYPE_STRONG);
-		}
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, article, ddmStructure,
+			PortletDataContext.REFERENCE_TYPE_STRONG);
 
-		if (Validator.isNotNull(article.getTemplateId())) {
-			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-				article.getGroupId(),
-				PortalUtil.getClassNameId(DDMStructure.class),
-				article.getTemplateId(), true);
+		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+			article.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class),
+			article.getTemplateId(), true);
 
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, article, ddmTemplate,
-				PortletDataContext.REFERENCE_TYPE_STRONG);
-		}
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, article, ddmTemplate,
+			PortletDataContext.REFERENCE_TYPE_STRONG);
 
 		if (article.isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.fetchImage(

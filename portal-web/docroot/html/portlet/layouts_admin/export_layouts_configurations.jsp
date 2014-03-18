@@ -38,7 +38,7 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 	<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 	<portlet:param name="tabs2" value="new-export-process" />
-	<portlet:param name="exportNav" value="export-configurations" />
+	<portlet:param name="exportConfigurationButtons" value="saved" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -46,7 +46,7 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 </liferay-portlet:renderURL>
 
 <liferay-ui:search-container
-	emptyResultsMessage="there-are-no-export-templates"
+	emptyResultsMessage="there-are-no-saved-export-templates"
 	iteratorURL="<%= portletURL %>"
 	total="<%= ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(groupId, ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) %>"
 >

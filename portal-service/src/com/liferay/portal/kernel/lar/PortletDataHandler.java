@@ -31,6 +31,11 @@ import javax.portlet.PortletPreferences;
  */
 public interface PortletDataHandler {
 
+	public PortletPreferences addDefaultData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException;
+
 	/**
 	 * Deletes the data created by the portlet. Can optionally return a modified
 	 * version of <code>preferences</code> if it contains reference to data that
@@ -198,6 +203,8 @@ public interface PortletDataHandler {
 	 * @return <code>true</code> to publish to live by default
 	 */
 	public boolean isPublishToLiveByDefault();
+
+	public boolean isRollbackOnException();
 
 	public boolean isSupportsDataStrategyCopyAsNew();
 

@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOCALIZATION_NAME</td>
+	<td>//td[@data-value='${key_localizationName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME_FIELD_REQUIRED</td>
 	<td>//span[@id='_166_nameBoundingBox']/div/div[@class='required']</td>
 	<td></td>

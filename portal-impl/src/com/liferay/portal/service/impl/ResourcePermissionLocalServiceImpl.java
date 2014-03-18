@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -381,8 +381,8 @@ public class ResourcePermissionLocalServiceImpl
 		throws PortalException, SystemException {
 
 		List<ResourcePermission> resourcePermissions =
-			resourcePermissionPersistence.findByC_N_S_P(
-				companyId, name, scope, primKey);
+			resourcePermissionPersistence.findByC_N_S_P_R(
+				companyId, name, scope, primKey, roleIds);
 
 		if (resourcePermissions.isEmpty()) {
 			return Collections.emptyMap();
@@ -391,14 +391,8 @@ public class ResourcePermissionLocalServiceImpl
 		Map<Long, Set<String>> roleIdsToActionIds =
 			new HashMap<Long, Set<String>>();
 
-		Set<Long> roleIdsSet = SetUtil.fromArray(roleIds);
-
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			long roleId = resourcePermission.getRoleId();
-
-			if (!roleIdsSet.contains(roleId)) {
-				continue;
-			}
 
 			Set<String> availableActionIds = roleIdsToActionIds.get(roleId);
 
@@ -749,20 +743,14 @@ public class ResourcePermissionLocalServiceImpl
 		}
 		else {
 			List<ResourcePermission> resourcePermissions =
-				resourcePermissionPersistence.findByC_N_S_P(
-					companyId, name, scope, primKey);
+				resourcePermissionPersistence.findByC_N_S_P_R(
+					companyId, name, scope, primKey, roleIds);
 
 			if (resourcePermissions.isEmpty()) {
 				return false;
 			}
 
-			Set<Long> roleIdsSet = SetUtil.fromArray(roleIds);
-
 			for (ResourcePermission resourcePermission : resourcePermissions) {
-				if (!roleIdsSet.contains(resourcePermission.getRoleId())) {
-					continue;
-				}
-
 				if (hasActionId(resourcePermission, resourceAction)) {
 					return true;
 				}
@@ -782,8 +770,8 @@ public class ResourcePermissionLocalServiceImpl
 			resourceActionLocalService.getResourceAction(name, actionId);
 
 		List<ResourcePermission> resourcePermissions =
-			resourcePermissionPersistence.findByC_N_S_P(
-				companyId, name, scope, primKey);
+			resourcePermissionPersistence.findByC_N_S_P_R(
+				companyId, name, scope, primKey, roleIds);
 
 		boolean[] hasResourcePermissions = new boolean[roleIds.length];
 
@@ -791,13 +779,7 @@ public class ResourcePermissionLocalServiceImpl
 			return hasResourcePermissions;
 		}
 
-		Set<Long> roleIdsSet = SetUtil.fromArray(roleIds);
-
 		for (ResourcePermission resourcePermission : resourcePermissions) {
-			if (!roleIdsSet.contains(resourcePermission.getRoleId())) {
-				continue;
-			}
-
 			if (hasActionId(resourcePermission, resourceAction)) {
 				long roleId = resourcePermission.getRoleId();
 
@@ -1239,19 +1221,14 @@ public class ResourcePermissionLocalServiceImpl
 		PermissionThreadLocal.setIndexEnabled(false);
 
 		try {
-			Set<Long> roleIds = roleIdsToActionIds.keySet();
+			long[] roleIds = ArrayUtil.toLongArray(roleIdsToActionIds.keySet());
 
 			List<ResourcePermission> resourcePermissions =
-				resourcePermissionPersistence.findByC_N_S_P(
-					companyId, name, scope, primKey);
+				resourcePermissionPersistence.findByC_N_S_P_R(
+					companyId, name, scope, primKey, roleIds);
 
 			for (ResourcePermission resourcePermission : resourcePermissions) {
 				long roleId = resourcePermission.getRoleId();
-
-				if (!roleIds.contains(roleId)) {
-					continue;
-				}
-
 				String[] actionIds = roleIdsToActionIds.remove(roleId);
 
 				doUpdateResourcePermission(

@@ -1135,6 +1135,12 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		_groupLocalService.enableStaging(groupId);
 	}
 
+	@Override
+	public com.liferay.portal.model.Group fetchCompanyGroup(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.fetchCompanyGroup(companyId);
+	}
+
 	/**
 	* Returns the group with the matching friendly URL.
 	*
@@ -1166,6 +1172,14 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _groupLocalService.fetchGroup(companyId, name);
+	}
+
+	@Override
+	public com.liferay.portal.model.Group fetchUserPersonalSiteGroup(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.fetchUserPersonalSiteGroup(companyId);
 	}
 
 	/**

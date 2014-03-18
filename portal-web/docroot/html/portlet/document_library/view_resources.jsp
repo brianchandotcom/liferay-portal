@@ -18,6 +18,7 @@
 
 <%
 String navigation = ParamUtil.getString(request, "navigation", "home");
+String browseBy = ParamUtil.getString(request, "browseBy");
 
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
@@ -38,7 +39,6 @@ if (folder != null) {
 	repositoryId = folder.getRepositoryId();
 }
 
-String browseBy = ParamUtil.getString(request, "browseBy");
 boolean viewEntries = ParamUtil.getBoolean(request, "viewEntries");
 boolean viewEntriesPage = ParamUtil.getBoolean(request, "viewEntriesPage");
 boolean viewFolders = ParamUtil.getBoolean(request, "viewFolders");

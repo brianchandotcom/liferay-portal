@@ -933,6 +933,13 @@
 		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
 
+		<if>
+			<equals arg1="${rememberMeChecked}" arg2="true" />
+			<then>
+				<execute action="PGLogin#check" locator-key1="REMEMBER_ME_CHECKBOX" />
+			</then>
+		</if>
+
 		<take-screenshot />
 
 		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />

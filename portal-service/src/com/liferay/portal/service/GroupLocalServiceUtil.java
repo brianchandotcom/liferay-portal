@@ -1061,6 +1061,12 @@ public class GroupLocalServiceUtil {
 		getService().enableStaging(groupId);
 	}
 
+	public static com.liferay.portal.model.Group fetchCompanyGroup(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchCompanyGroup(companyId);
+	}
+
 	/**
 	* Returns the group with the matching friendly URL.
 	*
@@ -1090,6 +1096,13 @@ public class GroupLocalServiceUtil {
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchGroup(companyId, name);
+	}
+
+	public static com.liferay.portal.model.Group fetchUserPersonalSiteGroup(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchUserPersonalSiteGroup(companyId);
 	}
 
 	/**

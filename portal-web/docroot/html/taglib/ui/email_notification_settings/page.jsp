@@ -26,7 +26,6 @@ String emailSubject = (String)request.getAttribute("liferay-ui:email-notificatio
 String fieldPrefix = (String)request.getAttribute("liferay-ui:email-notification-settings:fieldPrefix");
 String fieldPrefixSeparator = (String)request.getAttribute("liferay-ui:email-notification-settings:fieldPrefixSeparator");
 String helpMessage = (String)request.getAttribute("liferay-ui:email-notification-settings:helpMessage");
-String languageId = (String)request.getAttribute("liferay-ui:email-notification-settings:languageId");
 boolean showEmailEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-ui:email-notification-settings:showEmailEnabled"));
 boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-ui:email-notification-settings:showSubject"));
 %>
@@ -49,7 +48,7 @@ boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-ui:ema
 				</aui:field-wrapper>
 			</c:when>
 			<c:otherwise>
-				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= fieldPrefix + fieldPrefixSeparator + emailParam + "Subject" + (Validator.isNotNull(languageId) ? ("_" + languageId) : StringPool.BLANK) + fieldPrefixSeparator %>' value="<%= emailSubject %>" />
+				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= fieldPrefix + fieldPrefixSeparator + emailParam + "Subject" + fieldPrefixSeparator %>' value="<%= emailSubject %>" />
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -68,7 +67,7 @@ boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-ui:ema
 			<c:otherwise>
 				<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" initMethod='<%= "init" + emailParam + "BodyEditor" %>' name="<%= emailParam %>" />
 
-				<aui:input name='<%= fieldPrefix + fieldPrefixSeparator + emailParam + "Body" + (Validator.isNotNull(languageId) ? ("_" + languageId) : StringPool.BLANK) + fieldPrefixSeparator %>' type="hidden" />
+				<aui:input name='<%= fieldPrefix + fieldPrefixSeparator + emailParam + "Body" + fieldPrefixSeparator %>' type="hidden" />
 
 				<aui:script>
 					function <portlet:namespace />init<%= emailParam %>BodyEditor() {

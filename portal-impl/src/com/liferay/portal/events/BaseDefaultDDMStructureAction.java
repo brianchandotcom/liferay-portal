@@ -15,10 +15,13 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -29,7 +32,9 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.util.ContentUtil;
 
@@ -80,12 +85,15 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 			String xsd = structureElementRootElement.asXML();
 
 			Map<Locale, String> nameMap = new HashMap<Locale, String>();
-
-			nameMap.put(locale, name);
-
 			Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-			descriptionMap.put(locale, description);
+			Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
+
+			for (Locale curLocale : locales) {
+				nameMap.put(curLocale, LanguageUtil.get(curLocale, name));
+				descriptionMap.put(
+					curLocale, LanguageUtil.get(curLocale, description));
+			}
 
 			Attribute defaultLocaleAttribute =
 				structureElementRootElement.attribute("default-locale");
@@ -102,19 +110,36 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 				continue;
 			}
 
-			DDMStructureLocalServiceUtil.addStructure(
+			ddmStructure = DDMStructureLocalServiceUtil.addStructure(
 				userId, groupId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
 				ddmStructureKey, nameMap, descriptionMap, xsd, "xml",
 				DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+
+			String templateFileName = structureElement.elementText("template");
+
+			if (Validator.isNotNull(templateFileName)) {
+				DDMTemplateLocalServiceUtil.addTemplate(
+					userId, groupId,
+					PortalUtil.getClassNameId(DDMStructure.class),
+					ddmStructure.getStructureId(), nameMap, null,
+					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+					DDMTemplateConstants.TEMPLATE_MODE_CREATE,
+					TemplateConstants.LANG_TYPE_FTL,
+					getContent(templateFileName), serviceContext);
+			}
 		}
+	}
+
+	protected String getContent(String fileName) {
+		return ContentUtil.get(
+			"com/liferay/portal/events/dependencies/" + fileName);
 	}
 
 	protected List<Element> getDDMStructures(String fileName, Locale locale)
 		throws DocumentException {
 
-		String xml = ContentUtil.get(
-			"com/liferay/portal/events/dependencies/" + fileName);
+		String xml = getContent(fileName);
 
 		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
 

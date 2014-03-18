@@ -1,6 +1,8 @@
 $breakpoint_phone: 768px !default;
 $breakpoint_tablet: 980px !default;
 
+$form_text_fields: 'input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], textarea, .uneditable-input' !default;
+
 @mixin respond-to($types...) {
 	$maxWidth: -1;
 	$minWidth: -1;

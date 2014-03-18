@@ -68,7 +68,7 @@
 		}
 	}
 
-	input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], select, textarea, .uneditable-input {
+	#{$form_text_fields}, select {
 		border: 1px solid #DDD;
 		color: #8D8D8D;
 		font-weight: 200;
@@ -102,6 +102,12 @@
 		border: 1px solid rgba(0, 172, 255, 0.8);
 		outline: 5px auto rgba(82, 168, 236, 0.6);
 		outline-offset: -2px;
+	}
+
+	.control-group-inline {
+		#{$form_text_fields}, select {
+			margin-bottom: 0;
+		}
 	}
 
 	.form-search, .lfr-translation-manager-selector {
@@ -929,7 +935,7 @@
 		@include border-radius(5px);
 	}
 
-	input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="number"], input[type="password"], input[type="text"], input[type="time"], input[type="week"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], textarea, .uneditable-input {
+	#{$form_text_fields} {
 		@include border-radius(0);
 		@include box-shadow(none);
 

@@ -74,18 +74,6 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionModelType() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionDefaultModelType() {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testSubscriptionRootContainerModelWhenInContainerModel() {
 	}
 

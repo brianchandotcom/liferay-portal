@@ -27,8 +27,6 @@ import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -43,18 +41,6 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class BookmarksSubscriptionTest extends BaseSubscriptionTestCase {
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionModelType() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionDefaultModelType() {
-	}
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {

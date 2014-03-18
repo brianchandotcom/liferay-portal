@@ -24,11 +24,7 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseSubscriptionTestCase;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -69,18 +65,6 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected long addBaseModelWithModelType(
-		long containerModelId, long modelTypeId)
-		throws Exception {
-
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), containerModelId,
-			ServiceTestUtil.randomString(), modelTypeId);
-
-		return fileEntry.getFileEntryId();
-	}
-
-	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
 		Folder folder = DLAppTestUtil.addFolder(
 			group.getGroupId(), containerModelId,
@@ -90,27 +74,11 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected long addModelType() throws Exception {
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			DLFileEntry.class.getName());
-
-		DLFileEntryType fileEntryType = DLAppTestUtil.addDLFileEntryType(
-			group.getGroupId(), ddmStructure.getStructureId());
-
-		return fileEntryType.getFileEntryTypeId();
-	}
-
-	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
 		DLAppLocalServiceUtil.subscribeFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
-	}
-
-	@Override
-	protected void addSubscriptionModelType(long typeId) throws Exception {
-		DLAppServiceUtil.subscribeFileEntryType(group.getGroupId(), typeId);
 	}
 
 }

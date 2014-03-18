@@ -36,6 +36,8 @@ boolean layoutsUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettings
 Group group = themeDisplay.getSiteGroup();
 %>
 
+<liferay-ui:success key='<%= PortletKeys.SITE_TEMPLATE_SETTINGS + "requestProcessed" %>' message="site-template-was-added" />
+
 <c:if test="<%= !group.isLayoutSetPrototype() %>">
 	<liferay-util:include page="/html/portlet/layout_set_prototypes/toolbar.jsp">
 		<liferay-util:param name="toolbarItem" value='<%= layoutSetPrototype.isNew() ? "add" : StringPool.BLANK %>' />

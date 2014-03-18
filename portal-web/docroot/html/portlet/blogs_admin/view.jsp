@@ -39,6 +39,11 @@ portletURL.setParameter("struts_action", "/blogs_admin/view");
 
 	<liferay-util:include page="/html/portlet/blogs_admin/toolbar.jsp" />
 
+	<liferay-ui:categorization-filter
+		assetType="entries"
+		portletURL="<%= portletURL %>"
+	/>
+
 	<liferay-ui:search-container
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 		searchContainer="<%= new EntrySearch(renderRequest, portletURL) %>"

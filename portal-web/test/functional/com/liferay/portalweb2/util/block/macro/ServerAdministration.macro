@@ -1,0 +1,25 @@
+<definition>
+	<command name="searchPortalPropertiesCP">
+		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_PROPERTIES" value1="Properties" />
+		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_PORTAL_PROPERTIES" value1="Portal Properties" />
+
+		<execute action="CPServeradministration#type" locator-key1="PROPERTIES_PORTAL_PROPERTIES_SEARCH_FIELD" value1="${propertyName}" />
+		<execute action="CPServeradministration#assertClick" locator-key1="PROPERTIES_PORTAL_PROPERTIES_SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_propertyName" value="${propertyName}" />
+
+		<execute action="CPServeradministration#assertTextEquals" locator-key1="PROPERTIES_PORTAL_PROPERTIES_TABLE_PROPERTY" value1="${propertyName}" />
+
+		<if>
+			<isset var="propertyOveridden" />
+			<then>
+				<execute action="CPServeradministration#mouseOver" locator-key1="SOURCE" />
+				<execute action="CPServeradministration#assertTextEquals" locator-key1="PROPERTIES_PORTAL_PROPERTIES_TABLE_SOURCE" value1="The value of this property was overridden using the Control Panel and is stored in the database." />
+			</then>
+			<else>
+				<execute action="CPServeradministration#mouseOver" locator-key1="SOURCE" />
+				<execute action="CPServeradministration#assertTextEquals" locator-key1="PROPERTIES_PORTAL_PROPERTIES_TABLE_SOURCE" value1="The value of this property is read from a portal.properties file or one of its extension files." />
+			</else>
+		</if>
+	</command>
+</definition>

@@ -54,6 +54,18 @@
 		</if>
 	</command>
 
+	<command name="disableLDAPCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_LDAP" value1="LDAP" />
+		<execute action="CPPortalsettingsAuthentication#uncheck" locator-key1="AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_LDAP" value1="LDAP" />
+		<execute action="CPPortalsettingsAuthentication#assertNotChecked" locator-key1="AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+	</command>
+
 	<command name="disableRecycleBinCP">
 		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_RECYCLE_BIN" value1="Recycle Bin" />
 
@@ -111,6 +123,18 @@
 		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
 		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
+	</command>
+
+	<command name="enableLDAPCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_LDAP" value1="LDAP" />
+		<execute action="CPPortalsettingsAuthentication#check" locator-key1="AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_LDAP" value1="LDAP" />
+		<execute action="CPPortalsettingsAuthentication#assertChecked" locator-key1="AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
 	</command>
 
 	<command name="enableRecycleBinCP">

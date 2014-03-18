@@ -2020,6 +2020,47 @@ tck.url=true</echo>
 		</if>
 	</target>
 
+	<target name="prepare-test-dependencies">
+		<if>
+			<isset property="test.dependency.url" />
+			<then>
+				<get
+					dest="${selenium.output.dir}"
+					src="${test.dependency.url}"
+					verbose="true"
+				/>
+
+				<if>
+					<equals arg1="${test.dependency.extract}" arg2="true" />
+					<then>
+						<basename property="test.dependency.file" file="${test.dependency.url}" />
+						<if>
+							<or>
+								<contains string="${test.dependency.file}" substring=".war" />
+								<contains string="${test.dependency.file}" substring=".zip" />
+							</or>
+							<then>
+								<unzip
+									dest="${selenium.output.dir}"
+									src="${selenium.output.dir}/${test.dependency.file}"
+								/>
+							</then>
+							<elseif>
+								<contains string="${test.dependency.file}" substring=".gz" />
+								<then>
+									<gunzip
+										dest="${selenium.output.dir}"
+										src="${selenium.output.dir}/${test.dependency.file}"
+									/>
+								</then>
+							</elseif>
+						</if>
+					</then>
+				</if>
+			</then>
+		</if>
+	</target>
+
 	<target name="prepare-test-properties" depends="generate-test-properties">
 		<echo file="portal-impl/test/portal-test-ext.properties">
 jdbc.default.driverClassName=${database.driver}
@@ -2558,6 +2599,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 
 		<antcall target="prepare-selenium" />
+
+		<if>
+			<isset property="test.dependency.url" />
+			<then>
+				<antcall target="prepare-test-dependencies" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${browser.type}" arg2="googlechrome" />

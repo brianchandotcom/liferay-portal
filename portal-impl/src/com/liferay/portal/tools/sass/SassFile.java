@@ -253,14 +253,7 @@ public class SassFile implements Callable<Void>, SassFragment {
 
 		FileUtil.write(rtlCacheFile, getRtlContent());
 
-		File rtlFile = new File(_docrootDirName, rtlFileName);
-
-		if (rtlFile.exists()) {
-			rtlCacheFile.setLastModified(rtlFile.lastModified());
-		}
-		else {
-			rtlCacheFile.setLastModified(ltrFile.lastModified());
-		}
+		rtlCacheFile.setLastModified(ltrFile.lastModified());
 	}
 
 	private void _addSassString(String fileName, String sassContent)

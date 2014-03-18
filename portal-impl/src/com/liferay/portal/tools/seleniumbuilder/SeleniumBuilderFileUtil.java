@@ -892,7 +892,7 @@ public class SeleniumBuilderFileUtil {
 				String attributeName = attribute.getName();
 
 				if (!attributeName.equals("function") &&
-					!attributeName.equals("ignore-js-error") &&
+					!attributeName.equals("ignore-javascript-error") &&
 					!attributeName.equals("line-number") &&
 					!attributeName.startsWith("locator") &&
 					!attributeName.startsWith("value")) {

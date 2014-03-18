@@ -30,13 +30,13 @@ ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${f
 	;
 </#if>
 
-<#if !function?starts_with("Is")>
+<#if actionName?? && !function?starts_with("Is")>
 	liferaySelenium.assertJavaScriptErrors(
 
-	<#if functionElement.attributeValue("ignore-js-error")??>
-		<#assign jsError = functionElement.attributeValue("ignore-js-error")>
+	<#if functionElement.attributeValue("ignore-javascript-error")??>
+		<#assign ignoreJavaScriptError = functionElement.attributeValue("ignore-javascript-error")>
 
-		"${jsError}"
+		"${ignoreJavaScriptError}"
 	<#else>
 		null
 	</#if>

@@ -385,6 +385,8 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				>
 
 					<%
+					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+
 					List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), PortalUtil.getClassNameId(JournalArticle.class));
 
 					for (DDMStructure ddmStructure : ddmStructures) {
@@ -397,9 +399,9 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 
 						<liferay-ui:icon
 							cssClass="lfr-icon-action lfr-icon-action-add"
-							image="add_article"
 							label="<%= true %>"
-							message='<%= LanguageUtil.format(pageContext, "add-x", ddmStructure.getName(locale)) %>'
+							message="<%= ddmStructure.getName(locale) %>"
+							src="<%= assetRendererFactory.getIconPath(renderRequest) %>"
 							url="<%= taglibAddArticleURL %>"
 						/>
 

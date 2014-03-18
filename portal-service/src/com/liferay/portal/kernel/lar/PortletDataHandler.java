@@ -92,11 +92,6 @@ public interface PortletDataHandler {
 
 	public StagedModelType[] getDeletionSystemEventStagedModelTypes();
 
-	public PortletDataHandlerControl[] getExportConfigurationControls(
-			long companyId, long groupId, Portlet portlet,
-			boolean privateLayout)
-		throws Exception;
-
 	/**
 	 * This flag controls whether an exception occurred in a data handler
 	 * will stop current operation and rollback the transaction or not.
@@ -105,6 +100,11 @@ public interface PortletDataHandler {
 	 * exception occurs in the data handler
 	 */
 	public boolean getExceptionWillRollback();
+
+	public PortletDataHandlerControl[] getExportConfigurationControls(
+			long companyId, long groupId, Portlet portlet,
+			boolean privateLayout)
+		throws Exception;
 
 	public PortletDataHandlerControl[] getExportConfigurationControls(
 			long companyId, long groupId, Portlet portlet, long plid,

@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Company;
@@ -115,7 +114,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1045,6 +1043,23 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the company group, if exists
+	 *
+	 * @param  companyId the primary key of the company
+	 * @return the group associated with the company or null if it doesn't exist
+	 * @throws PortalException if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Group fetchCompanyGroup(long companyId)
+		throws PortalException, SystemException {
+
+		long classNameId = classNameLocalService.getClassNameId(Company.class);
+
+		return groupPersistence.fetchByC_C_C(companyId, classNameId, companyId);
+	}
+
+	/**
 	 * Returns the group with the matching friendly URL.
 	 *
 	 * @param  companyId the primary key of the company
@@ -1064,23 +1079,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		friendlyURL = getFriendlyURL(friendlyURL);
 
 		return groupPersistence.fetchByC_F(companyId, friendlyURL);
-	}
-
-	/**
-	 * Returns the company group, if exists
-	 *
-	 * @param  companyId the primary key of the company
-	 * @return the group associated with the company or null if it doesn't exist
-	 * @throws PortalException if a matching group could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Group fetchCompanyGroup(long companyId)
-		throws PortalException, SystemException {
-
-		long classNameId = classNameLocalService.getClassNameId(Company.class);
-
-		return groupPersistence.fetchByC_C_C(companyId, classNameId, companyId);
 	}
 
 	/**
@@ -3740,8 +3738,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			PortletDataContextFactoryUtil.createPreparePortletDataContext(
 				group.getCompanyId(), group.getGroupId(), null, null);
 
-		List<PortletDataHandler> portletDataHandlers =
-			getPortletDataHandlers(group);
+		List<PortletDataHandler> portletDataHandlers = getPortletDataHandlers(
+			group);
 
 		for (PortletDataHandler portletDataHandler : portletDataHandlers) {
 			try {
@@ -3769,8 +3767,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			PortletDataContextFactoryUtil.createPreparePortletDataContext(
 				group.getCompanyId(), group.getGroupId(), null, null);
 
-		List<PortletDataHandler> portletDataHandlers =
-			getPortletDataHandlers(group);
+		List<PortletDataHandler> portletDataHandlers = getPortletDataHandlers(
+			group);
 
 		for (PortletDataHandler portletDataHandler : portletDataHandlers) {
 			try {
@@ -4159,7 +4157,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected List<PortletDataHandler> getPortletDataHandlers(Group group)
-	throws SystemException {
+		throws SystemException {
 
 		List<Portlet> portlets = portletLocalService.getPortlets(
 			group.getCompanyId());

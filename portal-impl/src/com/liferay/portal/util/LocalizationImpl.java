@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.settings.Settings;
+import com.liferay.util.ContentUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -88,7 +89,7 @@ public class LocalizationImpl implements Localization {
 	@Override
 	public String[] getAvailableLanguageIds(Document document) {
 		String attributeValue = _getRootAttributeValue(
-			document, _AVAILABLE_LOCALES, StringPool.BLANK);
+				document, _AVAILABLE_LOCALES, StringPool.BLANK);
 
 		return StringUtil.split(attributeValue);
 	}
@@ -146,7 +147,7 @@ public class LocalizationImpl implements Localization {
 	@Override
 	public String getDefaultLanguageId(Document document) {
 		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getDefault());
+				LocaleUtil.getDefault());
 
 		return _getRootAttributeValue(
 			document, _DEFAULT_LOCALE, defaultLanguageId);
@@ -352,6 +353,14 @@ public class LocalizationImpl implements Localization {
 	public Map<Locale, String> getLocalizationMap(
 		PortletPreferences preferences, String preferenceName) {
 
+		return getLocalizationMap(preferences, preferenceName, null);
+	}
+
+	@Override
+	public Map<Locale, String> getLocalizationMap(
+		PortletPreferences preferences, String preferenceName,
+		String propertyName) {
+
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
 		Map<Locale, String> map = new HashMap<Locale, String>();
@@ -359,13 +368,27 @@ public class LocalizationImpl implements Localization {
 		for (Locale locale : locales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			String localeParameter = preferenceName.concat(
+			String localePreference = preferenceName.concat(
 				StringPool.UNDERLINE).concat(languageId);
 
 			map.put(
 				locale,
-				preferences.getValue(localeParameter, StringPool.BLANK));
+				preferences.getValue(localePreference, StringPool.BLANK));
 		}
+
+		if (Validator.isNull(propertyName)) {
+			return map;
+		}
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(defaultLocale, ContentUtil.get(PropsUtil.get(propertyName)));
 
 		return map;
 	}

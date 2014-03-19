@@ -708,4 +708,160 @@
 			<var name="orgReminderQuery" value="Nihongo" />
 		</execute>
 	</command>
+
+	<command name="ValidateRegExPasswordPolicyCP" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userFirstName" value="test1" />
+			<var name="userLastName" value="test1" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Password Policies" />
+		</execute>
+
+		<execute action="CPPasswordpolicies#assertClick" locator-key1="DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPPasswordpolicies#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#check" locator-key1="SYNTAX_CHECKING_ENABLED_CHECKBOX" />
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#uncheck" locator-key1="ALLOW_DICTIONARY_WORDS_CHECKBOX" />
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_ALPHA_NUMERIC_FIELD" value1="0" />
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_LENGTH_FIELD" value1="0" />
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_LOWER_CASE_FIELD" value1="0" />
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_NUMBERS_FIELD" value1="0" />
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_SYMBOLS_FIELD" value1="0" />
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_UPPER_CASE_FIELD" value1="0" />
+
+		<var name="atLeastFourCharNoNumbers">
+			<![CDATA[(?=.{4})(?:[a-zA-Z]*)
+			]]>
+		</var>
+
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="REGULAR_EXPRESSION_FIELD" value1="${atLeastFourCharNoNumbers}" /> -->
+
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordInvalidCP">
+			<var name="defaultPassword" value="NO1else" />
+			<var name="newPassword" value="NO1else" />
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userPassword" value="Invalid" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordInvalidCP">
+			<var name="defaultPassword" value="tryingHARD" />
+			<var name="newPassword" value="tryingHARD" />
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Password Policies" />
+		</execute>
+
+		<execute action="CPPasswordpolicies#assertClick" locator-key1="DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPPasswordpolicies#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
+
+		<var name="atLeastSixCharNumbersPermitted">
+			<![CDATA[(?=.{6})(?:[a-zA-Z0-9]*)
+			]]>
+		</var>
+
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="REGULAR_EXPRESSION_FIELD" value1="${atLeastSixCharNumbersPermitted}" />
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordInvalidCP">
+			<var name="defaultPassword" value="abcABC" />
+			<var name="newPassword" value=" abcABC" />
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordInvalidCP">
+			<var name="defaultPassword" value="123ABC" />
+			<var name="newPassword" value=" 123ABC" />
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordInvalidCP">
+			<var name="defaultPassword" value="1-2-3ABC" />
+			<var name="newPassword" value="1-2-3ABC" />
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userPassword" value="Invalid" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Password Policies" />
+		</execute>
+
+		<execute action="CPPasswordpolicies#assertClick" locator-key1="DEFAULT_PASSWORD_POLICY_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPPasswordpolicies#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#type" locator-key1="MINIMUM_NUMBERS_FIELD" value1="2" />
+		<execute action="CPPasswordpoliciesDefaultpasswordpolicy#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordInvalidCP">
+			<var name="defaultPassword" value="abcABC" />
+			<var name="newPassword" value="abcABC" />
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userPassword" value="Invalid" />
+			<var name="userPassword1" value="Trivial" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordInvalidCP">
+			<var name="defaultPassword" value="12AB" />
+			<var name="newPassword" value="12AB" />
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userPassword" value="Invalid" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordInvalidCP">
+			<var name="defaultPassword" value="12ABcd" />
+			<var name="newPassword" value="12ABcd" />
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+	</command>
 </definition>

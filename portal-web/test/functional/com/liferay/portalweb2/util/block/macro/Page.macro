@@ -71,6 +71,17 @@
 		<execute macro="Staging#submitForPublicationPageRevision" />
 	</command>
 
+	<command name="changeLogoViaPageCP">
+		<execute action="CPSitepages#assertClick" locator-key1="LOGO_NAVIGATION" value1="Logo" />
+		<execute action="CPSitepages#assertClick" locator-key1="LOGO_CHANGE_BUTTON" value1="Change" />
+		<execute action="CPSitepages#selectFrame" locator-key1="LOGO_UPLOAD_IMAGE_IFRAME" />
+		<execute action="CPSitepages#uploadCommonFile" locator-key1="LOGO_UPLOAD_BROWSE_BUTTON" value1="${logoFile}" />
+		<execute action="CPSitepages#assertClick" locator-key1="LOGO_UPLOAD_SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitepages#selectFrameTop" locator-key1="LOGO_UPLOAD_IMAGE_IFRAME" />
+		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="deletePG">
 		<var name="key_pageName" value="${pageName}" />
 
@@ -381,6 +392,16 @@
 		<var name="key_pageName" value="${pageName}" />
 
 		<execute action="Home#assertElementNotPresent" locator-key1="PAGE" value1="${pageName}" />
+	</command>
+		
+	<command name="viewCustomLogoPG">
+		<execute action="Home#assertElementPresent" locator-key1="CUSTOM_LOGO" />
+		<execute action="Home#assertElementNotPresent" locator-key1="DEFAULT_LOGO" />
+	</command>
+
+	<command name="viewDefaultLogoPG">
+		<execute action="Home#assertElementPresent" locator-key1="DEFAULT_LOGO" />
+		<execute action="Home#assertElementNotPresent" locator-key1="CUSTOM_LOGO" />
 	</command>
 
 	<command name="viewPageLayoutColumn">

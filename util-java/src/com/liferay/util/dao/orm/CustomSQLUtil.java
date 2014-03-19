@@ -78,6 +78,12 @@ public class CustomSQLUtil {
 		return _instance._customSQL.keywords(keywords, lowerCase);
 	}
 
+	public static String[] keywords(
+		String keywords, boolean lowerCase, int quoteMode) {
+
+		return _instance._customSQL.keywords(keywords, lowerCase, quoteMode);
+	}
+
 	public static String[] keywords(String[] keywordsArray) {
 		return _instance._customSQL.keywords(keywordsArray);
 	}

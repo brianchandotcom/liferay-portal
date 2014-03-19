@@ -231,6 +231,10 @@ public class CustomSQL {
 	}
 
 	public String[] keywords(String keywords, boolean lowerCase) {
+		return keywords(keywords, lowerCase, 0);
+	}
+
+	public String[] keywords(String keywords, boolean lowerCase, int quoteMode) {
 		if (Validator.isNull(keywords)) {
 			return new String[] {null};
 		}
@@ -262,8 +266,7 @@ public class CustomSQL {
 				if (i > pos) {
 					String keyword = keywords.substring(pos, i);
 
-					keywordsList.add(
-						StringUtil.quote(keyword, StringPool.PERCENT));
+					keywordsList.add(_quote(keyword, quoteMode));
 				}
 			}
 			else {
@@ -287,7 +290,7 @@ public class CustomSQL {
 
 				String keyword = keywords.substring(pos, i);
 
-				keywordsList.add(StringUtil.quote(keyword, StringPool.PERCENT));
+				keywordsList.add(_quote(keyword, quoteMode));
 			}
 		}
 
@@ -818,6 +821,19 @@ public class CustomSQL {
 		}
 
 		return sb.toString();
+	}
+
+	private String _quote(String keyword, int mode) {
+		switch (mode) {
+			case 0 :
+				return StringUtil.quote(keyword, StringPool.PERCENT);
+			case -1 :
+				return StringPool.PERCENT + keyword;
+			case 1 :
+				return keyword + StringPool.PERCENT;
+			default:
+				return keyword;
+		}
 	}
 
 	private static final boolean _CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED =

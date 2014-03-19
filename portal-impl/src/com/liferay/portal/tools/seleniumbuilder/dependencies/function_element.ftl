@@ -29,17 +29,3 @@ ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${f
 <#if functionElement.getName() == "execute">
 	;
 </#if>
-
-<#if !function?starts_with("Is")>
-	liferaySelenium.assertJavaScriptErrors(
-
-	<#if functionElement.attributeValue("ignore-js-error")??>
-		<#assign jsError = functionElement.attributeValue("ignore-js-error")>
-
-		"${jsError}"
-	<#else>
-		null
-	</#if>
-
-	);
-</#if>

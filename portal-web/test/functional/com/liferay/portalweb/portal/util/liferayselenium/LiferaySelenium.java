@@ -45,7 +45,7 @@ public interface LiferaySelenium extends Selenium {
 	public void assertEmailSubject(String index, String subject)
 		throws Exception;
 
-	public void assertJavaScriptErrors(String error) throws Exception;
+	public void assertJavaScriptErrors() throws Exception;
 
 	public void assertLiferayErrors() throws Exception;
 

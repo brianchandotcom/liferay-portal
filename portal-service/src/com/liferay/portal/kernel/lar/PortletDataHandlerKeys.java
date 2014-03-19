@@ -112,6 +112,10 @@ public class PortletDataHandlerKeys {
 	public static final String PUBLIC_LAYOUT_PERMISSIONS =
 		"PUBLIC_LAYOUT_PERMISSIONS";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String PUBLISH_TO_REMOTE = "PUBLISH_TO_REMOTE";
 
 	public static final String RATINGS = "RATINGS";

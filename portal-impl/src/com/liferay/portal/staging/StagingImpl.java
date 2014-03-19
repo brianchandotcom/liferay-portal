@@ -2305,10 +2305,6 @@ public class StagingImpl implements Staging {
 		Map<String, String[]> parameterMap = getStagingParameters(
 			portletRequest);
 
-		parameterMap.put(
-			PortletDataHandlerKeys.PUBLISH_TO_REMOTE,
-			new String[] {Boolean.TRUE.toString()});
-
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		UnicodeProperties groupTypeSettingsProperties =

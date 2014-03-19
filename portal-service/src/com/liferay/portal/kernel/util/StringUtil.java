@@ -2417,8 +2417,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * Replaces the substring between the given beginning and ending strings,
-	 * based on the key-value map values.
+	 * Replaces all occurrences of the of the keywords found in the substring,
+	 * defined by the beginning and ending strings, with the new values.
 	 *
 	 * <p>
 	 * For example, with the following initialized variables:
@@ -2442,12 +2442,16 @@ public class StringUtil {
 	 * </p>
 	 *
 	 * @param  s the original string
-	 * @param  begin the beginning characters of the substring to be removed
-	 * @param  end the ending characters of the substring to be removed
+	 * @param  begin the string preceding the substring to be modified. This
+	 *         string is excluded from the result.
+	 * @param  end the string following the substring to be modified. This
+	 *         string is excluded from the result.
 	 * @param  values the key-value map values
-	 * @return the replaced substring, or <code>null</code> if the original
-	 *         string, the beginning string, the ending string, or the key-map
-	 *         values are <code>null</code>
+	 * @return a string representing the original string with all occurrences of
+	 *         the of the keywords found in the substring, replaced with the new
+	 *         values. <code>null</code> is returned if the original string, the
+	 *         beginning string, the ending string, or the key-map values are
+	 *         <code>null</code>.
 	 */
 	public static String replace(
 		String s, String begin, String end, Map<String, String> values) {
@@ -2616,7 +2620,7 @@ public class StringUtil {
 	 *         and replaced in the original string
 	 * @param  newSub the strings with which to replace the first occurrences of
 	 *         the <code>oldSubs</code> strings
-	 * @param  fromIndex the index from which to start the search
+	 * @param  fromIndex the start index within the string
 	 * @return a string representing the original string with the first
 	 *         occurrences of the <code>oldSubs</code> strings replaced with the
 	 *         corresponding <code>newSubs</code> strings, or <code>null</code>
@@ -2785,17 +2789,43 @@ public class StringUtil {
 	}
 
 	/**
-	 * Replaces the substring between the given beginning and ending strings,
-	 * based on the key-value map values, and returned as a {@link
-	 * StringBundler}.
+	 * Replaces all occurrences of the of the keywords found in the substring,
+	 * defined by the beginning and ending strings, with the new values. The
+	 * result is returned as a {@link StringBundler}.
+	 *
+	 * <p>
+	 * For example, with the following initialized variables:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * String s = "http://www.example-url/${userId}";
+	 * String begin = "${";
+	 * String end = "}";
+	 * Map<String, String> values =  new HashMap&#60;String, String&#62;();
+	 * values.put("userId", "jbloggs");
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * <p>
+	 * <code>StringBundler sb = replaceToStringBundler(s, begin, end,
+	 * values)</code> <code>sb.toString()</code> returns
+	 * <code>"http://www.example-url/jbloggs"</code>
+	 * </p>
 	 *
 	 * @param  s the original string
-	 * @param  begin the beginning characters of the substring to be removed
-	 * @param  end the ending characters of the substring to be removed
+	 * @param  begin the string preceding the substring to be modified. This
+	 *         string is excluded from the result.
+	 * @param  end the string following the substring to be modified. This
+	 *         string is excluded from the result.
 	 * @param  values the key-value map values
-	 * @return the replaced substring, or <code>null</code> if the original
-	 *         string, the beginning string, the ending string, or the key-map
-	 *         values are <code>null</code>
+	 * @return a string bundler representing the original string with all
+	 *         occurrences of the of the keywords found in the substring,
+	 *         replaced with the new values. <code>null</code> is returned if
+	 *         the original string, the beginning string, the ending string, or
+	 *         the key-map values are <code>null</code>.
 	 * @see    #replace(String, String, String, Map)
 	 */
 	public static StringBundler replaceToStringBundler(
@@ -2841,19 +2871,22 @@ public class StringUtil {
 	}
 
 	/**
-	 * Replaces the substring between the given beginning and ending strings,
-	 * based on the key-value map values, and returned as a {@link
-	 * StringBundler}.
+	 * Replaces all occurrences of the of the keywords found in the substring,
+	 * defined by the beginning and ending strings, with the new values. The
+	 * result is returned as a {@link StringBundler}.
 	 *
 	 * @param  s the original string
-	 * @param  begin the beginning characters of the substring to be removed
-	 * @param  end the ending characters of the substring to be removed
-	 * @param  values the key-value map values, which has a string key and
-	 *         {@link StringBundler} value
-	 * @return the replaced substring, or <code>null</code> if the original
-	 *         string, the beginning string, the ending string, or the key-map
-	 *         values are <code>null</code>
-	 * @see    #replace(String, String, String, Map)
+	 * @param  begin the string preceding the substring to be modified. This
+	 *         string is removed from the result.
+	 * @param  end the string following the substring to be modified. This
+	 *         string is removed from the result.
+	 * @param  values the key-value map values, which has a string keys and
+	 *         {@link StringBundler} values
+	 * @return a string bundler representing the original string with all
+	 *         occurrences of the of the keywords found in the substring,
+	 *         replaced with the new values. <code>null</code> is returned if
+	 *         the original string, the beginning string, the ending string, or
+	 *         the key-map values are <code>null</code>.
 	 */
 	public static StringBundler replaceWithStringBundler(
 		String s, String begin, String end, Map<String, StringBundler> values) {
@@ -3970,7 +4003,7 @@ public class StringUtil {
 	 * locale.
 	 *
 	 * @param  s the string to convert
-	 * @param  locale the string's locale
+	 * @param  locale apply this locale's rules
 	 * @return the string, converted to lower case, or <code>null</code> if the
 	 *         string is <code>null</code>
 	 */
@@ -4028,7 +4061,7 @@ public class StringUtil {
 	 * locale.
 	 *
 	 * @param  s the string to convert
-	 * @param  locale the string's locale
+	 * @param  locale apply this locale's rules
 	 * @return the string, converted to upper case, or <code>null</code> if the
 	 *         string is <code>null</code>
 	 */
@@ -4605,7 +4638,7 @@ public class StringUtil {
 
 	/**
 	 * Wraps the text when it exceeds the <code>80</code> column width limit,
-	 * and begins the subsequent text on a new line.
+	 * using a {@link StringPool#NEW_LINE} to break each wrapped line.
 	 *
 	 * @param  text the text to wrap
 	 * @return the wrapped text following the column width limit, or
@@ -4616,12 +4649,12 @@ public class StringUtil {
 	}
 
 	/**
-	 * Wraps the text when it exceeds the column width limit, and inserts a line
-	 * separator after each wrapped line.
+	 * Wraps the text when it exceeds the column width limit, using the line
+	 * separator to break each wrapped line.
 	 *
 	 * @param  text the text to wrap
 	 * @param  width the column width limit for the text
-	 * @param  lineSeparator the string to input after a wrapped row of text
+	 * @param  lineSeparator the string to use in breaking each wrapped line
 	 * @return the wrapped text and line separators, following the column width
 	 *         limit, or <code>null</code> if the text is <code>null</code>
 	 */

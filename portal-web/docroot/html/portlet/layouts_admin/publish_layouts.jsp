@@ -295,22 +295,6 @@ else {
 						<div class="export-dialog-tree">
 
 							<%
-							String scheduleCMD = StringPool.BLANK;
-							String unscheduleCMD = StringPool.BLANK;
-
-							if (cmd.equals("copy_from_live")) {
-								scheduleCMD = "schedule_copy_from_live";
-								unscheduleCMD = "unschedule_copy_from_live";
-							}
-							else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-								scheduleCMD = "schedule_publish_to_live";
-								unscheduleCMD = "unschedule_publish_to_live";
-							}
-							else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
-								scheduleCMD = "schedule_publish_to_remote";
-								unscheduleCMD = "unschedule_publish_to_remote";
-							}
-
 							String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExecutor.class.getName() : LayoutRemoteStagingBackgroundTaskExecutor.class.getName();
 
 							int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(stagingGroupId, taskExecutorClassName, false);
@@ -324,11 +308,30 @@ else {
 								</liferay-util:include>
 							</div>
 
-							<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
+							<c:if test="<%= !cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE) %>">
+
+								<%
+								String scheduleCMD = StringPool.BLANK;
+								String unscheduleCMD = StringPool.BLANK;
+
+								if (cmd.equals("copy_from_live")) {
+									scheduleCMD = "schedule_copy_from_live";
+									unscheduleCMD = "unschedule_copy_from_live";
+								}
+								else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
+									scheduleCMD = "schedule_publish_to_live";
+									unscheduleCMD = "unschedule_publish_to_live";
+								}
+								else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
+									scheduleCMD = "schedule_publish_to_remote";
+									unscheduleCMD = "unschedule_publish_to_remote";
+								}
+								%>
+
 								<aui:fieldset cssClass="options-group" label="date">
 									<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
 								</aui:fieldset>
-							</div>
+							</c:if>
 
 							<c:if test="<%= !group.isCompany() %>">
 								<aui:fieldset cssClass="options-group" label="pages">

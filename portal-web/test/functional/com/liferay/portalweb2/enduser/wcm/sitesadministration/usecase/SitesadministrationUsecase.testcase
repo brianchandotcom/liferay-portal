@@ -449,9 +449,9 @@
 		</execute>
 
 		<execute macro="UserGroup#addPageCP">
-			<var name="userGroupName" value="User Group Name" />
 			<var name="sitePageName" value="site Page Name" />
 			<var name="sitePagePrivacy" value="Public" />
+			<var name="userGroupName" value="User Group Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -490,8 +490,7 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoMyDashboard">
-		</execute>
+		<execute macro="Page#gotoMyDashboard" />
 
 		<execute action="Home#assertLocation" value1="http://localhost:8080/user/usersn/home" />
 
@@ -509,12 +508,12 @@
 		</execute>
 
 		<execute macro="Site#editFriendlyURLCP">
-			<var name="siteFriendlyURLEdit" value="lakers" />
+			<var name="siteFriendlyURLEdit" value="liferay" />
 		</execute>
 
-		<execute action="Home#open" locator1="http://localhost:8080/web/lakers/site-page-name" />
+		<execute action="Home#open" locator1="http://localhost:8080/web/liferay/site-page-name" />
 
-		<execute action="Home#assertLocation" value1="http://localhost:8080/web/lakers/site-page-name" />
+		<execute action="Home#assertLocation" value1="http://localhost:8080/web/liferay/site-page-name" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />

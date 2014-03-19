@@ -106,6 +106,14 @@ ${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actio
 				liferaySelenium
 			</#if>
 
+			.assertJavaScriptErrors();
+
+			<#if testCaseName??>
+				selenium
+			<#else>
+				liferaySelenium
+			</#if>
+
 			.assertLiferayErrors();
 		</#if>
 	</#if>

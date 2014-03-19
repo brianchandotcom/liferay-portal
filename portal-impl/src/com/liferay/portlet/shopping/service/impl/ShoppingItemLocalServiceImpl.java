@@ -843,7 +843,7 @@ public class ShoppingItemLocalServiceImpl
 
 		ShoppingItem item = shoppingItemPersistence.fetchByC_S(companyId, sku);
 
-		if (item != null) {
+		if ((item != null) && (item.getItemId() != itemId)) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("{companyId=");

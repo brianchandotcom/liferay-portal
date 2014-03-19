@@ -1460,7 +1460,7 @@ public class StringUtil {
 	 * Converts all of the characters in the string to lower case.
 	 *
 	 * @param  s the string to convert
-	 * @return the string, converted to lowercase, or <code>null</code> if the
+	 * @return the string, converted to lower case, or <code>null</code> if the
 	 *         string is <code>null</code>
 	 * @see    String#toLowerCase()
 	 */
@@ -1468,6 +1468,12 @@ public class StringUtil {
 		return toLowerCase(s);
 	}
 
+	/**
+	 * Converts all of the characters in the arbitrary number of strings to
+	 * lower case.
+	 *
+	 * @param array the array or sequence of string arguments
+	 */
 	public static void lowerCase(String... array) {
 		if (array != null) {
 			for (int i = 0; i < array.length; i++) {
@@ -1620,10 +1626,28 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * Merges the elements of the collection by returning a string representing
+	 * a comma delimited list of its values.
+	 *
+	 * @param  col the collection of objects
+	 * @return the merged collection elements, or <code>null</code> if the
+	 *         collection is <code>null</code>
+	 */
 	public static String merge(Collection<?> col) {
 		return merge(col, StringPool.COMMA);
 	}
 
+	/**
+	 * Merges the elements of the collection by returning a string representing
+	 * a delimited list of its values.
+	 *
+	 * @param  col the collection of objects
+	 * @param  delimiter the string whose last index in the string marks where
+	 *         to begin the substring
+	 * @return the merged collection elements, or <code>null</code> if the
+	 *         collection is <code>null</code>
+	 */
 	public static String merge(Collection<?> col, String delimiter) {
 		if (col == null) {
 			return null;
@@ -2392,6 +2416,43 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Replaces all occurrences of the of the keywords found in the substring,
+	 * defined by the beginning and ending strings, with the new values.
+	 *
+	 * <p>
+	 * For example, with the following initialized variables:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * String s = "http://www.example-url/${userId}";
+	 * String begin = "${";
+	 * String end = "}";
+	 * Map<String, String> values =  new HashMap&#60;String, String&#62;();
+	 * values.put("userId", "jbloggs");
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * <p>
+	 * <code>replace(s, begin, end, values)</code> returns
+	 * <code>"http://www.example-url/jbloggs"</code>
+	 * </p>
+	 *
+	 * @param  s the original string
+	 * @param  begin the string preceding the substring to be modified. This
+	 *         string is excluded from the result.
+	 * @param  end the string following the substring to be modified. This
+	 *         string is excluded from the result.
+	 * @param  values the key-value map values
+	 * @return a string representing the original string with all occurrences of
+	 *         the of the keywords found in the substring, replaced with the new
+	 *         values. <code>null</code> is returned if the original string, the
+	 *         beginning string, the ending string, or the key-map values are
+	 *         <code>null</code>.
+	 */
 	public static String replace(
 		String s, String begin, String end, Map<String, String> values) {
 
@@ -2468,7 +2529,7 @@ public class StringUtil {
 	 *         all occurrences of the <code>oldSubs</code> strings replaced with
 	 *         the corresponding <code>newSubs</code> strings, or
 	 *         <code>null</code> if the original string, the
-	 *         <code>oldSubs</code> array, or the <code>newSubs</code is
+	 *         <code>oldSubs</code> array, or the <code>newSubs</code> is
 	 *         <code>null</code>
 	 */
 	public static String replace(
@@ -2549,6 +2610,23 @@ public class StringUtil {
 		return replaceFirst(s, oldSub, newSub, 0);
 	}
 
+	/**
+	 * Replaces the first occurrences of the elements of the string array with
+	 * the corresponding elements of the new string array, beginning the element
+	 * search from the index position.
+	 *
+	 * @param  s the original string
+	 * @param  oldSub the strings whose first occurrences are to be searched for
+	 *         and replaced in the original string
+	 * @param  newSub the strings with which to replace the first occurrences of
+	 *         the <code>oldSubs</code> strings
+	 * @param  fromIndex the start index within the string
+	 * @return a string representing the original string with the first
+	 *         occurrences of the <code>oldSubs</code> strings replaced with the
+	 *         corresponding <code>newSubs</code> strings, or <code>null</code>
+	 *         if the original string, the <code>oldSubs</code> string, or the
+	 *         <code>newSubs</code> string is <code>null</code>
+	 */
 	public static String replaceFirst(
 		String s, String oldSub, String newSub, int fromIndex) {
 
@@ -2584,7 +2662,7 @@ public class StringUtil {
 	 *         occurrences of the <code>oldSubs</code> strings replaced with the
 	 *         corresponding <code>newSubs</code> strings, or <code>null</code>
 	 *         if the original string, the <code>oldSubs</code> array, or the
-	 *         <code>newSubs</code is <code>null</code>
+	 *         <code>newSubs</code> is <code>null</code>
 	 */
 	public static String replaceFirst(
 		String s, String[] oldSubs, String[] newSubs) {
@@ -2690,7 +2768,7 @@ public class StringUtil {
 	 *         occurrences of the <code>oldSubs</code> strings replaced with the
 	 *         corresponding <code>newSubs</code> strings, or <code>null</code>
 	 *         if the original string, the <code>oldSubs</code> array, or the
-	 *         <code>newSubs</code is <code>null</code>
+	 *         <code>newSubs</code> is <code>null</code>
 	 */
 	public static String replaceLast(
 		String s, String[] oldSubs, String[] newSubs) {
@@ -2710,6 +2788,46 @@ public class StringUtil {
 		return s;
 	}
 
+	/**
+	 * Replaces all occurrences of the of the keywords found in the substring,
+	 * defined by the beginning and ending strings, with the new values. The
+	 * result is returned as a {@link StringBundler}.
+	 *
+	 * <p>
+	 * For example, with the following initialized variables:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * String s = "http://www.example-url/${userId}";
+	 * String begin = "${";
+	 * String end = "}";
+	 * Map<String, String> values =  new HashMap&#60;String, String&#62;();
+	 * values.put("userId", "jbloggs");
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * <p>
+	 * <code>StringBundler sb = replaceToStringBundler(s, begin, end,
+	 * values)</code> <code>sb.toString()</code> returns
+	 * <code>"http://www.example-url/jbloggs"</code>
+	 * </p>
+	 *
+	 * @param  s the original string
+	 * @param  begin the string preceding the substring to be modified. This
+	 *         string is excluded from the result.
+	 * @param  end the string following the substring to be modified. This
+	 *         string is excluded from the result.
+	 * @param  values the key-value map values
+	 * @return a string bundler representing the original string with all
+	 *         occurrences of the of the keywords found in the substring,
+	 *         replaced with the new values. <code>null</code> is returned if
+	 *         the original string, the beginning string, the ending string, or
+	 *         the key-map values are <code>null</code>.
+	 * @see    #replace(String, String, String, Map)
+	 */
 	public static StringBundler replaceToStringBundler(
 		String s, String begin, String end, Map<String, String> values) {
 
@@ -2752,6 +2870,24 @@ public class StringUtil {
 		return sb;
 	}
 
+	/**
+	 * Replaces all occurrences of the of the keywords found in the substring,
+	 * defined by the beginning and ending strings, with the new values. The
+	 * result is returned as a {@link StringBundler}.
+	 *
+	 * @param  s the original string
+	 * @param  begin the string preceding the substring to be modified. This
+	 *         string is removed from the result.
+	 * @param  end the string following the substring to be modified. This
+	 *         string is removed from the result.
+	 * @param  values the key-value map values, which has a string keys and
+	 *         {@link StringBundler} values
+	 * @return a string bundler representing the original string with all
+	 *         occurrences of the of the keywords found in the substring,
+	 *         replaced with the new values. <code>null</code> is returned if
+	 *         the original string, the beginning string, the ending string, or
+	 *         the key-map values are <code>null</code>.
+	 */
 	public static StringBundler replaceWithStringBundler(
 		String s, String begin, String end, Map<String, StringBundler> values) {
 
@@ -3850,10 +3986,27 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Converts all of the characters in the string to lower case, based on the
+	 * portal instance's default locale.
+	 *
+	 * @param  s the string to convert
+	 * @return the string, converted to lower case, or <code>null</code> if the
+	 *         string is <code>null</code>
+	 */
 	public static String toLowerCase(String s) {
 		return toLowerCase(s, null);
 	}
 
+	/**
+	 * Converts all of the characters in the string to lower case, based on the
+	 * locale.
+	 *
+	 * @param  s the string to convert
+	 * @param  locale apply this locale's rules
+	 * @return the string, converted to lower case, or <code>null</code> if the
+	 *         string is <code>null</code>
+	 */
 	public static String toLowerCase(String s, Locale locale) {
 		if (s == null) {
 			return null;
@@ -3891,10 +4044,27 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * Converts all of the characters in the string to upper case, based on the
+	 * portal instance's default locale.
+	 *
+	 * @param  s the string to convert
+	 * @return the string, converted to upper case, or <code>null</code> if the
+	 *         string is <code>null</code>
+	 */
 	public static String toUpperCase(String s) {
 		return toUpperCase(s, null);
 	}
 
+	/**
+	 * Converts all of the characters in the string to upper case, based on the
+	 * locale.
+	 *
+	 * @param  s the string to convert
+	 * @param  locale apply this locale's rules
+	 * @return the string, converted to upper case, or <code>null</code> if the
+	 *         string is <code>null</code>
+	 */
 	public static String toUpperCase(String s, Locale locale) {
 		if (s == null) {
 			return null;
@@ -4466,10 +4636,28 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Wraps the text when it exceeds the <code>80</code> column width limit,
+	 * using a {@link StringPool#NEW_LINE} to break each wrapped line.
+	 *
+	 * @param  text the text to wrap
+	 * @return the wrapped text following the column width limit, or
+	 *         <code>null</code> if the text is <code>null</code>
+	 */
 	public static String wrap(String text) {
 		return wrap(text, 80, StringPool.NEW_LINE);
 	}
 
+	/**
+	 * Wraps the text when it exceeds the column width limit, using the line
+	 * separator to break each wrapped line.
+	 *
+	 * @param  text the text to wrap
+	 * @param  width the column width limit for the text
+	 * @param  lineSeparator the string to use in breaking each wrapped line
+	 * @return the wrapped text and line separators, following the column width
+	 *         limit, or <code>null</code> if the text is <code>null</code>
+	 */
 	public static String wrap(String text, int width, String lineSeparator) {
 		try {
 			return _wrap(text, width, lineSeparator);

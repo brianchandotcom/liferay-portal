@@ -109,8 +109,7 @@ public class LayoutRevisionLocalServiceImpl
 			portletPreferencesPlid = plid;
 		}
 
-		copyPortletPreferences(
-			layoutRevision, portletPreferencesPlid, serviceContext);
+		copyPortletPreferences(layoutRevision, portletPreferencesPlid);
 
 		// Workflow
 
@@ -455,8 +454,7 @@ public class LayoutRevisionLocalServiceImpl
 			// Portlet preferences
 
 			copyPortletPreferences(
-				layoutRevision, layoutRevision.getParentLayoutRevisionId(),
-				serviceContext);
+				layoutRevision, layoutRevision.getParentLayoutRevisionId());
 
 			StagingUtil.setRecentLayoutBranchId(
 				user, layoutRevision.getLayoutSetBranchId(),
@@ -583,8 +581,7 @@ public class LayoutRevisionLocalServiceImpl
 	}
 
 	protected void copyPortletPreferences(
-			LayoutRevision layoutRevision, long parentLayoutRevisionId,
-			ServiceContext serviceContext)
+			LayoutRevision layoutRevision, long parentLayoutRevisionId)
 		throws SystemException {
 
 		List<PortletPreferences> portletPreferencesList =

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 
 import org.junit.Test;
 
@@ -73,6 +74,14 @@ public class EnumerationUtilTest {
 		Assert.assertEquals("1", composedEnumeration.nextElement());
 		Assert.assertEquals("2", composedEnumeration.nextElement());
 		Assert.assertEquals("3", composedEnumeration.nextElement());
+	}
+
+	@Test(expected = NoSuchElementException.class)
+	public void testNextElementThrowsException() {
+		Enumeration composedEnumeration = EnumerationUtil.compose(
+			Collections.emptyEnumeration());
+
+		composedEnumeration.nextElement();
 	}
 
 }

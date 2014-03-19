@@ -67,12 +67,6 @@
 
 			<#assign actionElement = element>
 
-			<#if element_has_next>
-				<#assign actionNextElement = elements[element_index + 1]>
-			<#else>
-				<#assign actionNextElement = element>
-			</#if>
-
 			<#include "action_log_element.ftl">
 
 			<#include "action_element.ftl">

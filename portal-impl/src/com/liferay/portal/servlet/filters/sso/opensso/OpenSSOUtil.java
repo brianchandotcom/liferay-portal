@@ -358,12 +358,23 @@ public class OpenSSOUtil {
 
 			int responseCode = httpURLConnection.getResponseCode();
 
-			if (responseCode != HttpURLConnection.HTTP_OK) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Attributes response code " + responseCode);
-				}
-
+			if (!(responseCode == HttpURLConnection.HTTP_OK
+					|| (responseCode >= HttpURLConnection.HTTP_MULT_CHOICE 
+						&& responseCode <= HttpURLConnection.HTTP_NOT_MODIFIED))) {
+					
+				_log.error("OpenSSO URL not valid. " 
+					+ "Response code " + responseCode + " "
+					+ "Url=" + url.toString()
+				);
+				
 				return false;
+			}
+			
+			if (_log.isDebugEnabled()) {
+				_log.debug("OpenSSO URL validated. " 
+					+ "Response code " + responseCode + " "
+					+ "Url=" + url.toString() 
+				);				
 			}
 		}
 		catch (IOException ioe) {

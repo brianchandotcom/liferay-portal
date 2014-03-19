@@ -836,27 +836,21 @@ public class LanguageImpl implements Language {
 	private String _get(ResourceBundle resourceBundle, String key) {
 		Locale locale = resourceBundle.getLocale();
 
+		if ((resourceBundle == null) || (key == null)) {
+			return null;
+		}
+
 		if (PropsValues.TRANSLATIONS_DISABLED) {
 			return key;
 		}
 
-		if (key == null) {
-			return null;
+		String value = ResourceBundleUtil.getString(resourceBundle, key);
+
+		if (value != null) {
+			return LanguageResources.fixValue(value);
 		}
 
-		String value = null;
-
-		if (resourceBundle != null) {
-			value = ResourceBundleUtil.getString(resourceBundle, key);
-
-			if (value != null) {
-				value = LanguageResources.fixValue(value);
-			}
-		}
-
-		if (value == null) {
-			value = LanguageResources.getMessage(locale, key);
-		}
+		value = LanguageResources.getMessage(locale, key);
 
 		if (value == null) {
 			if ((key.length() > 0) &&

@@ -155,22 +155,6 @@
 		margin-bottom: 0;
 	}
 
-	@include respond-to(phone) {
-		.form-search .input-append {
-			.btn {
-				font-size: 0;
-				padding: 4px 19px 0;
-
-				&:after {
-					content: $search;
-					font-size: 18px;
-
-					@include icon-FontAwesome();
-				}
-			}
-		}
-	}
-
 	.navbar .nav > li > a {
 		&:focus, &:hover {
 			color: #009AE5;

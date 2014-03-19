@@ -23,6 +23,7 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseSubscriptionTestCase;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
@@ -79,6 +80,16 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 
 		DLAppLocalServiceUtil.subscribeFolder(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected String getPortletId() {
+		return PortletKeys.DOCUMENT_LIBRARY;
+	}
+
+	@Override
+	protected String getSubscriptionBodyPreferenceName() throws Exception {
+		return "emailFileEntryAddedBody";
 	}
 
 }

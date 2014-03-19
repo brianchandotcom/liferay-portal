@@ -466,9 +466,12 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Test Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
-			<var name="searchTerm" value="Test Document" />
 		</execute>
 
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
@@ -521,9 +524,12 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Test Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
-			<var name="searchTerm" value="Test Document" />
 		</execute>
 
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
@@ -1074,9 +1080,12 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Test Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
-			<var name="searchTerm" value="Test Document" />
 		</execute>
 
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
@@ -1125,9 +1134,12 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Test Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
-			<var name="searchTerm" value="Test Document" />
 		</execute>
 
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />

@@ -150,9 +150,12 @@
 
 		<execute macro="Search#searchPG">
 			<var name="localizationIDName" value="Suchen" />
+			<var name="searchTerm" value="Kategorienamen" />
+		</execute>
+
+		<execute macro="Search#viewSearchPG">
 			<var name="searchAssetTitle" value="${webContentTitle}" />
 			<var name="searchAssetType" value="Webcontent" />
-			<var name="searchTerm" value="Kategorienamen" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

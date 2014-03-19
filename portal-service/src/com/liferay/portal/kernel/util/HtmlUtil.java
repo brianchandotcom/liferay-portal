@@ -149,7 +149,7 @@ public class HtmlUtil {
 	/**
 	 * Renders the HTML content into text. This provides a human readable
 	 * version of the segment content that is modeled on the way Mozilla
-	 * Thunderbird and other email clients provide an automatic conversion of
+	 * Thunderbird&reg; and other email clients provide an automatic conversion of
 	 * HTML content to text in their alternative MIME encoding of emails.
 	 *
 	 * <p>
@@ -167,7 +167,7 @@ public class HtmlUtil {
 	}
 
 	/**
-	 * Replaces all Microsoft Word Unicode characters with plain HTML entities
+	 * Replaces all Microsoft&reg; Word Unicode characters with plain HTML entities
 	 * or characters.
 	 *
 	 * @param  text the text

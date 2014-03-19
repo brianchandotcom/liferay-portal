@@ -397,9 +397,9 @@ public class HtmlImpl implements Html {
 
 	/**
 	 * Renders the HTML content into text. This provides a human readable
-	 * version of the content that is modeled on the way Mozilla Thunderbird and
-	 * other email clients provide an automatic conversion of HTML content to
-	 * text in their alternative MIME encoding of emails.
+	 * version of the content that is modeled on the way Mozilla Thunderbird&reg;
+	 * and other email clients provide an automatic conversion of HTML content
+	 * to text in their alternative MIME encoding of emails.
 	 *
 	 * <p>
 	 * Using the default settings, the output complies with the
@@ -425,7 +425,7 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * Replaces all Microsoft Word Unicode characters with plain HTML entities
+	 * Replaces all Microsoft&reg; Word Unicode characters with plain HTML entities
 	 * or characters.
 	 *
 	 * @param  text the text

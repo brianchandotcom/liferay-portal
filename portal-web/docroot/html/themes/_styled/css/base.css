@@ -1,4 +1,5 @@
 @import "compass";
+@import "mixins";
 
 /* ---------- Logo ---------- */
 
@@ -60,8 +61,8 @@ body.html-editor {
 		width: 100%;
 
 		&:after {
-			content: " ";
 			clear: both;
+			content: "";
 			display: block;
 			font-size: 0;
 			height: 0;
@@ -96,8 +97,8 @@ body.html-editor {
 			margin-right: 10px;
 
 			&:after {
-				content: " ";
 				clear: both;
+				content: "";
 				display: block;
 				font-size: 0;
 				height: 0;

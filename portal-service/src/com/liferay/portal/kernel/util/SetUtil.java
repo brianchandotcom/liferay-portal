@@ -223,4 +223,22 @@ public class SetUtil {
 		return fromArray(StringUtil.splitLines(s));
 	}
 
+	public static <T> Enumeration<T> toEnumeration(Set<T> set) {
+		final Iterator<T> iterator = set.iterator();
+
+		return new Enumeration<T>() {
+
+			@Override
+			public boolean hasMoreElements() {
+				return iterator.hasNext();
+			}
+
+			@Override
+			public T nextElement() {
+				return iterator.next();
+			}
+
+		};
+	}
+
 }

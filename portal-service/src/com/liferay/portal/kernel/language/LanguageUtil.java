@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -203,6 +204,10 @@ public class LanguageUtil {
 
 	public static String getCharset(Locale locale) {
 		return getLanguage().getCharset(locale);
+	}
+
+	public static Set<String> getKeys(Locale locale) {
+		return getLanguage().getKeys(locale);
 	}
 
 	public static Language getLanguage() {

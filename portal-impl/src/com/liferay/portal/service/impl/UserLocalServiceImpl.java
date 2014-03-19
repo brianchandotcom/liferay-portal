@@ -41,6 +41,9 @@ import com.liferay.portal.UserPasswordException;
 import com.liferay.portal.UserReminderQueryException;
 import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.UserSmsException;
+import com.liferay.portal.kernel.cache.CacheListener;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.shard.ShardCallable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -100,6 +103,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.model.impl.UserCacheModel;
+import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.security.auth.AuthPipeline;
 import com.liferay.portal.security.auth.Authenticator;
 import com.liferay.portal.security.auth.EmailAddressGenerator;
@@ -989,6 +994,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		return user;
+	}
+
+	@Override
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
+		PortalCache<Serializable, Serializable> portalCache =
+			EntityCacheUtil.getPortalCache(UserImpl.class);
+
+		portalCache.registerCacheListener(new DefaultUserCacheListener());
 	}
 
 	/**
@@ -1912,10 +1927,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.getUserId());
 
 		// User
-
-		if (user.isDefaultUser()) {
-			_defaultUsers.remove(user.getCompanyId());
-		}
 
 		userPersistence.remove(user);
 
@@ -5313,15 +5324,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			roleIds, userGroupRoles, userGroupIds, serviceContext);
 	}
 
-	@Override
-	public User updateUser(User user) throws SystemException {
-		if (user.isDefaultUser()) {
-			_defaultUsers.remove(user.getCompanyId());
-		}
-
-		return super.updateUser(user);
-	}
-
 	/**
 	 * Verifies the email address of the ticket.
 	 *
@@ -6421,5 +6423,65 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	private static Log _log = LogFactoryUtil.getLog(UserLocalServiceImpl.class);
 
 	private Map<Long, User> _defaultUsers = new ConcurrentHashMap<Long, User>();
+
+	private class DefaultUserCacheListener
+		implements CacheListener<Serializable, Serializable> {
+
+		@Override
+		public void notifyEntryEvicted(
+			PortalCache<Serializable, Serializable> portalCache,
+			Serializable key, Serializable value) {
+
+			_clearDefaultUserCache(value);
+		}
+
+		@Override
+		public void notifyEntryExpired(
+			PortalCache<Serializable, Serializable> portalCache,
+			Serializable key, Serializable value) {
+
+			_clearDefaultUserCache(value);
+		}
+
+		@Override
+		public void notifyEntryPut(
+			PortalCache<Serializable, Serializable> portalCache,
+			Serializable key, Serializable value) {
+
+			_clearDefaultUserCache(value);
+		}
+
+		@Override
+		public void notifyEntryRemoved(
+			PortalCache<Serializable, Serializable> portalCache,
+			Serializable key, Serializable value) {
+
+			_clearDefaultUserCache(value);
+		}
+
+		@Override
+		public void notifyEntryUpdated(
+			PortalCache<Serializable, Serializable> portalCache,
+			Serializable key, Serializable value) {
+
+			_clearDefaultUserCache(value);
+		}
+
+		@Override
+		public void notifyRemoveAll(
+			PortalCache<Serializable, Serializable> portalCache) {
+
+			_defaultUsers.clear();
+		}
+
+		private void _clearDefaultUserCache(Serializable serializable) {
+			UserCacheModel userCacheModel = (UserCacheModel)serializable;
+
+			if (userCacheModel.defaultUser) {
+				_defaultUsers.remove(userCacheModel.companyId);
+			}
+		}
+
+	}
 
 }

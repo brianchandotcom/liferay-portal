@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -238,8 +237,6 @@ public class CompanyLocalServiceTest {
 		Company company = addCompany();
 
 		User user = UserLocalServiceUtil.getDefaultUser(company.getCompanyId());
-
-		user.setFirstName(StringUtil.randomString());
 
 		UserLocalServiceUtil.updateUser(user);
 

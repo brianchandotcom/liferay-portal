@@ -1031,7 +1031,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		user.setLanguageId(languageId);
 		user.setTimeZoneId(timeZoneId);
 
-		userLocalService.updateUser(user);
+		userPersistence.update(user);
 	}
 
 	/**

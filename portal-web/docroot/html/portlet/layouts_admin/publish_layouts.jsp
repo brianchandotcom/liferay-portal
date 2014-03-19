@@ -302,11 +302,11 @@ else {
 								scheduleCMD = "schedule_copy_from_live";
 								unscheduleCMD = "unschedule_copy_from_live";
 							}
-							else if (cmd.equals("publish_to_live")) {
+							else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
 								scheduleCMD = "schedule_publish_to_live";
 								unscheduleCMD = "unschedule_publish_to_live";
 							}
-							else if (cmd.equals("publish_to_remote")) {
+							else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
 								scheduleCMD = "schedule_publish_to_remote";
 								unscheduleCMD = "unschedule_publish_to_remote";
 							}

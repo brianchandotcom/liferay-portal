@@ -65,7 +65,7 @@ public class MapUtil {
 			map.put(key, value);
 		}
 
-		return null;
+		return map;
 	}
 
 	public static boolean getBoolean(Map<String, ?> map, String key) {

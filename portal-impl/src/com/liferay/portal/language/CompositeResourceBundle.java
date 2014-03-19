@@ -14,12 +14,11 @@
 
 package com.liferay.portal.language;
 
-import java.util.Collections;
+import com.liferay.portal.kernel.util.EnumerationUtil;
+
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 /**
  * @author Carlos Sierra Andrés
@@ -36,13 +35,6 @@ public class CompositeResourceBundle extends ResourceBundle {
 
 	public CompositeResourceBundle(ResourceBundle ... delegateResourceBundles) {
 		_delegateResourceBundles = delegateResourceBundles;
-		_keySet = new HashSet<String>();
-
-		for (ResourceBundle delegateResourceBundle : _delegateResourceBundles) {
-			Set<String> delegateKeySet = delegateResourceBundle.keySet();
-
-			_keySet.addAll(delegateKeySet);
-		}
 	}
 
 	/**
@@ -51,7 +43,15 @@ public class CompositeResourceBundle extends ResourceBundle {
 	 */
 	@Override
 	public Enumeration<String> getKeys() {
-		return Collections.enumeration(keySet());
+		if (_enumerations == null) {
+			_enumerations = new Enumeration[_delegateResourceBundles.length];
+
+			for (int i = 0; i < _delegateResourceBundles.length; i++) {
+				_enumerations[i] = _delegateResourceBundles[i].getKeys();
+			}
+		}
+
+		return EnumerationUtil.<String>compose(_enumerations);
 	}
 
 	/**
@@ -88,12 +88,7 @@ public class CompositeResourceBundle extends ResourceBundle {
 			key);
 	}
 
-	@Override
-	protected Set<String> handleKeySet() {
-		return _keySet;
-	}
-
 	private ResourceBundle[] _delegateResourceBundles;
-	private final HashSet<String> _keySet;
+	private Enumeration[] _enumerations;
 
 }

@@ -775,6 +775,80 @@
 		</execute>
 	</command>
 
+	<command name="editPasswordInvalidCP">
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
+		<if>
+			<equals arg1="${userPassword}" arg2="Invalid" />
+			<then>
+				<if>
+					<isset var="newPassword" />
+					<then>
+						<var name="newPassword" value="${defaultPassword}" />
+					</then>
+					<else>
+						<var name="defaultPassword" value="password" />
+					</else>
+				</if>
+
+				<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_USER_INFORMATION_PASSWORD" value1="Password" />
+				<execute action="CPUsersandorganizationsUser#type" locator-key1="PASSWORD_NEW_PASSWORD_FIELD" value1="${defaultPassword}" />
+				<execute action="CPUsersandorganizationsUser#type" locator-key1="PASSWORD_ENTER_AGAIN_FIELD" value1="${defaultPassword}" />
+				<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+				<if>
+					<equals arg1="${userPassword1}" arg2="Trivial" />
+					<then>
+						<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+						<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="That password is too trivial." />
+					</then>
+					<else>
+						<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+						<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="That password is invalid. Please enter in a different password." />
+					</else>
+				</if>
+			</then>
+			<else>
+				<if>
+					<isset var="newPassword" />
+					<then>
+						<var name="newPassword" value="${defaultPassword}" />
+					</then>
+					<else>
+						<var name="defaultPassword" value="password" />
+					</else>
+				</if>
+
+				<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_USER_INFORMATION_PASSWORD" value1="Password" />
+				<execute action="CPUsersandorganizationsUser#type" locator-key1="PASSWORD_NEW_PASSWORD_FIELD" value1="${defaultPassword}" />
+				<execute action="CPUsersandorganizationsUser#type" locator-key1="PASSWORD_ENTER_AGAIN_FIELD" value1="${defaultPassword}" />
+				<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+				<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+				<execute macro="User#logoutPG" />
+
+				<execute macro="User#loginPG">
+					<var name="password" value="${defaultPassword}" />
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+				</execute>
+
+				<execute macro="User#logoutPG" />
+
+				<execute macro="User#loginPG">
+					<var name="password" value="test" />
+					<var name="userEmailAddress" value="test@liferay.com" />
+				</execute>
+			</else>
+		</if>
+	</command>
+
 	<command name="editUserDisplaySettingsCP">
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
 

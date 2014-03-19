@@ -447,12 +447,11 @@ $editLayoutPanelWidth: 460px;
 			}
 
 			> li.staging-toggle {
-				&.active a {
+				&.active a, > a {
 					color: #555;
 				}
 
 				> a {
-					color: #555;
 					padding: 4px 10px;
 				}
 			}
@@ -478,9 +477,8 @@ $editLayoutPanelWidth: 460px;
 
 		.staging-bar {
 			margin: 6px 0 0;
-			position: static;
 
-			li.staging-toggle {
+			&, li.staging-toggle {
 				position: static;
 			}
 		}

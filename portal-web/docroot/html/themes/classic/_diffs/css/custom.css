@@ -155,12 +155,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.nav > li.staging-toggle {
-			&.active a {
+			&.active a, > a {
 				color: #FFF;
 			}
 
 			> a {
-				color: #FFF;
 				padding: 2px 20px;
 			}
 		}
@@ -180,7 +179,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.page-customization-bar .btn {
 			border-color: transparent;
 
-			&:hover, &:focus {
+			&:focus, &:hover {
 				background: transparent;
 				text-decoration: underline;
 			}

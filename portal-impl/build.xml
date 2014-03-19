@@ -629,8 +629,8 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../portal-web" target="build-selenium-old" />
 	</target>
 
-	<target name="build-selenium-new">
-		<ant dir="../portal-web" target="build-selenium-new" />
+	<target name="build-selenium-new-block">
+		<ant dir="../portal-web" target="build-selenium-new-block" />
 	</target>
 
 	<target name="build-selenium-new-action">
@@ -651,10 +651,6 @@ public class Creole10Parser]]></replacevalue>
 
 	<target name="build-selenium-new-test-case">
 		<ant dir="../portal-web" target="build-selenium-new-test-case" />
-	</target>
-
-	<target name="build-selenium-new-test-suite">
-		<ant dir="../portal-web" target="build-selenium-new-test-suite" />
 	</target>
 
 	<target name="build-selenium-server-jar">

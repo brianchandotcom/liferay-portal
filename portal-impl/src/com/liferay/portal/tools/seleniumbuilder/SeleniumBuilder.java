@@ -117,13 +117,42 @@ public class SeleniumBuilder {
 			TestCaseConverter testCaseConverter = new TestCaseConverter(
 				_seleniumBuilderContext);
 
-			Set<String> testCaseNames =
-				_seleniumBuilderContext.getTestCaseNames();
+			try {
+				String testClass = arguments.get("test.class");
+				String testCaseName = "";
+				String testCaseCommandName = "";
 
-			for (String testCaseName : testCaseNames) {
-				_seleniumBuilderContext.validateTestCaseElements(testCaseName);
+				if (testClass.contains("#")) {
+					String[] testClassParts = testClass.split("#");
+					testCaseName = testClassParts[0];
+					testCaseCommandName = testClassParts[1];
 
-				testCaseConverter.convert(testCaseName);
+					if (testCaseName.endsWith("TestCase")) {
+						testCaseName = testCaseName.replace("TestCase", "");
+					}
+
+					if (testCaseCommandName.startsWith("test")) {
+						testCaseCommandName = testCaseCommandName.replaceFirst(
+							"test", "");
+					}
+
+					testClass = testCaseName + "#" + testCaseCommandName;
+
+					_seleniumBuilderContext.validateTestCaseElements(
+						testCaseName);
+
+					testCaseConverter.convert(testCaseName, testClass);
+				}
+				else {
+					testCaseName = testClass;
+
+					_seleniumBuilderContext.validateTestCaseElements(
+						testCaseName);
+
+					testCaseConverter.convert(testCaseName, testClass);
+				}
+			}
+			catch (NullPointerException npe) {
 			}
 		}
 

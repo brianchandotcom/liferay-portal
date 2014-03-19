@@ -2558,6 +2558,8 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</then>
 		</if>
 
+		<ant dir="portal-impl" target="build-selenium-new-test-case" />
+
 		<antcall target="prepare-selenium" />
 
 		<if>

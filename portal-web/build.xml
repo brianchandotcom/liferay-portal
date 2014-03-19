@@ -881,15 +881,23 @@
 		</java>
 	</target>
 
-	<target name="build-selenium-new">
-		<delete dir="${basedir.unix}/test/functional-generated" />
+	<target name="build-selenium-new-block">
+		<if>
+			<not>
+				<isset property="test.class" />
+			</not>
+			<then>
+				<property name="test.class" value="null" />
+				<delete dir="${basedir.unix}/test/functional-generated" />
+			</then>
+		</if>
 
 		<if>
 			<not>
 				<isset property="selenium.types" />
 			</not>
 			<then>
-				<property name="selenium.types" value="action,function,macro,path,testcase,testsuite" />
+				<property name="selenium.types" value="action,function,macro,path" />
 			</then>
 		</if>
 
@@ -904,42 +912,37 @@
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="selenium.base.dir=test/functional" />
 			<arg value="selenium.types=${selenium.types}" />
+			<arg value="test.class=${test.class}" />
 		</java>
 	</target>
 
 	<target name="build-selenium-new-action">
-		<antcall target="build-selenium-new">
+		<antcall target="build-selenium-new-block">
 			<param name="selenium.types" value="action" />
 		</antcall>
 	</target>
 
 	<target name="build-selenium-new-function">
-		<antcall target="build-selenium-new">
+		<antcall target="build-selenium-new-block">
 			<param name="selenium.types" value="function" />
 		</antcall>
 	</target>
 
 	<target name="build-selenium-new-macro">
-		<antcall target="build-selenium-new">
+		<antcall target="build-selenium-new-block">
 			<param name="selenium.types" value="macro" />
 		</antcall>
 	</target>
 
 	<target name="build-selenium-new-path">
-		<antcall target="build-selenium-new">
+		<antcall target="build-selenium-new-block">
 			<param name="selenium.types" value="path" />
 		</antcall>
 	</target>
 
 	<target name="build-selenium-new-test-case">
-		<antcall target="build-selenium-new">
+		<antcall target="build-selenium-new-block">
 			<param name="selenium.types" value="testcase" />
-		</antcall>
-	</target>
-
-	<target name="build-selenium-new-test-suite">
-		<antcall target="build-selenium-new">
-			<param name="selenium.types" value="testsuite" />
 		</antcall>
 	</target>
 

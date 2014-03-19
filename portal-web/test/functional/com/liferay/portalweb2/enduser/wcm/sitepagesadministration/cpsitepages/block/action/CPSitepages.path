@@ -19,9 +19,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>SITE_NAME</td>
-    <td>//a[contains(@title,'${key_siteName}')]</td>
-    <td></td>
+	<td>SITE_NAME</td>
+	<td>//a[contains(@title,'${key_siteName}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
@@ -147,9 +147,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>PAGE_TREE_PAGE_SPECIFIC_PAGE</td>
-    <td>//span[contains(@class,'tree-label')]/a[contains(.,'${key_sitePageName}')]</td>
-    <td></td>
+	<td>PAGE_TREE_PAGE_SPECIFIC_PAGE</td>
+	<td>//span[contains(@class,'tree-label')]/a[contains(.,'${key_sitePageName}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_LINK</td>
@@ -218,9 +218,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX</td>
-    <td>//input[contains(@id,'PrototypeLinkEnabledCheckbox')]</td>
-    <td></td>
+	<td>DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX</td>
+	<td>//input[contains(@id,'PrototypeLinkEnabledCheckbox')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_TYPE_SELECT</td>
@@ -305,9 +305,44 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--LOGO-->
+<tr>
+	<td>LOGO_NAVIGATION</td>
+	<td>//a[@id='_156_logoLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGO_CHANGE_BUTTON</td>
+	<td>//button[contains(.,'Change')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGO_UPLOAD_IMAGE_IFRAME</td>
+	<td>//iframe[@id='_156_changeLogo_iframe_']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGO_UPLOAD_BROWSE_BUTTON</td>
+	<td>//input[@id='_195_fileName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGO_UPLOAD_SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGO_UPLOAD_CLOSE_BUTTON</td>
+	<td>//button[contains(.,'Close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SEO-->
 <!--LOOK_AND_FEEL-->
-<!--LOGO-->
 <!--LAYOUT-->
 <!--JAVASCRIPT-->
 <!--CUSTOM_FIELDS-->

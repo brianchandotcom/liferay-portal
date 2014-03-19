@@ -111,6 +111,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGES_LOGO_CHECKBOX</td>
+	<td>//input[@id='_88_LOGOCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGES_OK_BUTTON</td>
 	<td>//button[contains(.,'OK')]</td>
 	<td></td>

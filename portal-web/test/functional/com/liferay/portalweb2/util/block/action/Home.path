@@ -89,6 +89,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEFAULT_LOGO</td>
+	<td>//a[contains(@class,'default-logo')]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_LOGO</td>
+	<td>//a[contains(@class,'custom-logo')]/img</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_NAME</td>
 	<td>//h1[@class='site-title']/a/span</td>
 	<td></td>

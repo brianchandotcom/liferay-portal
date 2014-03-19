@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutRevisionConstants;
@@ -108,16 +109,24 @@ public class LayoutRevisionLocalServiceImpl
 			portletPreferencesPlid = plid;
 		}
 
-		copyPortletPreferences(
-			layoutRevision, portletPreferencesPlid, serviceContext);
+		copyPortletPreferences(layoutRevision, portletPreferencesPlid);
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), layoutRevision.getGroupId(), user.getUserId(),
-			LayoutRevision.class.getName(),
-			layoutRevision.getLayoutRevisionId(), layoutRevision,
-			serviceContext);
+		if (isWorkflowEnabled(plid)) {
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				user.getCompanyId(), layoutRevision.getGroupId(),
+				user.getUserId(), LayoutRevision.class.getName(),
+				layoutRevision.getLayoutRevisionId(), layoutRevision,
+				serviceContext);
+		}
+		else {
+			updateMajor(layoutRevision);
+
+			updateStatus(
+				userId, layoutRevisionId, WorkflowConstants.STATUS_APPROVED,
+				serviceContext);
+		}
 
 		StagingUtil.setRecentLayoutRevisionId(
 			user, layoutSetBranchId, plid,
@@ -445,8 +454,7 @@ public class LayoutRevisionLocalServiceImpl
 			// Portlet preferences
 
 			copyPortletPreferences(
-				layoutRevision, layoutRevision.getParentLayoutRevisionId(),
-				serviceContext);
+				layoutRevision, layoutRevision.getParentLayoutRevisionId());
 
 			StagingUtil.setRecentLayoutBranchId(
 				user, layoutRevision.getLayoutSetBranchId(),
@@ -485,17 +493,24 @@ public class LayoutRevisionLocalServiceImpl
 
 		boolean major = ParamUtil.getBoolean(serviceContext, "major");
 
-		if (major) {
+		if (major || !isWorkflowEnabled(layoutRevision.getPlid())) {
 			updateMajor(layoutRevision);
 		}
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			layoutRevision.getCompanyId(), layoutRevision.getGroupId(), userId,
-			LayoutRevision.class.getName(),
-			layoutRevision.getLayoutRevisionId(), layoutRevision,
-			serviceContext);
+		if (isWorkflowEnabled(layoutRevision.getPlid())) {
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				layoutRevision.getCompanyId(), layoutRevision.getGroupId(),
+				userId, LayoutRevision.class.getName(),
+				layoutRevision.getLayoutRevisionId(), layoutRevision,
+				serviceContext);
+		}
+		else {
+			updateStatus(
+				userId, layoutRevision.getLayoutRevisionId(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+		}
 
 		return layoutRevision;
 	}
@@ -521,6 +536,7 @@ public class LayoutRevisionLocalServiceImpl
 		}
 		else {
 			layoutRevision.setHead(false);
+			layoutRevision.setMajor(false);
 		}
 
 		layoutRevisionPersistence.update(layoutRevision);
@@ -565,8 +581,7 @@ public class LayoutRevisionLocalServiceImpl
 	}
 
 	protected void copyPortletPreferences(
-			LayoutRevision layoutRevision, long parentLayoutRevisionId,
-			ServiceContext serviceContext)
+			LayoutRevision layoutRevision, long parentLayoutRevisionId)
 		throws SystemException {
 
 		List<PortletPreferences> portletPreferencesList =
@@ -609,6 +624,18 @@ public class LayoutRevisionLocalServiceImpl
 		}
 
 		return LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID;
+	}
+
+	protected boolean isWorkflowEnabled(long plid)
+		throws PortalException, SystemException {
+
+		Layout layout = layoutLocalService.getLayout(plid);
+
+		if (layout.isTypeLinkToLayout() || layout.isTypeURL()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected LayoutRevision updateMajor(LayoutRevision layoutRevision)

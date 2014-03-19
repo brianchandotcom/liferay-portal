@@ -4386,12 +4386,8 @@ public class JournalArticleLocalServiceImpl
 			long groupId, long userId, long ddmStructureId)
 		throws PortalException, SystemException {
 
-		String className = JournalUtil.getSubscriptionClassName(ddmStructureId);
-		long classPK = JournalUtil.getSubscriptionClassPK(
-			groupId, ddmStructureId);
-
 		subscriptionLocalService.addSubscription(
-			userId, groupId, className, classPK);
+			userId, groupId, DDMStructure.class.getName(), ddmStructureId);
 	}
 
 	@Override
@@ -4399,11 +4395,8 @@ public class JournalArticleLocalServiceImpl
 			long groupId, long userId, long ddmStructureId)
 		throws PortalException, SystemException {
 
-		String className = JournalUtil.getSubscriptionClassName(ddmStructureId);
-		long classPK = JournalUtil.getSubscriptionClassPK(
-			groupId, ddmStructureId);
-
-		subscriptionLocalService.deleteSubscription(userId, className, classPK);
+		subscriptionLocalService.deleteSubscription(
+			userId, DDMStructure.class.getName(), ddmStructureId);
 	}
 
 	/**
@@ -6448,21 +6441,13 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		long structureClassPK = 0;
-
-		if (article.isTemplateDriven()) {
-			DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-				article.getGroupId(),
-				classNameLocalService.getClassNameId(JournalArticle.class),
-				article.getStructureId(), true);
-
-			structureClassPK = ddmStructure.getStructureId();
-		}
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			article.getGroupId(),
+			classNameLocalService.getClassNameId(JournalArticle.class),
+			article.getStructureId(), true);
 
 		subscriptionSender.addPersistedSubscribers(
-			JournalUtil.getSubscriptionClassName(structureClassPK),
-			JournalUtil.getSubscriptionClassPK(
-				article.getGroupId(), structureClassPK));
+			DDMStructure.class.getName(), ddmStructure.getStructureId());
 
 		subscriptionSender.addPersistedSubscribers(
 			JournalArticle.class.getName(), article.getResourcePrimKey());

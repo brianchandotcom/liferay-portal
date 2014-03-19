@@ -128,9 +128,7 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void assertJavaScriptErrors(String ignoreJavaScriptError)
-		throws Exception {
-
+	public void assertJavaScriptErrors(String error) throws Exception {
 		if (!TestPropsValues.TEST_ASSSERT_JAVASCRIPT_ERRORS) {
 			return;
 		}
@@ -170,8 +168,8 @@ public abstract class BaseWebDriverImpl
 
 				System.out.println("JS_ERROR: " + javaScriptErrorValue);
 
-				if (Validator.isNotNull(ignoreJavaScriptError) &&
-					javaScriptErrorValue.contains(ignoreJavaScriptError)) {
+				if (Validator.isNotNull(error) &&
+					javaScriptErrorValue.contains(error)) {
 
 					continue;
 				}

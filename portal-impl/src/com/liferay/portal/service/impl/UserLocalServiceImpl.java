@@ -1913,6 +1913,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// User
 
+		if (user.isDefaultUser()) {
+			_defaultUsers.remove(user.getCompanyId());
+		}
+
 		userPersistence.remove(user);
 
 		// Permission cache
@@ -5307,6 +5311,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
 			skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
 			roleIds, userGroupRoles, userGroupIds, serviceContext);
+	}
+
+	@Override
+	public User updateUser(User user) throws SystemException {
+		if (user.isDefaultUser()) {
+			_defaultUsers.remove(user.getCompanyId());
+		}
+
+		return super.updateUser(user);
 	}
 
 	/**

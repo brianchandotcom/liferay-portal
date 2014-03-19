@@ -1050,7 +1050,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingDemoLocalLive4" priority="5">
+	<command name="StagingDemoLocalLive4" known-issues="LPS-43693" priority="5">
 		<var name="pageName" value="Home" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="Community Site Name" />
@@ -1945,7 +1945,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingOnlyApprovedPublishToLive" priority="5">
+	<command name="StagingOnlyApprovedPublishToLive" known-issues="LPS-44150" priority="5">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<execute macro="Page#gotoPG">

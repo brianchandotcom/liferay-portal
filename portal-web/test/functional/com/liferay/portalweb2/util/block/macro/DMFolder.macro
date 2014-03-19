@@ -29,7 +29,23 @@
 		<execute action="PGDocumentsandmediaAddfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${dmFolderDescription}" />
 		<execute action="PGDocumentsandmediaAddfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<if>
+			<equals arg1="${dmFolder}" arg2="Duplicate" />
+			<then>
+				<execute action="PGDocumentsandmediaAddfolder#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+				<execute action="PGDocumentsandmediaAddfolder#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a unique folder name." />
+			</then>
+			<elseif>
+				<equals arg1="${dmFolder}" arg2="Invalid" />
+				<then>
+					<execute action="PGDocumentsandmediaAddfolder#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute action="PGDocumentsandmediaAddfolder#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid name." />
+				</then>
+			</elseif>
+			<else>
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</else>
+		</if>
 	</command>
 
 	<command name="addPGViaMG">
@@ -54,7 +70,23 @@
 		<execute action="PGDocumentsandmediaAddfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${dmSubFolderDescription}" />
 		<execute action="PGDocumentsandmediaAddfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<if>
+			<equals arg1="${dmSubFolder}" arg2="Duplicate" />
+			<then>
+				<execute action="PGDocumentsandmediaAddfolder#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+				<execute action="PGDocumentsandmediaAddfolder#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a unique folder name." />
+			</then>
+			<elseif>
+				<equals arg1="${dmSubFolder}" arg2="Invalid" />
+				<then>
+					<execute action="PGDocumentsandmediaAddfolder#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute action="PGDocumentsandmediaAddfolder#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid name." />
+				</then>
+			</elseif>
+			<else>
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</else>
+		</if>
 	</command>
 
 	<command name="addSubfolderPGViaMG">

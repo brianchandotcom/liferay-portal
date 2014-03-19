@@ -26,7 +26,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddNewWebContentViaAddContentPanel" priority="5">
+	<command name="AddNewWebContentViaAddContentPanel" known-issues="LIFERAYQA-6795" priority="5">
 		<var name="assetType" value="Web Content Article" />
 		<var name="pageName" value="Web Content Page" />
 		<var name="webContentContent" value="WC WebContent Content" />
@@ -102,7 +102,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentPortalScopeCurrentPage" priority="5">
+	<command name="AddWebContentPortalScopeCurrentPage" known-issues="LPS-41756" priority="5">
 		<var name="pageName1" value="Web Content Display Page1" />
 		<var name="pageName2" value="Web Content Display Page2" />
 		<var name="pageName3" value="Web Content Display Page3" />

@@ -227,7 +227,7 @@
 </tr>
 <tr>
 	<td>BREADCRUMB_FOLDER</td>
-	<td>//div[@id='_20_breadcrumbContainer']/ul/li[2]</td>
+	<td>//div[@id='_20_breadcrumbContainer']/ul/li[contains(.,'${key_dmFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>

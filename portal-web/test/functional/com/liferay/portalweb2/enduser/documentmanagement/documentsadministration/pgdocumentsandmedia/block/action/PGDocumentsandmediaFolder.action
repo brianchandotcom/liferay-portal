@@ -12,4 +12,10 @@
 			<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" />
 		</case>
 	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="BREADCRUMB_FOLDER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
 </definition>

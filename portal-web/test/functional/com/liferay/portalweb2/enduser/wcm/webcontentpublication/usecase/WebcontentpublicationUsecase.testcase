@@ -35,7 +35,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddAndEditAssetsViaVirtualHostOrganizations" priority="4">
+	<command name="AddAndEditAssetsViaVirtualHostOrganizations" known-issues="LPS-44575" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 

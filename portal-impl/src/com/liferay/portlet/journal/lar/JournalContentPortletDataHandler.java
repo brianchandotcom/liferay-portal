@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -194,16 +195,13 @@ public class JournalContentPortletDataHandler
 		long importGroupId = GetterUtil.getLong(
 			portletPreferences.getValue("groupId", null));
 
-		if (importGroupId == portletDataContext.getSourceGroupId()) {
-			portletDataContext.setScopeGroupId(portletDataContext.getGroupId());
-		}
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
 
-		if (importGroupId ==
-				portletDataContext.getSourceCompanyGroupId()) {
+		long groupId = MapUtil.getLong(groupIds, importGroupId, importGroupId);
 
-			portletDataContext.setScopeGroupId(
-				portletDataContext.getCompanyGroupId());
-		}
+		portletDataContext.setScopeGroupId(groupId);
 
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
 			portletDataContext, DDMStructure.class);
@@ -225,16 +223,13 @@ public class JournalContentPortletDataHandler
 
 			portletPreferences.setValue("articleId", articleId);
 
-			String importedArticleGroupId = String.valueOf(
-				portletDataContext.getScopeGroupId());
-
-			portletPreferences.setValue("groupId", importedArticleGroupId);
+			portletPreferences.setValue("groupId", String.valueOf(groupId));
 
 			Layout layout = LayoutLocalServiceUtil.getLayout(
 				portletDataContext.getPlid());
 
 			JournalContentSearchLocalServiceUtil.updateContentSearch(
-				portletDataContext.getScopeGroupId(), layout.isPrivateLayout(),
+				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), portletId, articleId, true);
 		}
 		else {

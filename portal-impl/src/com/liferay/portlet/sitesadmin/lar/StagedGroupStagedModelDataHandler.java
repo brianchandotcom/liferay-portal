@@ -16,6 +16,7 @@ package com.liferay.portlet.sitesadmin.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
@@ -49,13 +50,39 @@ public class StagedGroupStagedModelDataHandler
 	}
 
 	@Override
-	public boolean validateReference(
-		PortletDataContext portletDataContext, Element referenceElement) {
+	public void importMissingReference(
+			PortletDataContext portletDataContext, Element referenceElement)
+		throws PortletDataException {
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
 
 		long groupId = GetterUtil.getLong(
 			referenceElement.attributeValue("group-id"));
 
-		if (groupId == 0) {
+		if ((groupId == 0) || groupIds.containsKey(groupId)) {
+			return;
+		}
+
+		Group existingGroup = fetchExistingGroup(
+			portletDataContext, referenceElement);
+
+		groupIds.put(groupId, existingGroup.getGroupId());
+	}
+
+	@Override
+	public boolean validateReference(
+		PortletDataContext portletDataContext, Element referenceElement) {
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
+
+		if ((groupId == 0) || groupIds.containsKey(groupId)) {
 			return true;
 		}
 
@@ -65,10 +92,6 @@ public class StagedGroupStagedModelDataHandler
 		if (existingGroup == null) {
 			return false;
 		}
-
-		Map<Long, Long> groupIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Group.class);
 
 		groupIds.put(groupId, existingGroup.getGroupId());
 

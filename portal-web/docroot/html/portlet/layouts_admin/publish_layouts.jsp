@@ -209,20 +209,13 @@ else {
 				</aui:nav-bar>
 			</div>
 
-			<portlet:renderURL var="redirectAfterUpdateURL">
-				<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
-				<portlet:param name="publishConfigurationButtons" value="saved" />
-				<portlet:param name="tabs2" value="new-publication-process" />
-			</portlet:renderURL>
-
-			<portlet:actionURL var="updatePublishConfigurationURL">
-				<portlet:param name="struts_action" value="/layouts_admin/edit_publish_configuration" />
-				<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
-				<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
-				<portlet:param name="redirect" value="<%= redirectAfterUpdateURL %>" />
-			</portlet:actionURL>
-
 			<div <%= publishConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
+				<portlet:actionURL var="updatePublishConfigurationURL">
+					<portlet:param name="struts_action" value="/layouts_admin/edit_publish_configuration" />
+					<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+					<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
+				</portlet:actionURL>
+
 				<aui:form action='<%= (cmd.equals(Constants.PUBLISH_TO_LIVE) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? portletURL.toString() : updatePublishConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= (cmd.equals(Constants.PUBLISH_TO_LIVE) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" : StringPool.BLANK %>' >
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 					<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />

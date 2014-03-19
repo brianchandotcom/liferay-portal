@@ -456,6 +456,14 @@
 		<execute action="CPSites#pause" locator1="2000" />
 	</command>
 
+	<command name="inactivateCP">
+		<execute action="CPSitesettings#assertTextEquals" locator-key1="NAME_FIELD" value1="${siteName}" />
+		<execute action="CPSitesettings#assertTextEquals" locator-key1="ACTIVE_LABEL" value1="Active" />
+		<execute action="CPSitesettings#uncheck" locator-key1="ACTIVE_CHECKBOX" />
+		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitesettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="joinViaMySitesPG">
 		<var name="key_siteName" value="${siteName}" />
 
@@ -632,6 +640,28 @@
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
+	</command>
+
+	<command name="selectPageType">
+		<execute action="CPSitesettings#assertTextEquals" locator-key1="PAGES_LABEL" value1="Pages" />
+
+		<if>
+			<equals arg1="${selectPublicPages}" arg2="true" />
+			<then>
+				<execute action="CPSitesettings#assertClick" locator-key1="PAGES_PUBLIC_PAGES_LABEL" value1="Public Pages" />
+				<execute action="CPSitesettings#select" locator-key1="PAGES_PUBLIC_PAGES_SITE_TEMPLATE_SELECT" value1="${siteTemplate}" />
+			</then>
+			<elseif>
+				<equals arg1="${selectPrivatePages}" arg2="true" />
+				<then>
+					<execute action="CPSitesettings#assertClick" locator-key1="PAGES_PRIVATE_PAGES_LABEL" value1="Private Pages" />
+					<execute action="CPSitesettings#select" locator-key1="PAGES_PRIVATE_PAGES_SITE_TEMPLATE_SELECT" value1="${siteTemplate}" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitesettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownCP">

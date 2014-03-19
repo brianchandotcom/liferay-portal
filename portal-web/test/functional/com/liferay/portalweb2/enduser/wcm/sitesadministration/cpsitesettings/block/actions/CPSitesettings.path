@@ -53,6 +53,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ACTIVE-->
+<tr>
+	<td>ACTIVE_LABEL</td>
+	<td>//label[@for='_165_active']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVE_CHECKBOX</td>
+	<td>//input[@id='_165_activeCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--PARENT_SITE_TABLE-->
 <tr>
 	<td>PARENT_SITE_TABLE_NAME</td>
@@ -163,6 +179,47 @@
 <tr>
 	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE</td>
 	<td>//div[@class='control-group']/select[@id='_165_type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGES-->
+<tr>
+	<td>PAGES_LABEL</td>
+	<td>//h3[contains(.,'Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_PUBLIC_PAGES_LABEL</td>
+	<td>//div[contains(@class,'accordion-toggle')]/span[contains(.,'Public Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_PUBLIC_PAGES_SITE_TEMPLATE_LABEL</td>
+	<td>//div[contains(@class,'control-group')]/label[@for='_165_publicLayoutSetPrototypeId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_PUBLIC_PAGES_SITE_TEMPLATE_SELECT</td>
+	<td>//div[contains(@class,'control-group')]/select[@id='_165_publicLayoutSetPrototypeId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_PRIVATE_PAGES_LABEL</td>
+	<td>//div[contains(@class,'accordion-toggle')]/span[contains(.,'Private Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_PRIVATE_PAGES_SITE_TEMPLATE_LABEL</td>
+	<td>//div[contains(@class,'control-group')]/label[@for='_165_privateLayoutSetPrototypeId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_PRIVATE_PAGES_SITE_TEMPLATE_SELECT</td>
+	<td>//div[contains(@class,'control-group')]/select[@id='_165_privateLayoutSetPrototypeId']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -404,8 +404,7 @@ public class LanguageImpl implements Language {
 		PageContext pageContext, String key, String defaultValue) {
 
 		try {
-			ResourceBundle resourceBundle = _getResourceBundle(
-				pageContext);
+			ResourceBundle resourceBundle = _getResourceBundle(pageContext);
 
 			return _get(resourceBundle, key, defaultValue);
 		}

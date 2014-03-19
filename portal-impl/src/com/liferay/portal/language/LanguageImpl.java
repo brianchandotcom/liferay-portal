@@ -854,11 +854,11 @@ public class LanguageImpl implements Language {
 			}
 		}
 
-		if ((value == null) || value.equals(defaultValue)) {
+		if (value == null) {
 			value = LanguageResources.getMessage(locale, key);
 		}
 
-		if ((value == null) || value.equals(defaultValue)) {
+		if (value == null) {
 			if ((key.length() > 0) &&
 				(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
 
@@ -867,13 +867,9 @@ public class LanguageImpl implements Language {
 				if (pos != -1) {
 					key = key.substring(0, pos);
 
-					return _get(resourceBundle, key, defaultValue);
+					return _get(resourceBundle, key);
 				}
 			}
-		}
-
-		if ((value == null) || value.equals(key)) {
-			value = defaultValue;
 		}
 
 		return value;
@@ -883,6 +879,13 @@ public class LanguageImpl implements Language {
 			ResourceBundle resourceBundle, String key, String defaultValue)
 		throws Exception {
 
+		String result = _get(resourceBundle, key);
+
+		if (result != null) {
+			return result;
+		}
+
+		return defaultValue;
 	}
 
 	private String _getCharset(Locale locale) {

@@ -833,10 +833,7 @@ public class LanguageImpl implements Language {
 			pattern, StringPool.APOSTROPHE, StringPool.DOUBLE_APOSTROPHE);
 	}
 
-	private String _get(
-			ResourceBundle resourceBundle, String key, String defaultValue)
-		throws Exception {
-
+	private String _get(ResourceBundle resourceBundle, String key) {
 		Locale locale = resourceBundle.getLocale();
 
 		if (PropsValues.TRANSLATIONS_DISABLED) {
@@ -880,6 +877,12 @@ public class LanguageImpl implements Language {
 		}
 
 		return value;
+	}
+
+	private String _get(
+			ResourceBundle resourceBundle, String key, String defaultValue)
+		throws Exception {
+
 	}
 
 	private String _getCharset(Locale locale) {

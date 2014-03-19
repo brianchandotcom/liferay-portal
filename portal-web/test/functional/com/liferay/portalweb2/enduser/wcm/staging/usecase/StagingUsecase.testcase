@@ -1945,6 +1945,75 @@
 		</execute>
 	</command>
 
+	<command name="StagingLogo" priority="4">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="pageVersioningEnabled" value="true" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#viewDefaultLogoPG" />
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#changeLogoViaPageCP">
+			<var name="logoFile" value="Document_2.png" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#viewCustomLogoPG" />
+
+		<execute macro="Staging#publishToLiveNowPG">
+			<var name="uncheckLogo" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#viewDefaultLogoPG" />
+
+		<execute macro="Page#gotoPG"> 
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#publishToLiveNowPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#viewCustomLogoPG" />
+	</command>
+
 	<command name="StagingOnlyApprovedPublishToLive" known-issues="LPS-44150" priority="5">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
@@ -2554,5 +2623,125 @@
 			<var name="pageName" value="Test Page Name" />
 			<var name="sitePagesVariationName" value="main-variation" />
 		</execute>
+	</command>
+
+	<command name="StagingVersionHistory" priority="4">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="pageVersioningEnabled" value="true" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<if>
+			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			<then>
+				<execute action="PGStaging#assertClick" locator-key1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
+			</then>
+		</if>
+
+		<execute action="PGStaging#click" locator-key1="HISTORY_BUTTON" />
+
+		<var name="historyVersion" path="PGStaging" locator-key="HISTORY_VERSION" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#viewHistoryVersionPG">
+			<var name="historyVersion" value="${historyVersion}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Staging#viewHistoryVersionPG">
+			<var name="historyVersion" value="${historyVersion}" />
+			<var name="modifiedVersion" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#undoStagingPageVersioningPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#viewNoSpecificPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Staging#viewHistoryVersionPG">
+			<var name="historyVersion" value="${historyVersion}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#redoStagingPageVersioningPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Staging#viewHistoryVersionPG">
+			<var name="historyVersion" value="${historyVersion}" />
+			<var name="modifiedVersion" value="true" />
+		</execute>
+
+		<execute macro="Staging#publishToLiveNowPG" />
 	</command>
 </definition>

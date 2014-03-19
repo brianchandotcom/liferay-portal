@@ -422,6 +422,7 @@ create database lportal2 character set utf8;</echo>
 				<property name="java.jdk.version" value="${java.jdk.version}" />
 				<property name="operating.system.type" value="${operating.system.type}" />
 				<property name="operating.system.version" value="${operating.system.version}" />
+				<property name="testray.project.name" value="${testray.project.name}" />
 			]]>
 		</property>
 

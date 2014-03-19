@@ -509,6 +509,22 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			}
 		}
 
+		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
+			page.getNodeId(), page.getTitle());
+
+		for (WikiPage redirectPage : redirectPages) {
+			if (!redirectPage.isApproved() ||
+				(!redirectPage.isInTrash() && page.isInTrash())) {
+
+				redirectPage.setRedirectTitle(StringPool.BLANK);
+
+				wikiPagePersistence.update(redirectPage);
+			}
+			else {
+				wikiPageLocalService.deletePage(redirectPage);
+			}
+		}
+
 		List<WikiPage> versionPages = wikiPagePersistence.findByN_T(
 			page.getNodeId(), page.getTitle());
 

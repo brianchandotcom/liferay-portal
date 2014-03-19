@@ -166,11 +166,12 @@
 
 		<execute action="CPWebcontentStructuresEditdefaultvalues#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
+		<execute action="CPWebcontentStructures#selectFrame" value1="relative=top" />
 		<execute action="CPWebcontentStructures#selectFrame" locator-key1="STRUCTURES_IFRAME" />
 		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_MENULIST_EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
 
-		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" />
+		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" value1="relative=top" />
 		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" locator-key1="STRUCTURES_IFRAME" />
 
 		<for list="${editSubstructureFieldNames}" param="structureFieldName">
@@ -189,6 +190,22 @@
 		<execute action="CPWebcontent#assertClick" locator-key1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
 
 		<execute action="CPWebcontentStructures#selectFrame" locator-key1="STRUCTURES_IFRAME" />
+
+		<execute action="CPWebcontentStructures#type" locator-key1="SEARCH_FIELD" value1="2" />
+		<execute action="CPWebcontentStructures#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+
+		<while>
+			<condition action="CPWebcontentStructures#isElementPresent" locator-key1="STRUCTURE_TABLE_ACTIONS_GENERIC" />
+			<then>
+				<execute action="CPWebcontentStructures#check" locator-key1="STRUCTURE_TABLE_SELECT_ALL_CHECKBOX" />
+				<execute action="CPWebcontentStructures#click" locator-key1="DELETE_BUTTON" value1="Delete" />
+				<execute action="CPWebcontentStructures#confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</then>
+		</while>
+
+		<execute action="CPWebcontentStructures#type" locator-key1="SEARCH_FIELD" value1="structure" />
+		<execute action="CPWebcontentStructures#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 
 		<while>
 			<condition action="CPWebcontentStructures#isElementPresent" locator-key1="STRUCTURE_TABLE_ACTIONS_GENERIC" />

@@ -150,7 +150,15 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 PortletURL renderURL = renderResponse.createRenderURL();
 
 renderURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
-renderURL.setParameter("tabs2", "current-and-previous");
+
+if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+	renderURL.setParameter("tabs2", "new-publication-process");
+	renderURL.setParameter("publishConfigurationButtons", "saved");
+}
+else {
+	renderURL.setParameter("tabs2", "current-and-previous");
+}
+
 renderURL.setParameter("closeRedirect", closeRedirect);
 renderURL.setParameter("groupId", String.valueOf(stagingGroupId));
 renderURL.setParameter("privateLayout", String.valueOf(privateLayout));
@@ -383,15 +391,8 @@ else {
 								<c:when test="<%= cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE) %>">
 									<aui:button type="submit" value="save" />
 
-									<portlet:renderURL var="cancelBackURL">
-										<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
-										<portlet:param name="publishConfigurationButtons" value="saved" />
-										<portlet:param name="tabs2" value="new-publication-process" />
-									</portlet:renderURL>
-
-									<aui:button href="<%= cancelBackURL %>" type="reset" value="cancel" />
+									<aui:button href="<%= renderURL.toString() %>" type="reset" value="cancel" />
 								</c:when>
-
 								<c:otherwise>
 									<aui:button id="addButton" name="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
 

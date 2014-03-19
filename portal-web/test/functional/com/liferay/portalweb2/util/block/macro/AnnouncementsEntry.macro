@@ -140,4 +140,17 @@
 		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_SCOPE" value1="${distributionScope}" />
 		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
 	</command>
+
+	<command name="viewViaManageEntriesPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGAnnouncementsManageentries#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TYPE" value1="${announcementType}" />
+		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator-key1="ENTRY_TABLE_MODIFIED_DATE" />
+		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator-key1="ENTRY_TABLE_DISPLAY_DATE" />
+		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator-key1="ENTRY_TABLE_EXPIRATION_DATE" />
+		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator-key1="ENTRY_TABLE_MODIFIED_DATE" />
+		<execute action="PGAnnouncementsManageentries#assertElementPresent" locator-key1="ENTRY_TABLE_ACTIONS" />
+	</command>
 </definition>

@@ -1308,7 +1308,7 @@
 	<portlet>
 		<portlet-name>86</portlet-name>
 		<display-name>Portlet Configuration</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.portletconfiguration.PortletConfigurationPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/portlet_configuration/</value>

@@ -17,6 +17,10 @@
 		<case locator-key1="SUCCESS_MESSAGE_CONTENT">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+
+		<case locator-key1="SUCCESS_MESSAGE_RESTORE_LOCATION">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 
 	<command name="confirm">

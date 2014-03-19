@@ -226,8 +226,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FOLDER_MENU_ADD_FOLDER</td>
 	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Add Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_ADD_SUBFOLDER</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Subfolder')]</td>
 	<td></td>
 </tr>
 <tr>

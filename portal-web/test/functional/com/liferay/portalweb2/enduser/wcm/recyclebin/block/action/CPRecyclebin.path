@@ -54,6 +54,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING_TOOLBAR</td>
+	<td>//ul[contains(@class,'nav-tabs')]//li/a[contains(.,'Staging')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIVE_TOOLBAR</td>
+	<td>//ul[contains(@class,'nav-tabs')]//li/a[contains(.,'Live')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@id='_182_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -98,6 +118,42 @@
 <tr>
 	<td>RECYCLE_BIN_MENULIST_DELETE</td>
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECYCLE_BIN_WARNING-->
+<tr>
+	<td>RECYCLE_BIN_WARNING_MESSAGE</td>
+	<td>//div[contains(@class,'alert-block')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_WARNING_OVERWRITE_RADIO</td>
+	<td>//input[@id='_182_override']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_WARNING_KEEP_AND_RENAME_RADIO</td>
+	<td>//input[@id='_182_rename']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_WARNING_KEEP_AND_RENAME_FIELD</td>
+	<td>//input[@id='_182_newName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_WARNING_CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_WARNING_SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -444,7 +444,13 @@
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${dmDocumentTitle} was moved to the Recycle Bin. Undo" />
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+
+		<if>
+			<condition action="CPDocumentsandmedia#isElementNotPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_GENERIC" />
+			<then>
+				<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+			</then>
+		</if>
 	</command>
 
 	<command name="publishDraftPG">
@@ -696,6 +702,15 @@
 				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_VERSION" value1="Version 1.0" />
 			</else>
 		</if>
+	</command>
+
+	<command name="viewDocumentVersionNumberPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG" />
 	</command>
 
 	<command name="viewEditCP">

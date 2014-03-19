@@ -135,6 +135,11 @@
 	<td>xpath=(//td/ul/li[2]/span/a/span)[3]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MESSAGE_BODY_ATTACHMENT_1</td>
+	<td>//div[@class='thread-body']/div/ul/li[@class='message-attachment']/span/a/span</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

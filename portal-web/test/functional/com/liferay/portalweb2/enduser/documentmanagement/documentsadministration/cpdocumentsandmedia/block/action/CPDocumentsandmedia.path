@@ -288,7 +288,11 @@
 	<td>//li[contains(@class,'app-view-navigation-entry') and contains(@class,'folder') and contains(@class,'file-entry-type')]/a[contains(.,'Basic Document')]</td>
 	<td></td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--BREADCRUMB-->
 <tr>
 	<td>BREADCRUMB_FIRST</td>
@@ -300,8 +304,17 @@
 	<td>//div[@id='_20_breadcrumbContainer']//li[contains(.,'${key_dmFolderName}')]</td>
 	<td></td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DOCUMENT_CONTAINER_DOCUMENT-->
+<tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT_GENERIC</td>
+	<td>//div[@id='_20_entriesContainer']//div[@class='entry-thumbnail']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>DOCUMENT_CONTAINER_DOCUMENT</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]</td>

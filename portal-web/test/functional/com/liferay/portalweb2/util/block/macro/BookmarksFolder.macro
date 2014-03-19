@@ -79,6 +79,21 @@
 		<execute action="CPBookmarksFolder#assertTextEquals" locator-key1="FOLDER_NAME" value1="${folderName}" />
 	</command>
 
+	<command name="addSubfolderPG">
+		<execute action="PGBookmarks#assertClick" locator-key1="FOLDER_MENU_ADD_SUBFOLDER" value1="Add Subfolder" />
+
+		<execute action="PGBookmarksAddSubfolder#type" locator-key1="NAME_FIELD" value1="${folderName}" />
+		<execute action="PGBookmarksAddSubfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${folderDescription}" />
+		<execute action="PGBookmarksAddSubfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_folderName" value="${folderName}" />
+
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
+	</command>
+
 	<command name="deletePG">
 		<var name="key_folderName" value="${folderName}" />
 
@@ -156,6 +171,22 @@
 		<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
 	</command>
 
+	<command name="gotoSubfolderPG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<var name="key_folderName" value="${folderName}" />
+
+		<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+
+		<var name="key_folderName" value="${subfolderName}" />
+
+		<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${subfolderName}" />
+	</command>
+
 	<command name="mergeSubfolderToFolderCP">
 		<var name="key_folderName" value="${folderName}" />
 
@@ -176,6 +207,11 @@
 		<execute action="CPBookmarksFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPBookmarksFolder#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
 		<execute action="CPBookmarksFolder#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
+	</command>
+
+	<command name="moveSubfolderToRecycleBinPG">
+		<execute action="PGBookmarks#assertClick" locator-key1="FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Bookmarks Folder ${subfolderName} was moved to the Recycle Bin." />
 	</command>
 
 	<command name="moveToRecycleBinCP">

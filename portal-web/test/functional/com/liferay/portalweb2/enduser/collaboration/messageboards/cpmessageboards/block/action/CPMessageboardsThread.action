@@ -3,6 +3,14 @@
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
 		</case>
+
+		<case locator-key1="MESSAGE_BODY_ATTACHMENT_1">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case comparator="startsWith" locator-key1="MESSAGE_BODY_">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 
 	<command name="click">

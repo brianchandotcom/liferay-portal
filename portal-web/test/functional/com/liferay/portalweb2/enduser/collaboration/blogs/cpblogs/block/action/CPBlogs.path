@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_BUTTON</td>
+	<td>//button[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECYCLE_BIN_BUTTON</td>
 	<td>//button[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
@@ -138,6 +143,11 @@
 <tr>
 	<td>ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

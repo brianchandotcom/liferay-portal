@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -67,6 +68,16 @@ public class LanguageResources {
 
 			languageMap.put(key, value);
 		}
+	}
+
+	public static Set<String> getKeys(Locale locale) {
+		Map<String, String> languageMap = _languageMaps.get(locale);
+
+		if (languageMap != null) {
+			return languageMap.keySet();
+		}
+
+		return null;
 	}
 
 	public static String getMessage(Locale locale, String key) {

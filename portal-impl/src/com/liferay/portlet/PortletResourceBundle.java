@@ -14,12 +14,16 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.util.EnumerationUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.model.PortletInfo;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -45,11 +49,21 @@ public class PortletResourceBundle extends ResourceBundle {
 
 	@Override
 	public Enumeration<String> getKeys() {
-		return parent.getKeys();
+		Enumeration<String> keysEnumeration = Collections.enumeration(_keys);
+
+		if (parent == null) {
+			return keysEnumeration;
+		}
+
+		return EnumerationUtil.compose(parent.getKeys(), keysEnumeration);
 	}
 
 	@Override
 	public Locale getLocale() {
+		if (parent == null) {
+			return null;
+		}
+
 		return parent.getLocale();
 	}
 
@@ -96,6 +110,13 @@ public class PortletResourceBundle extends ResourceBundle {
 
 		return null;
 	}
+
+	private static List<String> _keys = Arrays.asList(new String[] {
+		JavaConstants.JAVAX_PORTLET_TITLE,
+		JavaConstants.JAVAX_PORTLET_SHORT_TITLE,
+		JavaConstants.JAVAX_PORTLET_KEYWORDS,
+		JavaConstants.JAVAX_PORTLET_DESCRIPTION
+	});
 
 	private PortletInfo _portletInfo;
 

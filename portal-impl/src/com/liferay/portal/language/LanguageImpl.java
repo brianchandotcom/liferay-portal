@@ -37,17 +37,13 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletConfigFactoryUtil;
 
 import java.text.MessageFormat;
 
@@ -408,7 +404,9 @@ public class LanguageImpl implements Language {
 		PageContext pageContext, String key, String defaultValue) {
 
 		try {
-			return _get(pageContext, null, null, null, key, defaultValue);
+			ResourceBundle resourceBundle = _getResourceBundle(pageContext);
+
+			return _get(resourceBundle, key, defaultValue);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -429,9 +427,7 @@ public class LanguageImpl implements Language {
 		ResourceBundle resourceBundle, String key, String defaultValue) {
 
 		try {
-			return _get(
-				null, null, resourceBundle, resourceBundle.getLocale(), key,
-				defaultValue);
+			return _get(resourceBundle, key, defaultValue);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -494,6 +490,11 @@ public class LanguageImpl implements Language {
 	@Override
 	public String getCharset(Locale locale) {
 		return _getInstance()._getCharset(locale);
+	}
+
+	@Override
+	public Set<String> getKeys(Locale locale) {
+		return LanguageResources.getKeys(locale);
 	}
 
 	@Override
@@ -831,77 +832,26 @@ public class LanguageImpl implements Language {
 			pattern, StringPool.APOSTROPHE, StringPool.DOUBLE_APOSTROPHE);
 	}
 
-	private String _get(
-			PageContext pageContext, PortletConfig portletConfig,
-			ResourceBundle resourceBundle, Locale locale, String key,
-			String defaultValue)
-		throws Exception {
+	private String _get(ResourceBundle resourceBundle, String key) {
+		Locale locale = resourceBundle.getLocale();
+
+		if ((resourceBundle == null) || (key == null)) {
+			return null;
+		}
 
 		if (PropsValues.TRANSLATIONS_DISABLED) {
 			return key;
 		}
 
-		if (key == null) {
-			return null;
+		String value = ResourceBundleUtil.getString(resourceBundle, key);
+
+		if (value != null) {
+			return LanguageResources.fixValue(value);
 		}
 
-		String value = null;
+		value = LanguageResources.getMessage(locale, key);
 
-		if (pageContext != null) {
-			HttpServletRequest request =
-				(HttpServletRequest)pageContext.getRequest();
-
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			if (themeDisplay != null) {
-				locale = themeDisplay.getLocale();
-			}
-			else {
-				locale = request.getLocale();
-
-				if (!isAvailableLocale(locale)) {
-					locale = LocaleUtil.getDefault();
-				}
-			}
-
-			portletConfig = (PortletConfig)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
-		}
-
-		if (resourceBundle != null) {
-			value = ResourceBundleUtil.getString(resourceBundle, key);
-
-			if (value != null) {
-				value = LanguageResources.fixValue(value);
-			}
-		}
-
-		if (portletConfig != null) {
-			resourceBundle = portletConfig.getResourceBundle(locale);
-
-			value = ResourceBundleUtil.getString(resourceBundle, key);
-
-			// LEP-7393
-
-			String portletName = portletConfig.getPortletName();
-
-			if (((value == null) || value.equals(defaultValue)) &&
-				portletName.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-
-				value = _getPortletConfigurationValue(pageContext, locale, key);
-			}
-
-			if (value != null) {
-				value = LanguageResources.fixValue(value);
-			}
-		}
-
-		if ((value == null) || value.equals(defaultValue)) {
-			value = LanguageResources.getMessage(locale, key);
-		}
-
-		if ((value == null) || value.equals(defaultValue)) {
+		if (value == null) {
 			if ((key.length() > 0) &&
 				(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
 
@@ -910,18 +860,25 @@ public class LanguageImpl implements Language {
 				if (pos != -1) {
 					key = key.substring(0, pos);
 
-					return _get(
-						pageContext, portletConfig, resourceBundle, locale, key,
-						defaultValue);
+					return _get(resourceBundle, key);
 				}
 			}
 		}
 
-		if ((value == null) || value.equals(key)) {
-			value = defaultValue;
+		return value;
+	}
+
+	private String _get(
+			ResourceBundle resourceBundle, String key, String defaultValue)
+		throws Exception {
+
+		String result = _get(resourceBundle, key);
+
+		if (result != null) {
+			return result;
 		}
 
-		return value;
+		return defaultValue;
 	}
 
 	private String _getCharset(Locale locale) {
@@ -932,31 +889,38 @@ public class LanguageImpl implements Language {
 		return _localesMap.get(languageCode);
 	}
 
-	private String _getPortletConfigurationValue(
-			PageContext pageContext, Locale locale, String key)
-		throws Exception {
-
-		if (PropsValues.TRANSLATIONS_DISABLED) {
-			return key;
+	private ResourceBundle _getResourceBundle(PageContext pageContext) {
+		if (pageContext == null) {
+			return null;
 		}
+
+		Locale locale = null;
 
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 
-		String portletResource = ParamUtil.getString(
-			request, "portletResource");
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		long companyId = PortalUtil.getCompanyId(request);
+		if (themeDisplay != null) {
+			locale = themeDisplay.getLocale();
+		}
+		else {
+			locale = request.getLocale();
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			companyId, portletResource);
+			if (!isAvailableLocale(locale)) {
+				locale = LocaleUtil.getDefault();
+			}
+		}
 
-		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-			portlet, pageContext.getServletContext());
+		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
+		if (portletConfig != null) {
+			return portletConfig.getResourceBundle(locale);
+		}
 
-		return ResourceBundleUtil.getString(resourceBundle, key);
+		return null;
 	}
 
 	private void _initGroupLocales(long groupId) {

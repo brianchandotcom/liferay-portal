@@ -14,10 +14,10 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.diff.Diff;
+import com.liferay.portal.kernel.diff.DiffResult;
+import com.liferay.portal.kernel.diff.DiffUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.Diff;
-import com.liferay.portal.kernel.util.DiffResult;
-import com.liferay.portal.kernel.util.DiffUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import java.io.Reader;

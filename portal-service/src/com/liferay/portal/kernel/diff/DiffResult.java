@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.util.diff;
+package com.liferay.portal.kernel.diff;
 
+import com.liferay.portal.kernel.util.HashCode;
+import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.ArrayList;
@@ -29,11 +31,8 @@ import java.util.List;
  * already highlighted, indicating where the changes are.
  * </p>
  *
- * @author     Bruno Farache
- * @deprecated As of 6.2.0, moved to {@link
- *             com.liferay.portal.kernel.diff.DiffResult}
+ * @author Bruno Farache
  */
-@Deprecated
 public class DiffResult {
 
 	public static final String SOURCE = "SOURCE";
@@ -80,6 +79,16 @@ public class DiffResult {
 		return _lineNumber;
 	}
 
+	@Override
+	public int hashCode() {
+		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
+
+		hashCode.append(_lineNumber);
+		hashCode.append(_changedLines);
+
+		return hashCode.toHashCode();
+	}
+
 	public void setChangedLines(List<String> changedLines) {
 		_changedLines = changedLines;
 	}
@@ -90,7 +99,7 @@ public class DiffResult {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(_changedLines.size() * 2 + 3);
+		StringBundler sb = new StringBundler(2 * _changedLines.size() + 3);
 
 		sb.append("Line: ");
 		sb.append(_lineNumber);

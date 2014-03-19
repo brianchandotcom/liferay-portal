@@ -14,12 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
-import java.io.Reader;
-
-import java.util.List;
-
 /**
  * This class can compare two different versions of a text. Source refers to the
  * earliest version of the text and target refers to a modified version of
@@ -29,66 +23,10 @@ import java.util.List;
  * Take a look at <code>DiffTest</code> to see the expected inputs and outputs.
  *
  * @author Bruno Farache
- * @see    com.liferay.portal.kernel.util.DiffUtil
+ * @see    com.liferay.portal.kernel.diff.DiffUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.portal.kernel.diff.DiffUtil}
  */
-public class DiffUtil {
-
-	/**
-	 * This is a diff method with default values.
-	 *
-	 * @param  source the source text
-	 * @param  target the modified version of the source text
-	 * @return an array containing two lists of <code>DiffResults</code>, the
-	 *         first element contains DiffResults related to changes in source
-	 *         and the second element to changes in target
-	 */
-	public static List<DiffResult>[] diff(Reader source, Reader target) {
-		return getDiff().diff(source, target);
-	}
-
-	/**
-	 * The main entrance of this class. This method will compare the two texts,
-	 * highlight the changes by enclosing them with markers and return a list of
-	 * <code>DiffResults</code>.
-	 *
-	 * @param  source the source text
-	 * @param  target the modified version of the source text
-	 * @param  addedMarkerStart the marker to indicate the start of text added
-	 *         to the source
-	 * @param  addedMarkerEnd the marker to indicate the end of text added to
-	 *         the source
-	 * @param  deletedMarkerStart the marker to indicate the start of text
-	 *         deleted from the source
-	 * @param  deletedMarkerEnd the marker to indicate the end of text deleted
-	 *         from the source
-	 * @param  margin the vertical margin to use in displaying differences
-	 *         between changed line changes
-	 * @return an array containing two lists of <code>DiffResults</code>, the
-	 *         first element contains DiffResults related to changes in source
-	 *         and the second element to changes in target
-	 */
-	public static List<DiffResult>[] diff(
-		Reader source, Reader target, String addedMarkerStart,
-		String addedMarkerEnd, String deletedMarkerStart,
-		String deletedMarkerEnd, int margin) {
-
-		return getDiff().diff(
-			source, target, addedMarkerStart, addedMarkerEnd,
-			deletedMarkerStart, deletedMarkerEnd, margin);
-	}
-
-	public static Diff getDiff() {
-		PortalRuntimePermission.checkGetBeanProperty(DiffUtil.class);
-
-		return _diff;
-	}
-
-	public void setDiff(Diff diff) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_diff = diff;
-	}
-
-	private static Diff _diff;
-
+@Deprecated
+public class DiffUtil extends com.liferay.portal.kernel.diff.DiffUtil {
 }

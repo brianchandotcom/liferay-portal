@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,9 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+package com.liferay.portal.kernel.diff;
 
-<%@ page import="com.liferay.portal.kernel.diff.Diff" %><%@
-page import="com.liferay.portal.kernel.diff.DiffResult" %>
+import java.io.Reader;
+
+/**
+ * @author Julio Camarero
+ */
+public interface DiffHtml {
+
+	public String diff(Reader source, Reader target) throws Exception;
+
+}

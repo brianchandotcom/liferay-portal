@@ -12,7 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.kernel.diff;
+
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
+import java.io.Reader;
 
 /**
  * <p>
@@ -22,9 +26,25 @@ package com.liferay.portal.kernel.util;
  * </p>
  *
  * @author Julio Camarero
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.portal.kernel.diff.DiffHtmlUtil}
  */
-@Deprecated
-public class DiffHtmlUtil extends com.liferay.portal.kernel.diff.DiffHtmlUtil {
+public class DiffHtmlUtil {
+
+	public static String diff(Reader source, Reader target) throws Exception {
+		return getDiffHtml().diff(source, target);
+	}
+
+	public static DiffHtml getDiffHtml() {
+		PortalRuntimePermission.checkGetBeanProperty(DiffHtmlUtil.class);
+
+		return _diffHtml;
+	}
+
+	public void setDiffHtml(DiffHtml diffHtml) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
+		_diffHtml = diffHtml;
+	}
+
+	private static DiffHtml _diffHtml;
+
 }

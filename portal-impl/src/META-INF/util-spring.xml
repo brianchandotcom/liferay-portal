@@ -381,12 +381,12 @@
 			<bean class="com.liferay.portal.util.DateFormatFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.util.DiffHtmlUtil" class="com.liferay.portal.kernel.util.DiffHtmlUtil">
+	<bean id="com.liferay.portal.kernel.util.DiffHtmlUtil" class="com.liferay.portal.kernel.diff.DiffHtmlUtil">
 		<property name="diffHtml">
 			<bean class="com.liferay.portal.util.DiffHtmlImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.util.DiffUtil" class="com.liferay.portal.kernel.util.DiffUtil">
+	<bean id="com.liferay.portal.kernel.util.DiffUtil" class="com.liferay.portal.kernel.diff.DiffUtil">
 		<property name="diff">
 			<bean class="com.liferay.portal.util.DiffImpl" />
 		</property>

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,92 +27,18 @@ import java.util.List;
  * </p>
  *
  * @author Bruno Farache
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.portal.kernel.diff.DiffResult}
  */
-public class DiffResult {
-
-	public static final String SOURCE = "SOURCE";
-
-	public static final String TARGET = "TARGET";
+@Deprecated
+public class DiffResult extends com.liferay.portal.kernel.diff.DiffResult {
 
 	public DiffResult(int linePos, List<String> changedLines) {
-		_lineNumber = linePos + 1;
-		_changedLines = changedLines;
+		super(linePos, changedLines);
 	}
 
 	public DiffResult(int linePos, String changedLine) {
-		_lineNumber = linePos + 1;
-		_changedLines = new ArrayList<String>();
-		_changedLines.add(changedLine);
+		super(linePos, changedLine);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DiffResult)) {
-			return false;
-		}
-
-		DiffResult diffResult = (DiffResult)obj;
-
-		if ((diffResult.getLineNumber() == _lineNumber) &&
-			diffResult.getChangedLines().equals(_changedLines)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public List<String> getChangedLines() {
-		return _changedLines;
-	}
-
-	public int getLineNumber() {
-		return _lineNumber;
-	}
-
-	@Override
-	public int hashCode() {
-		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
-
-		hashCode.append(_lineNumber);
-		hashCode.append(_changedLines);
-
-		return hashCode.toHashCode();
-	}
-
-	public void setChangedLines(List<String> changedLines) {
-		_changedLines = changedLines;
-	}
-
-	public void setLineNumber(int lineNumber) {
-		_lineNumber = lineNumber;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(2 * _changedLines.size() + 3);
-
-		sb.append("Line: ");
-		sb.append(_lineNumber);
-		sb.append("\n");
-
-		for (String changedLine : _changedLines) {
-			sb.append(changedLine);
-			sb.append("\n");
-		}
-
-		if (!_changedLines.isEmpty()) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		return sb.toString();
-	}
-
-	private List<String> _changedLines;
-	private int _lineNumber;
 
 }

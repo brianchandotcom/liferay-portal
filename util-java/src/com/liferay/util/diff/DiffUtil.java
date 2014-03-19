@@ -36,7 +36,7 @@ import org.incava.util.diff.Difference;
  *
  * @author     Bruno Farache
  * @deprecated As of 6.2.0, moved to {@link
- *             com.liferay.portal.kernel.util.DiffUtil}
+ *             com.liferay.portal.kernel.diff.DiffUtil}
  */
 @Deprecated
 public class DiffUtil {

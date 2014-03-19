@@ -15,6 +15,9 @@
 package com.liferay.portlet.wiki.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.diff.DiffHtmlUtil;
+import com.liferay.portal.kernel.diff.DiffVersion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -26,7 +29,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.DiffHtmlUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -86,6 +88,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -631,6 +635,59 @@ public class WikiUtil {
 		return orderByComparator;
 	}
 
+	public static Object[] getWikiPageVersionsInfo(
+			long nodeId, String title, double sourceVersion,
+			double targetVersion, PageContext pageContext)
+		throws SystemException {
+
+		double previousVersion = 0;
+		double nextVersion = 0;
+
+		List<WikiPage> allPages = WikiPageLocalServiceUtil.getPages(
+			nodeId, title, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new PageVersionComparator());
+
+		List<WikiPage> intermediatePages = new ArrayList<WikiPage>();
+
+		for (WikiPage wikiPage : allPages) {
+			if ((wikiPage.getVersion() < sourceVersion) &&
+				(wikiPage.getVersion() > previousVersion)) {
+
+				previousVersion = wikiPage.getVersion();
+			}
+
+			if ((wikiPage.getVersion() > targetVersion) &&
+				((wikiPage.getVersion() < nextVersion) || (nextVersion == 0))) {
+
+				nextVersion = wikiPage.getVersion();
+			}
+
+			if ((wikiPage.getVersion() > sourceVersion) &&
+				(wikiPage.getVersion() <= targetVersion)) {
+
+				intermediatePages.add(wikiPage);
+			}
+		}
+
+		List<DiffVersion> diffVersions = new ArrayList<DiffVersion>();
+
+		for (WikiPage wikiPage : intermediatePages) {
+			String extraInfo = StringPool.BLANK;
+
+			if (wikiPage.isMinorEdit()) {
+				extraInfo = LanguageUtil.get(pageContext, "minor-edit");
+			}
+
+			DiffVersion diffVersion = new DiffVersion(
+				wikiPage.getUserId(), wikiPage.getVersion(),
+				wikiPage.getSummary(), extraInfo);
+
+			diffVersions.add(diffVersion);
+		}
+
+		return new Object[] {diffVersions, previousVersion, nextVersion};
+	}
+
 	public static List<WikiNode> orderNodes(
 		List<WikiNode> nodes, String[] visibleNodeNames) {
 
@@ -657,14 +714,6 @@ public class WikiUtil {
 		orderedNodes.addAll(nodes);
 
 		return orderedNodes;
-	}
-
-	public static String processContent(String content) {
-		content = content.replaceAll("</p>", "</p>\n");
-		content = content.replaceAll("</br>", "</br>\n");
-		content = content.replaceAll("</div>", "</div>\n");
-
-		return content;
 	}
 
 	public static String unescapeName(String name) {

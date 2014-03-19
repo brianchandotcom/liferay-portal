@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.util.DiffResult;
+import com.liferay.portal.kernel.diff.DiffResult;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;

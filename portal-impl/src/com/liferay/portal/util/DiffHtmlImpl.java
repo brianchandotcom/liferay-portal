@@ -14,9 +14,9 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.diff.DiffHtml;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.util.DiffHtml;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 

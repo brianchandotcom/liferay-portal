@@ -182,9 +182,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.navbar-inner {
 			.container .nav-collapse > .nav {
 				&.nav-account-controls {
+					background-color: $dockbarGradientEnd;
 					border-top: 1px solid #00AEFF;
 
 					@include respond-to(phone, tablet) {
+						background-color: transparent;
 						border-top-width: 0;
 					}
 

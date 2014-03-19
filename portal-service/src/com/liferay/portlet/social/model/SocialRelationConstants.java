@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -43,6 +45,47 @@ public class SocialRelationConstants {
 	public static final int TYPE_UNI_SUBORDINATE = 10;
 
 	public static final int TYPE_UNI_SUPERVISOR = 11;
+
+	public static String getTypeLabel(int type) {
+		if (type == TYPE_BI_CONNECTION) {
+			return "connection";
+		}
+		else if (type == TYPE_BI_COWORKER) {
+			return "coworker";
+		}
+		else if (type == TYPE_BI_FRIEND) {
+			return "friend";
+		}
+		else if (type == TYPE_BI_ROMANTIC_PARTNER) {
+			return "romantic-partner";
+		}
+		else if (type == TYPE_BI_SIBLING) {
+			return "sibling";
+		}
+		else if (type == TYPE_BI_SPOUSE) {
+			return "spouse";
+		}
+		else if (type == TYPE_UNI_CHILD) {
+			return "child";
+		}
+		else if (type == TYPE_UNI_ENEMY) {
+			return "enemy";
+		}
+		else if (type == TYPE_UNI_FOLLOWER) {
+			return "follower";
+		}
+		else if (type == TYPE_UNI_PARENT) {
+			return "parent";
+		}
+		else if (type == TYPE_UNI_SUBORDINATE) {
+			return "subordinate";
+		}
+		else if (type == TYPE_UNI_SUPERVISOR) {
+			return "supervisor";
+		}
+
+		return StringPool.BLANK;
+	}
 
 	public static boolean isTypeBi(int type) {
 		return !isTypeUni(type);

@@ -294,7 +294,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 							String value = StringPool.BLANK;
 
 							if (tempPriorities.length > j) {
-								String[] priority = StringUtil.split(tempPriorities[j]);
+								String[] priority = StringUtil.split(tempPriorities[j], StringPool.PIPE);
 
 								try {
 									name = priority[0];

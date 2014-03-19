@@ -95,7 +95,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 					(value != 0.0)) {
 
 					priorities.add(
-						name + StringPool.COMMA + image + StringPool.COMMA +
+						name + StringPool.PIPE + image + StringPool.PIPE +
 							value);
 				}
 			}

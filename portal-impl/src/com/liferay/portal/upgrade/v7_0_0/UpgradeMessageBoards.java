@@ -15,8 +15,10 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -92,11 +94,37 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 		upgradeEmailSignature(
 			portletPreferences, "emailMessageAddedBody",
 			"emailMessageAddedSignature");
+
 		upgradeEmailSignature(
 			portletPreferences, "emailMessageUpdatedBody",
 			"emailMessageUpdatedSignature");
 
+		upgradeThreadPriorities(portletPreferences);
+
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	}
+
+	protected void upgradeThreadPriorities(
+			PortletPreferences portletPreferences)
+		throws ReadOnlyException {
+
+		String[] threadPriorities = portletPreferences.getValues(
+			"priorities", StringPool.EMPTY_ARRAY);
+
+		if (ArrayUtil.isNotEmpty(threadPriorities)) {
+			String[] upgradedThreadPriorities =
+				new String[threadPriorities.length];
+
+			for (int i = 0; i < threadPriorities.length; i++) {
+				String[] parts = StringUtil.split(threadPriorities[i]);
+
+				upgradedThreadPriorities[i] = StringUtil.merge(
+					parts, StringPool.PIPE);
+			}
+
+			portletPreferences.setValues(
+				"priorities", upgradedThreadPriorities);
+		}
 	}
 
 }

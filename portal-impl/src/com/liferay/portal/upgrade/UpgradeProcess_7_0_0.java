@@ -44,11 +44,17 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeEmailNotificationPreferences.class);
 		upgrade(UpgradeJournal.class);
 		upgrade(UpgradeMessageBoards.class);
-		upgrade(UpgradePortletSettings.class);
 		upgrade(UpgradeRepositoryEntry.class);
 		upgrade(UpgradeShopping.class);
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeWiki.class);
+
+		// This must be the last upgrade process. Otherwise upgrades based on
+		// BaseUpgradePortletPreferences will fail because the portletId won't
+		// be found after UpgradePortletSettings translates it to the service
+		// name.
+
+		upgrade(UpgradePortletSettings.class);
 	}
 
 }

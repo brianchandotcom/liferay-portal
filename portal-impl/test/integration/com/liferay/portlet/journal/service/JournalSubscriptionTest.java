@@ -22,6 +22,7 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseSubscriptionTestCase;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -114,6 +115,16 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 
 		JournalFolderLocalServiceUtil.subscribe(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected String getPortletId() {
+		return PortletKeys.JOURNAL;
+	}
+
+	@Override
+	protected String getSubscriptionBodyPreferenceName() throws Exception {
+		return "emailArticleAddedBody";
 	}
 
 	@Override

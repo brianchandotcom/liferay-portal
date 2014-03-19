@@ -833,11 +833,11 @@ public class LanguageImpl implements Language {
 	}
 
 	private String _get(ResourceBundle resourceBundle, String key) {
-		Locale locale = resourceBundle.getLocale();
-
 		if ((resourceBundle == null) || (key == null)) {
 			return null;
 		}
+
+		Locale locale = resourceBundle.getLocale();
 
 		if (PropsValues.TRANSLATIONS_DISABLED) {
 			return key;

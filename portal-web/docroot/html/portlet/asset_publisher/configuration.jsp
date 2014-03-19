@@ -336,7 +336,6 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 			%>
 
 			document.<portlet:namespace />fm.<portlet:namespace />metadataFields.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentMetadataFields);
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailAssetEntryAddedBody_<%= currentLanguageId %>--'].value = window['<portlet:namespace />emailAssetEntryAdded'].getHTML();
 
 			submitForm(document.<portlet:namespace />fm);
 		},

@@ -182,6 +182,8 @@ else {
 }
 %>
 
+<liferay-ui:trash-undo />
+
 <liferay-ui:tabs
 	names="<%= tabs2Names %>"
 	param="tabs2"
@@ -189,28 +191,44 @@ else {
 >
 	<c:if test='<%= !cmd.equals("view_processes") %>'>
 		<liferay-ui:section>
-			<aui:nav-bar>
-				<aui:nav id="publishConfigurationButtons">
-					<aui:nav-item
-						data-value="custom"
-						iconCssClass="icon-puzzle"
-						label="custom"
-					/>
+			<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
+				<aui:nav-bar>
+					<aui:nav id="publishConfigurationButtons">
+						<aui:nav-item
+							data-value="custom"
+							iconCssClass="icon-puzzle"
+							label="custom"
+						/>
 
-					<aui:nav-item
-						data-value="saved"
-						iconCssClass="icon-archive"
-						label="publish-templates"
-					/>
-				</aui:nav>
-			</aui:nav-bar>
+						<aui:nav-item
+							data-value="saved"
+							iconCssClass="icon-archive"
+							label="publish-templates"
+						/>
+					</aui:nav>
+				</aui:nav-bar>
+			</div>
+
+			<portlet:renderURL var="redirectAfterUpdateURL">
+				<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+				<portlet:param name="publishConfigurationButtons" value="saved" />
+				<portlet:param name="tabs2" value="new-publication-process" />
+			</portlet:renderURL>
+
+			<portlet:actionURL var="updatePublishConfigurationURL">
+				<portlet:param name="struts_action" value="/layouts_admin/edit_publish_configuration" />
+				<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+				<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
+				<portlet:param name="redirect" value="<%= redirectAfterUpdateURL %>" />
+			</portlet:actionURL>
 
 			<div <%= publishConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
-				<aui:form action='<%= portletURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" %>' >
+				<aui:form action='<%= (cmd.equals(Constants.PUBLISH_TO_LIVE) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? portletURL.toString() : updatePublishConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= (cmd.equals(Constants.PUBLISH_TO_LIVE) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" : StringPool.BLANK %>' >
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 					<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />
 					<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 					<aui:input name="redirect" type="hidden" value="<%= renderURL.toString() %>" />
+					<aui:input name="groupId" type="hidden" value="<%= stagingGroupId %>" />
 					<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
 					<aui:input name="layoutSetBranchName" type="hidden" value="<%= layoutSetBranchName %>" />
 					<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />
@@ -263,6 +281,16 @@ else {
 						<liferay-ui:message key="<%= se.getMessage() %>" />
 					</liferay-ui:error>
 
+					<c:if test="<%= !cmd.equals(Constants.PUBLISH_TO_LIVE) && !cmd.equals(Constants.PUBLISH_TO_REMOTE) %>">
+						<aui:fieldset cssClass="options-group" label='<%= cmd.equals(Constants.ADD) ? "new-publish-template" : "edit-template" %>'>
+							<aui:input label="name" name="name" showRequiredLabel="<%= false %>">
+								<aui:validator name="required" />
+							</aui:input>
+
+							<aui:input label="description" name="description" />
+						</aui:fieldset>
+					</c:if>
+
 					<div id="<portlet:namespace />publishOptions">
 						<div class="export-dialog-tree">
 
@@ -296,9 +324,11 @@ else {
 								</liferay-util:include>
 							</div>
 
-							<aui:fieldset cssClass="options-group" label="date">
-								<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
-							</aui:fieldset>
+							<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
+								<aui:fieldset cssClass="options-group" label="date">
+									<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
+								</aui:fieldset>
+							</div>
 
 							<c:if test="<%= !group.isCompany() %>">
 								<aui:fieldset cssClass="options-group" label="pages">
@@ -357,9 +387,25 @@ else {
 						</div>
 
 						<aui:button-row>
-							<aui:button id="addButton" name="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
+							<c:choose>
+								<c:when test="<%= cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE) %>">
+									<aui:button type="submit" value="save" />
 
-							<aui:button id="publishButton" name="publishButton" type="submit" value="<%= publishActionKey %>" />
+									<portlet:renderURL var="cancelBackURL">
+										<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+										<portlet:param name="publishConfigurationButtons" value="saved" />
+										<portlet:param name="tabs2" value="new-publication-process" />
+									</portlet:renderURL>
+
+									<aui:button href="<%= cancelBackURL %>" type="reset" value="cancel" />
+								</c:when>
+
+								<c:otherwise>
+									<aui:button id="addButton" name="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
+
+									<aui:button id="publishButton" name="publishButton" type="submit" value="<%= publishActionKey %>" />
+								</c:otherwise>
+							</c:choose>
 						</aui:button-row>
 					</div>
 				</aui:form>
@@ -367,7 +413,7 @@ else {
 
 			<div <%= publishConfigurationButtons.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />savedConfigurations">
 				<liferay-util:include page="/html/portlet/layouts_admin/publish_layouts_configurations.jsp">
-					<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+					<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 					<liferay-util:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				</liferay-util:include>

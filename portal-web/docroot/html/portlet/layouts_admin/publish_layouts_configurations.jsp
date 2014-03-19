@@ -22,6 +22,15 @@ boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing");
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 %>
 
+<portlet:renderURL var="addPublishConfigurationURL">
+	<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+</portlet:renderURL>
+
+<aui:button href="<%= addPublishConfigurationURL %>" value="new" />
+
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
@@ -74,6 +83,10 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 		<liferay-ui:search-container-column-date
 			name="create-date"
 			value="<%= exportImportConfiguration.getCreateDate() %>"
+		/>
+
+		<liferay-ui:search-container-column-jsp
+			path="/html/portlet/layouts_admin/publish_configuration_actions.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

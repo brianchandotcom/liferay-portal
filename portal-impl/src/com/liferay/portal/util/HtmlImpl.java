@@ -31,8 +31,9 @@ import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.TextExtractor;
 
 /**
- * Provides the implementation for escaping, rendering, replacing, and stripping
- * HTML text. This class uses XSS recommendations from <a
+ * Provides the implementation of the HTML utility interface for escaping,
+ * rendering, replacing, and stripping HTML text. This class uses XSS
+ * recommendations from <a
  * href="http://www.owasp.org/index.php/Cross_Site_Scripting#How_to_Protect_Yourself">http://www.owasp.org/index.php/Cross_Site_Scripting#How_to_Protect_Yourself</a>
  * when escaping HTML text.
  *

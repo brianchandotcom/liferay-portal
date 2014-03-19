@@ -33,6 +33,10 @@ import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
@@ -122,15 +126,23 @@ public class JournalArticleScheduledTest {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
 
+		String xsd = DDMStructureTestUtil.getSampleStructureXSD();
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			groupId, JournalArticle.class.getName(), xsd);
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			groupId, ddmStructure.getStructureId());
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent();
+
 		return JournalArticleLocalServiceUtil.addArticle(
 			TestPropsValues.getUserId(), groupId,
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, 0, StringPool.BLANK,
 			true, JournalArticleConstants.VERSION_DEFAULT, titleMap,
-			descriptionMap,
-			JournalTestUtil.createLocalizedContent(
-				ServiceTestUtil.randomString(), LocaleUtil.getDefault()),
-			"general", null, null, null,
+			descriptionMap, content, "general", ddmStructure.getStructureKey(),
+			ddmTemplate.getTemplateKey(), null,
 			displayDateCalendar.get(Calendar.MONTH),
 			displayDateCalendar.get(Calendar.DAY_OF_MONTH),
 			displayDateCalendar.get(Calendar.YEAR),

@@ -15,6 +15,8 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -140,9 +142,30 @@ public class DDMStructureTestUtil {
 	}
 
 	public static String getSampleStructuredContent(
-		String name, String keywords) {
+		Map<Locale, String> contents, String defaultLocale) {
 
-		Document document = createDocumentContent();
+		return getSampleStructuredContent("name", contents, defaultLocale);
+	}
+
+	public static String getSampleStructuredContent(String keywords) {
+		return getSampleStructuredContent("name", keywords);
+	}
+
+	public static String getSampleStructuredContent(
+		String name, Map<Locale, String> contents, String defaultLocale) {
+
+		StringBundler sb = new StringBundler(2 * contents.size());
+
+		for (Map.Entry<Locale, String> content : contents.entrySet()) {
+			Locale locale = content.getKey();
+
+			sb.append(LocaleUtil.toLanguageId(locale));
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		Document document = createDocumentContent(sb.toString(), defaultLocale);
 
 		Element rootElement = document.getRootElement();
 
@@ -153,13 +176,26 @@ public class DDMStructureTestUtil {
 		dynamicElementElement.addAttribute("name", name);
 		dynamicElementElement.addAttribute("type", "text");
 
-		Element dynamicContentElement = dynamicElementElement.addElement(
-			"dynamic-content");
+		for (Map.Entry<Locale, String> content : contents.entrySet()) {
+			Element dynamicContentElement = dynamicElementElement.addElement(
+				"dynamic-content");
 
-		dynamicContentElement.addAttribute("language-id", "en_US");
-		dynamicContentElement.addCDATA(keywords);
+			dynamicContentElement.addAttribute(
+				"language-id", LocaleUtil.toLanguageId(content.getKey()));
+			dynamicContentElement.addCDATA(content.getValue());
+		}
 
 		return document.asXML();
+	}
+
+	public static String getSampleStructuredContent(
+		String name, String keywords) {
+
+		Map<Locale, String> contents = new HashMap<Locale, String>();
+
+		contents.put(Locale.US, keywords);
+
+		return getSampleStructuredContent(name, contents, "en_US");
 	}
 
 	public static String getSampleStructureXSD() {
@@ -202,13 +238,15 @@ public class DDMStructureTestUtil {
 		return document.asXML();
 	}
 
-	protected static Document createDocumentContent() {
+	protected static Document createDocumentContent(
+		String availableLocales, String defaultLocale) {
+
 		Document document = SAXReaderUtil.createDocument();
 
 		Element rootElement = document.addElement("root");
 
-		rootElement.addAttribute("available-locales", "en_US");
-		rootElement.addAttribute("default-locale", "en_US");
+		rootElement.addAttribute("available-locales", availableLocales);
+		rootElement.addAttribute("default-locale", defaultLocale);
 		rootElement.addElement("request");
 
 		return document;

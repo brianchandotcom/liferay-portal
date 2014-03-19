@@ -41,6 +41,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -72,16 +73,7 @@ public class JournalTestUtilTest {
 	public void testAddArticleWithDDMStructureAndDDMTemplate()
 		throws Exception {
 
-		Document document = JournalTestUtil.createDocument("en_US", "en_US");
-
-		Element dynamicElementElement =
-			JournalTestUtil.addDynamicElementElement(
-				document.getRootElement(), "text", "name");
-
-		JournalTestUtil.addDynamicContentElement(
-			dynamicElementElement, "en_US", "Joe Bloggs");
-
-		String xml = document.asXML();
+		String content = DDMStructureTestUtil.getSampleStructuredContent();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			JournalArticle.class.getName());
@@ -92,7 +84,7 @@ public class JournalTestUtilTest {
 
 		Assert.assertNotNull(
 			JournalTestUtil.addArticleWithXMLContent(
-				xml, ddmStructure.getStructureKey(),
+				content, ddmStructure.getStructureKey(),
 				ddmTemplate.getTemplateKey()));
 	}
 
@@ -187,17 +179,13 @@ public class JournalTestUtilTest {
 	@Test
 	public void testAddDynamicContent() {
 		try {
-			Document document = JournalTestUtil.createDocument(
-				"en_US,pt_BR", "en_US");
+			Map<Locale, String> contents = new HashMap<Locale, String>();
 
-			Element dynamicElementElement =
-				JournalTestUtil.addDynamicElementElement(
-					document.getRootElement(), "text", "name");
+			contents.put(LocaleUtil.US, "Joe Bloggs");
+			contents.put(LocaleUtil.BRAZIL, "Joe Bloggs");
 
-			JournalTestUtil.addDynamicContentElement(
-				dynamicElementElement, "en_US", "Joe Bloggs");
-
-			String xml = document.asXML();
+			String xml = DDMStructureTestUtil.getSampleStructuredContent(
+				contents, LanguageUtil.getLanguageId(LocaleUtil.US));
 
 			String content = JournalUtil.transform(
 				null, getTokens(), Constants.VIEW, "en_US", xml,
@@ -229,18 +217,6 @@ public class JournalTestUtilTest {
 	}
 
 	@Test
-	public void testCreateDocument() {
-		Assert.assertNotNull(JournalTestUtil.createDocument("en_US", "en_US"));
-	}
-
-	@Test
-	public void testCreateLocalizedContent() {
-		Assert.assertNotNull(
-			JournalTestUtil.createLocalizedContent(
-				"This is localized content.", LocaleUtil.getSiteDefault()));
-	}
-
-	@Test
 	public void testGetSampleStructuredContent() throws Exception {
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
 			"name", "Joe Bloggs");
@@ -269,8 +245,16 @@ public class JournalTestUtilTest {
 		JournalArticle article = JournalTestUtil.addArticle(
 			_group.getGroupId(), "Test Article", "This is a test article.");
 
-		String localizedContent = JournalTestUtil.createLocalizedContent(
-			"This is an updated test article.", LocaleUtil.getSiteDefault());
+		Map<Locale, String> contents = new HashMap<Locale, String>();
+
+		contents.put(Locale.US, "This is an updated test article.");
+
+		String defaultLanguageId = LanguageUtil.getLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		String localizedContent =
+			DDMStructureTestUtil.getSampleStructuredContent(
+				contents, defaultLanguageId);
 
 		Assert.assertNotNull(
 			JournalTestUtil.updateArticle(

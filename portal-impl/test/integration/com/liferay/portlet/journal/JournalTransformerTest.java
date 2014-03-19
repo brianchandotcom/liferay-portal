@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.journal;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -34,6 +36,8 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -81,16 +85,7 @@ public class JournalTransformerTest {
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM, xsl);
 
-		document = JournalTestUtil.createDocument("en_US", "en_US");
-
-		Element dynamicElementElement =
-			JournalTestUtil.addDynamicElementElement(
-				document.getRootElement(), "text", "name");
-
-		JournalTestUtil.addDynamicContentElement(
-			dynamicElementElement, "en_US", "Joe Bloggs");
-
-		String xml = document.asXML();
+		String xml = DDMStructureTestUtil.getSampleStructuredContent();
 
 		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
 			xml, ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
@@ -135,19 +130,13 @@ public class JournalTransformerTest {
 	public void testLocaleTransformerListener() throws Exception {
 		Map<String, String> tokens = getTokens();
 
-		Document document = JournalTestUtil.createDocument(
-			"en_US,pt_BR", "en_US");
+		Map<Locale, String> contents = new HashMap<Locale, String>();
 
-		Element dynamicElementElement =
-			JournalTestUtil.addDynamicElementElement(
-				document.getRootElement(), "text", "name");
+		contents.put(LocaleUtil.US, "Joe Bloggs");
+		contents.put(LocaleUtil.BRAZIL, "Joao da Silva");
 
-		JournalTestUtil.addDynamicContentElement(
-			dynamicElementElement, "en_US", "Joe Bloggs");
-		JournalTestUtil.addDynamicContentElement(
-			dynamicElementElement, "pt_BR", "Joao da Silva");
-
-		String xml = document.asXML();
+		String xml = DDMStructureTestUtil.getSampleStructuredContent(
+			contents, LanguageUtil.getLanguageId(LocaleUtil.US));
 
 		String script = "$name.getData()";
 

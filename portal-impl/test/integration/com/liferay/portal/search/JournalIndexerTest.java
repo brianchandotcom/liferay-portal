@@ -15,6 +15,7 @@
 package com.liferay.portal.search;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -153,9 +154,11 @@ public class JournalIndexerTest {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+			"Architectural Approach");
+
 		JournalTestUtil.updateArticle(
-			article1, article1.getTitle(), "Architectural Approach",
-			serviceContext);
+			article1, article1.getTitle(), content, serviceContext);
 
 		JournalArticle article2 = JournalTestUtil.addArticleWithWorkflow(
 			_group.getGroupId(), folder.getFolderId(), "title",
@@ -165,9 +168,11 @@ public class JournalIndexerTest {
 			initialSearchCount  + 2,
 			searchCount(_group.getGroupId(), searchContext));
 
+		content = DDMStructureTestUtil.getSampleStructuredContent(
+			"Architectural Tablet");
+
 		JournalTestUtil.updateArticle(
-			article2, article2.getTitle(), "Architectural Tablet",
-			serviceContext);
+			article2, article2.getTitle(), content, serviceContext);
 
 		JournalArticleLocalServiceUtil.deleteArticles(_group.getGroupId());
 
@@ -219,7 +224,7 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), content, serviceContext);
+			article, article.getTitle(), article.getContent(), serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount + 2,
@@ -230,7 +235,7 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		JournalTestUtil.updateArticle(
-			article, article.getTitle(), content, serviceContext);
+			article, article.getTitle(), article.getContent(), serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount + 3,
@@ -420,8 +425,11 @@ public class JournalIndexerTest {
 
 		contentMap.put(LocaleUtil.SPAIN, "Apple manzana tablet");
 
-		String content = JournalTestUtil.createLocalizedContent(
-			contentMap, LocaleUtil.getDefault());
+		String defaultLanguageId = LanguageUtil.getLanguageId(
+			LocaleUtil.getDefault());
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+			contentMap, defaultLanguageId);
 
 		article = JournalArticleLocalServiceUtil.updateArticleTranslation(
 			_group.getGroupId(), article.getArticleId(), article.getVersion(),
@@ -448,13 +456,8 @@ public class JournalIndexerTest {
 	}
 
 	@Test
-	public void testUpdateBasicContent() throws Exception {
-		updateContent(true);
-	}
-
-	@Test
 	public void testUpdateStructuredContent() throws Exception {
-		updateContent(false);
+		updateContent();
 	}
 
 	protected void addArticle(boolean approve) throws Exception {
@@ -541,8 +544,11 @@ public class JournalIndexerTest {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+			"Apple tablet");
+
 		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), "Apple tablet", serviceContext);
+			article, article.getTitle(), content, serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount1,
@@ -614,7 +620,7 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), content, serviceContext);
+			article, article.getTitle(), article.getContent(), serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount + 2,
@@ -793,8 +799,11 @@ public class JournalIndexerTest {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
 
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+			"Apple tablet");
+
 		JournalTestUtil.updateArticle(
-			article, article.getTitle(), "Apple tablet", serviceContext);
+			article, article.getTitle(), content, serviceContext);
 
 		if (approve) {
 			Assert.assertEquals(
@@ -814,7 +823,7 @@ public class JournalIndexerTest {
 		}
 	}
 
-	protected void updateContent(boolean basicContent) throws Exception {
+	protected void updateContent() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
 
@@ -839,30 +848,15 @@ public class JournalIndexerTest {
 
 		String content = "Liferay Architectural Approach";
 
-		JournalArticle article = null;
-
-		if (basicContent) {
-			article = JournalTestUtil.addArticleWithWorkflow(
-				_group.getGroupId(), folder.getFolderId(), "title", content,
-				true);
-		}
-		else {
-			article = addJournalWithDDMStructure(
-				folder.getFolderId(), content, serviceContext);
-		}
+		JournalArticle article = addJournalWithDDMStructure(
+			folder.getFolderId(), content, serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount1 + 1,
 			searchCount(_group.getGroupId(), searchContext1));
 
-		if (basicContent) {
-			content = JournalTestUtil.createLocalizedContent(
-				"Architectural Approach", LocaleUtil.getDefault());
-		}
-		else {
-			content = DDMStructureTestUtil.getSampleStructuredContent(
-				"name", "Architectural Approach");
-		}
+		content = DDMStructureTestUtil.getSampleStructuredContent(
+			"name", "Architectural Approach");
 
 		JournalArticleLocalServiceUtil.updateContent(
 			_group.getGroupId(), article.getArticleId(), article.getVersion(),

@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.upgrade.UpgradeMVCC;
 
 /**
  * @author Jorge Ferrer
@@ -24,6 +25,8 @@ public class UpgradeSchema extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQLTemplate("update-5.2.3-6.0.0.sql", false);
+
+		upgrade(UpgradeMVCC.class);
 	}
 
 }

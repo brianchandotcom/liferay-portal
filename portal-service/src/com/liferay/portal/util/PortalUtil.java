@@ -1734,6 +1734,14 @@ public class PortalUtil {
 		return getPortal().getServletContextName();
 	}
 
+	public static long[] getSharedContentSiteGroupIds(
+			long companyId, long groupId, long userId)
+		throws PortalException, SystemException {
+
+		return getPortal().getSharedContentSiteGroupIds(
+			companyId, groupId, userId);
+	}
+
 	public static Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
 			HttpServletRequest request)
 		throws SystemException {

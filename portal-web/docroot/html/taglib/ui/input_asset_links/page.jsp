@@ -112,7 +112,7 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 			}
 
 			assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
-			assetBrowserURL.setParameter("selectedGroupIds", themeDisplay.getCompanyGroupId() + "," + groupId);
+			assetBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), groupId, user.getUserId())));
 			assetBrowserURL.setParameter("typeSelection", assetRendererFactory.getClassName());
 
 			Map<String, Object> data = new HashMap<String, Object>();

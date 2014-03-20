@@ -11,7 +11,7 @@
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>StagingPG</td>
+	<td>PGStaging</td>
 </tr>
 <tr>
 	<td></td>
@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HISTORY_BUTTON</td>
+	<td>//a[@id='_170_viewHistoryLink']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRMATION</td>
 	<td></td>
 	<td></td>
@@ -103,6 +108,17 @@
 <tr>
 	<td>PAGE_VARIATION_MENULIST_NAME</td>
 	<td>//ul//a[contains(.,'${key_pageVariationName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HISTORY-->
+<tr>
+	<td>HISTORY_VERSION</td>
+	<td>//td/span[@class='layout-revision-current']</td>
 	<td></td>
 </tr>
 <tr>

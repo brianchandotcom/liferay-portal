@@ -163,6 +163,10 @@
 										background-color: #5BBAE8;
 									}
 								}
+
+								&.sign-in > a {
+									padding: 15px;
+								}
 							}
 						}
 					}

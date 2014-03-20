@@ -195,7 +195,7 @@ public abstract class BaseSubscriptionTestCase {
 		return;
 	}
 
-	protected void addSubscriptionClassType(long baseModelId) throws Exception {
+	protected void addSubscriptionClassType(long classTypeId) throws Exception {
 		return;
 	}
 

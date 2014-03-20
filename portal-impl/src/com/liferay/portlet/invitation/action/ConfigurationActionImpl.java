@@ -33,23 +33,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateEmailMessage(actionRequest);
+		validateEmail(actionRequest, "emailMessage", true);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	protected void validateEmailMessage(ActionRequest actionRequest) {
-		String emailMessageSubject = getParameter(
-			actionRequest, "emailMessageSubject");
-		String emailMessageBody = getParameter(
-			actionRequest, "emailMessageBody");
-
-		if (Validator.isNull(emailMessageSubject)) {
-			SessionErrors.add(actionRequest, "emailMessageSubject");
-		}
-		else if (Validator.isNull(emailMessageBody)) {
-			SessionErrors.add(actionRequest, "emailMessageBody");
-		}
 	}
 
 }

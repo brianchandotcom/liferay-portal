@@ -41,6 +41,7 @@ AUI.add(
 						instance._cropRegionNode = instance.one('#cropRegion');
 						instance._fileNameNode = instance.one('#fileName');
 						instance._formNode = instance.one('#fm');
+						instance._formValidator = Liferay.Form.get(instance._formNode.attr('id')).formValidator;
 						instance._portraitPreviewImg = instance.one('#portraitPreviewImg');
 						instance._submitButton = instance.one('#submitButton');
 					},
@@ -166,32 +167,34 @@ AUI.add(
 					_onFileNameChange: function(event) {
 						var instance = this;
 
-						var uploadURL = instance.get('uploadURL');
+						instance._formValidator.validateField(instance._fileNameNode);
 
-						var imageCropper = instance._imageCropper;
-						var portraitPreviewImg = instance._portraitPreviewImg;
+						if (!instance._formValidator.hasErrors()) {
+							var imageCropper = instance._imageCropper;
+							var portraitPreviewImg = instance._portraitPreviewImg;
 
-						portraitPreviewImg.addClass('loading');
+							portraitPreviewImg.addClass('loading');
 
-						portraitPreviewImg.attr('src', themeDisplay.getPathThemeImages() + '/spacer.png');
+							portraitPreviewImg.attr('src', themeDisplay.getPathThemeImages() + '/spacer.png');
 
-						if (imageCropper) {
-							imageCropper.disable();
-						}
-
-						A.io.request(
-							uploadURL,
-							{
-								form: {
-									id: instance.ns('fm'),
-									upload: true
-								},
-								on: {
-									complete: A.bind('fire', instance, 'uploadComplete'),
-									start: A.bind('fire', instance, 'uploadStart')
-								}
+							if (imageCropper) {
+								imageCropper.disable();
 							}
-						);
+
+							A.io.request(
+								instance.get('uploadURL'),
+								{
+									form: {
+										id: instance.ns('fm'),
+										upload: true
+									},
+									on: {
+										complete: A.bind('fire', instance, 'uploadComplete'),
+										start: A.bind('fire', instance, 'uploadStart')
+									}
+								}
+							);
+						}
 					},
 
 					_onImageLoad: function(event) {

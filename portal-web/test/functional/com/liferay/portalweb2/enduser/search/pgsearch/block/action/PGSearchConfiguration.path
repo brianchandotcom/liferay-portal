@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>PGSearchConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGSearchConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGSearchConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortletConfiguration</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_SETTING-->
+<tr>
+	<td>DISPLAY_SETTING_BASIC_RADIO</td>
+	<td>//label[contains(@class,'radio') and contains(@for,'basic')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTING_ADVANCED_RADIO</td>
+	<td>//label[contains(@class,'radio') and contains(@for,'advanced')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_SETTING_BASIC-->
+<tr>
+	<td>DISPLAY_SETTING_BASIC_DISPLAY_SITE_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayScopeFacetCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTING_BASIC_DISPLAY_ASSET_TYPE_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayAssetTypeFacetCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTING_BASIC_DISPLAY_ASSET_TAGS_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayAssetTagsFacetCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTING_BASIC_DISPLAY_ASSET_CATEGORIES_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayAssetCategoriesFacetCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTING_BASIC_DISPLAY_FOLDER_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayFolderFacetCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTING_BASIC_DISPLAY_USER_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayUserFacetCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTING_BASIC_DISPLAY_MODIFIED_RANGE_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayModifiedRangeFacetCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_SETTING_ADVANCED-->
+<tr>
+	<td>DISPLAY_SETTING_ADVANCED_SEARCH_CONFIGURATION</td>
+	<td>//textarea[contains(@id,'searchConfiguration')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

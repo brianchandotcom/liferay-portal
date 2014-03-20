@@ -1,4 +1,28 @@
 <definition>
+	<command name="gotoModifiedRangeFacetPG">
+		<var name="key_searchModifiedRange" value="${searchModifiedRange}" />
+
+		<execute action="PGSearchResults#assertClick" locator-key1="MODIFIED_RANGE_FACET_TIME_RANGE" value1="${searchModifiedRange}" />
+	</command>
+
+	<command name="removeFacetValuePG">
+		<var name="key_searchFacetValue" value="${searchFacetValue}" />
+
+		<execute action="PGSearchResults#click" locator-key1="FACET_VALUE_REMOVE" />
+	</command>
+
+	<command name="removeUserFacetDisplayPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<execute action="PGSearchConfiguration#uncheck" locator-key1="DISPLAY_SETTING_BASIC_DISPLAY_USER_FACET_CHECKBOX" />
+		<execute action="PGSearchConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGSearchConfiguration#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="searchNoPG">
 		<execute action="PGSearch#type" locator-key1="SEARCH_FIELD" value1="${searchTerm}" />
 
@@ -56,18 +80,33 @@
 				<execute action="PGSearch#click" locator-key1="SEARCH_ICON" />
 			</else>
 		</if>
+	</command>
 
+	<command name="viewAssetTypeFacetPG">
+		<var name="key_searchAssetType" value="${searchAssetType}" />
+
+		<execute action="PGSearchResults#assertElementPresent" locator-key1="ASSET_TYPE_FACET_SEARCH_ASSETS_BOX" />
+		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_TYPE_FACET_EVERYTHING" value1="Everything" />
+		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_TYPE_FACET_FREQUENCY" value1="${facetFrequency}" />
+		<execute action="PGSearchResults#assertClick" locator-key1="ASSET_TYPE_FACET_ASSET" value1="${searchAssetType}" />
+
+		<execute macro="Search#viewSearchPG">
+			<var name="searchAssetSummary" value="${searchAssetSummary}" />
+			<var name="searchAssetTitle" value="${searchAssetTitle}" />
+			<var name="searchAssetType" value="${searchAssetType}" />
+		</execute>
+	</command>
+
+	<command name="viewSearchAssetTitle">
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
 		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
-		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TYPE" value1="${searchAssetType}" />
+	</command>
 
-		<if>
-			<isset var="searchAssetSummary" />
-			<then>
-				<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
-			</then>
-		</if>
+	<command name="viewSearchNoAssetTitle">
+		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+
+		<execute action="PGSearchResults#assertTextNotPresent" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 	</command>
 
 	<command name="viewSearchNoPG">
@@ -103,5 +142,21 @@
 				<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewUserFacetPG">
+		<var name="key_facetFrequency" value="${facetFrequency}" />
+		<var name="key_userLoginFullName" value="${userLoginFullName}" />
+
+		<execute action="PGSearchResults#assertElementPresent" locator-key1="USER_FACET_SEARCH_USERS_BOX" />
+		<execute action="PGSearchResults#assertTextEquals" locator-key1="USER_FACET_ANY_USER" value1="Any User" />
+		<execute action="PGSearchResults#assertTextEquals" locator-key1="USER_FACET_FREQUENCY" value1="${facetFrequency}" />
+		<execute action="PGSearchResults#assertClick" locator-key1="USER_FACET_USER_NAME" value1="${userLoginFullName}" />
+
+		<execute macro="Search#viewSearchPG">
+			<var name="searchAssetSummary" value="${searchAssetSummary}" />
+			<var name="searchAssetTitle" value="${searchAssetTitle}" />
+			<var name="searchAssetType" value="${searchAssetType}" />
+		</execute>
 	</command>
 </definition>

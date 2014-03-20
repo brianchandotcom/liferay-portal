@@ -103,9 +103,9 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected void addSubscriptionClassType(long typeId) throws Exception {
+	protected void addSubscriptionClassType(long classTypeId) throws Exception {
 		JournalArticleLocalServiceUtil.subscribeStructure(
-			group.getGroupId(), TestPropsValues.getUserId(), typeId);
+			group.getGroupId(), TestPropsValues.getUserId(), classTypeId);
 	}
 
 	@Override

@@ -101,8 +101,9 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected void addSubscriptionClassType(long typeId) throws Exception {
-		DLAppServiceUtil.subscribeFileEntryType(group.getGroupId(), typeId);
+	protected void addSubscriptionClassType(long classTypeId) throws Exception {
+		DLAppServiceUtil.subscribeFileEntryType(
+			group.getGroupId(), classTypeId);
 	}
 
 	@Override

@@ -883,19 +883,8 @@ public class LanguageImpl implements Language {
 		return StringPool.UTF8;
 	}
 
-	private Locale _getLocale(String languageCode) {
-		return _localesMap.get(languageCode);
-	}
-
-	private ResourceBundle _getResourceBundle(PageContext pageContext) {
-		if (pageContext == null) {
-			return null;
-		}
-
+	private Locale _getLocale(HttpServletRequest request) {
 		Locale locale = null;
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -911,14 +900,33 @@ public class LanguageImpl implements Language {
 			}
 		}
 
+		return locale;
+	}
+
+	private Locale _getLocale(String languageCode) {
+		return _localesMap.get(languageCode);
+	}
+
+	private ResourceBundle _getResourceBundle(PageContext pageContext) {
+		if (pageContext == null) {
+			return null;
+		}
+
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		Locale locale = _getLocale(request);
+
 		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		if (portletConfig != null) {
-			return portletConfig.getResourceBundle(locale);
+		if (portletConfig == null) {
+			return LanguageResources.getBundle(locale);
 		}
 
-		return null;
+		return new AggregateResourceBundle(
+			portletConfig.getResourceBundle(locale),
+			LanguageResources.getBundle(locale));
 	}
 
 	private void _initGroupLocales(long groupId) {

@@ -74,7 +74,7 @@ catch (NoSuchFolderException nsfe) {
 			<liferay-ui:panel-container extended="<%= true %>" id="documentLibrarySettingsPanelContainer" persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryItemsListingPanel" persistState="<%= true %>" title="display-settings">
 					<aui:fieldset>
-						<aui:field-wrapper label="root-folder">
+						<aui:field-wrapper label="root-folder" name="rootFolderName">
 							<div class="input-append">
 								<liferay-ui:input-resource id="rootFolderName" url="<%= rootFolderName %>" />
 

@@ -67,15 +67,15 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 				</aui:select>
 			</c:when>
 			<c:when test="<%= (role == null) %>">
-				<aui:field-wrapper label="type">
-					<liferay-ui:input-resource url="<%= LanguageUtil.get(pageContext, RoleConstants.getTypeLabel(type)) %>" />
+				<aui:field-wrapper label="type" name="roleType">
+					<liferay-ui:input-resource id="roleType" url="<%= LanguageUtil.get(pageContext, RoleConstants.getTypeLabel(type)) %>" />
 				</aui:field-wrapper>
 
 				<aui:input name="type" type="hidden" value="<%= String.valueOf(type) %>" />
 			</c:when>
 			<c:otherwise>
-				<aui:field-wrapper label="type">
-					<liferay-ui:input-resource url="<%= LanguageUtil.get(pageContext, role.getTypeLabel()) %>" />
+				<aui:field-wrapper label="type" name="roleType">
+					<liferay-ui:input-resource id="roleType" url="<%= LanguageUtil.get(pageContext, role.getTypeLabel()) %>" />
 				</aui:field-wrapper>
 			</c:otherwise>
 		</c:choose>

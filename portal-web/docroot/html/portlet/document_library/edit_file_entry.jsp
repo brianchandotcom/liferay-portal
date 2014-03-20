@@ -248,7 +248,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 		}
 		%>
 
-		<aui:field-wrapper label="folder">
+		<aui:field-wrapper label="folder" name="folderName">
 			<div class="input-append">
 				<liferay-ui:input-resource id="folderName" url="<%= folderName %>" />
 

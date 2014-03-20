@@ -101,13 +101,13 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 		<aui:row>
 			<aui:col width="<%= 60 %>">
 				<div class="lfr-asset-assigned">
-					<aui:field-wrapper label="assigned-to">
+					<aui:field-wrapper label="assigned-to" name="assignee">
 						<c:choose>
 							<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
-								<liferay-ui:input-resource url="<%= PortalUtil.getUserName(workflowTask.getAssigneeUserId(), StringPool.BLANK) %>" />
+								<liferay-ui:input-resource id="assignee" url="<%= PortalUtil.getUserName(workflowTask.getAssigneeUserId(), StringPool.BLANK) %>" />
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:input-resource url='<%= LanguageUtil.get(pageContext, "nobody") %>' />
+								<liferay-ui:input-resource id="assignee" url='<%= LanguageUtil.get(pageContext, "nobody") %>' />
 							</c:otherwise>
 						</c:choose>
 
@@ -147,22 +147,22 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 				</div>
 
 				<div class="lfr-asset-status">
-					<aui:field-wrapper label="state">
-						<liferay-ui:input-resource url="<%= LanguageUtil.get(pageContext, HtmlUtil.escape(WorkflowInstanceLinkLocalServiceUtil.getState(companyId, groupId, className, classPK))) %>" />
+					<aui:field-wrapper label="state" name="state">
+						<liferay-ui:input-resource id="state" url="<%= LanguageUtil.get(pageContext, HtmlUtil.escape(WorkflowInstanceLinkLocalServiceUtil.getState(companyId, groupId, className, classPK))) %>" />
 					</aui:field-wrapper>
 				</div>
 			</aui:col>
 
 			<aui:col>
 				<div class="lfr-asset-date">
-					<aui:field-wrapper label="create-date">
-						<liferay-ui:input-resource url="<%= dateFormatDateTime.format(workflowTask.getCreateDate()) %>" />
+					<aui:field-wrapper label="create-date" name="createDate">
+						<liferay-ui:input-resource id="createDate" url="<%= dateFormatDateTime.format(workflowTask.getCreateDate()) %>" />
 					</aui:field-wrapper>
 				</div>
 
 				<div class="lfr-asset-due-date">
-					<aui:field-wrapper label="due-date">
-						<liferay-ui:input-resource url='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>' />
+					<aui:field-wrapper label="due-date" name="dueDate">
+						<liferay-ui:input-resource id="dueDate" url='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>' />
 
 						<c:if test="<%= !workflowTask.isCompleted() %>">
 							<portlet:actionURL var="updateDueDateURL">

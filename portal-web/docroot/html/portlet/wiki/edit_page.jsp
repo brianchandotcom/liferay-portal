@@ -237,8 +237,8 @@ if (Validator.isNull(redirect)) {
 				</c:if>
 
 				<c:if test="<%= Validator.isNotNull(parentTitle) %>">
-					<aui:field-wrapper label="parent">
-						<liferay-ui:input-resource url="<%= parentTitle %>" />
+					<aui:field-wrapper label="parent" name="parentlTitle">
+						<liferay-ui:input-resource id="parentlTitle" url="<%= parentTitle %>" />
 					</aui:field-wrapper>
 				</c:if>
 

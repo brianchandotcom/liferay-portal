@@ -126,8 +126,6 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 				<aui:field-wrapper inlineLabel="left" label="trackback-url" name="trackbackUrl">
 					<liferay-ui:input-resource id="trackbackUrl" url='<%= PortalUtil.getLayoutFullURL(themeDisplay) + Portal.FRIENDLY_URL_SEPARATOR + "blogs/trackback/" + entry.getUrlTitle() %>' />
 				</aui:field-wrapper>
-
-				<br /><br />
 			</c:if>
 
 			<portlet:actionURL var="discussionURL">

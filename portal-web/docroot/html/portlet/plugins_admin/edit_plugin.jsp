@@ -57,12 +57,12 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 	/>
 
 	<aui:fieldset>
-		<aui:field-wrapper label="module-id">
-			<liferay-ui:input-resource url="<%= moduleId %>" />
+		<aui:field-wrapper label="module-id" name="moduleId">
+			<liferay-ui:input-resource id="moduleId" url="<%= moduleId %>" />
 		</aui:field-wrapper>
 
-		<aui:field-wrapper label="plugin-id">
-			<liferay-ui:input-resource url="<%= pluginId %>" />
+		<aui:field-wrapper label="plugin-id" name="pluginId">
+			<liferay-ui:input-resource id="pluginId" url="<%= pluginId %>" />
 		</aui:field-wrapper>
 
 		<aui:input name="active" type="checkbox" value="<%= active %>" />

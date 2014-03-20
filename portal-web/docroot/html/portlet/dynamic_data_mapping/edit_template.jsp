@@ -137,8 +137,8 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="templateDetailsPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="templateDetailsSectionPanel" persistState="<%= true %>" title="details">
 				<c:if test="<%= ddmDisplay.isShowStructureSelector() %>">
-					<aui:field-wrapper helpMessage="structure-help" label="structure">
-						<liferay-ui:input-resource url="<%= (structure != null) ? structure.getName(locale) : StringPool.BLANK %>" />
+					<aui:field-wrapper helpMessage="structure-help" label="structure" name="structure">
+						<liferay-ui:input-resource id="structure" url="<%= (structure != null) ? structure.getName(locale) : StringPool.BLANK %>" />
 
 						<c:if test="<%= ((template == null) || (template.getClassPK() == 0)) %>">
 							<liferay-ui:icon
@@ -179,17 +179,17 @@ if (Validator.isNotNull(structureAvailableFields)) {
 				<aui:input name="description" />
 
 				<c:if test="<%= template != null %>">
-					<aui:field-wrapper helpMessage="template-key-help" label="template-key">
-						<liferay-ui:input-resource url="<%= template.getTemplateKey() %>" />
+					<aui:field-wrapper helpMessage="template-key-help" label="template-key" name="templateKey">
+						<liferay-ui:input-resource id="templateKey" url="<%= template.getTemplateKey() %>" />
 					</aui:field-wrapper>
 
-					<aui:field-wrapper label="url">
-						<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_template?templateId=" + templateId %>' />
+					<aui:field-wrapper label="url" name="url">
+						<liferay-ui:input-resource id="url" url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_template?templateId=" + templateId %>' />
 					</aui:field-wrapper>
 
 					<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
-						<aui:field-wrapper label="webdav-url">
-							<liferay-ui:input-resource url="<%= template.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
+						<aui:field-wrapper label="webdav-url" name="webdavUrl">
+							<liferay-ui:input-resource id="webdavUrl" url="<%= template.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
 						</aui:field-wrapper>
 					</c:if>
 				</c:if>

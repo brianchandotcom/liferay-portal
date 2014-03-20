@@ -110,8 +110,8 @@ if (feed != null) {
 				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<aui:field-wrapper label="id">
-					<liferay-ui:input-resource url="<%= feedId %>" />
+				<aui:field-wrapper label="id" name="feedId">
+					<liferay-ui:input-resource id="feedId" url="<%= feedId %>" />
 				</aui:field-wrapper>
 			</c:otherwise>
 		</c:choose>
@@ -131,8 +131,8 @@ if (feed != null) {
 				</aui:field-wrapper>
 			</c:when>
 			<c:otherwise>
-				<aui:field-wrapper label="url">
-					<liferay-ui:input-resource url="<%= feedURL.toString() %>" />
+				<aui:field-wrapper label="url" name="feedUrl">
+					<liferay-ui:input-resource id="feedUrl" url="<%= feedURL.toString() %>" />
 				</aui:field-wrapper>
 			</c:otherwise>
 		</c:choose>
@@ -155,11 +155,11 @@ if (feed != null) {
 
 				</aui:select>
 
-				<aui:field-wrapper label="structure">
+				<aui:field-wrapper label="structure" name="ddmStructureName">
 					<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
 
 					<div class="input-append">
-						<liferay-ui:input-resource url="<%= ddmStructureName %>" />
+						<liferay-ui:input-resource id="ddmStructureName" url="<%= ddmStructureName %>" />
 
 						<aui:button name="selectStructureButton" onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
 

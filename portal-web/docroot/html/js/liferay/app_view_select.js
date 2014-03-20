@@ -201,9 +201,11 @@ AUI.add(
 					_initSelectAllCheckbox: function() {
 						var instance = this;
 
-						instance._eventHandles.push(
-							instance._selectAllCheckbox.on(STR_CLICK, instance._toggleEntriesSelection, instance)
-						);
+						if (instance._selectAllCheckbox) {
+							instance._eventHandles.push(
+								instance._selectAllCheckbox.on(STR_CLICK, instance._toggleEntriesSelection, instance)
+							);
+						}
 					},
 
 					_initToggleSelect: function() {

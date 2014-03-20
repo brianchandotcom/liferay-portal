@@ -18,6 +18,7 @@ import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,6 +33,8 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.invitation.util.InvitationUtil;
 
 import java.util.HashSet;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.mail.internet.InternetAddress;
@@ -109,9 +112,25 @@ public class ViewAction extends PortletAction {
 			PortletPreferencesFactoryUtil.getPortletSetup(
 				actionRequest, PortletKeys.INVITATION);
 
-		String subject = InvitationUtil.getEmailMessageSubject(
-			portletPreferences);
-		String body = InvitationUtil.getEmailMessageBody(portletPreferences);
+		Map<Locale, String> localizedSubjectMap =
+			InvitationUtil.getEmailMessageSubjectMap(portletPreferences);
+		Map<Locale, String> localizedBodyMap =
+			InvitationUtil.getEmailMessageBodyMap(portletPreferences);
+
+		Locale locale = user.getLocale();
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String subject = localizedSubjectMap.get(locale);
+
+		if (Validator.isNull(subject)) {
+			subject = localizedSubjectMap.get(defaultLocale);
+		}
+
+		String body = localizedBodyMap.get(locale);
+
+		if (Validator.isNull(body)) {
+			body = localizedSubjectMap.get(defaultLocale);
+		}
 
 		subject = StringUtil.replace(
 			subject,

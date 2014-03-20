@@ -119,7 +119,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Skipping LDAP import for company " + companyId +
-							"because another LDAP import is in process");
+							" because another LDAP import is in process");
 				}
 
 				return;

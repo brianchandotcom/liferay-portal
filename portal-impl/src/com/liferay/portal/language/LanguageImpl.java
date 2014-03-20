@@ -359,39 +359,14 @@ public class LanguageImpl implements Language {
 
 	@Override
 	public String get(Locale locale, String key, String defaultValue) {
-		if (PropsValues.TRANSLATIONS_DISABLED) {
-			return key;
+		ResourceBundle bundle = LanguageResources.getBundle(locale);
+
+		try {
+			return _get(bundle, key, defaultValue);
 		}
-
-		if (key == null) {
-			return null;
+		catch (Exception e) {
+			return defaultValue;
 		}
-
-		String value = LanguageResources.getMessage(locale, key);
-
-		while ((value == null) || value.equals(defaultValue)) {
-			if ((key.length() > 0) &&
-				(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
-
-				int pos = key.lastIndexOf(CharPool.OPEN_BRACKET);
-
-				if (pos != -1) {
-					key = key.substring(0, pos);
-
-					value = LanguageResources.getMessage(locale, key);
-
-					continue;
-				}
-			}
-
-			break;
-		}
-
-		if (value == null) {
-			value = defaultValue;
-		}
-
-		return value;
 	}
 
 	@Override

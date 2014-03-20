@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.sites.util;
 
-import com.liferay.portal.RequiredLayoutException;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -514,15 +513,6 @@ public class SitesImpl implements Sites {
 				response);
 		}
 
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		if (group.isGuest() && !layoutSet.isPrivateLayout() &&
-			(layoutSet.getPageCount() == 1)) {
-
-			throw new RequiredLayoutException(
-				RequiredLayoutException.AT_LEAST_ONE);
-		}
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			request);
 
@@ -532,6 +522,8 @@ public class SitesImpl implements Sites {
 		long newPlid = layout.getParentPlid();
 
 		if (newPlid <= 0) {
+			LayoutSet layoutSet = layout.getLayoutSet();
+
 			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
 				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);

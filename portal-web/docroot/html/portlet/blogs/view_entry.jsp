@@ -123,9 +123,11 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	<liferay-ui:panel-container extended="<%= false %>" id="blogsCommentsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="blogsCommentsPanel" persistState="<%= true %>" title="comments">
 			<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() && !portletId.equals(PortletKeys.BLOGS_ADMIN) %>">
-				<aui:field-wrapper inlineLabel="left" label="trackback-url">
+				<aui:field-wrapper inlineLabel="left" label="trackback-url" name="trackbackUrl">
 					<liferay-ui:input-resource id="trackbackUrl" url='<%= PortalUtil.getLayoutFullURL(themeDisplay) + Portal.FRIENDLY_URL_SEPARATOR + "blogs/trackback/" + entry.getUrlTitle() %>' />
 				</aui:field-wrapper>
+
+				<br /><br />
 			</c:if>
 
 			<portlet:actionURL var="discussionURL">

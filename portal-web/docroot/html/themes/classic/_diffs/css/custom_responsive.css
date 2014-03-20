@@ -66,6 +66,10 @@
 						}
 					}
 
+					.dockbar-user-notifications .user-notifications-count {
+						margin: 0;
+					}
+
 					.nav-collapse {
 						> .nav {
 							background: transparent;

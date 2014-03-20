@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.util;
 
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -32,10 +34,14 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
+import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.util.ContentUtil;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -313,6 +319,27 @@ public class BlogsUtil {
 
 		return PortalUtil.getEmailFromName(
 			preferences, companyId, PropsValues.BLOGS_EMAIL_FROM_NAME);
+	}
+
+	public static Object[] getResultsByTagsAndCategories(
+			SearchContainer searchContainer)
+		throws PortalException, SystemException {
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(
+			BlogsEntry.class.getName(), searchContainer);
+
+		assetEntryQuery.setExcludeZeroViewCount(false);
+		assetEntryQuery.setVisible(Boolean.TRUE);
+
+		int total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+		assetEntryQuery.setEnd(searchContainer.getEnd());
+		assetEntryQuery.setStart(searchContainer.getStart());
+
+		List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(
+			assetEntryQuery);
+
+		return new Object[] {assetEntries, total};
 	}
 
 	public static String getUrlTitle(long entryId, String title) {

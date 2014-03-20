@@ -1,5 +1,3 @@
-<%@ page
-		import="com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil" %>
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -18,19 +16,11 @@
 
 <%
 if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
-	AssetEntryQuery assetEntryQuery = new AssetEntryQuery(BlogsEntry.class.getName(), searchContainer);
+	Object[] searchContainerResults = BlogsUtil.getResultsByTagsAndCategories(searchContainer);
 
-	assetEntryQuery.setExcludeZeroViewCount(false);
-	assetEntryQuery.setVisible(Boolean.TRUE);
+	searchContainer.setTotal((Integer)searchContainerResults[1]);
 
-	total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-
-	searchContainer.setTotal(total);
-
-	assetEntryQuery.setEnd(searchContainer.getEnd());
-	assetEntryQuery.setStart(searchContainer.getStart());
-
-	List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+	List<AssetEntry> assetEntries = (List<AssetEntry>)searchContainerResults[0];
 
 	for (AssetEntry assetEntry : assetEntries) {
 		results.add(BlogsEntryLocalServiceUtil.getBlogsEntry(assetEntry.getClassPK()));

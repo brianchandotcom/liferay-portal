@@ -30,6 +30,9 @@ public interface MultiVMPool {
 	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
 		String name, boolean blocking);
 
+	public PortalCacheManager<? extends Serializable, ? extends Serializable>
+		getCacheManager();
+
 	public void removeCache(String name);
 
 }

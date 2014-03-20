@@ -29,6 +29,8 @@ public interface SingleVMPool {
 	public PortalCache<? extends Serializable, ?> getCache(
 		String name, boolean blocking);
 
+	public PortalCacheManager<? extends Serializable, ?> getCacheManager();
+
 	public void removeCache(String name);
 
 }

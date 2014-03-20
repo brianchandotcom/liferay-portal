@@ -40,6 +40,12 @@ public class SingleVMPoolUtil {
 		return (PortalCache<K, V>)getSingleVMPool().getCache(name, blocking);
 	}
 
+	public static <K extends Serializable, V> PortalCacheManager<K, V>
+		getCacheManager() {
+
+		return (PortalCacheManager<K, V>)getSingleVMPool().getCacheManager();
+	}
+
 	public static SingleVMPool getSingleVMPool() {
 		PortalRuntimePermission.checkGetBeanProperty(SingleVMPoolUtil.class);
 

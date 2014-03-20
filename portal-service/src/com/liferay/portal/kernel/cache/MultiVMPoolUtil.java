@@ -40,6 +40,12 @@ public class MultiVMPoolUtil {
 		return (PortalCache<K, V>)getMultiVMPool().getCache(name, blocking);
 	}
 
+	public static <K extends Serializable, V extends Serializable>
+		PortalCacheManager<K, V> getCacheManager() {
+
+		return (PortalCacheManager<K, V>)getMultiVMPool().getCacheManager();
+	}
+
 	public static MultiVMPool getMultiVMPool() {
 		PortalRuntimePermission.checkGetBeanProperty(MultiVMPoolUtil.class);
 

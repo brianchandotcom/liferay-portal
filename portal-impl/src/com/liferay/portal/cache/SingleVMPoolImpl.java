@@ -46,6 +46,11 @@ public class SingleVMPoolImpl implements SingleVMPool {
 	}
 
 	@Override
+	public PortalCacheManager<? extends Serializable, ?> getCacheManager() {
+		return _portalCacheManager;
+	}
+
+	@Override
 	public void removeCache(String name) {
 		_portalCacheManager.removeCache(name);
 	}

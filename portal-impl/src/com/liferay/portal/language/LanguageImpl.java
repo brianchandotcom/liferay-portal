@@ -822,8 +822,6 @@ public class LanguageImpl implements Language {
 			return LanguageResources.fixValue(value);
 		}
 
-		value = LanguageResources.getMessage(resourceBundle.getLocale(), key);
-
 		if (value == null) {
 			if ((key.length() > 0) &&
 				(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {

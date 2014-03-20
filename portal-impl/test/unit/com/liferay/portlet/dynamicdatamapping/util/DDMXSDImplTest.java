@@ -14,17 +14,14 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.LocalizationImpl;
+import com.liferay.portal.xml.SAXReaderImpl;
 
-import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -32,35 +29,33 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
 import org.springframework.mock.web.MockPageContext;
 
 /**
  * @author Pablo Carvalho
  */
-@ExecutionTestListeners(
-	listeners = {
-		EnvironmentExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
-public class DDMXSDImplTest {
+@PrepareForTest({LocalizationUtil.class, SAXReaderUtil.class})
+@RunWith(PowerMockRunner.class)
+public class DDMXSDImplTest extends PowerMockito {
+
 	@Before
 	public void setUp() {
-		_ddmXSDImpl = new DDMXSDImpl();
-		_mockPageContext = new MockPageContext();
+		setUpMocks();
 
-		_portletNamespace = "portletNamespace.";
-		_namespace = "namespace.";
-		_fieldsContextKey = _portletNamespace + _namespace + "fieldsContext";
+		_document = createSampleDocument();
 
-		createDocument();
+		_fieldsContextKey = _portletNamespace.concat(
+			_namespace).concat("fieldsContext");
 	}
 
 	@Test
 	public void testGetFieldsContext() throws Exception {
-		_ddmXSDImpl.getFieldsContext(
-				_mockPageContext, _portletNamespace, _namespace);
+		_ddmXSD.getFieldsContext(
+			_mockPageContext, _portletNamespace, _namespace);
 
 		Assert.assertNotNull(_mockPageContext.getAttribute(_fieldsContextKey));
 	}
@@ -69,12 +64,12 @@ public class DDMXSDImplTest {
 	public void testGetLocalizableFieldContext() throws Exception {
 		Element root = _document.getRootElement();
 
-		Element field = addTextElement(root, "Localizable", "Loc", true);
+		Element field = addTextElement(
+			root, "Localizable", "Localizable", true);
 
-		Locale locale = LocaleUtil.US;
-
-		Map<String, Object> fieldContext = _ddmXSDImpl.getFieldContext(
-			_mockPageContext, "portlet", "namespace", field, locale);
+		Map<String, Object> fieldContext = _ddmXSD.getFieldContext(
+			_mockPageContext, _portletNamespace, _namespace, field,
+			LocaleUtil.US);
 
 		Assert.assertFalse(fieldContext.containsKey("disabled"));
 	}
@@ -83,12 +78,12 @@ public class DDMXSDImplTest {
 	public void testGetTranslatingLocalizableFieldContext() throws Exception {
 		Element root = _document.getRootElement();
 
-		Element field = addTextElement(root, "Localizable", "Loc", true);
+		Element field = addTextElement(
+			root, "Localizable", "Localizable", true);
 
-		Locale locale = LocaleUtil.BRAZIL;
-
-		Map<String, Object> fieldContext = _ddmXSDImpl.getFieldContext(
-			_mockPageContext, "portlet", "namespace", field, locale);
+		Map<String, Object> fieldContext = _ddmXSD.getFieldContext(
+			_mockPageContext, _portletNamespace, _namespace, field,
+			LocaleUtil.BRAZIL);
 
 		Assert.assertFalse(fieldContext.containsKey("disabled"));
 	}
@@ -97,12 +92,12 @@ public class DDMXSDImplTest {
 	public void testGetTranslatingUnlocalizableFieldContext() throws Exception {
 		Element root = _document.getRootElement();
 
-		Element field = addTextElement(root, "Unlocalizable", "Unloc", false);
+		Element field = addTextElement(
+			root, "Unlocalizable", "Unlocalizable", false);
 
-		Locale locale = LocaleUtil.BRAZIL;
-
-		Map<String, Object> fieldContext = _ddmXSDImpl.getFieldContext(
-			_mockPageContext, "portlet", "namespace", field, locale);
+		Map<String, Object> fieldContext = _ddmXSD.getFieldContext(
+			_mockPageContext, _portletNamespace, _namespace, field,
+			LocaleUtil.BRAZIL);
 
 		Assert.assertEquals(
 			Boolean.TRUE.toString(), fieldContext.get("disabled"));
@@ -112,29 +107,30 @@ public class DDMXSDImplTest {
 	public void testGetUnlocalizableFieldContext() throws Exception {
 		Element root = _document.getRootElement();
 
-		Element field = addTextElement(root, "Unlocalizable", "Unloc", false);
+		Element field = addTextElement(
+			root, "Unlocalizable", "Unlocalizable", false);
 
-		Locale locale = LocaleUtil.US;
-
-		Map<String, Object> fieldContext = _ddmXSDImpl.getFieldContext(
-			_mockPageContext, "portlet", "namespace", field, locale);
+		Map<String, Object> fieldContext = _ddmXSD.getFieldContext(
+			_mockPageContext, _portletNamespace, _namespace, field,
+			LocaleUtil.US);
 
 		Assert.assertFalse(fieldContext.containsKey("disabled"));
 	}
 
 	protected Element addTextElement(
-			Element element, String name, String label, boolean localizable) {
+		Element element, String name, String label, boolean localizable) {
+
 		Element dynamicElement = element.addElement("dynamic-element");
 
 		dynamicElement.addAttribute("dataType", "string");
+		dynamicElement.addAttribute("localizable", String.valueOf(localizable));
 		dynamicElement.addAttribute("name", name);
 		dynamicElement.addAttribute("type", "text");
-		dynamicElement.addAttribute("localizable", String.valueOf(localizable));
 
 		Element metadataElement = dynamicElement.addElement("meta-data");
 
-		Locale locale = LocaleUtil.US;
-		metadataElement.addAttribute("locale", LocaleUtil.toLanguageId(locale));
+		metadataElement.addAttribute(
+			"locale", LocaleUtil.toLanguageId(LocaleUtil.US));
 
 		Element entryElement = metadataElement.addElement("entry");
 
@@ -144,22 +140,44 @@ public class DDMXSDImplTest {
 		return dynamicElement;
 	}
 
-	protected void createDocument() {
-		_document = SAXReaderUtil.createDocument();
+	protected Document createSampleDocument() {
+		Document document = SAXReaderUtil.createDocument();
 
-		Element rootElement = _document.addElement("root");
+		Element rootElement = document.addElement("root");
 
 		rootElement.addAttribute("available-locales", "en_US");
 		rootElement.addAttribute("default-locale", "en_US");
 
 		addTextElement(rootElement, "Unlocalizable", "Text 2", false);
+
+		return document;
 	}
 
-	private DDMXSDImpl _ddmXSDImpl;
+	protected void setUpMocks() {
+		spy(LocalizationUtil.class);
+
+		when(
+			LocalizationUtil.getLocalization()
+		).thenReturn(
+			_localization
+		);
+
+		spy(SAXReaderUtil.class);
+
+		when(
+			SAXReaderUtil.getSAXReader()
+		).thenReturn(
+			_saxReader
+		);
+	}
+
+	private DDMXSDImpl _ddmXSD = new DDMXSDImpl();
 	private Document _document;
 	private String _fieldsContextKey;
-	private MockPageContext _mockPageContext;
-	private String _namespace;
-	private String _portletNamespace;
+	private LocalizationImpl _localization = new LocalizationImpl();
+	private MockPageContext _mockPageContext = new MockPageContext();
+	private String _namespace = "_namespace_";
+	private String _portletNamespace = "_portletNamespace_";
+	private SAXReaderImpl _saxReader = new SAXReaderImpl();
 
 }

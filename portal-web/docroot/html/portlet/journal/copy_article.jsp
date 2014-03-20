@@ -45,14 +45,14 @@ double version = ParamUtil.getDouble(request, "version");
 	<liferay-ui:error exception="<%= DuplicateArticleIdException.class %>" message="please-enter-a-unique-id" />
 
 	<aui:fieldset>
-		<aui:field-wrapper label="id" name="oldArticleId">
-			<liferay-ui:input-resource id="oldArticleId" url="<%= oldArticleId %>" />
+		<aui:field-wrapper label="id" name="oldArticleIdDisplay">
+			<liferay-ui:input-resource id="oldArticleIdDisplay" url="<%= oldArticleId %>" />
 		</aui:field-wrapper>
 
-		<aui:field-wrapper label="new-id" name="newArticleId">
+		<aui:field-wrapper label="new-id" name="newArticleIdDisplay">
 			<c:choose>
 				<c:when test="<%= PropsValues.JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID %>">
-					<liferay-ui:input-resource id="newArticleId" url='<%= LanguageUtil.get(pageContext, "autogenerate-id") %>' />
+					<liferay-ui:input-resource id="newArticleIdDisplay" url='<%= LanguageUtil.get(pageContext, "autogenerate-id") %>' />
 
 					<aui:input name="newArticleId" type="hidden" />
 					<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />

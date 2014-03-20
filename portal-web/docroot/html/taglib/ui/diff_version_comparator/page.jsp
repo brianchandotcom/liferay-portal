@@ -14,22 +14,22 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/version_comparator/init.jsp" %>
+<%@ include file="/html/taglib/ui/diff_version_comparator/init.jsp" %>
 
 <%
-String diffHtmlResults = (String)request.getAttribute("liferay-ui:version-comparator:diffHtmlResults");
-PortletURL iteratorURL = (PortletURL)request.getAttribute("liferay-ui:version-comparator:iteratorURL");
-double nextVersion = (Double)request.getAttribute("liferay-ui:version-comparator:nextVersion");
-double previousVersion = (Double)request.getAttribute("liferay-ui:version-comparator:previousVersion");
-double sourceVersion = (Double)request.getAttribute("liferay-ui:version-comparator:sourceVersion");
-double targetVersion = (Double)request.getAttribute("liferay-ui:version-comparator:targetVersion");
-List<DiffVersion> diffVersions = (List<DiffVersion>)request.getAttribute("liferay-ui:version-comparator:versionsInfo");
+String diffHtmlResults = (String)request.getAttribute("liferay-ui:diff-version-comparator:diffHtmlResults");
+PortletURL iteratorURL = (PortletURL)request.getAttribute("liferay-ui:diff-version-comparator:iteratorURL");
+double nextVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:nextVersion");
+double previousVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:previousVersion");
+double sourceVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:sourceVersion");
+double targetVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:targetVersion");
+List<DiffVersion> diffVersions = (List<DiffVersion>)request.getAttribute("liferay-ui:diff-version-comparator:versionsInfo");
 
 String sourceVersionString = (previousVersion != 0) ? String.valueOf(sourceVersion) : String.valueOf(sourceVersion) + " (" + LanguageUtil.get(pageContext, "first-version") + ")";
 String targetVersionString = (nextVersion != 0) ? String.valueOf(targetVersion) : String.valueOf(targetVersion) + " (" + LanguageUtil.get(pageContext, "last-version") + ")";
 %>
 
-<div class="version-comparator">
+<div class="diff-version-comparator">
 	<c:choose>
 		<c:when test="<%= previousVersion != 0 %>">
 

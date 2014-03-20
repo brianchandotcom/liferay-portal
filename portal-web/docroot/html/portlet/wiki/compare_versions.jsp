@@ -47,7 +47,7 @@ Object[] returnValue = WikiUtil.getWikiPageVersionsInfo(nodeId, title, sourceVer
 	<portlet:param name="title" value="<%= title %>" />
 </liferay-portlet:renderURL>
 
-<liferay-ui:version-comparator
+<liferay-ui:diff-version-comparator
 	diffHtmlResults="<%= diffHtmlResults %>"
 	iteratorURL="<%= iteratorURL %>"
 	nextVersion="<%= (Double)returnValue[2] %>"

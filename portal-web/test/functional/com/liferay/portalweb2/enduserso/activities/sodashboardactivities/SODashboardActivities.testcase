@@ -51,7 +51,11 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOMicroblogs#gotoMicroblogsContentField" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryMention">
 			<var name="mentionUserEmailAddress" value="${userEmailAddress1}" />
@@ -65,7 +69,11 @@
 			<var name="microblogsEntryCharacterCountdown" value="${microblogsEntryCharacterCountdown1}" />
 		</execute>
 
-		<execute macro="SOMicroblogs#gotoMicroblogsContentField" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -111,6 +119,12 @@
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
 		</execute>
 
 		<execute macro="SOContactsCenter#disconnectFromConnection">
@@ -225,7 +239,11 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOMicroblogs#gotoMicroblogsContentField" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
 
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -233,7 +251,11 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 		</execute>
 
-		<execute macro="SOMicroblogs#gotoMicroblogsContentField" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -250,7 +272,11 @@
 
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
 
-		<execute macro="SOMicroblogs#gotoMicroblogsContentField" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
 
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${userName}" />
@@ -258,7 +284,11 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent3}" />
 		</execute>
 
-		<execute macro="SOMicroblogs#gotoMicroblogsContentField" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryHashtag">
 			<var name="microblogsEntryAuthorName" value="${userName}" />

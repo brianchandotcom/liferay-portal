@@ -24,6 +24,10 @@
 			<execute function="Click#makeVisibleClickAt" />
 		</case>
 
+		<case locator-key1="MICROBLOGS_ENTRY_EDIT_LINK">
+			<execute function="Click#makeVisibleClickAt" />
+		</case>
+
 		<case locator-key1="MICROBLOGS_ENTRY_CONTENT_TAG">
 			<execute function="Click#clickAtAndWait" />
 		</case>

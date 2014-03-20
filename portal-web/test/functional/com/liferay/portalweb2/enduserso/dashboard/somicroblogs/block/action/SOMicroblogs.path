@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>MICROBLOGS_CONTENT_COUNTDOWN</td>
-	<td>//span[@class='microblogs-countdown']</td>
+	<td>//span[contains(@class,'microblogs-countdown')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -116,7 +116,7 @@
 </tr>
 <tr>
 	<td>MICROBLOGS_ENTRY_REPOST_LINK</td>
-	<td>//span[@class='action repost']/a</td>
+	<td>//div[@class='microblogs-entry' and contains(.,'${key_microblogsEntryContent}')]//span[@class='action repost']/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -167,22 +167,27 @@
 </tr>
 <tr>
 	<td>MICROBLOGS_ENTRY_COMMENT_AUTHOR</td>
-	<td>xPath=(//div[@class='user-name']/span/a)[2]</td>
+	<td>//div[@class='microblogs-entry' and contains(.,'${key_microblogsEntryCommentContent}')]//div[@class='user-name']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MICROBLOGS_ENTRY_COMMENT_CONTENT</td>
-	<td>xPath=(//div[@class='content'])[2]</td>
+	<td>//div[@class='microblogs-entry' and contains(.,'${key_microblogsEntryCommentContent}')]//div[@class='content']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MICROBLOGS_ENTRY_COMMENT_CONTENT_TAG</td>
-	<td>xPath=(//div[@class='content']/span/a)[2]</td>
+	<td>//div[@class='microblogs-entry' and contains(.,'${key_microblogsEntryCommentContent}')]//div[@class='content']/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MICROBLOGS_ENTRY_COMMENT_DELETE</td>
+	<td>//div[@class='microblogs-entry' and contains(.,'${key_microblogsEntryCommentContent}')]//span[@class='action delete']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MICROBLOGS_ENTRY_COMMENT_DELETE_LINK</td>
-	<td>xPath=(//span[@class='action delete']/a)[2]</td>
+	<td>//div[@class='microblogs-entry' and contains(.,'${key_microblogsEntryCommentContent}')]//span[@class='action delete']/a</td>
 	<td></td>
 </tr>
 <tr>

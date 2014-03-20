@@ -991,7 +991,11 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOMicroblogs#gotoMicroblogsContentField" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
 
 		<execute macro="SOMicroblogs#addMicroblogsEntryMention">
 			<var name="mentionUserEmailAddress" value="${userEmailAddress}" />
@@ -1023,7 +1027,11 @@
 			<var name="microblogsEntryContent" value="${userName}" />
 		</execute>
 
-		<execute macro="SOMicroblogs#gotoMicroblogsContentField" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
 
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />

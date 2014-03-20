@@ -45,11 +45,11 @@ portletURL.setParameter("struts_action", "/blogs/view");
 	List results = null;
 
 	if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
-		Object[] searchContainerResults = BlogsUtil.getResultsByTagsAndCategories(searchContainer);
+		SearchContainerResults<AssetEntry> searchContainerResults = BlogsUtil.getSearchContainerResultsByTagsAndCategories(searchContainer);
 
-		searchContainer.setTotal((Integer) searchContainerResults[1]);
+		searchContainer.setTotal(searchContainerResults.getTotal());
 
-		results = (List<AssetEntry>)searchContainerResults[0];
+		results = searchContainerResults.getResults();
 	}
 	else {
 		int status = WorkflowConstants.STATUS_APPROVED;

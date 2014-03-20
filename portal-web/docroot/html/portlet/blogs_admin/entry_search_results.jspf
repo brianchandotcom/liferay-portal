@@ -16,11 +16,11 @@
 
 <%
 if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
-	Object[] searchContainerResults = BlogsUtil.getResultsByTagsAndCategories(searchContainer);
+	SearchContainerResults<AssetEntry> searchContainerResults = BlogsUtil.getSearchContainerResultsByTagsAndCategories(searchContainer);
 
-	searchContainer.setTotal((Integer)searchContainerResults[1]);
+	searchContainer.setTotal(searchContainerResults.getTotal());
 
-	List<AssetEntry> assetEntries = (List<AssetEntry>)searchContainerResults[0];
+	List<AssetEntry> assetEntries = searchContainerResults.getResults();
 
 	for (AssetEntry assetEntry : assetEntries) {
 		results.add(BlogsEntryLocalServiceUtil.getBlogsEntry(assetEntry.getClassPK()));

@@ -15,6 +15,7 @@
 package com.liferay.portlet.blogs.util;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.dao.search.SearchContainerResults;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -321,9 +322,10 @@ public class BlogsUtil {
 			preferences, companyId, PropsValues.BLOGS_EMAIL_FROM_NAME);
 	}
 
-	public static Object[] getResultsByTagsAndCategories(
-			SearchContainer searchContainer)
-		throws PortalException, SystemException {
+	public static SearchContainerResults<AssetEntry>
+		getSearchContainerResultsByTagsAndCategories(
+				SearchContainer searchContainer)
+			throws PortalException, SystemException {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(
 			BlogsEntry.class.getName(), searchContainer);
@@ -339,7 +341,7 @@ public class BlogsUtil {
 		List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(
 			assetEntryQuery);
 
-		return new Object[] {assetEntries, total};
+		return new SearchContainerResults(assetEntries, total);
 	}
 
 	public static String getUrlTitle(long entryId, String title) {

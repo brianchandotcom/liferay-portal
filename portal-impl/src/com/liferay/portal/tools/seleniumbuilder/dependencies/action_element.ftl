@@ -4,6 +4,10 @@
 	return
 </#if>
 
+<#assign x = action?last_index_of("#")>
+
+<#assign actionCommand = action?substring(x + 1)>
+
 <#if !action?contains("#is") && !action?ends_with("#confirm")>
 	<#if testCaseName??>
 		selenium
@@ -61,10 +65,6 @@
 
 	, ${variableContext});
 </#if>
-
-<#assign x = action?last_index_of("#")>
-
-<#assign actionCommand = action?substring(x + 1)>
 
 ${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actionCommand}(
 	<#assign functionName = seleniumBuilderFileUtil.getObjectName(actionCommand)>

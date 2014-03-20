@@ -1091,6 +1091,10 @@ public interface Portal {
 
 	public String getServletContextName();
 
+	public long[] getSharedContentSiteGroupIds(
+			long companyId, long groupId, long userId)
+		throws PortalException, SystemException;
+
 	public Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
 			HttpServletRequest request)
 		throws SystemException;

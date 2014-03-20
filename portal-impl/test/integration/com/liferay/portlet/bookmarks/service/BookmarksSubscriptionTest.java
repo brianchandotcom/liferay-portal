@@ -47,13 +47,13 @@ public class BookmarksSubscriptionTest extends BaseSubscriptionTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionModelType() {
+	public void testSubscriptionClassType() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionDefaultModelType() {
+	public void testSubscriptionDefaultClassType() {
 	}
 
 	@Override

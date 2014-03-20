@@ -70,8 +70,7 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected long addBaseModelWithModelType(
-		long containerId, long modelTypeId)
+	protected long addBaseModelWithClassType(long containerId, long classTypeId)
 		throws Exception {
 
 		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
@@ -84,16 +83,7 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected long addContainerModel(long containerModelId) throws Exception {
-		JournalFolder folder = JournalTestUtil.addFolder(
-			group.getGroupId(), containerModelId,
-			ServiceTestUtil.randomString());
-
-		return folder.getFolderId();
-	}
-
-	@Override
-	protected long addModelType() throws Exception {
+	protected long addClassType() throws Exception {
 		_ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), JournalArticle.class.getName());
 
@@ -104,17 +94,26 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
+	protected long addContainerModel(long containerModelId) throws Exception {
+		JournalFolder folder = JournalTestUtil.addFolder(
+			group.getGroupId(), containerModelId,
+			ServiceTestUtil.randomString());
+
+		return folder.getFolderId();
+	}
+
+	@Override
+	protected void addSubscriptionClassType(long typeId) throws Exception {
+		JournalArticleLocalServiceUtil.subscribeStructure(
+			group.getGroupId(), TestPropsValues.getUserId(), typeId);
+	}
+
+	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
 		JournalFolderLocalServiceUtil.subscribe(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
-	}
-
-	@Override
-	protected void addSubscriptionModelType(long typeId) throws Exception {
-		JournalArticleLocalServiceUtil.subscribeStructure(
-			group.getGroupId(), TestPropsValues.getUserId(), typeId);
 	}
 
 	@Override

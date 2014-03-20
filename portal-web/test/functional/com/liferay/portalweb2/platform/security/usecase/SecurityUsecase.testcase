@@ -105,4 +105,56 @@
 
 		<execute action="PGOpensocialgadget#assertTextEquals" locator-key1="PORTLET_TITLE" value1="To-Do List" />
 	</command>
+
+	<command name="ViewURLValidateNoXSS" priority="5">
+		<var name="maliciousURL1">
+			<![CDATA[
+				http://localhost:8080/c/portal/flash?title=abc</title><script%0d%0a>alert(3.1415926)</script%0d%0a><title>aaa
+			]]>
+		</var>
+
+		<var name="maliciousURL2">
+			<![CDATA[
+				http://localhost:8080/group/control_panel/manage?p_p_id=132&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_132_struts_action=%2Fplugins_admin%2Fedit_plugin&_132_pluginId=116&_132_pluginType=portlet&_132_title=Activities&_132_moduleId=%3Cscript%3Ealert(%22xss%22);%3C/script%3E
+			]]>
+		</var>
+
+		<var name="maliciousURL3">
+			<![CDATA[
+				http://localhost:8080/group/control_panel/manage?p_p_id=132&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_132_struts_action=%2Fplugins_admin%2Fedit_plugin&_132_pluginId=116&_132_pluginType=portlet&_132_title=Activities&_132_moduleId=%3Cscript%3Ealert(%22xss%22);%3C/script%3E&_2_backURL=%22%3E%3Cscript%3Ealert%28%27xss%27%29;%3C/script%3E
+			]]>
+		</var>
+
+		<var name="maliciousURL4">
+			<![CDATA[
+				http://localhost:8080/group/control_panel/manage?p_p_id=132&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_132_struts_action=%2Fplugins_admin%2Fedit_plugin&_132_pluginId=116&_132_pluginType=portlet&_132_title=Activities&_132_moduleId=%3Cscript%3Ealert(%22xss%22);%3C/script%3E&_2_backURL=alert%28%27xss%27%29
+			]]>
+		</var>
+
+		<var name="maliciousURL5">
+			<![CDATA[
+				http://localhost:8080/html/portal/progress_poller.jsp?ProgressId=a%3D1%3Balert(document.cookie)%3B%2F%2F
+			]]>
+		</var>
+
+		<execute action="Home#open" locator1="${maliciousURL1}" />
+		<execute action="Home#assertAlertNotPresent" />
+
+		<execute action="Home#open" locator1="${maliciousURL2}" />
+		<execute action="Home#assertAlertNotPresent" />
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#assertClick" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+
+		<execute action="Home#open" locator1="${maliciousURL3}" />
+		<execute action="Home#assertAlertNotPresent" />
+
+		<execute action="Home#open" locator1="${maliciousURL4}" />
+		<execute action="Home#assertAlertNotPresent" />
+
+		<execute action="Home#open" locator1="${maliciousURL5}" />
+		<execute action="Home#assertAlertNotPresent" />
+	</command>
 </definition>

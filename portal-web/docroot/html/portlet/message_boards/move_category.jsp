@@ -44,7 +44,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 	<aui:model-context bean="<%= category %>" model="<%= MBCategory.class %>" />
 
 	<aui:fieldset>
-		<aui:field-wrapper label="parent-category[message-board]">
+		<aui:field-wrapper label="parent-category[message-board]" name="parentCategoryName">
 
 			<%
 			String parentCategoryName = StringPool.BLANK;

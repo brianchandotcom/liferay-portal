@@ -73,7 +73,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 
 				</aui:select>
 
-				<aui:field-wrapper label="structure">
+				<aui:field-wrapper label="structure" name="structure">
 
 					<%
 					String ddmStructureName = StringPool.BLANK;

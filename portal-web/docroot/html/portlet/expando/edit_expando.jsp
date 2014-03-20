@@ -76,10 +76,10 @@ portletURL.setParameter("modelResource", modelResource);
 	<aui:fieldset>
 		<c:choose>
 			<c:when test="<%= column != null %>">
-				<aui:field-wrapper helpMessage="custom-field-key-help" label="key">
+				<aui:field-wrapper helpMessage="custom-field-key-help" label="key" name="customField">
 					<aui:input name="name" type="hidden" value="<%= column.getName() %>" />
 
-					<liferay-ui:input-resource url="<%= column.getName() %>" />
+					<liferay-ui:input-resource id="customField" url="<%= column.getName() %>" />
 				</aui:field-wrapper>
 			</c:when>
 			<c:otherwise>
@@ -89,10 +89,10 @@ portletURL.setParameter("modelResource", modelResource);
 
 		<c:choose>
 			<c:when test="<%= column != null %>">
-				<aui:field-wrapper label="type">
+				<aui:field-wrapper label="type" name="customFieldType">
 					<aui:input name="type" type="hidden" value="<%= type %>" />
 
-					<liferay-ui:input-resource url="<%= LanguageUtil.get(pageContext, ExpandoColumnConstants.getTypeLabel(type)) %>" />
+					<liferay-ui:input-resource id="customFieldType" url="<%= LanguageUtil.get(pageContext, ExpandoColumnConstants.getTypeLabel(type)) %>" />
 				</aui:field-wrapper>
 			</c:when>
 			<c:otherwise>

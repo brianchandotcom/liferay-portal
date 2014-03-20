@@ -313,7 +313,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		}
 		%>
 
-		<aui:field-wrapper label="new-folder">
+		<aui:field-wrapper label="new-folder" name="folderName">
 			<div class="input-append">
 				<liferay-ui:input-resource id="folderName" url="<%= folderName %>" />
 

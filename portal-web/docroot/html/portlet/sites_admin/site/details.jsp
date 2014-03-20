@@ -129,8 +129,8 @@ else if (group != null) {
 			<aui:input name="name" type="hidden" />
 		</c:when>
 		<c:when test="<%= (liveGroup != null) && liveGroup.isOrganization() %>">
-			<aui:field-wrapper helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" label="name">
-				<liferay-ui:input-resource url="<%= liveGroup.getDescriptiveName(locale) %>" />
+			<aui:field-wrapper helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" label="name" name="name">
+				<liferay-ui:input-resource id="name" url="<%= liveGroup.getDescriptiveName(locale) %>" />
 			</aui:field-wrapper>
 		</c:when>
 		<c:otherwise>
@@ -141,8 +141,8 @@ else if (group != null) {
 	<aui:input name="description" />
 
 	<c:if test="<%= liveGroup != null %>">
-		<aui:field-wrapper label="site-id">
-			<liferay-ui:input-resource url="<%= String.valueOf(liveGroup.getGroupId()) %>" />
+		<aui:field-wrapper label="site-id" name="siteId">
+			<liferay-ui:input-resource id="siteId" url="<%= String.valueOf(liveGroup.getGroupId()) %>" />
 		</aui:field-wrapper>
 	</c:if>
 

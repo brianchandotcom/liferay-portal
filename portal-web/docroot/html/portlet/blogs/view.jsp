@@ -45,19 +45,11 @@ portletURL.setParameter("struts_action", "/blogs/view");
 	List results = null;
 
 	if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
-		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(BlogsEntry.class.getName(), searchContainer);
+		SearchContainerResults<AssetEntry> searchContainerResults = BlogsUtil.getSearchContainerResultsByTagsAndCategories(searchContainer);
 
-		assetEntryQuery.setExcludeZeroViewCount(false);
-		assetEntryQuery.setVisible(Boolean.TRUE);
+		searchContainer.setTotal(searchContainerResults.getTotal());
 
-		total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-
-		searchContainer.setTotal(total);
-
-		assetEntryQuery.setEnd(searchContainer.getEnd());
-		assetEntryQuery.setStart(searchContainer.getStart());
-
-		results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+		results = searchContainerResults.getResults();
 	}
 	else {
 		int status = WorkflowConstants.STATUS_APPROVED;

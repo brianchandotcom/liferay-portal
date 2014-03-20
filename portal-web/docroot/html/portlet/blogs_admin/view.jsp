@@ -17,6 +17,9 @@
 <%@ include file="/html/portlet/blogs_admin/init.jsp" %>
 
 <%
+long assetCategoryId = ParamUtil.getLong(request, "categoryId");
+String assetTagName = ParamUtil.getString(request, "tag");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/blogs_admin/view");
@@ -35,6 +38,11 @@ portletURL.setParameter("struts_action", "/blogs_admin/view");
 	<aui:input name="deleteEntryIds" type="hidden" />
 
 	<liferay-util:include page="/html/portlet/blogs_admin/toolbar.jsp" />
+
+	<liferay-ui:categorization-filter
+		assetType="entries"
+		portletURL="<%= portletURL %>"
+	/>
 
 	<liferay-ui:search-container
 		rowChecker="<%= new RowChecker(renderResponse) %>"

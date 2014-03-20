@@ -54,6 +54,12 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testSubscriptionClassType() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testSubscriptionContainerModelWhenInRootContainerModel() {
 	}
 
@@ -66,13 +72,7 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionModelType() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionDefaultModelType() {
+	public void testSubscriptionDefaultClassType() {
 	}
 
 	@Ignore

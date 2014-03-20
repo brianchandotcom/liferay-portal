@@ -68,6 +68,18 @@ public abstract class BaseSubscriptionTestCase {
 	}
 
 	@Test
+	public void testSubscriptionClassType() throws Exception {
+		long classTypeId = addClassType();
+
+		addSubscriptionClassType(classTypeId);
+
+		addBaseModelWithClassType(
+			_PARENT_CONTAINER_MODEL_ID_DEFAULT, classTypeId);
+
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+	}
+
+	@Test
 	public void testSubscriptionContainerModelWhenInContainerModel()
 		throws Exception {
 
@@ -112,20 +124,8 @@ public abstract class BaseSubscriptionTestCase {
 	}
 
 	@Test
-	public void testSubscriptionModelType() throws Exception {
-		long modelTypeId = addModelType();
-
-		addSubscriptionModelType(modelTypeId);
-
-		addBaseModelWithModelType(
-			_PARENT_CONTAINER_MODEL_ID_DEFAULT, modelTypeId);
-
-		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
-	}
-
-	@Test
-	public void testSubscriptionDefaultModelType() throws Exception {
-		addSubscriptionModelType(_MODEL_TYPE_ID_DEFAULT);
+	public void testSubscriptionDefaultClassType() throws Exception {
+		addSubscriptionClassType(_CLASS_TYPE_ID_DEFAULT);
 
 		addBaseModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
@@ -176,9 +176,14 @@ public abstract class BaseSubscriptionTestCase {
 	protected abstract long addBaseModel(long containerModelId)
 		throws Exception;
 
-	protected long addBaseModelWithModelType(
-		long containerModelId, long modelTypeId)
+	protected long addBaseModelWithClassType(
+			long containerModelId, long classTypeId)
 		throws Exception {
+
+		return 0;
+	}
+
+	protected long addClassType() throws Exception {
 		return 0;
 	}
 
@@ -186,21 +191,16 @@ public abstract class BaseSubscriptionTestCase {
 		return 0;
 	};
 
-	protected long addModelType() throws Exception {
-		return 0;
+	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
+		return;
 	}
 
-	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
+	protected void addSubscriptionClassType(long baseModelId) throws Exception {
 		return;
 	}
 
 	protected abstract void addSubscriptionContainerModel(long containerModelId)
 		throws Exception;
-
-	protected void addSubscriptionModelType(long baseModelId)
-		throws Exception {
-		return;
-	}
 
 	protected long updateEntry(long baseModelId) throws Exception {
 		return 0;
@@ -208,7 +208,7 @@ public abstract class BaseSubscriptionTestCase {
 
 	protected Group group;
 
-	private static final long _MODEL_TYPE_ID_DEFAULT = 0;
+	private static final long _CLASS_TYPE_ID_DEFAULT = 0;
 
 	private static final long _PARENT_CONTAINER_MODEL_ID_DEFAULT = 0;
 

@@ -160,67 +160,6 @@
 		}
 	}
 
-	.history-navigation {
-		background: #EEE;
-		border-top: 1px solid #CCC;
-		margin: 15px 0 20px;
-		overflow: hidden;
-		padding: 5px;
-
-		.central-info {
-			float: left;
-			padding-left: 10px;
-			padding-right: 10px;
-			text-align: center;
-			width: 66%;
-
-			a.change-mode {
-				font-weight: bold;
-			}
-
-			span.change-mode {
-				color: #999;
-				font-weight: bold;
-			}
-		}
-
-		.central-title {
-			font-weight: bold;
-			padding-right: 20px;
-		}
-
-		.central-username {
-			font-weight: bold;
-		}
-
-		.next {
-			background-image: url(@theme_image_path@/arrows/paging_next.png);
-			background-position: 100% 0;
-			float: right;
-			padding-right: 15px;
-		}
-
-		.previous {
-			background-image: url(@theme_image_path@/arrows/paging_previous.png);
-			float: left;
-			padding-left: 15px;
-		}
-
-		a, span {
-			background: url() no-repeat;
-		}
-
-		span {
-			&.next {
-				background-position: 100% 100%;
-			}
-
-			&.previous {
-				background-position: 0 100%;
-			}
-		}
-	}
-
 	.node-current {
 		text-decoration: none;
 		font-weight: bold;

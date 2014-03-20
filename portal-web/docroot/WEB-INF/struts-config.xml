@@ -857,6 +857,11 @@
 
 		<!-- Journal -->
 
+		<action path="/journal/compare_versions" type="com.liferay.portlet.journal.action.CompareVersionsAction">
+			<forward name="portlet.journal.compare_versions" path="portlet.journal.compare_versions" />
+			<forward name="portlet.journal.error" path="portlet.journal.error" />
+		</action>
+
 		<action path="/journal/copy_article" type="com.liferay.portlet.journal.action.CopyArticleAction">
 			<forward name="portlet.journal.copy_article" path="portlet.journal.copy_article" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />

@@ -15,6 +15,8 @@
 package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.diff.DiffVersion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -84,6 +86,7 @@ import com.liferay.portlet.journal.model.JournalStructureConstants;
 import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.model.JournalTemplateAdapter;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleCreateDateComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleDisplayDateComparator;
@@ -936,6 +939,53 @@ public class JournalUtil {
 
 		return PortalUtil.getEmailFromName(
 			preferences, companyId, PropsValues.JOURNAL_EMAIL_FROM_NAME);
+	}
+
+	public static Object[] getJournalArticleVersionsInfo(
+			long groupId, String articleId, double sourceVersion,
+			double targetVersion)
+		throws SystemException {
+
+		double previousVersion = 0;
+		double nextVersion = 0;
+
+		List<JournalArticle> articles =
+			JournalArticleServiceUtil.getArticlesByArticleId(
+				groupId, articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new ArticleVersionComparator());
+		List<JournalArticle> intermediateArticles =
+			new ArrayList<JournalArticle>();
+
+		for (JournalArticle article : articles) {
+			if ((article.getVersion() < sourceVersion) &&
+				(article.getVersion() > previousVersion)) {
+
+				previousVersion = article.getVersion();
+			}
+
+			if ((article.getVersion() > targetVersion) &&
+				((article.getVersion() < nextVersion) || (nextVersion == 0))) {
+
+				nextVersion = article.getVersion();
+			}
+
+			if ((article.getVersion() > sourceVersion) &&
+				(article.getVersion() <= targetVersion)) {
+
+				intermediateArticles.add(article);
+			}
+		}
+
+		List<DiffVersion> diffVersions = new ArrayList<DiffVersion>();
+
+		for (JournalArticle article : intermediateArticles) {
+			DiffVersion diffVersion = new DiffVersion(
+				article.getUserId(), article.getVersion());
+
+			diffVersions.add(diffVersion);
+		}
+
+		return new Object[] {diffVersions, previousVersion, nextVersion};
 	}
 
 	public static String getJournalControlPanelLink(

@@ -111,6 +111,10 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 			<c:if test="<%= !results.isEmpty() %>">
 				<aui:button-row>
+					<c:if test="<%= results.size() > 1 %>">
+						<aui:button name="compare" value="compare-versions" />
+					</c:if>
+
 					<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
 						<aui:button disabled="<%= true %>" name="expire" onClick='<%= renderResponse.getNamespace() + "expireArticles();" %>' value="expire" />
 					</c:if>
@@ -174,9 +178,51 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 			<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 		</aui:form>
 
-		<aui:script>
+		<aui:script use="aui-base">
 			Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 			Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />expire', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
+			<portlet:renderURL var="compareVersionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/journal/compare_versions" />
+				<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+			</portlet:renderURL>
+
+			var compareButton = A.one('#<portlet:namespace />compare');
+
+			if (compareButton) {
+				compareButton.on(
+					'click',
+					function(event) {
+						event.preventDefault();
+
+						var uri = '<%= compareVersionURL %>';
+
+						var rowIds = A.all('input[name=<portlet:namespace />rowIds]:checked');
+
+						var rowIdsSize = rowIds.size();
+
+						if (rowIdsSize == 1) {
+							uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + rowIds.item(0).val(), uri);
+						}
+						else if (rowIdsSize == 2) {
+							uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + rowIds.item(1).val(), uri);
+							uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + rowIds.item(0).val(), uri);
+						}
+
+						Liferay.Util.openWindow(
+							{
+								dialog: {
+									width: 820
+								},
+								id: '<portlet:namespace />compareVersions',
+								title: '<%= UnicodeLanguageUtil.get(pageContext, "compare-versions") %>',
+								uri: uri
+							}
+						);
+					}
+				);
+			}
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
 				Liferay.provide(

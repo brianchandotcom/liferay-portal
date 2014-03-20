@@ -1036,7 +1036,8 @@ public class GroupServiceTest {
 		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 
 		CompanyTestUtil.resetCompanyLocales(
-			TestPropsValues.getCompanyId(), portalAvailableLocales);
+			TestPropsValues.getCompanyId(), portalAvailableLocales,
+			LocaleUtil.getDefault());
 
 		Group group = GroupTestUtil.addGroup(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID,
@@ -1057,7 +1058,8 @@ public class GroupServiceTest {
 		}
 		finally {
 			CompanyTestUtil.resetCompanyLocales(
-				TestPropsValues.getCompanyId(), availableLocales);
+				TestPropsValues.getCompanyId(), availableLocales,
+				LocaleUtil.getDefault());
 		}
 	}
 

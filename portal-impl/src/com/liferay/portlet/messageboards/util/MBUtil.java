@@ -569,7 +569,7 @@ public class MBUtil {
 	public static MBSettings getMBSettings(long groupId)
 		throws PortalException, SystemException {
 
-		Settings settings = SettingsFactoryUtil.getServiceGroupSettings(
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, MBConstants.SERVICE_NAME);
 
 		return new MBSettings(settings);

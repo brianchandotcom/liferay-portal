@@ -261,6 +261,7 @@ else {
 					<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />
 					<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 					<aui:input name="redirect" type="hidden" value="<%= renderURL.toString() %>" />
+					<aui:input name="actionType" type="hidden" value="publish" />
 					<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
 					<aui:input name="groupId" type="hidden" value="<%= stagingGroupId %>" />
 					<aui:input name="layoutSetBranchName" type="hidden" value="<%= layoutSetBranchName %>" />
@@ -370,6 +371,11 @@ else {
 
 							<c:if test="<%= !group.isCompany() %>">
 								<aui:fieldset cssClass="options-group" label="pages">
+
+									<%
+									request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
+									%>
+
 									<liferay-util:include page="/html/portlet/layouts_admin/export_configuration/select_pages.jsp">
 										<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
 										<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />

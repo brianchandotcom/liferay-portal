@@ -387,6 +387,16 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		return ddmStructurePersistence.filterFindByGroupId(groupIds);
 	}
 
+	/**
+	 * Returns all the structures matching class name ID and group that the user
+	 * has permission to view.
+	 *
+	 * @param  groupIds the primary key of the groups
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @return the structures in the groups that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public List<DDMStructure> getStructures(long[] groupIds, long classNameId)
 		throws SystemException {

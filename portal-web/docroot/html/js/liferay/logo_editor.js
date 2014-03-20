@@ -89,33 +89,14 @@ AUI.add(
 
 						var responseText = obj.responseText;
 
-						var exception;
-
-						if (responseText.indexOf('FileSizeException') > -1) {
-							exception = 'FileSizeException';
+						try {
+							responseText = A.JSON.parse(responseText);
 						}
-						else if (responseText.indexOf('TypeException') > -1) {
-							exception = 'TypeException';
+						catch (err) {
 						}
 
-						var message;
-
-						if (exception) {
-							message = '';
-
-							if (exception == 'FileSizeException') {
-								var maxFileSize = instance.formatStorage(instance.get('maxFileSize'));
-
-								message = Lang.sub(
-									Liferay.Language.get('upload-images-no-larger-than-x'),
-									[maxFileSize]
-								);
-							}
-							else {
-								message = Liferay.Language.get('please-enter-a-file-with-a-valid-file-type');
-							}
-
-							var messageNode = instance._getMessageNode(message, 'alert alert-error');
+						if (responseText.errorMessage) {
+							var messageNode = instance._getMessageNode(responseText.errorMessage, 'alert alert-error');
 
 							instance._formNode.prepend(messageNode);
 						}

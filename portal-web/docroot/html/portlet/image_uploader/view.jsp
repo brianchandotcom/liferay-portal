@@ -61,6 +61,10 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 			<liferay-ui:error exception="<%= NoSuchFileException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 			<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 
+			<liferay-ui:error exception="<%= FileExtensionException.class %>">
+				<liferay-ui:message arguments="<%= StringUtil.merge(PropsValues.DL_FILE_EXTENSIONS, StringPool.COMMA) %>" key="please-enter-a-file-with-a-valid-extension-x" translateArguments="<%= false %>" />
+			</liferay-ui:error>
+
 			<liferay-ui:error exception="<%= FileSizeException.class %>">
 				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 			</liferay-ui:error>
@@ -84,6 +88,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 			<portlet:actionURL var="addTempImageURL">
 				<portlet:param name="struts_action" value="/image_uploader/view" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" />
+				<portlet:param name="maxFileSize" value="<%= String.valueOf(maxFileSize) %>" />
 			</portlet:actionURL>
 
 			var imageUploadedInput = A.one('#<portlet:namespace />imageUploaded');

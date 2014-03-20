@@ -70,7 +70,17 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 			/>
 		</liferay-ui:search-container-column-text>
 
+		<liferay-portlet:renderURL varImpl="rowURL">
+			<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+			<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+			<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+		</liferay-portlet:renderURL>
+
 		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
 			name="name"
 			value="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>"
 		/>

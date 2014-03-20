@@ -832,7 +832,7 @@
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${entryTitle}" />
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_CONTENT" value1="${entryContent}" />
 	</command>
-	
+
 	<command name="viewCategoryPG">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_entryTitle" value="${entryTitle}" />

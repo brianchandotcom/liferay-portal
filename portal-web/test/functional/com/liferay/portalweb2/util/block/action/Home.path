@@ -151,7 +151,7 @@
 <!--SCOPE_SELECTOR_MENULIST-->
 <tr>
 	<td>SCOPE_SELECTOR_MENULIST_ITEM</td>
-	<td>//ul[@aria-labelledby='_145_controlPanelSiteSelector']/li/a[contains(.,'${key_siteScopeName}')]</td>
+	<td>//ul[contains(@aria-labelledby,'controlPanelSiteSelector')]/li/a[contains(.,'${key_siteScopeName}')]</td>
 	<td></td>
 </tr>
 <tr>

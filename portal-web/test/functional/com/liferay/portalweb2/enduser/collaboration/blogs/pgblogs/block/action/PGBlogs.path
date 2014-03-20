@@ -99,6 +99,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORIZATION_FILTER_TITLE</td>
+	<td>//h2[contains(@class,'taglib-categorization-filter') and contains (.,'${key_vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_FILTER_TITLE</td>
+	<td>//h2[contains(@class,'taglib-categorization-filter') and contains (.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -268,6 +278,31 @@
 <tr>
 	<td>ENTRY_RECYCLE_BIN_3</td>
 	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_COMMENTS</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span/a[contains(.,'Comments')]</td>
+	<td>Vocabulary 1</td>
+</tr>
+<tr>
+	<td>ENTRY_FLAG</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span/a[contains(.,'Flag')]</td>
+	<td>Vocabulary 1</td>
+</tr>
+<tr>
+	<td>ENTRY_TAG</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span/a[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_VOCABULARY_CATEGORIZATION</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span[contains(.,'${key_vocabularyName}:') and contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_VOCABULARY_CATEGORIZATION_LINK</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span[contains(.,'${key_vocabularyName}:') and contains(.,'${key_categoryName}')]/a</td>
 	<td></td>
 </tr>
 <tr>

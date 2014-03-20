@@ -1,5 +1,7 @@
 <definition>
 	<command name="viewBlogsEntryRecentBlogs">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
 		<execute action="SOBlogs#assertTextEquals" locator-key1="RECENT_BLOGS_ENTRY_TITLE" value1="${entryTitle}" />
 
 		<if>
@@ -55,8 +57,27 @@
 		</if>
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="YOUR_RATING" value1="Your Rating" />
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="PREVIOUS" value1="Previous" />
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="NEXT" value1="Next" />
+
+		<if>
+			<condition action="PGBlogsEntry#isElementPresent" locator-key1="PREVIOUS" />
+			<then>
+				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="PREVIOUS" value1="Previous" />
+			</then>
+			<else>
+				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="PREVIOUS_LINK" value1="Previous" />
+			</else>
+		</if>
+
+		<if>
+			<condition action="PGBlogsEntry#isElementPresent" locator-key1="NEXT" />
+			<then>
+				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="NEXT" value1="Next" />
+			</then>
+			<else>
+				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="NEXT_LINK" value1="Next" />
+			</else>
+		</if>
+
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS" value1="Comments" />
 	</command>
 </definition>

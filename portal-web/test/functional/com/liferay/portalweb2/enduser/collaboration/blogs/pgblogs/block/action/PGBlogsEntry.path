@@ -197,22 +197,22 @@
 </tr>
 <tr>
 	<td>PREVIOUS</td>
-	<td>//div[@class='entry-navigation' and contains(.,'Previous')]/span</td>
+	<td>//div[@class='entry-navigation']/span[contains(.,'Previous')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIOUS_LINK</td>
-	<td>//div[@class='entry-navigation' and contains(.,'Previous')]/a</td>
+	<td>//div[@class='entry-navigation']/a[contains(.,'Previous')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEXT</td>
-	<td>//div[@class='entry-navigation' and contains(.,'Next')]/span[2]</td>
+	<td>//div[@class='entry-navigation']/span[contains(.,'Next')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEXT_LINK</td>
-	<td>//div[@class='entry-navigation' and contains(.,'Next')]/a[2]</td>
+	<td>//div[@class='entry-navigation']/a[contains(.,'Next')]</td>
 	<td></td>
 </tr>
 <tr>

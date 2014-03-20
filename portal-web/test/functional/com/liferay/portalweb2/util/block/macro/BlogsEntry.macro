@@ -86,6 +86,31 @@
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CATEGORY" value1="${categoryName}" />
 	</command>
 
+	<command name="addCategoryPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogsAdd#assertTextEquals" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="PGBlogsAdd#assertElementPresent" locator-key1="CONTENT_FIELD" />
+
+		<if>
+			<condition action="PGBlogsAdd#isElementNotPresent" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />
+			<then>
+				<execute action="PGBlogsAdd#assertClick" locator-key1="CATEGORIZATION_TOGGLE" value1="Categorization" />
+				<execute action="PGBlogsAdd#assertElementPresent" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />
+			</then>
+		</if>
+
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="PGBlogsAdd#assertClick" locator-key1="CATEGORIZATION_SELECT_BUTTON" value1="Select" />
+		<execute action="PGBlogsAdd#assertElementPresent" locator-key1="SELECT_CATEGORIES_CATEGORY" />
+		<execute action="PGBlogsAdd#assertClick" locator-key1="SELECT_CATEGORIES_CATEGORY" value1="${categoryName}" />
+		<execute action="PGBlogsAdd#assertElementPresent" locator-key1="SELECT_CATEGORIES_CATEGORY_CHECKED" />
+		<execute action="PGBlogsAdd#click" locator-key1="SELECT_CATEGORIES_CLOSE_BUTTON" />
+		<execute action="PGBlogsAdd#assertTextEquals" locator-key1="CATEGORIZATION_CATEGORY" value1="${categoryName}" />
+	</command>
+
 	<command name="addCP">
 		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
 
@@ -187,6 +212,28 @@
 
 		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+
+		<if>
+			<equals arg1="${entryAddCategory}" arg2="true" />
+			<then>
+				<execute macro="BlogsEntry#addCategoryPG">
+					<var name="categoryName" value="${categoryName}" />
+					<var name="entryTitle" value="${entryTitle}" />
+					<var name="vocabularyName" value="${vocabularyName}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${entryAddTag}" arg2="true" />
+			<then>
+				<execute macro="BlogsEntry#addTagPG">
+					<var name="entryTitle" value="${entryTitle}" />
+					<var name="tagName" value="${tagName}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<if>
@@ -223,6 +270,27 @@
 			<else>
 				<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
+		</if>
+
+		<if>
+			<equals arg1="${entryAddCategory}" arg2="true" />
+			<then>
+				<execute macro="BlogsEntry#viewCategoryPG">
+					<var name="categoryName" value="${categoryName}" />
+					<var name="entryTitle" value="${entryTitle}" />
+					<var name="vocabularyName" value="${vocabularyName}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${entryAddTag}" arg2="true" />
+			<then>
+				<execute macro="BlogsEntry#viewTagPG">
+					<var name="entryTitle" value="${entryTitle}" />
+					<var name="tagName" value="${tagName}" />
+				</execute>
+			</then>
 		</if>
 	</command>
 
@@ -322,6 +390,27 @@
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TAG" value1="${tagName}" />
+	</command>
+
+	<command name="addTagPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogsAdd#assertTextEquals" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="PGBlogsAdd#assertElementPresent" locator-key1="CONTENT_FIELD" />
+
+		<if>
+			<condition action="PGBlogsAdd#isElementNotPresent" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />
+			<then>
+				<execute action="PGBlogsAdd#assertClick" locator-key1="CATEGORIZATION_TOGGLE" value1="Categorization" />
+				<execute action="PGBlogsAdd#assertElementPresent" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />
+			</then>
+		</if>
+
+		<var name="key_tagName" value="${tagName}" />
+
+		<execute action="PGBlogsAdd#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+		<execute action="PGBlogsAdd#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+		<execute action="PGBlogsAdd#assertElementPresent" locator-key1="CATEGORIZATION_TAG" value1="${tagName}" />
 	</command>
 
 	<command name="addWithTrackbackURLPG">
@@ -744,6 +833,17 @@
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_CONTENT" value1="${entryContent}" />
 	</command>
 
+	<command name="viewCategoryPG">
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_VOCABULARY_CATEGORIZATION" value1="${vocabularyName}: ${categoryName}" />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_VOCABULARY_CATEGORIZATION_LINK" value1="${categoryName}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="CATEGORIZATION_FILTER_TITLE" value1="Entries with ${vocabularyName} ${categoryName} ." />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+	</command>
+
 	<command name="viewCP">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -1039,6 +1139,17 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SCHEDULED_ENTRY_STATUS" value1="Scheduled" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SCHEDULED_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SCHEDULED_ENTRY_CONTENT" value1="${entryContent}" />
+	</command>
+
+	<command name="viewTagPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+		<var name="key_tagName" value="${tagName?lowercase()}" />
+		<var name="tagName" value="${tagName?lowercase()}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TAG" value1="${tagName}" />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TAG" value1="${tagName}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="TAG_FILTER_TITLE" value1="Entries with tag ${tagName} ." />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 	</command>
 
 	<command name="viewViewCountCP">

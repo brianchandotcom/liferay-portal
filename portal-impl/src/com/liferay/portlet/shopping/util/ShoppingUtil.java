@@ -992,7 +992,7 @@ public class ShoppingUtil {
 	public static ShoppingSettings getShoppingSettings(long groupId)
 		throws PortalException, SystemException {
 
-		Settings settings = SettingsFactoryUtil.getServiceGroupSettings(
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
 			groupId, ShoppingConstants.SERVICE_NAME);
 
 		return new ShoppingSettings(settings);

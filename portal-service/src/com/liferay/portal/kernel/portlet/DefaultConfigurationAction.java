@@ -159,11 +159,11 @@ public class DefaultConfigurationAction
 				actionRequest, "serviceName");
 
 			if (settingsScope.equals("company")) {
-				settings = SettingsFactoryUtil.getServiceCompanySettings(
+				settings = SettingsFactoryUtil.getCompanyServiceSettings(
 					themeDisplay.getCompanyId(), serviceName);
 			}
 			else if (settingsScope.equals("group")) {
-				settings = SettingsFactoryUtil.getServiceGroupSettings(
+				settings = SettingsFactoryUtil.getGroupServiceSettings(
 					themeDisplay.getSiteGroupId(), serviceName);
 			}
 			else if (settingsScope.equals("portletInstance")) {

@@ -42,6 +42,10 @@
 		}
 	}
 
+	.rating-element {
+		padding-right: 4px;
+	}
+
 	.rating-input-container .rating-input {
 		margin-left: 1px;
 	}

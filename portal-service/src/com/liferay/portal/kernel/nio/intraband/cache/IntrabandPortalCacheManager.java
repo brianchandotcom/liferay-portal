@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.nio.intraband.cache;
 
+import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.io.Serializer;
@@ -26,7 +27,9 @@ import java.io.Serializable;
 
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -60,17 +63,6 @@ public class IntrabandPortalCacheManager
 	@Override
 	public void destroy() {
 		_portalCaches.clear();
-
-		Serializer serializer = new Serializer();
-
-		serializer.writeInt(PortalCacheActionType.DESTROY.ordinal());
-
-		SystemDataType systemDataType = SystemDataType.PORTAL_CACHE;
-
-		_intraband.sendDatagram(
-			_registrationReference,
-			Datagram.createRequestDatagram(
-				systemDataType.getValue(), serializer.toByteBuffer()));
 	}
 
 	@Override
@@ -93,6 +85,11 @@ public class IntrabandPortalCacheManager
 	}
 
 	@Override
+	public Set<CacheManagerListener> getCacheManagerListeners() {
+		return Collections.emptySet();
+	}
+
+	@Override
 	public void reconfigureCaches(URL configurationURL) {
 		Serializer serializer = new Serializer();
 
@@ -108,20 +105,22 @@ public class IntrabandPortalCacheManager
 	}
 
 	@Override
+	public boolean registerCacheManagerListener(
+		CacheManagerListener cacheManagerListener) {
+
+		return false;
+	}
+
+	@Override
 	public void removeCache(String name) {
 		_portalCaches.remove(name);
+	}
 
-		Serializer serializer = new Serializer();
+	@Override
+	public boolean unregisterCacheManagerListener(
+		CacheManagerListener cacheManagerListener) {
 
-		serializer.writeInt(PortalCacheActionType.REMOVE_CACHE.ordinal());
-		serializer.writeString(name);
-
-		SystemDataType systemDataType = SystemDataType.PORTAL_CACHE;
-
-		_intraband.sendDatagram(
-			_registrationReference,
-			Datagram.createRequestDatagram(
-				systemDataType.getValue(), serializer.toByteBuffer()));
+		return false;
 	}
 
 	private final Intraband _intraband;

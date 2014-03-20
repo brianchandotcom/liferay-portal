@@ -48,6 +48,13 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	}
 
 	@Override
+	public PortalCacheManager<? extends Serializable, ? extends Serializable>
+		getCacheManager() {
+
+		return _portalCacheManager;
+	}
+
+	@Override
 	public void removeCache(String name) {
 		_portalCacheManager.removeCache(name);
 	}

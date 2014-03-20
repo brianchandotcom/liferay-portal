@@ -14,25 +14,17 @@
 
 package com.liferay.portal.kernel.cache;
 
-import java.io.Serializable;
-
 /**
- * @author Brian Wing Shun Chan
- * @author Michael Young
+ * @author Shuyang Zhou
  */
-public interface MultiVMPool {
+public interface CacheManagerListener {
 
-	public void clear();
+	public void dispose() throws PortalCacheException;
 
-	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
-		String name);
+	public void init() throws PortalCacheException;
 
-	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
-		String name, boolean blocking);
+	public void notifyCacheAdded(String name);
 
-	public PortalCacheManager<? extends Serializable, ? extends Serializable>
-		getCacheManager();
-
-	public void removeCache(String name);
+	public void notifyCacheRemoved(String name);
 
 }

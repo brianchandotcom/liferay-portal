@@ -27,6 +27,7 @@ import java.lang.reflect.Field;
 
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +50,23 @@ public class IntrabandPortalCacheManagerTest {
 			}
 
 		};
+
+	@Test
+	public void testCacheManagerListeners() {
+		IntrabandPortalCacheManager<String, String>
+			intrabandPortalCacheManager =
+				new IntrabandPortalCacheManager<String, String>(
+					_mockRegistrationReference);
+
+		Assert.assertSame(
+			Collections.emptySet(),
+			intrabandPortalCacheManager.getCacheManagerListeners());
+
+		Assert.assertFalse(
+			intrabandPortalCacheManager.registerCacheManagerListener(null));
+		Assert.assertFalse(
+			intrabandPortalCacheManager.unregisterCacheManagerListener(null));
+	}
 
 	@Test
 	public void testConstructor() throws Exception {
@@ -85,18 +103,6 @@ public class IntrabandPortalCacheManagerTest {
 		intrabandPortalCacheManager.destroy();
 
 		Assert.assertTrue(portalCaches.isEmpty());
-
-		Datagram datagram = _mockIntraband.getDatagram();
-
-		Assert.assertNotNull(datagram);
-		Assert.assertEquals(
-			SystemDataType.PORTAL_CACHE.getValue(), datagram.getType());
-
-		Deserializer deserializer = new Deserializer(
-			datagram.getDataByteBuffer());
-
-		Assert.assertEquals(
-			PortalCacheActionType.DESTROY.ordinal(), deserializer.readInt());
 	}
 
 	@Test
@@ -199,6 +205,11 @@ public class IntrabandPortalCacheManagerTest {
 		Assert.assertEquals(1, portalCaches.size());
 		Assert.assertSame(portalCache2, portalCaches.get(portalCacheName2));
 
+		intrabandPortalCacheManager.clearAll();
+
+		Assert.assertEquals(1, portalCaches.size());
+		Assert.assertSame(portalCache2, portalCaches.get(portalCacheName2));
+
 		Datagram datagram = _mockIntraband.getDatagram();
 
 		Assert.assertNotNull(datagram);
@@ -207,24 +218,6 @@ public class IntrabandPortalCacheManagerTest {
 
 		Deserializer deserializer = new Deserializer(
 			datagram.getDataByteBuffer());
-
-		Assert.assertEquals(
-			PortalCacheActionType.REMOVE_CACHE.ordinal(),
-			deserializer.readInt());
-		Assert.assertEquals(portalCacheName1, deserializer.readString());
-
-		intrabandPortalCacheManager.clearAll();
-
-		Assert.assertEquals(1, portalCaches.size());
-		Assert.assertSame(portalCache2, portalCaches.get(portalCacheName2));
-
-		datagram = _mockIntraband.getDatagram();
-
-		Assert.assertNotNull(datagram);
-		Assert.assertEquals(
-			SystemDataType.PORTAL_CACHE.getValue(), datagram.getType());
-
-		deserializer = new Deserializer(datagram.getDataByteBuffer());
 
 		Assert.assertEquals(
 			PortalCacheActionType.CLEAR_ALL.ordinal(), deserializer.readInt());

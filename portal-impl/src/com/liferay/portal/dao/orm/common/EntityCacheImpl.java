@@ -15,10 +15,12 @@
 package com.liferay.portal.dao.orm.common;
 
 import com.liferay.portal.cache.ehcache.MVCCEhcachePortalCacheFactory;
+import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -51,7 +53,8 @@ import org.apache.commons.collections.map.LRUMap;
  * @author Shuyang Zhou
  */
 @DoPrivileged
-public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
+public class EntityCacheImpl
+	implements CacheManagerListener, CacheRegistryItem, EntityCache {
 
 	public static final String CACHE_NAME = EntityCache.class.getName();
 
@@ -84,6 +87,11 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		if (_localCacheAvailable) {
 			_localCache.remove();
 		}
+	}
+
+	@Override
+	public void dispose() {
+		_portalCaches.clear();
 	}
 
 	@Override
@@ -140,6 +148,10 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		}
 
 		return _toEntityModel(result);
+	}
+
+	@Override
+	public void init() {
 	}
 
 	@Override
@@ -231,6 +243,15 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 	}
 
 	@Override
+	public void notifyCacheAdded(String name) {
+	}
+
+	@Override
+	public void notifyCacheRemoved(String name) {
+		_portalCaches.remove(name);
+	}
+
+	@Override
 	public void putResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
 		Serializable result) {
@@ -312,6 +333,11 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 
 	public void setMultiVMPool(MultiVMPool multiVMPool) {
 		_multiVMPool = multiVMPool;
+
+		PortalCacheManager<? extends Serializable, ? extends Serializable>
+			portalCacheManager = _multiVMPool.getCacheManager();
+
+		portalCacheManager.registerCacheManagerListener(this);
 	}
 
 	private Serializable _encodeCacheKey(Serializable primaryKey) {

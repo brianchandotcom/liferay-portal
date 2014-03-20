@@ -388,12 +388,6 @@
 		</while>
 	</command>
 
-	<command name="viewNoPG">
-		<var name="key_pageName" value="${pageName}" />
-
-		<execute action="Home#assertElementNotPresent" locator-key1="PAGE" value1="${pageName}" />
-	</command>
-		
 	<command name="viewCustomLogoPG">
 		<execute action="Home#assertElementPresent" locator-key1="CUSTOM_LOGO" />
 		<execute action="Home#assertElementNotPresent" locator-key1="DEFAULT_LOGO" />
@@ -402,6 +396,12 @@
 	<command name="viewDefaultLogoPG">
 		<execute action="Home#assertElementPresent" locator-key1="DEFAULT_LOGO" />
 		<execute action="Home#assertElementNotPresent" locator-key1="CUSTOM_LOGO" />
+	</command>
+
+	<command name="viewNoPG">
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="Home#assertElementNotPresent" locator-key1="PAGE" value1="${pageName}" />
 	</command>
 
 	<command name="viewPageLayoutColumn">

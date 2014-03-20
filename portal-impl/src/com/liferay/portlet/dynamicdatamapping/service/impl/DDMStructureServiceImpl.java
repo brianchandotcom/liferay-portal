@@ -388,13 +388,14 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the structures matching class name ID and group that the user
-	 * has permission to view.
+	 * Returns all the structures matching the groups and class name ID that the
+	 * user has permission to view.
 	 *
-	 * @param  groupIds the primary key of the groups
+	 * @param  groupIds the primary keys of the groups
 	 * @param  classNameId the primary key of the class name for the structure's
 	 *         related model
-	 * @return the structures in the groups that the user has permission to view
+	 * @return the structures matching the groups and class name ID that the
+	 *         user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override

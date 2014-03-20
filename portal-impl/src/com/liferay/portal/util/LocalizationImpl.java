@@ -89,7 +89,7 @@ public class LocalizationImpl implements Localization {
 	@Override
 	public String[] getAvailableLanguageIds(Document document) {
 		String attributeValue = _getRootAttributeValue(
-				document, _AVAILABLE_LOCALES, StringPool.BLANK);
+			document, _AVAILABLE_LOCALES, StringPool.BLANK);
 
 		return StringUtil.split(attributeValue);
 	}
@@ -147,7 +147,7 @@ public class LocalizationImpl implements Localization {
 	@Override
 	public String getDefaultLanguageId(Document document) {
 		String defaultLanguageId = LocaleUtil.toLanguageId(
-				LocaleUtil.getDefault());
+			LocaleUtil.getDefault());
 
 		return _getRootAttributeValue(
 			document, _DEFAULT_LOCALE, defaultLanguageId);

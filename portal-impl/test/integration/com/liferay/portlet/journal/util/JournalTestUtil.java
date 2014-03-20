@@ -112,7 +112,7 @@ public class JournalTestUtil {
 			contentMap, LocaleUtil.toLanguageId(defaultLocale));
 
 		String xsd = DDMStructureTestUtil.getSampleStructureXSD(
-			ServiceTestUtil.randomString(), _locales, defaultLocale);
+			_locales, defaultLocale);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			groupId, JournalArticle.class.getName(), xsd);

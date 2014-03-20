@@ -90,6 +90,14 @@ AUI.add(
 						return fnId;
 					},
 
+					resetInterval: function() {
+						var instance = this;
+
+						instance._stopTimer();
+
+						instance._startTimer();
+					},
+
 					unregisterInterval: function(fnId) {
 						var instance = this;
 

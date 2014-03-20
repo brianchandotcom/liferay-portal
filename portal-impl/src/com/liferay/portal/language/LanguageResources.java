@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -68,6 +69,28 @@ public class LanguageResources {
 
 			languageMap.put(key, value);
 		}
+	}
+
+	public static ResourceBundle getBundle(final Locale locale) {
+		final Map<String, String> languageMap = _languageMaps.get(locale);
+
+		return new ResourceBundle() {
+
+			@Override
+			protected Object handleGetObject(String key) {
+				return getMessage(locale, key);
+			}
+
+			@Override
+			public Enumeration<String> getKeys() {
+				return Collections.enumeration(languageMap.keySet());
+			}
+
+			@Override
+			protected Set<String> handleKeySet() {
+				return languageMap.keySet();
+			}
+		};
 	}
 
 	public static Set<String> getKeys(Locale locale) {

@@ -28,6 +28,8 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletPreferences;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -249,22 +251,21 @@ public abstract class BaseSubscriptionTestCase {
 	protected void setAddBaseModelSubscriptionBodyPreferences()
 		throws Exception {
 
-		javax.portlet.PortletPreferences jxPortletPreferences =
+		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
 				layout, getPortletId());
 
 		LocalizationUtil.setPreferencesValue(
-			jxPortletPreferences, getSubscriptionBodyPreferenceName(),
+			portletPreferences, getSubscriptionBodyPreferenceName(),
 			LocaleUtil.toLanguageId(LocaleUtil.GERMANY), _GERMAN_BODY);
 
 		LocalizationUtil.setPreferencesValue(
-			jxPortletPreferences, getSubscriptionBodyPreferenceName(),
+			portletPreferences, getSubscriptionBodyPreferenceName(),
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), _SPANISH_BODY);
 
 		PortletPreferencesLocalServiceUtil.updatePreferences(
 			group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,
-			PortletKeys.PREFS_PLID_SHARED, getPortletId(),
-			jxPortletPreferences);
+			PortletKeys.PREFS_PLID_SHARED, getPortletId(), portletPreferences);
 	}
 
 	protected long updateEntry(long baseModelId) throws Exception {

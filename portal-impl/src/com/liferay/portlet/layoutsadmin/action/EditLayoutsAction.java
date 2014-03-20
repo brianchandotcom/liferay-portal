@@ -260,7 +260,9 @@ public class EditLayoutsAction extends PortletAction {
 				updateLayoutRevision(actionRequest, themeDisplay);
 			}
 
-			MultiSessionMessages.add(actionRequest, "requestProcessed");
+			MultiSessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) + "requestProcessed");
 
 			sendRedirect(
 				portletConfig, actionRequest, actionResponse, redirect,

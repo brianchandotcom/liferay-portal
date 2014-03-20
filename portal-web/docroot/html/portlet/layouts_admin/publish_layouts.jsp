@@ -27,6 +27,38 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
 
 String publishConfigurationButtons = ParamUtil.getString(request, "publishConfigurationButtons", "custom");
 
+long exportImportConfigurationId = 0;
+
+ExportImportConfiguration exportImportConfiguration = null;
+Map<String, Serializable> exportImportConfigurationSettingsMap = Collections.emptyMap();
+Map<String, String[]> parameterMap = Collections.emptyMap();
+Map<Long, Boolean> layoutIdMap = Collections.emptyMap();
+
+if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId")) {
+	exportImportConfigurationId = (Long)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId");
+
+	if (exportImportConfigurationId > 0) {
+		exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
+	}
+
+	exportImportConfigurationSettingsMap = (Map<String, Serializable>)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "settingsMap");
+
+	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
+	layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
+}
+else {
+	exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
+
+	if (exportImportConfigurationId > 0) {
+		exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
+
+		exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
+
+		parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
+		layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
+	}
+}
+
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
@@ -229,6 +261,7 @@ else {
 					<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />
 					<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 					<aui:input name="redirect" type="hidden" value="<%= renderURL.toString() %>" />
+					<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
 					<aui:input name="groupId" type="hidden" value="<%= stagingGroupId %>" />
 					<aui:input name="layoutSetBranchName" type="hidden" value="<%= layoutSetBranchName %>" />
 					<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />
@@ -282,6 +315,8 @@ else {
 					</liferay-ui:error>
 
 					<c:if test="<%= !cmd.equals(Constants.PUBLISH_TO_LIVE) && !cmd.equals(Constants.PUBLISH_TO_REMOTE) %>">
+						<aui:model-context bean="<%= exportImportConfiguration %>" model="<%= ExportImportConfiguration.class %>" />
+
 						<aui:fieldset cssClass="options-group" label='<%= cmd.equals(Constants.ADD) ? "new-publish-template" : "edit-template" %>'>
 							<aui:input label="name" name="name" showRequiredLabel="<%= false %>">
 								<aui:validator name="required" />

@@ -110,8 +110,8 @@ if (feed != null) {
 				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<aui:field-wrapper label="id" name="feedId">
-					<liferay-ui:input-resource id="feedId" url="<%= feedId %>" />
+				<aui:field-wrapper label="id" name="feedIdDisplay">
+					<liferay-ui:input-resource id="feedIdDisplay" url="<%= feedId %>" />
 				</aui:field-wrapper>
 			</c:otherwise>
 		</c:choose>

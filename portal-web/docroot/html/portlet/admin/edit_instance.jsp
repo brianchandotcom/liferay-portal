@@ -57,8 +57,8 @@ catch (Exception e) {
 	<aui:fieldset>
 		<c:choose>
 			<c:when test="<%= selCompany != null %>">
-				<aui:field-wrapper label="id" name="companyId">
-					<liferay-ui:input-resource id="companyId" url="<%= String.valueOf(companyId) %>" />
+				<aui:field-wrapper label="id" name="companyIdDisplay">
+					<liferay-ui:input-resource id="companyIdDisplay" url="<%= String.valueOf(companyId) %>" />
 				</aui:field-wrapper>
 
 				<aui:field-wrapper label="web-id" name="webId">

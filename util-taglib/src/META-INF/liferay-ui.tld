@@ -860,6 +860,46 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>diff-version-comparator</name>
+		<tag-class>com.liferay.taglib.ui.DiffVersionComparatorTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>diffHtmlResults</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>iteratorURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>nextVersion</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>previousVersion</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sourceVersion</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>targetVersion</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>versionsInfo</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>discussion</name>
 		<tag-class>com.liferay.taglib.ui.DiscussionTag</tag-class>
 		<body-content>JSP</body-content>
@@ -4156,46 +4196,6 @@
 		<attribute>
 			<name>userParams</name>
 			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<name>version-comparator</name>
-		<tag-class>com.liferay.taglib.ui.VersionComparatorTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>diffHtmlResults</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>iteratorURL</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>nextVersion</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>previousVersion</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>sourceVersion</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>targetVersion</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>versionsInfo</name>
-			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

@@ -33,7 +33,7 @@ Object[] returnValue = JournalUtil.getJournalArticleVersionsInfo(groupId, articl
 	<portlet:param name="articleId" value="<%= articleId %>" />
 </liferay-portlet:renderURL>
 
-<liferay-ui:version-comparator
+<liferay-ui:diff-version-comparator
 	diffHtmlResults="<%= diffHtmlResults %>"
 	iteratorURL="<%= iteratorURL %>"
 	nextVersion="<%= (Double)returnValue[2] %>"

@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class VersionComparatorTag extends IncludeTag {
+public class DiffVersionComparatorTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
@@ -85,25 +85,27 @@ public class VersionComparatorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:version-comparator:diffHtmlResults", _diffHtmlResults);
+			"liferay-ui:diff-version-comparator:diffHtmlResults",
+			_diffHtmlResults);
 		request.setAttribute(
-			"liferay-ui:version-comparator:iteratorURL", _iteratorURL);
+			"liferay-ui:diff-version-comparator:iteratorURL", _iteratorURL);
 		request.setAttribute(
-			"liferay-ui:version-comparator:nextVersion", _nextVersion);
+			"liferay-ui:diff-version-comparator:nextVersion", _nextVersion);
 		request.setAttribute(
-			"liferay-ui:version-comparator:previousVersion", _previousVersion);
+			"liferay-ui:diff-version-comparator:previousVersion",
+			_previousVersion);
 		request.setAttribute(
-			"liferay-ui:version-comparator:sourceVersion", _sourceVersion);
+			"liferay-ui:diff-version-comparator:sourceVersion", _sourceVersion);
 		request.setAttribute(
-			"liferay-ui:version-comparator:targetVersion", _targetVersion);
+			"liferay-ui:diff-version-comparator:targetVersion", _targetVersion);
 		request.setAttribute(
-			"liferay-ui:version-comparator:versionsInfo", _versionsInfo);
+			"liferay-ui:diff-version-comparator:versionsInfo", _versionsInfo);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
 	private static final String _PAGE =
-		"/html/taglib/ui/version_comparator/page.jsp";
+		"/html/taglib/ui/diff_version_comparator/page.jsp";
 
 	private String _diffHtmlResults;
 	private PortletURL _iteratorURL;

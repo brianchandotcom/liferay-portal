@@ -1,0 +1,14 @@
+<definition>
+	<command name="configureAdvancedSearchPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<execute action="PGSearchConfiguration#click" locator-key1="DISPLAY_SETTING_ADVANCED_RADIO" />
+		<execute action="PGSearchConfiguration#type" locator-key1="DISPLAY_SETTING_ADVANCED_SEARCH_CONFIGURATION" value1="${advancedSearchConfiguration}" />
+		<execute action="PGSearchConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGSearchConfiguration#selectFrame" value1="relative=top" />
+	</command>
+</definition>

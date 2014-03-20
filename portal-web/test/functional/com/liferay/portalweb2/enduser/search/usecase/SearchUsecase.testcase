@@ -229,7 +229,7 @@
 			<var name="pageName" value="${searchPageName}" />
 		</execute>
 
-		<execute macro="Search#configureAdvancedSearchPG">
+		<execute macro="SearchPortlet#configureAdvancedSearchPG">
 			<var name="advancedSearchConfiguration" value="${advancedSearchConfiguration}" />
 			<var name="portletName" value="${searchPortletName}" />
 		</execute>
@@ -251,7 +251,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchEntriesByPortletsAndTimeRange" priority="4">
+	<command name="SearchEntriesByPortletsAndModifiedRangeFacet" priority="4">
 		<var name="searchTerm"><![CDATA["AssetContent"]]></var>
 
 		<execute macro="Page#gotoContentCP">
@@ -351,7 +351,7 @@
 			<execute action="PGSearchResults#assertTextNotEquals" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 		</for>
 
-		<execute macro="Search#viewTypeFacetPG">
+		<execute macro="Search#viewAssetTypeFacetPG">
 			<var name="facetFrequency" value="4" />
 			<var name="searchAssetTitle" value="Wiki Page2 Title" />
 			<var name="searchAssetType" value="Wiki Page" />
@@ -361,8 +361,8 @@
 			<var name="searchFacetValue" value="Wiki Page" />
 		</execute>
 
-		<execute macro="Search#gotoTimeRangeFacetPG">
-			<var name="searchTimeRange" value="Past Month" />
+		<execute macro="Search#gotoModifiedRangeFacetPG">
+			<var name="searchModifiedRange" value="Past Month" />
 		</execute>
 
 		<for list="Blogs Entry1 Title,WC WebContent2 Title,Wiki Page2 Title,DM Document Title" param="searchAssetTitle">

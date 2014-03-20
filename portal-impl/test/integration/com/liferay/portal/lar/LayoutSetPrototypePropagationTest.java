@@ -18,6 +18,7 @@ import com.liferay.portal.LayoutParentLayoutIdException;
 import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
@@ -519,7 +520,15 @@ public class LayoutSetPrototypePropagationTest
 
 		String content = _layoutSetPrototypeJournalArticle.getContent();
 
-		Assert.assertEquals(content, journalArticle.getContent());
+		for (String languageId : journalArticle.getAvailableLanguageIds()) {
+			String localization = LocalizationUtil.getLocalization(
+				content, languageId);
+
+			String importedLocalization = LocalizationUtil.getLocalization(
+				journalArticle.getContent(), languageId);
+
+			Assert.assertEquals(localization, importedLocalization);
+		}
 
 		String newContent = DDMStructureTestUtil.getSampleStructuredContent(
 			"New Test Content");
@@ -531,7 +540,15 @@ public class LayoutSetPrototypePropagationTest
 
 		// Portlet data is no longer propagated once the group has been created
 
-		Assert.assertEquals(content, journalArticle.getContent());
+		for (String languageId : journalArticle.getAvailableLanguageIds()) {
+			String localization = LocalizationUtil.getLocalization(
+				content, languageId);
+
+			String importedLocalization = LocalizationUtil.getLocalization(
+				journalArticle.getContent(), languageId);
+
+			Assert.assertEquals(localization, importedLocalization);
+		}
 	}
 
 	@Override

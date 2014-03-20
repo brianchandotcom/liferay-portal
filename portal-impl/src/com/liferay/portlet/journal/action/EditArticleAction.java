@@ -159,6 +159,12 @@ public class EditArticleAction extends PortletAction {
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteArticles(actionRequest, true);
 			}
+			else if (cmd.equals(Constants.SUBSCRIBE)) {
+				subscribeStructure(actionRequest);
+			}
+			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
+				unsubscribeStructure(actionRequest);
+			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -473,6 +479,34 @@ public class EditArticleAction extends PortletAction {
 			JournalArticleServiceUtil.removeArticleLocale(
 				groupId, articleId, version, languageId);
 		}
+	}
+
+	protected void subscribeStructure(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
+
+		JournalArticleServiceUtil.subscribeStructure(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			ddmStructureId);
+	}
+
+	protected void unsubscribeStructure(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
+
+		JournalArticleServiceUtil.unsubscribeStructure(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			ddmStructureId);
 	}
 
 	protected Object[] updateArticle(ActionRequest actionRequest)

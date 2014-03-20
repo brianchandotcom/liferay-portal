@@ -1211,6 +1211,14 @@ public class JournalUtil {
 			ArrayUtil.toLongArray(ancestorFolderIds));
 	}
 
+	public static boolean isSubscribedToStructure(
+		long companyId, long groupId, long userId, long ddmStructureId)
+			throws PortalException, SystemException {
+
+		return SubscriptionLocalServiceUtil.isSubscribed(
+			companyId, userId, DDMStructure.class.getName(), ddmStructureId);
+	}
+
 	public static String mergeArticleContent(
 		String curContent, String newContent, boolean removeNullElements) {
 

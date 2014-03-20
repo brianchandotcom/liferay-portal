@@ -513,6 +513,42 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
+	* Subscribe the user to changes in elements that belongs to specified
+	* structure.
+	*
+	* @param groupId the primary key of the folder's group
+	* @param userId the primary key of the user to be subscribed
+	* @param structureId the primary key of the structure to subscribe to
+	* @throws PortalException if the user, group os structure could not be
+	found, or if subscribing was not permissible
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void subscribeStructure(long groupId, long userId,
+		long structureId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().subscribeStructure(groupId, userId, structureId);
+	}
+
+	/**
+	* Unsubscribe the user from changes in elements that belongs to specified
+	* structure.
+	*
+	* @param groupId the primary key of the folder's group
+	* @param userId the primary key of the user to be subscribed
+	* @param structureId the primary key of the structure to subscribe to
+	* @throws PortalException if the user, group os structure could not be
+	found, or if subscribing was not permissible
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void unsubscribeStructure(long groupId, long userId,
+		long structureId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsubscribeStructure(groupId, userId, structureId);
+	}
+
+	/**
 	* Adds the model resources with the permissions to the web content article.
 	*
 	* @param article the web content article to add resources to

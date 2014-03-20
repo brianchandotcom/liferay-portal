@@ -4374,6 +4374,24 @@ public class JournalArticleLocalServiceImpl
 		return searchJournalArticles(searchContext);
 	}
 
+	@Override
+	public void subscribeStructure(
+			long groupId, long userId, long ddmStructureId)
+		throws PortalException, SystemException {
+
+		subscriptionLocalService.addSubscription(
+			userId, groupId, DDMStructure.class.getName(), ddmStructureId);
+	}
+
+	@Override
+	public void unsubscribeStructure(
+			long groupId, long userId, long ddmStructureId)
+		throws PortalException, SystemException {
+
+		subscriptionLocalService.deleteSubscription(
+			userId, DDMStructure.class.getName(), ddmStructureId);
+	}
+
 	/**
 	 * Updates the web content article matching the version, replacing its
 	 * folder, title, description, content, and layout UUID.
@@ -6403,6 +6421,9 @@ public class JournalArticleLocalServiceImpl
 
 		JournalFolder folder = article.getFolder();
 
+		subscriptionSender.addPersistedSubscribers(
+			JournalFolder.class.getName(), article.getGroupId());
+
 		if (folder != null) {
 			subscriptionSender.addPersistedSubscribers(
 				JournalFolder.class.getName(), folder.getFolderId());
@@ -6413,8 +6434,13 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			article.getGroupId(),
+			classNameLocalService.getClassNameId(JournalArticle.class),
+			article.getStructureId(), true);
+
 		subscriptionSender.addPersistedSubscribers(
-			JournalFolder.class.getName(), article.getGroupId());
+			DDMStructure.class.getName(), ddmStructure.getStructureId());
 
 		subscriptionSender.addPersistedSubscribers(
 			JournalArticle.class.getName(), article.getResourcePrimKey());

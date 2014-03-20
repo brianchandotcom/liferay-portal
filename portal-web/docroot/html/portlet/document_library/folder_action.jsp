@@ -444,7 +444,7 @@ String iconMenuId = null;
 
 		<br /><br />
 
-		<aui:field-wrapper cssClass="file-entry-field" label="webdav-url">
+		<aui:field-wrapper cssClass="file-entry-field" label="webdav-url" name="webdavUrl">
 			<liferay-ui:input-resource cssClass="webdav-url-resource" id="webdavUrl" url="<%= DLUtil.getWebDavURL(themeDisplay, folder, null) %>" />
 		</aui:field-wrapper>
 	</div>

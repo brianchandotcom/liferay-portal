@@ -176,7 +176,7 @@ if (Validator.isNotNull(script)) {
 
 				<aui:input name="description" />
 
-				<aui:field-wrapper label='<%= LanguageUtil.format(pageContext, "parent-x", ddmDisplay.getStructureName(locale), false) %>'>
+				<aui:field-wrapper label='<%= LanguageUtil.format(pageContext, "parent-x", ddmDisplay.getStructureName(locale), false) %>' name="parentStructureName">
 					<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
 
 					<div class="input-append">
@@ -204,13 +204,13 @@ if (Validator.isNotNull(script)) {
 				</aui:field-wrapper>
 
 				<c:if test="<%= structure != null %>">
-					<aui:field-wrapper label="url">
-						<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_structure?structureId=" + classPK %>' />
+					<aui:field-wrapper label="url" name="url">
+						<liferay-ui:input-resource id="url" url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_structure?structureId=" + classPK %>' />
 					</aui:field-wrapper>
 
 					<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
-						<aui:field-wrapper label="webdav-url">
-							<liferay-ui:input-resource url="<%= structure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
+						<aui:field-wrapper label="webdav-url" name="webdavUrl">
+							<liferay-ui:input-resource id="webdavUrl" url="<%= structure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
 						</aui:field-wrapper>
 					</c:if>
 				</c:if>

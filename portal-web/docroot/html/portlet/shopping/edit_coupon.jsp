@@ -72,8 +72,8 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 				<aui:input label="autogenerate-code" name="autoCode" type="checkbox" />
 			</c:when>
 			<c:otherwise>
-				<aui:field-wrapper label="code">
-					<liferay-ui:input-resource url="<%= code %>" />
+				<aui:field-wrapper label="code" name="code">
+					<liferay-ui:input-resource id="code" url="<%= code %>" />
 				</aui:field-wrapper>
 			</c:otherwise>
 		</c:choose>

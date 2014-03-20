@@ -234,8 +234,8 @@ catch (NoSuchArticleException nsae) {
 	<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
 
 	<aui:fieldset>
-		<aui:field-wrapper label="portlet-id">
-			<liferay-ui:input-resource url="<%= portletResource %>" />
+		<aui:field-wrapper label="portlet-id" name="portletResource">
+			<liferay-ui:input-resource id="portletResource" url="<%= portletResource %>" />
 		</aui:field-wrapper>
 	</aui:fieldset>
 

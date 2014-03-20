@@ -72,13 +72,13 @@ portletURL.setParameter("articleId", String.valueOf(articleId));
 		}
 		%>
 
-		<aui:field-wrapper label="current-folder">
-			<liferay-ui:input-resource url="<%= folderName %>" />
+		<aui:field-wrapper label="current-folder" name="currentFolderName">
+			<liferay-ui:input-resource id="currentFolderName" url="<%= folderName %>" />
 		</aui:field-wrapper>
 
-		<aui:field-wrapper label="new-folder">
+		<aui:field-wrapper label="new-folder" name="newFolderName">
 			<div class="input-append">
-				<liferay-ui:input-resource id="folderName" url="<%= folderName %>" />
+				<liferay-ui:input-resource id="newFolderName" url="<%= folderName %>" />
 
 				<aui:button name="selectFolderButton" value="select" />
 			</div>

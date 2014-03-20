@@ -53,7 +53,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 	<aui:fieldset>
 		<c:if test="<%= category != null %>">
-			<aui:field-wrapper label="parent-category">
+			<aui:field-wrapper label="parent-category" name="parentCategoryName">
 
 				<%
 				String parentCategoryName = "";

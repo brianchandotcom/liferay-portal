@@ -417,10 +417,10 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		double discountSubtotal = ShoppingUtil.calculateDiscountSubtotal(items);
 		%>
 
-		<aui:field-wrapper label="subtotal" name="subTotal">
+		<aui:field-wrapper label="subtotal" name="subtotal">
 			<c:choose>
 				<c:when test="<%= subtotal == actualSubtotal %>">
-					<liferay-ui:input-resource id="subTotal" url="<%= currencyFormat.format(subtotal) %>" />
+					<liferay-ui:input-resource id="subtotal" url="<%= currencyFormat.format(subtotal) %>" />
 				</c:when>
 				<c:otherwise>
 					<div class="alert alert-success">

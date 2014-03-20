@@ -19,6 +19,7 @@ import com.liferay.portal.cache.memory.MemoryPortalCache;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactory;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
@@ -1706,6 +1707,13 @@ public class TableMapperTest {
 		@Override
 		public void removeCache(String name) {
 			_portalCaches.remove(name);
+		}
+
+		@Override
+		public PortalCacheManager
+			<? extends Serializable, ? extends Serializable> getCacheManager() {
+
+			return null;
 		}
 
 		private Map<String, PortalCache<?, ?>> _portalCaches =

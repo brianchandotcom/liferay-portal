@@ -18,6 +18,7 @@ import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
+import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
@@ -37,8 +38,10 @@ import java.lang.reflect.Method;
 
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -592,6 +595,25 @@ public class PortalCacheDatagramReceiveHandlerTest {
 		@Override
 		public void removeCache(String name) {
 			_portalCaches.remove(name);
+		}
+
+		@Override
+		public Set<CacheManagerListener> getCacheManagerListeners() {
+			return Collections.emptySet();
+		}
+
+		@Override
+		public boolean registerCacheManagerListener(
+			CacheManagerListener cacheManagerListener) {
+
+			return false;
+		}
+
+		@Override
+		public boolean unregisterCacheManagerListener(
+			CacheManagerListener cacheManagerListener) {
+
+			return false;
 		}
 
 		private URL _configurationURL;

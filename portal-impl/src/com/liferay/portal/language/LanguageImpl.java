@@ -359,39 +359,14 @@ public class LanguageImpl implements Language {
 
 	@Override
 	public String get(Locale locale, String key, String defaultValue) {
-		if (PropsValues.TRANSLATIONS_DISABLED) {
-			return key;
+		ResourceBundle bundle = LanguageResources.getBundle(locale);
+
+		try {
+			return _get(bundle, key, defaultValue);
 		}
-
-		if (key == null) {
-			return null;
+		catch (Exception e) {
+			return defaultValue;
 		}
-
-		String value = LanguageResources.getMessage(locale, key);
-
-		while ((value == null) || value.equals(defaultValue)) {
-			if ((key.length() > 0) &&
-				(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
-
-				int pos = key.lastIndexOf(CharPool.OPEN_BRACKET);
-
-				if (pos != -1) {
-					key = key.substring(0, pos);
-
-					value = LanguageResources.getMessage(locale, key);
-
-					continue;
-				}
-			}
-
-			break;
-		}
-
-		if (value == null) {
-			value = defaultValue;
-		}
-
-		return value;
 	}
 
 	@Override
@@ -847,8 +822,6 @@ public class LanguageImpl implements Language {
 			return LanguageResources.fixValue(value);
 		}
 
-		value = LanguageResources.getMessage(resourceBundle.getLocale(), key);
-
 		if (value == null) {
 			if ((key.length() > 0) &&
 				(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
@@ -883,19 +856,8 @@ public class LanguageImpl implements Language {
 		return StringPool.UTF8;
 	}
 
-	private Locale _getLocale(String languageCode) {
-		return _localesMap.get(languageCode);
-	}
-
-	private ResourceBundle _getResourceBundle(PageContext pageContext) {
-		if (pageContext == null) {
-			return null;
-		}
-
+	private Locale _getLocale(HttpServletRequest request) {
 		Locale locale = null;
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -911,14 +873,33 @@ public class LanguageImpl implements Language {
 			}
 		}
 
+		return locale;
+	}
+
+	private Locale _getLocale(String languageCode) {
+		return _localesMap.get(languageCode);
+	}
+
+	private ResourceBundle _getResourceBundle(PageContext pageContext) {
+		if (pageContext == null) {
+			return null;
+		}
+
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		Locale locale = _getLocale(request);
+
 		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		if (portletConfig != null) {
-			return portletConfig.getResourceBundle(locale);
+		if (portletConfig == null) {
+			return LanguageResources.getBundle(locale);
 		}
 
-		return null;
+		return new AggregateResourceBundle(
+			portletConfig.getResourceBundle(locale),
+			LanguageResources.getBundle(locale));
 	}
 
 	private void _initGroupLocales(long groupId) {

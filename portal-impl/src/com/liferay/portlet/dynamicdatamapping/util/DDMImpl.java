@@ -210,9 +210,29 @@ public class DDMImpl implements DDM {
 
 		Set<String> fieldNames = ddmStructure.getFieldNames();
 
+		boolean translating = true;
+
+		String defaultLanguageId = (String)serviceContext.getAttribute(
+			"defaultLanguageId");
+		String toLanguageId = (String)serviceContext.getAttribute(
+			"toLanguageId");
+
+		if (Validator.isNull(toLanguageId) ||
+			Validator.equals(defaultLanguageId, toLanguageId)) {
+
+			translating = false;
+		}
+
 		Fields fields = new Fields();
 
 		for (String fieldName : fieldNames) {
+			boolean localizable = GetterUtil.getBoolean(
+				ddmStructure.getFieldProperty(fieldName, "localizable"), true);
+
+			if (!localizable && translating) {
+				continue;
+			}
+
 			List<Serializable> fieldValues = getFieldValues(
 				ddmStructure, fieldName, fieldNamespace, serviceContext);
 

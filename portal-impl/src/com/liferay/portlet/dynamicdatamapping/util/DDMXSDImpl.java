@@ -166,6 +166,13 @@ public class DDMXSDImpl implements DDMXSD {
 
 			fieldStructure.put("children", childrenHTML);
 
+			boolean disabled = GetterUtil.getBoolean(
+				fieldStructure.get("disabled"), false);
+
+			if (disabled) {
+				readOnly = true;
+			}
+
 			sb.append(
 				processFTL(
 					pageContext, element, mode, readOnly, freeMarkerContext));
@@ -616,15 +623,17 @@ public class DDMXSDImpl implements DDMXSD {
 		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
 			document);
 
-		String languageId = LocaleUtil.toLanguageId(locale);
+		String editingLanguageId = LocaleUtil.toLanguageId(locale);
 
-		if (!ArrayUtil.contains(availableLanguageIds, languageId)) {
-			languageId = defaultLanguageId;
+		String structureLanguageId = editingLanguageId;
+
+		if (!ArrayUtil.contains(availableLanguageIds, editingLanguageId)) {
+			structureLanguageId = defaultLanguageId;
 		}
 
 		Element metadataElement =
 			(Element)dynamicElementElement.selectSingleNode(
-				"meta-data[@locale='" + languageId + "']");
+				"meta-data[@locale='" + structureLanguageId + "']");
 
 		fieldContext = new HashMap<String, Object>();
 
@@ -638,6 +647,13 @@ public class DDMXSDImpl implements DDMXSD {
 
 		for (Attribute attribute : dynamicElementElement.attributes()) {
 			fieldContext.put(attribute.getName(), attribute.getValue());
+		}
+
+		boolean localizable = GetterUtil.getBoolean(
+			dynamicElementElement.attributeValue("localizable"), true);
+
+		if (!localizable && !editingLanguageId.equals(defaultLanguageId)) {
+			fieldContext.put("disabled", Boolean.TRUE.toString());
 		}
 
 		fieldContext.put("fieldNamespace", StringUtil.randomId());

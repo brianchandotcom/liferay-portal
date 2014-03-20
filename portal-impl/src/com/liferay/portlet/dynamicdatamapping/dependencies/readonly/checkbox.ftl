@@ -10,7 +10,11 @@
 			<@liferay_ui.message key=escape(label) />
 		</label>
 
-		${escape(fieldValue)}
+		<#if fieldValue == "true">
+			<@liferay_ui.message key=escape("yes") />
+		<#else>
+			<@liferay_ui.message key=escape("no") />
+		</#if>
 
 		${fieldStructure.children}
 	</div>

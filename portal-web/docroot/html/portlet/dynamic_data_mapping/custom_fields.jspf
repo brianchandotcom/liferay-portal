@@ -82,6 +82,11 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 					value: 'keyword'
 				},
 
+				localizable: {
+					seter: booleanParse,
+					value: true
+				},
+
 				name: {
 					setter: Liferay.FormBuilder.normalizeKey,
 					valueFn: function() {
@@ -123,7 +128,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 					};
 				}
 
-				var repeatableOptions = {
+				var booleanOptions = {
 					'false': '<liferay-ui:message key="no" />',
 					'true': '<liferay-ui:message key="yes" />'
 				};
@@ -143,14 +148,26 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 							name: '<liferay-ui:message key="indexable" />'
 						},
 						{
-							attributeName: 'repeatable',
+							attributeName: 'localizable',
 							editor: new A.RadioCellEditor(
 								{
-									options: repeatableOptions
+									options: booleanOptions
 								}
 							),
 							formatter: function(val) {
-								return repeatableOptions[val.data.value];
+								return booleanOptions[val.data.value];
+							},
+							name: '<liferay-ui:message key="localizable" />'
+						},
+						{
+							attributeName: 'repeatable',
+							editor: new A.RadioCellEditor(
+								{
+									options: booleanOptions
+								}
+							),
+							formatter: function(val) {
+								return booleanOptions[val.data.value];
 							},
 							name: '<liferay-ui:message key="repeatable" />'
 						}

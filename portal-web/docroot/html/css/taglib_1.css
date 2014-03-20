@@ -12,6 +12,7 @@
 @import url(taglib/ddm_template.css);
 @import url(taglib/diff.css);
 @import url(taglib/diff_html.css);
+@import url(taglib/diff_version_comparator.css);
 @import url(taglib/discussion.css);
 @import url(taglib/flags.css);
 @import url(taglib/form_navigator.css);

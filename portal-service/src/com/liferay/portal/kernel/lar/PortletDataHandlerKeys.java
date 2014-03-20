@@ -105,13 +105,25 @@ public class PortletDataHandlerKeys {
 	public static final String PORTLETS_MERGE_MODE_ADD_TO_BOTTOM =
 		"ADD_TO_BOTTOM";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String PORTLETS_MERGE_MODE_ADD_TO_TOP = "ADD_TO_TOP";
 
 	public static final String PORTLETS_MERGE_MODE_REPLACE = "REPLACE";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String PUBLIC_LAYOUT_PERMISSIONS =
 		"PUBLIC_LAYOUT_PERMISSIONS";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String PUBLISH_TO_REMOTE = "PUBLISH_TO_REMOTE";
 
 	public static final String RATINGS = "RATINGS";

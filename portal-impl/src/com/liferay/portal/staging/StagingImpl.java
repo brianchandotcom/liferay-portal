@@ -1682,7 +1682,7 @@ public class StagingImpl implements Staging {
 
 		String cmd = MapUtil.getString(parameterMap, Constants.CMD);
 
-		if (!cmd.equals("publish_to_live")) {
+		if (!cmd.equals(Constants.PUBLISH_TO_LIVE)) {
 			return;
 		}
 
@@ -2304,10 +2304,6 @@ public class StagingImpl implements Staging {
 
 		Map<String, String[]> parameterMap = getStagingParameters(
 			portletRequest);
-
-		parameterMap.put(
-			PortletDataHandlerKeys.PUBLISH_TO_REMOTE,
-			new String[] {Boolean.TRUE.toString()});
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 

@@ -75,8 +75,8 @@ public class EditPublishConfigurationAction
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteExportImportConfiguration(actionRequest, true);
 			}
-			else if (cmd.equals("publish_to_live") ||
-					 cmd.equals("publish_to_remote")) {
+			else if (cmd.equals(Constants.PUBLISH_TO_LIVE) ||
+					 cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
 
 				ExportImportConfigurationHelper.
 					publishLayoutsByExportImportConfiguration(

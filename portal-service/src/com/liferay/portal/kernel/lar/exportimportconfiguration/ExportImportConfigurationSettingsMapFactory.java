@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.lar.exportimportconfiguration;
 
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
-import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -165,12 +164,6 @@ public class ExportImportConfigurationSettingsMapFactory {
 				liveGroup.getGroupId(), privateLayout, layoutIdMap,
 				parameterMap, dateRange.getStartDate(), dateRange.getEndDate(),
 				themeDisplay.getLocale(), themeDisplay.getTimeZone());
-		}
-
-		if (liveGroup == null) {
-			parameterMap.put(
-				PortletDataHandlerKeys.PUBLISH_TO_REMOTE,
-				new String[] {Boolean.TRUE.toString()});
 		}
 
 		UnicodeProperties groupTypeSettingsProperties =

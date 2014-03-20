@@ -215,9 +215,9 @@ for (JournalArticle curArticle : articles) {
 		}
 		%>
 
-		<aui:field-wrapper label="new-folder">
+		<aui:field-wrapper label="new-folder" name="newFolderName">
 			<div class="input-append">
-				<liferay-ui:input-resource id="folderName" url="<%= folderName %>" />
+				<liferay-ui:input-resource id="newFolderName" url="<%= folderName %>" />
 
 				<aui:button name="selectFolderButton" value="select" />
 			</div>

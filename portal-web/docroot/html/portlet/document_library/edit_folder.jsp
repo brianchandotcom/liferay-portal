@@ -91,8 +91,8 @@ if (workflowEnabled) {
 			%>
 
 			<c:if test="<%= folder != null %>">
-				<aui:field-wrapper label="parent-folder">
-					<liferay-ui:input-resource url="<%= parentFolderName %>" />
+				<aui:field-wrapper label="parent-folder" name="parentFolder">
+					<liferay-ui:input-resource id="parentFolder" url="<%= parentFolderName %>" />
 				</aui:field-wrapper>
 			</c:if>
 

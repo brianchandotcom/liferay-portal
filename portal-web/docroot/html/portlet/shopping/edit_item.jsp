@@ -108,7 +108,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 	<aui:fieldset>
 		<c:if test="<%= item != null %>">
-			<aui:field-wrapper label="category">
+			<aui:field-wrapper label="category" name="categoryName">
 
 				<%
 				String categoryName = "";

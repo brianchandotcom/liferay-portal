@@ -74,7 +74,7 @@ else {
 
 	<aui:fieldset>
 		<c:if test="<%= folder != null %>">
-			<aui:field-wrapper label="parent-folder">
+			<aui:field-wrapper label="parent-folder" name="parentFolderName">
 
 				<%
 				String parentFolderName = LanguageUtil.get(pageContext, "home");

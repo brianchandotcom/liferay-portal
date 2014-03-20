@@ -44,7 +44,7 @@ if (organizationId > 0) {
 		</aui:select>
 
 		<div id="<portlet:namespace />UsersSelectionOptions">
-			<aui:field-wrapper label="organization">
+			<aui:field-wrapper label="organization" name="organizationName">
 				<div class="input-append">
 					<liferay-ui:input-resource id="organizationName" url="<%= HtmlUtil.escape(organizationName) %>" />
 

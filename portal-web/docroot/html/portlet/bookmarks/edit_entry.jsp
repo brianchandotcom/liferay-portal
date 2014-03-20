@@ -81,7 +81,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 	<aui:fieldset>
 		<c:if test="<%= ((entry != null) || (folderId <= 0) || Validator.isNotNull(referringPortletResource)) %>">
-			<aui:field-wrapper label="folder">
+			<aui:field-wrapper label="folder" name="folderName">
 
 				<%
 				String folderName = StringPool.BLANK;

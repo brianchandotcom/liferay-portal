@@ -47,7 +47,7 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", J
 	<aui:model-context bean="<%= folder %>" model="<%= JournalFolder.class %>" />
 
 	<aui:fieldset>
-		<aui:field-wrapper label="parent-folder">
+		<aui:field-wrapper label="parent-folder" name="parentFolderName">
 
 			<%
 			String parentFolderName = "";

@@ -114,7 +114,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 						</c:choose>
 					</div>
 
-					<aui:field-wrapper label="callback-url">
+					<aui:field-wrapper label="callback-url" name="callbackUrl">
 						<liferay-ui:input-resource id="callbackUrl" url="<%= callbackURL %>" />
 					</aui:field-wrapper>
 
@@ -134,7 +134,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 					<liferay-ui:message key="use-the-opensocial-gadget-url-to-create-an-opensocial-gadget" />
 				</div>
 
-				<aui:field-wrapper label="opensocial-gadget-url">
+				<aui:field-wrapper label="opensocial-gadget-url" name="opensocialGadgetUrl">
 					<liferay-ui:input-resource id="opensocialGadgetUrl" url="<%= PortalUtil.getGoogleGadgetURL(portlet, themeDisplay) %>" />
 				</aui:field-wrapper>
 
@@ -153,7 +153,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 					<liferay-ui:message key="use-the-netvibes-widget-url-to-create-a-netvibes-widget" />
 				</div>
 
-				<aui:field-wrapper label="netvibes-widget-url">
+				<aui:field-wrapper label="netvibes-widget-url" name="netvibesWidgetUrl">
 					<liferay-ui:input-resource id="netvibesWidgetUrl" url="<%= PortalUtil.getNetvibesURL(portlet, themeDisplay) %>" />
 				</aui:field-wrapper>
 

@@ -61,7 +61,7 @@ boolean splitThread = false;
 	%>
 
 	<aui:fieldset>
-		<aui:field-wrapper label="category[message-board]">
+		<aui:field-wrapper label="category[message-board]" name="categoryName">
 			<div class="input-append">
 				<liferay-ui:input-resource id="categoryName" url='<%= ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && (categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) ? category.getName() : LanguageUtil.get(pageContext, "message-boards-home") %>' />
 

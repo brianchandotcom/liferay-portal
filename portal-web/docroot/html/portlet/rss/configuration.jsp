@@ -157,7 +157,7 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 							<aui:option label="right" selected='<%= feedImageAlignment.equals("right") %>' />
 						</aui:select>
 
-						<aui:field-wrapper label="header-web-content">
+						<aui:field-wrapper label="header-web-content" name="headerArticleTitle">
 							<div class="input-append">
 
 								<%
@@ -172,7 +172,7 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 								}
 								%>
 
-								<liferay-ui:input-resource url="<%= (headerArticle != null) ? headerArticle.getTitle(locale) : StringPool.BLANK %>" />
+								<liferay-ui:input-resource id="headerArticleTitle" url="<%= (headerArticle != null) ? headerArticle.getTitle(locale) : StringPool.BLANK %>" />
 
 								<aui:button name="selectButton" onClick='<%= renderResponse.getNamespace() + "selectionForHeader();" %>' value="select" />
 
@@ -180,7 +180,7 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 							</div>
 						</aui:field-wrapper>
 
-						<aui:field-wrapper label="footer-web-content">
+						<aui:field-wrapper label="footer-web-content" name="footerArticleTitle">
 							<div class="input-append">
 
 								<%
@@ -195,7 +195,7 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 								}
 								%>
 
-								<liferay-ui:input-resource url="<%= (footerArticle != null) ? footerArticle.getTitle(locale) : StringPool.BLANK %>" />
+								<liferay-ui:input-resource id="footerArticleTitle" url="<%= (footerArticle != null) ? footerArticle.getTitle(locale) : StringPool.BLANK %>" />
 
 								<aui:button name="selectButton" onClick='<%= renderResponse.getNamespace() + "selectionForFooter();" %>' value="select" />
 

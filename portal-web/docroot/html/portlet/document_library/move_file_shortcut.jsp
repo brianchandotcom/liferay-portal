@@ -78,14 +78,14 @@ long folderId = BeanParamUtil.getLong(fileShortcut, request, "folderId");
 		%>
 
 		<c:if test="<%= !cmd.equals(Constants.MOVE_FROM_TRASH) %>">
-			<aui:field-wrapper label="current-folder">
-				<liferay-ui:input-resource url="<%= folderName %>" />
+			<aui:field-wrapper label="current-folder" name="currentFolder">
+				<liferay-ui:input-resource id="currentFolder" url="<%= folderName %>" />
 			</aui:field-wrapper>
 		</c:if>
 
-		<aui:field-wrapper label="new-folder">
+		<aui:field-wrapper label="new-folder" name="newFolderName">
 			<div class="input-append">
-				<liferay-ui:input-resource id="folderName" url="<%= folderName %>" />
+				<liferay-ui:input-resource id="newFolderName" url="<%= folderName %>" />
 
 				<aui:button name="selectFolderButton" value="select" />
 			</div>

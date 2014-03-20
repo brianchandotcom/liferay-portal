@@ -158,8 +158,8 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 			<table class="lfr-table">
 			<tr>
 				<td>
-					<aui:field-wrapper label="default-language">
-						<liferay-ui:input-resource url="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
+					<aui:field-wrapper label="default-language" name="defaultLocale">
+						<liferay-ui:input-resource id="defaultLocale" url="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
 					</aui:field-wrapper>
 				</td>
 				<td>
@@ -415,8 +415,8 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 				<table class="lfr-table">
 				<tr>
 					<td class="lfr-label">
-						<aui:field-wrapper label="default-language">
-							<liferay-ui:input-resource url="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
+						<aui:field-wrapper label="default-language" name="defaultLocale">
+							<liferay-ui:input-resource id="defaultLocale" url="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
 						</aui:field-wrapper>
 					</td>
 					<td class="lfr-label">

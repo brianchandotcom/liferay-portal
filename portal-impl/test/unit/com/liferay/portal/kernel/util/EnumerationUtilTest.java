@@ -31,8 +31,10 @@ public class EnumerationUtilTest {
 
 	@Test
 	public void testHasMoreElements() {
-		Enumeration<String> enumeration1 = Collections.emptyEnumeration();
-		Enumeration<String> enumeration2 = Collections.emptyEnumeration();
+		Enumeration<String> enumeration1 = Collections.enumeration(
+			Collections.<String>emptyList());
+		Enumeration<String> enumeration2 = Collections.enumeration(
+			Collections.<String>emptyList());
 
 		List<String> list1 = Arrays.asList(new String[] {"1", "2"});
 		List<String> list2 = Arrays.asList(new String[] {"3"});
@@ -58,8 +60,10 @@ public class EnumerationUtilTest {
 
 	@Test
 	public void testNextElement() {
-		Enumeration<String> enumeration1 = Collections.emptyEnumeration();
-		Enumeration<String> enumeration2 = Collections.emptyEnumeration();
+		Enumeration<String> enumeration1 = Collections.enumeration(
+			Collections.<String>emptyList());
+		Enumeration<String> enumeration2 = Collections.enumeration(
+			Collections.<String>emptyList());
 
 		List<String> list1 = Arrays.asList(new String[] {"1", "2"});
 		List<String> list2 = Arrays.asList(new String[] {"3"});
@@ -76,7 +80,7 @@ public class EnumerationUtilTest {
 	@Test(expected = NoSuchElementException.class)
 	public void testNextElementThrowsException() {
 		Enumeration<?> compositeEnumeration = EnumerationUtil.compose(
-			Collections.emptyEnumeration());
+			Collections.enumeration(Collections.<String>emptyList()));
 
 		compositeEnumeration.nextElement();
 	}

@@ -14,10 +14,12 @@
 
 package com.liferay.portal.dao.orm.common;
 
+import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -44,7 +46,8 @@ import org.apache.commons.collections.map.LRUMap;
  * @author Shuyang Zhou
  */
 @DoPrivileged
-public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
+public class FinderCacheImpl
+	implements CacheManagerListener, CacheRegistryItem, FinderCache {
 
 	public static final String CACHE_NAME = FinderCache.class.getName();
 
@@ -77,6 +80,11 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		if (_localCacheAvailable) {
 			_localCache.remove();
 		}
+	}
+
+	@Override
+	public void dispose() {
+		_portalCaches.clear();
 	}
 
 	@Override
@@ -132,8 +140,21 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 	}
 
 	@Override
+	public void init() {
+	}
+
+	@Override
 	public void invalidate() {
 		clearCache();
+	}
+
+	@Override
+	public void notifyCacheAdded(String name) {
+	}
+
+	@Override
+	public void notifyCacheRemoved(String name) {
+		_portalCaches.remove(name);
 	}
 
 	@Override
@@ -212,6 +233,11 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 
 	public void setMultiVMPool(MultiVMPool multiVMPool) {
 		_multiVMPool = multiVMPool;
+
+		PortalCacheManager<? extends Serializable, ? extends Serializable>
+			portalCacheManager = _multiVMPool.getCacheManager();
+
+		portalCacheManager.registerCacheManagerListener(this);
 	}
 
 	private PortalCache<Serializable, Serializable> _getPortalCache(

@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>DEFAULT_PROFILE_PICTURE</td>
-	<td>//img[contains(@src,'default')]</td>
+	<td>//img[@id='_so_WAR_sotheme_avatar' and contains(@src,'img_id=0')]</td>
 	<td></td>
 </tr>
 <tr>

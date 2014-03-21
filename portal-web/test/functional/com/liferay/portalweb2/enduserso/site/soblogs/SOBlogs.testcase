@@ -725,6 +725,8 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<var name="key_entryTitle" value="${entryTitle}" />
+
 		<execute action="SOBlogs#assertElementPresent" locator-key1="RECENT_BLOGS_ENTRY_NO_ENTRIES" />
 		<execute action="SOBlogs#assertElementNotPresent" locator-key1="RECENT_BLOGS_ENTRY_TITLE" />
 	</command>

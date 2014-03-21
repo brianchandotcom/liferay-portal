@@ -710,7 +710,7 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
 	</command>
 
-	<command name="ViewContactsCenterNotifications" priority="5">
+	<command name="ViewContactsCenterNotifications" known-issues="SOS-2143" priority="5">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />

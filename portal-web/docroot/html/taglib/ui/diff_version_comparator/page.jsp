@@ -18,12 +18,13 @@
 
 <%
 String diffHtmlResults = (String)request.getAttribute("liferay-ui:diff-version-comparator:diffHtmlResults");
+DiffVersionsInfo diffVersionsInfo = (DiffVersionsInfo)request.getAttribute("liferay-ui:diff-version-comparator:diffVersionsInfo");
 PortletURL iteratorURL = (PortletURL)request.getAttribute("liferay-ui:diff-version-comparator:iteratorURL");
-double nextVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:nextVersion");
-double previousVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:previousVersion");
 double sourceVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:sourceVersion");
 double targetVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:targetVersion");
-List<DiffVersion> diffVersions = (List<DiffVersion>)request.getAttribute("liferay-ui:diff-version-comparator:versionsInfo");
+
+double nextVersion = diffVersionsInfo.getNextVersion();
+double previousVersion = diffVersionsInfo.getPreviousVersion();
 
 String sourceVersionString = (previousVersion != 0) ? String.valueOf(sourceVersion) : String.valueOf(sourceVersion) + " (" + LanguageUtil.get(pageContext, "first-version") + ")";
 String targetVersionString = (nextVersion != 0) ? String.valueOf(targetVersion) : String.valueOf(targetVersion) + " (" + LanguageUtil.get(pageContext, "last-version") + ")";
@@ -56,6 +57,8 @@ String targetVersionString = (nextVersion != 0) ? String.valueOf(targetVersion) 
 		<div class="central-author">
 
 			<%
+			List<DiffVersion> diffVersions = diffVersionsInfo.getDiffVersions();
+
 			for (DiffVersion diffVersion : diffVersions) {
 				User author = UserLocalServiceUtil.getUser(diffVersion.getUserId());
 			%>

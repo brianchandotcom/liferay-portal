@@ -23,8 +23,6 @@ long groupId = ParamUtil.getLong(request, "groupId");
 String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS);
 double sourceVersion = (Double)request.getAttribute(WebKeys.SOURCE_VERSION);
 double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
-
-Object[] returnValue = JournalUtil.getJournalArticleVersionsInfo(groupId, articleId, sourceVersion, targetVersion);
 %>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
@@ -35,10 +33,8 @@ Object[] returnValue = JournalUtil.getJournalArticleVersionsInfo(groupId, articl
 
 <liferay-ui:diff-version-comparator
 	diffHtmlResults="<%= diffHtmlResults %>"
+	diffVersionsInfo="<%= JournalUtil.getJournalArticleVersionsInfo(groupId, articleId, sourceVersion, targetVersion) %>"
 	iteratorURL="<%= iteratorURL %>"
-	nextVersion="<%= (Double)returnValue[2] %>"
-	previousVersion="<%= (Double)returnValue[1] %>"
 	sourceVersion="<%= sourceVersion %>"
 	targetVersion="<%= targetVersion %>"
-	versionsInfo="<%= (List<DiffVersion>)returnValue[0] %>"
 />

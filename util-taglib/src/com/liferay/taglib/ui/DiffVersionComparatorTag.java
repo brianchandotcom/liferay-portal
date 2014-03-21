@@ -14,10 +14,8 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.diff.DiffVersion;
+import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.taglib.util.IncludeTag;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -37,16 +35,12 @@ public class DiffVersionComparatorTag extends IncludeTag {
 		_diffHtmlResults = diffHtmlResults;
 	}
 
+	public void setDiffVersionsInfo(DiffVersionsInfo diffVersionsInfo) {
+		_diffVersionsInfo = diffVersionsInfo;
+	}
+
 	public void setIteratorURL(PortletURL iteratorURL) {
 		_iteratorURL = iteratorURL;
-	}
-
-	public void setNextVersion(double nextVersion) {
-		_nextVersion = nextVersion;
-	}
-
-	public void setPreviousVersion(double previousVersion) {
-		_previousVersion = previousVersion;
 	}
 
 	public void setSourceVersion(double sourceVersion) {
@@ -57,19 +51,13 @@ public class DiffVersionComparatorTag extends IncludeTag {
 		_targetVersion = targetVersion;
 	}
 
-	public void setVersionsInfo(List<DiffVersion> versionsInfo) {
-		_versionsInfo = versionsInfo;
-	}
-
 	@Override
 	protected void cleanUp() {
 		_diffHtmlResults = null;
+		_diffVersionsInfo = null;
 		_iteratorURL = null;
-		_nextVersion = 0;
-		_previousVersion = 0;
 		_sourceVersion = 0;
 		_targetVersion = 0;
-		_versionsInfo = null;
 	}
 
 	@Override
@@ -88,18 +76,14 @@ public class DiffVersionComparatorTag extends IncludeTag {
 			"liferay-ui:diff-version-comparator:diffHtmlResults",
 			_diffHtmlResults);
 		request.setAttribute(
+			"liferay-ui:diff-version-comparator:diffVersionsInfo",
+			_diffVersionsInfo);
+		request.setAttribute(
 			"liferay-ui:diff-version-comparator:iteratorURL", _iteratorURL);
-		request.setAttribute(
-			"liferay-ui:diff-version-comparator:nextVersion", _nextVersion);
-		request.setAttribute(
-			"liferay-ui:diff-version-comparator:previousVersion",
-			_previousVersion);
 		request.setAttribute(
 			"liferay-ui:diff-version-comparator:sourceVersion", _sourceVersion);
 		request.setAttribute(
 			"liferay-ui:diff-version-comparator:targetVersion", _targetVersion);
-		request.setAttribute(
-			"liferay-ui:diff-version-comparator:versionsInfo", _versionsInfo);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -108,11 +92,9 @@ public class DiffVersionComparatorTag extends IncludeTag {
 		"/html/taglib/ui/diff_version_comparator/page.jsp";
 
 	private String _diffHtmlResults;
+	private DiffVersionsInfo _diffVersionsInfo;
 	private PortletURL _iteratorURL;
-	private double _nextVersion;
-	private double _previousVersion;
 	private double _sourceVersion;
 	private double _targetVersion;
-	private List<DiffVersion> _versionsInfo;
 
 }

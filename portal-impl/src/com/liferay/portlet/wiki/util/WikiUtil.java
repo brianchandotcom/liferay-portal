@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.diff.DiffVersion;
+import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -532,7 +533,7 @@ public class WikiUtil {
 		return orderByComparator;
 	}
 
-	public static Object[] getWikiPageVersionsInfo(
+	public static DiffVersionsInfo getWikiPageVersionsInfo(
 			long nodeId, String title, double sourceVersion,
 			double targetVersion, PageContext pageContext)
 		throws SystemException {
@@ -582,7 +583,7 @@ public class WikiUtil {
 			diffVersions.add(diffVersion);
 		}
 
-		return new Object[]{diffVersions, previousVersion, nextVersion};
+		return new DiffVersionsInfo(diffVersions, previousVersion, nextVersion);
 	}
 
 	public static WikiSettings getWikiSettings(long groupId)

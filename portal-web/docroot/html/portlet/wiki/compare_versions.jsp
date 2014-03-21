@@ -24,8 +24,6 @@ long nodeId = (Long)request.getAttribute(WebKeys.WIKI_NODE_ID);
 String title = (String)request.getAttribute(WebKeys.TITLE);
 double sourceVersion = (Double)request.getAttribute(WebKeys.SOURCE_VERSION);
 double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
-
-Object[] returnValue = WikiUtil.getWikiPageVersionsInfo(nodeId, title, sourceVersion, targetVersion, pageContext);
 %>
 
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
@@ -49,10 +47,8 @@ Object[] returnValue = WikiUtil.getWikiPageVersionsInfo(nodeId, title, sourceVer
 
 <liferay-ui:diff-version-comparator
 	diffHtmlResults="<%= diffHtmlResults %>"
+	diffVersionsInfo="<%= WikiUtil.getWikiPageVersionsInfo(nodeId, title, sourceVersion, targetVersion, pageContext) %>"
 	iteratorURL="<%= iteratorURL %>"
-	nextVersion="<%= (Double)returnValue[2] %>"
-	previousVersion="<%= (Double)returnValue[1] %>"
 	sourceVersion="<%= sourceVersion %>"
 	targetVersion="<%= targetVersion %>"
-	versionsInfo="<%= (List<DiffVersion>)returnValue[0] %>"
 />

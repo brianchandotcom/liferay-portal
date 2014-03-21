@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.util;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffVersion;
+import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -941,7 +942,7 @@ public class JournalUtil {
 			preferences, companyId, PropsValues.JOURNAL_EMAIL_FROM_NAME);
 	}
 
-	public static Object[] getJournalArticleVersionsInfo(
+	public static DiffVersionsInfo getJournalArticleVersionsInfo(
 			long groupId, String articleId, double sourceVersion,
 			double targetVersion)
 		throws SystemException {
@@ -985,7 +986,7 @@ public class JournalUtil {
 			diffVersions.add(diffVersion);
 		}
 
-		return new Object[] {diffVersions, previousVersion, nextVersion};
+		return new DiffVersionsInfo(diffVersions, previousVersion, nextVersion);
 	}
 
 	public static String getJournalControlPanelLink(

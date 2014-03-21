@@ -27,7 +27,6 @@ Folder folder = (com.liferay.portal.kernel.repository.model.Folder)request.getAt
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", rootFolderId);
 
 boolean defaultFolderView = false;
-boolean showSelectAll = false;
 
 if ((folder == null) && (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 	defaultFolderView = true;
@@ -64,8 +63,13 @@ int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
 
-int status = WorkflowConstants.STATUS_APPROVED;
-int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
+int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, false);
+
+boolean showSelectAll = false;
+
+if (total > 0) {
+	showSelectAll = true;
+}
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
@@ -95,12 +99,6 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 		</aui:col>
 
 		<aui:col cssClass="context-pane" width="<%= showFolderMenu ? 75 : 100 %>">
-			<%
-				if (total > 0) {
-					showSelectAll = true;
-				}
-			%>
-
 			<liferay-ui:app-view-toolbar
 				includeDisplayStyle="<%= true %>"
 				includeSelectAll="<%= showSelectAll %>"

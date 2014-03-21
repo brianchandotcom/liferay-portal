@@ -24,8 +24,6 @@ JournalFolder folder = (JournalFolder)request.getAttribute(WebKeys.JOURNAL_FOLDE
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-boolean showSelectAll = false;
-
 if ((folder == null) && (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 	try {
 		folder = JournalFolderLocalServiceUtil.getFolder(folderId);
@@ -51,8 +49,13 @@ int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
 
-int status = WorkflowConstants.STATUS_APPROVED;
-int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, status);
+int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED);
+
+boolean showSelectAll = false;
+
+if (total > 0) {
+	showSelectAll = true;
+}
 
 request.setAttribute("view.jsp-folder", folder);
 
@@ -70,12 +73,6 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 		</aui:col>
 
 		<aui:col cssClass="context-pane" last="<%= true %>" width="<%= 75 %>">
-			<%
-				if (total > 0) {
-					showSelectAll = true;
-				}
-			%>
-
 			<liferay-ui:app-view-toolbar
 				includeDisplayStyle="<%= true %>"
 				includeSelectAll="<%= showSelectAll %>"

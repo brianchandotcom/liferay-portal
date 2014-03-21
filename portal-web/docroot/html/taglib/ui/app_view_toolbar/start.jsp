@@ -17,9 +17,10 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-boolean includeSelectAll = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app_view_toolbar:includeSelectAll"));
-String cssClass = "hide select-all-entries";
 String searchJsp = (String)request.getAttribute("liferay-ui:app_view_toolbar:searchJsp");
+boolean includeSelectAll = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app_view_toolbar:includeSelectAll"));
+
+String cssClass = "select-all-entries";
 %>
 
 <div class="app-view-taglib">
@@ -29,9 +30,9 @@ String searchJsp = (String)request.getAttribute("liferay-ui:app_view_toolbar:sea
 		</c:if>
 
 		<div>
-			<c:if test="<%= includeSelectAll %>">
-				<% 
-					cssClass = "select-all-entries"; 
+			<c:if test="<%= !includeSelectAll %>">
+				<%
+					cssClass += " hide";
 				%>
 			</c:if>
 

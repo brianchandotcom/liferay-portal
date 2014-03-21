@@ -636,18 +636,21 @@ AUI.add(
 
 						var entriesContainer = instance.one('#entriesContainer');
 
-						var entries = entriesContainer ? entriesContainer.all('.app-view-entry') : null;
+						if (entriesContainer && portletContainer) {
+							var entriesSize = entriesContainer.all('.app-view-entry').size();
 
-						var entriesSize = entries ? entries.size() : null;
+							var selectAllEntriesCheckbox = portletContainer.one('.select-all-entries');
 
-						var selectAllEntriesCheckbox = portletContainer ? portletContainer.one('.select-all-entries') : null;
+							if (selectAllEntriesCheckbox) {
+								var entries = (entriesSize > 0);
+								var hasClass = selectAllEntriesCheckbox.hasClass('hide');
 
-						if (selectAllEntriesCheckbox) {
-							if (entriesSize > 0 && selectAllEntriesCheckbox.hasClass('hide')) {
-								selectAllEntriesCheckbox.removeClass('hide');
-							}
-							else if (entriesSize <= 0 && !selectAllEntriesCheckbox.hasClass('hide')) {
-								selectAllEntriesCheckbox.addClass('hide');
+								if (entries && hasClass) {
+									selectAllEntriesCheckbox.removeClass('hide');
+								}
+								else if (!entries && !hasClass) {
+									selectAllEntriesCheckbox.addClass('hide');
+								}
 							}
 						}
 					},

@@ -118,7 +118,9 @@ AUI.add(
 						instance._initHover();
 
 						if (themeDisplay.isSignedIn()) {
-							instance._initSelectAllCheckbox();
+							if (instance._selectAllCheckbox) {
+								instance._initSelectAllCheckbox();
+							}
 
 							instance._initToggleSelect();
 						}
@@ -201,11 +203,9 @@ AUI.add(
 					_initSelectAllCheckbox: function() {
 						var instance = this;
 
-						if (instance._selectAllCheckbox) {
-							instance._eventHandles.push(
-								instance._selectAllCheckbox.on(STR_CLICK, instance._toggleEntriesSelection, instance)
-							);
-						}
+						instance._eventHandles.push(
+							instance._selectAllCheckbox.on(STR_CLICK, instance._toggleEntriesSelection, instance)
+						);
 					},
 
 					_initToggleSelect: function() {

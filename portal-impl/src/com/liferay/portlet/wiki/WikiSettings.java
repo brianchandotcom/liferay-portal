@@ -14,16 +14,14 @@
 
 package com.liferay.portlet.wiki;
 
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.BaseServiceSettings;
+import com.liferay.portal.settings.FallbackPaths;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContentUtil;
-
-import java.util.Map;
 
 /**
  * @author Iván Zaera
@@ -31,7 +29,7 @@ import java.util.Map;
 public class WikiSettings extends BaseServiceSettings {
 
 	public WikiSettings(Settings settings) {
-		super(settings, _fallbackKeys);
+		super(settings, _fallbackPaths);
 	}
 
 	public String getDisplayStyle() {
@@ -159,18 +157,44 @@ public class WikiSettings extends BaseServiceSettings {
 		typedSettings.setValues("visibleNodes", visibleNodes);
 	}
 
-	private static Map<String, String> _fallbackKeys = MapUtil.fromArray(
-		"emailFromAddress", PropsKeys.WIKI_EMAIL_FROM_ADDRESS,
-		PropsKeys.WIKI_EMAIL_FROM_ADDRESS, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS,
-		"emailFromName", PropsKeys.WIKI_EMAIL_FROM_NAME,
-		PropsKeys.WIKI_EMAIL_FROM_NAME, PropsKeys.ADMIN_EMAIL_FROM_NAME,
-		"emailPageAddedEnabled", PropsKeys.WIKI_EMAIL_PAGE_ADDED_ENABLED,
-		"emailPageAddedSubject", PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT,
-		"emailPageUpdatedEnabled", PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED,
-		"enableCommentRatings", PropsKeys.WIKI_COMMENT_RATINGS_ENABLED,
-		"enableRelatedAssets", PropsKeys.WIKI_RELATED_ASSETS_ENABLED,
-		"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA,
-		"rssDisplayStyle", PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT,
-		"rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT);
+	private static FallbackPaths _getFallbackPaths() {
+		FallbackPaths fallbackPaths = new FallbackPaths();
+
+		fallbackPaths.addPath(
+			"emailFromAddress", PropsKeys.WIKI_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+
+		fallbackPaths.addPath(
+			"emailFromName", PropsKeys.WIKI_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+
+		fallbackPaths.addPath(
+			"emailPageAddedEnabled", PropsKeys.WIKI_EMAIL_PAGE_ADDED_ENABLED);
+
+		fallbackPaths.addPath(
+			"emailPageAddedSubject", PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT);
+
+		fallbackPaths.addPath(
+			"emailPageUpdatedEnabled",
+			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED);
+
+		fallbackPaths.addPath(
+			"enableCommentRatings", PropsKeys.WIKI_COMMENT_RATINGS_ENABLED);
+
+		fallbackPaths.addPath(
+			"enableRelatedAssets", PropsKeys.WIKI_RELATED_ASSETS_ENABLED);
+
+		fallbackPaths.addPath(
+			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+
+		fallbackPaths.addPath(
+			"rssDisplayStyle", PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT);
+
+		fallbackPaths.addPath("rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT);
+
+		return fallbackPaths;
+	}
+
+	private static FallbackPaths _fallbackPaths = _getFallbackPaths();
 
 }

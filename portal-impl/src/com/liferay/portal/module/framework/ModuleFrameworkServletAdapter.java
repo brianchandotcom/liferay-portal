@@ -37,7 +37,7 @@ public class ModuleFrameworkServletAdapter extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		if (!_servlets.isEmpty()) {
+		if (_servlets.isEmpty()) {
 			PortalUtil.sendError(
 				HttpServletResponse.SC_SERVICE_UNAVAILABLE,
 				new ServletException("Module framework is unavailable"),

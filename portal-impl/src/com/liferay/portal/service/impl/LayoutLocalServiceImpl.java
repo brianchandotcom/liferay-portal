@@ -576,6 +576,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					layoutLocalServiceHelper.validateFirstLayout(secondLayout);
 				}
 			}
+			else {
+				Group group = layout.getGroup();
+
+				if (group.isGuest() && !layout.isPrivateLayout()) {
+					throw new RequiredLayoutException(
+						RequiredLayoutException.AT_LEAST_ONE);
+				}
+			}
 		}
 
 		// Child layouts

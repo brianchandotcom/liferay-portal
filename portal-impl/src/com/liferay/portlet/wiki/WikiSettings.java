@@ -14,16 +14,14 @@
 
 package com.liferay.portlet.wiki;
 
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.BaseServiceSettings;
+import com.liferay.portal.settings.FallbackKeys;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContentUtil;
-
-import java.util.Map;
 
 /**
  * @author Iván Zaera
@@ -159,18 +157,44 @@ public class WikiSettings extends BaseServiceSettings {
 		typedSettings.setValues("visibleNodes", visibleNodes);
 	}
 
-	private static Map<String, String> _fallbackKeys = MapUtil.fromArray(
-		"emailFromAddress", PropsKeys.WIKI_EMAIL_FROM_ADDRESS,
-		PropsKeys.WIKI_EMAIL_FROM_ADDRESS, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS,
-		"emailFromName", PropsKeys.WIKI_EMAIL_FROM_NAME,
-		PropsKeys.WIKI_EMAIL_FROM_NAME, PropsKeys.ADMIN_EMAIL_FROM_NAME,
-		"emailPageAddedEnabled", PropsKeys.WIKI_EMAIL_PAGE_ADDED_ENABLED,
-		"emailPageAddedSubject", PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT,
-		"emailPageUpdatedEnabled", PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED,
-		"enableCommentRatings", PropsKeys.WIKI_COMMENT_RATINGS_ENABLED,
-		"enableRelatedAssets", PropsKeys.WIKI_RELATED_ASSETS_ENABLED,
-		"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA,
-		"rssDisplayStyle", PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT,
-		"rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT);
+	private static FallbackKeys _getFallbackKeys() {
+		FallbackKeys fallbackKeys = new FallbackKeys();
+
+		fallbackKeys.addPath(
+			"emailFromAddress", PropsKeys.WIKI_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+
+		fallbackKeys.addPath(
+			"emailFromName", PropsKeys.WIKI_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+
+		fallbackKeys.addPath(
+			"emailPageAddedEnabled", PropsKeys.WIKI_EMAIL_PAGE_ADDED_ENABLED);
+
+		fallbackKeys.addPath(
+			"emailPageAddedSubject", PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT);
+
+		fallbackKeys.addPath(
+			"emailPageUpdatedEnabled",
+			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED);
+
+		fallbackKeys.addPath(
+			"enableCommentRatings", PropsKeys.WIKI_COMMENT_RATINGS_ENABLED);
+
+		fallbackKeys.addPath(
+			"enableRelatedAssets", PropsKeys.WIKI_RELATED_ASSETS_ENABLED);
+
+		fallbackKeys.addPath(
+			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+
+		fallbackKeys.addPath(
+			"rssDisplayStyle", PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT);
+
+		fallbackKeys.addPath("rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT);
+
+		return fallbackKeys;
+	}
+
+	private static FallbackKeys _fallbackKeys = _getFallbackKeys();
 
 }

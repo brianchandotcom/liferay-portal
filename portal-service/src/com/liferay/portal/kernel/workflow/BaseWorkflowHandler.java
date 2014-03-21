@@ -34,6 +34,8 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -77,13 +79,27 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 		return getIconPath(themeDisplay);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(long,
+	 *             PortletRequest, PortletResponse)}
+	 */
+	@Deprecated
 	@Override
 	public String getSummary(long classPK, Locale locale) {
+		return getSummary(classPK, null, null);
+	}
+
+	@Override
+	public String getSummary(
+		long classPK, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
+
 		try {
 			AssetRenderer assetRenderer = getAssetRenderer(classPK);
 
 			if (assetRenderer != null) {
-				return assetRenderer.getSummary(locale);
+				return assetRenderer.getSummary(
+					portletRequest, portletResponse);
 			}
 		}
 		catch (Exception e) {

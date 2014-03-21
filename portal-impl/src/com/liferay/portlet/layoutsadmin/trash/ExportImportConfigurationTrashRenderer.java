@@ -22,6 +22,8 @@ import com.liferay.portal.util.WebKeys;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -59,7 +61,9 @@ public class ExportImportConfigurationTrashRenderer extends BaseTrashRenderer {
 	}
 
 	@Override
-	public String getSummary(Locale locale) {
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return _exportImportConfiguration.getDescription();
 	}
 

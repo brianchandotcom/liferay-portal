@@ -23,6 +23,9 @@ import com.liferay.portlet.wiki.model.WikiNode;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -55,7 +58,9 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 	}
 
 	@Override
-	public String getSummary(Locale locale) {
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return HtmlUtil.stripHtml(_node.getDescription());
 	}
 

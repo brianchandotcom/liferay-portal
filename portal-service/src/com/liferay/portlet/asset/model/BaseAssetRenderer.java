@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -124,7 +125,17 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	@Override
 	public String getSearchSummary(Locale locale) {
-		return getSummary(locale);
+		return getSummary(null, null);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(PortletRequest,
+	 *             PortletResponse)}
+	 */
+	@Deprecated
+	@Override
+	public String getSummary(Locale locale) {
+		return getSummary(null, null);
 	}
 
 	@Override
@@ -339,6 +350,14 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/page.png";
+	}
+
+	protected Locale getLocale(PortletRequest portletRequest) {
+		if (portletRequest != null) {
+			return portletRequest.getLocale();
+		}
+
+		return LocaleUtil.getMostRelevantLocale();
 	}
 
 	protected String getURLViewInContext(

@@ -23,6 +23,9 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 /**
  * @author Eduardo Garcia
  */
@@ -59,7 +62,9 @@ public class MBCategoryTrashRenderer extends BaseTrashRenderer {
 	}
 
 	@Override
-	public String getSummary(Locale locale) {
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return HtmlUtil.stripHtml(_category.getDescription());
 	}
 

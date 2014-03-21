@@ -46,7 +46,7 @@ if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 	viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 }
 
-String summary = StringUtil.shorten(assetRenderer.getSummary(locale), assetPublisherDisplayContext.getAbstractLength());
+String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
 
 String viewURL = null;
 

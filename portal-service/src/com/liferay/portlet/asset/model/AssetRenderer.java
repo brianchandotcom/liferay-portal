@@ -69,12 +69,20 @@ public interface AssetRenderer {
 	public String getNewName(String oldName, String token);
 
 	public String getPreviewPath(
-			PortletRequest portletRequest, PortletResponse PortletResponse)
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception;
 
 	public String getSearchSummary(Locale locale);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(PortletRequest,
+	 *             PortletResponse)}
+	 */
+	@Deprecated
 	public String getSummary(Locale locale);
+
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse);
 
 	public String getThumbnailPath(PortletRequest portletRequest)
 		throws Exception;

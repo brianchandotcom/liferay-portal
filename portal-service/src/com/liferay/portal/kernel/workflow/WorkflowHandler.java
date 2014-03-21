@@ -27,6 +27,8 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -48,7 +50,16 @@ public interface WorkflowHandler {
 
 	public String getIconPath(LiferayPortletRequest liferayPortletRequest);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(long,
+	 *             PortletRequest, PortletResponse)}
+	 */
+	@Deprecated
 	public String getSummary(long classPK, Locale locale);
+
+	public String getSummary(
+		long classPK, PortletRequest portletRequest,
+		PortletResponse portletResponse);
 
 	public String getTitle(long classPK, Locale locale);
 

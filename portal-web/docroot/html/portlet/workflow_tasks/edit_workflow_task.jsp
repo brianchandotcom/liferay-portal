@@ -238,7 +238,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 
 					<c:choose>
 						<c:when test="<%= path == null %>">
-							<%= HtmlUtil.escape(workflowHandler.getSummary(classPK, locale)) %>
+							<%= HtmlUtil.escape(workflowHandler.getSummary(classPK, renderRequest, renderResponse)) %>
 						</c:when>
 						<c:otherwise>
 							<liferay-util:include page="<%= path %>" portletId="<%= assetRendererFactory.getPortletId() %>" />

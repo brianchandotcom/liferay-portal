@@ -63,6 +63,8 @@
 
 		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/node.js')]" />
 
+		<execute selenium="pause" argument1="1000" />
+
 		<execute function="Click#clickAt" />
 	</command>
 

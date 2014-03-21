@@ -33,6 +33,17 @@
 				base: PATH_JAVASCRIPT + '/liferay/',
 				combine: COMBINE,
 				modules: {
+					'liferay-ajax-session': {
+						condition: {
+							trigger: 'aui-io-request'
+						},
+						path: 'ajax_session.js',
+						requires: [
+							'aui-io-request',
+							'liferay-session'
+						]
+					},
+
 					'liferay-app-view-folders': {
 						path: 'app_view_folders.js',
 						requires: [

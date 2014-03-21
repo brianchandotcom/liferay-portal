@@ -340,10 +340,10 @@ public class LocalizationImpl implements Localization {
 		for (Locale locale : locales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			String localeParameter = parameter.concat(
+			String localizedParameter = parameter.concat(
 				StringPool.UNDERLINE).concat(languageId);
 
-			map.put(locale, ParamUtil.getString(request, localeParameter));
+			map.put(locale, ParamUtil.getString(request, localizedParameter));
 		}
 
 		return map;
@@ -368,12 +368,12 @@ public class LocalizationImpl implements Localization {
 		for (Locale locale : locales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			String localePreference = preferenceName.concat(
+			String localizedPreference = preferenceName.concat(
 				StringPool.UNDERLINE).concat(languageId);
 
 			map.put(
 				locale,
-				preferences.getValue(localePreference, StringPool.BLANK));
+				preferences.getValue(localizedPreference, StringPool.BLANK));
 		}
 
 		if (Validator.isNull(propertyName)) {
@@ -404,11 +404,12 @@ public class LocalizationImpl implements Localization {
 		for (Locale locale : locales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			String localeParameter = parameter.concat(
+			String localizedParameter = parameter.concat(
 				StringPool.UNDERLINE).concat(languageId);
 
 			map.put(
-				locale, ParamUtil.getString(portletRequest, localeParameter));
+				locale,
+				ParamUtil.getString(portletRequest, localizedParameter));
 		}
 
 		return map;
@@ -533,15 +534,15 @@ public class LocalizationImpl implements Localization {
 			String localizedParameter =
 				parameter + StringPool.UNDERLINE + languageId;
 
-			String prefixedLocalParameter = localizedParameter;
+			String prefixedLocalizedParameter = localizedParameter;
 
 			if (Validator.isNotNull(prefix)) {
-				prefixedLocalParameter =
+				prefixedLocalizedParameter =
 					prefix + "--" + localizedParameter + "--";
 			}
 
 			String value = ParamUtil.getString(
-				portletRequest, prefixedLocalParameter,
+				portletRequest, prefixedLocalizedParameter,
 				preferences.getValue(localizedParameter, null));
 
 			if (value != null) {

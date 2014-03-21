@@ -192,7 +192,7 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	@include border-radius(5px);
 }
 
-.portlet-journal, .portlet-dynamic-data-list-display {
+.portlet-dynamic-data-list-display, .portlet-journal {
 	.lfr-ddm-container .field-wrapper {
 		@include border-radius(6px);
 	}

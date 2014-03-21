@@ -15,14 +15,6 @@
 		liferaySelenium
 	</#if>
 
-	.assertJavaScriptErrors();
-
-	<#if testCaseName??>
-		selenium
-	<#else>
-		liferaySelenium
-	</#if>
-
 	.assertLiferayErrors();
 
 	${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actionCommand}Description(

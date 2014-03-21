@@ -73,7 +73,7 @@
 		<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
 	</command>
 
-	<command name="DeleteMessageBySOUser" priority="5">
+	<command name="DeleteMessageBySOUser" known-issues="SOS-2108" priority="5">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -256,7 +256,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteMessageDetails" priority="5">
+	<command name="DeleteMessageDetails" known-issues="SOS-2108" priority="5">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -456,7 +456,7 @@
 		<execute action="SOMessages#assertElementPresent" locator-key1="MESSAGE_UNREAD" />
 	</command>
 
-	<command name="MarkAsUnreadMessageDetails" priority="5">
+	<command name="MarkAsUnreadMessageDetails" known-issues="SOS-2108" priority="5">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -862,6 +862,7 @@
 		</execute>
 
 		<execute macro="SOMessages#viewMessage">
+			<var name="connectionName" value="${userName}" />
 			<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />

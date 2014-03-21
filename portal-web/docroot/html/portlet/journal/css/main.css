@@ -68,8 +68,8 @@
 	.article-structure-template-toolbar {
 		.article-structure-toolbar, .article-template-toolbar {
 			display: inline;
-			margin-left: 0.5em;
 			margin-bottom: 0;
+			margin-left: 0.5em;
 		}
 
 		.article-template-image {
@@ -300,8 +300,8 @@
 	.component-group-title {
 		font-size: 12px;
 		font-weight: bold;
-		text-decoration: underline;
 		padding: 4px 0 0;
+		text-decoration: underline;
 	}
 
 	.journal-article-component-container {
@@ -363,8 +363,8 @@
 	}
 
 	.article-entries-pagination {
-		text-align: center;
 		margin: 10px 0;
+		text-align: center;
 
 		.pagination-content {
 			margin: 0;
@@ -912,8 +912,8 @@
 
 	.user-instructions {
 		border-width: 0;
-		padding: 0;
 		margin-bottom: 1em;
+		padding: 0;
 	}
 
 	.button-holder {

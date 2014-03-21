@@ -94,9 +94,9 @@ body.portlet {
 }
 
 .portlet-nested-portlets .portlet-boundary {
+	left: 0 !important;
 	position: relative !important;
 	top: 0 !important;
-	left: 0 !important;
 }
 
 %portlet-action-bar {

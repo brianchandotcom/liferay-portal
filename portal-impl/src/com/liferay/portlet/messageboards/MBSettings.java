@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.BaseServiceSettings;
-import com.liferay.portal.settings.FallbackKeys;
+import com.liferay.portal.settings.FallbackPaths;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.util.MBUtil;
@@ -31,7 +31,7 @@ import com.liferay.util.RSSUtil;
 public class MBSettings extends BaseServiceSettings {
 
 	public MBSettings(Settings settings) {
-		super(settings, _fallbackKeys);
+		super(settings, _fallbackPaths);
 	}
 
 	public String getEmailFromAddress() {
@@ -172,67 +172,67 @@ public class MBSettings extends BaseServiceSettings {
 		return typedSettings.getBooleanValue("threadAsQuestionByDefault");
 	}
 
-	private static FallbackKeys _getFallbackKeys() {
-		FallbackKeys fallbackKeys = new FallbackKeys();
+	private static FallbackPaths _getFallbackPaths() {
+		FallbackPaths fallbackPaths = new FallbackPaths();
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"allowAnonymousPosting",
 			PropsKeys.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"emailFromAddress", PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS,
 			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"emailFromName", PropsKeys.MESSAGE_BOARDS_EMAIL_FROM_NAME,
 			PropsKeys.ADMIN_EMAIL_FROM_NAME);
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"emailHtmlFormat", PropsKeys.MESSAGE_BOARDS_EMAIL_HTML_FORMAT);
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"emailMessageAddedEnabled",
 			PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_ENABLED);
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"emailMessageUpdatedEnabled",
 			PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_ENABLED);
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"enableFlags", PropsKeys.MESSAGE_BOARDS_FLAGS_ENABLED);
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"enableRatings", PropsKeys.MESSAGE_BOARDS_RATINGS_ENABLED);
 
-		fallbackKeys.addPath("enableRss", PropsKeys.MESSAGE_BOARDS_RSS_ENABLED);
+		fallbackPaths.addPath("enableRss", PropsKeys.MESSAGE_BOARDS_RSS_ENABLED);
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"messageFormat", PropsKeys.MESSAGE_BOARDS_MESSAGE_FORMATS_DEFAULT);
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"priorities", PropsKeys.MESSAGE_BOARDS_THREAD_PRIORITIES);
 
-		fallbackKeys.addPath("ranks", PropsKeys.MESSAGE_BOARDS_USER_RANKS);
+		fallbackPaths.addPath("ranks", PropsKeys.MESSAGE_BOARDS_USER_RANKS);
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"recentPostsDateOffset",
 			PropsKeys.MESSAGE_BOARDS_RECENT_POSTS_DATE_OFFSET);
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"rssDisplayStyle", PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT);
 
-		fallbackKeys.addPath("rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT);
+		fallbackPaths.addPath("rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT);
 
-		fallbackKeys.addPath(
+		fallbackPaths.addPath(
 			"subscribeByDefault",
 			PropsKeys.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT);
 
-		return fallbackKeys;
+		return fallbackPaths;
 	}
 
-	private static FallbackKeys _fallbackKeys = _getFallbackKeys();
+	private static FallbackPaths _fallbackPaths = _getFallbackPaths();
 
 }

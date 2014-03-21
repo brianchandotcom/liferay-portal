@@ -658,6 +658,8 @@ public class LiferaySeleniumHelper {
 		}
 
 		if (Validator.equals(
+				TestPropsValues.LIFERAY_PORTAL_BRANCH, "ee-6.2.10") ||
+			Validator.equals(
 				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||
 			Validator.equals(
 				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.2") ||

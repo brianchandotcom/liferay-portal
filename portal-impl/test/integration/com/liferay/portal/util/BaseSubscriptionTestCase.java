@@ -68,6 +68,18 @@ public abstract class BaseSubscriptionTestCase {
 	}
 
 	@Test
+	public void testSubscriptionClassType() throws Exception {
+		long classTypeId = addClassType();
+
+		addSubscriptionClassType(classTypeId);
+
+		addBaseModelWithClassType(
+			_PARENT_CONTAINER_MODEL_ID_DEFAULT, classTypeId);
+
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+	}
+
+	@Test
 	public void testSubscriptionContainerModelWhenInContainerModel()
 		throws Exception {
 
@@ -107,6 +119,15 @@ public abstract class BaseSubscriptionTestCase {
 		long subcontainerModelId = addContainerModel(containerModelId);
 
 		addBaseModel(subcontainerModelId);
+
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+	}
+
+	@Test
+	public void testSubscriptionDefaultClassType() throws Exception {
+		addSubscriptionClassType(_CLASS_TYPE_ID_DEFAULT);
+
+		addBaseModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 	}
@@ -155,11 +176,26 @@ public abstract class BaseSubscriptionTestCase {
 	protected abstract long addBaseModel(long containerModelId)
 		throws Exception;
 
+	protected long addBaseModelWithClassType(
+			long containerModelId, long classTypeId)
+		throws Exception {
+
+		return 0;
+	}
+
+	protected long addClassType() throws Exception {
+		return 0;
+	}
+
 	protected long addContainerModel(long containerModelId) throws Exception {
 		return 0;
 	};
 
 	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
+		return;
+	}
+
+	protected void addSubscriptionClassType(long classTypeId) throws Exception {
 		return;
 	}
 
@@ -171,6 +207,8 @@ public abstract class BaseSubscriptionTestCase {
 	};
 
 	protected Group group;
+
+	private static final long _CLASS_TYPE_ID_DEFAULT = 0;
 
 	private static final long _PARENT_CONTAINER_MODEL_ID_DEFAULT = 0;
 

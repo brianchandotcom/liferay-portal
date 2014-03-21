@@ -36,17 +36,25 @@ import org.apache.tools.ant.DirectoryScanner;
  */
 public class SeleniumBuilderContext {
 
-	public SeleniumBuilderContext(String baseDirName) throws Exception {
-		this(baseDirName, "com/liferay/portalweb/portal/util/liferayselenium/");
+	public SeleniumBuilderContext(String baseDirName, String projectDirName)
+		throws Exception {
+
+		this(
+			baseDirName, projectDirName,
+			"com/liferay/portalweb/portal/util/liferayselenium/");
 	}
 
 	public SeleniumBuilderContext(
-			String baseDirName, String liferaySeleniumDirName)
+			String baseDirName, String projectDirName,
+			String liferaySeleniumDirName)
 		throws Exception {
 
 		_baseDirName = baseDirName;
 
-		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(_baseDirName);
+		_projectDirName = projectDirName;
+
+		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(
+			_baseDirName, _projectDirName);
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -525,6 +533,10 @@ public class SeleniumBuilderContext {
 
 	public String getPathSimpleClassName(String pathName) {
 		return _pathSimpleClassNames.get(pathName);
+	}
+
+	public String getProjectDirName() {
+		return _projectDirName;
 	}
 
 	public int getSeleniumParameterCount(String seleniumCommandName) {
@@ -1281,6 +1293,7 @@ public class SeleniumBuilderContext {
 		new HashMap<String, Element>();
 	private Map<String, String> _pathSimpleClassNames =
 		new HashMap<String, String>();
+	private String _projectDirName;
 	private SeleniumBuilderFileUtil _seleniumBuilderFileUtil;
 	private Map<String, Integer> _seleniumParameterCounts =
 		new HashMap<String, Integer>();

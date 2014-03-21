@@ -26,7 +26,8 @@ public class BaseConverter {
 		this.seleniumBuilderContext = seleniumBuilderContext;
 
 		this.seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(
-			seleniumBuilderContext.getBaseDirName());
+			seleniumBuilderContext.getBaseDirName(),
+			seleniumBuilderContext.getProjectDirName());
 	}
 
 	protected Map<String, Object> getContext() {

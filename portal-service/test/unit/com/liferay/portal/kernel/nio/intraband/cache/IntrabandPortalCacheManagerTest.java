@@ -65,6 +65,8 @@ public class IntrabandPortalCacheManagerTest {
 			intrabandPortalCacheManager.registerCacheManagerListener(null));
 		Assert.assertFalse(
 			intrabandPortalCacheManager.unregisterCacheManagerListener(null));
+
+		intrabandPortalCacheManager.unregisterCacheManagerListeners();
 	}
 
 	@Test

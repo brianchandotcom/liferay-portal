@@ -46,4 +46,6 @@ public interface PortalCacheManager<K extends Serializable, V> {
 	public boolean unregisterCacheManagerListener(
 		CacheManagerListener cacheManagerListener);
 
+	public void unregisterCacheManagerListeners();
+
 }

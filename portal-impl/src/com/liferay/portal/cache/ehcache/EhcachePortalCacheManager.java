@@ -37,6 +37,7 @@ import java.lang.reflect.Field;
 import java.net.URL;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,6 +47,7 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
+import net.sf.ehcache.event.CacheManagerEventListener;
 import net.sf.ehcache.event.CacheManagerEventListenerRegistry;
 import net.sf.ehcache.management.ManagementService;
 import net.sf.ehcache.util.FailSafeTimer;
@@ -171,7 +173,29 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
 			_cacheManager.getCacheManagerEventListenerRegistry();
 
-		return cacheManagerEventListenerRegistry.getRegisteredListeners();
+		Set<CacheManagerEventListener> cacheManagerEventListeners =
+			cacheManagerEventListenerRegistry.getRegisteredListeners();
+
+		Set<CacheManagerListener> cacheManagerListeners =
+			new HashSet<CacheManagerListener>();
+
+		for (CacheManagerEventListener cacheManagerEventListener :
+				cacheManagerEventListeners) {
+
+			if (!(cacheManagerEventListener instanceof
+					PortalCacheManagerEventListener)) {
+
+				continue;
+			}
+
+			PortalCacheManagerEventListener portalCacheManagerEventListener =
+				(PortalCacheManagerEventListener)cacheManagerEventListener;
+
+			cacheManagerListeners.add(
+				portalCacheManagerEventListener.getCacheManagerListener());
+		}
+
+		return cacheManagerListeners;
 	}
 
 	public CacheManager getEhcacheManager() {
@@ -253,6 +277,28 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		return cacheManagerEventListenerRegistry.unregisterListener(
 			new PortalCacheManagerEventListener(cacheManagerListener));
+	}
+
+	@Override
+	public void unregisterCacheManagerListeners() {
+		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
+			_cacheManager.getCacheManagerEventListenerRegistry();
+
+		Set<CacheManagerEventListener> cacheManagerEventListeners =
+			cacheManagerEventListenerRegistry.getRegisteredListeners();
+
+		for (CacheManagerEventListener cacheManagerEventListener :
+				cacheManagerEventListeners) {
+
+			if (!(cacheManagerEventListener instanceof
+					PortalCacheManagerEventListener)) {
+
+				continue;
+			}
+
+			cacheManagerEventListenerRegistry.unregisterListener(
+				cacheManagerEventListener);
+		}
 	}
 
 	protected boolean isTransactionalPortalCache(String name) {

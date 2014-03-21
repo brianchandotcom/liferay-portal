@@ -53,6 +53,10 @@ public class PortalCacheManagerEventListener
 			portalCacheManagerEventListener._cacheManagerListener);
 	}
 
+	public CacheManagerListener getCacheManagerListener() {
+		return _cacheManagerListener;
+	}
+
 	@Override
 	public Status getStatus() {
 		return Status.STATUS_ALIVE;

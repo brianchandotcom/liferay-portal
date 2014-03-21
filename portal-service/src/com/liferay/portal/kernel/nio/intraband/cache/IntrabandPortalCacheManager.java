@@ -123,6 +123,10 @@ public class IntrabandPortalCacheManager
 		return false;
 	}
 
+	@Override
+	public void unregisterCacheManagerListeners() {
+	}
+
 	private final Intraband _intraband;
 	private final Map<String, PortalCache<K, V>> _portalCaches =
 		new ConcurrentHashMap<String, PortalCache<K, V>>();

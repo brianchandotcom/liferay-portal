@@ -616,6 +616,10 @@ public class PortalCacheDatagramReceiveHandlerTest {
 			return false;
 		}
 
+		@Override
+		public void unregisterCacheManagerListeners() {
+		}
+
 		private URL _configurationURL;
 		private boolean _clearAll;
 		private boolean _destroyed;

@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 import java.net.URL;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -96,7 +97,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public Set<CacheManagerListener> getCacheManagerListeners() {
-		return _cacheManagerListeners;
+		return new HashSet<CacheManagerListener>(_cacheManagerListeners);
 	}
 
 	@Override
@@ -139,6 +140,11 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 		CacheManagerListener cacheManagerListener) {
 
 		return _cacheManagerListeners.remove(cacheManagerListener);
+	}
+
+	@Override
+	public void unregisterCacheManagerListeners() {
+		_cacheManagerListeners.clear();
 	}
 
 	private int _cacheInitialCapacity = 10000;

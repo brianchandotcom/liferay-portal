@@ -350,14 +350,14 @@ public class JournalArticleIndexer extends BaseIndexer {
 			}
 
 			document.addText(
-				Field.CONTENT.concat(StringPool.UNDERLINE).concat(languageId),
+				LocalizationUtil.getLocalizedName(Field.CONTENT, languageId),
 				content);
 			document.addText(
-				Field.DESCRIPTION.concat(StringPool.UNDERLINE).concat(
-					languageId),
+				LocalizationUtil.getLocalizedName(
+					Field.DESCRIPTION, languageId),
 				description);
 			document.addText(
-				Field.TITLE.concat(StringPool.UNDERLINE).concat(languageId),
+				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
 				title);
 		}
 

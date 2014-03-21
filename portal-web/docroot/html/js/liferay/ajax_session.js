@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-ajax-session',
 	function(A) {
-	 	var Lang = A.Lang;
+		var Lang = A.Lang;
 
 		var IORequest = A.Component.create(
 			{
@@ -12,7 +12,7 @@ AUI.add(
 						var instance = this;
 
 						if (Liferay.Session) {
-							instance.after(['failure', 'success'], instance._resetSessionInterval, instance);
+							instance.after('complete', instance._resetSessionInterval, instance);
 						}
 					},
 

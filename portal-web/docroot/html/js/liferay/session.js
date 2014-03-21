@@ -94,7 +94,6 @@ AUI.add(
 						var instance = this;
 
 						instance._stopTimer();
-
 						instance._startTimer();
 					},
 

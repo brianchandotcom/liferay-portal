@@ -42,10 +42,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.settings.Settings;
+import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -54,6 +55,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.WikiFormatException;
+import com.liferay.portlet.wiki.WikiSettings;
 import com.liferay.portlet.wiki.engines.WikiEngine;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -64,7 +66,6 @@ import com.liferay.portlet.wiki.service.permission.WikiNodePermission;
 import com.liferay.portlet.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.portlet.wiki.util.comparator.PageTitleComparator;
 import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
-import com.liferay.util.ContentUtil;
 
 import java.io.IOException;
 
@@ -81,7 +82,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -189,14 +189,6 @@ public class WikiUtil {
 		return _instance._getEditPage(format);
 	}
 
-	public static String getEmailFromAddress(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
-
-		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsValues.WIKI_EMAIL_FROM_ADDRESS);
-	}
-
 	public static Map<String, String> getEmailFromDefinitionTerms(
 		RenderRequest request, String emailFromAddress, String emailFromName) {
 
@@ -239,14 +231,6 @@ public class WikiUtil {
 				"the-site-name-associated-with-the-wiki"));
 
 		return definitionTerms;
-	}
-
-	public static String getEmailFromName(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
-
-		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsValues.WIKI_EMAIL_FROM_NAME);
 	}
 
 	public static Map<String, String> getEmailNotificationDefinitionTerms(
@@ -348,94 +332,6 @@ public class WikiUtil {
 		return definitionTerms;
 	}
 
-	public static String getEmailPageAddedBody(PortletPreferences preferences) {
-		String emailPageAddedBody = preferences.getValue(
-			"emailPageAddedBody", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailPageAddedBody)) {
-			return emailPageAddedBody;
-		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY));
-		}
-	}
-
-	public static boolean getEmailPageAddedEnabled(
-		PortletPreferences preferences) {
-
-		String emailPageAddedEnabled = preferences.getValue(
-			"emailPageAddedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailPageAddedEnabled)) {
-			return GetterUtil.getBoolean(emailPageAddedEnabled);
-		}
-		else {
-			return GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_ENABLED));
-		}
-	}
-
-	public static String getEmailPageAddedSubject(
-		PortletPreferences preferences) {
-
-		String emailPageAddedSubject = preferences.getValue(
-			"emailPageAddedSubject", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailPageAddedSubject)) {
-			return emailPageAddedSubject;
-		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT));
-		}
-	}
-
-	public static String getEmailPageUpdatedBody(
-		PortletPreferences preferences) {
-
-		String emailPageUpdatedBody = preferences.getValue(
-			"emailPageUpdatedBody", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailPageUpdatedBody)) {
-			return emailPageUpdatedBody;
-		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY));
-		}
-	}
-
-	public static boolean getEmailPageUpdatedEnabled(
-		PortletPreferences preferences) {
-
-		String emailPageUpdatedEnabled = preferences.getValue(
-			"emailPageUpdatedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailPageUpdatedEnabled)) {
-			return GetterUtil.getBoolean(emailPageUpdatedEnabled);
-		}
-		else {
-			return GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED));
-		}
-	}
-
-	public static String getEmailPageUpdatedSubject(
-		PortletPreferences preferences) {
-
-		String emailPageUpdatedSubject = preferences.getValue(
-			"emailPageUpdatedSubject", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailPageUpdatedSubject)) {
-			return emailPageUpdatedSubject;
-		}
-		else {
-			return ContentUtil.get(
-				PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT));
-		}
-	}
-
 	public static List<Object> getEntries(Hits hits) {
 		List<Object> entries = new ArrayList<Object>();
 
@@ -495,13 +391,12 @@ public class WikiUtil {
 
 		List<WikiNode> nodes = WikiNodeLocalServiceUtil.getNodes(groupId);
 
-		PortletPreferences preferences = portletRequest.getPreferences();
-		String[] visibleNodeNames = StringUtil.split(
-			preferences.getValue("visibleNodes", null));
+		WikiSettings wikiSettings = WikiUtil.getWikiSettings(
+			themeDisplay.getScopeGroupId());
+		String[] visibleNodeNames = wikiSettings.getVisibleNodes();
 		nodes = orderNodes(nodes, visibleNodeNames);
 
-		String[] hiddenNodes = StringUtil.split(
-			preferences.getValue("hiddenNodes", StringPool.BLANK));
+		String[] hiddenNodes = wikiSettings.getHiddenNodes();
 		Arrays.sort(hiddenNodes);
 
 		for (WikiNode node : nodes) {
@@ -629,6 +524,15 @@ public class WikiUtil {
 		}
 
 		return orderByComparator;
+	}
+
+	public static WikiSettings getWikiSettings(long groupId)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, WikiConstants.SERVICE_NAME);
+
+		return new WikiSettings(settings);
 	}
 
 	public static List<WikiNode> orderNodes(

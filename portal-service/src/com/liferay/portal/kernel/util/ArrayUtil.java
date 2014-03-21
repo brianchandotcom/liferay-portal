@@ -1244,6 +1244,16 @@ public class ArrayUtil {
 		return list.toArray(new String[list.size()]);
 	}
 
+	public static void replace(
+		String[] values, String oldValue, String newValue) {
+
+		for (int i = 0; i < values.length; i++) {
+			if (values[i].equals(oldValue)) {
+				values[i] = newValue;
+			}
+		}
+	}
+
 	public static void reverse(boolean[] array) {
 		for (int left = 0, right = array.length - 1; left < right;
 				left++, right--) {

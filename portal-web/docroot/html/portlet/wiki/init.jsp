@@ -37,6 +37,7 @@ page import="com.liferay.portlet.wiki.PageTitleException" %><%@
 page import="com.liferay.portlet.wiki.PageVersionException" %><%@
 page import="com.liferay.portlet.wiki.RequiredNodeException" %><%@
 page import="com.liferay.portlet.wiki.WikiFormatException" %><%@
+page import="com.liferay.portlet.wiki.WikiSettings" %><%@
 page import="com.liferay.portlet.wiki.importers.WikiImporterKeys" %><%@
 page import="com.liferay.portlet.wiki.model.WikiNode" %><%@
 page import="com.liferay.portlet.wiki.model.WikiPage" %><%@
@@ -53,41 +54,39 @@ page import="com.liferay.portlet.wiki.service.permission.WikiPagePermission" %><
 page import="com.liferay.portlet.wiki.service.permission.WikiPermission" %><%@
 page import="com.liferay.portlet.wiki.social.WikiActivityKeys" %><%@
 page import="com.liferay.portlet.wiki.util.WikiCacheUtil" %><%@
+page import="com.liferay.portlet.wiki.util.WikiConstants" %><%@
 page import="com.liferay.portlet.wiki.util.WikiPageAttachmentsUtil" %><%@
 page import="com.liferay.portlet.wiki.util.WikiUtil" %><%@
-page import="com.liferay.portlet.wiki.util.comparator.PageVersionComparator" %><%@
-page import="com.liferay.util.RSSUtil" %>
+page import="com.liferay.portlet.wiki.util.comparator.PageVersionComparator" %>
 
 <%
-String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLANK);
-long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
-boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);
-boolean enablePageRatings = PropsValues.WIKI_PAGE_RATINGS_ENABLED && GetterUtil.getBoolean(portletPreferences.getValue("enablePageRatings", null), true);
-boolean enableComments = PropsValues.WIKI_PAGE_COMMENTS_ENABLED && GetterUtil.getBoolean(portletPreferences.getValue("enableComments", null), true);
-boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null), true);
+WikiSettings wikiSettings = WikiUtil.getWikiSettings(scopeGroupId);
+
+String displayStyle = wikiSettings.getDisplayStyle();
+long displayStyleGroupId = wikiSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId());
+boolean enableRelatedAssets = wikiSettings.getEnableRelatedAssets();
+boolean enablePageRatings = wikiSettings.getEnablePageRatings();
+boolean enableComments = wikiSettings.getEnableComments();
+boolean enableCommentRatings = wikiSettings.getEnableCommentRatings();
 
 List<WikiNode> allNodes = WikiNodeServiceUtil.getNodes(scopeGroupId);
 List<String> allNodeNames = WikiUtil.getNodeNames(allNodes);
 
-String[] visibleNodes = null;
+String[] visibleNodes = wikiSettings.getVisibleNodes();
 
-String visibleNodesPreference = portletPreferences.getValue("visibleNodes", null);
-
-if (visibleNodesPreference != null) {
-	visibleNodes = StringUtil.split(visibleNodesPreference);
-
+if (ArrayUtil.isNotEmpty(visibleNodes)) {
 	allNodes = WikiUtil.orderNodes(allNodes, visibleNodes);
 }
 else {
 	visibleNodes = allNodeNames.toArray(new String[allNodeNames.size()]);
 }
 
-String[] hiddenNodes = StringUtil.split(portletPreferences.getValue("hiddenNodes", null));
+String[] hiddenNodes = wikiSettings.getHiddenNodes();
 
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null), true);
-int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+boolean enableRSS = wikiSettings.getEnableRSS();
+int rssDelta = wikiSettings.getRssDelta();
+String rssDisplayStyle = wikiSettings.getRssDisplayStyle();
+String rssFeedType = wikiSettings.getRssFeedType();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

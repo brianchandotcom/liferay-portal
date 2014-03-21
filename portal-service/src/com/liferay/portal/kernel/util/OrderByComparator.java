@@ -77,6 +77,10 @@ public abstract class OrderByComparator implements Comparator, Serializable {
 		return fields;
 	}
 
+	public String getTableName() {
+		return _tableName;
+	}
+
 	public boolean isAscending() {
 		String orderBy = getOrderBy();
 
@@ -94,11 +98,17 @@ public abstract class OrderByComparator implements Comparator, Serializable {
 		return isAscending();
 	}
 
+	public void setTableName(String value) {
+		_tableName = value;
+	}
+
 	@Override
 	public String toString() {
 		return getOrderBy();
 	}
 
 	private static final String _ORDER_BY_DESC = " DESC";
+
+	private String _tableName;
 
 }

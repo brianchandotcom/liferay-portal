@@ -338,10 +338,8 @@ public class LocalizationImpl implements Localization {
 		Map<Locale, String> map = new HashMap<Locale, String>();
 
 		for (Locale locale : locales) {
-			String languageId = LocaleUtil.toLanguageId(locale);
-
-			String localizedParameter = parameter.concat(
-				StringPool.UNDERLINE).concat(languageId);
+			String localizedParameter = getLocalizedName(
+				parameter, LocaleUtil.toLanguageId(locale));
 
 			map.put(locale, ParamUtil.getString(request, localizedParameter));
 		}
@@ -366,10 +364,8 @@ public class LocalizationImpl implements Localization {
 		Map<Locale, String> map = new HashMap<Locale, String>();
 
 		for (Locale locale : locales) {
-			String languageId = LocaleUtil.toLanguageId(locale);
-
-			String localizedPreference = preferenceName.concat(
-				StringPool.UNDERLINE).concat(languageId);
+			String localizedPreference = getLocalizedName(
+				preferenceName, LocaleUtil.toLanguageId(locale));
 
 			map.put(
 				locale,
@@ -402,10 +398,8 @@ public class LocalizationImpl implements Localization {
 		Map<Locale, String> map = new HashMap<Locale, String>();
 
 		for (Locale locale : locales) {
-			String languageId = LocaleUtil.toLanguageId(locale);
-
-			String localizedParameter = parameter.concat(
-				StringPool.UNDERLINE).concat(languageId);
+			String localizedParameter = getLocalizedName(
+				parameter, LocaleUtil.toLanguageId(locale));
 
 			map.put(
 				locale,
@@ -531,8 +525,7 @@ public class LocalizationImpl implements Localization {
 		for (Locale locale : locales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			String localizedParameter =
-				parameter + StringPool.UNDERLINE + languageId;
+			String localizedParameter = getLocalizedName(parameter, languageId);
 
 			String prefixedLocalizedParameter = localizedParameter;
 
@@ -563,6 +556,11 @@ public class LocalizationImpl implements Localization {
 	}
 
 	@Override
+	public String getLocalizedName(String name, String languageId) {
+		return name.concat(StringPool.UNDERLINE).concat(languageId);
+	}
+
+	@Override
 	public Map<Locale, String> getLocalizedParameter(
 		PortletRequest portletRequest, String parameter) {
 
@@ -575,7 +573,7 @@ public class LocalizationImpl implements Localization {
 			LocaleUtil.getDefault());
 
 		if (!languageId.equals(defaultLanguageId)) {
-			key += StringPool.UNDERLINE + languageId;
+			key = getLocalizedName(key, languageId);
 		}
 
 		return key;

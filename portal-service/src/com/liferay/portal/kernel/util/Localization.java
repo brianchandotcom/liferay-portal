@@ -242,6 +242,8 @@ public interface Localization {
 		PortletPreferences preferences, PortletRequest portletRequest,
 		String parameter, String prefix, String defaultValue);
 
+	public String getLocalizedName(String name, String languageId);
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getLocalizationMap(PortletRequest, String)}

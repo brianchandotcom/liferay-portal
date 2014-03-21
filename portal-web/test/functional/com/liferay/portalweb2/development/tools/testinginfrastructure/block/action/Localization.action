@@ -1,0 +1,7 @@
+<definition>
+	<command name="click">
+		<default>
+			<execute function="Click#clickAtAndWait" />
+		</default>
+	</command>
+</definition>

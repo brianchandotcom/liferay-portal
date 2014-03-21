@@ -5,6 +5,12 @@
 		</case>
 	</command>
 
+	<command name="assertTextEquals">
+		<case locator-key1="MESSAGE_BODY_2">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
 	<command name="click">
 		<case comparator="startsWith" locator-key1="MESSAGE_EDIT_">
 			<execute function="Click#textClickAtAndWait" value1="Edit" />

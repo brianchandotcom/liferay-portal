@@ -88,6 +88,47 @@
 	<td>//button[@type='button' and contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ATTACHMENTS-->
+<tr>
+	<td>ATTACHMENTS_DROPDOWN</td>
+	<td>//div[@id='mbMessageAttachmentsPanel']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_DROPDOWN_COLLAPSED</td>
+	<td>//div[contains(@class,'header-collapsed') and @data-persist-id='mbMessageAttachmentsPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_FILE_FIELD_1</td>
+	<td>//input[contains(@id,'_msgFile1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_FILE_FIELD_2</td>
+	<td>//input[contains(@id,'_msgFile2')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_FILE_FIELD_3</td>
+	<td>//input[contains(@id,'_msgFile3')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_FILE_FIELD_4</td>
+	<td>//input[contains(@id,'_msgFile4')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_FILE_FIELD_5</td>
+	<td>//input[contains(@id,'_msgFile5')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

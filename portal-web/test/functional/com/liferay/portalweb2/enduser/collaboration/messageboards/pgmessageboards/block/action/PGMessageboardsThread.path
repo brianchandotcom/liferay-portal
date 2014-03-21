@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE_HEADER</td>
 	<td>//h3[@class='header-title']</td>
 	<td></td>
@@ -97,6 +107,11 @@
 	<td></td>
 </tr>
 <!--MESSAGE-->
+<tr>
+	<td>MESSAGE_BAN_THIS_USER</td>
+	<td>//div[contains(.,'${key_userName}')]/div/span/a/span[contains(.,'Ban This User')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>MESSAGE_SUBJECT_1</td>
 	<td>xpath=(//div[@class='subject']/a)[1]</td>
@@ -195,6 +210,11 @@
 <tr>
 	<td>MESSAGE_SPLIT_THREAD</td>
 	<td>//table[contains(.,'${key_threadBody}')]/tbody/tr/td[@class='thread-bottom']/ul//a[contains(.,'Split Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_ATTACHMENT_IMAGE</td>
+	<td>//div[@class='message-attachments']/div/img[contains(@src,'${key_mbThreadAttachment}')]</td>
 	<td></td>
 </tr>
 </tbody>

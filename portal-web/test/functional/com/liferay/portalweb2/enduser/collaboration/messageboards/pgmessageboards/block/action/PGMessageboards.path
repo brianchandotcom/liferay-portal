@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_BUTTON</td>
-	<td>//button[contains(.,'Add Category')]</td>
+	<td>//button[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -225,6 +225,11 @@
 <tr>
 	<td>THREAD_TABLE_THREAD</td>
 	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_FLAG</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>

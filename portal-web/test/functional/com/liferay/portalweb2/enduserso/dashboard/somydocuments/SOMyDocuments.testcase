@@ -86,17 +86,13 @@
 	</command>
 
 	<command name="AddFolderDocument" priority="5">
-		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
-		<var name="dmDocumentFile" value="${dmDocumentFile}" />
-		<var name="dmDocumentSize" value="${dmDocumentSize}" />
-		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-		<var name="dmDocumentUploader" value="${dmDocumentUploader}" />
-		<var name="dmFolderDescription" value="${dmFolderDescription}" />
-		<var name="dmFolderName" value="${dmFolderName}" />
-		<var name="key_siteName" value="${key_siteName}" />
-		<var name="pageName" value="${pageName}" />
-		<var name="pageType" value="${pageType}" />
-		<var name="siteName" value="${siteName}" />
+		<var name="dmDocumentDescription" value="DM Folder Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentTitle" value="DM Folder Document Title" />
+		<var name="dmDocumentUploader" value="Test Test" />
+		<var name="dmDocumentVersionNumber" value="1.0" />
+		<var name="dmFolderDescription" value="DM Folder Description" />
+		<var name="dmFolderName" value="DM Folder Name" />
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 

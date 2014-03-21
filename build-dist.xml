@@ -1890,6 +1890,15 @@ release was successful.</echo>
 
 	<target name="unzip-weblogic">
 		<if>
+			<not>
+				<equals arg1="${app.server.weblogic.major.version}" arg2="12" />
+			</not>
+			<then>
+				<fail>Weblogic ${app.server.weblogic.major.version} is unsupported.</fail>
+			</then>
+		</if>
+
+		<if>
 			<available file="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}" />
 			<then>
 				<antcall target="unzip-weblogic-custom" />

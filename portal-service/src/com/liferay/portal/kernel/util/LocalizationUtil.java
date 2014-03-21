@@ -189,6 +189,10 @@ public class LocalizationUtil {
 			preferences, portletRequest, parameter, prefix, defaultValue);
 	}
 
+	public static String getLocalizedName(String name, String languageId) {
+		return getLocalization().getLocalizedName(name, languageId);
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getLocalizationMap}
 	 */

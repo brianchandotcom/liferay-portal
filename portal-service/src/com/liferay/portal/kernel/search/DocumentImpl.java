@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -62,7 +63,7 @@ public class DocumentImpl implements Document {
 	}
 
 	public static String getLocalizedName(String languageId, String name) {
-		return name.concat(StringPool.UNDERLINE).concat(languageId);
+		return LocalizationUtil.getLocalizedName(name, languageId);
 	}
 
 	public static String getSortableFieldName(String name) {

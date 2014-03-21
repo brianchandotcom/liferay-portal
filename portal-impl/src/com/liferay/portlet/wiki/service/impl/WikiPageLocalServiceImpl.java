@@ -497,9 +497,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getNodeId(), page.getTitle());
 
 		for (WikiPage childrenPage : childrenPages) {
-			if (!childrenPage.isApproved() ||
-				(!childrenPage.isInTrash() && page.isInTrash())) {
-
+			if (!childrenPage.isApproved()) {
 				childrenPage.setParentTitle(StringPool.BLANK);
 
 				wikiPagePersistence.update(childrenPage);
@@ -513,9 +511,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getNodeId(), page.getTitle());
 
 		for (WikiPage redirectPage : redirectPages) {
-			if (!redirectPage.isApproved() ||
-				(!redirectPage.isInTrash() && page.isInTrash())) {
-
+			if (!redirectPage.isApproved()) {
 				redirectPage.setRedirectTitle(StringPool.BLANK);
 
 				wikiPagePersistence.update(redirectPage);

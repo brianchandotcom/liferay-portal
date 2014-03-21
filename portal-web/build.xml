@@ -881,13 +881,12 @@
 		</java>
 	</target>
 
-	<target name="build-selenium-new-block">
+	<target name="build-selenium-new">
 		<if>
 			<not>
-				<isset property="test.class" />
+				<equals arg1="${delete.function.generated}" arg2="false" />
 			</not>
 			<then>
-				<property name="test.class" value="null" />
 				<delete dir="${basedir.unix}/test/functional-generated" />
 			</then>
 		</if>
@@ -897,7 +896,7 @@
 				<isset property="selenium.types" />
 			</not>
 			<then>
-				<property name="selenium.types" value="action,function,macro,path" />
+				<property name="selenium.types" value="action,function,macro,path,testcase" />
 			</then>
 		</if>
 
@@ -917,31 +916,51 @@
 	</target>
 
 	<target name="build-selenium-new-action">
-		<antcall target="build-selenium-new-block">
+		<antcall target="build-selenium-new">
+			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="action" />
 		</antcall>
 	</target>
 
+	<target name="build-selenium-new-block">
+		<antcall target="build-selenium-new">
+			<param name="selenium.types" value="action,function,macro,path" />
+		</antcall>
+	</target>
+
 	<target name="build-selenium-new-function">
-		<antcall target="build-selenium-new-block">
+		<antcall target="build-selenium-new">
+			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="function" />
 		</antcall>
 	</target>
 
 	<target name="build-selenium-new-macro">
-		<antcall target="build-selenium-new-block">
+		<antcall target="build-selenium-new">
+			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="macro" />
 		</antcall>
 	</target>
 
 	<target name="build-selenium-new-path">
-		<antcall target="build-selenium-new-block">
+		<antcall target="build-selenium-new">
+			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="path" />
 		</antcall>
 	</target>
 
 	<target name="build-selenium-new-test-case">
-		<antcall target="build-selenium-new-block">
+		<if>
+			<not>
+				<isset property="test.class" />
+			</not>
+			<then>
+				<fail>Please set "test.class".</fail>
+			</then>
+		</if>
+
+		<antcall target="build-selenium-new">
+			<param name="delete.function.generated" value="false" />
 			<param name="selenium.types" value="testcase" />
 		</antcall>
 	</target>

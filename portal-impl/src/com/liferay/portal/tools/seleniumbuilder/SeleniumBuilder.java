@@ -117,42 +117,42 @@ public class SeleniumBuilder {
 			TestCaseConverter testCaseConverter = new TestCaseConverter(
 				_seleniumBuilderContext);
 
-			try {
-				String testClass = arguments.get("test.class");
-				String testCaseName = "";
-				String testCaseCommandName = "";
+			Set<String> testCaseNames =
+				_seleniumBuilderContext.getTestCaseNames();
+
+			for (String testCaseName : testCaseNames) {
+				_seleniumBuilderContext.validateTestCaseElements(testCaseName);
+			}
+
+			String testClass = arguments.get("test.class");
+
+			if (!testClass.equals("${test.class}")) {
+				String testCaseCommandName = null;
+				String testCaseName = null;
 
 				if (testClass.contains("#")) {
-					String[] testClassParts = testClass.split("#");
-					testCaseName = testClassParts[0];
+					String[] testClassParts = StringUtil.split(testClass, "#");
+
 					testCaseCommandName = testClassParts[1];
-
-					if (testCaseName.endsWith("TestCase")) {
-						testCaseName = testCaseName.replace("TestCase", "");
-					}
-
-					if (testCaseCommandName.startsWith("test")) {
-						testCaseCommandName = testCaseCommandName.replaceFirst(
-							"test", "");
-					}
-
-					testClass = testCaseName + "#" + testCaseCommandName;
-
-					_seleniumBuilderContext.validateTestCaseElements(
-						testCaseName);
-
-					testCaseConverter.convert(testCaseName, testClass);
+					testCaseName = testClassParts[0];
 				}
 				else {
 					testCaseName = testClass;
-
-					_seleniumBuilderContext.validateTestCaseElements(
-						testCaseName);
-
-					testCaseConverter.convert(testCaseName, testClass);
 				}
-			}
-			catch (NullPointerException npe) {
+
+				if ((testCaseCommandName != null) &&
+					testCaseCommandName.startsWith("test")) {
+
+					testCaseCommandName = StringUtil.replaceFirst(
+						testCaseCommandName, "test", "");
+				}
+
+				if (testCaseName.endsWith("TestCase")) {
+					testCaseName = StringUtil.replaceLast(
+						testCaseName, "TestCase", "");
+				}
+
+				testCaseConverter.convert(testCaseName, testCaseCommandName);
 			}
 		}
 

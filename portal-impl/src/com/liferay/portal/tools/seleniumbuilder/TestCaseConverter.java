@@ -25,7 +25,7 @@ public class TestCaseConverter extends BaseConverter {
 		super(seleniumBuilderContext);
 	}
 
-	public void convert(String testCaseName, String testClass)
+	public void convert(String testCaseName, String testCaseCommandName)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
@@ -36,9 +36,9 @@ public class TestCaseConverter extends BaseConverter {
 		context.put("ifTypeStack", new FreeMarkerStack());
 		context.put("logicalOperatorElementStack", new FreeMarkerStack());
 		context.put("macroNameStack", new FreeMarkerStack());
+		context.put("testCaseCommandName", testCaseCommandName);
 		context.put("testCaseNameStack", new FreeMarkerStack());
 		context.put("testCaseName", testCaseName);
-		context.put("testClass", testClass);
 		context.put("variableContextStack", new FreeMarkerStack());
 
 		String javaContent = processTemplate("test_case.ftl", context);

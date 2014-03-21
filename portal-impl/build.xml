@@ -629,12 +629,16 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../portal-web" target="build-selenium-old" />
 	</target>
 
-	<target name="build-selenium-new-block">
-		<ant dir="../portal-web" target="build-selenium-new-block" />
+	<target name="build-selenium-new">
+		<ant dir="../portal-web" target="build-selenium-new" />
 	</target>
 
 	<target name="build-selenium-new-action">
 		<ant dir="../portal-web" target="build-selenium-new-action" />
+	</target>
+
+	<target name="build-selenium-new-block">
+		<ant dir="../portal-web" target="build-selenium-new-block" />
 	</target>
 
 	<target name="build-selenium-new-function">

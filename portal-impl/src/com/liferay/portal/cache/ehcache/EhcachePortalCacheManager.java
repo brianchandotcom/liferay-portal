@@ -37,6 +37,7 @@ import java.lang.reflect.Field;
 import java.net.URL;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -171,7 +172,21 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
 			_cacheManager.getCacheManagerEventListenerRegistry();
 
-		return cacheManagerEventListenerRegistry.getRegisteredListeners();
+		Set<PortalCacheManagerEventListener> portalCacheManagerEventListeners =
+			cacheManagerEventListenerRegistry.getRegisteredListeners();
+
+		Set<CacheManagerListener> cacheManagerListeners =
+			new HashSet<CacheManagerListener>();
+
+		for (
+			PortalCacheManagerEventListener portalCacheManagerEventListener :
+				portalCacheManagerEventListeners) {
+
+			cacheManagerListeners.add(
+				portalCacheManagerEventListener.getCacheManagerListener());
+		}
+
+		return cacheManagerListeners;
 	}
 
 	public CacheManager getEhcacheManager() {

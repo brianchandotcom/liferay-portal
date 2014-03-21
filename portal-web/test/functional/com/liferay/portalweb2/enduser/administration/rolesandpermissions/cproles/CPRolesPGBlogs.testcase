@@ -1773,7 +1773,7 @@
 		</execute>
 	</command>
 
-	<command name="SubcribeBlogsRegRole" priority="5">
+	<command name="SubscribeBlogsRegRole" priority="5">
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_SUBSCRIBE_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Subscribe" />
@@ -1964,7 +1964,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewNoPermissionPG" />
+		<execute macro="BlogsPortlet#viewAsSiteMemberPG" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
@@ -2000,7 +2000,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewNoPermissionPG" />
+		<execute macro="BlogsPortlet#viewAsSiteMemberPG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -2044,7 +2044,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewNoPermissionPG" />
+		<execute macro="BlogsPortlet#viewAsSiteMemberPG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -2102,7 +2102,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewNoPermissionPG" />
+		<execute macro="BlogsPortlet#viewAsSiteMemberPG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -2406,7 +2406,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewNoPermissionPG" />
+		<execute macro="BlogsPortlet#viewAsSiteMemberPG" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
@@ -2442,7 +2442,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewNoPermissionPG" />
+		<execute macro="BlogsPortlet#viewAsSiteMemberPG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -2486,7 +2486,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewNoPermissionPG" />
+		<execute macro="BlogsPortlet#viewAsSiteMemberPG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -2544,7 +2544,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewNoPermissionPG" />
+		<execute macro="BlogsPortlet#viewAsSiteMemberPG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />

@@ -56,7 +56,7 @@ public class DLActionsDisplayContext {
 		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
 		if ((_fileEntryTypeId == -1) && (fileEntry != null) &&
-				fileEntry.getModel() instanceof DLFileEntry) {
+			(fileEntry.getModel() instanceof DLFileEntry)) {
 
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 

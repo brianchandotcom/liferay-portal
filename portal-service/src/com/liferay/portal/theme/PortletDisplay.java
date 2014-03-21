@@ -29,6 +29,11 @@ import java.io.Writer;
 import javax.portlet.PortletPreferences;
 
 /**
+ * PortletDisplay, just like {@link ThemeDisplay}, contains a lot of 
+ * contextual information about the currently rendered portlet. An
+ * object of this class is naturally only available in the context of
+ * a single portlet, not on the page level.
+ * 
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  */
@@ -188,6 +193,12 @@ public class PortletDisplay implements Serializable {
 		return _content;
 	}
 
+	/**
+	 * In case this portlet is configured to appear in the ControlPanel,
+	 * retrieve the category that it's displayed in. This is configured
+	 * in liferay-portlet.xml
+	 * @return this portlet's ControlPanel category
+	 */
 	public String getControlPanelCategory() {
 		return _controlPanelCategory;
 	}

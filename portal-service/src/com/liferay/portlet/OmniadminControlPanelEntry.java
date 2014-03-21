@@ -19,10 +19,17 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
+ * This {@link ControlPanelEntry} class is used as the 
+ * control-panel-entry-class (declared in liferay-portlet.xml) for
+ * portlets that shall only be visible/accessible to the Omni
+ * Administrator
  * @author Jorge Ferrer
  */
 public class OmniadminControlPanelEntry extends BaseControlPanelEntry {
 
+	/**
+	 * @return true if the current user is OmniAdmin
+	 */
 	@Override
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group, Portlet portlet)

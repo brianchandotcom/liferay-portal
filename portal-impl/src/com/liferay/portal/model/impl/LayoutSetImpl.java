@@ -37,6 +37,8 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import java.io.IOException;
 
 /**
+ * Each {@link Group} in Liferay can have a public and a private LayoutSet.
+ * This keeps information common to all pages (layouts) in the LayoutSet 
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
@@ -45,17 +47,32 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	public LayoutSetImpl() {
 	}
 
+	/**
+	 * ColorSchemes can - just like themes - be configured on the LayoutSet level.
+	 * This method retrieves the layoutSet's colorScheme. It can be overridden on
+	 * the layout level.
+	 * @return the colorScheme for this whole layoutSet
+	 */
 	@Override
 	public ColorScheme getColorScheme() {
 		return ThemeLocalServiceUtil.getColorScheme(
 			getCompanyId(), getTheme().getThemeId(), getColorSchemeId(), false);
 	}
 
+	/**
+	 * @return the group that this LayoutSet belongs to.
+	 */
 	@Override
 	public Group getGroup() throws PortalException {
 		return GroupLocalServiceUtil.getGroup(getGroupId());
 	}
 
+	/**
+	 * A prototype's name on the UI is SiteTemplate. If this LayoutSet is based
+	 * on a SiteTemplate, this method retrieves its id. 
+	 * @return this layoutSet prototype's id, 0 if the layoutSet doesn't have a 
+	 *         prototype  
+	 */
 	@Override
 	public long getLayoutSetPrototypeId() throws PortalException {
 		String layoutSetPrototypeUuid = getLayoutSetPrototypeUuid();
@@ -169,6 +186,12 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		return value;
 	}
 
+	/**
+	 * retrieve the virtualHost name configured for this LayoutSet. When
+	 * accessed with this virtualHost name, the URL elements "/web/sitename"
+	 * or "/group/sitename" can be omitted
+	 * @return this layoutSet's virtualHost name, empty string if unconfigured
+	 */
 	@Override
 	public String getVirtualHostname() {
 		if (_virtualHostname != null) {
@@ -237,6 +260,11 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		super.setSettings(_settingsProperties.toString());
 	}
 
+	/**
+	 * set this LayoutSet's VirtualHost name. When the portal is being accessed
+	 * with this hostname, the URL elements /web/sitename or /group/sitename 
+	 * can be omitted.
+	 */
 	@Override
 	public void setVirtualHostname(String virtualHostname) {
 		_virtualHostname = virtualHostname;

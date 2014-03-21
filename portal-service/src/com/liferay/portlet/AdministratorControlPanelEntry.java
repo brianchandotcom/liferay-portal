@@ -19,10 +19,17 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
+ * This {@link ControlPanelEntry} class is used as the 
+ * control-panel-entry-class (declared in liferay-portlet.xml) for
+ * portlets that shall only be visible/accessible to the company's
+ * Administrator
  * @author Brian Wing Shun Chan
  */
 public class AdministratorControlPanelEntry extends BaseControlPanelEntry {
 
+	/**
+	 * @return true if the current user is Administrator for this company
+	 */
 	@Override
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group, Portlet portlet)

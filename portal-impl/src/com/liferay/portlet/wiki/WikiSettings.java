@@ -22,7 +22,6 @@ import com.liferay.portal.settings.Settings;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContentUtil;
-import com.liferay.util.RSSUtil;
 
 import java.util.Map;
 

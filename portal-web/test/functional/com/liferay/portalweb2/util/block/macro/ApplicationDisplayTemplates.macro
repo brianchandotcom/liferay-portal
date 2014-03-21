@@ -1,4 +1,23 @@
 <definition>
+	<command name="addADTviaPortletCP">
+		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
+		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="CPADTConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<if>
+			<condition action="CPADTConfiguration#isElementPresent" locator-key1="NAVIGATION_DISPLAY_SETTINGS" />
+			<then>
+				<execute action="CPADTConfiguration#assertClick" locator-key1="NAVIGATION_DISPLAY_SETTINGS" value1="Display Settings" />
+			</then>
+		</if>
+
+		<execute action="CPADTConfiguration#select" locator-key1="DISPLAY_TEMPLATE_SELECT" value1="${adtType} Test ADT" />
+		<execute action="CPADTConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPADTConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="CPADTConfiguration#selectFrameTop" locator-key1="CONFIGURATION_IFRAME" value1="relative=top" />
+	</command>
+
 	<command name="addADTviaPortletPG">
 		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
 		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
@@ -23,9 +42,6 @@
 
 		<execute action="CPApplicationdisplaytemplates#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no templates." />
 		<execute action="CPApplicationdisplaytemplates#assertClick" locator-key1="ADD" value1="Add" />
-
-		<var name="key_adtType" value="${adtType}" />
-
 		<execute action="CPApplicationdisplaytemplates#assertClick" locator-key1="ADD_MENULIST" value1="${adtType} Template" />
 
 		<execute action="CPApplicationdisplaytemplatesAdd#assertTextEquals" locator-key1="HEADER" value1="New ${adtType} Template" />

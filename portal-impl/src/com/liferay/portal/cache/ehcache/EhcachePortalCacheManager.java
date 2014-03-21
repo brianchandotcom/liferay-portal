@@ -279,6 +279,28 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			new PortalCacheManagerEventListener(cacheManagerListener));
 	}
 
+	@Override
+	public void unregisterCacheManagerListeners() {
+		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
+			_cacheManager.getCacheManagerEventListenerRegistry();
+
+		Set<CacheManagerEventListener> cacheManagerEventListeners =
+			cacheManagerEventListenerRegistry.getRegisteredListeners();
+
+		for (CacheManagerEventListener cacheManagerEventListener :
+				cacheManagerEventListeners) {
+
+			if (!(cacheManagerEventListener instanceof
+					PortalCacheManagerEventListener)) {
+
+				continue;
+			}
+
+			cacheManagerEventListenerRegistry.unregisterListener(
+				cacheManagerEventListener);
+		}
+	}
+
 	protected boolean isTransactionalPortalCache(String name) {
 		for (String namePattern : PropsValues.TRANSACTIONAL_CACHE_NAMES) {
 			if (StringUtil.wildcardMatches(

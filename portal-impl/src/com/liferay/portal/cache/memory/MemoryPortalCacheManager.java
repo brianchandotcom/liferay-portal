@@ -142,6 +142,11 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 		return _cacheManagerListeners.remove(cacheManagerListener);
 	}
 
+	@Override
+	public void unregisterCacheManagerListeners() {
+		_cacheManagerListeners.clear();
+	}
+
 	private int _cacheInitialCapacity = 10000;
 	private int _cacheManagerInitialCapacity = 10000;
 	private Set<CacheManagerListener> _cacheManagerListeners =

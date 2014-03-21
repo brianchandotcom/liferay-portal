@@ -117,6 +117,12 @@ public class QueryDefinition {
 		_orderByComparator = orderByComparator;
 	}
 
+	public void setOrderByComparatorTableName(String tableName) {
+		if (_orderByComparator != null) {
+			_orderByComparator.setTableName(tableName);
+		}
+	}
+
 	public void setStart(int start) {
 		_start = start;
 	}

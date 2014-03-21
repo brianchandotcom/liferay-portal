@@ -243,6 +243,7 @@ boolean expired = true;
 												<portlet:param name="struts_action" value="/journal/edit_article" />
 												<portlet:param name="redirect" value="<%= currentURL %>" />
 												<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+												<portlet:param name="folderId" value="<%= String.valueOf(article.getFolderId()) %>" />
 												<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 												<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
 											</liferay-portlet:renderURL>
@@ -314,6 +315,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 					<portlet:param name="struts_action" value="/journal/edit_article" />
 					<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(latestArticle.getGroupId()) %>" />
+					<portlet:param name="folderId" value="<%= String.valueOf(latestArticle.getFolderId()) %>" />
 					<portlet:param name="articleId" value="<%= latestArticle.getArticleId() %>" />
 					<portlet:param name="version" value="<%= String.valueOf(latestArticle.getVersion()) %>" />
 					<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />

@@ -6475,6 +6475,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		private void _clearDefaultUserCache(Serializable serializable) {
+			if (!(serializable instanceof UserCacheModel)) {
+				return;
+			}
+
 			UserCacheModel userCacheModel = (UserCacheModel)serializable;
 
 			if (userCacheModel.defaultUser) {

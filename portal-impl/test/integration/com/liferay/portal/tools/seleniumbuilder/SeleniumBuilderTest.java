@@ -29,7 +29,7 @@ public class SeleniumBuilderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(".");
+		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(".", ".");
 	}
 
 	@Test

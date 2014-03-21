@@ -35,7 +35,7 @@ public class SeleniumBuilderContextTest {
 	public static void setUpClass() throws Exception {
 		try {
 			_seleniumBuilderContext = new SeleniumBuilderContext(
-				_BASE_DIR, _LIFERAY_SELENIUM_DIR);
+				_BASE_DIR, ".", _LIFERAY_SELENIUM_DIR);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

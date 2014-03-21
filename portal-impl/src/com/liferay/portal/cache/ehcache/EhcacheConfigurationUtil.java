@@ -139,6 +139,10 @@ public class EhcacheConfigurationUtil {
 			return;
 		}
 
+		if (!PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED) {
+			cacheConfiguration.addBootstrapCacheLoaderFactory(null);
+		}
+
 		List<CacheEventListenerFactoryConfiguration>
 			cacheEventListenerFactoryConfigurations =
 				cacheConfiguration.getCacheEventListenerConfigurations();

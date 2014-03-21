@@ -84,14 +84,18 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (Validator.isNotNull(cmd)) {
-			validateDisplayStyleViews(actionRequest);
-			validateEmail(actionRequest, "emailFileEntryAdded", true);
-			validateEmail(actionRequest, "emailFileEntryUpdated", true);
-			validateEmailFrom(actionRequest);
-			validateRootFolder(actionRequest);
+			validate(actionRequest);
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	protected void validate(ActionRequest actionRequest) throws Exception {
+		validateDisplayStyleViews(actionRequest);
+		validateEmail(actionRequest, "emailFileEntryAdded", true);
+		validateEmail(actionRequest, "emailFileEntryUpdated", true);
+		validateEmailFrom(actionRequest);
+		validateRootFolder(actionRequest);
 	}
 
 	protected void validateDisplayStyleViews(ActionRequest actionRequest) {

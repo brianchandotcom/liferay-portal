@@ -14,55 +14,17 @@
 
 package com.liferay.portlet.documentlibrarydisplay.action;
 
-import com.liferay.portal.NoSuchRepositoryEntryException;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-
 import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 
 /**
  * @author Sergio González
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+public class ConfigurationActionImpl
+	extends com.liferay.portlet.documentlibrary.action.ConfigurationActionImpl {
 
 	@Override
-	public void processAction(
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
+	public void validate(ActionRequest actionRequest) throws Exception {
 		validateRootFolder(actionRequest);
-
-		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	protected void validateRootFolder(ActionRequest actionRequest)
-		throws Exception {
-
-		long rootFolderId = GetterUtil.getLong(
-			getParameter(actionRequest, "rootFolderId"));
-
-		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			try {
-				DLAppLocalServiceUtil.getFolder(rootFolderId);
-			}
-			catch (Exception e) {
-				if (e instanceof NoSuchFolderException ||
-					e instanceof NoSuchRepositoryEntryException) {
-
-					SessionErrors.add(actionRequest, "rootFolderIdInvalid");
-				}
-				else {
-					throw e;
-				}
-			}
-		}
 	}
 
 }

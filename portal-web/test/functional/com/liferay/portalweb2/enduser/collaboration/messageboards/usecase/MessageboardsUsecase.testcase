@@ -792,7 +792,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsPortlet#viewBannedUser">
+		<execute macro="MessageboardsPortlet#viewBannedUserPG">
 			<var name="userScreenName" value="userfn1 userln1" />
 		</execute>
 
@@ -800,7 +800,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsPortlet#viewBannedUser">
+		<execute macro="MessageboardsPortlet#viewBannedUserPG">
 			<var name="userScreenName" value="userfn2 userln2" />
 		</execute>
 	</command>

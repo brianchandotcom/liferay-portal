@@ -90,12 +90,16 @@
 		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
-	<command name="viewBannedUser">
+	<command name="viewBannedUserPG">
 		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_BANNED_USERS" value1="Banned Users" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute action="PGMessageboardsBannedusers#assertTextEquals" locator-key1="BANNED_USERS_TABLE_BANNED_USER" value1="${userScreenName}" />
+		<execute action="PGMessageboardsBannedusers#assertTextEquals" locator-key1="BANNED_USERS_TABLE_BANNED_BY" value1="Test Test" />
+		<execute action="PGMessageboardsBannedusers#assertVisible" locator-key1="BANNED_USERS_TABLE_BAN_DATE"  />
+		<execute action="PGMessageboardsBannedusers#assertVisible" locator-key1="BANNED_USERS_TABLE_UNBAN_DATE"  />
+		<execute action="PGMessageboardsBannedusers#assertTextEquals" locator-key1="BANNED_USERS_TABLE_UNBAN_THIS_USER" value1="Unban This User" />
 		<execute action="PGMessageboardsBannedusers#assertClick" locator-key1="BANNED_USERS_TABLE_BANNED_USER" value1="${userScreenName}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${userScreenName}" />
@@ -133,7 +137,7 @@
 			<then>
 				<var name="key_userName" value="${userName}" />
 
-				<execute action="PGMessageboardsSearch#assertElementPresent" locator-key1="SEARCH_RESULTS_ATTACHMENT_IMAGE" />
+				<execute action="PGMessageboardsSearch#assertVisible" locator-key1="SEARCH_RESULTS_ATTACHMENT_IMAGE" />
 				<execute action="PGMessageboardsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ATTACHMENT_HEADER" value1="Attachment added by ${userName}." />
 				<execute action="PGMessageboardsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ATTACHMENT_BODY" value1="${searchTerm}" />
 			</then>

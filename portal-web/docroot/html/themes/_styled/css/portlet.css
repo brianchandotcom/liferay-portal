@@ -631,7 +631,7 @@ body.portlet {
 
 /* ---------- Journal/Dynamic Data List Display portlet ---------- */
 
-.journal-article-container, .portlet-dynamic-data-list-display {
+.portlet-journal .journal-article-container, .portlet-dynamic-data-list-display {
 	.lfr-ddm-container .field-wrapper {
 		&[data-repeatable="true"], .field-wrapper {
 			border: 1px solid #D0D0D0;

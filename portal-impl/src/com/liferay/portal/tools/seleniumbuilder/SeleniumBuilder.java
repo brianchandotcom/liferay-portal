@@ -122,8 +122,37 @@ public class SeleniumBuilder {
 
 			for (String testCaseName : testCaseNames) {
 				_seleniumBuilderContext.validateTestCaseElements(testCaseName);
+			}
 
-				testCaseConverter.convert(testCaseName);
+			String testClass = arguments.get("test.class");
+
+			if (!testClass.equals("${test.class}")) {
+				String testCaseCommandName = null;
+				String testCaseName = null;
+
+				if (testClass.contains("#")) {
+					String[] testClassParts = StringUtil.split(testClass, "#");
+
+					testCaseCommandName = testClassParts[1];
+					testCaseName = testClassParts[0];
+				}
+				else {
+					testCaseName = testClass;
+				}
+
+				if ((testCaseCommandName != null) &&
+					testCaseCommandName.startsWith("test")) {
+
+					testCaseCommandName = StringUtil.replaceFirst(
+						testCaseCommandName, "test", "");
+				}
+
+				if (testCaseName.endsWith("TestCase")) {
+					testCaseName = StringUtil.replaceLast(
+						testCaseName, "TestCase", "");
+				}
+
+				testCaseConverter.convert(testCaseName, testCaseCommandName);
 			}
 		}
 

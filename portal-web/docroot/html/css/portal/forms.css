@@ -15,15 +15,16 @@
 	.advanced-search {
 		.search-query {
 			padding-left: 40px;
+			z-index: 0;
 		}
 
 		.toggle-advanced {
 			cursor: pointer;
+			left: 0;
 			line-height: 1;
 			padding: 8px 10px;
 			position: absolute;
 			top: 0;
-			z-index: 100;
 
 			.caret {
 				margin-top: 7px;

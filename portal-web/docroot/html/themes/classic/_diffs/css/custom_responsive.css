@@ -171,6 +171,10 @@
 							}
 						}
 					}
+
+					.dockbar-user-notifications .user-notifications-count {
+						margin: 0;
+					}
 				}
 			}
 		}

@@ -222,6 +222,12 @@
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_ACTIONS" />
 	</command>
 
+	<command name="viewNoPG">
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="PGMessageboards#assertTextNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+	</command>
+
 	<command name="viewNoSubcategoryCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_subCategoryName" value="${subCategoryName}" />
@@ -237,8 +243,18 @@
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES" value1="0" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS" value1="0" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS" value1="0" />
+
+		<if>
+			<isset var="threadPostCount" />
+			<then>
+				<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS" value1="${threadPostCount}" />
+				<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS" value1="${threadPostCount}" />
+			</then>
+			<else>
+				<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS" value1="0" />
+				<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS" value1="0" />
+			</else>
+		</if>
 
 		<if>
 			<equals arg1="categoryDescriptionEnabled" arg2="true" />

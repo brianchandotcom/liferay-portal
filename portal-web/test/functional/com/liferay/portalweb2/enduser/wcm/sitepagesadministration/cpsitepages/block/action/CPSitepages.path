@@ -70,6 +70,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVIGATION_MY_PROFILE</td>
+	<td>//li[contains(@id,'_156_tabs')]/a[contains(.,'My Profile')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_MY_DASHBOARD</td>
+	<td>//li[contains(@id,'_156_tabs')]/a[contains(.,'My Dashboard')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -179,6 +189,26 @@
 <tr>
 	<td>PAGE_TREE_PAGE_LINK_4</td>
 	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_PAGE_LINK_5</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_PAGE_LINK_6</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_PAGE_LINK_7</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_PAGE_LINK_8</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[8]</td>
 	<td></td>
 </tr>
 <tr>

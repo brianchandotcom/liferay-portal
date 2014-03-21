@@ -1056,7 +1056,7 @@
 		<execute action="SOMicroblogs#assertTextEquals" locator1="xpath=(//div[@class='user-name']/span/a)[2]" value1="${adminName}" />
 		<execute action="SOMicroblogs#assertTextEquals" locator1="xpath=(//div[@class='content'])[2]" value1="${userName}" />
 		<execute action="SOMicroblogs#assertTextEquals" locator1="xpath=(//span[@class='action comment']/a)[2]" value1="1 Comment" />
-		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_REPOST_LINK" value1="Repost" />
+		<execute action="SOMicroblogs#assertTextEquals" locator1="//span[@class='action repost']/a" value1="Repost" />
 	</command>
 
 	<tear-down>
@@ -1070,7 +1070,7 @@
 
 		<execute macro="SOCalendarEvent#tearDownPG" />
 
-		<execute macro="SODashboard#tearDownPG" />
+		<execute macro="SODashboard#tearDownCP" />
 
 		<execute macro="SOTasks#tearDownTask" />
 

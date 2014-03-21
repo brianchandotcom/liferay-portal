@@ -164,6 +164,26 @@
 		<execute action="SODashboard#assertTextNotPresent" value1="${whatsHappeningEntryContent}" />
 	</command>
 
+	<command name="tearDownCP">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_PAGES" value1="Pages" />
+
+		<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
+
+		<if>
+			<condition action="CPSitepages#isElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_8" />
+			<then>
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_8" />
+				<execute action="CPSitepages#click" locator-key1="TOOLBAR_DELETE" />
+				<execute action="CPSitepages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+			</then>
+		</if>
+
+		<execute action="CPSitepages#assertElementNotPresent" locator-key1="PAGE_TREE_PAGE_LINK_8" />
+	</command>
+
 	<command name="tearDownPG">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
@@ -290,9 +310,9 @@
 
 	<command name="viewLinkPrivateMessaging">
 		<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
-		<execute action="SOMessages#assertTextEquals" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
-		<execute action="SOMessages#assertTextEquals" locator-key1="MARK_AS_READ_BUTTON" value1="Mark as Read" />
-		<execute action="SOMessages#assertTextEquals" locator-key1="DELETE_BUTTON" value1="Delete" />
+		<execute action="SOMessages#assertElementNotPresent" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
+		<execute action="SOMessages#assertElementNotPresent" locator-key1="MARK_AS_READ_BUTTON" value1="Mark as Read" />
+		<execute action="SOMessages#assertElementNotPresent" locator-key1="DELETE_BUTTON" value1="Delete" />
 		<execute action="SOMessages#assertTextEquals" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
 
 		<var name="siteName" value="Liferay" />
@@ -426,6 +446,8 @@
 	</command>
 
 	<command name="viewUpcomingTaskNone">
+		<var name="key_taskDescription" value="${taskDescription}" />
+
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
 		<execute action="SODashboard#assertTextEquals" locator-key1="VIEW_ALL_TASKS_LINK" value1="View All Tasks" />

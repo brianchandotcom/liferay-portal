@@ -115,6 +115,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENT_EDIT_LINK</td>
+	<td>//span[@class='edit-message']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_DELETE_LINK</td>
+	<td>//span[@class='delete-message']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

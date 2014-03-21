@@ -122,8 +122,12 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 	%>
 
 	<c:if test="<%= !(group.isControlPanel() && controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE)) %>">
-		<aui:nav collapsible="<%= true %>" cssClass="nav-navigation" icon="reorder" id="navSiteNavigation">
-			<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-cog">
+		<aui:nav collapsible="<%= true %>" cssClass="nav-navigation">
+			<c:if test="<%= !group.isControlPanel() %>">
+				<aui:nav-item anchorCssClass="site-navigation-btn" anchorId="navSiteNavigation" href="javascript:;" iconCssClass="icon-reorder" />
+			</c:if>
+
+			<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-cog" toggleTouch="<%= false %>">
 				<c:if test="<%= group.isControlPanel() && !controlPanelCategory.equals(PortletCategoryKeys.MY) && !controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
 
 					<%
@@ -173,7 +177,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 	%>
 
 	<aui:nav ariaLabel='<%= LanguageUtil.get(pageContext, "layout-controls") %>' collapsible="<%= true %>" cssClass='<%= portalMessageUseAnimation ? "nav-add-controls" : "nav-add-controls nav-add-controls-notice" %>' icon="pencil" id="navAddControls">
-		<aui:nav-item cssClass="dockbar-item" dropdown="<%= true %>" iconCssClass="icon-pencil">
+		<aui:nav-item cssClass="dockbar-item" dropdown="<%= true %>" iconCssClass="icon-pencil" toggleTouch="<%= false %>">
 
 			<%
 			boolean hasLayoutAddPermission = false;

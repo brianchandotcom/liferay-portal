@@ -1930,6 +1930,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>toggleTouch</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>useDialog</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

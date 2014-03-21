@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -45,6 +46,7 @@ import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.util.ExpandoTestUtil;
 import com.liferay.portlet.wiki.DuplicatePageException;
+import com.liferay.portlet.wiki.NoSuchPageResourceException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.util.WikiTestUtil;
@@ -59,6 +61,7 @@ import org.testng.Assert;
 
 /**
  * @author Manuel de la Peña
+ * @author Roberto Díaz
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -122,6 +125,123 @@ public class WikiPageLocalServiceTest {
 			fileEntry.getMimeType(), copyFileEntry.getMimeType());
 		Assert.assertEquals(fileEntry.getTitle(), copyFileEntry.getTitle());
 		Assert.assertEquals(fileEntry.getSize(), copyFileEntry.getSize());
+	}
+
+	@Test(expected = NoSuchPageResourceException.class)
+	public void testDeletePage() throws Exception {
+		WikiPage page = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"TestPage", true);
+
+		WikiPageLocalServiceUtil.deletePage(page);
+
+		WikiPageLocalServiceUtil.getPage(page.getResourcePrimKey());
+	}
+
+	@Test
+	public void testDeleteTrashedPageWithRestoredChildPage() throws Exception {
+		WikiPage[] wikiPages = addTrashedParentPageWithTrashedChildPage();
+
+		WikiPage parentPage = wikiPages[0];
+		WikiPage childPage = wikiPages[1];
+
+		WikiPageLocalServiceUtil.restorePageFromTrash(
+			TestPropsValues.getUserId(), childPage);
+
+		WikiPageLocalServiceUtil.deletePage(parentPage);
+
+		try {
+			WikiPageLocalServiceUtil.getPage(parentPage.getResourcePrimKey());
+
+			Assert.fail("parentPage exists");
+		}
+		catch (NoSuchPageResourceException nspre) {
+			childPage = WikiPageLocalServiceUtil.getPage(
+				childPage.getResourcePrimKey());
+
+			Assert.assertNull(childPage.getParentPage());
+			Assert.assertEquals(
+				childPage.getStatus(), WorkflowConstants.STATUS_APPROVED);
+		}
+	}
+
+	@Test
+	public void testDeleteTrashedPageWithRestoredRedirectPage()
+		throws Exception {
+
+		WikiPage[] wikiPages = addTrashedPageWithTrashedRedirectPage();
+
+		WikiPage page = wikiPages[0];
+		WikiPage redirectPage = wikiPages[1];
+
+		WikiPageLocalServiceUtil.restorePageFromTrash(
+			TestPropsValues.getUserId(), redirectPage);
+
+		WikiPageLocalServiceUtil.deletePage(page);
+
+		try {
+			WikiPageLocalServiceUtil.getPage(page.getResourcePrimKey());
+
+			Assert.fail("page exists");
+		}
+		catch (NoSuchPageResourceException nspre) {
+			redirectPage = WikiPageLocalServiceUtil.getPage(
+				redirectPage.getResourcePrimKey());
+
+			Assert.assertNull(redirectPage.getRedirectPage());
+			Assert.assertEquals(
+				redirectPage.getStatus(), WorkflowConstants.STATUS_APPROVED);
+		}
+	}
+
+	@Test
+	public void testDeleteTrashedPageWithTrashedRedirectPage()
+		throws Exception {
+
+		WikiPage[] wikiPages = addTrashedPageWithTrashedRedirectPage();
+
+		WikiPage page = wikiPages[0];
+		WikiPage redirectPage = wikiPages[1];
+
+		WikiPageLocalServiceUtil.deletePage(page);
+
+		try {
+			WikiPageLocalServiceUtil.getPage(page.getResourcePrimKey());
+
+			Assert.fail("page exists");
+		}
+		catch (NoSuchPageResourceException nspre) {
+			redirectPage = WikiPageLocalServiceUtil.getLatestPage(
+				redirectPage.getResourcePrimKey(),
+				WorkflowConstants.STATUS_IN_TRASH, false);
+
+			Assert.assertNull(redirectPage.getRedirectPage());
+		}
+	}
+
+	@Test
+	public void testDeleteTrashedParentPageWithTrashedChildPage()
+		throws Exception {
+
+		WikiPage[] wikiPages = addTrashedParentPageWithTrashedChildPage();
+
+		WikiPage parentPage = wikiPages[0];
+		WikiPage childPage = wikiPages[1];
+
+		WikiPageLocalServiceUtil.deletePage(parentPage);
+
+		try {
+			WikiPageLocalServiceUtil.getPage(parentPage.getResourcePrimKey());
+
+			Assert.fail("parentPage exists");
+		}
+		catch (NoSuchPageResourceException nspre) {
+			childPage = WikiPageLocalServiceUtil.getLatestPage(
+				childPage.getResourcePrimKey(),
+				WorkflowConstants.STATUS_IN_TRASH, false);
+
+			Assert.assertNull(childPage.getParentPage());
+		}
 	}
 
 	@Test
@@ -225,6 +345,49 @@ public class WikiPageLocalServiceTest {
 
 		expandoBridge.addAttribute(
 			column.getName(), ExpandoColumnConstants.STRING, value.getString());
+	}
+
+	protected WikiPage[] addTrashedPageWithTrashedRedirectPage()
+		throws Exception {
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"A", true);
+
+		WikiPageLocalServiceUtil.movePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "A", "B",
+			ServiceTestUtil.getServiceContext(_group.getGroupId()));
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "B");
+		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "A");
+
+		WikiPageLocalServiceUtil.movePageToTrash(
+			TestPropsValues.getUserId(), _node.getNodeId(), "B");
+
+		return new WikiPage[] {page, redirectPage};
+	}
+
+	protected WikiPage[] addTrashedParentPageWithTrashedChildPage()
+		throws Exception {
+
+		WikiPage parentPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"TestPage", true);
+
+		WikiPage childPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"TestChildPage", true);
+
+		WikiPageLocalServiceUtil.changeParent(
+			TestPropsValues.getUserId(), _node.getNodeId(), "TestChildPage",
+			"TestPage", ServiceTestUtil.getServiceContext(_group.getGroupId()));
+
+		WikiPageLocalServiceUtil.movePageToTrash(
+			TestPropsValues.getUserId(), parentPage);
+
+		return new WikiPage[] {parentPage, childPage};
 	}
 
 	protected void checkPopulatedServiceContext(

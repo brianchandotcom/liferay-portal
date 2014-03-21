@@ -27,6 +27,7 @@ AUI.add(
 			}
 		);
 
+		A._IORequest = A.IORequest;
 		A.IORequest = IORequest;
 	},
 	'',

@@ -137,7 +137,7 @@ public class JournalArticleAssetRenderer
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Locale locale = LocaleUtil.getMostRelevantLocale();
+		Locale locale = getLocale(portletRequest);
 
 		String summary = _article.getDescription(locale);
 

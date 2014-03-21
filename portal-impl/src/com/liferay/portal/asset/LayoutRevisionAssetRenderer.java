@@ -78,7 +78,7 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Locale locale = LocaleUtil.getMostRelevantLocale();
+		Locale locale = getLocale(portletRequest);
 
 		StringBundler sb = new StringBundler(16);
 

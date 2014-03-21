@@ -246,7 +246,8 @@ public class GetFileAction extends PortletAction {
 				version = fileEntry.getVersion();
 			}
 			else {
-				throw new NoSuchFileEntryException();
+				throw new NoSuchFileEntryException(
+					"{fileEntryId=" + fileEntryId + "}");
 			}
 		}
 

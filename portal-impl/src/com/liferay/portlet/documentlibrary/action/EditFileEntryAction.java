@@ -983,7 +983,7 @@ public class EditFileEntryAction extends PortletAction {
 			Folder folder = DLAppServiceUtil.getFolder(folderId);
 
 			if (folder.getGroupId() != themeDisplay.getScopeGroupId()) {
-				throw new NoSuchFolderException();
+				throw new NoSuchFolderException("{folderId=" + folderId + "}");
 			}
 		}
 

@@ -56,7 +56,7 @@ public class LayoutPrototypeImpl extends LayoutPrototypeBaseImpl {
 			return layouts.get(0);
 		}
 
-		throw new NoSuchLayoutException();
+		throw new NoSuchLayoutException("{groupId=" + group.getGroupId() + "}");
 	}
 
 }

@@ -46,7 +46,7 @@ public class ActionUtil {
 			entry = BookmarksEntryServiceUtil.getEntry(entryId);
 
 			if (entry.isInTrash()) {
-				throw new NoSuchEntryException();
+				throw new NoSuchEntryException("{entryId=" + entryId + "}");
 			}
 		}
 
@@ -76,7 +76,7 @@ public class ActionUtil {
 			folder = BookmarksFolderServiceUtil.getFolder(folderId);
 
 			if (folder.isInTrash()) {
-				throw new NoSuchFolderException();
+				throw new NoSuchFolderException("{folderId=" + folderId + "}");
 			}
 		}
 		else {

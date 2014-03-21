@@ -93,7 +93,7 @@ public class ActionUtil {
 		}
 
 		if ((message != null) && message.isInTrash()) {
-			throw new NoSuchMessageException();
+			throw new NoSuchMessageException("{messageId=" + messageId + "}");
 		}
 
 		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, message);
@@ -123,7 +123,7 @@ public class ActionUtil {
 		}
 
 		if ((message != null) && message.isInTrash()) {
-			throw new NoSuchMessageException();
+			throw new NoSuchMessageException("{threadId=" + threadId + "}");
 		}
 
 		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, message);

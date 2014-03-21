@@ -289,14 +289,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			thread = mbThreadPersistence.fetchByPrimaryKey(threadId);
 		}
 
-		if ((thread == null) &&
-			(parentMessageId == MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
+		if (thread == null) {
+			if (parentMessageId ==
+					MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
 
-			thread = mbThreadLocalService.addThread(
-				categoryId, message, serviceContext);
-		}
-		else if (thread == null) {
-			throw new NoSuchThreadException();
+				thread = mbThreadLocalService.addThread(
+					categoryId, message, serviceContext);
+			}
+			else {
+				throw new NoSuchThreadException("{threadId=" + threadId + "}");
+			}
 		}
 
 		if ((priority != MBThreadConstants.PRIORITY_NOT_GIVEN) &&

@@ -63,18 +63,19 @@ public class CommandArgument {
 
 		int pos = currentGroupName.indexOf(" - ");
 
-		if (pos > 0) {
-			long groupId = GetterUtil.getLong(
-				currentGroupName.substring(0, pos));
-
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			if (group.getCompanyId() == getCompanyId()) {
-				return group;
-			}
+		if (pos == -1) {
+			throw new NoSuchGroupException();
 		}
 
-		throw new NoSuchGroupException();
+		long groupId = GetterUtil.getLong(currentGroupName.substring(0, pos));
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.getCompanyId() == getCompanyId()) {
+			return group;
+		}
+
+		throw new NoSuchGroupException("{groupId=" + groupId + "}");
 	}
 
 	public String getCurrentGroupName() {

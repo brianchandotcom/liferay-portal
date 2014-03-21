@@ -674,7 +674,8 @@ public class DLFileEntryTypeLocalServiceImpl
 				ddmStructurePersistence.fetchByPrimaryKey(ddmStructureId);
 
 			if (ddmStructure == null) {
-				throw new NoSuchMetadataSetException();
+				throw new NoSuchMetadataSetException(
+					"{ddmStructureId=" + ddmStructureId);
 			}
 		}
 	}

@@ -737,7 +737,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		WikiNode node = wikiNodePersistence.fetchByG_N(groupId, name);
 
 		if ((node != null) && (node.getNodeId() != nodeId)) {
-			throw new DuplicateNodeNameException();
+			throw new DuplicateNodeNameException("{nodeId=" + nodeId + "}");
 		}
 	}
 

@@ -777,7 +777,15 @@ public class JournalArticleLocalServiceImpl
 			if (journalArticlePersistence.countByG_A(
 					groupId, newArticleId) > 0) {
 
-				throw new DuplicateArticleIdException();
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("{groupId=");
+				sb.append(groupId);
+				sb.append(", articleId=");
+				sb.append(newArticleId);
+				sb.append("}");
+
+				throw new DuplicateArticleIdException(sb.toString());
 			}
 		}
 
@@ -6731,7 +6739,8 @@ public class JournalArticleLocalServiceImpl
 				ddmTemplateKey, true);
 
 			if (ddmTemplate.getClassPK() != ddmStructure.getStructureId()) {
-				throw new NoSuchTemplateException();
+				throw new NoSuchTemplateException(
+					"{templateKey=" + ddmTemplateKey + "}");
 			}
 		}
 		else if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
@@ -6801,7 +6810,17 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, version);
 
 		if (article != null) {
-			throw new DuplicateArticleIdException();
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("{groupId=");
+			sb.append(groupId);
+			sb.append(", articleId=");
+			sb.append(articleId);
+			sb.append(", version=");
+			sb.append(version);
+			sb.append("}");
+
+			throw new DuplicateArticleIdException(sb.toString());
 		}
 
 		validate(

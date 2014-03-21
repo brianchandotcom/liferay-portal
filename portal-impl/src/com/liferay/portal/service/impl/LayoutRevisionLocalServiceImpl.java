@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Layout;
@@ -311,7 +312,17 @@ public class LayoutRevisionLocalServiceImpl
 			return layoutRevisions.get(0);
 		}
 
-		throw new NoSuchLayoutRevisionException();
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{layoutSetBranchId=");
+		sb.append(layoutSetBranchId);
+		sb.append(", layoutBranchId=");
+		sb.append(layoutBranchId);
+		sb.append(", plid=");
+		sb.append(plid);
+		sb.append("}");
+
+		throw new NoSuchLayoutRevisionException(sb.toString());
 	}
 
 	@Override

@@ -106,6 +106,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WIKI_PAGE_TABLE_ACTIONS_GENERIC</td>
+	<td>//tr[1]/td[6]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_ACTIONS_GENERIC_2</td>
+	<td>//tr[2]/td[6]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

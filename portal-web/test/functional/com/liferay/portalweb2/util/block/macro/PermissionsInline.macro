@@ -154,6 +154,38 @@
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 	</command>
 
+	<command name="gotoMessageBoardsCategoryPG">
+		<if>
+			<equals arg1="categoryDescriptionEnabled" arg2="true" />
+			<then>
+				<var name="key_categoryDescription" value="${categoryDescription}" />
+
+				<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${categoryDescription}" />
+			</then>
+			<else>
+				<var name="key_categoryName" value="${categoryName}" />
+
+				<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+			</else>
+		</if>
+
+		<execute action="PGMessageboardsCategory#assertClick" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+	</command>
+
+	<command name="gotoMessageBoardsPG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURLTemp}" />
+		</execute>
+
+		<execute action="PGMessageboards#assertClick" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+	</command>
+
 	<command name="gotoPagePG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

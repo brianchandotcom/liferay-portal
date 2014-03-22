@@ -127,6 +127,14 @@
 		</default>
 	</command>
 
+	<command name="assertVisible">
+		<default>
+			<description message="Assert that the ${locator1} is visible." />
+
+			<execute function="AssertVisible#assertVisible" />
+		</default>
+	</command>
+
 	<command name="check">
 		<default>
 			<execute function="Check#clickAt" />

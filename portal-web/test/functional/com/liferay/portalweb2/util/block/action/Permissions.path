@@ -116,6 +116,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_REPLY_TO_MESSAGE']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INLINE_PERMISSIONS_UPDATE</td>
 	<td>//input[@id='${key_roleName}_ACTION_UPDATE']</td>
 	<td></td>

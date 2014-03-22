@@ -1,0 +1,27 @@
+<definition component-name="marketplace-plugins-email-to-mb-filter-hook">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="EmailToMBFilterHookSmoke" priority="5">
+		<property name="hook.plugins.includes" value="email-to-mb-filter-hook" />
+
+		<var name="appName" value="Email to Message Boards Filter" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#uninstallAppCP">
+			<var name="appName" value="${appName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#viewUninstallAppCP">
+			<var name="appName" value="${appName}" />
+		</execute>
+	</command>
+</definition>

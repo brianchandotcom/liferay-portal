@@ -1,0 +1,27 @@
+<definition component-name="marketplace-plugins-1-2-1-columns-layouttpl">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="121ColumnsLayouttplSmoke" priority="5">
+		<property name="layouttpl.plugins.includes" value="1-2-1-columns-layouttpl" />
+
+		<var name="appName" value="1-2-1 Columns Layout" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#uninstallAppCP">
+			<var name="appName" value="${appName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#viewUninstallAppCP">
+			<var name="appName" value="${appName}" />
+		</execute>
+	</command>
+</definition>

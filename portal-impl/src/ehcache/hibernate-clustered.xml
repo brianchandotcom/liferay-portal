@@ -31,7 +31,6 @@
 			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
 			propertySeparator=","
 		/>
-		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
 	</defaultCache>
 
 	<!--
@@ -51,7 +50,6 @@
 		<cacheEventListenerFactory
 			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
 		/>
-		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
 	</cache>
 
 	<!--
@@ -71,6 +69,5 @@
 			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
 			propertySeparator=","
 		/>
-		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
 	</cache>
 </ehcache>

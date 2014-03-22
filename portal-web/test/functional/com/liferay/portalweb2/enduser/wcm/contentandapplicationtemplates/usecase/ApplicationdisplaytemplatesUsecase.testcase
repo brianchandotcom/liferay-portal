@@ -56,6 +56,13 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
 		<execute macro="BlogsEntry#addPGViaAP">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
@@ -241,6 +248,13 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Media Gallery" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="MGPortlet#configureShowAllPG">
@@ -478,6 +492,13 @@
 			<var name="portletName" value="Tags Navigation" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Blogs Test Page" />
 			<var name="pageStaging" value="true" />
@@ -494,6 +515,13 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Tag#addMultipleViaBlogsPG">
@@ -601,7 +629,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTWiki" priority="3">
+	<command name="ADTWiki" known-issues="LPS-45343" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -640,20 +668,23 @@
 			<var name="wikiPageContent" value="Test Wiki Content" />
 		</execute>
 
-		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="portlet_display_template_social.ftl" />
-			<var name="adtType" value="Wiki" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="ADT Test Page" />
-			<var name="pageStaging" value="true" />
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Application Display Templates" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
+		<execute macro="ApplicationDisplayTemplates#addCP">
+			<var name="adtFile" value="portlet_display_template_social.ftl" />
+			<var name="adtType" value="Wiki" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addADTviaPortletCP">
 			<var name="adtType" value="Wiki" />
 		</execute>
 

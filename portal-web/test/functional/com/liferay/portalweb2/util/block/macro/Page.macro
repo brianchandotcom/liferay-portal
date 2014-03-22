@@ -440,6 +440,7 @@
 	<command name="viewWithWorkflowPG">
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
 
+		<execute action="PGStaging#assertClick" locator-key1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
 		<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="${workflowStatus}" />
 		<execute action="PGStaging#assertClick" locator-key1="LIVE_BUTTON" value1="Live" />
 

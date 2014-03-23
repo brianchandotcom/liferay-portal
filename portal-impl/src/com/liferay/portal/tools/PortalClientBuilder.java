@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
 
@@ -36,7 +35,7 @@ import java.util.List;
 public class PortalClientBuilder {
 
 	public static void main(String[] args) {
-		InitUtil.initWithSpring();
+		ToolDependencies.wire();
 
 		if (args.length == 4) {
 			new PortalClientBuilder(args[0], args[1], args[2], args[3]);

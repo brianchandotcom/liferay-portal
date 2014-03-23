@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
-import com.liferay.portal.util.InitUtil;
 
 import jargs.gnu.CmdLineParser;
 
@@ -48,7 +47,7 @@ import org.apache.tools.ant.DirectoryScanner;
 public class SeleneseToJavaBuilder {
 
 	public static void main(String[] args) throws Exception {
-		InitUtil.initWithSpring();
+		ToolDependencies.wire();
 
 		new SeleneseToJavaBuilder(args);
 	}
@@ -182,9 +181,7 @@ public class SeleneseToJavaBuilder {
 
 		char[] array = param.toCharArray();
 
-		for (int i = 0; i < array.length; ++i) {
-			char c = array[i];
-
+		for (char c : array) {
 			if (c == CharPool.BACK_SLASH) {
 				sb.append("\\\\");
 			}

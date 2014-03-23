@@ -18,6 +18,7 @@ import com.liferay.portal.cache.SingleVMPoolImpl;
 import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactoryUtil;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.service.permission.PortletPermissionImpl;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portal.util.DigesterImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.FriendlyURLNormalizerImpl;
@@ -43,6 +45,10 @@ public class ToolDependencies {
 
 	public static void wire() {
 		InitUtil.init();
+
+		DigesterUtil digesterUtil = new DigesterUtil();
+
+		digesterUtil.setDigester(new DigesterImpl());
 
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();

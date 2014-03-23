@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
 
@@ -39,7 +38,7 @@ public class TLDFormatter {
 
 	public static void main(String[] args) {
 		try {
-			InitUtil.initWithSpring();
+			ToolDependencies.wire();
 
 			_formatTLD();
 		}

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
 
@@ -31,7 +30,7 @@ import java.io.File;
 public class EARBuilder {
 
 	public static void main(String[] args) {
-		InitUtil.initWithSpring();
+		ToolDependencies.wire();
 
 		if (args.length == 3) {
 			new EARBuilder(args[0], StringUtil.split(args[1]), args[2]);

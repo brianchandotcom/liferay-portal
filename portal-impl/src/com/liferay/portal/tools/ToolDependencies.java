@@ -14,8 +14,10 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.portal.cache.MultiVMPoolImpl;
 import com.liferay.portal.cache.SingleVMPoolImpl;
 import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactoryUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -36,12 +38,35 @@ import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.FriendlyURLNormalizerImpl;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PortalImpl;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.xml.SAXReaderImpl;
 
 /**
  * @author Raymond Augé
  */
 public class ToolDependencies {
+
+	public static void deployers() {
+		wire();
+
+		MultiVMPoolUtil multiVMPoolUtil = new MultiVMPoolUtil();
+
+		MultiVMPoolImpl multiVMPoolImpl = new MultiVMPoolImpl();
+
+		MemoryPortalCacheManager<String, String> memoryPortalCacheManager =
+			new MemoryPortalCacheManager<String, String>();
+
+		memoryPortalCacheManager.afterPropertiesSet();
+
+		multiVMPoolImpl.setPortalCacheManager(memoryPortalCacheManager);
+
+		multiVMPoolUtil.setMultiVMPool(multiVMPoolImpl);
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(new PortalImpl());
+	}
 
 	public static void wire() {
 		InitUtil.init();

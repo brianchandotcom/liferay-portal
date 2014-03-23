@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.util.InitUtil;
 import com.liferay.util.xml.XMLFormatter;
 
 import java.util.List;
@@ -31,7 +30,7 @@ import java.util.List;
 public class WebXML23Converter {
 
 	public static void main(String[] args) {
-		InitUtil.initWithSpring();
+		ToolDependencies.wire();
 
 		if (args.length == 2) {
 			new WebXML23Converter(args[0], args[1]);

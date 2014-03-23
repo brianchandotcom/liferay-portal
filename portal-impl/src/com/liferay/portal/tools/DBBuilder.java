@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.InitUtil;
 
 import java.io.IOException;
 
@@ -28,13 +27,14 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Charles May
  * @author Alexander Chow
+ * @author Raymond Augé
  */
 public class DBBuilder {
 
 	public static void main(String[] args) {
-		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
+		ToolDependencies.wire();
 
-		InitUtil.initWithSpringAndModuleFramework(true, null);
+		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		String databaseName = arguments.get("db.database.name");
 
@@ -52,8 +52,6 @@ public class DBBuilder {
 		String sqlDir = arguments.get("db.sql.dir");
 
 		new DBBuilder(databaseName, databaseTypes, sqlDir);
-
-		System.exit(0);
 	}
 
 	public DBBuilder(

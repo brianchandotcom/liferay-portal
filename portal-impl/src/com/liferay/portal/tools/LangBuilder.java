@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
-import com.liferay.portal.util.InitUtil;
 import com.liferay.portlet.translator.model.Translation;
 import com.liferay.portlet.translator.util.TranslationWebCacheItem;
 
@@ -54,11 +53,11 @@ public class LangBuilder {
 		" (Automatic Translation)";
 
 	public static void main(String[] args) {
+		ToolDependencies.wire();
+
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		System.setProperty("line.separator", StringPool.NEW_LINE);
-
-		InitUtil.initWithSpringAndModuleFramework();
 
 		String langDir = arguments.get("lang.dir");
 		String langFile = arguments.get("lang.file");
@@ -73,8 +72,6 @@ public class LangBuilder {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		InitUtil.stopModuleFramework();
 	}
 
 	public LangBuilder(

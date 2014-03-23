@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
-import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
 
@@ -37,7 +36,7 @@ public class WSDDBuilder {
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		InitUtil.initWithSpring();
+		ToolDependencies.wire();
 
 		WSDDBuilder wsddBuilder = new WSDDBuilder();
 

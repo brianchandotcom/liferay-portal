@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.tools.ToolDependencies;
 
 import java.util.List;
 import java.util.Map;
@@ -35,14 +35,9 @@ import java.util.TreeSet;
 public class SeleniumBuilder {
 
 	public static void main(String[] args) throws Exception {
-		try {
-			InitUtil.initWithSpringAndModuleFramework();
+		ToolDependencies.wire();
 
-			new SeleniumBuilder(args);
-		}
-		finally {
-			InitUtil.stopModuleFramework();
-		}
+		new SeleniumBuilder(args);
 	}
 
 	/**

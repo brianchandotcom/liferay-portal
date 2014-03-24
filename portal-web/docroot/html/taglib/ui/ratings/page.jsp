@@ -1,4 +1,4 @@
-                       <%--
+<%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -59,6 +59,8 @@ if (ratingsEntry != null) {
 double averageScore = ratingsStats.getAverageScore();
 
 int totalEntries = ratingsStats.getTotalEntries();
+
+boolean hasEntries = (totalEntries == 1);
 %>
 
 <c:if test="<%= !themeDisplay.isFacebook() %>">
@@ -75,15 +77,15 @@ int totalEntries = ratingsStats.getTotalEntries();
 								StringBundler sb = new StringBundler(19 * numberOfStars);
 
 								for (int i = 1; i <= numberOfStars; i++) {
-									sb.append("<a class=\"rating-element ");
+									sb.append("<a class=\"rating-element");
 
-									String yourStarCssClass = "icon-star-empty";
+									String myStarCss = " icon-star-empty";
 
 									if (i <= yourScore) {
-										yourStarCssClass = "icon-star";
+										myStarCss = " icon-star";
 									}
 
-									sb.append(yourStarCssClass);
+									sb.append(myStarCss);
 									sb.append("\" href=\"javascript:;\"></a>");
 									sb.append("<div class=\"rating-input-container\">");
 									sb.append("<label for=\"");
@@ -96,7 +98,6 @@ int totalEntries = ratingsStats.getTotalEntries();
 									String label = LanguageUtil.format(pageContext, (yourScore == i) ? "you-have-rated-this-x-stars-out-of-x" : "rate-this-x-stars-out-of-x", new Object[] {i, numberOfStars}, false);
 
 									sb.append(label);
-
 									sb.append("</label>");
 									sb.append("<input checked=\"");
 									sb.append(i == yourScore);
@@ -124,22 +125,22 @@ int totalEntries = ratingsStats.getTotalEntries();
 						<div class="rating-label">
 							<liferay-ui:message key="average" />
 
-							(<%= totalEntries %> <liferay-ui:message key='<%= (totalEntries == 1) ? "vote" : "votes" %>' />)
+							(<%= totalEntries %> <liferay-ui:message key='<%= hasEntries ? "vote" : "votes" %>' />)
 						</div>
 
 						<%
 						StringBundler sb = new StringBundler(5 * numberOfStars);
 
 						for (int i = 1; i <= numberOfStars; i++) {
-							sb.append("<span class=\"rating-element ");
+							sb.append("<span class=\"rating-element");
 
-							String averageStarCssClass = "icon-star-empty";
+							String averageStarCss = " icon-star-empty";
 
 							if (i <= averageScore) {
-								averageStarCssClass = "icon-star";
+								averageStarCss = " icon-star";
 							}
 
-							sb.append(averageStarCssClass);
+							sb.append(averageStarCss);
 							sb.append("\" title=\"");
 
 							String title = StringPool.BLANK;
@@ -175,7 +176,7 @@ int totalEntries = ratingsStats.getTotalEntries();
 
 								String totalScore = "0";
 
-								if (averageScore * totalEntries != 0) {
+								if ((averageScore * totalEntries) != 0) {
 									if (averageScore > 0) {
 										totalScore = "+";
 									}
@@ -193,7 +194,7 @@ int totalEntries = ratingsStats.getTotalEntries();
 
 								String ratingLabel = LanguageUtil.get(pageContext, "votes");
 
-								if (totalEntries == 1) {
+								if (hasEntries) {
 									ratingLabel = LanguageUtil.get(pageContext, "vote");
 								}
 
@@ -202,24 +203,26 @@ int totalEntries = ratingsStats.getTotalEntries();
 								sb.append("</div>");
 
 								if (isInTrash) {
-									sb.append("<span class=\"rating-element rating-");
+									sb.append("<span");
 								}
 								else {
-									sb.append("<a class=\"rating-element rating-");
+									sb.append("<a");
 								}
 
-								String thumbsUpCssClass = "rating-element rating-";
+								sb.append(" class=\"rating-element rating-");
+
+								String thumbsUpCss = "rating-element rating-";
 
 								if (yourScore > 0) {
-									thumbsUpCssClass += "on";
+									thumbsUpCss += "on";
 								}
 								else {
-									thumbsUpCssClass += "off";
+									thumbsUpCss += "off";
 								}
 
-								thumbsUpCssClass += " rating-thumb-up icon-thumbs-up";
+								thumbsUpCss += " rating-thumb-up icon-thumbs-up";
 
-								sb.append(thumbsUpCssClass);
+								sb.append(thumbsUpCss);
 
 								if (isInTrash) {
 									sb.append("\" title=\"");
@@ -231,24 +234,26 @@ int totalEntries = ratingsStats.getTotalEntries();
 								}
 
 								if (isInTrash) {
-									sb.append("<span class=\"rating-element rating-");
+									sb.append("<span");
 								}
 								else {
-									sb.append("<a class=\"rating-element rating-");
+									sb.append("<a");
 								}
 
-								String thumbsDownCssClass = "rating-element rating-";
+								sb.append(" class=\"rating-element rating-");
+
+								String thumbsDownCSS = "rating-element rating-";
 
 								if (yourScore < 0) {
-									thumbsDownCssClass += "on";
+									thumbsDownCSS += "on";
 								}
 								else {
-									thumbsDownCssClass += "off";
+									thumbsDownCSS += "off";
 								}
 
-								thumbsDownCssClass += " rating-thumb-down icon-thumbs-down";
+								thumbsDownCSS += " rating-thumb-down icon-thumbs-down";
 
-								sb.append(thumbsDownCssClass);
+								sb.append(thumbsDownCSS);
 
 								if (isInTrash) {
 									sb.append("\" title=\"");

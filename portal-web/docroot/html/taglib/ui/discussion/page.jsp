@@ -317,7 +317,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										String msgBody = message.getBody();
 
 										if (message.isFormatBBCode()) {
-											msgBody = MBUtil.formatMessageBodyToBBCode(msgBody, themeDisplay.getPathThemeImages());
+											msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
 										}
 										%>
 

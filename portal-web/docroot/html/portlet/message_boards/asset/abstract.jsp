@@ -24,7 +24,7 @@ MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSA
 String summary = StringUtil.shorten(message.getBody(), abstractLength);
 
 if (message.isFormatBBCode()) {
-	summary = MBUtil.formatMessageBodyToBBCode(summary, themeDisplay.getPathThemeImages());
+	summary = MBUtil.getBBCodeHTML(summary, themeDisplay.getPathThemeImages());
 }
 %>
 

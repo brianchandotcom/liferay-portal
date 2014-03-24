@@ -283,7 +283,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 				String msgBody = message.getBody();
 
 				if (message.isFormatBBCode()) {
-					msgBody = MBUtil.formatMessageBodyToBBCode(msgBody, themeDisplay.getPathThemeImages());
+					msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
 				}
 				%>
 

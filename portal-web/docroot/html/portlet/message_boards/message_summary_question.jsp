@@ -39,7 +39,7 @@ MBMessage message = (MBMessage)objArray[0];
 	String msgBody = StringUtil.shorten(message.getBody(), 250);
 
 	if (message.isFormatBBCode()) {
-		msgBody = MBUtil.formatMessageBodyToBBCode(msgBody, themeDisplay.getPathThemeImages());
+		msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
 	}
 	%>
 

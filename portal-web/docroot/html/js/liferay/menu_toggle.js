@@ -12,6 +12,11 @@ AUI.add(
 						validator: '_validateContent'
 					},
 
+					open: {
+						validator: Lang.isBoolean,
+						value: false
+					},
+
 					toggle: {
 						validator: Lang.isBoolean,
 						value: false
@@ -100,6 +105,8 @@ AUI.add(
 						var instance = this;
 
 						instance._content.toggleClass('open', force);
+
+						instance.set('open', force);
 					},
 
 					_toggleMenu: function(event, target) {
@@ -110,14 +117,14 @@ AUI.add(
 
 						var handleId = instance._handleId;
 
-						instance._toggleContent();
+						var openMenu = !instance.get('open');
 
-						var menuOpen = instance._content.item(0).hasClass('open');
+						instance._toggleContent(openMenu);
 
 						if (!toggle) {
 							var handle = Liferay.Data[handleId];
 
-							if (menuOpen && !handle) {
+							if (openMenu && !handle) {
 								handle = target.on(
 									instance._getEventOutside(event),
 									function(event) {

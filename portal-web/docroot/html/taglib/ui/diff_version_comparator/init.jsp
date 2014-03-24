@@ -18,3 +18,5 @@
 
 <%@ page import="com.liferay.portal.kernel.diff.DiffVersion" %><%@
 page import="com.liferay.portal.kernel.diff.DiffVersionsInfo" %>
+
+<portlet:defineObjects />

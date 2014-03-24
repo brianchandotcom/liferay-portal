@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -31,7 +32,10 @@ import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.util.portlet.PortletRequestUtil;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
@@ -129,18 +133,21 @@ public class CompareVersionsAction extends PortletAction {
 			sourceVersion = tempVersion;
 		}
 
+		String languageId = getLanguageId(
+			renderRequest, groupId, articleId, sourceVersion, targetVersion);
+
 		String xmlRequest = PortletRequestUtil.toXML(
 			renderRequest, renderResponse);
 
 		JournalArticleDisplay sourceArticleDisplay =
 			JournalArticleLocalServiceUtil.getArticleDisplay(
 				groupId, articleId, sourceVersion, null, Constants.VIEW,
-				themeDisplay.getLanguageId(), 1, xmlRequest, themeDisplay);
+				languageId, 1, xmlRequest, themeDisplay);
 
 		JournalArticleDisplay targetArticleDisplay =
 			JournalArticleLocalServiceUtil.getArticleDisplay(
 				groupId, articleId, targetVersion, null, Constants.VIEW,
-				themeDisplay.getLanguageId(), 1, xmlRequest, themeDisplay);
+				languageId, 1, xmlRequest, themeDisplay);
 
 		String diffHtmlResults = DiffHtmlUtil.diff(
 			new UnsyncStringReader(sourceArticleDisplay.getContent()),
@@ -149,6 +156,44 @@ public class CompareVersionsAction extends PortletAction {
 		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
 		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
 		renderRequest.setAttribute(WebKeys.TARGET_VERSION, targetVersion);
+	}
+
+	protected String getLanguageId(
+			RenderRequest renderRequest, long groupId, String articleId,
+			double sourceVersion, double targetVersion)
+		throws Exception {
+
+		JournalArticle sourceArticle =
+			JournalArticleLocalServiceUtil.fetchArticle(
+				groupId, articleId, sourceVersion);
+
+		JournalArticle targetArticle =
+			JournalArticleLocalServiceUtil.fetchArticle(
+				groupId, articleId, targetVersion);
+
+		Set<Locale> locales = new HashSet<Locale>();
+
+		for (String locale : sourceArticle.getAvailableLanguageIds()) {
+			locales.add(LocaleUtil.fromLanguageId(locale));
+		}
+
+		for (String locale : targetArticle.getAvailableLanguageIds()) {
+			locales.add(LocaleUtil.fromLanguageId(locale));
+		}
+
+		String languageId = ParamUtil.get(
+			renderRequest, "languageId", targetArticle.getDefaultLanguageId());
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		if (!locales.contains(locale)) {
+			languageId = targetArticle.getDefaultLanguageId();
+		}
+
+		renderRequest.setAttribute(WebKeys.AVAILABLE_LOCALES, locales);
+		renderRequest.setAttribute(WebKeys.LANGUAGE_ID, languageId);
+
+		return languageId;
 	}
 
 }

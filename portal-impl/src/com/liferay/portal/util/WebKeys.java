@@ -43,6 +43,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String ASSET_VOCABULARY = "ASSET_VOCABULARY";
 
+	public static final String AVAILABLE_LOCALES = "AVAILABLE_LOCALES";
+
 	public static final String BASIC_AUTH_ENABLED = "BASIC_AUTH_ENABLED";
 
 	public static final String BLOGS_CATEGORY = "BLOGS_CATEGORY";
@@ -210,6 +212,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String JOURNAL_TEMPLATE = "JOURNAL_TEMPLATE";
 
 	public static final String JOURNAL_TEMPLATE_ID = "JOURNAL_TEMPLATE_ID";
+
+	public static final String LANGUAGE_ID = "LANGUAGE_ID";
 
 	@Distributed
 	public static final String LAYOUT_ASSET_ENTRY = "LIFERAY_SHARED_LAYOUT_ASSET_ENTRY";

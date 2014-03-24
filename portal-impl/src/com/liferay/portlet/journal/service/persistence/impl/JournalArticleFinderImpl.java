@@ -1100,6 +1100,8 @@ public class JournalArticleFinderImpl
 
 			sql = replaceStatusJoin(sql, queryDefinition);
 
+			queryDefinition.setOrderByComparatorTableName("JournalArticle");
+
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
@@ -1224,6 +1226,8 @@ public class JournalArticleFinderImpl
 				FIND_BY_G_U_F_C, queryDefinition, "JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);
+
+			queryDefinition.setOrderByComparatorTableName("JournalArticle");
 
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());

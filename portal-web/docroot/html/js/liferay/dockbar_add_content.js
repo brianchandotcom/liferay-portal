@@ -53,7 +53,6 @@ AUI.add(
 						);
 
 						Liferay.on('AddContent:changeDisplayStyle', instance._onChangeDisplayStyle, instance);
-
 						Liferay.on('AddContent:refreshContentList', instance._refreshContentList, instance);
 
 						Liferay.on('showTab', instance._onShowTab, instance);

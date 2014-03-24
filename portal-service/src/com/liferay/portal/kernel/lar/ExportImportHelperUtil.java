@@ -373,6 +373,21 @@ public class ExportImportHelperUtil {
 
 	public static void updateExportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext, Portlet portlet,
+			PortletPreferences portletPreferences, String key, String className)
+		throws Exception {
+
+		getExportImportHelper().updateExportPortletPreferencesClassPKs(
+			portletDataContext, portlet, portletPreferences, key, className);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #updateExportPortletPreferencesClassPKs(PortletDataContext,
+	 *             Portlet, PortletPreferences, String, String)}
+	 */
+	@Deprecated
+	public static void updateExportPortletPreferencesClassPKs(
+			PortletDataContext portletDataContext, Portlet portlet,
 			PortletPreferences portletPreferences, String key, String className,
 			Element rootElement)
 		throws Exception {

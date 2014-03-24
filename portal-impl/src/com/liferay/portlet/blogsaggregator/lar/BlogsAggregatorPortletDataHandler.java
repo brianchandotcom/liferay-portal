@@ -73,8 +73,7 @@ public class BlogsAggregatorPortletDataHandler
 
 			ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 				portletDataContext, portlet, portletPreferences,
-				"organizationId", Organization.class.getName(),
-				portletDataContext.getExportDataRootElement());
+				"organizationId", Organization.class.getName());
 		}
 
 		return portletPreferences;

@@ -76,8 +76,7 @@ public class AssetCategoriesNavigationPortletDataHandler
 			if (name.equals("assetVocabularyIds")) {
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences, name,
-					AssetVocabulary.class.getName(),
-					portletDataContext.getExportDataRootElement());
+					AssetVocabulary.class.getName());
 			}
 		}
 

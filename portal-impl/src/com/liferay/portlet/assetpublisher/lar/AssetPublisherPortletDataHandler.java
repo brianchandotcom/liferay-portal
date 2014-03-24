@@ -160,8 +160,7 @@ public class AssetPublisherPortletDataHandler
 
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences, name,
-					DLFileEntryType.class.getName(),
-					portletDataContext.getExportDataRootElement());
+					DLFileEntryType.class.getName());
 			}
 			else if (name.equals(
 						"anyClassTypeJournalArticleAssetRendererFactory") ||
@@ -173,14 +172,12 @@ public class AssetPublisherPortletDataHandler
 
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences, name,
-					DDMStructure.class.getName(),
-					portletDataContext.getExportDataRootElement());
+					DDMStructure.class.getName());
 			}
 			else if (name.equals("assetVocabularyId")) {
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences, name,
-					AssetVocabulary.class.getName(),
-					portletDataContext.getExportDataRootElement());
+					AssetVocabulary.class.getName());
 			}
 			else if (name.startsWith("queryName") &&
 					 StringUtil.equalsIgnoreCase(value, "assetCategories")) {
@@ -189,8 +186,7 @@ public class AssetPublisherPortletDataHandler
 
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences,
-					"queryValues" + index, AssetCategory.class.getName(),
-					portletDataContext.getExportDataRootElement());
+					"queryValues" + index, AssetCategory.class.getName());
 			}
 			else if (name.equals("scopeIds")) {
 				updateExportScopeIds(

@@ -1595,8 +1595,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	@Override
 	public void updateExportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext, Portlet portlet,
-			PortletPreferences portletPreferences, String key, String className,
-			Element rootElement)
+			PortletPreferences portletPreferences, String key, String className)
 		throws Exception {
 
 		String[] oldValues = portletPreferences.getValues(key, null);
@@ -1622,8 +1621,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				long primaryKeyLong = GetterUtil.getLong(primaryKey);
 
 				String uuid = getExportPortletPreferencesUuid(
-					portletDataContext, portlet, className, rootElement,
-					primaryKeyLong);
+					portletDataContext, portlet, className, primaryKeyLong);
 
 				if (Validator.isNull(uuid)) {
 					if (_log.isWarnEnabled()) {
@@ -1642,6 +1640,23 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		portletPreferences.setValues(key, newValues);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #updateExportPortletPreferencesClassPKs(PortletDataContext,
+	 *             Portlet, PortletPreferences, String, String)}
+	 */
+	@Deprecated
+	@Override
+	public void updateExportPortletPreferencesClassPKs(
+			PortletDataContext portletDataContext, Portlet portlet,
+			PortletPreferences portletPreferences, String key, String className,
+			Element rootElement)
+		throws Exception {
+
+		updateExportPortletPreferencesClassPKs(
+			portletDataContext, portlet, portletPreferences, key, className);
 	}
 
 	@Override
@@ -1878,10 +1893,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	protected String getExportPortletPreferencesUuid(
 			PortletDataContext portletDataContext, Portlet portlet,
-			String className, Element rootElement, long primaryKeyLong)
+			String className, long primaryKeyLong)
 		throws Exception {
 
 		String uuid = null;
+
+		Element rootElement = portletDataContext.getExportDataRootElement();
 
 		if (className.equals(AssetCategory.class.getName())) {
 			AssetCategory assetCategory =

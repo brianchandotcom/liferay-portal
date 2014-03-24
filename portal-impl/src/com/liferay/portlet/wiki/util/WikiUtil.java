@@ -240,7 +240,7 @@ public class WikiUtil {
 			diffVersions.add(diffVersion);
 		}
 
-		return new DiffVersionsInfo(diffVersions, previousVersion, nextVersion);
+		return new DiffVersionsInfo(diffVersions, nextVersion, previousVersion);
 	}
 
 	public static String getEditPage(String format) {

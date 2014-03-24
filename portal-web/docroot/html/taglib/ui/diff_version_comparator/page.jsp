@@ -17,14 +17,20 @@
 <%@ include file="/html/taglib/ui/diff_version_comparator/init.jsp" %>
 
 <%
+Set<Locale> availableLocales = (Set<Locale>)request.getAttribute("liferay-ui:diff-version-comparator:availableLocales");
+String languageId = (String)request.getAttribute("liferay-ui:diff-version-comparator:languageId");
 String diffHtmlResults = (String)request.getAttribute("liferay-ui:diff-version-comparator:diffHtmlResults");
 DiffVersionsInfo diffVersionsInfo = (DiffVersionsInfo)request.getAttribute("liferay-ui:diff-version-comparator:diffVersionsInfo");
-PortletURL iteratorURL = (PortletURL)request.getAttribute("liferay-ui:diff-version-comparator:iteratorURL");
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:diff-version-comparator:portletURL");
 double sourceVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:sourceVersion");
 double targetVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:targetVersion");
 
 double nextVersion = diffVersionsInfo.getNextVersion();
 double previousVersion = diffVersionsInfo.getPreviousVersion();
+
+PortletURL iteratorURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
+iteratorURL.setParameter("languageId", languageId);
 %>
 
 <div class="diff-version-comparator">
@@ -116,5 +122,38 @@ double previousVersion = diffVersionsInfo.getPreviousVersion();
 		</c:otherwise>
 	</c:choose>
 </div>
+
+<c:if test="<%= (availableLocales != null) && !availableLocales.isEmpty() %>">
+
+	<%
+	portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
+	portletURL.setParameter("targetVersion", String.valueOf(targetVersion));
+	%>
+
+	<aui:form action="<%= portletURL %>" method="post" name="fm">
+		<aui:select label="" name="languageId">
+
+			<%
+			for (Locale availableLocale : availableLocales) {
+			%>
+
+				<aui:option label="<%= availableLocale.getDisplayName(locale) %>" selected="<%= languageId.equals(LocaleUtil.toLanguageId(availableLocale)) %>" value="<%= LocaleUtil.toLanguageId(availableLocale) %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+	</aui:form>
+
+	<aui:script use="aui-base">
+		A.one('#<portlet:namespace />languageId').on(
+			'change',
+			function(event) {
+				submitForm(document.<portlet:namespace />fm);
+			}
+		);
+	</aui:script>
+</c:if>
 
 <liferay-ui:diff-html diffHtmlResults="<%= diffHtmlResults %>" />

@@ -17,6 +17,9 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Locale;
+import java.util.Set;
+
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +34,10 @@ public class DiffVersionComparatorTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public void setAvailableLocales(Set<Locale> availableLocales) {
+		_availableLocales = availableLocales;
+	}
+
 	public void setDiffHtmlResults(String diffHtmlResults) {
 		_diffHtmlResults = diffHtmlResults;
 	}
@@ -39,8 +46,12 @@ public class DiffVersionComparatorTag extends IncludeTag {
 		_diffVersionsInfo = diffVersionsInfo;
 	}
 
-	public void setIteratorURL(PortletURL iteratorURL) {
-		_iteratorURL = iteratorURL;
+	public void setPortletURL(PortletURL portletURL) {
+		_portletURL = portletURL;
+	}
+
+	public void setLanguageId(String languageId) {
+		_languageId = languageId;
 	}
 
 	public void setSourceVersion(double sourceVersion) {
@@ -53,9 +64,11 @@ public class DiffVersionComparatorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_availableLocales = null;
 		_diffHtmlResults = null;
 		_diffVersionsInfo = null;
-		_iteratorURL = null;
+		_languageId = null;
+		_portletURL = null;
 		_sourceVersion = 0;
 		_targetVersion = 0;
 	}
@@ -73,13 +86,18 @@ public class DiffVersionComparatorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
+			"liferay-ui:diff-version-comparator:availableLocales",
+			_availableLocales);
+		request.setAttribute(
 			"liferay-ui:diff-version-comparator:diffHtmlResults",
 			_diffHtmlResults);
 		request.setAttribute(
 			"liferay-ui:diff-version-comparator:diffVersionsInfo",
 			_diffVersionsInfo);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:iteratorURL", _iteratorURL);
+			"liferay-ui:diff-version-comparator:languageId", _languageId);
+		request.setAttribute(
+			"liferay-ui:diff-version-comparator:portletURL", _portletURL);
 		request.setAttribute(
 			"liferay-ui:diff-version-comparator:sourceVersion", _sourceVersion);
 		request.setAttribute(
@@ -91,9 +109,11 @@ public class DiffVersionComparatorTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/diff_version_comparator/page.jsp";
 
+	private Set<Locale> _availableLocales;
 	private String _diffHtmlResults;
 	private DiffVersionsInfo _diffVersionsInfo;
-	private PortletURL _iteratorURL;
+	private String _languageId;
+	private PortletURL _portletURL;
 	private double _sourceVersion;
 	private double _targetVersion;
 

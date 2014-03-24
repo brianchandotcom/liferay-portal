@@ -140,7 +140,7 @@ public class WikiPageLocalServiceTest {
 
 	@Test
 	public void testDeleteTrashedPageWithRestoredChildPage() throws Exception {
-		WikiPage[] wikiPages = addTrashedParentPageWithTrashedChildPage();
+		WikiPage[] wikiPages = addTrashedPageWithTrashedChildPage();
 
 		WikiPage parentPage = wikiPages[0];
 		WikiPage childPage = wikiPages[1];
@@ -223,7 +223,7 @@ public class WikiPageLocalServiceTest {
 	public void testDeleteTrashedParentPageWithTrashedChildPage()
 		throws Exception {
 
-		WikiPage[] wikiPages = addTrashedParentPageWithTrashedChildPage();
+		WikiPage[] wikiPages = addTrashedPageWithTrashedChildPage();
 
 		WikiPage parentPage = wikiPages[0];
 		WikiPage childPage = wikiPages[1];
@@ -369,10 +369,10 @@ public class WikiPageLocalServiceTest {
 		return new WikiPage[] {page, redirectPage};
 	}
 
-	protected WikiPage[] addTrashedParentPageWithTrashedChildPage()
+	protected WikiPage[] addTrashedPageWithTrashedChildPage()
 		throws Exception {
 
-		WikiPage parentPage = WikiTestUtil.addPage(
+		WikiPage page = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
 			"TestPage", true);
 
@@ -385,9 +385,9 @@ public class WikiPageLocalServiceTest {
 			"TestPage", ServiceTestUtil.getServiceContext(_group.getGroupId()));
 
 		WikiPageLocalServiceUtil.movePageToTrash(
-			TestPropsValues.getUserId(), parentPage);
+			TestPropsValues.getUserId(), page);
 
-		return new WikiPage[] {parentPage, childPage};
+		return new WikiPage[] {page, childPage};
 	}
 
 	protected void checkPopulatedServiceContext(

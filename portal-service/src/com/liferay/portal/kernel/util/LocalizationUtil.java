@@ -121,9 +121,18 @@ public class LocalizationUtil {
 	}
 
 	public static Map<Locale, String> getLocalizationMap(
-		PortletPreferences preferences, String parameter) {
+		PortletPreferences preferences, String preferenceName) {
 
-		return getLocalization().getLocalizationMap(preferences, parameter);
+		return getLocalization().getLocalizationMap(
+			preferences, preferenceName);
+	}
+
+	public static Map<Locale, String> getLocalizationMap(
+		PortletPreferences preferences, String preferenceName,
+		String propertyName) {
+
+		return getLocalization().getLocalizationMap(
+			preferences, preferenceName, propertyName);
 	}
 
 	public static Map<Locale, String> getLocalizationMap(
@@ -170,6 +179,18 @@ public class LocalizationUtil {
 
 		return getLocalization().getLocalizationXmlFromPreferences(
 			preferences, portletRequest, parameter, defaultValue);
+	}
+
+	public static String getLocalizationXmlFromPreferences(
+		PortletPreferences preferences, PortletRequest portletRequest,
+		String parameter, String prefix, String defaultValue) {
+
+		return getLocalization().getLocalizationXmlFromPreferences(
+			preferences, portletRequest, parameter, prefix, defaultValue);
+	}
+
+	public static String getLocalizedName(String name, String languageId) {
+		return getLocalization().getLocalizedName(name, languageId);
 	}
 
 	/**

@@ -202,6 +202,12 @@ public class DDMStructureTestUtil {
 		return getSampleStructureXSD("name");
 	}
 
+	public static String getSampleStructureXSD(
+		Locale[] availableLocales, Locale defaultLocale) {
+
+		return getSampleStructureXSD("name", availableLocales, defaultLocale);
+	}
+
 	public static String getSampleStructureXSD(String name) {
 		return getSampleStructureXSD(
 			name, new Locale[] {LocaleUtil.US}, LocaleUtil.US);

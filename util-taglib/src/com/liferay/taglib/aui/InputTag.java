@@ -17,6 +17,7 @@ package com.liferay.taglib.aui;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -236,7 +237,7 @@ public class InputTag extends BaseInputTag {
 		String languageId = getLanguageId();
 
 		if (Validator.isNotNull(languageId)) {
-			forLabel = forLabel + StringPool.UNDERLINE + languageId;
+			forLabel = LocalizationUtil.getLocalizedName(forLabel, languageId);
 		}
 
 		_inputName = getName();
@@ -317,7 +318,8 @@ public class InputTag extends BaseInputTag {
 			String languageId = getLanguageId();
 
 			if (Validator.isNotNull(languageId)) {
-				inputName = inputName + StringPool.UNDERLINE + languageId;
+				inputName = LocalizationUtil.getLocalizedName(
+					inputName, languageId);
 			}
 
 			validatorTagsMap.put(inputName, validatorTags);

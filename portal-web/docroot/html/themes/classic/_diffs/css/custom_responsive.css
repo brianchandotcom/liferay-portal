@@ -48,6 +48,10 @@
 				width: 300px;
 			}
 
+			.nav .staging-toggle {
+				padding: 2px 0;
+			}
+
 			.navbar-inner {
 				width: auto;
 
@@ -184,8 +188,26 @@
 			width: 100%;
 		}
 
+		.portlet-staging-bar .staging-toggle .variations-options {
+			.page-variations {
+				right: 0;
+
+				a {
+					padding: 3px 6px;
+				}
+			}
+
+			.staging-variation-selector {
+				margin-right: 0;
+			}
+		}
+
 		.signed-out #_145_navAddControlsNavbarBtn {
 			display: none;
+		}
+
+		.staging-toggle .variations-options a {
+			padding: 0;
 		}
 	}
 }

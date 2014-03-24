@@ -73,25 +73,11 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
-		.staging-controls {
-			.staging-bar {
-				li.dropdown .dropdown-menu {
-					left: auto;
-					margin-left: 10px;
-					width: auto;
-				}
-			}
-		}
-
 		&.navbar-static-top {
 			position: relative;
 
 			.collapse {
 				position: static;
-
-				.nav-account-controls {
-					position: static;
-				}
 			}
 		}
 
@@ -441,20 +427,58 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
-		.nav.staging-nav-items {
-			margin: 0;
-			position: static;
+		.nav {
+			&.staging-nav-items {
+				margin: 0;
+				position: static;
 
-			li.dropdown.active > .dropdown-toggle {
-				background-color: transparent;
-				display: block;
+				li.dropdown.active > .dropdown-toggle {
+					background-color: transparent;
+					display: block;
 
-				&:hover {
-					color: #0077B3;
+					&:hover {
+						color: #0077B3;
+					}
+				}
+
+				.staging-link {
+					position: static;
 				}
 			}
 
-			.staging-link {
+			> li.staging-toggle {
+				&.active a, > a {
+					color: #555;
+				}
+
+				> a {
+					padding: 4px 10px;
+				}
+			}
+		}
+
+		.staging-controls .staging-bar li.dropdown {
+			&.live-link.open .dropdown-menu {
+				&:after {
+					left: 73px;
+				}
+
+				&:before {
+					left: 72px;
+				}
+			}
+
+			.dropdown-menu {
+				left: 0;
+				margin-left: 10px;
+				width: 100%;
+			}
+		}
+
+		.staging-bar {
+			margin: 6px 0 0;
+
+			&, li.staging-toggle {
 				position: static;
 			}
 		}
@@ -476,21 +500,14 @@ $editLayoutPanelWidth: 460px;
 			position: absolute;
 
 			@include respond-to(phone, tablet) {
+				height: auto;
 				position: relative;
 			}
 
-			@include respond-to(phone, tablet) {
-				height: auto;
-			}
-
-			.staging-controls {
-				.staging-bar {
-					li.dropdown .dropdown-menu {
-						left: 0;
-						margin-left: 0;
-						width: 100%;
-					}
-				}
+			.staging-controls .staging-bar li.dropdown .dropdown-menu {
+				left: 0;
+				margin-left: 0;
+				width: 100%;
 			}
 
 			&.navbar-static-top {
@@ -518,6 +535,11 @@ $editLayoutPanelWidth: 460px;
 			.info-items {
 				left: auto;
 				position: static;
+			}
+
+			.nav > li.staging-toggle > a {
+				color: #FFF;
+				padding: 6px 10px;
 			}
 
 			.navbar-inner {
@@ -740,10 +762,6 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
-		.staging-bar {
-			margin: 10px 0;
-		}
-
 		&.controls-hidden .dockbar .navbar-inner .nav-add-controls li.toggle-controls > .toggle-controls-link {
 			background: #F5AF45;
 		}
@@ -839,7 +857,7 @@ $editLayoutPanelWidth: 460px;
 
 	.staging-controls {
 		padding-left: 5px;
-		padding-right: 50px;
+		padding-right: 25px;
 
 		select {
 			width: 100%;
@@ -1139,10 +1157,39 @@ $editLayoutPanelWidth: 460px;
 		}
 	}
 
-	.page-customization-bar-container {
-		@include respond-to(phone, tablet) {
+	@include respond-to(phone, tablet) {
+		.page-customization-bar-container {
 			position: static;
 			width: 100%;
+		}
+
+		.portlet-staging-bar .layout-revision-actions {
+			a.taglib-icon {
+				padding: 9px 15px;
+			}
+
+			[class^="icon-"] {
+				margin-left: 0;
+			}
+		}
+
+		.dockbar .staging-controls {
+			padding: 0;
+
+			.staging-bar li.dropdown .dropdown-menu {
+				background-color: #FFF;
+
+				@include box-sizing(border-box);
+
+				margin:0;
+				padding: 10px;
+			}
+		}
+	}
+
+	@include respond-to(phone) {
+		.portlet-staging-bar .layout-revision-actions a.taglib-icon {
+			margin-left: -5px;
 		}
 	}
 

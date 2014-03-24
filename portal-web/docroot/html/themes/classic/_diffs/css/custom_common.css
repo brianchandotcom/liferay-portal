@@ -283,7 +283,7 @@
 						position: relative;
 						top: 2px;
 						width: 28px;
-				    }
+					}
 				}
 
 				.nav-collapse {
@@ -358,6 +358,7 @@
 									color: #FFF;
 									font-size: 0.9em;
 									font-weight: 300;
+									line-height: 31px;
 
 									@include respond-to(phone, tablet) {
 										font-size: 16px;

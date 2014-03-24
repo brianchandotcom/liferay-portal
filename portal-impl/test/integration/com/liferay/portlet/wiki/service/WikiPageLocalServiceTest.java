@@ -347,6 +347,24 @@ public class WikiPageLocalServiceTest {
 			column.getName(), ExpandoColumnConstants.STRING, value.getString());
 	}
 
+	protected WikiPage[] addTrashedPageWithTrashedChildPage() throws Exception {
+		WikiPage page = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"TestPage", true);
+
+		WikiPage childPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "TestChildPage",
+			ServiceTestUtil.randomString(), "TestPage", true,
+			ServiceTestUtil.getServiceContext(_group.getGroupId()));
+
+		WikiPageLocalServiceUtil.movePageToTrash(
+			TestPropsValues.getUserId(), page);
+
+		page = WikiPageLocalServiceUtil.getPageByPageId(page.getPageId());
+
+		return new WikiPage[] {page, childPage};
+	}
+
 	protected WikiPage[] addTrashedPageWithTrashedRedirectPage()
 		throws Exception {
 
@@ -369,26 +387,6 @@ public class WikiPageLocalServiceTest {
 		page = WikiPageLocalServiceUtil.getPageByPageId(page.getPageId());
 
 		return new WikiPage[] {page, redirectPage};
-	}
-
-	protected WikiPage[] addTrashedPageWithTrashedChildPage()
-		throws Exception {
-
-		WikiPage page = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			"TestPage", true);
-
-		WikiPage childPage = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _node.getNodeId(), "TestChildPage",
-			ServiceTestUtil.randomString(), "TestPage", true,
-			ServiceTestUtil.getServiceContext(_group.getGroupId()));
-
-		WikiPageLocalServiceUtil.movePageToTrash(
-			TestPropsValues.getUserId(), page);
-
-		page = WikiPageLocalServiceUtil.getPageByPageId(page.getPageId());
-
-		return new WikiPage[] {page, childPage};
 	}
 
 	protected void checkPopulatedServiceContext(

@@ -95,12 +95,7 @@ boolean nodeInGroup = false;
 					nodeSelector.on(
 						'change',
 						function() {
-							if (nodeSelector.get('value') === nodeId) {
-								pageSelectorContainer.show();
-							}
-							else {
-								pageSelectorContainer.hide();
-							}
+							pageSelectorContainer.toggle(nodeSelector.get('value') === nodeId);
 						}
 					);
 				</aui:script>

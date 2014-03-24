@@ -35,7 +35,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -100,18 +99,6 @@ public class LanguageResources {
 		else {
 			return value;
 		}
-	}
-
-	public static ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle resourceBundle = _resourceBundles.get(locale);
-
-		if (resourceBundle == null) {
-			resourceBundle = new LanguageResourcesBundle(locale);
-
-			_resourceBundles.put(locale, resourceBundle);
-		}
-
-		return resourceBundle;
 	}
 
 	public static Locale getSuperLocale(Locale locale) {
@@ -259,35 +246,5 @@ public class LanguageResources {
 	private static String[] _configNames;
 	private static Map<Locale, Map<String, String>> _languageMaps =
 		new ConcurrentHashMap<Locale, Map<String, String>>(64);
-	private static Map<Locale, ResourceBundle> _resourceBundles =
-		new ConcurrentHashMap<Locale, ResourceBundle>(64);
-
-	private static class LanguageResourcesBundle extends ResourceBundle {
-
-		private LanguageResourcesBundle(Locale locale) {
-			_locale = locale;
-
-			_languageMap = _languageMaps.get(locale);
-		}
-
-		@Override
-		protected Object handleGetObject(String key) {
-			return getMessage(_locale, key);
-		}
-
-		@Override
-		public Enumeration<String> getKeys() {
-			return Collections.enumeration(_languageMap.keySet());
-		}
-
-		@Override
-		protected Set<String> handleKeySet() {
-			return _languageMap.keySet();
-		}
-
-		private final Map<String, String> _languageMap;
-
-		private final Locale _locale;
-	}
 
 }

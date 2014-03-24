@@ -166,8 +166,8 @@
 		.publish-link {
 			@include ellipsis;
 
-			padding: 5px;
 			max-width: 95%;
+			padding: 5px;
 
 			em {
 				display: inline-block;

@@ -45,7 +45,7 @@
 
 	.entry-footer:after {
 		clear: both;
-		content: ".";
+		content: '';
 		display: block;
 		height: 0;
 		visibility: hidden;
@@ -151,7 +151,7 @@
 
 	.form-search:after {
 		clear: both;
-		content: ".";
+		content: '';
 		display: block;
 		height: 0;
 		visibility: hidden;

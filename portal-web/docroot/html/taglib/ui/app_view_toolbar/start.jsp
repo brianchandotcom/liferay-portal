@@ -21,6 +21,10 @@ String searchJsp = (String)request.getAttribute("liferay-ui:app_view_toolbar:sea
 boolean includeSelectAll = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app_view_toolbar:includeSelectAll"));
 
 String cssClass = "select-all-entries";
+
+if (!includeSelectAll) {
+	cssClass += " hide";
+}
 %>
 
 <div class="app-view-taglib">
@@ -30,12 +34,6 @@ String cssClass = "select-all-entries";
 		</c:if>
 
 		<div>
-			<c:if test="<%= !includeSelectAll %>">
-				<%
-					cssClass += " hide";
-				%>
-			</c:if>
-
 			<c:if test="<%= !user.isDefaultUser() %>">
 				<aui:input cssClass="<%= cssClass %>" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" type="checkbox" />
 			</c:if>

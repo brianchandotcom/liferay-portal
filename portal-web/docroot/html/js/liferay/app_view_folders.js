@@ -643,12 +643,12 @@ AUI.add(
 
 							if (selectAllEntriesCheckbox) {
 								var entries = (entriesSize > 0);
-								var hasClass = selectAllEntriesCheckbox.hasClass('hide');
+								var hidden = selectAllEntriesCheckbox.hasClass('hide');
 
-								if (entries && hasClass) {
+								if (entries && hidden) {
 									selectAllEntriesCheckbox.removeClass('hide');
 								}
-								else if (!entries && !hasClass) {
+								else if (!entries && !hidden) {
 									selectAllEntriesCheckbox.addClass('hide');
 								}
 							}

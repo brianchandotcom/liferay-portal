@@ -1,4 +1,5 @@
 @import "compass";
+@import "mixins";
 
 /* ---------- Logo ---------- */
 
@@ -48,6 +49,78 @@ body.html-editor {
 		background: #F9F9F9;
 		border: 1px solid #777;
 		padding: 0.5em;
+	}
+}
+
+/* ---------- Table Styles ---------- */
+
+@include respond-to(phone, tablet) {
+	.responsive-table-horizontal {
+		display: block;
+		position: relative;
+		width: 100%;
+
+		&:after {
+			clear: both;
+			content: '';
+			display: block;
+			font-size: 0;
+			height: 0;
+			visibility: hidden;
+		}
+
+		tbody {
+			display: block;
+			overflow-x: auto;
+			position: relative;
+			white-space: nowrap;
+			width: auto;
+
+			tr {
+				display: inline-block;
+				vertical-align: top;
+
+				td {
+					display: block;
+					margin-bottom: 20px;
+
+					&:first-child {
+						text-align: left;
+					}
+				}
+			}
+		}
+
+		thead {
+			display: block;
+			float: left;
+			margin-right: 10px;
+
+			&:after {
+				clear: both;
+				content: "";
+				display: block;
+				font-size: 0;
+				height: 0;
+				visibility: hidden;
+			}
+
+			th {
+				display: block;
+				margin-bottom: 20px;
+				text-align: right;
+
+				&:first-child {
+					text-align: right;
+				}
+			}
+		}
+	}
+
+	.ie9 {
+		.responsive-table-horizontal thead {
+			float: none;
+		}
 	}
 }
 

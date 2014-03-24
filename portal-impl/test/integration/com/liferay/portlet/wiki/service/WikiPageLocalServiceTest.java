@@ -366,6 +366,8 @@ public class WikiPageLocalServiceTest {
 		WikiPageLocalServiceUtil.movePageToTrash(
 			TestPropsValues.getUserId(), _node.getNodeId(), "B");
 
+		page = WikiPageLocalServiceUtil.getPageByPageId(page.getPageId());
+
 		return new WikiPage[] {page, redirectPage};
 	}
 
@@ -383,6 +385,8 @@ public class WikiPageLocalServiceTest {
 
 		WikiPageLocalServiceUtil.movePageToTrash(
 			TestPropsValues.getUserId(), page);
+
+		page = WikiPageLocalServiceUtil.getPageByPageId(page.getPageId());
 
 		return new WikiPage[] {page, childPage};
 	}

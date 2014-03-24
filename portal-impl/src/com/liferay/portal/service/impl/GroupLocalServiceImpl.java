@@ -1044,11 +1044,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the company group, if exists
+	 * Returns the company's group.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @return the group associated with the company or null if it doesn't exist
-	 * @throws PortalException if a matching group could not be found
+	 * @return the company's group, or <code>null</code> if the company's group
+	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -1106,10 +1106,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the personal site group, if exists
+	 * Returns the default user's personal site group.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @return the personal site group or null if it doesn't exist
+	 * @return the default user's personal site group, or <code>null</code> if
+	 *         the group could not be found
 	 * @throws PortalException if a matching group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1960,11 +1961,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the personal site group
+	 * Returns the default user's personal site group.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @return the personal site group
-	 * @throws PortalException if a matching group could not be found
+	 * @return the default user's personal site group
+	 * @throws PortalException if a matching group or default user for the
+	 *         company could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override

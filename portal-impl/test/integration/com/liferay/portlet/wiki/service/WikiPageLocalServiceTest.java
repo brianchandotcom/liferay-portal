@@ -377,12 +377,9 @@ public class WikiPageLocalServiceTest {
 			"TestPage", true);
 
 		WikiPage childPage = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			"TestChildPage", true);
-
-		WikiPageLocalServiceUtil.changeParent(
 			TestPropsValues.getUserId(), _node.getNodeId(), "TestChildPage",
-			"TestPage", ServiceTestUtil.getServiceContext(_group.getGroupId()));
+			ServiceTestUtil.randomString(), "TestPage", true,
+			ServiceTestUtil.getServiceContext(_group.getGroupId()));
 
 		WikiPageLocalServiceUtil.movePageToTrash(
 			TestPropsValues.getUserId(), page);

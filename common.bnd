@@ -16,7 +16,7 @@ Liferay-Portal-Release-Info: ${release.info.release.info}
 Liferay-Portal-Server-Info: ${release.info.server.info}
 Liferay-Portal-Version: ${release.info.version}
 
--baseline: *
+-baseline:
 -baselinerepo: remoterepo
 -donotcopy: (\.touch)
 -dsannotations: *

@@ -223,8 +223,46 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 		}
 	};
 
-	(function() {
+	<c:if test="<%= inlineEdit && (inlineEditSaveURL != null) %>">
+	var inlineEditor;
+
+	Liferay.on(
+		'toggleControls',
+		function(event) {
+			if (event.src === 'ui') {
+				var ckEditor = CKEDITOR.instances['<%= name %>'];
+
+				if (event.enabled) {
+					if (!ckEditor) {
+						createEditor();
+					}
+				}
+				else if (ckEditor) {
+					inlineEditor.destroy();
+
+					ckEditor.destroy();
+
+					ckEditor = null;
+
+					var editorNode = A.one('#' + '<%= name %>');
+
+					editorNode.removeAttribute('contenteditable');
+
+					editorNode.removeClass('lfr-editable');
+				}
+			}
+		}
+	);
+	</c:if>
+
+	var createEditor = function() {
 		var Util = Liferay.Util;
+
+		var editorNode = A.one('#' + '<%= name %>');
+
+		editorNode.setAttribute('contenteditable', true);
+
+		editorNode.addClass('lfr-editable');
 
 		function getToolbarSet(toolbarSet) {
 			if (Util.isPhone()) {
@@ -283,17 +321,23 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 			}
 		);
 
+		if (window['<%= name %>Config']) {
+			window['<%= name %>Config']();
+		}
+
 		var ckEditor = CKEDITOR.instances['<%= name %>'];
 
 		<c:if test="<%= inlineEdit && (inlineEditSaveURL != null) %>">
-			new Liferay.CKEditorInline(
-				{
-					editor: ckEditor,
-					editorName: '<%= name %>',
-					namespace: '<portlet:namespace />',
-					saveURL: '<%= inlineEditSaveURL %>'
-				}
-			);
+
+		inlineEditor = new Liferay.CKEditorInline(
+			{
+				editor: ckEditor,
+				editorName: '<%= name %>',
+				namespace: '<portlet:namespace />',
+				saveURL: '<%= inlineEditSaveURL %>'
+			}
+		);
+
 		</c:if>
 
 		var customDataProcessorLoaded = false;
@@ -424,7 +468,17 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 		}
 		%>
 
-	})();
+	};
+
+	<%
+	String toogleControlsStatus = GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", ""));
+	%>
+
+	<c:if test='<%= (inlineEdit && toogleControlsStatus.equals("visible")) || !inlineEdit %>'>;
+
+	createEditor();
+
+	</c:if>
 
 </aui:script>
 

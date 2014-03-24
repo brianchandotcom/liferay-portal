@@ -15,7 +15,7 @@
 .lfr-header-row, .lfr-header-row-content {
 	&:after {
 		clear: both;
-		content: "";
+		content: '';
 		display: block;
 		height: 0;
 	}

@@ -31,8 +31,8 @@
 	}
 
 	h3.task-content-title {
-		margin-top: 0;
 		border-bottom: 1px solid #DDD;
+		margin-top: 0;
 	}
 
 	.task-panel-container .lfr-panel-content {
@@ -78,10 +78,10 @@
 	}
 
 	.asset-metadata {
-		border-top: 1px solid #DDD;
 		background-color: #EFEFEF;
-		padding: 0.5em;
+		border-top: 1px solid #DDD;
 		margin: 2em 0 0;
+		padding: 0.5em;
 
 		span {
 			display: inline;
@@ -92,8 +92,8 @@
 		background: url(@theme_image_path@/portlet/edit_guest.png) no-repeat 0 0;
 		font-weight: bold;
 		margin-right: 10px;
-		padding-left: 25px;
 		padding-bottom: 5px;
+		padding-left: 25px;
 	}
 
 	.metadata-entry {

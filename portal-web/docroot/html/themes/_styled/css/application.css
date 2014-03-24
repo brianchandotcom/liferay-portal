@@ -685,7 +685,7 @@
 
 .ios.mobile {
 	.modal-content .dialog-iframe-bd {
-		overflow: auto;
 		-webkit-overflow-scrolling: touch;
+		overflow: auto;
 	}
 }

@@ -154,7 +154,7 @@
 
 		&:after {
 			clear: both;
-			content: "";
+			content: '';
 			display: block;
 			height: 0;
 		}
@@ -221,8 +221,8 @@
 .ie6, .ie7, .ie8 {
 	.portlet-asset-tag-admin {
 		.tag-item-merge {
-			font-weight: normal;
 			font-size: 120%;
+			font-weight: normal;
 		}
 	}
 }

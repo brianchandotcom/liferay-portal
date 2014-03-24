@@ -396,10 +396,38 @@
 		<if>
 			<equals arg1="${fieldShowLabel}" arg2="No" />
 			<then>
-				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_1" value1="${ddlRecordFieldData}" />
+				<if>
+					<equals arg1="${ddlRecordFieldData}" arg2="true" />
+					<then>
+						<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_1" value1="Yes" />
+					</then>
+					<elseif>
+						<equals arg1="${ddlRecordFieldData}" arg2="false" />
+						<then>
+							<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_1" value1="No" />
+						</then>
+					</elseif>
+					<else>
+						<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_1" value1="${ddlRecordFieldData}" />
+					</else>
+				</if>
 			</then>
 			<else>
-				<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+				<if>
+					<equals arg1="${ddlRecordFieldData}" arg2="true" />
+					<then>
+						<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel} Yes" />
+					</then>
+					<elseif>
+						<equals arg1="${ddlRecordFieldData}" arg2="false" />
+						<then>
+							<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel} No" />
+						</then>
+					</elseif>
+					<else>
+						<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+					</else>
+				</if>
 			</else>
 		</if>
 	</command>

@@ -104,7 +104,7 @@
 
 .lfr-categories-selector-search-results label:after {
 	clear: both;
-	content: ".";
+	content: '';
 	display: block;
 	height: 0;
 	visibility: hidden;

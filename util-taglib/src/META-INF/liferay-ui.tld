@@ -864,6 +864,11 @@
 		<tag-class>com.liferay.taglib.ui.DiffVersionComparatorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>availableLocales</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>diffHtmlResults</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -874,7 +879,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>iteratorURL</name>
+			<name>languageId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>portletURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

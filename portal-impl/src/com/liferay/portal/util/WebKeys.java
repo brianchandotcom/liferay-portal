@@ -43,6 +43,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String ASSET_VOCABULARY = "ASSET_VOCABULARY";
 
+	public static final String AVAILABLE_LOCALES = "AVAILABLE_LOCALES";
+
 	public static final String BASIC_AUTH_ENABLED = "BASIC_AUTH_ENABLED";
 
 	public static final String BLOGS_CATEGORY = "BLOGS_CATEGORY";

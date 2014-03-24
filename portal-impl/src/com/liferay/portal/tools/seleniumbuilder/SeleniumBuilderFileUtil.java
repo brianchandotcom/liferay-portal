@@ -33,13 +33,16 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -55,8 +58,25 @@ import org.apache.commons.lang.StringEscapeUtils;
  */
 public class SeleniumBuilderFileUtil {
 
-	public SeleniumBuilderFileUtil(String baseDirName) {
+	public SeleniumBuilderFileUtil(String baseDirName, String projectDirName) {
 		_baseDirName = baseDirName;
+
+		Properties properties = new Properties();
+
+		try {
+			String content = FileUtil.read(projectDirName + "/test.properties");
+
+			InputStream inputStream = new ByteArrayInputStream(
+				content.getBytes());
+
+			properties.load(inputStream);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		_componentNames = ListUtil.fromArray(
+			StringUtil.split(properties.getProperty("component.names")));
 	}
 
 	public String escapeHtml(String input) {
@@ -1816,27 +1836,7 @@ public class SeleniumBuilderFileUtil {
 			"attribute", "line-number", "locator", "locator-key", "name",
 			"path", "value"
 		});
-	private static List<String> _componentNames = ListUtil.fromArray(
-		new String[] {
-			"marketplace", "marketplace-known-issues", "portal-administration",
-			"portal-apis", "portal-application-standards",
-			"portal-authentication", "portal-business-productivity",
-			"portal-calendar", "portal-collaboration", "portal-configuration",
-			"portal-deployment", "portal-known-issues",
-			"portal-document-management", "portal-frameworks",
-			"portal-infrastructure", "portal-integrations", "portal-legacy",
-			"portal-opensocial", "portal-operations", "portal-permissions",
-			"portal-personalization-and-customization",
-			"portal-sample-portlet-plugins", "portal-search", "portal-security",
-			"portal-social-networking", "portal-staging",
-			"portal-theme-development", "portal-tools", "portal-upgrades",
-			"portal-user-interface", "portal-util-misc", "portal-wcm",
-			"portal-web-forms-and-data-lists", "portal-workflow",
-			"social-office-administration", "social-office-dashboard",
-			"social-office-environment", "social-office-known-issues",
-			"social-office-profile", "social-office-site",
-			"social-office-user-bar"
-		});
+	private static List<String> _componentNames;
 	private static List<String> _methodNames = ListUtil.fromArray(
 		new String[] {
 			"getFirstNumber", "getIPAddress", "increment", "length",

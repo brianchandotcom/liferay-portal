@@ -36,21 +36,25 @@ import org.apache.tools.ant.DirectoryScanner;
  */
 public class SeleniumBuilderContext {
 
-	public SeleniumBuilderContext(String baseDirName) throws Exception {
-		this(baseDirName, "com/liferay/portalweb/portal/util/liferayselenium/");
+	public SeleniumBuilderContext(
+			SeleniumBuilderFileUtil seleniumBuilderFileUtil)
+		throws Exception {
+
+		this(
+			seleniumBuilderFileUtil,
+			"com/liferay/portalweb/portal/util/liferayselenium/");
 	}
 
 	public SeleniumBuilderContext(
-			String baseDirName, String liferaySeleniumDirName)
+			SeleniumBuilderFileUtil seleniumBuilderFileUtil,
+			String liferaySeleniumDirName)
 		throws Exception {
 
-		_baseDirName = baseDirName;
-
-		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(_baseDirName);
+		_seleniumBuilderFileUtil = seleniumBuilderFileUtil;
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
-		directoryScanner.setBasedir(_baseDirName);
+		directoryScanner.setBasedir(seleniumBuilderFileUtil.getBaseDirName());
 		directoryScanner.setIncludes(
 			new String[] {
 				"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
@@ -271,10 +275,6 @@ public class SeleniumBuilderContext {
 
 	public String getActionSimpleClassName(String actionName) {
 		return _actionSimpleClassNames.get(actionName);
-	}
-
-	public String getBaseDirName() {
-		return _baseDirName;
 	}
 
 	public String getFunctionClassName(String functionName) {
@@ -1240,7 +1240,6 @@ public class SeleniumBuilderContext {
 		new HashMap<String, Element>();
 	private Map<String, String> _actionSimpleClassNames =
 		new HashMap<String, String>();
-	private String _baseDirName;
 	private Map<String, String> _functionClassNames =
 		new HashMap<String, String>();
 	private Map<String, String> _functionFileNames =

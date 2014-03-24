@@ -21,8 +21,11 @@ import java.util.Map;
  */
 public class PathConverter extends BaseConverter {
 
-	public PathConverter(SeleniumBuilderContext seleniumBuilderContext) {
-		super(seleniumBuilderContext);
+	public PathConverter(
+		SeleniumBuilderContext seleniumBuilderContext,
+		SeleniumBuilderFileUtil seleniumBuilderFileUtil) {
+
+		super(seleniumBuilderContext, seleniumBuilderFileUtil);
 	}
 
 	public void convert(String pathName) throws Exception {

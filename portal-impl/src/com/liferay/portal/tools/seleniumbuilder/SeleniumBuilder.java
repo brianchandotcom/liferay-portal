@@ -55,16 +55,20 @@ public class SeleniumBuilder {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		String baseDirName = arguments.get("selenium.base.dir");
+		String projectDirName = arguments.get("project.dir");
 
-		_seleniumBuilderContext = new SeleniumBuilderContext(baseDirName);
-		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(baseDirName);
+		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(
+			baseDirName, projectDirName);
+
+		_seleniumBuilderContext = new SeleniumBuilderContext(
+			_seleniumBuilderFileUtil);
 
 		Set<String> types = SetUtil.fromArray(
 			StringUtil.split(arguments.get("selenium.types")));
 
 		if (types.contains("action")) {
 			ActionConverter actionConverter = new ActionConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> actionNames = _seleniumBuilderContext.getActionNames();
 
@@ -77,7 +81,7 @@ public class SeleniumBuilder {
 
 		if (types.contains("function")) {
 			FunctionConverter functionConverter = new FunctionConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> functionNames =
 				_seleniumBuilderContext.getFunctionNames();
@@ -91,7 +95,7 @@ public class SeleniumBuilder {
 
 		if (types.contains("macro")) {
 			MacroConverter macroConverter = new MacroConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> macroNames = _seleniumBuilderContext.getMacroNames();
 
@@ -104,7 +108,7 @@ public class SeleniumBuilder {
 
 		if (types.contains("path")) {
 			PathConverter pathConverter = new PathConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> pathNames = _seleniumBuilderContext.getPathNames();
 
@@ -115,7 +119,7 @@ public class SeleniumBuilder {
 
 		if (types.contains("testcase")) {
 			TestCaseConverter testCaseConverter = new TestCaseConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> testCaseNames =
 				_seleniumBuilderContext.getTestCaseNames();

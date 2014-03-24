@@ -199,6 +199,7 @@ AUI.add(
 						instance._setEntries(data);
 						instance._setFolders(data);
 						instance._setParentTitle(data);
+						instance._setSelectAllCheckbox(data);
 
 						instance._parseContent(data);
 
@@ -625,6 +626,32 @@ AUI.add(
 							var parentTitleContainer = instance.byId('parentTitleContainer');
 
 							parentTitleContainer.setContent(parentTitle);
+						}
+					},
+
+					_setSelectAllCheckbox: function(content) {
+						var instance = this;
+
+						var portletContainer = instance._portletContainer;
+
+						var entriesContainer = instance.one('#entriesContainer');
+
+						if (entriesContainer && portletContainer) {
+							var entriesSize = entriesContainer.all('.app-view-entry').size();
+
+							var selectAllEntriesCheckbox = portletContainer.one('.select-all-entries');
+
+							if (selectAllEntriesCheckbox) {
+								var entries = (entriesSize > 0);
+								var hidden = selectAllEntriesCheckbox.hasClass('hide');
+
+								if (entries && hidden) {
+									selectAllEntriesCheckbox.removeClass('hide');
+								}
+								else if (!entries && !hidden) {
+									selectAllEntriesCheckbox.addClass('hide');
+								}
+							}
 						}
 					},
 

@@ -63,6 +63,14 @@ int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
 
+int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, false);
+
+boolean showSelectAll = false;
+
+if (total > 0) {
+	showSelectAll = true;
+}
+
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
@@ -93,7 +101,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 		<aui:col cssClass="context-pane" width="<%= showFolderMenu ? 75 : 100 %>">
 			<liferay-ui:app-view-toolbar
 				includeDisplayStyle="<%= true %>"
-				includeSelectAll="<%= true %>"
+				includeSelectAll="<%= showSelectAll %>"
 			>
 				<liferay-util:include page="/html/portlet/document_library/toolbar.jsp" />
 			</liferay-ui:app-view-toolbar>

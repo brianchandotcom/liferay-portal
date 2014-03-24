@@ -118,7 +118,9 @@ AUI.add(
 						instance._initHover();
 
 						if (themeDisplay.isSignedIn()) {
-							instance._initSelectAllCheckbox();
+							if (instance._selectAllCheckbox) {
+								instance._initSelectAllCheckbox();
+							}
 
 							instance._initToggleSelect();
 						}

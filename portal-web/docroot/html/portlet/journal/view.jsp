@@ -49,6 +49,14 @@ int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
 
+int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED);
+
+boolean showSelectAll = false;
+
+if (total > 0) {
+	showSelectAll = true;
+}
+
 request.setAttribute("view.jsp-folder", folder);
 
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
@@ -67,7 +75,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 		<aui:col cssClass="context-pane" last="<%= true %>" width="<%= 75 %>">
 			<liferay-ui:app-view-toolbar
 				includeDisplayStyle="<%= true %>"
-				includeSelectAll="<%= true %>"
+				includeSelectAll="<%= showSelectAll %>"
 			>
 				<liferay-util:include page="/html/portlet/journal/toolbar.jsp" />
 			</liferay-ui:app-view-toolbar>

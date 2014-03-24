@@ -229,13 +229,7 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 
 		<aui:input cssClass="lfr-input-text-container" label="password" name="userMappingPassword" type="text" value="<%= userMappingPassword %>" />
 
-		<aui:input cssClass="lfr-input-text-container" label="first-name" name="userMappingFirstName" type="text" value="<%= userMappingFirstName %>" />
-
-		<aui:input cssClass="lfr-input-text-container" label="middle-name" name="userMappingMiddleName" type="text" value="<%= userMappingMiddleName %>" />
-
-		<aui:input cssClass="lfr-input-text-container" label="last-name" name="userMappingLastName" type="text" value="<%= userMappingLastName %>" />
-
-		<aui:input cssClass="lfr-input-text-container" helpMessage="ldap-full-name-attribute-help" label="full-name" name="userMappingFullName" type="text" value="<%= userMappingFullName %>" />
+		<%@ include file="/html/portlet/portal_settings/edit_ldap_server_user_name.jspf" %>
 
 		<aui:input cssClass="lfr-input-text-container" label="job-title" name="userMappingJobTitle" type="text" value="<%= userMappingJobTitle %>" />
 

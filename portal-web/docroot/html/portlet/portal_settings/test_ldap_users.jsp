@@ -159,15 +159,7 @@ portletURL.setWindowState(LiferayWindowState.POP_UP);
 			value="<%= HtmlUtil.escape(emailAddress) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			name="first-name"
-			value="<%= HtmlUtil.escape(firstName) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="last-name"
-			value="<%= HtmlUtil.escape(lastName) %>"
-		/>
+		<%@ include file="/html/portlet/portal_settings/test_ldap_users_user_name.jspf" %>
 
 		<liferay-ui:search-container-column-text
 			name="password"

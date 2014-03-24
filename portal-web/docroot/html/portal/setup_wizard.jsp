@@ -95,9 +95,7 @@
 							</aui:fieldset>
 
 							<aui:fieldset cssClass="column-last span6" label="administrator-user">
-								<aui:input label="first-name" name="adminFirstName" value="<%= PropsValues.DEFAULT_ADMIN_FIRST_NAME %>" />
-
-								<aui:input label="last-name" name="adminLastName" value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>" />
+								<%@ include file="/html/portal/setup_wizard_user_name.jspf" %>
 
 								<aui:input label="email" name="adminEmailAddress" value="<%= emailAddress %>">
 									<aui:validator name="email" />

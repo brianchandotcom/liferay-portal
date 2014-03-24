@@ -34,8 +34,11 @@ public class SeleniumBuilderContextTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		try {
+			_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(
+				_BASE_DIR, ".");
+
 			_seleniumBuilderContext = new SeleniumBuilderContext(
-				_BASE_DIR, ".", _LIFERAY_SELENIUM_DIR);
+				_seleniumBuilderFileUtil, _LIFERAY_SELENIUM_DIR);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -700,5 +703,6 @@ public class SeleniumBuilderContextTest {
 		SeleniumBuilderContextTest.class);
 
 	private static SeleniumBuilderContext _seleniumBuilderContext;
+	private static SeleniumBuilderFileUtil _seleniumBuilderFileUtil;
 
 }

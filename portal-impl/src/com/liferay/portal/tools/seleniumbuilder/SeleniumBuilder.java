@@ -55,12 +55,13 @@ public class SeleniumBuilder {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		String baseDirName = arguments.get("selenium.base.dir");
-		String projectDirName = arguments.get("selenium.project.dir");
+		String projectDirName = arguments.get("project.dir");
 
-		_seleniumBuilderContext = new SeleniumBuilderContext(
-			baseDirName, projectDirName);
 		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(
 			baseDirName, projectDirName);
+
+		_seleniumBuilderContext = new SeleniumBuilderContext(
+			_seleniumBuilderFileUtil);
 
 		Set<String> types = SetUtil.fromArray(
 			StringUtil.split(arguments.get("selenium.types")));

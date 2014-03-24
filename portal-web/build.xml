@@ -909,8 +909,8 @@
 			newenvironment="true"
 		>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg value="project.dir=${project.dir}" />
 			<arg value="selenium.base.dir=test/functional" />
-			<arg value="selenium.project.dir=${project.dir}" />
 			<arg value="selenium.types=${selenium.types}" />
 			<arg value="test.class=${test.class}" />
 		</java>

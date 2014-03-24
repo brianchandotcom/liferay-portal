@@ -36,29 +36,25 @@ import org.apache.tools.ant.DirectoryScanner;
  */
 public class SeleniumBuilderContext {
 
-	public SeleniumBuilderContext(String baseDirName, String projectDirName)
+	public SeleniumBuilderContext(
+			SeleniumBuilderFileUtil seleniumBuilderFileUtil)
 		throws Exception {
 
 		this(
-			baseDirName, projectDirName,
+			seleniumBuilderFileUtil,
 			"com/liferay/portalweb/portal/util/liferayselenium/");
 	}
 
 	public SeleniumBuilderContext(
-			String baseDirName, String projectDirName,
+			SeleniumBuilderFileUtil seleniumBuilderFileUtil,
 			String liferaySeleniumDirName)
 		throws Exception {
 
-		_baseDirName = baseDirName;
-
-		_projectDirName = projectDirName;
-
-		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(
-			_baseDirName, _projectDirName);
+		_seleniumBuilderFileUtil = seleniumBuilderFileUtil;
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
-		directoryScanner.setBasedir(_baseDirName);
+		directoryScanner.setBasedir(seleniumBuilderFileUtil.getBaseDirName());
 		directoryScanner.setIncludes(
 			new String[] {
 				"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
@@ -279,10 +275,6 @@ public class SeleniumBuilderContext {
 
 	public String getActionSimpleClassName(String actionName) {
 		return _actionSimpleClassNames.get(actionName);
-	}
-
-	public String getBaseDirName() {
-		return _baseDirName;
 	}
 
 	public String getFunctionClassName(String functionName) {
@@ -533,10 +525,6 @@ public class SeleniumBuilderContext {
 
 	public String getPathSimpleClassName(String pathName) {
 		return _pathSimpleClassNames.get(pathName);
-	}
-
-	public String getProjectDirName() {
-		return _projectDirName;
 	}
 
 	public int getSeleniumParameterCount(String seleniumCommandName) {
@@ -1252,7 +1240,6 @@ public class SeleniumBuilderContext {
 		new HashMap<String, Element>();
 	private Map<String, String> _actionSimpleClassNames =
 		new HashMap<String, String>();
-	private String _baseDirName;
 	private Map<String, String> _functionClassNames =
 		new HashMap<String, String>();
 	private Map<String, String> _functionFileNames =
@@ -1293,7 +1280,6 @@ public class SeleniumBuilderContext {
 		new HashMap<String, Element>();
 	private Map<String, String> _pathSimpleClassNames =
 		new HashMap<String, String>();
-	private String _projectDirName;
 	private SeleniumBuilderFileUtil _seleniumBuilderFileUtil;
 	private Map<String, Integer> _seleniumParameterCounts =
 		new HashMap<String, Integer>();

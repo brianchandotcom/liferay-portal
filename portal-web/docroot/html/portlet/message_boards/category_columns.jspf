@@ -23,9 +23,9 @@
 	buffer.append("<a href=\"");
 	buffer.append(rowURL);
 	buffer.append("\">");
-	buffer.append("<span class=\"category-title\">");
+	buffer.append("<div class=\"category-title\">");
 	buffer.append(curCategory.getName());
-	buffer.append("</span>");
+	buffer.append("</div>");
 
 	if (Validator.isNotNull(curCategory.getDescription())) {
 		buffer.append("<div class=\"category-description\">");

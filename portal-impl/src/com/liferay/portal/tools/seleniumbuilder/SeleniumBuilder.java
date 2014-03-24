@@ -152,6 +152,18 @@ public class SeleniumBuilder {
 						testCaseName, "TestCase", "");
 				}
 
+				Element rootElement =
+					_seleniumBuilderContext.getTestCaseRootElement(
+						testCaseName);
+
+				String extendsTestCaseName = rootElement.attributeValue(
+					"extends");
+
+				if (extendsTestCaseName != null) {
+					testCaseConverter.convert(
+						extendsTestCaseName, testCaseCommandName);
+				}
+
 				testCaseConverter.convert(testCaseName, testCaseCommandName);
 			}
 		}

@@ -312,7 +312,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									</c:if>
 
 									<div class="lfr-discussion-message">
-										<%= MBMessageUtil.formatMessage(message, themeDisplay.getPathThemeImages()) %>
+										<%= MBUtil.formatMessageBodyToBBCode(message.getBody(), themeDisplay.getPathThemeImages()) %>
 									</div>
 
 									<div class="lfr-discussion-controls">

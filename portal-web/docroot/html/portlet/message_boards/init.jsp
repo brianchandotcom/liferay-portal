@@ -65,7 +65,6 @@ page import="com.liferay.portlet.messageboards.service.permission.MBMessagePermi
 page import="com.liferay.portlet.messageboards.service.permission.MBPermission" %><%@
 page import="com.liferay.portlet.messageboards.util.MBConstants" %><%@
 page import="com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil" %><%@
-page import="com.liferay.portlet.messageboards.util.MBUtil" %><%@
 page import="com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator" %><%@
 page import="com.liferay.portlet.ratings.model.RatingsStats" %><%@
 page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %><%@

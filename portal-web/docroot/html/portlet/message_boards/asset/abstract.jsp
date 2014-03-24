@@ -21,7 +21,11 @@ int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTR
 
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
-String summary = MBMessageUtil.formatMessage(message, abstractLength, themeDisplay.getPathThemeImages());
+String summary = StringUtil.shorten(message.getBody(), abstractLength);
+
+if (message.isFormatBBCode()) {
+	summary = MBUtil.formatMessageBodyToBBCode(summary, themeDisplay.getPathThemeImages());
+}
 %>
 
 <%= HtmlUtil.escape(summary) %>

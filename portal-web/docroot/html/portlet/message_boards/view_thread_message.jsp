@@ -279,7 +279,15 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 
 			<div class="thread-body">
 
-				<%= MBMessageUtil.formatMessage(message, themeDisplay.getPathThemeImages()) %>
+				<%
+				String msgBody = message.getBody();
+
+				if (message.isFormatBBCode()) {
+					msgBody = MBUtil.formatMessageBodyToBBCode(msgBody, themeDisplay.getPathThemeImages());
+				}
+				%>
+
+				<%= msgBody %>
 
 				<liferay-ui:custom-attributes-available className="<%= MBMessage.class.getName() %>">
 					<div class="custom-attributes">

@@ -34,7 +34,16 @@ MBMessage message = (MBMessage)objArray[0];
 </div>
 
 <div class="summary">
-	<%= MBMessageUtil.formatMessage(message, 250, themeDisplay.getPathThemeImages()) %>
+
+	<%
+	String msgBody = StringUtil.shorten(message.getBody(), 250);
+
+	if (message.isFormatBBCode()) {
+		msgBody = MBUtil.formatMessageBodyToBBCode(msgBody, themeDisplay.getPathThemeImages());
+	}
+	%>
+
+	<%= msgBody %>
 </div>
 
 <div class="tags">

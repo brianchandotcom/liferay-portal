@@ -62,7 +62,7 @@ body.html-editor {
 
 		&:after {
 			clear: both;
-			content: "";
+			content: '';
 			display: block;
 			font-size: 0;
 			height: 0;
@@ -117,47 +117,9 @@ body.html-editor {
 		}
 	}
 
-	.ie9, .ie8, .ie7, .ie6 {
-		.responsive-table-horizontal {
-			display: table;
-			position: static;
-			width: auto;
-
-			thead {
-				display: table-header-group;
-				float: none;
-				margin-right: auto;
-
-				th {
-					display: table-cell;
-					margin-bottom: auto;
-					text-align: initial;
-
-					&:first-child {
-						text-align: initial;
-					}
-				}
-			}
-
-			tbody {
-				display: table-row-group;
-				overflow-x: auto;
-				position: static;
-
-				tr {
-					display: table-row;
-
-					td {
-						display: table-cell;
-						margin-bottom: auto;
-						text-align: initial;
-
-						&:first-child {
-							text-align: initial;
-						}
-					}
-				}
-			}
+	.ie9 {
+		.responsive-table-horizontal thead {
+			float: none;
 		}
 	}
 }

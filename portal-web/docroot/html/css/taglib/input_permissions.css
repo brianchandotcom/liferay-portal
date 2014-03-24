@@ -4,15 +4,7 @@
 	overflow: auto;
 
 	table {
-		tbody td {
-			text-align: center;
-
-			&:first-child {
-				text-align: left;
-			}
-		}
-
-		thead th {
+		tbody td, thead th {
 			text-align: center;
 
 			&:first-child {
@@ -26,17 +18,13 @@
 	.permissions-table-container {
 		table {
 			tbody td {
-				text-align: center;
-
 				&:first-child {
 					text-align: center;
 				}
 			}
 
 			thead th {
-				text-align: right;
-
-				&:first-child {
+				&, &:first-child {
 					text-align: right;
 				}
 			}
@@ -49,7 +37,7 @@
 		}
 	}
 
-	.ie9, .ie8, .ie7, .ie6 {
+	.ie9 {
 		.permissions-table-container {
 			table {
 				thead th {

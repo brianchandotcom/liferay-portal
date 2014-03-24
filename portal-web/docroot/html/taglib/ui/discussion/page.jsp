@@ -312,7 +312,16 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									</c:if>
 
 									<div class="lfr-discussion-message">
-										<%= MBUtil.formatMessageBodyToBBCode(message.getBody(), themeDisplay.getPathThemeImages()) %>
+
+										<%
+										String msgBody = message.getBody();
+
+										if (message.isFormatBBCode()) {
+											msgBody = MBUtil.formatMessageBodyToBBCode(msgBody, themeDisplay.getPathThemeImages());
+										}
+										%>
+
+										<%= msgBody %>
 									</div>
 
 									<div class="lfr-discussion-controls">

@@ -932,7 +932,7 @@ public class MBUtil {
 		return StringUtil.replace(
 			messageBody,
 			new String[] {
-				"@theme_images_path@", "href=\"/", "src=\"/"
+				MBMessageUtil.THEME_IMAGES_PATH, "href=\"/", "src=\"/"
 			},
 			new String[] {
 				themeDisplay.getPathThemeImages(),

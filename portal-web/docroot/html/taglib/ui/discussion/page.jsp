@@ -312,14 +312,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									</c:if>
 
 									<div class="lfr-discussion-message">
-
-										<%
-										String msgBody = BBCodeTranslatorUtil.getHTML(message.getBody());
-
-										msgBody = StringUtil.replace(msgBody, "@theme_images_path@/emoticons", themeDisplay.getPathThemeImages() + "/emoticons");
-										%>
-
-										<%= msgBody %>
+										<%= MBMessageUtil.formatMessage(message, themeDisplay.getPathThemeImages()) %>
 									</div>
 
 									<div class="lfr-discussion-controls">

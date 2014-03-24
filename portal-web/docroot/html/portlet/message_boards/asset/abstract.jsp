@@ -21,12 +21,7 @@ int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTR
 
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
-String summary = StringUtil.shorten(message.getBody(), abstractLength);
-
-if (message.isFormatBBCode()) {
-	summary = BBCodeTranslatorUtil.getHTML(summary);
-	summary = StringUtil.replace(summary, "@theme_images_path@/emoticons", themeDisplay.getPathThemeImages() + "/emoticons");
-}
+String summary = MBMessageUtil.formatMessage(message, abstractLength, themeDisplay.getPathThemeImages());
 %>
 
 <%= HtmlUtil.escape(summary) %>

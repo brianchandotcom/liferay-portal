@@ -17,7 +17,7 @@
 <%
 Map<String,String> configParams = new HashMap();
 
-configParams.put("emoticonsPath", themeDisplay.getPathThemeImages() + "/emoticons");
+configParams.put("emoticonsPath", themeDisplay.getPathThemeImages() + MBMessageUtil.EMOTICONS);
 
 if (quote && Validator.isNull(body) && (curParentMessage != null)) {
 	StringBundler sb = new StringBundler(5);

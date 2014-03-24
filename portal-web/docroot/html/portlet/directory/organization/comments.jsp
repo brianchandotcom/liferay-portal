@@ -23,11 +23,5 @@ Organization organization = (Organization)request.getAttribute(WebKeys.ORGANIZAT
 <c:if test="<%= Validator.isNotNull(organization.getComments()) %>">
 	<h3><liferay-ui:message key="comments" /></h3>
 
-	<%
-	String msgBody = BBCodeTranslatorUtil.getHTML(organization.getComments());
-
-	msgBody = StringUtil.replace(msgBody, "@theme_images_path@/emoticons", themeDisplay.getPathThemeImages() + "/emoticons");
-	%>
-
-	<%= msgBody %>
+	<%= MBMessageUtil.formatMessageBodyToBBCode(organization.getComments(), themeDisplay.getPathThemeImages()) %>
 </c:if>

@@ -23,11 +23,5 @@ User selUser = (User)request.getAttribute("user.selUser");
 <c:if test="<%= Validator.isNotNull(selUser.getComments()) %>">
 	<h3><liferay-ui:message key="comments" /></h3>
 
-	<%
-	String msgBody = BBCodeTranslatorUtil.getHTML(selUser.getComments());
-
-	msgBody = StringUtil.replace(msgBody, "@theme_images_path@/emoticons", themeDisplay.getPathThemeImages() + "/emoticons");
-	%>
-
-	<%= msgBody %>
+	<%= MBMessageUtil.formatMessageBodyToBBCode(selUser.getComments(), themeDisplay.getPathThemeImages()) %>
 </c:if>

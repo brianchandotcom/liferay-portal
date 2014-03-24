@@ -20,7 +20,7 @@
 String[][] emoticons = BBCodeTranslatorUtil.getEmoticons();
 
 for (int i = 0; i < emoticons.length; i++) {
-	String image = StringUtil.replace(emoticons[i][0], "@theme_images_path@", themeDisplay.getPathThemeImages());
+	String image = StringUtil.replace(emoticons[i][0], MBMessageUtil.THEME_IMAGES_PATH, themeDisplay.getPathThemeImages());
 %>
 
 	<a class="lfr-button emoticon" emoticonCode="<%= emoticons[i][1] %>"><%= image %></a>

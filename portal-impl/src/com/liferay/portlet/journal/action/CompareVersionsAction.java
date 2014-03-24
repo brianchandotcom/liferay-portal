@@ -153,8 +153,6 @@ public class CompareVersionsAction extends PortletAction {
 			new UnsyncStringReader(sourceArticleDisplay.getContent()),
 			new UnsyncStringReader(targetArticleDisplay.getContent()));
 
-		renderRequest.setAttribute("languageId", languageId);
-
 		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
 		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
 		renderRequest.setAttribute(WebKeys.TARGET_VERSION, targetVersion);
@@ -193,6 +191,7 @@ public class CompareVersionsAction extends PortletAction {
 		}
 
 		renderRequest.setAttribute(WebKeys.AVAILABLE_LOCALES, locales);
+		renderRequest.setAttribute(WebKeys.LANGUAGE_ID, languageId);
 
 		return languageId;
 	}

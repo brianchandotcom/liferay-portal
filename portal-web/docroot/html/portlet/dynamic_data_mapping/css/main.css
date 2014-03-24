@@ -41,8 +41,8 @@
 	.lfr-ddm-small-image-preview {
 		background-color: #FFF;
 		border: 1px solid #CCC;
-		padding: 4px;
 		max-width: 120px;
+		padding: 4px;
 	}
 
 	.lfr-ddm-small-image-preview div {

@@ -35,15 +35,15 @@
 						border-color: rgba(0, 0, 0, 0.2);
 
 						&:after {
+							border-bottom: 6px solid #FFF;
 							border-left: 6px solid transparent;
 							border-right: 6px solid transparent;
-							border-bottom: 6px solid #FFF;
 						}
 
 						&:before {
+							border-bottom: 7px solid #CCC;
 							border-left: 7px solid transparent;
 							border-right: 7px solid transparent;
-							border-bottom: 7px solid #CCC;
 						}
 
 						a {

@@ -47,8 +47,8 @@
 
 			.user-details .user-name, .user-profile-image {
 				clear: none;
-				vertical-align: top;
 				text-align: center;
+				vertical-align: top;
 			}
 
 			.user-profile-image img {
@@ -197,8 +197,8 @@
 
 .taglib-discussion {
 	table.tree-walker {
-		border-width: 0;
 		border-collapse: collapse;
+		border-width: 0;
 	}
 
 	.lfr-discussion {

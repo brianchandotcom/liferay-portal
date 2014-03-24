@@ -28,8 +28,8 @@
 	}
 
 	.toc {
-		border: 1px solid #AAA;
 		background-color: #F9F9F9;
+		border: 1px solid #AAA;
 		padding: 0 1em;
 
 		h4 {
@@ -127,8 +127,8 @@
 		}
 
 		li {
-			font-weight: bold;
 			font-size: 1.1em;
+			font-weight: bold;
 		}
 	}
 
@@ -149,20 +149,20 @@
 
 		a.external-link {
 			background: transparent url(@theme_image_path@/wiki/external.png) right top no-repeat;
-			text-decoration: none;
 			padding-right: 10px;
+			text-decoration: none;
 
 			&:hover {
 				background: transparent url(@theme_image_path@/wiki/external.png) right top no-repeat;
-				text-decoration: underline;
 				padding-right: 11px;
+				text-decoration: underline;
 			}
 		}
 	}
 
 	.node-current {
-		text-decoration: none;
 		font-weight: bold;
+		text-decoration: none;
 	}
 
 	.page-actions {
@@ -273,8 +273,8 @@
 		}
 
 		pre {
-			margin-left: 1em;
 			margin-bottom: 1em;
+			margin-left: 1em;
 		}
 	}
 

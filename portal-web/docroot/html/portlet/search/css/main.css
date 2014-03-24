@@ -161,9 +161,9 @@
 				}
 
 				.asset-entry-type {
+					color: #777;
 					float: right;
 					font-size: 0.8em;
-					color: #777;
 				}
 
 				.toggle-details {
@@ -211,8 +211,8 @@
 		}
 
 		.changed-keyword {
-			font-weight: bold;
 			font-style: italic;
+			font-weight: bold;
 		}
 	}
 

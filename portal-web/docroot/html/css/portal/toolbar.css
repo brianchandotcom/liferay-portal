@@ -46,8 +46,8 @@
 
 .lfr-emoticon-container {
 	border: 1px solid transparent;
-	padding-top: 5px;
 	overflow: hidden;
+	padding-top: 5px;
 	width: 180px;
 
 	.lfr-button {
@@ -78,9 +78,7 @@
 		}
 
 		&:hover {
-			border-color: #CCC;
-			border-bottom-color: #777;
-			border-right-color: #777;
+			border-color: #CCC #777 #777;
 		}
 	}
 

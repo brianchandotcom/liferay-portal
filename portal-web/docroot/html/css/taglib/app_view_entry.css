@@ -5,12 +5,12 @@
 	&.display-icon {
 		display: inline-block;
 		float: left;
+		height: 160px;
 		margin: 5px;
 		padding: 10px 0;
 		position: relative;
 		vertical-align: top;
 		width: 200px;
-		height: 160px;
 
 		@include respond-to(phone, tablet) {
 			height: 210px;

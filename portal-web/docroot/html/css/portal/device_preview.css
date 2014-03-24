@@ -151,8 +151,8 @@
 			padding: 20px 50px;
 
 			&:before {
-				width: 10px;
 				height: 10px;
+				width: 10px;
 			}
 		}
 

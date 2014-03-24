@@ -122,8 +122,8 @@
 	}
 
 	.document-entries-pagination {
-		text-align: center;
 		margin: 10px 0;
+		text-align: center;
 
 		.pagination-content {
 			margin: 0;
@@ -302,8 +302,8 @@
 
 	.lfr-document-library-comments.lfr-panel.lfr-extended {
 		background: #FFF;
-		border-width: 0;
-		border-right: 1px solid #CCC;
+		border: 0 solid #CCC;
+		border-right-width: 1px;
 		margin-bottom: 0;
 
 		.lfr-panel-titlebar {
@@ -452,10 +452,11 @@
 		}
 
 		.document-description {
+			display: block;
+
 			@include hyphenation;
 
 			margin: 8px 0;
-			display: block;
 		}
 
 		.document-thumbnail {
@@ -511,12 +512,12 @@
 	}
 
 	.taglib-discussion {
-		width: 90%;
 		margin: 0 auto;
+		width: 90%;
 
-			@include respond-to(phone) {
-				width: auto;
-			}
+		@include respond-to(phone) {
+			width: auto;
+		}
 	}
 
 	.taglib-ratings.stars {

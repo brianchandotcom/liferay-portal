@@ -20,8 +20,8 @@ td {
 	margin-bottom: 2em;
 
 	dd:after {
-		content: '';
 		clear: both;
+		content: '';
 		display: block;
 		height: 0;
 		visibility: hidden;
@@ -140,8 +140,8 @@ img.icon {
 	cursor: pointer;
 	display: inline-block;
 	line-height: 1;
-	padding: 0.3em 0.5em 0.3em;
 	margin: 0.1em 0.2em;
+	padding: 0.3em 0.5em 0.3em;
 }
 
 .lfr-token-primary {

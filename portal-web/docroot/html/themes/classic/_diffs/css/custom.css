@@ -282,9 +282,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.brand {
+			margin-left: 0;
 			padding: 0;
 			padding-right: 20px;
-			margin-left: 0;
 
 			img {
 				height: 40px;

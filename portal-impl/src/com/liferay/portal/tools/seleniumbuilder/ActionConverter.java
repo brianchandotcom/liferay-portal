@@ -21,8 +21,11 @@ import java.util.Map;
  */
 public class ActionConverter extends BaseConverter {
 
-	public ActionConverter(SeleniumBuilderContext seleniumBuilderContext) {
-		super(seleniumBuilderContext);
+	public ActionConverter(
+		SeleniumBuilderContext seleniumBuilderContext,
+		SeleniumBuilderFileUtil seleniumBuilderFileUtil) {
+
+		super(seleniumBuilderContext, seleniumBuilderFileUtil);
 	}
 
 	public void convert(String actionName) throws Exception {

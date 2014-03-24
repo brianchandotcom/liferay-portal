@@ -67,7 +67,7 @@ public class SeleniumBuilder {
 
 		if (types.contains("action")) {
 			ActionConverter actionConverter = new ActionConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> actionNames = _seleniumBuilderContext.getActionNames();
 
@@ -80,7 +80,7 @@ public class SeleniumBuilder {
 
 		if (types.contains("function")) {
 			FunctionConverter functionConverter = new FunctionConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> functionNames =
 				_seleniumBuilderContext.getFunctionNames();
@@ -94,7 +94,7 @@ public class SeleniumBuilder {
 
 		if (types.contains("macro")) {
 			MacroConverter macroConverter = new MacroConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> macroNames = _seleniumBuilderContext.getMacroNames();
 
@@ -107,7 +107,7 @@ public class SeleniumBuilder {
 
 		if (types.contains("path")) {
 			PathConverter pathConverter = new PathConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> pathNames = _seleniumBuilderContext.getPathNames();
 
@@ -118,7 +118,7 @@ public class SeleniumBuilder {
 
 		if (types.contains("testcase")) {
 			TestCaseConverter testCaseConverter = new TestCaseConverter(
-				_seleniumBuilderContext);
+				_seleniumBuilderContext, _seleniumBuilderFileUtil);
 
 			Set<String> testCaseNames =
 				_seleniumBuilderContext.getTestCaseNames();

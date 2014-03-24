@@ -21,8 +21,11 @@ import java.util.Map;
  */
 public class TestCaseConverter extends BaseConverter {
 
-	public TestCaseConverter(SeleniumBuilderContext seleniumBuilderContext) {
-		super(seleniumBuilderContext);
+	public TestCaseConverter(
+		SeleniumBuilderContext seleniumBuilderContext,
+		SeleniumBuilderFileUtil seleniumBuilderFileUtil) {
+
+		super(seleniumBuilderContext, seleniumBuilderFileUtil);
 	}
 
 	public void convert(String testCaseName, String testCaseCommandName)

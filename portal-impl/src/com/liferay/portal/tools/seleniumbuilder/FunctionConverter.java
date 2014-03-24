@@ -21,8 +21,11 @@ import java.util.Map;
  */
 public class FunctionConverter extends BaseConverter {
 
-	public FunctionConverter(SeleniumBuilderContext seleniumBuilderContext) {
-		super(seleniumBuilderContext);
+	public FunctionConverter(
+		SeleniumBuilderContext seleniumBuilderContext,
+		SeleniumBuilderFileUtil seleniumBuilderFileUtil) {
+
+		super(seleniumBuilderContext, seleniumBuilderFileUtil);
 	}
 
 	public void convert(String functionName) throws Exception {

@@ -22,12 +22,13 @@ import java.util.Map;
  */
 public class BaseConverter {
 
-	public BaseConverter(SeleniumBuilderContext seleniumBuilderContext) {
+	public BaseConverter(
+		SeleniumBuilderContext seleniumBuilderContext,
+		SeleniumBuilderFileUtil seleniumBuilderFileUtil) {
+
 		this.seleniumBuilderContext = seleniumBuilderContext;
 
-		this.seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(
-			seleniumBuilderContext.getBaseDirName(),
-			seleniumBuilderContext.getProjectDirName());
+		this.seleniumBuilderFileUtil = seleniumBuilderFileUtil;
 	}
 
 	protected Map<String, Object> getContext() {

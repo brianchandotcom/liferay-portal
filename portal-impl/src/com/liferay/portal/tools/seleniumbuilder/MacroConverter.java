@@ -21,8 +21,11 @@ import java.util.Map;
  */
 public class MacroConverter extends BaseConverter {
 
-	public MacroConverter(SeleniumBuilderContext seleniumBuilderContext) {
-		super(seleniumBuilderContext);
+	public MacroConverter(
+		SeleniumBuilderContext seleniumBuilderContext,
+		SeleniumBuilderFileUtil seleniumBuilderFileUtil) {
+
+		super(seleniumBuilderContext, seleniumBuilderFileUtil);
 	}
 
 	public void convert(String macroName) throws Exception {

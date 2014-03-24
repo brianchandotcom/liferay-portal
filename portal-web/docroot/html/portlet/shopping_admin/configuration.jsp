@@ -31,7 +31,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
-	<aui:input name="preferences--ccTypes--" type="hidden" />
+	<aui:input name="ccTypes" type="hidden" />
 
 	<liferay-ui:tabs
 		names="payment-settings,shipping-calculation,insurance-calculation,email-from,confirmation-email,shipping-email"

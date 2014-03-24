@@ -47,8 +47,15 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		updateInsuranceCalculation(actionRequest);
 		updatePayment(actionRequest);
 		updateShippingCalculation(actionRequest);
+		updateCcTypes(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	protected void updateCcTypes(ActionRequest actionRequest) {
+		String ccTypes = ParamUtil.getString(actionRequest, "ccTypes");
+
+		setPreference(actionRequest, "ccTypes", StringUtil.split(ccTypes));
 	}
 
 	protected void updateInsuranceCalculation(ActionRequest actionRequest)
@@ -61,7 +68,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				ParamUtil.getDouble(actionRequest, "insurance" + i));
 		}
 
-		setPreference(actionRequest, "insurance", StringUtil.merge(insurance));
+		setPreference(actionRequest, "insurance", insurance);
 	}
 
 	protected void updatePayment(ActionRequest actionRequest) throws Exception {
@@ -94,7 +101,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				ParamUtil.getDouble(actionRequest, "shipping" + i));
 		}
 
-		setPreference(actionRequest, "shipping", StringUtil.merge(shipping));
+		setPreference(actionRequest, "shipping", shipping);
 	}
 
 }

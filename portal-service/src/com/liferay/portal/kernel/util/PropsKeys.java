@@ -2243,6 +2243,10 @@ public interface PropsKeys {
 
 	public static final String SHOPPING_CATEGORY_SHOW_SPECIAL_ITEMS = "shopping.category.show.special.items";
 
+	public static final String SHOPPING_CREDIT_CARD_TYPES = "shopping.credit.card.types";
+
+	public static final String SHOPPING_CURRENCY_ID = "shopping.currency.id";
+
 	public static final String SHOPPING_EMAIL_FROM_ADDRESS = "shopping.email.from.address";
 
 	public static final String SHOPPING_EMAIL_FROM_NAME = "shopping.email.from.name";
@@ -2267,9 +2271,19 @@ public interface PropsKeys {
 
 	public static final String SHOPPING_IMAGE_SMALL_MAX_SIZE = "shopping.image.small.max.size";
 
+	public static final String SHOPPING_INSURANCE = "shopping.insurance";
+
+	public static final String SHOPPING_INSURANCE_FORMULA = "shopping.insurance.formula";
+
 	public static final String SHOPPING_ITEM_SHOW_AVAILABILITY = "shopping.item.show.availability";
 
 	public static final String SHOPPING_ORDER_COMMENTS_ENABLED = "shopping.order.comments.enabled";
+
+	public static final String SHOPPING_SHIPPING = "shopping.shipping";
+
+	public static final String SHOPPING_SHIPPING_FORMULA = "shopping.shipping.formula";
+
+	public static final String SHOPPING_TAX_STATE = "shopping.tax.state";
 
 	public static final String SHUTDOWN_PROGRAMMATICALLY_EXIT = "shutdown.programmatically.exit";
 

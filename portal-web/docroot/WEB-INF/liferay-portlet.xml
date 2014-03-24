@@ -2201,7 +2201,7 @@
 		<icon>/html/icons/shopping.png</icon>
 		<struts-path>shopping_admin</struts-path>
 		<parent-struts-path>shopping</parent-struts-path>
-		<configuration-action-class>com.liferay.portlet.messageboards.action.ConfigurationActionImpl</configuration-action-class>
+		<configuration-action-class>com.liferay.portlet.shopping.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>6.0</control-panel-entry-weight>

@@ -160,7 +160,7 @@
 </#macro>
 
 <#macro getDiscussion>
-	<#if validator.isNotNull(assetRenderer.getDiscussionPath()) && (enableComments == "true")>
+	<#if validator.isNotNull(assetRenderer.getDiscussionPath()) && enableComments?? && (enableComments == "true")>
 		<br />
 
 		<#assign discussionURL = renderResponse.createActionURL() />
@@ -230,7 +230,7 @@
 	cssClass
 	entry
 >
-	<#if enablePageRatings == "true">
+	<#if enablePageRatings?? && (enablePageRatings == "true")>
 		<div class="${cssClass}">
 			<@liferay_ui["ratings"]
 				className=wikiPageClassName
@@ -241,7 +241,7 @@
 </#macro>
 
 <#macro getRelatedAssets>
-	<#if assetEntry?? && (enableRelatedAssets == "true")>
+	<#if assetEntry?? && enableRelatedAssets?? && (enableRelatedAssets == "true")>
 		<@liferay_ui["asset-links"]
 			assetEntryId=assetEntry.getEntryId()
 		/>

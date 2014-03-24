@@ -97,7 +97,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 
 	var addContent = new Liferay.Dockbar.AddContent(
 		{
-			displayStyle: '<%= displayStyle %>',
+			displayStyle: '<%= displayStyle.toString() %>',
 			focusItem: searchContent,
 			inputNode: searchContent,
 			namespace: '<portlet:namespace />',

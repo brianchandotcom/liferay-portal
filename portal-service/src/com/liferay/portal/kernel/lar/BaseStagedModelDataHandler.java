@@ -88,6 +88,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				manifestSummary.incrementModelAdditionCount(
 					stagedModel.getStagedModelType());
 			}
+
+			portletDataContext.cleanUpMissingReferences(stagedModel);
 		}
 		catch (PortletDataException pde) {
 			throw pde;

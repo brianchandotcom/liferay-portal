@@ -243,6 +243,8 @@ public interface PortletDataContext extends Serializable {
 	public void addZipEntry(String name, StringBuilder sb)
 		throws SystemException;
 
+	public void cleanUpMissingReferences(ClassedModel classedModel);
+
 	public void clearScopedPrimaryKeys();
 
 	public ServiceContext createServiceContext(

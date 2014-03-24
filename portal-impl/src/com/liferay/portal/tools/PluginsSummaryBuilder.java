@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
 
@@ -42,7 +41,7 @@ import org.apache.tools.ant.DirectoryScanner;
 public class PluginsSummaryBuilder {
 
 	public static void main(String[] args) {
-		InitUtil.initWithSpring();
+		ToolDependencies.wire();
 
 		File pluginsDir = new File(System.getProperty("plugins.dir"));
 

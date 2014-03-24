@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,7 +55,7 @@ import java.util.Properties;
 public class SampleSQLBuilder {
 
 	public static void main(String[] args) {
-		InitUtil.initWithSpring();
+		ToolDependencies.wire();
 
 		Reader reader = null;
 

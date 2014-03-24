@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +34,7 @@ import java.util.TreeMap;
 public class WSDDMerger {
 
 	public static void main(String[] args) {
-		InitUtil.initWithSpring();
+		ToolDependencies.wire();
 
 		new WSDDMerger(args[0], args[1]);
 	}

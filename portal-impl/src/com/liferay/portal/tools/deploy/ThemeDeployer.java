@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Plugin;
-import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;
 
@@ -33,7 +33,7 @@ import java.util.Map;
 public class ThemeDeployer extends BaseDeployer {
 
 	public static void main(String[] args) {
-		InitUtil.initWithSpring();
+		ToolDependencies.deployers();
 
 		List<String> wars = new ArrayList<String>();
 		List<String> jars = new ArrayList<String>();

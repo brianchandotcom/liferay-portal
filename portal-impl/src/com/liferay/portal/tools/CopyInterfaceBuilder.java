@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.tools.comparator.JavaMethodComparator;
 import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
-import com.liferay.portal.util.InitUtil;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
@@ -42,7 +41,7 @@ import java.util.TreeSet;
 public class CopyInterfaceBuilder {
 
 	public static void main(String[] args) {
-		InitUtil.initWithSpring();
+		ToolDependencies.wire();
 
 		if (args.length == 2) {
 			new CopyInterfaceBuilder(args[0], args[1]);

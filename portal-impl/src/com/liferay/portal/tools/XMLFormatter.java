@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.InitUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -26,7 +25,7 @@ import com.liferay.portal.util.InitUtil;
 public class XMLFormatter {
 
 	public static void main(String[] args) {
-		InitUtil.initWithSpring();
+		ToolDependencies.wire();
 
 		String fileName = System.getProperty("xml.formatter.file");
 		boolean stripComments = GetterUtil.getBoolean(

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
 import java.io.FileReader;
@@ -36,7 +35,7 @@ import java.util.Properties;
 public class TCKtoJUnitConverter {
 
 	public static void main(String[] args) {
-		InitUtil.initWithSpring();
+		ToolDependencies.wire();
 
 		if (args.length == 2) {
 			new TCKtoJUnitConverter(args[0], args[1]);

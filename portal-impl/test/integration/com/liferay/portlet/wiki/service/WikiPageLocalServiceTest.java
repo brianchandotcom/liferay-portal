@@ -153,7 +153,7 @@ public class WikiPageLocalServiceTest {
 		try {
 			WikiPageLocalServiceUtil.getPage(parentPage.getResourcePrimKey());
 
-			Assert.fail("parentPage exists");
+			Assert.fail("Parent page should be deleted");
 		}
 		catch (NoSuchPageResourceException nspre) {
 			childPage = WikiPageLocalServiceUtil.getPage(
@@ -182,7 +182,7 @@ public class WikiPageLocalServiceTest {
 		try {
 			WikiPageLocalServiceUtil.getPage(page.getResourcePrimKey());
 
-			Assert.fail("page exists");
+			Assert.fail("Page should be deleted");
 		}
 		catch (NoSuchPageResourceException nspre) {
 			redirectPage = WikiPageLocalServiceUtil.getPage(
@@ -208,7 +208,7 @@ public class WikiPageLocalServiceTest {
 		try {
 			WikiPageLocalServiceUtil.getPage(page.getResourcePrimKey());
 
-			Assert.fail("page exists");
+			Assert.fail("Page should be deleted");
 		}
 		catch (NoSuchPageResourceException nspre) {
 			redirectPage = WikiPageLocalServiceUtil.getLatestPage(
@@ -233,7 +233,7 @@ public class WikiPageLocalServiceTest {
 		try {
 			WikiPageLocalServiceUtil.getPage(parentPage.getResourcePrimKey());
 
-			Assert.fail("parentPage exists");
+			Assert.fail("Parent page should be deleted");
 		}
 		catch (NoSuchPageResourceException nspre) {
 			childPage = WikiPageLocalServiceUtil.getLatestPage(

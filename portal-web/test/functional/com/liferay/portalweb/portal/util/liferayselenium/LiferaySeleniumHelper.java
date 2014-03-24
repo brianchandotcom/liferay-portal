@@ -35,6 +35,7 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import java.io.BufferedReader;
@@ -822,6 +823,11 @@ public class LiferaySeleniumHelper {
 			liferaySelenium, image,
 			liferaySelenium.getProjectDirName() +
 				liferaySelenium.getDependenciesDirName() + value);
+
+		Robot robot = new Robot();
+
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
 	}
 
 	public static void sikuliUploadTempFile(
@@ -837,6 +843,11 @@ public class LiferaySeleniumHelper {
 		sikuliType(
 			liferaySelenium, image,
 			liferaySelenium.getOutputDirName() + slash + value);
+
+		Robot robot = new Robot();
+
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
 	}
 
 	public static void typeAceEditor(

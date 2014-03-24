@@ -47,6 +47,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 	<c:otherwise>
 		<portlet:actionURL var="uploadImageURL">
 			<portlet:param name="struts_action" value="/image_uploader/view" />
+            <portlet:param name="maxFileSize" value="<%= String.valueOf(maxFileSize) %>" />
 		</portlet:actionURL>
 
 		<aui:form action="<%= uploadImageURL %>" enctype="multipart/form-data" method="post" name="fm">

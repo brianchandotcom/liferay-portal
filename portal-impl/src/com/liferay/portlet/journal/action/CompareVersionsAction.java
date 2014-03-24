@@ -132,9 +132,38 @@ public class CompareVersionsAction extends PortletAction {
 			targetVersion = sourceVersion;
 			sourceVersion = tempVersion;
 		}
+		
+		String languageId = getLanguageId(
+			renderRequest, groupId, articleId, sourceVersion, targetVersion);
 
 		String xmlRequest = PortletRequestUtil.toXML(
 			renderRequest, renderResponse);
+
+		JournalArticleDisplay sourceArticleDisplay =
+			JournalArticleLocalServiceUtil.getArticleDisplay(
+				groupId, articleId, sourceVersion, null, Constants.VIEW,
+				languageId, 1, xmlRequest, themeDisplay);
+
+		JournalArticleDisplay targetArticleDisplay =
+			JournalArticleLocalServiceUtil.getArticleDisplay(
+				groupId, articleId, targetVersion, null, Constants.VIEW,
+				languageId, 1, xmlRequest, themeDisplay);
+
+		String diffHtmlResults = DiffHtmlUtil.diff(
+			new UnsyncStringReader(sourceArticleDisplay.getContent()),
+			new UnsyncStringReader(targetArticleDisplay.getContent()));
+
+		renderRequest.setAttribute("languageId", languageId);
+
+		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
+		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
+		renderRequest.setAttribute(WebKeys.TARGET_VERSION, targetVersion);
+	}
+	
+	protected String getLanguageId(
+			RenderRequest renderRequest, long groupId, String articleId,
+			double sourceVersion, double targetVersion)
+		throws Exception {
 
 		JournalArticle sourceArticle =
 			JournalArticleLocalServiceUtil.fetchArticle(
@@ -163,26 +192,9 @@ public class CompareVersionsAction extends PortletAction {
 			languageId = targetArticle.getDefaultLanguageId();
 		}
 
-		JournalArticleDisplay sourceArticleDisplay =
-			JournalArticleLocalServiceUtil.getArticleDisplay(
-				groupId, articleId, sourceVersion, null, Constants.VIEW,
-				languageId, 1, xmlRequest, themeDisplay);
-
-		JournalArticleDisplay targetArticleDisplay =
-			JournalArticleLocalServiceUtil.getArticleDisplay(
-				groupId, articleId, targetVersion, null, Constants.VIEW,
-				languageId, 1, xmlRequest, themeDisplay);
-
-		String diffHtmlResults = DiffHtmlUtil.diff(
-			new UnsyncStringReader(sourceArticleDisplay.getContent()),
-			new UnsyncStringReader(targetArticleDisplay.getContent()));
-
-		renderRequest.setAttribute("languageId", languageId);
-
 		renderRequest.setAttribute(WebKeys.AVAILABLE_LOCALES, locales);
-		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
-		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
-		renderRequest.setAttribute(WebKeys.TARGET_VERSION, targetVersion);
+		
+		return languageId;
 	}
 
 }

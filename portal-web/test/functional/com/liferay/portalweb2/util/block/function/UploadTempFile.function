@@ -1,4 +1,8 @@
 <definition>
+	<command name="sikuliUploadTempFile">
+		<execute selenium="sikuliUploadTempFile" />
+	</command>
+
 	<command name="uploadTempFile">
 		<execute selenium="waitForVisible" />
 

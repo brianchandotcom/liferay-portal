@@ -16,6 +16,7 @@ package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.audit.AuditMessageFactoryUtil;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
+import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
@@ -513,6 +514,15 @@ public class TemplateContextHelper {
 
 		try {
 			variables.put("httpUtil", HttpUtil.getHttp());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+
+		// Image tool util
+
+		try {
+			variables.put("imageToolUtil", ImageToolUtil.getImageTool());
 		}
 		catch (SecurityException se) {
 			_log.error(se, se);

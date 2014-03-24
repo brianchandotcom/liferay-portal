@@ -132,7 +132,7 @@ public class CompareVersionsAction extends PortletAction {
 			targetVersion = sourceVersion;
 			sourceVersion = tempVersion;
 		}
-		
+
 		String languageId = getLanguageId(
 			renderRequest, groupId, articleId, sourceVersion, targetVersion);
 
@@ -159,7 +159,7 @@ public class CompareVersionsAction extends PortletAction {
 		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
 		renderRequest.setAttribute(WebKeys.TARGET_VERSION, targetVersion);
 	}
-	
+
 	protected String getLanguageId(
 			RenderRequest renderRequest, long groupId, String articleId,
 			double sourceVersion, double targetVersion)
@@ -193,7 +193,7 @@ public class CompareVersionsAction extends PortletAction {
 		}
 
 		renderRequest.setAttribute(WebKeys.AVAILABLE_LOCALES, locales);
-		
+
 		return languageId;
 	}
 

@@ -46,12 +46,12 @@ public class DiffVersionComparatorTag extends IncludeTag {
 		_diffVersionsInfo = diffVersionsInfo;
 	}
 
-	public void setPortletURL(PortletURL portletURL) {
-		_portletURL = portletURL;
-	}
-
 	public void setLanguageId(String languageId) {
 		_languageId = languageId;
+	}
+
+	public void setPortletURL(PortletURL portletURL) {
+		_portletURL = portletURL;
 	}
 
 	public void setSourceVersion(double sourceVersion) {

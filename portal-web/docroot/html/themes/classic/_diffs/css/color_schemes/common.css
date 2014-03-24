@@ -119,7 +119,7 @@
 				background: transparent;
 
 				&:after {
-					content: "";
+					content: '';
 				}
 			}
 
@@ -150,7 +150,7 @@
 					width: auto;
 
 					&:after {
-						content: "";
+						content: '';
 					}
 
 					.portlet-icon-back {

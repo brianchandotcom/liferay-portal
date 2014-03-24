@@ -12,4 +12,18 @@
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
+
+	<command name="assertElementNotPresent">
+		<case locator-key1="MARK_AS_UNREAD_BUTTON">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+
+		<case locator-key1="MARK_AS_READ_BUTTON">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+
+		<case locator-key1="DELETE_BUTTON">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+	</command>
 </definition>

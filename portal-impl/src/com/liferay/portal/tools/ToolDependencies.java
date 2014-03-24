@@ -30,6 +30,8 @@ import com.liferay.portal.microsofttranslator.MicrosoftTranslatorFactoryImpl;
 import com.liferay.portal.model.ModelHintsImpl;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.security.permission.ResourceActionsImpl;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.permission.PortletPermissionImpl;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.DigesterImpl;
@@ -66,6 +68,18 @@ public class ToolDependencies {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
+	}
+
+	public static void serviceBuilder() {
+		deployers();
+
+		ResourceActionsUtil resourceActionsUtil = new ResourceActionsUtil();
+
+		ResourceActionsImpl resourceActionsImpl = new ResourceActionsImpl();
+
+		resourceActionsImpl.afterPropertiesSet();
+
+		resourceActionsUtil.setResourceActions(resourceActionsImpl);
 	}
 
 	public static void wire() {

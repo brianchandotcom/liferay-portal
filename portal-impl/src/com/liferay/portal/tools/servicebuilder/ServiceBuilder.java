@@ -45,8 +45,8 @@ import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sourceformatter.JavaSourceProcessor;
-import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.xml.XMLFormatter;
 
@@ -219,7 +219,7 @@ public class ServiceBuilder {
 	public static void main(String[] args) {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		InitUtil.initWithSpringAndModuleFramework();
+		ToolDependencies.serviceBuilder();
 
 		String fileName = arguments.get("service.input.file");
 		String hbmFileName = arguments.get("service.hbm.file");
@@ -318,8 +318,6 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.spring_xml=" + _TPL_ROOT + "spring_xml.ftl\n"+
 				"\t-Dservice.tpl.spring_xml_session=" + _TPL_ROOT + "spring_xml_session.ftl");
 
-			InitUtil.stopModuleFramework();
-
 			throw re;
 		}
 
@@ -329,8 +327,6 @@ public class ServiceBuilder {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		InitUtil.stopModuleFramework();
 
 		Introspector.flushCaches();
 	}

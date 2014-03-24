@@ -196,6 +196,42 @@ public class PortletDataContextReferencesTest {
 	}
 
 	@Test
+	public void testMultipleMissingReferences() throws Exception {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			PortletKeys.ASSET_PUBLISHER);
+
+		_portletDataContext.addReferenceElement(
+			portlet, _portletDataContext.getExportDataRootElement(),
+			_bookmarksEntry, PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
+			true);
+
+		_portletDataContext.addReferenceElement(
+			portlet, _portletDataContext.getExportDataRootElement(),
+			_bookmarksEntry, PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
+			true);
+
+		Element missingReferencesElement =
+			_portletDataContext.getMissingReferencesElement();
+
+		List<Element> missingReferenceElements =
+			missingReferencesElement.elements();
+
+		Assert.assertFalse(missingReferenceElements.isEmpty());
+
+		Assert.assertEquals(1, missingReferenceElements.size());
+
+		Element missingReferenceElement = missingReferenceElements.get(0);
+
+		Assert.assertEquals(
+			BookmarksEntry.class.getName(),
+			missingReferenceElement.attributeValue("class-name"));
+
+		Assert.assertEquals(
+			String.valueOf(_bookmarksEntry.getEntryId()),
+			missingReferenceElement.attributeValue("class-pk"));
+	}
+
+	@Test
 	public void testNotMissingMissingReference() throws Exception {
 		Element bookmarksEntryElement =
 			_portletDataContext.getExportDataElement(_bookmarksEntry);

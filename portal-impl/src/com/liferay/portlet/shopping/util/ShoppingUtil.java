@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.settings.ParameterMapSettings;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -77,6 +78,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -996,6 +998,19 @@ public class ShoppingUtil {
 			groupId, ShoppingConstants.SERVICE_NAME);
 
 		return new ShoppingSettings(settings);
+	}
+
+	public static ShoppingSettings getShoppingSettings(
+			long groupId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, ShoppingConstants.SERVICE_NAME);
+
+		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
+			settings, request.getParameterMap());
+
+		return new ShoppingSettings(parameterMapSettings);
 	}
 
 	public static boolean isInStock(ShoppingItem item) {

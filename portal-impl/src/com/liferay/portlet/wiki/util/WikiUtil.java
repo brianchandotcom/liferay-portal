@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.settings.ParameterMapSettings;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -90,6 +91,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -593,6 +595,19 @@ public class WikiUtil {
 			groupId, WikiConstants.SERVICE_NAME);
 
 		return new WikiSettings(settings);
+	}
+
+	public static WikiSettings getWikiSettings(
+			long groupId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, WikiConstants.SERVICE_NAME);
+
+		ParameterMapSettings configurationSettings = new ParameterMapSettings(
+			settings, request.getParameterMap());
+
+		return new WikiSettings(configurationSettings);
 	}
 
 	public static List<WikiNode> orderNodes(

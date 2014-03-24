@@ -17,8 +17,7 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
-String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", wikiSettings.getEmailFromName());
-String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", wikiSettings.getEmailFromAddress());
+wikiSettings = WikiUtil.getWikiSettings(themeDisplay.getSiteGroupId(), request);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
@@ -58,9 +57,9 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 		<liferay-ui:section>
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />
+				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= wikiSettings.getEmailFromName() %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
+				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= wikiSettings.getEmailFromAddress() %>" />
 			</aui:fieldset>
 
 			<aui:fieldset cssClass="definition-of-terms">
@@ -71,7 +70,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 				<dl>
 
 					<%
-					Map<String, String> definitionTerms = WikiUtil.getEmailFromDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+					Map<String, String> definitionTerms = WikiUtil.getEmailFromDefinitionTerms(renderRequest, wikiSettings.getEmailFromAddress(), wikiSettings.getEmailFromName());
 
 					for (Map.Entry<String, String> definitionTerm : definitionTerms.entrySet()) {
 					%>
@@ -92,26 +91,26 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		</liferay-ui:section>
 
 		<%
-		Map<String, String> definitionTerms = WikiUtil.getEmailNotificationDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+		Map<String, String> definitionTerms = WikiUtil.getEmailNotificationDefinitionTerms(renderRequest, wikiSettings.getEmailFromAddress(), wikiSettings.getEmailFromName());
 		%>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= SettingsParamUtil.getString(wikiSettings, request, "emailPageAddedBody", ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_BODY)) %>'
+				emailBody="<%= wikiSettings.getEmailPageAddedBody() %>"
 				emailDefinitionTerms="<%= definitionTerms %>"
-				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailPageAddedEnabled--", wikiSettings.getEmailPageAddedEnabled()) %>'
+				emailEnabled="<%= wikiSettings.getEmailPageAddedEnabled() %>"
 				emailParam="emailPageAdded"
-				emailSubject='<%= SettingsParamUtil.getString(wikiSettings, request, "emailPageAddedSubject", ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_SUBJECT)) %>'
+				emailSubject="<%= wikiSettings.getEmailPageAddedSubject() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= SettingsParamUtil.getString(wikiSettings, request, "emailPageUpdatedBody", ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_BODY)) %>'
+				emailBody="<%= wikiSettings.getEmailPageUpdatedBody() %>"
 				emailDefinitionTerms="<%= definitionTerms %>"
-				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailPageUpdatedEnabled--", wikiSettings.getEmailPageUpdatedEnabled()) %>'
+				emailEnabled="<%= wikiSettings.getEmailPageUpdatedEnabled() %>"
 				emailParam="emailPageUpdated"
-				emailSubject='<%= SettingsParamUtil.getString(wikiSettings, request, "emailPageUpdatedSubject", ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_SUBJECT)) %>'
+				emailSubject="<%= wikiSettings.getEmailPageAddedSubject() %>"
 			/>
 		</liferay-ui:section>
 

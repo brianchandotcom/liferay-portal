@@ -181,7 +181,6 @@ page import="com.liferay.portal.service.permission.PortletPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.RolePermissionUtil" %><%@
 page import="com.liferay.portal.settings.Settings" %><%@
 page import="com.liferay.portal.settings.SettingsFactoryUtil" %><%@
-page import="com.liferay.portal.settings.SettingsParamUtil" %><%@
 page import="com.liferay.portal.struts.StrutsUtil" %><%@
 page import="com.liferay.portal.struts.TilesAttributeUtil" %><%@
 page import="com.liferay.portal.theme.ThemeDisplay" %><%@

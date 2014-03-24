@@ -17,8 +17,7 @@
 <%@ include file="/html/portlet/message_boards/init.jsp" %>
 
 <%
-String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", mbSettings.getEmailFromName());
-String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", mbSettings.getEmailFromAddress());
+mbSettings = MBUtil.getMBSettings(themeDisplay.getSiteGroupId(), request);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="portletURL" />
@@ -93,9 +92,9 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 		<liferay-ui:section>
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />
+				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= mbSettings.getEmailFromName() %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
+				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= mbSettings.getEmailFromAddress() %>" />
 
 				<aui:input label="html-format" name="preferences--emailHtmlFormat--" type="checkbox" value="<%= mbSettings.isEmailHtmlFormat() %>" />
 			</aui:fieldset>
@@ -125,26 +124,26 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		</liferay-ui:section>
 
 		<%
-		Map<String, String> emailDefinitionTerms = MBUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+		Map<String, String> emailDefinitionTerms = MBUtil.getEmailDefinitionTerms(renderRequest, mbSettings.getEmailFromAddress(), mbSettings.getEmailFromName());
 		%>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= ParamUtil.getString(request, "preferences--emailMessageAddedBody--", mbSettings.getEmailMessageAddedBody()) %>'
+				emailBody="<%= mbSettings.getEmailMessageAddedBody() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailMessageAddedEnabled--", mbSettings.isEmailMessageAddedEnabled()) %>'
+				emailEnabled="<%= mbSettings.isEmailMessageAddedEnabled() %>"
 				emailParam="emailMessageAdded"
-				emailSubject='<%= ParamUtil.getString(request, "preferences--emailMessageAddedSubject--", mbSettings.getEmailMessageAddedSubject()) %>'
+				emailSubject="<%= mbSettings.getEmailMessageAddedSubject() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= ParamUtil.getString(request, "preferences--emailMessageUpdatedBody--", mbSettings.getEmailMessageUpdatedBody()) %>'
+				emailBody="<%= mbSettings.getEmailMessageUpdatedBody() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailMessageUpdatedEnabled--", mbSettings.isEmailMessageUpdatedEnabled()) %>'
+				emailEnabled="<%= mbSettings.isEmailMessageUpdatedEnabled() %>"
 				emailParam="emailMessageUpdated"
-				emailSubject='<%= ParamUtil.getString(request, "preferences--emailMessageUpdatedSubject--", mbSettings.getEmailMessageUpdatedSubject()) %>'
+				emailSubject="<%= mbSettings.getEmailMessageUpdatedSubject() %>"
 			/>
 		</liferay-ui:section>
 

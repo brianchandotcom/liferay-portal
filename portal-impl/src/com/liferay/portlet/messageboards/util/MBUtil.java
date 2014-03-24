@@ -56,6 +56,7 @@ import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.settings.ParameterMapSettings;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -573,6 +574,19 @@ public class MBUtil {
 			groupId, MBConstants.SERVICE_NAME);
 
 		return new MBSettings(settings);
+	}
+
+	public static MBSettings getMBSettings(
+			long groupId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, MBConstants.SERVICE_NAME);
+
+		ParameterMapSettings configurationSettings = new ParameterMapSettings(
+			settings, request.getParameterMap());
+
+		return new MBSettings(configurationSettings);
 	}
 
 	public static long getMessageId(String mailId) {

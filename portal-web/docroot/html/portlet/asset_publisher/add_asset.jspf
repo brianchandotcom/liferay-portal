@@ -14,56 +14,52 @@
  */
 --%>
 
-<c:if test="<%= !addPortletURLs.isEmpty() %>">
-	<aui:nav-bar>
-		<aui:nav>
-			<c:choose>
-				<c:when test="<%= addPortletURLs.size() == 1 %>">
+<aui:nav>
+	<c:choose>
+		<c:when test="<%= addPortletURLs.size() == 1 %>">
 
-					<%
-					Set<Map.Entry<String, PortletURL>> addPortletURLsSet = addPortletURLs.entrySet();
+			<%
+			Set<Map.Entry<String, PortletURL>> addPortletURLsSet = addPortletURLs.entrySet();
 
-					Iterator<Map.Entry<String, PortletURL>> iterator = addPortletURLsSet.iterator();
+			Iterator<Map.Entry<String, PortletURL>> iterator = addPortletURLsSet.iterator();
 
-					Map.Entry<String, PortletURL> entry = iterator.next();
+			Map.Entry<String, PortletURL> entry = iterator.next();
 
+			String message = _getMessage(entry.getKey(), addPortletURLs, locale);
+			%>
+
+			<aui:nav-item
+				href="<%= _getURL(groupId, plid, entry.getValue(), message, defaultAssetPublisher, layout, pageContext, liferayPortletResponse) %>"
+				iconCssClass="icon-file"
+				label='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(message), false) %>'
+			/>
+		</c:when>
+		<c:otherwise>
+			<aui:nav-item
+				dropdown="<%= true %>"
+				iconCssClass="icon-plus"
+				label='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-new" : "add-new-in-x", HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)), false) %>'
+			>
+
+				<%
+				for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
 					String message = _getMessage(entry.getKey(), addPortletURLs, locale);
-					%>
+				%>
 
 					<aui:nav-item
 						href="<%= _getURL(groupId, plid, entry.getValue(), message, defaultAssetPublisher, layout, pageContext, liferayPortletResponse) %>"
 						iconCssClass="icon-file"
-						label='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(message), false) %>'
+						label="<%= HtmlUtil.escape(message) %>"
 					/>
-				</c:when>
-				<c:otherwise>
-					<aui:nav-item
-						dropdown="<%= true %>"
-						iconCssClass="icon-plus"
-						label='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-new" : "add-new-in-x", HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)), false) %>'
-					>
 
-						<%
-						for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
-							String message = _getMessage(entry.getKey(), addPortletURLs, locale);
-						%>
+				<%
+				}
+				%>
 
-							<aui:nav-item
-								href="<%= _getURL(groupId, plid, entry.getValue(), message, defaultAssetPublisher, layout, pageContext, liferayPortletResponse) %>"
-								iconCssClass="icon-file"
-								label="<%= HtmlUtil.escape(message) %>"
-							/>
-
-						<%
-						}
-						%>
-
-					</aui:nav-item>
-				</c:otherwise>
-			</c:choose>
-		</aui:nav>
-	</aui:nav-bar>
-</c:if>
+			</aui:nav-item>
+		</c:otherwise>
+	</c:choose>
+</aui:nav>
 
 <%!
 private String _getMessage(String className, Map<String, PortletURL> addPortletURLs, Locale locale) {

@@ -1195,14 +1195,18 @@
 		<delete dir="test-classes" />
 		<delete dir="test-results" />
 
+		<antcall target="clean-css" />
+
+		<antcall target="clean-themes" />
+	</target>
+
+	<target name="clean-css">
 		<delete includeemptydirs="true">
 			<fileset dir="docroot/html/css" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 			<fileset dir="docroot/html/portlet" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 			<fileset dir="docroot/html/themes" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 			<fileset dir="docroot/WEB-INF/tld" includes="liferay*.tld" />
 		</delete>
-
-		<antcall target="clean-themes" />
 	</target>
 
 	<target name="clean-themes">

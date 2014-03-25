@@ -6504,6 +6504,28 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.flushNotificationsAsync();
 	}
 
+	protected String replaceStyles(String html) {
+		return StringUtil.replace(
+			html,
+			new String[] {
+				"class=\"diff-html-added\"", "class=\"diff-html-removed\"",
+				"class=\"diff-html-changed\"",
+				"changeType=\"diff-added-image\"",
+				"changeType=\"diff-removed-image\"",
+				"changeType=\"diff-changed-image\""
+			},
+			new String[] {
+				"style=\"background-color: #CFC;\"",
+				"style=\"background-color: #FDC6C6; text-decoration: " +
+					"line-through;\"",
+				"style=\"border-bottom: 2px dotted blue;\"",
+				"style=\"border: 10px solid #CFC;\"",
+				"style=\"border: 10px solid #FDC6C6;\"",
+				"style=\"border: 10px solid blue;\""
+			}
+		);
+	}
+
 	protected void saveImages(
 			boolean smallImage, long smallImageId, File smallImageFile,
 			byte[] smallImageBytes)

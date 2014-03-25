@@ -51,8 +51,8 @@ public class LayoutPriorityComparator extends OrderByComparator {
 
 		int value = 0;
 
-		int priority1 = layout1.getPriority();
-		int priority2 = layout2.getPriority();
+		int priority1 = layout1 == null ? -1 : layout1.getPriority();
+		int priority2 = layout2 == null ? -1 : layout2.getPriority();
 
 		if (priority1 > priority2) {
 			value = 1;

@@ -30,9 +30,9 @@ boolean setRatingsStats = GetterUtil.getBoolean((String)request.getAttribute("li
 String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:ratings:type"));
 String url = (String)request.getAttribute("liferay-ui:ratings:url");
 
-boolean isInTrash = TrashUtil.isInTrash(className, classPK);
+boolean inTrash = TrashUtil.isInTrash(className, classPK);
 
-String isInTrashMessage = LanguageUtil.get(pageContext, "ratings-are-disabled-because-this-entry-is-in-the-recycle-bin");
+String inTrashMessage = LanguageUtil.get(pageContext, "ratings-are-disabled-because-this-entry-is-in-the-recycle-bin");
 
 if (numberOfStars < 1) {
 	numberOfStars = 1;
@@ -68,7 +68,7 @@ boolean hasEntries = (totalEntries == 1);
 		<c:choose>
 			<c:when test='<%= type.equals("stars") %>'>
 				<c:choose>
-					<c:when test="<%= themeDisplay.isSignedIn() && !isInTrash %>">
+					<c:when test="<%= themeDisplay.isSignedIn() && !inTrash %>">
 						<div class="liferay-rating-vote" id="<%= randomNamespace %>ratingStar">
 							<div id="<%= randomNamespace %>ratingStarContent">
 								<div class="rating-label"><liferay-ui:message key="your-rating" /></div>
@@ -100,7 +100,7 @@ boolean hasEntries = (totalEntries == 1);
 									sb.append(label);
 									sb.append("</label>");
 									sb.append("<input checked=\"");
-									sb.append(i == yourScore);
+									sb.append(String.valueOf(i == yourScore));
 									sb.append("\" class=\"rating-input\" id=\"");
 									sb.append(ratingId);
 									sb.append("\" name=\"");
@@ -145,8 +145,8 @@ boolean hasEntries = (totalEntries == 1);
 
 							String title = StringPool.BLANK;
 
-							if (isInTrash) {
-								title = isInTrashMessage;
+							if (inTrash) {
+								title = inTrashMessage;
 							}
 							else if (i == 1) {
 								title = LanguageUtil.format(pageContext, "the-average-rating-is-x-stars-out-of-x", new Object[] {averageScore, numberOfStars}, false);
@@ -202,7 +202,7 @@ boolean hasEntries = (totalEntries == 1);
 								sb.append(")");
 								sb.append("</div>");
 
-								if (isInTrash) {
+								if (inTrash) {
 									sb.append("<span");
 								}
 								else {
@@ -224,16 +224,16 @@ boolean hasEntries = (totalEntries == 1);
 
 								sb.append(thumbsUpCss);
 
-								if (isInTrash) {
+								if (inTrash) {
 									sb.append("\" title=\"");
-									sb.append(isInTrashMessage);
+									sb.append(inTrashMessage);
 									sb.append("\"></span>");
 								}
 								else {
 									sb.append("\" href=\"javascript:;\"></a>");
 								}
 
-								if (isInTrash) {
+								if (inTrash) {
 									sb.append("<span");
 								}
 								else {
@@ -255,16 +255,16 @@ boolean hasEntries = (totalEntries == 1);
 
 								sb.append(thumbsDownCSS);
 
-								if (isInTrash) {
+								if (inTrash) {
 									sb.append("\" title=\"");
-									sb.append(isInTrashMessage);
+									sb.append(inTrashMessage);
 									sb.append("\"></span>");
 								}
 								else {
 									sb.append("\" href=\"javascript:;\"></a>");
 								}
 
-								if (!isInTrash) {
+								if (!inTrash) {
 									sb.append("<div class=\"rating-input-container\">");
 									sb.append("<label for=\"");
 
@@ -324,7 +324,7 @@ boolean hasEntries = (totalEntries == 1);
 		</c:choose>
 	</div>
 
-	<c:if test="<%= !isInTrash %>">
+	<c:if test="<%= !inTrash %>">
 		<aui:script use="liferay-ratings">
 			Liferay.Ratings.register(
 				{

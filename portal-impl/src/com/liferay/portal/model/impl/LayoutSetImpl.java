@@ -37,8 +37,9 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import java.io.IOException;
 
 /**
- * Each {@link Group} in Liferay can have a public and a private LayoutSet.
- * This keeps information common to all pages (layouts) in the LayoutSet 
+ * Each {@link Group} in Liferay can have a public and a private LayoutSet. This
+ * keeps information common to all pages (layouts) in the LayoutSet
+ *
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
@@ -48,9 +49,10 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	/**
-	 * ColorSchemes can - just like themes - be configured on the LayoutSet level.
-	 * This method retrieves the layoutSet's colorScheme. It can be overridden on
-	 * the layout level.
+	 * ColorSchemes can - just like themes - be configured on the LayoutSet
+	 * level. This method retrieves the layoutSet's colorScheme. It can be
+	 * overridden on the layout level.
+	 *
 	 * @return the colorScheme for this whole layoutSet
 	 */
 	@Override
@@ -69,9 +71,10 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 
 	/**
 	 * A prototype's name on the UI is SiteTemplate. If this LayoutSet is based
-	 * on a SiteTemplate, this method retrieves its id. 
-	 * @return this layoutSet prototype's id, 0 if the layoutSet doesn't have a 
-	 *         prototype  
+	 * on a SiteTemplate, this method retrieves its ID.
+	 *
+	 * @return this layoutSet prototype's ID, 0 if the layoutSet doesn't have a
+	 *         prototype
 	 */
 	@Override
 	public long getLayoutSetPrototypeId() throws PortalException {
@@ -188,8 +191,9 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 
 	/**
 	 * retrieve the virtualHost name configured for this LayoutSet. When
-	 * accessed with this virtualHost name, the URL elements "/web/sitename"
-	 * or "/group/sitename" can be omitted
+	 * accessed with this virtualHost name, the URL elements "/web/sitename" or
+	 * "/group/sitename" can be omitted
+	 *
 	 * @return this layoutSet's virtualHost name, empty string if unconfigured
 	 */
 	@Override
@@ -262,8 +266,8 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 
 	/**
 	 * set this LayoutSet's VirtualHost name. When the portal is being accessed
-	 * with this hostname, the URL elements /web/sitename or /group/sitename 
-	 * can be omitted.
+	 * with this hostname, the URL elements /web/sitename or /group/sitename can
+	 * be omitted.
 	 */
 	@Override
 	public void setVirtualHostname(String virtualHostname) {

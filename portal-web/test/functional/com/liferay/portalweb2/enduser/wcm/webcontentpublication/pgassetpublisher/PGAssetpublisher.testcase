@@ -380,10 +380,11 @@
 	</command>
 
 	<command name="ConfigureAPPortletSelectedWebContent" priority="5">
-		<var name="selectedAsset" value="Web Content Article" />
+		<var name="selectedAsset" value="Basic Web Content" />
+		<var name="selectedAssetConfiguration" value="Web Content Article" />
 
 		<execute macro="AssetPublisherPortlet#configureSelectedPG">
-			<var name="selectedAsset" value="${selectedAsset}" />
+			<var name="selectedAsset" value="${selectedAssetConfiguration}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -392,6 +393,7 @@
 
 		<execute macro="AssetPublisherPortlet#viewSelectedPG">
 			<var name="selectedAsset" value="${selectedAsset}" />
+			<var name="selectedAssetConfiguration" value="${selectedAssetConfiguration}" />
 		</execute>
 	</command>
 

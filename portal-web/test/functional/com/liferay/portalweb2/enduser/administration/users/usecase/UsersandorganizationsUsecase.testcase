@@ -751,10 +751,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordInvalidCP">
-			<var name="defaultPassword" value="NO1else" />
 			<var name="newPassword" value="NO1else" />
 			<var name="userEmailAddress" value="test1@liferay.com" />
-			<var name="userPassword" value="Invalid" />
 			<var name="userScreenName" value="test1" />
 		</execute>
 
@@ -762,9 +760,9 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#editPasswordInvalidCP">
-			<var name="defaultPassword" value="tryingHARD" />
+		<execute macro="User#editPasswordCP">
 			<var name="newPassword" value="tryingHARD" />
+			<var name="syntaxCheckingEnabled" value="true" />
 			<var name="userEmailAddress" value="test1@liferay.com" />
 			<var name="userScreenName" value="test1" />
 		</execute>
@@ -788,9 +786,20 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#editPasswordInvalidCP">
-			<var name="defaultPassword" value="abcABC" />
-			<var name="newPassword" value=" abcABC" />
+		<execute macro="User#editPasswordCP">
+			<var name="newPassword" value="abcABC" />
+			<var name="syntaxCheckingEnabled" value="true" />
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="newPassword" value="123ABC" />
+			<var name="syntaxCheckingEnabled" value="true" />
 			<var name="userEmailAddress" value="test1@liferay.com" />
 			<var name="userScreenName" value="test1" />
 		</execute>
@@ -800,21 +809,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordInvalidCP">
-			<var name="defaultPassword" value="123ABC" />
-			<var name="newPassword" value=" 123ABC" />
-			<var name="userEmailAddress" value="test1@liferay.com" />
-			<var name="userScreenName" value="test1" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordInvalidCP">
-			<var name="defaultPassword" value="1-2-3ABC" />
 			<var name="newPassword" value="1-2-3ABC" />
 			<var name="userEmailAddress" value="test1@liferay.com" />
-			<var name="userPassword" value="Invalid" />
 			<var name="userScreenName" value="test1" />
 		</execute>
 
@@ -833,11 +829,9 @@
 		</execute>
 
 		<execute macro="User#editPasswordInvalidCP">
-			<var name="defaultPassword" value="abcABC" />
 			<var name="newPassword" value="abcABC" />
+			<var name="trivialPassword" value="true" />
 			<var name="userEmailAddress" value="test1@liferay.com" />
-			<var name="userPassword" value="Invalid" />
-			<var name="userPassword1" value="Trivial" />
 			<var name="userScreenName" value="test1" />
 		</execute>
 
@@ -846,10 +840,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordInvalidCP">
-			<var name="defaultPassword" value="12AB" />
 			<var name="newPassword" value="12AB" />
 			<var name="userEmailAddress" value="test1@liferay.com" />
-			<var name="userPassword" value="Invalid" />
 			<var name="userScreenName" value="test1" />
 		</execute>
 
@@ -857,9 +849,9 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#editPasswordInvalidCP">
-			<var name="defaultPassword" value="12ABcd" />
+		<execute macro="User#editPasswordCP">
 			<var name="newPassword" value="12ABcd" />
+			<var name="syntaxCheckingEnabled" value="true" />
 			<var name="userEmailAddress" value="test1@liferay.com" />
 			<var name="userScreenName" value="test1" />
 		</execute>

@@ -455,6 +455,11 @@
 </tr>
 <!--USER-->
 <tr>
+	<td>USER_AVATAR_IMAGE</td>
+	<td>//span[@class='user-avatar-image']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_NAME</td>
 	<td>//span[@class='user-full-name']</td>
 	<td></td>

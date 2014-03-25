@@ -39,8 +39,7 @@ MBMessage message = (MBMessage)objArray[0];
 	String msgBody = StringUtil.shorten(message.getBody(), 250);
 
 	if (message.isFormatBBCode()) {
-		msgBody = BBCodeTranslatorUtil.getHTML(msgBody);
-		msgBody = StringUtil.replace(msgBody, "@theme_images_path@/emoticons", themeDisplay.getPathThemeImages() + "/emoticons");
+		msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
 	}
 	%>
 

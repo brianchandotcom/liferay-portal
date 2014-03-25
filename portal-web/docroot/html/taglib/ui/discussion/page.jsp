@@ -314,9 +314,11 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									<div class="lfr-discussion-message">
 
 										<%
-										String msgBody = BBCodeTranslatorUtil.getHTML(message.getBody());
+										String msgBody = message.getBody();
 
-										msgBody = StringUtil.replace(msgBody, "@theme_images_path@/emoticons", themeDisplay.getPathThemeImages() + "/emoticons");
+										if (message.isFormatBBCode()) {
+											msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
+										}
 										%>
 
 										<%= msgBody %>

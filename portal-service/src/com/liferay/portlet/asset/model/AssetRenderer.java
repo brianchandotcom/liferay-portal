@@ -117,6 +117,11 @@ public interface AssetRenderer {
 			WindowState windowState)
 		throws Exception;
 
+	public PortletURL getURLViewDiffs(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception;
+
 	public String getURLViewInContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,

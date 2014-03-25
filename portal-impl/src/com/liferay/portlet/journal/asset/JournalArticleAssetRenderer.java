@@ -240,6 +240,36 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
+	public PortletURL getURLViewDiffs(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
+			PortletRequest.RENDER_PHASE);
+
+		JournalArticle previousApprovedArticle =
+			JournalArticleLocalServiceUtil.getPreviousApprovedArticle(_article);
+
+		if (previousApprovedArticle.getVersion() == _article.getVersion()) {
+			return null;
+		}
+
+		portletURL.setParameter("struts_action", "/journal/compare_versions");
+		portletURL.setParameter(
+			"groupId", String.valueOf(_article.getGroupId()));
+		portletURL.setParameter("articleId", _article.getArticleId());
+		portletURL.setParameter(
+			"sourceVersion",
+			String.valueOf(previousApprovedArticle.getVersion()));
+		portletURL.setParameter(
+			"targetVersion", String.valueOf(_article.getVersion()));
+
+		return portletURL;
+	}
+
+	@Override
 	public String getURLViewInContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,

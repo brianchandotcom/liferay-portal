@@ -249,6 +249,15 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	}
 
 	@Override
+	public PortletURL getURLViewDiffs(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		return null;
+	}
+
+	@Override
 	public String getURLViewInContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,

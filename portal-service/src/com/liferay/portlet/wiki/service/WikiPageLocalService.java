@@ -631,6 +631,12 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public int getPagesCount(java.lang.String format)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.wiki.model.WikiPage getPreviousVersionPage(
+		com.liferay.portlet.wiki.model.WikiPage page)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getRecentChanges(long, long,
 	int, int)}

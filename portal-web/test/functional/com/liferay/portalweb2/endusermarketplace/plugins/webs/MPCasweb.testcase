@@ -1,0 +1,27 @@
+<definition component-name="marketplace-plugins-cas-web">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="CasWebSmoke" priority="5">
+		<property name="web.plugins.includes" value="cas-web" />
+
+		<var name="appName" value="Central Authentication Service" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#uninstallAppCP">
+			<var name="appName" value="${appName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#viewUninstallAppCP">
+			<var name="appName" value="${appName}" />
+		</execute>
+	</command>
+</definition>

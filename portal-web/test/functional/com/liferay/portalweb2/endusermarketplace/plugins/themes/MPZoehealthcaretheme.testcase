@@ -1,0 +1,29 @@
+<definition component-name="marketplace-plugins-zoe-healthcare-theme">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="ZoeHealthcareThemeSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="web-form-portlet" />
+		<property name="theme.plugins.includes" value="zoe-healthcare-theme" />
+		<property name="web.plugins.includes" value="resources-importer-web" />
+
+		<var name="appName" value="Zoe Healthcare" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#uninstallAppCP">
+			<var name="appName" value="${appName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#viewUninstallAppCP">
+			<var name="appName" value="${appName}" />
+		</execute>
+	</command>
+</definition>

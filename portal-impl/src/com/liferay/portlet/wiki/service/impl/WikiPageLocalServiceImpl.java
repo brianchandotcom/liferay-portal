@@ -1324,6 +1324,19 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return wikiPagePersistence.countByFormat(format);
 	}
 
+	@Override
+	public WikiPage getPreviousVersionPage(WikiPage page)
+		throws PortalException, SystemException {
+
+		double previousVersion = MathUtil.format(page.getVersion() - 0.1, 1, 1);
+
+		if (previousVersion < 1) {
+			return null;
+		}
+
+		return getPage(page.getNodeId(), page.getTitle(), previousVersion);
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getRecentChanges(long, long,
 	 *             int, int)}
@@ -2428,18 +2441,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		catch (Exception e) {
 			return null;
 		}
-	}
-
-	protected WikiPage getPreviousVersionPage(WikiPage page)
-		throws PortalException, SystemException {
-
-		double previousVersion = MathUtil.format(page.getVersion() - 0.1, 1, 1);
-
-		if (previousVersion < 1) {
-			return null;
-		}
-
-		return getPage(page.getNodeId(), page.getTitle(), previousVersion);
 	}
 
 	protected boolean isLinkedTo(WikiPage page, String targetTitle)

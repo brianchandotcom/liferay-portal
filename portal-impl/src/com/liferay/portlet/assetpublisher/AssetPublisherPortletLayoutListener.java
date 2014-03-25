@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
+import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
 /**
@@ -43,6 +45,11 @@ public class AssetPublisherPortletLayoutListener
 
 			JournalArticleLocalServiceUtil.deleteLayoutArticleReferences(
 				layout.getGroupId(), layout.getUuid());
+
+			SubscriptionLocalServiceUtil.deleteSubscriptions(
+				layout.getCompanyId(),
+				com.liferay.portal.model.PortletPreferences.class.getName(),
+				AssetPublisherUtil.getSubscriptionClassPK(plid, portletId));
 		}
 		catch (Exception e) {
 			throw new PortletLayoutListenerException(e);

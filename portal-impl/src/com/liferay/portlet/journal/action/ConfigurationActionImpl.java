@@ -15,15 +15,93 @@
 package com.liferay.portlet.journal.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.journal.util.JournalUtil;
+import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
+
+	@Override
+	public void postProcessPortletPreferences(
+			long companyId, PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		removeDefaultValue(
+			portletRequest, portletPreferences, "emailFromAddress",
+			JournalUtil.getEmailFromAddress(portletPreferences, companyId));
+		removeDefaultValue(
+			portletRequest, portletPreferences, "emailFromName",
+			JournalUtil.getEmailFromName(portletPreferences, companyId));
+
+		String languageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleAddedBody_" + languageId,
+			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_ADDED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleAddedSubject_" + languageId,
+			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_ADDED_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleReviewBody_" + languageId,
+			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_REVIEW_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleReviewSubject_" + languageId,
+			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_REVIEW_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleUpdatedBody_" + languageId,
+			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_UPDATED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleUpdatedSubject_" + languageId,
+			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_UPDATED_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleApprovalDeniedBody_" + languageId,
+			ContentUtil.get(
+				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleApprovalDeniedSubject_" + languageId,
+			ContentUtil.get(
+				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleApprovalGrantedBody_" + languageId,
+			ContentUtil.get(
+				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleApprovalGrantedSubject_" + languageId,
+			ContentUtil.get(
+				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleApprovalRequestedBody_" + languageId,
+			ContentUtil.get(
+				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleApprovalRequestedSubject_" + languageId,
+			ContentUtil.get(
+				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT));
+	}
 
 	@Override
 	public void processAction(

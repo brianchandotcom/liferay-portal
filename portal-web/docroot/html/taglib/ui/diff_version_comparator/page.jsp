@@ -18,9 +18,10 @@
 
 <%
 Set<Locale> availableLocales = (Set<Locale>)request.getAttribute("liferay-ui:diff-version-comparator:availableLocales");
-String languageId = (String)request.getAttribute("liferay-ui:diff-version-comparator:languageId");
 String diffHtmlResults = (String)request.getAttribute("liferay-ui:diff-version-comparator:diffHtmlResults");
 DiffVersionsInfo diffVersionsInfo = (DiffVersionsInfo)request.getAttribute("liferay-ui:diff-version-comparator:diffVersionsInfo");
+boolean hideControls = (Boolean)request.getAttribute("liferay-ui:diff-version-comparator:hideControls");
+String languageId = (String)request.getAttribute("liferay-ui:diff-version-comparator:languageId");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:diff-version-comparator:portletURL");
 double sourceVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:sourceVersion");
 double targetVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:targetVersion");
@@ -30,24 +31,28 @@ double previousVersion = diffVersionsInfo.getPreviousVersion();
 
 PortletURL iteratorURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
-iteratorURL.setParameter("languageId", languageId);
+if (Validator.isNotNull(languageId)) {
+	iteratorURL.setParameter("languageId", languageId);
+}
 %>
 
 <div class="diff-version-comparator">
-	<c:choose>
-		<c:when test="<%= previousVersion != 0 %>">
+	<c:if test="<%= !hideControls %>">
+	  	<c:choose>
+			<c:when test="<%= previousVersion != 0 %>">
 
-			<%
-			iteratorURL.setParameter("sourceVersion", String.valueOf(previousVersion));
-			iteratorURL.setParameter("targetVersion", String.valueOf(sourceVersion));
-			%>
+				<%
+				iteratorURL.setParameter("sourceVersion", String.valueOf(previousVersion));
+				iteratorURL.setParameter("targetVersion", String.valueOf(sourceVersion));
+				%>
 
-			<aui:a cssClass="previous" href="<%= iteratorURL.toString() %>" label="previous-change" />
-		</c:when>
-		<c:otherwise>
-			<span class="previous"><liferay-ui:message key="previous-change" /></span>
-		</c:otherwise>
-	</c:choose>
+				<aui:a cssClass="previous" href="<%= iteratorURL.toString() %>" label="previous-change" />
+			</c:when>
+			<c:otherwise>
+				<span class="previous"><liferay-ui:message key="previous-change" /></span>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
 
 	<div class="central-info">
 
@@ -107,20 +112,22 @@ iteratorURL.setParameter("languageId", languageId);
 		</div>
 	</div>
 
-	<c:choose>
-		<c:when test="<%= nextVersion != 0 %>">
+	<c:if test="<%= !hideControls %>">
+		<c:choose>
+			<c:when test="<%= nextVersion != 0 %>">
 
-			<%
-			iteratorURL.setParameter("sourceVersion", String.valueOf(targetVersion));
-			iteratorURL.setParameter("targetVersion", String.valueOf(nextVersion));
-			%>
+				<%
+				iteratorURL.setParameter("sourceVersion", String.valueOf(targetVersion));
+				iteratorURL.setParameter("targetVersion", String.valueOf(nextVersion));
+				%>
 
-			<aui:a cssClass="next" href="<%= iteratorURL.toString() %>" label="next-change" />
-		</c:when>
-		<c:otherwise>
-			<span class="next"><liferay-ui:message key="next-change" /></span>
-		</c:otherwise>
-	</c:choose>
+				<aui:a cssClass="next" href="<%= iteratorURL.toString() %>" label="next-change" />
+			</c:when>
+			<c:otherwise>
+				<span class="next"><liferay-ui:message key="next-change" /></span>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
 </div>
 
 <c:if test="<%= (availableLocales != null) && !availableLocales.isEmpty() %>">

@@ -23,4 +23,6 @@ public interface DiffHtml {
 
 	public String diff(Reader source, Reader target) throws Exception;
 
+	public String replaceStyles(String html);
+
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Reader;
 
@@ -118,6 +119,29 @@ public class DiffHtmlImpl implements DiffHtml {
 		unsyncStringWriter.flush();
 
 		return unsyncStringWriter.toString();
+	}
+
+	@Override
+	public String replaceStyles(String html) {
+		return StringUtil.replace(
+			html,
+			new String[] {
+				"class=\"diff-html-added\"", "class=\"diff-html-removed\"",
+				"class=\"diff-html-changed\"",
+				"changeType=\"diff-added-image\"",
+				"changeType=\"diff-removed-image\"",
+				"changeType=\"diff-changed-image\""
+			},
+			new String[] {
+				"style=\"background-color: #CFC;\"",
+				"style=\"background-color: #FDC6C6; text-decoration: " +
+					"line-through;\"",
+				"style=\"border-bottom: 2px dotted blue;\"",
+				"style=\"border: 10px solid #CFC;\"",
+				"style=\"border: 10px solid #FDC6C6;\"",
+				"style=\"border: 10px solid blue;\""
+			}
+		);
 	}
 
 	private static final String _DIFF = "diff";

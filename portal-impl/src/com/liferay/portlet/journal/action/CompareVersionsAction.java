@@ -14,10 +14,7 @@
 
 package com.liferay.portlet.journal.action;
 
-import com.liferay.portal.kernel.diff.DiffHtmlUtil;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,9 +22,9 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
+import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.util.portlet.PortletRequestUtil;
@@ -139,19 +136,9 @@ public class CompareVersionsAction extends PortletAction {
 		String xmlRequest = PortletRequestUtil.toXML(
 			renderRequest, renderResponse);
 
-		JournalArticleDisplay sourceArticleDisplay =
-			JournalArticleLocalServiceUtil.getArticleDisplay(
-				groupId, articleId, sourceVersion, null, Constants.VIEW,
-				languageId, 1, xmlRequest, themeDisplay);
-
-		JournalArticleDisplay targetArticleDisplay =
-			JournalArticleLocalServiceUtil.getArticleDisplay(
-				groupId, articleId, targetVersion, null, Constants.VIEW,
-				languageId, 1, xmlRequest, themeDisplay);
-
-		String diffHtmlResults = DiffHtmlUtil.diff(
-			new UnsyncStringReader(sourceArticleDisplay.getContent()),
-			new UnsyncStringReader(targetArticleDisplay.getContent()));
+		String diffHtmlResults = JournalUtil.diffHtml(
+			groupId, articleId, sourceVersion, targetVersion, languageId,
+			xmlRequest, themeDisplay);
 
 		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
 		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);

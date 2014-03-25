@@ -2103,6 +2103,14 @@ public class JournalArticleLocalServiceWrapper
 			folderId);
 	}
 
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticle getPreviousApprovedArticle(
+		com.liferay.portlet.journal.model.JournalArticle article)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getPreviousApprovedArticle(article);
+	}
+
 	/**
 	* Returns the web content articles matching the group and DDM structure
 	* key.

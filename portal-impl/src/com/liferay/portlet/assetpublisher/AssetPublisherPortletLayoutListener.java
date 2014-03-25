@@ -17,6 +17,7 @@ package com.liferay.portlet.assetpublisher;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
@@ -47,8 +48,7 @@ public class AssetPublisherPortletLayoutListener
 				layout.getGroupId(), layout.getUuid());
 
 			SubscriptionLocalServiceUtil.deleteSubscriptions(
-				layout.getCompanyId(),
-				com.liferay.portal.model.PortletPreferences.class.getName(),
+				layout.getCompanyId(), PortletPreferences.class.getName(),
 				AssetPublisherUtil.getSubscriptionClassPK(plid, portletId));
 		}
 		catch (Exception e) {

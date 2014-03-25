@@ -19,6 +19,7 @@ import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -6461,7 +6462,8 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setContextAttribute(
 			"[$ARTICLE_CONTENT$]", articleContent, false);
 		subscriptionSender.setContextAttribute(
-			"[$ARTICLE_DIFFS$]", replaceStyles(articleDiffs), false);
+			"[$ARTICLE_DIFFS$]", DiffHtmlUtil.replaceStyles(articleDiffs),
+			false);
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setEntryTitle(articleTitle);
 		subscriptionSender.setEntryURL(articleURL);
@@ -6514,28 +6516,6 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		subscriptionSender.flushNotificationsAsync();
-	}
-
-	protected String replaceStyles(String html) {
-		return StringUtil.replace(
-			html,
-			new String[] {
-				"class=\"diff-html-added\"", "class=\"diff-html-removed\"",
-				"class=\"diff-html-changed\"",
-				"changeType=\"diff-added-image\"",
-				"changeType=\"diff-removed-image\"",
-				"changeType=\"diff-changed-image\""
-			},
-			new String[] {
-				"style=\"background-color: #CFC;\"",
-				"style=\"background-color: #FDC6C6; text-decoration: " +
-					"line-through;\"",
-				"style=\"border-bottom: 2px dotted blue;\"",
-				"style=\"border: 10px solid #CFC;\"",
-				"style=\"border: 10px solid #FDC6C6;\"",
-				"style=\"border: 10px solid blue;\""
-			}
-		);
 	}
 
 	protected void saveImages(

@@ -39,6 +39,10 @@ public class DiffHtmlUtil {
 		return _diffHtml;
 	}
 
+	public static String replaceStyles(String html) {
+		return getDiffHtml().replaceStyles(html);
+	}
+
 	public void setDiffHtml(DiffHtml diffHtml) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

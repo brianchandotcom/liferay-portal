@@ -46,7 +46,10 @@ public class PortalImplBaseURLTestCase {
 
 		group = GroupTestUtil.addGroup();
 
-		layout = LayoutTestUtil.addLayout(
+		privateLayout = LayoutTestUtil.addLayout(
+			group.getGroupId(), ServiceTestUtil.randomString(), true);
+
+		publicLayout = LayoutTestUtil.addLayout(
 			group.getGroupId(), ServiceTestUtil.randomString());
 	}
 
@@ -56,7 +59,7 @@ public class PortalImplBaseURLTestCase {
 			GroupLocalServiceUtil.deleteGroup(group);
 		}
 		catch (RequiredGroupException rge) {
-			LayoutLocalServiceUtil.deleteLayout(layout);
+			LayoutLocalServiceUtil.deleteLayout(publicLayout);
 		}
 	}
 
@@ -100,6 +103,7 @@ public class PortalImplBaseURLTestCase {
 	protected Company company;
 	protected Layout controlPanelLayout;
 	protected Group group;
-	protected Layout layout;
+	protected Layout privateLayout;
+	protected Layout publicLayout;
 
 }

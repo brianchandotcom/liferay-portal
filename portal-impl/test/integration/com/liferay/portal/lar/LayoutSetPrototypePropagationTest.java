@@ -46,6 +46,7 @@ import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
@@ -468,9 +469,11 @@ public class LayoutSetPrototypePropagationTest
 
 		Assert.assertEquals(content, journalArticle.getContent());
 
-		JournalTestUtil.updateArticle(
-			_layoutSetPrototypeJournalArticle, "New Test Title",
+		String newContent = DDMStructureTestUtil.getSampleStructuredContent(
 			"New Test Content");
+
+		JournalTestUtil.updateArticle(
+			_layoutSetPrototypeJournalArticle, "New Test Title", newContent);
 
 		propagateChanges(group);
 

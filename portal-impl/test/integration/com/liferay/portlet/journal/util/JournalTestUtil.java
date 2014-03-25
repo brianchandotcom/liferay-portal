@@ -108,6 +108,20 @@ public class JournalTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		return addArticle(
+			groupId, folderId, classNameId, titleMap, descriptionMap,
+			contentMap, null, defaultLocale, expirationDate, workflowEnabled,
+			approved, serviceContext);
+	}
+
+	public static JournalArticle addArticle(
+			long groupId, long folderId, long classNameId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> contentMap, String layoutUuid,
+			Locale defaultLocale, Date expirationDate, boolean workflowEnabled,
+			boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
 			contentMap, LocaleUtil.toLanguageId(defaultLocale));
 
@@ -163,11 +177,11 @@ public class JournalTestUtil {
 			serviceContext.getUserId(), groupId, folderId, classNameId, 0,
 			StringPool.BLANK, true, JournalArticleConstants.VERSION_DEFAULT,
 			titleMap, descriptionMap, content, "general",
-			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(), null,
-			1, 1, 1965, 0, 0, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, 0, 0, 0, 0, 0, true, true, false, null, null, null,
-			null, serviceContext);
+			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
+			layoutUuid, 1, 1, 1965, 0, 0, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, 0, 0, 0, 0, 0, true, true, false,
+			null, null, null, null, serviceContext);
 	}
 
 	public static JournalArticle addArticle(

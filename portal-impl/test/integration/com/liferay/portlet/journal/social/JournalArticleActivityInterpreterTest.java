@@ -77,8 +77,7 @@ public class JournalArticleActivityInterpreterTest
 	@Override
 	protected void renameModels() throws Exception {
 		_article = JournalTestUtil.updateArticle(
-			_article, ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString());
+			_article, ServiceTestUtil.randomString(), _article.getContent());
 	}
 
 	@Override

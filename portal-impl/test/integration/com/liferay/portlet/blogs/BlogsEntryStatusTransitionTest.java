@@ -22,6 +22,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -65,7 +66,7 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 
 		group = GroupTestUtil.addGroup();
 
-		User user = UserTestUtil.addUser(
+		user = UserTestUtil.addUser(
 			ServiceTestUtil.randomString(), group.getGroupId());
 
 		entry = BlogsTestUtil.addEntry(user.getUserId(), group, false);
@@ -74,6 +75,8 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 	@After
 	public void tearDown() throws Exception {
 		GroupLocalServiceUtil.deleteGroup(group);
+
+		UserLocalServiceUtil.deleteUser(user);
 	}
 
 	@Test
@@ -342,5 +345,6 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 
 	protected BlogsEntry entry;
 	protected Group group;
+	protected User user;
 
 }

@@ -361,6 +361,8 @@ public class WikiPageLocalServiceTest {
 			TestPropsValues.getUserId(), page);
 
 		page = WikiPageLocalServiceUtil.getPageByPageId(page.getPageId());
+		childPage = WikiPageLocalServiceUtil.getPageByPageId(
+			childPage.getPageId());
 
 		return new WikiPage[] {page, childPage};
 	}
@@ -385,6 +387,8 @@ public class WikiPageLocalServiceTest {
 			TestPropsValues.getUserId(), _node.getNodeId(), "B");
 
 		page = WikiPageLocalServiceUtil.getPageByPageId(page.getPageId());
+		redirectPage = WikiPageLocalServiceUtil.getPageByPageId(
+			redirectPage.getPageId());
 
 		return new WikiPage[] {page, redirectPage};
 	}

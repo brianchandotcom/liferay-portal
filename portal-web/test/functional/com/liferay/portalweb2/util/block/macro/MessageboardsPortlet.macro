@@ -108,6 +108,12 @@
 		<execute action="PGMessageboardsConfigurationScope#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
+	<command name="disableAnonymousPostingAllowanceCP">
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#uncheck" locator-key1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="gotoRecentPostsPG">
 		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_RECENT_POSTS" value1="Recent Posts" />
 	</command>
@@ -140,6 +146,26 @@
 		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
+	<command name="tearDownConfigurationGeneralCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#check" locator-key1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="viewAnonymousPostingInPostNewThreadCP">
+		<execute action="CPMessageboards#assertClick" locator-key1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+
+		<execute action="CPMessageboardsPostthread#assertElementPresent" locator-key1="ANONYMOUS_CHECKBOX" />
+	</command>
+
 	<command name="viewBannedUserPG">
 		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_BANNED_USERS" value1="Banned Users" />
 
@@ -153,6 +179,19 @@
 		<execute action="PGMessageboardsBannedusers#assertClick" locator-key1="BANNED_USERS_TABLE_BANNED_USER" value1="${userScreenName}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${userScreenName}" />
+	</command>
+
+	<command name="viewNoAnonymousPostingAllowanceCP">
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#assertNotChecked" locator-key1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="viewNoAnonymousPostingInPostNewThreadCP">
+		<execute action="CPMessageboards#assertClick" locator-key1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+
+		<execute action="CPMessageboardsPostthread#assertElementNotPresent" locator-key1="ANONYMOUS_CHECKBOX" />
 	</command>
 
 	<command name="viewNoPermissionCP">

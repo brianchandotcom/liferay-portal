@@ -2974,6 +2974,31 @@ public class JournalArticleLocalServiceImpl
 			groupId, folderIds, queryDefinition);
 	}
 
+	@Override
+	public JournalArticle getPreviousApprovedArticle(JournalArticle article)
+		throws PortalException, SystemException {
+
+		List<JournalArticle> approvedArticles =
+			journalArticlePersistence.findByG_A_ST(
+				article.getGroupId(), article.getArticleId(),
+				WorkflowConstants.STATUS_APPROVED, 0, 2);
+
+		if (approvedArticles.isEmpty() ||
+			((approvedArticles.size() == 1) &&
+			 (article.getStatus() == WorkflowConstants.STATUS_APPROVED))) {
+
+			return article;
+		}
+
+		JournalArticle previousApprovedArticle = approvedArticles.get(0);
+
+		if (article.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			previousApprovedArticle = approvedArticles.get(1);
+		}
+
+		return previousApprovedArticle;
+	}
+
 	/**
 	 * Returns the web content articles matching the group and DDM structure
 	 * key.
@@ -6261,30 +6286,6 @@ public class JournalArticleLocalServiceImpl
 		dateInterval[1] = latestExpirationDate;
 
 		return dateInterval;
-	}
-
-	protected JournalArticle getPreviousApprovedArticle(JournalArticle article)
-		throws PortalException, SystemException {
-
-		List<JournalArticle> approvedArticles =
-			journalArticlePersistence.findByG_A_ST(
-				article.getGroupId(), article.getArticleId(),
-				WorkflowConstants.STATUS_APPROVED, 0, 2);
-
-		if (approvedArticles.isEmpty() ||
-			((approvedArticles.size() == 1) &&
-			 (article.getStatus() == WorkflowConstants.STATUS_APPROVED))) {
-
-			return article;
-		}
-
-		JournalArticle previousApprovedArticle = approvedArticles.get(0);
-
-		if (article.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-			previousApprovedArticle = approvedArticles.get(1);
-		}
-
-		return previousApprovedArticle;
 	}
 
 	protected String getUniqueUrlTitle(

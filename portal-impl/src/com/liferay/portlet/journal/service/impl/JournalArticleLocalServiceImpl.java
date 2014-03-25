@@ -6262,6 +6262,30 @@ public class JournalArticleLocalServiceImpl
 		return dateInterval;
 	}
 
+	protected JournalArticle getPreviousApprovedArticle(JournalArticle article)
+		throws PortalException, SystemException {
+
+		List<JournalArticle> approvedArticles =
+			journalArticlePersistence.findByG_A_ST(
+				article.getGroupId(), article.getArticleId(),
+				WorkflowConstants.STATUS_APPROVED, 0, 2);
+
+		if (approvedArticles.isEmpty() ||
+			((approvedArticles.size() == 1) &&
+			 (article.getStatus() == WorkflowConstants.STATUS_APPROVED))) {
+
+			return article;
+		}
+
+		JournalArticle previousApprovedArticle = approvedArticles.get(0);
+
+		if (article.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			previousApprovedArticle = approvedArticles.get(1);
+		}
+
+		return previousApprovedArticle;
+	}
+
 	protected String getUniqueUrlTitle(
 			long id, long groupId, String articleId, String title)
 		throws PortalException, SystemException {
@@ -6661,26 +6685,15 @@ public class JournalArticleLocalServiceImpl
 	protected void updatePreviousApprovedArticle(JournalArticle article)
 		throws PortalException, SystemException {
 
-		List<JournalArticle> approvedArticles =
-			journalArticlePersistence.findByG_A_ST(
-				article.getGroupId(), article.getArticleId(),
-				WorkflowConstants.STATUS_APPROVED, 0, 2);
+		JournalArticle previousApprovedArticle = getPreviousApprovedArticle(
+			article);
 
-		if (approvedArticles.isEmpty() ||
-			((approvedArticles.size() == 1) &&
-			 (article.getStatus() == WorkflowConstants.STATUS_APPROVED))) {
-
+		if (previousApprovedArticle.getVersion() == article.getVersion()) {
 			assetEntryLocalService.updateVisible(
 				JournalArticle.class.getName(), article.getResourcePrimKey(),
 				false);
 		}
 		else {
-			JournalArticle previousApprovedArticle = approvedArticles.get(0);
-
-			if (article.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-				previousApprovedArticle = approvedArticles.get(1);
-			}
-
 			Date[] dateInterval = getDateInterval(
 				previousApprovedArticle.getGroupId(),
 				previousApprovedArticle.getArticleId(),

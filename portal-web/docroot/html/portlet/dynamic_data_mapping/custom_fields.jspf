@@ -37,6 +37,10 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 								'<input type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "select") %>" />' +
 							'<div>';
 
+			var TPL_GEOLOCATION = '<div class="field-labels-inline">' +
+										'<input type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "geolocate") %>" />' +
+									'<div>';
+
 			var TPL_LINK_TO_PAGE = '<div class="lfr-ddm-link-to-page">' +
 									'<a href="javascript:;"><%= UnicodeLanguageUtil.get(pageContext, "link") %></a>' +
 								'</div>';
@@ -335,6 +339,30 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 				}
 			);
 
+			var DDMGeolocationField = A.Component.create(
+				{
+					ATTRS: {
+						dataType: {
+							value: 'geolocation'
+						},
+
+						fieldNamespace: {
+							value: 'ddm'
+						}
+					},
+
+					EXTENDS: A.FormBuilderTextField,
+
+					NAME: 'ddm-geolocation',
+
+					prototype: {
+						getHTML: function() {
+							return TPL_GEOLOCATION;
+						}
+					}
+				}
+			);
+
 			var DDMImageField = A.Component.create(
 				{
 					ATTRS: {
@@ -575,6 +603,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 			FormBuilderTypes['ddm-date'] = DDMDateField;
 			FormBuilderTypes['ddm-decimal'] = DDMDecimalField;
 			FormBuilderTypes['ddm-documentlibrary'] = DDMDocumentLibraryField;
+			FormBuilderTypes['ddm-geolocation'] = DDMGeolocationField;
 			FormBuilderTypes['ddm-image'] = DDMImageField;
 			FormBuilderTypes['ddm-integer'] = DDMIntegerField;
 			FormBuilderTypes['ddm-link-to-page'] = DDMLinkToPageField;

@@ -67,6 +67,6 @@ double version = ParamUtil.getDouble(request, "version");
 	<aui:button-row>
 		<aui:button type="submit" value="copy" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= redirect %>" value="cancel" />
 	</aui:button-row>
 </aui:form>

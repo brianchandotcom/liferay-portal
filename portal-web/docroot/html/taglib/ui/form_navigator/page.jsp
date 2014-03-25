@@ -175,13 +175,20 @@ if (Validator.isNotNull(historyKey)) {
 			<aui:script use="aui-event-input,aui-tabview,aui-url,history,io-form">
 				var formNode = A.one('#<portlet:namespace /><%= formName %>');
 
-				var tabview = new A.TabView(
-					{
-						boundingBox: '#<portlet:namespace />tabsBoundingBox',
-						srcNode: '#<portlet:namespace />tabs',
-						type: 'list'
+				Liferay.component(
+					'<portlet:namespace /><%= formName %>Tabview',
+					function() {
+						return new A.TabView(
+							{
+								boundingBox: '#<portlet:namespace />tabsBoundingBox',
+								srcNode: '#<portlet:namespace />tabs',
+								type: 'list'
+							}
+						).render();
 					}
-				).render();
+				);
+
+				var tabview = Liferay.component('<portlet:namespace /><%= formName %>Tabview');
 
 				var history = new A.HistoryHash();
 

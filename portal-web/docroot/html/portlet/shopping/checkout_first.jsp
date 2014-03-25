@@ -104,44 +104,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 					</aui:select>
 				</c:if>
 
-				<aui:col width="<%= 50 %>">
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="first-name" name="billingFirstName" />
-
-					<aui:input label="last-name" name="billingLastName" />
-
-					<aui:input label="email-address" name="billingEmailAddress" />
-
-					<aui:input label="company" name="billingCompany" />
-
-					<aui:input label="street" name="billingStreet" />
-
-					<aui:input label="city" name="billingCity" />
-				</aui:col>
-
-				<aui:col width="<%= 50 %>">
-					<aui:select label="state" name="billingStateSel">
-						<aui:option label="outside-us" />
-
-						<%
-						for (int i = 0; i < StateUtil.STATES.length; i++) {
-						%>
-
-							<aui:option label="<%= StateUtil.STATES[i].getName() %>" selected="<%= billingStateSel.equals(StateUtil.STATES[i].getId()) %>" value="<%= StateUtil.STATES[i].getId() %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-
-					<aui:input bean="<%= null %>" label="other-state" name="billingState" value="<%= billingState %>" />
-
-					<aui:input label="postal-code" name="billingZip" />
-
-					<aui:input label="country" name="billingCountry" />
-
-					<aui:input label="phone" name="billingPhone" />
-				</aui:col>
+				<%@ include file="/html/portlet/shopping/checkout_first_billing_address.jspf" %>
 			</aui:fieldset>
 		</liferay-ui:panel>
 
@@ -180,46 +143,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 					</aui:select>
 				</c:if>
 
-				<aui:col width="<%= 50 %>">
-					<aui:input label="first-name" name="shippingFirstName" />
-
-					<aui:input label="last-name" name="shippingLastName" />
-
-					<aui:input label="email-address" name="shippingEmailAddress" />
-
-					<aui:input label="company" name="shippingCompany" />
-
-					<aui:input label="street" name="shippingStreet" />
-
-					<aui:input label="city" name="shippingCity" />
-
-					<aui:input label="same-as-billing" name="shipToBilling" />
-				</aui:col>
-
-				<aui:col width="<%= 50 %>">
-					<aui:select label="state" name="shippingStateSel">
-						<aui:option label="outside-us" />
-
-						<%
-						for (int i = 0; i < StateUtil.STATES.length; i++) {
-						%>
-
-							<aui:option label="<%= StateUtil.STATES[i].getName() %>" selected="<%= shippingStateSel.equals(StateUtil.STATES[i].getId()) %>" value="<%= StateUtil.STATES[i].getId() %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-
-					<aui:input bean="<%= null %>" label="other-state" name="shippingState" value="<%= shippingState %>" />
-
-					<aui:input label="postal-code" name="shippingZip" />
-
-					<aui:input label="country" name="shippingCountry" />
-
-					<aui:input label="phone" name="shippingPhone" />
-				</aui:col>
+				<%@ include file="/html/portlet/shopping/checkout_first_shipping_address.jspf" %>
 			</aui:fieldset>
 		</liferay-ui:panel>
 

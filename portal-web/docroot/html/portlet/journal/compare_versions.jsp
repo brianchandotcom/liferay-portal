@@ -19,6 +19,7 @@
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
 String articleId = ParamUtil.getString(request, "articleId");
+boolean hideControls = ParamUtil.getBoolean(request, "hideControls");
 
 Set<Locale> availableLocales = (Set<Locale>)request.getAttribute(WebKeys.AVAILABLE_LOCALES);
 String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS);
@@ -37,6 +38,7 @@ double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 	availableLocales="<%= availableLocales %>"
 	diffHtmlResults="<%= diffHtmlResults %>"
 	diffVersionsInfo="<%= JournalUtil.getDiffVersionsInfo(groupId, articleId, sourceVersion, targetVersion) %>"
+	hideControls="<%= hideControls %>"
 	languageId="<%= languageId %>"
 	portletURL="<%= portletURL %>"
 	sourceVersion="<%= sourceVersion %>"

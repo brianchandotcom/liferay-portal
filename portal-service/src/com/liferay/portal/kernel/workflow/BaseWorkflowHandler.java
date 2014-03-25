@@ -152,6 +152,28 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 	}
 
 	@Override
+	public PortletURL getURLViewDiffs(
+		long classPK, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		try {
+			AssetRenderer assetRenderer = getAssetRenderer(classPK);
+
+			if (assetRenderer != null) {
+				return assetRenderer.getURLViewDiffs(
+					liferayPortletRequest, liferayPortletResponse);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public String getURLViewInContext(
 		long classPK, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,

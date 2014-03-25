@@ -16,10 +16,12 @@ package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.diff.DiffVersion;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -80,6 +83,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.model.JournalStructure;
@@ -469,6 +473,27 @@ public class JournalUtil {
 
 		tokens.put(
 			StringUtil.replace(name, CharPool.DASH, CharPool.UNDERLINE), value);
+	}
+
+	public static String diffHtml(
+			long groupId, String articleId, double sourceVersion,
+			double targetVersion, String languageId, String xmlRequest,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		JournalArticleDisplay sourceArticleDisplay =
+			JournalArticleLocalServiceUtil.getArticleDisplay(
+				groupId, articleId, sourceVersion, null, Constants.VIEW,
+				languageId, 1, xmlRequest, themeDisplay);
+
+		JournalArticleDisplay targetArticleDisplay =
+			JournalArticleLocalServiceUtil.getArticleDisplay(
+				groupId, articleId, targetVersion, null, Constants.VIEW,
+				languageId, 1, xmlRequest, themeDisplay);
+
+		return DiffHtmlUtil.diff(
+			new UnsyncStringReader(sourceArticleDisplay.getContent()),
+			new UnsyncStringReader(targetArticleDisplay.getContent()));
 	}
 
 	public static String formatVM(String vm) {

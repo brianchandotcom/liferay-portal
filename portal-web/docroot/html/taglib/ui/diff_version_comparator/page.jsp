@@ -18,9 +18,9 @@
 
 <%
 Set<Locale> availableLocales = (Set<Locale>)request.getAttribute("liferay-ui:diff-version-comparator:availableLocales");
-String languageId = (String)request.getAttribute("liferay-ui:diff-version-comparator:languageId");
 String diffHtmlResults = (String)request.getAttribute("liferay-ui:diff-version-comparator:diffHtmlResults");
 DiffVersionsInfo diffVersionsInfo = (DiffVersionsInfo)request.getAttribute("liferay-ui:diff-version-comparator:diffVersionsInfo");
+String languageId = (String)request.getAttribute("liferay-ui:diff-version-comparator:languageId");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:diff-version-comparator:portletURL");
 double sourceVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:sourceVersion");
 double targetVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:targetVersion");
@@ -30,7 +30,9 @@ double previousVersion = diffVersionsInfo.getPreviousVersion();
 
 PortletURL iteratorURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
-iteratorURL.setParameter("languageId", languageId);
+if (Validator.isNotNull(languageId)) {
+    iteratorURL.setParameter("languageId", languageId);
+}
 %>
 
 <div class="diff-version-comparator">

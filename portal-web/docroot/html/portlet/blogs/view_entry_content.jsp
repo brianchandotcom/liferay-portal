@@ -164,9 +164,11 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						String entryContentId = "blogs-entry-content-" + entry.getEntryId();
 
 						boolean inlineEditEnabled = BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) && BrowserSnifferUtil.isRtf(request) && !WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, BlogsEntry.class.getName());
+
+						boolean ckEditorControlsVisible = GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", "")).equals("visible");
 						%>
 
-						<div <%= inlineEditEnabled ? "class=\"lfr-editable\" contenteditable=\"true\" id=\"" + entryContentId + "\" spellcheck=\"false\"" : StringPool.BLANK %>>
+						<div id="<%= entryContentId %>" <%= inlineEditEnabled && ckEditorControlsVisible ? "class=\"lfr-editable\" contenteditable=\"true\" spellcheck=\"false\"" : StringPool.BLANK %>>
 							<%= entry.getContent() %>
 						</div>
 

@@ -61,10 +61,21 @@ public class PortalImplBaseURLTestCase {
 	}
 
 	protected ThemeDisplay initThemeDisplay(
-			Company company, Group group, Layout layout, String virtualHostname)
+			Company company, Group group, Layout layout,
+			String companyVirtualHostname)
 		throws Exception {
 
-		company.setVirtualHostname(virtualHostname);
+		return initThemeDisplay(
+			company, group, layout, companyVirtualHostname,
+			companyVirtualHostname);
+	}
+
+	protected ThemeDisplay initThemeDisplay(
+			Company company, Group group, Layout layout,
+			String companyVirtualHostname, String serverName)
+		throws Exception {
+
+		company.setVirtualHostname(companyVirtualHostname);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -73,7 +84,7 @@ public class PortalImplBaseURLTestCase {
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
 		themeDisplay.setSecure(false);
-		themeDisplay.setServerName(virtualHostname);
+		themeDisplay.setServerName(serverName);
 		themeDisplay.setServerPort(8080);
 		themeDisplay.setSiteGroupId(group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());

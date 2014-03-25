@@ -122,9 +122,7 @@ public class PortalImplLayoutURLTest extends PortalImplBaseURLTestCase {
 			layout, themeDisplay, true);
 
 		themeDisplay = initThemeDisplay(
-			company, group, controlPanelLayout, VIRTUAL_HOSTNAME);
-
-		themeDisplay.setServerName(LOCALHOST);
+			company, group, controlPanelLayout, VIRTUAL_HOSTNAME, LOCALHOST);
 
 		String controlPanelFriendlyURL = PortalUtil.getLayoutURL(
 			layout, themeDisplay, true);

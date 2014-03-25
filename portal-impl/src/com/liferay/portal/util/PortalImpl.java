@@ -3163,6 +3163,23 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public String getLayoutRelativeURL(Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		return getLayoutRelativeURL(layout, themeDisplay, true);
+	}
+
+	@Override
+	public String getLayoutRelativeURL(
+			Layout layout, ThemeDisplay themeDisplay, boolean doAsUser)
+		throws PortalException, SystemException {
+
+		String layoutFullURL = getLayoutFullURL(layout, themeDisplay, doAsUser);
+
+		return HttpUtil.removeDomain(layoutFullURL);
+	}
+
+	@Override
 	public String getLayoutSetFriendlyURL(
 			LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {

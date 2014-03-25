@@ -430,6 +430,10 @@
 	</target>
 
 	<target name="build-css">
+		<property name="sass.tmp.dir" value="${basedir}/sass_tmp_dir" />
+
+		<mkdir dir="${sass.tmp.dir}" />
+
 		<java
 			classname="com.liferay.portal.tools.SassToCssBuilder"
 			classpathref="project.classpath"
@@ -438,6 +442,7 @@
 			newenvironment="true"
 		>
 			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-Djava.io.tmpdir=${sass.tmp.dir}" />
 			<jvmarg value="-Dliferay.lib.portal.dir=${basedir}/../lib/portal" />
 			<arg value="sass.dir.0=/html/css" />
 			<arg value="sass.dir.1=/html/portlet" />
@@ -445,6 +450,8 @@
 			<arg value="sass.docroot.dir=${basedir}/docroot" />
 			<arg value="sass.portal.common.dir=${basedir}/docroot/html/css/common" />
 		</java>
+
+		<delete dir="${sass.tmp.dir}" />
 	</target>
 
 	<target name="build-dtd">

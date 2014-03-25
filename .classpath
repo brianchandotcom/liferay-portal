@@ -80,6 +80,7 @@
 	<classpathentry kind="lib" path="lib/development/selenium-java.jar"/>
 	<classpathentry kind="lib" path="lib/development/selenium-server.jar"/>
 	<classpathentry kind="lib" path="lib/development/servlet-api.jar"/>
+	<classpathentry kind="lib" path="lib/development/sikuli-api.jar"/>
 	<classpathentry kind="lib" path="lib/development/sikuli-script.jar"/>
 	<classpathentry kind="lib" path="lib/development/smtp.jar"/>
 	<classpathentry kind="lib" path="lib/development/sonar-ant-task.jar"/>

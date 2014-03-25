@@ -691,6 +691,22 @@ public class MBUtil {
 		return sb.toString();
 	}
 
+	public static String getSubjectForEmail(Message message) throws Exception {
+		long parentMessageId = getParentMessageId(message);
+
+		MBMessage parentMessage = MBMessageLocalServiceUtil.getMBMessage(
+			parentMessageId);
+
+		String subject = parentMessage.getSubject();
+
+		if (subject.startsWith("RE:")) {
+			return subject;
+		}
+		else {
+			return "RE: " + parentMessage.getSubject();
+		}
+	}
+
 	public static String getSubjectWithoutMessageId(Message message)
 		throws Exception {
 

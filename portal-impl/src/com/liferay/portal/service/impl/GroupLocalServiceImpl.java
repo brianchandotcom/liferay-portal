@@ -1111,7 +1111,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @return the default user's personal site group, or <code>null</code> if
 	 *         the group could not be found
-	 * @throws PortalException if a matching group could not be found
+	 * @throws PortalException if a default user for the company could not be
+	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override

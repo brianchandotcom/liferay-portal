@@ -1,0 +1,99 @@
+<definition component-name="portal-wcm">
+	<property name="portlet.plugins.includes" value="test-localized-portlet" />
+
+	<var name="pageName" value="Test Localization" />
+	<var name="portletName" value="Test Localized" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<command name="CheckLocalizationChinese" known-issues="LPS-45313" priority="5">
+		<execute action="PGTestlocalization#click" locator-key1="CHINESE_LOCALIZATION" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_1" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_2" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_3" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_4" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_5" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_6" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_7" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_8" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_9" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_10" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_11" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_12" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_13" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_14" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextNotPresent" value1="FAILED" />
+	</command>
+
+	<command name="CheckLocalizationEnglish" known-issues="LPS-45313" priority="5">
+		<execute action="PGTestlocalization#click" locator-key1="ENGLISH_LOCALIZATION" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_1" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_2" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_3" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_4" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_5" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_6" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_7" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_8" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_9" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_10" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_11" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_12" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_13" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_14" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextNotPresent" value1="FAILED" />
+	</command>
+
+	<command name="CheckLocalizationFrench" known-issues="LPS-45313" priority="5">
+		<execute action="PGTestlocalization#click" locator-key1="FRENCH_LOCALIZATION" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_1" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_2" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_3" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_4" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_5" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_6" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_7" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_8" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_9" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_10" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_11" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_12" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_13" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_14" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextNotPresent" value1="FAILED" />
+	</command>
+
+	<command name="CheckLocalizationSpanish" known-issues="LPS-45313" priority="5">
+		<execute action="PGTestlocalization#click" locator-key1="SPANISH_LOCALIZATION" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_1" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_2" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_3" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_4" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_5" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_6" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_7" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_8" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_9" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_10" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_11" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_12" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_13" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextEquals" locator-key1="LOCALIZATION_TEST_14" value1="PASSED" />
+		<execute action="PGTestlocalization#assertTextNotPresent" value1="FAILED" />
+	</command>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+</definition>

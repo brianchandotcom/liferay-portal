@@ -155,14 +155,6 @@
 		margin-bottom: 0;
 	}
 
-	.lfr-url-error {
-		display: inline-block;
-		white-space: normal;
-		word-wrap: break-word;
-
-		@include word-break(break-all);
-	}
-
 	.navbar .nav > li > a {
 		&:focus, &:hover {
 			color: #009AE5;

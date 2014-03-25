@@ -31,7 +31,7 @@ import java.util.List;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-1976.
+ * See https://issues.liferay.com/browse/LPS-1976.
  * </p>
  *
  * @author Jorge Ferrer

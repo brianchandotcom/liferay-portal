@@ -20,7 +20,7 @@ import org.objectweb.asm.tree.MethodNode;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-44718.
+ * See https://issues.liferay.com/browse/LPS-44718.
  * </p>
  *
  * @author Shuyang Zhou

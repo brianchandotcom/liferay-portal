@@ -18,7 +18,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-15016.
+ * See https://issues.liferay.com/browse/LPS-15016.
  * </p>
  *
  * @author Brian Wing Shun Chan

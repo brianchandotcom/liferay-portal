@@ -28,7 +28,7 @@ import org.apache.jasper.Constants;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-19130.
+ * See https://issues.liferay.com/browse/LPS-19130.
  * </p>
  *
  * @author Shuyang Zhou

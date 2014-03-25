@@ -24,7 +24,7 @@ import java.lang.reflect.Constructor;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-6072.
+ * See https://issues.liferay.com/browse/LPS-6072.
  * </p>
  *
  * @author Shuyang Zhou

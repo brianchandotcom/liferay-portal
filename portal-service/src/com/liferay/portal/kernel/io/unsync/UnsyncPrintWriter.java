@@ -32,7 +32,7 @@ import java.util.Locale;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-6648.
+ * See https://issues.liferay.com/browse/LPS-6648.
  * </p>
  *
  * @author Shuyang Zhou

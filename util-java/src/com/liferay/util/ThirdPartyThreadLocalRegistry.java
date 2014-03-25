@@ -21,7 +21,7 @@ import java.util.Set;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-7864.
+ * See https://issues.liferay.com/browse/LPS-7864.
  * </p>
  *
  * @author Brian Wing Shun Chan

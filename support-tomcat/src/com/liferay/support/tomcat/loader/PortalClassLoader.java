@@ -24,7 +24,7 @@ import org.apache.catalina.loader.WebappClassLoader;
  * </p>
  *
  * <p>
- * See http://issues.liferay.com/browse/LEP-2346.
+ * See https://issues.liferay.com/browse/LEP-2346.
  * </p>
  *
  * @author Brian Wing Shun Chan

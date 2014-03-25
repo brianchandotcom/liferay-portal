@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-38327.
+ * See https://issues.liferay.com/browse/LPS-38327.
  * </p>
  *
  * @author Raymond Augé

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-18587.
+ * See https://issues.liferay.com/browse/LPS-18587.
  * </p>
  *
  * @author Michael C. Han

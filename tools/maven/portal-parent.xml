@@ -40,7 +40,7 @@
 	</scm>
 	<issueManagement>
 		<system>JIRA</system>
-		<url>http://issues.liferay.com/browse/LPS</url>
+		<url>https://issues.liferay.com/browse/LPS</url>
 	</issueManagement>
 	<distributionManagement>
 		<repository>

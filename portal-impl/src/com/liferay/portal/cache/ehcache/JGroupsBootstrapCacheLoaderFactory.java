@@ -20,7 +20,7 @@ import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-11061.
+ * See https://issues.liferay.com/browse/LPS-11061.
  * </p>
  *
  * @author Shuyang Zhou

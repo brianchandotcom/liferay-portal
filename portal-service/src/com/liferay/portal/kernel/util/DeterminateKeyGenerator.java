@@ -19,7 +19,7 @@ import java.util.Map;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-6872.
+ * See https://issues.liferay.com/browse/LPS-6872.
  * </p>
  *
  * @author Shuyang Zhou

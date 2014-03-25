@@ -52,7 +52,7 @@ for our software.
 ## Bug Tracker
 
 Have a bug? Please file an issue at
-[http://issues.liferay.com](http://issues.liferay.com) following [Liferay's JIRA
+[https://issues.liferay.com](https://issues.liferay.com) following [Liferay's JIRA
 Guidelines](http://www.liferay.com/community/wiki/-/wiki/Main/JIRA).
 
 ## Twitter Account

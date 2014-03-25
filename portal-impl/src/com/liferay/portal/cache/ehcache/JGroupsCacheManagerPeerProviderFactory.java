@@ -27,7 +27,7 @@ import net.sf.ehcache.distribution.CacheManagerPeerProviderFactory;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-11061.
+ * See https://issues.liferay.com/browse/LPS-11061.
  * </p>
  *
  * @author Tina Tian

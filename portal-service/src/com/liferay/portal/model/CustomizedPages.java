@@ -16,7 +16,7 @@ package com.liferay.portal.model;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-15626.
+ * See https://issues.liferay.com/browse/LPS-15626.
  * </p>
  *
  * @author Raymond Augé

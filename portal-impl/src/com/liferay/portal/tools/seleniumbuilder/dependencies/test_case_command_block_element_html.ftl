@@ -19,7 +19,7 @@
 
 					[Known Issues:
 						<#list knownIssues?split(",") as knownIssue>
-							<a href="http://issues.liferay.com/browse/${knownIssue}">${knownIssue}</a>
+							<a href="https://issues.liferay.com/browse/${knownIssue}">${knownIssue}</a>
 
 							<#if knownIssue_has_next>
 								,

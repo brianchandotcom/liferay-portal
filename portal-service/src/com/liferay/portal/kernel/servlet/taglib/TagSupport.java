@@ -20,7 +20,7 @@ import javax.servlet.jsp.tagext.Tag;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-13878.
+ * See https://issues.liferay.com/browse/LPS-13878.
  * </p>
  *
  * @author Shuyang Zhou

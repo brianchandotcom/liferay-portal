@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-5363.
+ * See https://issues.liferay.com/browse/LPS-5363.
  * </p>
  *
  * @author Brian Wing Shun Chan

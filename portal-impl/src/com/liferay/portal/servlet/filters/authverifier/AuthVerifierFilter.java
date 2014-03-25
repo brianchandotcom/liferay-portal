@@ -49,7 +49,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-27888.
+ * See https://issues.liferay.com/browse/LPS-27888.
  * </p>
  *
  * @author Tomas Polesovsky

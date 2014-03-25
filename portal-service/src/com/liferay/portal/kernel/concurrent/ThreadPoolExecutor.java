@@ -28,7 +28,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-14986.
+ * See https://issues.liferay.com/browse/LPS-14986.
  * </p>
  *
  * @author Shuyang Zhou

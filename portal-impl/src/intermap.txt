@@ -45,10 +45,10 @@ KmWiki http://www.voght.com/cgi-bin/pywiki?
 KnowHow http://www2.iro.umontreal.ca/~paquetse/cgi-bin/wiki.cgi?
 LanifexWiki http://opt.lanifex.com/cgi-bin/wiki.pl?
 LegoWiki http://www.object-arts.com/wiki/html/Lego-Robotics/
-LEP http://support.liferay.com/browse/LEP-
+LEP https://issues.liferay.com/browse/LEP-
 LiferayForum http://www.liferay.com/web/guest/community/forums/message_boards/message/
 LiferayPedia http://wiki.liferay.com/index.php/
-LiferaySupport http://http://support.liferay.com/browse/
+LiferaySupport https://issues.liferay.com/browse/
 LinuxWiki http://www.linuxwiki.de/
 LugKR http://lug-kr.sourceforge.net/cgi-bin/lugwiki.pl?
 MathSongsWiki http://SeedWiki.com/page.cfm?wikiid=237&doc=

@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LPS-39277.
+ * See https://issues.liferay.com/browse/LPS-39277.
  * </p>
  *
  * @author Brian Wing Shun Chan

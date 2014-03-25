@@ -42,7 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LEP-5943.
+ * See https://issues.liferay.com/browse/LEP-5943.
  * </p>
  *
  * @author Prashant Dighe

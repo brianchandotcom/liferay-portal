@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServlet;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LEP-2297.
+ * See https://issues.liferay.com/browse/LEP-2297.
  * </p>
  *
  * @author Olaf Fricke

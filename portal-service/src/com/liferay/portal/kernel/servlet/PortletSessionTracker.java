@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * <p>
- * See http://issues.liferay.com/browse/LEP-1466.
+ * See https://issues.liferay.com/browse/LEP-1466.
  * </p>
  *
  * @author Rudy Hilado

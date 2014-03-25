@@ -95,6 +95,12 @@ public class PortalImplBaseURLTestCase {
 
 	protected static final String LOCALHOST = "localhost";
 
+	protected static final String PRIVATE_GROUP_SERVLET_MAPPING =
+		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING;
+
+	protected static final String PUBLIC_SERVLET_MAPPING =
+		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING;
+
 	protected static final String VIRTUAL_HOSTNAME = "test.com";
 
 	protected Company company;

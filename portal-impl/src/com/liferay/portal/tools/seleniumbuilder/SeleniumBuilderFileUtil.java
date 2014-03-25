@@ -1770,9 +1770,20 @@ public class SeleniumBuilderFileUtil {
 			}
 		}
 
+		if (attributeMap.containsKey("method")) {
+			String methodValue = attributeMap.get("method");
+
+			if (!methodValue.startsWith("selenium") &&
+				!methodValue.startsWith("StringUtil")) {
+
+				throwValidationException(1005, fileName, element, "method");
+			}
+		}
+
 		if (!attributeMap.containsKey("value") && Validator.isNull(varText)) {
 			if (!attributeMap.containsKey("locator") &&
 				!attributeMap.containsKey("locator-key") &&
+				!attributeMap.containsKey("method") &&
 				!attributeMap.containsKey("path")) {
 
 				throwValidationException(
@@ -1833,8 +1844,8 @@ public class SeleniumBuilderFileUtil {
 		});
 	private static List<String> _allowedVarAttributes = ListUtil.fromArray(
 		new String[] {
-			"attribute", "line-number", "locator", "locator-key", "name",
-			"path", "value"
+			"attribute", "line-number", "locator", "locator-key", "method",
+			"name", "path", "value"
 		});
 	private static List<String> _componentNames;
 	private static List<String> _methodNames = ListUtil.fromArray(

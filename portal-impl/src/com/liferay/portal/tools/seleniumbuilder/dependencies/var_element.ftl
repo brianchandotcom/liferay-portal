@@ -8,6 +8,10 @@
 	<#assign varValue = varElement.getText()>
 </#if>
 
+<#if varElement.attributeValue("method")??>
+	<#assign methodValue = varElement.attributeValue("method")>
+</#if>
+
 <#if varElement.attributeValue("locator-key")?? && varElement.attributeValue("path")??>
 	<#assign pathRootElement = seleniumBuilderContext.getPathRootElement(varElement.attributeValue("path"))>
 
@@ -39,6 +43,35 @@
 		</#if>
 
 		${variableContext}.put("${varName}", RuntimeVariables.evaluateVariable(${selenium}.${seleniumMethod}(RuntimeVariables.evaluateVariable("${locatorValue}", ${variableContext})), ${variableContext}));
+	</#if>
+<#elseif methodValue??>
+	<#assign z = methodValue?last_index_of("#")>
+	<#assign methodCall = methodValue?substring(z + 1)>
+
+	<#if "${methodValue}"?starts_with("StringUtil")>
+
+		<#assign x = methodValue?last_index_of("(")>
+		<#assign y = methodValue?last_index_of(")")>
+
+		<#assign parameterValues  = methodValue?substring(x + 1, y)>
+
+		<#assign methodType = methodValue?substring(z + 1, x)>
+
+		${variableContext}.put("${varName}", StringUtil.${methodType}(
+
+		<#list parameterValues?split(",") as parameter>
+			<#assign result = parameter?replace("\"", "")>
+			<#assign trimResult = result?trim>
+			RuntimeVariables.evaluateVariable("${trimResult}", ${variableContext})
+			<#if parameter_has_next>
+				,
+			</#if>
+		</#list>
+
+		));
+
+	<#else>
+		${variableContext}.put("${varName}", RuntimeVariables.evaluateVariable(${selenium}.${methodCall}, ${variableContext}));
 	</#if>
 <#else>
 	${variableContext}.put("${varName}", RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(varValue)}", ${variableContext}));

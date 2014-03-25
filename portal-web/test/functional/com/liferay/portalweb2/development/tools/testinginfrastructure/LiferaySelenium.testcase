@@ -1,0 +1,13 @@
+<definition component-name="portal-tools">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="UsingMethods" priority="5">
+		<var name="url" method="selenium#getLocation()" />
+		<echo message="${url}" />
+
+		<var name="newURL" method='StringUtil#replace("${url}", "guest","hello")' />
+		<echo message="${newURL}" />
+	</command>
+</definition>

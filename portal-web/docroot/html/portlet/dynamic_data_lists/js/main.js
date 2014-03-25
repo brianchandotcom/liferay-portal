@@ -127,15 +127,15 @@ AUI.add(
 						var instance = this;
 
 						if (val) {
-								SpreadSheet.Util.getFileEntry(
-									val,
-									function(fileEntry) {
-										var url = SpreadSheet.Util.getFileEntryURL(fileEntry);
+							SpreadSheet.Util.getFileEntry(
+								val,
+								function(fileEntry) {
+									var url = SpreadSheet.Util.getFileEntryURL(fileEntry);
 
-										instance._syncFileLabel(fileEntry.title, url);
-									}
-								);
-							}
+									instance._syncFileLabel(fileEntry.title, url);
+								}
+							);
+						}
 						else {
 							instance._syncFileLabel(STR_EMPTY, STR_EMPTY);
 

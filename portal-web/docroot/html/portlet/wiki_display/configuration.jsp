@@ -66,7 +66,7 @@ boolean nodeInGroup = false;
 
 		<c:choose>
 			<c:when test="<%= nodeInGroup %>">
-				<div class="<portlet:namespace/>page-selector-container">
+				<div class="page-selector-container">
 					<aui:select label="page" name="preferences--title--">
 
 						<%
@@ -89,13 +89,13 @@ boolean nodeInGroup = false;
 
 				<aui:script use="aui-base">
 					var nodeSelector = A.one('#<portlet:namespace/>nodeId');
-					var nodeId = nodeSelector.get('value');
-					var pageSelectorContainer = A.one('.<portlet:namespace/>page-selector-container');
+					var nodeId = nodeSelector.val();
+					var pageSelectorContainer = A.one('.page-selector-container');
 
 					nodeSelector.on(
 						'change',
 						function() {
-							pageSelectorContainer.toggle(nodeSelector.get('value') === nodeId);
+							pageSelectorContainer.toggle(nodeSelector.val() === nodeId);
 						}
 					);
 				</aui:script>

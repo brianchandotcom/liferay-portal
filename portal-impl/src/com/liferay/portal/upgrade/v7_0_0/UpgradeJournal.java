@@ -94,6 +94,10 @@ public class UpgradeJournal extends UpgradeProcess {
 
 		String xsd = structureElementRootElement.asXML();
 
+		if (existsDDMStructure(groupId, name) > 0) {
+			return name;
+		}
+
 		long ddmStructureId = addDDMStructure(
 			increment(), groupId, companyId, name, localizedName,
 			localizedDescription, xsd);
@@ -368,6 +372,40 @@ public class UpgradeJournal extends UpgradeProcess {
 				JournalArticleTable.TABLE_COLUMNS,
 				JournalArticleTable.TABLE_SQL_CREATE,
 				JournalArticleTable.TABLE_SQL_ADD_INDEXES);
+		}
+	}
+
+	protected int existsDDMStructure(long groupId, String name)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select count(*) from DDMStructure where groupId = ? and " +
+				"classNameId = ? and structureKey = ?");
+
+			ps.setLong(1, groupId);
+			ps.setLong(
+				2, PortalUtil.getClassNameId(JournalArticle.class.getName()));
+			ps.setString(3, name);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				int count = rs.getInt(1);
+
+				return count;
+			}
+
+			return 0;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

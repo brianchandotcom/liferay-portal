@@ -190,6 +190,13 @@
 
 		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_DEFINE_PERMISSIONS" value1="Define Permissions" />
 
+		<if>
+			<condition action="CPRolesDefinepermissions#isElementPresent" locator-key1="INFO_MESSAGE" />
+			<then>
+				<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="INFO_MESSAGE" value1="This role does not have any permissions." />
+			</then>
+		</if>
+
 		<execute action="CPRolesDefinepermissions#type" locator-key1="SEARCH_FIELD" value1="${permissionNavigationValue}" />
 		<execute action="CPRolesDefinepermissions#assertClick" locator-key1="${permissionNavigationKey}" value1="${permissionNavigationValue}" />
 

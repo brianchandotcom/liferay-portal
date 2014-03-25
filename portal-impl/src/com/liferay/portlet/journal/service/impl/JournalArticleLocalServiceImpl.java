@@ -6423,6 +6423,10 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		String articleContent = StringPool.BLANK;
+		String articleDiffs = StringPool.BLANK;
+
+		JournalArticle previousApprovedArticle = getPreviousApprovedArticle(
+			article);
 
 		try {
 			String xmlRequest = PortletRequestUtil.toXML(
@@ -6435,6 +6439,12 @@ public class JournalArticleLocalServiceImpl
 				xmlRequest, serviceContext.getThemeDisplay());
 
 			articleContent = articleDisplay.getContent();
+
+			articleDiffs = JournalUtil.diffHtml(
+				article.getGroupId(), article.getArticleId(),
+				previousApprovedArticle.getVersion(), article.getVersion(),
+				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
+				xmlRequest, serviceContext.getThemeDisplay());
 		}
 		catch (Exception e) {
 		}
@@ -6450,6 +6460,8 @@ public class JournalArticleLocalServiceImpl
 			article.getVersion());
 		subscriptionSender.setContextAttribute(
 			"[$ARTICLE_CONTENT$]", articleContent, false);
+		subscriptionSender.setContextAttribute(
+			"[$ARTICLE_DIFFS$]", replaceStyles(articleDiffs), false);
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setEntryTitle(articleTitle);
 		subscriptionSender.setEntryURL(articleURL);

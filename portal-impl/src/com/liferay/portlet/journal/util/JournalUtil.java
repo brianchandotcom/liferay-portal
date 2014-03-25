@@ -876,6 +876,12 @@ public class JournalUtil {
 			"[$ARTICLE_CONTENT]",
 			LanguageUtil.get(themeDisplay.getLocale(), "the-web-content"));
 		definitionTerms.put(
+			"[$ARTICLE_DIFFS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-web-content-compared-with-the-previous-version-web-" +
+					"content"));
+		definitionTerms.put(
 			"[$ARTICLE_ID$]",
 			LanguageUtil.get(themeDisplay.getLocale(), "the-web-content-id"));
 		definitionTerms.put(

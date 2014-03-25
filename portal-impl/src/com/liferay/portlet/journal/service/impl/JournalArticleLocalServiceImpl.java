@@ -19,6 +19,7 @@ import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -134,6 +135,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -2970,6 +2972,31 @@ public class JournalArticleLocalServiceImpl
 
 		return journalArticleFinder.countByG_F(
 			groupId, folderIds, queryDefinition);
+	}
+
+	@Override
+	public JournalArticle getPreviousApprovedArticle(JournalArticle article)
+		throws PortalException, SystemException {
+
+		List<JournalArticle> approvedArticles =
+			journalArticlePersistence.findByG_A_ST(
+				article.getGroupId(), article.getArticleId(),
+				WorkflowConstants.STATUS_APPROVED, 0, 2);
+
+		if (approvedArticles.isEmpty() ||
+			((approvedArticles.size() == 1) &&
+			 (article.getStatus() == WorkflowConstants.STATUS_APPROVED))) {
+
+			return article;
+		}
+
+		JournalArticle previousApprovedArticle = approvedArticles.get(0);
+
+		if (article.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			previousApprovedArticle = approvedArticles.get(1);
+		}
+
+		return previousApprovedArticle;
 	}
 
 	/**
@@ -6397,6 +6424,33 @@ public class JournalArticleLocalServiceImpl
 				preferences);
 		}
 
+		String articleContent = StringPool.BLANK;
+		String articleDiffs = StringPool.BLANK;
+
+		JournalArticle previousApprovedArticle = getPreviousApprovedArticle(
+			article);
+
+		try {
+			String xmlRequest = PortletRequestUtil.toXML(
+				serviceContext.getLiferayPortletRequest(),
+				serviceContext.getLiferayPortletResponse());
+
+			JournalArticleDisplay articleDisplay = getArticleDisplay(
+				article, null, Constants.VIEW,
+				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()), 1,
+				xmlRequest, serviceContext.getThemeDisplay());
+
+			articleContent = articleDisplay.getContent();
+
+			articleDiffs = JournalUtil.diffHtml(
+				article.getGroupId(), article.getArticleId(),
+				previousApprovedArticle.getVersion(), article.getVersion(),
+				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
+				xmlRequest, serviceContext.getThemeDisplay());
+		}
+		catch (Exception e) {
+		}
+
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setClassName(article.getModelClassName());
@@ -6406,6 +6460,11 @@ public class JournalArticleLocalServiceImpl
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
 			articleTitle, "[$ARTICLE_URL$]", articleURL, "[$ARTICLE_VERSION$]",
 			article.getVersion());
+		subscriptionSender.setContextAttribute(
+			"[$ARTICLE_CONTENT$]", articleContent, false);
+		subscriptionSender.setContextAttribute(
+			"[$ARTICLE_DIFFS$]", DiffHtmlUtil.replaceStyles(articleDiffs),
+			false);
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setEntryTitle(articleTitle);
 		subscriptionSender.setEntryURL(articleURL);
@@ -6641,26 +6700,15 @@ public class JournalArticleLocalServiceImpl
 	protected void updatePreviousApprovedArticle(JournalArticle article)
 		throws PortalException, SystemException {
 
-		List<JournalArticle> approvedArticles =
-			journalArticlePersistence.findByG_A_ST(
-				article.getGroupId(), article.getArticleId(),
-				WorkflowConstants.STATUS_APPROVED, 0, 2);
+		JournalArticle previousApprovedArticle = getPreviousApprovedArticle(
+			article);
 
-		if (approvedArticles.isEmpty() ||
-			((approvedArticles.size() == 1) &&
-			 (article.getStatus() == WorkflowConstants.STATUS_APPROVED))) {
-
+		if (previousApprovedArticle.getVersion() == article.getVersion()) {
 			assetEntryLocalService.updateVisible(
 				JournalArticle.class.getName(), article.getResourcePrimKey(),
 				false);
 		}
 		else {
-			JournalArticle previousApprovedArticle = approvedArticles.get(0);
-
-			if (article.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-				previousApprovedArticle = approvedArticles.get(1);
-			}
-
 			Date[] dateInterval = getDateInterval(
 				previousApprovedArticle.getGroupId(),
 				previousApprovedArticle.getArticleId(),

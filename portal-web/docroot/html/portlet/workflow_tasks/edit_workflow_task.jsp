@@ -55,6 +55,8 @@ if ((workflowTask.getAssigneeUserId() == user.getUserId()) && !workflowTask.isCo
 
 PortletURL editPortletURL = workflowHandler.getURLEdit(classPK, liferayPortletRequest, liferayPortletResponse);
 
+PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, liferayPortletRequest, liferayPortletResponse);
+
 String viewFullContentURLString = null;
 
 if (assetRenderer.isPreviewInContext()) {
@@ -194,6 +196,20 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 						<liferay-ui:icon-list>
 							<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
 								<liferay-ui:icon image="view" message="view[action]" method="get" target='<%= assetRenderer.isPreviewInContext() ? "_blank" : StringPool.BLANK %>' url="<%= viewFullContentURLString %>" />
+
+								<c:if test="<%= viewDiffsPortletURL != null %>">
+
+									<%
+									viewDiffsPortletURL.setParameter("redirect", currentURL);
+									viewDiffsPortletURL.setParameter("hideControls", Boolean.TRUE.toString());
+									viewDiffsPortletURL.setWindowState(LiferayWindowState.POP_UP);
+									viewDiffsPortletURL.setPortletMode(PortletMode.VIEW);
+
+									String taglibViewDiffsURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "viewDiffs', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(pageContext, "diffs")) + "', uri:'" + HtmlUtil.escapeJS(viewDiffsPortletURL.toString()) + "'});";
+									%>
+
+									<liferay-ui:icon image="pages" message="diffs" url="<%= taglibViewDiffsURL %>" />
+								</c:if>
 							</c:if>
 
 							<c:if test="<%= editPortletURL != null %>">

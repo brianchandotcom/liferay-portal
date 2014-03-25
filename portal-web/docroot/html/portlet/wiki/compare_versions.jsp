@@ -18,6 +18,7 @@
 
 <%
 String backURL = ParamUtil.getString(request, "backURL");
+boolean hideControls = ParamUtil.getBoolean(request, "hideControls");
 
 long nodeId = (Long)request.getAttribute(WebKeys.WIKI_NODE_ID);
 String title = (String)request.getAttribute(WebKeys.TITLE);
@@ -27,18 +28,20 @@ double sourceVersion = (Double)request.getAttribute(WebKeys.SOURCE_VERSION);
 double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 %>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
+<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
+	<liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
 
-<liferay-util:include page="/html/portlet/wiki/page_tabs.jsp">
-	<liferay-util:param name="tabs1" value="history" />
-</liferay-util:include>
+	<liferay-util:include page="/html/portlet/wiki/page_tabs.jsp">
+		<liferay-util:param name="tabs1" value="history" />
+	</liferay-util:include>
 
-<liferay-util:include page="/html/portlet/wiki/page_tabs_history.jsp" />
+	<liferay-util:include page="/html/portlet/wiki/page_tabs_history.jsp" />
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title="compare-versions"
-/>
+	<liferay-ui:header
+		backURL="<%= backURL %>"
+		title="compare-versions"
+	/>
+</c:if>
 
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/wiki/compare_versions" />
@@ -49,6 +52,7 @@ double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 <liferay-ui:diff-version-comparator
 	diffHtmlResults="<%= diffHtmlResults %>"
 	diffVersionsInfo="<%= WikiUtil.getDiffVersionsInfo(nodeId, title, sourceVersion, targetVersion, pageContext) %>"
+	hideControls="<%= hideControls %>"
 	portletURL="<%= portletURL %>"
 	sourceVersion="<%= sourceVersion %>"
 	targetVersion="<%= targetVersion %>"

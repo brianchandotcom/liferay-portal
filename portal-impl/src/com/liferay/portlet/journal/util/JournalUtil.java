@@ -848,6 +848,9 @@ public class JournalUtil {
 			new LinkedHashMap<String, String>();
 
 		definitionTerms.put(
+			"[$ARTICLE_CONTENT]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-web-content"));
+		definitionTerms.put(
 			"[$ARTICLE_ID$]",
 			LanguageUtil.get(themeDisplay.getLocale(), "the-web-content-id"));
 		definitionTerms.put(

@@ -134,6 +134,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -6397,6 +6398,23 @@ public class JournalArticleLocalServiceImpl
 				preferences);
 		}
 
+		String articleContent = StringPool.BLANK;
+
+		try {
+			String xmlRequest = PortletRequestUtil.toXML(
+				serviceContext.getLiferayPortletRequest(),
+				serviceContext.getLiferayPortletResponse());
+
+			JournalArticleDisplay articleDisplay = getArticleDisplay(
+				article, null, Constants.VIEW,
+				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()), 1,
+				xmlRequest, serviceContext.getThemeDisplay());
+
+			articleContent = articleDisplay.getContent();
+		}
+		catch (Exception e) {
+		}
+
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setClassName(article.getModelClassName());
@@ -6406,6 +6424,8 @@ public class JournalArticleLocalServiceImpl
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
 			articleTitle, "[$ARTICLE_URL$]", articleURL, "[$ARTICLE_VERSION$]",
 			article.getVersion());
+		subscriptionSender.setContextAttribute(
+			"[$ARTICLE_CONTENT$]", articleContent, false);
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setEntryTitle(articleTitle);
 		subscriptionSender.setEntryURL(articleURL);

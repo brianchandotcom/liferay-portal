@@ -1373,9 +1373,11 @@
 		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_ME" value1="Me" />
 
 		<execute macro="SOActivities#viewMicroblogsRepostActivityEntry">
+			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 			<var name="microblogsEntryRepostAuthorFirstName" value="${userFirstName}" />
+			<var name="microblogsEntryRepostAuthorName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsRepost">
@@ -1400,6 +1402,7 @@
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+			<var name="microblogsEntryRepostAuthorFirstName" value="${userFirstName}" />
 			<var name="microblogsEntryRepostAuthorName" value="${userName}" />
 			<var name="profileScreenName" value="${userScreenName}" />
 		</execute>

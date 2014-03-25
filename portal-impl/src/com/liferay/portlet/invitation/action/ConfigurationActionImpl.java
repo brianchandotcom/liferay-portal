@@ -16,16 +16,40 @@ package com.liferay.portlet.invitation.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
+
+	@Override
+	public void postProcessPortletPreferences(
+			long companyId, PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		String languageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailMessageBody_" + languageId,
+			ContentUtil.get(PropsValues.INVITATION_EMAIL_MESSAGE_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailMessageSubject_" + languageId,
+			ContentUtil.get(PropsValues.INVITATION_EMAIL_MESSAGE_SUBJECT));
+	}
 
 	@Override
 	public void processAction(

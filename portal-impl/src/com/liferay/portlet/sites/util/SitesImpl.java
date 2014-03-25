@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.sites.util;
 
+import com.liferay.portal.RequiredLayoutException;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -511,6 +512,15 @@ public class SitesImpl implements Sites {
 				PropsKeys.LAYOUT_CONFIGURATION_ACTION_DELETE,
 				layoutSettings.getConfigurationActionDelete(), request,
 				response);
+		}
+
+		if (group.isGuest() && !layout.isPrivateLayout() &&
+			layout.isRootLayout() &&
+			(LayoutLocalServiceUtil.getLayoutsCount(
+				group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) == 1)) {
+
+			throw new RequiredLayoutException(
+				RequiredLayoutException.AT_LEAST_ONE);
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

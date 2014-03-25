@@ -35,7 +35,6 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import java.io.BufferedReader;
@@ -48,6 +47,7 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
+import org.sikuli.api.robot.Key;
 import org.sikuli.script.Match;
 import org.sikuli.script.Screen;
 
@@ -775,9 +775,7 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		Screen screen = new Screen();
-
-		Match match = screen.exists(
+		Match match = _screen.exists(
 			liferaySelenium.getProjectDirName() +
 			liferaySelenium.getSikuliImagesDirName() + image);
 
@@ -787,7 +785,7 @@ public class LiferaySeleniumHelper {
 			return;
 		}
 
-		screen.click(
+		_screen.click(
 			liferaySelenium.getProjectDirName() +
 			liferaySelenium.getSikuliImagesDirName() + image);
 	}
@@ -796,9 +794,7 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
 
-		Screen screen = new Screen();
-
-		Match match = screen.exists(
+		Match match = _screen.exists(
 			liferaySelenium.getProjectDirName() +
 			liferaySelenium.getSikuliImagesDirName() + image);
 
@@ -808,11 +804,11 @@ public class LiferaySeleniumHelper {
 			return;
 		}
 
-		screen.click(
+		_screen.click(
 			liferaySelenium.getProjectDirName() +
 			liferaySelenium.getSikuliImagesDirName() + image);
 
-		screen.type(value);
+		_screen.type(value);
 	}
 
 	public static void sikuliUploadCommonFile(
@@ -824,10 +820,7 @@ public class LiferaySeleniumHelper {
 			liferaySelenium.getProjectDirName() +
 				liferaySelenium.getDependenciesDirName() + value);
 
-		Robot robot = new Robot();
-
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
+		_screen.type(Key.ENTER);
 	}
 
 	public static void sikuliUploadTempFile(
@@ -844,10 +837,7 @@ public class LiferaySeleniumHelper {
 			liferaySelenium, image,
 			liferaySelenium.getOutputDirName() + slash + value);
 
-		Robot robot = new Robot();
-
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
+		_screen.type(Key.ENTER);
 	}
 
 	public static void typeAceEditor(
@@ -1211,6 +1201,7 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	private static Screen _screen = new Screen();
 	private static int _screenshotCount = 0;
 
 }

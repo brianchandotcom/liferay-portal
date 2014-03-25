@@ -73,31 +73,6 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
-### Web Content Articles Now Require a Structure and Template
-- **Date:** 2014-Mar-18
-- **JIRA Ticket:** LPS-45107
-
-#### What changed?
-Web content is now required to use a structure and template. A default structure
-and template named *Basic Web Content* was added to the global scope, and can be
-modified or deleted.
-
-#### Who is affected?
-Applications that were using the Journal API to create web content without a
-structure or template.
-
-#### How should I update my code?
-You should always use a structure and template when creating web content. You
-can still use the *Basic Web Content* from the global scope (using the
-structure key `basic-web-content`), but you should keep in mind that users can
-modify or delete it.
-
-#### Why was this change made?
-This change gives users the flexibility to modify the default structure and
-template.
-
----------------------------------------
-
 ### Merged Configured Email Signature Field into the Body of Email Messages from Message Boards and Wiki
 - **Date:** 2014-Feb-28
 - **JIRA Ticket:** LPS-44599
@@ -178,5 +153,30 @@ The removed methods didn't work properly and would never work properly, since
 they didn't have all the information they required. Since we expected the
 methods were rarely used, we thought it better to remove them without
 deprecation than to leave them as buggy methods in the API.
+
+---------------------------------------
+
+### Web Content Articles Now Require a Structure and Template
+- **Date:** 2014-Mar-18
+- **JIRA Ticket:** LPS-45107
+
+#### What changed?
+Web content is now required to use a structure and template. A default structure
+and template named *Basic Web Content* was added to the global scope, and can be
+modified or deleted.
+
+#### Who is affected?
+Applications that use the Journal API to create web content without a structure
+or template are affected.
+
+#### How should I update my code?
+You should always use a structure and template when creating web content. You
+can still use the *Basic Web Content* from the global scope (using the
+structure key `basic-web-content`), but you should keep in mind that users can
+modify or delete it.
+
+#### Why was this change made?
+This change gives users the flexibility to modify the default structure and
+template.
 
 ---------------------------------------

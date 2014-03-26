@@ -3636,7 +3636,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 			else {
 				localizedBodyMap = LocalizationUtil.getLocalizationMap(
-					companyPortletPreferences, "adminEmailPasswordResetBody",
+					companyPortletPreferences, "adminEmailPasswordSentBody",
 					PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY);
 			}
 		}

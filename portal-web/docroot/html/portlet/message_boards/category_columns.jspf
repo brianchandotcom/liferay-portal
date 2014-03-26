@@ -28,9 +28,9 @@
 	buffer.append("</span>");
 
 	if (Validator.isNotNull(curCategory.getDescription())) {
-		buffer.append("<div class=\"category-description\">");
+		buffer.append("<span class=\"category-description\">");
 		buffer.append(curCategory.getDescription());
-		buffer.append("</div>");
+		buffer.append("</span>");
 	}
 
 	buffer.append("</a>");

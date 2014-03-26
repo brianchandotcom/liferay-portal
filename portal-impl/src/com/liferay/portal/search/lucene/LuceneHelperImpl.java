@@ -752,7 +752,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 	public void shutdown(long companyId) {
 		IndexAccessor indexAccessor = getIndexAccessor(companyId);
 
-		_indexAccessors.remove(indexAccessor);
+		_indexAccessors.remove(companyId);
 
 		indexAccessor.close();
 	}

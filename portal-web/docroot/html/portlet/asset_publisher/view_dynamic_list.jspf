@@ -148,15 +148,9 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 	}
 	else {
 		for (long classNameId : assetPublisherDisplayContext.getClassNameIds()) {
-			long[] oldGroupClassNameIds = assetEntryQuery.getClassNameIds();
+			assetEntryQuery.setClassNameIds(new long[] {classNameId});
 
-			long[] groupClassNameIds = {classNameId};
-
-			assetEntryQuery.setClassNameIds(groupClassNameIds);
-
-			String groupClassName = PortalUtil.getClassName(classNameId);
-
-			AssetRendererFactory groupAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(groupClassName);
+			AssetRendererFactory groupAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));
 
 			int groupTotal = 0;
 
@@ -218,7 +212,6 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 					}
 				}
 
-				assetEntryQuery.setClassNameIds(oldGroupClassNameIds);
 				assetEntryQuery.setEnd(QueryUtil.ALL_POS);
 				assetEntryQuery.setStart(QueryUtil.ALL_POS);
 			}

@@ -238,47 +238,49 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 		permissionNavigationSearch.on(
 			'results',
-			function(event) {
-				permissionNavigationItems.each(
-					function(item, index, collection) {
-						item.ancestor().addClass('hide');
-					}
-				);
-
-				AArray.each(
-					event.results,
-					function(item, index, collection) {
-						item.raw.node.removeClass('hide');
-					}
-				);
-
-				var foundVisibleSection;
-
-				permissionNavigationSectionsNode.each(
-					function(item, index, collection) {
-						var action = 'addClass';
-
-						var visibleItem = item.one('.permission-navigation-item-container:not(.hide)');
-
-						if (visibleItem) {
-							action = 'removeClass';
-
-							foundVisibleSection = true;
+			A.debounce(
+				function(event) {
+					permissionNavigationItems.each(
+						function(item, index, collection) {
+							item.ancestor().addClass('hide');
 						}
+					);
 
-						item[action]('hide');
+					AArray.each(
+						event.results,
+						function(item, index, collection) {
+							item.raw.node.removeClass('hide');
+						}
+					);
+
+					var foundVisibleSection;
+
+					permissionNavigationSectionsNode.each(
+						function(item, index, collection) {
+							var action = 'addClass';
+
+							var visibleItem = item.one('.permission-navigation-item-container:not(.hide)');
+
+							if (visibleItem) {
+								action = 'removeClass';
+
+								foundVisibleSection = true;
+							}
+
+							item[action]('hide');
+						}
+					);
+
+					var noResultsNode = getNoResultsNode();
+
+					if (foundVisibleSection) {
+						noResultsNode.remove();
 					}
-				);
-
-				var noResultsNode = getNoResultsNode();
-
-				if (foundVisibleSection) {
-					noResultsNode.remove();
-				}
-				else {
-					permissionNavigationDataContainer.appendChild(noResultsNode);
-				}
-			}
+					else {
+						permissionNavigationDataContainer.appendChild(noResultsNode);
+					}
+				},
+			400)
 		);
 	}
 

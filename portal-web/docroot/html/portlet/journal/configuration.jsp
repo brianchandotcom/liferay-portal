@@ -25,7 +25,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 <liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
@@ -135,51 +135,3 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		<aui:button type="submit" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveConfiguration() {
-		<portlet:namespace />saveEmails();
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	function <portlet:namespace />saveEmails() {
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailArticleAddedBody--'].value = window['<portlet:namespace />emailArticleAdded'].getHTML();
-		}
-		catch (e) {
-		}
-
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailArticleReviewBody--'].value = window['<portlet:namespace />emailArticleReview'].getHTML();
-		}
-		catch (e) {
-		}
-
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailArticleUpdatedBody--'].value = window['<portlet:namespace />emailArticleUpdated'].getHTML();
-		}
-		catch (e) {
-		}
-
-		<c:if test="<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, JournalArticle.class.getName()) %>">
-			try {
-				document.<portlet:namespace />fm['<portlet:namespace />preferences--emailArticleApprovalDeniedBody--'].value = window['<portlet:namespace />emailArticleApprovalDenied'].getHTML();
-			}
-			catch (e) {
-			}
-
-			try {
-				document.<portlet:namespace />fm['<portlet:namespace />preferences--emailArticleApprovalGrantedBody--'].value = window['<portlet:namespace />emailArticleApprovalGranted'].getHTML();
-			}
-			catch (e) {
-			}
-
-			try {
-				document.<portlet:namespace />fm['<portlet:namespace />preferences--emailArticleApprovalRequestedBody--'].value = window['<portlet:namespace />emailArticleApprovalRequested'].getHTML();
-			}
-			catch (e) {
-			}
-		</c:if>
-	}
-</aui:script>

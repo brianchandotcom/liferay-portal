@@ -66,36 +66,37 @@ boolean nodeInGroup = false;
 
 		<c:choose>
 			<c:when test="<%= nodeInGroup %>">
-				<div class="page-selector-container">
+				<div class="<portlet:namespace />pageSelectorContainer">
 					<aui:select label="page" name="preferences--title--">
 
 						<%
-							int total = WikiPageLocalServiceUtil.getPagesCount(nodeId, true);
+						int total = WikiPageLocalServiceUtil.getPagesCount(nodeId, true);
 
-							List pages = WikiPageLocalServiceUtil.getPages(nodeId, true, 0, total);
+						List pages = WikiPageLocalServiceUtil.getPages(nodeId, true, 0, total);
 
-							for (int i = 0; i < pages.size(); i++) {
-								WikiPage wikiPage = (WikiPage)pages.get(i);
+						for (int i = 0; i < pages.size(); i++) {
+							WikiPage wikiPage = (WikiPage)pages.get(i);
 						%>
 
 								<aui:option label="<%= wikiPage.getTitle() %>" selected="<%= wikiPage.getTitle().equals(title) || (Validator.isNull(title) && wikiPage.getTitle().equals(WikiPageConstants.FRONT_PAGE)) %>" />
 
 						<%
-							}
+						}
 						%>
 
 					</aui:select>
 				</div>
 
 				<aui:script use="aui-base">
-					var nodeSelector = A.one('#<portlet:namespace/>nodeId');
-					var nodeId = nodeSelector.val();
-					var pageSelectorContainer = A.one('.page-selector-container');
+					var nodeIdSelect = A.one('#<portlet:namespace/>nodeId');
+					var pageSelectorContainer = A.one('#<portlet:namespace />pageSelectorContainer');
 
-					nodeSelector.on(
+					var nodeIdValue = nodeIdSelect.val();
+
+					nodeIdSelect.on(
 						'change',
 						function() {
-							pageSelectorContainer.toggle(nodeSelector.val() === nodeId);
+							pageSelectorContainer.toggle(nodeIdSelect.val() === nodeIdValue);
 						}
 					);
 				</aui:script>

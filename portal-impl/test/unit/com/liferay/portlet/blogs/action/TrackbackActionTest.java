@@ -59,9 +59,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author André de Oliveira
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest( {
-	ActionUtil.class
-})
+@PrepareForTest({ActionUtil.class})
 public class TrackbackActionTest extends PowerMockito {
 
 	@Before
@@ -104,19 +102,15 @@ public class TrackbackActionTest extends PowerMockito {
 		assertError("Trackback requires a valid permanent URL.");
 	}
 
-	@Test
+	@Test(expected = NoSuchEntryException.class)
 	public void testNoSuchEntryException() throws Exception {
 		whenGetEntryThenThrow(new NoSuchEntryException());
 
 		initValidUrl();
 
-		try {
-			addTrackback();
+		addTrackback();
 
-			Assert.fail();
-		}
-		catch (NoSuchEntryException nsee) {
-		}
+		Assert.fail();
 	}
 
 	@Test

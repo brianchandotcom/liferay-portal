@@ -43,9 +43,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author André de Oliveira
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest( {
-	MBMessageLocalServiceUtil.class
-})
+@PrepareForTest({MBMessageLocalServiceUtil.class})
 public class TrackbackCommentsImplTest extends PowerMockito {
 
 	@Before

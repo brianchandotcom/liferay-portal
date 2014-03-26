@@ -290,18 +290,18 @@
 		}
 	}
 
-	.category-title {
+	.category-description, .category-title {
 		display: block;
-
-		@include ellipsis;
-
-		font-weight: bold;
 	}
 
 	.category-description {
-		display: block;
-
 		@include hyphenation;
+	}
+
+	.category-title {
+		@include ellipsis;
+
+		font-weight: bold;
 	}
 
 	.subcategories {

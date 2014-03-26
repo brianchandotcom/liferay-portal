@@ -311,7 +311,11 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="SOContactsCenter#unfollowUser" />
+		<execute macro="SOContactsCenter#unfollowUser">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+		</execute>
 	</command>
 
 	<command name="EditContact" priority="4">
@@ -663,9 +667,9 @@
 		</execute>
 
 		<execute macro="SOContactsCenter#followUser">
-			<var name="adminEmailAddress" value="${adminEmailAddress}" />
-			<var name="adminListName" value="${adminListName}" />
-			<var name="adminName" value="${adminName}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="SOContactsCenter#viewFollowing">

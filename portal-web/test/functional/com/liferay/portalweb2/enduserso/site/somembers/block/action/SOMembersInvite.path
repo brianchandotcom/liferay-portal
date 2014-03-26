@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>FIND_MEMBERS_USER</td>
-	<td>//div[contains(@class, 'user')]/span</td>
+	<td>//div[contains(@class, 'user') and contains(.,'${key_userName}')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,7 +52,7 @@
 <!--MEMBERS_INVITE-->
 <tr>
 	<td>MEMBERS_INVITE_LIST</td>
-	<td>//div[@class='user-invited']/div/div</td>
+	<td>//div[@class='user-invited']/div/div[contains(.,'${key_userName}')]</td>
 	<td></td>
 </tr>
 <tr>

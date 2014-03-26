@@ -22,6 +22,8 @@
 	</command>
 
 	<command name="inviteMember">
+		<var name="key_userName" value="${userName}" />
+
 		<execute action="SOMembers#assertClick" locator-key1="INVITE_BUTTON" value1="Invite members to this site." />
 
 		<execute action="SOMembersInvite#type" locator-key1="FIND_MEMBERS_SEARCH_FIELD" value1="${userName}" />
@@ -100,6 +102,8 @@
 				<execute action="SOSiteHome#assertElementPresent" locator-key1="EVENTS_DISPLAY_OPTIONS" />
 				<execute action="SOSiteHome#click" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
 
+				<var name="key_userEmailAddress" value="${userEmailAddress}" />
+
 				<execute action="SOMembers#type" locator-key1="MEMBERS_LIST_SEARCH" value1="${userEmailAddress}" />
 				<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
 				<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
@@ -171,6 +175,8 @@
 	</command>
 
 	<command name="viewMember">
+		<var name="key_userEmailAddress" value="${userEmailAddress}" />
+
 		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LINK_ALL" value1="View all 2 users." />
 		<execute action="SOMembers#type" locator-key1="MEMBERS_LIST_SEARCH" value1="${userEmailAddress}" />
 		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />

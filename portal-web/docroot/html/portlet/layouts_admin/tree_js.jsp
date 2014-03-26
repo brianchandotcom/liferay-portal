@@ -411,7 +411,11 @@ if (!selectableTree) {
 					data: A.mix(
 						data,
 						{
-							p_auth: Liferay.authToken
+							controlPanelCategory: 'current_site.pages',
+							doAsGroupId: themeDisplay.getScopeGroupId(),
+							p_auth: Liferay.authToken,
+							p_l_id: themeDisplay.getPlid(),
+							p_p_id: '88'
 						}
 					)
 				}

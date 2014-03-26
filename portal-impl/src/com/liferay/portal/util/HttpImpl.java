@@ -1056,6 +1056,56 @@ public class HttpImpl implements Http {
 	}
 
 	@Override
+	public String shortenURL(String url, int count) {
+		if (count == 0) {
+			return null;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		String[] params = url.split(StringPool.AMPERSAND);
+
+		for (int i = 0; i < params.length; i++) {
+			String param = params[i];
+
+			if (param.contains("_backURL=") || param.contains("_redirect=") ||
+				param.contains("_returnToFullPageURL=")) {
+
+				int pos = param.indexOf(StringPool.EQUAL);
+
+				String qName = param.substring(0, pos);
+
+				String redirect = param.substring(pos + 1);
+
+				redirect = decodeURL(redirect);
+
+				String newURL = shortenURL(redirect, count - 1);
+
+				if (newURL != null) {
+					newURL = encodeURL(newURL);
+
+					sb.append(qName);
+					sb.append(StringPool.EQUAL);
+					sb.append(newURL);
+
+					if (i < (params.length - 1)) {
+						sb.append(StringPool.AMPERSAND);
+					}
+				}
+			}
+			else {
+				sb.append(param);
+
+				if (i < (params.length - 1)) {
+					sb.append(StringPool.AMPERSAND);
+				}
+			}
+		}
+
+		return sb.toString();
+	}
+
+	@Override
 	public byte[] URLtoByteArray(Http.Options options) throws IOException {
 		return URLtoByteArray(
 			options.getLocation(), options.getMethod(), options.getHeaders(),

@@ -291,7 +291,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 						@include respond-to(phone, tablet) {
 							margin: 5px 0 3px 5px;
-							padding: 12px;
+							padding: 12px 10px;
 						}
 					}
 				}

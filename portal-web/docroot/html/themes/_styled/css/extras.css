@@ -100,19 +100,31 @@
 	}
 }
 
-.dockbar .navbar-inner .nav-add-controls > li > ul.dropdown-menu {
-	@include box-shadow(none);
-}
+.dockbar .navbar-inner {
+	.container .nav-collapse > .nav {
+		@include respond-to(phone, tablet) {
+			&.nav-account-controls .info-link-container .info-link {
+				@include border-radius(3px);
+			}
+		}
 
-.dockbar-split .dockbar .navbar-inner .container .nav-collapse > .nav {
-	> li > a {
-		@include text-shadow(none);
+		> li {
+			> a, .info-button > a {
+				@include text-shadow(none);
 
-		@include respond-to(phone) {
-			@include border-radius(4px);
+				@include respond-to(phone) {
+					@include border-radius(4px);
+				}
+			}
 		}
 	}
 
+	.nav-add-controls > li > ul.dropdown-menu {
+		@include box-shadow(none);
+	}
+}
+
+.dockbar-split .dockbar .navbar-inner .container .nav-collapse > .nav {
 	&.nav-add-controls {
 		> li {
 			a {

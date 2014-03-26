@@ -166,7 +166,7 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 			</c:if>
 		</div>
 
-		<aui:nav-item cssClass="info-link-container">
+		<aui:nav-item cssClass='<%= "info-link-container" + (dockbarMessagesHidden ? StringPool.BLANK : " open") %>'>
 			<div class="info-button">
 				<a class="info-link" href="javascript:;">
 					<i class="icon-info"></i>
@@ -177,7 +177,9 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 		</aui:nav-item>
 
 		<aui:script use="aui-base, liferay-store">
-			A.one('.info-link-container').on(
+			var infoLinkContainer = A.one('.info-link-container');
+
+			infoLinkContainer.on(
 				'click',
 				function(event) {
 					event.preventDefault();
@@ -186,7 +188,11 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 
 					var infoItems = navAccountControls.one('.info-items');
 
-					navAccountControls.one('.info-items').toggleClass('hide');
+					if (infoItems) {
+						infoItems.toggleClass('hide');
+
+						infoLinkContainer.toggleClass('open');
+					}
 
 					Liferay.Store('dockbarMessagesHidden', infoItems.hasClass('hide'));
 				}

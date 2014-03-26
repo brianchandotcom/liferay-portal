@@ -35,6 +35,10 @@
 		word-wrap: break-word;
 	}
 
+	span.alert {
+		display: inline-block;
+	}
+
 	.table {
 		font-size: 15px;
 		overflow: hidden;

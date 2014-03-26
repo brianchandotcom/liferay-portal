@@ -303,7 +303,7 @@
 	vertical-align: middle;
 }
 
-code.lfr-url-error {
+.aui .lfr-url-error {
 	display: inline-block;
 	white-space: normal;
 

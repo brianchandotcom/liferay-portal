@@ -90,6 +90,50 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 		_dataSource = dataSource;
 	}
 
+	protected void cacheSessionFactory(
+		DataSource dataSource, SessionFactory sessionFactory) {
+
+		_sessionFactories.put(dataSource, sessionFactory);
+	}
+
+	protected SessionFactory createSessionFactory(DataSource dataSource) {
+		String servletContextName =
+			PortletClassLoaderUtil.getServletContextName();
+
+		ClassLoader classLoader = getSessionFactoryClassLoader();
+
+		PortletClassLoaderUtil.setServletContextName(
+			ClassLoaderPool.getContextName(classLoader));
+
+		try {
+			PortletHibernateConfiguration portletHibernateConfiguration =
+				new PortletHibernateConfiguration();
+
+			portletHibernateConfiguration.setDataSource(dataSource);
+
+			SessionFactory sessionFactory;
+
+			try {
+				sessionFactory =
+					portletHibernateConfiguration.buildSessionFactory();
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				return null;
+			}
+
+			return sessionFactory;
+		}
+		finally {
+			PortletClassLoaderUtil.setServletContextName(servletContextName);
+		}
+	}
+
+	protected SessionFactory getCachedSessionFactory(DataSource dataSource) {
+		return _sessionFactories.get(dataSource);
+	}
+
 	protected DataSource getDataSource() {
 		ShardDataSourceTargetSource shardDataSourceTargetSource =
 			(ShardDataSourceTargetSource)
@@ -114,43 +158,19 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 		DataSource dataSource = shardDataSourceTargetSource.getDataSource();
 
-		SessionFactory sessionFactory = _sessionFactories.get(dataSource);
+		SessionFactory sessionFactory = getCachedSessionFactory(dataSource);
 
 		if (sessionFactory != null) {
 			return sessionFactory;
 		}
 
-		String servletContextName =
-			PortletClassLoaderUtil.getServletContextName();
+		sessionFactory = createSessionFactory(dataSource);
 
-		ClassLoader classLoader = getSessionFactoryClassLoader();
-
-		PortletClassLoaderUtil.setServletContextName(
-			ClassLoaderPool.getContextName(classLoader));
-
-		try {
-			PortletHibernateConfiguration portletHibernateConfiguration =
-				new PortletHibernateConfiguration();
-
-			portletHibernateConfiguration.setDataSource(dataSource);
-
-			try {
-				sessionFactory =
-					portletHibernateConfiguration.buildSessionFactory();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-
-				return null;
-			}
-
-			_sessionFactories.put(dataSource, sessionFactory);
-
-			return sessionFactory;
+		if (sessionFactory != null) {
+			cacheSessionFactory(dataSource, sessionFactory);
 		}
-		finally {
-			PortletClassLoaderUtil.setServletContextName(servletContextName);
-		}
+
+		return sessionFactory;
 	}
 
 	@Override

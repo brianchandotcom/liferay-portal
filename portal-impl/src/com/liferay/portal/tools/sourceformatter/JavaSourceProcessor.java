@@ -2235,6 +2235,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return new Tuple(previousLine + line);
 		}
 
+		if (line.endsWith(StringPool.COMMA)) {
+			String strippedQuotesLine = stripQuotes(line, CharPool.QUOTE);
+
+			int openParenthesisCount = StringUtil.count(
+				strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
+			int closeParenthesisCount = StringUtil.count(
+				strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
+
+			if (closeParenthesisCount > openParenthesisCount) {
+				return new Tuple(previousLine + line);
+			}
+		}
+
 		if (((line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
 			  !line.startsWith("new ")) ||
 			 line.endsWith(StringPool.CLOSE_PARENTHESIS)) &&

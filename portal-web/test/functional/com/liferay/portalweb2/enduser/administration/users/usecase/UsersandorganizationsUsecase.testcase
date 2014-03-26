@@ -13,6 +13,25 @@
 		<execute macro="Organization#tearDownCP" />
 	</tear-down>
 
+	<command name="CannotViewSiteSettingsInUserPersonalSite" priority="4">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="siteScopeName" value="Test Test" />
+		</execute>
+
+		<execute action="Home#assertElementNotPresent" locator-key1="SITE_ADMINISTRATION_CONFIGURATION_SITE_SETTINGS" value1="Site Settings" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute action="Home#click" locator-key1="SCOPE_SELECTOR" />
+
+		<var name="key_siteScopeName" value="Test Test" />
+
+		<execute action="Home#click" locator-key1="SCOPE_SELECTOR_MENULIST_ITEM" />
+		<execute action="Home#assertElementNotPresent" locator-key1="SITE_ADMINISTRATION_CONFIGURATION_SITE_SETTINGS" value1="Site Settings" />
+	</command>
+
 	<command name="MultipleUsersandOrganizations" priority="4">
 		<var name="orgName" value="Organization Name 2" />
 		<var name="orgNameList" value="Suborganization Name 1,Suborganization Name 2,Suborganization Name 3,Suborganization Name 4" />

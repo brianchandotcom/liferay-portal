@@ -254,10 +254,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return new boolean[] {
 			exportPortletControlsMap.get(
 				PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
-			exportPortletControlsMap.get(
-				PortletDataHandlerKeys.PORTLET_DATA),
-			exportPortletControlsMap.get(
-				PortletDataHandlerKeys.PORTLET_SETUP),
+			exportPortletControlsMap.get(PortletDataHandlerKeys.PORTLET_DATA),
+			exportPortletControlsMap.get(PortletDataHandlerKeys.PORTLET_SETUP),
 			exportPortletControlsMap.get(
 				PortletDataHandlerKeys.PORTLET_USER_PREFERENCES),
 		};
@@ -422,10 +420,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return new boolean[] {
 			importPortletControlsMap.get(
 				PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
-			importPortletControlsMap.get(
-				PortletDataHandlerKeys.PORTLET_DATA),
-			importPortletControlsMap.get(
-				PortletDataHandlerKeys.PORTLET_SETUP),
+			importPortletControlsMap.get(PortletDataHandlerKeys.PORTLET_DATA),
+			importPortletControlsMap.get(PortletDataHandlerKeys.PORTLET_SETUP),
 			importPortletControlsMap.get(
 				PortletDataHandlerKeys.PORTLET_USER_PREFERENCES),
 		};

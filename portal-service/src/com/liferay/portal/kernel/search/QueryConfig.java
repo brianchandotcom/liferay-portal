@@ -74,16 +74,14 @@ public class QueryConfig implements Serializable {
 
 	public int getQueryIndexingThreshold() {
 		return GetterUtil.getInteger(
-			_attributes.get(
-				PropsKeys.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD),
-				_INDEX_SEARCH_QUERY_INDEXING_THRESHOLD);
+			_attributes.get(PropsKeys.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD),
+			_INDEX_SEARCH_QUERY_INDEXING_THRESHOLD);
 	}
 
 	public int getQuerySuggestionMax() {
 		return GetterUtil.getInteger(
-			_attributes.get(
-				PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_MAX),
-				_INDEX_SEARCH_QUERY_SUGGESTION_MAX);
+			_attributes.get(PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_MAX),
+			_INDEX_SEARCH_QUERY_SUGGESTION_MAX);
 	}
 
 	public int getQuerySuggestionScoresThreshold() {
@@ -117,9 +115,8 @@ public class QueryConfig implements Serializable {
 
 	public boolean isQueryIndexingEnabled() {
 		return GetterUtil.getBoolean(
-			_attributes.get(
-				PropsKeys.INDEX_SEARCH_QUERY_INDEXING_ENABLED),
-				_INDEX_SEARCH_QUERY_INDEXING_ENABLED);
+			_attributes.get(PropsKeys.INDEX_SEARCH_QUERY_INDEXING_ENABLED),
+			_INDEX_SEARCH_QUERY_INDEXING_ENABLED);
 	}
 
 	public boolean isQuerySuggestionEnabled() {
@@ -269,9 +266,7 @@ public class QueryConfig implements Serializable {
 
 	private static final int _INDEX_SEARCH_QUERY_INDEXING_THRESHOLD =
 		GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD),
-			50);
+			PropsUtil.get(PropsKeys.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD), 50);
 
 	private static final boolean _INDEX_SEARCH_QUERY_SUGGESTION_ENABLED =
 		GetterUtil.getBoolean(

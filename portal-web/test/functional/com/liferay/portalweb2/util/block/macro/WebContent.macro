@@ -388,13 +388,6 @@
 		<execute action="PGWebcontentdisplayEditwebcontentTranslation#type" locator-key1="TITLE_FIELD" value1="${webContentTranslationTitle}" />
 		<execute action="PGWebcontentdisplayEditwebcontentTranslation#type" locator-key1="CONTENT_FIELD" value1="${webContentTranslationContent}" />
 		<execute action="PGWebcontentdisplayEditwebcontentTranslation#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
-
-		<execute action="PGWebcontentdisplayEditwebcontentTranslation#selectFrame" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME" />
-		<execute action="PGWebcontentdisplayEditwebcontentTranslation#type" locator-key1="TITLE_FIELD" value1="${webContentTranslationTitle}" />
-		<execute action="PGWebcontentdisplayEditwebcontentTranslation#type" locator-key1="CONTENT_FIELD" value1="${webContentTranslationContent}" />
-		<execute action="PGWebcontentdisplayEditwebcontentTranslation#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
 		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />

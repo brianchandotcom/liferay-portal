@@ -57,13 +57,13 @@ public class LocaleUtilTest extends PowerMockito {
 			LocaleUtil.class.getName(), Level.WARNING);
 
 		Assert.assertEquals(Locale.US, LocaleUtil.fromLanguageId("en_US"));
-		Assert.assertEquals(0,  logRecords.size());
+		Assert.assertEquals(0, logRecords.size());
 
 		logRecords.clear();
 
 		LocaleUtil.fromLanguageId("en");
 
-		Assert.assertEquals(1,  logRecords.size());
+		Assert.assertEquals(1, logRecords.size());
 
 		LogRecord logRecord = logRecords.get(0);
 

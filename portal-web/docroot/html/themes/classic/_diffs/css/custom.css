@@ -82,6 +82,27 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* ---------- Dockbar ---------- */
 
+	.dockbar, .dockbar-split .dockbar {
+		@include respond-to(phone, tablet) {
+			.info-link-container {
+				&.open {
+					.info-button a {
+						background-color: #3EA9DB;
+					}
+				}
+
+				.info-link {
+					color: #FFF;
+					font-size: 26px;
+
+					&:focus, &:hover {
+						background-color: #5BBAE8;
+					}
+				}
+			}
+		}
+	}
+
 	.dockbar {
 		&.navbar {
 			.nav {
@@ -182,8 +203,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 				@include respond-to(phone, tablet) {
 					&.nav-account-controls li.info-link-container {
-						float: right;
-
 						&.open {
 							.info-link {
 								background-color: #3EA9DB;
@@ -291,6 +310,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 				background-color: #6DA4E4;
 				background-color: rgba(109, 168, 228, 0.9);
 				line-height: 20px;
+			}
+
+			.page-customization-bar-container {
+				top: -1px;
 			}
 
 			.staging-bar {

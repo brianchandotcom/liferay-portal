@@ -147,6 +147,10 @@ $editLayoutPanelWidth: 460px;
 							@include respond-to(phone, tablet) {
 								float: left;
 								position: static;
+
+								&.info-link-container {
+									float: right;
+								}
 							}
 
 							&.dropdown .dropdown-menu {
@@ -253,12 +257,12 @@ $editLayoutPanelWidth: 460px;
 						&.nav-account-controls {
 							float: right;
 							padding: 0 5px;
+							position: static;
 
 							@include respond-to(phone, tablet) {
 								float: left;
 								min-width: 0;
 								padding: 0;
-								position: static;
 
 								.dropdown-menu .nav-item-label {
 									display: inline;
@@ -439,6 +443,13 @@ $editLayoutPanelWidth: 460px;
 					padding: 4px 10px;
 				}
 			}
+		}
+
+		.page-customization-bar-container {
+			top: 0;
+			position: absolute;
+			right: 0;
+			width: 100%;
 		}
 
 		.staging-controls .staging-bar li.dropdown {
@@ -789,7 +800,7 @@ $editLayoutPanelWidth: 460px;
 			}
 
 			.page-customization-bar-container {
-				top: -1px;
+				top: 0;
 				position: absolute;
 				right: 100%;
 				width: 320px;
@@ -1116,7 +1127,6 @@ $editLayoutPanelWidth: 460px;
 
 	.info-button {
 		cursor: pointer;
-		display: inline-block;
 		position: relative;
 		right: $diamondSize;
 		z-index: 1;
@@ -1282,6 +1292,10 @@ $editLayoutPanelWidth: 460px;
 		}
 
 		.dockbar-split .dockbar {
+			.info-link-container.open .info-button a {
+				background-color: #FFF;
+			}
+
 			.navbar-inner .container .nav-collapse > .nav > li.info-items {
 				left: 0;
 				top: 100%;

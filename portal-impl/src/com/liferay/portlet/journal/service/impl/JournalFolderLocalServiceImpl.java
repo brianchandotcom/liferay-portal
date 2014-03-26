@@ -224,7 +224,7 @@ public class JournalFolderLocalServiceImpl
 		throws SystemException {
 
 		return journalFolderPersistence.fetchByG_P_N(
-				groupId, parentFolderId, name);
+			groupId, parentFolderId, name);
 	}
 
 	@Override
@@ -292,7 +292,7 @@ public class JournalFolderLocalServiceImpl
 		throws SystemException {
 
 		return journalFolderPersistence.findByG_P_S(
-				groupId, parentFolderId, status, start, end);
+			groupId, parentFolderId, status, start, end);
 	}
 
 	@Override

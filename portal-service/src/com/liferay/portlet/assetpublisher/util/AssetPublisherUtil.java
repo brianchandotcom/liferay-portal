@@ -335,7 +335,7 @@ public class AssetPublisherUtil {
 		String name, AssetEntryQueryProcessor assetQueryProcessor) {
 
 		getAssetPublisher().registerAssetQueryProcessor(
-				name, assetQueryProcessor);
+			name, assetQueryProcessor);
 	}
 
 	public static void removeAndStoreSelection(

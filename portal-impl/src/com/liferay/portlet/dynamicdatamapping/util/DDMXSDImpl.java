@@ -135,7 +135,7 @@ public class DDMXSDImpl implements DDMXSD {
 			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
 			String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(
-					fieldsDisplayField);
+				fieldsDisplayField);
 
 			Map<String, Object> parentFieldStructure =
 				(Map<String, Object>)freeMarkerContext.get(

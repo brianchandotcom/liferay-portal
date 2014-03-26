@@ -310,7 +310,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		bookmarksFolderLocalService.restoreFolderFromTrash(
-				getUserId(), folderId);
+			getUserId(), folderId);
 	}
 
 	@Override

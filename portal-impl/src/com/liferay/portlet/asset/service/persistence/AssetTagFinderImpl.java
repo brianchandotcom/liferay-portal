@@ -65,7 +65,7 @@ public class AssetTagFinderImpl
 		AssetTagFinder.class.getName() + ".findByG_N_P";
 
 	public static final String FIND_BY_G_N_S_E =
-			AssetTagFinder.class.getName() + ".findByG_N_S_E";
+		AssetTagFinder.class.getName() + ".findByG_N_S_E";
 
 	@Override
 	public int countByG_C_N(long groupId, long classNameId, String name)

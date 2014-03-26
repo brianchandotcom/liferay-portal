@@ -330,7 +330,7 @@ public class LayoutSetPrototypePropagationTest
 			ServiceTestUtil.randomString(), true);
 
 		LayoutTestUtil.updateLayoutTemplateId(
-				_prototypeLayout, initialLayoutTemplateId);
+			_prototypeLayout, initialLayoutTemplateId);
 
 		_initialPrototypeLayoutCount =
 			LayoutLocalServiceUtil.getLayoutsCount(

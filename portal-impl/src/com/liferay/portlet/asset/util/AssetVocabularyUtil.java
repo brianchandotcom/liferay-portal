@@ -59,7 +59,7 @@ public class AssetVocabularyUtil {
 					AssetVocabulary.class);
 
 				long companyId = GetterUtil.getLong(
-						document.get(Field.COMPANY_ID));
+					document.get(Field.COMPANY_ID));
 
 				indexer.delete(companyId, document.getUID());
 			}

@@ -3441,11 +3441,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String toName = user.getFullName();
 		String toAddress = emailAddress;
 
-		Company company = companyPersistence.findByPrimaryKey(
-			user.getCompanyId());
-
 		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(company.getCompanyId(), true);
+			PrefsPropsUtil.getPreferences(user.getCompanyId(), true);
 
 		Map<Locale, String> localizedSubjectMap =
 			LocalizationUtil.getLocalizationMap(companyPortletPreferences,
@@ -5864,7 +5861,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	protected void notifyUser(
 			User user, String password, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		if (!PrefsPropsUtil.getBoolean(
 				user.getCompanyId(),
@@ -5881,11 +5878,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String toName = user.getFullName();
 		String toAddress = user.getEmailAddress();
 
-		Company company = companyPersistence.findByPrimaryKey(
-			user.getCompanyId());
-
 		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(company.getCompanyId(), true);
+			PrefsPropsUtil.getPreferences(user.getCompanyId(), true);
 
 		Map<Locale, String> localizedSubjectMap =
 			LocalizationUtil.getLocalizationMap(companyPortletPreferences,

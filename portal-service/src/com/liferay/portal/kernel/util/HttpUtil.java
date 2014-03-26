@@ -270,6 +270,10 @@ public class HttpUtil {
 		return getHttp().setParameter(url, name, value);
 	}
 
+	public static String shortenURL(String url, int count) {
+		return getHttp().shortenURL(url, count);
+	}
+
 	public static byte[] URLtoByteArray(Http.Options options)
 		throws IOException {
 

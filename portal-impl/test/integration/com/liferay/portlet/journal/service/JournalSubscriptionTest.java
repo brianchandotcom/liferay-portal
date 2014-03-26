@@ -15,17 +15,23 @@
 package com.liferay.portlet.journal.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseSubscriptionTestCase;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -33,6 +39,7 @@ import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -74,11 +81,19 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 	protected long addBaseModelWithClassType(long containerId, long classTypeId)
 		throws Exception {
 
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+		serviceContext.setLayoutFullURL("http://layout_url");
+
+		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+			classTypeId);
+		DDMTemplate template = structure.getTemplates().get(0);
+
 		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
-			group.getGroupId(), containerId,
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-			"<title>Test Article</title>", _ddmStructure.getStructureKey(),
-			_ddmTemplate.getTemplateKey());
+			containerId, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			"<title>Test Article</title>", structure.getStructureKey(),
+			template.getTemplateKey(), LocaleUtil.getSiteDefault(), null,
+			serviceContext);
 
 		return article.getResourcePrimKey();
 	}
@@ -115,6 +130,23 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 
 		JournalFolderLocalServiceUtil.subscribe(
 			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected Long getDefaultClassTypeId() throws Exception {
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			group.getCompanyId());
+
+		DDMStructure defaultStructure =
+			DDMStructureLocalServiceUtil.getStructure(
+				company.getGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class),
+				"BASIC-WEB-CONTENT");
+
+		Assert.assertNotNull(defaultStructure);
+
+		return defaultStructure.getStructureId();
 	}
 
 	@Override

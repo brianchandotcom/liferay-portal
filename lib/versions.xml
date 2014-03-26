@@ -174,9 +174,9 @@
 	</library>
 	<library>
 		<file-name>lib/development/dumbster.jar</file-name>
-		<version>1.6</version>
+		<version>02856255a6cc7fae9648ea7d9f65cb8f30401c22</version>
 		<project-name>Dumbster</project-name>
-		<project-url>http://sourceforge.net/projects/dumbster</project-url>
+		<project-url>https://github.com/rjo1970/dumbster</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>

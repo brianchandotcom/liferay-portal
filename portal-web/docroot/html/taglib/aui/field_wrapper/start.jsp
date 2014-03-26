@@ -22,7 +22,7 @@ String fieldCss = AUIUtil.buildCss("field-wrapper", false, first, last, cssClass
 
 <div class="<%= controlGroupCss %> <%= fieldCss %>" <%= AUIUtil.buildData(data) %>>
 	<c:if test='<%= Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
-		<label <%= AUIUtil.buildLabel("wrapper", inlineField, showForLabel, name) %>>
+		<<%= showForLabel ? "label" : "span" %> <%= AUIUtil.buildLabel("wrapper", inlineField, showForLabel, name) %>>
 			<liferay-ui:message key="<%= label %>" />
 
 			<c:if test="<%= required %>">
@@ -32,5 +32,5 @@ String fieldCss = AUIUtil.buildCss("field-wrapper", false, first, last, cssClass
 			<c:if test="<%= Validator.isNotNull(helpMessage) %>">
 				<liferay-ui:icon-help message="<%= helpMessage %>" />
 			</c:if>
-		</label>
+		</<%= showForLabel ? "label" : "span" %>>
 	</c:if>

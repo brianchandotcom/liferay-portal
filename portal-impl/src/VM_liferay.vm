@@ -69,6 +69,14 @@ img, .png {
 #end
 #end
 
+#macro (quick_access $content_id)
+	#set ($quick_access_tag = $theme.getQuickAccessTag())
+
+	$quick_access_tag.setContentId($content_id)
+
+	$quick_access_tag.runTag()
+#end
+
 #macro (breadcrumbs $control_panel)
 	#set ($breadcrumb_tag = $theme.getBreadcrumbTag())
 

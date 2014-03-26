@@ -37,13 +37,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	#skip-to-content:focus {
-		clip: rect(auto auto auto auto);
-		margin-top: 35px;
-		right: 5px;
-		z-index: 200;
-	}
-
 	#sign-in {
 		background: url(@theme_image_path@/common/key.png) no-repeat 3px 50%;
 		font-weight: bold;

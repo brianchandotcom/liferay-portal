@@ -1075,7 +1075,8 @@ public class HttpImpl implements Http {
 			String param = params[i];
 
 			if (param.contains("_backURL=") || param.contains("_redirect=") ||
-				param.contains("_returnToFullPageURL=")) {
+				param.contains("_returnToFullPageURL=") ||
+				param.startsWith("redirect")) {
 
 				int pos = param.indexOf(StringPool.EQUAL);
 

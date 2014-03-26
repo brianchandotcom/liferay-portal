@@ -69,8 +69,8 @@ AUI.add(
 					_getEventOutside: function(event) {
 						var eventOutside = event._event.type;
 
-						if (eventOutside == 'MSPointerUp') {
-							eventOutside = 'mouseup';
+						if (eventOutside.toLowerCase().indexOf('pointerdown') !== -1) {
+							eventOutside = 'mousedown';
 						}
 
 						eventOutside = eventOutside + 'outside';

@@ -83,6 +83,11 @@ public class MailMessageListener extends BaseMessageListener {
 
 		mailMessage.setBulkAddresses(bulkAddresses);
 
+		InternetAddress[] replyTo = filterInternetAddresses(
+			mailMessage.getReplyTo());
+
+		mailMessage.setReplyTo(replyTo);
+
 		if (ArrayUtil.isNotEmpty(to) || ArrayUtil.isNotEmpty(cc) ||
 			ArrayUtil.isNotEmpty(bcc) || ArrayUtil.isNotEmpty(bulkAddresses)) {
 

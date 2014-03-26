@@ -118,7 +118,7 @@ public class ViewAction extends PortletAction {
 			InvitationUtil.getEmailMessageBodyMap(portletPreferences);
 
 		Locale locale = user.getLocale();
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String subject = localizedSubjectMap.get(locale);
 

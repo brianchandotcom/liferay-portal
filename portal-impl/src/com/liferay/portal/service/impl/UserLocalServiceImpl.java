@@ -3445,13 +3445,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			PrefsPropsUtil.getPreferences(user.getCompanyId(), true);
 
 		Map<Locale, String> localizedSubjectMap =
-			LocalizationUtil.getLocalizationMap(companyPortletPreferences,
-				"adminEmailVerificationSubject",
+			LocalizationUtil.getLocalizationMap(
+				companyPortletPreferences, "adminEmailVerificationSubject",
 				PropsKeys.ADMIN_EMAIL_VERIFICATION_SUBJECT);
 
 		Map<Locale, String> localizedBodyMap =
-			LocalizationUtil.getLocalizationMap(companyPortletPreferences,
-				"adminEmailVerificationBody",
+			LocalizationUtil.getLocalizationMap(
+				companyPortletPreferences, "adminEmailVerificationBody",
 				PropsKeys.ADMIN_EMAIL_VERIFICATION_BODY);
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
@@ -5882,8 +5882,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			PrefsPropsUtil.getPreferences(user.getCompanyId(), true);
 
 		Map<Locale, String> localizedSubjectMap =
-			LocalizationUtil.getLocalizationMap(companyPortletPreferences,
-				"adminEmailUserAddedSubject",
+			LocalizationUtil.getLocalizationMap(
+				companyPortletPreferences, "adminEmailUserAddedSubject",
 				PropsKeys.ADMIN_EMAIL_USER_ADDED_SUBJECT);
 
 		Map<Locale, String> localizedBodyMap = null;

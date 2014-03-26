@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -46,6 +47,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.Subscription;
+import com.liferay.portal.model.ThemeConstants;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -112,6 +114,8 @@ public class MBUtil {
 	public static final String BB_CODE_EDITOR_WYSIWYG_IMPL_KEY =
 		"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards." +
 			"edit_message.bb_code.jsp";
+
+	public static final String EMOTICONS = "/emoticons";
 
 	public static final String MESSAGE_POP_PORTLET_PREFIX = "mb_message.";
 
@@ -304,6 +308,13 @@ public class MBUtil {
 		sb.append(mbCategory.getName());
 
 		return sb.toString();
+	}
+
+	public static String getBBCodeHTML(String msgBody, String pathThemeImages) {
+		return StringUtil.replace(
+			BBCodeTranslatorUtil.getHTML(msgBody),
+			ThemeConstants.THEME_IMAGES_PATH + EMOTICONS,
+			pathThemeImages + EMOTICONS);
 	}
 
 	public static long getCategoryId(
@@ -932,7 +943,7 @@ public class MBUtil {
 		return StringUtil.replace(
 			messageBody,
 			new String[] {
-				"@theme_images_path@", "href=\"/", "src=\"/"
+				ThemeConstants.THEME_IMAGES_PATH, "href=\"/", "src=\"/"
 			},
 			new String[] {
 				themeDisplay.getPathThemeImages(),

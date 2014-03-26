@@ -23,5 +23,5 @@ Organization organization = (Organization)request.getAttribute(WebKeys.ORGANIZAT
 <c:if test="<%= Validator.isNotNull(organization.getComments()) %>">
 	<h3><liferay-ui:message key="comments" /></h3>
 
-	<%= HtmlUtil.escape(organization.getComments()) %>
+	<%= MBUtil.getBBCodeHTML(organization.getComments(), themeDisplay.getPathThemeImages()) %>
 </c:if>

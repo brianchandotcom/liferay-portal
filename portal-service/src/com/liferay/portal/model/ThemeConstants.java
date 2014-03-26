@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,20 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/message_boards/init.jsp" %>
+package com.liferay.portal.model;
 
-<%
-int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH);
+/**
+ * @author Roberto Díaz
+ */
+public class ThemeConstants {
 
-MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
+	public static final String THEME_IMAGES_PATH = "@theme_images_path@";
 
-String summary = StringUtil.shorten(message.getBody(), abstractLength);
-
-if (message.isFormatBBCode()) {
-	summary = MBUtil.getBBCodeHTML(summary, themeDisplay.getPathThemeImages());
 }
-%>
-
-<%= HtmlUtil.escape(summary) %>

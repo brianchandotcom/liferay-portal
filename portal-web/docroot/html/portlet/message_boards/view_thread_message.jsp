@@ -283,8 +283,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 				String msgBody = message.getBody();
 
 				if (message.isFormatBBCode()) {
-					msgBody = BBCodeTranslatorUtil.getHTML(msgBody);
-					msgBody = StringUtil.replace(msgBody, "@theme_images_path@/emoticons", themeDisplay.getPathThemeImages() + "/emoticons");
+					msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
 				}
 				%>
 

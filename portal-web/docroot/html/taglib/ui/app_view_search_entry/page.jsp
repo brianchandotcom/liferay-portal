@@ -125,6 +125,9 @@ summary.setQueryTerms(queryTerms);
 			if (Validator.isNull(summary.getContent())) {
 				summary.setContent(fileEntry.getTitle());
 			}
+
+			summary.setHighlight(highlightEnabled);
+			summary.setQueryTerms(queryTerms);
 		%>
 
 			<div class="entry-attachment">

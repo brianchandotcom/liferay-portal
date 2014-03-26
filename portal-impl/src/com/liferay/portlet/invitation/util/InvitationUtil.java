@@ -20,18 +20,15 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.util.ContentUtil;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;

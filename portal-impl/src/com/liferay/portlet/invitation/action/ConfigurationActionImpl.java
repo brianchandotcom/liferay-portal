@@ -15,9 +15,7 @@
 package com.liferay.portlet.invitation.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContentUtil;
 

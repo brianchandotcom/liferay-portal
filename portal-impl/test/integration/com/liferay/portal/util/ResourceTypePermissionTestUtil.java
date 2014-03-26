@@ -37,7 +37,7 @@ public class ResourceTypePermissionTestUtil {
 		throws Exception {
 
 		long resourceTypePermissionId = CounterLocalServiceUtil.increment(
-				ResourceTypePermission.class.getName());
+			ResourceTypePermission.class.getName());
 
 		ResourceTypePermission resourceTypePermission =
 			ResourceTypePermissionLocalServiceUtil.createResourceTypePermission(

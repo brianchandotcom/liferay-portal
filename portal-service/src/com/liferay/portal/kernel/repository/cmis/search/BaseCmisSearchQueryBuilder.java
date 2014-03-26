@@ -271,7 +271,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 				CMISJunction currentCMISJunction = cmisDisjunction;
 
 				BooleanClauseOccur booleanClauseOccur =
-						booleanClause.getBooleanClauseOccur();
+					booleanClause.getBooleanClauseOccur();
 
 				if (booleanClauseOccur.equals(BooleanClauseOccur.MUST)) {
 					currentCMISJunction = anyCMISConjunction;
@@ -316,7 +316,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 			String value = queryTerm.getValue();
 
 			value = CMISParameterValueUtil.formatParameterValue(
-					field, value, false, queryConfig);
+				field, value, false, queryConfig);
 
 			CMISContainsValueExpression cmisContainsValueExpression =
 				new CMISContainsValueExpression(value);

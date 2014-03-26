@@ -350,7 +350,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		throws Exception {
 
 		AssetCategoriesSummaryTag assetCategoriesSummaryTag =
-				new AssetCategoriesSummaryTag();
+			new AssetCategoriesSummaryTag();
 
 		setUp(assetCategoriesSummaryTag);
 

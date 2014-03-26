@@ -100,7 +100,7 @@ public class AssetTagFinderTest {
 				initialScopeGroupAssetTagsCount + 1, scopeGroupAssetTagsCount);
 
 			int siteGroupAssetTagsCount = AssetTagFinderUtil.filterCountByG_C_N(
-					siteGroup.getGroupId(), classNameId, assetTagName);
+				siteGroup.getGroupId(), classNameId, assetTagName);
 
 			Assert.assertEquals(
 				initialSiteGroupAssetTagsCount, siteGroupAssetTagsCount);

@@ -177,7 +177,7 @@ public class PortalInstances {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Company id from cookie " + cookieCompanyId +
-										" does not exist");
+									" does not exist");
 						}
 					}
 					else {

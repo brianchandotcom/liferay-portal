@@ -69,7 +69,7 @@ public class AssetCategoryUtil {
 
 			if (vocabularyId > 0) {
 				categoryIdsArray = filterCategoryIds(
-						vocabularyId, categoryIdsArray);
+					vocabularyId, categoryIdsArray);
 			}
 
 			categoryIds = StringPool.BLANK;

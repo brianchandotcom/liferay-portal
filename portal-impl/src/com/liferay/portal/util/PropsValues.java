@@ -842,7 +842,7 @@ public class PropsValues {
 
 	public static final boolean INDEX_WITH_THREAD = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INDEX_WITH_THREAD));
 
-	public static final String INVITATION_EMAIL_MESSAGE_BODY= PropsUtil.get(PropsKeys.INVITATION_EMAIL_MESSAGE_BODY);
+	public static final String INVITATION_EMAIL_MESSAGE_BODY = PropsUtil.get(PropsKeys.INVITATION_EMAIL_MESSAGE_BODY);
 
 	public static final String INVITATION_EMAIL_MESSAGE_SUBJECT = PropsUtil.get(PropsKeys.INVITATION_EMAIL_MESSAGE_SUBJECT);
 

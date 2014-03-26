@@ -129,7 +129,7 @@ public class ViewAction extends PortletAction {
 		String body = localizedBodyMap.get(locale);
 
 		if (Validator.isNull(body)) {
-			body = localizedSubjectMap.get(defaultLocale);
+			body = localizedBodyMap.get(defaultLocale);
 		}
 
 		subject = StringUtil.replace(

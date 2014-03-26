@@ -981,9 +981,9 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	public void quickAccess(String contentId) throws Exception {
 		QuickAccessTag quickAccessTag = new QuickAccessTag();
 
-		quickAccessTag.setContentId(contentId);
-
 		setUp(quickAccessTag);
+
+		quickAccessTag.setContentId(contentId);
 
 		quickAccessTag.runTag();
 	}

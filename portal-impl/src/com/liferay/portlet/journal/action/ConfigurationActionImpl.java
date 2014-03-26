@@ -57,22 +57,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_ADDED_SUBJECT));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
-			"emailArticleReviewBody_" + languageId,
-			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_REVIEW_BODY));
-		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleReviewSubject_" + languageId,
-			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_REVIEW_SUBJECT));
-		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleUpdatedBody_" + languageId,
-			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_UPDATED_BODY));
-		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleUpdatedSubject_" + languageId,
-			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_UPDATED_SUBJECT));
-		removeDefaultValue(
-			portletRequest, portletPreferences,
 			"emailArticleApprovalDeniedBody_" + languageId,
 			ContentUtil.get(
 				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_BODY));
@@ -101,6 +85,22 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			"emailArticleApprovalRequestedSubject_" + languageId,
 			ContentUtil.get(
 				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleReviewBody_" + languageId,
+			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_REVIEW_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleReviewSubject_" + languageId,
+			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_REVIEW_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleUpdatedBody_" + languageId,
+			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_UPDATED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailArticleUpdatedSubject_" + languageId,
+			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_UPDATED_SUBJECT));
 	}
 
 	@Override

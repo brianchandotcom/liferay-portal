@@ -26,7 +26,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddNewWebContentViaAddContentPanel" priority="5">
+	<command name="AddNewWebContentViaAddContentPanel" known-issues="LIFERAYQA-6795" priority="5">
 		<var name="assetType" value="Web Content Article" />
 		<var name="pageName" value="Web Content Page" />
 		<var name="webContentContent" value="WC WebContent Content" />

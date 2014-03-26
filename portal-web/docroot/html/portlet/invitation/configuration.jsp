@@ -18,17 +18,17 @@
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
 	<liferay-ui:error key="emailMessageBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailMessageSubject" message="please-enter-a-valid-subject" />
 
 	<liferay-ui:email-notification-settings
-		emailBody='<%= ParamUtil.getString(request, "emailMessageBody", InvitationUtil.getEmailMessageBody(portletPreferences)) %>'
+		emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailMessageBody", "preferences", ContentUtil.get(PropsValues.INVITATION_EMAIL_MESSAGE_BODY)) %>'
 		emailDefinitionTerms="<%= InvitationUtil.getEmailDefinitionTerms(renderRequest) %>"
 		emailParam="emailMessage"
-		emailSubject='<%= ParamUtil.getString(request, "emailMessageSubject", InvitationUtil.getEmailMessageSubject(portletPreferences)) %>'
+		emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailMessageSubject", "preferences", ContentUtil.get(PropsValues.INVITATION_EMAIL_MESSAGE_SUBJECT)) %>'
 		showEmailEnabled="<%= false %>"
 	/>
 
@@ -36,15 +36,3 @@
 		<aui:button type="submit" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveConfiguration() {
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailMessageBody--'].value = window['<portlet:namespace />emailMessage'].getHTML();
-		}
-		catch (e) {
-		}
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>

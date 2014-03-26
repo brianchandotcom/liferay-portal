@@ -15,12 +15,15 @@
 package com.liferay.portlet.invitation.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -28,28 +31,33 @@ import javax.portlet.PortletConfig;
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 	@Override
+	public void postProcessPortletPreferences(
+			long companyId, PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		String languageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailMessageBody_" + languageId,
+			ContentUtil.get(PropsValues.INVITATION_EMAIL_MESSAGE_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailMessageSubject_" + languageId,
+			ContentUtil.get(PropsValues.INVITATION_EMAIL_MESSAGE_SUBJECT));
+	}
+
+	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateEmailMessage(actionRequest);
+		validateEmail(actionRequest, "emailMessage", true);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	protected void validateEmailMessage(ActionRequest actionRequest) {
-		String emailMessageSubject = getParameter(
-			actionRequest, "emailMessageSubject");
-		String emailMessageBody = getParameter(
-			actionRequest, "emailMessageBody");
-
-		if (Validator.isNull(emailMessageSubject)) {
-			SessionErrors.add(actionRequest, "emailMessageSubject");
-		}
-		else if (Validator.isNull(emailMessageBody)) {
-			SessionErrors.add(actionRequest, "emailMessageBody");
-		}
 	}
 
 }

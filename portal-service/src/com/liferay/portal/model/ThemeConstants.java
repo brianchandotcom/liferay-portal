@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,19 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portal/init.jsp" %>
+package com.liferay.portal.model;
 
-<%
-String[][] emoticons = BBCodeTranslatorUtil.getEmoticons();
+/**
+ * @author Roberto Díaz
+ */
+public class ThemeConstants {
 
-for (int i = 0; i < emoticons.length; i++) {
-	String image = StringUtil.replace(emoticons[i][0], ThemeConstants.THEME_IMAGES_PATH, themeDisplay.getPathThemeImages());
-%>
+	public static final String THEME_IMAGES_PATH = "@theme_images_path@";
 
-	<a class="lfr-button emoticon" emoticonCode="<%= emoticons[i][1] %>"><%= image %></a>
-
-<%
 }
-%>

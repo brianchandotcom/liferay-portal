@@ -47,6 +47,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.Subscription;
+import com.liferay.portal.model.ThemeConstants;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -117,8 +118,6 @@ public class MBUtil {
 	public static final String EMOTICONS = "/emoticons";
 
 	public static final String MESSAGE_POP_PORTLET_PREFIX = "mb_message.";
-
-	public static final String THEME_IMAGES_PATH = "@theme_images_path@";
 
 	public static void addPortletBreadcrumbEntries(
 			long categoryId, HttpServletRequest request,
@@ -314,7 +313,8 @@ public class MBUtil {
 	public static String getBBCodeHTML(String msgBody, String pathThemeImages) {
 		return StringUtil.replace(
 			BBCodeTranslatorUtil.getHTML(msgBody),
-			THEME_IMAGES_PATH + EMOTICONS, pathThemeImages + EMOTICONS);
+			ThemeConstants.THEME_IMAGES_PATH + EMOTICONS,
+			pathThemeImages + EMOTICONS);
 	}
 
 	public static long getCategoryId(
@@ -942,7 +942,9 @@ public class MBUtil {
 
 		return StringUtil.replace(
 			messageBody,
-			new String[] {THEME_IMAGES_PATH, "href=\"/", "src=\"/"},
+			new String[] {
+				ThemeConstants.THEME_IMAGES_PATH, "href=\"/", "src=\"/"
+			},
 			new String[] {
 				themeDisplay.getPathThemeImages(),
 				"href=\"" + themeDisplay.getURLPortal() + "/",

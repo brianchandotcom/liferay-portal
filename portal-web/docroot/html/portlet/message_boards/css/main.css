@@ -291,12 +291,16 @@
 	}
 
 	.category-title {
+		display: block;
+
 		@include ellipsis;
 
 		font-weight: bold;
 	}
 
 	.category-description {
+		display: block;
+
 		@include hyphenation;
 	}
 

@@ -142,10 +142,19 @@
 
 	<command name="AddProfilePicture" priority="5">
 		<var name="imageFileName" value="Document_4.jpg" />
+		<var name="imageFileNameEdit" value="Document_3.jpg" />
 		<var name="userName" value="${userName}" />
 
 		<execute macro="MyAccount#addProfilePicture">
 			<var name="imageFileName" value="${imageFileName}" />
+		</execute>
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOProfile#viewProfilePicture" />
+
+		<execute macro="MyAccount#addProfilePicture">
+			<var name="imageFileName" value="${imageFileNameEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />

@@ -87,6 +87,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_TABLE_SUBJECT_4</td>
+	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[1]/a)[4]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_TABLE_AUTHOR_1</td>
 	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[2]/a)[1]</td>
 	<td></td>
@@ -128,6 +133,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_SUBJECT_4</td>
+	<td>xpath=(//div[@class='subject']/a)[4]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_WORKFLOW_STATUS_1</td>
 	<td>xpath=(//span[@class='taglib-workflow-status']/span/strong)[1]</td>
 	<td></td>
@@ -148,6 +158,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_BODY_4</td>
+	<td>xpath=(//div[@class='thread-body'])[4]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_USERNAME_1</td>
 	<td>xpath=(//span[@class='user-name'])[1]</td>
 	<td></td>
@@ -160,6 +175,46 @@
 <tr>
 	<td>MESSAGE_USERNAME_3</td>
 	<td>xpath=(//span[@class='user-name'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_USERNAME_4</td>
+	<td>xpath=(//span[@class='user-name'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_MARK_AS_AN_ANSWER_1</td>
+	<td>xpath=(//span[.='Mark as an Answer'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_MARK_AS_AN_ANSWER_2</td>
+	<td>xpath=(//span[.='Mark as an Answer'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_ANSWER_1</td>
+	<td>xpath=(//span[.='Answer'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_ANSWER_2</td>
+	<td>xpath=(//span[.='Answer'])[4]</td>
+	<td>Answer</td>
+</tr>
+<tr>
+	<td>MESSAGE_TAG_1</td>
+	<td>xpath=(//div[@class="tags"])[1]//span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_TAG_2</td>
+	<td>xpath=(//div[@class="tags"])[2]//span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_TAG_3</td>
+	<td>xpath=(//div[@class="tags"])[3]//span[contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -190,6 +245,41 @@
 <tr>
 	<td>MESSAGE_RATING_3</td>
 	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_RATING_4</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_RATING_1_UPVOTE</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'rating-thumb-up')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_RATING_1_DOWNVOTE</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'rating-thumb-down')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_RATING_2_UPVOTE</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'rating-thumb-up')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_RATING_2_DOWNVOTE</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'rating-thumb-down')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_RATING_3_UPVOTE</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'rating-thumb-up')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_RATING_3_DOWNVOTE</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'rating-thumb-down')])[3]</td>
 	<td></td>
 </tr>
 <tr>

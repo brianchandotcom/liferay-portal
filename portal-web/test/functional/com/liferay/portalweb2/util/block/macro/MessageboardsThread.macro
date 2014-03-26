@@ -69,8 +69,34 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${threadAddTag}" arg2="true" />
+			<then>
+				<execute macro="MessageboardsThread#addTagPG" />
+			</then>
+		</if>
+
 		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="addTagPG">
+		<execute action="PGMessageboardsPostthread#assertTextEquals" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
+		<execute action="PGMessageboardsPostthread#assertElementPresent" locator-key1="BODY_FIELD" />
+
+		<if>
+			<condition action="PGMessageboardsPostthread#isElementNotPresent" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />
+			<then>
+				<execute action="PGMessageboardsPostthread#assertClick" locator-key1="CATEGORIZATION_TOGGLE" value1="Categorization" />
+				<execute action="PGMessageboardsPostthread#assertElementPresent" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />
+			</then>
+		</if>
+
+		<var name="key_tagName" value="${tagName}" />
+
+		<execute action="PGMessageboardsPostthread#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+		<execute action="PGMessageboardsPostthread#assertElementPresent" locator-key1="CATEGORIZATION_TAG" value1="${tagName}" />
 	</command>
 
 	<command name="addWithWorkflowCP">
@@ -224,6 +250,21 @@
 		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 	</command>
 
+	<command name="markAsAnswerPG">
+		<if>
+			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_MARK_AS_AN_ANSWER_1" />
+			<then>
+				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_MARK_AS_AN_ANSWER_1" value1="Mark as an Answer" />
+				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_MARK_AS_AN_ANSWER_1" value1="Mark as an Answer" />
+			</then>
+			<else>
+				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_MARK_AS_AN_ANSWER_1" value1="Mark as an Answer" />
+			</else>
+		</if>
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_ANSWER_1" value1="Answer" />
+	</command>
+
 	<command name="movePG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
@@ -279,6 +320,36 @@
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
 	</command>
 
+	<command name="ratePG">
+		<if>
+			<equals arg1="${ratingType}" arg2="Positive" />
+			<then>
+				<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_RATING_1_UPVOTE" />
+			</then>
+			<elseif>
+				<equals arg1="${ratingType}" arg2="Negative" />
+				<then>
+					<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_RATING_1_DOWNVOTE" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
+	<command name="removeViewPermissionsPG">
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_MENULIST_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${entryTitle}" />
+		<execute action="Permissions#uncheck" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Permissions#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="replyCP">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
@@ -326,6 +397,13 @@
 		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<if>
+			<equals arg1="${markAsAnswer}" arg2="true" />
+			<then>
+				<execute macro="MessageboardsThread#markAsAnswerPG" />
+			</then>
+		</if>
 	</command>
 
 	<command name="restoreMBAttachmentCP">
@@ -521,6 +599,21 @@
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_MESSAGE_BOARDS_THREAD_BODY" value1="${threadBody}" />
 	</command>
 
+	<command name="viewRatingPG">
+		<if>
+			<equals arg1="${ratingType}" arg2="Positive" />
+			<then>
+				<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_1" value1="+1 (1 Vote)" />
+			</then>
+			<elseif>
+				<equals arg1="${ratingType}" arg2="Negative" />
+				<then>
+					<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_1" value1="-1 (1 Vote)" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
 	<command name="viewReplyCP">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
@@ -643,6 +736,33 @@
 
 		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="TOP_POSTERS_AUTHOR_NAME" value1="${userName}" />
 		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="TOP_POSTERS_AUTHOR_POSTS" value1="Posts: ${threadPostNumber}" />
+	</command>
+
+	<command name="viewTagPG">
+		<var name="key_tagName" value="${tagName?lowercase()}" />
+		<var name="tagName" value="${tagName?lowercase()}" />
+
+		<if>
+			<equals arg1="${messageTagNumber}" arg2="1" />
+			<then>
+				<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_TAG_1" value1="${tagName}" />
+			</then>
+			<elseif>
+				<equals arg1="${messageTagNumber}" arg2="2" />
+				<then>
+					<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_TAG_2" value1="${tagName}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${messageTagNumber}" arg2="3" />
+				<then>
+					<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_TAG_3" value1="${tagName}" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_TAG_1" value1="${tagName}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewWaitingForAnswerPG">

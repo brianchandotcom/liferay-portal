@@ -158,7 +158,6 @@
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
 		<execute action="Myaccount#selectFrame" locator-key1="UPLOAD_IMAGE_IFRAME" />
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
-		<execute action="Myaccount#assertElementNotPresent" value1="UPLOAD_IMAGE_IFRAME" />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />

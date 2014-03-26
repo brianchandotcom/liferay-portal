@@ -83,7 +83,7 @@ public class DeleteExportImportBackgroundTaskAction extends PortletAction {
 			backgroundTask.getTaskContextMap();
 
 		long exportImportConfigurationId = MapUtil.getLong(
-			taskContextMap, "exportImportConfigurationId", 0L);
+			taskContextMap, "exportImportConfigurationId");
 
 		if (exportImportConfigurationId > 0) {
 			ExportImportConfiguration exportImportConfiguration =

@@ -1,0 +1,38 @@
+<definition component-name="portal-sample-portlet-plugins">
+	<var name="pageName" value="Sample PHP Page" />
+	<var name="portletName" value="Sample PHP" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ViewSamplePHP" priority="4">
+		<property name="portlet.plugins.includes" value="sample-php-portlet" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute action="Home#assertConsoleTextNotPresent" value1="File &quot;/index.php&quot; not found" />
+	</command>
+</definition>

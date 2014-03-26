@@ -14,19 +14,6 @@
 
 package com.liferay.portlet.blogs.action;
 
-import static org.junit.Assert.assertEquals;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.same;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.support.membermodification.MemberMatcher.method;
-import static org.powermock.api.support.membermodification.MemberModifier.stub;
-
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -55,10 +42,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.stubbing.answers.CallsRealMethods;
 
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -72,7 +62,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 @PrepareForTest( {
 	ActionUtil.class
 })
-public class TrackbackActionTest {
+public class TrackbackActionTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
@@ -161,12 +151,13 @@ public class TrackbackActionTest {
 
 		assertSuccess();
 
-		verify(
+		Mockito.verify(
 			_trackback
 		).addTrackback(
-			same(_blogsEntry), same(_themeDisplay), eq("__excerpt__"),
-			eq("__url__"), eq("__blogName__"), eq("__title__"),
-			(Function<String, ServiceContext>)any()
+			Matchers.same(_blogsEntry), Matchers.same(_themeDisplay),
+			Matchers.eq("__excerpt__"), Matchers.eq("__url__"),
+			Matchers.eq("__blogName__"), Matchers.eq("__title__"),
+			(Function<String, ServiceContext>)Matchers.any()
 		);
 	}
 
@@ -201,7 +192,8 @@ public class TrackbackActionTest {
 	}
 
 	protected void assertResponseContent(String expected) throws Exception {
-		assertEquals(expected, _mockHttpServletResponse.getContentAsString());
+		Assert.assertEquals(
+			expected, _mockHttpServletResponse.getContentAsString());
 	}
 
 	protected void assertSuccess() throws Exception {
@@ -263,19 +255,19 @@ public class TrackbackActionTest {
 		Portal portal = mock(Portal.class);
 
 		when(
-			portal.getOriginalServletRequest((HttpServletRequest)any())
+			portal.getOriginalServletRequest((HttpServletRequest)Matchers.any())
 		).thenReturn(
 			_mockOriginalServletRequest
 		);
 
 		when(
-			portal.getHttpServletRequest((PortletRequest)any())
+			portal.getHttpServletRequest((PortletRequest)Matchers.any())
 		).thenReturn(
 			_mockHttpServletRequest
 		);
 
 		when(
-			portal.getHttpServletResponse((PortletResponse)any())
+			portal.getHttpServletResponse((PortletResponse)Matchers.any())
 		).thenReturn(
 			_mockHttpServletResponse
 		);

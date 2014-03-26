@@ -14,20 +14,6 @@
 
 package com.liferay.portlet.blogs.trackback;
 
-import static org.junit.Assert.assertEquals;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.support.membermodification.MemberMatcher.method;
-import static org.powermock.api.support.membermodification.MemberModifier.stub;
-
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
@@ -38,14 +24,18 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.stubbing.answers.CallsRealMethods;
 
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -56,7 +46,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PrepareForTest( {
 	MBMessageLocalServiceUtil.class
 })
-public class TrackbackCommentsImplTest {
+public class TrackbackCommentsImplTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
@@ -108,21 +98,23 @@ public class TrackbackCommentsImplTest {
 
 		// Verify
 
-		assertEquals(messageId, result);
+		Assert.assertEquals(messageId, result);
 
-		verify(
+		Mockito.verify(
 			_mbMessageLocalService
 		).getDiscussionMessageDisplay(
 			userId, groupId, className, classPK,
 			WorkflowConstants.STATUS_APPROVED
 		);
 
-		verify(
+		Mockito.verify(
 			_mbMessageLocalService
 		).addDiscussionMessage(
-			eq(userId), eq("__blogName__"), eq(groupId), eq(className),
-			eq(classPK), eq(threadId), eq(parentMessageId), eq("__title__"),
-			eq("__body__"), same(_mockServiceContext)
+			Matchers.eq(userId), Matchers.eq("__blogName__"),
+			Matchers.eq(groupId), Matchers.eq(className), Matchers.eq(classPK),
+			Matchers.eq(threadId), Matchers.eq(parentMessageId),
+			Matchers.eq("__title__"), Matchers.eq("__body__"),
+			Matchers.same(_mockServiceContext)
 		);
 	}
 
@@ -137,8 +129,9 @@ public class TrackbackCommentsImplTest {
 
 		when(
 			_mbMessageLocalService.getDiscussionMessageDisplay(
-				anyLong(), anyLong(), eq(BlogsEntry.class.getName()), anyLong(),
-				eq(WorkflowConstants.STATUS_APPROVED)
+				Matchers.anyLong(), Matchers.anyLong(),
+				Matchers.eq(BlogsEntry.class.getName()), Matchers.anyLong(),
+				Matchers.eq(WorkflowConstants.STATUS_APPROVED)
 			)
 		).thenReturn(
 			_mbMessageDisplay
@@ -146,9 +139,10 @@ public class TrackbackCommentsImplTest {
 
 		when(
 			_mbMessageLocalService.addDiscussionMessage(
-				anyLong(), anyString(), anyLong(), anyString(), anyLong(),
-				anyLong(), anyLong(), anyString(), anyString(),
-				(ServiceContext)any()
+				Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong(),
+				Matchers.anyString(), Matchers.anyLong(), Matchers.anyLong(),
+				Matchers.anyLong(), Matchers.anyString(), Matchers.anyString(),
+				(ServiceContext)Matchers.any()
 			)
 		).thenReturn(
 			_mbMessage

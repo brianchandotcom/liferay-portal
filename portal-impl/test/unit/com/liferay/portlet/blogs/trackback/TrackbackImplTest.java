@@ -14,21 +14,6 @@
 
 package com.liferay.portlet.blogs.trackback;
 
-import static org.junit.Assert.assertEquals;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.support.membermodification.MemberMatcher.method;
-import static org.powermock.api.support.membermodification.MemberModifier.replace;
-import static org.powermock.api.support.membermodification.MemberModifier.stub;
-
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
@@ -42,11 +27,14 @@ import com.liferay.portlet.blogs.util.LinkbackConsumerUtil;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.stubbing.answers.CallsRealMethods;
 
@@ -61,7 +49,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PrepareForTest( {
 	UserLocalServiceUtil.class, LinkbackConsumerUtil.class
 })
-public class TrackbackImplTest {
+public class TrackbackImplTest extends PowerMockito {
 
 	public static void addNewTrackback(
 		long messageId, String url, String entryUrl) {
@@ -89,7 +77,7 @@ public class TrackbackImplTest {
 		long userId = 42;
 
 		when(
-			_userLocalService.getDefaultUserId(anyLong())
+			_userLocalService.getDefaultUserId(Matchers.anyLong())
 		).thenReturn(
 			userId
 		);
@@ -130,9 +118,10 @@ public class TrackbackImplTest {
 
 		when(
 			_trackbackComments.addTrackbackComment(
-				anyLong(), anyLong(), anyString(), anyLong(), anyString(),
-				anyString(), anyString(),
-				(Function<String, ServiceContext>)any()
+				Matchers.anyLong(), Matchers.anyLong(), Matchers.anyString(),
+				Matchers.anyLong(), Matchers.anyString(), Matchers.anyString(),
+				Matchers.anyString(),
+				(Function<String, ServiceContext>)Matchers.any()
 			)
 		).thenReturn(
 			99999L
@@ -151,16 +140,18 @@ public class TrackbackImplTest {
 
 		String className = BlogsEntry.class.getName();
 
-		verify(
+		Mockito.verify(
 			_trackbackComments
 		).addTrackbackComment(
-			eq(userId), eq(groupId), eq(className), eq(classPK),
-			eq("__blogName__"), eq("__title__"),
-			eq("[...] __excerpt__ [...] [url=__url__]__read-more__[/url]"),
-			same(_serviceContextFunction)
+			Matchers.eq(userId), Matchers.eq(groupId), Matchers.eq(className),
+			Matchers.eq(classPK), Matchers.eq("__blogName__"),
+			Matchers.eq("__title__"),
+			Matchers.eq(
+				"[...] __excerpt__ [...] [url=__url__]__read-more__[/url]"),
+			Matchers.same(_serviceContextFunction)
 		);
 
-		assertEquals(
+		Assert.assertEquals(
 			"[99999, __url__, __LayoutFullURL__/-/blogs/__UrlTitle__]",
 			_linkback);
 	}

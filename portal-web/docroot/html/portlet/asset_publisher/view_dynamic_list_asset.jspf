@@ -18,10 +18,9 @@
 for (int assetEntryIndex = 0; assetEntryIndex < results.size(); assetEntryIndex++) {
 	AssetEntry assetEntry = (AssetEntry)results.get(assetEntryIndex);
 
-	String className = PortalUtil.getClassName(assetEntry.getClassNameId());
 	long classPK = assetEntry.getClassPK();
 
-	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetEntry.getClassNameId());
 
 	if (assetRendererFactory == null) {
 		continue;

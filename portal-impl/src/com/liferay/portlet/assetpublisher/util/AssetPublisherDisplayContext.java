@@ -157,8 +157,7 @@ public class AssetPublisherDisplayContext {
 
 			AssetRendererFactory assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						PortalUtil.getClassName(classNameIds[0]));
+					getAssetRendererFactoryByClassNameId(classNameIds[0]);
 
 			Tuple classTypeFieldName =
 				assetRendererFactory.getClassTypeFieldName(
@@ -865,8 +864,7 @@ public class AssetPublisherDisplayContext {
 
 				AssetRendererFactory assetRendererFactory =
 					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassName(
-							PortalUtil.getClassName(classNameIds[0]));
+						getAssetRendererFactoryByClassNameId(classNameIds[0]);
 
 				Tuple classTypeFieldName =
 					assetRendererFactory.getClassTypeFieldName(

@@ -12,20 +12,14 @@
 	<var name="siteDescription" value="Open Site Description" />
 	<var name="siteName" value="Open Site Name" />
 	<var name="siteType" value="Open" />
+	<var name="soPage" value="true" />
 	<var name="userEmailAddress" value="socialoffice01@liferay.com" />
-	<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
 	<var name="userFirstName" value="Social01" />
-	<var name="userFirstName2" value="Social02" />
 	<var name="userLastName" value="User01" />
-	<var name="userLastName2" value="User02" />
 	<var name="userListName" value="User01, Social01" />
-	<var name="userListName2" value="User02, Social02" />
 	<var name="userMiddleName" value="Office01" />
-	<var name="userMiddleName2" value="Office02" />
 	<var name="userName" value="Social01 Office01 User01" />
-	<var name="userName2" value="Social02 Office02 User02" />
 	<var name="userScreenName" value="socialoffice01" />
-	<var name="userScreenName2" value="socialoffice02" />
 
 	<set-up>
 		<execute macro="SOUser#firstLoginPG" />
@@ -47,8 +41,11 @@
 		</execute>
 	</set-up>
 
-	<command name="ConfirmMemberInviteSiteTest" priority="5">
-		<execute macro="SOSite#gotoPG" />
+	<command name="ConfirmMemberInviteSite" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="SOMembers#inviteMember">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -74,13 +71,19 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="SOMembers#viewMember" />
 	</command>
 
-	<command name="IgnoreMemberInviteSiteTest" priority="5">
-		<execute macro="SOSite#gotoPG" />
+	<command name="IgnoreMemberInviteSite" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="SOMembers#inviteMember">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -106,12 +109,15 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="SOMembers#viewNonMember" />
 	</command>
 
-	<command name="InviteConnectionSiteTest" priority="5">
+	<command name="InviteConnectionSite" priority="5">
 		<execute macro="SOContactsCenter#requestToConnect">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userListName" value="${userListName}" />
@@ -134,7 +140,10 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="SOMembers#inviteMember">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -158,7 +167,12 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
 		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LINK_ALL" value1="View all 2 users." />
 		<execute action="SOMembers#assertClick" locator-key1="MEMBERS_LINK_CONNECTIONS" value1="You have 1 connections in this site." />
@@ -169,7 +183,65 @@
 		<execute action="SOMembers#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
 	</command>
 
-	<command name="InviteMembersSiteRolesSiteTest" priority="5">
+	<command name="InviteFollowingSite" priority="4">
+		<execute macro="SOContactsCenter#followUser">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMember">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_userEmailAddress" value="${userEmailAddress}" />
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LINK_ALL" value1="View all 2 users." />
+		<execute action="SOMembers#assertClick" locator-key1="MEMBERS_LINK_FOLLOWING" value1="You are following 1 people in this site." />
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOMembers#click" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+	</command>
+
+	<command name="InviteMembersSiteRolesSite" priority="5">
+		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
+		<var name="userFirstName2" value="Social02" />
+		<var name="userLastName2" value="User02" />
+		<var name="userListName2" value="User02, Social02" />
+		<var name="userMiddleName2" value="Office02" />
+		<var name="userName2" value="Social02 Office02 User02" />
+		<var name="userScreenName2" value="socialoffice02" />
+
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
 			<var name="password" value="test" />
@@ -180,7 +252,10 @@
 			<var name="userScreenName" value="${userScreenName2}" />
 		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="SOMembers#inviteMember">
 			<var name="siteRoleInvite" value="Site Owner" />
@@ -191,7 +266,10 @@
 			<var name="userName" value="${userName}" />
 		</execute>
 
-		<execute macro="SOSite#gotoPG" />
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="SOMembers#inviteMember">
 			<var name="siteRoleInvite" value="Site Administrator" />
@@ -239,6 +317,304 @@
 			<var name="userName" value="${userName2}" />
 			<var name="userScreenName" value="${userScreenName2}" />
 		</execute>
+	</command>
+
+	<command name="ViewMembersSite" priority="4">
+		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
+		<var name="userEmailAddress3" value="socialoffice03@liferay.com" />
+		<var name="userEmailAddress4" value="socialoffice04@liferay.com" />
+		<var name="userFirstName2" value="Social02" />
+		<var name="userFirstName3" value="Social03" />
+		<var name="userFirstName4" value="Social04" />
+		<var name="userLastName2" value="User02" />
+		<var name="userLastName3" value="User03" />
+		<var name="userLastName4" value="User04" />
+		<var name="userListName2" value="User02, Social02" />
+		<var name="userListName3" value="User03, Social03" />
+		<var name="userListName4" value="User04, Social04" />
+		<var name="userMiddleName2" value="Office02" />
+		<var name="userMiddleName3" value="Office03" />
+		<var name="userMiddleName4" value="Office04" />
+		<var name="userName2" value="Social02 Office02 User02" />
+		<var name="userName3" value="Social03 Office03 User03" />
+		<var name="userName4" value="Social04 Office04 User04" />
+		<var name="userScreenName2" value="socialoffice02" />
+		<var name="userScreenName3" value="socialoffice03" />
+		<var name="userScreenName4" value="socialoffice04" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userMiddleName" value="${userMiddleName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userFirstName" value="${userFirstName3}" />
+			<var name="userLastName" value="${userLastName3}" />
+			<var name="userMiddleName" value="${userMiddleName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress4}" />
+			<var name="userFirstName" value="${userFirstName4}" />
+			<var name="userLastName" value="${userLastName4}" />
+			<var name="userMiddleName" value="${userMiddleName4}" />
+			<var name="userScreenName" value="${userScreenName4}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#requestToConnect">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#followUser">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userListName" value="${userListName2}" />
+			<var name="userName" value="${userName2}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#requestToConnect">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userListName" value="${userListName3}" />
+			<var name="userName" value="${userName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#followUser">
+			<var name="userEmailAddress" value="${userEmailAddress4}" />
+			<var name="userListName" value="${userListName4}" />
+			<var name="userName" value="${userName4}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#confirmRequestToConnect">
+			<var name="senderName" value="${adminName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
+			<var name="userLoginFullName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#confirmRequestToConnect">
+			<var name="senderName" value="${adminName}" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOMembers#assertClick" locator-key1="INVITE_BUTTON" value1="Invite members to this site." />
+
+		<var name="key_userName" value="${userName}" />
+
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="FIND_MEMBERS_USER" value1="${userName}" />
+		<execute action="SOMembersInvite#click" locator-key1="FIND_MEMBERS_USER" />
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="MEMBERS_INVITE_LIST" value1="${userName}${userEmailAddress}" />
+
+		<var name="key_userName" value="${userName2}" />
+
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="FIND_MEMBERS_USER" value1="${userName2}" />
+		<execute action="SOMembersInvite#click" locator-key1="FIND_MEMBERS_USER" />
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="MEMBERS_INVITE_LIST" value1="${userName2}${userEmailAddress2}" />
+
+		<var name="key_userName" value="${userName3}" />
+
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="FIND_MEMBERS_USER" value1="${userName3}" />
+		<execute action="SOMembersInvite#click" locator-key1="FIND_MEMBERS_USER" />
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="MEMBERS_INVITE_LIST" value1="${userName3}${userEmailAddress3}" />
+
+		<var name="key_userName" value="${userName4}" />
+
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="FIND_MEMBERS_USER" value1="${userName4}" />
+		<execute action="SOMembersInvite#click" locator-key1="FIND_MEMBERS_USER" />
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="MEMBERS_INVITE_LIST" value1="${userName4}${userEmailAddress4}" />
+		<execute action="SOMembersInvite#assertClick" locator-key1="SEND_INVITATIONS_BUTTON" value1="Send Invitations"  />
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully."  />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
+			<var name="userLoginFullName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOMembers#ignoreMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress4}" />
+			<var name="userLoginFullName" value="${userName4}" />
+		</execute>
+
+		<execute macro="SOMembers#ignoreMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LINK_ALL" value1="View all 3 users." />
+		<execute action="SOMembers#assertClick" locator-key1="MEMBERS_LINK_CONNECTIONS" value1="You have 1 connections in this site." />
+
+		<var name="key_userEmailAddress" value="${userEmailAddress}" />
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOMembers#assertClick" locator-key1="MEMBERS_LINK_FOLLOWING" value1="You are following 1 people in this site." />
+
+		<var name="key_userEmailAddress" value="${userEmailAddress2}" />
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName2}, ${userFirstName2}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress2}" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
+			<var name="userLoginFullName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOUserBar#joinSOSite">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress4}" />
+			<var name="userLoginFullName" value="${userName4}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOSite#joinSitePG">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LINK_ALL" value1="View all 5 users." />
+		<execute action="SOMembers#assertClick" locator-key1="MEMBERS_LINK_CONNECTIONS" value1="You have 2 connections in this site." />
+
+		<var name="key_userEmailAddress" value="${userEmailAddress}" />
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
+
+		<var name="key_userEmailAddress" value="${userEmailAddress3}" />
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName3}, ${userFirstName3}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress3}" />
+		<execute action="SOMembers#assertClick" locator-key1="MEMBERS_LINK_FOLLOWING" value1="You are following 2 people in this site." />
+
+		<var name="key_userEmailAddress" value="${userEmailAddress2}" />
+
+		<execute action="SOMembers#assertClick" locator-key1="MEMBERS_LINK_FOLLOWING" value1="You are following 2 people in this site." />
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName2}, ${userFirstName2}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress2}" />
+
+		<var name="key_userEmailAddress" value="${userEmailAddress4}" />
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName4}, ${userFirstName4}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress4}" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUserBar#leaveSOSite">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
+		</execute>
+
+		<execute macro="SOUserBar#leaveSOSite">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LINK_ALL" value1="View all 3 users." />
+		<execute action="SOMembers#assertClick" locator-key1="MEMBERS_LINK_CONNECTIONS" value1="You have 1 connections in this site." />
+
+		<var name="key_userEmailAddress" value="${userEmailAddress3}" />
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName3}, ${userFirstName3}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress3}" />
+		<execute action="SOMembers#assertClick" locator-key1="MEMBERS_LINK_FOLLOWING" value1="You are following 1 people in this site." />
+
+		<var name="key_userEmailAddress" value="${userEmailAddress4}" />
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName4}, ${userFirstName4}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress4}" />
 	</command>
 
 	<tear-down>

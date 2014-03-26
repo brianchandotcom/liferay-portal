@@ -195,9 +195,9 @@
 		</execute>
 
 		<execute macro="SOContactsCenter#unfollowUser">
-			<var name="adminEmailAddress" value="${adminEmailAddress}" />
-			<var name="userEmailAddress" value="${userEmailAddress2}" />
-			<var name="userName" value="${userName2}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />

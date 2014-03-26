@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -58,6 +59,12 @@ public class AssetRendererFactoryRegistryUtil {
 		String className) {
 
 		return _instance._getAssetRendererFactoryByClassName(className);
+	}
+
+	public static AssetRendererFactory getAssetRendererFactoryByClassNameId(
+		long classNameId) {
+
+		return _instance._getAssetRendererFactoryByClassNameId(classNameId);
 	}
 
 	public static AssetRendererFactory getAssetRendererFactoryByType(
@@ -161,6 +168,13 @@ public class AssetRendererFactoryRegistryUtil {
 		String className) {
 
 		return _assetRenderFactoriesMapByClassName.get(className);
+	}
+
+	private AssetRendererFactory _getAssetRendererFactoryByClassNameId(
+		long classNameId) {
+
+		return _getAssetRendererFactoryByClassName(
+			PortalUtil.getClassName(classNameId));
 	}
 
 	private AssetRendererFactory _getAssetRendererFactoryByType(String type) {

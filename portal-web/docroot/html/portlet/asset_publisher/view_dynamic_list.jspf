@@ -64,7 +64,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 			}
 
-			if (!results.isEmpty()) {
+			if (!results.isEmpty() && (start < groupTotal)) {
 				searchContainer.setResults(results);
 
 				request.setAttribute("view.jsp-results", results);
@@ -148,15 +148,9 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 	}
 	else {
 		for (long classNameId : assetPublisherDisplayContext.getClassNameIds()) {
-			long[] oldGroupClassNameIds = assetEntryQuery.getClassNameIds();
+			assetEntryQuery.setClassNameIds(new long[] {classNameId});
 
-			long[] groupClassNameIds = {classNameId};
-
-			assetEntryQuery.setClassNameIds(groupClassNameIds);
-
-			String groupClassName = PortalUtil.getClassName(classNameId);
-
-			AssetRendererFactory groupAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(groupClassName);
+			AssetRendererFactory groupAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
 
 			int groupTotal = 0;
 
@@ -184,7 +178,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 			request.setAttribute("view.jsp-results", results);
 
-			if (!results.isEmpty()) {
+			if (!results.isEmpty() && (start < groupTotal)) {
 %>
 
 				<h3 class="asset-entries-group-label"><%= ResourceActionsUtil.getModelResource(locale, groupAssetRendererFactory.getClassName()) %></h3>
@@ -218,7 +212,6 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 					}
 				}
 
-				assetEntryQuery.setClassNameIds(oldGroupClassNameIds);
 				assetEntryQuery.setEnd(QueryUtil.ALL_POS);
 				assetEntryQuery.setStart(QueryUtil.ALL_POS);
 			}

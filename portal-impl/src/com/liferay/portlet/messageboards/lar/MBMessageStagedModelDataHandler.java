@@ -316,7 +316,8 @@ public class MBMessageStagedModelDataHandler
 				}
 			}
 
-			importedMessage.setAnswer(message.getAnswer());
+			MBMessageLocalServiceUtil.updateAnswer(
+				importedMessage, message.isAnswer(), false);
 
 			if (importedMessage.isRoot() && !importedMessage.isDiscussion()) {
 				MBThreadLocalServiceUtil.updateQuestion(

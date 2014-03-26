@@ -148,9 +148,7 @@ public class JournalArticleAssetRenderer
 			String xmlRequest = null;
 			ThemeDisplay themeDisplay = null;
 
-			if (_article.isTemplateDriven() &&
-				(portletRequest != null) && (portletResponse != null)) {
-
+			if ((portletRequest != null) && (portletResponse != null)) {
 				xmlRequest = PortletRequestUtil.toXML(
 					portletRequest, portletResponse);
 				themeDisplay = (ThemeDisplay)portletRequest.getAttribute(

@@ -1,9 +1,3 @@
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-	fieldset {
-		min-width: 0;
-	}
-}
-
 .taglib-form-navigator {
 	ul.form-navigator.well {
 		float: right;

@@ -741,6 +741,7 @@
 			<equals arg1="${selectedAsset}" arg2="Document" />
 			<then>
 				<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
+
 				<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
 
 				<execute action="PGAssetpublisherConfiguration#assertSelectedLabel" locator-key1="SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAssetConfiguration}" />

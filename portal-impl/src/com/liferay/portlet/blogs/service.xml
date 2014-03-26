@@ -233,5 +233,6 @@
 		<exception>EntrySmallImageName</exception>
 		<exception>EntrySmallImageSize</exception>
 		<exception>EntryTitle</exception>
+		<exception>TrackbackValidation</exception>
 	</exceptions>
 </service-builder>

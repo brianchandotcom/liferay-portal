@@ -52,7 +52,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 		<liferay-ui:message key="an-unexpected-error-occurred--with-the-initial-staging-publication" />
 
 		<liferay-portlet:actionURL portletName="<%= PortletKeys.GROUP_PAGES %>" var="deleteBackgroundTaskURL">
-			<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
+			<portlet:param name="struts_action" value="/group_pages/delete_export_import_background_task" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="backgroundTaskId" value="<%= String.valueOf(lastCompletedInitialPublicationBackgroundTask.getBackgroundTaskId()) %>" />
 		</liferay-portlet:actionURL>

@@ -311,8 +311,7 @@ public class LayoutTypePortletImpl
 		List<Portlet> portlets = new ArrayList<Portlet>(portletIds.length);
 
 		for (String portletId : portletIds) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				getCompanyId(), portletId);
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
 			if (portlet != null) {
 				portlets.add(portlet);

@@ -108,7 +108,7 @@ public class BaseSourceProcessorTestCase {
 				File file = new File(_DIR_NAME + "/expected/" + fileName);
 
 				String expectedFormattedContent = FileUtils.readFileToString(
-					file, "UTF8");
+					file, StringPool.UTF8);
 
 				Assert.assertEquals(
 					expectedFormattedContent, actualFormattedContent);

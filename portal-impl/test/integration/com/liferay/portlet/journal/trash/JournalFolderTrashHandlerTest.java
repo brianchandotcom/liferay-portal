@@ -65,15 +65,6 @@ public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashGrandParentBaseModelAndRestoreParentModel()
-		throws Exception {
-
-		trashGrandParentBaseModelAndRestoreParentModel();
-	}
-
-	@Ignore()
-	@Override
-	@Test
 	public void testTrashMyBaseModel() throws Exception {
 	}
 
@@ -178,12 +169,22 @@ public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected BaseModel<?> getParentBaseModel(
-			Group group, ServiceContext serviceContext)
+			Group group, long parentBaseModelId, ServiceContext serviceContext)
 		throws Exception {
 
 		return JournalTestUtil.addFolder(
-			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			group.getGroupId(), parentBaseModelId,
 			ServiceTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH));
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
+			Group group, ServiceContext serviceContext)
+		throws Exception {
+
+		return getParentBaseModel(
+			group, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			serviceContext);
 	}
 
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.invitation.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.PropsValues;
@@ -31,10 +33,10 @@ import javax.portlet.PortletRequest;
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 	@Override
-	public void postProcessPortletPreferences(
+	public void postProcess(
 			long companyId, PortletRequest portletRequest,
 			PortletPreferences portletPreferences)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());

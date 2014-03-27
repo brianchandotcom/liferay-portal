@@ -16,6 +16,7 @@ package com.liferay.portal.tools.sourceformatter;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 
 import java.io.File;
@@ -109,6 +110,10 @@ public class BaseSourceProcessorTestCase {
 
 				String expectedFormattedContent = FileUtils.readFileToString(
 					file, StringPool.UTF8);
+
+				expectedFormattedContent = StringUtil.replace(
+					expectedFormattedContent, StringPool.RETURN_NEW_LINE,
+					StringPool.NEW_LINE);
 
 				Assert.assertEquals(
 					expectedFormattedContent, actualFormattedContent);

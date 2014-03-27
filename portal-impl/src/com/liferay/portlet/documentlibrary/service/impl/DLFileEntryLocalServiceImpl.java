@@ -1047,16 +1047,6 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public List<DLFileEntry> getFileEntries(
-			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
-			QueryDefinition queryDefinition)
-		throws Exception {
-
-		return dlFileEntryFinder.findByG_U_F_M(
-			groupId, userId, folderIds, mimeTypes, queryDefinition);
-	}
-
-	@Override
-	public List<DLFileEntry> getFileEntries(
 			long groupId, long userId, List<Long> folderIds,
 			List<Long> repositoryIds, String[] mimeTypes,
 			QueryDefinition queryDefinition)
@@ -1065,6 +1055,16 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryFinder.findByG_U_F_R_M(
 			groupId, userId, folderIds, repositoryIds, mimeTypes,
 			queryDefinition);
+	}
+
+	@Override
+	public List<DLFileEntry> getFileEntries(
+			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws Exception {
+
+		return dlFileEntryFinder.findByG_U_F_M(
+			groupId, userId, folderIds, mimeTypes, queryDefinition);
 	}
 
 	@Override
@@ -1110,16 +1110,6 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public int getFileEntriesCount(
-			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
-			QueryDefinition queryDefinition)
-		throws Exception {
-
-		return dlFileEntryFinder.countByG_U_F_M(
-			groupId, userId, folderIds, mimeTypes, queryDefinition);
-	}
-
-	@Override
-	public int getFileEntriesCount(
 			long groupId, long userId, List<Long> folderIds,
 			List<Long> repositoryIds, String[] mimeTypes,
 			QueryDefinition queryDefinition)
@@ -1128,6 +1118,16 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryFinder.countByG_U_F_R_M(
 			groupId, userId, folderIds, repositoryIds, mimeTypes,
 			queryDefinition);
+	}
+
+	@Override
+	public int getFileEntriesCount(
+			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws Exception {
+
+		return dlFileEntryFinder.countByG_U_F_M(
+			groupId, userId, folderIds, mimeTypes, queryDefinition);
 	}
 
 	@Override

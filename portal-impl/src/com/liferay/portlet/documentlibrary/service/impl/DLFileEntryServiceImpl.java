@@ -496,17 +496,6 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@Override
 	public List<DLFileEntry> getGroupFileEntries(
-			long groupId, long userId, long rootFolderId, String[] mimeTypes,
-			int status, int start, int end, OrderByComparator obc)
-		throws PortalException, SystemException {
-
-		return getGroupFileEntries(
-			groupId, userId, rootFolderId, 0, mimeTypes, status, start, end,
-			obc);
-	}
-
-	@Override
-	public List<DLFileEntry> getGroupFileEntries(
 			long groupId, long userId, long rootFolderId, long repositoryId,
 			String[] mimeTypes, int status, int start, int end,
 			OrderByComparator obc)
@@ -540,6 +529,17 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<DLFileEntry> getGroupFileEntries(
+			long groupId, long userId, long rootFolderId, String[] mimeTypes,
+			int status, int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		return getGroupFileEntries(
+			groupId, userId, rootFolderId, 0, mimeTypes, status, start, end,
+			obc);
+	}
+
+	@Override
 	public int getGroupFileEntriesCount(
 			long groupId, long userId, long rootFolderId)
 		throws PortalException, SystemException {
@@ -558,16 +558,6 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			return dlFileEntryPersistence.filterCountByG_U_F(
 				groupId, userId, ArrayUtil.toLongArray(folderIds));
 		}
-	}
-
-	@Override
-	public int getGroupFileEntriesCount(
-			long groupId, long userId, long rootFolderId, String[] mimeTypes,
-			int status)
-		throws PortalException, SystemException {
-
-		return getGroupFileEntriesCount(
-			groupId, userId, rootFolderId, 0, mimeTypes, status);
 	}
 
 	@Override
@@ -598,6 +588,16 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		return dlFileEntryFinder.filterCountByG_U_F_R_M(
 			groupId, userId, folderIds, repositoryIds, mimeTypes,
 			new QueryDefinition(status));
+	}
+
+	@Override
+	public int getGroupFileEntriesCount(
+			long groupId, long userId, long rootFolderId, String[] mimeTypes,
+			int status)
+		throws PortalException, SystemException {
+
+		return getGroupFileEntriesCount(
+			groupId, userId, rootFolderId, 0, mimeTypes, status);
 	}
 
 	@Override

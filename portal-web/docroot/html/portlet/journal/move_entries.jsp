@@ -120,7 +120,7 @@ for (JournalArticle curArticle : articles) {
 				for (JournalFolder folder : invalidMoveFolders) {
 				%>
 
-					<li class="move-folder move-error">
+					<li class="move-error move-folder">
 						<span class="folder-title">
 							<%= folder.getName() %>
 						</span>
@@ -217,7 +217,7 @@ for (JournalArticle curArticle : articles) {
 
 		<aui:field-wrapper label="new-folder">
 			<div class="input-append">
-				<liferay-ui:input-resource id="folderName" url="<%= folderName %>" />
+				<liferay-ui:input-resource id="folderName" label="new-folder" url="<%= folderName %>" />
 
 				<aui:button name="selectFolderButton" value="select" />
 			</div>

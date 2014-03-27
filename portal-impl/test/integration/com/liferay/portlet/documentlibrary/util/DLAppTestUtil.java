@@ -123,7 +123,7 @@ public abstract class DLAppTestUtil {
 	}
 
 	public static FileEntry addFileEntry(
-			long userId, long groupId, long folderId, String sourceFileName,
+			long userId, long repositoryId, long folderId, String sourceFileName,
 			String mimeType, String title, byte[] bytes, int workflowAction,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -137,7 +137,7 @@ public abstract class DLAppTestUtil {
 		serviceContext.setWorkflowAction(workflowAction);
 
 		return DLAppLocalServiceUtil.addFileEntry(
-			userId, groupId, folderId, sourceFileName, mimeType, title,
+			userId, repositoryId, folderId, sourceFileName, mimeType, title,
 			StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
 	}
 
@@ -145,6 +145,17 @@ public abstract class DLAppTestUtil {
 			long userId, long groupId, long folderId, String sourceFileName,
 			String mimeType, String title, byte[] bytes, long fileEntryTypeId,
 			int workflowAction)
+		throws Exception {
+
+		return addFileEntry(
+			userId, groupId, groupId, folderId, sourceFileName, mimeType, title,
+			bytes, fileEntryTypeId, workflowAction);
+	}
+
+	public static FileEntry addFileEntry(
+			long userId, long groupId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title, byte[] bytes,
+			long fileEntryTypeId, int workflowAction)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
@@ -155,8 +166,8 @@ public abstract class DLAppTestUtil {
 		serviceContext.setLayoutFullURL("http://localhost");
 
 		return addFileEntry(
-			userId, groupId, folderId, sourceFileName, mimeType, title, bytes,
-			workflowAction, serviceContext);
+			userId, repositoryId, folderId, sourceFileName, mimeType, title,
+			bytes, workflowAction, serviceContext);
 	}
 
 	public static FileEntry addFileEntry(
@@ -229,6 +240,21 @@ public abstract class DLAppTestUtil {
 		return addFileEntry(
 			groupId, folderId, sourceFileName, mimeType, title, null,
 			WorkflowConstants.ACTION_PUBLISH);
+	}
+
+	public static FileEntry addFileEntry(
+			long groupId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title, byte[] bytes,
+			int workflowAction)
+		throws Exception {
+
+		long fileEntryTypeId =
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
+
+		return addFileEntry(
+			TestPropsValues.getUserId(), groupId, repositoryId, folderId,
+			sourceFileName, mimeType, title, bytes, fileEntryTypeId,
+			workflowAction);
 	}
 
 	public static FileEntry addFileEntry(

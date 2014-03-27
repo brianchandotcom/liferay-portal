@@ -38,33 +38,13 @@ import javax.mail.internet.InternetAddress;
 public class MailMessageListener extends BaseMessageListener {
 
 	protected void doMailMessage(MailMessage mailMessage) throws Exception {
-		InternetAddress[] auditTrail = InternetAddress.parse(
-			PropsValues.MAIL_AUDIT_TRAIL);
-
-		if (auditTrail.length > 0) {
-			InternetAddress[] bcc = mailMessage.getBCC();
-
-			if (bcc != null) {
-				InternetAddress[] allBCC = new InternetAddress[
-					bcc.length + auditTrail.length];
-
-				ArrayUtil.combine(bcc, auditTrail, allBCC);
-
-				mailMessage.setBCC(allBCC);
-			}
-			else {
-				mailMessage.setBCC(auditTrail);
-			}
-		}
-
 		InternetAddress from = filterInternetAddress(mailMessage.getFrom());
 
 		if (from == null) {
 			return;
 		}
-		else {
-			mailMessage.setFrom(from);
-		}
+
+		mailMessage.setFrom(from);
 
 		InternetAddress[] to = filterInternetAddresses(mailMessage.getTo());
 
@@ -76,12 +56,31 @@ public class MailMessageListener extends BaseMessageListener {
 
 		InternetAddress[] bcc = filterInternetAddresses(mailMessage.getBCC());
 
+		InternetAddress[] auditTrail = InternetAddress.parse(
+			PropsValues.MAIL_AUDIT_TRAIL);
+
+		if (auditTrail.length > 0) {
+			if (ArrayUtil.isNotEmpty(bcc)) {
+				for (InternetAddress internetAddress : auditTrail) {
+					ArrayUtil.append(bcc, internetAddress);
+				}
+			}
+			else {
+				bcc = auditTrail;
+			}
+		}
+
 		mailMessage.setBCC(bcc);
 
 		InternetAddress[] bulkAddresses = filterInternetAddresses(
 			mailMessage.getBulkAddresses());
 
 		mailMessage.setBulkAddresses(bulkAddresses);
+
+		InternetAddress[] replyTo = filterInternetAddresses(
+			mailMessage.getReplyTo());
+
+		mailMessage.setReplyTo(replyTo);
 
 		if (ArrayUtil.isNotEmpty(to) || ArrayUtil.isNotEmpty(cc) ||
 			ArrayUtil.isNotEmpty(bcc) || ArrayUtil.isNotEmpty(bulkAddresses)) {

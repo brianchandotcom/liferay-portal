@@ -29,9 +29,7 @@
 	</tear-down>
 
 	<command name="AddList" priority="5">
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
@@ -42,7 +40,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -59,7 +56,6 @@
 		</execute>
 
 		<execute macro="DDLList#addPGViaDDLDisplay">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
@@ -79,9 +75,7 @@
 	</command>
 
 	<command name="AddListRecord" priority="5">
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Text" />
 		<var name="field" value="Text" />
@@ -93,7 +87,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -110,7 +103,6 @@
 		</execute>
 
 		<execute macro="DDLList#addPGViaDDLDisplay">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
@@ -146,9 +138,7 @@
 	</command>
 
 	<command name="ConfigureEditableListPG" priority="5">
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
@@ -159,7 +149,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -176,7 +165,6 @@
 		</execute>
 
 		<execute macro="DDLList#addPGViaDDLDisplay">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
@@ -204,9 +192,7 @@
 	</command>
 
 	<command name="ConfigureSpreadsheetListPG" priority="5">
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
@@ -217,7 +203,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -234,7 +219,6 @@
 		</execute>
 
 		<execute macro="DDLList#addPGViaDDLDisplay">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
@@ -262,9 +246,7 @@
 	</command>
 
 	<command name="DeleteList" priority="5">
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
@@ -275,7 +257,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -288,7 +269,6 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="DDLList#addCP">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
@@ -308,9 +288,7 @@
 	</command>
 
 	<command name="DeleteListRecord" priority="5">
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Text" />
 		<var name="field" value="Text" />
@@ -322,7 +300,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -339,7 +316,6 @@
 		</execute>
 
 		<execute macro="DDLList#addPGViaDDLDisplay">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
@@ -371,7 +347,6 @@
 	</command>
 
 	<command name="EditList" priority="5">
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
 		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListDescriptionEdit" value="List Description Edit" />
@@ -386,7 +361,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -433,9 +407,7 @@
 	</command>
 
 	<command name="EditListRecord" priority="5">
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Text" />
 		<var name="field" value="Text" />
@@ -448,7 +420,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -465,7 +436,6 @@
 		</execute>
 
 		<execute macro="DDLList#addPGViaDDLDisplay">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
@@ -514,9 +484,7 @@
 	</command>
 
 	<command name="EditListRecordViaRecordView" priority="5">
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Text" />
 		<var name="field" value="Text" />
@@ -529,7 +497,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -546,7 +513,6 @@
 		</execute>
 
 		<execute macro="DDLList#addPGViaDDLDisplay">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
@@ -595,9 +561,7 @@
 	</command>
 
 	<command name="SelectList" priority="5">
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
@@ -608,7 +572,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -621,7 +584,6 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="DDLList#addCP">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
@@ -647,11 +609,9 @@
 	<command name="ViewListRecordWithUploadedFreeMarkerDisplayTemplate" priority="5">
 		<property name="custom.properties" value="freemarker.engine.restricted.variables=$${line.separator}velocity.engine.restricted.variables=" />
 
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateLanguage" value="FreeMarker (.ftl)" />
 		<var name="ddlDisplayTemplateName" value="Data Definition FreeMarker Display Template Name" />
-		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Name" />
@@ -662,7 +622,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -679,7 +638,6 @@
 		</execute>
 
 		<execute macro="DDLTemplate#addDisplayTemplateCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlDisplayTemplateLanguage" value="FreeMarker (.ftl)" />
 			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
@@ -691,7 +649,6 @@
 		</execute>
 
 		<execute macro="DDLList#addCP">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
@@ -760,11 +717,9 @@
 	<command name="ViewListRecordWithUploadedVelocityDisplayTemplate" priority="5">
 		<property name="custom.properties" value="freemarker.engine.restricted.variables=$${line.separator}velocity.engine.restricted.variables=" />
 
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateLanguage" value="FreeMarker (.ftl)" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
-		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Name" />
@@ -775,7 +730,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -792,7 +746,6 @@
 		</execute>
 
 		<execute macro="DDLTemplate#addDisplayTemplateCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlDisplayTemplateLanguage" value="Velocity (.vm)" />
 			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
@@ -804,7 +757,6 @@
 		</execute>
 
 		<execute macro="DDLList#addCP">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 

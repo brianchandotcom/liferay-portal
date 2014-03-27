@@ -73,7 +73,7 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 
 					<liferay-ui:search-container-column-text
 						name="type"
-						value="<%= assetRendererFactory.getTypeName(locale, false) %>"
+						value="<%= assetRendererFactory.getTypeName(locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
@@ -127,9 +127,9 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 
 								data.put("groupid", String.valueOf(groupId));
 								data.put("href", assetBrowserURL.toString());
-								data.put("title", LanguageUtil.format(pageContext, "select-x", curRendererFactory.getTypeName(locale, false), false));
+								data.put("title", LanguageUtil.format(pageContext, "select-x", curRendererFactory.getTypeName(locale), false));
 
-								String type = curRendererFactory.getTypeName(locale, false);
+								String type = curRendererFactory.getTypeName(locale);
 
 								data.put("type", type);
 							%>
@@ -138,7 +138,7 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 									cssClass="asset-selector"
 									data="<%= data %>"
 									id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
-									message="<%= curRendererFactory.getTypeName(locale, false) %>"
+									message="<%= curRendererFactory.getTypeName(locale) %>"
 									src="<%= curRendererFactory.getIconPath(renderRequest) %>"
 									url="javascript:;"
 								/>

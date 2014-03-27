@@ -91,7 +91,7 @@ if (dataJSONObject.has("values")) {
 						<img alt="" src="<%= assetRendererFactory.getIconPath(renderRequest) %>" />
 					</c:if>
 
-					<%= assetRendererFactory.getTypeName(locale, false) %>
+					<%= assetRendererFactory.getTypeName(locale) %>
 
 					<c:if test="<%= showAssetCount %>">
 						<span class="badge badge-info frequency"><%= frequency %></span>

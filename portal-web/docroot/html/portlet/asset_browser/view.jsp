@@ -122,7 +122,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 						data.put("assetentryid", assetEntry.getEntryId());
 						data.put("assetclassname", assetEntry.getClassName());
-						data.put("assettype", assetRendererFactory.getTypeName(locale, true));
+						data.put("assettype", assetRendererFactory.getTypeName(locale));
 						data.put("assettitle", assetEntry.getTitle(locale));
 						data.put("groupdescriptivename", group.getDescriptiveName(locale));
 						%>

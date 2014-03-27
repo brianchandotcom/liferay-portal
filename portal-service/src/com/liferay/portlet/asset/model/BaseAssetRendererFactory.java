@@ -141,8 +141,23 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	@Override
-	public String getTypeName(Locale locale, boolean hasSubtypes) {
+	public String getTypeName(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getTypeName(Locale)}
+	 */
+	@Deprecated
+	@Override
+	public String getTypeName(Locale locale, boolean hasSubtypes) {
+		return getTypeName(locale);
+	}
+
+	@Override
+	public String getTypeName(Locale locale, long subtypeId) {
+		return getTypeName(locale);
 	}
 
 	@Override

@@ -118,9 +118,9 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("href", assetBrowserURL.toString());
-			data.put("title", LanguageUtil.format(pageContext, "select-x", assetRendererFactory.getTypeName(locale, false), false));
+			data.put("title", LanguageUtil.format(pageContext, "select-x", assetRendererFactory.getTypeName(locale), false));
 
-			String type = assetRendererFactory.getTypeName(locale, false);
+			String type = assetRendererFactory.getTypeName(locale);
 
 			data.put("type", assetRendererFactory.getClassName());
 		%>
@@ -129,7 +129,7 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 				cssClass="asset-selector"
 				data="<%= data %>"
 				id="<%= FriendlyURLNormalizerUtil.normalize(type) %>"
-				message="<%= assetRendererFactory.getTypeName(locale, false) %>"
+				message="<%= assetRendererFactory.getTypeName(locale) %>"
 				src="<%= assetRendererFactory.getIconPath(portletRequest) %>"
 				url="javascript:;"
 			/>
@@ -186,7 +186,7 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 		<liferay-ui:search-container-column-text
 			name="type"
-			value="<%= assetRendererFactory.getTypeName(locale, false) %>"
+			value="<%= assetRendererFactory.getTypeName(locale) %>"
 		/>
 
 		<liferay-ui:search-container-column-text

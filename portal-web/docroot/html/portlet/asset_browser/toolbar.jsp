@@ -49,7 +49,7 @@ Map<Long, String> classTypes = assetRendererFactory.getClassTypes(PortalUtil.get
 			addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
 			%>
 
-			<aui:nav-item href="<%= addPortletURLString %>" label='<%= LanguageUtil.format(pageContext, "add-x", assetRendererFactory.getTypeName(locale, false), false) %>' />
+			<aui:nav-item href="<%= addPortletURLString %>" label='<%= LanguageUtil.format(pageContext, "add-x", assetRendererFactory.getTypeName(locale), false) %>' />
 		</c:if>
 	</c:when>
 	<c:otherwise>
@@ -70,7 +70,7 @@ Map<Long, String> classTypes = assetRendererFactory.getClassTypes(PortalUtil.get
 				addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
 				%>
 
-				<aui:nav-item href="<%= addPortletURLString %>" label="<%= assetRendererFactory.getTypeName(locale, true) %>" />
+				<aui:nav-item href="<%= addPortletURLString %>" label="<%= assetRendererFactory.getTypeName(locale) %>" />
 			</c:if>
 
 			<%

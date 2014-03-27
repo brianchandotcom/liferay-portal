@@ -76,7 +76,7 @@ private String _getMessage(String className, Map<String, PortletURL> addPortletU
 	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
 	if (pos == -1) {
-		message = assetRendererFactory.getTypeName(locale, AssetUtil.hasSubtype(className, addPortletURLs));
+		message = assetRendererFactory.getTypeName(locale);
 	}
 
 	return message;

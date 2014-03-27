@@ -73,8 +73,7 @@ public class UserTestUtil {
 		Role administratorRole = RoleLocalServiceUtil.getRole(
 			PortalInstances.getDefaultCompanyId(), RoleConstants.ADMINISTRATOR);
 
-		UserLocalServiceUtil.setRoleUsers(
-			administratorRole.getRoleId(), new long[] {user.getUserId()});
+		UserLocalServiceUtil.addRoleUser(administratorRole.getRoleId(), user);
 
 		return user;
 	}

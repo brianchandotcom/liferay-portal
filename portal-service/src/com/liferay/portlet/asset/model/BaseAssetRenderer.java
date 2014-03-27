@@ -128,6 +128,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return getSummary(null, null);
 	}
 
+	@Override
+	public String getSummary() {
+		return getSummary(null, null);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(PortletRequest,
 	 *             PortletResponse)}

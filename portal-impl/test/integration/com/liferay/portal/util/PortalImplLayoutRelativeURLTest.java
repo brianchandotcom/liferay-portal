@@ -38,12 +38,12 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 			VIRTUAL_HOSTNAME);
 
 		privateLayoutRelativeURL =
-			PRIVATE_GROUP_SERVLET_MAPPING + group.getFriendlyURL() +
-				privateLayout.getFriendlyURL();
+			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +
+				group.getFriendlyURL() + privateLayout.getFriendlyURL();
 
 		publicLayoutRelativeURL =
-			PUBLIC_SERVLET_MAPPING + group.getFriendlyURL() +
-				publicLayout.getFriendlyURL();
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				group.getFriendlyURL() + publicLayout.getFriendlyURL();
 	}
 
 	@Test

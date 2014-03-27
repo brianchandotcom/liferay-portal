@@ -51,49 +51,8 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GENERAL_PERMISSIONS_ACTION" />
-			<var name="permissionDefinitionValue" value="Action" />
-			<var name="roleName" value="${roleName}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_SITE_ACTION" />
-			<var name="permissionDefinitionValue" value="Action" />
-			<var name="roleName" value="${roleName}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_PAGE_ACTION" />
-			<var name="permissionDefinitionValue" value="Action" />
-			<var name="roleName" value="${roleName}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_PAGE_VARIATION_ACTION" />
-			<var name="permissionDefinitionValue" value="Action" />
-			<var name="roleName" value="${roleName}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_SITE_PAGES_VARIATION_ACTION" />
-			<var name="permissionDefinitionValue" value="Action" />
+		<execute macro="Role#definePermissionsCP">
+			<var name="permissionDefinitionKeys" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GENERAL_PERMISSIONS_ACTION,SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_SITE_ACTION,SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_PAGE_ACTION,SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_PAGE_VARIATION_ACTION,SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_SITE_PAGES_VARIATION_ACTION" />
 			<var name="roleName" value="${roleName}" />
 		</execute>
 	</command>
@@ -161,6 +120,43 @@
 	</command>
 
 	<command name="definePermissionCmdCP">
+		<execute macro="Role#editPermissionCmdCP">
+			<var name="define" value="true" />
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+	</command>
+
+	<command name="definePermissionCP">
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+		</execute>
+	</command>
+
+	<command name="definePermissionPG">
+		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+		<execute action="Permissions#check" locator-key1="${permissionDefinitionKey}" />
+		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Permissions#assertChecked" locator-key1="${permissionDefinitionKey}" />
+	</command>
+
+	<command name="definePermissionsCP">
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKeys" value="${permissionDefinitionKeys}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+	</command>
+
+	<command name="editPermissionCmdCP">
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
@@ -188,270 +184,164 @@
 		</if>
 
 		<if>
-			<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_GENERAL_PERMISSIONS" />
+			<not>
+				<isset var="permissionDefinitionKeys" />
+			</not>
 			<then>
-				<var name="permissionNavigationKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
-				<var name="permissionNavigationValue" value="General Permissions" />
+				<var name="permissionDefinitionKeys" value="${permissionDefinitionKey}" />
 			</then>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_USERS_ROLES" />
-				<then>
-					<var name="permissionNavigationKey" value="CONTROL_PANEL_USERS_ROLES" />
-					<var name="permissionNavigationValue" value="Roles" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_SITES_SITES" />
-				<then>
-					<var name="permissionNavigationKey" value="CONTROL_PANEL_SITES_SITES" />
-					<var name="permissionNavigationValue" value="Sites" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_SITES_SITES" />
-				<then>
-					<var name="permissionNavigationKey" value="CONTROL_PANEL_USERS_USER_GROUPS" />
-					<var name="permissionNavigationValue" value="User Groups" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS" />
-				<then>
-					<var name="permissionNavigationKey" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS" />
-					<var name="permissionNavigationValue" value="Users and Organizations" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER" />
-					<var name="permissionNavigationValue" value="Asset Publisher" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY" />
-					<var name="permissionNavigationValue" value="Web Content Display" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_BLOGS" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-					<var name="permissionNavigationValue" value="Blogs" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
-					<var name="permissionNavigationValue" value="Documents and Media" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
-					<var name="permissionNavigationValue" value="Dynamic Data Lists" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />
-					<var name="permissionNavigationValue" value="Message Boards" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_USERS_SITE_MEMBERSHIPS" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_USERS_SITE_MEMBERSHIPS" />
-					<var name="permissionNavigationValue" value="Site Memberships" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_PAGES_SITE_PAGES" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
-					<var name="permissionNavigationValue" value="Site Pages" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_WEB_CONTENT" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
-					<var name="permissionNavigationValue" value="Web Content" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_WIKI" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WIKI" />
-					<var name="permissionNavigationValue" value="Wiki" />
-				</then>
-			</elseif>
 		</if>
 
-		<execute action="CPRolesDefinepermissions#type" locator-key1="SEARCH_FIELD" value1="${permissionNavigationValue}" />
-		<execute action="CPRolesDefinepermissions#assertClick" locator-key1="${permissionNavigationKey}" value1="${permissionNavigationValue}" />
+		<for list="${permissionDefinitionKeys}" param="permissionDefinitionKey">
+			<if>
+				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_GENERAL_PERMISSIONS" />
+				<then>
+					<var name="permissionNavigationKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
+					<var name="permissionNavigationValue" value="General Permissions" />
+				</then>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_USERS_ROLES" />
+					<then>
+						<var name="permissionNavigationKey" value="CONTROL_PANEL_USERS_ROLES" />
+						<var name="permissionNavigationValue" value="Roles" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_SITES_SITES" />
+					<then>
+						<var name="permissionNavigationKey" value="CONTROL_PANEL_SITES_SITES" />
+						<var name="permissionNavigationValue" value="Sites" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_SITES_SITES" />
+					<then>
+						<var name="permissionNavigationKey" value="CONTROL_PANEL_USERS_USER_GROUPS" />
+						<var name="permissionNavigationValue" value="User Groups" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS" />
+					<then>
+						<var name="permissionNavigationKey" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS" />
+						<var name="permissionNavigationValue" value="Users and Organizations" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER" />
+						<var name="permissionNavigationValue" value="Asset Publisher" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY" />
+						<var name="permissionNavigationValue" value="Web Content Display" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_BLOGS" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+						<var name="permissionNavigationValue" value="Blogs" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
+						<var name="permissionNavigationValue" value="Documents and Media" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
+						<var name="permissionNavigationValue" value="Dynamic Data Lists" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />
+						<var name="permissionNavigationValue" value="Message Boards" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_USERS_SITE_MEMBERSHIPS" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_USERS_SITE_MEMBERSHIPS" />
+						<var name="permissionNavigationValue" value="Site Memberships" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_PAGES_SITE_PAGES" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+						<var name="permissionNavigationValue" value="Site Pages" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_WEB_CONTENT" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
+						<var name="permissionNavigationValue" value="Web Content" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_WIKI" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WIKI" />
+						<var name="permissionNavigationValue" value="Wiki" />
+					</then>
+				</elseif>
+			</if>
 
-		<execute action="CPRolesDefinepermissionsAllpermissions#assertTextEquals" locator-key1="PERMISSION_HEADER" value1="${permissionNavigationValue}" />
-		<execute action="CPRolesDefinepermissionsAllpermissions#check" locator-key1="${permissionDefinitionKey}" />
+			<if>
+				<not>
+					<condition action="CPRolesDefinepermissionsAllpermissions#isElementPresent" locator-key1="${permissionDefinitionKey}" />
+				</not>
+				<then>
+					<execute action="CPRolesDefinepermissions#type" locator-key1="SEARCH_FIELD" value1="${permissionNavigationValue}" />
+					<execute action="CPRolesDefinepermissions#assertClick" locator-key1="${permissionNavigationKey}" value1="${permissionNavigationValue}" />
+
+					<execute action="CPRolesDefinepermissionsAllpermissions#assertTextEquals" locator-key1="PERMISSION_HEADER" value1="${permissionNavigationValue}" />
+				</then>
+			</if>
+
+			<if>
+				<equals arg1="${define}" arg2="true" />
+				<then>
+					<execute action="CPRolesDefinepermissionsAllpermissions#check" locator-key1="${permissionDefinitionKey}" />
+				</then>
+				<elseif>
+					<equals arg1="${remove}" arg2="true" />
+					<then>
+						<execute action="CPRolesDefinepermissionsAllpermissions#uncheck" locator-key1="${permissionDefinitionKey}" />
+					</then>
+				</elseif>
+			</if>
+		</for>
+
 		<execute action="CPRolesDefinepermissionsAllpermissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The role permissions were updated." />
 	</command>
 
-	<command name="definePermissionCP">
-		<execute macro="Role#definePermissionCmdCP">
+	<command name="removePermissionCP">
+		<execute macro="Role#editPermissionCmdCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="remove" value="true" />
 			<var name="roleName" value="${roleName}" />
 		</execute>
 
 		<execute macro="Role#viewPermissionCP">
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
 			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="remove" value="true" />
 		</execute>
-	</command>
-
-	<command name="definePermissionPG">
-		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
-		<var name="key_roleName" value="${key_roleName?lowercase()}" />
-
-		<execute action="Permissions#check" locator-key1="${permissionDefinitionKey}" />
-		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="Permissions#assertChecked" locator-key1="${permissionDefinitionKey}" />
-	</command>
-
-	<command name="removePermissionCP">
-		<if>
-			<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_GENERAL_PERMISSIONS" />
-			<then>
-				<var name="permissionNavigationKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
-				<var name="permissionNavigationValue" value="General Permissions" />
-			</then>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_USERS_ROLES" />
-				<then>
-					<var name="permissionNavigationKey" value="CONTROL_PANEL_USERS_ROLES" />
-					<var name="permissionNavigationValue" value="Roles" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_SITES_SITES" />
-				<then>
-					<var name="permissionNavigationKey" value="CONTROL_PANEL_SITES_SITES" />
-					<var name="permissionNavigationValue" value="Sites" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_SITES_SITES" />
-				<then>
-					<var name="permissionNavigationKey" value="CONTROL_PANEL_USERS_USER_GROUPS" />
-					<var name="permissionNavigationValue" value="User Groups" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS" />
-				<then>
-					<var name="permissionNavigationKey" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS" />
-					<var name="permissionNavigationValue" value="Users and Organizations" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER" />
-					<var name="permissionNavigationValue" value="Asset Publisher" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY" />
-					<var name="permissionNavigationValue" value="Web Content Display" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_BLOGS" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-					<var name="permissionNavigationValue" value="Blogs" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
-					<var name="permissionNavigationValue" value="Documents and Media" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
-					<var name="permissionNavigationValue" value="Dynamic Data Lists" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />
-					<var name="permissionNavigationValue" value="Message Boards" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_USERS_SITE_MEMBERSHIPS" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_USERS_SITE_MEMBERSHIPS" />
-					<var name="permissionNavigationValue" value="Site Memberships" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_PAGES_SITE_PAGES" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
-					<var name="permissionNavigationValue" value="Site Pages" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_WEB_CONTENT" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
-					<var name="permissionNavigationValue" value="Web Content" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_WIKI" />
-				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WIKI" />
-					<var name="permissionNavigationValue" value="Wiki" />
-				</then>
-			</elseif>
-		</if>
-
-		<var name="key_roleName" value="${roleName}" />
-
-		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TITLE" value1="${roleName}" />
-		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_DEFINE_PERMISSIONS" value1="Define Permissions" />
-
-		<execute action="CPRolesDefinepermissions#type" locator-key1="SEARCH_FIELD" value1="${permissionNavigationValue}" />
-		<execute action="CPRolesDefinepermissions#assertClick" locator-key1="${permissionNavigationKey}" value1="${permissionNavigationValue}" />
-
-		<execute action="CPRolesDefinepermissionsAllpermissions#uncheck" locator-key1="${permissionDefinitionKey}" />
-		<execute action="CPRolesDefinepermissionsAllpermissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<var name="key_permissionDefinitionValue" value="${permissionDefinitionValue}" />
-		<var name="key_permissionNavigationValue" value="${permissionNavigationValue}" />
-
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The role permissions were updated." />
-		<execute action="CPRolesDefinepermissions#assertElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
-		<execute action="CPRolesDefinepermissions#assertElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
-		<execute action="CPRolesDefinepermissions#assertElementNotPresent" locator-key1="PERMISSION_TABLE_REMOVE" value1="Remove" />
 	</command>
 
 	<command name="removePermissionPG">
@@ -462,6 +352,14 @@
 		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Permissions#assertNotChecked" locator-key1="${permissionDefinitionKey}" />
+	</command>
+
+	<command name="removePermissionsCP">
+		<execute macro="Role#editPermissionCmdCP">
+			<var name="permissionDefinitionKeys" value="${permissionDefinitionKeys}" />
+			<var name="remove" value="true" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
 	</command>
 
 	<command name="tearDownCP">
@@ -665,16 +563,26 @@
 		<var name="key_permissionDefinitionValue" value="${permissionDefinitionValue}" />
 		<var name="key_permissionNavigationValue" value="${permissionNavigationValue}" />
 
-		<while>
-			<condition action="CPRoles#isElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" />
+		<if>
+			<equals arg1="${remove}" arg2="true" />
 			<then>
-				<execute action="CPRoles#assertClick" locator-key1="PAGINATION_NEXT_BUTTON" value1="Next" />
+				<execute action="CPRolesDefinepermissions#assertElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
+				<execute action="CPRolesDefinepermissions#assertElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
+				<execute action="CPRolesDefinepermissions#assertElementNotPresent" locator-key1="PERMISSION_TABLE_REMOVE" value1="Remove" />
 			</then>
-		</while>
+			<else>
+				<while>
+					<condition action="CPRoles#isElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" />
+					<then>
+						<execute action="CPRoles#assertClick" locator-key1="PAGINATION_NEXT_BUTTON" value1="Next" />
+					</then>
+				</while>
 
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_REMOVE" value1="Remove" />
+				<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
+				<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
+				<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_REMOVE" value1="Remove" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewPermissionPG">

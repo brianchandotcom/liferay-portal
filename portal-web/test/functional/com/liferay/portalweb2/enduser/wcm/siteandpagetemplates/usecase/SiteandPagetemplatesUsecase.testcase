@@ -24,6 +24,46 @@
 		<execute macro="DMDocument#tearDownCP" />
 	</tear-down>
 
+	<command name="EditSiteTemplateGuestPermissions" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateName" value="${siteTemplateName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addSiteTemplateCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoSiteTemplateCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="sitePageName" value="Home" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="Guest" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoSiteTemplateCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="sitePageName" value="Home" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Role#definePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="Guest" />
+		</execute>
+	</command>
+
 	<command name="SitesDynamicTemplateInheritance" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />

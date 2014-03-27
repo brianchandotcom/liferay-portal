@@ -25,10 +25,6 @@
 		<var name="permissionDefinition2Value" value="Access in Control Panel" />
 		<var name="permissionDefinition3Key" value="CONTROL_PANEL_USERS_USER_GROUPS_USER_GROUP_VIEW" />
 		<var name="permissionDefinition3Value" value="View" />
-		<var name="permissionNavigation1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
-		<var name="permissionNavigation1Value" value="General Permissions" />
-		<var name="permissionNavigation2Key" value="CONTROL_PANEL_USERS_USER_GROUPS" />
-		<var name="permissionNavigation2Value" value="User Groups" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -49,8 +45,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation2Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation2Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -63,8 +57,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
@@ -73,8 +65,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition3Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition3Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation2Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation2Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -89,8 +79,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
@@ -99,8 +87,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition3Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition3Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation2Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation2Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />

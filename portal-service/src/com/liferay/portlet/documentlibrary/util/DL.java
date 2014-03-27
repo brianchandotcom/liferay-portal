@@ -26,15 +26,14 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
@@ -100,6 +99,10 @@ public interface DL {
 
 	public String getDDMStructureKey(String fileEntryTypeUuid);
 
+	String getDefaultEntryColumns(boolean showActions);
+
+	String getAllEntryColumns(boolean showActions);
+
 	public String getDeprecatedDDMStructureKey(DLFileEntryType dlFileEntryType);
 
 	public String getDeprecatedDDMStructureKey(long fileEntryTypeId);
@@ -114,39 +117,19 @@ public interface DL {
 			PortletRequest portletRequest, long folderId)
 		throws PortalException, SystemException;
 
+	public DLSettings getDLSettings(long groupId)
+		throws PortalException, SystemException;
+
+	public DLSettings getDLSettings(long groupId, HttpServletRequest request)
+		throws PortalException, SystemException;
+
 	public Map<String, String> getEmailDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,
 		String emailFromName);
 
-	public Map<Locale, String> getEmailFileEntryAddedBodyMap(
-		PortletPreferences preferences);
-
-	public boolean getEmailFileEntryAddedEnabled(
-		PortletPreferences preferences);
-
-	public Map<Locale, String> getEmailFileEntryAddedSubjectMap(
-		PortletPreferences preferences);
-
-	public Map<Locale, String> getEmailFileEntryUpdatedBodyMap(
-		PortletPreferences preferences);
-
-	public boolean getEmailFileEntryUpdatedEnabled(
-		PortletPreferences preferences);
-
-	public Map<Locale, String> getEmailFileEntryUpdatedSubjectMap(
-		PortletPreferences preferences);
-
-	public String getEmailFromAddress(
-			PortletPreferences preferences, long companyId)
-		throws SystemException;
-
 	public Map<String, String> getEmailFromDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,
 		String emailFromName);
-
-	public String getEmailFromName(
-			PortletPreferences preferences, long companyId)
-		throws SystemException;
 
 	public List<Object> getEntries(Hits hits);
 
@@ -168,9 +151,6 @@ public interface DL {
 	public String getImagePreviewURL(
 			FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception;
-
-	public String[] getMediaGalleryMimeTypes(
-		PortletPreferences portletPreferences, PortletRequest portletRequest);
 
 	public String getPreviewURL(
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,

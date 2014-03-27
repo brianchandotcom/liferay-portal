@@ -32,10 +32,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -52,13 +50,16 @@ import com.liferay.portal.model.Subscription;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.settings.ParameterMapSettings;
+import com.liferay.portal.settings.Settings;
+import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -79,18 +80,17 @@ import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
@@ -172,10 +172,13 @@ public class DLImpl implements DL {
 
 		portletURL.setParameter("struts_action", "/document_library/view");
 
+		DLSettings dlSettings = getDLSettings(
+			themeDisplay.getScopeGroupId(), request);
+
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		data.put("direction-right", Boolean.TRUE.toString());
-		data.put("folder-id", getDefaultFolderId(request));
+		data.put("folder-id", dlSettings.getDefaultFolderId());
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, themeDisplay.translate("home"), portletURL.toString(),
@@ -189,7 +192,13 @@ public class DLImpl implements DL {
 			Folder folder, HttpServletRequest request, PortletURL portletURL)
 		throws Exception {
 
-		long defaultFolderId = getDefaultFolderId(request);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		DLSettings dlSettings = getDLSettings(
+			themeDisplay.getScopeGroupId(), request);
+
+		long defaultFolderId = dlSettings.getDefaultFolderId();
 
 		List<Folder> ancestorFolders = Collections.emptyList();
 
@@ -370,6 +379,12 @@ public class DLImpl implements DL {
 	}
 
 	@Override
+	public String getAllEntryColumns(boolean showActions) {
+		return getDefaultEntryColumns(showActions) +
+			",modified-date,create-date";
+	}
+
+	@Override
 	public Set<String> getAllMediaGalleryMimeTypes() {
 		return _allMediaGalleryMimeTypes;
 	}
@@ -383,6 +398,21 @@ public class DLImpl implements DL {
 	public String getDDMStructureKey(String fileEntryTypeUuid) {
 		return _STRUCTURE_KEY_PREFIX +
 			StringUtil.toUpperCase(fileEntryTypeUuid);
+	}
+
+	@Override
+	public String getDefaultEntryColumns(boolean showActions) {
+		String defaultEntryColumns = "name,size,status";
+
+		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
+			defaultEntryColumns += ",downloads";
+		}
+
+		if (showActions) {
+			defaultEntryColumns += ",action";
+		}
+
+		return defaultEntryColumns;
 	}
 
 	@Override
@@ -454,6 +484,28 @@ public class DLImpl implements DL {
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();
+	}
+
+	public DLSettings getDLSettings(long groupId)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, DLConstants.SERVICE_NAME);
+
+		return new DLSettings(settings);
+	}
+
+	@Override
+	public DLSettings getDLSettings(long groupId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, DLConstants.SERVICE_NAME);
+
+		Settings parameterMapSettings = new ParameterMapSettings(
+			settings, request.getParameterMap());
+
+		return new DLSettings(parameterMapSettings);
 	}
 
 	@Override
@@ -534,81 +586,6 @@ public class DLImpl implements DL {
 	}
 
 	@Override
-	public Map<Locale, String> getEmailFileEntryAddedBodyMap(
-		PortletPreferences preferences) {
-
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailFileEntryAddedBody",
-			PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_BODY);
-	}
-
-	@Override
-	public boolean getEmailFileEntryAddedEnabled(
-		PortletPreferences preferences) {
-
-		String emailFileEntryAddedEnabled = preferences.getValue(
-			"emailFileEntryAddedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailFileEntryAddedEnabled)) {
-			return GetterUtil.getBoolean(emailFileEntryAddedEnabled);
-		}
-		else {
-			return PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_ENABLED;
-		}
-	}
-
-	@Override
-	public Map<Locale, String> getEmailFileEntryAddedSubjectMap(
-		PortletPreferences preferences) {
-
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailFileEntryAddedSubject",
-			PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT);
-	}
-
-	@Override
-	public Map<Locale, String> getEmailFileEntryUpdatedBodyMap(
-		PortletPreferences preferences) {
-
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailFileEntryUpdatedBody",
-			PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_BODY);
-	}
-
-	@Override
-	public boolean getEmailFileEntryUpdatedEnabled(
-		PortletPreferences preferences) {
-
-		String emailFileEntryUpdatedEnabled = preferences.getValue(
-			"emailFileEntryUpdatedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailFileEntryUpdatedEnabled)) {
-			return GetterUtil.getBoolean(emailFileEntryUpdatedEnabled);
-		}
-		else {
-			return PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_ENABLED;
-		}
-	}
-
-	@Override
-	public Map<Locale, String> getEmailFileEntryUpdatedSubjectMap(
-		PortletPreferences preferences) {
-
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailFileEntryUpdatedSubject",
-			PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT);
-	}
-
-	@Override
-	public String getEmailFromAddress(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
-
-		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsValues.DL_EMAIL_FROM_ADDRESS);
-	}
-
-	@Override
 	public Map<String, String> getEmailFromDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,
 		String emailFromName) {
@@ -656,15 +633,6 @@ public class DLImpl implements DL {
 				"the-site-name-associated-with-the-document"));
 
 		return definitionTerms;
-	}
-
-	@Override
-	public String getEmailFromName(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
-
-		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsValues.DL_EMAIL_FROM_NAME);
 	}
 
 	@Override
@@ -790,21 +758,6 @@ public class DLImpl implements DL {
 
 		return getImagePreviewURL(
 			fileEntry, fileEntry.getFileVersion(), themeDisplay);
-	}
-
-	@Override
-	public String[] getMediaGalleryMimeTypes(
-		PortletPreferences portletPreferences, PortletRequest portletRequest) {
-
-		String mimeTypes = PrefsParamUtil.getString(
-			portletPreferences, portletRequest, "mimeTypes",
-			_allMediaGalleryMimeTypesString);
-
-		String[] mimeTypesArray = StringUtil.split(mimeTypes);
-
-		Arrays.sort(mimeTypesArray);
-
-		return mimeTypesArray;
 	}
 
 	@Override
@@ -1277,19 +1230,6 @@ public class DLImpl implements DL {
 		}
 
 		return false;
-	}
-
-	protected long getDefaultFolderId(HttpServletRequest request)
-		throws Exception {
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getPortletPreferences(
-				request, PortalUtil.getPortletId(request));
-
-		return GetterUtil.getLong(
-			portletPreferences.getValue(
-				"rootFolderId",
-				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)));
 	}
 
 	protected String getImageSrc(

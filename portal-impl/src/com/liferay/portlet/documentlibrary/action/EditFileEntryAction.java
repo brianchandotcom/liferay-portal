@@ -59,6 +59,7 @@ import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
@@ -91,7 +92,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
@@ -716,17 +716,15 @@ public class EditFileEntryAction extends PortletAction {
 				PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
 		}
 		else {
-			PortletPreferences portletPreferences = getStrictPortletSetup(
-				portletRequest);
+			ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			if (portletPreferences == null) {
-				portletPreferences = portletRequest.getPreferences();
-			}
+			DLSettings settings = DLUtil.getDLSettings(
+				themeDisplay.getScopeGroupId());
 
 			Set<String> extensions = new HashSet<String>();
 
-			String[] mimeTypes = DLUtil.getMediaGalleryMimeTypes(
-				portletPreferences, portletRequest);
+			String[] mimeTypes = settings.getMediaGalleryMimeTypes();
 
 			for (String mimeType : mimeTypes) {
 				extensions.addAll(MimeTypesUtil.getExtensions(mimeType));
@@ -992,15 +990,10 @@ public class EditFileEntryAction extends PortletAction {
 				String portletName = portletConfig.getPortletName();
 
 				if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-					PortletPreferences portletPreferences =
-						getStrictPortletSetup(actionRequest);
+					DLSettings settings = DLUtil.getDLSettings(
+						themeDisplay.getScopeGroupId());
 
-					if (portletPreferences == null) {
-						portletPreferences = actionRequest.getPreferences();
-					}
-
-					String[] mimeTypes = DLUtil.getMediaGalleryMimeTypes(
-						portletPreferences, actionRequest);
+					String[] mimeTypes = settings.getMediaGalleryMimeTypes();
 
 					if (Arrays.binarySearch(mimeTypes, contentType) < 0) {
 						throw new FileMimeTypeException(contentType);

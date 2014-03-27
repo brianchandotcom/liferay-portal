@@ -18,6 +18,7 @@
 
 <%@ page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
 page import="com.liferay.portal.kernel.search.Document" %><%@
+page import="com.liferay.portlet.documentlibrary.DLSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFolder" %><%@
@@ -77,6 +78,8 @@ String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLA
 long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+
+DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId, request);
 %>
 
 <%@ include file="/html/portlet/image_gallery_display/init-ext.jsp" %>

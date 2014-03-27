@@ -46,7 +46,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -55,6 +54,7 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.documentlibrary.DLSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -86,7 +86,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -2011,26 +2010,13 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		PortletPreferences preferences =
-			ServiceContextUtil.getPortletPreferences(serviceContext);
-
-		if (preferences == null) {
-			long ownerId = fileVersion.getGroupId();
-			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
-			long plid = PortletKeys.PREFS_PLID_SHARED;
-			String portletId = PortletKeys.DOCUMENT_LIBRARY;
-			String defaultPreferences = null;
-
-			preferences = portletPreferencesLocalService.getPreferences(
-				fileVersion.getCompanyId(), ownerId, ownerType, plid, portletId,
-				defaultPreferences);
-		}
+		DLSettings settings = DLUtil.getDLSettings(fileVersion.getGroupId());
 
 		if (serviceContext.isCommandAdd() &&
-			DLUtil.getEmailFileEntryAddedEnabled(preferences)) {
+			settings.getEmailFileEntryAddedEnabled()) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-				 DLUtil.getEmailFileEntryUpdatedEnabled(preferences)) {
+				 settings.getEmailFileEntryUpdatedEnabled()) {
 		}
 		else {
 			return;
@@ -2039,25 +2025,19 @@ public class DLAppHelperLocalServiceImpl
 		String entryTitle = fileVersion.getTitle();
 		String entryURL = getEntryURL(fileVersion, serviceContext);
 
-		String fromName = DLUtil.getEmailFromName(
-			preferences, fileVersion.getCompanyId());
-		String fromAddress = DLUtil.getEmailFromAddress(
-			preferences, fileVersion.getCompanyId());
+		String fromName = settings.getEmailFromName();
+		String fromAddress = settings.getEmailFromAddress();
 
 		Map<Locale, String> localizedSubjectMap = null;
 		Map<Locale, String> localizedBodyMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
-			localizedSubjectMap = DLUtil.getEmailFileEntryUpdatedSubjectMap(
-				preferences);
-			localizedBodyMap = DLUtil.getEmailFileEntryUpdatedBodyMap(
-				preferences);
+			localizedSubjectMap = settings.getEmailFileEntryUpdatedSubject();
+			localizedBodyMap = settings.getEmailFileEntryUpdatedBody();
 		}
 		else {
-			localizedSubjectMap = DLUtil.getEmailFileEntryAddedSubjectMap(
-				preferences);
-			localizedBodyMap = DLUtil.getEmailFileEntryAddedBodyMap(
-				preferences);
+			localizedSubjectMap = settings.getEmailFileEntryAddedSubject();
+			localizedBodyMap = settings.getEmailFileEntryAddedBody();
 		}
 
 		FileEntry fileEntry = fileVersion.getFileEntry();

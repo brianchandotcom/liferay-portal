@@ -564,7 +564,7 @@ create database lportal2 character set utf8;</echo>
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset
 				dir="${app.server.deploy.dir}"
-				excludes="${clean.app.server.deploy.dir.excludes}"
+				excludes=",*.dodeploy,*.rar,*.sar/**,*.xml,.autodeploystatus/**,liferay-portal/**,liferay-portal.war/**,marketplace-portlet/**,portal-compat-hook/**,security/**,root/**,ROOT/**,ROOT.war/**,tunnel-web/**,tunnel-web.war/**"
 			/>
 		</delete>
 	</target>
@@ -2498,9 +2498,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				<equals arg1="${skip.clean-app-server-deploy-dir}" arg2="true" />
 			</not>
 			<then>
-				<antcall target="clean-app-server-deploy-dir">
-					<param name="clean.app.server.deploy.dir.excludes" value=",*.dodeploy,*.rar,*.sar/**,*.xml,.autodeploystatus/**,liferay-portal/**,liferay-portal.war/**,marketplace-portlet/**,security/**,root/**,ROOT/**,ROOT.war/**,tunnel-web/**,tunnel-web.war/**" />
-				</antcall>
+				<antcall target="clean-app-server-deploy-dir" />
 			</then>
 		</if>
 

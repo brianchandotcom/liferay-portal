@@ -206,15 +206,6 @@
 		}
 	}
 
-	/* ---------- Quick access ---------- */
-
-	.quick-access-nav {
-		a {
-			background: #009AE5;
-			background: rgba(0, 154, 229, 0.9);
-		}
-	}
-
 	/* ---------- Help icon ---------- */
 
 	.taglib-icon-help {
@@ -751,6 +742,15 @@
 			&.toggler-header-expanded {
 				background-image: url(../images/arrows/05_down.png);
 			}
+		}
+	}
+
+	/* ---------- Quick access ---------- */
+
+	.quick-access-nav {
+		a {
+			background: #009AE5;
+			background: rgba(0, 154, 229, 0.9);
 		}
 	}
 

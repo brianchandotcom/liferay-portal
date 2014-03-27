@@ -723,12 +723,23 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	%portlet-action-bar-custom {
-		@include border-radius(20px);
+		@include respond-to(phone, tablet) {
+			@include border-radius(3px);
+		}
+
+		@include respond-to(desktop) {
+			@include border-radius(20px);
+		}
+
 		@include box-shadow(inset 0 1px 3px #000);
 	}
 
 	.portlet-borderless-bar {
 		@extend %portlet-action-bar-custom;
+
+		@include respond-to(phone, tablet) {
+			margin-bottom: 10px;
+		}
 	}
 
 	.portlet-content, .portlet-minimized .portlet-content-container {

@@ -119,11 +119,11 @@ if (ratingsEntry != null) {
 								<liferay-util:whitespace-remover>
 									<div class="rating-label">
 										<c:choose>
-											<c:when test="<%= (ratingsStats.getAverageScore() * ratingsStats.getTotalEntries() == 0) %>">
+											<c:when test="<%= (ratingsStats.getTotalScore() == 0) %>">
 												0
 											</c:when>
 											<c:otherwise>
-												<%= (ratingsStats.getAverageScore() > 0) ? "+" : StringPool.BLANK %><%= (int)(ratingsStats.getAverageScore() * ratingsStats.getTotalEntries()) %>
+												<%= (ratingsStats.getAverageScore() > 0) ? "+" : StringPool.BLANK %><%= (int)ratingsStats.getTotalScore() %>
 											</c:otherwise>
 										</c:choose>
 

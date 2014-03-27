@@ -460,8 +460,7 @@ public class BookmarksFolderLocalServiceWrapper
 	@Override
 	public java.util.List<java.lang.Object> getFoldersAndEntries(long groupId,
 		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return _bookmarksFolderLocalService.getFoldersAndEntries(groupId,
 			folderId);
 	}

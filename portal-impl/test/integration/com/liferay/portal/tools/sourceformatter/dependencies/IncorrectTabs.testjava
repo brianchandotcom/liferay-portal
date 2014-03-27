@@ -19,29 +19,25 @@ package com.liferay.portal.tools.sourceformatter.dependencies;
  */
 public class IncorrectTabs {
 
-	public void method1() {
+	public void method() {
 	return;
 	}
 
-	public void method2() {
-			return;
-	}
-
 	public void methodWithLongNameInOrderToHaveThrowsExceptionOnNextLine1()
-	throws Exception() {
+	throws Exception {
 
 		return;
 	}
 
 	public void methodWithLongNameInOrderToHaveThrowsExceptionOnNextLine2()
-			throws Exception() {
+			throws Exception {
 
 		return;
 	}
 
 	public void methodWithLongNameInOrderToHaveThrowsExceptionOnNextLine3(
 		String s)
-		throws Exception() {
+		throws Exception {
 
 		return;
 	}

@@ -16,6 +16,7 @@ package com.liferay.portal.tools.sourceformatter;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 
 import java.io.File;
@@ -81,7 +82,7 @@ public class BaseSourceProcessorTestCase {
 
 		if (!errorMessages.isEmpty() || (expectedErrorMessages.length > 0)) {
 			Assert.assertEquals(
-				errorMessages.size(), expectedErrorMessages.length);
+				expectedErrorMessages.length, errorMessages.size());
 
 			for (int i = 0; i < errorMessages.size(); i++) {
 				String actualErrorMessage = errorMessages.get(i);
@@ -108,7 +109,11 @@ public class BaseSourceProcessorTestCase {
 				File file = new File(_DIR_NAME + "/expected/" + fileName);
 
 				String expectedFormattedContent = FileUtils.readFileToString(
-					file, "UTF8");
+					file, StringPool.UTF8);
+
+				expectedFormattedContent = StringUtil.replace(
+					expectedFormattedContent, StringPool.RETURN_NEW_LINE,
+					StringPool.NEW_LINE);
 
 				Assert.assertEquals(
 					expectedFormattedContent, actualFormattedContent);

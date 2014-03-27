@@ -165,13 +165,22 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected BaseModel<?> getParentBaseModel(
-			Group group, ServiceContext serviceContext)
+			Group group, long parentBaseModelId, ServiceContext serviceContext)
 		throws Exception {
 
 		return MBCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, getSearchKeywords(),
+			TestPropsValues.getUserId(), parentBaseModelId, getSearchKeywords(),
 			StringPool.BLANK, serviceContext);
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
+			Group group, ServiceContext serviceContext)
+		throws Exception {
+
+		return getParentBaseModel(
+			group, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			serviceContext);
 	}
 
 	@Override
@@ -186,6 +195,11 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected boolean isAssetableModel() {
+		return false;
+	}
+
+	@Override
+	protected boolean isAssetableParentModel() {
 		return false;
 	}
 

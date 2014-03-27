@@ -12,22 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.notifications;
+package com.liferay.portlet.comments.notifications;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
+import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.util.BlogsTestUtil;
+import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
+import com.liferay.portlet.messageboards.util.MBTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -42,48 +41,45 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class DocumentLibraryUserNotificationTest
-	extends BaseUserNotificationTestCase {
+public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
-	protected BaseModel<?> addBaseModel() throws Exception {
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), group.getGroupId(), _folder.getFolderId(),
-			ServiceTestUtil.randomString());
+	public void setUp() throws Exception {
+		super.setUp();
 
-		return (BaseModel<?>)fileEntry.getModel();
+		_entry = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
 	}
 
 	@Override
-	protected void addContainerModel() throws Exception {
-		_folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+	protected BaseModel<?> addBaseModel() throws Exception {
+		return MBTestUtil.addDiscussionMessage(
+			TestPropsValues.getUser(), group.getGroupId(),
+			BlogsEntry.class.getName(), _entry.getEntryId());
 	}
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.DOCUMENT_LIBRARY;
+		return PortletKeys.COMMENTS;
 	}
 
 	@Override
 	protected void subscribeToContainer() throws Exception {
-		DLAppLocalServiceUtil.subscribeFolder(
-			user.getUserId(), group.getGroupId(), _folder.getFolderId());
+		MBDiscussionLocalServiceUtil.subscribeDiscussion(
+			user.getUserId(), group.getGroupId(), BlogsEntry.class.getName(),
+			_entry.getEntryId());
 	}
 
 	@Override
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppTestUtil.updateFileEntry(
-			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
-			false);
-
-		return (BaseModel<?>)fileEntry.getModel();
+		return MBTestUtil.updateDiscussionMessage(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			(Long)baseModel.getPrimaryKeyObj(), BlogsEntry.class.getName(),
+			_entry.getEntryId());
 	}
 
-	private Folder _folder;
+	private BlogsEntry _entry;
 
 }

@@ -24,6 +24,7 @@ import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 
@@ -43,8 +44,7 @@ public abstract class BaseUserNotificationTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-
-		user = TestPropsValues.getUser();
+		user = UserTestUtil.addOmniAdmin();
 
 		group = GroupTestUtil.addGroup();
 
@@ -56,11 +56,13 @@ public abstract class BaseUserNotificationTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(group);
-
 		deleteUserNotificationEvents(user.getUserId());
 
 		deleteUserNotificationDeliveries();
+
+		GroupLocalServiceUtil.deleteGroup(group);
+
+		UserLocalServiceUtil.deleteUser(user);
 	}
 
 	@Test

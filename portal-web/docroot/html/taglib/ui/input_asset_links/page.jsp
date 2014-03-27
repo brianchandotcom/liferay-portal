@@ -117,24 +117,52 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 			Map<String, Object> data = new HashMap<String, Object>();
 
-			data.put("href", assetBrowserURL.toString());
-			data.put("title", LanguageUtil.format(pageContext, "select-x", assetRendererFactory.getTypeName(locale), false));
+			if (!assetRendererFactory.isSupportsClassTypes()) {
+				data.put("href", assetBrowserURL.toString());
 
-			String type = assetRendererFactory.getTypeName(locale);
+				String type = assetRendererFactory.getTypeName(locale);
 
-			data.put("type", assetRendererFactory.getClassName());
-		%>
+				data.put("title", LanguageUtil.format(pageContext, "select-x", type, false));
+				data.put("type", type);
+			%>
 
-			<liferay-ui:icon
-				cssClass="asset-selector"
-				data="<%= data %>"
-				id="<%= FriendlyURLNormalizerUtil.normalize(type) %>"
-				message="<%= assetRendererFactory.getTypeName(locale) %>"
-				src="<%= assetRendererFactory.getIconPath(portletRequest) %>"
-				url="javascript:;"
-			/>
+				<liferay-ui:icon
+					cssClass="asset-selector"
+					data="<%= data %>"
+					id="<%= FriendlyURLNormalizerUtil.normalize(type) %>"
+					message="<%= type %>"
+					src="<%= assetRendererFactory.getIconPath(portletRequest) %>"
+					url="javascript:;"
+				/>
 
-		<%
+			<%
+			}
+			else {
+				Map<Long, String> assetAvailableClassTypes = assetRendererFactory.getClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
+
+				for (Map.Entry<Long, String> assetAvailableClassType : assetAvailableClassTypes.entrySet()) {
+					assetBrowserURL.setParameter("subtypeSelection", String.valueOf(assetAvailableClassType.getKey()));
+
+					data.put("href", assetBrowserURL.toString());
+
+					String type = assetAvailableClassType.getValue();
+
+					data.put("title", LanguageUtil.format(pageContext, "select-x", type, false));
+					data.put("type", type);
+					%>
+
+						<liferay-ui:icon
+							cssClass="asset-selector"
+							data="<%= data %>"
+							id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
+							message="<%= type %>"
+							src="<%= assetRendererFactory.getIconPath(portletRequest) %>"
+							url="javascript:;"
+						/>
+
+					 <%
+				}
+			}
 		}
 	}
 	%>

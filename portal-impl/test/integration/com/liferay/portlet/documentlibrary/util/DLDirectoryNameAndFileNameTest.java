@@ -70,7 +70,7 @@ public class DLDirectoryNameAndFileNameTest {
 
 		DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			true, name);
+			name);
 	}
 
 	@Test(expected = FolderNameException.class)
@@ -168,7 +168,7 @@ public class DLDirectoryNameAndFileNameTest {
 	public void testUpdateFileEntry() throws Exception {
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			true, StringUtil.randomString(20));
+			StringUtil.randomString(20));
 
 		String name =
 			StringUtil.randomString(20) + PropsValues.DL_CHAR_BLACKLIST[0];

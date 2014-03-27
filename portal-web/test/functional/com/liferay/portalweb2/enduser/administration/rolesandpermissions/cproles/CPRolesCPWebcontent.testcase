@@ -27,8 +27,6 @@
 		<var name="permissionDefinition1Value" value="Access in Site Administration" />
 		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT_ADD_FOLDER" />
 		<var name="permissionDefinition2Value" value="Add Folder" />
-		<var name="permissionNavigation1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
-		<var name="permissionNavigation1Value" value="Web Content" />
 		<var name="portletName1" value="Web Content" />
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
@@ -57,8 +55,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -75,8 +71,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -95,8 +89,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
-			<var name="permissionNavigationValue" value="Site Pages" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
@@ -105,8 +97,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -127,8 +117,6 @@
 		<var name="permissionDefinition1Value" value="Access in Site Administration" />
 		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT_ADD_STRUCTURE" />
 		<var name="permissionDefinition2Value" value="Add Structure" />
-		<var name="permissionNavigation1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
-		<var name="permissionNavigation1Value" value="Web Content" />
 		<var name="portletName1" value="Web Content" />
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
@@ -161,8 +149,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -179,8 +165,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -201,8 +185,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
-			<var name="permissionNavigationValue" value="Site Pages" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
@@ -211,8 +193,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -233,8 +213,6 @@
 		<var name="permissionDefinition1Value" value="Access in Site Administration" />
 		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT_ADD_TEMPLATE" />
 		<var name="permissionDefinition2Value" value="Add Template" />
-		<var name="permissionNavigation1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
-		<var name="permissionNavigation1Value" value="Web Content" />
 		<var name="portletName1" value="Web Content" />
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
@@ -265,8 +243,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -283,8 +259,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -303,8 +277,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
-			<var name="permissionNavigationValue" value="Site Pages" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
@@ -313,8 +285,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -335,8 +305,6 @@
 		<var name="permissionDefinition1Value" value="Access in Site Administration" />
 		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT_ADD_WEB_CONTENT" />
 		<var name="permissionDefinition2Value" value="Add Web Content" />
-		<var name="permissionNavigation1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
-		<var name="permissionNavigation1Value" value="Web Content" />
 		<var name="portletName1" value="Web Content" />
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
@@ -367,8 +335,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -385,8 +351,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -405,8 +369,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
-			<var name="permissionNavigationValue" value="Site Pages" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
@@ -415,8 +377,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -434,8 +394,6 @@
 	<command name="ViewWebContentPortletRegRole" priority="5">
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
-		<var name="permissionNavigationValue" value="Web Content" />
 		<var name="portletName1" value="Web Content" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -461,8 +419,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -475,8 +431,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
-			<var name="permissionNavigationValue" value="Site Pages" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
@@ -485,8 +439,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -501,8 +453,6 @@
 		<var name="pageName" value="Web Content Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
-		<var name="permissionNavigationValue" value="Web Content" />
 		<var name="portletName1" value="Web Content" />
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
@@ -539,8 +489,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -556,8 +504,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
-			<var name="permissionNavigationValue" value="Site Pages" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
@@ -566,8 +512,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />

@@ -49,8 +49,6 @@
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Orgrole Name" />
 		<var name="roleType" value="Organization" />
@@ -87,8 +85,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -108,8 +104,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -243,8 +237,6 @@
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -273,8 +265,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -293,8 +283,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -408,8 +396,6 @@
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
@@ -447,8 +433,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -468,8 +452,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -742,8 +724,6 @@
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Delete" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Orgrole Name" />
 		<var name="roleType" value="Organization" />
@@ -793,8 +773,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -815,8 +793,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
@@ -990,8 +966,6 @@
 		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
 		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -1014,8 +988,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyAdd}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -1096,8 +1068,6 @@
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Delete" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -1136,8 +1106,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -1156,8 +1124,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
@@ -1298,8 +1264,6 @@
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Delete" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
@@ -1350,8 +1314,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -1372,8 +1334,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
@@ -1672,8 +1632,6 @@
 		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_UPDATE_CHECKBOX" />
 		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -1696,8 +1654,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyAdd}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -1861,8 +1817,6 @@
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_SUBSCRIBE_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Subscribe" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
@@ -1900,8 +1854,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -1918,8 +1870,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -2045,8 +1995,6 @@
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_SUBSCRIBE_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Subscribe" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -2075,8 +2023,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -2091,8 +2037,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -2117,8 +2061,6 @@
 		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX" />
 		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -2141,8 +2083,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyAdd}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -2219,8 +2159,6 @@
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_PERMISSIONS_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Permissions" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -2249,8 +2187,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -2265,8 +2201,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -2372,8 +2306,6 @@
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_PERMISSIONS_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Permissions" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
@@ -2411,8 +2343,6 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
@@ -2429,8 +2359,6 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />

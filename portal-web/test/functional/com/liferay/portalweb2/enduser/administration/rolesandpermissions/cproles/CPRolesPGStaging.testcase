@@ -90,8 +90,6 @@
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="CONTROL_PANEL_SITES_SITES_SITE_VIEW_STAGING" />
 			<var name="permissionDefinitionValue" value="View Staging" />
-			<var name="permissionNavigationKey" value="CONTROL_PANEL_SITES_SITES" />
-			<var name="permissionNavigationValue" value="Sites" />
 			<var name="roleName" value="Regrole Name" />
 		</execute>
 
@@ -189,8 +187,6 @@
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_MANAGE_PAGES" />
 			<var name="permissionDefinitionValue" value="Manage Pages" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
-			<var name="permissionNavigationValue" value="Site Pages" />
 			<var name="roleName" value="Power User Name" />
 		</execute>
 
@@ -203,8 +199,6 @@
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add Entry" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-			<var name="permissionNavigationValue" value="Blogs" />
 			<var name="roleName" value="Power User Name" />
 		</execute>
 

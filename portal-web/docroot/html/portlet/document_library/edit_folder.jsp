@@ -1,3 +1,5 @@
+<%@ page
+	import="com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException" %>
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -70,6 +72,7 @@ if (workflowEnabled) {
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-folder-name" />
 	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-folder-name" />
 	<liferay-ui:error exception="<%= FolderNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="please-select-a-file-entry-type" />
 
 	<aui:model-context bean="<%= folder %>" model="<%= DLFolder.class %>" />
 

@@ -92,12 +92,14 @@ public class DLFileEntryFinderTest {
 			StringPool.BLANK, "Test Portlet", typeSettingsProperties, true,
 			serviceContext);
 
-		Object[] objects = setUp(_group.getGroupId(), serviceContext);
+		Object[] objects = setUp(
+			_group.getGroupId(), StringPool.BLANK, serviceContext);
 
 		_folderDefaultRepository = (Folder)objects[0];
 		_dlFileVersionDefaultRepository = (DLFileVersion)objects[1];
 
-		objects = setUp(_repository.getRepositoryId(), serviceContext);
+		objects = setUp(
+			_repository.getRepositoryId(), "-NewRepository", serviceContext);
 
 		_folderNewRepository = (Folder)objects[0];
 		_dlFileVersionNewRepository = (DLFileVersion)objects[1];
@@ -1046,7 +1048,7 @@ public class DLFileEntryFinderTest {
 
 		DLFileEntry dlFileEntry = dlFileEntries.get(0);
 
-		Assert.assertEquals("FE2.pdf", dlFileEntry.getTitle());
+		Assert.assertEquals("FE2.pdf-NewRepository", dlFileEntry.getTitle());
 	}
 
 	@Test
@@ -1126,7 +1128,7 @@ public class DLFileEntryFinderTest {
 
 		DLFileEntry dlFileEntry = dlFileEntries.get(0);
 
-		Assert.assertEquals("FE1.txt", dlFileEntry.getTitle());
+		Assert.assertEquals("FE1.txt-NewRepository", dlFileEntry.getTitle());
 	}
 
 	@Test
@@ -1405,7 +1407,9 @@ public class DLFileEntryFinderTest {
 			queryDefinition);
 	}
 
-	protected Object[] setUp(long repositoryId, ServiceContext serviceContext)
+	protected Object[] setUp(
+			long repositoryId, String titleSuffix,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Folder folder = DLAppLocalServiceUtil.addFolder(
@@ -1428,8 +1432,9 @@ public class DLFileEntryFinderTest {
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			user.getUserId(), _group.getGroupId(), repositoryId,
-			folder.getFolderId(), "FE1.txt", ContentTypes.TEXT_PLAIN, "FE1.txt",
-			null, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			folder.getFolderId(), "FE1.txt", ContentTypes.TEXT_PLAIN,
+			"FE1.txt".concat(titleSuffix), null,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			WorkflowConstants.ACTION_PUBLISH);
 
 		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
@@ -1446,15 +1451,17 @@ public class DLFileEntryFinderTest {
 
 		DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), repositoryId, folder.getFolderId(), "FE2.pdf",
-			ContentTypes.APPLICATION_PDF, "FE2.pdf", null,
+			ContentTypes.APPLICATION_PDF, "FE2.pdf".concat(titleSuffix), null,
 			WorkflowConstants.ACTION_PUBLISH);
 
 		fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), repositoryId, folder.getFolderId(), "FE3.txt");
+			_group.getGroupId(), repositoryId, folder.getFolderId(), "FE3.txt",
+			ContentTypes.TEXT_PLAIN, "FE3.txt".concat(titleSuffix), null,
+			WorkflowConstants.ACTION_PUBLISH);
 
 		fileEntry = DLAppTestUtil.updateFileEntry(
 			_group.getGroupId(), fileEntry.getFileEntryId(), "FE3.txt",
-			"FE3.txt");
+			"FE3.txt".concat(titleSuffix));
 
 		dlFileEntry = ((LiferayFileEntry)fileEntry).getDLFileEntry();
 

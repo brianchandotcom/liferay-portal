@@ -58,8 +58,6 @@
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 		</execute>
 
@@ -82,8 +80,6 @@
 		<execute macro="Role#removePermissionCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="roleName" value="${roleName}" />
 		</execute>
 

@@ -118,8 +118,7 @@ public class DLFileEntryFinderTest {
 			ContentTypes.APPLICATION_PDF, "FE2.pdf");
 
 		fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), _folder.getFolderId(), false, "FE3.txt",
-			"FE3.txt");
+			_group.getGroupId(), _folder.getFolderId(), "FE3.txt", "FE3.txt");
 
 		fileEntry = DLAppTestUtil.updateFileEntry(
 			_group.getGroupId(), fileEntry.getFileEntryId(), "FE3.txt",

@@ -105,8 +105,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 	@Test
 	public void testRequestFileInTrash() throws Exception {
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), false,
-			"Test Trash.txt");
+			group.getGroupId(), parentFolder.getFolderId(), "Test Trash.txt");
 
 		MockHttpServletResponse mockHttpServletResponse =  testRequestFile(
 			fileEntry, _user, false);

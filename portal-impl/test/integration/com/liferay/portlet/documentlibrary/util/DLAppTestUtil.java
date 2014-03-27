@@ -292,19 +292,6 @@ public abstract class DLAppTestUtil {
 			workflowAction, serviceContext);
 	}
 
-	public static Folder addFolder(
-			long groupId, Folder parentFolder, boolean rootFolder, String name)
-		throws Exception {
-
-		long parentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-		if (!rootFolder) {
-			parentFolderId = parentFolder.getFolderId();
-		}
-
-		return addFolder(groupId, parentFolderId, name);
-	}
-
 	public static Folder addFolder(long groupId, long parentFolderId)
 		throws Exception {
 

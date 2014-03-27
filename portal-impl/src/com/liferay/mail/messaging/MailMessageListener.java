@@ -46,30 +46,23 @@ public class MailMessageListener extends BaseMessageListener {
 
 		mailMessage.setFrom(from);
 
+		InternetAddress[] bcc = filterInternetAddresses(mailMessage.getBCC());
+
 		InternetAddress[] auditTrail = InternetAddress.parse(
 			PropsValues.MAIL_AUDIT_TRAIL);
 
 		if (auditTrail.length > 0) {
-			InternetAddress[] bcc = mailMessage.getBCC();
-
-			if (bcc != null) {
-				InternetAddress[] allBCC = new InternetAddress[
-					bcc.length + auditTrail.length];
-
-				ArrayUtil.combine(bcc, auditTrail, allBCC);
-
-				mailMessage.setBCC(allBCC);
+			if (ArrayUtil.isNotEmpty(bcc)) {
+				for (InternetAddress internetAddress : auditTrail) {
+					ArrayUtil.append(bcc, internetAddress);
+				}
 			}
 			else {
-				mailMessage.setBCC(auditTrail);
+				bcc = auditTrail;
 			}
 		}
-		else {
-			InternetAddress[] bcc = filterInternetAddresses(
-				mailMessage.getBCC());
 
-			mailMessage.setBCC(bcc);
-		}
+		mailMessage.setBCC(bcc);
 
 		InternetAddress[] to = filterInternetAddresses(mailMessage.getTo());
 

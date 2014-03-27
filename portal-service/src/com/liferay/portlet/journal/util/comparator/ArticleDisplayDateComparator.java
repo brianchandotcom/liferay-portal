@@ -66,8 +66,8 @@ public class ArticleDisplayDateComparator extends OrderByComparator {
 			ORDER_BY_FIELDS.length * 5 - 1);
 
 		boolean first = true;
-		for (String field : ORDER_BY_FIELDS) {
 
+		for (String field : ORDER_BY_FIELDS) {
 			if (getTableName() != null) {
 				orderBy.append(getTableName());
 				orderBy.append(StringPool.PERIOD);

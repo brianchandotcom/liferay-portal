@@ -212,8 +212,7 @@ public class MessageListenerImpl implements MessageListener {
 
 			ServiceContext serviceContext = new ServiceContext();
 
-			serviceContext.setAddGroupPermissions(true);
-			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setAttribute("propagatePermissions", Boolean.TRUE);
 			serviceContext.setLayoutFullURL(
 				PortalUtil.getLayoutFullURL(
 					groupId, PortletKeys.MESSAGE_BOARDS));

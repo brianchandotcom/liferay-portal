@@ -413,9 +413,9 @@ public class DLFileEntryFinderTest {
 			ServiceTestUtil.randomString(), _group.getGroupId());
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			user.getUserId(), _group.getGroupId(), folder.getFolderId(),
-			"FE1.txt", ContentTypes.TEXT_PLAIN, "FE1.txt", null,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			user.getUserId(), _group.getGroupId(), repositoryId,
+			folder.getFolderId(), "FE1.txt", ContentTypes.TEXT_PLAIN, "FE1.txt",
+			null, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			WorkflowConstants.ACTION_PUBLISH);
 
 		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
@@ -431,11 +431,12 @@ public class DLFileEntryFinderTest {
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 		DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), folder.getFolderId(), "FE2.pdf",
-			ContentTypes.APPLICATION_PDF, "FE2.pdf");
+			_group.getGroupId(), repositoryId, folder.getFolderId(), "FE2.pdf",
+			ContentTypes.APPLICATION_PDF, "FE2.pdf", null,
+			WorkflowConstants.ACTION_PUBLISH);
 
 		fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), folder.getFolderId(), "FE3.txt", "FE3.txt");
+			_group.getGroupId(), repositoryId, folder.getFolderId(), "FE3.txt");
 
 		fileEntry = DLAppTestUtil.updateFileEntry(
 			_group.getGroupId(), fileEntry.getFileEntryId(), "FE3.txt",

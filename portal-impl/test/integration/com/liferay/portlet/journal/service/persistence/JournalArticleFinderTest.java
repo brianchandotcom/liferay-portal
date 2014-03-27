@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
@@ -286,6 +285,10 @@ public class JournalArticleFinderTest {
 		doQueryByG_C_S(
 			_group.getGroupId(), JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 			_ddmStructure.getStructureKey(), queryDefinition, 1);
+
+		doQueryByG_C_S(
+			_group.getGroupId(), JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			_basicWebContentDDMStructure.getStructureKey(), queryDefinition, 1);
 	}
 
 	@Test
@@ -574,11 +577,8 @@ public class JournalArticleFinderTest {
 	private static final long _USER_ID = 1234L;
 
 	private JournalArticle _article;
-<<<<<<< HEAD
-	private DDMStructure _basicWebContentDDMStructure;
-=======
 	private List<JournalArticle> _articles = new ArrayList<JournalArticle>();
->>>>>>> LPS-43952 Added tests to reproduce the issue
+	private DDMStructure _basicWebContentDDMStructure;
 	private DDMStructure _ddmStructure;
 	private JournalFolder _folder;
 	private List<Long> _folderIds = new ArrayList<Long>();

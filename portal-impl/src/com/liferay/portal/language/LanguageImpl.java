@@ -14,6 +14,10 @@
 
 package com.liferay.portal.language;
 
+import com.liferay.portal.kernel.cache.CacheListener;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
@@ -44,6 +48,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+
+import java.io.Serializable;
 
 import java.text.MessageFormat;
 
@@ -957,13 +963,15 @@ public class LanguageImpl implements Language {
 	}
 
 	private void _resetAvailableLocales(long companyId) {
-		_instances.remove(companyId);
+		_portalCache.remove(companyId);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LanguageImpl.class);
 
 	private static Map<Long, LanguageImpl> _instances =
 		new ConcurrentHashMap<Long, LanguageImpl>();
+	private static PortalCache<Long, Serializable> _portalCache =
+		MultiVMPoolUtil.getCache(LanguageImpl.class.getName());
 
 	private Map<String, String> _charEncodings;
 	private Set<String> _duplicateLanguageCodes;
@@ -975,5 +983,55 @@ public class LanguageImpl implements Language {
 	private Set<Locale> _localesBetaSet;
 	private Map<String, Locale> _localesMap;
 	private Set<Locale> _localesSet;
+
+	static {
+		_portalCache.registerCacheListener(
+			new CacheListener<Long, Serializable>() {
+
+				@Override
+				public void notifyEntryEvicted(
+						PortalCache<Long, Serializable> portalCache, Long key,
+						Serializable value)
+					throws PortalCacheException {
+				}
+
+				@Override
+				public void notifyEntryExpired(
+						PortalCache<Long, Serializable> portalCache, Long key,
+						Serializable value)
+					throws PortalCacheException {
+				}
+
+				@Override
+				public void notifyEntryPut(
+						PortalCache<Long, Serializable> portalCache, Long key,
+						Serializable value)
+					throws PortalCacheException {
+				}
+
+				@Override
+				public void notifyEntryRemoved(
+						PortalCache<Long, Serializable> portalCache, Long key,
+						Serializable value)
+					throws PortalCacheException {
+
+					_instances.remove(key);
+				}
+
+				@Override
+				public void notifyEntryUpdated(
+						PortalCache<Long, Serializable> portalCache, Long key,
+						Serializable value)
+					throws PortalCacheException {
+				}
+
+				@Override
+				public void notifyRemoveAll(
+						PortalCache<Long, Serializable> portalCache)
+					throws PortalCacheException {
+				}
+
+			});
+	}
 
 }

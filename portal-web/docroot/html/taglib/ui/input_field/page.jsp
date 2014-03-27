@@ -418,7 +418,7 @@ if (hints != null) {
 							<liferay-ui:input-localized
 								autoFocus="<%= autoFocus %>"
 								availableLocales="<%= availableLocales %>"
-								cssClass='<%= cssClass + " lfr-input-text" %>'
+								cssClass='<%= cssClass + " lfr-input-editor" %>'
 								defaultLanguageId="<%= defaultLanguageId %>"
 								disabled="<%= disabled %>"
 								formName="<%= formName %>"
@@ -434,7 +434,7 @@ if (hints != null) {
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:input-editor
-								cssClass='<%= cssClass + \" lfr-input-text\" %>'
+								cssClass='<%= cssClass + \" lfr-input-editor\" %>'
 								editorImpl="ckeditor"
 								initMethod='<%= fieldParam + \"InitEditor\" %>'
 								name="<%= fieldParam %>"

@@ -24,6 +24,12 @@ public interface DLFileEntryFinder {
 	public int countByExtraSettings()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int countByG_R_F(long groupId,
+		java.util.List<java.lang.Long> repositoryIds,
+		java.util.List<java.lang.Long> folderIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public int countByG_F(long groupId,
 		java.util.List<java.lang.Long> folderIds,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
@@ -34,7 +40,19 @@ public interface DLFileEntryFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int countByG_U_R_F_M(long groupId, long userId,
+		java.util.List<java.lang.Long> repositoryIds,
+		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public int countByG_U_F_M(long groupId, long userId,
+		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int filterCountByG_U_R_F_M(long groupId, long userId,
+		java.util.List<java.lang.Long> repositoryIds,
 		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -53,14 +71,33 @@ public interface DLFileEntryFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int filterCountByG_R_F(long groupId,
+		java.util.List<java.lang.Long> repositoryIds,
+		java.util.List<java.lang.Long> folderIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> filterFindByG_F(
 		long groupId, java.util.List<java.lang.Long> folderIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> filterFindByG_R_F(
+		long groupId, java.util.List<java.lang.Long> repositoryIds,
+		java.util.List<java.lang.Long> folderIds,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> filterFindByG_U_F_M(
 		long groupId, long userId, java.util.List<java.lang.Long> folderIds,
 		java.lang.String[] mimeTypes,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> filterFindByG_U_R_F_M(
+		long groupId, long userId,
+		java.util.List<java.lang.Long> repositoryIds,
+		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -96,9 +133,22 @@ public interface DLFileEntryFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByG_R_F(
+		long groupId, java.util.List<java.lang.Long> repositoryIds,
+		java.util.List<java.lang.Long> folderIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByG_U_F_M(
 		long groupId, long userId, java.util.List<java.lang.Long> folderIds,
 		java.lang.String[] mimeTypes,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByG_U_R_F_M(
+		long groupId, long userId,
+		java.util.List<java.lang.Long> repositoryIds,
+		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

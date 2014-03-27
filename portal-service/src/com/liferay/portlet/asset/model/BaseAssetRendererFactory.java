@@ -141,8 +141,23 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	@Override
-	public String getTypeName(Locale locale, boolean hasSubtypes) {
+	public String getTypeName(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getTypeName(Locale)}
+	 */
+	@Deprecated
+	@Override
+	public String getTypeName(Locale locale, boolean hasSubtypes) {
+		return getTypeName(locale);
+	}
+
+	@Override
+	public String getTypeName(Locale locale, long subtypeId) {
+		return getTypeName(locale);
 	}
 
 	@Override
@@ -230,6 +245,11 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	@Override
+	public boolean isSupportsClassTypes() {
+		return _SUPPORTS_CLASS_TYPES;
+	}
+
+	@Override
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -291,6 +311,8 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		"checkbox", "ddm-date", "ddm-decimal", "ddm-integer", "ddm-number",
 		"radio", "select", "text"
 	};
+
+	private static final boolean _SUPPORTS_CLASS_TYPES = false;
 
 	private String _className;
 	private String _portletId;

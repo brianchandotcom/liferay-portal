@@ -119,7 +119,7 @@ public abstract class BaseModelUserNotificationHandler
 				assetRenderer.getClassName());
 
 		String typeName = assetRendererFactory.getTypeName(
-			serviceContext.getLocale(), true);
+			serviceContext.getLocale());
 
 		int notificationType = jsonObject.getInt("notificationType");
 

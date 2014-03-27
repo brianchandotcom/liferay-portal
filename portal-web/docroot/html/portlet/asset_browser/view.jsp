@@ -21,6 +21,7 @@ long groupId = ParamUtil.getLong(request, "groupId");
 long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selectedGroupIds"), 0L);
 long refererAssetEntryId = ParamUtil.getLong(request, "refererAssetEntryId");
 String typeSelection = ParamUtil.getString(request, "typeSelection");
+long subtypeSelection = ParamUtil.getLong(request, "subtypeSelection");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectAsset");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -29,6 +30,7 @@ portletURL.setParameter("struts_action", "/asset_browser/view");
 portletURL.setParameter("selectedGroupIds", StringUtil.merge(selectedGroupIds));
 portletURL.setParameter("refererAssetEntryId", String.valueOf(refererAssetEntryId));
 portletURL.setParameter("typeSelection", typeSelection);
+portletURL.setParameter("subtypeSelection", String.valueOf(subtypeSelection));
 portletURL.setParameter("eventName", eventName);
 
 request.setAttribute("view.jsp-portletURL", portletURL);
@@ -46,6 +48,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<liferay-util:include page="/html/portlet/asset_browser/toolbar.jsp">
 						<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<liferay-util:param name="typeSelection" value="<%= typeSelection %>" />
+						<liferay-util:param name="subtypeSelection" value="<%= String.valueOf(subtypeSelection) %>" />
 					</liferay-util:include>
 				</aui:nav>
 
@@ -122,7 +125,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 						data.put("assetentryid", assetEntry.getEntryId());
 						data.put("assetclassname", assetEntry.getClassName());
-						data.put("assettype", assetRendererFactory.getTypeName(locale, true));
+						data.put("assettype", assetRendererFactory.getTypeName(locale, subtypeSelection));
 						data.put("assettitle", assetEntry.getTitle(locale));
 						data.put("groupdescriptivename", group.getDescriptiveName(locale));
 						%>

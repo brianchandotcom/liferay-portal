@@ -18,10 +18,10 @@
 Hits hits = null;
 
 if (searchTerms.isAdvancedSearch()) {
-	hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), new long[] {searchTerms.getGroupId()}, themeDisplay.getUserId(), assetRendererFactory.getClassName(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), null, null, WorkflowConstants.STATUS_APPROVED, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+	hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), new long[] {searchTerms.getGroupId()}, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelection, searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), null, null, WorkflowConstants.STATUS_APPROVED, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
 }
 else {
-	hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), groupIds, themeDisplay.getUserId(), assetRendererFactory.getClassName(), searchTerms.getKeywords(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
+	hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), groupIds, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelection, searchTerms.getKeywords(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
 }
 
 searchContainer.setResults(ListUtil.fromArray(hits.getDocs()));

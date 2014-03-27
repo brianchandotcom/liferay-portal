@@ -21,18 +21,37 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 
 long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
 String typeSelection = ParamUtil.getString(request, "typeSelection");
+long subtypeSelection = ParamUtil.getLong(request, "subtypeSelection");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(typeSelection);
-
-Map<Long, String> classTypes = assetRendererFactory.getClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
 %>
 
 <aui:nav-item href="<%= portletURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
 
 <c:choose>
-	<c:when test="<%= classTypes.isEmpty() %>">
+	<c:when test="<%= assetRendererFactory.isSupportsClassTypes() && (subtypeSelection > 0) %>">
+
+		<%
+		PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, groupId, typeSelection, subtypeSelection, null, null, portletURL.toString());
+		%>
+
+		<c:if test="<%= addPortletURL != null %>">
+
+			<%
+			addPortletURL.setParameter("groupId", String.valueOf(groupId));
+
+			String addPortletURLString = addPortletURL.toString();
+
+			addPortletURLString = HttpUtil.addParameter(addPortletURLString, "doAsGroupId", groupId);
+			addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
+			%>
+
+			<aui:nav-item href="<%= addPortletURLString %>" label='<%= LanguageUtil.format(pageContext, "add-x", assetRendererFactory.getTypeName(locale, subtypeSelection)) %>' />
+		</c:if>
+	</c:when>
+	<c:otherwise>
 
 		<%
 		PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, groupId, typeSelection, 0, null, null, portletURL.toString());
@@ -51,50 +70,5 @@ Map<Long, String> classTypes = assetRendererFactory.getClassTypes(PortalUtil.get
 
 			<aui:nav-item href="<%= addPortletURLString %>" label='<%= LanguageUtil.format(pageContext, "add-x", assetRendererFactory.getTypeName(locale), false) %>' />
 		</c:if>
-	</c:when>
-	<c:otherwise>
-		<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>'>
-
-			<%
-			PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, groupId, typeSelection, 0, null, null, portletURL.toString());
-			%>
-
-			<c:if test="<%= addPortletURL != null %>">
-
-				<%
-				addPortletURL.setParameter("groupId", String.valueOf(groupId));
-
-				String addPortletURLString = addPortletURL.toString();
-
-				addPortletURLString = HttpUtil.addParameter(addPortletURLString, "doAsGroupId", groupId);
-				addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
-				%>
-
-				<aui:nav-item href="<%= addPortletURLString %>" label="<%= assetRendererFactory.getTypeName(locale) %>" />
-			</c:if>
-
-			<%
-			for (long classTypeId : classTypes.keySet()) {
-				addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, groupId, typeSelection, classTypeId, null, null, portletURL.toString());
-
-				if (addPortletURL == null) {
-					continue;
-				}
-
-				addPortletURL.setParameter("groupId", String.valueOf(groupId));
-
-				String addPortletURLString = addPortletURL.toString();
-
-				addPortletURLString = HttpUtil.addParameter(addPortletURLString, "doAsGroupId", groupId);
-				addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
-			%>
-
-				<aui:nav-item href="<%= addPortletURLString %>" label="<%= HtmlUtil.escape(classTypes.get(classTypeId)) %>" />
-
-			<%
-			}
-			%>
-
-		</aui:nav-item>
 	</c:otherwise>
 </c:choose>

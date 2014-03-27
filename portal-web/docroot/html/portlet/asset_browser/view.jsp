@@ -48,6 +48,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<liferay-util:include page="/html/portlet/asset_browser/toolbar.jsp">
 						<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<liferay-util:param name="typeSelection" value="<%= typeSelection %>" />
+						<liferay-util:param name="subtypeSelection" value="<%= String.valueOf(subtypeSelection) %>" />
 					</liferay-util:include>
 				</aui:nav>
 

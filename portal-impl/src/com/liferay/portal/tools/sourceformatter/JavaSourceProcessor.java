@@ -1164,7 +1164,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String javaTermContent = javaTerm.getContent();
 
 			while (true) {
-				String newJavaTermContent = sortAnnotations(javaTermContent);
+				String newJavaTermContent = sortAnnotations(
+					javaTermContent, StringPool.TAB);
 
 				if (javaTermContent.equals(newJavaTermContent)) {
 					break;
@@ -1176,7 +1177,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		return content;
+		return sortAnnotations(content, StringPool.BLANK);
 	}
 
 	protected String formatJava(String fileName, String content)
@@ -2692,7 +2693,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return false;
 	}
 
-	protected String sortAnnotations(String content) throws IOException {
+	protected String sortAnnotations(String content, String indent)
+		throws IOException {
+
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(content));
 
@@ -2702,11 +2705,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String previousAnnotation = StringPool.BLANK;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.equals(StringPool.TAB + StringPool.CLOSE_CURLY_BRACE)) {
+			if (line.equals(indent + StringPool.CLOSE_CURLY_BRACE)) {
 				return content;
 			}
 
-			if (StringUtil.count(line, StringPool.TAB) == 1) {
+			if (StringUtil.count(line, StringPool.TAB) == indent.length()) {
 				if (Validator.isNotNull(previousAnnotation) &&
 					(previousAnnotation.compareTo(annotation) > 0)) {
 
@@ -2718,7 +2721,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					return content;
 				}
 
-				if (line.startsWith(StringPool.TAB + StringPool.AT)) {
+				if (line.startsWith(indent + StringPool.AT)) {
 					if (Validator.isNotNull(annotation)) {
 						previousAnnotation = annotation;
 					}
@@ -2727,6 +2730,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 				else {
 					annotation = StringPool.BLANK;
+					previousAnnotation = StringPool.BLANK;
 				}
 			}
 			else {

@@ -106,29 +106,6 @@ public abstract class DLAppTestUtil {
 	}
 
 	public static FileEntry addFileEntry(
-			long groupId, long parentFolderId, boolean rootFolder,
-			String fileName)
-		throws Exception {
-
-		return addFileEntry(
-			groupId, parentFolderId, rootFolder, fileName, fileName);
-	}
-
-	public static FileEntry addFileEntry(
-			long groupId, long parentFolderId, boolean rootFolder,
-			String sourceFileName, String title)
-		throws Exception {
-
-		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-		if (!rootFolder) {
-			folderId = parentFolderId;
-		}
-
-		return addFileEntry(groupId, folderId, sourceFileName, title);
-	}
-
-	public static FileEntry addFileEntry(
 			long groupId, long repositoryId, long folderId,
 			String sourceFileName)
 		throws Exception {
@@ -282,19 +259,6 @@ public abstract class DLAppTestUtil {
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			folderId, sourceFileName, ContentTypes.TEXT_PLAIN, title, null,
 			workflowAction, serviceContext);
-	}
-
-	public static Folder addFolder(
-			long groupId, Folder parentFolder, boolean rootFolder, String name)
-		throws Exception {
-
-		long parentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-		if (!rootFolder) {
-			parentFolderId = parentFolder.getFolderId();
-		}
-
-		return addFolder(groupId, parentFolderId, name);
 	}
 
 	public static Folder addFolder(

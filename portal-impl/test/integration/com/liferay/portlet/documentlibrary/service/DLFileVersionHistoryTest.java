@@ -120,8 +120,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		throws Exception {
 
 		_fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), false,
-			_VERSION_1_0);
+			group.getGroupId(), parentFolder.getFolderId(), _VERSION_1_0);
 
 		long fileEntryId = _fileEntry.getFileEntryId();
 
@@ -218,8 +217,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		throws Exception {
 
 		_fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), false,
-			_VERSION_1_0);
+			group.getGroupId(), parentFolder.getFolderId(), _VERSION_1_0);
 
 		long fileEntryId = _fileEntry.getFileEntryId();
 

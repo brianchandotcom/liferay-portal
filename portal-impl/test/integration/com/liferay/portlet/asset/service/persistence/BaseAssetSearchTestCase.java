@@ -63,8 +63,8 @@ import org.junit.runner.RunWith;
 		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 @Sync
+@Transactional
 public abstract class BaseAssetSearchTestCase {
 
 	@Before

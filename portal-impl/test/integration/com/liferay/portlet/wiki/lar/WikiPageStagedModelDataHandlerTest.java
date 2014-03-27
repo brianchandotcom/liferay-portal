@@ -56,8 +56,8 @@ import org.junit.runner.RunWith;
 		SynchronousDestinationExecutionTestListener.class,
 		TransactionalExecutionTestListener.class
 	})
-@Sync
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
 public class WikiPageStagedModelDataHandlerTest
 	extends BaseWorkflowedStagedModelDataHandlerTestCase {
 

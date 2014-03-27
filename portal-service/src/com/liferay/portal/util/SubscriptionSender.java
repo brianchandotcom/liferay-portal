@@ -499,14 +499,20 @@ public class SubscriptionSender implements Serializable {
 		}
 
 		if (bulk) {
-			InternetAddress bulkAddress = new InternetAddress(
-				user.getEmailAddress(), user.getFullName());
+			if (UserNotificationManagerUtil.isDeliver(
+					user.getUserId(), portletId, _notificationClassNameId,
+					_notificationType,
+					UserNotificationDeliveryConstants.TYPE_EMAIL)) {
 
-			if (_bulkAddresses == null) {
-				_bulkAddresses = new ArrayList<InternetAddress>();
+				InternetAddress bulkAddress = new InternetAddress(
+					user.getEmailAddress(), user.getFullName());
+
+				if (_bulkAddresses == null) {
+					_bulkAddresses = new ArrayList<InternetAddress>();
+				}
+
+				_bulkAddresses.add(bulkAddress);
 			}
-
-			_bulkAddresses.add(bulkAddress);
 
 			sendNotification(user);
 		}

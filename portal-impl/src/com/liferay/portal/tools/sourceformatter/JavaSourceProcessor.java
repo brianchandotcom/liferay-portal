@@ -1161,18 +1161,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				checkTestAnnotations(javaTerm, fileName);
 			}
 
+			String javaTermContent = javaTerm.getContent();
+
 			while (true) {
-				String javaTermContent = javaTerm.getContent();
-
-				javaTerm.sortAnnotations();
-
-				String newJavaTermContent = javaTerm.getContent();
+				String newJavaTermContent = sortAnnotations(javaTermContent);
 
 				if (javaTermContent.equals(newJavaTermContent)) {
 					break;
 				}
 
 				content = content.replace(javaTermContent, newJavaTermContent);
+
+				javaTermContent = newJavaTermContent;
 			}
 		}
 
@@ -2690,6 +2690,55 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return false;
+	}
+
+	protected String sortAnnotations(String content) throws IOException {
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(content));
+
+		String line = null;
+
+		String annotation = StringPool.BLANK;
+		String previousAnnotation = StringPool.BLANK;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.equals(StringPool.TAB + StringPool.CLOSE_CURLY_BRACE)) {
+				return content;
+			}
+
+			if (StringUtil.count(line, StringPool.TAB) == 1) {
+				if (Validator.isNotNull(previousAnnotation) &&
+					(previousAnnotation.compareTo(annotation) > 0)) {
+
+					content = StringUtil.replaceFirst(
+						content, previousAnnotation, annotation);
+					content = StringUtil.replaceLast(
+						content, annotation, previousAnnotation);
+
+					return content;
+				}
+
+				if (line.startsWith(StringPool.TAB + StringPool.AT)) {
+					if (Validator.isNotNull(annotation)) {
+						previousAnnotation = annotation;
+					}
+
+					annotation = line + "\n";
+				}
+				else {
+					annotation = StringPool.BLANK;
+				}
+			}
+			else {
+				if (Validator.isNull(annotation)) {
+					return content;
+				}
+
+				annotation += line + "\n";
+			}
+		}
+
+		return content;
 	}
 
 	protected String sortExceptions(String line) {

@@ -1052,8 +1052,8 @@ public class DLFileEntryLocalServiceImpl
 			QueryDefinition queryDefinition)
 		throws Exception {
 
-		return dlFileEntryFinder.findByG_U_F_R_M(
-			groupId, userId, folderIds, repositoryIds, mimeTypes,
+		return dlFileEntryFinder.findByG_U_R_F_M(
+			groupId, userId, repositoryIds, folderIds, mimeTypes,
 			queryDefinition);
 	}
 
@@ -1115,8 +1115,8 @@ public class DLFileEntryLocalServiceImpl
 			QueryDefinition queryDefinition)
 		throws Exception {
 
-		return dlFileEntryFinder.countByG_U_F_R_M(
-			groupId, userId, folderIds, repositoryIds, mimeTypes,
+		return dlFileEntryFinder.countByG_U_R_F_M(
+			groupId, userId, repositoryIds, folderIds, mimeTypes,
 			queryDefinition);
 	}
 

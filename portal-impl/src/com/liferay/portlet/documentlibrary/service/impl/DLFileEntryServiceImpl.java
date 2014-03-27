@@ -496,7 +496,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@Override
 	public List<DLFileEntry> getGroupFileEntries(
-			long groupId, long userId, long rootFolderId, long repositoryId,
+			long groupId, long userId, long repositoryId, long rootFolderId,
 			String[] mimeTypes, int status, int start, int end,
 			OrderByComparator obc)
 		throws PortalException, SystemException {
@@ -511,8 +511,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			status, start, end, obc);
 
 		if (rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return dlFileEntryFinder.filterFindByG_U_F_R_M(
-				groupId, userId, new ArrayList<Long>(), repositoryIds,
+			return dlFileEntryFinder.filterFindByG_U_R_F_M(
+				groupId, userId, repositoryIds, new ArrayList<Long>(),
 				mimeTypes, queryDefinition);
 		}
 
@@ -523,8 +523,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		return dlFileEntryFinder.filterFindByG_U_F_R_M(
-			groupId, userId, folderIds, repositoryIds, mimeTypes,
+		return dlFileEntryFinder.filterFindByG_U_R_F_M(
+			groupId, userId, repositoryIds, folderIds, mimeTypes,
 			queryDefinition);
 	}
 
@@ -535,7 +535,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return getGroupFileEntries(
-			groupId, userId, rootFolderId, 0, mimeTypes, status, start, end,
+			groupId, userId, 0, rootFolderId, mimeTypes, status, start, end,
 			obc);
 	}
 
@@ -562,7 +562,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@Override
 	public int getGroupFileEntriesCount(
-			long groupId, long userId, long rootFolderId, long repositoryId,
+			long groupId, long userId, long repositoryId, long rootFolderId,
 			String[] mimeTypes, int status)
 		throws PortalException, SystemException {
 
@@ -573,8 +573,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		}
 
 		if (rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return dlFileEntryFinder.filterCountByG_U_F_R_M(
-				groupId, userId, new ArrayList<Long>(), repositoryIds,
+			return dlFileEntryFinder.filterCountByG_U_R_F_M(
+				groupId, userId, repositoryIds, new ArrayList<Long>(),
 				mimeTypes, new QueryDefinition(status));
 		}
 
@@ -585,8 +585,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			return 0;
 		}
 
-		return dlFileEntryFinder.filterCountByG_U_F_R_M(
-			groupId, userId, folderIds, repositoryIds, mimeTypes,
+		return dlFileEntryFinder.filterCountByG_U_R_F_M(
+			groupId, userId, repositoryIds, folderIds, mimeTypes,
 			new QueryDefinition(status));
 	}
 
@@ -597,7 +597,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return getGroupFileEntriesCount(
-			groupId, userId, rootFolderId, 0, mimeTypes, status);
+			groupId, userId, 0, rootFolderId, mimeTypes, status);
 	}
 
 	@Override

@@ -3079,14 +3079,11 @@ public class PortalImpl implements Portal {
 
 		String layoutURL = getLayoutURL(layout, themeDisplay, doAsUser);
 
-		if (HttpUtil.hasProtocol(layoutURL)) {
-			return layoutURL;
+		if (!HttpUtil.hasProtocol(layoutURL)) {
+			layoutURL = getPortalURL(layout, themeDisplay) + (layoutURL);
 		}
-		else {
-			String portalURL = getPortalURL(layout, themeDisplay);
 
-			return portalURL + layoutURL;
-		}
+		return layoutURL;
 	}
 
 	@Override

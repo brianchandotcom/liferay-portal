@@ -108,7 +108,6 @@ import com.liferay.portlet.sites.util.SitesUtil;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -1411,38 +1410,7 @@ public class ServicePreAction extends Action {
 			long userId, long groupId, boolean privateLayout, File larFile)
 		throws PortalException, SystemException {
 
-		Map<String, String[]> parameterMap = new HashMap<String, String[]>();
-
-		parameterMap.put(
-			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_CONFIGURATION,
-				new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-				new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-				new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.THEME_REFERENCE,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL,
-			new String[] {Boolean.TRUE.toString()});
+		Map<String, String[]> parameterMap = getLARParameters();
 
 		LayoutLocalServiceUtil.importLayouts(
 			userId, groupId, privateLayout, parameterMap, larFile);
@@ -1797,6 +1765,44 @@ public class ServicePreAction extends Action {
 		friendlyURL = GetterUtil.getString(friendlyURL);
 
 		return FriendlyURLNormalizerUtil.normalize(friendlyURL);
+	}
+
+	protected Map<String, String[]> getLARParameters() {
+		Map<String, String[]> parameterMap =
+			new LinkedHashMap<String, String[]>();
+
+		parameterMap.put(
+			PortletDataHandlerKeys.PERMISSIONS,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.THEME_REFERENCE,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL,
+			new String[] {Boolean.TRUE.toString()});
+
+		return parameterMap;
 	}
 
 	protected Object[] getViewableLayouts(

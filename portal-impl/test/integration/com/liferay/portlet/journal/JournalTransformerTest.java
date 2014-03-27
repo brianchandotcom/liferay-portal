@@ -99,6 +99,8 @@ public class JournalTransformerTest {
 
 		Assert.assertEquals("Joe Bloggs", content);
 
+		document = SAXReaderUtil.read(xml);
+
 		Element element = (Element)document.selectSingleNode(
 			"//dynamic-content");
 

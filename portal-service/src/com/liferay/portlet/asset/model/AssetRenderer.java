@@ -74,6 +74,8 @@ public interface AssetRenderer {
 
 	public String getSearchSummary(Locale locale);
 
+	public String getSummary();
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(PortletRequest,
 	 *             PortletResponse)}

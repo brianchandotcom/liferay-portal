@@ -64,6 +64,12 @@ public class MailMessageListener extends BaseMessageListener {
 				mailMessage.setBCC(auditTrail);
 			}
 		}
+		else {
+			InternetAddress[] bcc = filterInternetAddresses(
+				mailMessage.getBCC());
+
+			mailMessage.setBCC(bcc);
+		}
 
 		InternetAddress[] to = filterInternetAddresses(mailMessage.getTo());
 
@@ -72,10 +78,6 @@ public class MailMessageListener extends BaseMessageListener {
 		InternetAddress[] cc = filterInternetAddresses(mailMessage.getCC());
 
 		mailMessage.setCC(cc);
-
-		InternetAddress[] bcc = filterInternetAddresses(mailMessage.getBCC());
-
-		mailMessage.setBCC(bcc);
 
 		InternetAddress[] bulkAddresses = filterInternetAddresses(
 			mailMessage.getBulkAddresses());

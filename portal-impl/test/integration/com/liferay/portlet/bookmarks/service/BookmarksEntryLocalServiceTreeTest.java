@@ -15,10 +15,13 @@
 package com.liferay.portlet.bookmarks.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
@@ -28,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,14 +44,14 @@ import org.testng.Assert;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class BookmarksEntryLocalServiceTreeTest {
 
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
+
 	@After
 	public void tearDown() throws Exception {
-		for (int i = _entries.size() - 1; i >= 0; i--) {
-			BookmarksEntryLocalServiceUtil.deleteBookmarksEntry(
-				_entries.get(i));
-		}
-
-		BookmarksFolderLocalServiceUtil.deleteBookmarksFolder(_folder);
+		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -88,5 +92,6 @@ public class BookmarksEntryLocalServiceTreeTest {
 
 	private List<BookmarksEntry> _entries = new ArrayList<BookmarksEntry>();
 	private BookmarksFolder _folder;
+	private Group _group;
 
 }

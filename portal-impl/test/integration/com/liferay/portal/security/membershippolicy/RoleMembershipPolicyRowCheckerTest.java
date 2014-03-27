@@ -14,9 +14,14 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.test.EnvironmentExecutionTestListener;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.rolesadmin.search.UserRoleChecker;
 
@@ -24,12 +29,20 @@ import javax.portlet.RenderResponse;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Roberto Díaz
  */
+@ExecutionTestListeners(
+	listeners = {
+		EnvironmentExecutionTestListener.class,
+		TransactionalExecutionTestListener.class
+	})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Transactional
 public class RoleMembershipPolicyRowCheckerTest
 	extends BaseRoleMembershipPolicyTestCase {
 

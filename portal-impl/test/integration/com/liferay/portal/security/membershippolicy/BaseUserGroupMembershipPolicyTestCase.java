@@ -24,7 +24,7 @@ import org.junit.Before;
  * @author Roberto Díaz
  */
 public abstract class BaseUserGroupMembershipPolicyTestCase
-	extends BaseMembersipPolicyTestCase {
+	extends BaseMembershipPolicyTestCase {
 
 	public static long[] getForbiddenUserGroupIds() {
 		return _forbiddenUserGroupIds;

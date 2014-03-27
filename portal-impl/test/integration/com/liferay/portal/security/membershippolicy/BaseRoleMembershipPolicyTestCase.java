@@ -22,7 +22,7 @@ import org.junit.After;
  * @author Roberto Díaz
  */
 public abstract class BaseRoleMembershipPolicyTestCase
-	extends BaseMembersipPolicyTestCase {
+	extends BaseMembershipPolicyTestCase {
 
 	public static long[] getForbiddenRoleIds() {
 		return _forbiddenRoleIds;

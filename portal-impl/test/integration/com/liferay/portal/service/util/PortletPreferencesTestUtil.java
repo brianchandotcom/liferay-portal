@@ -74,27 +74,48 @@ public class PortletPreferencesTestUtil {
 			portlet.getPortletId());
 	}
 
+	public static String getPortletPreferencesXML() {
+		return getPortletPreferencesXML(null, null);
+	}
+
+	public static String getPortletPreferencesXML(String name) {
+		return getPortletPreferencesXML(name, null);
+	}
+
 	public static String getPortletPreferencesXML(
 		String name, String[] values) {
 
-		StringBundler sb = new StringBundler(7 + (values.length * 3));
+		StringBundler sb = new StringBundler();
 
 		sb.append("<portlet-preferences>");
-		sb.append("<preference>");
-		sb.append("<name>");
-		sb.append(name);
-		sb.append("</name>");
 
-		for (String value : values) {
-			sb.append("<value>");
-			sb.append(value);
-			sb.append("</value>");
+		if ((name != null) || (values != null)) {
+			sb.append("<preference>");
+
+			if (name != null) {
+				sb.append("<name>");
+				sb.append(name);
+				sb.append("</name>");
+			}
+
+			if (values != null) {
+				for (String value : values) {
+					sb.append("<value>");
+					sb.append(value);
+					sb.append("</value>");
+				}
+			}
+
+			sb.append("</preference>");
 		}
 
-		sb.append("</preference>");
 		sb.append("</portlet-preferences>");
 
 		return sb.toString();
+	}
+
+	public static String getPortletPreferencesXML(String[] values) {
+		return getPortletPreferencesXML(null, values);
 	}
 
 	public static PortletPreferencesImpl toPortletPreferencesImpl(
@@ -106,6 +127,16 @@ public class PortletPreferencesTestUtil {
 			portletPreferences.getOwnerType(), portletPreferences.getPlid(),
 			portletPreferences.getPortletId(),
 			portletPreferences.getPreferences());
+	}
+
+	public static PortletPreferencesImpl toPortletPreferencesImpl(String xml)
+		throws Exception {
+
+		PortletPreferencesImpl portletPreferencesImpl =
+			(PortletPreferencesImpl)
+				PortletPreferencesFactoryUtil.fromDefaultXML(xml);
+
+		return portletPreferencesImpl;
 	}
 
 }

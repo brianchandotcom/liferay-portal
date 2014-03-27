@@ -16,13 +16,14 @@ package com.liferay.portlet.asset.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetTagStats;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -30,6 +31,7 @@ import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,20 +47,24 @@ import org.junit.runner.RunWith;
 @Transactional
 public class AssetTagStatsServiceTest {
 
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
+
 	@Test
-	@Transactional
 	public void testGetTagStats() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			TestPropsValues.getGroupId());
+			_group.getGroupId());
 
 		serviceContext.setAssetTagNames(new String[] {"basketball"});
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			TestPropsValues.getGroupId(), ServiceTestUtil.randomString(),
+			_group.getGroupId(), ServiceTestUtil.randomString(),
 			ServiceTestUtil.randomString(100), serviceContext);
 
 		AssetTag tag = AssetTagLocalServiceUtil.getTag(
-			TestPropsValues.getGroupId(), "basketball");
+			_group.getGroupId(), "basketball");
 
 		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
 
@@ -74,5 +80,7 @@ public class AssetTagStatsServiceTest {
 
 		Assert.assertEquals(0, tagStats.getAssetCount());
 	}
+
+	private Group _group;
 
 }

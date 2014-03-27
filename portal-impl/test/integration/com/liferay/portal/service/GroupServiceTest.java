@@ -80,8 +80,10 @@ import org.junit.runner.RunWith;
 public class GroupServiceTest {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		FinderCacheUtil.clearCache();
+
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
@@ -371,7 +373,7 @@ public class GroupServiceTest {
 
 		themeDisplay.setPlid(group.getClassPK());
 
-		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
 
 		String scopeDescriptiveName = group.getScopeDescriptiveName(
 			themeDisplay);
@@ -399,7 +401,7 @@ public class GroupServiceTest {
 
 		Group group = addGroup(false, false, true);
 
-		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
 
 		String scopeDescriptiveName = group.getScopeDescriptiveName(
 			themeDisplay);
@@ -474,7 +476,7 @@ public class GroupServiceTest {
 
 		themeDisplay.setPlid(group.getClassPK());
 
-		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
 
 		String scopeLabel = group.getScopeLabel(themeDisplay);
 
@@ -503,7 +505,7 @@ public class GroupServiceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
 
 		String scopeLabel = group.getScopeLabel(themeDisplay);
 
@@ -1058,5 +1060,7 @@ public class GroupServiceTest {
 				TestPropsValues.getCompanyId(), availableLocales);
 		}
 	}
+
+	private Group _group;
 
 }

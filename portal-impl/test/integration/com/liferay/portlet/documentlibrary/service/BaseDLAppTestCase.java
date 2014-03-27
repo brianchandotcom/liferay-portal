@@ -23,7 +23,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.RoleTestUtil;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
@@ -38,6 +37,8 @@ public abstract class BaseDLAppTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		_name = PrincipalThreadLocal.getName();
+
 		group = GroupTestUtil.addGroup();
 
 		parentFolder = DLAppTestUtil.addFolder(
@@ -52,7 +53,7 @@ public abstract class BaseDLAppTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+		PrincipalThreadLocal.setName(_name);
 
 		GroupLocalServiceUtil.deleteGroup(group);
 
@@ -67,5 +68,7 @@ public abstract class BaseDLAppTestCase {
 
 	protected Group group;
 	protected Folder parentFolder;
+
+	private String _name;
 
 }

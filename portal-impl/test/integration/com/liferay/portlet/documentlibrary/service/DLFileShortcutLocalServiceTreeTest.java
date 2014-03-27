@@ -78,8 +78,8 @@ public class DLFileShortcutLocalServiceTreeTest {
 
 	protected void createTree() throws Exception {
 		_fileEntry = DLAppTestUtil.addFileEntry(
-			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Entry A.txt");
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Entry A.txt");
 
 		DLFileShortcut dlFileShortcutA = DLAppTestUtil.addDLFileShortcut(
 			_fileEntry, TestPropsValues.getGroupId(),
@@ -88,8 +88,8 @@ public class DLFileShortcutLocalServiceTreeTest {
 		_dlFileShortcuts.add(dlFileShortcutA);
 
 		_folder = DLAppTestUtil.addFolder(
-			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A");
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Folder A");
 
 		DLFileShortcut dlFileShortcutAA = DLAppTestUtil.addDLFileShortcut(
 			_fileEntry, TestPropsValues.getGroupId(), _folder.getFolderId());

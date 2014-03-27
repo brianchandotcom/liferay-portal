@@ -81,7 +81,7 @@ public class BaseSourceProcessorTestCase {
 
 		if (!errorMessages.isEmpty() || (expectedErrorMessages.length > 0)) {
 			Assert.assertEquals(
-				errorMessages.size(), expectedErrorMessages.length);
+				expectedErrorMessages.length, errorMessages.size());
 
 			for (int i = 0; i < errorMessages.size(); i++) {
 				String actualErrorMessage = errorMessages.get(i);

@@ -138,6 +138,20 @@ public class MBTestUtil {
 	}
 
 	public static MBMessage addMessage(
+			long groupId, long categoryId, boolean approved)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return addMessage(
+			categoryId, StringPool.BLANK, approved, serviceContext);
+	}
+
+	public static MBMessage addMessage(
 			long groupId, long categoryId, long threadId, long parentMessageId)
 		throws Exception {
 
@@ -276,6 +290,21 @@ public class MBTestUtil {
 			userId, messageId, className, classPK,
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
 			serviceContext);
+	}
+
+	public static MBMessage updateMessage(MBMessage message) throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			message.getGroupId());
+
+		serviceContext.setCommand(Constants.UPDATE);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return MBMessageLocalServiceUtil.updateMessage(
+			TestPropsValues.getUserId(), message.getMessageId(),
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
+			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
+			Collections.<String>emptyList(), message.getPriority(),
+			message.isAllowPingbacks(), serviceContext);
 	}
 
 	protected static MBMessage addMessage(

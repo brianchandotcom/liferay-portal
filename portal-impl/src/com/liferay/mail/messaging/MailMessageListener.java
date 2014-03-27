@@ -46,6 +46,14 @@ public class MailMessageListener extends BaseMessageListener {
 
 		mailMessage.setFrom(from);
 
+		InternetAddress[] to = filterInternetAddresses(mailMessage.getTo());
+
+		mailMessage.setTo(to);
+
+		InternetAddress[] cc = filterInternetAddresses(mailMessage.getCC());
+
+		mailMessage.setCC(cc);
+
 		InternetAddress[] bcc = filterInternetAddresses(mailMessage.getBCC());
 
 		InternetAddress[] auditTrail = InternetAddress.parse(
@@ -63,14 +71,6 @@ public class MailMessageListener extends BaseMessageListener {
 		}
 
 		mailMessage.setBCC(bcc);
-
-		InternetAddress[] to = filterInternetAddresses(mailMessage.getTo());
-
-		mailMessage.setTo(to);
-
-		InternetAddress[] cc = filterInternetAddresses(mailMessage.getCC());
-
-		mailMessage.setCC(cc);
 
 		InternetAddress[] bulkAddresses = filterInternetAddresses(
 			mailMessage.getBulkAddresses());

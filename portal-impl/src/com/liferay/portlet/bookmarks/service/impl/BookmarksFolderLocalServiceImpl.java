@@ -269,23 +269,10 @@ public class BookmarksFolderLocalServiceImpl
 
 	@Override
 	public List<Object> getFoldersAndEntries(long groupId, long folderId)
-		throws SystemException, PortalException {
+		throws SystemException {
 
-		BookmarksFolder folder = bookmarksFolderPersistence.findByPrimaryKey(
-			folderId);
-
-		int curFolderStatus = folder.getStatus();
-
-		int status = WorkflowConstants.STATUS_ANY;
-
-		if (curFolderStatus == WorkflowConstants.STATUS_IN_TRASH) {
-			status = WorkflowConstants.STATUS_ANY;
-		}
-		else {
-			status = WorkflowConstants.STATUS_IN_TRASH;
-		}
-
-		return getFoldersAndEntries(groupId, folderId, status);
+		return getFoldersAndEntries(
+			groupId, folderId, WorkflowConstants.STATUS_ANY);
 	}
 
 	@Override
@@ -917,7 +904,8 @@ public class BookmarksFolderLocalServiceImpl
 				// Folders and entries
 
 				List<Object> curFoldersAndEntries = getFoldersAndEntries(
-					folder.getGroupId(), folder.getFolderId());
+					folder.getGroupId(), folder.getFolderId(),
+					WorkflowConstants.STATUS_IN_TRASH);
 
 				restoreDependentsFromTrash(curFoldersAndEntries, trashEntryId);
 

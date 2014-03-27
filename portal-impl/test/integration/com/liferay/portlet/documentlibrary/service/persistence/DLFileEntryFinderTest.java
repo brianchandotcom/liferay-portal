@@ -102,7 +102,6 @@ public class DLFileEntryFinderTest {
 			_repository.getRepositoryId(), "-NewRepository", serviceContext);
 
 		_folderNewRepository = (Folder)objects[0];
-		_dlFileVersionNewRepository = (DLFileVersion)objects[1];
 	}
 
 	@After
@@ -1485,7 +1484,6 @@ public class DLFileEntryFinderTest {
 	private static final long _SMALL_IMAGE_ID = 1234L;
 
 	private DLFileVersion _dlFileVersionDefaultRepository;
-	private DLFileVersion _dlFileVersionNewRepository;
 	private Folder _folderDefaultRepository;
 	private Folder _folderNewRepository;
 	private Group _group;

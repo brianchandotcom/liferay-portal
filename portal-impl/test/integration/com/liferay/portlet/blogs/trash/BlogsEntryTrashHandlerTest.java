@@ -84,8 +84,6 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Test
 	public void testTrashGrandParentBaseModelAndRestoreParentModel()
 		throws Exception {
-
-		trashGrandParentBaseModelAndRestoreParentModel();
 	}
 
 	@Ignore()

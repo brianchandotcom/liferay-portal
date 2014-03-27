@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.trash;
 
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -203,21 +202,19 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			WorkflowConstants.STATUS_ANY);
-
 		MBCategory category = (MBCategory)parentBaseModel;
 
-		return MBThreadLocalServiceUtil.getGroupThreadsCount(
-			category.getGroupId(), queryDefinition);
+		return MBThreadLocalServiceUtil.getCategoryThreadsCount(
+			category.getGroupId(), category.getCategoryId(),
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
 	protected BaseModel<?> getParentBaseModel(
-			Group group, long parentModelId, ServiceContext serviceContext)
+			Group group, long parentBaseModelId, ServiceContext serviceContext)
 		throws Exception {
 
-		return MBTestUtil.addCategory(group.getGroupId(), parentModelId);
+		return MBTestUtil.addCategory(group.getGroupId(), parentBaseModelId);
 	}
 
 	@Override
@@ -251,6 +248,11 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
+	}
+
+	@Override
+	protected boolean isAssetableParentModel() {
+		return false;
 	}
 
 	@Override

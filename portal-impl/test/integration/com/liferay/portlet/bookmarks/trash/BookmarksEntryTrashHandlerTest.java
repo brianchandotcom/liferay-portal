@@ -177,11 +177,11 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected BaseModel<?> getParentBaseModel(
-			Group group, long parentModelId, ServiceContext serviceContext)
+			Group group, long parentBaseModelId, ServiceContext serviceContext)
 		throws Exception {
 
 		return BookmarksFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), parentModelId,
+			TestPropsValues.getUserId(), parentBaseModelId,
 			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
@@ -190,10 +190,9 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
-		return BookmarksFolderLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString(), StringPool.BLANK, serviceContext);
+		return getParentBaseModel(
+			group, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			serviceContext);
 	}
 
 	@Override

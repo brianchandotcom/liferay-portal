@@ -396,7 +396,7 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception;
 
 	protected BaseModel<?> getParentBaseModel(
-			Group group, long parentModelId, ServiceContext serviceContext)
+			Group group, long parentBaseModelId, ServiceContext serviceContext)
 		throws Exception {
 
 		return group;
@@ -442,6 +442,10 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	protected boolean isAssetableModel() {
+		return true;
+	}
+
+	protected boolean isAssetableParentModel() {
 		return true;
 	}
 
@@ -768,32 +772,42 @@ public abstract class BaseTrashHandlerTestCase {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
-		BaseModel<?> parentBaseModel = getParentBaseModel(
+		BaseModel<?> grandParentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		BaseModel<?> grandParentBaseModel = getParentBaseModel(
-			group, (Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
-
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
-			parentBaseModel);
+			grandParentBaseModel);
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
-		baseModel = addBaseModel(grandParentBaseModel, true, serviceContext);
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, (Long)grandParentBaseModel.getPrimaryKeyObj(),
+			serviceContext);
 
-		Assert.assertEquals(
-			initialBaseModelsCount,
-			getNotInTrashBaseModelsCount(parentBaseModel));
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		if (getBaseModelClassName().equals(getParentBaseModelClassName())) {
+			Assert.assertEquals(
+				initialBaseModelsCount + 1,
+				getNotInTrashBaseModelsCount(grandParentBaseModel));
+		}
+		else {
+			Assert.assertEquals(
+				initialBaseModelsCount,
+				getNotInTrashBaseModelsCount(grandParentBaseModel));
+		}
+
 		Assert.assertEquals(
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
 
-		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
+		moveParentBaseModelToTrash(
+			(Long)grandParentBaseModel.getPrimaryKeyObj());
 
 		Assert.assertTrue(isInTrashContainer(baseModel));
-		Assert.assertTrue(isInTrashContainer(grandParentBaseModel));
+		Assert.assertTrue(isInTrashContainer(parentBaseModel));
 
 		Assert.assertEquals(
 			initialBaseModelsCount,
-			getNotInTrashBaseModelsCount(parentBaseModel));
+			getNotInTrashBaseModelsCount(grandParentBaseModel));
 		Assert.assertEquals(
 			initialTrashEntriesCount + 1,
 			getTrashEntriesCount(group.getGroupId()));
@@ -806,23 +820,27 @@ public abstract class BaseTrashHandlerTestCase {
 			Assert.assertFalse(isAssetEntryVisible(baseModel));
 		}
 
-		Assert.assertFalse(isAssetEntryVisible(grandParentBaseModel));
+		if (isAssetableParentModel()) {
+			Assert.assertFalse(isAssetEntryVisible(parentBaseModel));
+		}
 
 		parentTrashHandler.restoreTrashEntry(
 			TestPropsValues.getUserId(),
-			(Long)parentBaseModel.getPrimaryKeyObj());
+			(Long)grandParentBaseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
 
 		Assert.assertFalse(isInTrashContainer(baseModel));
-		Assert.assertFalse(isInTrashContainer(grandParentBaseModel));
+		Assert.assertFalse(isInTrashContainer(parentBaseModel));
 
 		if (isAssetableModel()) {
 			Assert.assertTrue(isAssetEntryVisible(baseModel));
 		}
 
-		Assert.assertTrue(isAssetEntryVisible(grandParentBaseModel));
+		if (isAssetableParentModel()) {
+			Assert.assertTrue(isAssetEntryVisible(parentBaseModel));
+		}
 	}
 
 	protected void trashIsRestorableBaseModel() throws Exception {

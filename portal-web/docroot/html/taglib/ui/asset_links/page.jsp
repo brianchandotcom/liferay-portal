@@ -49,13 +49,11 @@ if (assetEntryId > 0) {
 
 				assetLinkEntry = assetLinkEntry.toEscapedModel();
 
-				String className = PortalUtil.getClassName(assetLinkEntry.getClassNameId());
-
-				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetLinkEntry.getClassNameId());
 
 				if (Validator.isNull(assetRendererFactory)) {
 					if (_log.isWarnEnabled()) {
-						_log.warn("No asset renderer factory found for class " + className);
+						_log.warn("No asset renderer factory found for class " + PortalUtil.getClassName(assetLinkEntry.getClassNameId()));
 					}
 
 					continue;

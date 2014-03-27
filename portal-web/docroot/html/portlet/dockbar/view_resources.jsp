@@ -59,7 +59,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 					long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
 
 					for (long classNameId : availableClassNameIds) {
-						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
 
 						if (!assetRendererFactory.isSelectable()) {
 							availableClassNameIds = ArrayUtil.remove(availableClassNameIds, classNameId);

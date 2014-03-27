@@ -53,6 +53,7 @@ import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -951,6 +952,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			List<Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		if (overrideFileEntryTypes && fileEntryTypeIds.isEmpty()) {
+			throw new RequiredFileEntryTypeException();
+		}
 
 		boolean hasLock = hasFolderLock(userId, folderId);
 

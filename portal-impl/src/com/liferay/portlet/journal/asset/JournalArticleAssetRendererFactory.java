@@ -248,10 +248,17 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Override
+	public boolean isSupportsClassTypes() {
+		return _SUPPORTS_CLASS_TYPES;
+	}
+
+	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}
 
 	private static final boolean _LINKABLE = true;
+
+	private static final boolean _SUPPORTS_CLASS_TYPES = true;
 
 }

@@ -233,10 +233,17 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
+	public boolean isSupportsClassTypes() {
+		return _SUPPORTS_CLASS_TYPES;
+	}
+
+	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/clip.png";
 	}
 
 	private static final boolean _LINKABLE = true;
+
+	private static final boolean _SUPPORTS_CLASS_TYPES = true;
 
 }

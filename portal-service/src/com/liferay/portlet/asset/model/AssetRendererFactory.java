@@ -112,6 +112,8 @@ public interface AssetRendererFactory {
 
 	public boolean isSelectable();
 
+	public boolean isSupportsClassTypes();
+
 	public void setClassName(String className);
 
 	public void setPortletId(String portletId);

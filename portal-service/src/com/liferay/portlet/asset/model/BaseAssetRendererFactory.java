@@ -230,6 +230,11 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	@Override
+	public boolean isSupportsClassTypes() {
+		return _SUPPORTS_CLASS_TYPES;
+	}
+
+	@Override
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -291,6 +296,8 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		"checkbox", "ddm-date", "ddm-decimal", "ddm-integer", "ddm-number",
 		"radio", "select", "text"
 	};
+
+	private static final boolean _SUPPORTS_CLASS_TYPES = false;
 
 	private String _className;
 	private String _portletId;

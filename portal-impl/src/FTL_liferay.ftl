@@ -35,6 +35,16 @@ LPS-30525.
 	</#if>
 </#function>
 
+<#macro breadcrumbs
+	control_panel = ""
+>
+	<#if control_panel = "control_panel">
+		${theme.breadcrumb(0, false, false, true, true)}
+	<#else>
+		${theme.breadcrumb()}
+	</#if>
+</#macro>
+
 <#macro css
 	file_name
 >
@@ -45,31 +55,14 @@ LPS-30525.
 	</#if>
 </#macro>
 
-<#macro js
-	file_name
->
-	<#if file_name == js_main_file>
-		<script id="mainLiferayThemeJavaScript" src="${file_name}" type="text/javascript"></script>
-	<#else>
-		<script src="${file_name}" type="text/javascript"></script>
-	</#if>
-</#macro>
-
-<#macro language
-	key
->
-${languageUtil.get(locale, key)}</#macro>
-
-<#macro language_format
-	arguments
-	key
->
-${languageUtil.format(locale, key, arguments)}</#macro>
-
 <#macro date
 	format
 >
 ${dateUtil.getCurrentDate(format, locale)}</#macro>
+
+<#macro dockbar>
+	${theme.runtime("145")}
+</#macro>
 
 <#macro ie6_png_fix>
 <#if browserSniffer.isIe(request) && browserSniffer.getMajorVersion(request) < 7>
@@ -117,16 +110,29 @@ img, .png {
 </#if>
 </#macro>
 
-<#macro breadcrumbs
-	control_panel = ""
+<#macro js
+	file_name
 >
-	<#if control_panel = "control_panel">
-		${theme.breadcrumb(0, false, false, true, true)}
+	<#if file_name == js_main_file>
+		<script id="mainLiferayThemeJavaScript" src="${file_name}" type="text/javascript"></script>
 	<#else>
-		${theme.breadcrumb()}
+		<script src="${file_name}" type="text/javascript"></script>
 	</#if>
 </#macro>
 
-<#macro dockbar>
-	${theme.runtime("145")}
+<#macro language
+	key
+>
+${languageUtil.get(locale, key)}</#macro>
+
+<#macro language_format
+	arguments
+	key
+>
+${languageUtil.format(locale, key, arguments)}</#macro>
+
+<#macro quick_acess
+	content_id
+>
+	${theme.quick_acess(content_id)}
 </#macro>

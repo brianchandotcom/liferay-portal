@@ -29,6 +29,7 @@ import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
 import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
+import com.liferay.taglib.ui.QuickAccessTag;
 import com.liferay.taglib.ui.RatingsTag;
 
 import javax.portlet.PortletURL;
@@ -148,6 +149,8 @@ public interface VelocityTaglib {
 	public MySitesTag getMySitesTag() throws Exception;
 
 	public PngImageTag getPngImageTag() throws Exception;
+
+	public QuickAccessTag getQuickAccessTag() throws Exception;
 
 	public RatingsTag getRatingsTag() throws Exception;
 
@@ -342,6 +345,10 @@ public interface VelocityTaglib {
 	public void portletIconPrint() throws Exception;
 
 	public void portletIconRefresh() throws Exception;
+
+	public void quickAccess() throws Exception;
+
+	public void quickAccess(String contentId) throws Exception;
 
 	public void ratings(
 			String className, long classPK, int numberOfStars, String type,

@@ -745,6 +745,15 @@
 		}
 	}
 
+	/* ---------- Quick access ---------- */
+
+	.quick-access-nav {
+		a {
+			background: #009AE5;
+			background: rgba(0, 154, 229, 0.9);
+		}
+	}
+
 	/* ---------- Side accordion navigations ---------- */
 
 	.add-content-menu, .lfr-edit-layout-panel, .panel-page-menu .portlet-borderless-container {

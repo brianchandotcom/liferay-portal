@@ -30,6 +30,7 @@ import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
 import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
+import com.liferay.taglib.ui.QuickAccessTag;
 import com.liferay.taglib.ui.RatingsTag;
 
 import javax.portlet.PortletURL;
@@ -214,6 +215,11 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public PngImageTag getPngImageTag() throws Exception {
+		return null;
+	}
+
+	@Override
+	public QuickAccessTag getQuickAccessTag() throws Exception {
 		return null;
 	}
 
@@ -529,6 +535,14 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public void portletIconRefresh() throws Exception {
+	}
+
+	@Override
+	public void quickAccess() throws Exception {
+	}
+
+	@Override
+	public void quickAccess(String contentId) throws Exception {
 	}
 
 	@Override

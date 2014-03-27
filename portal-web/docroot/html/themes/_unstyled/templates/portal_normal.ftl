@@ -14,7 +14,7 @@
 
 <body class="${css_class}">
 
-<a href="#main-content" id="skip-to-content"><@liferay.language key="skip-to-content" /></a>
+<@liferay.quick_access contentId="#main-content" />
 
 ${theme.include(body_top_include)}
 

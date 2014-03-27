@@ -22,11 +22,15 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
@@ -35,6 +39,7 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -75,70 +80,26 @@ public class DLFileEntryFinderTest {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
 
-		_folder = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
-			StringPool.BLANK, serviceContext);
+		long classNameId = PortalUtil.getClassNameId(
+			LiferayRepository.class.getName());
 
-		DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), "Folder B", StringPool.BLANK,
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		_repository = RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Repository A",
+			StringPool.BLANK, "Test Portlet", typeSettingsProperties, true,
 			serviceContext);
 
-		Folder folder = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), "Folder C", StringPool.BLANK,
-			serviceContext);
+		Object[] objects = setUp(_group.getGroupId(), serviceContext);
 
-		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+		_folderDefaultRepository = (Folder)objects[0];
+		_dlFileVersionDefaultRepository = (DLFileVersion)objects[1];
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), _group.getGroupId());
+		objects = setUp(_repository.getRepositoryId(), serviceContext);
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			user.getUserId(), _group.getGroupId(), _folder.getFolderId(),
-			"FE1.txt", ContentTypes.TEXT_PLAIN, "FE1.txt", null,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			WorkflowConstants.ACTION_PUBLISH);
-
-		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
-
-		DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
-
-		dlFileEntry.setExtraSettings("hello=world");
-		dlFileEntry.setSmallImageId(_SMALL_IMAGE_ID);
-
-		dlFileEntry = DLFileEntryLocalServiceUtil.updateDLFileEntry(
-			dlFileEntry);
-
-		_dlFileVersion = dlFileEntry.getFileVersion();
-
-		DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), _folder.getFolderId(), "FE2.pdf",
-			ContentTypes.APPLICATION_PDF, "FE2.pdf");
-
-		fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), _folder.getFolderId(), "FE3.txt", "FE3.txt");
-
-		fileEntry = DLAppTestUtil.updateFileEntry(
-			_group.getGroupId(), fileEntry.getFileEntryId(), "FE3.txt",
-			"FE3.txt");
-
-		dlFileEntry = ((LiferayFileEntry)fileEntry).getDLFileEntry();
-
-		dlFileEntry.setDescription("FE3.txt");
-
-		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
-
-		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-		dlFileVersion.setExtraSettings("hello=world");
-
-		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
-
-		FinderCacheUtil.clearCache();
-
-		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
+		_folderNewRepository = (Folder)objects[0];
+		_dlFileVersionNewRepository = (DLFileVersion)objects[1];
 	}
 
 	@After
@@ -149,7 +110,7 @@ public class DLFileEntryFinderTest {
 	@Test
 	public void testCountByExtraSettings() throws Exception {
 		Assert.assertEquals(
-			2, DLFileEntryLocalServiceUtil.getExtraSettingsFileEntriesCount());
+			4, DLFileEntryLocalServiceUtil.getExtraSettingsFileEntriesCount());
 	}
 
 	@Test
@@ -178,7 +139,9 @@ public class DLFileEntryFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(
-			2, doCountBy_G_U_F_M(_folder.getUserId(), null, queryDefinition));
+			2,
+			doCountBy_G_U_F_M(
+				_folderDefaultRepository.getUserId(), null, queryDefinition));
 	}
 
 	@Test
@@ -192,7 +155,8 @@ public class DLFileEntryFinderTest {
 		Assert.assertEquals(
 			1,
 			doCountBy_G_U_F_M(
-				_folder.getUserId(), ContentTypes.TEXT_PLAIN, queryDefinition));
+				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
+				queryDefinition));
 	}
 
 	@Test
@@ -222,7 +186,9 @@ public class DLFileEntryFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(
-			1, doCountBy_G_U_F_M(_folder.getUserId(), null, queryDefinition));
+			1,
+			doCountBy_G_U_F_M(
+				_folderDefaultRepository.getUserId(), null, queryDefinition));
 	}
 
 	@Test
@@ -236,7 +202,8 @@ public class DLFileEntryFinderTest {
 		Assert.assertEquals(
 			0,
 			doCountBy_G_U_F_M(
-				_folder.getUserId(), ContentTypes.TEXT_PLAIN, queryDefinition));
+				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
+				queryDefinition));
 	}
 
 	@Test
@@ -266,7 +233,9 @@ public class DLFileEntryFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 
 		Assert.assertEquals(
-			1, doCountBy_G_U_F_M(_folder.getUserId(), null, queryDefinition));
+			1,
+			doCountBy_G_U_F_M(
+				_folderDefaultRepository.getUserId(), null, queryDefinition));
 	}
 
 	@Test
@@ -280,7 +249,8 @@ public class DLFileEntryFinderTest {
 		Assert.assertEquals(
 			0,
 			doCountBy_G_U_F_M(
-				_folder.getUserId(), ContentTypes.TEXT_PLAIN, queryDefinition));
+				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
+				queryDefinition));
 	}
 
 	@Test
@@ -299,7 +269,8 @@ public class DLFileEntryFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
 		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_M(
-			_folder.getUserId(), ContentTypes.TEXT_PLAIN, queryDefinition);
+			_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
+			queryDefinition);
 
 		Assert.assertEquals(1, dlFileEntries.size());
 
@@ -315,7 +286,7 @@ public class DLFileEntryFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_M(
-			_folder.getUserId(), null, queryDefinition);
+			_folderDefaultRepository.getUserId(), null, queryDefinition);
 
 		Assert.assertEquals(dlFileEntries.size(), 1);
 
@@ -342,12 +313,14 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void testFindByMisversioned() throws Exception {
-		long oldFileEntryId =  _dlFileVersion.getFileEntryId();
+		long oldFileEntryId =  _dlFileVersionDefaultRepository.getFileEntryId();
 
 		try {
-			_dlFileVersion.setFileEntryId(ServiceTestUtil.randomLong());
+			_dlFileVersionDefaultRepository.setFileEntryId(
+				ServiceTestUtil.randomLong());
 
-			DLFileVersionLocalServiceUtil.updateDLFileVersion(_dlFileVersion);
+			DLFileVersionLocalServiceUtil.updateDLFileVersion(
+				_dlFileVersionDefaultRepository);
 
 			List<DLFileEntry> dlFileEntries =
 				DLFileEntryLocalServiceUtil.getMisversionedFileEntries();
@@ -359,16 +332,18 @@ public class DLFileEntryFinderTest {
 			Assert.assertEquals("FE1.txt", dlFileEntry.getTitle());
 		}
 		finally {
-			_dlFileVersion.setFileEntryId(oldFileEntryId);
+			_dlFileVersionDefaultRepository.setFileEntryId(oldFileEntryId);
 
-			DLFileVersionLocalServiceUtil.updateDLFileVersion(_dlFileVersion);
+			DLFileVersionLocalServiceUtil.updateDLFileVersion(
+				_dlFileVersionDefaultRepository);
 		}
 	}
 
 	@Test
 	public void testFindByNoAssets() throws Exception {
 		AssetEntryLocalServiceUtil.deleteEntry(
-			DLFileEntry.class.getName(), _dlFileVersion.getFileEntryId());
+			DLFileEntry.class.getName(),
+			_dlFileVersionDefaultRepository.getFileEntryId());
 
 		LastSessionRecorderUtil.syncLastSessionState();
 
@@ -387,7 +362,7 @@ public class DLFileEntryFinderTest {
 		throws Exception {
 
 		List<Long> folderIds = ListUtil.toList(
-			new long[] {_folder.getFolderId()});
+			new long[] {_folderDefaultRepository.getFolderId()});
 
 		String[] mimeTypes = null;
 
@@ -404,7 +379,7 @@ public class DLFileEntryFinderTest {
 		throws Exception {
 
 		List<Long> folderIds = ListUtil.toList(
-			new long[] {_folder.getFolderId()});
+			new long[] {_folderDefaultRepository.getFolderId()});
 
 		String[] mimeTypes = null;
 
@@ -416,10 +391,82 @@ public class DLFileEntryFinderTest {
 			_group.getGroupId(), userId, folderIds, mimeTypes, queryDefinition);
 	}
 
+	protected Object[] setUp(long repositoryId, ServiceContext serviceContext)
+		throws Exception {
+
+		Folder folder = DLAppLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), repositoryId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
+			StringPool.BLANK, serviceContext);
+
+		DLAppLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), repositoryId, folder.getFolderId(),
+			"Folder B", StringPool.BLANK, serviceContext);
+
+		Folder folderC = DLAppLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), repositoryId, folder.getFolderId(),
+			"Folder C", StringPool.BLANK, serviceContext);
+
+		DLAppServiceUtil.moveFolderToTrash(folderC.getFolderId());
+
+		User user = UserTestUtil.addUser(
+			ServiceTestUtil.randomString(), _group.getGroupId());
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			user.getUserId(), _group.getGroupId(), folder.getFolderId(),
+			"FE1.txt", ContentTypes.TEXT_PLAIN, "FE1.txt", null,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			WorkflowConstants.ACTION_PUBLISH);
+
+		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
+
+		DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
+
+		dlFileEntry.setExtraSettings("hello=world");
+		dlFileEntry.setSmallImageId(_SMALL_IMAGE_ID);
+
+		dlFileEntry = DLFileEntryLocalServiceUtil.updateDLFileEntry(
+			dlFileEntry);
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		DLAppTestUtil.addFileEntry(
+			_group.getGroupId(), folder.getFolderId(), "FE2.pdf",
+			ContentTypes.APPLICATION_PDF, "FE2.pdf");
+
+		fileEntry = DLAppTestUtil.addFileEntry(
+			_group.getGroupId(), folder.getFolderId(), "FE3.txt", "FE3.txt");
+
+		fileEntry = DLAppTestUtil.updateFileEntry(
+			_group.getGroupId(), fileEntry.getFileEntryId(), "FE3.txt",
+			"FE3.txt");
+
+		dlFileEntry = ((LiferayFileEntry)fileEntry).getDLFileEntry();
+
+		dlFileEntry.setDescription("FE3.txt");
+
+		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+
+		DLFileVersion dlFileVersion3 = dlFileEntry.getFileVersion();
+
+		dlFileVersion3.setExtraSettings("hello=world");
+
+		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion3);
+
+		FinderCacheUtil.clearCache();
+
+		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
+
+		return new Object[] {folder, dlFileVersion};
+	}
+
 	private static final long _SMALL_IMAGE_ID = 1234L;
 
-	private DLFileVersion _dlFileVersion;
-	private Folder _folder;
+	private DLFileVersion _dlFileVersionDefaultRepository;
+	private DLFileVersion _dlFileVersionNewRepository;
+	private Folder _folderDefaultRepository;
+	private Folder _folderNewRepository;
 	private Group _group;
+	private Repository _repository;
 
 }

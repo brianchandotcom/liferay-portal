@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.service.persistence;
 
 import com.google.common.collect.Lists;
+
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -40,6 +41,13 @@ import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
+import com.liferay.portlet.journal.util.comparator.ArticleCreateDateComparator;
+import com.liferay.portlet.journal.util.comparator.ArticleDisplayDateComparator;
+import com.liferay.portlet.journal.util.comparator.ArticleIDComparator;
+import com.liferay.portlet.journal.util.comparator.ArticleModifiedDateComparator;
+import com.liferay.portlet.journal.util.comparator.ArticleReviewDateComparator;
+import com.liferay.portlet.journal.util.comparator.ArticleTitleComparator;
+import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,7 +56,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import com.liferay.portlet.journal.util.comparator.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -282,116 +289,113 @@ public class JournalArticleFinderTest {
 	}
 
 	@Test
-	public void testQueryByG_C_S_WithComparatorCreateDate() throws Exception {
+	public void testQueryByG_C_S_WithComparatorCreateDateAscending()
+		throws Exception {
 
-		SortedArticlesTester tester = new SortedArticlesTester(
-			getDateSequence()) {
-
-			protected void modifyArticle(JournalArticle article, Object obj) {
-				article.setCreateDate((Date)obj);
-			}
-
-		};
-
-		tester.startTest(new ArticleCreateDateComparator(true));
-		tester.startTest(new ArticleCreateDateComparator(false));
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleCreateDateComparator(true));
 	}
 
 	@Test
-	public void testQueryByG_C_S_WithComparatorDisplayDate() throws Exception {
+	public void testQueryByG_C_S_WithComparatorCreateDateDescending()
+		throws Exception {
 
-		SortedArticlesTester tester = new SortedArticlesTester(
-			getDateSequence()) {
-
-			protected void modifyArticle(JournalArticle article, Object obj) {
-				article.setDisplayDate((Date)obj);
-			}
-
-		};
-
-		tester.startTest(new ArticleDisplayDateComparator(true));
-		tester.startTest(new ArticleDisplayDateComparator(false));
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleCreateDateComparator(false));
 	}
 
 	@Test
-	public void testQueryByG_C_S_WithComparatorID() throws Exception {
+	public void testQueryByG_C_S_WithComparatorDisplayDateAscending()
+		throws Exception {
 
-		SortedArticlesTester tester = new SortedArticlesTester(
-			getStringSequence()) {
-
-			protected void modifyArticle(JournalArticle article, Object obj) {
-				article.setArticleId(obj.toString());
-			}
-
-		};
-
-		tester.startTest(new ArticleIDComparator(true));
-		tester.startTest(new ArticleIDComparator(false));
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleDisplayDateComparator(true));
 	}
 
 	@Test
-	public void testQueryByG_C_S_WithComparatorModifiedDate() throws Exception {
+	public void testQueryByG_C_S_WithComparatorDisplayDateDescending()
+		throws Exception {
 
-		SortedArticlesTester tester = new SortedArticlesTester(
-			getDateSequence()) {
-
-			protected void modifyArticle(JournalArticle article, Object obj) {
-				article.setModifiedDate((Date)obj);
-			}
-
-		};
-
-		tester.startTest(new ArticleModifiedDateComparator(true));
-		tester.startTest(new ArticleModifiedDateComparator(false));
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleDisplayDateComparator(false));
 	}
 
 	@Test
-	public void testQueryByG_C_S_WithComparatorReviewDate() throws Exception {
+	public void testQueryByG_C_S_WithComparatorIDAscending() throws Exception {
 
-		SortedArticlesTester tester = new SortedArticlesTester(
-			getDateSequence()) {
-
-			protected void modifyArticle(JournalArticle article, Object obj) {
-				article.setReviewDate((Date)obj);
-			}
-
-		};
-
-		tester.startTest(new ArticleReviewDateComparator(true));
-		tester.startTest(new ArticleReviewDateComparator(false));
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleIDComparator(true));
 	}
 
 	@Test
-	public void testQueryByG_C_S_WithComparatorTitle() throws Exception {
+	public void testQueryByG_C_S_WithComparatorIDDescending() throws Exception {
 
-		SortedArticlesTester tester = new SortedArticlesTester(
-			getStringSequence()) {
-
-			protected void modifyArticle(JournalArticle article, Object obj) {
-				article.setTitle(obj.toString());
-			}
-
-		};
-
-		tester.startTest(new ArticleTitleComparator(true));
-		tester.startTest(new ArticleTitleComparator(false));
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleIDComparator(false));
 	}
 
 	@Test
-	public void testQueryByG_C_S_WithComparatorVersion() throws Exception {
+	public void testQueryByG_C_S_WithComparatorModifiedDateAscending()
+		throws Exception {
 
-		SortedArticlesTester tester = new SortedArticlesTester(
-			getDoubleSequence()) {
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleModifiedDateComparator(true));
+	}
 
-			protected void modifyArticle(JournalArticle article, Object obj) {
-				Double d = (Double)obj;
-				article.setVersion(d.doubleValue());
-			}
+	@Test
+	public void testQueryByG_C_S_WithComparatorModifiedDateDescending()
+		throws Exception {
 
-		};
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleModifiedDateComparator(false));
+	}
 
-		tester.startTest(new ArticleVersionComparator(true));
-		tester.startTest(new ArticleVersionComparator(false));
+	@Test
+	public void testQueryByG_C_S_WithComparatorReviewDateAscending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleReviewDateComparator(true));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorReviewDateDescending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleReviewDateComparator(false));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorTitleAscending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleTitleComparator(true));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorTitleDescending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleTitleComparator(false));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorVersionAscending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleVersionComparator(true));
+	}
+
+	@Test
+	public void testQueryByG_C_S_WithComparatorVersionDescending()
+		throws Exception {
+
+		prepareSortedArticles();
+		doQueryByG_F_CheckingOrder(new ArticleVersionComparator(false));
 	}
 
 	@Test
@@ -399,16 +403,16 @@ public class JournalArticleFinderTest {
 		QueryDefinition queryDefinition = new QueryDefinition();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		doQueryByG_F_CheckingCount(_group.getGroupId(), _folderIds, queryDefinition, 4);
+		doQueryByG_F_CheckingCount(
+			_group.getGroupId(), _folderIds, queryDefinition, 4);
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH);
-
-		doQueryByG_F_CheckingCount(_group.getGroupId(), _folderIds, queryDefinition, 1);
+		doQueryByG_F_CheckingCount(
+			_group.getGroupId(), _folderIds, queryDefinition, 1);
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
-
-		doQueryByG_F_CheckingCount(_group.getGroupId(), _folderIds, queryDefinition, 3);
+		doQueryByG_F_CheckingCount(
+			_group.getGroupId(), _folderIds, queryDefinition, 3);
 	}
 
 	@Test
@@ -501,15 +505,26 @@ public class JournalArticleFinderTest {
 		Assert.assertEquals(expectedCount, actualCount);
 	}
 
-	protected void doQueryByG_F_CheckingOrder(
-			long groupId, List<Long> folderIds, QueryDefinition queryDefinition,
-			List<JournalArticle> expected)
+	protected void doQueryByG_F_CheckingOrder(OrderByComparator comparator)
 		throws Exception {
 
-		List<JournalArticle> articles = JournalArticleFinderUtil.findByG_F(
-			groupId, folderIds, queryDefinition);
+		QueryDefinition queryDefinition = new QueryDefinition();
+		queryDefinition.setOrderByComparator(comparator);
 
-		Assert.assertEquals(expected, articles);
+		List<JournalArticle> expectedArticles;
+
+		if (comparator.isAscending()) {
+			expectedArticles = _articles;
+		}
+		else {
+			expectedArticles = Lists.reverse(_articles);
+		}
+
+		List<JournalArticle> actualArticles =
+			JournalArticleFinderUtil.findByG_F(
+				_group.getGroupId(), _folderIds, queryDefinition);
+
+		Assert.assertEquals(expectedArticles, actualArticles);
 	}
 
 	protected void doQueryByG_U_C(
@@ -530,81 +545,31 @@ public class JournalArticleFinderTest {
 		Assert.assertEquals(expectedCount, actualCount);
 	}
 
-	private List<Object> getDateSequence() {
-		List<Object> dates = new ArrayList<Object>(_articles.size());
+	protected void prepareSortedArticles() throws Exception {
 		Calendar calendar = new GregorianCalendar();
 
 		calendar.set(Calendar.YEAR, 2014);
 		calendar.set(Calendar.MONTH, 1);
 		calendar.set(Calendar.DATE, 1);
 
-		for (int i = 0; i  < _articles.size(); ++i) {
+		for (int i = 0; i < _articles.size(); ++i) {
 			calendar.add(Calendar.DATE, 1);
-			dates.add(calendar.getTime());
-		}
+			Date sequenceDate = calendar.getTime();
+			String sequenceString = String.valueOf((char) ('a' + i));
 
-		return dates;
+			JournalArticle article = _articles.get(i);
+
+			article.setCreateDate(sequenceDate);
+			article.setDisplayDate(sequenceDate);
+			article.setModifiedDate(sequenceDate);
+			article.setReviewDate(sequenceDate);
+			article.setArticleId(sequenceString);
+			article.setTitle(sequenceString);
+			article.setVersion((double)i);
+
+			JournalArticleLocalServiceUtil.updateJournalArticle(article);
+		}
 	}
-
-	private List<Object> getStringSequence() {
-		List<Object> strings = new ArrayList<Object>(_articles.size());
-
-		for (int i = 0; i  < _articles.size(); ++i) {
-			strings.add(String.valueOf((char) ('a' + i)));
-		}
-
-		return strings;
-	}
-
-	private List<Object> getDoubleSequence() {
-		List<Object> doubles = new ArrayList<Object>(_articles.size());
-
-		for (int i = 0; i  < _articles.size(); ++i) {
-			doubles.add(Double.valueOf((double)i));
-		}
-
-		return doubles;
-	}
-
-
-	private class SortedArticlesTester {
-
-		public SortedArticlesTester(List<Object> objectSequence) {
-			_objectSequence = objectSequence;
-		}
-
-		public void startTest(OrderByComparator comparator) throws Exception {
-
-			if (_objectSequence != null) {
-				for (int i = 0; i < _articles.size(); ++i) {
-					JournalArticle article = _articles.get(i);
-
-					modifyArticle(article, _objectSequence.get(i));
-
-					JournalArticleLocalServiceUtil.updateJournalArticle(
-						article);
-				}
-			}
-
-			QueryDefinition queryDefinition = new QueryDefinition();
-			queryDefinition.setOrderByComparator(comparator);
-
-			List<JournalArticle> expectedArticles =
-				comparator.isAscending() ?
-					_articles : Lists.reverse(_articles);
-
-			doQueryByG_F_CheckingOrder(
-				_group.getGroupId(), _folderIds, queryDefinition,
-				expectedArticles);
-		}
-
-		protected void modifyArticle(JournalArticle article, Object obj) {
-		}
-
-		private List<Object> _objectSequence;
-
-	}
-
 
 	private static final long _USER_ID = 1234L;
 
@@ -618,4 +583,5 @@ public class JournalArticleFinderTest {
 	private JournalFolder _folder;
 	private List<Long> _folderIds = new ArrayList<Long>();
 	private Group _group;
+
 }

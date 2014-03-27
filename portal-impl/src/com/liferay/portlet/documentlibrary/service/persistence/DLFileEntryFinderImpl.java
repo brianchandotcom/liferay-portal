@@ -35,6 +35,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -119,12 +120,23 @@ public class DLFileEntryFinderImpl
 	}
 
 	@Override
+	public int countByG_F_R(
+			long groupId, List<Long> folderIds, List<Long> repositoryIds,
+			QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doCountByG_U_F_R_M(
+			groupId, 0, folderIds, repositoryIds, null, queryDefinition, false);
+	}
+
+	@Override
 	public int countByG_F(
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
 
-		return doCountByG_U_F_M(
-			groupId, 0, folderIds, null, queryDefinition, false);
+		return doCountByG_U_F_R_M(
+			groupId, 0, folderIds, new ArrayList<Long>(), null, queryDefinition,
+			false);
 	}
 
 	@Override
@@ -139,7 +151,8 @@ public class DLFileEntryFinderImpl
 			session = openSession();
 
 			String sql = getFileEntriesSQL(
-				COUNT_BY_G_M_R, groupId, null, null, queryDefinition, false);
+				COUNT_BY_G_M_R, groupId, null, null, null, queryDefinition,
+				false);
 
 			if ((dateRange == null) || (dateRange.getStartDate() == null)) {
 				sql = StringUtil.replace(
@@ -193,13 +206,38 @@ public class DLFileEntryFinderImpl
 	}
 
 	@Override
+	public int countByG_U_F_R_M(
+			long groupId, long userId, List<Long> folderIds,
+			List<Long> repositoryIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doCountByG_U_F_R_M(
+			groupId, userId, folderIds, repositoryIds, mimeTypes,
+			queryDefinition, false);
+	}
+
+	@Override
 	public int countByG_U_F_M(
 			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
 			QueryDefinition queryDefinition)
 		throws SystemException {
 
-		return doCountByG_U_F_M(
-			groupId, userId, folderIds, mimeTypes, queryDefinition, false);
+		return doCountByG_U_F_R_M(
+			groupId, userId, folderIds, new ArrayList<Long>(), mimeTypes,
+			queryDefinition, false);
+	}
+
+	@Override
+	public int filterCountByG_U_F_R_M(
+			long groupId, long userId, List<Long> folderIds,
+			List<Long> repositoryIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doCountByG_U_F_R_M(
+			groupId, userId, folderIds, repositoryIds, mimeTypes,
+			queryDefinition, true);
 	}
 
 	@Override
@@ -208,8 +246,9 @@ public class DLFileEntryFinderImpl
 			QueryDefinition queryDefinition)
 		throws SystemException {
 
-		return doCountByG_U_F_M(
-			groupId, userId, folderIds, mimeTypes, queryDefinition, true);
+		return doCountByG_U_F_R_M(
+			groupId, userId, folderIds, new ArrayList<Long>(), mimeTypes,
+			queryDefinition, true);
 	}
 
 	@Override
@@ -253,8 +292,19 @@ public class DLFileEntryFinderImpl
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
 
-		return doCountByG_U_F_M(
-			groupId, 0, folderIds, null, queryDefinition, true);
+		return doCountByG_U_F_R_M(
+			groupId, 0, folderIds, new ArrayList<Long>(), null, queryDefinition,
+			true);
+	}
+
+	@Override
+	public int filterCountByG_F_R(
+			long groupId, List<Long> folderIds, List<Long> repositoryIds,
+			QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doCountByG_U_F_R_M(
+			groupId, 0, folderIds, repositoryIds, null, queryDefinition, true);
 	}
 
 	@Override
@@ -262,8 +312,19 @@ public class DLFileEntryFinderImpl
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
 
-		return doFindByG_U_F_M(
-			groupId, 0, folderIds, null, queryDefinition, true);
+		return doFindByG_U_F_R_M(
+			groupId, 0, folderIds, new ArrayList<Long>(), null, queryDefinition,
+			true);
+	}
+
+	@Override
+	public List<DLFileEntry> filterFindByG_F_R(
+			long groupId, List<Long> folderIds, List<Long> repositoryIds,
+			QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doFindByG_U_F_R_M(
+			groupId, 0, folderIds, repositoryIds, null, queryDefinition, true);
 	}
 
 	@Override
@@ -272,8 +333,21 @@ public class DLFileEntryFinderImpl
 			QueryDefinition queryDefinition)
 		throws SystemException {
 
-		return doFindByG_U_F_M(
-			groupId, userId, folderIds, mimeTypes, queryDefinition, true);
+		return doFindByG_U_F_R_M(
+			groupId, userId, folderIds, new ArrayList<Long>(), mimeTypes,
+			queryDefinition, true);
+	}
+
+	@Override
+	public List<DLFileEntry> filterFindByG_U_F_R_M(
+			long groupId, long userId, List<Long> folderIds,
+			List<Long> repositoryIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doFindByG_U_F_R_M(
+			groupId, userId, folderIds, repositoryIds, mimeTypes,
+			queryDefinition, true);
 	}
 
 	@Override
@@ -469,8 +543,19 @@ public class DLFileEntryFinderImpl
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
 
-		return doFindByG_U_F_M(
-			groupId, 0, folderIds, null, queryDefinition, false);
+		return doFindByG_U_F_R_M(
+			groupId, 0, folderIds, new ArrayList<Long>(), null, queryDefinition,
+			false);
+	}
+
+	@Override
+	public List<DLFileEntry> findByG_F_R(
+			long groupId, List<Long> folderIds, List<Long> repositoryIds,
+			QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doFindByG_U_F_R_M(
+			groupId, 0, folderIds, repositoryIds, null, queryDefinition, false);
 	}
 
 	@Override
@@ -479,12 +564,26 @@ public class DLFileEntryFinderImpl
 			QueryDefinition queryDefinition)
 		throws SystemException {
 
-		return doFindByG_U_F_M(
-			groupId, userId, folderIds, mimeTypes, queryDefinition, false);
+		return doFindByG_U_F_R_M(
+			groupId, userId, folderIds, new ArrayList<Long>(), mimeTypes,
+			queryDefinition, false);
 	}
 
-	protected int doCountByG_U_F_M(
-			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+	@Override
+	public List<DLFileEntry> findByG_U_F_R_M(
+			long groupId, long userId, List<Long> folderIds,
+			List<Long> repositoryIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doFindByG_U_F_R_M(
+			groupId, userId, folderIds, repositoryIds, mimeTypes,
+			queryDefinition, false);
+	}
+
+	protected int doCountByG_U_F_R_M(
+			long groupId, long userId, List<Long> folderIds,
+			List<Long> repositoryIds, String[] mimeTypes,
 			QueryDefinition queryDefinition, boolean inlineSQLHelper)
 		throws SystemException {
 
@@ -503,8 +602,8 @@ public class DLFileEntryFinderImpl
 			}
 
 			String sql = getFileEntriesSQL(
-				id, groupId, folderIds, mimeTypes, queryDefinition,
-				inlineSQLHelper);
+				id, groupId, folderIds, repositoryIds, mimeTypes,
+				queryDefinition, inlineSQLHelper);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -522,6 +621,10 @@ public class DLFileEntryFinderImpl
 
 			for (Long folderId : folderIds) {
 				qPos.add(folderId);
+			}
+
+			for (Long repositoryId : repositoryIds) {
+				qPos.add(repositoryId);
 			}
 
 			if (mimeTypes != null) {
@@ -548,8 +651,9 @@ public class DLFileEntryFinderImpl
 		}
 	}
 
-	protected List<DLFileEntry> doFindByG_U_F_M(
-			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+	protected List<DLFileEntry> doFindByG_U_F_R_M(
+			long groupId, long userId, List<Long> folderIds,
+			List<Long> repositoryIds, String[] mimeTypes,
 			QueryDefinition queryDefinition, boolean inlineSQLHelper)
 		throws SystemException {
 
@@ -568,8 +672,8 @@ public class DLFileEntryFinderImpl
 			}
 
 			String sql = getFileEntriesSQL(
-				id, groupId, folderIds, mimeTypes, queryDefinition,
-				inlineSQLHelper);
+				id, groupId, folderIds, repositoryIds, mimeTypes,
+				queryDefinition, inlineSQLHelper);
 
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
@@ -590,6 +694,10 @@ public class DLFileEntryFinderImpl
 
 			for (Long folderId : folderIds) {
 				qPos.add(folderId);
+			}
+
+			for (Long repositoryId : repositoryIds) {
+				qPos.add(repositoryId);
 			}
 
 			if (mimeTypes != null) {
@@ -628,8 +736,9 @@ public class DLFileEntryFinderImpl
 	}
 
 	protected String getFileEntriesSQL(
-		String id, long groupId, List<Long> folderIds, String[] mimeTypes,
-		QueryDefinition queryDefinition, boolean inlineSQLHelper) {
+		String id, long groupId, List<Long> folderIds, List<Long> repositoryIds,
+		String[] mimeTypes, QueryDefinition queryDefinition,
+		boolean inlineSQLHelper) {
 
 		String tableName = DLFileVersionImpl.TABLE_NAME;
 
@@ -656,12 +765,20 @@ public class DLFileEntryFinderImpl
 		StringBundler sb = new StringBundler(7);
 
 		if (((folderIds != null) && !folderIds.isEmpty()) ||
+			((repositoryIds != null) && !repositoryIds.isEmpty()) ||
 			ArrayUtil.isNotEmpty(mimeTypes)) {
 
 			if ((folderIds != null) && !folderIds.isEmpty()) {
 				sb.append(WHERE_AND);
 				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append(getFolderIds(folderIds, tableName));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
+			if ((repositoryIds != null) && !repositoryIds.isEmpty()) {
+				sb.append(WHERE_AND);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(getRepositoryIds(repositoryIds, tableName));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
@@ -717,6 +834,31 @@ public class DLFileEntryFinderImpl
 				sb.append(WHERE_OR);
 			}
 		}
+
+		return sb.toString();
+	}
+
+	protected String getRepositoryIds(
+		List<Long> repositoryIds, String tableName) {
+
+		if (repositoryIds.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(repositoryIds.size() * 3 + 1);
+
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		for (int i = 0; i < repositoryIds.size(); i++) {
+			sb.append(tableName);
+			sb.append(".repositoryId = ? ");
+
+			if ((i + 1) != repositoryIds.size()) {
+				sb.append(WHERE_OR);
+			}
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
 	}

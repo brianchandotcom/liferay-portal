@@ -129,21 +129,21 @@ mbSettings = MBUtil.getMBSettings(themeDisplay.getSiteGroupId(), request);
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= mbSettings.getEmailMessageAddedBody() %>"
+				emailBody="<%= mbSettings.getEmailMessageAddedBody().getLocalizationXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= mbSettings.isEmailMessageAddedEnabled() %>"
 				emailParam="emailMessageAdded"
-				emailSubject="<%= mbSettings.getEmailMessageAddedSubject() %>"
+				emailSubject="<%= mbSettings.getEmailMessageAddedSubject().getLocalizationXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= mbSettings.getEmailMessageUpdatedBody() %>"
+				emailBody="<%= mbSettings.getEmailMessageUpdatedBody().getLocalizationXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= mbSettings.isEmailMessageUpdatedEnabled() %>"
 				emailParam="emailMessageUpdated"
-				emailSubject="<%= mbSettings.getEmailMessageUpdatedSubject() %>"
+				emailSubject="<%= mbSettings.getEmailMessageUpdatedSubject().getLocalizationXml() %>"
 			/>
 		</liferay-ui:section>
 

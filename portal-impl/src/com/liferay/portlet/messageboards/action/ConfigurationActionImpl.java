@@ -49,8 +49,8 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateEmail(actionRequest, "emailMessageAdded", false);
-		validateEmail(actionRequest, "emailMessageUpdated", false);
+		validateEmail(actionRequest, "emailMessageAdded", true);
+		validateEmail(actionRequest, "emailMessageUpdated", true);
 		validateEmailFrom(actionRequest);
 		updateThreadPriorities(actionRequest);
 		updateUserRanks(actionRequest);

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
+import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.util.MBUtil;
@@ -41,20 +42,20 @@ public class MBSettings extends BaseServiceSettings {
 		return typedSettings.getValue("emailFromName");
 	}
 
-	public String getEmailMessageAddedBody() {
-		return typedSettings.getValue("emailMessageAddedBody");
+	public LocalizedValuesMap getEmailMessageAddedBody() {
+		return typedSettings.getLocalizedValuesMap("emailMessageAddedBody");
 	}
 
-	public String getEmailMessageAddedSubject() {
-		return typedSettings.getValue("emailMessageAddedSubject");
+	public LocalizedValuesMap getEmailMessageAddedSubject() {
+		return typedSettings.getLocalizedValuesMap("emailMessageAddedSubject");
 	}
 
-	public String getEmailMessageUpdatedBody() {
-		return typedSettings.getValue("emailMessageUpdatedBody");
+	public LocalizedValuesMap getEmailMessageUpdatedBody() {
+		return typedSettings.getLocalizedValuesMap("emailMessageUpdatedBody");
 	}
 
-	public String getEmailMessageUpdatedSubject() {
-		return typedSettings.getValue("emailMessageUpdatedSubject");
+	public LocalizedValuesMap getEmailMessageUpdatedSubject() {
+		return typedSettings.getLocalizedValuesMap("emailMessageUpdatedSubject");
 	}
 
 	public String getMessageFormat() {

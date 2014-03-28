@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateRange;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,7 +36,6 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -135,8 +135,8 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doCountByG_U_R_F_M(
-			groupId, 0, new ArrayList<Long>(), folderIds, null, queryDefinition,
-			false);
+			groupId, 0, Collections.EMPTY_LIST, folderIds, null,
+			queryDefinition, false);
 	}
 
 	@Override
@@ -224,7 +224,7 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doCountByG_U_R_F_M(
-			groupId, userId, new ArrayList<Long>(), folderIds, mimeTypes,
+			groupId, userId, Collections.EMPTY_LIST, folderIds, mimeTypes,
 			queryDefinition, false);
 	}
 
@@ -247,7 +247,7 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doCountByG_U_R_F_M(
-			groupId, userId, new ArrayList<Long>(), folderIds, mimeTypes,
+			groupId, userId, Collections.EMPTY_LIST, folderIds, mimeTypes,
 			queryDefinition, true);
 	}
 
@@ -293,8 +293,8 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doCountByG_U_R_F_M(
-			groupId, 0, new ArrayList<Long>(), folderIds, null, queryDefinition,
-			true);
+			groupId, 0, Collections.EMPTY_LIST, folderIds, null,
+			queryDefinition, true);
 	}
 
 	@Override
@@ -313,8 +313,8 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doFindByG_U_R_F_M(
-			groupId, 0, new ArrayList<Long>(), folderIds, null, queryDefinition,
-			true);
+			groupId, 0, Collections.EMPTY_LIST, folderIds, null,
+			queryDefinition, true);
 	}
 
 	@Override
@@ -334,7 +334,7 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doFindByG_U_R_F_M(
-			groupId, userId, new ArrayList<Long>(), folderIds, mimeTypes,
+			groupId, userId, Collections.EMPTY_LIST, folderIds, mimeTypes,
 			queryDefinition, true);
 	}
 
@@ -544,8 +544,8 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doFindByG_U_R_F_M(
-			groupId, 0, new ArrayList<Long>(), folderIds, null, queryDefinition,
-			false);
+			groupId, 0, Collections.EMPTY_LIST, folderIds, null,
+			queryDefinition, false);
 	}
 
 	@Override
@@ -565,7 +565,7 @@ public class DLFileEntryFinderImpl
 		throws SystemException {
 
 		return doFindByG_U_R_F_M(
-			groupId, userId, new ArrayList<Long>(), folderIds, mimeTypes,
+			groupId, userId, Collections.EMPTY_LIST, folderIds, mimeTypes,
 			queryDefinition, false);
 	}
 
@@ -764,18 +764,18 @@ public class DLFileEntryFinderImpl
 
 		StringBundler sb = new StringBundler(7);
 
-		if (((folderIds != null) && !folderIds.isEmpty()) ||
-			((repositoryIds != null) && !repositoryIds.isEmpty()) ||
+		if (ListUtil.isNotEmpty(folderIds) ||
+			ListUtil.isNotEmpty(repositoryIds) ||
 			ArrayUtil.isNotEmpty(mimeTypes)) {
 
-			if ((folderIds != null) && !folderIds.isEmpty()) {
+			if (ListUtil.isNotEmpty(folderIds)) {
 				sb.append(WHERE_AND);
 				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append(getFolderIds(folderIds, tableName));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
-			if ((repositoryIds != null) && !repositoryIds.isEmpty()) {
+			if (ListUtil.isNotEmpty(repositoryIds)) {
 				sb.append(WHERE_AND);
 				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append(getRepositoryIds(repositoryIds, tableName));

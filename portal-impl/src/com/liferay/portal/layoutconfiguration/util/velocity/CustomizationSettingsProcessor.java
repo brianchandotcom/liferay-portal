@@ -30,6 +30,7 @@ import javax.servlet.jsp.tagext.Tag;
 
 /**
  * @author Raymond Augé
+ * @author Oliver Teichmann
  */
 public class CustomizationSettingsProcessor implements ColumnProcessor {
 
@@ -124,6 +125,13 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 		_writer.append("</div>");
 
 		return StringPool.BLANK;
+	}
+	
+	@Override
+	public String processPortlet(String portletId, String defaultPreferences)
+		throws Exception {
+	
+		return processPortlet(portletId);
 	}
 
 	private boolean _customizationEnabled;

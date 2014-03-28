@@ -27,6 +27,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -41,6 +42,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Oliver Teichmann
  */
 public class TemplateProcessor implements ColumnProcessor {
 
@@ -202,6 +204,16 @@ public class TemplateProcessor implements ColumnProcessor {
 		finally {
 			_request.removeAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
 		}
+	}
+	
+	@Override
+	public String processPortlet(String portletId, String defaultPreferences) throws Exception {
+		if (Validator.isNotNull(defaultPreferences)) {
+			PortletPreferencesFactoryUtil.getPortletSetup(
+				_request, portletId, defaultPreferences);
+		}
+
+		return processPortlet(portletId);
 	}
 
 	private static RenderWeightComparator _renderWeightComparator =

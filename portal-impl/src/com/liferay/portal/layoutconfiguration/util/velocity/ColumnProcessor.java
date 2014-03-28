@@ -16,6 +16,7 @@ package com.liferay.portal.layoutconfiguration.util.velocity;
 
 /**
  * @author Raymond Augé
+ * @author Oliver Teichmann
  */
 public interface ColumnProcessor {
 
@@ -33,5 +34,8 @@ public interface ColumnProcessor {
 	public String processMax(String classNames) throws Exception;
 
 	public String processPortlet(String portletId) throws Exception;
+
+	public String processPortlet(String portletId, String defaultPreferences)
+		throws Exception;
 
 }

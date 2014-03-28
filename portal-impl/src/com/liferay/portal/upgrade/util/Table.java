@@ -145,13 +145,11 @@ public class Table {
 			SystemProperties.get(SystemProperties.TMP_DIR) + "/temp-db-" +
 				_tableName + "-" + System.currentTimeMillis();
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
 
 		if (_log.isInfoEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-
 			_log.info(
 				"Starting backup of " + _tableName + " to " + tempFileName);
 		}
@@ -186,9 +184,17 @@ public class Table {
 			}
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Finished backup of " + _tableName + " to " +
-						tempFileName + " in " + stopWatch.getTime() + " ms");
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("Backup of ");
+				sb.append(_tableName);
+				sb.append(" to ");
+				sb.append(tempFileName);
+				sb.append(" took ");
+				sb.append(stopWatch.getTime());
+				sb.append(" ms");
+
+				_log.info(sb.toString());
 			}
 		}
 		catch (Exception e) {

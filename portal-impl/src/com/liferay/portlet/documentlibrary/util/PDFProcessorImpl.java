@@ -411,13 +411,9 @@ public class PDFProcessorImpl
 		throws Exception {
 
 		if (_isGeneratePreview(fileVersion)) {
-			StopWatch stopWatch = null;
+			StopWatch stopWatch = new StopWatch();
 
-			if (_log.isInfoEnabled()) {
-				stopWatch = new StopWatch();
-
-				stopWatch.start();
-			}
+			stopWatch.start();
 
 			_generateImagesGS(fileVersion, file, false);
 
@@ -425,27 +421,24 @@ public class PDFProcessorImpl
 				int previewFileCount = getPreviewFileCount(fileVersion);
 
 				_log.info(
-					"Ghostscript generated " + previewFileCount +
+					"Ghostscript generation of " + previewFileCount +
 						" preview pages for " + fileVersion.getTitle() +
-							" in " + stopWatch);
+							" took " + stopWatch.getTime());
 			}
 		}
 
 		if (_isGenerateThumbnail(fileVersion)) {
-			StopWatch stopWatch = null;
+			StopWatch stopWatch = new StopWatch();
 
-			if (_log.isInfoEnabled()) {
-				stopWatch = new StopWatch();
-
-				stopWatch.start();
-			}
+			stopWatch.start();
 
 			_generateImagesGS(fileVersion, file, true);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Ghostscript generated a thumbnail for " +
-						fileVersion.getTitle() + " in " + stopWatch);
+					"Ghostscript generation of a thumbnail for " +
+						fileVersion.getTitle() + " took " +
+							stopWatch.getTime());
 			}
 		}
 	}

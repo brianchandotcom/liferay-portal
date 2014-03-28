@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.PermissionedModel;
@@ -433,13 +434,9 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			String actionId, long[] roleIds)
 		throws PortalException, SystemException {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		int block = 1;
 
@@ -987,10 +984,21 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			return;
 		}
 
-		_log.debug(
-			"Checking user permissions block " + block + " for " + userId +
-				" " + resourceId + " " + actionId + " takes " +
-					stopWatch.getTime() + " ms");
+		StringBundler sb = new StringBundler(11);
+
+		sb.append("Checking user permissions for {block=");
+		sb.append(block);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", resourceId=");
+		sb.append(resourceId);
+		sb.append(", actionId=");
+		sb.append(actionId);
+		sb.append("} took ");
+		sb.append(stopWatch.getTime());
+		sb.append(" ms");
+
+		_log.debug(sb.toString());
 	}
 
 	protected void updateResourceBlocks(

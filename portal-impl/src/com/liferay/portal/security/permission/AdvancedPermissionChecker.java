@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
@@ -517,13 +518,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	public boolean hasPermission(
 		long groupId, String name, String primKey, String actionId) {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		Group group = null;
 
@@ -583,10 +580,21 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				hasPermissionImpl(groupId, name, primKey, actionId));
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Checking permission for " + groupId + " " + name +
-						" " + primKey + " " + actionId + " takes " +
-							stopWatch.getTime() + " ms");
+				StringBundler sb = new StringBundler(11);
+
+				sb.append("Checking permission for {groupId=");
+				sb.append(groupId);
+				sb.append(", name=");
+				sb.append(name);
+				sb.append(", primKey=");
+				sb.append(primKey);
+				sb.append(", actionId=");
+				sb.append(actionId);
+				sb.append("} took ");
+				sb.append(stopWatch.getTime());
+				sb.append(" ms");
+
+				_log.debug(sb.toString());
 			}
 		}
 		finally {
@@ -988,13 +996,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			boolean checkAdmin)
 		throws Exception {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		long companyId = user.getCompanyId();
 
@@ -1133,13 +1137,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return true;
 		}
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		if (group.isOrganization()) {
 			Organization organization =
@@ -1333,10 +1333,23 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return;
 		}
 
-		_log.debug(
-			"Checking user permission block " + block + " for " + groupId +
-				" " + name + " " + primKey + " " + actionId + " takes " +
-					stopWatch.getTime() + " ms");
+		StringBundler sb = new StringBundler(13);
+
+		sb.append("Checking user permission for {block=");
+		sb.append(block);
+		sb.append(", groupId=");
+		sb.append(groupId);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", primKey=");
+		sb.append(primKey);
+		sb.append(", actionId=");
+		sb.append(actionId);
+		sb.append("} took ");
+		sb.append(stopWatch.getTime());
+		sb.append(" ms");
+
+		_log.debug(sb.toString());
 	}
 
 	/**

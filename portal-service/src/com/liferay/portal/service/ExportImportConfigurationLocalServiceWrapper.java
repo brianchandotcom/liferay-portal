@@ -288,6 +288,19 @@ public class ExportImportConfigurationLocalServiceWrapper
 	@Override
 	public com.liferay.portal.model.ExportImportConfiguration addExportImportConfiguration(
 		long userId, long groupId, java.lang.String name,
+		java.lang.String description, int type, int status,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _exportImportConfigurationLocalService.addExportImportConfiguration(userId,
+			groupId, name, description, type, status, settingsMap,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.model.ExportImportConfiguration addExportImportConfiguration(
+		long userId, long groupId, java.lang.String name,
 		java.lang.String description, int type,
 		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
 		com.liferay.portal.service.ServiceContext serviceContext)

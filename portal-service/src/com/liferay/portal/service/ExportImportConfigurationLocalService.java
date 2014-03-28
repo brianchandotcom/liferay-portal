@@ -248,6 +248,14 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 
 	public com.liferay.portal.model.ExportImportConfiguration addExportImportConfiguration(
 		long userId, long groupId, java.lang.String name,
+		java.lang.String description, int type, int status,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.ExportImportConfiguration addExportImportConfiguration(
+		long userId, long groupId, java.lang.String name,
 		java.lang.String description, int type,
 		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
 		com.liferay.portal.service.ServiceContext serviceContext)

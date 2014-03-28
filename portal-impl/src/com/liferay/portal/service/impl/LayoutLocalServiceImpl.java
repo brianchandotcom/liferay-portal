@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
@@ -54,6 +56,7 @@ import com.liferay.portal.lar.backgroundtask.LayoutImportBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.PortletExportBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.PortletImportBackgroundTaskExecutor;
 import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -922,16 +925,31 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			throw new LARFileNameException(fileName);
 		}
 
-		Map<String, Serializable> taskContextMap =
-			BackgroundTaskContextMapFactory.buildTaskContextMap(
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				userId, groupId, privateLayout, layoutIds, parameterMap,
-				Constants.EXPORT, startDate, endDate, fileName);
+				startDate, endDate, null, null);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		ExportImportConfiguration exportImportConfiguration =
+			exportImportConfigurationLocalService.addExportImportConfiguration(
+				userId, groupId, taskName, StringPool.BLANK,
+				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+				WorkflowConstants.STATUS_DRAFT, settingsMap, serviceContext);
+
+		Map<String, Serializable> taskContextMap =
+			new HashMap<String, Serializable>();
+
+		taskContextMap.put(
+			"exportImportConfigurationId",
+			exportImportConfiguration.getExportImportConfigurationId());
 
 		BackgroundTask backgroundTask =
 			backgroundTaskLocalService.addBackgroundTask(
 				userId, groupId, taskName, null,
 				LayoutExportBackgroundTaskExecutor.class, taskContextMap,
-				new ServiceContext());
+				serviceContext);
 
 		return backgroundTask.getBackgroundTaskId();
 	}

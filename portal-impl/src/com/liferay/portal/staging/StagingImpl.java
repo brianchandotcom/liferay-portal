@@ -1387,6 +1387,11 @@ public class StagingImpl implements Staging {
 			new ServiceContext());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
+	 *             long, boolean, long[], Map, Date, Date)}
+	 */
+	@Deprecated
 	@Override
 	public void publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
@@ -2176,10 +2181,11 @@ public class StagingImpl implements Staging {
 
 		String scope = ParamUtil.getString(portletRequest, "scope");
 
-		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<Long, Boolean>();
+		long[] layoutIds = null;
 
 		if (scope.equals("selected-pages")) {
-			layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(portletRequest);
+			layoutIds = ExportImportHelperUtil.getLayoutIds(
+				portletRequest, targetGroupId);
 		}
 
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
@@ -2215,7 +2221,7 @@ public class StagingImpl implements Staging {
 				portletRequest, "description");
 
 			LayoutServiceUtil.schedulePublishToLive(
-				sourceGroupId, targetGroupId, privateLayout, layoutIdMap,
+				sourceGroupId, targetGroupId, privateLayout, layoutIds,
 				parameterMap, scope, dateRange.getStartDate(),
 				dateRange.getEndDate(), groupName, cronText,
 				startCalendar.getTime(), schedulerEndDate, description);
@@ -2235,7 +2241,7 @@ public class StagingImpl implements Staging {
 				else {
 					publishLayouts(
 						themeDisplay.getUserId(), sourceGroupId, targetGroupId,
-						privateLayout, layoutIdMap, parameterMap,
+						privateLayout, layoutIds, parameterMap,
 						dateRange.getStartDate(), dateRange.getEndDate());
 				}
 			}
@@ -2251,7 +2257,7 @@ public class StagingImpl implements Staging {
 					ExportImportConfigurationSettingsMapFactory.
 						buildSettingsMap(
 							themeDisplay.getUserId(), sourceGroupId,
-							targetGroupId, privateLayout, layoutIdMap,
+							targetGroupId, privateLayout, layoutIds,
 							parameterMap, dateRange.getStartDate(),
 							dateRange.getEndDate(), themeDisplay.getLocale(),
 							themeDisplay.getTimeZone());

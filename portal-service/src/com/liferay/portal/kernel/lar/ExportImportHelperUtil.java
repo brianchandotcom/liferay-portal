@@ -185,7 +185,7 @@ public class ExportImportHelperUtil {
 
 	public static Map<Long, Boolean> getLayoutIdMap(
 			PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException {
 
 		return getExportImportHelper().getLayoutIdMap(portletRequest);
 	}
@@ -205,6 +205,20 @@ public class ExportImportHelperUtil {
 		throws PortalException, SystemException {
 
 		return getExportImportHelper().getLayoutIds(layoutIdMap, targetGroupId);
+	}
+
+	public static long[] getLayoutIds(PortletRequest portletRequest)
+		throws PortalException, SystemException {
+
+		return getExportImportHelper().getLayoutIds(portletRequest);
+	}
+
+	public static long[] getLayoutIds(
+			PortletRequest portletRequest, long targetGroupId)
+		throws PortalException, SystemException {
+
+		return getExportImportHelper().getLayoutIds(
+			portletRequest, targetGroupId);
 	}
 
 	public static ManifestSummary getManifestSummary(

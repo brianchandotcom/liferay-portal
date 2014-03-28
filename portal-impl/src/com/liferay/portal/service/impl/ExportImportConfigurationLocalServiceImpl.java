@@ -43,7 +43,7 @@ public class ExportImportConfigurationLocalServiceImpl
 	@Override
 	public ExportImportConfiguration addExportImportConfiguration(
 			long userId, long groupId, String name, String description,
-			int type, Map<String, Serializable> settingsMap,
+			int type, int status, Map<String, Serializable> settingsMap,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -67,7 +67,7 @@ public class ExportImportConfigurationLocalServiceImpl
 		exportImportConfiguration.setName(name);
 		exportImportConfiguration.setDescription(description);
 		exportImportConfiguration.setType(type);
-		exportImportConfiguration.setStatus(WorkflowConstants.STATUS_APPROVED);
+		exportImportConfiguration.setStatus(status);
 		exportImportConfiguration.setStatusByUserId(userId);
 		exportImportConfiguration.setStatusByUserName(user.getScreenName());
 		exportImportConfiguration.setStatusDate(now);
@@ -80,6 +80,18 @@ public class ExportImportConfigurationLocalServiceImpl
 
 		return exportImportConfigurationPersistence.update(
 			exportImportConfiguration);
+	}
+
+	@Override
+	public ExportImportConfiguration addExportImportConfiguration(
+			long userId, long groupId, String name, String description,
+			int type, Map<String, Serializable> settingsMap,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addExportImportConfiguration(
+			userId, groupId, name, description, type,
+			WorkflowConstants.STATUS_APPROVED, settingsMap, serviceContext);
 	}
 
 	@Override

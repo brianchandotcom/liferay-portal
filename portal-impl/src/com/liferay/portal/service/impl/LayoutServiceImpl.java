@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
@@ -1155,8 +1156,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  sourceGroupId the primary key of the source group
 	 * @param  targetGroupId the primary key of the target group
 	 * @param  privateLayout whether the layout is private to the group
-	 * @param  layoutIdMap the layouts considered for publishing, specified by
-	 *         the layout IDs and booleans indicating whether they have children
+	 * @param  layoutIds the layouts considered for publishing, specified by the
+	 *         layout IDs
 	 * @param  parameterMap the mapping of parameters indicating which
 	 *         information will be used. See {@link
 	 *         com.liferay.portal.kernel.lar.PortletDataHandlerKeys}
@@ -1179,10 +1180,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	@Override
 	public void schedulePublishToLive(
 			long sourceGroupId, long targetGroupId, boolean privateLayout,
-			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-			String scope, Date startDate, Date endDate, String groupName,
-			String cronText, Date schedulerStartDate, Date schedulerEndDate,
-			String description)
+			long[] layoutIds, Map<String, String[]> parameterMap, String scope,
+			Date startDate, Date endDate, String groupName, String cronText,
+			Date schedulerStartDate, Date schedulerEndDate, String description)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
@@ -1195,7 +1195,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				getUserId(), sourceGroupId, targetGroupId, privateLayout,
-				layoutIdMap, parameterMap, startDate, endDate, null, null);
+				layoutIds, parameterMap, startDate, endDate, null, null);
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.addExportImportConfiguration(
@@ -1208,6 +1208,56 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			trigger, StorageType.PERSISTED, description,
 			DestinationNames.LAYOUTS_LOCAL_PUBLISHER,
 			exportImportConfiguration.getExportImportConfigurationId(), 0);
+	}
+
+	/**
+	 * Schedules a range of layouts to be published.
+	 *
+	 * @param      sourceGroupId the primary key of the source group
+	 * @param      targetGroupId the primary key of the target group
+	 * @param      privateLayout whether the layout is private to the group
+	 * @param      layoutIdMap the layouts considered for publishing, specified
+	 *             by the layout IDs and booleans indicating whether they have
+	 *             children
+	 * @param      parameterMap the mapping of parameters indicating which
+	 *             information will be used. See {@link
+	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}
+	 * @param      scope the scope of the pages. It can be
+	 *             <code>all-pages</code> or <code>selected-pages</code>.
+	 * @param      startDate the start date
+	 * @param      endDate the end date
+	 * @param      groupName the group name (optionally {@link
+	 *             com.liferay.portal.kernel.messaging.DestinationNames#LAYOUTS_LOCAL_PUBLISHER}).
+	 *             See {@link
+	 *             com.liferay.portal.kernel.messaging.DestinationNames}.
+	 * @param      cronText the cron text. See {@link
+	 *             com.liferay.portal.kernel.cal.RecurrenceSerializer
+	 *             #toCronText}
+	 * @param      schedulerStartDate the scheduler start date
+	 * @param      schedulerEndDate the scheduler end date
+	 * @param      description the scheduler description
+	 * @throws     PortalException if the group did not have permission to
+	 *             manage and publish
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #schedulePublishToLive(long,
+	 *             long, boolean, long[], Map, String, Date, Date, String,
+	 *             String, Date, Date, String)}
+	 */
+	@Deprecated
+	@Override
+	public void schedulePublishToLive(
+			long sourceGroupId, long targetGroupId, boolean privateLayout,
+			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
+			String scope, Date startDate, Date endDate, String groupName,
+			String cronText, Date schedulerStartDate, Date schedulerEndDate,
+			String description)
+		throws PortalException, SystemException {
+
+		schedulePublishToLive(
+			sourceGroupId, targetGroupId, privateLayout,
+			ExportImportHelperUtil.getLayoutIds(layoutIdMap, targetGroupId),
+			parameterMap, scope, startDate, endDate, groupName, cronText,
+			schedulerStartDate, schedulerEndDate, description);
 	}
 
 	/**

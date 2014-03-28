@@ -21,8 +21,13 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
+import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
 import java.io.File;
@@ -51,25 +56,42 @@ public class LayoutExportBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long userId = MapUtil.getLong(taskContextMap, "userId");
-		String fileName = MapUtil.getString(taskContextMap, "fileName");
+		long exportImportConfigurationId = MapUtil.getLong(
+			taskContextMap, "exportImportConfigurationId");
 
-		long groupId = MapUtil.getLong(taskContextMap, "groupId");
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfiguration(exportImportConfigurationId);
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long userId = MapUtil.getLong(settingsMap, "userId");
+		long groupId = MapUtil.getLong(settingsMap, "sourceGroupId");
 		boolean privateLayout = MapUtil.getBoolean(
-			taskContextMap, "privateLayout");
+			settingsMap, "privateLayout");
 		long[] layoutIds = GetterUtil.getLongValues(
-			taskContextMap.get("layoutIds"));
+			settingsMap.get("layoutIds"));
 		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)taskContextMap.get("parameterMap");
-		Date startDate = (Date)taskContextMap.get("startDate");
-		Date endDate = (Date)taskContextMap.get("endDate");
+			(Map<String, String[]>)settingsMap.get("parameterMap");
+		Date startDate = (Date)settingsMap.get("startDate");
+		Date endDate = (Date)settingsMap.get("endDate");
+		String fileName = exportImportConfiguration.getName();
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(fileName.replace(StringPool.SPACE, StringPool.UNDERLINE));
+		sb.append(StringPool.DASH);
+		sb.append(Time.getShortTimestamp());
+		sb.append(".lar");
 
 		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
 			groupId, privateLayout, layoutIds, parameterMap, startDate,
 			endDate);
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
-			userId, backgroundTask.getBackgroundTaskId(), fileName, larFile);
+			userId, backgroundTask.getBackgroundTaskId(), sb.toString(),
+			larFile);
 
 		boolean updateLastPublishDate = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);

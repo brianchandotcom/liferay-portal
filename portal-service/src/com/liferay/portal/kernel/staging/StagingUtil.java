@@ -373,6 +373,11 @@ public class StagingUtil {
 			parameterMap, startDate, endDate);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
+	 *             long, boolean, long[], Map, Date, Date)}
+	 */
+	@Deprecated
 	public static void publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, Map<Long, Boolean> layoutIdMap,

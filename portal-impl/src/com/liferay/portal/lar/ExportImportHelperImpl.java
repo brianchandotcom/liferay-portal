@@ -549,7 +549,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
 	public Map<Long, Boolean> getLayoutIdMap(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException {
 
 		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<Long, Boolean>();
 
@@ -636,6 +636,23 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return getLayoutIds(layouts);
+	}
+
+	@Override
+	public long[] getLayoutIds(PortletRequest portletRequest)
+		throws PortalException, SystemException {
+
+		return getLayoutIds(
+			getLayoutIdMap(portletRequest),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID);
+	}
+
+	@Override
+	public long[] getLayoutIds(
+			PortletRequest portletRequest, long targetGroupId)
+		throws PortalException, SystemException {
+
+		return getLayoutIds(getLayoutIdMap(portletRequest), targetGroupId);
 	}
 
 	@Override

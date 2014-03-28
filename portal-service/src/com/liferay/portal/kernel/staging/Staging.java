@@ -230,6 +230,11 @@ public interface Staging {
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws PortalException, SystemException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
+	 *             long, boolean, long[], Map, Date, Date)}
+	 */
+	@Deprecated
 	public void publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, Map<Long, Boolean> layoutIdMap,

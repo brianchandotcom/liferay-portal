@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.lar.exportimportconfiguration;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -43,12 +44,12 @@ import javax.portlet.PortletRequest;
 public class ExportImportConfigurationSettingsMapFactory {
 
 	public static Map<String, Serializable> buildSettingsMap(
-		long userId, long groupId, boolean privateLayout,
-		Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-		Date startDate, Date endDate, Locale locale, TimeZone timeZone) {
+		long userId, long groupId, boolean privateLayout, long[] layoutIds,
+		Map<String, String[]> parameterMap, Date startDate, Date endDate,
+		Locale locale, TimeZone timeZone) {
 
 		return buildSettingsMap(
-			userId, groupId, 0, privateLayout, layoutIdMap, parameterMap,
+			userId, groupId, 0, privateLayout, layoutIds, parameterMap,
 			startDate, endDate, locale, timeZone);
 	}
 
@@ -61,8 +62,15 @@ public class ExportImportConfigurationSettingsMapFactory {
 		Locale locale, TimeZone timeZone) {
 
 		Map<String, Serializable> settingsMap = buildSettingsMap(
-			userId, sourceGroupId, privateLayout, layoutIdMap, parameterMap,
-			startDate, endDate, locale, timeZone);
+			userId, sourceGroupId, privateLayout, null, parameterMap, startDate,
+			endDate, locale, timeZone);
+
+		if (MapUtil.isNotEmpty(layoutIdMap)) {
+			HashMap<Long, Boolean> serializableLayoutIdMap =
+				new HashMap<Long, Boolean>(layoutIdMap);
+
+			settingsMap.put("layoutIdMap", serializableLayoutIdMap);
+		}
 
 		settingsMap.put("remoteAddress", remoteAddress);
 		settingsMap.put("remoteGroupId", remoteGroupId);
@@ -76,7 +84,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 	public static Map<String, Serializable> buildSettingsMap(
 		long userId, long sourceGroupId, long targetGroupId,
-		boolean privateLayout, Map<Long, Boolean> layoutIdMap,
+		boolean privateLayout, long[] layoutIds,
 		Map<String, String[]> parameterMap, Date startDate, Date endDate,
 		Locale locale, TimeZone timeZone) {
 
@@ -87,11 +95,8 @@ public class ExportImportConfigurationSettingsMapFactory {
 			settingsMap.put("endDate", endDate);
 		}
 
-		if (MapUtil.isNotEmpty(layoutIdMap)) {
-			HashMap<Long, Boolean> serializableLayoutIdMap =
-				new HashMap<Long, Boolean>(layoutIdMap);
-
-			settingsMap.put("layoutIdMap", serializableLayoutIdMap);
+		if (ArrayUtil.isNotEmpty(layoutIds)) {
+			settingsMap.put("layoutIds", layoutIds);
 		}
 
 		settingsMap.put("locale", locale);
@@ -144,8 +149,10 @@ public class ExportImportConfigurationSettingsMapFactory {
 			portletRequest, groupId, privateLayout, 0, null, defaultDateRange);
 
 		if (type == ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) {
+			long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
+
 			return buildSettingsMap(
-				themeDisplay.getUserId(), groupId, privateLayout, layoutIdMap,
+				themeDisplay.getUserId(), groupId, privateLayout, layoutIds,
 				portletRequest.getParameterMap(), dateRange.getStartDate(),
 				dateRange.getEndDate(), themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());
@@ -159,10 +166,13 @@ public class ExportImportConfigurationSettingsMapFactory {
 			portletRequest);
 
 		if (liveGroup != null) {
+			long[] layoutIds = ExportImportHelperUtil.getLayoutIds(
+				layoutIdMap, liveGroup.getGroupId());
+
 			return buildSettingsMap(
 				themeDisplay.getUserId(), stagingGroup.getGroupId(),
-				liveGroup.getGroupId(), privateLayout, layoutIdMap,
-				parameterMap, dateRange.getStartDate(), dateRange.getEndDate(),
+				liveGroup.getGroupId(), privateLayout, layoutIds, parameterMap,
+				dateRange.getStartDate(), dateRange.getEndDate(),
 				themeDisplay.getLocale(), themeDisplay.getTimeZone());
 		}
 

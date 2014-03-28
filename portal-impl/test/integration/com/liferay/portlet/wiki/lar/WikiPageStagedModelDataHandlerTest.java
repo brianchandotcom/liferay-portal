@@ -69,9 +69,7 @@ public class WikiPageStagedModelDataHandlerTest
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			new HashMap<String, List<StagedModel>>();
 
-		WikiNode node = WikiTestUtil.addNode(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString());
+		WikiNode node = WikiTestUtil.addNode(group.getGroupId());
 
 		addDependentStagedModel(dependentStagedModelsMap, WikiNode.class, node);
 
@@ -134,19 +132,15 @@ public class WikiPageStagedModelDataHandlerTest
 
 		List<StagedModel> stagedModels = new ArrayList<StagedModel>();
 
-		WikiNode node = WikiTestUtil.addNode(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString());
+		WikiNode node = WikiTestUtil.addNode(group.getGroupId());
 
 		WikiPage page = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), group.getGroupId(), node.getNodeId(),
-			ServiceTestUtil.randomString(), true);
+			group.getGroupId(), node.getNodeId(), true);
 
 		stagedModels.add(page);
 
 		WikiPage draftPage = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), group.getGroupId(), node.getNodeId(),
-			ServiceTestUtil.randomString(), false);
+			group.getGroupId(), node.getNodeId(), false);
 
 		stagedModels.add(draftPage);
 

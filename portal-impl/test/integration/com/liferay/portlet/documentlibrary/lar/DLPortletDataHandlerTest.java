@@ -155,8 +155,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	protected void addStagedModels() throws Exception {
 		Folder folder = DLAppTestUtil.addFolder(
 			stagingGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			stagingGroup.getGroupId(), DLFileEntryType.class.getName());

@@ -180,8 +180,7 @@ public class DLDirectoryNameAndFileNameTest {
 	@Test(expected = FolderNameException.class)
 	public void testUpdateFolder() throws Exception {
 		Folder folder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(20));
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		String name =
 			StringUtil.randomString(20) + PropsValues.DL_CHAR_BLACKLIST[0];

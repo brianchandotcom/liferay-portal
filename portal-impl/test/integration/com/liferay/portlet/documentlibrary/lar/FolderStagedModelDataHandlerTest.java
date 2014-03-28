@@ -23,7 +23,6 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
@@ -108,8 +107,7 @@ public class FolderStagedModelDataHandlerTest
 
 		Folder folder = DLAppTestUtil.addFolder(
 			stagingGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DLFolder.class, folder);
@@ -138,8 +136,7 @@ public class FolderStagedModelDataHandlerTest
 			dependentStagedModelsMap, DLFileEntryType.class, dlFileEntryType);
 
 		Folder folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DLFolder.class, folder);
@@ -165,8 +162,7 @@ public class FolderStagedModelDataHandlerTest
 			(DLFileEntryType)fileEntryTypeDependentStagedModels.get(0);
 
 		folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), folder.getFolderId(),
-			ServiceTestUtil.randomString());
+			group.getGroupId(), folder.getFolderId());
 
 		DLAppTestUtil.updateFolderFileEntryType(
 			folder, dlFileEntryType.getFileEntryTypeId());

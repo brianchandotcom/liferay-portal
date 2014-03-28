@@ -159,7 +159,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		}
 
 		MBTestUtil.addDiscussionMessage(
-			TestPropsValues.getUser(), stagingGroup.getGroupId(),
+			stagingGroup.getGroupId(),
 			ExportImportClassedModelUtil.getClassName(stagedModel),
 			ExportImportClassedModelUtil.getClassPK(stagedModel));
 	}

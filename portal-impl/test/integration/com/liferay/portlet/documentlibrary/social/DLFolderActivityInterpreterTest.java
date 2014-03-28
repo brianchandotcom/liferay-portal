@@ -46,8 +46,7 @@ public class DLFolderActivityInterpreterTest
 	@Override
 	protected void addActivities() throws Exception {
 		_folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		DLAppServiceUtil.moveFolderToTrash(_folder.getFolderId());
 

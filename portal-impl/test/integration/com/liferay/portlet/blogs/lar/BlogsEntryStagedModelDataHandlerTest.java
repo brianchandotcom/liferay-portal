@@ -21,7 +21,6 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
@@ -50,7 +49,7 @@ public class BlogsEntryStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		return BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, true);
+		return BlogsTestUtil.addEntry(group, true);
 	}
 
 	@Override
@@ -59,11 +58,9 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 		List<StagedModel> stagedModels = new ArrayList<StagedModel>();
 
-		stagedModels.add(
-			BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, true));
+		stagedModels.add(BlogsTestUtil.addEntry(group, true));
 
-		stagedModels.add(
-			BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, false));
+		stagedModels.add(BlogsTestUtil.addEntry(group, false));
 
 		return stagedModels;
 	}

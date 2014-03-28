@@ -16,16 +16,63 @@ package com.liferay.portlet.wiki.action;
 
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Bruno Farache
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
+
+	@Override
+	public void postProcessPortletPreferences(
+			long companyId, PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		String emailFromAddress = PortalUtil.getEmailFromAddress(
+			portletPreferences, companyId,
+			PropsValues.WIKI_EMAIL_FROM_ADDRESS);
+
+		removeDefaultValue(
+			portletRequest, portletPreferences, "emailFromAddress",
+			emailFromAddress);
+
+		String emailFromName = PortalUtil.getEmailFromName(
+			portletPreferences, companyId, PropsValues.WIKI_EMAIL_FROM_NAME);
+
+		removeDefaultValue(
+			portletRequest, portletPreferences, "emailFromName", emailFromName);
+
+		String languageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailPageAddedBody_" + languageId,
+			ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailPageAddedSubject_" + languageId,
+			ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailPageUpdatedBody_" + languageId,
+			ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailPageUpdatedSubject_" + languageId,
+			ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_SUBJECT));
+	}
 
 	@Override
 	public void processAction(

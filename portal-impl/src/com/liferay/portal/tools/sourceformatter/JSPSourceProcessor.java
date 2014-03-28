@@ -1161,9 +1161,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			if ((delimeter == CharPool.APOSTROPHE) &&
 				!value.contains(StringPool.QUOTE)) {
 
-				return StringUtil.replace(
+				line = StringUtil.replace(
 					line, StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
 					StringPool.QUOTE + value + StringPool.QUOTE);
+
+				return sortJSPAttributes(fileName, line, lineCount);
 			}
 
 			StringBundler sb = new StringBundler(5);
@@ -1187,6 +1189,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					line = StringUtil.replaceLast(
 						line, currentAttributeAndValue,
 						previousAttributeAndValue);
+
+					return sortJSPAttributes(fileName, line, lineCount);
 				}
 
 				return line;

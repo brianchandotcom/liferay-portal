@@ -1163,17 +1163,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String javaTermContent = javaTerm.getContent();
 
-			while (true) {
-				String newJavaTermContent = sortAnnotations(
-					javaTermContent, StringPool.TAB);
+			String newJavaTermContent = sortAnnotations(
+				javaTermContent, StringPool.TAB);
 
-				if (javaTermContent.equals(newJavaTermContent)) {
-					break;
-				}
-
+			if (!javaTermContent.equals(newJavaTermContent)) {
 				content = content.replace(javaTermContent, newJavaTermContent);
-
-				javaTermContent = newJavaTermContent;
 			}
 		}
 
@@ -2718,7 +2712,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					content = StringUtil.replaceLast(
 						content, annotation, previousAnnotation);
 
-					return content;
+					return sortAnnotations(content, indent);
 				}
 
 				if (line.startsWith(indent + StringPool.AT)) {
@@ -2779,9 +2773,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (Validator.isNotNull(previousException) &&
 				(previousException.compareToIgnoreCase(exception) > 0)) {
 
-				return StringUtil.replace(
+				line = StringUtil.replace(
 					line, previousException + ", " + exception,
 					exception + ", " + previousException);
+
+				return sortExceptions(line);
 			}
 
 			previousException = exception;

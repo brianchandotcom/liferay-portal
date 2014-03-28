@@ -142,13 +142,13 @@
 </tr>
 <!--WELCOME_QUICK_START_GUIDE-->
 <tr>
-	<td>WELCOME_QUICK_START_GUIDE_HEADER</td>
-	<td>//div[@class='page-heading']/h1</td>
+	<td>WELCOME_QUICK_START_GUIDE_HEADING_IMAGE</td>
+	<td>//img[@class='main-heading-img']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>WELCOME_QUICK_START_GUIDE_SUBHEADER</td>
-	<td>//div[@class='page-heading']/p</td>
+	<td>WELCOME_QUICK_START_GUIDE_SUBHEADING</td>
+	<td>//img[@class='main-heading-img']/following-sibling::span</td>
 	<td></td>
 </tr>
 <tr>

@@ -339,6 +339,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 			li {
 				&.dropdown {
 					> .dropdown-toggle {
+						padding-right: 0;
+
 						.caret {
 							border-bottom-color: #FFF;
 							border-top-color: #FFF;
@@ -403,15 +405,33 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	.modify-pages .delete-tab {
-		background: #555;
-		border: 2px solid #FFF;
-		color: #FFF;
-		font-size: 16px;
-		padding: 4px;
-		right: -10px;
-		top: 0;
-		z-index: 300;
+	.modify-pages {
+		.delete-tab {
+			background: #555;
+			border: 2px solid #FFF;
+			color: #FFF;
+			font-size: 16px;
+			padding: 4px;
+			right: -10px;
+			top: 0;
+			z-index: 300;
+		}
+
+		.lfr-nav-item .lfr-nav-child-toggle {
+			padding: 10px;
+
+			i {
+				margin: 0;
+			}
+
+			@include respond-to(phone, tablet) {
+				line-height: 1em;
+				padding: 14px;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+		}
 	}
 
 	/* ---------- Breadcrumbs ---------- */

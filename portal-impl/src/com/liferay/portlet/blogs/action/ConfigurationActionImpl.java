@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.action;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -36,10 +37,10 @@ import javax.portlet.PortletRequest;
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 	@Override
-	public void postProcessPortletPreferences(
+	public void postProcess(
 			long companyId, PortletRequest portletRequest,
 			PortletPreferences portletPreferences)
-		throws Exception {
+		throws SystemException {
 
 		String emailFromAddress = PortalUtil.getEmailFromAddress(
 			portletPreferences, companyId,

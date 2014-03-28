@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.NoSuchRepositoryEntryException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -42,10 +43,10 @@ import javax.portlet.PortletRequest;
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 	@Override
-	public void postProcessPortletPreferences(
+	public void postProcess(
 			long companyId, PortletRequest portletRequest,
 			PortletPreferences portletPreferences)
-		throws Exception {
+		throws SystemException {
 
 		removeDefaultValue(
 			portletRequest, portletPreferences, "emailFromAddress",

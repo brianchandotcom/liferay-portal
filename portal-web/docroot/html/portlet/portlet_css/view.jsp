@@ -44,7 +44,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 					<span class="field-row">
 						<aui:input inlineField="<%= true %>" label="" name="custom-title" />
 
-						<aui:select inlineField="<%= true %>" label="language" name="lfr-portlet-language">
+						<aui:select hideLabel="<%= true %>" inlineField="<%= true %>" label="language" name="lfr-portlet-language">
 
 							<%
 							Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());

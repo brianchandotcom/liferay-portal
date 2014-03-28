@@ -40,6 +40,39 @@
 		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
+	<command name="addDocumentTypePG">
+		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
+
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
+
+		<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+
+		<for list="${dmDynamicDataFieldNames}" param="dmDynamicDataFieldNames">
+			<var name="key_dmDynamicDataFieldName" value="${dmDynamicDataFieldNames}" />
+
+ 			<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="DYNAMIC_DATA_GENERIC_FIELD" value1="${dmDynamicDataFieldNames} Content" />
+		</for>
+
+		<for list="${dmDynamicDataFieldTextarea}" param="dmDynamicDataFieldTextarea">
+			<var name="key_dmDynamicDataFieldTextarea" value="${dmDynamicDataFieldTextarea}" />
+
+ 			<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="DYNAMIC_DATA_GENERIC_TEXTAREA" value1="${dmDynamicDataFieldTextarea} Content" />
+		</for>
+
+		<if>
+			<isset var="selectOption" />
+			<then>
+				<execute action="PGDocumentsandmediaAdddocumenttype#select" locator-key1="SELECT_OPTIONS_SELECT" value1="${selectOption}" />
+			</then>
+		</if>
+
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addPG">
 		<if>
 			<equals arg1="${stagingActivated}" arg2="true" />
@@ -464,6 +497,148 @@
 		</if>
 	</command>
 
+	<command name="populateField">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<if>
+			<not>
+				<equals arg1="${fieldShowLabel}" arg2="No" />
+			</not>
+			<then>
+				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="FIELD_LABEL" value1="${fieldFieldLabel}" />
+			</then>
+			<else>
+				<execute action="PGDocumentsandmediaAdddocumenttype#assertElementNotPresent" locator-key1="FIELD_LABEL" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Boolean" />
+			<then>
+				<if>
+					<equals arg1="${dmRecordFieldData}" arg2="false" />
+					<then>
+						<execute action="PGDocumentsandmediaAdddocumenttype#uncheck" locator-key1="BOOLEAN_CHECKBOX" />
+					</then>
+					<elseif>
+						<equals arg1="${dmRecordFieldData}" arg2="true" />
+						<then>
+							<execute action="PGDocumentsandmediaAdddocumenttype#check" locator-key1="BOOLEAN_CHECKBOX" />
+						</then>
+					</elseif>
+					<else>
+						<fail message="Invalid var recordFieldData. Must be (true|false)." />
+					</else>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Date" />
+			<then>
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="DATE_FIELD" value1="${dmRecordFieldData}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Decimal" />
+			<then>
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="DECIMAL_FIELD" value1="${dmRecordFieldData}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Documents and Media" />
+			<then>
+				<execute action="PGDocumentsandmediaAdddocumenttype#assertClick" locator-key1="DOCUMENTS_AND_MEDIA_SELECT" value1="Select" />
+
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#selectFrame" locator-key1="SELECT_DOCUMENT_IFRAME" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelectAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${document}" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelectAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelectAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+				<var name="key_documentTitle" value="${dmRecordFieldData}" />
+
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#assertTextEquals" locator-key1="DOCUMENTS_TABLE_DOCUMENT" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#click" locator-key1="DOCUMENTS_TABLE_CHOOSE" />
+
+				<execute action="PGDocumentsandmediaAdddocumenttype#selectFrame" value1="relative=top" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="DOCUMENTS_AND_MEDIA_FIELD" value1="${dmRecordFieldData}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="HTML" />
+			<then>
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="HTML_FIELD" value1="${dmRecordFieldData}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Integer" />
+			<then>
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="INTEGER_FIELD" value1="${dmRecordFieldData}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Link to Page" />
+			<then>
+				<var name="key_recordFieldData" value="${dmRecordFieldData}" />
+
+				<execute action="PGDocumentsandmediaAdddocumenttype#click" locator-key1="LINK_TO_PAGE_SELECT" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#doubleClick" locator-key1="LINK_TO_PAGE_SELECT_OPTION" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Number" />
+			<then>
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="NUMBER_FIELD" value1="${dmRecordFieldData}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Radio" />
+			<then>
+				<var name="key_recordFieldData" value="${dmRecordFieldData}" />
+
+				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="RADIO_OPTION_LABEL" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#click" locator-key1="RADIO_OPTION_RADIO" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Select" />
+			<then>
+				<execute action="PGDocumentsandmediaAdddocumenttype#select" locator-key1="SELECT_SELECT" value1="${dmRecordFieldData}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Text" />
+			<then>
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="TEXT_FIELD" value1="${dmRecordFieldData}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Text Box" />
+			<then>
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="TEXT_BOX_FIELD" value1="${dmRecordFieldData}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="publishCP">
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="publishDraftPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
@@ -727,6 +902,40 @@
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="TOOLBAR_MOVE_TO_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
 	</command>
 
+	<command name="viewDocumentTypePG">
+		<if>
+			<isset var="selectOption" />
+			<then>
+				<var name="${selectOption}" value="selectOption" />
+
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="METADATA_PANEL_SELECT" value1="Select ${selectOption}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="radioOption" />
+			<then>
+				<var name="${radioOption}" value="radioOption" />
+
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="METADATA_PANEL_RADIO" value1="${radioOption}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="metadataSetName" arg2="Meeting Metadata" />" />
+			<then>
+				<for list="${textContent}" param="textContent">
+					<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="METADATA_PANEL_TEXT" value1="${textContent} Content" />
+				</for>
+			</then>
+			<else>
+				<for list="${textContent}" param="textContent">
+					<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="METADATA_PANEL_TEXT" value1="${textContent} Content" />
+				</for>
+			</else>
+		</if>
+	</command>
+
 	<command name="viewDocumentVersionNumberCmdPG">
 		<if>
 			<not>
@@ -861,6 +1070,18 @@
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_WORKFLOW" value1="Status: ${workflow}" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSize})" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_URL" value1="Get URL or WebDAV URL." />
+	</command>
+
+	<command name="viewPGMetadata">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute macro="DMDocument#viewDocumentTitleCmdPG">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_THUMBNAIL" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_RATING" value1="Rating" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
 	</command>
 
 	<command name="viewPGNonAuthor">

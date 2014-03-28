@@ -17,12 +17,13 @@
 <%@ include file="/html/portlet/blogs/init.jsp" %>
 
 <%
-String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", BlogsUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", BlogsUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
-String socialBookmarkTypes = portletPreferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES));
+blogsSettings = BlogsUtil.getBlogsSettings(scopeGroupId, request);
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
+	<portlet:param name="serviceName" value="<%= BlogsConstants.SERVICE_NAME %>" />
+	<portlet:param name="settingsScope" value="group" />
+</liferay-portlet:actionURL>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
@@ -50,21 +51,21 @@ String socialBookmarkTypes = portletPreferences.getValue("socialBookmarksTypes",
 		<liferay-ui:error key="emailEntryUpdatedSubject" message="please-enter-a-valid-subject" />
 
 		<liferay-ui:section>
-			<%@ include file="/html/portlet/blogs/display_settings.jspf" %>
+			<%@ include file="/html/portlet/blogs_admin/display_settings.jspf" %>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />
+				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= blogsSettings.getEmailFromName() %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
+				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= blogsSettings.getEmailFromAddress() %>" />
 			</aui:fieldset>
 
 			<aui:fieldset cssClass="definition-of-terms" label="definition-of-terms">
 				<dl>
 
 					<%
-					Map<String, String> emailFromDefinitionTerms = BlogsUtil.getEmailFromDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+					Map<String, String> emailFromDefinitionTerms = BlogsUtil.getEmailFromDefinitionTerms(renderRequest, blogsSettings.getEmailFromAddress(), blogsSettings.getEmailFromName());
 
 					for (Map.Entry<String, String> entry : emailFromDefinitionTerms.entrySet()) {
 					%>
@@ -85,26 +86,26 @@ String socialBookmarkTypes = portletPreferences.getValue("socialBookmarksTypes",
 		</liferay-ui:section>
 
 		<%
-		Map<String, String> emailDefinitionTerms = BlogsUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+		Map<String, String> emailDefinitionTerms = BlogsUtil.getEmailDefinitionTerms(renderRequest, blogsSettings.getEmailFromAddress(), blogsSettings.getEmailFromName());
 		%>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailEntryAddedBody", "preferences", ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_ADDED_BODY)) %>'
+				emailBody="<%= blogsSettings.getEmailEntryAddedBody().getLocalizationXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailEntryAddedEnabled--", BlogsUtil.getEmailEntryAddedEnabled(portletPreferences)) %>'
+				emailEnabled="<%= blogsSettings.getEmailEntryAddedEnabled() %>"
 				emailParam="emailEntryAdded"
-				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailEntryAddedSubject", "preferences", ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT)) %>'
+				emailSubject="<%= blogsSettings.getEmailEntryAddedSubject().getLocalizationXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailEntryUpdatedBody", "preferences", ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_UPDATED_BODY)) %>'
+				emailBody="<%= blogsSettings.getEmailEntryUpdatedBody().getLocalizationXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled='<%= ParamUtil.getBoolean(request, "preferences--emailEntryUpdatedEnabled--", BlogsUtil.getEmailEntryUpdatedEnabled(portletPreferences)) %>'
+					emailEnabled="<%= blogsSettings.getEmailEntryUpdatedEnabled() %>"
 				emailParam="emailEntryUpdated"
-				emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailEntryUpdatedSubject", "preferences", ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT)) %>'
+				emailSubject="<%= blogsSettings.getEmailEntryAddedSubject().getLocalizationXml() %>"
 			/>
 		</liferay-ui:section>
 

@@ -47,7 +47,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextUtil;
+import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -58,6 +58,7 @@ import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.blogs.BlogsSettings;
 import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryDisplayDateException;
 import com.liferay.portlet.blogs.EntrySmallImageNameException;
@@ -79,11 +80,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -1394,26 +1393,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		PortletPreferences preferences =
-			ServiceContextUtil.getPortletPreferences(serviceContext);
-
-		if (preferences == null) {
-			long ownerId = entry.getGroupId();
-			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
-			long plid = PortletKeys.PREFS_PLID_SHARED;
-			String portletId = PortletKeys.BLOGS;
-			String defaultPreferences = null;
-
-			preferences = portletPreferencesLocalService.getPreferences(
-				entry.getCompanyId(), ownerId, ownerType, plid, portletId,
-				defaultPreferences);
-		}
+		BlogsSettings blogsSettings = BlogsUtil.getBlogsSettings(
+			entry.getGroupId());
 
 		if (serviceContext.isCommandAdd() &&
-			BlogsUtil.getEmailEntryAddedEnabled(preferences)) {
+			blogsSettings.getEmailEntryAddedEnabled()) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-				 BlogsUtil.getEmailEntryUpdatedEnabled(preferences)) {
+				 blogsSettings.getEmailEntryUpdatedEnabled()) {
 		}
 		else {
 			return;
@@ -1422,24 +1409,21 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		String entryTitle = entry.getTitle();
 		String entryURL = getEntryURL(entry, serviceContext);
 
-		String fromName = BlogsUtil.getEmailFromName(
-			preferences, entry.getCompanyId());
-		String fromAddress = BlogsUtil.getEmailFromAddress(
-			preferences, entry.getCompanyId());
+		String fromName = blogsSettings.getEmailFromName();
+		String fromAddress = blogsSettings.getEmailFromAddress();
 
-		Map<Locale, String> localizedSubjectMap = null;
-		Map<Locale, String> localizedBodyMap = null;
+		LocalizedValuesMap subjectLocalizedValuesMap = null;
+		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
-			localizedSubjectMap = BlogsUtil.getEmailEntryUpdatedSubjectMap(
-				preferences);
-			localizedBodyMap = BlogsUtil.getEmailEntryUpdatedBodyMap(
-				preferences);
+			subjectLocalizedValuesMap =
+				blogsSettings.getEmailEntryUpdatedSubject();
+			bodyLocalizedValuesMap = blogsSettings.getEmailEntryUpdatedBody();
 		}
 		else {
-			localizedSubjectMap = BlogsUtil.getEmailEntryAddedSubjectMap(
-				preferences);
-			localizedBodyMap = BlogsUtil.getEmailEntryAddedBodyMap(preferences);
+			subjectLocalizedValuesMap =
+				blogsSettings.getEmailEntryAddedSubject();
+			bodyLocalizedValuesMap = blogsSettings.getEmailEntryAddedBody();
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
@@ -1459,8 +1443,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setEntryURL(entryURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
-		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
+		subscriptionSender.setLocalizedBodyMap(bodyLocalizedValuesMap);
+		subscriptionSender.setLocalizedSubjectMap(subjectLocalizedValuesMap);
 		subscriptionSender.setMailId("blogs_entry", entry.getEntryId());
 
 		int notificationType =

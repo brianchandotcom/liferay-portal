@@ -20,33 +20,31 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.ModelHintsUtil;
+import com.liferay.portal.settings.ParameterMapSettings;
+import com.liferay.portal.settings.Settings;
+import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+import com.liferay.portlet.blogs.BlogsSettings;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -59,6 +57,28 @@ public class BlogsUtil {
 	public static final String DISPLAY_STYLE_FULL_CONTENT = "full-content";
 
 	public static final String DISPLAY_STYLE_TITLE = "title";
+
+	public static BlogsSettings getBlogsSettings(long groupId)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, BlogsConstants.SERVICE_NAME);
+
+		return new BlogsSettings(settings);
+	}
+
+	public static BlogsSettings getBlogsSettings(
+			long groupId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, BlogsConstants.SERVICE_NAME);
+
+		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
+			settings, request.getParameterMap());
+
+		return new BlogsSettings(parameterMapSettings);
+	}
 
 	public static Map<String, String> getEmailDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,
@@ -141,76 +161,6 @@ public class BlogsUtil {
 		return definitionTerms;
 	}
 
-	public static Map<Locale, String> getEmailEntryAddedBodyMap(
-		PortletPreferences preferences) {
-
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailEntryAddedBody",
-			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_BODY);
-	}
-
-	public static boolean getEmailEntryAddedEnabled(
-		PortletPreferences preferences) {
-
-		String emailEntryAddedEnabled = preferences.getValue(
-			"emailEntryAddedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailEntryAddedEnabled)) {
-			return GetterUtil.getBoolean(emailEntryAddedEnabled);
-		}
-		else {
-			return GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_ENABLED));
-		}
-	}
-
-	public static Map<Locale, String> getEmailEntryAddedSubjectMap(
-		PortletPreferences preferences) {
-
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailEntryAddedSubject",
-			PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT);
-	}
-
-	public static Map<Locale, String> getEmailEntryUpdatedBodyMap(
-		PortletPreferences preferences) {
-
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailEntryUpdatedBody",
-			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_BODY);
-	}
-
-	public static boolean getEmailEntryUpdatedEnabled(
-		PortletPreferences preferences) {
-
-		String emailEntryUpdatedEnabled = preferences.getValue(
-			"emailEntryUpdatedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailEntryUpdatedEnabled)) {
-			return GetterUtil.getBoolean(emailEntryUpdatedEnabled);
-		}
-		else {
-			return GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_ENABLED));
-		}
-	}
-
-	public static Map<Locale, String> getEmailEntryUpdatedSubjectMap(
-		PortletPreferences preferences) {
-
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailEntryUpdatedSubject",
-			PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT);
-	}
-
-	public static String getEmailFromAddress(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
-
-		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsValues.BLOGS_EMAIL_FROM_ADDRESS);
-	}
-
 	public static Map<String, String> getEmailFromDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,
 		String emailFromName) {
@@ -254,14 +204,6 @@ public class BlogsUtil {
 				"the-site-name-associated-with-the-blog"));
 
 		return definitionTerms;
-	}
-
-	public static String getEmailFromName(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
-
-		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsValues.BLOGS_EMAIL_FROM_NAME);
 	}
 
 	public static SearchContainerResults<AssetEntry> getSearchContainerResults(

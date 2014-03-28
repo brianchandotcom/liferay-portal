@@ -17,7 +17,7 @@
 <%
 boolean showAddEntryButton = BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY);
 boolean showPermissionsButton = BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
-boolean showSubscribeButton = BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (BlogsUtil.getEmailEntryAddedEnabled(portletPreferences) || BlogsUtil.getEmailEntryUpdatedEnabled(portletPreferences));
+boolean showSubscribeButton = BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (blogsSettings.getEmailEntryAddedEnabled() || blogsSettings.getEmailEntryUpdatedEnabled());
 showSearch = showSearch && !results.isEmpty();
 %>
 

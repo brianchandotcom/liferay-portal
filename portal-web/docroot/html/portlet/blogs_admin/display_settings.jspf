@@ -70,6 +70,6 @@
 		displayPosition="<%= socialBookmarksDisplayPosition %>"
 		displayStyle="<%= socialBookmarksDisplayStyle %>"
 		enabled="<%= enableSocialBookmarks %>"
-		types="<%= socialBookmarkTypes %>"
+		types="<%= blogsSettings.getSocialBookmarksTypes() %>"
 	/>
 </aui:fieldset>

@@ -17,6 +17,7 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.service.SubscriptionLocalServiceUtil" %><%@
+page import="com.liferay.portlet.blogs.BlogsSettings" %><%@
 page import="com.liferay.portlet.blogs.EntryContentException" %><%@
 page import="com.liferay.portlet.blogs.EntrySmallImageNameException" %><%@
 page import="com.liferay.portlet.blogs.EntrySmallImageSizeException" %><%@
@@ -27,36 +28,32 @@ page import="com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.blogs.service.BlogsEntryServiceUtil" %><%@
 page import="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" %><%@
 page import="com.liferay.portlet.blogs.service.permission.BlogsPermission" %><%@
-page import="com.liferay.portlet.blogs.util.BlogsUtil" %><%@
-page import="com.liferay.util.RSSUtil" %>
+page import="com.liferay.portlet.blogs.util.BlogsConstants" %><%@
+page import="com.liferay.portlet.blogs.util.BlogsUtil" %>
 
 <%
-int pageDelta = GetterUtil.getInteger(portletPreferences.getValue("pageDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String displayStyle = portletPreferences.getValue("displayStyle", BlogsUtil.DISPLAY_STYLE_FULL_CONTENT);
-long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
+BlogsSettings blogsSettings = BlogsUtil.getBlogsSettings(scopeGroupId);
+
+int pageDelta = blogsSettings.getPageDelta();
+String displayStyle = blogsSettings.getDisplayStyle();
+long displayStyleGroupId = blogsSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId());
 int pageAbstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
-boolean enableFlags = GetterUtil.getBoolean(portletPreferences.getValue("enableFlags", null), true);
-boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);
-boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableRatings", null), true);
-boolean enableComments = PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED && GetterUtil.getBoolean(portletPreferences.getValue("enableComments", null), true);
-boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null), true);
-boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null), true);
+boolean enableFlags = blogsSettings.getEnableFlags();
+boolean enableRelatedAssets = blogsSettings.getEnableRelatedAssets();
+boolean enableRatings = blogsSettings.getEnableRatings();
+boolean enableComments = blogsSettings.getEnableComments();
+boolean enableCommentRatings = blogsSettings.getEnableCommentRatings();
+boolean enableSocialBookmarks = blogsSettings.getEnableSocialBookmarks();
 
-String socialBookmarksDisplayStyle = portletPreferences.getValue("socialBookmarksDisplayStyle", null);
+String socialBookmarksDisplayStyle = blogsSettings.getSocialBookmarksDisplayStyles()[0];
 
-if (Validator.isNull(socialBookmarksDisplayStyle)) {
-	String[] socialBookmarksDisplayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
+String socialBookmarksDisplayPosition = blogsSettings.getSocialBookmarksDisplayPosition();
+String socialBookmarksTypes = blogsSettings.getSocialBookmarksTypes();
 
-	socialBookmarksDisplayStyle = socialBookmarksDisplayStyles[0];
-}
-
-String socialBookmarksDisplayPosition = portletPreferences.getValue("socialBookmarksDisplayPosition", "bottom");
-String socialBookmarksTypes = portletPreferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES));
-
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null), true);
-int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+boolean enableRSS = blogsSettings.getEnableRSS();
+int rssDelta = blogsSettings.getRssDelta();
+String rssDisplayStyle = blogsSettings.getRssDisplayStyle();
+String rssFeedType = blogsSettings.getRssFeedType();
 
 boolean showSearch = true;
 boolean showEditEntryPermissions = true;

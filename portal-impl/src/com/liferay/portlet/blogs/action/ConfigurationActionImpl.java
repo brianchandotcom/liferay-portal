@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.blogs.util.BlogsUtil;
 import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
@@ -41,12 +41,18 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		String emailFromAddress = PortalUtil.getEmailFromAddress(
+			portletPreferences, companyId,
+			PropsValues.BLOGS_EMAIL_FROM_ADDRESS);
+
+		String emailFromName = PortalUtil.getEmailFromName(
+			portletPreferences, companyId, PropsValues.BLOGS_EMAIL_FROM_NAME);
+
 		removeDefaultValue(
 			portletRequest, portletPreferences, "emailFromAddress",
-			BlogsUtil.getEmailFromAddress(portletPreferences, companyId));
+			emailFromAddress);
 		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromName",
-			BlogsUtil.getEmailFromName(portletPreferences, companyId));
+			portletRequest, portletPreferences, "emailFromName", emailFromName);
 
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());

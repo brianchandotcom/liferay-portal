@@ -281,6 +281,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_MENULIST_DOCUMENT_TYPE</td>
+	<td>//a[@role='menuitem' and contains(.,'${dmDocumentTypeName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

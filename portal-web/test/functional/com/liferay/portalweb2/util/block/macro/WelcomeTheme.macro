@@ -19,8 +19,8 @@
 
 		<execute action="Home#open" locator1="http://www.liferay.com/welcome-start?v1.0" />
 
-		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_QUICK_START_GUIDE_HEADER" value1="Quick Start" />
-		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_QUICK_START_GUIDE_SUBHEADER" value1="Get up and running quickly with this step-by-step guide for Liferay Portal." />
+		<execute action="PGWelcome#assertElementPresent" locator-key1="WELCOME_QUICK_START_GUIDE_HEADING_IMAGE" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_QUICK_START_GUIDE_SUBHEADING" value1="Learn a little more about our platform." />
 
 		<execute action="Home#open" locator1="http://www.liferay.com/welcome-learn?v1.0" />
 

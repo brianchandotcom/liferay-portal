@@ -125,54 +125,6 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testCountByG_U_F_R_M_StatusAny_NewRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(
-			3, doCountBy_G_U_F_R_M_NewRepository(0, null, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusAny_DefaultRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(
-			3, doCountBy_G_U_F_R_M_DefaultRepository(0, null, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusAny_BothRepositories()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(
-			6, doCountBy_G_U_F_R_M_BothRepositories(0, null, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusAny_EmptyRepositories()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(
-			6, doCountBy_G_U_F_R_M_EmptyRepositories(0, null, queryDefinition));
-	}
-
-	@Test
 	public void testCountByG_U_F_M_StatusAnyByMimeType() throws Exception {
 		QueryDefinition queryDefinition = new QueryDefinition();
 
@@ -180,62 +132,6 @@ public class DLFileEntryFinderTest {
 
 		Assert.assertEquals(
 			2, doCountBy_G_U_F_M(0, ContentTypes.TEXT_PLAIN, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusAnyByMimeType_NewRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(
-			2,
-			doCountBy_G_U_F_R_M_NewRepository(
-				0, ContentTypes.TEXT_PLAIN, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusAnyByMimeType_DefaultRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(
-			2,
-			doCountBy_G_U_F_R_M_DefaultRepository(
-				0, ContentTypes.TEXT_PLAIN, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusAnyByMimeType_BothRepositories()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(
-			4,
-			doCountBy_G_U_F_R_M_BothRepositories(
-				0, ContentTypes.TEXT_PLAIN, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusAnyByMimeType_EmptyRepositories()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(
-			4,
-			doCountBy_G_U_F_R_M_EmptyRepositories(
-				0, ContentTypes.TEXT_PLAIN, queryDefinition));
 	}
 
 	@Test
@@ -247,62 +143,6 @@ public class DLFileEntryFinderTest {
 		Assert.assertEquals(
 			2,
 			doCountBy_G_U_F_M(
-				_folderDefaultRepository.getUserId(), null, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusAnyByUserId_NewRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(
-			2,
-			doCountBy_G_U_F_R_M_NewRepository(
-				_folderDefaultRepository.getUserId(), null, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusAnyByUserId_DefaultRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(
-			2,
-			doCountBy_G_U_F_R_M_DefaultRepository(
-				_folderDefaultRepository.getUserId(), null, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusAnyByUserId_BothRepositories()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(
-			4,
-			doCountBy_G_U_F_R_M_BothRepositories(
-				_folderDefaultRepository.getUserId(), null, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusAnyByUserId_EmptyRepositories()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(
-			4,
-			doCountBy_G_U_F_R_M_EmptyRepositories(
 				_folderDefaultRepository.getUserId(), null, queryDefinition));
 	}
 
@@ -322,8 +162,157 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void
-	testCountByG_U_F_R_M_StatusAnyByUserIdAndMimeType_NewRepository()
+	public void testCountByG_U_F_M_StatusApproved() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(2, doCountBy_G_U_F_M(0, null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusApprovedByMimeType() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			1,
+			doCountBy_G_U_F_M(0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusApprovedByMimeType_BothRepositories()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			2,
+			doCountBy_G_U_F_R_M_BothRepositories(
+				0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusApprovedByMimeType_DefaultRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			1,
+			doCountBy_G_U_F_R_M_DefaultRepository(
+				0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusApprovedByMimeType_EmptyRepositories()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			2,
+			doCountBy_G_U_F_R_M_EmptyRepositories(
+				0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusApprovedByMimeType_NewRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			1,
+			doCountBy_G_U_F_R_M_NewRepository(
+				0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusApprovedByUserId() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			1,
+			doCountBy_G_U_F_M(
+				_folderDefaultRepository.getUserId(), null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusApprovedByUserIdAndMimeType()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			0,
+			doCountBy_G_U_F_M(
+				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
+				queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusInTrash() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		Assert.assertEquals(2, doCountBy_G_U_F_M(0, null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusInTrashByMimeType() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		Assert.assertEquals(
+			1,
+			doCountBy_G_U_F_M(0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusInTrashByUserId() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		Assert.assertEquals(
+			1,
+			doCountBy_G_U_F_M(
+				_folderDefaultRepository.getUserId(), null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusInTrashByUserIdAndMimeType()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		Assert.assertEquals(
+			0,
+			doCountBy_G_U_F_M(
+				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
+				queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusAny_BothRepositories()
 		throws Exception {
 
 		QueryDefinition queryDefinition = new QueryDefinition();
@@ -331,8 +320,169 @@ public class DLFileEntryFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(
-			1,
+			6, doCountBy_G_U_F_R_M_BothRepositories(0, null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusAny_DefaultRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			3, doCountBy_G_U_F_R_M_DefaultRepository(0, null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusAny_EmptyRepositories()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			6, doCountBy_G_U_F_R_M_EmptyRepositories(0, null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusAny_NewRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			3, doCountBy_G_U_F_R_M_NewRepository(0, null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusAnyByMimeType_BothRepositories()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			4,
+			doCountBy_G_U_F_R_M_BothRepositories(
+				0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusAnyByMimeType_DefaultRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			2,
+			doCountBy_G_U_F_R_M_DefaultRepository(
+				0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusAnyByMimeType_EmptyRepositories()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			4,
+			doCountBy_G_U_F_R_M_EmptyRepositories(
+				0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusAnyByMimeType_NewRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			2,
 			doCountBy_G_U_F_R_M_NewRepository(
+				0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusAnyByUserId_BothRepositories()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			4,
+			doCountBy_G_U_F_R_M_BothRepositories(
+				_folderDefaultRepository.getUserId(), null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusAnyByUserId_DefaultRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			2,
+			doCountBy_G_U_F_R_M_DefaultRepository(
+				_folderDefaultRepository.getUserId(), null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusAnyByUserId_EmptyRepositories()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			4,
+			doCountBy_G_U_F_R_M_EmptyRepositories(
+				_folderDefaultRepository.getUserId(), null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusAnyByUserId_NewRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			2,
+			doCountBy_G_U_F_R_M_NewRepository(
+				_folderDefaultRepository.getUserId(), null, queryDefinition));
+	}
+
+	@Test
+	public void
+	testCountByG_U_F_R_M_StatusAnyByUserIdAndMimeType_BothRepositories()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			2,
+			doCountBy_G_U_F_R_M_BothRepositories(
 				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
 				queryDefinition));
 	}
@@ -355,22 +505,6 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_F_R_M_StatusAnyByUserIdAndMimeType_BothRepositories()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		Assert.assertEquals(
-			2,
-			doCountBy_G_U_F_R_M_BothRepositories(
-				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
-				queryDefinition));
-	}
-
-	@Test
-	public void
 	testCountByG_U_F_R_M_StatusAnyByUserIdAndMimeType_EmptyRepositories()
 		throws Exception {
 
@@ -386,36 +520,19 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testCountByG_U_F_M_StatusApproved() throws Exception {
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		Assert.assertEquals(2, doCountBy_G_U_F_M(0, null, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusApproved_NewRepository()
+	public void
+	testCountByG_U_F_R_M_StatusAnyByUserIdAndMimeType_NewRepository()
 		throws Exception {
 
 		QueryDefinition queryDefinition = new QueryDefinition();
 
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(
-			2, doCountBy_G_U_F_R_M_NewRepository(0, null, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusApproved_DefaultRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		Assert.assertEquals(
-			2, doCountBy_G_U_F_R_M_DefaultRepository(0, null, queryDefinition));
+			1,
+			doCountBy_G_U_F_R_M_NewRepository(
+				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
+				queryDefinition));
 	}
 
 	@Test
@@ -431,6 +548,18 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
+	public void testCountByG_U_F_R_M_StatusApproved_DefaultRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			2, doCountBy_G_U_F_R_M_DefaultRepository(0, null, queryDefinition));
+	}
+
+	@Test
 	public void testCountByG_U_F_R_M_StatusApproved_EmptyRepositories()
 		throws Exception {
 
@@ -443,18 +572,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testCountByG_U_F_M_StatusApprovedByMimeType() throws Exception {
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		Assert.assertEquals(
-			1,
-			doCountBy_G_U_F_M(0, ContentTypes.TEXT_PLAIN, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_M_StatusApprovedByMimeType_NewRepository()
+	public void testCountByG_U_F_R_M_StatusApproved_NewRepository()
 		throws Exception {
 
 		QueryDefinition queryDefinition = new QueryDefinition();
@@ -462,27 +580,11 @@ public class DLFileEntryFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(
-			1,
-			doCountBy_G_U_F_R_M_NewRepository(
-				0, ContentTypes.TEXT_PLAIN, queryDefinition));
+			2, doCountBy_G_U_F_R_M_NewRepository(0, null, queryDefinition));
 	}
 
 	@Test
-	public void testCountByG_U_F_M_StatusApprovedByMimeType_DefaultRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		Assert.assertEquals(
-			1,
-			doCountBy_G_U_F_R_M_DefaultRepository(
-				0, ContentTypes.TEXT_PLAIN, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_M_StatusApprovedByMimeType_BothRepositories()
+	public void testCountByG_U_F_R_M_StatusApprovedByUserId_BothRepositories()
 		throws Exception {
 
 		QueryDefinition queryDefinition = new QueryDefinition();
@@ -492,46 +594,6 @@ public class DLFileEntryFinderTest {
 		Assert.assertEquals(
 			2,
 			doCountBy_G_U_F_R_M_BothRepositories(
-				0, ContentTypes.TEXT_PLAIN, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_M_StatusApprovedByMimeType_EmptyRepositories()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		Assert.assertEquals(
-			2,
-			doCountBy_G_U_F_R_M_EmptyRepositories(
-				0, ContentTypes.TEXT_PLAIN, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_M_StatusApprovedByUserId() throws Exception {
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		Assert.assertEquals(
-			1,
-			doCountBy_G_U_F_M(
-				_folderDefaultRepository.getUserId(), null, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusApprovedByUserId_NewRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		Assert.assertEquals(
-			1,
-			doCountBy_G_U_F_R_M_NewRepository(
 				_folderDefaultRepository.getUserId(), null, queryDefinition));
 	}
 
@@ -550,20 +612,6 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testCountByG_U_F_R_M_StatusApprovedByUserId_BothRepositories()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		Assert.assertEquals(
-			2,
-			doCountBy_G_U_F_R_M_BothRepositories(
-				_folderDefaultRepository.getUserId(), null, queryDefinition));
-	}
-
-	@Test
 	public void testCountByG_U_F_R_M_StatusApprovedByUserId_EmptyRepositories()
 		throws Exception {
 
@@ -578,7 +626,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testCountByG_U_F_M_StatusApprovedByUserIdAndMimeType()
+	public void testCountByG_U_F_R_M_StatusApprovedByUserId_NewRepository()
 		throws Exception {
 
 		QueryDefinition queryDefinition = new QueryDefinition();
@@ -586,15 +634,14 @@ public class DLFileEntryFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(
-			0,
-			doCountBy_G_U_F_M(
-				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
-				queryDefinition));
+			1,
+			doCountBy_G_U_F_R_M_NewRepository(
+				_folderDefaultRepository.getUserId(), null, queryDefinition));
 	}
 
 	@Test
 	public void
-	testCountByG_U_F_R_M_StatusApprovedByUserIdAndMimeType_NewRepository()
+	testCountByG_U_F_R_M_StatusApprovedByUserIdAndMimeType_BothRepositories()
 		throws Exception {
 
 		QueryDefinition queryDefinition = new QueryDefinition();
@@ -603,7 +650,7 @@ public class DLFileEntryFinderTest {
 
 		Assert.assertEquals(
 			0,
-			doCountBy_G_U_F_R_M_NewRepository(
+			doCountBy_G_U_F_R_M_BothRepositories(
 				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
 				queryDefinition));
 	}
@@ -626,22 +673,6 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_F_R_M_StatusApprovedByUserIdAndMimeType_BothRepositories()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		Assert.assertEquals(
-			0,
-			doCountBy_G_U_F_R_M_BothRepositories(
-				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
-				queryDefinition));
-	}
-
-	@Test
-	public void
 	testCountByG_U_F_R_M_StatusApprovedByUserIdAndMimeType_EmptyRepositories()
 		throws Exception {
 
@@ -657,16 +688,23 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testCountByG_U_F_M_StatusInTrash() throws Exception {
+	public void
+	testCountByG_U_F_R_M_StatusApprovedByUserIdAndMimeType_NewRepository()
+		throws Exception {
+
 		QueryDefinition queryDefinition = new QueryDefinition();
 
-		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-		Assert.assertEquals(2, doCountBy_G_U_F_M(0, null, queryDefinition));
+		Assert.assertEquals(
+			0,
+			doCountBy_G_U_F_R_M_NewRepository(
+				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
+				queryDefinition));
 	}
 
 	@Test
-	public void testCountByG_U_F_R_M_StatusInTrash_NewRepository()
+	public void testCountByG_U_F_R_M_StatusInTrash_BothRepositories()
 		throws Exception {
 
 		QueryDefinition queryDefinition = new QueryDefinition();
@@ -674,7 +712,7 @@ public class DLFileEntryFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 
 		Assert.assertEquals(
-			2, doCountBy_G_U_F_R_M_NewRepository(0, null, queryDefinition));
+			4, doCountBy_G_U_F_R_M_BothRepositories(0, null, queryDefinition));
 	}
 
 	@Test
@@ -690,17 +728,6 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testCountByG_U_F_R_M_StatusInTrash_BothRepositories()
-		throws Exception {
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
-
-		Assert.assertEquals(
-			4, doCountBy_G_U_F_R_M_BothRepositories(0, null, queryDefinition));
-	}
-
-	@Test
 	public void testCountByG_U_F_R_M_StatusInTrash_EmptyRepositories()
 		throws Exception {
 
@@ -713,18 +740,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testCountByG_U_F_M_StatusInTrashByMimeType() throws Exception {
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
-
-		Assert.assertEquals(
-			1,
-			doCountBy_G_U_F_M(0, ContentTypes.TEXT_PLAIN, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusInTrashByMimeType_NewRepository()
+	public void testCountByG_U_F_R_M_StatusInTrash_NewRepository()
 		throws Exception {
 
 		QueryDefinition queryDefinition = new QueryDefinition();
@@ -732,8 +748,20 @@ public class DLFileEntryFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 
 		Assert.assertEquals(
-			1,
-			doCountBy_G_U_F_R_M_NewRepository(
+			2, doCountBy_G_U_F_R_M_NewRepository(0, null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusInTrashByMimeType_BothRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		Assert.assertEquals(
+			2,
+			doCountBy_G_U_F_R_M_BothRepositories(
 				0, ContentTypes.TEXT_PLAIN, queryDefinition));
 	}
 
@@ -752,20 +780,6 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testCountByG_U_F_R_M_StatusInTrashByMimeType_BothRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
-
-		Assert.assertEquals(
-			2,
-			doCountBy_G_U_F_R_M_BothRepositories(
-				0, ContentTypes.TEXT_PLAIN, queryDefinition));
-	}
-
-	@Test
 	public void testCountByG_U_F_R_M_StatusInTrashByMimeType_EmptyRepository()
 		throws Exception {
 
@@ -780,19 +794,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testCountByG_U_F_M_StatusInTrashByUserId() throws Exception {
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
-
-		Assert.assertEquals(
-			1,
-			doCountBy_G_U_F_M(
-				_folderDefaultRepository.getUserId(), null, queryDefinition));
-	}
-
-	@Test
-	public void testCountByG_U_F_R_M_StatusInTrashByUserId_NewRepository()
+	public void testCountByG_U_F_R_M_StatusInTrashByMimeType_NewRepository()
 		throws Exception {
 
 		QueryDefinition queryDefinition = new QueryDefinition();
@@ -802,6 +804,20 @@ public class DLFileEntryFinderTest {
 		Assert.assertEquals(
 			1,
 			doCountBy_G_U_F_R_M_NewRepository(
+				0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_R_M_StatusInTrashByUserId_BothRepositories()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		Assert.assertEquals(
+			2,
+			doCountBy_G_U_F_R_M_BothRepositories(
 				_folderDefaultRepository.getUserId(), null, queryDefinition));
 	}
 
@@ -820,20 +836,6 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testCountByG_U_F_R_M_StatusInTrashByUserId_BothRepositories()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
-
-		Assert.assertEquals(
-			2,
-			doCountBy_G_U_F_R_M_BothRepositories(
-				_folderDefaultRepository.getUserId(), null, queryDefinition));
-	}
-
-	@Test
 	public void testCountByG_U_F_R_M_StatusInTrashByUserId_EmptyRepositories()
 		throws Exception {
 
@@ -848,7 +850,7 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testCountByG_U_F_M_StatusInTrashByUserIdAndMimeType()
+	public void testCountByG_U_F_R_M_StatusInTrashByUserId_NewRepository()
 		throws Exception {
 
 		QueryDefinition queryDefinition = new QueryDefinition();
@@ -856,15 +858,14 @@ public class DLFileEntryFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 
 		Assert.assertEquals(
-			0,
-			doCountBy_G_U_F_M(
-				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
-				queryDefinition));
+			1,
+			doCountBy_G_U_F_R_M_NewRepository(
+				_folderDefaultRepository.getUserId(), null, queryDefinition));
 	}
 
 	@Test
 	public void
-	testCountByG_U_F_R_M_StatusInTrashByUserIdAndMimeType_NewRepository()
+	testCountByG_U_F_R_M_StatusInTrashByUserIdAndMimeType_BothRepositories()
 		throws Exception {
 
 		QueryDefinition queryDefinition = new QueryDefinition();
@@ -873,7 +874,7 @@ public class DLFileEntryFinderTest {
 
 		Assert.assertEquals(
 			0,
-			doCountBy_G_U_F_R_M_NewRepository(
+			doCountBy_G_U_F_R_M_BothRepositories(
 				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
 				queryDefinition));
 	}
@@ -896,22 +897,6 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void
-	testCountByG_U_F_R_M_StatusInTrashByUserIdAndMimeType_BothRepositories()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
-
-		Assert.assertEquals(
-			0,
-			doCountBy_G_U_F_R_M_BothRepositories(
-				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
-				queryDefinition));
-	}
-
-	@Test
-	public void
 	testCountByG_U_F_R_M_StatusInTrashByUserIdAndMimeType_EmptyRepositories()
 		throws Exception {
 
@@ -922,6 +907,22 @@ public class DLFileEntryFinderTest {
 		Assert.assertEquals(
 			0,
 			doCountBy_G_U_F_R_M_EmptyRepositories(
+				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
+				queryDefinition));
+	}
+
+	@Test
+	public void
+	testCountByG_U_F_R_M_StatusInTrashByUserIdAndMimeType_NewRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		Assert.assertEquals(
+			0,
+			doCountBy_G_U_F_R_M_NewRepository(
 				_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
 				queryDefinition));
 	}
@@ -953,20 +954,18 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testFindByG_U_F_M_StatusAny_NewRepository() throws Exception {
+	public void testFindByG_U_F_M_StatusAny_BothRepositories()
+		throws Exception {
+
 		QueryDefinition queryDefinition = new QueryDefinition();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
-		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_NewRepository(
-			_folderNewRepository.getUserId(), ContentTypes.TEXT_PLAIN,
+		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_BothRepositories(
+			_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
 			queryDefinition);
 
-		Assert.assertEquals(1, dlFileEntries.size());
-
-		DLFileEntry dlFileEntry = dlFileEntries.get(0);
-
-		Assert.assertEquals("FE3.txt", dlFileEntry.getDescription());
+		Assert.assertEquals(2, dlFileEntries.size());
 	}
 
 	@Test
@@ -989,22 +988,9 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testFindByG_U_F_M_StatusAny_BothRepositories()
-		throws Exception {
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_BothRepositories(
-			_folderDefaultRepository.getUserId(), ContentTypes.TEXT_PLAIN,
-			queryDefinition);
-
-		Assert.assertEquals(2, dlFileEntries.size());
-	}
-
-	@Test
 	public void testFindByG_U_F_M_StatusAny_EmptyRepositories()
 		throws Exception {
+
 		QueryDefinition queryDefinition = new QueryDefinition();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
@@ -1017,48 +1003,29 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
+	public void testFindByG_U_F_M_StatusAny_NewRepository() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_NewRepository(
+			_folderNewRepository.getUserId(), ContentTypes.TEXT_PLAIN,
+			queryDefinition);
+
+		Assert.assertEquals(1, dlFileEntries.size());
+
+		DLFileEntry dlFileEntry = dlFileEntries.get(0);
+
+		Assert.assertEquals("FE3.txt", dlFileEntry.getDescription());
+	}
+
+	@Test
 	public void testFindByG_U_F_M_StatusApproved() throws Exception {
 		QueryDefinition queryDefinition = new QueryDefinition();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_M(
-			_folderDefaultRepository.getUserId(), null, queryDefinition);
-
-		Assert.assertEquals(dlFileEntries.size(), 1);
-
-		DLFileEntry dlFileEntry = dlFileEntries.get(0);
-
-		Assert.assertEquals("FE2.pdf", dlFileEntry.getTitle());
-	}
-
-	@Test
-	public void testFindByG_U_F_M_StatusApproved_NewRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_NewRepository(
-			_folderNewRepository.getUserId(), null, queryDefinition);
-
-		Assert.assertEquals(dlFileEntries.size(), 1);
-
-		DLFileEntry dlFileEntry = dlFileEntries.get(0);
-
-		Assert.assertEquals("FE2.pdf-NewRepository", dlFileEntry.getTitle());
-	}
-
-	@Test
-	public void testFindByG_U_F_M_StatusApproved_DefaultRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_DefaultRepository(
 			_folderDefaultRepository.getUserId(), null, queryDefinition);
 
 		Assert.assertEquals(dlFileEntries.size(), 1);
@@ -1083,6 +1050,24 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
+	public void testFindByG_U_F_M_StatusApproved_DefaultRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_DefaultRepository(
+			_folderDefaultRepository.getUserId(), null, queryDefinition);
+
+		Assert.assertEquals(dlFileEntries.size(), 1);
+
+		DLFileEntry dlFileEntry = dlFileEntries.get(0);
+
+		Assert.assertEquals("FE2.pdf", dlFileEntry.getTitle());
+	}
+
+	@Test
 	public void testFindByG_U_F_M_StatusApproved_EmptyRepositories()
 		throws Exception {
 
@@ -1097,48 +1082,30 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
+	public void testFindByG_U_F_M_StatusApproved_NewRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_NewRepository(
+			_folderNewRepository.getUserId(), null, queryDefinition);
+
+		Assert.assertEquals(dlFileEntries.size(), 1);
+
+		DLFileEntry dlFileEntry = dlFileEntries.get(0);
+
+		Assert.assertEquals("FE2.pdf-NewRepository", dlFileEntry.getTitle());
+	}
+
+	@Test
 	public void testFindByG_U_F_M_StatusInTrash() throws Exception {
 		QueryDefinition queryDefinition = new QueryDefinition();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 
 		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_M(
-			0, ContentTypes.TEXT_PLAIN, queryDefinition);
-
-		Assert.assertEquals(1, dlFileEntries.size());
-
-		DLFileEntry dlFileEntry = dlFileEntries.get(0);
-
-		Assert.assertEquals("FE1.txt", dlFileEntry.getTitle());
-	}
-
-	@Test
-	public void testFindByG_U_F_M_StatusInTrash_NewRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
-
-		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_NewRepository(
-			0, ContentTypes.TEXT_PLAIN, queryDefinition);
-
-		Assert.assertEquals(1, dlFileEntries.size());
-
-		DLFileEntry dlFileEntry = dlFileEntries.get(0);
-
-		Assert.assertEquals("FE1.txt-NewRepository", dlFileEntry.getTitle());
-	}
-
-	@Test
-	public void testFindByG_U_F_M_StatusInTrash_DefaultRepository()
-		throws Exception {
-
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
-
-		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_DefaultRepository(
 			0, ContentTypes.TEXT_PLAIN, queryDefinition);
 
 		Assert.assertEquals(1, dlFileEntries.size());
@@ -1163,6 +1130,24 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
+	public void testFindByG_U_F_M_StatusInTrash_DefaultRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_DefaultRepository(
+			0, ContentTypes.TEXT_PLAIN, queryDefinition);
+
+		Assert.assertEquals(1, dlFileEntries.size());
+
+		DLFileEntry dlFileEntry = dlFileEntries.get(0);
+
+		Assert.assertEquals("FE1.txt", dlFileEntry.getTitle());
+	}
+
+	@Test
 	public void testFindByG_U_F_M_StatusInTrash_EmptyRepositories()
 		throws Exception {
 
@@ -1174,6 +1159,24 @@ public class DLFileEntryFinderTest {
 			0, ContentTypes.TEXT_PLAIN, queryDefinition);
 
 		Assert.assertEquals(2, dlFileEntries.size());
+	}
+
+	@Test
+	public void testFindByG_U_F_M_StatusInTrash_NewRepository()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_NewRepository(
+			0, ContentTypes.TEXT_PLAIN, queryDefinition);
+
+		Assert.assertEquals(1, dlFileEntries.size());
+
+		DLFileEntry dlFileEntry = dlFileEntries.get(0);
+
+		Assert.assertEquals("FE1.txt-NewRepository", dlFileEntry.getTitle());
 	}
 
 	@Test

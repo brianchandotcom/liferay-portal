@@ -5,7 +5,6 @@
 		<hint name="max-length">2000000</hint>
 	</hint-collection>
 	<hint-collection name="EDITOR">
-		<hint name="display-width">530</hint>
 		<hint name="editor">true</hint>
 		<hint name="max-length">2000000</hint>
 	</hint-collection>

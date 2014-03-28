@@ -44,6 +44,7 @@ import com.liferay.portal.UserSmsException;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.shard.ShardCallable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -3286,7 +3288,64 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			LinkedHashMap<String, Object> params)
 		throws SystemException {
 
-		return userFinder.countByKeywords(companyId, keywords, status, params);
+		if (!PropsValues.USERS_INDEXER_ENABLED ||
+			!PropsValues.USERS_SEARCH_WITH_INDEX) {
+
+			return userFinder.countByKeywords(
+				companyId, keywords, status, params);
+		}
+
+		try {
+			String firstName = null;
+			String middleName = null;
+			String lastName = null;
+			String fullName = null;
+			String screenName = null;
+			String emailAddress = null;
+			String street = null;
+			String city = null;
+			String zip = null;
+			String region = null;
+			String country = null;
+			boolean andOperator = false;
+
+			if (Validator.isNotNull(keywords)) {
+				firstName = keywords;
+				middleName = keywords;
+				lastName = keywords;
+				fullName = keywords;
+				screenName = keywords;
+				emailAddress = keywords;
+				street = keywords;
+				city = keywords;
+				zip = keywords;
+				region = keywords;
+				country = keywords;
+			}
+			else {
+				andOperator = true;
+			}
+
+			if (params != null) {
+				params.put("keywords", keywords);
+			}
+
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				User.class);
+
+			SearchContext searchContext = buildSearchContext(
+				companyId, firstName, middleName, lastName, fullName,
+				screenName, emailAddress, street, city, zip, region, country,
+				status, params, andOperator, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+			Hits hits = indexer.search(searchContext);
+
+			return hits.getLength();
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	/**
@@ -3318,9 +3377,36 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			LinkedHashMap<String, Object> params, boolean andSearch)
 		throws SystemException {
 
-		return userFinder.countByC_FN_MN_LN_SN_EA_S(
-			companyId, firstName, middleName, lastName, screenName,
-			emailAddress, status, params, andSearch);
+		if (!PropsValues.USERS_INDEXER_ENABLED ||
+			!PropsValues.USERS_SEARCH_WITH_INDEX) {
+
+			return userFinder.countByC_FN_MN_LN_SN_EA_S(
+				companyId, firstName, middleName, lastName, screenName,
+				emailAddress, status, params, andSearch);
+		}
+
+		try {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				User.class);
+
+			FullNameGenerator fullNameGenerator =
+				FullNameGeneratorFactory.getInstance();
+
+			String fullName = fullNameGenerator.getFullName(
+				firstName, middleName, lastName);
+
+			SearchContext searchContext = buildSearchContext(
+				companyId, firstName, middleName, lastName, fullName,
+				screenName, emailAddress, null, null, null, null, null, status,
+				params, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			Hits hits = indexer.search(searchContext);
+
+			return hits.getLength();
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	@Override

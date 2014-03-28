@@ -158,7 +158,24 @@ public class UserIndexer extends BaseIndexer {
 			Object value)
 		throws Exception {
 
-		if (key.equals("usersOrgs")) {
+		if (key.equals("usersGroups")) {
+			if (value instanceof Long[]) {
+				Long[] values = (Long[])value;
+
+				BooleanQuery usersGroupsQuery = BooleanQueryFactoryUtil.create(
+					searchContext);
+
+				for (long groupId : values) {
+					usersGroupsQuery.addTerm("groupIds", groupId);
+				}
+
+				contextQuery.add(usersGroupsQuery, BooleanClauseOccur.MUST);
+			}
+			else {
+				contextQuery.addRequiredTerm("groupIds", String.valueOf(value));
+			}
+		}
+		else if (key.equals("usersOrgs")) {
 			if (value instanceof Long[]) {
 				Long[] values = (Long[])value;
 

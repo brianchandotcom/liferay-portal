@@ -13,6 +13,8 @@
 		<execute macro="Workflow#tearDownPortalWorkflow" />
 
 		<execute macro="Workflow#tearDownSiteWorkflow" />
+
+		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
 	<command name="ViewTaskCount" priority="3">
@@ -111,6 +113,78 @@
 			<var name="authorAddress" value="${authorAddress}" />
 			<var name="authorName" value="${authorName}" />
 			<var name="webContentWorkflowEnabled" value="true" />
+		</execute>
+	</command>
+
+	<command name="XSSScriptWebContent" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Workflow Configuration" />
+		</execute>
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addWithWorkflowCP">
+			<var name="webContentContent"><![CDATA[&lt;script&gt;alert("web content article")&lt;/script&gt;]]></var>
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewWithWorkflowCP">
+			<var name="webContentContent"><![CDATA[<script>alert("web content article")</script>]]></var>
+			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="workflowStatus" value="Pending" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="WC WebContent Title" />
+			<var name="workflowAssetType" value="Web Content Article" />
+			<var name="workflowTask" value="Review" />
+			<var name="workflowActivityComment"><![CDATA[<script>alert("web commenting on WC")</script>]]></var>
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="WC WebContent Title" />
+			<var name="workflowAssetType" value="Web Content Article" />
+			<var name="workflowTask" value="Review" />
+			<var name="workflowActivityComment"><![CDATA[<script>alert("approve")</script>]]></var>
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent"><![CDATA[<script>alert("web content article")</script>]]></var>
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Asset Publisher Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaAP">
+			<var name="webContentContent"><![CDATA[<script>alert("web content article")</script>]]></var>
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
 </definition>

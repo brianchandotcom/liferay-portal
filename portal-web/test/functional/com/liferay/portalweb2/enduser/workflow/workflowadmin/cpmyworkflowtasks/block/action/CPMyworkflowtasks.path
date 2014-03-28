@@ -257,6 +257,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--PREVIEW-->
+<tr>
+	<td>PREVIEW_ACTIVITY</td>
+	<td>//div[@class='accordion-toggle' and contains(.,'Activities')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_ACTIVITY_ENTRY</td>
+	<td>//div[@class='accordion-inner']/div/div[contains(.,'${key_workflowActivityComment}')]</td>
+	<td></td>
+</tr>
 <!--COMPLETED_TABLE-->
 <tr>
 	<td>COMPLETED_TABLE_TASK</td>

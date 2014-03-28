@@ -10,4 +10,16 @@
 			<execute function="Type#sikuliType" />
 		</default>
 	</command>
+
+	<command name="uploadCommonFile">
+		<default>
+			<execute function="UploadCommonFile#sikuliUploadCommonFile" />
+		</default>
+	</command>
+
+	<command name="uploadTempFile">
+		<default>
+			<execute function="UploadTempFile#sikuliUploadTempFile" />
+		</default>
+	</command>
 </definition>

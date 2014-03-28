@@ -1163,17 +1163,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String javaTermContent = javaTerm.getContent();
 
-			while (true) {
-				String newJavaTermContent = sortAnnotations(
-					javaTermContent, StringPool.TAB);
+			String newJavaTermContent = sortAnnotations(
+				javaTermContent, StringPool.TAB);
 
-				if (javaTermContent.equals(newJavaTermContent)) {
-					break;
-				}
-
+			if (!javaTermContent.equals(newJavaTermContent)) {
 				content = content.replace(javaTermContent, newJavaTermContent);
-
-				javaTermContent = newJavaTermContent;
 			}
 		}
 

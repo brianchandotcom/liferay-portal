@@ -387,7 +387,7 @@ if (hints != null) {
 					cssClass += " input-xxlarge";
 				}
 				else if (editor) {
-					cssClass += " lfr-input-editor"
+					cssClass += " lfr-input-editor";
 				}
 				else {
 					cssClass += " input-large";

@@ -132,6 +132,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECORD_TABLE_GUEST_VIEW_LINK</td>
+	<td>//a[contains(.,'View')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

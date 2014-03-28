@@ -37,8 +37,13 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import java.io.IOException;
 
 /**
- * Each {@link Group} in Liferay can have a public and a private LayoutSet. This
- * keeps information common to all pages (layouts) in the LayoutSet
+ * Represents a portal layout set, providing access to the layout set's color schemes,
+ * groups, prototypes, themes, and more.
+ * 
+ * <p>
+ * Each {@link Group} in Liferay can have a public and a private layout set. This
+ * keeps information common to all layouts (pages) in the layout set.
+ * <p>
  *
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
@@ -49,11 +54,16 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	/**
-	 * ColorSchemes can - just like themes - be configured on the LayoutSet
-	 * level. This method retrieves the layoutSet's colorScheme. It can be
-	 * overridden on the layout level.
+	 * Returns the current layout set's color scheme.
 	 *
-	 * @return the colorScheme for this whole layoutSet
+	 * <p>
+	 * Just like themes, color schemes can be configured on the layout set
+	 * level. The layout set's color scheme can be overridden on the layout
+	 * level.
+	 * </p>
+	 *
+	 * @return the current layout set's color scheme
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ColorScheme getColorScheme() {
@@ -62,7 +72,12 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	/**
-	 * @return the group that this LayoutSet belongs to.
+	 * Returns the current layout set's group.
+	 *
+	 * @return the current layout set's group
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Group getGroup() throws PortalException {
@@ -70,11 +85,18 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	/**
-	 * A prototype's name on the UI is SiteTemplate. If this LayoutSet is based
-	 * on a SiteTemplate, this method retrieves its ID.
+	 * Returns the current layout set prototype's ID, or <code>0</code> if there
+	 * is no layout set prototype.
 	 *
-	 * @return this layoutSet prototype's ID, 0 if the layoutSet doesn't have a
-	 *         prototype
+	 * <p>
+	 * Prototype is Liferay's technical name for a site template.
+	 * </p>
+	 *
+	 * @return the current layout set prototype's ID, or <code>0</code> if there
+	 *         is no layout set prototype
+	 * @throws PortalException if a matching layout set prototype could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long getLayoutSetPrototypeId() throws PortalException {
@@ -190,11 +212,15 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	/**
-	 * retrieve the virtualHost name configured for this LayoutSet. When
-	 * accessed with this virtualHost name, the URL elements "/web/sitename" or
-	 * "/group/sitename" can be omitted
+	 * Returns the current layout set's virtual host name.
 	 *
-	 * @return this layoutSet's virtualHost name, empty string if unconfigured
+	 * <p>
+	 * When accessing a layout set with the virtual host name, the URL elements
+	 * "/web/sitename" or "/group/sitename" can be omitted.
+	 * </p>
+	 *
+	 * @return the current layout set's virtual host name, or an empty string if
+	 *         the layout set's virtual host name could not be found
 	 */
 	@Override
 	public String getVirtualHostname() {
@@ -265,9 +291,9 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	/**
-	 * set this LayoutSet's VirtualHost name. When the portal is being accessed
-	 * with this hostname, the URL elements /web/sitename or /group/sitename can
-	 * be omitted.
+	 * Sets the layout set's virtual host name.
+	 * 
+	 * @see #getVirtualHostname()
 	 */
 	@Override
 	public void setVirtualHostname(String virtualHostname) {

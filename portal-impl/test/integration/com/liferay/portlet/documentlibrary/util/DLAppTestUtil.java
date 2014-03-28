@@ -129,6 +129,14 @@ public abstract class DLAppTestUtil {
 	}
 
 	public static FileEntry addFileEntry(
+			long groupId, long repositoryId, long folderId)
+		throws Exception {
+
+		return addFileEntry(
+			groupId, repositoryId, folderId, ServiceTestUtil.randomString());
+	}
+
+	public static FileEntry addFileEntry(
 			long groupId, long repositoryId, long folderId,
 			String sourceFileName)
 		throws Exception {
@@ -297,6 +305,13 @@ public abstract class DLAppTestUtil {
 		return addFolder(groupId, parentFolderId, name);
 	}
 
+	public static Folder addFolder(long groupId, long parentFolderId)
+		throws Exception {
+
+		return addFolder(
+			groupId, parentFolderId, ServiceTestUtil.randomString(), false);
+	}
+
 	public static Folder addFolder(
 			long groupId, long repositoryId, long parentFolderId, String name)
 		throws Exception {
@@ -428,6 +443,15 @@ public abstract class DLAppTestUtil {
 
 		return RepositoryEntryLocalServiceUtil.addRepositoryEntry(
 			userId, groupId, repositoryId, mappedId, serviceContext);
+	}
+
+	public static FileEntry updateFileEntry(
+			long groupId, long fileEntryId, boolean majorVersion)
+		throws Exception {
+
+		return updateFileEntry(
+			groupId, fileEntryId, ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(), majorVersion);
 	}
 
 	public static FileEntry updateFileEntry(

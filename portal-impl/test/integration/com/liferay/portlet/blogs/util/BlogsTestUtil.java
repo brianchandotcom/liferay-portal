@@ -22,6 +22,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
@@ -33,6 +34,12 @@ import org.junit.Assert;
  * @author Zsolt Berentey
  */
 public class BlogsTestUtil {
+
+	public static BlogsEntry addEntry(Group group, boolean approved)
+		throws Exception {
+
+		return addEntry(TestPropsValues.getUserId(), group, approved);
+	}
 
 	public static BlogsEntry addEntry(
 			long userId, Group group, boolean approved)
@@ -174,6 +181,24 @@ public class BlogsTestUtil {
 			blogsEntry.isAllowTrackbacks(), blogEntryOther.isAllowTrackbacks());
 		Assert.assertEquals(
 			blogsEntry.isSmallImage(), blogEntryOther.isSmallImage());
+	}
+
+	public static BlogsEntry updateEntry(BlogsEntry blogsEntry)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			blogsEntry.getGroupId());
+
+		serviceContext.setCommand(Constants.UPDATE);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return BlogsEntryLocalServiceUtil.updateEntry(
+			blogsEntry.getUserId(), blogsEntry.getEntryId(),
+			ServiceTestUtil.randomString(), blogsEntry.getDescription(),
+			blogsEntry.getContent(), 1, 1, 2012, 12, 00, true, true,
+			new String[0], blogsEntry.getSmallImage(),
+			blogsEntry.getSmallImageURL(), StringPool.BLANK, null,
+			serviceContext);
 	}
 
 }

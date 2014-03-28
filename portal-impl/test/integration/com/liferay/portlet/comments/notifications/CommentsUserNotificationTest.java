@@ -22,7 +22,6 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
@@ -47,15 +46,14 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_entry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+		_entry = BlogsTestUtil.addEntry(group, true);
 	}
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
 		return MBTestUtil.addDiscussionMessage(
-			TestPropsValues.getUser(), group.getGroupId(),
-			BlogsEntry.class.getName(), _entry.getEntryId());
+			group.getGroupId(), BlogsEntry.class.getName(),
+			_entry.getEntryId());
 	}
 
 	@Override
@@ -75,9 +73,8 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 		throws Exception {
 
 		return MBTestUtil.updateDiscussionMessage(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			(Long)baseModel.getPrimaryKeyObj(), BlogsEntry.class.getName(),
-			_entry.getEntryId());
+			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(),
+			BlogsEntry.class.getName(), _entry.getEntryId());
 	}
 
 	private BlogsEntry _entry;

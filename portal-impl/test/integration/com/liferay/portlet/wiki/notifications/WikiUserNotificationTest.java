@@ -16,14 +16,12 @@ package com.liferay.portlet.wiki.notifications;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
@@ -47,15 +45,12 @@ public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
 		return WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), group.getGroupId(), _node.getNodeId(),
-			ServiceTestUtil.randomString(), true);
+			group.getGroupId(), _node.getNodeId(), true);
 	}
 
 	@Override
 	protected void addContainerModel() throws Exception {
-		_node = WikiTestUtil.addNode(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50));
+		_node = WikiTestUtil.addNode(group.getGroupId());
 	}
 
 	@Override

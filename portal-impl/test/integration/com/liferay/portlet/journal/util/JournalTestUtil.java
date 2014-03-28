@@ -688,6 +688,12 @@ public class JournalTestUtil {
 		return map;
 	}
 
+	public static JournalArticle updateArticle(JournalArticle article)
+		throws Exception {
+
+		return updateArticle(article, ServiceTestUtil.randomString());
+	}
+
 	public static JournalArticle updateArticle(
 			JournalArticle article, String title)
 		throws Exception {

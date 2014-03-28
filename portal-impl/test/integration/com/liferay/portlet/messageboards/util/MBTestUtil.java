@@ -103,6 +103,14 @@ public class MBTestUtil {
 	}
 
 	public static MBMessage addDiscussionMessage(
+			long groupId, String className, long classPK)
+		throws Exception {
+
+		return addDiscussionMessage(
+			TestPropsValues.getUser(), groupId, className, classPK);
+	}
+
+	public static MBMessage addDiscussionMessage(
 			User user, long groupId, String className, long classPK)
 		throws Exception {
 
@@ -290,6 +298,15 @@ public class MBTestUtil {
 			userId, messageId, className, classPK,
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
 			serviceContext);
+	}
+
+	public static MBMessage updateDiscussionMessage(
+			long groupId, long messageId, String className, long classPK)
+		throws Exception {
+
+		return updateDiscussionMessage(
+			TestPropsValues.getUserId(), groupId, messageId, className,
+			classPK);
 	}
 
 	public static MBMessage updateMessage(MBMessage message) throws Exception {

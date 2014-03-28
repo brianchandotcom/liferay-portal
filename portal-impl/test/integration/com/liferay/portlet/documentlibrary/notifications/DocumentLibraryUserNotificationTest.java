@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -48,8 +47,7 @@ public class DocumentLibraryUserNotificationTest
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), group.getGroupId(), _folder.getFolderId(),
-			ServiceTestUtil.randomString());
+			group.getGroupId(), group.getGroupId(), _folder.getFolderId());
 
 		return (BaseModel<?>)fileEntry.getModel();
 	}
@@ -57,8 +55,7 @@ public class DocumentLibraryUserNotificationTest
 	@Override
 	protected void addContainerModel() throws Exception {
 		_folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@Override
@@ -77,9 +74,7 @@ public class DocumentLibraryUserNotificationTest
 		throws Exception {
 
 		FileEntry fileEntry = DLAppTestUtil.updateFileEntry(
-			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
-			false);
+			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(), false);
 
 		return (BaseModel<?>)fileEntry.getModel();
 	}

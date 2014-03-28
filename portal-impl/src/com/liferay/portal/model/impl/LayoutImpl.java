@@ -74,10 +74,15 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The UI name for a layout is "page". Thus a Layout represents a Page in the
- * Portal. Layouts can be organized hierarchically and are summarized in {@link
- * LayoutSet}s. A single page is either part of the public or the private
- * LayoutSet of a group (site)
+ * Represents a portal layout, providing access to the layout's URLs, parent
+ * layouts, child layouts, theme settings, type settings, and more.
+ *
+ * <p>
+ * The UI name for a layout is "page." Thus, a layout represents a page in the
+ * portal. A single page is either part of the public or private layout set
+ * of a group (site). Layouts can be organized hierarchically and are summarized
+ * in a {@link LayoutSet}.
+ * </p>
  *
  * @author Brian Wing Shun Chan
  */
@@ -98,13 +103,14 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Checks if the given friendlyURL is considered valid - e.g. length and
-	 * certain syntactic restrictions are met.
+	 * Verifies that the friendly URL is valid by checking that the maximum
+	 * length and other syntactic restrictions are met.
 	 *
 	 * @param  friendlyURL the URL to be checked
-	 * @param  checkMaxLength
-	 * @return error code, can be found as constants in {@link
-	 *         LayoutFriendlyURLException}, -1 if URL validates correctly
+	 * @param  checkMaxLength whether to check the URL's maximum length
+	 * @return the error code, which can can be found as constants in {@link
+	 *         LayoutFriendlyURLException}, or <code>-1</code> if the URL
+	 *         validates correctly
 	 */
 	public static int validateFriendlyURL(
 		String friendlyURL, boolean checkMaxLength) {
@@ -164,7 +170,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Retrieve all layouts that are direct or indirect children of this Layout.
+	 * Returns all layouts that are direct or indirect children of the current
+	 * layout.
+	 *
+	 * @return the layouts that are direct or indirect children of the current
+	 *         layout
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Layout> getAllChildren() {
@@ -179,10 +190,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Retrieve the ID of the toplevel layout, e.g. n-th parent of this layout,
-	 * that does not have any parent itself
+	 * Returns the ID of the topmost parent layout of the current layout.
 	 *
-	 * @return the ID of the topmost parent layout of this layout
+	 * @return the ID of the topmost parent layout of the current layout
+	 * @throws PortalException if a matching layout could not be found
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long getAncestorLayoutId() throws PortalException {
@@ -207,10 +219,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Retrieve the plid of the toplevel layout, e.g. n-th parent of this
-	 * layout, that does not have any parent itself
+	 * Returns the plid of the topmost parent layout of the current layout.
 	 *
-	 * @return the plid of the topmost parent layout of this layout
+	 * @return the plid of the topmost parent layout of the current layout
+	 * @throws PortalException if a matching layout could not be found
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long getAncestorPlid() throws PortalException {
@@ -235,8 +248,13 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * recursively retrieve the list of parents of this layout. Ordered as
-	 * direct parent layout first, most distant last
+	 * Returns all parent layouts of the current layout. The list is retrieved
+	 * recursively with the direct parent layout listed first, and most distant
+	 * parent listed last.
+	 *
+	 * @return the current layout's list of parent layouts
+	 * @throws PortalException if a matching layout could not be found
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Layout> getAncestors() throws PortalException {
@@ -256,10 +274,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Retrieve all child layouts of this layout, independent of access
-	 * permissions
+	 * Returns all child layouts of the current layout, independent of user
+	 * access permissions.
 	 *
 	 * @return the list of all child layouts
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Layout> getChildren() {
@@ -268,11 +287,14 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Retrieve all child layouts of this layout that the permission checker
-	 * gives access to.
+	 * Returns all child layouts of the current layout that the user has
+	 * permission to access.
 	 *
-	 * @param  permissionChecker user-specific context to check permissions
-	 * @return the child layouts that the given user has access to
+	 * @param  permissionChecker the user-specific context to check permissions
+	 * @return the list of all child layouts that the user has permission to
+	 *         access
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Layout> getChildren(PermissionChecker permissionChecker)
@@ -297,10 +319,15 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Retrieve the color scheme that is configured for this layout or - if
-	 * unonfigured - of the layout set that contains this layout.
+	 * Returns the color scheme that is configured for the current layout, or
+	 * the layout set that contains the current layout if no color scheme is
+	 * configured.
 	 *
-	 * @return the color scheme to be used for this layout
+	 * @return the color scheme that is configured for the current layout, or
+	 *         the layout set that contains the current layout if there is no
+	 *         color scheme configured
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ColorScheme getColorScheme() throws PortalException {
@@ -315,11 +342,18 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Layouts and {@link LayoutSet}s can configure CSS that's applied in
-	 * addition to the theme's CSS. Retrieve this CSS text, either for this page
-	 * or for the whole Layoutset (if unconfigured for this layout)
+	 * Returns the CSS text for the current layout, or for the layout set if no
+	 * CSS text is available in the current layout.
 	 *
-	 * @return the extra CSS to be used on this layout
+	 * <p>
+	 * Layouts and layout sets can configure CSS that is applied in addition to
+	 * the theme's CSS.
+	 * </p>
+	 *
+	 * @return the CSS text for the current layout, or for the layout set if no
+	 *         CSS text is available in the current layout
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public String getCssText() throws PortalException {
@@ -357,10 +391,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * retrieve this layout's friendly URL value for the given locale
+	 * Returns the layout's friendly URL for the given locale.
 	 *
-	 * @param  locale the locale that the URL value should be retrieved for
-	 * @return the matching friendly URL value
+	 * @param  locale the locale of the friendly URL being generated
+	 * @return the layout's friendly URL for the given locale
 	 */
 	@Override
 	public String getFriendlyURL(Locale locale) {
@@ -382,7 +416,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Retrieve the friendly URLs for all configured locales
+	 * Returns the friendly URLs for all configured locales.
+	 *
+	 * @return the friendly URLs for all configured locales
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Map<Locale, String> getFriendlyURLMap() {
@@ -410,8 +447,16 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Retrieve this layout's group. Think of group as the technical name for a
-	 * Site.
+	 * Returns the current layout's group.
+	 *
+	 * <p>
+	 * Group is Liferay's technical name for a site.
+	 * </p>
+	 *
+	 * @return the current layout's group
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Group getGroup() throws PortalException {
@@ -419,11 +464,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Retrieve the HTML title for the given locale. Returns the layout's name
-	 * if HTML title is unconfigured.
+	 * Returns the HTML title for the given locale, or the current layout's name
+	 * if no HTML title is configured.
 	 *
-	 * @param  locale the locale that the HTML title should be retrieved for
-	 * @return the matching HTML title
+	 * @param  locale the locale of the HTML title being retrieved
+	 * @return the HTML title for the given locale, or the current layout's name
+	 *         if no HTML title is configured
 	 */
 	@Override
 	public String getHTMLTitle(Locale locale) {
@@ -433,12 +479,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Retrieve the HTML title for the given locale ID. Returns the layout's
-	 * name if HTML title is unconfigured.
+	 * Returns the HTML title for the given locale language ID, or the current
+	 * layout's name if no HTML title is configured.
 	 *
-	 * @param  localeLanguageId the locale that the HTML title should be
-	 *         retrieved for
-	 * @return the matching HTML title
+	 * @param  localeLanguageId the locale of the HTML title being retrieved
+	 * @return the HTML title for the given locale language ID, or the current
+	 *         layout's name if no HTML title is configured
 	 */
 	@Override
 	public String getHTMLTitle(String localeLanguageId) {
@@ -452,9 +498,9 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Determine if this layout has a configured icon
+	 * Returns <code>true</code> if the current layout has a configured icon.
 	 *
-	 * @return <code>true</code> if an icon has been configured,
+	 * @return <code>true</code> if the current layout has a configured icon,
 	 *         <code>false</code> otherwise
 	 */
 	@Override
@@ -467,9 +513,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * retrieve this layout's {@link LayoutSet}
+	 * Returns the current layout's {@link LayoutSet}.
 	 *
-	 * @return this layout's LayoutSet
+	 * @return the current layout's layout set
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutSet getLayoutSet() throws PortalException {
@@ -482,9 +530,9 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * retrieve this layout's {@link LayoutType}
+	 * Returns the current layout's {@link LayoutType}.
 	 *
-	 * @return this layout's LayoutType
+	 * @return the current layout's layout type
 	 */
 	@Override
 	public LayoutType getLayoutType() {
@@ -496,10 +544,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * if this layout links to another layout, retrieve the target layout.
-	 * <code>Null</code> otherwise
+	 * Returns the current layout's linked layout.
 	 *
-	 * @return the target layout or <code>null</code> if not applicable
+	 * @return the current layout's linked layout, or <code>null</code> if no
+	 *         linked layout could be found
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Layout getLinkedToLayout() {
@@ -515,10 +564,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * retrieve the parent's plid or 0 if current layout is already a toplevel
-	 * layout
+	 * Returns the current layout's parent plid.
 	 *
-	 * @return the parent layout's plid or 0 if this is a toplevel layout
+	 * @return the current layout's parent plid, or <code>0</code> if the
+	 *         current layout is the topmost parent layout
+	 * @throws PortalException if a matching layout could not be found
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long getParentPlid() throws PortalException {
@@ -573,10 +624,13 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * retrieve this layout's theme. If not configured individually, this is the
-	 * layoutSet's theme.
+	 * Returns the current layout's theme, or the layout set's theme if no
+	 * layout theme is configured.
 	 *
-	 * @return the theme to be used on this layout
+	 * @return the current layout's theme, or the layout set's theme if no
+	 *         layout theme is configured
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Theme getTheme() throws PortalException {
@@ -657,9 +711,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 	}
 
-	/**
-	 * Once upon a time there was a technology...
-	 */
 	@Override
 	public Theme getWapTheme() throws PortalException {
 		if (isInheritWapLookAndFeel()) {
@@ -672,12 +723,16 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * determine if the given ID describes one of the (hierarchical) parents of
-	 * this layout
+	 * Returns <code>true</code> if the given layout ID describes one of the
+	 * current layout's hierarchical parents.
 	 *
-	 * @param  layoutId the ID that the parent list will be searched for
-	 * @return <code>true</code> if the given layoutId describes one of the
-	 *         layout's parents.
+	 * @param  layoutId the layout ID to search for in the current layout's
+	 *         parent list
+	 * @return <code>true</code> if the given layout ID describes one of the
+	 *         current layout's hierarchical parents; <code>false</code>
+	 *         otherwise
+	 * @throws PortalException if a matching layout could not be found
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public boolean hasAncestor(long layoutId) throws PortalException {
@@ -698,10 +753,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Determine if this layout has child layouts
+	 * Returns <code>true</code> if the current layout has child layouts.
 	 *
-	 * @return <code>true</code> if this layout has children, <code>false</code>
-	 *         otherwise
+	 * @return <code>true</code> if the current layout has child layouts,
+	 *         <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public boolean hasChildren() {
@@ -741,12 +797,16 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Determine if this layout can be used as a content display page. A content
-	 * display page must have an AssetPublisher portlet that is configured as
-	 * the default AssetPublisher for this page.
+	 * Returns <code>true</code> if the current layout can be used as a content
+	 * display page.
 	 *
-	 * @return <code>true</code> if an appropriately configured AssetPublisher
-	 *         is present on the layout
+	 * <p>
+	 * A content display page must have an Asset Publisher portlet that is
+	 * configured as the default Asset Publisher for the layout.
+	 * </p>
+	 *
+	 * @return <code>true</code> if the current layout can be used as a content
+	 *         display page; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isContentDisplayPage() {
@@ -764,10 +824,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * determine if this is the first layout in its parent's list of childs
+	 * Returns <code>true</code> if the current layout is the first layout in
+	 * its parent's hierarchical list of children layouts.
 	 *
-	 * @return <code>true</code> if this is the first layout in the list of its
-	 *         parent's childs
+	 * @return <code>true</code> if the current layout is the first layout in
+	 *         its parent's hierarchical list of children layouts;
+	 *         <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isFirstChild() {
@@ -779,9 +841,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Determine if this is the first toplevel layout
+	 * Returns <code>true</code> if the current layout is the topmost parent
+	 * layout.
 	 *
-	 * @return <code>true</code> if this layout is the first toplevel page
+	 * @return <code>true</code> if the current layout is the topmost parent
+	 *         layout; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isFirstParent() {
@@ -798,8 +862,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Determine if this layout utilizes its {@link LayoutSet}s look&feel
-	 * options, e.g. theme, color scheme.
+	 * Returns <code>true</code> if the current layout utilizes its {@link
+	 * LayoutSet}'s look and feel options (e.g. theme, color scheme).
+	 *
+	 * @return <code>true</code> if the current layout utilizes its layout set's
+	 *         look and feel options; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isInheritLookAndFeel() {
@@ -812,9 +879,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 		return false;
 	}
 
-	/**
-	 * Once upon a time...
-	 */
 	@Override
 	public boolean isInheritWapLookAndFeel() {
 		if (Validator.isNull(getWapThemeId()) ||
@@ -827,11 +891,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Pages can be linked to PageTemplates ({@link LayoutPrototype}). Determine
-	 * if this is the case for this layout.
+	 * Returns <code>true</code> if the current layout is built from a layout
+	 * template and still maintains an active connection.
 	 *
-	 * @return <code>true</code> if this layout is built from a PageTemplate
-	 *         that still maintains an active connection
+	 * @return <code>true</code> if the current layout is built from a layout
+	 *         template and still maintains an active connection;
+	 *         <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isLayoutPrototypeLinkActive() {
@@ -845,9 +910,16 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Determine if this layout is part of the public {@link LayoutSet}. Note
-	 * that this does not give any information about the actual access
-	 * permissions, just about the default access options.
+	 * Returns <code>true</code> if the current layout is part of the public
+	 * {@link LayoutSet}.
+	 *
+	 * <p>
+	 * Note that this does not give any information about the actual access
+	 * permissions, just the default access options.
+	 * </p>
+	 *
+	 * @return <code>true</code> if the current layout is part of the public
+	 *         layout set; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isPublicLayout() {
@@ -855,9 +927,9 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * determine if this layout is a root layout, e.g. does not have any parent
+	 * Returns <code>true</code> if the current layout is the root layout.
 	 *
-	 * @return <code>true</code> if this layout is a root layout,
+	 * @return <code>true</code> if the current layout is the root layout;
 	 *         <code>false</code> otherwise
 	 */
 	@Override
@@ -885,7 +957,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 	
 	/**
-	 * @return <code>true</code> if this layout can hold embedded portlets
+	 * Returns <code>true</code> if the current layout can hold embedded
+	 * portlets.
+	 *
+	 * @return <code>true</code> if the current layout can hold embedded
+	 *         portlets; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isSupportsEmbeddedPortlets() {

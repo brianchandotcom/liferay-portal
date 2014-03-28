@@ -26,6 +26,7 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
@@ -47,7 +48,7 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
-		return BlogsTestUtil.addEntry(user.getUserId(), group, true);
+		return BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, true);
 	}
 
 	@Override

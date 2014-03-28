@@ -54,7 +54,7 @@ public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 	@Override
 	protected void addContainerModel() throws Exception {
 		_node = WikiTestUtil.addNode(
-			user.getUserId(), group.getGroupId(),
+			TestPropsValues.getUserId(), group.getGroupId(),
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50));
 	}
 

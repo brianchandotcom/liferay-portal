@@ -31,13 +31,13 @@ import javax.portlet.ValidatorException;
 /**
  * @author Iván Zaera
  */
-public class SettingsDefaultConfigurationAction
+public class SettingsConfigurationAction
 	extends BaseDefaultConfigurationAction<Settings>
 	implements ConfigurationAction, ResourceServingConfigurationAction {
 
 	public static final String SETTINGS_PREFIX = "preferences--";
 
-	public SettingsDefaultConfigurationAction() {
+	public SettingsConfigurationAction() {
 		super(SETTINGS_PREFIX);
 	}
 

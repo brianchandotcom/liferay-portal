@@ -1027,7 +1027,7 @@ public class DataFactory {
 
 		long resourcePrimKey = journalArticleModel.getResourcePrimKey();
 
-		String resourceUuid = _journalArticleResourceUUID.get(resourcePrimKey);
+		String resourceUuid = _journalArticleResourceUUIDs.get(resourcePrimKey);
 
 		return newAssetEntryModel(
 			journalArticleModel.getGroupId(),
@@ -1568,7 +1568,7 @@ public class DataFactory {
 		journalArticleResourceModel.setArticleId(
 			String.valueOf(_counter.get()));
 
-		_journalArticleResourceUUID.put(
+		_journalArticleResourceUUIDs.put(
 			journalArticleResourceModel.getPrimaryKey(),
 			journalArticleResourceModel.getUuid());
 
@@ -3027,7 +3027,7 @@ public class DataFactory {
 	private RoleModel _guestRoleModel;
 	private UserModel _guestUserModel;
 	private String _journalArticleContent;
-	private Map<Long, String> _journalArticleResourceUUID =
+	private Map<Long, String> _journalArticleResourceUUIDs =
 		new HashMap<Long, String>();
 	private List<String> _lastNames;
 	private Map<Long, SimpleCounter> _layoutCounters =

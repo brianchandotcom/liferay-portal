@@ -44,6 +44,7 @@ public class DefaultConfigurationAction
 	}
 
 	@Override
+	@SuppressWarnings("unused")
 	protected void postProcess(
 			long companyId, PortletRequest portletRequest,
 			PortletPreferences portletPreferences)

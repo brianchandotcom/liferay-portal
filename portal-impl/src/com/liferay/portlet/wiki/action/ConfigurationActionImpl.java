@@ -34,8 +34,8 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		throws Exception {
 
 		validateDisplaySettings(actionRequest);
-		validateEmail(actionRequest, "emailPageAdded", false);
-		validateEmail(actionRequest, "emailPageUpdated", false);
+		validateEmail(actionRequest, "emailPageAdded", true);
+		validateEmail(actionRequest, "emailPageUpdated", true);
 		validateEmailFrom(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);

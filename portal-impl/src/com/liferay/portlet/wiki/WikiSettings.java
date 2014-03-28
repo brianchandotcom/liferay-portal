@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
+import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -49,28 +50,28 @@ public class WikiSettings extends BaseServiceSettings {
 		return typedSettings.getValue("emailFromName");
 	}
 
-	public String getEmailPageAddedBody() {
-		return typedSettings.getValue("emailPageAddedBody");
+	public LocalizedValuesMap getEmailPageAddedBody() {
+		return typedSettings.getLocalizedValuesMap("emailPageAddedBody");
 	}
 
 	public boolean getEmailPageAddedEnabled() {
 		return typedSettings.getBooleanValue("emailPageAddedEnabled");
 	}
 
-	public String getEmailPageAddedSubject() {
-		return typedSettings.getValue("emailPageAddedSubject");
+	public LocalizedValuesMap getEmailPageAddedSubject() {
+		return typedSettings.getLocalizedValuesMap("emailPageAddedSubject");
 	}
 
-	public String getEmailPageUpdatedBody() {
-		return typedSettings.getValue("emailPageUpdatedBody");
+	public LocalizedValuesMap getEmailPageUpdatedBody() {
+		return typedSettings.getLocalizedValuesMap("emailPageUpdatedBody");
 	}
 
 	public boolean getEmailPageUpdatedEnabled() {
 		return typedSettings.getBooleanValue("emailPageUpdatedEnabled");
 	}
 
-	public String getEmailPageUpdatedSubject() {
-		return typedSettings.getValue("emailPageUpdatedSubject");
+	public LocalizedValuesMap getEmailPageUpdatedSubject() {
+		return typedSettings.getLocalizedValuesMap("emailPageUpdatedSubject");
 	}
 
 	public boolean getEnableCommentRatings() {

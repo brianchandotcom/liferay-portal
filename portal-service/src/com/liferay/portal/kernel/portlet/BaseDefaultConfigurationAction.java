@@ -65,12 +65,6 @@ public abstract class BaseDefaultConfigurationAction<T>
 	extends LiferayPortlet
 	implements ConfigurationAction, ResourceServingConfigurationAction {
 
-	protected void setConfigurationParametersPrefix(
-		String configurationParametersPrefix) {
-
-		_configurationParametersPrefix = configurationParametersPrefix;
-	}
-
 	public String getLocalizedParameter(
 		PortletRequest portletRequest, String name) {
 
@@ -273,6 +267,12 @@ public abstract class BaseDefaultConfigurationAction<T>
 	}
 
 	protected abstract void reset(T configuration, String key);
+
+	protected void setConfigurationParametersPrefix(
+		String configurationParametersPrefix) {
+
+		_configurationParametersPrefix = configurationParametersPrefix;
+	}
 
 	protected abstract void setValue(
 		T configuration, String name, String value);

@@ -158,7 +158,7 @@ shoppingSettings = ShoppingUtil.getShoppingSettings(themeDisplay.getSiteGroupId(
 						and over
 					</c:if>
 
-					<aui:input label="" maxlength="6" name='<%= "shipping" + i %>' size="6" type="text" value="<%= GetterUtil.getString(shoppingSettings.getShipping()[i]) %>" />
+					<aui:input hideLabel="<%= true %>" label="shipping" maxlength="6" name='<%= "shipping" + i %>' size="6" type="text" value="<%= GetterUtil.getString(shoppingSettings.getShipping()[i]) %>" />
 
 					<%
 					}
@@ -199,7 +199,7 @@ shoppingSettings = ShoppingUtil.getShoppingSettings(themeDisplay.getSiteGroupId(
 						and over
 					</c:if>
 
-					<aui:input label="" maxlength="6" name='<%= "insurance" + i %>' size="6" type="text" value="<%= GetterUtil.getString(shoppingSettings.getInsurance()[i]) %>" />
+					<aui:input hideLabel="<%= true %>" label="insurance" maxlength="6" name='<%= "insurance" + i %>' size="6" type="text" value="<%= GetterUtil.getString(shoppingSettings.getInsurance()[i]) %>" />
 
 					<%
 					}

@@ -45,7 +45,7 @@
 			</c:if>
 	</c:when>
 	<c:when test='<%= !type.equals("hidden") && !type.equals("image") %>'>
-		<label class="hide-accessible" for="<%= forLabel %>"><liferay-ui:message key='<%= Validator.isNotNull(label) ? label : name %>' /></label>
+		<label class="hidden-label" for="<%= forLabel %>"><liferay-ui:message key='<%= Validator.isNotNull(label) ? label : name %>' /></label>
 	</c:when>
 </c:choose>
 

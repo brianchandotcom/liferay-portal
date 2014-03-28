@@ -36,7 +36,7 @@
 			</label>
 		</c:when>
 		<c:when test="<%= hideLabel %>">
-			<label class="hide-accessible" for="<%= namespace + id %>"><liferay-ui:message key="<%= label %>" /></label>
+			<label class="hidden-label" for="<%= namespace + id %>"><liferay-ui:message key="<%= label %>" /></label>
 		</c:when>
 	</c:choose>
 

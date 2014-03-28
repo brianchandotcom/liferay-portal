@@ -27,6 +27,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="DMDocumentType#tearDownCP">
+			<var name="dmDocumentTypeScope" value="Current Site" />
+		</execute>
+
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
@@ -214,6 +218,90 @@
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentTitle" value="Document_3.doc" />
+		</execute>
+	</command>
+
+	<command name="AddDocumentType" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#gotoPG" />
+
+		<execute macro="DMDocumentType#addPG">
+			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box" />
+			<var name="dmDocumentTypeName" value="DM Document Type Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#viewPGAddMenulist">
+			<var name="dmDocumentTypeName" value="DM Document Type Name" />
+		</execute>
+	</command>
+
+	<command name="AddDocumentTypes" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#gotoPG" />
+
+		<execute macro="DMDocumentType#addPG">
+			<var name="dmDocumentTypeDescription" value="DM Document Type 1 Description" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box" />
+			<var name="dmDocumentTypeName" value="DM Document Type 1 Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#viewPGAddMenulist">
+			<var name="dmDocumentTypeName" value="DM Document Type 1 Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#gotoPG" />
+
+		<execute macro="DMDocumentType#addPG">
+			<var name="dmDocumentTypeDescription" value="DM Document Type 2 Description" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box" />
+			<var name="dmDocumentTypeName" value="DM Document Type 2 Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#viewPGAddMenulist">
+			<var name="dmDocumentTypeName" value="DM Document Type 2 Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#gotoPG" />
+
+		<execute macro="DMDocumentType#addPG">
+			<var name="dmDocumentTypeDescription" value="DM Document Type 3 Description" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box" />
+			<var name="dmDocumentTypeName" value="DM Document Type 3 Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#viewPGAddMenulist">
+			<var name="dmDocumentTypeName" value="DM Document Type 3 Name" />
 		</execute>
 	</command>
 
@@ -696,6 +784,40 @@
 		</execute>
 	</command>
 
+	<command name="DeleteDocumentType" priority="5">
+		<var name="field" value="Text Box" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#gotoPG" />
+
+		<execute macro="DMDocumentType#addPG">
+			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box" />
+			<var name="dmDocumentTypeName" value="DM Document Type Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#viewPGAddMenulist">
+			<var name="dmDocumentTypeName" value="DM Document Type Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#gotoPG" />
+
+		<execute macro="DMDocumentType#deletePG">
+			<var name="dmDocumentTypeName" value="DM Document Type Name" />
+		</execute>
+	</command>
+
 	<command name="DeleteFolder" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -841,6 +963,48 @@
 		<execute macro="DMDocument#editPG">
 			<var name="dmDocumentTitle" value="DM Document Title" />
 			<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
+		</execute>
+	</command>
+
+	<command name="EditDocumentType" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#gotoPG" />
+
+		<execute macro="DMDocumentType#addPG">
+			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box" />
+			<var name="dmDocumentTypeName" value="DM Document Type Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#viewPGAddMenulist">
+			<var name="dmDocumentTypeName" value="DM Document Type Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#gotoPG" />
+
+		<execute macro="DMDocumentType#editPG">
+			<var name="dmDocumentTypeDescriptionEdit" value="DM Document Type Description Edit" />
+			<var name="dmDocumentTypeName" value="DM Document Type Name" />
+			<var name="dmDocumentTypeNameEdit" value="DM Document Type Name Edit" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#viewPGAddMenulist">
+			<var name="dmDocumentTypeName" value="DM Document Type Name Edit" />
 		</execute>
 	</command>
 

@@ -1,5 +1,6 @@
 <definition>
 	<command name="approveTaskByActions">
+		<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
@@ -10,6 +11,14 @@
 
 		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_ME_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_ME_MENULIST_APPROVE" value1="Approve" />
+
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<execute action="CPMyworkflowtasks#type" locator-key1="PANEL_COMMENT_FIELD" value1="${workflowActivityComment}" />
+			</then>
+		</if>
+
 		<execute action="CPMyworkflowtasks#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPMyworkflowtasks#pause" locator1="1000" />
@@ -21,6 +30,15 @@
 		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
 		<execute action="CPMyworkflowtasksCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
 		<execute action="CPMyworkflowtasksCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_DUE_DATE" />
+
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<execute action="CPMyworkflowtasks#assertClick" locator-key1="COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+				<execute action="CPMyworkflowtasks#assertClick" locator-key1="PREVIEW_ACTIVITY" value1="Activities" />
+				<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="PREVIEW_ACTIVITY_ENTRY" value1="${workflowActivityComment}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="approveTaskByDetails">
@@ -62,6 +80,7 @@
 	</command>
 
 	<command name="assignToMeTaskByActions">
+		<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
@@ -72,6 +91,14 @@
 
 		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_MY_ROLES_MENULIST_ASSIGN_TO_ME" value1="Assign to Me" />
+
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<execute action="CPMyworkflowtasks#type" locator-key1="PANEL_COMMENT_FIELD" value1="${workflowActivityComment}" />
+			</then>
+		</if>
+
 		<execute action="CPMyworkflowtasks#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
@@ -80,6 +107,15 @@
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
 		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
 		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_DUE_DATE" />
+
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+				<execute action="CPMyworkflowtasks#assertClick" locator-key1="PREVIEW_ACTIVITY" value1="Activities" />
+				<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="PREVIEW_ACTIVITY_ENTRY" value1="${workflowActivityComment}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="assignToMeTaskByDetails">

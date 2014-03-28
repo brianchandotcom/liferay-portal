@@ -1026,6 +1026,54 @@
 		</execute>
 	</command>
 
+	<command name="EditCategoryProperty" priority="4">
+		<var name="categoryName" value="Category Name" />
+		<var name="propertiesKeyField" value="Category Property" />
+		<var name="propertiesValueField" value="Category Property" />
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#addCategoryPropertyCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="propertiesKeyField" value="Category Property" />
+			<var name="propertiesValueField" value="Category Property" />
+			<var name="propertyNumber" value="1" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Category#viewCategoryPropertyCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="propertiesKeyField" value="Category Property" />
+			<var name="propertiesValueField" value="Category Property" />
+			<var name="propertyNumber" value="1" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Category#editCategoryPropertyCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="categoryNameEdit" value="Category Name Edit" />
+			<var name="propertiesKeyFieldEdit" value="Category Property Edit" />
+			<var name="propertiesValueFieldEdit" value="Category Property Edit" />
+			<var name="propertyNumber" value="1" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+	</command>
+
 	<command name="EditSubcategory" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="subcategoryName" value="Subcategory Name" />

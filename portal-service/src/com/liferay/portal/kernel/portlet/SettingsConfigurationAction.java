@@ -32,7 +32,7 @@ import javax.portlet.ValidatorException;
  * @author Iván Zaera
  */
 public class SettingsConfigurationAction
-	extends BaseDefaultConfigurationAction<Settings>
+	extends BasePersistedConfigurationAction<Settings>
 	implements ConfigurationAction, ResourceServingConfigurationAction {
 
 	public static final String SETTINGS_PREFIX = "preferences--";

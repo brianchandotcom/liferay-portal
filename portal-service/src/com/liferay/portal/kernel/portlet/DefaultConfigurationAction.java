@@ -29,7 +29,7 @@ import javax.portlet.ValidatorException;
  * @author Iván Zaera
  */
 public class DefaultConfigurationAction
-	extends BaseDefaultConfigurationAction<PortletPreferences>
+	extends BasePersistedConfigurationAction<PortletPreferences>
 	implements ConfigurationAction, ResourceServingConfigurationAction {
 
 	public static final String PREFERENCES_PREFIX = "preferences--";

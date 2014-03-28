@@ -70,7 +70,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 						<aui:fieldset>
 							<aui:input cssClass="lfr-journal-small-image-type" inlineField="<%= true %>" label="small-image-url" name="smallImageType" type="radio" />
 
-							<aui:input cssClass="lfr-journal-small-image-value" hideLabel="<%= true %>" inlineField="<%= true %>" label="small-image-URL" name="smallImageURL" />
+							<aui:input cssClass="lfr-journal-small-image-value" hideLabel="<%= true %>" inlineField="<%= true %>" label="small-image-url" name="smallImageURL" />
 						</aui:fieldset>
 
 						<aui:fieldset>

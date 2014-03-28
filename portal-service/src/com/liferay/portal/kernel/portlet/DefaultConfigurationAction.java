@@ -35,7 +35,7 @@ public class DefaultConfigurationAction
 	public static final String PREFERENCES_PREFIX = "preferences--";
 
 	public DefaultConfigurationAction() {
-		super(PREFERENCES_PREFIX);
+		setConfigurationParametersPrefix(PREFERENCES_PREFIX);
 	}
 
 	@Override

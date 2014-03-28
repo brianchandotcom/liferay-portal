@@ -65,7 +65,7 @@ public abstract class BaseDefaultConfigurationAction<T>
 	extends LiferayPortlet
 	implements ConfigurationAction, ResourceServingConfigurationAction {
 
-	public BaseDefaultConfigurationAction(
+	protected void setConfigurationParametersPrefix(
 		String configurationParametersPrefix) {
 
 		_configurationParametersPrefix = configurationParametersPrefix;

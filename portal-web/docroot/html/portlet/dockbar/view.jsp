@@ -63,7 +63,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 					}
 				}
 
-				backURL = PortalUtil.getLayoutURL(refererLayout, themeDisplay);
+				backURL = PortalUtil.getLayoutRelativeURL(refererLayout, themeDisplay);
 
 				if (!CookieKeys.hasSessionId(request)) {
 					backURL = PortalUtil.getURLWithSessionId(backURL, session.getId());

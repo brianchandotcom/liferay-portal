@@ -826,6 +826,13 @@ public interface Portal {
 	public String getLayoutFullURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
 
+	public String getLayoutRelativeURL(Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException;
+
+	public String getLayoutRelativeURL(
+			Layout layout, ThemeDisplay themeDisplay, boolean doAsUser)
+		throws PortalException, SystemException;
+
 	public String getLayoutSetFriendlyURL(
 			LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;

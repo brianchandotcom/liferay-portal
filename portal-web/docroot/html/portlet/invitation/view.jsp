@@ -55,7 +55,7 @@
 					</div>
 				</c:if>
 
-				<aui:input cssClass="lfr-input-text-container" label="" name='<%= "emailAddress" + i %>' size="65" title='<%= LanguageUtil.get(pageContext, "email-address") + StringPool.SPACE + (i + 1) %>' type="text" value="<%= emailAddress %>" />
+				<aui:input cssClass="lfr-input-text-container" hideLabel="<%= true %>" label="email-address" name='<%= "emailAddress" + i %>' size="65" title='<%= LanguageUtil.get(pageContext, "email-address") + StringPool.SPACE + (i + 1) %>' type="text" value="<%= emailAddress %>" />
 
 			<%
 			}

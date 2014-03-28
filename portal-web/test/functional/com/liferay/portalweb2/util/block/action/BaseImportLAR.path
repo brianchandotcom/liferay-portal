@@ -1,0 +1,149 @@
+<html>
+<head>
+<title>BaseImportLAR</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">BaseImportLAR</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>BaseImportLAR</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BaseExportLAR</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FILE_BUTTON</td>
+	<td>//button[contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTINUE_BUTTON</td>
+	<td>//button[contains(.,'Continue')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_TITLE</td>
+	<td>//span[@class='file-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMPORT_BUTTON</td>
+	<td>//button[contains(.,'Import')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_NEW_IMPORT_PROCESS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'New Import Process')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FILE-->
+<tr>
+	<td>FILE_NAME</td>
+	<td>//dl[@class='import-file-details options']/dd[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_EXPORT</td>
+	<td>//dl[@class='import-file-details options']/dd[2]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_AUTHOR</td>
+	<td>//dl[@class='import-file-details options']/dd[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_SIZE</td>
+	<td>//dl[@class='import-file-details options']/dd[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONFIGURATION-->
+<tr>
+	<td>CONFIGURATION_CHECK_BOX</td>
+	<td>//label[contains(.,'Configuration')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT-->
+<tr>
+	<td>CONTENT_CHECK_BOX</td>
+	<td>//label[contains(.,'Content')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CURRENT_AND_PREVIOUS-->
+<tr>
+	<td>CURRENT_AND_PREVIOUS_INFO_MESSAGE</td>
+	<td>//div[@class='incomplete-process-message']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_AND_PREVIOUS_USER_1</td>
+	<td>//tr[1]/td[1]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_AND_PREVIOUS_STATUS_1</td>
+	<td>//tr[1]/td[2]/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_AND_PREVIOUS_CREATE_DATE_1</td>
+	<td>//tr[1]/td[3]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_AND_PREVIOUS_COMPLETION_DATE_1</td>
+	<td>//tr[1]/td[4]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_AND_PREVIOUS_CLEAR_1</td>
+	<td>//tr[1]/td[5]/span/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

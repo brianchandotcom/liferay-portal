@@ -377,4 +377,52 @@
 			<execute action="PGSearchResults#assertTextNotEquals" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 		</for>
 	</command>
+
+	<command name="SearchXSSAsset" priority="5">
+		<property name="custom.properties" value="index.search.highlight.enabled=false" />
+
+		<var name="threadSubject" value="Thread Subject" />
+		<var name="threadBody"><![CDATA[<script>alert("Liferay Alert")</script>]]></var>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Liferay Alert" />
+		</execute>
+
+		<var name="searchAssetTitle" value="${threadSubject}" />
+
+		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+
+		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+
+		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_SUMMARY" value1="${threadBody}" />
+	</command>
 </definition>

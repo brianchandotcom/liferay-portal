@@ -411,13 +411,9 @@ public class PDFProcessorImpl
 		throws Exception {
 
 		if (_isGeneratePreview(fileVersion)) {
-			StopWatch stopWatch = null;
+			StopWatch stopWatch = new StopWatch();
 
-			if (_log.isInfoEnabled()) {
-				stopWatch = new StopWatch();
-
-				stopWatch.start();
-			}
+			stopWatch.start();
 
 			_generateImagesGS(fileVersion, file, false);
 
@@ -432,13 +428,9 @@ public class PDFProcessorImpl
 		}
 
 		if (_isGenerateThumbnail(fileVersion)) {
-			StopWatch stopWatch = null;
+			StopWatch stopWatch = new StopWatch();
 
-			if (_log.isInfoEnabled()) {
-				stopWatch = new StopWatch();
-
-				stopWatch.start();
-			}
+			stopWatch.start();
 
 			_generateImagesGS(fileVersion, file, true);
 

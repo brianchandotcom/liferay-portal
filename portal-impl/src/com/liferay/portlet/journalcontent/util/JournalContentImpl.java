@@ -123,13 +123,9 @@ public class JournalContentImpl implements JournalContent {
 		String viewMode, String languageId, int page,
 		PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay) {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		articleId = StringUtil.toUpperCase(GetterUtil.getString(articleId));
 		ddmTemplateKey = StringUtil.toUpperCase(

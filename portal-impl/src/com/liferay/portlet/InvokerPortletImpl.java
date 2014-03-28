@@ -308,13 +308,9 @@ public class InvokerPortletImpl implements InvokerPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		try {
 			invokeAction(actionRequest, actionResponse);
@@ -341,13 +337,9 @@ public class InvokerPortletImpl implements InvokerPortlet {
 			EventRequest eventRequest, EventResponse eventResponse)
 		throws IOException, PortletException {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		invokeEvent(eventRequest, eventResponse);
 
@@ -371,13 +363,9 @@ public class InvokerPortletImpl implements InvokerPortlet {
 			throw portletException;
 		}
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		String remoteUser = renderRequest.getRemoteUser();
 
@@ -458,13 +446,9 @@ public class InvokerPortletImpl implements InvokerPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		try {
 			invokeResource(resourceRequest, resourceResponse);

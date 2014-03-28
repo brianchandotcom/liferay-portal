@@ -517,13 +517,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	public boolean hasPermission(
 		long groupId, String name, String primKey, String actionId) {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		Group group = null;
 
@@ -988,13 +984,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			boolean checkAdmin)
 		throws Exception {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		long companyId = user.getCompanyId();
 
@@ -1133,13 +1125,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return true;
 		}
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		if (group.isOrganization()) {
 			Organization organization =

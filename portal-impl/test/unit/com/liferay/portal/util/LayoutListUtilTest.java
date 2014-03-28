@@ -122,13 +122,9 @@ public class LayoutListUtilTest extends PowerMockito {
 
 	@Test
 	public void testGetLayoutDescriptions() throws SystemException {
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		List<LayoutDescription> layoutDescriptions =
 			LayoutListUtil.getLayoutDescriptions(0, false, "ROOT", null);

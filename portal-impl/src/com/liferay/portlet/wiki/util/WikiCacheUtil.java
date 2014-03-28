@@ -51,13 +51,9 @@ public class WikiCacheUtil {
 		long nodeId, String title, PortletURL viewPageURL,
 		PortletURL editPageURL, String attachmentURLPrefix) {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		String key = _encodeKey(nodeId, title, viewPageURL.toString());
 

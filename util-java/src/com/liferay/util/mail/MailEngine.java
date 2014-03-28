@@ -178,13 +178,11 @@ public class MailEngine {
 			List<FileAttachment> fileAttachments, SMTPAccount smtpAccount)
 		throws MailEngineException {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
 
 		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-
 			_log.debug("From: " + from);
 			_log.debug("To: " + Arrays.toString(to));
 			_log.debug("CC: " + Arrays.toString(cc));

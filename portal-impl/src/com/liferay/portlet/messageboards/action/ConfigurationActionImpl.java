@@ -26,7 +26,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.util.ContentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +40,58 @@ import java.util.TreeMap;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
+
+	@Override
+	public void postProcessPortletPreferences(
+			long companyId, PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		String emailFromAddress = PortalUtil.getEmailFromAddress(
+			portletPreferences, companyId,
+			PropsValues.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS);
+
+		removeDefaultValue(
+			portletRequest, portletPreferences, "emailFromAddress",
+			emailFromAddress);
+
+		String emailFromName = PortalUtil.getEmailFromName(
+			portletPreferences, companyId, PropsValues.MESSAGE_BOARDS_EMAIL_FROM_NAME);
+
+		removeDefaultValue(
+			portletRequest, portletPreferences, "emailFromName", emailFromName);
+
+		String languageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailMessageAddedBody_" + languageId,
+			ContentUtil.get(
+				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailMessageAddedSubject_" + languageId,
+			ContentUtil.get(
+				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailMessageUpdatedBody_" + languageId,
+			ContentUtil.get(
+				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY));
+		removeDefaultValue(
+			portletRequest, portletPreferences,
+			"emailMessageUpdatedSubject_" + languageId,
+			ContentUtil.get(
+				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT));
+	}
 
 	@Override
 	public void processAction(

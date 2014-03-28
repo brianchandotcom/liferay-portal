@@ -50,15 +50,7 @@ public class WikiSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailPageAddedBody() {
-		String emailPageAddedBody = typedSettings.getValue(
-			"emailPageAddedBody");
-
-		if (Validator.isNotNull(emailPageAddedBody)) {
-			return emailPageAddedBody;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY));
+		return typedSettings.getValue("emailPageAddedBody");
 	}
 
 	public boolean getEmailPageAddedEnabled() {
@@ -70,15 +62,7 @@ public class WikiSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailPageUpdatedBody() {
-		String emailPageUpdatedBody = typedSettings.getValue(
-			"emailPageUpdatedBody");
-
-		if (Validator.isNotNull(emailPageUpdatedBody)) {
-			return emailPageUpdatedBody;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY));
+		return typedSettings.getValue("emailPageUpdatedBody");
 	}
 
 	public boolean getEmailPageUpdatedEnabled() {
@@ -86,15 +70,7 @@ public class WikiSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailPageUpdatedSubject() {
-		String emailPageUpdatedSubject = typedSettings.getValue(
-			"emailPageUpdatedSubject");
-
-		if (Validator.isNotNull(emailPageUpdatedSubject)) {
-			return emailPageUpdatedSubject;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT));
+		return typedSettings.getValue("emailPageUpdatedSubject");
 	}
 
 	public boolean getEnableCommentRatings() {
@@ -167,12 +143,19 @@ public class WikiSettings extends BaseServiceSettings {
 			"emailFromName", PropsKeys.WIKI_EMAIL_FROM_NAME,
 			PropsKeys.ADMIN_EMAIL_FROM_NAME);
 		_fallbackKeys.add(
+			"emailPageAddedBody", PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY);
+		_fallbackKeys.add(
 			"emailPageAddedEnabled", PropsKeys.WIKI_EMAIL_PAGE_ADDED_ENABLED);
 		_fallbackKeys.add(
 			"emailPageAddedSubject", PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT);
 		_fallbackKeys.add(
+			"emailPageUpdatedBody", PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY);
+		_fallbackKeys.add(
 			"emailPageUpdatedEnabled",
 			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED);
+		_fallbackKeys.add(
+			"emailPageUpdatedSubject",
+			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT);
 		_fallbackKeys.add(
 			"enableCommentRatings", PropsKeys.WIKI_COMMENT_RATINGS_ENABLED);
 		_fallbackKeys.add(

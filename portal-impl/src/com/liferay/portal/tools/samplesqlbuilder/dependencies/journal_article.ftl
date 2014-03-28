@@ -1,3 +1,11 @@
+<#assign ddmStructureModel = dataFactory.defaultContentDDMStructureModel>
+
+insert into DDMStructure values ('${ddmStructureModel.uuid}', ${ddmStructureModel.structureId}, ${ddmStructureModel.groupId}, ${ddmStructureModel.companyId}, ${ddmStructureModel.userId}, '${ddmStructureModel.userName}', '${dataFactory.getDateString(ddmStructureModel.createDate)}', '${dataFactory.getDateString(ddmStructureModel.modifiedDate)}', ${ddmStructureModel.parentStructureId}, ${ddmStructureModel.classNameId}, '${ddmStructureModel.structureKey}', '${ddmStructureModel.name}', '${ddmStructureModel.description}', '${ddmStructureModel.xsd}', '${ddmStructureModel.storageType}', ${ddmStructureModel.type});
+
+<#assign ddmTemplateModel = dataFactory.defaultContentDDMTemplateModel>
+
+insert into DDMTemplate values ('${ddmTemplateModel.uuid}', ${ddmTemplateModel.templateId}, ${ddmTemplateModel.groupId}, ${ddmTemplateModel.companyId}, ${ddmTemplateModel.userId}, '${ddmTemplateModel.userName}', '${dataFactory.getDateString(ddmTemplateModel.createDate)}', '${dataFactory.getDateString(ddmTemplateModel.modifiedDate)}', ${ddmTemplateModel.classNameId}, ${ddmTemplateModel.classPK}, '${ddmTemplateModel.templateKey}', '${ddmTemplateModel.name}', '${ddmTemplateModel.description}', '${ddmTemplateModel.type}', '${ddmTemplateModel.mode}', '${ddmTemplateModel.language}', '${ddmTemplateModel.script}', ${ddmTemplateModel.cacheable?string}, ${ddmTemplateModel.smallImage?string}, ${ddmTemplateModel.smallImageId}, '${ddmTemplateModel.smallImageURL}');
+
 <#assign journalArticlePageCounts = dataFactory.getSequence(dataFactory.maxJournalArticlePageCount)>
 
 <#assign resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.portlet.journal", groupId)>

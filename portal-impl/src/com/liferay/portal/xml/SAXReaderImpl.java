@@ -50,7 +50,6 @@ import java.util.Map;
 import org.apache.xerces.parsers.SAXParser;
 
 import org.dom4j.DocumentFactory;
-import org.dom4j.DocumentHelper;
 
 /**
  * @author Brian Wing Shun Chan
@@ -193,10 +192,8 @@ public class SAXReaderImpl implements SAXReader {
 		ElementImpl elementImpl = (ElementImpl)element;
 		QNameImpl qNameImpl = (QNameImpl)qName;
 
-		DocumentFactory documentFactory = DocumentFactory.getInstance();
-
 		return new AttributeImpl(
-			documentFactory.createAttribute(
+			_documentFactory.createAttribute(
 				elementImpl.getWrappedElement(), qNameImpl.getWrappedQName(),
 				value));
 	}
@@ -207,16 +204,14 @@ public class SAXReaderImpl implements SAXReader {
 
 		ElementImpl elementImpl = (ElementImpl)element;
 
-		DocumentFactory documentFactory = DocumentFactory.getInstance();
-
 		return new AttributeImpl(
-			documentFactory.createAttribute(
+			_documentFactory.createAttribute(
 				elementImpl.getWrappedElement(), name, value));
 	}
 
 	@Override
 	public Document createDocument() {
-		return new DocumentImpl(DocumentHelper.createDocument());
+		return new DocumentImpl(_documentFactory.createDocument());
 	}
 
 	@Override
@@ -224,14 +219,13 @@ public class SAXReaderImpl implements SAXReader {
 		ElementImpl rootElementImpl = (ElementImpl)rootElement;
 
 		return new DocumentImpl(
-			DocumentHelper.createDocument(rootElementImpl.getWrappedElement()));
+			_documentFactory.createDocument(
+				rootElementImpl.getWrappedElement()));
 	}
 
 	@Override
 	public Document createDocument(String encoding) {
-		DocumentFactory documentFactory = DocumentFactory.getInstance();
-
-		return new DocumentImpl(documentFactory.createDocument(encoding));
+		return new DocumentImpl(_documentFactory.createDocument(encoding));
 	}
 
 	@Override
@@ -239,17 +233,17 @@ public class SAXReaderImpl implements SAXReader {
 		QNameImpl qNameImpl = (QNameImpl)qName;
 
 		return new ElementImpl(
-			DocumentHelper.createElement(qNameImpl.getWrappedQName()));
+			_documentFactory.createElement(qNameImpl.getWrappedQName()));
 	}
 
 	@Override
 	public Element createElement(String name) {
-		return new ElementImpl(DocumentHelper.createElement(name));
+		return new ElementImpl(_documentFactory.createElement(name));
 	}
 
 	@Override
 	public Entity createEntity(String name, String text) {
-		return new EntityImpl(DocumentHelper.createEntity(name, text));
+		return new EntityImpl(_documentFactory.createEntity(name, text));
 	}
 
 	@Override
@@ -259,7 +253,7 @@ public class SAXReaderImpl implements SAXReader {
 
 	@Override
 	public Namespace createNamespace(String prefix, String uri) {
-		return new NamespaceImpl(DocumentHelper.createNamespace(prefix, uri));
+		return new NamespaceImpl(_documentFactory.createNamespace(prefix, uri));
 	}
 
 	@Override
@@ -267,7 +261,7 @@ public class SAXReaderImpl implements SAXReader {
 		String target, Map<String, String> data) {
 
 		org.dom4j.ProcessingInstruction processingInstruction =
-			DocumentHelper.createProcessingInstruction(target, data);
+			_documentFactory.createProcessingInstruction(target, data);
 
 		if (processingInstruction == null) {
 			return null;
@@ -282,7 +276,7 @@ public class SAXReaderImpl implements SAXReader {
 		String target, String data) {
 
 		org.dom4j.ProcessingInstruction processingInstruction =
-			DocumentHelper.createProcessingInstruction(target, data);
+			_documentFactory.createProcessingInstruction(target, data);
 
 		if (processingInstruction == null) {
 			return null;
@@ -294,7 +288,7 @@ public class SAXReaderImpl implements SAXReader {
 
 	@Override
 	public QName createQName(String localName) {
-		return new QNameImpl(DocumentHelper.createQName(localName));
+		return new QNameImpl(_documentFactory.createQName(localName));
 	}
 
 	@Override
@@ -302,13 +296,13 @@ public class SAXReaderImpl implements SAXReader {
 		NamespaceImpl namespaceImpl = (NamespaceImpl)namespace;
 
 		return new QNameImpl(
-			DocumentHelper.createQName(
+			_documentFactory.createQName(
 				localName, namespaceImpl.getWrappedNamespace()));
 	}
 
 	@Override
 	public Text createText(String text) {
-		return new TextImpl(DocumentHelper.createText(text));
+		return new TextImpl(_documentFactory.createText(text));
 	}
 
 	@Override
@@ -321,7 +315,7 @@ public class SAXReaderImpl implements SAXReader {
 		String xPathExpression, Map<String, String> namespaceContextMap) {
 
 		return new XPathImpl(
-			DocumentHelper.createXPath(xPathExpression), namespaceContextMap);
+			_documentFactory.createXPath(xPathExpression), namespaceContextMap);
 	}
 
 	@Override
@@ -523,30 +517,36 @@ public class SAXReaderImpl implements SAXReader {
 	public List<Node> selectNodes(
 		String xPathFilterExpression, List<Node> nodes) {
 
-		return toNewNodes(
-			DocumentHelper.selectNodes(
-				xPathFilterExpression, toOldNodes(nodes)));
+		org.dom4j.XPath xPath = _documentFactory.createXPath(
+			xPathFilterExpression);
+
+		return toNewNodes(xPath.selectNodes(toOldNodes(nodes)));
 	}
 
 	@Override
 	public List<Node> selectNodes(String xPathFilterExpression, Node node) {
 		NodeImpl nodeImpl = (NodeImpl)node;
 
-		return toNewNodes(
-			DocumentHelper.selectNodes(
-				xPathFilterExpression, nodeImpl.getWrappedNode()));
+		org.dom4j.XPath xPath = _documentFactory.createXPath(
+			xPathFilterExpression);
+
+		return toNewNodes(xPath.selectNodes(nodeImpl.getWrappedNode()));
 	}
 
 	@Override
 	public void sort(List<Node> nodes, String xPathExpression) {
-		DocumentHelper.sort(toOldNodes(nodes), xPathExpression);
+		org.dom4j.XPath xPath = _documentFactory.createXPath(xPathExpression);
+
+		xPath.sort(toOldNodes(nodes));
 	}
 
 	@Override
 	public void sort(
 		List<Node> nodes, String xPathExpression, boolean distinct) {
 
-		DocumentHelper.sort(toOldNodes(nodes), xPathExpression, distinct);
+		org.dom4j.XPath xPath = _documentFactory.createXPath(xPathExpression);
+
+		xPath.sort(toOldNodes(nodes), distinct);
 	}
 
 	protected org.dom4j.io.SAXReader getSAXReader(boolean validate) {
@@ -643,5 +643,8 @@ public class SAXReaderImpl implements SAXReader {
 	private static Log _log = LogFactoryUtil.getLog(SAXReaderImpl.class);
 
 	private static SAXReaderImpl _instance = new SAXReaderImpl();
+
+	private static DocumentFactory _documentFactory =
+		DocumentFactory.getInstance();
 
 }

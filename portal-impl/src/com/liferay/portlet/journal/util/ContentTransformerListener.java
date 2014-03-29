@@ -41,6 +41,23 @@ public class ContentTransformerListener extends BaseTransformerListener {
 
 	@Override
 	public String onScript(
+		String script, Document document, String languageId,
+		Map<String, String> tokens) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("onScript");
+		}
+
+		return injectEditInPlace(document, script);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #onScript(
+	 *			   String, Document, String, Map)}
+	 */
+	@Deprecated
+	@Override
+	public String onScript(
 		String script, String xml, String languageId,
 		Map<String, String> tokens) {
 
@@ -51,6 +68,24 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		return injectEditInPlace(xml, script);
 	}
 
+	@Override
+	public Document onXml(
+		Document document, String languageId, Map<String, String> tokens) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("onXml");
+		}
+
+		replace(document, tokens);
+
+		return document;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #onXml(
+	 *			   Document, String, Map)}
+	 */
+	@Deprecated
 	@Override
 	public String onXml(
 		String xml, String languageId, Map<String, String> tokens) {
@@ -86,10 +121,8 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		return GetterUtil.getString(content);
 	}
 
-	protected String injectEditInPlace(String xml, String script) {
+	protected String injectEditInPlace(Document document, String script) {
 		try {
-			Document document = SAXReaderUtil.read(xml);
-
 			List<Node> nodes = document.selectNodes("//dynamic-element");
 
 			for (Node node : nodes) {
@@ -117,6 +150,34 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		}
 
 		return script;
+	}
+
+	protected String injectEditInPlace(String xml, String script) {
+		try {
+			Document document = SAXReaderUtil.read(xml);
+
+			script = injectEditInPlace(document, script);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e.getMessage());
+			}
+		}
+
+		return script;
+	}
+
+	protected void replace(Document document, Map<String, String> tokens) {
+		try {
+			Element rootElement = document.getRootElement();
+
+			replace(rootElement, tokens);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e.getMessage());
+			}
+		}
 	}
 
 	protected void replace(Element root, Map<String, String> tokens)
@@ -182,9 +243,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		try {
 			Document document = SAXReaderUtil.read(xml);
 
-			Element rootElement = document.getRootElement();
-
-			replace(rootElement, tokens);
+			replace(document, tokens);
 
 			xml = DDMXMLUtil.formatXML(document);
 		}

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.templateparser;
 
+import com.liferay.portal.kernel.xml.Document;
+
 import java.util.Map;
 
 /**
@@ -26,9 +28,26 @@ public interface TransformerListener {
 		String output, String languageId, Map<String, String> tokens);
 
 	public String onScript(
+		String script, Document document, String languageId,
+		Map<String, String> tokens);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #onScript(
+	 *			   String, Document, String, Map)}
+	 */
+	@Deprecated
+	public String onScript(
 		String script, String xml, String languageId,
 		Map<String, String> tokens);
 
+	public Document onXml(
+		Document document, String languageId, Map<String, String> tokens);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #onXml(
+	 *			   Document, String, Map)}
+	 */
+	@Deprecated
 	public String onXml(
 		String xml, String languageId, Map<String, String> tokens);
 

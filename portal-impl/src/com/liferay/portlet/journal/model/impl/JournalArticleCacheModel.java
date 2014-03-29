@@ -278,6 +278,8 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 
 		journalArticleImpl.resetOriginalValues();
 
+		journalArticleImpl.setDefaultLanguageId(_defaultLanguageId);
+
 		journalArticleImpl.setDocument(_document);
 
 		return journalArticleImpl;
@@ -321,6 +323,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
 
+		_defaultLanguageId = (java.lang.String)objectInput.readObject();
 		_document = (com.liferay.portal.kernel.xml.Document)objectInput.readObject();
 	}
 
@@ -451,6 +454,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 
 		objectOutput.writeLong(statusDate);
 
+		objectOutput.writeObject(_defaultLanguageId);
 		objectOutput.writeObject(_document);
 	}
 
@@ -488,5 +492,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public java.lang.String _defaultLanguageId;
 	public com.liferay.portal.kernel.xml.Document _document;
 }

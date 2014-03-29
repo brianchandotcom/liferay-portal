@@ -1701,6 +1701,11 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
+	public void setDefaultLanguageId(java.lang.String defaultLanguageId) {
+		_journalArticle.setDefaultLanguageId(defaultLanguageId);
+	}
+
+	@Override
 	public void setDocument(com.liferay.portal.kernel.xml.Document document) {
 		_journalArticle.setDocument(document);
 	}

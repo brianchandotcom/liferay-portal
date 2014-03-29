@@ -97,6 +97,8 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	@java.lang.Deprecated()
 	public boolean isTemplateDriven();
 
+	public void setDefaultLanguageId(java.lang.String defaultLanguageId);
+
 	public void setDocument(com.liferay.portal.kernel.xml.Document document);
 
 	public void setSmallImageType(java.lang.String smallImageType);

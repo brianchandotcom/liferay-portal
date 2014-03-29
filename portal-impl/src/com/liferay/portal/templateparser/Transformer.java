@@ -103,8 +103,28 @@ public class Transformer {
 
 		this(errorTemplatePropertyKey, restricted);
 
-		_transformerListenerClassNames = SetUtil.fromArray(
-			PropsUtil.getArray(transformerListenerPropertyKey));
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		for (String transformerListenerClassName :
+				SetUtil.fromArray(
+					PropsUtil.getArray(transformerListenerPropertyKey))) {
+
+			try {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Instantiate listener " + transformerListenerClassName);
+				}
+
+				TransformerListener transformerListener =
+					(TransformerListener)InstanceFactory.newInstance(
+						classLoader, transformerListenerClassName);
+
+				_transformerListeners.add(transformerListener);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
 	}
 
 	public String transform(
@@ -203,33 +223,7 @@ public class Transformer {
 			_logTransformBefore.debug(document);
 		}
 
-		List<TransformerListener> transformerListeners =
-			new ArrayList<TransformerListener>();
-
-		for (String transformerListenersClassName :
-				_transformerListenerClassNames) {
-
-			TransformerListener transformerListener = null;
-
-			try {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Instantiate listener " +
-							transformerListenersClassName);
-				}
-
-				ClassLoader classLoader =
-					PortalClassLoaderUtil.getClassLoader();
-
-				transformerListener =
-					(TransformerListener)InstanceFactory.newInstance(
-						classLoader, transformerListenersClassName);
-
-				transformerListeners.add(transformerListener);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		for (TransformerListener transformerListener : _transformerListeners) {
 
 			// Modify XML
 
@@ -388,7 +382,7 @@ public class Transformer {
 
 		// Postprocess output
 
-		for (TransformerListener transformerListener : transformerListeners) {
+		for (TransformerListener transformerListener : _transformerListeners) {
 
 			// Modify output
 
@@ -693,6 +687,7 @@ public class Transformer {
 	private Map<String, String> _errorTemplateIds =
 		new HashMap<String, String>();
 	private boolean _restricted;
-	private Set<String> _transformerListenerClassNames = new HashSet<String>();
+	private Set<TransformerListener> _transformerListeners =
+		new HashSet<TransformerListener>();
 
 }

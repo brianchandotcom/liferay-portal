@@ -17,12 +17,14 @@ package com.liferay.portal.kernel.xml;
 /**
  * @author Brian Wing Shun Chan
  */
-public interface Document extends Branch {
+public interface Document extends Branch, Cloneable {
 
 	public Document addComment(String comment);
 
 	public Document addDocumentType(
 		String name, String publicId, String systemId);
+
+	public Document clone();
 
 	public DocumentType getDocumentType();
 

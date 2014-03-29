@@ -15,6 +15,7 @@
 package com.liferay.portlet.journalcontent.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,7 +26,6 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
-import com.liferay.util.portlet.PortletRequestUtil;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
@@ -77,13 +77,14 @@ public class ViewAction extends WebContentAction {
 		String viewMode = ParamUtil.getString(renderRequest, "viewMode");
 		String languageId = LanguageUtil.getLanguageId(renderRequest);
 		int page = ParamUtil.getInteger(renderRequest, "page", 1);
-		String xmlRequest = PortletRequestUtil.toXML(
-			renderRequest, renderResponse);
 
 		JournalArticle article = null;
 		JournalArticleDisplay articleDisplay = null;
 
 		if ((articleGroupId > 0) && Validator.isNotNull(articleId)) {
+			PortletRequestModel portletRequestModel = new PortletRequestModel(
+				renderRequest, renderResponse);
+
 			article = JournalArticleLocalServiceUtil.fetchLatestArticle(
 				articleGroupId, articleId, WorkflowConstants.STATUS_APPROVED);
 
@@ -98,14 +99,15 @@ public class ViewAction extends WebContentAction {
 
 				articleDisplay = JournalContentUtil.getDisplay(
 					articleGroupId, articleId, version, ddmTemplateKey,
-					viewMode, languageId, themeDisplay, page, xmlRequest);
+					viewMode, languageId, themeDisplay, page,
+					portletRequestModel);
 			}
 			catch (Exception e) {
 				renderRequest.removeAttribute(WebKeys.JOURNAL_ARTICLE);
 
 				articleDisplay = JournalContentUtil.getDisplay(
 					articleGroupId, articleId, ddmTemplateKey, viewMode,
-					languageId, themeDisplay, page, xmlRequest);
+					languageId, themeDisplay, page, portletRequestModel);
 			}
 		}
 

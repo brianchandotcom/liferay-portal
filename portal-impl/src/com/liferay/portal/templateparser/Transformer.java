@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -177,7 +178,8 @@ public class Transformer {
 
 	public String transform(
 			ThemeDisplay themeDisplay, Map<String, String> tokens,
-			String viewMode, String languageId, String xml, String script,
+			String viewMode, String languageId, String xml,
+			PortletRequestModel portletRequestModel, String script,
 			String langType)
 		throws Exception {
 
@@ -314,12 +316,24 @@ public class Transformer {
 						}
 					}
 
-					Element requestElement = rootElement.element("request");
+					if (TemplateConstants.LANG_TYPE_XSL.equals(langType)) {
+						Element requestElement = null;
 
-					template.put(
-						"request", insertRequestVariables(requestElement));
+						if (portletRequestModel != null) {
+							Document requestDocument = SAXReaderUtil.read(
+								portletRequestModel.toXML());
 
-					template.put("xmlRequest", requestElement.asXML());
+							requestElement = requestDocument.getRootElement();
+						}
+						else {
+							requestElement = rootElement.element("request");
+						}
+
+						template.put(
+							"request", insertRequestVariables(requestElement));
+
+						template.put("xmlRequest", requestElement.asXML());
+					}
 				}
 
 				template.put("articleGroupId", articleGroupId);

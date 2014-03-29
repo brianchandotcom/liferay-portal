@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -27,7 +28,6 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portlet.wiki.NoSuchPageException;
-import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.util.HashSet;
 import java.util.List;
@@ -133,12 +133,10 @@ public class CompareVersionsAction extends PortletAction {
 		String languageId = getLanguageId(
 			renderRequest, groupId, articleId, sourceVersion, targetVersion);
 
-		String xmlRequest = PortletRequestUtil.toXML(
-			renderRequest, renderResponse);
-
 		String diffHtmlResults = JournalUtil.diffHtml(
 			groupId, articleId, sourceVersion, targetVersion, languageId,
-			xmlRequest, themeDisplay);
+			new PortletRequestModel(renderRequest, renderResponse),
+			themeDisplay);
 
 		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
 		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);

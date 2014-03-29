@@ -178,7 +178,7 @@ public class Transformer {
 
 	public String transform(
 			ThemeDisplay themeDisplay, Map<String, String> tokens,
-			String viewMode, String languageId, String xml,
+			String viewMode, String languageId, Document document,
 			PortletRequestModel portletRequestModel, String script,
 			String langType)
 		throws Exception {
@@ -200,7 +200,7 @@ public class Transformer {
 		}
 
 		if (_logTransformBefore.isDebugEnabled()) {
-			_logTransformBefore.debug(xml);
+			_logTransformBefore.debug(document);
 		}
 
 		List<TransformerListener> transformerListeners =
@@ -234,14 +234,15 @@ public class Transformer {
 			// Modify XML
 
 			if (_logXmlBeforeListener.isDebugEnabled()) {
-				_logXmlBeforeListener.debug(xml);
+				_logXmlBeforeListener.debug(document);
 			}
 
 			if (transformerListener != null) {
-				xml = transformerListener.onXml(xml, languageId, tokens);
+				document = transformerListener.onXml(
+					document, languageId, tokens);
 
 				if (_logXmlAfterListener.isDebugEnabled()) {
-					_logXmlAfterListener.debug(xml);
+					_logXmlAfterListener.debug(document);
 				}
 			}
 
@@ -253,7 +254,7 @@ public class Transformer {
 
 			if (transformerListener != null) {
 				script = transformerListener.onScript(
-					script, xml, languageId, tokens);
+					script, document, languageId, tokens);
 
 				if (_logScriptAfterListener.isDebugEnabled()) {
 					_logScriptAfterListener.debug(script);
@@ -266,7 +267,8 @@ public class Transformer {
 		String output = null;
 
 		if (Validator.isNull(langType)) {
-			output = LocalizationUtil.getLocalization(xml, languageId);
+			output = LocalizationUtil.getLocalization(
+				document.asXML(), languageId);
 		}
 		else {
 			long companyId = 0;
@@ -297,14 +299,12 @@ public class Transformer {
 				templateId, companyId, companyGroupId, articleGroupId);
 
 			Template template = getTemplate(
-				templateId, tokens, languageId, xml, script, langType);
+				templateId, tokens, languageId, document, script, langType);
 
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 			try {
-				if (Validator.isNotNull(xml)) {
-					Document document = SAXReaderUtil.read(xml);
-
+				if (document != null) {
 					Element rootElement = document.getRootElement();
 
 					List<TemplateNode> templateNodes = getTemplateNodes(
@@ -448,7 +448,7 @@ public class Transformer {
 
 	protected Template getTemplate(
 			String templateId, Map<String, String> tokens, String languageId,
-			String xml, String script, String langType)
+			Document document, String script, String langType)
 		throws Exception {
 
 		TemplateResource templateResource = null;
@@ -458,7 +458,7 @@ public class Transformer {
 				tokens, languageId);
 
 			templateResource = new XSLTemplateResource(
-				templateId, script, xslURIResolver, xml);
+				templateId, script, xslURIResolver, document.asXML());
 		}
 		else {
 			templateResource = new StringTemplateResource(templateId, script);

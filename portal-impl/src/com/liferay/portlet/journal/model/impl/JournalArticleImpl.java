@@ -54,6 +54,17 @@ import java.util.Set;
  */
 public class JournalArticleImpl extends JournalArticleBaseImpl {
 
+	public static String getContentByLocale(
+		Document document, String languageId) {
+
+		TransformerListener transformerListener =
+			new LocaleTransformerListener();
+
+		document = transformerListener.onXml(document, languageId, null);
+
+		return document.asXML();
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #getContentByLocale(String,
 	 *             String}
@@ -62,14 +73,16 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	public static String getContentByLocale(
 		String content, boolean templateDriven, String languageId) {
 
-		return getContentByLocale(content, languageId);
-	}
+		try {
+			return getContentByLocale(SAXReaderUtil.read(content), languageId);
+		}
+		catch (DocumentException de) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(de, de);
+			}
 
-	public static String getContentByLocale(String content, String languageId) {
-		TransformerListener transformerListener =
-			new LocaleTransformerListener();
-
-		return transformerListener.onXml(content, languageId, null);
+			return content;
+		}
 	}
 
 	public JournalArticleImpl() {
@@ -155,7 +168,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public String getContentByLocale(String languageId) {
-		return getContentByLocale(getContent(), languageId);
+		return getContentByLocale(getDocument(), languageId);
 	}
 
 	@Override

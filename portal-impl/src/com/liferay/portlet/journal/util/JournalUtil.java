@@ -1095,7 +1095,7 @@ public class JournalUtil {
 			}
 
 			script = transformerListener.onScript(
-				script, null, languageId, tokens);
+				script, (Document)null, languageId, tokens);
 		}
 
 		return script;
@@ -1463,13 +1463,13 @@ public class JournalUtil {
 
 	public static String transform(
 			ThemeDisplay themeDisplay, Map<String, String> tokens,
-			String viewMode, String languageId, String xml,
+			String viewMode, String languageId, Document document,
 			PortletRequestModel portletRequestModel, String script,
 			String langType)
 		throws Exception {
 
 		return _transformer.transform(
-			themeDisplay, tokens, viewMode, languageId, xml,
+			themeDisplay, tokens, viewMode, languageId, document,
 			portletRequestModel, script, langType);
 	}
 

@@ -84,10 +84,10 @@ if (article != null) {
 	}
 
 	if (Validator.isNotNull(toLanguageId)) {
-		content = JournalArticleImpl.getContentByLocale(content, toLanguageId);
+		content = JournalArticleImpl.getContentByLocale(article.getDocument(), toLanguageId);
 	}
 	else {
-		content = JournalArticleImpl.getContentByLocale(content, defaultLanguageId);
+		content = JournalArticleImpl.getContentByLocale(article.getDocument(), defaultLanguageId);
 	}
 }
 else {

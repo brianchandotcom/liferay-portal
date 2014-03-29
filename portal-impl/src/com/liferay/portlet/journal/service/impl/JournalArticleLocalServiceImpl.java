@@ -1843,8 +1843,6 @@ public class JournalArticleLocalServiceImpl
 		JournalUtil.addAllReservedEls(
 			rootElement, tokens, article, languageId, themeDisplay);
 
-		String xml = DDMXMLUtil.formatXML(document);
-
 		try {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -1892,7 +1890,7 @@ public class JournalArticleLocalServiceImpl
 			cacheable = ddmTemplate.isCacheable();
 
 			content = JournalUtil.transform(
-				themeDisplay, tokens, viewMode, languageId, xml,
+				themeDisplay, tokens, viewMode, languageId, document,
 				portletRequestModel, script, langType);
 
 			if (!pageFlow) {
@@ -2009,10 +2007,10 @@ public class JournalArticleLocalServiceImpl
 		tokens.put("structure_id", article.getStructureId());
 		tokens.put("template_id", ddmTemplateKey);
 
-		String xml = null;
+		Document document = null;
 
 		try {
-			Document document = article.getDocument();
+			document = article.getDocument();
 
 			Element rootElement = document.getRootElement();
 
@@ -2065,8 +2063,6 @@ public class JournalArticleLocalServiceImpl
 
 			JournalUtil.addAllReservedEls(
 				rootElement, tokens, article, languageId, themeDisplay);
-
-			xml = DDMXMLUtil.formatXML(document);
 		}
 		catch (DocumentException de) {
 			throw new SystemException(de);
@@ -2119,8 +2115,8 @@ public class JournalArticleLocalServiceImpl
 			cacheable = ddmTemplate.isCacheable();
 
 			content = JournalUtil.transform(
-				themeDisplay, tokens, viewMode, languageId, xml, null, script,
-				langType);
+				themeDisplay, tokens, viewMode, languageId, document, null,
+				script, langType);
 
 			if (!pageFlow) {
 				String[] pieces = StringUtil.split(

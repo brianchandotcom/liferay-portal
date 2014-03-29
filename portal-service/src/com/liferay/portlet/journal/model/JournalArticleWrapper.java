@@ -1667,6 +1667,11 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.xml.Document getDocument() {
+		return _journalArticle.getDocument();
+	}
+
+	@Override
 	public com.liferay.portlet.journal.model.JournalFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1693,6 +1698,11 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public boolean isTemplateDriven() {
 		return _journalArticle.isTemplateDriven();
+	}
+
+	@Override
+	public void setDocument(com.liferay.portal.kernel.xml.Document document) {
+		_journalArticle.setDocument(document);
 	}
 
 	@Override

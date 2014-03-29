@@ -82,6 +82,7 @@ page import="com.liferay.portal.kernel.portlet.LiferayPortletRequest" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayPortletResponse" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayPortletURL" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletRequestModel" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileVersion" %><%@
 page import="com.liferay.portal.kernel.search.BaseModelSearchResult" %><%@
@@ -289,7 +290,6 @@ page import="com.liferay.util.PwdGenerator" %><%@
 page import="com.liferay.util.State" %><%@
 page import="com.liferay.util.StateUtil" %><%@
 page import="com.liferay.util.log4j.Levels" %><%@
-page import="com.liferay.util.portlet.PortletRequestUtil" %><%@
 page import="com.liferay.util.xml.XMLFormatter" %>
 
 <%@ page import="java.io.Serializable" %>

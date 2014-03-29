@@ -32,12 +32,10 @@ boolean workflowAssetPreview = ParamUtil.getBoolean(request, "workflowAssetPrevi
 JournalArticleDisplay articleDisplay = null;
 
 if (!workflowAssetPreview && article.isApproved()) {
-	String xmlRequest = PortletRequestUtil.toXML(renderRequest, renderResponse);
-
-	articleDisplay = JournalContentUtil.getDisplay(articleResource.getGroupId(), articleResource.getArticleId(), article.getVersion(), templateId, viewMode, languageId, themeDisplay, articlePage, xmlRequest);
+	articleDisplay = JournalContentUtil.getDisplay(articleResource.getGroupId(), articleResource.getArticleId(), article.getVersion(), templateId, viewMode, languageId, themeDisplay, articlePage, new PortletRequestModel(renderRequest, renderResponse));
 }
 else {
-	articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(article, null, viewMode, languageId, 1, null, themeDisplay);
+	articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(article, null, viewMode, languageId, 1, (PortletRequestModel)null, themeDisplay);
 }
 %>
 

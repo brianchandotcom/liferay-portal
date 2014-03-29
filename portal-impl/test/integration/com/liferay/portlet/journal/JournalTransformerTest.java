@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -94,8 +95,8 @@ public class JournalTransformerTest {
 		Map<String, String> tokens = getTokens();
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", xml, xsl,
-			TemplateConstants.LANG_TYPE_VM);
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, xsl, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
@@ -107,7 +108,7 @@ public class JournalTransformerTest {
 		element.setText("[@" + article.getArticleId()  + ";name@]");
 
 		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", document.asXML(), xsl,
+			null, tokens, Constants.VIEW, "en_US", document, null, xsl,
 			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
@@ -123,8 +124,8 @@ public class JournalTransformerTest {
 		String script = "${name.getData()} - ${viewMode}";
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.PRINT, "en_US", xml, script,
-			TemplateConstants.LANG_TYPE_FTL);
+			null, tokens, Constants.PRINT, "en_US", SAXReaderUtil.read(xml),
+			null, script, TemplateConstants.LANG_TYPE_FTL);
 
 		Assert.assertEquals("Joe Bloggs - print", content);
 	}
@@ -144,20 +145,20 @@ public class JournalTransformerTest {
 		String script = "$name.getData()";
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", xml, script,
-			TemplateConstants.LANG_TYPE_VM);
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
 		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "pt_BR", xml, script,
-			TemplateConstants.LANG_TYPE_VM);
+			null, tokens, Constants.VIEW, "pt_BR", SAXReaderUtil.read(xml),
+			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joao da Silva", content);
 
 		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "fr_CA", xml, script,
-			TemplateConstants.LANG_TYPE_VM);
+			null, tokens, Constants.VIEW, "fr_CA", SAXReaderUtil.read(xml),
+			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
@@ -172,8 +173,8 @@ public class JournalTransformerTest {
 		String script = "Hello $name.getData(), Welcome to beta.sample.com.";
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", xml, script,
-			TemplateConstants.LANG_TYPE_VM);
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals(
 			"Hello Joe Bloggs, Welcome to production.sample.com.", content);
@@ -188,8 +189,8 @@ public class JournalTransformerTest {
 		String script = "@company_id@";
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", xml, script,
-			TemplateConstants.LANG_TYPE_VM);
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals(
 			String.valueOf(TestPropsValues.getCompanyId()), content);
@@ -197,8 +198,8 @@ public class JournalTransformerTest {
 		script = "@@company_id@@";
 
 		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", xml, script,
-			TemplateConstants.LANG_TYPE_VM);
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals(
 			String.valueOf(TestPropsValues.getCompanyId()), content);
@@ -215,8 +216,8 @@ public class JournalTransformerTest {
 		String script = "@view_counter@";
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", xml, script,
-			TemplateConstants.LANG_TYPE_VM);
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		StringBundler sb = new StringBundler(6);
 
@@ -240,15 +241,15 @@ public class JournalTransformerTest {
 		String script = "$name.getData()";
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", xml, script,
-			TemplateConstants.LANG_TYPE_VM);
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
 
 	protected Map<String, String> getTokens() throws Exception {
 		Map<String, String> tokens = JournalUtil.getTokens(
-			TestPropsValues.getGroupId(), null, null);
+			TestPropsValues.getGroupId(), null, (PortletRequestModel)null);
 
 		tokens.put(
 			"article_group_id", String.valueOf(TestPropsValues.getGroupId()));

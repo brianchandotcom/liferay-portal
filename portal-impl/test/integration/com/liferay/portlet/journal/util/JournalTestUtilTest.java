@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -188,7 +189,8 @@ public class JournalTestUtilTest {
 				contents, LanguageUtil.getLanguageId(LocaleUtil.US));
 
 			String content = JournalUtil.transform(
-				null, getTokens(), Constants.VIEW, "en_US", xml,
+				null, getTokens(), Constants.VIEW, "en_US",
+				SAXReaderUtil.read(xml), null,
 				JournalTestUtil.getSampleTemplateXSL(),
 				TemplateConstants.LANG_TYPE_VM);
 
@@ -222,8 +224,8 @@ public class JournalTestUtilTest {
 			"name", "Joe Bloggs");
 
 		String content = JournalUtil.transform(
-			null, getTokens(), Constants.VIEW, "en_US", xml,
-			JournalTestUtil.getSampleTemplateXSL(),
+			null, getTokens(), Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, JournalTestUtil.getSampleTemplateXSL(),
 			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
@@ -263,7 +265,7 @@ public class JournalTestUtilTest {
 
 	protected Map<String, String> getTokens() throws Exception {
 		Map<String, String> tokens = JournalUtil.getTokens(
-			TestPropsValues.getGroupId(), null, null);
+			TestPropsValues.getGroupId(), null, (PortletRequestModel)null);
 
 		tokens.put(
 			"article_group_id", String.valueOf(TestPropsValues.getGroupId()));

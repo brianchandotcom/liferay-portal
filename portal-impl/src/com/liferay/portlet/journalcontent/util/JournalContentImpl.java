@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -34,6 +35,8 @@ import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.portlet.RenderRequest;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -64,12 +67,42 @@ public class JournalContentImpl implements JournalContent {
 	@Override
 	public String getContent(
 		long groupId, String articleId, String viewMode, String languageId,
+		PortletRequestModel portletRequestModel) {
+
+		return getContent(
+			groupId, articleId, null, viewMode, languageId, null,
+			portletRequestModel);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getContent(
+	 *			   long, String, String, String, PortletRequestModel)}
+	 */
+	@Deprecated
+	@Override
+	public String getContent(
+		long groupId, String articleId, String viewMode, String languageId,
 		String xmlRequest) {
 
 		return getContent(
 			groupId, articleId, null, viewMode, languageId, null, xmlRequest);
 	}
 
+	@Override
+	public String getContent(
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
+		String languageId, PortletRequestModel portletRequestModel) {
+
+		return getContent(
+			groupId, articleId, ddmTemplateKey, viewMode, languageId, null,
+			portletRequestModel);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getContent(
+	 *			   long, String, String, String, String, PortletRequestModel)}
+	 */
+	@Deprecated
 	@Override
 	public String getContent(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
@@ -87,9 +120,33 @@ public class JournalContentImpl implements JournalContent {
 
 		return getContent(
 			groupId, articleId, ddmTemplateKey, viewMode, languageId,
-			themeDisplay, null);
+			themeDisplay, (PortletRequestModel)null);
 	}
 
+	@Override
+	public String getContent(
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
+		String languageId, ThemeDisplay themeDisplay,
+		PortletRequestModel portletRequestModel) {
+
+		JournalArticleDisplay articleDisplay = getDisplay(
+			groupId, articleId, ddmTemplateKey, viewMode, languageId,
+			themeDisplay, 1, portletRequestModel);
+
+		if (articleDisplay != null) {
+			return articleDisplay.getContent();
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getContent(
+	 *			   long, String, String, String, String, ThemeDisplay,
+	 *			   PortletRequestModel)}
+	 */
+	@Deprecated
 	@Override
 	public String getContent(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
@@ -116,6 +173,89 @@ public class JournalContentImpl implements JournalContent {
 			groupId, articleId, null, viewMode, languageId, themeDisplay);
 	}
 
+	@Override
+	public JournalArticleDisplay getDisplay(
+		long groupId, String articleId, double version, String ddmTemplateKey,
+		String viewMode, String languageId, ThemeDisplay themeDisplay, int page,
+		PortletRequestModel portletRequestModel) {
+
+		StopWatch stopWatch = null;
+
+		if (_log.isDebugEnabled()) {
+			stopWatch = new StopWatch();
+
+			stopWatch.start();
+		}
+
+		articleId = StringUtil.toUpperCase(GetterUtil.getString(articleId));
+		ddmTemplateKey = StringUtil.toUpperCase(
+			GetterUtil.getString(ddmTemplateKey));
+
+		long layoutSetId = 0;
+		boolean secure = false;
+
+		if (themeDisplay != null) {
+			try {
+				if (!JournalArticlePermission.contains(
+						themeDisplay.getPermissionChecker(), groupId, articleId,
+						ActionKeys.VIEW)) {
+
+					return null;
+				}
+
+				Layout layout = themeDisplay.getLayout();
+
+				LayoutSet layoutSet = layout.getLayoutSet();
+
+				layoutSetId = layoutSet.getLayoutSetId();
+			}
+			catch (Exception e) {
+			}
+
+			secure = themeDisplay.isSecure();
+		}
+
+		String key = encodeKey(
+			groupId, articleId, version, ddmTemplateKey, layoutSetId, viewMode,
+			languageId, page, secure);
+
+		JournalArticleDisplay articleDisplay = portalCache.get(key);
+
+		boolean lifecycleRender = false;
+
+		if (portletRequestModel != null) {
+			lifecycleRender = RenderRequest.RENDER_PHASE.equals(
+				portletRequestModel.getLifecycle());
+		}
+
+		if ((articleDisplay == null) || !lifecycleRender) {
+			articleDisplay = getArticleDisplay(
+				groupId, articleId, ddmTemplateKey, viewMode, languageId, page,
+				portletRequestModel, themeDisplay);
+
+			if ((articleDisplay != null) && articleDisplay.isCacheable() &&
+				lifecycleRender) {
+
+				portalCache.put(key, articleDisplay);
+			}
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"getDisplay for {" + groupId + ", " + articleId + ", " +
+					ddmTemplateKey + ", " + viewMode + ", " + languageId +
+						", " + page + "} takes " + stopWatch.getTime() + " ms");
+		}
+
+		return articleDisplay;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDisplay(
+	 *			   long, String, double, String, String, String, ThemeDisplay,
+	 *			   int, PortletRequestModel)}
+	 */
+	@Deprecated
 	@Override
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, double version, String ddmTemplateKey,
@@ -191,6 +331,21 @@ public class JournalContentImpl implements JournalContent {
 	@Override
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String viewMode, String languageId,
+		PortletRequestModel portletRequestModel) {
+
+		return getDisplay(
+			groupId, articleId, null, viewMode, languageId, null, 1,
+			portletRequestModel);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDisplay(
+	 *			   long, String, String, String, PortletRequestModel)}
+	 */
+	@Deprecated
+	@Override
+	public JournalArticleDisplay getDisplay(
+		long groupId, String articleId, String viewMode, String languageId,
 		String xmlRequest) {
 
 		return getDisplay(
@@ -198,6 +353,21 @@ public class JournalContentImpl implements JournalContent {
 			xmlRequest);
 	}
 
+	@Override
+	public JournalArticleDisplay getDisplay(
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
+		String languageId, PortletRequestModel portletRequestModel) {
+
+		return getDisplay(
+			groupId, articleId, ddmTemplateKey, viewMode, languageId, null, 1,
+			portletRequestModel);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDisplay(
+	 *			   long, String, String, String, String, PortletRequestModel)}
+	 */
+	@Deprecated
 	@Override
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
@@ -215,9 +385,26 @@ public class JournalContentImpl implements JournalContent {
 
 		return getDisplay(
 			groupId, articleId, ddmTemplateKey, viewMode, languageId,
-			themeDisplay, 1, null);
+			themeDisplay, 1, (PortletRequestModel)null);
 	}
 
+	@Override
+	public JournalArticleDisplay getDisplay(
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
+		String languageId, ThemeDisplay themeDisplay, int page,
+		PortletRequestModel portletRequestModel) {
+
+		return getDisplay(
+			groupId, articleId, 0, ddmTemplateKey, viewMode, languageId,
+			themeDisplay, 1, portletRequestModel);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDisplay(
+	 *			   long, String, String, String, String, ThemeDisplay, int,
+	 *			   PortletRequestModel)}
+	 */
+	@Deprecated
 	@Override
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
@@ -245,7 +432,7 @@ public class JournalContentImpl implements JournalContent {
 
 		return getDisplay(
 			groupId, articleId, null, viewMode, languageId, themeDisplay, page,
-			null);
+			(PortletRequestModel)null);
 	}
 
 	protected String encodeKey(
@@ -289,6 +476,39 @@ public class JournalContentImpl implements JournalContent {
 		return sb.toString();
 	}
 
+	protected JournalArticleDisplay getArticleDisplay(
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
+		String languageId, int page, PortletRequestModel portletRequestModel,
+		ThemeDisplay themeDisplay) {
+
+		try {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Get article display {" + groupId + ", " + articleId +
+						", " + ddmTemplateKey + "}");
+			}
+
+			return JournalArticleLocalServiceUtil.getArticleDisplay(
+				groupId, articleId, ddmTemplateKey, viewMode, languageId, page,
+				portletRequestModel, themeDisplay);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get display for " + groupId + " " +
+						articleId + " " + languageId);
+			}
+
+			return null;
+		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getArticleDisplay(
+	 *			   long, String, String, String, String, int,
+	 *			   PortletRequestModel, ThemeDisplay)}
+	 */
+	@Deprecated
 	protected JournalArticleDisplay getArticleDisplay(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, int page, String xmlRequest,

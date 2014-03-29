@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journalcontent.util;
 
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 
@@ -45,8 +46,26 @@ public interface JournalContent {
 
 	public String getContent(
 		long groupId, String articleId, String viewMode, String languageId,
+		PortletRequestModel portletRequestModel);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getContent(
+	 *			   long, String, String, String, PortletRequestModel)}
+	 */
+	@Deprecated
+	public String getContent(
+		long groupId, String articleId, String viewMode, String languageId,
 		String xmlRequest);
 
+	public String getContent(
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
+		String languageId, PortletRequestModel portletRequestModel);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getContent(
+	 *			   long, String, String, String, String, PortletRequestModel)}
+	 */
+	@Deprecated
 	public String getContent(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, String xmlRequest);
@@ -55,6 +74,17 @@ public interface JournalContent {
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, ThemeDisplay themeDisplay);
 
+	public String getContent(
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
+		String languageId, ThemeDisplay themeDisplay,
+		PortletRequestModel portletRequestModel);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getContent(
+	 *			   long, String, String, String, String, ThemeDisplay,
+	 *			   PortletRequestModel)}
+	 */
+	@Deprecated
 	public String getContent(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, ThemeDisplay themeDisplay, String xmlRequest);
@@ -66,12 +96,41 @@ public interface JournalContent {
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, double version, String ddmTemplateKey,
 		String viewMode, String languageId, ThemeDisplay themeDisplay, int page,
+		PortletRequestModel portletRequestModel);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDisplay(
+	 *			   long, String, double, String, String, String, ThemeDisplay,
+	 *			   int, PortletRequestModel)}
+	 */
+	@Deprecated
+	public JournalArticleDisplay getDisplay(
+		long groupId, String articleId, double version, String ddmTemplateKey,
+		String viewMode, String languageId, ThemeDisplay themeDisplay, int page,
 		String xmlRequest);
 
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String viewMode, String languageId,
+		PortletRequestModel portletRequestModel);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDisplay(
+	 *			   long, String, String, String, PortletRequestModel)}
+	 */
+	@Deprecated
+	public JournalArticleDisplay getDisplay(
+		long groupId, String articleId, String viewMode, String languageId,
 		String xmlRequest);
 
+	public JournalArticleDisplay getDisplay(
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
+		String languageId, PortletRequestModel portletRequestModel);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDisplay(
+	 *			   long, String, String, String, String, PortletRequestModel)}
+	 */
+	@Deprecated
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, String xmlRequest);
@@ -80,6 +139,17 @@ public interface JournalContent {
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, ThemeDisplay themeDisplay);
 
+	public JournalArticleDisplay getDisplay(
+		long groupId, String articleId, String ddmTemplateKey, String viewMode,
+		String languageId, ThemeDisplay themeDisplay, int page,
+		PortletRequestModel portletRequestModel);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDisplay(
+	 *			   long, String, String, String, String, ThemeDisplay, int,
+	 *			   PortletRequestModel)}
+	 */
+	@Deprecated
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, ThemeDisplay themeDisplay, int page,

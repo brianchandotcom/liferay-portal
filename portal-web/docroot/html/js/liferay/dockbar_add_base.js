@@ -270,7 +270,6 @@ AUI.add(
 						var instance = this;
 
 						var addedMessage = instance.byId('addedMessage');
-
 						var addedMessagePortlet = instance.byId('portletName');
 
 						var portletNameNode = A.one('[data-portlet-id=' + portletId + ']');
@@ -279,13 +278,18 @@ AUI.add(
 
 						addedMessagePortlet.setHTML(portletName);
 
-						addedMessage.show(true);
-
-						setTimeout(
+						var fadeOut = setTimeout(
 							function() {
 								addedMessage.hide(true);
 							},
-							2500
+							2000
+						);
+
+						addedMessage.show(
+							true,
+							function() {
+								fadeOut;
+							}
 						);
 					},
 

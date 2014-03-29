@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -135,7 +136,6 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -1603,8 +1603,8 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException, SystemException {
 
 		JournalArticleDisplay articleDisplay = getArticleDisplay(
-			article, ddmTemplateKey, viewMode, languageId, 1, null,
-			themeDisplay);
+			article, ddmTemplateKey, viewMode, languageId, 1,
+			(PortletRequestModel)null, themeDisplay);
 
 		if (articleDisplay == null) {
 			return StringPool.BLANK;
@@ -1730,6 +1730,207 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, viewMode, null, languageId, themeDisplay);
 	}
 
+	@Override
+	public JournalArticleDisplay getArticleDisplay(
+			JournalArticle article, String ddmTemplateKey, String viewMode,
+			String languageId, int page,
+			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		String content = null;
+
+		if (page < 1) {
+			page = 1;
+		}
+
+		int numberOfPages = 1;
+		boolean paginate = false;
+		boolean pageFlow = false;
+
+		boolean cacheable = true;
+
+		Map<String, String> tokens = JournalUtil.getTokens(
+			article.getGroupId(), themeDisplay, portletRequestModel);
+
+		if ((themeDisplay == null) && (portletRequestModel == null)) {
+			tokens.put("company_id", String.valueOf(article.getCompanyId()));
+
+			Group companyGroup = groupLocalService.getCompanyGroup(
+				article.getCompanyId());
+
+			tokens.put(
+				"article_group_id", String.valueOf(article.getGroupId()));
+			tokens.put(
+				"company_group_id", String.valueOf(companyGroup.getGroupId()));
+
+			// Deprecated tokens
+
+			tokens.put("group_id", String.valueOf(article.getGroupId()));
+		}
+
+		tokens.put(
+			"article_resource_pk",
+			String.valueOf(article.getResourcePrimKey()));
+
+		String defaultDDMTemplateKey = article.getTemplateId();
+
+		if (Validator.isNull(ddmTemplateKey)) {
+			ddmTemplateKey = defaultDDMTemplateKey;
+		}
+
+		tokens.put("structure_id", article.getStructureId());
+		tokens.put("template_id", ddmTemplateKey);
+
+		String xml = article.getContent();
+
+		try {
+			Document document = SAXReaderUtil.read(xml);
+
+			Element rootElement = document.getRootElement();
+
+			List<Element> pages = rootElement.elements("page");
+
+			if (!pages.isEmpty()) {
+				pageFlow = true;
+
+				String targetPage = null;
+
+				Map<String, String[]> parameters =
+					portletRequestModel.getParameters();
+
+				if (parameters != null) {
+					String[] values = parameters.get("targetPage");
+
+					if ((values != null) && (values.length > 0)) {
+						targetPage = values[0];
+					}
+				}
+
+				Element pageElement = null;
+
+				if (Validator.isNotNull(targetPage)) {
+					targetPage = HtmlUtil.escapeXPathAttribute(targetPage);
+
+					XPath xPathSelector = SAXReaderUtil.createXPath(
+						"/root/page[@id = " + targetPage + "]");
+
+					pageElement = (Element)xPathSelector.selectSingleNode(
+						document);
+				}
+
+				if (pageElement != null) {
+					document = SAXReaderUtil.createDocument(pageElement);
+
+					rootElement = document.getRootElement();
+
+					numberOfPages = pages.size();
+				}
+				else {
+					if (page > pages.size()) {
+						page = 1;
+					}
+
+					pageElement = pages.get(page - 1);
+
+					document = SAXReaderUtil.createDocument(pageElement);
+
+					rootElement = document.getRootElement();
+
+					numberOfPages = pages.size();
+					paginate = true;
+				}
+			}
+
+			JournalUtil.addAllReservedEls(
+				rootElement, tokens, article, languageId, themeDisplay);
+
+			xml = DDMXMLUtil.formatXML(document);
+		}
+		catch (DocumentException de) {
+			throw new SystemException(de);
+		}
+
+		try {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Transforming " + article.getArticleId() + " " +
+						article.getVersion() + " " + languageId);
+			}
+
+			// Try with specified template first (in the current group and the
+			// global group). If a template is not specified, use the default
+			// one. If the specified template does not exist, use the default
+			// one. If the default one does not exist, throw an exception.
+
+			DDMTemplate ddmTemplate = null;
+
+			try {
+				ddmTemplate = ddmTemplateLocalService.getTemplate(
+					PortalUtil.getSiteGroupId(article.getGroupId()),
+					classNameLocalService.getClassNameId(DDMStructure.class),
+					ddmTemplateKey, true);
+
+				Group companyGroup = groupLocalService.getCompanyGroup(
+					article.getCompanyId());
+
+				if (companyGroup.getGroupId() == ddmTemplate.getGroupId()) {
+					tokens.put(
+						"company_group_id",
+						String.valueOf(companyGroup.getGroupId()));
+				}
+			}
+			catch (NoSuchTemplateException nste) {
+				if (!defaultDDMTemplateKey.equals(ddmTemplateKey)) {
+					ddmTemplate = ddmTemplatePersistence.findByG_C_T(
+						PortalUtil.getSiteGroupId(article.getGroupId()),
+						classNameLocalService.getClassNameId(
+							DDMStructure.class),
+						defaultDDMTemplateKey);
+				}
+				else {
+					throw nste;
+				}
+			}
+
+			String script = ddmTemplate.getScript();
+			String langType = ddmTemplate.getLanguage();
+			cacheable = ddmTemplate.isCacheable();
+
+			content = JournalUtil.transform(
+				themeDisplay, tokens, viewMode, languageId, xml,
+				portletRequestModel, script, langType);
+
+			if (!pageFlow) {
+				String[] pieces = StringUtil.split(
+					content, PropsValues.JOURNAL_ARTICLE_TOKEN_PAGE_BREAK);
+
+				if (pieces.length > 1) {
+					if (page > pieces.length) {
+						page = 1;
+					}
+
+					content = pieces[page - 1];
+					numberOfPages = pieces.length;
+					paginate = true;
+				}
+			}
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+
+		return new JournalArticleDisplayImpl(
+			article.getCompanyId(), article.getId(),
+			article.getResourcePrimKey(), article.getGroupId(),
+			article.getUserId(), article.getArticleId(), article.getVersion(),
+			article.getTitle(languageId), article.getUrlTitle(),
+			article.getDescription(languageId),
+			article.getAvailableLanguageIds(), content, article.getType(),
+			article.getStructureId(), ddmTemplateKey, article.isSmallImage(),
+			article.getSmallImageId(), article.getSmallImageURL(),
+			numberOfPages, page, paginate, cacheable);
+	}
+
 	/**
 	 * Returns a web content article display for the specified page of the
 	 * latest version of the web content article, optionally based on the DDM
@@ -1753,7 +1954,11 @@ public class JournalArticleLocalServiceImpl
 	 * @throws PortalException if a matching DDM template could not be found or
 	 *         if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #getArticleDisplay(
+	 *			   JournalArticle, String, String, String, int,
+	 *			   PortletRequestModel, ThemeDisplay)}
 	 */
+	@Deprecated
 	@Override
 	public JournalArticleDisplay getArticleDisplay(
 			JournalArticle article, String ddmTemplateKey, String viewMode,
@@ -1919,7 +2124,7 @@ public class JournalArticleLocalServiceImpl
 			cacheable = ddmTemplate.isCacheable();
 
 			content = JournalUtil.transform(
-				themeDisplay, tokens, viewMode, languageId, xml, script,
+				themeDisplay, tokens, viewMode, languageId, xml, null, script,
 				langType);
 
 			if (!pageFlow) {
@@ -1953,6 +2158,37 @@ public class JournalArticleLocalServiceImpl
 			numberOfPages, page, paginate, cacheable);
 	}
 
+	@Override
+	public JournalArticleDisplay getArticleDisplay(
+			long groupId, String articleId, double version,
+			String ddmTemplateKey, String viewMode, String languageId, int page,
+			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		Date now = new Date();
+
+		JournalArticle article = journalArticlePersistence.findByG_A_V(
+			groupId, articleId, version);
+
+		if (article.isExpired()) {
+			Date expirationDate = article.getExpirationDate();
+
+			if ((expirationDate != null) && expirationDate.before(now)) {
+				return null;
+			}
+		}
+
+		Date displayDate = article.getDisplayDate();
+
+		if (displayDate.after(now)) {
+			return null;
+		}
+
+		return getArticleDisplay(
+			article, ddmTemplateKey, viewMode, languageId, page,
+			portletRequestModel, themeDisplay);
+	}
+
 	/**
 	 * Returns a web content article display for the first page of the specified
 	 * version of the web content article, optionally based on the DDM template
@@ -1979,7 +2215,11 @@ public class JournalArticleLocalServiceImpl
 	 * @throws PortalException if a matching web content article or DDM template
 	 *         could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #getArticleDisplay(
+	 *			   long, String, double, String, String, String, int,
+	 *			   PortletRequestModel, ThemeDisplay)}
 	 */
+	@Deprecated
 	@Override
 	public JournalArticleDisplay getArticleDisplay(
 			long groupId, String articleId, double version,
@@ -2044,7 +2284,19 @@ public class JournalArticleLocalServiceImpl
 
 		return getArticleDisplay(
 			groupId, articleId, version, ddmTemplateKey, viewMode, languageId,
-			1, null, themeDisplay);
+			1, (PortletRequestModel)null, themeDisplay);
+	}
+
+	@Override
+	public JournalArticleDisplay getArticleDisplay(
+			long groupId, String articleId, String viewMode, String languageId,
+			int page, PortletRequestModel portletRequestModel,
+			ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		return getArticleDisplay(
+			groupId, articleId, null, viewMode, languageId, page,
+			portletRequestModel, themeDisplay);
 	}
 
 	/**
@@ -2068,7 +2320,11 @@ public class JournalArticleLocalServiceImpl
 	 * @throws PortalException if a matching web content article or DDM template
 	 *         could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #getArticleDisplay(
+	 *			   long, String, String, String, int, PortletRequestModel,
+	 *			   ThemeDisplay)}
 	 */
+	@Deprecated
 	@Override
 	public JournalArticleDisplay getArticleDisplay(
 			long groupId, String articleId, String viewMode, String languageId,
@@ -2078,6 +2334,20 @@ public class JournalArticleLocalServiceImpl
 		return getArticleDisplay(
 			groupId, articleId, null, viewMode, languageId, page, xmlRequest,
 			themeDisplay);
+	}
+
+	@Override
+	public JournalArticleDisplay getArticleDisplay(
+			long groupId, String articleId, String ddmTemplateKey,
+			String viewMode, String languageId, int page,
+			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		JournalArticle article = getDisplayArticle(groupId, articleId);
+
+		return getArticleDisplay(
+			groupId, articleId, article.getVersion(), ddmTemplateKey, viewMode,
+			languageId, page, portletRequestModel, themeDisplay);
 	}
 
 	/**
@@ -2106,7 +2376,11 @@ public class JournalArticleLocalServiceImpl
 	 * @throws PortalException if a matching web content article or DDM template
 	 *         could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #getArticleDisplay(
+	 *			   long, String, String, String, String, int,
+	 *			   PortletRequestModel, ThemeDisplay)}
 	 */
+	@Deprecated
 	@Override
 	public JournalArticleDisplay getArticleDisplay(
 			long groupId, String articleId, String ddmTemplateKey,
@@ -6435,14 +6709,14 @@ public class JournalArticleLocalServiceImpl
 			article);
 
 		try {
-			String xmlRequest = PortletRequestUtil.toXML(
+			PortletRequestModel portletRequestModel = new PortletRequestModel(
 				serviceContext.getLiferayPortletRequest(),
 				serviceContext.getLiferayPortletResponse());
 
 			JournalArticleDisplay articleDisplay = getArticleDisplay(
 				article, null, Constants.VIEW,
 				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()), 1,
-				xmlRequest, serviceContext.getThemeDisplay());
+				portletRequestModel, serviceContext.getThemeDisplay());
 
 			articleContent = articleDisplay.getContent();
 
@@ -6450,7 +6724,7 @@ public class JournalArticleLocalServiceImpl
 				article.getGroupId(), article.getArticleId(),
 				previousApprovedArticle.getVersion(), article.getVersion(),
 				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-				xmlRequest, serviceContext.getThemeDisplay());
+				portletRequestModel, serviceContext.getThemeDisplay());
 		}
 		catch (Exception e) {
 		}

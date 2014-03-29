@@ -1188,6 +1188,20 @@ public class JournalArticleLocalServiceWrapper
 			articleId, viewMode, languageId, themeDisplay);
 	}
 
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticleDisplay getArticleDisplay(
+		com.liferay.portlet.journal.model.JournalArticle article,
+		java.lang.String ddmTemplateKey, java.lang.String viewMode,
+		java.lang.String languageId, int page,
+		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getArticleDisplay(article,
+			ddmTemplateKey, viewMode, languageId, page, portletRequestModel,
+			themeDisplay);
+	}
+
 	/**
 	* Returns a web content article display for the specified page of the
 	* latest version of the web content article, optionally based on the DDM
@@ -1211,7 +1225,11 @@ public class JournalArticleLocalServiceWrapper
 	* @throws PortalException if a matching DDM template could not be found or
 	if a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #getArticleDisplay(
+	JournalArticle, String, String, String, int,
+	PortletRequestModel, ThemeDisplay)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticleDisplay getArticleDisplay(
 		com.liferay.portlet.journal.model.JournalArticle article,
@@ -1222,6 +1240,20 @@ public class JournalArticleLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleLocalService.getArticleDisplay(article,
 			ddmTemplateKey, viewMode, languageId, page, xmlRequest, themeDisplay);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticleDisplay getArticleDisplay(
+		long groupId, java.lang.String articleId, double version,
+		java.lang.String ddmTemplateKey, java.lang.String viewMode,
+		java.lang.String languageId, int page,
+		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getArticleDisplay(groupId,
+			articleId, version, ddmTemplateKey, viewMode, languageId, page,
+			portletRequestModel, themeDisplay);
 	}
 
 	/**
@@ -1250,7 +1282,11 @@ public class JournalArticleLocalServiceWrapper
 	* @throws PortalException if a matching web content article or DDM template
 	could not be found, or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #getArticleDisplay(
+	long, String, double, String, String, String, int,
+	PortletRequestModel, ThemeDisplay)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticleDisplay getArticleDisplay(
 		long groupId, java.lang.String articleId, double version,
@@ -1301,6 +1337,19 @@ public class JournalArticleLocalServiceWrapper
 			themeDisplay);
 	}
 
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticleDisplay getArticleDisplay(
+		long groupId, java.lang.String articleId, java.lang.String viewMode,
+		java.lang.String languageId, int page,
+		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getArticleDisplay(groupId,
+			articleId, viewMode, languageId, page, portletRequestModel,
+			themeDisplay);
+	}
+
 	/**
 	* Returns a web content article display for the first page of the latest
 	* version of the web content article matching the group and article ID. If
@@ -1322,7 +1371,11 @@ public class JournalArticleLocalServiceWrapper
 	* @throws PortalException if a matching web content article or DDM template
 	could not be found, or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #getArticleDisplay(
+	long, String, String, String, int, PortletRequestModel,
+	ThemeDisplay)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticleDisplay getArticleDisplay(
 		long groupId, java.lang.String articleId, java.lang.String viewMode,
@@ -1332,6 +1385,20 @@ public class JournalArticleLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleLocalService.getArticleDisplay(groupId,
 			articleId, viewMode, languageId, page, xmlRequest, themeDisplay);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticleDisplay getArticleDisplay(
+		long groupId, java.lang.String articleId,
+		java.lang.String ddmTemplateKey, java.lang.String viewMode,
+		java.lang.String languageId, int page,
+		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getArticleDisplay(groupId,
+			articleId, ddmTemplateKey, viewMode, languageId, page,
+			portletRequestModel, themeDisplay);
 	}
 
 	/**
@@ -1360,7 +1427,11 @@ public class JournalArticleLocalServiceWrapper
 	* @throws PortalException if a matching web content article or DDM template
 	could not be found, or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #getArticleDisplay(
+	long, String, String, String, String, int,
+	PortletRequestModel, ThemeDisplay)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticleDisplay getArticleDisplay(
 		long groupId, java.lang.String articleId,

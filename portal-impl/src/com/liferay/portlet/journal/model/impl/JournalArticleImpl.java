@@ -173,14 +173,16 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public String getDefaultLanguageId() {
-		String defaultLanguageId = super.getDefaultLanguageId();
+		if (_defaultLanguageId == null) {
+			_defaultLanguageId = super.getDefaultLanguageId();
 
-		if (Validator.isNull(defaultLanguageId)) {
-			defaultLanguageId = LocaleUtil.toLanguageId(
-				LocaleUtil.getSiteDefault());
+			if (Validator.isNull(_defaultLanguageId)) {
+				_defaultLanguageId = LocaleUtil.toLanguageId(
+					LocaleUtil.getSiteDefault());
+			}
 		}
 
-		return defaultLanguageId;
+		return _defaultLanguageId;
 	}
 
 	/**
@@ -296,6 +298,11 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
+	}
+
+	@Override
 	public void setDocument(Document document) {
 		_document = document;
 	}
@@ -305,7 +312,17 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		_smallImageType = smallImageType;
 	}
 
+	@Override
+	public void setTitle(String title) {
+		super.setTitle(title);
+
+		_defaultLanguageId = null;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(JournalArticleImpl.class);
+
+	@CacheField
+	private String _defaultLanguageId;
 
 	@CacheField
 	private Document _document;

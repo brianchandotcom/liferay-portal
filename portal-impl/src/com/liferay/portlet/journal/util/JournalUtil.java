@@ -1286,40 +1286,10 @@ public class JournalUtil {
 		return curContent;
 	}
 
-	public static void removeArticleLocale(Element element, String languageId)
-		throws PortalException, SystemException {
-
-		for (Element dynamicElementElement :
-				element.elements("dynamic-element")) {
-
-			for (Element dynamicContentElement :
-					dynamicElementElement.elements("dynamic-content")) {
-
-				String curLanguageId = GetterUtil.getString(
-					dynamicContentElement.attributeValue("language-id"));
-
-				if (curLanguageId.equals(languageId)) {
-					long id = GetterUtil.getLong(
-						dynamicContentElement.attributeValue("id"));
-
-					if (id > 0) {
-						ImageLocalServiceUtil.deleteImage(id);
-					}
-
-					dynamicContentElement.detach();
-				}
-			}
-
-			removeArticleLocale(dynamicElementElement, languageId);
-		}
-	}
-
 	public static String removeArticleLocale(
-		String content, String languageId) {
+		Document document, String content, String languageId) {
 
 		try {
-			Document document = SAXReaderUtil.read(content);
-
 			Element rootElement = document.getRootElement();
 
 			String availableLocales = rootElement.attributeValue(
@@ -1348,6 +1318,34 @@ public class JournalUtil {
 		}
 
 		return content;
+	}
+
+	public static void removeArticleLocale(Element element, String languageId)
+		throws PortalException, SystemException {
+
+		for (Element dynamicElementElement :
+				element.elements("dynamic-element")) {
+
+			for (Element dynamicContentElement :
+					dynamicElementElement.elements("dynamic-content")) {
+
+				String curLanguageId = GetterUtil.getString(
+					dynamicContentElement.attributeValue("language-id"));
+
+				if (curLanguageId.equals(languageId)) {
+					long id = GetterUtil.getLong(
+						dynamicContentElement.attributeValue("id"));
+
+					if (id > 0) {
+						ImageLocalServiceUtil.deleteImage(id);
+					}
+
+					dynamicContentElement.detach();
+				}
+			}
+
+			removeArticleLocale(dynamicElementElement, languageId);
+		}
 	}
 
 	public static String removeOldContent(String content, String xsd) {

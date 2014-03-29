@@ -62,12 +62,10 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		return replace(xml, tokens);
 	}
 
-	protected String getDynamicContent(String xml, String elementName) {
+	protected String getDynamicContent(Document document, String elementName) {
 		String content = null;
 
 		try {
-			Document document = SAXReaderUtil.read(xml);
-
 			Element rootElement = document.getRootElement();
 
 			for (Element element : rootElement.elements()) {
@@ -157,7 +155,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 						dynamicContent.clearContent();
 						dynamicContent.addCDATA(
 							getDynamicContent(
-								article.getContent(), elementName));
+								article.getDocument(), elementName));
 					}
 				}
 

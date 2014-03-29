@@ -1781,74 +1781,69 @@ public class JournalArticleLocalServiceImpl
 		tokens.put("structure_id", article.getStructureId());
 		tokens.put("template_id", ddmTemplateKey);
 
-		String xml = article.getContent();
+		Document document = article.getDocument();
 
-		try {
-			Document document = SAXReaderUtil.read(xml);
+		Element rootElement = document.getRootElement();
 
-			Element rootElement = document.getRootElement();
+		List<Element> pages = rootElement.elements("page");
 
-			List<Element> pages = rootElement.elements("page");
+		if (!pages.isEmpty()) {
+			pageFlow = true;
 
-			if (!pages.isEmpty()) {
-				pageFlow = true;
+			String targetPage = null;
 
-				String targetPage = null;
+			Map<String, String[]> parameters =
+				portletRequestModel.getParameters();
 
-				Map<String, String[]> parameters =
-					portletRequestModel.getParameters();
+			if (parameters != null) {
+				String[] values = parameters.get("targetPage");
 
-				if (parameters != null) {
-					String[] values = parameters.get("targetPage");
-
-					if ((values != null) && (values.length > 0)) {
-						targetPage = values[0];
-					}
-				}
-
-				Element pageElement = null;
-
-				if (Validator.isNotNull(targetPage)) {
-					targetPage = HtmlUtil.escapeXPathAttribute(targetPage);
-
-					XPath xPathSelector = SAXReaderUtil.createXPath(
-						"/root/page[@id = " + targetPage + "]");
-
-					pageElement = (Element)xPathSelector.selectSingleNode(
-						document);
-				}
-
-				if (pageElement != null) {
-					document = SAXReaderUtil.createDocument(pageElement);
-
-					rootElement = document.getRootElement();
-
-					numberOfPages = pages.size();
-				}
-				else {
-					if (page > pages.size()) {
-						page = 1;
-					}
-
-					pageElement = pages.get(page - 1);
-
-					document = SAXReaderUtil.createDocument(pageElement);
-
-					rootElement = document.getRootElement();
-
-					numberOfPages = pages.size();
-					paginate = true;
+				if ((values != null) && (values.length > 0)) {
+					targetPage = values[0];
 				}
 			}
 
-			JournalUtil.addAllReservedEls(
-				rootElement, tokens, article, languageId, themeDisplay);
+			Element pageElement = null;
 
-			xml = DDMXMLUtil.formatXML(document);
+			if (Validator.isNotNull(targetPage)) {
+				targetPage = HtmlUtil.escapeXPathAttribute(targetPage);
+
+				XPath xPathSelector = SAXReaderUtil.createXPath(
+					"/root/page[@id = " + targetPage + "]");
+
+				pageElement = (Element)xPathSelector.selectSingleNode(document);
+			}
+
+			if (pageElement != null) {
+				document = SAXReaderUtil.createDocument(pageElement);
+
+				rootElement = document.getRootElement();
+
+				numberOfPages = pages.size();
+			}
+			else {
+				if (page > pages.size()) {
+					page = 1;
+				}
+
+				pageElement = pages.get(page - 1);
+
+				document = SAXReaderUtil.createDocument(pageElement);
+
+				rootElement = document.getRootElement();
+
+				numberOfPages = pages.size();
+				paginate = true;
+			}
 		}
-		catch (DocumentException de) {
-			throw new SystemException(de);
+		else {
+			rootElement = rootElement.createCopy();
 		}
+
+		JournalUtil.addAllReservedEls(
+			rootElement, tokens, article, languageId, themeDisplay);
+
+		String xml = DDMXMLUtil.formatXML(document);
 
 		try {
 			if (_log.isDebugEnabled()) {
@@ -2014,10 +2009,10 @@ public class JournalArticleLocalServiceImpl
 		tokens.put("structure_id", article.getStructureId());
 		tokens.put("template_id", ddmTemplateKey);
 
-		String xml = article.getContent();
+		String xml = null;
 
 		try {
-			Document document = SAXReaderUtil.read(xml);
+			Document document = article.getDocument();
 
 			Element rootElement = document.getRootElement();
 
@@ -3836,9 +3831,14 @@ public class JournalArticleLocalServiceImpl
 
 		String content = article.getContent();
 
-		content = JournalUtil.removeArticleLocale(content, languageId);
+		Document document = article.getDocument();
 
-		article.setContent(content);
+		if (document != null) {
+			content = JournalUtil.removeArticleLocale(
+				document, content, languageId);
+
+			article.setContent(content);
+		}
 
 		journalArticlePersistence.update(article);
 
@@ -6086,13 +6086,10 @@ public class JournalArticleLocalServiceImpl
 				article.getStructureId());
 		}
 
-		String content = GetterUtil.getString(article.getContent());
-
 		try {
-			Document contentDocument = SAXReaderUtil.read(content);
 			Document xsdDocument = SAXReaderUtil.read(structure.getXsd());
 
-			checkStructure(contentDocument, xsdDocument.getRootElement());
+			checkStructure(article.getDocument(), xsdDocument.getRootElement());
 		}
 		catch (DocumentException de) {
 			throw new SystemException(de);
@@ -6167,7 +6164,9 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle oldArticle, JournalArticle newArticle)
 		throws Exception {
 
-		Document contentDoc = SAXReaderUtil.read(oldArticle.getContent());
+		Document contentDoc = oldArticle.getDocument();
+
+		contentDoc = contentDoc.clone();
 
 		XPath xPathSelector = SAXReaderUtil.createXPath(
 			"//dynamic-element[@type='image']");

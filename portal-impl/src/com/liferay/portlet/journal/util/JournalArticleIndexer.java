@@ -254,7 +254,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		try {
 			fields = JournalConverterUtil.getDDMFields(
-				ddmStructure, article.getContent());
+				ddmStructure, article.getDocument());
 		}
 		catch (Exception e) {
 			return;
@@ -326,14 +326,14 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addUID(PORTLET_ID, article.getId());
 
 		String articleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-			article.getContent());
+			article.getDocument());
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		String[] languageIds = getLanguageIds(
-			defaultLanguageId, article.getContent());
+			defaultLanguageId, article.getDocument());
 
 		for (String languageId : languageIds) {
 			String content = extractDDMContent(article, languageId);
@@ -525,7 +525,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		try {
 			fields = JournalConverterUtil.getDDMFields(
-				ddmStructure, article.getContent());
+				ddmStructure, article.getDocument());
 		}
 		catch (Exception e) {
 			return StringPool.BLANK;
@@ -603,10 +603,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 	}
 
 	protected String[] getLanguageIds(
-		String defaultLanguageId, String content) {
+		String defaultLanguageId,
+		com.liferay.portal.kernel.xml.Document document) {
 
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			content);
+			document);
 
 		if (languageIds.length == 0) {
 			languageIds = new String[] {defaultLanguageId};

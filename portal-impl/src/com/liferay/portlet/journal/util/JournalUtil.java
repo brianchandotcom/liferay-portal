@@ -143,46 +143,46 @@ public class JournalUtil {
 		Element rootElement, Map<String, String> tokens, JournalArticle article,
 		String languageId, ThemeDisplay themeDisplay) {
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens, JournalStructureConstants.RESERVED_ARTICLE_ID,
 			article.getArticleId());
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_VERSION,
 			article.getVersion());
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_TITLE,
 			article.getTitle(languageId));
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_URL_TITLE,
 			article.getUrlTitle());
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_DESCRIPTION,
 			article.getDescription(languageId));
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_TYPE, article.getType());
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_CREATE_DATE,
 			article.getCreateDate());
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_MODIFIED_DATE,
 			article.getModifiedDate());
 
 		if (article.getDisplayDate() != null) {
-			JournalUtil.addReservedEl(
+			addReservedEl(
 				rootElement, tokens,
 				JournalStructureConstants.RESERVED_ARTICLE_DISPLAY_DATE,
 				article.getDisplayDate());
@@ -206,7 +206,7 @@ public class JournalUtil {
 			smallImageURL = sb.toString();
 		}
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
 			smallImageURL);
@@ -220,12 +220,12 @@ public class JournalUtil {
 		catch (SystemException se) {
 		}
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_ASSET_TAG_NAMES,
 			StringUtil.merge(assetTagNames));
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_ID,
 			String.valueOf(article.getUserId()));
@@ -235,36 +235,34 @@ public class JournalUtil {
 		String userComments = StringPool.BLANK;
 		String userJobTitle = StringPool.BLANK;
 
-		User user = null;
-
 		try {
-			user = UserLocalServiceUtil.getUserById(article.getUserId());
+			User user = UserLocalServiceUtil.fetchUserById(article.getUserId());
 
-			userName = user.getFullName();
-			userEmailAddress = user.getEmailAddress();
-			userComments = user.getComments();
-			userJobTitle = user.getJobTitle();
-		}
-		catch (PortalException pe) {
+			if (user != null) {
+				userName = user.getFullName();
+				userEmailAddress = user.getEmailAddress();
+				userComments = user.getComments();
+				userJobTitle = user.getJobTitle();
+			}
 		}
 		catch (SystemException se) {
 		}
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_NAME, userName);
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_EMAIL_ADDRESS,
 			userEmailAddress);
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_COMMENTS,
 			userComments);
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_JOB_TITLE,
 			userJobTitle);
@@ -447,28 +445,18 @@ public class JournalUtil {
 		// XML
 
 		if (rootElement != null) {
-			Element dynamicElementElement = SAXReaderUtil.createElement(
+			Element dynamicElementElement = rootElement.addElement(
 				"dynamic-element");
 
-			Attribute nameAttribute = SAXReaderUtil.createAttribute(
-				dynamicElementElement, "name", name);
+			dynamicElementElement.addAttribute("name", name);
 
-			dynamicElementElement.add(nameAttribute);
+			dynamicElementElement.addAttribute("type", "text");
 
-			Attribute typeAttribute = SAXReaderUtil.createAttribute(
-				dynamicElementElement, "type", "text");
-
-			dynamicElementElement.add(typeAttribute);
-
-			Element dynamicContentElement = SAXReaderUtil.createElement(
+			Element dynamicContentElement = dynamicElementElement.addElement(
 				"dynamic-content");
 
 			//dynamicContentElement.setText("<![CDATA[" + value + "]]>");
 			dynamicContentElement.setText(value);
-
-			dynamicElementElement.add(dynamicContentElement);
-
-			rootElement.add(dynamicElementElement);
 		}
 
 		// Tokens
@@ -691,12 +679,12 @@ public class JournalUtil {
 	public static boolean getEmailArticleAnyEventEnabled(
 		PortletPreferences preferences) {
 
-		if (JournalUtil.getEmailArticleAddedEnabled(preferences) ||
-			JournalUtil.getEmailArticleApprovalDeniedEnabled(preferences) ||
-			JournalUtil.getEmailArticleApprovalGrantedEnabled(preferences) ||
-			JournalUtil.getEmailArticleApprovalRequestedEnabled(preferences) ||
-			JournalUtil.getEmailArticleReviewEnabled(preferences) ||
-			JournalUtil.getEmailArticleUpdatedEnabled(preferences)) {
+		if (getEmailArticleAddedEnabled(preferences) ||
+			getEmailArticleApprovalDeniedEnabled(preferences) ||
+			getEmailArticleApprovalGrantedEnabled(preferences) ||
+			getEmailArticleApprovalRequestedEnabled(preferences) ||
+			getEmailArticleReviewEnabled(preferences) ||
+			getEmailArticleUpdatedEnabled(preferences)) {
 
 			return true;
 		}

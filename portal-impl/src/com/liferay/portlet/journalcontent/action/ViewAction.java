@@ -64,8 +64,7 @@ public class ViewAction extends WebContentAction {
 		}
 
 		String articleId = ParamUtil.getString(renderRequest, "articleId");
-		String ddmTemplateKey = ParamUtil.getString(
-			renderRequest, "ddmTemplateKey");
+		String ddmTemplateKey = null;
 
 		if (Validator.isNull(articleId)) {
 			articleId = GetterUtil.getString(
@@ -73,15 +72,19 @@ public class ViewAction extends WebContentAction {
 			ddmTemplateKey = GetterUtil.getString(
 				portletPreferences.getValue("ddmTemplateKey", null));
 		}
-
-		String viewMode = ParamUtil.getString(renderRequest, "viewMode");
-		String languageId = LanguageUtil.getLanguageId(renderRequest);
-		int page = ParamUtil.getInteger(renderRequest, "page", 1);
+		else {
+			ddmTemplateKey = ParamUtil.getString(
+				renderRequest, "ddmTemplateKey");
+		}
 
 		JournalArticle article = null;
 		JournalArticleDisplay articleDisplay = null;
 
 		if ((articleGroupId > 0) && Validator.isNotNull(articleId)) {
+			String viewMode = ParamUtil.getString(renderRequest, "viewMode");
+			String languageId = LanguageUtil.getLanguageId(renderRequest);
+			int page = ParamUtil.getInteger(renderRequest, "page", 1);
+
 			PortletRequestModel portletRequestModel = new PortletRequestModel(
 				renderRequest, renderResponse);
 

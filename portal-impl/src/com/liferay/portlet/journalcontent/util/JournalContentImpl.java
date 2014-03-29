@@ -202,15 +202,13 @@ public class JournalContentImpl implements JournalContent {
 
 					return null;
 				}
-
-				Layout layout = themeDisplay.getLayout();
-
-				LayoutSet layoutSet = layout.getLayoutSet();
-
-				layoutSetId = layoutSet.getLayoutSetId();
 			}
 			catch (Exception e) {
 			}
+
+			LayoutSet layoutSet = themeDisplay.getLayoutSet();
+
+			layoutSetId = layoutSet.getLayoutSetId();
 
 			secure = themeDisplay.isSecure();
 		}

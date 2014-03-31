@@ -2235,6 +2235,14 @@ public class PortalUtil {
 		return getPortal().isValidResourceId(resourceId);
 	}
 
+	public static boolean removePortalEventListener(
+		PortalInetSocketAddressEventListener
+			portalInetSocketAddressEventListener) {
+
+		return getPortal().removePortalInetSocketAddressEventListener(
+			portalInetSocketAddressEventListener);
+	}
+
 	public static void resetCDNHosts() {
 		getPortal().resetCDNHosts();
 	}
@@ -2414,14 +2422,6 @@ public class PortalUtil {
 
 		return getPortal().updateWindowState(
 			portletId, user, layout, windowState, request);
-	}
-
-	public boolean removePortalEventListener(
-		PortalInetSocketAddressEventListener
-			portalInetSocketAddressEventListener) {
-
-		return getPortal().removePortalInetSocketAddressEventListener(
-			portalInetSocketAddressEventListener);
 	}
 
 	/**

@@ -82,8 +82,7 @@ public class DLFolderFinderTest {
 		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), _folder.getFolderId(), false, "FE1.txt",
-			"FE1.txt");
+			_group.getGroupId(), _folder.getFolderId(), "FE1.txt", "FE1.txt");
 
 		_dlFileShortcut = DLAppTestUtil.addDLFileShortcut(
 			_group.getGroupId(), fileEntry);
@@ -93,8 +92,7 @@ public class DLFolderFinderTest {
 			ContentTypes.APPLICATION_PDF, "FE2.pdf");
 
 		fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), _folder.getFolderId(), false, "FE3.txt",
-			"FE3.txt");
+			_group.getGroupId(), _folder.getFolderId(), "FE3.txt", "FE3.txt");
 
 		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
 	}

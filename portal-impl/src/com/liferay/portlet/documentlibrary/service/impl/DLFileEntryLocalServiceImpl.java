@@ -1045,6 +1045,18 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public List<DLFileEntry> getFileEntries(
+			long groupId, long userId, List<Long> folderIds,
+			List<Long> repositoryIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws Exception {
+
+		return dlFileEntryFinder.findByG_U_R_F_M(
+			groupId, userId, repositoryIds, folderIds, mimeTypes,
+			queryDefinition);
+	}
+
+	@Override
+	public List<DLFileEntry> getFileEntries(
 			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
 			QueryDefinition queryDefinition)
 		throws Exception {
@@ -1092,6 +1104,18 @@ public class DLFileEntryLocalServiceImpl
 
 		return dlFileEntryFinder.countByG_F(
 			groupId, folderIds, new QueryDefinition(status));
+	}
+
+	@Override
+	public int getFileEntriesCount(
+			long groupId, long userId, List<Long> folderIds,
+			List<Long> repositoryIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws Exception {
+
+		return dlFileEntryFinder.countByG_U_R_F_M(
+			groupId, userId, repositoryIds, folderIds, mimeTypes,
+			queryDefinition);
 	}
 
 	@Override

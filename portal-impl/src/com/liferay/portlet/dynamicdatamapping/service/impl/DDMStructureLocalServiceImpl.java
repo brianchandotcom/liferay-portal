@@ -1515,11 +1515,11 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	protected void getChildrenStructureIds(
-			List<Long> structureIds, long groupId, long structureId)
+			List<Long> structureIds, long groupId, long parentStructureId)
 		throws PortalException, SystemException {
 
 		List<DDMStructure> structures = ddmStructurePersistence.findByG_P(
-			groupId, structureId);
+			groupId, parentStructureId);
 
 		for (DDMStructure structure : structures) {
 			structureIds.add(structure.getStructureId());

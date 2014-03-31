@@ -391,7 +391,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				ExportImportClassedModelUtil.getClassName(stagedModel),
 				ExportImportClassedModelUtil.getClassPK(stagedModel));
 
-		if (ratingsEntries.size() == 0) {
+		if (ratingsEntries.isEmpty()) {
 			return;
 		}
 

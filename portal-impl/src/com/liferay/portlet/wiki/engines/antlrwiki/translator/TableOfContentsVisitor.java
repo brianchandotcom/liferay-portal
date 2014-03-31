@@ -75,7 +75,7 @@ public class TableOfContentsVisitor extends BaseASTVisitor {
 		List<TreeNode<HeadingNode>> treeNodes = treeNode.getChildNodes();
 
 		if ((headingNode.getLevel() > treeNodeHeadingNode.getLevel()) &&
-			(treeNodes != null) && (treeNodes.size() > 0)) {
+			(treeNodes != null) && !treeNodes.isEmpty()) {
 
 			return true;
 		}

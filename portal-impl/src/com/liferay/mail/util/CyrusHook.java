@@ -47,7 +47,7 @@ public class CyrusHook implements Hook {
 
 				File file = new File(home + "/" + userId + ".procmail.forward");
 
-				if ((filters.size() > 0) || (emailAddresses.size() > 0) ||
+				if (!filters.isEmpty() || !emailAddresses.isEmpty() ||
 					leaveCopy) {
 
 					StringBundler sb = new StringBundler(
@@ -68,7 +68,7 @@ public class CyrusHook implements Hook {
 						sb.append("| $DELIVER -e -a $USER -m user.$USER\n\n");
 					}
 
-					if (emailAddresses.size() > 0) {
+					if (!emailAddresses.isEmpty()) {
 						sb.append(":0\n");
 						sb.append("!");
 
@@ -219,7 +219,7 @@ public class CyrusHook implements Hook {
 
 		File file = new File(home + "/" + userId + ".procmail.blocked");
 
-		if ((blocked == null) || (blocked.size() == 0)) {
+		if ((blocked == null) || blocked.isEmpty()) {
 			file.delete();
 
 			return;

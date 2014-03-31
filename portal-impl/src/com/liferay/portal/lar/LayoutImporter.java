@@ -505,7 +505,7 @@ public class LayoutImporter {
 		}
 
 		if (_log.isDebugEnabled()) {
-			if (_layoutElements.size() > 0) {
+			if (!_layoutElements.isEmpty()) {
 				_log.debug("Importing layouts");
 			}
 		}
@@ -524,7 +524,7 @@ public class LayoutImporter {
 
 		if (deletePortletData) {
 			if (_log.isDebugEnabled()) {
-				if (portletElements.size() > 0) {
+				if (!portletElements.isEmpty()) {
 					_log.debug("Deleting portlet data");
 				}
 			}
@@ -548,7 +548,7 @@ public class LayoutImporter {
 		// Import portlets
 
 		if (_log.isDebugEnabled()) {
-			if (portletElements.size() > 0) {
+			if (!portletElements.isEmpty()) {
 				_log.debug("Importing portlets");
 			}
 		}

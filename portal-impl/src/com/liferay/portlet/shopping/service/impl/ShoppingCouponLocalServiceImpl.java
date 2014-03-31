@@ -303,7 +303,7 @@ public class ShoppingCouponLocalServiceImpl
 			}
 		}
 
-		if (invalidCategoryIds.size() > 0) {
+		if (!invalidCategoryIds.isEmpty()) {
 			CouponLimitCategoriesException clce =
 				new CouponLimitCategoriesException();
 
@@ -334,7 +334,7 @@ public class ShoppingCouponLocalServiceImpl
 			}
 		}
 
-		if (invalidSkus.size() > 0) {
+		if (!invalidSkus.isEmpty()) {
 			CouponLimitSKUsException clskue = new CouponLimitSKUsException();
 
 			clskue.setSkus(invalidSkus);

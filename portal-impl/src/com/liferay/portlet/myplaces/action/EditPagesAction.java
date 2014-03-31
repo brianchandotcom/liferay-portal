@@ -66,7 +66,7 @@ public class EditPagesAction extends PortletAction {
 			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			false, 0, 1);
 
-		if (layouts.size() > 0) {
+		if (!layouts.isEmpty()) {
 			layout = layouts.get(0);
 		}
 		else {

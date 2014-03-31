@@ -255,7 +255,7 @@ public class PermissionExporter {
 	}
 
 	protected boolean hasRole(List<Role> roles, String roleName) {
-		if ((roles == null) || (roles.size() == 0)) {
+		if ((roles == null) || roles.isEmpty()) {
 			return false;
 		}
 

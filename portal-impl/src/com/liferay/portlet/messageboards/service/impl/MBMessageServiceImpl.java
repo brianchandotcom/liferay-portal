@@ -443,7 +443,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			}
 		}
 
-		if (messages.size() > 0) {
+		if (!messages.isEmpty()) {
 			MBMessage message = messages.get(messages.size() - 1);
 
 			name = message.getSubject();
@@ -494,7 +494,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			}
 		}
 
-		if (messages.size() > 0) {
+		if (!messages.isEmpty()) {
 			MBMessage message = messages.get(messages.size() - 1);
 
 			name = message.getSubject();
@@ -607,7 +607,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				}
 			}
 
-			if (messages.size() > 0) {
+			if (!messages.isEmpty()) {
 				MBMessage message = messages.get(messages.size() - 1);
 
 				name = message.getSubject();

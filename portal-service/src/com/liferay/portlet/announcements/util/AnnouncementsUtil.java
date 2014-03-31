@@ -152,7 +152,7 @@ public class AnnouncementsUtil {
 			roles.add(guestRole);
 		}
 
-		if (roles.size() > 0) {
+		if (!roles.isEmpty()) {
 			scopes.put(_ROLE_CLASS_NAME_ID, _getRoleIds(roles));
 		}
 

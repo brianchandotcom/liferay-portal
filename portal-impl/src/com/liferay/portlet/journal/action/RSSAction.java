@@ -180,7 +180,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 				layout.getGroupId(), layout.isPrivateLayout(),
 				article.getArticleId());
 
-		if (hitLayoutIds.size() > 0) {
+		if (!hitLayoutIds.isEmpty()) {
 			Long hitLayoutId = hitLayoutIds.get(0);
 
 			Layout hitLayout = LayoutLocalServiceUtil.getLayout(
@@ -301,7 +301,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 			List<Node> results = xPathSelector.selectNodes(document);
 
-			if (results.size() == 0) {
+			if (results.isEmpty()) {
 				return content;
 			}
 

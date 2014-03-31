@@ -65,7 +65,7 @@ public class TableIteratorTag extends TagSupport {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			if (_list.size() > 0) {
+			if (!_list.isEmpty()) {
 				PortalIncludeUtil.include(pageContext, getEndPage());
 			}
 
@@ -92,7 +92,7 @@ public class TableIteratorTag extends TagSupport {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			if (_list.size() > 0) {
+			if (!_list.isEmpty()) {
 				HttpServletRequest request =
 					(HttpServletRequest)pageContext.getRequest();
 

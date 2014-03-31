@@ -455,7 +455,7 @@ public class JournalConverterImpl implements JournalConverter {
 			List<Element> optionElements = dynamicContentElement.elements(
 				"option");
 
-			if (optionElements.size() > 0) {
+			if (!optionElements.isEmpty()) {
 				for (Element optionElement : optionElements) {
 					jsonArray.put(optionElement.getText());
 				}

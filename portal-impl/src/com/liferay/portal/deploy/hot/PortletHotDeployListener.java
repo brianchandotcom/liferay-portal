@@ -563,7 +563,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		Properties portletProperties =
 			portletPropertiesConfiguration.getProperties();
 
-		if (portletProperties.size() == 0) {
+		if (portletProperties.isEmpty()) {
 			return;
 		}
 

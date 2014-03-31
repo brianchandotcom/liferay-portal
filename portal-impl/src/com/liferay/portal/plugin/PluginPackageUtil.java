@@ -949,7 +949,7 @@ public class PluginPackageUtil {
 			liferayVersions.add(liferayVersion.trim());
 		}
 
-		if (liferayVersions.size() == 0) {
+		if (liferayVersions.isEmpty()) {
 			liferayVersions.add(ReleaseInfo.getVersion() + "+");
 		}
 

@@ -130,7 +130,7 @@ public class ShoppingItemLocalServiceImpl
 		item.setName(name);
 		item.setDescription(description);
 		item.setProperties(properties);
-		item.setFields(itemFields.size() > 0);
+		item.setFields(!itemFields.isEmpty());
 		item.setFieldsQuantities(fieldsQuantities);
 
 		for (ShoppingItemPrice itemPrice : itemPrices) {
@@ -334,11 +334,11 @@ public class ShoppingItemLocalServiceImpl
 		List<ShoppingItem> featuredItems = shoppingItemFinder.findByFeatured(
 			groupId, new long[] {categoryId}, numOfItems);
 
-		if (featuredItems.size() == 0) {
+		if (featuredItems.isEmpty()) {
 			List<ShoppingCategory> childCategories =
 				shoppingCategoryPersistence.findByG_P(groupId, categoryId);
 
-			if (childCategories.size() > 0) {
+			if (!childCategories.isEmpty()) {
 				long[] categoryIds = new long[childCategories.size()];
 
 				for (int i = 0; i < childCategories.size(); i++) {
@@ -433,11 +433,11 @@ public class ShoppingItemLocalServiceImpl
 		List<ShoppingItem> saleItems = shoppingItemFinder.findBySale(
 			groupId, new long[] {categoryId}, numOfItems);
 
-		if (saleItems.size() == 0) {
+		if (saleItems.isEmpty()) {
 			List<ShoppingCategory> childCategories =
 				shoppingCategoryPersistence.findByG_P(groupId, categoryId);
 
-			if (childCategories.size() > 0) {
+			if (!childCategories.isEmpty()) {
 				long[] categoryIds = new long[childCategories.size()];
 
 				for (int i = 0; i < childCategories.size(); i++) {
@@ -517,7 +517,7 @@ public class ShoppingItemLocalServiceImpl
 		item.setName(name);
 		item.setDescription(description);
 		item.setProperties(properties);
-		item.setFields(itemFields.size() > 0);
+		item.setFields(!itemFields.isEmpty());
 		item.setFieldsQuantities(fieldsQuantities);
 
 		for (ShoppingItemPrice itemPrice : itemPrices) {

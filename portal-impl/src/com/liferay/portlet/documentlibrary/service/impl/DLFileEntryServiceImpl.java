@@ -480,7 +480,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		List<Long> folderIds = dlFolderService.getFolderIds(
 			groupId, rootFolderId);
 
-		if (folderIds.size() == 0) {
+		if (folderIds.isEmpty()) {
 			return Collections.emptyList();
 		}
 		else if (userId <= 0) {
@@ -512,7 +512,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		List<Long> folderIds = dlFolderService.getFolderIds(
 			groupId, rootFolderId);
 
-		if (folderIds.size() == 0) {
+		if (folderIds.isEmpty()) {
 			return Collections.emptyList();
 		}
 
@@ -528,7 +528,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		List<Long> folderIds = dlFolderService.getFolderIds(
 			groupId, rootFolderId);
 
-		if (folderIds.size() == 0) {
+		if (folderIds.isEmpty()) {
 			return 0;
 		}
 		else if (userId <= 0) {
@@ -556,7 +556,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		List<Long> folderIds = dlFolderService.getFolderIds(
 			groupId, rootFolderId);
 
-		if (folderIds.size() == 0) {
+		if (folderIds.isEmpty()) {
 			return 0;
 		}
 

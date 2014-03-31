@@ -368,13 +368,13 @@ public class DiffImpl implements com.liferay.portal.kernel.diff.Diff {
 	private static int _checkOverlapping(
 		List<DiffResult> results, int startPos, int margin) {
 
-		if ((results.size() == 0) || ((startPos - margin) < 0)) {
+		if (results.isEmpty() || ((startPos - margin) < 0)) {
 			return margin;
 		}
 
 		DiffResult lastDiff = results.get(results.size() - 1);
 
-		if (lastDiff.getChangedLines().size() == 0) {
+		if (lastDiff.getChangedLines().isEmpty()) {
 			return margin;
 		}
 

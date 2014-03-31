@@ -738,7 +738,7 @@ public class LayoutImporter {
 			}
 		}
 
-		// Update priorities
+		// Page priorities
 
 		updatePriorities(portletDataContext);
 
@@ -909,6 +909,7 @@ public class LayoutImporter {
 
 		// Gathering imported layouts and create a NavigableSet for each
 		// parentLayoutId to handle each priority queue separately
+
 		for (Element element : _layoutElements) {
 			String action = element.attributeValue(Constants.ACTION);
 
@@ -932,28 +933,29 @@ public class LayoutImporter {
 			}
 		}
 
-		List<Layout> layouts = LayoutUtil.findByG_P(
+		List<Layout> previousLayouts = LayoutUtil.findByG_P(
 			portletDataContext.getGroupId(),
 			portletDataContext.isPrivateLayout());
 
-		List<Layout> unmodifiedLayouts = new LinkedList<Layout>(layouts);
+		List<Layout> unmodifiedLayouts = new LinkedList<Layout>(
+			previousLayouts);
 
 		unmodifiedLayouts.removeAll(newLayouts);
 
-		// If there are no unmodified layouts then every priority is updated
-		// so there is nothing else to do
+		// Priorities are up-to date if there are no unmodified layouts
+
 		if (unmodifiedLayouts.isEmpty()) {
 			return;
 		}
 
-		// Fill the NavigableSets with the layouts which weren't updated
-		// by the import
+		// Fill the sets with the layouts which weren't updated by the import.
+		// If there isn't any updated/new layout under a parent, there is
+		// nothing to do
+
 		for (Layout layout : unmodifiedLayouts) {
 			NavigableSet<Layout> layoutSet = layoutSets.get(
 				layout.getParentLayoutId());
 
-			// If there isn't any updated/new layout under a parent, there is
-			// nothing to do
 			if (layoutSet != null) {
 				layoutSet.add(layout);
 			}
@@ -963,8 +965,6 @@ public class LayoutImporter {
 			NavigableSet<Layout> layoutSet = layoutSets.get(
 				layout.getParentLayoutId());
 
-			// If there isn't any unmodified layout under a parent, there is
-			// nothing to do
 			if (layoutSet.isEmpty()) {
 				continue;
 			}
@@ -974,14 +974,15 @@ public class LayoutImporter {
 			int priority = layout.getPriority();
 
 			// If a layout's priority collides with an existing one, then we
-			// "push it back" by 1, and do it until there is no collision
+			// "push it back" by 1, and do it until there is no collision.
+			// Break, if there was a "hole" in the priority queue and we don't
+			// have to push back more layouts
+
 			for (Layout tail : tailSet) {
 				if (tail.getPriority() == priority) {
 					tail.setPriority(++priority);
 				}
 				else {
-					// Stop the loop if there was a "hole" in the priority
-					// queue and we don't have to push back more layouts
 					break;
 				}
 			}

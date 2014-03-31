@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ADD_WEB_CONTENT</td>
-	<td>//span[contains(@class,'lfr-icon-action-add')]/a</td>
+	<td>//div[contains(@class,'lfr-icon-action-add')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,6 +108,17 @@
 <tr>
 	<td>LANGUAGE_MENU_SPANISH</td>
 	<td>//img[@title='español']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_MENU-->
+<tr>
+	<td>ADD_MENU_WEB_CONTENT_STRUCTURE</td>
+	<td>//li[contains(@class,'lfr-icon-action')]/a[contains(.,'${key_selectStructureName}')]</td>
 	<td></td>
 </tr>
 </tbody>

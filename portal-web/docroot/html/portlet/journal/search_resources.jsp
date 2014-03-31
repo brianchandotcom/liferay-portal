@@ -160,7 +160,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 	</liferay-portlet:renderURL>
 
 	<div class="journal-container" id="<portlet:namespace />entriesContainer">
-		<aui:form action="<%= searchURL %>" method="get" name="fm">
+		<aui:form action="<%= searchURL %>" method="get" name="fm2">
 			<liferay-portlet:renderURLParams varImpl="searchURL" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= breadcrumbsFolderId %>" />

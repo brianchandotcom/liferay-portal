@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -273,7 +274,14 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 				JournalContentUtil.getDisplay(
 					feed.getGroupId(), article.getArticleId(),
 					rendererTemplateId, null, languageId, themeDisplay, 1,
-					_XML_REQUUEST);
+					new PortletRequestModel() {
+
+						@Override
+						public String toXML() {
+							return _XML_REQUUEST;
+						}
+
+					});
 
 			if (articleDisplay != null) {
 				content = articleDisplay.getContent();

@@ -724,7 +724,7 @@ public class EditArticleAction extends PortletAction {
 				ddmStructure.getStructureId(), serviceContext);
 
 			Fields existingFields = JournalConverterUtil.getDDMFields(
-				ddmStructure, curArticle.getContent());
+				ddmStructure, curArticle.getDocument());
 
 			Fields mergedFields = DDMUtil.mergeFields(
 				newFields, existingFields);

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.util;
 
+import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
@@ -24,6 +25,9 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 public interface JournalConverter {
 
 	public String getContent(DDMStructure ddmStructure, Fields ddmFields)
+		throws Exception;
+
+	public Fields getDDMFields(DDMStructure ddmStructure, Document document)
 		throws Exception;
 
 	public Fields getDDMFields(DDMStructure ddmStructure, String content)

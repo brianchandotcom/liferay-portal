@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Document;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +44,23 @@ public class PropertiesTransformerListener extends BaseTransformerListener {
 		return replace(output, languageId, tokens);
 	}
 
+	@Override
+	public String onScript(
+		String script, Document document, String languageId,
+		Map<String, String> tokens) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("onScript");
+		}
+
+		return replace(script, languageId, tokens);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #onScript(
+	 *			   String, Document, String, Map)}
+	 */
+	@Deprecated
 	@Override
 	public String onScript(
 		String script, String xml, String languageId,

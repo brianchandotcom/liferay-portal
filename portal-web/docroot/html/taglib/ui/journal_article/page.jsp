@@ -24,10 +24,10 @@ String templateId = GetterUtil.getString((String)request.getAttribute("liferay-u
 String languageId = GetterUtil.getString((String)request.getAttribute("liferay-ui:journal-article:languageId"), LanguageUtil.getLanguageId(request));
 int articlePage = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:journal-article:articlePage"));
 
-String xmlRequest = GetterUtil.getString((String)request.getAttribute("liferay-ui:journal-article:xmlRequest"));
+PortletRequestModel portletRequestModel = (PortletRequestModel)request.getAttribute("liferay-ui:journal-article:portletRequestModel");
 
-if (Validator.isNull(xmlRequest) && (portletRequest != null) && (portletResponse != null)) {
-	xmlRequest = PortletRequestUtil.toXML(portletRequest, portletResponse);
+if ((portletRequestModel == null) && (portletRequest != null) && (portletResponse != null)) {
+	portletRequestModel = new PortletRequestModel(portletRequest, portletResponse);
 }
 
 boolean showTitle = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:journal-article:showTitle"));
@@ -40,7 +40,7 @@ if (articleResourcePrimKey > 0) {
 	articleId = articleResource.getArticleId();
 }
 
-JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(groupId, articleId, templateId, null, languageId, themeDisplay, articlePage, xmlRequest);
+JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(groupId, articleId, templateId, null, languageId, themeDisplay, articlePage, portletRequestModel);
 %>
 
 <c:if test="<%= articleDisplay != null %>">

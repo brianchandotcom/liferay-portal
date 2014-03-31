@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -60,7 +61,6 @@ import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.persistence.JournalArticleActionableDynamicQuery;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.io.Serializable;
 
@@ -254,7 +254,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		try {
 			fields = JournalConverterUtil.getDDMFields(
-				ddmStructure, article.getContent());
+				ddmStructure, article.getDocument());
 		}
 		catch (Exception e) {
 			return;
@@ -326,14 +326,14 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addUID(PORTLET_ID, article.getId());
 
 		String articleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-			article.getContent());
+			article.getDocument());
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		String[] languageIds = getLanguageIds(
-			defaultLanguageId, article.getContent());
+			defaultLanguageId, article.getDocument());
 
 		for (String languageId : languageIds) {
 			String content = extractDDMContent(article, languageId);
@@ -525,7 +525,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		try {
 			fields = JournalConverterUtil.getDDMFields(
-				ddmStructure, article.getContent());
+				ddmStructure, article.getDocument());
 		}
 		catch (Exception e) {
 			return StringPool.BLANK;
@@ -577,14 +577,14 @@ public class JournalArticleIndexer extends BaseIndexer {
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			String xmlRequest = PortletRequestUtil.toXML(
+			PortletRequestModel portletRequestModel = new PortletRequestModel(
 				portletRequest, portletResponse);
 
 			JournalArticleDisplay articleDisplay =
 				JournalContentUtil.getDisplay(
 					groupId, articleId, version, null, Constants.VIEW,
 					LocaleUtil.toLanguageId(snippetLocale), themeDisplay, 1,
-					xmlRequest);
+					portletRequestModel);
 
 			content = HtmlUtil.escape(articleDisplay.getDescription());
 			content = HtmlUtil.replaceNewLine(content);
@@ -603,10 +603,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 	}
 
 	protected String[] getLanguageIds(
-		String defaultLanguageId, String content) {
+		String defaultLanguageId,
+		com.liferay.portal.kernel.xml.Document document) {
 
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			content);
+			document);
 
 		if (languageIds.length == 0) {
 			languageIds = new String[] {defaultLanguageId};

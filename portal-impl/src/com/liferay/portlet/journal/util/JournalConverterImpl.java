@@ -145,10 +145,8 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	@Override
-	public Fields getDDMFields(DDMStructure ddmStructure, String content)
+	public Fields getDDMFields(DDMStructure ddmStructure, Document document)
 		throws Exception {
-
-		Document document = SAXReaderUtil.read(content);
 
 		Field fieldsDisplayField = new Field(
 			ddmStructure.getStructureId(), DDMImpl.FIELDS_DISPLAY_NAME,
@@ -171,6 +169,13 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		return ddmFields;
+	}
+
+	@Override
+	public Fields getDDMFields(DDMStructure ddmStructure, String content)
+		throws Exception {
+
+		return getDDMFields(ddmStructure, SAXReaderUtil.read(content));
 	}
 
 	@Override

@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
+import com.liferay.portal.kernel.portlet.ThemeDisplayModel;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -141,46 +143,46 @@ public class JournalUtil {
 		Element rootElement, Map<String, String> tokens, JournalArticle article,
 		String languageId, ThemeDisplay themeDisplay) {
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens, JournalStructureConstants.RESERVED_ARTICLE_ID,
 			article.getArticleId());
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_VERSION,
 			article.getVersion());
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_TITLE,
 			article.getTitle(languageId));
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_URL_TITLE,
 			article.getUrlTitle());
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_DESCRIPTION,
 			article.getDescription(languageId));
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_TYPE, article.getType());
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_CREATE_DATE,
 			article.getCreateDate());
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_MODIFIED_DATE,
 			article.getModifiedDate());
 
 		if (article.getDisplayDate() != null) {
-			JournalUtil.addReservedEl(
+			addReservedEl(
 				rootElement, tokens,
 				JournalStructureConstants.RESERVED_ARTICLE_DISPLAY_DATE,
 				article.getDisplayDate());
@@ -204,7 +206,7 @@ public class JournalUtil {
 			smallImageURL = sb.toString();
 		}
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
 			smallImageURL);
@@ -218,12 +220,12 @@ public class JournalUtil {
 		catch (SystemException se) {
 		}
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_ASSET_TAG_NAMES,
 			StringUtil.merge(assetTagNames));
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_ID,
 			String.valueOf(article.getUserId()));
@@ -233,36 +235,34 @@ public class JournalUtil {
 		String userComments = StringPool.BLANK;
 		String userJobTitle = StringPool.BLANK;
 
-		User user = null;
-
 		try {
-			user = UserLocalServiceUtil.getUserById(article.getUserId());
+			User user = UserLocalServiceUtil.fetchUserById(article.getUserId());
 
-			userName = user.getFullName();
-			userEmailAddress = user.getEmailAddress();
-			userComments = user.getComments();
-			userJobTitle = user.getJobTitle();
-		}
-		catch (PortalException pe) {
+			if (user != null) {
+				userName = user.getFullName();
+				userEmailAddress = user.getEmailAddress();
+				userComments = user.getComments();
+				userJobTitle = user.getJobTitle();
+			}
 		}
 		catch (SystemException se) {
 		}
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_NAME, userName);
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_EMAIL_ADDRESS,
 			userEmailAddress);
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_COMMENTS,
 			userComments);
 
-		JournalUtil.addReservedEl(
+		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_JOB_TITLE,
 			userJobTitle);
@@ -445,28 +445,18 @@ public class JournalUtil {
 		// XML
 
 		if (rootElement != null) {
-			Element dynamicElementElement = SAXReaderUtil.createElement(
+			Element dynamicElementElement = rootElement.addElement(
 				"dynamic-element");
 
-			Attribute nameAttribute = SAXReaderUtil.createAttribute(
-				dynamicElementElement, "name", name);
+			dynamicElementElement.addAttribute("name", name);
 
-			dynamicElementElement.add(nameAttribute);
+			dynamicElementElement.addAttribute("type", "text");
 
-			Attribute typeAttribute = SAXReaderUtil.createAttribute(
-				dynamicElementElement, "type", "text");
-
-			dynamicElementElement.add(typeAttribute);
-
-			Element dynamicContentElement = SAXReaderUtil.createElement(
+			Element dynamicContentElement = dynamicElementElement.addElement(
 				"dynamic-content");
 
 			//dynamicContentElement.setText("<![CDATA[" + value + "]]>");
 			dynamicContentElement.setText(value);
-
-			dynamicElementElement.add(dynamicContentElement);
-
-			rootElement.add(dynamicElementElement);
 		}
 
 		// Tokens
@@ -477,18 +467,18 @@ public class JournalUtil {
 
 	public static String diffHtml(
 			long groupId, String articleId, double sourceVersion,
-			double targetVersion, String languageId, String xmlRequest,
-			ThemeDisplay themeDisplay)
+			double targetVersion, String languageId,
+			PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		JournalArticleDisplay sourceArticleDisplay =
 			JournalArticleLocalServiceUtil.getArticleDisplay(
 				groupId, articleId, sourceVersion, null, Constants.VIEW,
-				languageId, 1, xmlRequest, themeDisplay);
+				languageId, 1, portletRequestModel, themeDisplay);
 		JournalArticleDisplay targetArticleDisplay =
 			JournalArticleLocalServiceUtil.getArticleDisplay(
 				groupId, articleId, targetVersion, null, Constants.VIEW,
-				languageId, 1, xmlRequest, themeDisplay);
+				languageId, 1, portletRequestModel, themeDisplay);
 
 		return DiffHtmlUtil.diff(
 			new UnsyncStringReader(sourceArticleDisplay.getContent()),
@@ -689,12 +679,12 @@ public class JournalUtil {
 	public static boolean getEmailArticleAnyEventEnabled(
 		PortletPreferences preferences) {
 
-		if (JournalUtil.getEmailArticleAddedEnabled(preferences) ||
-			JournalUtil.getEmailArticleApprovalDeniedEnabled(preferences) ||
-			JournalUtil.getEmailArticleApprovalGrantedEnabled(preferences) ||
-			JournalUtil.getEmailArticleApprovalRequestedEnabled(preferences) ||
-			JournalUtil.getEmailArticleReviewEnabled(preferences) ||
-			JournalUtil.getEmailArticleUpdatedEnabled(preferences)) {
+		if (getEmailArticleAddedEnabled(preferences) ||
+			getEmailArticleApprovalDeniedEnabled(preferences) ||
+			getEmailArticleApprovalGrantedEnabled(preferences) ||
+			getEmailArticleApprovalRequestedEnabled(preferences) ||
+			getEmailArticleReviewEnabled(preferences) ||
+			getEmailArticleUpdatedEnabled(preferences)) {
 
 			return true;
 		}
@@ -1093,7 +1083,7 @@ public class JournalUtil {
 			}
 
 			script = transformerListener.onScript(
-				script, null, languageId, tokens);
+				script, (Document)null, languageId, tokens);
 		}
 
 		return script;
@@ -1124,9 +1114,45 @@ public class JournalUtil {
 			long articleGroupId, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
-		return getTokens(articleGroupId, themeDisplay, null);
+		return getTokens(
+			articleGroupId, themeDisplay, (PortletRequestModel)null);
 	}
 
+	public static Map<String, String> getTokens(
+			long articleGroupId, ThemeDisplay themeDisplay,
+			PortletRequestModel portletRequestModel)
+		throws PortalException, SystemException {
+
+		Map<String, String> tokens = new HashMap<String, String>();
+
+		if (themeDisplay != null) {
+			_populateTokens(tokens, articleGroupId, themeDisplay);
+		}
+		else if (portletRequestModel != null) {
+			ThemeDisplayModel themeDisplayModel =
+				portletRequestModel.getThemeDisplayModel();
+
+			if (themeDisplayModel != null) {
+				try {
+					_populateTokens(tokens, articleGroupId, themeDisplayModel);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(e, e);
+					}
+				}
+			}
+		}
+
+		return tokens;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by{@link #getTokens(
+	 *				long,
+	 *				com.liferay.portal.kernel.portlet.PortletRequestModel)}
+	 */
+	@Deprecated
 	public static Map<String, String> getTokens(
 			long articleGroupId, ThemeDisplay themeDisplay, String xmlRequest)
 		throws PortalException, SystemException {
@@ -1248,40 +1274,10 @@ public class JournalUtil {
 		return curContent;
 	}
 
-	public static void removeArticleLocale(Element element, String languageId)
-		throws PortalException, SystemException {
-
-		for (Element dynamicElementElement :
-				element.elements("dynamic-element")) {
-
-			for (Element dynamicContentElement :
-					dynamicElementElement.elements("dynamic-content")) {
-
-				String curLanguageId = GetterUtil.getString(
-					dynamicContentElement.attributeValue("language-id"));
-
-				if (curLanguageId.equals(languageId)) {
-					long id = GetterUtil.getLong(
-						dynamicContentElement.attributeValue("id"));
-
-					if (id > 0) {
-						ImageLocalServiceUtil.deleteImage(id);
-					}
-
-					dynamicContentElement.detach();
-				}
-			}
-
-			removeArticleLocale(dynamicElementElement, languageId);
-		}
-	}
-
 	public static String removeArticleLocale(
-		String content, String languageId) {
+		Document document, String content, String languageId) {
 
 		try {
-			Document document = SAXReaderUtil.read(content);
-
 			Element rootElement = document.getRootElement();
 
 			String availableLocales = rootElement.attributeValue(
@@ -1310,6 +1306,34 @@ public class JournalUtil {
 		}
 
 		return content;
+	}
+
+	public static void removeArticleLocale(Element element, String languageId)
+		throws PortalException, SystemException {
+
+		for (Element dynamicElementElement :
+				element.elements("dynamic-element")) {
+
+			for (Element dynamicContentElement :
+					dynamicElementElement.elements("dynamic-content")) {
+
+				String curLanguageId = GetterUtil.getString(
+					dynamicContentElement.attributeValue("language-id"));
+
+				if (curLanguageId.equals(languageId)) {
+					long id = GetterUtil.getLong(
+						dynamicContentElement.attributeValue("id"));
+
+					if (id > 0) {
+						ImageLocalServiceUtil.deleteImage(id);
+					}
+
+					dynamicContentElement.detach();
+				}
+			}
+
+			removeArticleLocale(dynamicElementElement, languageId);
+		}
 	}
 
 	public static String removeOldContent(String content, String xsd) {
@@ -1427,12 +1451,14 @@ public class JournalUtil {
 
 	public static String transform(
 			ThemeDisplay themeDisplay, Map<String, String> tokens,
-			String viewMode, String languageId, String xml, String script,
+			String viewMode, String languageId, Document document,
+			PortletRequestModel portletRequestModel, String script,
 			String langType)
 		throws Exception {
 
 		return _transformer.transform(
-			themeDisplay, tokens, viewMode, languageId, xml, script, langType);
+			themeDisplay, tokens, viewMode, languageId, document,
+			portletRequestModel, script, langType);
 	}
 
 	private static void _addElementOptions(
@@ -1846,6 +1872,85 @@ public class JournalUtil {
 			themeDisplay.getPathFriendlyURLPrivateGroup());
 		tokens.put("group_id", String.valueOf(articleGroupId));
 		tokens.put("page_url", themeDisplay.getPathFriendlyURLPublic());
+	}
+
+	private static void _populateTokens(
+			Map<String, String> tokens, long articleGroupId,
+			ThemeDisplayModel themeDisplayModel)
+		throws Exception {
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			themeDisplayModel.getPlid());
+
+		Group group = layout.getGroup();
+
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		String friendlyUrlCurrent = null;
+
+		if (layout.isPublicLayout()) {
+			friendlyUrlCurrent = themeDisplayModel.getPathFriendlyURLPublic();
+		}
+		else if (group.isUserGroup()) {
+			friendlyUrlCurrent =
+				themeDisplayModel.getPathFriendlyURLPrivateUser();
+		}
+		else {
+			friendlyUrlCurrent =
+				themeDisplayModel.getPathFriendlyURLPrivateGroup();
+		}
+
+		String layoutSetFriendlyUrl = themeDisplayModel.getI18nPath();
+
+		String virtualHostname = layoutSet.getVirtualHostname();
+
+		if (Validator.isNull(virtualHostname) ||
+			!virtualHostname.equals(themeDisplayModel.getServerName())) {
+
+			layoutSetFriendlyUrl = friendlyUrlCurrent + group.getFriendlyURL();
+		}
+
+		tokens.put("article_group_id", String.valueOf(articleGroupId));
+		tokens.put("cdn_host", themeDisplayModel.getCdnHost());
+		tokens.put(
+			"company_id", String.valueOf(themeDisplayModel.getCompanyId()));
+		tokens.put("friendly_url_current", friendlyUrlCurrent);
+		tokens.put(
+			"friendly_url_private_group",
+			themeDisplayModel.getPathFriendlyURLPrivateGroup());
+		tokens.put(
+			"friendly_url_private_user",
+			themeDisplayModel.getPathFriendlyURLPrivateUser());
+		tokens.put(
+			"friendly_url_public",
+			themeDisplayModel.getPathFriendlyURLPublic());
+		tokens.put("group_friendly_url", group.getFriendlyURL());
+		tokens.put("image_path", themeDisplayModel.getPathImage());
+		tokens.put("layout_set_friendly_url", layoutSetFriendlyUrl);
+		tokens.put("main_path", themeDisplayModel.getPathMain());
+		tokens.put("portal_ctx", themeDisplayModel.getPathContext());
+		tokens.put(
+			"portal_url",
+			HttpUtil.removeProtocol(themeDisplayModel.getURLPortal()));
+		tokens.put(
+			"protocol", HttpUtil.getProtocol(themeDisplayModel.getURLPortal()));
+		tokens.put("root_path", themeDisplayModel.getPathContext());
+		tokens.put(
+			"scope_group_id",
+			String.valueOf(themeDisplayModel.getScopeGroupId()));
+		tokens.put("theme_image_path", themeDisplayModel.getPathThemeImages());
+
+		_populateCustomTokens(tokens);
+
+		// Deprecated tokens
+
+		tokens.put(
+			"friendly_url", themeDisplayModel.getPathFriendlyURLPublic());
+		tokens.put(
+			"friendly_url_private",
+			themeDisplayModel.getPathFriendlyURLPrivateGroup());
+		tokens.put("group_id", String.valueOf(articleGroupId));
+		tokens.put("page_url", themeDisplayModel.getPathFriendlyURLPublic());
 	}
 
 	private static void _removeOldContent(

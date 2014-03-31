@@ -44,7 +44,10 @@ import javax.portlet.WindowStateException;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @deprecated As of 7.0.0, replaced by
+ *			   {@link com.liferay.portal.kernel.portlet.PortletRequestModel}
  */
+@Deprecated
 public class PortletRequestUtil {
 
 	public static String toXML(
@@ -52,7 +55,6 @@ public class PortletRequestUtil {
 
 		Element requestElement = new Element("request");
 
-		requestElement.addElement("container-type", "portlet");
 		requestElement.addElement("container-type", "portlet");
 		requestElement.addElement(
 			"container-namespace", portletRequest.getContextPath());

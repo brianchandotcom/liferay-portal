@@ -1394,6 +1394,16 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_statusDate = statusDate;
 	}
 
+	public void setDefaultLanguageId(java.lang.String defaultLanguageId) {
+	}
+
+	public com.liferay.portal.kernel.xml.Document getDocument() {
+		return null;
+	}
+
+	public void setDocument(com.liferay.portal.kernel.xml.Document document) {
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -1868,6 +1878,10 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		journalArticleModelImpl._setOriginalStatus = false;
 
+		setDefaultLanguageId(null);
+
+		setDocument(null);
+
 		journalArticleModelImpl._columnBitmask = 0;
 	}
 
@@ -2068,6 +2082,10 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		else {
 			journalArticleCacheModel.statusDate = Long.MIN_VALUE;
 		}
+
+		journalArticleCacheModel._defaultLanguageId = getDefaultLanguageId();
+
+		journalArticleCacheModel._document = getDocument();
 
 		return journalArticleCacheModel;
 	}

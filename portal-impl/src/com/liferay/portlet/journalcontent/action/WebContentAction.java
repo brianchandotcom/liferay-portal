@@ -15,6 +15,7 @@
 package com.liferay.portlet.journalcontent.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -24,7 +25,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
-import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.io.OutputStream;
 
@@ -77,13 +77,11 @@ public class WebContentAction extends PortletAction {
 		String languageId = LanguageUtil.getLanguageId(actionRequest);
 		int page = ParamUtil.getInteger(actionRequest, "page", 1);
 
-		String xmlRequest = PortletRequestUtil.toXML(
-			actionRequest, actionResponse);
-
 		if ((groupId > 0) && Validator.isNotNull(articleId)) {
 			JournalContentUtil.getDisplay(
 				groupId, articleId, ddmTemplateKey, viewMode, languageId,
-				themeDisplay, page, xmlRequest);
+				themeDisplay, page,
+				new PortletRequestModel(actionRequest, actionResponse));
 		}
 	}
 
@@ -136,15 +134,14 @@ public class WebContentAction extends PortletAction {
 			String viewMode = ParamUtil.getString(resourceRequest, "viewMode");
 			String languageId = LanguageUtil.getLanguageId(resourceRequest);
 			int page = ParamUtil.getInteger(resourceRequest, "page", 1);
-			String xmlRequest = PortletRequestUtil.toXML(
-				resourceRequest, resourceResponse);
 
 			JournalArticleDisplay articleDisplay = null;
 
 			if ((groupId > 0) && Validator.isNotNull(articleId)) {
 				articleDisplay = JournalContentUtil.getDisplay(
 					groupId, articleId, ddmTemplateKey, viewMode, languageId,
-					themeDisplay, page, xmlRequest);
+					themeDisplay, page,
+					new PortletRequestModel(resourceRequest, resourceResponse));
 			}
 
 			if (articleDisplay != null) {

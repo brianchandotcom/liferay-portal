@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -43,7 +44,6 @@ import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
-import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -145,11 +145,11 @@ public class JournalArticleAssetRenderer
 		}
 
 		try {
-			String xmlRequest = null;
+			PortletRequestModel portletRequestModel = null;
 			ThemeDisplay themeDisplay = null;
 
 			if ((portletRequest != null) && (portletResponse != null)) {
-				xmlRequest = PortletRequestUtil.toXML(
+				portletRequestModel = new PortletRequestModel(
 					portletRequest, portletResponse);
 				themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
@@ -158,7 +158,7 @@ public class JournalArticleAssetRenderer
 			JournalArticleDisplay articleDisplay =
 				JournalArticleLocalServiceUtil.getArticleDisplay(
 					_article, null, null, LanguageUtil.getLanguageId(locale), 1,
-					xmlRequest, themeDisplay);
+					portletRequestModel, themeDisplay);
 
 			summary = StringUtil.shorten(
 				HtmlUtil.stripHtml(articleDisplay.getContent()), 200);

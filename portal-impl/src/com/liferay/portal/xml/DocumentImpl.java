@@ -52,6 +52,11 @@ public class DocumentImpl extends BranchImpl implements Document {
 	}
 
 	@Override
+	public Document clone() {
+		return new DocumentImpl((org.dom4j.Document)_document.clone());
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

@@ -278,11 +278,16 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 
 		journalArticleImpl.resetOriginalValues();
 
+		journalArticleImpl.setDefaultLanguageId(_defaultLanguageId);
+
+		journalArticleImpl.setDocument(_document);
+
 		return journalArticleImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
 		uuid = objectInput.readUTF();
 		id = objectInput.readLong();
 		resourcePrimKey = objectInput.readLong();
@@ -317,6 +322,9 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+
+		_defaultLanguageId = (java.lang.String)objectInput.readObject();
+		_document = (com.liferay.portal.kernel.xml.Document)objectInput.readObject();
 	}
 
 	@Override
@@ -445,6 +453,9 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		}
 
 		objectOutput.writeLong(statusDate);
+
+		objectOutput.writeObject(_defaultLanguageId);
+		objectOutput.writeObject(_document);
 	}
 
 	public String uuid;
@@ -481,4 +492,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public java.lang.String _defaultLanguageId;
+	public com.liferay.portal.kernel.xml.Document _document;
 }

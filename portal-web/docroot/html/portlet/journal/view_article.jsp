@@ -23,9 +23,8 @@ long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
 String articleId = ParamUtil.getString(request, "articleId");
 String languageId = LanguageUtil.getLanguageId(request);
 int articlePage = ParamUtil.getInteger(renderRequest, "page", 1);
-String xmlRequest = PortletRequestUtil.toXML(renderRequest, renderResponse);
 
-JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(groupId, articleId, null, null, languageId, themeDisplay, articlePage, xmlRequest);
+JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(groupId, articleId, null, null, languageId, themeDisplay, articlePage, new PortletRequestModel(renderRequest, renderResponse));
 
 try {
 	article = JournalArticleLocalServiceUtil.getLatestArticle(groupId, articleId, WorkflowConstants.STATUS_ANY);

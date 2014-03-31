@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletModeFactory_IW;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.WindowStateFactory_IW;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.template.Template;
@@ -249,6 +250,12 @@ public class TemplateContextHelper {
 		// XML request
 
 		if ((portletRequest != null) && (portletResponse != null)) {
+			template.put(
+				"portletRequestModel",
+				new PortletRequestModel(portletRequest, portletResponse));
+
+			// Deprecated
+
 			template.put(
 				"xmlRequest",
 				new Object() {

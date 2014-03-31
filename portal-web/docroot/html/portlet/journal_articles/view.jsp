@@ -199,9 +199,8 @@ double version = ParamUtil.getDouble(request, "version");
 		<%
 		String languageId = LanguageUtil.getLanguageId(request);
 		int articlePage = ParamUtil.getInteger(renderRequest, "page", 1);
-		String xmlRequest = PortletRequestUtil.toXML(renderRequest, renderResponse);
 
-		JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(groupId, articleId, null, null, languageId, themeDisplay, articlePage, xmlRequest);
+		JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(groupId, articleId, null, null, languageId, themeDisplay, articlePage, new PortletRequestModel(renderRequest, renderResponse));
 
 		JournalArticle article = null;
 

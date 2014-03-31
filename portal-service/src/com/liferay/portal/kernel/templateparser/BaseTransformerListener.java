@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.templateparser;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.xml.Document;
 
 import java.util.Map;
 
@@ -37,6 +38,23 @@ public abstract class BaseTransformerListener implements TransformerListener {
 
 	@Override
 	public String onScript(
+		String script, Document document, String languageId,
+		Map<String, String> tokens) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("onScript");
+		}
+
+		return script;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #onScript(
+	 *			   String, Document, String, Map)}
+	 */
+	@Deprecated
+	@Override
+	public String onScript(
 		String script, String xml, String languageId,
 		Map<String, String> tokens) {
 
@@ -47,6 +65,22 @@ public abstract class BaseTransformerListener implements TransformerListener {
 		return script;
 	}
 
+	@Override
+	public Document onXml(
+		Document document, String languageId, Map<String, String> tokens) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("onXml");
+		}
+
+		return document;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #onXml(
+	 *			   Document, String, Map)}
+	 */
+	@Deprecated
 	@Override
 	public String onXml(
 		String xml, String languageId, Map<String, String> tokens) {

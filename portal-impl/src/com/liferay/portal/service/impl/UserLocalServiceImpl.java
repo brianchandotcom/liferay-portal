@@ -41,8 +41,9 @@ import com.liferay.portal.UserPasswordException;
 import com.liferay.portal.UserReminderQueryException;
 import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.UserSmsException;
-import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
+import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil.Synchronizer;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.shard.ShardCallable;
@@ -1007,7 +1008,27 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		PortalCache<Serializable, Serializable> portalCache =
 			EntityCacheUtil.getPortalCache(UserImpl.class);
 
-		portalCache.registerCacheListener(new DefaultUserCacheListener());
+		PortalCacheMapSynchronizeUtil.synchronize(
+			portalCache, _defaultUsers,
+			new Synchronizer<Serializable, Serializable>() {
+
+				@Override
+				public void onSynchronize(
+					Map<? extends Serializable, ? extends Serializable> map,
+					Serializable key, Serializable value) {
+
+					if (!(value instanceof UserCacheModel)) {
+						return;
+					}
+
+					UserCacheModel userCacheModel = (UserCacheModel)value;
+
+					if (userCacheModel.defaultUser) {
+						_defaultUsers.remove(userCacheModel.companyId);
+					}
+				}
+
+			});
 	}
 
 	/**
@@ -6547,69 +6568,5 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	private static Log _log = LogFactoryUtil.getLog(UserLocalServiceImpl.class);
 
 	private Map<Long, User> _defaultUsers = new ConcurrentHashMap<Long, User>();
-
-	private class DefaultUserCacheListener
-		implements CacheListener<Serializable, Serializable> {
-
-		@Override
-		public void notifyEntryEvicted(
-			PortalCache<Serializable, Serializable> portalCache,
-			Serializable key, Serializable value) {
-
-			_clearDefaultUserCache(value);
-		}
-
-		@Override
-		public void notifyEntryExpired(
-			PortalCache<Serializable, Serializable> portalCache,
-			Serializable key, Serializable value) {
-
-			_clearDefaultUserCache(value);
-		}
-
-		@Override
-		public void notifyEntryPut(
-			PortalCache<Serializable, Serializable> portalCache,
-			Serializable key, Serializable value) {
-
-			_clearDefaultUserCache(value);
-		}
-
-		@Override
-		public void notifyEntryRemoved(
-			PortalCache<Serializable, Serializable> portalCache,
-			Serializable key, Serializable value) {
-
-			_clearDefaultUserCache(value);
-		}
-
-		@Override
-		public void notifyEntryUpdated(
-			PortalCache<Serializable, Serializable> portalCache,
-			Serializable key, Serializable value) {
-
-			_clearDefaultUserCache(value);
-		}
-
-		@Override
-		public void notifyRemoveAll(
-			PortalCache<Serializable, Serializable> portalCache) {
-
-			_defaultUsers.clear();
-		}
-
-		private void _clearDefaultUserCache(Serializable serializable) {
-			if (!(serializable instanceof UserCacheModel)) {
-				return;
-			}
-
-			UserCacheModel userCacheModel = (UserCacheModel)serializable;
-
-			if (userCacheModel.defaultUser) {
-				_defaultUsers.remove(userCacheModel.companyId);
-			}
-		}
-
-	}
 
 }

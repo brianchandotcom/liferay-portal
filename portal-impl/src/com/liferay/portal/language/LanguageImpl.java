@@ -14,6 +14,10 @@
 
 package com.liferay.portal.language;
 
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
+import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil.Synchronizer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
@@ -45,6 +49,8 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
+import java.io.Serializable;
+
 import java.text.MessageFormat;
 
 import java.util.ArrayList;
@@ -72,7 +78,7 @@ import javax.servlet.jsp.PageContext;
  * @author Eduardo Lundgren
  */
 @DoPrivileged
-public class LanguageImpl implements Language {
+public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public String format(
@@ -957,13 +963,15 @@ public class LanguageImpl implements Language {
 	}
 
 	private void _resetAvailableLocales(long companyId) {
-		_instances.remove(companyId);
+		_portalCache.remove(companyId);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LanguageImpl.class);
 
 	private static Map<Long, LanguageImpl> _instances =
 		new ConcurrentHashMap<Long, LanguageImpl>();
+	private static PortalCache<Long, Serializable> _portalCache =
+		MultiVMPoolUtil.getCache(LanguageImpl.class.getName());
 
 	private Map<String, String> _charEncodings;
 	private Set<String> _duplicateLanguageCodes;
@@ -975,5 +983,21 @@ public class LanguageImpl implements Language {
 	private Set<Locale> _localesBetaSet;
 	private Map<String, Locale> _localesMap;
 	private Set<Locale> _localesSet;
+
+	static {
+		PortalCacheMapSynchronizeUtil.<Long, Serializable>synchronize(
+			_portalCache, _instances,
+			new Synchronizer<Long, Serializable>() {
+
+				@Override
+				public void onSynchronize(
+					Map<? extends Long, ? extends Serializable> map, Long key,
+					Serializable value) {
+
+					_instances.remove(key);
+				}
+
+			});
+	}
 
 }

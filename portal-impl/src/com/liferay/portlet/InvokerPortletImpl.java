@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -630,7 +631,7 @@ public class InvokerPortletImpl implements InvokerPortlet {
 
 		Map<String, String[]> properties = portletResponse.getProperties();
 
-		if ((properties != null) && !properties.isEmpty()) {
+		if (MapUtil.isNotEmpty(properties)) {
 			if (_expCache != null) {
 				String[] expCache = properties.get(
 					RenderResponse.EXPIRATION_CACHE);

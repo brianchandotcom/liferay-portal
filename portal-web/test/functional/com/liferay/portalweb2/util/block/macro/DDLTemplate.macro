@@ -311,6 +311,17 @@
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="viewNoDuplicateTemplateCP">
+		<execute macro="DDLTemplate#gotoManageTemplatesCmd">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<var name="key_dataDefinitionTemplateName" value="${ddlTemplateName}" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertTextPresent" locator-key1="TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertElementNotPresent" locator-key1="TEMPLATE_TABLE_DUPLICATE_TEMPLATE_NAME" />
+	</command>
+
 	<command name="viewNoTemplateCP">
 		<execute macro="DDLTemplate#gotoManageTemplatesCmd">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />

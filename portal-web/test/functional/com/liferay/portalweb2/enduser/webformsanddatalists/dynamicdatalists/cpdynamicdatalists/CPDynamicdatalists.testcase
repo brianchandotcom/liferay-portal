@@ -1583,6 +1583,84 @@
 		</execute>
 	</command>
 
+	<command name="CopyDataDefinitionWithCopyFormTemplatesAndCopyDisplayTemplatesAndAssertNoDuplicatesInOriginal" priority="5">
+		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
+		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
+		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLTemplate#addFormTemplateCP">
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlFormTemplateName" value="${ddlFormTemplateName}" />
+		</execute>
+
+		<execute macro="DDLTemplate#saveFormTemplateCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLTemplate#addDisplayTemplateCP">
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDisplayTemplateLanguage" value="FreeMarker (.ftl)" />
+			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
+			<var name="ddlDisplayTemplateTextFieldScript" value="Text" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#copyCP">
+			<var name="copyDisplayTemplates" value="true" />
+			<var name="copyFormTemplates" value="true" />
+			<var name="ddlDataDefinitionCopyName" value="${ddlDataDefinitionCopyName}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLTemplate#viewNoDuplicateTemplateCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionCopyName}" />
+			<var name="ddlTemplateName" value="${ddlDisplayTemplateName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLTemplate#viewNoDuplicateTemplateCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionCopyName}" />
+			<var name="ddlTemplateName" value="${ddlFormTemplateName}" />
+		</execute>
+	</command>
+
 	<command name="DeleteDataDefinition" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />

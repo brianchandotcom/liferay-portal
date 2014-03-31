@@ -45,6 +45,25 @@
 		<execute action="PGBlogsConfigurationScope#assertTextEquals" locator-key1="SCOPE_MENULIST" value1="${scopeSelection}" />
 	</command>
 
+	<command name="tearDownConfigurationDisplaySettingsCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="CPBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="CPBlogsConfiguration#click" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_MENULIST" />
+
+		<var name="key_displaySelection" value="Full Content" />
+
+		<execute action="CPBlogsConfiguration#doubleClick" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECTION" />
+		<execute action="CPBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPBlogsConfiguration#assertElementPresent" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
 	<command name="tearDownConfigurationDisplaySettingsPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

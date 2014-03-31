@@ -8,6 +8,9 @@
 	</tear-down>
 
 	<command name="AddBlogsEntries" priority="5">
+		<property name="testray.components" value="Blogs,Collaboration" />
+		<property name="testray.main.component" value="Blogs" />
+
 		<var name="entryContent1" value="Blogs Entry1 Content" />
 		<var name="entryContent2" value="Blogs Entry2 Content" />
 		<var name="entryContent3" value="Blogs Entry3 Content" />

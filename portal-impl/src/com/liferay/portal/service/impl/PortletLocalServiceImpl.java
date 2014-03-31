@@ -2308,7 +2308,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				List<Portlet> portletModels = _getPortletsByPortletName(
 					portletName, servletContextName, portletsPool);
 
-				if (portletModels.size() == 0) {
+				if (portletModels.isEmpty()) {
 					_log.error(
 						"Filter mapping with filter name " + filterName +
 							" references unnknown portlet name " + portletName);

@@ -1889,7 +1889,7 @@ public class JournalUtil {
 
 		List<Node> curNodes = xPathSelector.selectNodes(xsdDocument);
 
-		if (curNodes.size() == 0) {
+		if (curNodes.isEmpty()) {
 			contentElement.detach();
 		}
 

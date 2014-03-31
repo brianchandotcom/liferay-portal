@@ -268,7 +268,7 @@ public class MailEngine {
 
 			message.setSubject(subject);
 
-			if ((fileAttachments != null) && (fileAttachments.size() > 0)) {
+			if ((fileAttachments != null) && !fileAttachments.isEmpty()) {
 				MimeMultipart rootMultipart = new MimeMultipart(
 					_MULTIPART_TYPE_MIXED);
 

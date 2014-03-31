@@ -217,7 +217,7 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 		Properties serviceBuilderProperties =
 			serviceBuilderPropertiesConfiguration.getProperties();
 
-		if (serviceBuilderProperties.size() == 0) {
+		if (serviceBuilderProperties.isEmpty()) {
 			return;
 		}
 

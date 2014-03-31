@@ -40,7 +40,7 @@ public class SCProductEntryImpl extends SCProductEntryBaseImpl {
 
 		SCProductVersion lastVersion = null;
 
-		if (results.size() > 0) {
+		if (!results.isEmpty()) {
 			lastVersion = results.get(0);
 		}
 

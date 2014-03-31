@@ -215,10 +215,10 @@ public class ShoppingUtil {
 
 				ShoppingItem item = cartItem.getItem();
 
-				if (((categoryIdsSet.size() > 0) &&
+				if ((!categoryIdsSet.isEmpty() &&
 					 categoryIdsSet.contains(
 						 String.valueOf(item.getCategoryId()))) ||
-					((skusSet.size() > 0) && skusSet.contains(item.getSku()))) {
+					(!skusSet.isEmpty() && skusSet.contains(item.getSku()))) {
 
 					newItems.put(cartItem, count);
 				}

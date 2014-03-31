@@ -42,7 +42,7 @@ public class RSSPreferencesValidator implements PreferencesValidator {
 			}
 		}
 
-		if (badURLs.size() > 0) {
+		if (!badURLs.isEmpty()) {
 			throw new ValidatorException("Failed to retrieve URLs", badURLs);
 		}
 	}

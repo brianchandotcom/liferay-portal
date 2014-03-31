@@ -77,7 +77,7 @@ public class RandomLayoutAction extends Action {
 			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 				generalGuestGroup.getGroupId(), false);
 
-			if (layouts.size() > 0) {
+			if (!layouts.isEmpty()) {
 				Layout randomLayout = layouts.get(
 					RandomUtil.nextInt(layouts.size()));
 

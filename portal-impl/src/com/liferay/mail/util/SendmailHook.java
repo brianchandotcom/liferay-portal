@@ -47,7 +47,7 @@ public class SendmailHook implements Hook {
 
 				File file = new File(home + "/" + userId + "/.forward");
 
-				if (emailAddresses.size() > 0) {
+				if (!emailAddresses.isEmpty()) {
 					StringBundler sb = new StringBundler(
 						emailAddresses.size() * 2);
 
@@ -143,7 +143,7 @@ public class SendmailHook implements Hook {
 
 		File file = new File(home + "/" + userId + "/.procmailrc");
 
-		if ((blocked == null) || (blocked.size() == 0)) {
+		if ((blocked == null) || blocked.isEmpty()) {
 			file.delete();
 
 			return;

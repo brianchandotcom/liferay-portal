@@ -184,7 +184,7 @@ public class InstanceWrapperBuilder {
 				newExceptions.add(thrownException.getValue());
 			}
 
-			if (newExceptions.size() > 0) {
+			if (!newExceptions.isEmpty()) {
 				sb.append(" throws ");
 
 				for (String newException : newExceptions) {

@@ -630,7 +630,7 @@ public class InvokerPortletImpl implements InvokerPortlet {
 
 		Map<String, String[]> properties = portletResponse.getProperties();
 
-		if ((properties != null) && (properties.size() > 0)) {
+		if ((properties != null) && !properties.isEmpty()) {
 			if (_expCache != null) {
 				String[] expCache = properties.get(
 					RenderResponse.EXPIRATION_CACHE);

@@ -1093,7 +1093,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			actions = ResourceActionsUtil.getModelResourceActions(name);
 		}
 
-		if (actions.size() == 0) {
+		if (actions.isEmpty()) {
 			throw new ResourceActionsException(
 				"There are no actions associated with the resource " + name);
 		}

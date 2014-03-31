@@ -312,7 +312,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
 		throws PortalException, SystemException {
 
-		if (inputStreamOVPs.size() == 0) {
+		if (inputStreamOVPs.isEmpty()) {
 			return;
 		}
 
@@ -1449,7 +1449,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		List<WikiPage> versionPages = wikiPagePersistence.findByN_T(
 			nodeId, title);
 
-		if (versionPages.size() == 0) {
+		if (versionPages.isEmpty()) {
 			return;
 		}
 

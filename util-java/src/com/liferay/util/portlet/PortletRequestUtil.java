@@ -237,7 +237,7 @@ public class PortletRequestUtil {
 		else if (obj instanceof Collection<?>) {
 			Collection<?> col = (Collection<?>)obj;
 
-			if (col.size() == 0) {
+			if (col.isEmpty()) {
 				return false;
 			}
 			else {
@@ -247,7 +247,7 @@ public class PortletRequestUtil {
 		else if (obj instanceof Map<?, ?>) {
 			Map<?, ?> map = (Map<?, ?>)obj;
 
-			if (map.size() == 0) {
+			if (map.isEmpty()) {
 				return false;
 			}
 			else {

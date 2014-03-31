@@ -629,7 +629,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				if (fileName.endsWith(".war") || fileName.endsWith(".zip")) {
 					deploy = true;
 
-					if (wars.size() > 0) {
+					if (!wars.isEmpty()) {
 						if (!wars.contains(srcFile.getName())) {
 							deploy = false;
 						}
@@ -1833,7 +1833,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		Properties properties = getPluginPackageProperties(srcFile);
 
-		if ((properties == null) || (properties.size() == 0)) {
+		if ((properties == null) || properties.isEmpty()) {
 			return null;
 		}
 

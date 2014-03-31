@@ -483,7 +483,7 @@ public class DLStoreImpl implements DLStore {
 
 			fullQuery.add(contextQuery, BooleanClauseOccur.MUST);
 
-			if (searchQuery.clauses().size() > 0) {
+			if (!searchQuery.clauses().isEmpty()) {
 				fullQuery.add(searchQuery, BooleanClauseOccur.MUST);
 			}
 

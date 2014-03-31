@@ -117,7 +117,7 @@ public class DefaultUpgradeTableImpl
 			getSortedColumnName(sortedColumnNames, upgradeColumn);
 		}
 
-		if (sortedColumnNames.size() > 0) {
+		if (!sortedColumnNames.isEmpty()) {
 			Arrays.sort(columns, new ColumnsComparator(sortedColumnNames));
 		}
 

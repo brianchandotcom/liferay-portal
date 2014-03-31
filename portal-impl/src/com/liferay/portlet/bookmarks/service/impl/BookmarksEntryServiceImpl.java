@@ -164,7 +164,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 		List<Long> folderIds = bookmarksFolderService.getFolderIds(
 			groupId, rootFolderId);
 
-		if (folderIds.size() == 0) {
+		if (folderIds.isEmpty()) {
 			return Collections.emptyList();
 		}
 		else if (userId <= 0) {
@@ -215,7 +215,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 		List<Long> folderIds = bookmarksFolderService.getFolderIds(
 			groupId, rootFolderId);
 
-		if (folderIds.size() == 0) {
+		if (folderIds.isEmpty()) {
 			return 0;
 		}
 		else if (userId <= 0) {

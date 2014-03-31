@@ -71,14 +71,12 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<if>
-			<not>
-				<equals arg1="${fieldShowLabel}" arg2="No" />
-			</not>
+			<equals arg1="${fieldShowLabel}" arg2="No" />
 			<then>
-				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="FIELD_LABEL" value1="${fieldFieldLabel}" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertElementNotPresent" locator-key1="FIELD_LABEL" />
 			</then>
 			<else>
-				<execute action="CPDynamicdatalistsListAddrecord#assertElementNotPresent" locator-key1="FIELD_LABEL" />
+				<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="FIELD_LABEL" value1="${fieldFieldLabel}" />
 			</else>
 		</if>
 

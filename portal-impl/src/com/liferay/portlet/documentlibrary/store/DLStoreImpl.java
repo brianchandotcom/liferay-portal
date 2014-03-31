@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
+import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
@@ -59,6 +60,8 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -483,7 +486,9 @@ public class DLStoreImpl implements DLStore {
 
 			fullQuery.add(contextQuery, BooleanClauseOccur.MUST);
 
-			if (!searchQuery.clauses().isEmpty()) {
+			List<BooleanClause> clauses = searchQuery.clauses();
+
+			if (!clauses.isEmpty()) {
 				fullQuery.add(searchQuery, BooleanClauseOccur.MUST);
 			}
 

@@ -74,6 +74,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Tibor Lipusz
  */
 public class UploadImageAction extends PortletAction {
 
@@ -101,7 +102,13 @@ public class UploadImageAction extends PortletAction {
 				throw new PortalException(uploadException.getCause());
 			}
 			else if (cmd.equals(Constants.ADD_TEMP)) {
-				addTempImageFile(actionRequest);
+				FileEntry tempImageFile = addTempImageFile(actionRequest);
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+				jsonObject.put("tempImageFileName", tempImageFile.getTitle());
+
+				writeJSON(actionRequest, actionResponse, jsonObject);
 			}
 			else {
 				FileEntry fileEntry = null;
@@ -230,10 +237,15 @@ public class UploadImageAction extends PortletAction {
 			throw new ImageTypeException();
 		}
 
+		String sourceFileName = uploadPortletRequest.getFileName("fileName");
+
+		sourceFileName = getTempImageFileName(portletRequest).concat(
+			StringPool.UNDERLINE).concat(sourceFileName);
+
 		try {
 			TempFileUtil.deleteTempFile(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				getTempImageFileName(portletRequest), getTempImageFolderName());
+				sourceFileName, getTempImageFolderName());
 		}
 		catch (Exception e) {
 		}
@@ -245,8 +257,8 @@ public class UploadImageAction extends PortletAction {
 
 			return TempFileUtil.addTempFile(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				getTempImageFileName(portletRequest), getTempImageFolderName(),
-				inputStream, contentType);
+				sourceFileName, getTempImageFolderName(), inputStream,
+				contentType);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);

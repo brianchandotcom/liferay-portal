@@ -26,7 +26,6 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 <portlet:resourceURL var="previewURL">
 	<portlet:param name="struts_action" value="/image_uploader/view" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" />
-	<portlet:param name="tempImageFileName" value="<%= tempImageFileName %>" />
 </portlet:resourceURL>
 
 <c:choose>
@@ -34,6 +33,8 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 
 		<%
 		FileEntry fileEntry = (FileEntry)SessionMessages.get(renderRequest, "imageUploaded");
+
+		previewURL = HttpUtil.addParameter(previewURL, "tempImageFileName", tempImageFileName);
 		%>
 
 		<aui:script>

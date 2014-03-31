@@ -44,6 +44,7 @@ AUI.add(
 						instance._formValidator = Liferay.Form.get(instance._formNode.attr('id')).formValidator;
 						instance._portraitPreviewImg = instance.one('#portraitPreviewImg');
 						instance._submitButton = instance.one('#submitButton');
+						instance._tempImageFileName = instance.one('#tempImageFileName').val();
 					},
 
 					bindUI: function() {
@@ -96,19 +97,26 @@ AUI.add(
 						catch (err) {
 						}
 
-						if (responseText.errorMessage) {
-							var messageNode = instance._getMessageNode(responseText.errorMessage, 'alert alert-error');
-
-							instance._formNode.prepend(messageNode);
-						}
-
-						var previewURL = instance.get('previewURL');
-
-						previewURL = Liferay.Util.addParams('t=' + Lang.now(), previewURL);
-
 						var portraitPreviewImg = instance._portraitPreviewImg;
 
-						portraitPreviewImg.attr('src', previewURL);
+						if (Lang.isObject(responseText)) {
+							if (responseText.errorMessage) {
+								var messageNode = instance._getMessageNode(responseText.errorMessage, 'alert alert-error');
+
+								instance._formNode.prepend(messageNode);
+							}
+
+							if (responseText.tempImageFileName) {
+								instance._tempImageFileName = responseText.tempImageFileName;
+
+								var previewURL = instance.get('previewURL');
+
+								previewURL = Liferay.Util.addParams(instance.get('namespace') + 'tempImageFileName=' + responseText.tempImageFileName, previewURL);
+								previewURL = Liferay.Util.addParams('t=' + Lang.now(), previewURL);
+
+								portraitPreviewImg.attr('src', previewURL);
+							}
+						}
 
 						portraitPreviewImg.removeClass('loading');
 					},
@@ -263,6 +271,9 @@ AUI.add(
 
 							instance._cropRegionNode.val(A.JSON.stringify(cropRegion));
 						}
+
+						instance.one('#previewURL').val(portraitPreviewImg.attr('src'));
+						instance.one('#tempImageFileName').val(instance._tempImageFileName);
 					},
 
 					_setCropBackgroundSize: function(width, height) {

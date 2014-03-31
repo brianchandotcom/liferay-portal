@@ -253,6 +253,30 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="record-testray-components">
+		<sequential>
+			<property file="${basedir}/test.run.properties" />
+
+			<if>
+				<not>
+					<isset property="testray.main.component" />
+				</not>
+				<then>
+					<property name="testray.main.component" value="" />
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<isset property="testray.components" />
+				</not>
+				<then>
+					<property name="testray.components" value="${testray.main.component}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<target name="build-sql-file">
 		<if>
 			<isset property="sql.legacy.url" />
@@ -401,6 +425,7 @@ create database lportal2 character set utf8;</echo>
 		<record-env-java-jdk />
 		<record-env-liferay-portal />
 		<record-env-operating-system />
+		<record-testray-components />
 
 		<property name="file.properties">
 			<![CDATA[
@@ -428,6 +453,8 @@ create database lportal2 character set utf8;</echo>
 					<property name="operating.system.version" value="${operating.system.version}" />
 					<property name="testray.build.name" value="${testray.build.name}" />
 					<property name="testray.build.type" value="${testray.build.type}" />
+					<property name="testray.components" value="${testray.components}" />
+					<property name="testray.main.component" value="${testray.main.component}" />
 					<property name="testray.product.type" value="${testray.product.type}" />
 					<property name="testray.product.version" value="${testray.product.version}" />
 					<property name="testray.project.name" value="${testray.project.name}" />

@@ -486,7 +486,7 @@ public class Entity {
 	}
 
 	public boolean hasColumns() {
-		if ((_columnList == null) || _columnList.isEmpty()) {
+		if (ListUtil.isEmpty(_columnList)) {
 			return false;
 		}
 		else {

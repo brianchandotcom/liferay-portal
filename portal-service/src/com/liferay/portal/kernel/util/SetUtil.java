@@ -163,7 +163,7 @@ public class SetUtil {
 			return (Set<E>)c;
 		}
 
-		if ((c == null) || (c.isEmpty())) {
+		if ((c == null) || (c.size() == 0)) {
 			return new HashSet<E>();
 		}
 
@@ -212,7 +212,7 @@ public class SetUtil {
 	}
 
 	public static <E> Set<E> fromList(List<? extends E> array) {
-		if ((array == null) || array.isEmpty()) {
+		if (ListUtil.isEmpty(array)) {
 			return new HashSet<E>();
 		}
 

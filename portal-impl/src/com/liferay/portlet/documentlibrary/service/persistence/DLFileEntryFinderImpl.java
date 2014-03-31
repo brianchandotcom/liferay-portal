@@ -134,9 +134,10 @@ public class DLFileEntryFinderImpl
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
 
+		List<Long> repositoryIds = Collections.emptyList();
+
 		return doCountByG_U_R_F_M(
-			groupId, 0, Collections.EMPTY_LIST, folderIds, null,
-			queryDefinition, false);
+			groupId, 0, repositoryIds, folderIds, null, queryDefinition, false);
 	}
 
 	@Override
@@ -223,8 +224,10 @@ public class DLFileEntryFinderImpl
 			QueryDefinition queryDefinition)
 		throws SystemException {
 
+		List<Long> repositoryIds = Collections.emptyList();
+
 		return doCountByG_U_R_F_M(
-			groupId, userId, Collections.EMPTY_LIST, folderIds, mimeTypes,
+			groupId, userId, repositoryIds, folderIds, mimeTypes,
 			queryDefinition, false);
 	}
 
@@ -246,8 +249,10 @@ public class DLFileEntryFinderImpl
 			QueryDefinition queryDefinition)
 		throws SystemException {
 
+		List<Long> repositoryIds = Collections.emptyList();
+
 		return doCountByG_U_R_F_M(
-			groupId, userId, Collections.EMPTY_LIST, folderIds, mimeTypes,
+			groupId, userId, repositoryIds, folderIds, mimeTypes,
 			queryDefinition, true);
 	}
 
@@ -292,9 +297,10 @@ public class DLFileEntryFinderImpl
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
 
+		List<Long> repositoryIds = Collections.emptyList();
+
 		return doCountByG_U_R_F_M(
-			groupId, 0, Collections.EMPTY_LIST, folderIds, null,
-			queryDefinition, true);
+			groupId, 0, repositoryIds, folderIds, null, queryDefinition, true);
 	}
 
 	@Override
@@ -312,9 +318,10 @@ public class DLFileEntryFinderImpl
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
 
+		List<Long> repositoryIds = Collections.emptyList();
+
 		return doFindByG_U_R_F_M(
-			groupId, 0, Collections.EMPTY_LIST, folderIds, null,
-			queryDefinition, true);
+			groupId, 0, repositoryIds, folderIds, null, queryDefinition, true);
 	}
 
 	@Override
@@ -333,8 +340,10 @@ public class DLFileEntryFinderImpl
 			QueryDefinition queryDefinition)
 		throws SystemException {
 
+		List<Long> repositoryIds = Collections.emptyList();
+
 		return doFindByG_U_R_F_M(
-			groupId, userId, Collections.EMPTY_LIST, folderIds, mimeTypes,
+			groupId, userId, repositoryIds, folderIds, mimeTypes,
 			queryDefinition, true);
 	}
 
@@ -543,9 +552,10 @@ public class DLFileEntryFinderImpl
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
 
+		List<Long> repositoryIds = Collections.emptyList();
+
 		return doFindByG_U_R_F_M(
-			groupId, 0, Collections.EMPTY_LIST, folderIds, null,
-			queryDefinition, false);
+			groupId, 0, repositoryIds, folderIds, null, queryDefinition, false);
 	}
 
 	@Override
@@ -564,8 +574,10 @@ public class DLFileEntryFinderImpl
 			QueryDefinition queryDefinition)
 		throws SystemException {
 
+		List<Long> repositoryIds = Collections.emptyList();
+
 		return doFindByG_U_R_F_M(
-			groupId, userId, Collections.EMPTY_LIST, folderIds, mimeTypes,
+			groupId, userId, repositoryIds, folderIds, mimeTypes,
 			queryDefinition, false);
 	}
 

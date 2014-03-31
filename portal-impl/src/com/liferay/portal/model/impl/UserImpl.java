@@ -769,11 +769,11 @@ public class UserImpl extends UserBaseImpl {
 			Set<String> organizationQuestions =
 				organization.getReminderQueryQuestions(getLanguageId());
 
-			if (organizationQuestions.size() == 0) {
+			if (organizationQuestions.isEmpty()) {
 				Organization parentOrganization =
 					organization.getParentOrganization();
 
-				while ((organizationQuestions.size() == 0) &&
+				while (organizationQuestions.isEmpty() &&
 					   (parentOrganization != null)) {
 
 					organizationQuestions =
@@ -788,7 +788,7 @@ public class UserImpl extends UserBaseImpl {
 			questions.addAll(organizationQuestions);
 		}
 
-		if (questions.size() == 0) {
+		if (questions.isEmpty()) {
 			Set<String> defaultQuestions = SetUtil.fromArray(
 				PropsUtil.getArray(PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS));
 

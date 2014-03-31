@@ -423,7 +423,7 @@ public class LiveUsers {
 			}
 		}
 
-		if (userTrackers.size() == 0) {
+		if (userTrackers.isEmpty()) {
 			Map<Long, List<UserTracker>> userTrackersMap = _getUserTrackersMap(
 				companyId);
 

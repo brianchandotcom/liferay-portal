@@ -92,7 +92,7 @@ public class ShoppingOrderLocalServiceImpl
 			shoppingOrderPersistence.findByG_U_PPPS(
 				groupId, userId, ShoppingOrderConstants.STATUS_CHECKOUT, 0, 1);
 
-		if (pastOrders.size() > 0) {
+		if (!pastOrders.isEmpty()) {
 			ShoppingOrder pastOrder = pastOrders.get(0);
 
 			order = shoppingOrderPersistence.create(orderId);

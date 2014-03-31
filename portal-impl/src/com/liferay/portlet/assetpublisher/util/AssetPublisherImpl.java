@@ -1254,7 +1254,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (assetEntryUuids.size() == 0) {
+		if (assetEntryUuids.isEmpty()) {
 			return;
 		}
 

@@ -450,7 +450,7 @@ public class SCProductEntryLocalServiceImpl
 
 		// Product screenshots
 
-		if (thumbnails.size() == 0) {
+		if (thumbnails.isEmpty()) {
 			scProductScreenshotLocalService.deleteProductScreenshots(
 				productEntryId);
 		}

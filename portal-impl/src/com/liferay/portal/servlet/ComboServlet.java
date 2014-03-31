@@ -109,7 +109,7 @@ public class ComboServlet extends HttpServlet {
 			modulePathsSet.add(name);
 		}
 
-		if (modulePathsSet.size() == 0) {
+		if (modulePathsSet.isEmpty()) {
 			response.sendError(
 				HttpServletResponse.SC_BAD_REQUEST,
 				"Modules paths set is empty");

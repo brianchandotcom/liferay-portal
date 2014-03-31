@@ -1667,13 +1667,13 @@ public class ServicePreAction extends Action {
 				userGroup.getGroupId(), true,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-			if (layouts.size() == 0) {
+			if (layouts.isEmpty()) {
 				layouts = LayoutLocalServiceUtil.getLayouts(
 					userGroup.getGroupId(), false,
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 			}
 
-			if (layouts.size() > 0) {
+			if (!layouts.isEmpty()) {
 				layout = layouts.get(0);
 			}
 
@@ -1694,13 +1694,13 @@ public class ServicePreAction extends Action {
 						group.getGroupId(), true,
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-					if (layouts.size() == 0) {
+					if (layouts.isEmpty()) {
 						layouts = LayoutLocalServiceUtil.getLayouts(
 							group.getGroupId(), false,
 							LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 					}
 
-					if (layouts.size() > 0) {
+					if (!layouts.isEmpty()) {
 						layout = layouts.get(0);
 
 						break;
@@ -1770,7 +1770,7 @@ public class ServicePreAction extends Action {
 				guestGroup.getGroupId(), false,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-			if (layouts.size() > 0) {
+			if (!layouts.isEmpty()) {
 				layout = layouts.get(0);
 			}
 		}

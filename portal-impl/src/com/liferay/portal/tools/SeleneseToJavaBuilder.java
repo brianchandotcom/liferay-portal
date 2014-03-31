@@ -563,7 +563,7 @@ public class SeleneseToJavaBuilder {
 			}
 		}
 
-		if (labels.size() > 0) {
+		if (!labels.isEmpty()) {
 			sb.append("int label = 1;");
 
 			sb.append("while (label >= 1) {");
@@ -1288,7 +1288,7 @@ public class SeleneseToJavaBuilder {
 			}
 		}
 
-		if (labels.size() > 0) {
+		if (!labels.isEmpty()) {
 			sb.append("case 100:");
 			sb.append("label = -1;");
 			sb.append("}");

@@ -230,7 +230,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			addWeeklyDayPos(portletRequest, dayPos, Calendar.FRIDAY);
 			addWeeklyDayPos(portletRequest, dayPos, Calendar.SATURDAY);
 
-			if (dayPos.size() == 0) {
+			if (dayPos.isEmpty()) {
 				dayPos.add(new DayAndPosition(Calendar.MONDAY, 0));
 			}
 

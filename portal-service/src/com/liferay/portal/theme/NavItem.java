@@ -132,7 +132,9 @@ public class NavItem implements Serializable {
 	}
 
 	public boolean hasChildren() throws Exception {
-		if (getChildren().size() > 0) {
+		List<NavItem> children = getChildren();
+
+		if (!children.isEmpty()) {
 			return true;
 		}
 		else {

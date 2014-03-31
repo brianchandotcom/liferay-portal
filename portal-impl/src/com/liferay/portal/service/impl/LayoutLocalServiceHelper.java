@@ -234,7 +234,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			List<Layout> layouts = layoutPersistence.findByG_P_P(
 				groupId, privateLayout, parentLayoutId, 0, 1);
 
-			if (layouts.size() == 0) {
+			if (layouts.isEmpty()) {
 				firstLayout = true;
 			}
 			else {

@@ -866,7 +866,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		List<Organization> userOrgs =
 			OrganizationLocalServiceUtil.getUserOrganizations(userId);
 
-		if (userOrgs.size() == 0) {
+		if (userOrgs.isEmpty()) {
 			return userOrgs;
 		}
 

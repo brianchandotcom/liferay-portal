@@ -1158,7 +1158,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			List<Layout> layouts = layoutPersistence.findByGroupId(
 				groupId, 0, 1);
 
-			if (layouts.size() > 0) {
+			if (!layouts.isEmpty()) {
 				Layout layout = layouts.get(0);
 
 				return layout.getPlid();
@@ -1185,7 +1185,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			List<Layout> layouts = layoutPersistence.findByG_P(
 				groupId, privateLayout, 0, 1);
 
-			if (layouts.size() > 0) {
+			if (!layouts.isEmpty()) {
 				Layout layout = layouts.get(0);
 
 				return layout.getPlid();

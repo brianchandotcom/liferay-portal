@@ -819,7 +819,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 			List<Element> optionElements = dynamicContentElement.elements(
 				"option");
 
-			if (optionElements.size() > 0) {
+			if (!optionElements.isEmpty()) {
 				for (Element optionElement : optionElements) {
 					values.add(optionElement.getText());
 				}

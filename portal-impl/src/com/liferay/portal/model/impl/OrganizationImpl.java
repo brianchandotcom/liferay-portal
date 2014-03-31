@@ -98,7 +98,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 		try {
 			List<Address> addresses = getAddresses();
 
-			if (addresses.size() > 0) {
+			if (!addresses.isEmpty()) {
 				address = addresses.get(0);
 			}
 		}

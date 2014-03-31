@@ -78,7 +78,7 @@ public class RandomLookAndFeelAction extends Action {
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 				themeDisplay.getUserId(), wapTheme);
 
-			if (themes.size() > 0) {
+			if (!themes.isEmpty()) {
 				Theme theme = themes.get(RandomUtil.nextInt(themes.size()));
 
 				List<ColorScheme> colorSchemes = theme.getColorSchemes();

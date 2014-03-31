@@ -204,7 +204,7 @@ public class Element {
 	}
 
 	private void _flushPendingOpenElements() {
-		while (_elementStack.size() > 0) {
+		while (!_elementStack.isEmpty()) {
 			_closeElement(_elementStack.removeLast());
 		}
 	}

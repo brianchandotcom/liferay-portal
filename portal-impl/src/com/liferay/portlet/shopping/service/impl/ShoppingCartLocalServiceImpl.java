@@ -151,7 +151,7 @@ public class ShoppingCartLocalServiceImpl
 			}
 		}
 
-		if (badItemIds.size() > 0) {
+		if (!badItemIds.isEmpty()) {
 			throw new CartMinQuantityException(
 				StringUtil.merge(
 					badItemIds.toArray(new Long[badItemIds.size()])));

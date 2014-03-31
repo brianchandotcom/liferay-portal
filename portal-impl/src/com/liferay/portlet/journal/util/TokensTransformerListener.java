@@ -70,7 +70,7 @@ public class TokensTransformerListener extends BaseTransformerListener {
 	protected String replace(String s, Map<String, String> tokens) {
 		Set<Map.Entry<String, String>> tokensSet = tokens.entrySet();
 
-		if (tokensSet.size() == 0) {
+		if (tokensSet.isEmpty()) {
 			return s;
 		}
 

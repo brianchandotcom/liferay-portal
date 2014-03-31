@@ -394,7 +394,7 @@ public class SeleniumBuilder {
 				}
 			}
 
-			if (productTestCaseMethodNames.size() != 0) {
+			if (!productTestCaseMethodNames.isEmpty()) {
 				String testCaseMethodNamesString = StringUtil.merge(
 					productTestCaseMethodNames.toArray(
 						new String[productTestCaseMethodNames.size()]),

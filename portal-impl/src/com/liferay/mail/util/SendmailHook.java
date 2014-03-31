@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,7 +48,7 @@ public class SendmailHook implements Hook {
 
 				File file = new File(home + "/" + userId + "/.forward");
 
-				if (emailAddresses.size() > 0) {
+				if (!emailAddresses.isEmpty()) {
 					StringBundler sb = new StringBundler(
 						emailAddresses.size() * 2);
 
@@ -143,7 +144,7 @@ public class SendmailHook implements Hook {
 
 		File file = new File(home + "/" + userId + "/.procmailrc");
 
-		if ((blocked == null) || (blocked.size() == 0)) {
+		if (ListUtil.isEmpty(blocked)) {
 			file.delete();
 
 			return;

@@ -206,19 +206,17 @@ public class DLFileEntryLocalServiceImpl
 				repository.getDlFolderId());
 		}
 
+		long classNameId = 0;
+		long classPK = 0;
+
 		if ((repositoryDLFolder != null) && repositoryDLFolder.isHidden()) {
-			long classNameId = classNameLocalService.getClassNameId(
+			classNameId = classNameLocalService.getClassNameId(
 				(String)serviceContext.getAttribute("className"));
-			long classPK = ParamUtil.getLong(serviceContext, "classPK");
-
-			if (Validator.isNotNull(classNameId) &&
-				Validator.isNotNull(classPK)) {
-
-				dlFileEntry.setClassNameId(classNameId);
-				dlFileEntry.setClassPK(classPK);
-			}
+			classPK = ParamUtil.getLong(serviceContext, "classPK");
 		}
 
+		dlFileEntry.setClassNameId(classNameId);
+		dlFileEntry.setClassPK(classPK);
 		dlFileEntry.setRepositoryId(repositoryId);
 		dlFileEntry.setFolderId(folderId);
 		dlFileEntry.setTreePath(dlFileEntry.buildTreePath());

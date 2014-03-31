@@ -21,7 +21,7 @@
 	<tear-down>
 		<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="BlogsPortlet#tearDownConfigurationDisplaySettingsPG" />
+		<execute macro="BlogsPortlet#tearDownConfigurationDisplaySettingsCP" />
 
 		<execute macro="BlogsPortlet#tearDownConfigurationScopePG" />
 

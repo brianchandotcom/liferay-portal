@@ -363,7 +363,7 @@ create database lportal2 character set utf8;</echo>
 							</or>
 							<then>
 								<property name="sql.dir" value="sql\create${database.create.suffix}\" />
-								<property name="sql.file" value="create${database.create.suffix}-${database.family}.sql" />
+								<property name="sql.file" value="create${database.create.suffix}-${database.type}.sql" />
 							</then>
 						</if>
 
@@ -713,12 +713,10 @@ create database lportal2 character set utf8;</echo>
 						/>
 					</delete>
 
-					<copy todir="${todir}">
-						<fileset
-							dir="${jdbc.drivers.optional.dir}/oracle/10.2.0.1.0"
-							includes="${jdbc.oracle.driver}"
-						/>
-					</copy>
+					<get
+						dest="${todir}"
+						src="${test.jdbc.drivers.url}/oracle/10.2.0.1.0/${jdbc.oracle.driver}"
+					/>
 				</then>
 			</elseif>
 			<elseif>
@@ -734,12 +732,10 @@ create database lportal2 character set utf8;</echo>
 						/>
 					</delete>
 
-					<copy todir="${todir}">
-						<fileset
-							dir="${jdbc.drivers.optional.dir}/oracle/11.2.0.1.0"
-							includes="${jdbc.oracle.driver}"
-						/>
-					</copy>
+					<get
+						dest="${todir}"
+						src="${test.jdbc.drivers.url}/oracle/11.2.0.1.0/${jdbc.oracle.driver}"
+					/>
 				</then>
 			</elseif>
 		</if>
@@ -2224,7 +2220,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 						<copy file="sql/${database.name}.script" tofile="${liferay.home}/data/hsql/${database.name}.script" />
 					</then>
 					<elseif>
-						<equals arg1="${database.family}" arg2="mysql" />
+						<equals arg1="${database.type}" arg2="mysql" />
 						<then>
 							<var name="mysql.arg.line" unset="true" />
 
@@ -2255,6 +2251,18 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 							<exec executable="${mysql.executable}" input="create.sql">
 								<arg line="${mysql.arg.line}" />
+							</exec>
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${database.type}" arg2="oracle" />
+						<then>
+							<var name="oracle.arg.line" unset="true" />
+
+							<var name="oracle.arg.line" value="${oracle.admin.user}/${oracle.admin.password} @create.sql ${database.username} ${database.password}" />
+
+							<exec executable="${oracle.sqlplus.executable}">
+								<arg line="${oracle.arg.line}" />
 							</exec>
 						</then>
 					</elseif>

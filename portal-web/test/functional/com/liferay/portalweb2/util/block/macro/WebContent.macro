@@ -261,11 +261,6 @@
 		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
 		<execute action="PGWebcontentdisplayAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGWebcontentdisplayAddwebcontent#pause" locator1="5000" />
-
-		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
-
-		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 	</command>
 
 	<command name="addPGViaWCD">

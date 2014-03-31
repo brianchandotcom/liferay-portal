@@ -23,6 +23,10 @@
 		<case comparator="startsWith" locator-key1="SORT_BY_MENULIST_">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
+		<case comparator="startsWith" locator-key1="TOOLBAR_">
+			<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" />
+		</case>
 	</command>
 
 	<command name="assertElementNotPresent">

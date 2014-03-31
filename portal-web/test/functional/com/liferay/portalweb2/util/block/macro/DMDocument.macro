@@ -37,8 +37,6 @@
 			</then>
 		</if>
 
-		<execute action="Home#pause" locator1="3000" />
-
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 

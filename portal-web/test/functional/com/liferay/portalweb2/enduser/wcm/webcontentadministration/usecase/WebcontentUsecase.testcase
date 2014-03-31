@@ -141,7 +141,7 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="WebContentDisplayPortlet#selectWebContentStructure">
+		<execute macro="WebContentDisplayPortlet#selectWebContentGlobalStructure">
 			<var name="selectStructureName" value="Basic Web Content" />
 			<var name="structureName" value="Global WC Structure Name" />
 			<var name="templateName" value="Local WC Template Name" />

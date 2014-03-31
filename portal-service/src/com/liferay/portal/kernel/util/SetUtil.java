@@ -212,7 +212,7 @@ public class SetUtil {
 	}
 
 	public static <E> Set<E> fromList(List<? extends E> array) {
-		if ((array == null) || array.isEmpty()) {
+		if (ListUtil.isEmpty(array)) {
 			return new HashSet<E>();
 		}
 

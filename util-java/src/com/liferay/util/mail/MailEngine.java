@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.mail.SMTPAccount;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -268,7 +269,7 @@ public class MailEngine {
 
 			message.setSubject(subject);
 
-			if ((fileAttachments != null) && !fileAttachments.isEmpty()) {
+			if (ListUtil.isNotEmpty(fileAttachments)) {
 				MimeMultipart rootMultipart = new MimeMultipart(
 					_MULTIPART_TYPE_MIXED);
 

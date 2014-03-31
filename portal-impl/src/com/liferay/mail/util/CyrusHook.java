@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -219,7 +220,7 @@ public class CyrusHook implements Hook {
 
 		File file = new File(home + "/" + userId + ".procmail.blocked");
 
-		if ((blocked == null) || blocked.isEmpty()) {
+		if (ListUtil.isEmpty(blocked)) {
 			file.delete();
 
 			return;

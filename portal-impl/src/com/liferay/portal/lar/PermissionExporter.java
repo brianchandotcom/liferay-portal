@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PrimitiveLongList;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -255,7 +256,7 @@ public class PermissionExporter {
 	}
 
 	protected boolean hasRole(List<Role> roles, String roleName) {
-		if ((roles == null) || roles.isEmpty()) {
+		if (ListUtil.isEmpty(roles)) {
 			return false;
 		}
 

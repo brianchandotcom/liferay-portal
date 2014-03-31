@@ -2750,7 +2750,7 @@ public class JournalArticleLocalServiceImpl
 					orderByComparator);
 			}
 
-			if ((articles == null) || articles.isEmpty()) {
+			if (ListUtil.isEmpty(articles)) {
 				articles = journalArticlePersistence.findByResourcePrimKey(
 					resourcePrimKey, 0, 1, orderByComparator);
 			}

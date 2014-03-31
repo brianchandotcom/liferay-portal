@@ -54,6 +54,7 @@
 		<execute action="BaseExportLAR#assertClick" locator-key1="NAVIGATION_IMPORT" value1="Import" />
 		<execute action="BaseImportLAR#assertClick" locator-key1="SELECT_FILE_BUTTON" value1="Select File" />
 
+		<execute action="Sikuli#click" locator-key1="TYPE_FILE_NAME" />
 		<execute action="Sikuli#uploadTempFile" locator-key1="FILE_DIALOG" value1="${larFileName}" />
 
 		<execute action="BaseImportLAR#assertTextEquals" locator-key1="FILE_TITLE" value1="${larFileName}" />

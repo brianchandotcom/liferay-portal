@@ -15,6 +15,7 @@
 package com.liferay.cobertura.instrument;
 
 import org.objectweb.asm.Label;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.MethodNode;
 
@@ -31,7 +32,7 @@ public class BackwardCompatibleMethodNode extends MethodNode {
 		int access, String name, String desc, String signature,
 		String[] exceptions) {
 
-		super(access, name, desc, signature, exceptions);
+		super(Opcodes.ASM5, access, name, desc, signature, exceptions);
 	}
 
 	@Override

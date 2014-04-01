@@ -35,7 +35,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 		Map<Label, JumpHolder> jumpLabels, Map<Label, Integer> lineLabels,
 		Map<Label, SwitchHolder> switchLabels) {
 
-		super(Opcodes.ASM4, methodVisitor);
+		super(Opcodes.ASM5, methodVisitor);
 
 		_owner = owner;
 		_jumpLabels = jumpLabels;
@@ -203,7 +203,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 		mv.visitIntInsn(Opcodes.SIPUSH, line);
 		mv.visitMethodInsn(
 			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touch",
-			"(Ljava/lang/String;I)V");
+			"(Ljava/lang/String;I)V", false);
 
 		super.visitLineNumber(line, start);
 	}
@@ -244,9 +244,16 @@ public class TouchMethodVisitor extends MethodVisitor {
 	public void visitMethodInsn(
 		int opcode, String owner, String name, String desc) {
 
+		visitMethodInsn(opcode, owner, name, desc, false);
+	}
+
+	@Override
+	public void visitMethodInsn(
+		int opcode, String owner, String name, String desc, boolean itf) {
+
 		_touchBranch();
 
-		super.visitMethodInsn(opcode, owner, name, desc);
+		super.visitMethodInsn(opcode, owner, name, desc, itf);
 	}
 
 	@Override
@@ -329,7 +336,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 
 		mv.visitMethodInsn(
 			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touchJump",
-			"(Ljava/lang/String;IIZ)V");
+			"(Ljava/lang/String;IIZ)V", false);
 
 		mv.visitIntInsn(Opcodes.SIPUSH, -1);
 		mv.visitVarInsn(Opcodes.ISTORE, _variableIndex + 1);
@@ -344,7 +351,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 
 		mv.visitMethodInsn(
 			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touchSwitch",
-			"(Ljava/lang/String;III)V");
+			"(Ljava/lang/String;III)V", false);
 	}
 
 	private static final String _TOUCH_COLLECTOR_CLASS =

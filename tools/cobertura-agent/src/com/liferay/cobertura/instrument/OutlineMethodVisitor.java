@@ -37,7 +37,7 @@ public class OutlineMethodVisitor extends MethodVisitor {
 		String[] exceptions) {
 
 		super(
-			Opcodes.ASM4,
+			Opcodes.ASM5,
 			new BackwardCompatibleMethodNode(
 				access, name, desc, signature, exceptions));
 

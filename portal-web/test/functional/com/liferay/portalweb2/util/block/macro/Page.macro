@@ -71,6 +71,11 @@
 		<execute macro="Staging#submitForPublicationPageRevision" />
 	</command>
 
+	<command name="assertLocalizedPG">
+		<execute action="PGSignin#assertTextEquals" locator-key1="PORTLET_CONTENT_LOCALIZED" value1="${localizedContent}" />
+		<execute action="Dockbar#assertTextEquals" locator-key1="ADMIN" value1="${localizedAdmin}" />
+	</command>
+
 	<command name="changeLogoViaPageCP">
 		<execute action="CPSitepages#assertClick" locator-key1="LOGO_NAVIGATION" value1="Logo" />
 		<execute action="CPSitepages#assertClick" locator-key1="LOGO_CHANGE_BUTTON" value1="Change" />
@@ -159,6 +164,48 @@
 		</if>
 	</command>
 
+	<command name="gotoCmdLocalizedCP">
+		<execute macro="Page#openURL" />
+
+		<var name="key_localizedPortletCategoryName" value="${localizedPortletCategoryName}" />
+
+		<execute action="Dockbar#click" locator-key1="ADMIN_LOCALIZED" value1="${localizedAdmin}" />
+		<execute action="Dockbar#click" locator-key1="${portletCategoryKey}" value1="${localizedPortletCategoryName}" />
+
+		<if>
+			<isset var="siteScopeName" />
+			<then>
+				<execute action="Home#click" locator-key1="SCOPE_SELECTOR" />
+
+				<var name="key_siteScopeName" value="${siteScopeName}" />
+
+				<execute action="Home#click" locator-key1="SCOPE_SELECTOR_MENULIST_ITEM" />
+			</then>
+		</if>
+
+		<var name="key_portletCategoryName" value="${localizedPortletCategoryName}" />
+
+		<if>
+			<condition action="Home#isElementPresent" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${localizedPortletCategoryName}" />
+			<then>
+				<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${localizedPortletCategoryName}" />
+
+				<execute action="Home#assertTextEquals" locator-key1="SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${localizedPortletCategoryName}" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<contains string="${portletName}" substring="{portletName}" />
+			</not>
+			<then>
+				<var name="key_portletName" value="${portletName}" />
+
+				<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+			</then>
+		</if>
+	</command>
+
 	<command name="gotoConfigurationCP">
 		<description message="Navigate to Site Administration > Configuration > ${portletName}." />
 
@@ -166,6 +213,16 @@
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONFIGURATION" />
 			<var name="portletCategoryName" value="Configuration" />
 			<var name="portletName" value="${portletName}" />
+		</execute>
+	</command>
+
+	<command name="gotoConfigurationLocalizedCP">
+		<description message="Navigate to Site Administration > Configuration > ${portletName}." />
+
+		<execute macro="Page#gotoCmdLocalizedCP">
+			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONFIGURATION_LOCALIZED" />
+			<var name="localizedPortletCategoryName" value="${localizedPortletCategoryName}" />
+			<var name="localizedPortletName" value="${localizedPortletName}" />
 		</execute>
 	</command>
 
@@ -195,6 +252,21 @@
 				<execute action="Home#click" locator-key1="CONTROL_PANEL_NAVIGATION" />
 			</then>
 		</if>
+	</command>
+
+	<command name="gotoCPLocalized">
+		<description message="Navigate to Control Panel > ${portletName}." />
+
+		<execute macro="Page#openURL" />
+
+		<var name="key_localizedControlPanel" value="${localizedControlPanel}" />
+
+		<execute action="Dockbar#click" locator-key1="ADMIN_LOCALIZED" value1="${localizedAdmin}" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL_LOCALIZED" value1="${localizedControlPanel}" />
+
+		<var name="key_portletName" value="${localizedPortletName}" />
+
+		<execute action="Home#assertClick" locator-key1="CONTROL_PANEL_NAVIGATION" />
 	</command>
 
 	<command name="gotoMyAccount">
@@ -406,6 +478,29 @@
 
 	<command name="viewPageLayoutColumn">
 		<execute action="Home#assertElementPresent" locator-key1="${pageColumnLayout}" />
+	</command>
+
+	<command name="viewPageLocalization">
+		<if>
+			<condition action="Home#isElementPresent" locator-key1="PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" />
+			<then>
+				<execute action="Home#click" locator-key1="PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" />
+			</then>
+		</if>
+
+		<execute action="Dockbar#click" locator-key1="EDIT" />
+
+		<var name="key_defaultSiteLanguageKey" value="${defaultSiteLanguageKey}" />
+
+		<if>
+			<condition action="Dockbar#isElementNotPresent" locator-key1="EDIT_SEO_HTML_TITLE" />
+			<then>
+				<execute action="Dockbar#assertClick" locator-key1="EDIT_SEO" value1="SEO" />
+			</then>
+		</if>
+
+		<execute action="Dockbar#assertElementPresent" locator-key1="EDIT_SEO_HTML_TITLE" />
+		<execute action="Dockbar#assertElementPresent" locator-key1="EDIT_SEO_META_TAGS_DESCRIPTION" />
 	</command>
 
 	<command name="viewPanelPortletListPG">

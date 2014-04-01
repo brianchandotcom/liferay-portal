@@ -54,6 +54,12 @@
 					<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 					<execute action="CPSites#click" locator-key1="ADD_SITE_TEMPLATE_SITE" />
+					<if>
+						<equals arg1="${uncheckPropagation}" arg2="true" />
+						<then>
+							<execute action="CPSitesAdd#uncheck" locator-key1="ENABLE_PROPAGATION_CHECKBOX" />
+						</then>
+					</if>
 				</then>
 			</elseif>
 			<else>
@@ -348,6 +354,58 @@
 		<execute action="CPUsersandorganizationsUser#selectFrame" value1="relative=top" />
 		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="configureCurrentLanguagesCP">
+		<var name="key_displaySettings" value="${displaySettings}" />
+
+		<execute action="CPSitesettings#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS_LOCALIZED" value1="${displaySettings}" />
+
+		<execute action="CPSitesettingsDisplaysettings#check" locator-key1="DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO" />
+
+		<if>
+			<isset var="currentSiteLanguages" />
+			<then>
+				<while>
+					<condition action="CPSitesettingsDisplaysettings#isElementPresent" locator-key1="AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
+					<then>
+						<execute action="CPSitesettingsDisplaysettings#click" locator-key1="AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
+						<execute action="CPSitesettingsDisplaysettings#click" locator-key1="MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
+					</then>
+				</while>
+
+				<for list="${currentSiteLanguages}" param="currentSiteLanguage">
+					<var name="currentSiteLanguage" value="${currentSiteLanguage}" />
+
+					<execute action="CPSitesettingsDisplaysettings#select" locator-key1="AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${currentSiteLanguage}" />
+					<execute action="CPSitesettingsDisplaysettings#click" locator-key1="MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
+					<execute action="CPSitesettingsDisplaysettings#assertTextEquals" locator-key1="AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentSiteLanguage}" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="defaultSiteLanguage" />
+			<then>
+				<var name="defaultSiteLanguage" value="${defaultSiteLanguage}" />
+
+				<execute action="CPSitesettingsDisplaysettings#select" locator-key1="DEFAULT_LANGUAGE_SELECT" value1="${defaultSiteLanguage}" />
+			</then>
+		</if>
+
+		<execute action="CPSitesettingsDisplaysettings#click" locator-key1="SAVE_BUTTON" />
+
+		<if>
+			<isset var="localizedSuccessMessage" />
+			<then>
+				<var name="localizedSuccessMessage" value="${localizedSuccessMessage}" />
+
+				<execute action="CPSitesettingsDisplaysettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="${localizedSuccessMessage}" />
+			</then>
+			<else>
+				<execute action="CPSitesettingsDisplaysettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</else>
+		</if>
 	</command>
 
 	<command name="deactivateOrganizationSiteCP">
@@ -785,6 +843,35 @@
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
 	</command>
 
+	<command name="viewCurrentLanguagesCP">
+		<var name="key_displaySettings" value="${displaySettings}" />
+
+		<execute action="CPSitesettings#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS_LOCALIZED" value1="${displaySettings}" />
+
+		<execute action="CPSitesettingsDisplaysettings#check" locator-key1="DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO" value1="Display Settings" />
+
+		<for list="${currentSiteLanguages}" param="currentSiteLanguage">
+			<var name="currentSiteLanguage" value="${currentSiteLanguage}" />
+
+			<execute action="CPSitesettingsDisplaysettings#assertTextEquals" locator-key1="AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentSiteLanguage}" />
+		</for>
+
+		<for list="${availableSiteLanguages}" param="availableSiteLanguage">
+			<var name="availableSiteLanguage" value="${availableSiteLanguage}" />
+
+			<execute action="CPSitesettingsDisplaysettings#assertTextEquals" locator-key1="AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${availableSiteLanguage}" />
+		</for>
+
+		<if>
+			<isset var="defaultSiteLanguage" />
+			<then>
+				<var name="defaultSiteLanguage" value="${defaultSiteLanguage}" />
+
+				<execute action="CPSitesettingsDisplaysettings#select" locator-key1="DEFAULT_LANGUAGE_SELECT" value1="${defaultSiteLanguage}" />
+			</then>
+		</if>
+	</command>
+
 	<command name="viewLimitMembershipParentSiteCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -859,11 +946,35 @@
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_DELETE" value1="Delete" />
 	</command>
 
+	<command name="viewSiteClonedFromSiteTemplateCP">
+		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+		<execute action="CPSitesettings#assertClick" locator-key1="MENU_BASIC_INFORMATION_SITE_TEMPLATE" value1="Site Template" />
+
+		<if>
+			<equals arg1="${clonedFromTemplate}" arg2="true" />
+			<then>
+				<execute action="CPSitesettingsSitetemplate#assertTextEquals" locator-key1="SITE_CLONED_FROM_TEMPLATE_MESSAGE" value1="This site was cloned from site template ${siteTemplateName}" />
+			</then>
+			<else>
+				<execute action="CPSitesettingsSitetemplate#assertTextEquals" locator-key1="SITE_NOT_CLONED_FROM_TEMPLATE_MESSAGE" value1="This site is not related to a site template." />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewSiteFriendlyURLPG">
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
 		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
 		<execute action="Home#assertLocation" value1="${sitePageURL}" />
+	</command>
+
+	<command name="viewSiteNotClonedFromSiteTemplateCP">
+		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+		<execute action="CPSitesettings#assertClick" locator-key1="MENU_BASIC_INFORMATION_SITE_TEMPLATE" value1="Site Template" />
+
+		<execute action="CPSitesettingsSitetemplate#assertTextEquals" locator-key1="SITE_CLONED_FROM_TEMPLATE_MESSAGE" value1="Site Template" />
 	</command>
 
 	<command name="viewSitePG">

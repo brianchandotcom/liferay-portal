@@ -54,6 +54,43 @@
 		</if>
 	</command>
 
+	<command name="configureCurrentLanguagesCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+
+		<if>
+			<isset var="defaultPortalLanguage" />
+			<then>
+				<var name="defaultPortalLanguage" value="${defaultPortalLanguage}" />
+
+				<execute action="CPSitesettingsDisplaysettings#select" locator-key1="DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="currentPortalLanguages" />
+			<then>
+				<while>
+					<condition action="CPPortalsettingsDisplaysettings#isElementPresent" locator-key1="AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
+					<then>
+						<execute action="CPPortalsettingsDisplaysettings#click" locator-key1="AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
+						<execute action="CPPortalsettingsDisplaysettings#click" locator-key1="MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
+					</then>
+				</while>
+
+				<for list="${currentPortalLanguages}" param="currentPortalLanguage">
+					<var name="currentPortalLanguage" value="${currentPortalLanguage}" />
+
+					<execute action="CPPortalsettingsDisplaysettings#select" locator-key1="AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${currentPortalLanguage}" />
+					<execute action="CPPortalsettingsDisplaysettings#click" locator-key1="MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
+					<execute action="CPPortalsettingsDisplaysettings#assertTextEquals" locator-key1="AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentPortalLanguage}" />
+				</for>
+			</then>
+		</if>
+
+		<execute action="CPPortalsettingsDisplaysettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettingsDisplaysettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="disableLDAPCP">
 		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
 
@@ -336,6 +373,12 @@
 
 		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
 		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
+	</command>
+
+	<command name="viewCurrentDefaultPortalLanguageCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="${displaySettings}" />
+
+		<execute action="CPPortalsettingsDisplaysettings#assertSelectedLabel" locator-key1="DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
 	</command>
 
 	<command name="viewDefaultUserAssociationsCP">

@@ -268,9 +268,22 @@
 		<execute action="PGWebcontentdisplay#click" locator-key1="ADD_WEB_CONTENT" />
 
 		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
-		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
-		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
-		<execute action="PGWebcontentdisplayAddwebcontent#click" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<if>
+			<equals arg1="${localizedTitle}" arg2="true" />
+			<then>
+				<var name="key_languageKey" value="${defaultSiteLanguageKey}" />
+
+				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD_LOCALIZED" value1="${webContentTitle}" />
+				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
+				<execute action="PGWebcontentdisplayAddwebcontent#click" locator-key1="LOCALIZED_PUBLISH_BUTTON" />
+			</then>
+			<else>
+				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
+				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
+				<execute action="PGWebcontentdisplayAddwebcontent#click" locator-key1="PUBLISH_BUTTON" />
+			</else>
+		</if>
 
 		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
 
@@ -828,6 +841,24 @@
 
 	<command name="viewPGViaWCD">
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+
+		<if>
+			<equals arg1="${availableLanguages}" arg2="true" />
+			<then>
+				<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" />
+
+				<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
+				<execute action="PGWebcontentdisplayEditwebcontent#click" locator-key1="ADD_TRANSLATION_MENULIST" />
+
+				<var name="key_webContentTranslationLanguage" value="${webContentTranslationLanguage1}" />
+
+				<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="${webContentTranslationLanguage1}" />
+
+				<var name="key_webContentTranslationLanguage" value="${webContentTranslationLanguage2}" />
+
+				<execute action="PGWebcontentdisplayEditwebcontent#assertTextNotPresent" locator-key1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="${webContentTranslationLanguage2}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewSelectNoPGViaWCD">

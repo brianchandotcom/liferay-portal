@@ -569,11 +569,4 @@
 			<var name="ddlTemplateName" value="Template Rev" />
 		</execute>
 	</command>
-
-	<command name="SpreadsheetAndRecordView" priority="5">
-		<execute macro="DDLTemplate#viewFormTemplateCP">
-			<var name="ddlDataDefinitionName" value="Data Definition Clone With Form Template" />
-			<var name="ddlTemplateName" value="Template Rev" />
-		</execute>
-	</command>
 </definition>

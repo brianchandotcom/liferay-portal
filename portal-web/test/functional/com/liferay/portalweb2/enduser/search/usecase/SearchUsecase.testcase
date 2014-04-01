@@ -381,9 +381,6 @@
 	<command name="SearchXSSAsset" priority="5">
 		<property name="custom.properties" value="index.search.highlight.enabled=false" />
 
-		<var name="threadSubject" value="Thread Subject" />
-		<var name="threadBody"><![CDATA[<script>alert("Liferay Alert")</script>]]></var>
-
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
@@ -405,8 +402,8 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody"><![CDATA[<script>alert("Liferay Alert")</script>]]></var>
+			<var name="threadSubject" value="Thread Subject" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -417,12 +414,10 @@
 			<var name="searchTerm" value="Liferay Alert" />
 		</execute>
 
-		<var name="searchAssetTitle" value="${threadSubject}" />
-
-		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
-
-		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
-
-		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_SUMMARY" value1="${threadBody}" />
+		<execute macro="Search#viewSearchPG">
+			<var name="searchAssetTitle" value="Thread Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchAssetSummary"><![CDATA[<script>alert("Liferay Alert")</script>]]></var>
+		</execute>
 	</command>
 </definition>

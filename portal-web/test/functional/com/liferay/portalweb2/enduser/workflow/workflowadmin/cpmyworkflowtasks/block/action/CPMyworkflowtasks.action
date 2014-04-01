@@ -8,22 +8,6 @@
 			<execute function="AssertClick#pauseAssertTextClickAt" />
 		</case>
 
-		<case locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="COMPLETED_TABLE_ASSET_TITLE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="PREVIEW_ACTIVITY">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
 		<case locator-key1="PANEL_OK_BUTTON">
 			<execute function="AssertClick#pauseAssertTextClickAt" />
 		</case>

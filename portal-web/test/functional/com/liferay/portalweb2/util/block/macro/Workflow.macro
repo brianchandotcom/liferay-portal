@@ -1,6 +1,5 @@
 <definition>
 	<command name="approveTaskByActions">
-		<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
@@ -15,6 +14,8 @@
 		<if>
 			<isset var="workflowActivityComment" />
 			<then>
+				<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
+
 				<execute action="CPMyworkflowtasks#type" locator-key1="PANEL_COMMENT_FIELD" value1="${workflowActivityComment}" />
 			</then>
 		</if>

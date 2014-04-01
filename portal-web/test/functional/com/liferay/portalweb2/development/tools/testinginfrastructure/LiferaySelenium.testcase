@@ -5,9 +5,17 @@
 
 	<command name="UsingMethods" priority="5">
 		<var name="url" method="selenium#getLocation()" />
-		<echo message="${url}" />
 
-		<var name="newURL" method='StringUtil#replace("${url}", "guest","hello")' />
-		<echo message="${newURL}" />
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${url}" />
+			<var name="expected" value="http://localhost:8080/web/guest" />
+		</execute>
+
+		<var name="url" method='StringUtil#replace("${url}", "guest", "hello")' />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${url}" />
+			<var name="expected" value="http://localhost:8080/web/hello" />
+		</execute>
 	</command>
 </definition>

@@ -1778,6 +1778,10 @@ public class SeleniumBuilderFileUtil {
 
 				throwValidationException(1005, fileName, element, "method");
 			}
+
+			if (!methodValue.contains("#")) {
+				throwValidationException(1005, fileName, element, "method");
+			}
 		}
 
 		if (!attributeMap.containsKey("value") && Validator.isNull(varText)) {

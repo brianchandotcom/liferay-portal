@@ -40,6 +40,36 @@
 
 		${variableContext}.put("${varName}", RuntimeVariables.evaluateVariable(${selenium}.${seleniumMethod}(RuntimeVariables.evaluateVariable("${locatorValue}", ${variableContext})), ${variableContext}));
 	</#if>
+<#elseif varElement.attributeValue("method")??>
+	<#assign method = varElement.attributeValue("method")>
+
+	<#if "${method}"?starts_with("StringUtil")>
+		<#assign objectName = "StringUtil">
+	<#else>
+		<#assign objectName = "${selenium}">
+	</#if>
+
+	<#assign x = method?last_index_of("#")>
+	<#assign y = method?last_index_of("(")>
+	<#assign z = method?last_index_of(")")>
+
+	<#assign methodParameters  = method?substring(y + 1, z)>
+
+	${variableContext}.put("${varName}", ${objectName}.${method?substring(x + 1, y)}(
+		<#if "${methodParameters}" != "">
+			<#list methodParameters?split(",") as methodParameter>
+				<#assign parameter = methodParameter?replace("\"", "")>
+
+				<#assign parameter = parameter?trim>
+
+				RuntimeVariables.evaluateVariable("${parameter}", ${variableContext})
+
+				<#if methodParameter_has_next>
+					,
+				</#if>
+			</#list>
+		</#if>
+	));
 <#else>
 	${variableContext}.put("${varName}", RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(varValue)}", ${variableContext}));
 </#if>

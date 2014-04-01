@@ -474,6 +474,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SITE_ADMIN_CONTENT_BOOKMARKS_BOOKMARKS_ENTRY-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_BOOKMARKS_BOOKMARKS_ENTRY_VIEW_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.bookmarks.model.BookmarksEntryVIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BOOKMARKS_BOOKMARKS_ENTRY_VIEW_CHANGE_LINK</td>
+	<td>//a[@id='_128_comliferayportletbookmarksmodelBookmarksEntryVIEW']/span[contains(.,'Change')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BOOKMARKS_BOOKMARKS_ENTRY_VIEW_SITE_SCOPE</td>
+	<td>//span[@id='_128_groupHTMLcom.liferay.portlet.bookmarks.model.BookmarksEntryVIEW']/span[contains(.,'${key_siteNameScope}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_CONTENT_MESSAGE_BOARDS_GENERAL-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_GENERAL_ALL_CHECKBOX</td>

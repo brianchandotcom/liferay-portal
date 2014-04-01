@@ -122,6 +122,13 @@
 			</then>
 		</if>
 
+		<if>
+			<isset var="bookmarkViewableBy" />
+			<then>
+				<execute action="PGBookmarksAddBookmark#select" locator-key1="VIEWABLE_BY_SELECT" value1="${bookmarkViewableBy}" />
+			</then>
+		</if>
+
 		<execute action="PGBookmarksAddBookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -414,6 +421,11 @@
 
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
+	</command>
+
+	<command name="viewNoPG">
+		<execute action="PGBookmarks#assertTextNotPresent" value1="${bookmarkName}" />
+		<execute action="PGBookmarks#assertTextNotPresent" value1="${bookmarkURL}" />
 	</command>
 
 	<command name="viewPG">

@@ -249,6 +249,13 @@
 					</then>
 				</elseif>
 				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_BOOKMARKS" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BOOKMARKS" />
+						<var name="permissionNavigationValue" value="Bookmarks" />
+					</then>
+				</elseif>
+				<elseif>
 					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
@@ -322,6 +329,27 @@
 						<execute action="CPRolesDefinepermissionsAllpermissions#uncheck" locator-key1="${permissionDefinitionKey}" />
 					</then>
 				</elseif>
+			</if>
+
+			<if>
+				<isset var="siteNameScope" />
+				<then>
+					<var name="permissionDefinitionKeyChange" value="${permissionDefinitionKey?replace('CHECKBOX', 'CHANGE_LINK')}" />
+
+					<execute action="CPRolesDefinepermissionsAllpermissions#assertClick" locator-key1="${permissionDefinitionKeyChange}" value1="Change" />
+
+					<var name="key_siteNameScope" value="${siteNameScope}" />
+
+					<execute action="CPRolesDefinepermissionsSelectSite#selectFrame" locator-key1="SELECT_SITE_IFRAME" />
+					<execute action="CPRolesDefinepermissionsSelectSite#assertTextEquals" locator-key1="SCOPE_SITES_TABLE_NAME" value1="${siteNameScope}" />
+					<execute action="CPRolesDefinepermissionsSelectSite#click" locator-key1="SCOPE_SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+
+					<var name="key_siteNameScope" value="${siteNameScope}" />
+					<var name="permissionDefinitionKeySiteScope" value="${permissionDefinitionKey?replace('CHECKBOX', 'SITE_SCOPE')}" />
+
+					<execute action="CPRolesDefinepermissionsAllpermissions#selectFrame" value1="relative=top" />
+					<execute action="CPRolesDefinepermissionsAllpermissions#assertTextEquals" locator-key1="${permissionDefinitionKeySiteScope}" value1="${siteNameScope}" />
+				</then>
 			</if>
 		</for>
 

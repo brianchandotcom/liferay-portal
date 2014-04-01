@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
@@ -48,6 +49,7 @@ import javax.naming.ldap.LdapContext;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  * @author Wesley Gong
+ * @author Vilmos Papp
  */
 @DoPrivileged
 public class PortalLDAPExporterImpl implements PortalLDAPExporter {
@@ -254,8 +256,25 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 				user.getEmailAddress());
 
 			if (binding == null) {
-				binding = addUser(
-					ldapServerId, ldapContext, user, userMappings);
+				String emailAddress = user.getEmailAddress();
+
+				String originalEmailAddress =
+					LDAPUserTransactionThreadLocal.getOriginalEmailAddress();
+
+				if (Validator.isNotNull(originalEmailAddress) &&
+					!emailAddress.equals(originalEmailAddress)) {
+
+					emailAddress = originalEmailAddress;
+				}
+
+				binding = PortalLDAPUtil.getUser(
+					ldapServerId, user.getCompanyId(), user.getScreenName(),
+					emailAddress);
+
+				if (binding == null) {
+					binding = addUser(
+						ldapServerId, ldapContext, user, userMappings);
+				}
 			}
 
 			Name name = new CompositeName();

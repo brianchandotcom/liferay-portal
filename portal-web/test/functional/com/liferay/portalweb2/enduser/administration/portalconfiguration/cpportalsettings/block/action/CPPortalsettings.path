@@ -79,6 +79,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--MENU_MISCELLANEOUS-->
+<tr>
+	<td>MENU_MISCELLANEOUS_DISPLAY_SETTINGS</td>
+	<td>//a[@id='_130_displaySettingsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MAIN_CONFIGURATION-->
 <tr>
 	<td>MAIN_CONFIGURATION_NAME_FIELD</td>

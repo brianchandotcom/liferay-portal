@@ -166,6 +166,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENU_MISCELLANEOUS_DISPLAY_SETTINGS_LOCALIZED</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'${key_displaySettings}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -122,7 +122,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 		ClassWriter classWriter = new ClassWriter(0);
 
 		classWriter.visit(
-			Opcodes.V1_5, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER,
+			Opcodes.V1_6, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER,
 			constantsBeanClassBinaryName, null, objectClassBinaryName, null);
 
 		MethodVisitor methodVisitor = classWriter.visitMethod(
@@ -131,7 +131,8 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 		methodVisitor.visitCode();
 		methodVisitor.visitVarInsn(Opcodes.ALOAD, 0);
 		methodVisitor.visitMethodInsn(
-			Opcodes.INVOKESPECIAL, objectClassBinaryName, "<init>", "()V");
+			Opcodes.INVOKESPECIAL, objectClassBinaryName, "<init>", "()V",
+			false);
 		methodVisitor.visitInsn(Opcodes.RETURN);
 		methodVisitor.visitMaxs(1, 1);
 		methodVisitor.visitEnd();
@@ -140,9 +141,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 
 		for (Field field :fields) {
 			if (Modifier.isStatic(field.getModifiers())) {
-				Class<?> fieldClass = field.getType();
-
-				Type fieldType = Type.getType(fieldClass);
+				Type fieldType = Type.getType(field.getType());
 
 				methodVisitor = classWriter.visitMethod(
 					Opcodes.ACC_PUBLIC, "get" + field.getName(),
@@ -153,24 +152,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 					Opcodes.GETSTATIC, constantsClassBinaryName,
 					field.getName(), fieldType.getDescriptor());
 
-				int returnOpcode = Opcodes.ARETURN;
-
-				if (fieldClass.isPrimitive()) {
-					if (fieldClass == Float.TYPE) {
-						returnOpcode = Opcodes.FRETURN;
-					}
-					else if (fieldClass == Double.TYPE) {
-						returnOpcode = Opcodes.DRETURN;
-					}
-					else if (fieldClass == Long.TYPE) {
-						returnOpcode = Opcodes.LRETURN;
-					}
-					else {
-						returnOpcode = Opcodes.IRETURN;
-					}
-				}
-
-				methodVisitor.visitInsn(returnOpcode);
+				methodVisitor.visitInsn(fieldType.getOpcode(Opcodes.IRETURN));
 
 				methodVisitor.visitMaxs(fieldType.getSize(), 1);
 				methodVisitor.visitEnd();

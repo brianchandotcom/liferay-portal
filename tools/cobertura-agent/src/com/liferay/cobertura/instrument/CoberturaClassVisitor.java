@@ -31,7 +31,7 @@ public class CoberturaClassVisitor extends ClassVisitor {
 	public CoberturaClassVisitor(
 		ClassData classData, ClassVisitor classVisitor) {
 
-		super(Opcodes.ASM4, classVisitor);
+		super(Opcodes.ASM5, classVisitor);
 
 		_classData = classData;
 	}

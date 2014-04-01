@@ -14,52 +14,45 @@
  */
 --%>
 
-<c:if test="<%= themeDisplay.isSignedIn() && !PropsValues.SESSION_DISABLED %>">
+<c:if test="<%= !PropsValues.SESSION_DISABLED %>">
 
 	<%
-	String autoRememberMe = CookieKeys.getCookie(request, CookieKeys.REMEMBER_ME);
+	int sessionTimeout = PropsValues.SESSION_TIMEOUT;
+	int sessionTimeoutMinute = sessionTimeout * (int)Time.MINUTE;
+	int sessionTimeoutWarning = PropsValues.SESSION_TIMEOUT_WARNING;
+
+	boolean sessionRedirectOnExpire = PropsValues.SESSION_TIMEOUT_REDIRECT_ON_EXPIRE;
+	String sessionRedirectUrl = themeDisplay.getURLHome();
+
+	long companyId = themeDisplay.getCompanyId();
+
+	if (PrefsPropsUtil.getBoolean(companyId, PropsKeys.CAS_AUTH_ENABLED, PropsValues.CAS_AUTH_ENABLED) && PropsValues.CAS_LOGOUT_ON_SESSION_EXPIRATION) {
+		sessionRedirectOnExpire = true;
+		sessionRedirectUrl = PrefsPropsUtil.getString(companyId, PropsKeys.CAS_LOGOUT_URL, PropsValues.CAS_LOGOUT_URL);
+	}
+	else if (PrefsPropsUtil.getBoolean(companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED, PropsValues.OPEN_SSO_AUTH_ENABLED) && PropsValues.OPEN_SSO_LOGOUT_ON_SESSION_EXPIRATION) {
+		sessionRedirectOnExpire = true;
+		sessionRedirectUrl = PrefsPropsUtil.getString(companyId, PropsKeys.OPEN_SSO_LOGOUT_URL, PropsValues.OPEN_SSO_LOGOUT_URL);
+	}
+
+	Calendar sessionTimeoutCal = CalendarFactoryUtil.getCalendar(timeZone);
+
+	sessionTimeoutCal.add(Calendar.MILLISECOND, sessionTimeoutMinute);
 	%>
 
-	<c:if test="<%= Validator.isNull(autoRememberMe) %>">
+	<aui:script use="liferay-session">
+		Liferay.Session = new Liferay.SessionBase(
+			{
+				autoExtend: <%= PropsValues.SESSION_TIMEOUT_AUTO_EXTEND %>,
+				sessionLength: <%= sessionTimeout %>,
+				redirectOnExpire: <%= sessionRedirectOnExpire %>,
+				redirectUrl: '<%= HtmlUtil.escapeJS(sessionRedirectUrl) %>',
+				warningLength: <%= sessionTimeoutWarning %>
+			}
+		);
 
-		<%
-		int sessionTimeout = PropsValues.SESSION_TIMEOUT;
-		int sessionTimeoutMinute = sessionTimeout * (int)Time.MINUTE;
-		int sessionTimeoutWarning = PropsValues.SESSION_TIMEOUT_WARNING;
-
-		boolean sessionRedirectOnExpire = PropsValues.SESSION_TIMEOUT_REDIRECT_ON_EXPIRE;
-		String sessionRedirectUrl = themeDisplay.getURLHome();
-
-		long companyId = themeDisplay.getCompanyId();
-
-		if (PrefsPropsUtil.getBoolean(companyId, PropsKeys.CAS_AUTH_ENABLED, PropsValues.CAS_AUTH_ENABLED) && PropsValues.CAS_LOGOUT_ON_SESSION_EXPIRATION) {
-			sessionRedirectOnExpire = true;
-			sessionRedirectUrl = PrefsPropsUtil.getString(companyId, PropsKeys.CAS_LOGOUT_URL, PropsValues.CAS_LOGOUT_URL);
-		}
-		else if (PrefsPropsUtil.getBoolean(companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED, PropsValues.OPEN_SSO_AUTH_ENABLED) && PropsValues.OPEN_SSO_LOGOUT_ON_SESSION_EXPIRATION) {
-			sessionRedirectOnExpire = true;
-			sessionRedirectUrl = PrefsPropsUtil.getString(companyId, PropsKeys.OPEN_SSO_LOGOUT_URL, PropsValues.OPEN_SSO_LOGOUT_URL);
-		}
-
-		Calendar sessionTimeoutCal = CalendarFactoryUtil.getCalendar(timeZone);
-
-		sessionTimeoutCal.add(Calendar.MILLISECOND, sessionTimeoutMinute);
-		%>
-
-		<aui:script use="liferay-session">
-			Liferay.Session = new Liferay.SessionBase(
-				{
-					autoExtend: <%= PropsValues.SESSION_TIMEOUT_AUTO_EXTEND %>,
-					sessionLength: <%= sessionTimeout %>,
-					redirectOnExpire: <%= sessionRedirectOnExpire %>,
-					redirectUrl: '<%= HtmlUtil.escapeJS(sessionRedirectUrl) %>',
-					warningLength: <%= sessionTimeoutWarning %>
-				}
-			);
-
-			<c:if test="<%= sessionTimeoutWarning > 0 %>">
-				Liferay.Session.plug(Liferay.SessionDisplay);
-			</c:if>
-		</aui:script>
-	</c:if>
+		<c:if test="<%= sessionTimeoutWarning > 0 %>">
+			Liferay.Session.plug(Liferay.SessionDisplay);
+		</c:if>
+	</aui:script>
 </c:if>

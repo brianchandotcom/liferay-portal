@@ -1,4 +1,29 @@
 <definition>
+	<command name="configureMessageAddedEmailCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
+
+		<if>
+			<equals arg1="${messageAddedEmailEnabled}" arg2="false" />
+			<then>
+				<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#uncheck" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertChecked" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
+			</else>
+		</if>
+
+		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
 	<command name="configureMessageAddedEmailPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
@@ -19,6 +44,31 @@
 
 		<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="configureMessageUpdatedEmailCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
+
+		<if>
+			<equals arg1="${messageUpdatedEmailEnabled}" arg2="false" />
+			<then>
+				<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#uncheck" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertChecked" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+			</else>
+		</if>
+
+		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureMessageUpdatedEmailPG">

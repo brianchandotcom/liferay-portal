@@ -27,7 +27,7 @@
 	</tear-down>
 
 	<command name="AddNewWebContentViaAddContentPanel" known-issues="LIFERAYQA-6795" priority="5">
-		<var name="assetType" value="Web Content Article" />
+		<var name="assetType" value="Basic Web Content" />
 		<var name="pageName" value="Web Content Page" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
@@ -47,6 +47,11 @@
 		<execute macro="WebContent#addPGViaPanel">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Liferay" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">

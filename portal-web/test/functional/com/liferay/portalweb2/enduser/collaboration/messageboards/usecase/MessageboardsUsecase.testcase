@@ -997,7 +997,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsPortlet#configureMessageAddedEmailPG">
+		<execute macro="MessageboardsPortlet#configureMessageAddedEmailCP">
 			<var name="messageAddedEmailEnabled" value="${messageAddedEmailEnabled}" />
 		</execute>
 
@@ -1005,7 +1005,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsPortlet#configureMessageUpdatedEmailPG">
+		<execute macro="MessageboardsPortlet#configureMessageUpdatedEmailCP">
 			<var name="messageUpdatedEmailEnabled" value="${messageUpdatedEmailEnabled}" />
 		</execute>
 

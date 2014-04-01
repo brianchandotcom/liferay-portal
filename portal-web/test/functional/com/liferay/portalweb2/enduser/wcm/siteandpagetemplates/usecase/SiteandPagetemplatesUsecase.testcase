@@ -720,4 +720,18 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
+
+	<command name="ViewNoAddPageTabViaPageTemplatesCP" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#gotoPageTemplateViaEdit">
+			<var name="pageTemplateName" value="Wiki" />
+		</execute>
+
+		<execute action="Home#selectWindow" locator1="title=Wiki - Liferay" />
+
+		<execute macro="Dockbar#viewAddTabsWithNoAddPagePermission" />
+	</command>
 </definition>

@@ -213,8 +213,38 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENTS_ADD_COMMENT_LINK</td>
+	<td>//span[contains(.,'Add Comment')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENTS_SUBSCRIBE_TO_COMMENTS_LINK</td>
 	<td>//span[contains(.,'Subscribe to Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_UNSUBSCRIBE_FROM_COMMENTS_LINK</td>
+	<td>//span[contains(.,'Unsubscribe from Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_BODY</td>
+	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//div[@class='lfr-discussion-message']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_COMMENT_FIELD</td>
+	<td>//textarea[contains(@id,'postReplyBody')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_REPLY_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Reply')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_CANCEL_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>

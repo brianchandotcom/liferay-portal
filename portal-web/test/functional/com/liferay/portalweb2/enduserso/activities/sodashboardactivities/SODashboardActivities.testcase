@@ -300,11 +300,13 @@
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${userFirstName}" />
+			<var name="microblogsEntryAuthorName" value="${userName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent4}" />
 		</execute>
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${userFirstName}" />
+			<var name="microblogsEntryAuthorName" value="${userName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent3}" />
 			<var name="row" value="02" />
 		</execute>
@@ -318,12 +320,14 @@
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
 			<var name="userFirstName" value="${microblogsEntryAuthorFirstName}" />
 		</execute>
 
 		<execute macro="SOActivities#viewMicroblogsActivityEntry">
 			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 			<var name="row" value="02" />
 			<var name="userFirstName" value="${microblogsEntryAuthorFirstName}" />

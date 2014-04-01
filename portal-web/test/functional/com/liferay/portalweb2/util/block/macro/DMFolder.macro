@@ -257,6 +257,22 @@
 		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 	</command>
 
+	<command name="removeFolderViewPermissionsPG">
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRY_ICON_FOLDER_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_FOLDER_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FOLDER_MENULIST_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dmFolderName}" />
+		<execute action="Permissions#uncheck" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Permissions#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />

@@ -2,7 +2,7 @@
 	<command name="addSiteContent">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Calendar" />
-			<var name="siteName" value="Open Site Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -11,26 +11,26 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="Regular" />
 			<var name="pageName" value="Calendar" />
-			<var name="siteName" value="Open Site Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents" />
-			<var name="siteName" value="Open Site Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="DMFolder#addPG">
 			<var name="dmFolderDescription" value="${dmFolderDescription}" />
 			<var name="dmFolderName" value="${dmFolderName}" />
-			<var name="siteName" value="Open Site Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents" />
-			<var name="siteName" value="Open Site Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -47,7 +47,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Forums" />
-			<var name="siteName" value="Open Site Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -57,7 +57,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Forums" />
-			<var name="siteName" value="Open Site Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -69,7 +69,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs" />
-			<var name="siteName" value="Open Site Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -77,7 +77,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki" />
-			<var name="siteName" value="Open Site Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -95,13 +95,13 @@
 
 		<execute macro="WikiPage#editFrontPagePG">
 			<var name="pageName" value="Wiki" />
-			<var name="siteName" value="Open Site Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="wikiPageContentEdit" value="${wikiPageContentEdit}" />
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="Open Site Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -110,6 +110,53 @@
 			<var name="bookmarksEntryName" value="${bookmarksEntryName}" />
 			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
 		</execute>
+	</command>
+
+	<command name="viewActivityEntryComment">
+		<if>
+			<isset var="row" />
+			<then>
+				<var name="row" value="${row}" />
+			</then>
+			<else>
+				<var name="row" value="01" />
+			</else>
+		</if>
+
+		<var name="key_row" value="${row}" />
+		<var name="key_userFirstName" value="${userFirstName}" />
+		<var name="key_userName" value="${userName}" />
+
+		<if>
+			<condition action="SOActivities#isNotVisible" locator-key1="ACTIVITIES_COMMENT_CONTENT" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</else>
+		</if>
+
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_USER_PICTURE" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT_USER_NAME" value1="${userName}" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT_CONTENT" value1="${commentContent}" />
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
 	<command name="viewBlogsActivityEntry">
@@ -124,13 +171,46 @@
 		</if>
 
 		<var name="key_row" value="${row}" />
+		<var name="key_userName" value="${userName}" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
+
+		<if>
+			<or>
+				<equals arg1="${dashboardView}" arg2="true" />
+				<equals arg1="${profileView}" arg2="true" />
+			</or>
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_TITLE" value1="${entryTitle}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_CONTENT" value1="${entryContent}" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+
+		<if>
+			<isset var="commentCount" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
@@ -146,13 +226,46 @@
 		</if>
 
 		<var name="key_row" value="${row}" />
+		<var name="key_userName" value="${userName}" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
+
+		<if>
+			<or>
+				<equals arg1="${dashboardView}" arg2="true" />
+				<equals arg1="${profileView}" arg2="true" />
+			</or>
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_TITLE" value1="${bookmarksEntryName}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_CONTENT" value1="${bookmarksEntryDescription}" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+
+		<if>
+			<isset var="commentCount" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
@@ -168,12 +281,45 @@
 		</if>
 
 		<var name="key_row" value="${row}" />
+		<var name="key_userName" value="${userName}" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
+
+		<if>
+			<or>
+				<equals arg1="${dashboardView}" arg2="true" />
+				<equals arg1="${profileView}" arg2="true" />
+			</or>
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_EVENT_DATE" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+
+		<if>
+			<isset var="commentCount" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
@@ -189,15 +335,48 @@
 		</if>
 
 		<var name="key_row" value="${row}" />
+		<var name="key_userName" value="${userName}" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
+
+		<if>
+			<or>
+				<equals arg1="${dashboardView}" arg2="true" />
+				<equals arg1="${profileView}" arg2="true" />
+			</or>
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_TITLE" value1="${dmDocumentTitle}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_DOCUMENT_VERSION" value1="Version ${dmDocumentVersionNumber}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_DOCUMENT_DESCRIPTION" value1="${dmDocumentDescription}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_DOWNLOAD" value1="Download" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+
+		<if>
+			<isset var="commentCount" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
@@ -213,8 +392,23 @@
 		</if>
 
 		<var name="key_row" value="${row}" />
+		<var name="key_userName" value="${userName}" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
+
+		<if>
+			<or>
+				<equals arg1="${dashboardView}" arg2="true" />
+				<equals arg1="${profileView}" arg2="true" />
+			</or>
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_TITLE" value1="${threadSubject}" />
@@ -234,6 +428,10 @@
 
 		<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
 
+		<var name="key_userName" value="${microblogsEntryAuthorName}" />
+
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
+
 		<if>
 			<equals arg1="${currentUser}" arg2="${microblogsEntryAuthorName}" />
 			<then>
@@ -249,13 +447,32 @@
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_VIEW_MICROBLOGS" value1="View Microblogs" />
 
 		<if>
-			<condition action="SOActivities#isElementPresent" locator-key1="ACTIVITIES_USER_LINK" />
+			<not>
+				<equals arg1="${microblogsEntryAuthorName}" arg2="${currentUser}" />
+			</not>
 			<then>
 				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_REPOST" value1="Repost" />
 			</then>
 		</if>
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+		<if>
+			<isset var="commentCount" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
@@ -283,6 +500,10 @@
 			</else>
 		</if>
 
+		<var name="key_userName" value="${microblogsEntryAuthorName}" />
+
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
+
 		<if>
 			<equals arg1="${microblogsEntryAuthorName}" arg2="${currentUser}" />
 			<then>
@@ -298,13 +519,32 @@
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_VIEW_MICROBLOGS" value1="View Microblogs" />
 
 		<if>
-			<condition action="SOActivities#isElementPresent" locator-key1="ACTIVITIES_USER_LINK" />
+			<not>
+				<equals arg1="${microblogsEntryAuthorName}" arg2="${currentUser}" />
+			</not>
 			<then>
 				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_REPOST" value1="Repost" />
 			</then>
 		</if>
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+		<if>
+			<isset var="commentCount" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
@@ -321,6 +561,10 @@
 
 		<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
 
+		<var name="key_userName" value="${microblogsEntryCommentAuthorName}" />
+
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
+
 		<if>
 			<equals arg1="${microblogsEntryCommentAuthorName}" arg2="${currentUser}" />
 			<then>
@@ -333,11 +577,17 @@
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="Commented on a microblog entry." />
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_CONTENT" value1="${microblogsEntryContent}" />
+
+		<var name="key_userName" value="${microblogsEntryAuthorName}" />
+
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ORIGINAL_MICROBLOGS_CONTENT" value1="${microblogsEntryContent}" />
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_ORIGINAL_MICROBLOGS_AUTHOR_PICTURE" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_VIEW_MICROBLOGS" value1="View Microblogs" />
 
 		<if>
-			<condition action="SOActivities#isElementPresent" locator-key1="ACTIVITIES_USER_LINK" />
+			<not>
+				<equals arg1="${microblogsEntryCommentAuthorName}" arg2="${currentUser}" />
+			</not>
 			<then>
 				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_REPOST" value1="Repost" />
 			</then>
@@ -353,6 +603,9 @@
 			</else>
 		</if>
 
+		<var name="key_userFirstName" value="${microblogsEntryCommentAuthorFirstName}" />
+
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_USER_PICTURE" value1="${microblogsEntryCommentAuthorName}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT_USER_NAME" value1="${microblogsEntryCommentAuthorName}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT_CONTENT" value1="${microblogsEntryCommentContent}" />
 
@@ -372,6 +625,10 @@
 
 		<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
 
+		<var name="key_userName" value="${microblogsEntryAuthorName}" />
+
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
+
 		<if>
 			<equals arg1="${currentUser}" arg2="${microblogsEntryAuthorName}" />
 			<then>
@@ -385,7 +642,25 @@
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${microblogsEntryContent}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_VIEW_MICROBLOGS" value1="View Microblogs" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+
+		<if>
+			<isset var="commentCount" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
@@ -400,9 +675,15 @@
 			</else>
 		</if>
 
+		<var name="key_userName" value="${microblogsEntryRepostAuthorName}" />
+
 		<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<var name="key_userName" value="${microblogsEntryRepostAuthorName}" />
+
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
 
 		<if>
 			<equals arg1="${microblogsEntryRepostAuthorName}" arg2="${currentUser}" />
@@ -436,13 +717,32 @@
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_VIEW_MICROBLOGS" value1="View Microblogs" />
 
 		<if>
-			<condition action="SOActivities#isElementPresent" locator-key1="ACTIVITIES_USER_LINK" />
+			<not>
+				<equals arg1="${microblogsEntryRepostAuthorName}" arg2="${currentUser}" />
+			</not>
 			<then>
 				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_REPOST" value1="Repost" />
 			</then>
 		</if>
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+		<if>
+			<isset var="commentCount" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
@@ -469,6 +769,10 @@
 				<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
 			</else>
 		</if>
+
+		<var name="key_userName" value="${microblogsEntryRepostAuthorName}" />
+
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
 
 		<if>
 			<equals arg1="${microblogsEntryRepostAuthorName}" arg2="${currentUser}" />
@@ -502,7 +806,24 @@
 			</then>
 		</if>
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+		<if>
+			<isset var="commentCount" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
@@ -518,8 +839,23 @@
 		</if>
 
 		<var name="key_row" value="${row}" />
+		<var name="key_userName" value="${userName}" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
+
+		<if>
+			<or>
+				<equals arg1="${dashboardView}" arg2="true" />
+				<equals arg1="${profileView}" arg2="true" />
+			</or>
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${documentsAction}" />
 
@@ -537,7 +873,24 @@
 			</then>
 		</while>
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+		<if>
+			<isset var="commentCount" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
@@ -584,14 +937,47 @@
 		</if>
 
 		<var name="key_row" value="${row}" />
+		<var name="key_userName" value="${userName}" />
 
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
+
+		<if>
+			<or>
+				<equals arg1="${dashboardView}" arg2="true" />
+				<equals arg1="${profileView}" arg2="true" />
+			</or>
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_TITLE" value1="${wikiPageTitle}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_CONTENT" value1="${wikiPageContent}" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_VIEW_CHANGES" value1="View Changes" />
-		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+
+		<if>
+			<isset var="commentCount" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+			</else>
+		</if>
+
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 </definition>

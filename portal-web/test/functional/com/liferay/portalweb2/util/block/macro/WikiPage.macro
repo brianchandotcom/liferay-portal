@@ -39,6 +39,37 @@
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiChildPageContent}" />
 	</command>
 
+	<command name="addCommentPG">
+		<var name="key_commentBody" value="${commentBody}" />
+
+		<if>
+			<and>
+				<condition action="PGWiki#isNotVisible" locator-key1="COMMENTS_BE_THE_FIRST_LINK" />
+				<condition action="PGWiki#isNotVisible" locator-key1="COMMENTS_ADD_COMMENT_LINK" />
+			</and>
+			<then>
+				<execute action="PGWiki#assertClick" locator-key1="COMMENTS_DROP_DOWN" value1="Comments" />
+			</then>
+		</if>
+
+		<if>
+			<condition action="PGWiki#isVisible" locator-key1="COMMENTS_BE_THE_FIRST_LINK" />
+			<then>
+				<execute action="PGWiki#assertClick" locator-key1="COMMENTS_BE_THE_FIRST_LINK" value1="Be the first." />
+			</then>
+			<elseif>
+				<condition action="PGWiki#isVisible" locator-key1="COMMENTS_ADD_COMMENT_LINK" />
+				<then>
+					<execute action="PGWiki#assertClick" locator-key1="COMMENTS_ADD_COMMENT_LINK" value1="Add Comment" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="PGWiki#type" locator-key1="COMMENTS_COMMENT_FIELD" value1="${commentBody}" />
+		<execute action="PGWiki#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+	</command>
+
 	<command name="addCP">
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
@@ -564,6 +595,27 @@
 		<execute action="PGWikiEditpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="removeViewPermissionPG">
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+
+		<execute action="PGWiki#assertClick" locator-key1="DETAILS_BUTTON" value1="Details" />
+
+		<execute action="PGWikiWikipageDetails#assertClick" locator-key1="PERMISSIONS_LINK" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${wikiPageTitle}" />
+		<execute action="Permissions#uncheck" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Permissions#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="renameWikiPagePG">

@@ -1,4 +1,15 @@
 <definition>
+	<command name="addCommentPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
+		<execute action="PGDocumentsandmediaDocument#type" locator-key1="COMMENTS_COMMENT_FIELD" value1="${commentBody}" />
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+	</command>
+
 	<command name="addCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
@@ -463,6 +474,22 @@
 		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="removeDocumentViewPermissionsPG">
+		<var name="key_dmDocumentTitleS" value="${dmDocumentTitle}" />
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="Permissions#uncheck" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Permissions#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="revertPG">

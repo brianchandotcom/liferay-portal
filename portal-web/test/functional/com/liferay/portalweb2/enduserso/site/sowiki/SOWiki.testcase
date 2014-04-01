@@ -60,6 +60,29 @@
 		</execute>
 	</command>
 
+	<command name="AddSOWikiFrontPageComment" priority="4">
+		<var name="commentBody" value="Wiki FrontPage Comment Body" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addCommentPG">
+			<var name="commentBody" value="${commentBody}" />
+		</execute>
+	</command>
+
 	<command name="AddSOWikiFrontPageDraft" priority="5">
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 
@@ -114,7 +137,101 @@
 		</execute>
 	</command>
 
+	<command name="ViewSOWikiFrontPageChildPageAsGuest" known-issues="LPS-45435" priority="4">
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+		<var name="wikiChildPageContent1" value="Wiki FrontPage Child Page Content 1" />
+		<var name="wikiChildPageContent2" value="Wiki FrontPage Child Page Content 2" />
+		<var name="wikiChildPageTitle1" value="Wiki FrontPage Child Page Title 1" />
+		<var name="wikiChildPageTitle2" value="Wiki FrontPage Child Page Title 2" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="wikiChildPageContent" value="${wikiChildPageContent1}" />
+			<var name="wikiChildPageTitle" value="${wikiChildPageTitle1}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="wikiChildPageContent" value="${wikiChildPageContent2}" />
+			<var name="wikiChildPageTitle" value="${wikiChildPageTitle2}" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#removeViewPermissionPG">
+			<var name="roleName" value="Guest" />
+			<var name="wikiPageTitle" value="${wikiChildPageTitle2}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#viewPG">
+			<var name="wikiPageContent" value="${wikiChildPageContent1}" />
+			<var name="wikiPageRevision" value="1.0" />
+			<var name="wikiPageTitle" value="${wikiChildPageTitle1}" />
+			<var name="wikiPageUsername" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="PGWiki#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
+		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<execute action="PGWikiAllpages#assertTextNotPresent" value1="${wikiChildPageTitle2}" />
+	</command>
+
 	<tear-down>
 		<execute macro="SOSite#tearDownCP" />
+
+		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 </definition>

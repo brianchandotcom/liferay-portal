@@ -1354,7 +1354,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
+		<execute macro="BlogsPortlet#configureDisplayTemplateCP">
 			<var name="displaySelection" value="${displaySelection}" />
 		</execute>
 
@@ -1429,7 +1429,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
+		<execute macro="BlogsPortlet#configureDisplayTemplateCP">
 			<var name="displaySelection" value="${displaySelection}" />
 		</execute>
 
@@ -1509,7 +1509,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
+		<execute macro="BlogsPortlet#configureDisplayTemplateCP">
 			<var name="displaySelection" value="${displaySelection}" />
 		</execute>
 

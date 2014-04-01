@@ -32,9 +32,6 @@ import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.portlet.RenderRequest;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -323,26 +320,8 @@ public class JournalContentImpl implements JournalContent {
 		}
 	}
 
-	protected boolean isLifecycleRender(
-		ThemeDisplay themeDisplay, String xmlRequest) {
-
-		if (themeDisplay != null) {
-			return themeDisplay.isLifecycleRender();
-		}
-		else if (Validator.isNotNull(xmlRequest)) {
-			Matcher matcher = lifecycleRenderPhasePattern.matcher(xmlRequest);
-
-			return matcher.find();
-		}
-		else {
-			return false;
-		}
-	}
-
 	protected static final String CACHE_NAME = JournalContent.class.getName();
 
-	protected static Pattern lifecycleRenderPhasePattern = Pattern.compile(
-		"<lifecycle>\\s*RENDER_PHASE\\s*</lifecycle>");
 	protected static PortalCache<String, JournalArticleDisplay> portalCache =
 		MultiVMPoolUtil.getCache(CACHE_NAME);
 

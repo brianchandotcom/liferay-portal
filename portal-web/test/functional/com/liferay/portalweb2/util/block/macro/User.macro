@@ -977,7 +977,16 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<if>
+			<equals arg1="${authenticationMethod}" arg2="By Screen Name" />
+			<then>
+				<execute action="PGLogin#type" locator-key1="SCREEN_NAME_FIELD" value1="${userScreenName}" />
+			</then>
+			<else>
+				<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+			</else>
+		</if>
+
 		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
 
 		<if>

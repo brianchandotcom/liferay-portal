@@ -172,9 +172,17 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Liferay" />
+			<var name="sitePageName" value="Asset Publisher Test Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Test Page" />
 		</execute>
 

@@ -20,7 +20,6 @@
 page import="com.liferay.portal.kernel.sanitizer.SanitizerException" %><%@
 page import="com.liferay.portal.kernel.sanitizer.SanitizerUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.DuplicateFileException" %><%@
-page import="com.liferay.portlet.documentlibrary.FileExtensionException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileNameException" %><%@
 page import="com.liferay.portlet.social.model.SocialActivity" %><%@
 page import="com.liferay.portlet.social.model.SocialActivityConstants" %><%@

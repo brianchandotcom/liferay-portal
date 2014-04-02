@@ -82,7 +82,13 @@
 		<execute action="CPSitepages#assertClick" locator-key1="LOGO_CHANGE_BUTTON" value1="Change" />
 		<execute action="CPSitepages#selectFrame" locator-key1="LOGO_UPLOAD_IMAGE_IFRAME" />
 		<execute action="CPSitepages#uploadCommonFile" locator-key1="LOGO_UPLOAD_BROWSE_BUTTON" value1="${logoFile}" />
+
+		<execute action="Home#pause" locator1="5000" />
+
 		<execute action="CPSitepages#assertClick" locator-key1="LOGO_UPLOAD_SAVE_BUTTON" value1="Save" />
+
+		<execute action="Home#pause" locator1="5000" />
+
 		<execute action="CPSitepages#selectFrameTop" />
 		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

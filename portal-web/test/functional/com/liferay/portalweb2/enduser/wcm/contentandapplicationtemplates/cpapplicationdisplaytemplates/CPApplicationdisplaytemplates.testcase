@@ -16,14 +16,6 @@
 
 		<execute macro="ApplicationDisplayTemplates#tearDownCP" />
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Blogs ADT Test Page" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#tearDownADTviaPortletPG">
-			<var name="defaultADT" value="${defaultADT}" />
-		</execute>
-
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
@@ -41,19 +33,11 @@
 			<var name="adtType" value="${adtType}" />
 		</execute>
 
-		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#viewADTviaPortletPG">
+		<execute macro="ApplicationDisplayTemplates#addADTviaPortletCP">
 			<var name="adtType" value="${adtType}" />
 		</execute>
 	</command>
@@ -86,11 +70,11 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
+		<execute macro="ApplicationDisplayTemplates#addADTviaPortletCP">
 			<var name="adtType" value="${adtType}" />
 		</execute>
 

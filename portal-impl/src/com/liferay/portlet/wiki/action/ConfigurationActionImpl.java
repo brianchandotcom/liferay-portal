@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.wiki.action;
 
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -25,7 +25,7 @@ import javax.portlet.PortletConfig;
 /**
  * @author Bruno Farache
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+public class ConfigurationActionImpl extends SettingsConfigurationAction {
 
 	@Override
 	public void processAction(

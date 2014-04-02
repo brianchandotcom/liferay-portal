@@ -155,6 +155,10 @@ public class AppViewEntryTag extends IncludeTag {
 		_title = HtmlUtil.unescape(title);
 	}
 
+	public void setType(String type) {
+		_type = type;
+	}
+
 	public void setUrl(String url) {
 		_url = url;
 	}
@@ -195,6 +199,7 @@ public class AppViewEntryTag extends IncludeTag {
 		_thumbnailSrc = null;
 		_thumbnailStyle = null;
 		_title = null;
+		_type = null;
 		_url = null;
 		_version = null;
 	}
@@ -265,6 +270,7 @@ public class AppViewEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-entry:thumbnailStyle", _thumbnailStyle);
 		request.setAttribute("liferay-ui:app-view-entry:title", _title);
+		request.setAttribute("liferay-ui:app-view-entry:type", _type);
 		request.setAttribute("liferay-ui:app-view-entry:version", _version);
 		request.setAttribute("liferay-ui:app-view-entry:url", _url);
 	}
@@ -304,6 +310,7 @@ public class AppViewEntryTag extends IncludeTag {
 	private String _thumbnailSrc;
 	private String _thumbnailStyle;
 	private String _title;
+	private String _type;
 	private String _url;
 	private String _version;
 

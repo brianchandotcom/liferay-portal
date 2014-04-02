@@ -160,7 +160,7 @@
 </#macro>
 
 <#macro getDiscussion>
-	<#if validator.isNotNull(assetRenderer.getDiscussionPath()) && (enableComments == "true")>
+	<#if validator.isNotNull(assetRenderer.getDiscussionPath()) && getterUtil.getBoolean(enableComments)>
 		<br />
 
 		<#assign discussionURL = renderResponse.createActionURL() />
@@ -172,7 +172,7 @@
 			classPK=entry.getResourcePrimKey()
 			formAction=discussionURL?string
 			formName="fm2"
-			ratingsEnabled=enableCommentRatings == "true"
+			ratingsEnabled=getterUtil.getBoolean(enableCommentRatings)
 			redirect=currentURL
 			subject=assetRenderer.getTitle(locale)
 			userId=assetRenderer.getUserId()
@@ -230,7 +230,7 @@
 	cssClass
 	entry
 >
-	<#if enablePageRatings == "true">
+	<#if getterUtil.getBoolean(enablePageRatings)>
 		<div class="${cssClass}">
 			<@liferay_ui["ratings"]
 				className=wikiPageClassName
@@ -241,7 +241,7 @@
 </#macro>
 
 <#macro getRelatedAssets>
-	<#if assetEntry?? && (enableRelatedAssets == "true")>
+	<#if assetEntry?? && getterUtil.getBoolean(enableRelatedAssets)>
 		<@liferay_ui["asset-links"]
 			assetEntryId=assetEntry.getEntryId()
 		/>

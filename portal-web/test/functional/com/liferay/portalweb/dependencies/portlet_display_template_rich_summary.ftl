@@ -54,7 +54,7 @@
 </#list>
 
 <#macro getDiscussion>
-	<#if validator.isNotNull(assetRenderer.getDiscussionPath()) && (enableComments == "true")>
+	<#if validator.isNotNull(assetRenderer.getDiscussionPath()) && getterUtil.getBoolean(enableComments)>
 		<br />
 
 		<#assign discussionURL = renderResponse.createActionURL() />
@@ -66,7 +66,7 @@
 			classPK=entry.getClassPK()
 			formAction=discussionURL?string
 			formName="fm" + entry.getClassPK()
-			ratingsEnabled=enableCommentRatings == "true"
+			ratingsEnabled=getterUtil.getBoolean(enableCommentRatings)
 			redirect=portalUtil.getCurrentURL(request)
 			userId=assetRenderer.getUserId()
 		/>
@@ -95,7 +95,7 @@
 </#macro>
 
 <#macro getFlagsIcon>
-	<#if enableFlags == "true">
+	<#if getterUtil.getBoolean(enableFlags)>
 		<@liferay_ui["flags"]
 			className=entry.getClassName()
 			classPK=entry.getClassPK()
@@ -149,7 +149,7 @@
 </#macro>
 
 <#macro getPrintIcon>
-	<#if enablePrint == "true" >
+	<#if getterUtil.getBoolean(enablePrint)>
 		<#assign printURL = renderResponse.createRenderURL() />
 
 		${printURL.setParameter("struts_action", "/asset_publisher/view_content")}
@@ -176,7 +176,7 @@
 </#macro>
 
 <#macro getRatings>
-	<#if (enableRatings == "true")>
+	<#if getterUtil.getBoolean(enableRatings)>
 		<div class="asset-ratings">
 			<@liferay_ui["ratings"]
 				className=entry.getClassName()
@@ -187,7 +187,7 @@
 </#macro>
 
 <#macro getRelatedAssets>
-	<#if enableRelatedAssets == "true">
+	<#if getterUtil.getBoolean(enableRelatedAssets)>
 		<@liferay_ui["asset-links"]
 			assetEntryId=entry.getEntryId()
 		/>
@@ -195,7 +195,7 @@
 </#macro>
 
 <#macro getSocialBookmarks>
-	<#if enableSocialBookmarks == "true">
+	<#if getterUtil.getBoolean(enableSocialBookmarks)>
 		<@liferay_ui["social-bookmarks"]
 			displayStyle="${socialBookmarksDisplayStyle}"
 			target="_blank"

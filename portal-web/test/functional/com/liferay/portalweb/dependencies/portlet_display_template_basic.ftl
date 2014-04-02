@@ -37,7 +37,7 @@
 
 			<#assign blogsEntryClassName = "com.liferay.portlet.blogs.model.BlogsEntry" />
 
-			<#if (enableFlags == "true")>
+			<#if getterUtil.getBoolean(enableFlags)>
 				<@liferay_ui["flags"]
 					className=blogsEntryClassName
 					classPK=entry.getEntryId()

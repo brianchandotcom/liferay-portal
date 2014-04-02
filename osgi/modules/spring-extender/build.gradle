@@ -1,0 +1,16 @@
+apply from: '../gradle/java.gradle'
+
+dependencies {
+	compile files(["${liferayProjectDir}/portal-impl/classes"])
+
+	compile fileTree(
+		dir:"${liferayProjectDir}/osgi/lib/common/portal",
+		includes: ["gemini-blueprint-*.jar"]
+	)
+
+	compile (
+		[group: 'org.osgi', name: 'org.osgi.core', version: '4.3.1']
+	)
+}
+
+project.ext.deployDir = project.hasProperty('osgiLibDir') ? project.osgiLibDir + "/core" : null

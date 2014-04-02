@@ -40,8 +40,9 @@ public class PortletBeanFactoryPostProcessor
 		ChainableMethodAdviceInjectorCollector.collect(
 			configurableListableBeanFactory);
 
-		configurableListableBeanFactory.setBeanClassLoader(
-			PortletApplicationContext.getBeanClassLoader());
+		ClassLoader classLoader = getClassLoader();
+
+		configurableListableBeanFactory.setBeanClassLoader(classLoader);
 
 		ListableBeanFactory parentListableBeanFactory =
 			(ListableBeanFactory)
@@ -69,8 +70,7 @@ public class PortletBeanFactoryPostProcessor
 					AbstractAutoProxyCreator abstractAutoProxyCreator =
 						(AbstractAutoProxyCreator)beanPostProcessor;
 
-					abstractAutoProxyCreator.setProxyClassLoader(
-						PortletApplicationContext.getBeanClassLoader());
+					abstractAutoProxyCreator.setProxyClassLoader(classLoader);
 				}
 
 				configurableListableBeanFactory.addBeanPostProcessor(
@@ -98,6 +98,10 @@ public class PortletBeanFactoryPostProcessor
 				continue;
 			}
 		}
+	}
+
+	protected ClassLoader getClassLoader() {
+		return PortletApplicationContext.getBeanClassLoader();
 	}
 
 }

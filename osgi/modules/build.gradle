@@ -5,6 +5,7 @@ allprojects {
 }
 
 ext {
+	singleModule = true
 	gradleDir = new File("../../tools/gradle")
 	wrapTasks = ["build", "clean", "compileJava", "deploy", "jar", "test"]
 }

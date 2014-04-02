@@ -870,6 +870,17 @@
 		<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="EDIT_WEB_CONTENT" />
 	</command>
 
+	<command name="viewNoContentAsGuestPGViaWCD">
+		<var name="key_portletName" value="Web Content Display" />
+
+		<execute action="PGWebcontentdisplay#assertTextNotPresent" locator-key1="ERROR_MESSAGE" value1="The selected web content no longer exists." />
+		<execute action="PGWebcontentdisplay#assertElementNotPresent" locator-key1="PORTLET_BODY" />
+	</command>
+
+	<command name="viewNoContentPGViaWCD">
+		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="The selected web content no longer exists." />
+	</command>
+
 	<command name="viewNoEditWCViaWCD">
 		<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 		<execute action="PGWebcontentdisplay#assertElementNotPresent" locator-key1="EDIT_WEB_CONTENT" />

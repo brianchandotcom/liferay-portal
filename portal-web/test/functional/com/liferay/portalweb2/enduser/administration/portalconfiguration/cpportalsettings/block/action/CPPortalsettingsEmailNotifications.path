@@ -103,32 +103,32 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_HEADER</td>
-	<td>//label[@for='_130_admin.email.user.added.subject']</td>
+	<td>//div[@id='_130_emailNotifications']/div[2]//span[contains(.,'Subject')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_FIELD</td>
-	<td>//input[@id='_130_admin.email.user.added.subject']</td>
+	<td>//input[@id='_130_adminEmailUserAddedSubject']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_HEADER</td>
-	<td>//div[@class='control-group field-wrapper']/label[contains(.,'Body with Password')]</td>
+	<td>//div[@id='_130_emailNotifications']/div[2]//span[contains(.,'Body with Password')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_FIELD</td>
-	<td>//iframe[@title='Rich Text Editor,_130_emailUserAddedBody']</td>
+	<td>//iframe[@title='Rich Text Editor,_130_adminEmailUserAddedBody']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_HEADER</td>
-	<td>//div[@class='control-group field-wrapper']/label[contains(.,'Body without Password')]</td>
+	<td>//div[@id='_130_emailNotifications']/div[2]//span[contains(.,'Body without Password')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_FIELD</td>
-	<td>//iframe[@title='Rich Text Editor,_130_emailUserAddedNoPasswordBody']</td>
+	<td>//iframe[@title='Rich Text Editor,_130_adminEmailUserAddedNoPasswordBody']</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,22 +139,22 @@
 <!--EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION-->
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_HEADER</td>
-	<td>//label[@for='_130_admin.email.password.sent.subject']</td>
+	<td>//div[@id='_130_emailNotifications']/div[4]//span[contains(.,'Subject')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_FIELD</td>
-	<td>//input[@id='_130_admin.email.password.sent.subject']</td>
+	<td>//input[@id='_130_adminEmailPasswordSentSubject']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_HEADER</td>
-	<td>xPath=(//div[@class='control-group field-wrapper']/label[contains(.,'Body')])[4]</td>
+	<td>//div[@id='_130_emailNotifications']/div[4]//span[contains(.,'Body')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_FIELD</td>
-	<td>//iframe[@title='Rich Text Editor,_130_emailPasswordSentBody']</td>
+	<td>//iframe[@title='Rich Text Editor,_130_adminEmailPasswordSentBody']</td>
 	<td></td>
 </tr>
 </tbody>

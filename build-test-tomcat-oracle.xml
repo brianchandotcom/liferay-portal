@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-oracle" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal-test-tomcat-oracle" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test-tomcat.xml" />
 
 	<target name="run-selenium-oracle">

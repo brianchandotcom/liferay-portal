@@ -12,16 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.backgroundtask.action;
+package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.NoSuchBackgroundTaskException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
+import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -31,9 +40,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author Michael C. Han
+ * @author Daniel Kocsis
  */
-public class DeleteBackgroundTaskAction extends PortletAction {
+public class DeleteExportImportBackgroundTaskAction extends PortletAction {
 
 	@Override
 	public void processAction(
@@ -66,6 +75,28 @@ public class DeleteBackgroundTaskAction extends PortletAction {
 
 		long backgroundTaskId = ParamUtil.getLong(
 			actionRequest, "backgroundTaskId");
+
+		BackgroundTask backgroundTask =
+			BackgroundTaskLocalServiceUtil.getBackgroundTask(backgroundTaskId);
+
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		long exportImportConfigurationId = MapUtil.getLong(
+			taskContextMap, "exportImportConfigurationId");
+
+		if (exportImportConfigurationId > 0) {
+			ExportImportConfiguration exportImportConfiguration =
+				ExportImportConfigurationLocalServiceUtil.
+					getExportImportConfiguration(exportImportConfigurationId);
+
+			if (exportImportConfiguration.getStatus() ==
+					WorkflowConstants.STATUS_DRAFT) {
+
+				ExportImportConfigurationLocalServiceUtil.
+					deleteExportImportConfiguration(exportImportConfiguration);
+			}
+		}
 
 		BackgroundTaskLocalServiceUtil.deleteBackgroundTask(backgroundTaskId);
 	}

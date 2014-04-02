@@ -188,7 +188,7 @@
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
-	<command name="AddSOBlogsEntryCategories" priority="4">
+	<command name="AddSOBlogsEntryCategories" known-issues="LPS-45435" priority="4">
 		<var name="categoryName" value="Category Name" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />

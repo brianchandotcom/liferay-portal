@@ -152,6 +152,10 @@ public class StagedGroupStagedModelDataHandler
 			existingGroupId = portletDataContext.getGroupId();
 		}
 
+		// In case of remote staging finds valid mappings only when the
+		// reference's group is properly staged or in case of local staging when
+		// the references don't change between stage and live
+
 		return GroupLocalServiceUtil.fetchGroup(existingGroupId);
 	}
 

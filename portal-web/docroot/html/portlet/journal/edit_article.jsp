@@ -216,7 +216,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 					if ((article != null) && (version > 0)) {
 						approved = article.isApproved();
 
-						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, JournalArticle.class.getName())) {
+						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId())) {
 							pending = article.isPending();
 						}
 					}
@@ -254,7 +254,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 
 						String publishButtonLabel = "publish";
 
-						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalArticle.class.getName())) {
+						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId())) {
 							publishButtonLabel = "submit-for-publication";
 						}
 

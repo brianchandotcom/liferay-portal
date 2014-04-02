@@ -27,8 +27,11 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TreeModelFinder;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -48,6 +51,7 @@ import com.liferay.portlet.journal.FolderNameException;
 import com.liferay.portlet.journal.InvalidDDMStructureException;
 import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.base.JournalFolderLocalServiceBaseImpl;
@@ -709,6 +713,31 @@ public class JournalFolderLocalServiceImpl
 				ddmStructureIds, overrideDDMStructures, mergeWithParentFolder,
 				serviceContext);
 		}
+
+		// Workflow definitions
+
+		List<ObjectValuePair<Long, String>> workflowDefinitionOVPs =
+			new ArrayList<ObjectValuePair<Long, String>>();
+
+		for (long ddmStructureId : ddmStructureIds) {
+			String workflowDefinition = StringPool.BLANK;
+
+			if (overrideDDMStructures ||
+				(folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+				workflowDefinition = ParamUtil.getString(
+					serviceContext, "workflowDefinition" + ddmStructureId);
+			}
+
+			workflowDefinitionOVPs.add(
+				new ObjectValuePair<Long, String>(
+					ddmStructureId, workflowDefinition));
+		}
+
+		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLinks(
+			serviceContext.getUserId(), serviceContext.getCompanyId(),
+			serviceContext.getScopeGroupId(), JournalFolder.class.getName(),
+			folderId, workflowDefinitionOVPs);
 
 		return folder;
 	}

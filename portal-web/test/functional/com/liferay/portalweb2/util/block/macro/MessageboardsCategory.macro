@@ -2,16 +2,16 @@
 	<var name="assetType" value="Message Boards Category" />
 
 	<command name="addCP">
-		<execute action="CPMessageboards#click" locator-key1="ADD_CATEGORY_BUTTON" />
+		<execute action="CPMessageboards#assertClick" locator-key1="ADD_CATEGORY_BUTTON" value1="Add Category" />
 
 		<execute action="CPMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${categoryName}" />
-		<execute action="CPMessageboardsAddcategory#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPMessageboardsAddcategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addPG">
-		<execute action="PGMessageboards#click" locator-key1="ADD_CATEGORY_BUTTON" />
+		<execute action="PGMessageboards#assertClick" locator-key1="ADD_CATEGORY_BUTTON" value1="Add Category" />
 
 		<execute action="PGMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${categoryName}" />
 
@@ -22,7 +22,7 @@
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsAddcategory#click" locator-key1="SAVE_BUTTON" />
+		<execute action="PGMessageboardsAddcategory#click" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -37,7 +37,7 @@
 
 		<execute action="CPMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${subCategoryName}" />
 		<execute action="CPMessageboardsAddcategory#type" locator-key1="DESCRIPTION_FIELD" value1="${subCategoryDescription}" />
-		<execute action="CPMessageboardsAddcategory#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPMessageboardsAddcategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -65,7 +65,7 @@
 
 		<execute action="PGMessageboardsAddsubcategory#type" locator-key1="NAME_FIELD" value1="${subCategoryNullName}" />
 		<execute action="PGMessageboardsAddsubcategory#type" locator-key1="DESCRIPTION_FIELD" value1="${subCategoryDescription}" />
-		<execute action="PGMessageboardsAddsubcategory#click" locator-key1="SAVE_BUTTON" />
+		<execute action="PGMessageboardsAddsubcategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGMessageboardsAddsubcategory#assertTextEquals" locator-key1="REQUIRED_ALERT" value1="This field is required." />
 	</command>
@@ -79,7 +79,7 @@
 
 		<execute action="PGMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${subCategoryName}" />
 		<execute action="PGMessageboardsAddcategory#type" locator-key1="DESCRIPTION_FIELD" value1="${subCategoryDescription}" />
-		<execute action="PGMessageboardsAddcategory#click" locator-key1="SAVE_BUTTON" />
+		<execute action="PGMessageboardsAddcategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -92,8 +92,8 @@
 		<if>
 			<condition action="CPMessageboards#isElementPresent" locator-key1="CATEGORY_TABLE_ALL_CHECKBOX" />
 			<then>
-				<execute action="CPMessageboards#click" locator-key1="CATEGORY_TABLE_ALL_CHECKBOX" />
-				<execute action="CPMessageboards#click" locator-key1="CATEGORIES_RECYCLE_BIN_BUTTON" />
+				<execute action="CPMessageboards#check" locator-key1="CATEGORY_TABLE_ALL_CHECKBOX" />
+				<execute action="CPMessageboards#assertClick" locator-key1="CATEGORIES_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin"  />
 				<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
@@ -103,8 +103,8 @@
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
-		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS" />
-		<execute action="PGMessageboards#click" locator-key1="CATEGORY_MENULIST_RECYCLE_BIN" />
+		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${categoryName} was moved to the Recycle Bin. Undo" />
 		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY" />
 
@@ -182,8 +182,8 @@
 		<while>
 			<condition action="CPMessageboards#isElementPresent" locator-key1="CATEGORY_TABLE_ALL_CHECKBOX" />
 			<then>
-				<execute action="CPMessageboards#click" locator-key1="CATEGORY_TABLE_ALL_CHECKBOX" />
-				<execute action="CPMessageboards#click" locator-key1="CATEGORIES_RECYCLE_BIN_BUTTON" />
+				<execute action="CPMessageboards#check" locator-key1="CATEGORY_TABLE_ALL_CHECKBOX" />
+				<execute action="CPMessageboards#assertClick" locator-key1="CATEGORIES_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin"  />
 				<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</while>
@@ -215,7 +215,7 @@
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS" value1="${threadsNumber}" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS" value1="${postsNumber}" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPMessageboards#click" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute action="CPMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 
 		<execute action="CPMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${categoryName}" />
 	</command>

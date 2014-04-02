@@ -5,17 +5,17 @@
 		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
 		<execute action="CPSites#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPSites#click" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+		<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<if>
 			<equals arg1="${sitePagePrivacy}" arg2="Private" />
 			<then>
-				<execute action="CPSitepages#click" locator-key1="NAVIGATION_PRIVATE_PAGES" />
+				<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
 			</then>
 			<elseif>
 				<equals arg1="${sitePagePrivacy}" arg2="Public" />
 				<then>
-					<execute action="CPSitepages#click" locator-key1="NAVIGATION_PUBLIC_PAGES" />
+					<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
 				</then>
 			</elseif>
 			<else>
@@ -26,10 +26,10 @@
 		<execute macro="SitePage#expandRootCP" />
 
 		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
-		<execute action="CPSitepages#click" locator-key1="TOOLBAR_ADD_CHILD_PAGE" />
+		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
 
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
-		<execute action="CPSitepagesAddpage#click" locator-key1="ADD_PAGE_BUTTON" />
+		<execute action="CPSitepagesAddpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
@@ -37,12 +37,12 @@
 		<if>
 			<equals arg1="${sitePagePrivacy}" arg2="Private" />
 			<then>
-				<execute action="CPSitepages#click" locator-key1="NAVIGATION_PRIVATE_PAGES" />
+				<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
 			</then>
 			<elseif>
 				<equals arg1="${sitePagePrivacy}" arg2="Public" />
 				<then>
-					<execute action="CPSitepages#click" locator-key1="NAVIGATION_PUBLIC_PAGES" />
+					<execute action="CPSitepages#assertClick" locator-key1="NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
 				</then>
 			</elseif>
 			<else>
@@ -68,7 +68,7 @@
 
 		<execute macro="SitePage#addCmd" />
 
-		<execute action="CPSitepages#click" locator-key1="TOOLBAR_ADD_PAGE" />
+		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_ADD_PAGE" value1="Add Page" />
 
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
 
@@ -94,7 +94,7 @@
 			</then>
 		</if>
 
-		<execute action="CPSitepagesAddpage#click" locator-key1="ADD_PAGE_BUTTON" />
+		<execute action="CPSitepagesAddpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
@@ -123,7 +123,7 @@
 	</command>
 
 	<command name="copyApplicationsFromPageToPagePG">
-		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" value1="Edit" />
+		<execute action="DockbarEdit#assertClick" locator-key1="DOCKBAR_EDIT" value1="Edit" />
 		<execute action="DockbarEdit#assertClick" locator-key1="TOOLBAR_COPY_APPLICATIONS" value1="Copy Applications" />
 		<execute action="DockbarEdit#assertTextEquals" locator-key1="COPY_APPLICATIONS_MESSAGE_INFO" value1="The applications in page ${pageName} will be replaced with the ones in the page you select below." />
 		<execute action="DockbarEdit#assertTextEquals" locator-key1="COPY_APPLICATIONS_COPY_FROM_PAGE_LABEL" value1="Copy from Page" />
@@ -164,10 +164,10 @@
 	<command name="disallowEditViaSiteAdminEditCP">
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName"  />
+		<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="${sitePageName}"  />
 
 		<execute action="CPSitepages#uncheck" locator-key1="DETAILS_PAGE_TEMPLATE_UPDATEABLE_CHECKBOX" />
-		<execute action="CPSitepages#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="editTemplatePagesCP">

@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>DragAndDrop</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DragAndDrop</td></tr>
+</thead>
+<tbody>
+<tr>
+    <td>CALENDAR_EVENT</td>
+    <td>//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'Calendar')]</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

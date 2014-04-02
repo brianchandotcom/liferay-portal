@@ -247,11 +247,23 @@
 		</default>
 	</command>
 
+	<command name="mouseDown">
+		<default>
+			<execute function="MouseDown#mouseDown" />
+		</default>
+	</command>
+
 	<command name="mouseOver">
 		<default>
 			<description message="Mouse over the ${locator1}." />
 
 			<execute function="MouseOver#mouseOver" />
+		</default>
+	</command>
+
+	<command name="mouseUp">
+		<default>
+			<execute function="MouseUp#mouseUp" />
 		</default>
 	</command>
 

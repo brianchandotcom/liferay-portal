@@ -1,0 +1,9 @@
+<definition>
+	<command name="mouseDownAt">
+		<execute selenium="mouseDownAt" />
+	</command>
+
+	<command name="mouseDown">
+		<execute selenium="mouseDown" />
+	</command>
+</definition>

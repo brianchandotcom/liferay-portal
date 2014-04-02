@@ -346,8 +346,27 @@ public class WebDriverToSeleniumBridge
 	}
 
 	@Override
-	public void dragAndDrop(String locator, String movementsString) {
-		throw new UnsupportedOperationException();
+	public void dragAndDrop(String locator, String coordString) {
+		WebElement webElement = getWebElement(locator);
+
+		scrollWebElementIntoView(webElement);
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		Actions actions = new Actions(webDriver);
+
+		String[] coords = coordString.split(",");
+
+		int x = GetterUtil.getInteger(coords[0]);
+		int y = GetterUtil.getInteger(coords[1]);
+
+		actions.dragAndDropBy(webElement, x, y);
+
+		Action action = actions.build();
+
+		action.perform();
 	}
 
 	@Override
@@ -1020,7 +1039,33 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void mouseDownAt(String locator, String coordString) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		scrollWebElementIntoView(webElement);
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		Actions actions = new Actions(webDriver);
+
+		if (coordString.contains(",")) {
+			String[] coords = coordString.split(",");
+
+			int x = GetterUtil.getInteger(coords[0]);
+			int y = GetterUtil.getInteger(coords[1]);
+
+			actions.moveToElement(webElement, x, y);
+			actions.clickAndHold(webElement);
+		}
+		else {
+			actions.moveToElement(webElement);
+			actions.clickAndHold(webElement);
+		}
+
+		Action action = actions.build();
+
+		action.perform();
 	}
 
 	@Override
@@ -1144,7 +1189,33 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void mouseUpAt(String locator, String coordString) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		scrollWebElementIntoView(webElement);
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		Actions actions = new Actions(webDriver);
+
+		if (coordString.contains(",")) {
+			String[] coords = coordString.split(",");
+
+			int x = GetterUtil.getInteger(coords[0]);
+			int y = GetterUtil.getInteger(coords[1]);
+
+			actions.moveToElement(webElement, x, y);
+			actions.release(webElement);
+		}
+		else {
+			actions.moveToElement(webElement);
+			actions.release(webElement);
+		}
+
+		Action action = actions.build();
+
+		action.perform();
 	}
 
 	@Override

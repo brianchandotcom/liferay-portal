@@ -175,8 +175,8 @@ public interface Localization {
 	 * @param  propertyName the name of the property which value is returned if
 	 *         no localization exists for the preference
 	 * @return the locales and localized strings, or the value of the property
-	 *         <code>propertyName</code> if no localization exists for
-	 *         the preference.
+	 *         <code>propertyName</code> if no localization exists for the
+	 *         preference.
 	 */
 	public Map<Locale, String> getLocalizationMap(
 		PortletPreferences preferences, String preferenceName,
@@ -365,8 +365,8 @@ public interface Localization {
 		boolean useDefault);
 
 	/**
-	 * Returns the localized settings value for the key in the language.
-	 * The default language is used if no localization exists for the requested
+	 * Returns the localized settings value for the key in the language. The
+	 * default language is used if no localization exists for the requested
 	 * language.
 	 *
 	 * @param  settings the settings
@@ -387,17 +387,17 @@ public interface Localization {
 	 * @param  languageId the ID of the language
 	 * @param  useDefault whether to use the default language if no localization
 	 *         exists for the requested language
-	 * @return the localized settings value. If <code>useDefault</code>
-	 *         is <code>false</code> and no localization exists for the
-	 *         requested language, an empty string is returned.
+	 * @return the localized settings value. If <code>useDefault</code> is
+	 *         <code>false</code> and no localization exists for the requested
+	 *         language, an empty string is returned.
 	 */
 	public String getSettingsValue(
 		Settings settings, String key, String languageId, boolean useDefault);
 
 	/**
-	 * Returns the localized settings values for the key in the
-	 * language. The default language is used if no localization exists for the
-	 * requested language.
+	 * Returns the localized settings values for the key in the language. The
+	 * default language is used if no localization exists for the requested
+	 * language.
 	 *
 	 * @param  settings the settings
 	 * @param  key the settings key
@@ -408,18 +408,18 @@ public interface Localization {
 		Settings settings, String key, String languageId);
 
 	/**
-	 * Returns the localized settings values for the key in the
-	 * language, optionally using the default language if no localization exists
-	 * for the requested language.
+	 * Returns the localized settings values for the key in the language,
+	 * optionally using the default language if no localization exists for the
+	 * requested language.
 	 *
 	 * @param  settings the settings
 	 * @param  key the settings key
 	 * @param  languageId the ID of the language
 	 * @param  useDefault whether to use the default language if no localization
 	 *         exists for the requested language
-	 * @return the localized settings values. If <code>useDefault</code>
-	 *         is <code>false</code> and no localization exists for the
-	 *         requested language, an empty array is returned.
+	 * @return the localized settings values. If <code>useDefault</code> is
+	 *         <code>false</code> and no localization exists for the requested
+	 *         language, an empty array is returned.
 	 */
 	public String[] getSettingsValues(
 		Settings settings, String key, String languageId, boolean useDefault);

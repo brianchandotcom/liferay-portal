@@ -55,20 +55,46 @@
 
 	<#assign methodParameters  = method?substring(y + 1, z)>
 
-	${variableContext}.put("${varName}", ${objectName}.${method?substring(x + 1, y)}(
-		<#if "${methodParameters}" != "">
-			<#list methodParameters?split(",") as methodParameter>
-				<#assign parameter = methodParameter?replace("\"", "")>
+	<#assign booleanMethods = ["contains", "endsWith", "equalsIgnoreBreakLine", "equalsIgnoreCase",
+								"isAlertPresent", "isChecked", "isConfirmation", "isConsoleTextPresent",
+								"isElementNotPresent", "isElementPresentAfterWait", "isElementPresent",
+								"isIgnorableErrorLine", "isLowerCase", "isNotChecked", "isNotPartialText",
+								"isNotText", "isNotValue", "isNotVisible", "isTextNotPresent", "isTextPresent",
+								"isVisible", "isUpperCase", "matches", "matchesIgnoreCase", "startsWith"]>
 
-				<#assign parameter = parameter?trim>
-
-				RuntimeVariables.evaluateVariable("${parameter}", ${variableContext})
-
-				<#if methodParameter_has_next>
-					,
-				</#if>
-			</#list>
+	<#list booleanMethods as booleanMethod>
+		<#if ("${method?substring(x + 1, y)}" = "${booleanMethod}")>
+			<#assign methodType = "Boolean.toString(">
+		<#elseif ("${method?substring(x + 1, y)}" = "count") ||
+				 ("${method?substring(x + 1, y)}" = "startsWithWeight")
+		>
+			<#assign methodType = "Integer.toString(">
 		</#if>
+	</#list>
+
+	<#if methodType??>
+		${variableContext}.put("${varName}", ${methodType}${objectName}.${method?substring(x + 1, y)}(
+	<#else>
+		${variableContext}.put("${varName}", ${objectName}.${method?substring(x + 1, y)}(
+	</#if>
+
+	<#if "${methodParameters}" != "">
+		<#list methodParameters?split(",") as methodParameter>
+			<#assign parameter = methodParameter?replace("\"", "")>
+
+			<#assign parameter = parameter?trim>
+
+			RuntimeVariables.evaluateVariable("${parameter}", ${variableContext})
+
+			<#if methodParameter_has_next>
+				,
+			</#if>
+		</#list>
+	</#if>
+
+	<#if methodType??>
+	)
+	</#if>
 	));
 <#else>
 	${variableContext}.put("${varName}", RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(varValue)}", ${variableContext}));

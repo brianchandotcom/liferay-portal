@@ -17,5 +17,26 @@
 			<var name="actual" value="${url}" />
 			<var name="expected" value="http://localhost:8080/web/hello" />
 		</execute>
+
+		<var name="boolean" method='StringUtil#startsWith("This is a test", "This")' />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${boolean}" />
+			<var name="expected" value="true" />
+		</execute>
+
+		<var name="boolean" method='StringUtil#isLowerCase("Hello")' />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${boolean}" />
+			<var name="expected" value="false" />
+		</execute>
+
+		<var name="int" method='StringUtil#count("Life Ray is Life of Portal", "Life")' />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${int}" />
+			<var name="expected" value="2" />
+		</execute>
 	</command>
 </definition>

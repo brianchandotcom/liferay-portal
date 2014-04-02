@@ -15,66 +15,57 @@
 package com.liferay.portlet.blogs.action;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.util.ContentUtil;
+import com.liferay.portal.settings.Settings;
+import com.liferay.portlet.blogs.BlogsSettings;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 /**
  * @author Jorge Ferrer
  * @author Thiago Moreira
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+public class ConfigurationActionImpl extends SettingsConfigurationAction {
 
 	@Override
 	public void postProcess(
-			long companyId, PortletRequest portletRequest,
-			PortletPreferences portletPreferences)
+			long companyId, PortletRequest portletRequest, Settings settings)
 		throws SystemException {
 
-		String emailFromAddress = PortalUtil.getEmailFromAddress(
-			portletPreferences, companyId,
-			PropsValues.BLOGS_EMAIL_FROM_ADDRESS);
+		BlogsSettings blogsSettings = new BlogsSettings(settings);
+
+		String emailFromAddress = blogsSettings.getEmailFromAddress();
 
 		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromAddress",
-			emailFromAddress);
+			portletRequest, settings, "emailFromAddress", emailFromAddress);
 
-		String emailFromName = PortalUtil.getEmailFromName(
-			portletPreferences, companyId, PropsValues.BLOGS_EMAIL_FROM_NAME);
+		String emailFromName = blogsSettings.getEmailFromName();
 
 		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromName", emailFromName);
+			portletRequest, settings, "emailFromName", emailFromName);
 
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailEntryAddedBody_" + languageId,
-			ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_ADDED_BODY));
+			portletRequest, settings, "emailEntryAddedBody_" + languageId,
+			blogsSettings.getEmailEntryAddedBody().getDefaultValue());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailEntryAddedSubject_" + languageId,
-			ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT));
+			portletRequest, settings, "emailEntryAddedSubject_" + languageId,
+			blogsSettings.getEmailEntryAddedSubject().getDefaultValue());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailEntryUpdatedBody_" + languageId,
-			ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_UPDATED_BODY));
+			portletRequest, settings, "emailEntryUpdatedBody_" + languageId,
+			blogsSettings.getEmailEntryUpdatedBody().getDefaultValue());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailEntryUpdatedSubject_" + languageId,
-			ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT));
+			portletRequest, settings, "emailEntryUpdatedSubject_" + languageId,
+			blogsSettings.getEmailEntryUpdatedSubject().getDefaultValue());
 	}
 
 	@Override

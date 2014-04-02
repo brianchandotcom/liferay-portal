@@ -17,16 +17,20 @@ package com.liferay.portlet.journal.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.base.JournalFolderServiceBaseImpl;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -83,6 +87,16 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			getPermissionChecker(), folder, ActionKeys.VIEW);
 
 		return folder;
+	}
+
+	@Override
+	public List<Long> getFolderDDMStructureIds(
+			long[] groupIds, long folderId, boolean inherited)
+		throws PortalException, SystemException {
+
+		return filterDDMStructures(
+			journalFolderLocalService.getFolderDDMStructureIds(
+				groupIds, folderId, inherited));
 	}
 
 	@Override
@@ -361,6 +375,46 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		return journalFolderLocalService.updateFolder(
 			getUserId(), folderId, parentFolderId, name, description,
 			mergeWithParentFolder, serviceContext);
+	}
+
+	@Override
+	public JournalFolder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			List<Long> ddmStructureIds, boolean overrideDDMStructures,
+			boolean mergeWithParentFolder, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
+
+		JournalFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.UPDATE);
+
+		return journalFolderLocalService.updateFolder(
+			getUserId(), folderId, parentFolderId, name, description,
+			ddmStructureIds, overrideDDMStructures, mergeWithParentFolder,
+			serviceContext);
+	}
+
+	protected List<Long> filterDDMStructures(List<Long> ddmStructureIds)
+		throws PortalException, SystemException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		ddmStructureIds = ListUtil.copy(ddmStructureIds);
+
+		Iterator<Long> itr = ddmStructureIds.iterator();
+
+		while (itr.hasNext()) {
+			long ddmStructureId = itr.next();
+
+			if (!DDMStructurePermission.contains(
+					permissionChecker, ddmStructureId, ActionKeys.VIEW)) {
+
+				itr.remove();
+			}
+		}
+
+		return ddmStructureIds;
 	}
 
 }

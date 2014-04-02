@@ -88,6 +88,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewCommentPG">
+			<var name="calendarName" value="${calendarName}" />
 			<var name="eventComment" value="${eventComment}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
@@ -156,6 +157,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewCommentPG">
+			<var name="calendarName" value="${calendarName}" />
 			<var name="eventComment" value="${eventComment}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
@@ -224,6 +226,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewCommentPG">
+			<var name="calendarName" value="${calendarName}" />
 			<var name="eventComment" value="${eventComment}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />

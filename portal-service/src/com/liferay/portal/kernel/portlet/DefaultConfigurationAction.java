@@ -16,20 +16,19 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-
-import java.io.IOException;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.settings.PortletPreferencesSettings;
+import com.liferay.portal.settings.Settings;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.ReadOnlyException;
-import javax.portlet.ValidatorException;
 
 /**
  * @author Iván Zaera
  */
-public class DefaultConfigurationAction
-	extends BasePersistedConfigurationAction<PortletPreferences>
+public class DefaultConfigurationAction extends SettingsConfigurationAction
 	implements ConfigurationAction, ResourceServingConfigurationAction {
 
 	public static final String PREFERENCES_PREFIX = "preferences--";
@@ -39,12 +38,10 @@ public class DefaultConfigurationAction
 	}
 
 	@Override
-	protected PortletPreferences getConfiguration(ActionRequest actionRequest) {
-		return actionRequest.getPreferences();
+	protected Settings getSettings(ActionRequest actionRequest) {
+		return new PortletPreferencesSettings(actionRequest.getPreferences());
 	}
 
-	@Override
-	@SuppressWarnings("unused")
 	protected void postProcess(
 			long companyId, PortletRequest portletRequest,
 			PortletPreferences portletPreferences)
@@ -52,44 +49,34 @@ public class DefaultConfigurationAction
 	}
 
 	@Override
-	protected void reset(PortletPreferences portletPreferences, String key) {
-		try {
-			portletPreferences.reset(key);
-		}
-		catch (ReadOnlyException roe) {
-			throw new RuntimeException(roe);
-		}
+	protected void postProcess(
+			long companyId, PortletRequest portletRequest, Settings settings)
+		throws PortalException, SystemException {
+
+		PortletPreferencesSettings portletPreferencesSettings =
+			(PortletPreferencesSettings)settings;
+
+		postProcess(
+			companyId, portletRequest,
+			portletPreferencesSettings.getPortletPreferences());
 	}
 
-	@Override
-	protected void setValue(
-		PortletPreferences portletPreferences, String name, String value) {
+	protected void removeDefaultValue(
+		PortletRequest portletRequest, PortletPreferences portletPreferences,
+		String key, String defaultValue) throws SystemException {
 
-		try {
-			portletPreferences.setValue(name, value);
+		String value = getParameter(portletRequest, key);
+
+		if (defaultValue.equals(value) ||
+			StringUtil.equalsIgnoreBreakLine(defaultValue, value)) {
+
+			try {
+				portletPreferences.reset(key);
+			}
+			catch (ReadOnlyException roe) {
+				throw new SystemException(roe);
+			}
 		}
-		catch (ReadOnlyException roe) {
-			throw new RuntimeException(roe);
-		}
-	}
-
-	@Override
-	protected void setValues(
-		PortletPreferences portletPreferences, String name, String[] values) {
-
-		try {
-			portletPreferences.setValues(name, values);
-		}
-		catch (ReadOnlyException roe) {
-			throw new RuntimeException(roe);
-		}
-	}
-
-	@Override
-	protected void store(PortletPreferences portletPreferences)
-		throws IOException, ValidatorException {
-
-		portletPreferences.store();
 	}
 
 }

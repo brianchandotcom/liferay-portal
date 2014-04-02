@@ -48,7 +48,7 @@ boolean resizable = ParamUtil.getBoolean(request, "resizable");
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
 
-;(function() {
+;window['<%= name %>Config'] = function() {
 	var ckEditor = CKEDITOR.instances['<%= HtmlUtil.escapeJS(name) %>'];
 
 	if (!CKEDITOR.stylesSet.get('liferayStyles')) {
@@ -224,4 +224,6 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 			}
 		}
 	);
-})();
+};
+
+window['<%= name %>Config']();

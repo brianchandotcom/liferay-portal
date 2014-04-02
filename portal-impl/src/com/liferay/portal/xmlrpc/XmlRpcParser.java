@@ -142,7 +142,7 @@ public class XmlRpcParser {
 			return new Tuple(methodName, arguments.toArray());
 		}
 		catch (Exception e) {
-			throw new IOException(e.getMessage());
+			throw new IOException(e);
 		}
 		finally {
 			if (xmlStreamReader != null) {

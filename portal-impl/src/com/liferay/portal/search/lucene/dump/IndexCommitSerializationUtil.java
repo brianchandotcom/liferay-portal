@@ -60,7 +60,7 @@ public class IndexCommitSerializationUtil {
 					(IndexCommitMetaInfo)objectInputStream.readObject();
 			}
 			catch (ClassNotFoundException cnfe) {
-				throw new IOException(cnfe.getMessage());
+				throw new IOException(cnfe);
 			}
 
 			if (_log.isDebugEnabled()) {

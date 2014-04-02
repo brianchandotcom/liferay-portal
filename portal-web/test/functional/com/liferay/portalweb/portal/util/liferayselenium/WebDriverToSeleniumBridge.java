@@ -1056,7 +1056,7 @@ public class WebDriverToSeleniumBridge
 			int y = GetterUtil.getInteger(coords[1]);
 
 			actions.moveToElement(webElement, x, y);
-			actions.clickAndHold(webElement);
+			actions.clickAndHold();
 		}
 		else {
 			actions.moveToElement(webElement);
@@ -1206,7 +1206,7 @@ public class WebDriverToSeleniumBridge
 			int y = GetterUtil.getInteger(coords[1]);
 
 			actions.moveToElement(webElement, x, y);
-			actions.release(webElement);
+			actions.release();
 		}
 		else {
 			actions.moveToElement(webElement);

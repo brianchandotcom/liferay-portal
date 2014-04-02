@@ -188,7 +188,7 @@
 	</command>
 
 	<command name="waitForDMHomeAssertTextEqualsClick">
-		<execute selenium="waitForElementPresent" argument1="//a[@class='browse-folder yui3-dd-drop']" />
+		<execute selenium="waitForElementPresent" argument1="//a[contains(@class,'browse-folder')]" />
 
 		<execute selenium="pause" argument1="1500" />
 

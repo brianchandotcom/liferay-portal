@@ -92,6 +92,8 @@ public class MBMessageStagedModelDataHandlerTest
 			group.getGroupId(), category.getCategoryId(), true,
 			objectValuePairs);
 
+		MBMessageLocalServiceUtil.updateAnswer(message, true, false);
+
 		List<FileEntry> attachmentsFileEntries =
 			message.getAttachmentsFileEntries();
 
@@ -182,6 +184,8 @@ public class MBMessageStagedModelDataHandlerTest
 
 		Assert.assertEquals(
 			1, importedMessage.getAttachmentsFileEntriesCount());
+
+		Assert.assertTrue(importedMessage.isAnswer());
 	}
 
 }

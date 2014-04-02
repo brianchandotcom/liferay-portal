@@ -1,5 +1,9 @@
 <definition>
 	<command name="dragAndDrop">
+		<execute selenium="dragAndDrop" />
+	</command>
+
+	<command name="dragAndDropToObject">
 		<execute selenium="waitForVisible" argument1="${locator1}" />
 
 		<execute selenium="mouseOver" argument1="${locator1}" />

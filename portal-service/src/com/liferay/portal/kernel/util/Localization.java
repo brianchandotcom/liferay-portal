@@ -165,18 +165,17 @@ public interface Localization {
 	/**
 	 * Returns a map of locales and localized strings for the preference in the
 	 * preferences container. If no localization exists for the preference,
-	 * returns the value of the property.
+	 * returns the property name.
 	 *
 	 * @param  preferences the preferences container
 	 * @param  preferenceName the prefix of the preference containing the
 	 *         localized strings. Each localization will be loaded from a
 	 *         preference with this prefix, followed by an underscore, and the
 	 *         language ID.
-	 * @param  propertyName the name of the property which value is returned if
-	 *         no localization exists for the preference
-	 * @return the locales and localized strings, or the value of the property
+	 * @param  propertyName the name of the property
+	 * @return the locales and localized strings, or the
 	 *         <code>propertyName</code> if no localization exists for the
-	 *         preference.
+	 *         preference
 	 */
 	public Map<Locale, String> getLocalizationMap(
 		PortletPreferences preferences, String preferenceName,
@@ -265,22 +264,22 @@ public interface Localization {
 	 * @param  parameter the prefix of the parameters containing the localized
 	 *         strings. Each localization will be loaded from a parameter with
 	 *         this prefix, followed by an underscore, and the language ID.
-	 * @param  prefix value used in the request to prefix the parameter name
+	 * @param  prefix the value used in the request to prefix the parameter name
 	 * @param  defaultValue the return value if no localization exists
-	 * @return the locales and localized strings. If no localization exists, the
-	 *         <code>defaultDefault</code> will be returned.
+	 * @return the locales and localized strings, or the
+	 *         <code>defaultValue</code> if no localization exists
 	 */
 	public String getLocalizationXmlFromPreferences(
 		PortletPreferences preferences, PortletRequest portletRequest,
 		String parameter, String prefix, String defaultValue);
 
 	/**
-	 * Returns the localized name in the language. This is just the name,
-	 * followed by an underscore, and the language ID.
+	 * Returns the localized name in the language. The localized name includes
+	 * the name, followed by an underscore, and the language ID.
 	 *
 	 * @param  name the name to be localized
 	 * @param  languageId the ID of the language
-	 * @return the localized name
+	 * @return the localized name in the language
 	 */
 	public String getLocalizedName(String name, String languageId);
 

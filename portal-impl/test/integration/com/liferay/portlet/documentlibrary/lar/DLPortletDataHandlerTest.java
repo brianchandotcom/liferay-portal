@@ -148,7 +148,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 		DLAppTestUtil.addFileEntry(
 			stagingGroup.getGroupId(), repository.getRepositoryId(),
-			folder.getFolderId(), ServiceTestUtil.randomString());
+			folder.getFolderId());
 	}
 
 	@Override

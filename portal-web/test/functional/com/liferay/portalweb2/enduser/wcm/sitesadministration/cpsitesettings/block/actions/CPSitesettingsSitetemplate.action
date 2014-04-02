@@ -1,15 +1,11 @@
 <definition>
 	<command name="assertTextEquals">
-		<case locator-key1="PORTLET_CONTENT_LOCALIZED">
+		<case locator-key1="SITE_CLONED_FROM_TEMPLATE_MESSAGE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 
-		<case locator-key1="PORTLET_CONTENT">
+		<case locator-key1="SITE_NOT_CLONED_FROM_TEMPLATE_MESSAGE">
 			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-
-		<case locator-key1="PORTLET_TITLE">
-			<execute function="AssertTextEquals#assertText" />
 		</case>
 	</command>
 </definition>

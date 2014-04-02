@@ -199,6 +199,29 @@
 		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName} Edit" />
 	</command>
 
+	<command name="viewNoSiteOrWorkflowLinksCP">
+		<var name="key_portletCategoryName" value="${portletCategoryName}" />
+		<var name="key_portletName" value="${portletName}" />
+		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+		<execute action="CPSitetemplates#assertClick" locator-key1="SITE_TEMPLATE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSitetemplates#assertClick" locator-key1="SITE_TEMPLATE_MENULIST_MANAGE" value1="Manage" />
+
+		<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
+		<execute action="Home#assertTextEquals" locator-key1="SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
+
+		<for list="${portletNames}" param="portletName">
+			<var name="key_portletName" value="${portletName}" />
+
+			<execute action="Home#assertTextNotPresent" locator-key1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+		</for>
+
+		<var name="key_portletCategoryName" value="${portletCategoryName2}" />
+
+		<execute action="Home#assertElementNotPresent" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName2}" />
+	</command>
+
 	<command name="viewTemplateStatusCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 

@@ -172,7 +172,7 @@
 
 		<execute action="PGAssetpublisher#assertClick" locator-key1="DISPLAY_ICON_EDIT" value1="Edit" />
 
-		<execute action="PGSignin#assertTextNotEquals" locator-key1="PORTLET_TITLE" />
+		<execute action="PGSignin#assertTextNotEquals" locator-key1="PORTLET_TITLE" value1="Sign In" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Page" />

@@ -340,9 +340,30 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--EDIT_SEO-->
+<tr>
+	<td>EDIT_SEO_HTML_TITLE</td>
+	<td>//div[@id='_145_titleContentBox']//td[contains(@class,'lfr-input-localized-default') and contains(@data-value,'${key_defaultSiteLanguageKey}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_SEO_META_TAGS_DESCRIPTION</td>
+	<td>//div[@id='_145_descriptionSEOContentBox']//td[contains(@class,'lfr-input-localized-default') and contains(@data-value,'${key_defaultSiteLanguageKey}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ADMIN-->
 <tr>
 	<td>ADMIN</td>
+	<td>//li[@id='_145_adminLinks']/a</td>
+	<td>Admin Drop Down Button</td>
+</tr>
+<tr>
+	<td>ADMIN_LOCALIZED</td>
 	<td>//li[@id='_145_adminLinks']/a</td>
 	<td>Admin Drop Down Button</td>
 </tr>
@@ -382,6 +403,11 @@
 	<td>Configuration Navigation</td>
 </tr>
 <tr>
+	<td>ADMIN_SITE_ADMINISTRATION_CONFIGURATION_LOCALIZED</td>
+	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'${key_localizedPortletCategoryName}')]</td>
+	<td>Configuration Navigation</td>
+</tr>
+<tr>
 	<td>ADMIN_SITE_ADMINISTRATION_CATEGORY</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,' ${key_portletCategoryName}')]</td>
 	<td></td>
@@ -389,6 +415,11 @@
 <tr>
 	<td>ADMIN_CONTROL_PANEL</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'Control Panel')]</td>
+	<td>Control Panel Navigation</td>
+</tr>
+<tr>
+	<td>ADMIN_CONTROL_PANEL_LOCALIZED</td>
+	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'${key_localizedControlPanel}')]</td>
 	<td>Control Panel Navigation</td>
 </tr>
 <tr>

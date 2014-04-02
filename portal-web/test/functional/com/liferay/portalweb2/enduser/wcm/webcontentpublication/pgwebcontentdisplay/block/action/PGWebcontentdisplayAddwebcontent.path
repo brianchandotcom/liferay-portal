@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TITLE_FIELD_LOCALIZED</td>
+	<td>//input[@id='_15_title_${key_languageKey}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_FIELD</td>
 	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td></td>
@@ -66,6 +71,11 @@
 <tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[@id='_15_publishButton' and contains(.,'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZED_PUBLISH_BUTTON</td>
+	<td>//button[@id='_15_publishButton']</td>
 	<td></td>
 </tr>
 <tr>

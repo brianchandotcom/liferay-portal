@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METADATA_SETS_TABLE_ACTIONS_1</td>
+	<td>//div[contains(@class,'lfr-icon-menu')]/a[@title='Actions']/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METADATA_SETS_TABLE_CHOOSE</td>
 	<td>//tr[contains(.,'${key_metadataSetName}')]/td[5]/button[contains(.,'Choose')]</td>
 	<td></td>

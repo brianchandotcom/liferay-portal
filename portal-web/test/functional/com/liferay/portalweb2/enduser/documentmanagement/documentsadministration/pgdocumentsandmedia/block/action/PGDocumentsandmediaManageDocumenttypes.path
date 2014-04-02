@@ -76,8 +76,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_TYPES_TABLE_SCOPE_ACTIONS</td>
-	<td>//tbody[@class='table-data']/tr[contains(.,'${dmDocumentTypeScope}')]/td[4]/div/a</td>
+	<td>DOCUMENT_TYPES_TABLE_ACTIONS_1</td>
+	<td>//div[contains(@class,'lfr-icon-menu')]/a[@title='Actions']/span</td>
 	<td></td>
 </tr>
 <tr>

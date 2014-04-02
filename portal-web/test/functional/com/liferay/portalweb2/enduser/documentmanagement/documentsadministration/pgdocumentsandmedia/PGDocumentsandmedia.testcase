@@ -19,17 +19,11 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="DMDocument#tearDownCP">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="DMDocument#tearDownCP" />
 
-		<execute macro="DMFolder#tearDownCP">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="DMFolder#tearDownCP" />
 
-		<execute macro="DMDocumentType#tearDownCP">
-			<var name="dmDocumentTypeScope" value="Current Site" />
-		</execute>
+		<execute macro="DMDocumentType#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
@@ -785,8 +779,6 @@
 	</command>
 
 	<command name="DeleteDocumentType" priority="5">
-		<var name="field" value="Text Box" />
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

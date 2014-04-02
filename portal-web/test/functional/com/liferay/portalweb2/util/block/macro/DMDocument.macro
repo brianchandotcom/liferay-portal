@@ -50,27 +50,12 @@
 		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
 		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
 
-		<for list="${dmDynamicDataFieldNames}" param="dmDynamicDataFieldNames">
-			<var name="key_dmDynamicDataFieldName" value="${dmDynamicDataFieldNames}" />
-
- 			<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="DYNAMIC_DATA_GENERIC_FIELD" value1="${dmDynamicDataFieldNames} Content" />
-		</for>
-
-		<for list="${dmDynamicDataFieldTextarea}" param="dmDynamicDataFieldTextarea">
-			<var name="key_dmDynamicDataFieldTextarea" value="${dmDynamicDataFieldTextarea}" />
-
- 			<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="DYNAMIC_DATA_GENERIC_TEXTAREA" value1="${dmDynamicDataFieldTextarea} Content" />
-		</for>
-
 		<if>
 			<isset var="selectOption" />
 			<then>
 				<execute action="PGDocumentsandmediaAdddocumenttype#select" locator-key1="SELECT_OPTIONS_SELECT" value1="${selectOption}" />
 			</then>
 		</if>
-
-		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addPG">
@@ -516,12 +501,12 @@
 			<equals arg1="${field}" arg2="Boolean" />
 			<then>
 				<if>
-					<equals arg1="${dmRecordFieldData}" arg2="false" />
+					<equals arg1="${dmDocumentTypeFieldData}" arg2="false" />
 					<then>
 						<execute action="PGDocumentsandmediaAdddocumenttype#uncheck" locator-key1="BOOLEAN_CHECKBOX" />
 					</then>
 					<elseif>
-						<equals arg1="${dmRecordFieldData}" arg2="true" />
+						<equals arg1="${dmDocumentTypeFieldData}" arg2="true" />
 						<then>
 							<execute action="PGDocumentsandmediaAdddocumenttype#check" locator-key1="BOOLEAN_CHECKBOX" />
 						</then>
@@ -536,14 +521,14 @@
 		<if>
 			<equals arg1="${field}" arg2="Date" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="DATE_FIELD" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="DATE_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Decimal" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="DECIMAL_FIELD" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="DECIMAL_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
@@ -557,37 +542,37 @@
 				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 
 				<execute action="PGDocumentsandmediaAdddocumenttypeSelectAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${document}" />
-				<execute action="PGDocumentsandmediaAdddocumenttypeSelectAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelectAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTypeFieldData}" />
 				<execute action="PGDocumentsandmediaAdddocumenttypeSelectAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-				<var name="key_documentTitle" value="${dmRecordFieldData}" />
+				<var name="key_documentTitle" value="${dmDocumentTypeFieldData}" />
 
-				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#assertTextEquals" locator-key1="DOCUMENTS_TABLE_DOCUMENT" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#assertTextEquals" locator-key1="DOCUMENTS_TABLE_DOCUMENT" value1="${dmDocumentTypeFieldData}" />
 				<execute action="PGDocumentsandmediaAdddocumenttypeSelect#click" locator-key1="DOCUMENTS_TABLE_CHOOSE" />
 
 				<execute action="PGDocumentsandmediaAdddocumenttype#selectFrame" value1="relative=top" />
-				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="DOCUMENTS_AND_MEDIA_FIELD" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="DOCUMENTS_AND_MEDIA_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="HTML" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="HTML_FIELD" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="HTML_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Integer" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="INTEGER_FIELD" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="INTEGER_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Link to Page" />
 			<then>
-				<var name="key_recordFieldData" value="${dmRecordFieldData}" />
+				<var name="key_recordFieldData" value="${dmDocumentTypeFieldData}" />
 
 				<execute action="PGDocumentsandmediaAdddocumenttype#click" locator-key1="LINK_TO_PAGE_SELECT" />
 				<execute action="PGDocumentsandmediaAdddocumenttype#doubleClick" locator-key1="LINK_TO_PAGE_SELECT_OPTION" />
@@ -597,16 +582,16 @@
 		<if>
 			<equals arg1="${field}" arg2="Number" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="NUMBER_FIELD" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="NUMBER_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Radio" />
 			<then>
-				<var name="key_recordFieldData" value="${dmRecordFieldData}" />
+				<var name="key_recordFieldData" value="${dmDocumentTypeFieldData}" />
 
-				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="RADIO_OPTION_LABEL" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="RADIO_OPTION_LABEL" value1="${dmDocumentTypeFieldData}" />
 				<execute action="PGDocumentsandmediaAdddocumenttype#click" locator-key1="RADIO_OPTION_RADIO" />
 			</then>
 		</if>
@@ -614,21 +599,21 @@
 		<if>
 			<equals arg1="${field}" arg2="Select" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#select" locator-key1="SELECT_SELECT" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#select" locator-key1="SELECT_SELECT" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Text" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="TEXT_FIELD" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="TEXT_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${field}" arg2="Text Box" />
 			<then>
-				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="TEXT_BOX_FIELD" value1="${dmRecordFieldData}" />
+				<execute action="PGDocumentsandmediaAdddocumenttype#type" locator-key1="TEXT_BOX_FIELD" value1="${dmDocumentTypeFieldData}" />
 			</then>
 		</if>
 	</command>

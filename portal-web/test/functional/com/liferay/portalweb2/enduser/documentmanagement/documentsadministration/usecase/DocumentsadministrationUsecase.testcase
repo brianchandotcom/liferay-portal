@@ -10,9 +10,9 @@
 
 		<execute macro="DMFolder#tearDownCP" />
 
-		<execute macro="DMDocumentType#tearDownCP">
-			<var name="dmDocumentTypeScope" value="Current Site" />
-		</execute>
+		<execute macro="DMDocumentType#tearDownCP" />
+
+		<execute macro="DMMetadataSet#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
 
@@ -20,97 +20,53 @@
 	</tear-down>
 
 	<command name="AddAndRemoveMetadataSets" priority="5">
-		<var name="pageName" value="Documents and Media Page" />
-		<var name="portletName" value="Documents and Media" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Documents and Media" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMMetadataSet#gotoPG" />
+
+		<execute macro="DMMetadataSet#addPG">
+			<var name="dmMetadataSetFieldNames" value="Text Box" />
+			<var name="metadataSetName" value="DM Metadata Set Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMDocumentType#gotoPG" />
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
-			<var name="dmDocumentTypeFieldNames" value="Select" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-			<var name="metadataSetName" value="Meeting Metadata" />
+			<var name="metadataSetName" value="DM Metadata Set Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMDocument#addDocumentTypePG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-			<var name="selectOption" value="option 2" />
-			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-			<var name="dmDynamicDataFieldNames" value="Location,Meeting Name,Time" />
-			<var name="dmDynamicDataFieldTextarea" value="Description,Participants" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMMetadataSet#gotoPG" />
-
-		<execute macro="DMMetadataSet#deletePGFailure">
-			<var name="metadataSetName" value="Meeting Metadata" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMDocumentType#gotoPG" />
 
 		<execute macro="DMDocumentType#editPG">
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
-			<var name="dmDocumentTypeFieldNames" value="Radio" />
-			<var name="metadataSetName" value="Meeting Metadata" />
+			<var name="metadataSetName" value="DM Metadata Set Name" />
 			<var name="removeMetadataSet" value="true" />
 		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTypePG">
-			<var name="textContent" value="Location,Meeting Name,Time,Description,Participants" />
-			<var name="radioOption" value="Radio" />
-			<var name="selectOption" value="option 2" />
-		</execute>
-
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
-
-		<execute action="PGDocumentsandmediaAdddocumenttype#click" locator-key1="OPTION_3_RADIO" />
-
-		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<var name="radioOption" value="option 3" />
-
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="METADATA_PANEL_RADIO" value1="Radio ${radioOption}" />
 	</command>
 
 	<command name="CheckoutAndCheckin" priority="5">

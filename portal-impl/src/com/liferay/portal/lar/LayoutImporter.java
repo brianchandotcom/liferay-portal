@@ -852,9 +852,18 @@ public class LayoutImporter {
 
 						Group oldScopeGroup = oldLayout.getScopeGroup();
 
-						oldScopeGroup.setLiveGroupId(scopeGroup.getGroupId());
+						if (group.isStagingGroup()) {
+							scopeGroup.setLiveGroupId(
+								oldScopeGroup.getGroupId());
 
-						GroupLocalServiceUtil.updateGroup(oldScopeGroup);
+							GroupLocalServiceUtil.updateGroup(scopeGroup);
+						}
+						else {
+							oldScopeGroup.setLiveGroupId(
+								scopeGroup.getGroupId());
+
+							GroupLocalServiceUtil.updateGroup(oldScopeGroup);
+						}
 					}
 					catch (NoSuchLayoutException nsle) {
 						if (_log.isWarnEnabled()) {

@@ -43,19 +43,57 @@
 <#elseif varElement.attributeValue("method")??>
 	<#assign method = varElement.attributeValue("method")>
 
+	<#assign x = method?last_index_of("#")>
+	<#assign y = method?last_index_of("(")>
+	<#assign z = method?last_index_of(")")>
+
+	${variableContext}.put("${varName}",
+
+	<#assign booleanMethodNames = [
+		"contains", "endsWith", "equalsIgnoreBreakLine", "equalsIgnoreCase",
+		"isAlertPresent", "isChecked", "isConfirmation", "isConsoleTextPresent",
+		"isElementNotPresent", "isElementPresent", "isElementPresentAfterWait",
+		"isIgnorableErrorLine", "isLowerCase", "isNotChecked",
+		"isNotPartialText", "isNotText", "isNotValue", "isNotVisible",
+		"isTextNotPresent", "isTextPresent", "isVisible", "isUpperCase",
+		"matches", "matchesIgnoreCase", "startsWith"
+	]>
+
+	<#assign methodName = method?substring(x + 1, y)>
+
+	<#assign methodReturnType = "String">
+
+	<#list booleanMethodNames as booleanMethodName>
+		<#if "${methodName}" == "${booleanMethodName}">
+			<#assign methodReturnType = "Boolean">
+
+			<#break>
+		</#if>
+	</#list>
+
+	<#assign integerMethodNames = ["count", "startsWithWeight"]>
+
+	<#list integerMethodNames as integerMethodName>
+		<#if "${methodName}" == "${integerMethodName}">
+			<#assign methodReturnType = "Integer">
+
+			<#break>
+		</#if>
+	</#list>
+
+	<#if "${methodReturnType}" != "String">
+		${methodReturnType}.toString(
+	</#if>
+
+	<#assign methodParameters  = method?substring(y + 1, z)>
+
 	<#if "${method}"?starts_with("StringUtil")>
 		<#assign objectName = "StringUtil">
 	<#else>
 		<#assign objectName = "${selenium}">
 	</#if>
 
-	<#assign x = method?last_index_of("#")>
-	<#assign y = method?last_index_of("(")>
-	<#assign z = method?last_index_of(")")>
-
-	<#assign methodParameters  = method?substring(y + 1, z)>
-
-	${variableContext}.put("${varName}", ${objectName}.${method?substring(x + 1, y)}(
+	${objectName}.${methodName}(
 		<#if "${methodParameters}" != "">
 			<#list methodParameters?split(",") as methodParameter>
 				<#assign parameter = methodParameter?replace("\"", "")>
@@ -69,7 +107,13 @@
 				</#if>
 			</#list>
 		</#if>
-	));
+	)
+
+	<#if "${methodReturnType}" != "String">
+		)
+	</#if>
+
+	);
 <#else>
 	${variableContext}.put("${varName}", RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(varValue)}", ${variableContext}));
 </#if>

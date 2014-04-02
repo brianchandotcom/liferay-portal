@@ -29,6 +29,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -203,13 +204,20 @@ public class AssetPublisherExportImportTest
 					childGroup.getGroupId()
 			});
 
-		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			preferenceMap);
+		try {
+			PortletPreferences portletPreferences =
+				getImportedPortletPreferences(preferenceMap);
 
-		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
-		Assert.assertTrue(
-			"The child group ID should have been filtered out on import",
-			ArrayUtil.isEmpty(portletPreferences.getValues("scopeIds", null)));
+			Assert.assertEquals(
+				null, portletPreferences.getValue("scopeId", null));
+			Assert.assertTrue(
+				"The child group ID should have been filtered out on import",
+				ArrayUtil.isEmpty(
+					portletPreferences.getValues("scopeIds", null)));
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(childGroup);
+		}
 	}
 
 	@Test

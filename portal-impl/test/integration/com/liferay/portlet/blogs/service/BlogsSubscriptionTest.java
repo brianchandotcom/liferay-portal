@@ -15,14 +15,18 @@
 package com.liferay.portlet.blogs.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.settings.Settings;
+import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseSubscriptionTestCase;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.util.BlogsConstants;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
 import org.junit.Ignore;
@@ -113,13 +117,32 @@ public class BlogsSubscriptionTest extends BaseSubscriptionTestCase {
 	}
 
 	@Override
-	protected String getPortletId() {
-		return PortletKeys.BLOGS;
+	protected String getSubscriptionBodyPreferenceName() throws Exception {
+		return "emailEntryAddedBody";
 	}
 
 	@Override
-	protected String getSubscriptionBodyPreferenceName() throws Exception {
-		return "emailEntryAddedBody";
+	protected void setAddBaseModelSubscriptionBodyPreferences()
+		throws Exception {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			group.getGroupId(), BlogsConstants.SERVICE_NAME);
+
+		String germanSubscriptionBodyPreferenceKey =
+			LocalizationUtil.getPreferencesKey(
+				getSubscriptionBodyPreferenceName(),
+				LocaleUtil.toLanguageId(LocaleUtil.GERMANY));
+
+		settings.setValue(germanSubscriptionBodyPreferenceKey, GERMAN_BODY);
+
+		String spanishSubscriptionBodyPreferenceKey =
+			LocalizationUtil.getPreferencesKey(
+				getSubscriptionBodyPreferenceName(),
+				LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
+
+		settings.setValue(spanishSubscriptionBodyPreferenceKey, SPANISH_BODY);
+
+		settings.store();
 	}
 
 }

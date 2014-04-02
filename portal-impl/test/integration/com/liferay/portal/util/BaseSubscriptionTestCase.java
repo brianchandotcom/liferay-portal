@@ -19,6 +19,7 @@ import com.dumbster.smtp.MailMessage;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -165,7 +166,7 @@ public abstract class BaseSubscriptionTestCase {
 		addBaseModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		List<MailMessage> messages = MailServiceTestUtil.getMailMessages(
-			"Body", _GERMAN_BODY);
+			"Body", GERMAN_BODY);
 
 		Assert.assertEquals(1, messages.size());
 
@@ -173,7 +174,7 @@ public abstract class BaseSubscriptionTestCase {
 
 		addBaseModel(_PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		messages = MailServiceTestUtil.getMailMessages("Body", _SPANISH_BODY);
+		messages = MailServiceTestUtil.getMailMessages("Body", SPANISH_BODY);
 
 		Assert.assertEquals(1, messages.size());
 	}
@@ -252,7 +253,9 @@ public abstract class BaseSubscriptionTestCase {
 		return null;
 	}
 
-	protected abstract String getPortletId();
+	protected String getPortletId() {
+		return StringPool.BLANK;
+	}
 
 	protected abstract String getSubscriptionBodyPreferenceName()
 		throws Exception;
@@ -266,11 +269,11 @@ public abstract class BaseSubscriptionTestCase {
 
 		LocalizationUtil.setPreferencesValue(
 			portletPreferences, getSubscriptionBodyPreferenceName(),
-			LocaleUtil.toLanguageId(LocaleUtil.GERMANY), _GERMAN_BODY);
+			LocaleUtil.toLanguageId(LocaleUtil.GERMANY), GERMAN_BODY);
 
 		LocalizationUtil.setPreferencesValue(
 			portletPreferences, getSubscriptionBodyPreferenceName(),
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), _SPANISH_BODY);
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), SPANISH_BODY);
 
 		PortletPreferencesLocalServiceUtil.updatePreferences(
 			group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,
@@ -283,12 +286,12 @@ public abstract class BaseSubscriptionTestCase {
 
 	protected static final long _PARENT_CONTAINER_MODEL_ID_DEFAULT = 0;
 
+	protected static final String GERMAN_BODY = "Hallo Welt";
+
+	protected static final String SPANISH_BODY = "Hola Mundo";
+
 	protected Locale defaultLocale;
 	protected Group group;
 	protected Layout layout;
-
-	private static final String _GERMAN_BODY = "Hallo Welt";
-
-	private static final String _SPANISH_BODY = "Hola Mundo";
 
 }

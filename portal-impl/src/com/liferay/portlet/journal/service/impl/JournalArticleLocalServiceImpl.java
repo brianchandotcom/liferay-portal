@@ -1783,6 +1783,8 @@ public class JournalArticleLocalServiceImpl
 
 		Document document = article.getDocument();
 
+		document = document.clone();
+
 		Element rootElement = document.getRootElement();
 
 		List<Element> pages = rootElement.elements("page");
@@ -1835,9 +1837,6 @@ public class JournalArticleLocalServiceImpl
 				numberOfPages = pages.size();
 				paginate = true;
 			}
-		}
-		else {
-			rootElement = rootElement.createCopy();
 		}
 
 		JournalUtil.addAllReservedEls(

@@ -60,7 +60,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		TransformerListener transformerListener =
 			new LocaleTransformerListener();
 
-		document = transformerListener.onXml(document, languageId, null);
+		document = transformerListener.onXml(
+			document.clone(), languageId, null);
 
 		return document.asXML();
 	}

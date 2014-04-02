@@ -2257,12 +2257,11 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 					<elseif>
 						<equals arg1="${database.type}" arg2="oracle" />
 						<then>
-							<var name="oracle.arg.line" unset="true" />
-
-							<var name="oracle.arg.line" value="${oracle.admin.user}/${oracle.admin.password} @create.sql ${database.username} ${database.password}" />
-
 							<exec executable="${oracle.sqlplus.executable}">
-								<arg line="${oracle.arg.line}" />
+								<arg value="${oracle.admin.user}/${oracle.admin.password}" />
+								<arg value="@create.sql" />
+								<arg value="${database.username}" />
+								<arg value="${database.password}" />
 							</exec>
 						</then>
 					</elseif>

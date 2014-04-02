@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <project name="portal-test-oracle" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
-	<import file="build-test.xml" />
+	<import file="build-test-tomcat.xml" />
 
 	<target name="run-selenium-oracle">
 		<echo file="app.server.${user.name}.properties">app.server.type=tomcat</echo>
@@ -30,8 +30,6 @@
 			</then>
 		</if>
 
-		<antcall target="prepare-portal-ext-properties" />
-
 		<antcall target="prepare-virtual-host-name-properties" />
 
 		<antcall target="start-selenium" />
@@ -41,17 +39,5 @@
 		</antcall>
 
 		<antcall target="stop-selenium" />
-	</target>
-
-	<target name="run-tomcat">
-		<antcall target="clean-up-logs" />
-
-		<record action="start" name="log" />
-
-		<antcall target="run-simple-server" />
-
-		<record action="stop" name="log" />
-
-		<antcall target="evaluate-logs" />
 	</target>
 </project>

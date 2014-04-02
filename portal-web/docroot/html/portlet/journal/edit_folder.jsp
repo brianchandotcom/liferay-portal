@@ -26,11 +26,21 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId");
 long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWithParentFolderDisabled");
+
+boolean rootFolder = ParamUtil.getBoolean(request, "rootFolder");
 %>
 
 <portlet:actionURL var="editFolderURL">
 	<portlet:param name="struts_action" value="/journal/edit_folder" />
 </portlet:actionURL>
+
+<liferay-util:buffer var="removeDDMStructureIcon">
+	<liferay-ui:icon
+		image="unlink"
+		label="<%= true %>"
+		message="remove"
+	/>
+</liferay-util:buffer>
 
 <aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFolder();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -129,6 +139,63 @@ boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWith
 			/>
 		</liferay-ui:custom-attributes-available>
 
+		<c:if test="<%= rootFolder || (folder != null) %>">
+
+			<%
+			List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getJournalFolderStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, false);
+
+			String headerNames = "name,null";
+			%>
+
+			<aui:field-wrapper helpMessage='<%= rootFolder ? "" : "structure-restrictions-help" %>' label='<%= rootFolder ? "" : "structure-restrictions" %>'>
+				<c:if test="<%= !rootFolder %>">
+					<aui:input checked="<%= !folder.isOverrideDDMStructures() %>" id="useDDMStructures" label="use-structure-restrictions-of-the-parent-folder" name="overrideDDMStructures" type="radio" value="<%= false %>" />
+
+					<aui:input checked="<%= folder.isOverrideDDMStructures() %>" id="overrideDDMStructures" label="define-specific-structure-restrictions-for-this-folder" name="overrideDDMStructures" type="radio" value="<%= true %>" />
+				</c:if>
+
+				<div id="<portlet:namespace />overrideParentSettings">
+					<c:if test="<%= !rootFolder %>">
+						<liferay-ui:search-container
+							headerNames="<%= headerNames %>"
+							total="<%= ddmStructures.size() %>"
+						>
+							<liferay-ui:search-container-results
+								results="<%= ddmStructures %>"
+							/>
+
+							<liferay-ui:search-container-row
+								className="com.liferay.portlet.dynamicdatamapping.model.DDMStructure"
+								escapedModel="<%= true %>"
+								keyProperty="structureId"
+								modelVar="ddmStructure"
+							>
+								<liferay-ui:search-container-column-text
+									name="name"
+									value="<%= ddmStructure.getName(locale) %>"
+								/>
+
+								<liferay-ui:search-container-column-text>
+									<a class="modify-link" data-rowId="<%= ddmStructure.getStructureId() %>" href="javascript:;"><%= removeDDMStructureIcon %></a>
+								</liferay-ui:search-container-column-text>
+							</liferay-ui:search-container-row>
+
+							<liferay-ui:search-iterator paginate="<%= false %>" />
+						</liferay-ui:search-container>
+
+						<liferay-ui:icon
+							cssClass="modify-link select-structure"
+							iconCssClass="icon-search"
+							label="<%= true %>"
+							linkCssClass="btn"
+							message="choose-structure"
+							url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
+						/>
+					</c:if>
+				</div>
+			</aui:field-wrapper>
+		</c:if>
+
 		<c:if test="<%= folder == null %>">
 			<aui:field-wrapper label="permissions">
 				<liferay-ui:input-permissions
@@ -151,6 +218,64 @@ boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWith
 
 		submitForm(document.<portlet:namespace />fm);
 	}
+
+	function <portlet:namespace />openDDMStructureSelector() {
+		Liferay.Util.openDDMPortlet(
+			{
+				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+				dialog: {
+					destroyOnHide: true
+				},
+				eventName: '<portlet:namespace />selectStructure',
+				groupId: <%= scopeGroupId %>,
+				refererPortletName: '<%= PortletKeys.JOURNAL_CONTENT %>',
+				showGlobalScope: true,
+				struts_action: '/dynamic_data_mapping/select_structure',
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
+			},
+			function(event) {
+				<portlet:namespace />selectStructure(event.ddmstructureid, event.name);
+			}
+		);
+	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />selectStructure',
+		function(ddmStructureId, ddmStructureName) {
+			var A = AUI();
+
+			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
+
+			var ddmStructureLink = '<a class="modify-link" data-rowId="' + ddmStructureId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
+
+			searchContainer.addRow([ddmStructureName, ddmStructureLink], ddmStructureId);
+
+			searchContainer.updateDataStore();
+		},
+		['liferay-search-container']
+	);
+
+	Liferay.Util.toggleRadio('<portlet:namespace />overrideDDMStructures', '<portlet:namespace />overrideParentSettings', '');
+	Liferay.Util.toggleRadio('<portlet:namespace />useDDMStructures', '', '<portlet:namespace />overrideParentSettings');
+</aui:script>
+
+<aui:script use="liferay-search-container">
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
+
+	searchContainer.get('contentBox').delegate(
+		'click',
+		function(event) {
+			var A = AUI();
+
+			var link = event.currentTarget;
+
+			var tr = link.ancestor('tr');
+
+			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+		},
+		'.modify-link'
+	);
 </aui:script>
 
 <%

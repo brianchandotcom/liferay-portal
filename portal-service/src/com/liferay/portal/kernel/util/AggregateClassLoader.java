@@ -292,10 +292,10 @@ public class AggregateClassLoader extends ClassLoader {
 		catch (InvocationTargetException ite) {
 			Throwable t = ite.getTargetException();
 
-			throw new IOException(t.getMessage());
+			throw new IOException(t);
 		}
 		catch (Exception e) {
-			throw new IOException(e.getMessage());
+			throw new IOException(e);
 		}
 	}
 

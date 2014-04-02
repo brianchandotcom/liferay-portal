@@ -175,7 +175,7 @@ public class PortletPreferencesImpl
 				getOwnerId(), getOwnerType(), _plid, _portletId, this);
 		}
 		catch (SystemException se) {
-			throw new IOException(se.getMessage());
+			throw new IOException(se);
 		}
 	}
 

@@ -225,7 +225,7 @@ public class PortalPreferencesImpl
 				getOwnerId(), getOwnerType(), this);
 		}
 		catch (SystemException se) {
-			throw new IOException(se.getMessage());
+			throw new IOException(se);
 		}
 	}
 

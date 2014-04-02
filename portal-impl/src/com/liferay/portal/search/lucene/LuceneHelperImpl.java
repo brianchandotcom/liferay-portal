@@ -582,7 +582,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 			return snippet;
 		}
 		catch (InvalidTokenOffsetsException itoe) {
-			throw new IOException(itoe.getMessage());
+			throw new IOException(itoe);
 		}
 	}
 

@@ -60,6 +60,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureLocalServiceBaseImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolderConstants;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -716,6 +718,34 @@ public class DDMStructureLocalServiceImpl
 		throws SystemException {
 
 		return dlFileEntryTypePersistence.getDDMStructures(dlFileEntryTypeId);
+	}
+
+	@Override
+	public List<DDMStructure> getJournalFolderStructures(
+			long[] groupIds, long folderId, boolean inherited)
+		throws PortalException, SystemException {
+
+		if (!inherited) {
+			return journalFolderPersistence.getDDMStructures(folderId);
+		}
+
+		List<DDMStructure> structures = null;
+
+		folderId = journalFolderLocalService.getOverridedDDMStructuresFolderId(
+			folderId);
+
+		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			structures = journalFolderPersistence.getDDMStructures(folderId);
+		}
+		else {
+			long classNameId = classNameLocalService.getClassNameId(
+				JournalArticle.class);
+
+			structures = ddmStructurePersistence.findByG_C(
+				groupIds, classNameId);
+		}
+
+		return structures;
 	}
 
 	/**

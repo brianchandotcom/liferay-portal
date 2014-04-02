@@ -21,7 +21,13 @@ JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), PortalUtil.getClassNameId(JournalArticle.class));
+boolean inherited = true;
+
+if (folder != null) {
+	inherited = !folder.isOverrideDDMStructures();
+}
+
+List<Long> ddmStructureIds = JournalFolderServiceUtil.getFolderDDMStructureIds(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, inherited);
 %>
 
 <aui:nav-item dropdown="<%= true %>" id="addButtonContainer" label="add">
@@ -39,7 +45,8 @@ List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getStructures(PortalU
 	<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_ARTICLE) %>">
 
 		<%
-		for (DDMStructure ddmStructure : ddmStructures) {
+		for (long ddmStructureId : ddmStructureIds) {
+			DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(ddmStructureId);
 		%>
 
 			<liferay-portlet:renderURL var="addArticleURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">

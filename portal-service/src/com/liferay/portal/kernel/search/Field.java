@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -28,6 +29,8 @@ import java.util.Map;
  * @author Alex Wallace
  */
 public class Field implements Serializable {
+
+	public static final String ALL_FIELDS_ID = StringPool.STAR;
 
 	public static final String ASSET_CATEGORY_ID = "assetCategoryId";
 

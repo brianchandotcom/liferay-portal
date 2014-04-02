@@ -15,16 +15,13 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Tina Tian
@@ -93,27 +90,9 @@ public class DefaultSearchResultPermissionFilter
 
 	@Override
 	protected Hits getHits(SearchContext searchContext) throws SearchException {
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		String[] selectedFieldNames = queryConfig.getSelectedFieldNames();
-
-		if (selectedFieldNames != null) {
-			Set<String> selectedFieldNameSet = SetUtil.fromArray(
-				selectedFieldNames);
-
-			selectedFieldNameSet.addAll(_PERMISSION_SELECTED_FIELD_NAMES);
-
-			selectedFieldNames = selectedFieldNameSet.toArray(
-				new String[selectedFieldNameSet.size()]);
-
-			queryConfig.setSelectedFieldNames(selectedFieldNames);
-		}
 
 		return _baseIndexer.doSearch(searchContext);
 	}
-
-	private static final List<String> _PERMISSION_SELECTED_FIELD_NAMES =
-		Arrays.asList(Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK);
 
 	private BaseIndexer _baseIndexer;
 	private PermissionChecker _permissionChecker;

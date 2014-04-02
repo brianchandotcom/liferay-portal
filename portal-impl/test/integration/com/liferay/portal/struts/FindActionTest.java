@@ -150,8 +150,7 @@ public class FindActionTest {
 			group = GroupTestUtil.addGroup();
 		}
 
-		_blogsEntry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+		_blogsEntry = BlogsTestUtil.addEntry(group, true);
 	}
 
 	protected HttpServletRequest getHttpServletRequest() throws Exception {

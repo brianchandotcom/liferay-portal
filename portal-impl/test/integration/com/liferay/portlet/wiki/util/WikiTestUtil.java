@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
@@ -34,6 +35,12 @@ import java.io.File;
  * @author Julio Camarero
  */
 public class WikiTestUtil {
+
+	public static WikiNode addNode(long groupId) throws Exception {
+		return addNode(
+			TestPropsValues.getUserId(), groupId,
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50));
+	}
 
 	public static WikiNode addNode(
 			long userId, long groupId, String name, String description)
@@ -52,6 +59,14 @@ public class WikiTestUtil {
 			userId, name, description, serviceContext);
 
 		return node;
+	}
+
+	public static WikiPage addPage(long groupId, long nodeId, boolean approved)
+		throws Exception {
+
+		return addPage(
+			TestPropsValues.getUserId(), groupId, nodeId,
+			ServiceTestUtil.randomString(), approved);
 	}
 
 	public static WikiPage addPage(

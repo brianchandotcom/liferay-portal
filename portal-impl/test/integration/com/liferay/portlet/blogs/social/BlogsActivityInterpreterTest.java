@@ -47,8 +47,7 @@ public class BlogsActivityInterpreterTest
 
 	@Override
 	protected void addActivities() throws Exception {
-		_entry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+		_entry = BlogsTestUtil.addEntry(group, true);
 	}
 
 	@Override

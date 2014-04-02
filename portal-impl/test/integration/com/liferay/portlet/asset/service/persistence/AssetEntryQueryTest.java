@@ -532,8 +532,7 @@ public class AssetEntryQueryTest {
 		threadLocalCache.removeAll();
 
 		for (int i = 0; i < scores.length; i++) {
-			BlogsEntry entry = BlogsTestUtil.addEntry(
-				TestPropsValues.getUserId(), _group, true);
+			BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
 
 			RatingsEntryServiceUtil.updateEntry(
 				BlogsEntry.class.getName(), entry.getEntryId(), scores[i]);
@@ -577,8 +576,7 @@ public class AssetEntryQueryTest {
 		threadLocalCache.removeAll();
 
 		for (int i = 0; i < viewCounts.length; i++) {
-			BlogsEntry entry = BlogsTestUtil.addEntry(
-				TestPropsValues.getUserId(), _group, true);
+			BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 				BlogsEntry.class.getName(), entry.getEntryId());

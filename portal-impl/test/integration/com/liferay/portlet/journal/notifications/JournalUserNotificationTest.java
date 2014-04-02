@@ -70,8 +70,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		return JournalTestUtil.updateArticle(
-			(JournalArticle)baseModel, ServiceTestUtil.randomString());
+		return JournalTestUtil.updateArticle((JournalArticle)baseModel);
 	}
 
 	private JournalFolder _folder;

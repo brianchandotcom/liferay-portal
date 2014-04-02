@@ -20,7 +20,6 @@ import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
 import org.junit.runner.RunWith;
@@ -35,7 +34,7 @@ public class BlogsPortletDataHandlerTest
 
 	@Override
 	protected void addStagedModels() throws Exception {
-		BlogsTestUtil.addEntry(TestPropsValues.getUserId(), stagingGroup, true);
+		BlogsTestUtil.addEntry(stagingGroup, true);
 	}
 
 	@Override

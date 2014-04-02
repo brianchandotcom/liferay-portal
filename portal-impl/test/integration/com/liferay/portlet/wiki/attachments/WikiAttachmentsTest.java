@@ -292,9 +292,7 @@ public class WikiAttachmentsTest {
 			_group = GroupTestUtil.addGroup();
 		}
 
-		_node = WikiTestUtil.addNode(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50));
+		_node = WikiTestUtil.addNode(_group.getGroupId());
 	}
 
 	protected void addWikiPage() throws Exception {
@@ -303,8 +301,7 @@ public class WikiAttachmentsTest {
 		}
 
 		_page = WikiTestUtil.addPage(
-			_node.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			ServiceTestUtil.randomString(), true);
+			_group.getGroupId(), _node.getNodeId(), true);
 	}
 
 	protected void addWikiPageAttachment() throws Exception {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.comments.notifications;
+package com.liferay.portlet.messageboards.notifications;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.BaseModel;
@@ -22,9 +22,9 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.BlogsTestUtil;
-import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
+import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.MBTestUtil;
 
 import org.junit.runner.RunWith;
@@ -40,43 +40,37 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
-
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		_entry = BlogsTestUtil.addEntry(group, true);
-	}
+public class MBUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
-		return MBTestUtil.addDiscussionMessage(
-			group.getGroupId(), BlogsEntry.class.getName(),
-			_entry.getEntryId());
+		return MBTestUtil.addMessage(
+			group.getGroupId(), _category.getCategoryId(), true);
+	}
+
+	@Override
+	protected void addContainerModel() throws Exception {
+		_category = MBTestUtil.addCategory(group.getGroupId());
 	}
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.COMMENTS;
+		return PortletKeys.MESSAGE_BOARDS;
 	}
 
 	@Override
 	protected void subscribeToContainer() throws Exception {
-		MBDiscussionLocalServiceUtil.subscribeDiscussion(
-			user.getUserId(), group.getGroupId(), BlogsEntry.class.getName(),
-			_entry.getEntryId());
+		MBCategoryLocalServiceUtil.subscribeCategory(
+			user.getUserId(), group.getGroupId(), _category.getCategoryId());
 	}
 
 	@Override
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		return MBTestUtil.updateDiscussionMessage(
-			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(),
-			BlogsEntry.class.getName(), _entry.getEntryId());
+		return MBTestUtil.updateMessage((MBMessage)baseModel);
 	}
 
-	private BlogsEntry _entry;
+	private MBCategory _category;
 
 }

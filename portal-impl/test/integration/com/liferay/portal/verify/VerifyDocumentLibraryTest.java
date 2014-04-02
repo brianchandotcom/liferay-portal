@@ -58,8 +58,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 		throws Exception {
 
 		Folder parentFolder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), parentFolder.getFolderId(), false,
@@ -78,12 +77,10 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 		throws Exception {
 
 		Folder grandparentFolder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Folder parentFolder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), grandparentFolder.getFolderId(),
-			ServiceTestUtil.randomString());
+			_group.getGroupId(), grandparentFolder.getFolderId());
 
 		DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), parentFolder.getFolderId(), false,
@@ -102,8 +99,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 		throws Exception {
 
 		Folder parentFolder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), parentFolder.getFolderId(), false,
@@ -126,12 +122,10 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 		throws Exception {
 
 		Folder grandparentFolder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Folder parentFolder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), grandparentFolder.getFolderId(),
-			ServiceTestUtil.randomString());
+			_group.getGroupId(), grandparentFolder.getFolderId());
 
 		DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), parentFolder.getFolderId(), false,
@@ -148,12 +142,10 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 	@Test
 	public void testDLFolderTreePathWithDLFolderInTrash() throws Exception {
 		Folder parentFolder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Folder folder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), parentFolder.getFolderId(),
-			ServiceTestUtil.randomString());
+			_group.getGroupId(), parentFolder.getFolderId());
 
 		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
 
@@ -168,16 +160,13 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 		throws Exception {
 
 		Folder grandparentFolder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Folder parentFolder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), grandparentFolder.getFolderId(),
-			ServiceTestUtil.randomString());
+			_group.getGroupId(), grandparentFolder.getFolderId());
 
 		DLAppTestUtil.addFolder(
-			_group.getGroupId(), parentFolder.getFolderId(),
-			ServiceTestUtil.randomString());
+			_group.getGroupId(), parentFolder.getFolderId());
 
 		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
 

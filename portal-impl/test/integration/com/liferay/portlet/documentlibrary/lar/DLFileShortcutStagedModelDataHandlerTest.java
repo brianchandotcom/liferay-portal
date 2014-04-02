@@ -62,8 +62,7 @@ public class DLFileShortcutStagedModelDataHandlerTest
 			new HashMap<String, List<StagedModel>>();
 
 		Folder folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DLFolder.class, folder);

@@ -110,8 +110,7 @@ public class FileEntryStagedModelDataHandlerTest
 
 		Folder folder = DLAppTestUtil.addFolder(
 			stagingGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DLFolder.class, folder);
@@ -140,8 +139,7 @@ public class FileEntryStagedModelDataHandlerTest
 			dependentStagedModelsMap, DLFileEntryType.class, dlFileEntryType);
 
 		Folder folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DLFolder.class, folder);

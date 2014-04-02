@@ -248,8 +248,7 @@ public abstract class BaseUserNotificationTestCase {
 	}
 
 	@Test
-	public void
-			testUpdateUserNotificationWhenWebsiteNotificationsDisabled()
+	public void testUpdateUserNotificationWhenWebsiteNotificationsDisabled()
 		throws Exception {
 
 		updateUserNotificationDelivery(

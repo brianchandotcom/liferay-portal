@@ -231,9 +231,7 @@ public class ConvertDocumentLibraryTest {
 	}
 
 	protected WikiPage addWikiPage() throws Exception {
-		WikiNode wikiNode = WikiTestUtil.addNode(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50));
+		WikiNode wikiNode = WikiTestUtil.addNode(_group.getGroupId());
 
 		return WikiTestUtil.addPage(
 			wikiNode.getUserId(), _group.getGroupId(), wikiNode.getNodeId(),

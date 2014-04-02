@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.service.BaseLocalServiceTreeTestCase;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
@@ -55,8 +54,7 @@ public class DLFolderLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
 		}
 
 		Folder folder = DLAppTestUtil.addFolder(
-			TestPropsValues.getGroupId(), parentFolderId,
-			ServiceTestUtil.randomString());
+			TestPropsValues.getGroupId(), parentFolderId);
 
 		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
 			folder.getFolderId());

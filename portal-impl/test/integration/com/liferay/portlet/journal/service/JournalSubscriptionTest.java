@@ -169,8 +169,7 @@ public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 			JournalArticleLocalServiceUtil.getLatestArticle(
 				baseModelId, WorkflowConstants.STATUS_APPROVED, true);
 
-		article = JournalTestUtil.updateArticle(
-			article, ServiceTestUtil.randomString());
+		article = JournalTestUtil.updateArticle(article);
 
 		return article.getResourcePrimKey();
 	}

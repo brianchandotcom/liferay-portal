@@ -80,9 +80,7 @@ public class WikiPageLocalServiceTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_node = WikiTestUtil.addNode(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50));
+		_node = WikiTestUtil.addNode(_group.getGroupId());
 	}
 
 	@Test
@@ -98,8 +96,7 @@ public class WikiPageLocalServiceTest {
 	@Test
 	public void testCopyPage() throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			ServiceTestUtil.randomString(), true);
+			_group.getGroupId(), _node.getNodeId(), true);
 
 		WikiTestUtil.addWikiAttachment(
 			page.getUserId(), page.getNodeId(), page.getTitle(), getClass());
@@ -247,8 +244,7 @@ public class WikiPageLocalServiceTest {
 	@Test
 	public void testGetPage() throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			ServiceTestUtil.randomString(), true);
+			_group.getGroupId(), _node.getNodeId(), true);
 
 		WikiPage retrievedPage = WikiPageLocalServiceUtil.getPage(
 			page.getResourcePrimKey());
@@ -298,8 +294,7 @@ public class WikiPageLocalServiceTest {
 	@Test(expected = DuplicatePageException.class)
 	public void testMovePageSameName() throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			ServiceTestUtil.randomString(), true);
+			_group.getGroupId(), _node.getNodeId(), true);
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
@@ -432,16 +427,14 @@ public class WikiPageLocalServiceTest {
 
 	protected void testChangeParent(boolean hasExpandoValues) throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			ServiceTestUtil.randomString(), true);
+			_group.getGroupId(), _node.getNodeId(), true);
 
 		if (hasExpandoValues) {
 			addExpandoValueToPage(page);
 		}
 
 		WikiPage parentPage = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			ServiceTestUtil.randomString(), true);
+			_group.getGroupId(), _node.getNodeId(), true);
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
@@ -459,8 +452,7 @@ public class WikiPageLocalServiceTest {
 
 	protected void testMovePage(boolean hasExpandoValues) throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			ServiceTestUtil.randomString(), true);
+			_group.getGroupId(), _node.getNodeId(), true);
 
 		if (hasExpandoValues) {
 			addExpandoValueToPage(page);
@@ -486,8 +478,7 @@ public class WikiPageLocalServiceTest {
 		throws Exception {
 
 		WikiPage page = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			ServiceTestUtil.randomString(), true);
+			_group.getGroupId(), _node.getNodeId(), true);
 
 		if (hasExpandoValues) {
 			addExpandoValueToPage(page);

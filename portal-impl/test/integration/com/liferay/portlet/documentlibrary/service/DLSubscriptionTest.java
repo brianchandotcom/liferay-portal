@@ -65,8 +65,7 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), group.getGroupId(), containerModelId,
-			ServiceTestUtil.randomString());
+			group.getGroupId(), group.getGroupId(), containerModelId);
 
 		return fileEntry.getFileEntryId();
 	}
@@ -97,8 +96,7 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
 		Folder folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), containerModelId,
-			ServiceTestUtil.randomString());
+			group.getGroupId(), containerModelId);
 
 		return folder.getFolderId();
 	}

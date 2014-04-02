@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.action;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -166,6 +167,26 @@ public class EditFolderAction extends PortletAction {
 		}
 	}
 
+	protected SortedArrayList<Long> getLongList(
+		ActionRequest actionRequest, String name) {
+
+		String value = ParamUtil.getString(actionRequest, name);
+
+		if (value == null) {
+			return new SortedArrayList<Long>();
+		}
+
+		long[] longArray = StringUtil.split(value, 0L);
+
+		SortedArrayList<Long> longList = new SortedArrayList<Long>();
+
+		for (long longValue : longArray) {
+			longList.add(longValue);
+		}
+
+		return longList;
+	}
+
 	protected void subscribeFolder(ActionRequest actionRequest)
 		throws Exception {
 
@@ -213,12 +234,17 @@ public class EditFolderAction extends PortletAction {
 				description, serviceContext);
 		}
 		else {
+			List<Long> ddmStructureIds = getLongList(
+				actionRequest, "ddmStructuresSearchContainerPrimaryKeys");
+			boolean overrideDDMStructures = ParamUtil.getBoolean(
+				actionRequest, "overrideDDMStructures");
 
 			// Update folder
 
 			JournalFolderServiceUtil.updateFolder(
 				folderId, parentFolderId, name, description,
-				mergeWithParentFolder, serviceContext);
+				ddmStructureIds, overrideDDMStructures, mergeWithParentFolder,
+				serviceContext);
 		}
 	}
 

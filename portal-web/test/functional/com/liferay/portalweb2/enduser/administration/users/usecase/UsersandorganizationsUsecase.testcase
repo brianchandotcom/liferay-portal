@@ -248,7 +248,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#click" locator-key1="MY_SITES" />
+		<execute action="Dockbar#assertClick" locator-key1="MY_SITES" value1="My Sites" />
 		<execute action="Dockbar#assertTextNotPresent" locator-key1="MY_SITES_SITE_NAME" value1="Organization Name 1" />
 		<execute action="Dockbar#assertTextNotPresent" locator-key1="MY_SITES_SITE_NAME" value1="Organization Name 2" />
 
@@ -263,13 +263,13 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="MY_SITES" />
+		<execute action="Dockbar#assertClick" locator-key1="MY_SITES" value1="My Sites" />
 		<execute action="Dockbar#assertTextNotPresent" locator-key1="MY_SITES_SITE_NAME" value1="Organization Name 1" />
 		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Organization Name 2" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="Dockbar#click" locator-key1="MY_SITES" />
+		<execute action="Dockbar#assertClick" locator-key1="MY_SITES" value1="My Sites" />
 		<execute action="Dockbar#assertClick" locator-key1="MY_SITES_PUBLIC_SITE" value1="${siteName}" />
 
 		<execute action="Home#click" locator-key1="PAGE_NAVIGATION_BAR" />
@@ -537,7 +537,7 @@
 			<var name="siteName" value="Site Name I" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="MY_SITES" />
+		<execute action="Dockbar#assertClick" locator-key1="MY_SITES" value1="My Sites" />
 		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name A" />
 		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name B" />
 		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name C" />
@@ -568,7 +568,7 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="MY_SITES" />
+		<execute action="Dockbar#assertClick" locator-key1="MY_SITES" value1="My Sites" />
 		<execute action="Dockbar#assertTextPresent" locator-key1="MY_SITES_SITE_NAME" value1="Site Name I" />
 	</command>
 

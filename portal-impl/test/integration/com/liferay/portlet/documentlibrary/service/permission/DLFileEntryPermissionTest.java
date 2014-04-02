@@ -60,14 +60,14 @@ public class DLFileEntryPermissionTest extends BasePermissionTestCase {
 	protected void doSetUp() throws Exception {
 		_fileEntry = DLAppTestUtil.addFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			true, ServiceTestUtil.randomString());
+			ServiceTestUtil.randomString());
 
 		Folder folder = DLAppTestUtil.addFolder(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceTestUtil.randomString(), true);
 
 		_subfileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), folder.getFolderId(), false,
+			group.getGroupId(), folder.getFolderId(),
 			ServiceTestUtil.randomString());
 	}
 

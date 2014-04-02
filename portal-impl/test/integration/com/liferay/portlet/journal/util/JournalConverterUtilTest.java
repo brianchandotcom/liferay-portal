@@ -116,7 +116,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, true, "Test 2.txt");
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 2.txt");
 
 		Field docLibrary = getDocumentLibraryField(
 			fileEntry, _ddmStructure.getStructureId());
@@ -351,7 +351,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, true, "Test 1.txt");
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1.txt");
 
 		Field documentLibraryField = getDocumentLibraryField(
 			fileEntry, _ddmStructure.getStructureId());

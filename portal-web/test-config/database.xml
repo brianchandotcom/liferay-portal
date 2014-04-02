@@ -4,7 +4,6 @@
 	<db2>
 		<device-name></device-name>
 		<driver>com.ibm.db2.jcc.DB2Driver</driver>
-		<family>db2</family>
 		<remote-schema-command>cmd.exe /c db2cmd /c /w /i /t db2 -f C:\temporary\create.sql -td;</remote-schema-command>
 		<sql-replacement>
 			<create-schema>
@@ -32,7 +31,6 @@
 	<hsql>
 		<device-name></device-name>
 		<driver>org.hsqldb.jdbcDriver</driver>
-		<family>hsql</family>
 		<remote-schema-command></remote-schema-command>
 		<sql-replacement>
 			<create-schema>
@@ -60,7 +58,6 @@
 	<mysql>
 		<device-name></device-name>
 		<driver>com.mysql.jdbc.Driver</driver>
-		<family>mysql</family>
 		<remote-schema-command></remote-schema-command>
 		<sql-replacement>
 			<create-schema>
@@ -88,7 +85,6 @@
 	<oracle>
 		<device-name></device-name>
 		<driver>oracle.jdbc.driver.OracleDriver</driver>
-		<family>oracle</family>
 		<remote-schema-command>sqlplus system/password @C:\temporary\create.sql ${database.username} ${database.password}</remote-schema-command>
 		<sql-replacement>
 			<create-schema>
@@ -117,7 +113,6 @@
 	<postgresql>
 		<device-name></device-name>
 		<driver>org.postgresql.Driver</driver>
-		<family>postgresql</family>
 		<remote-schema-command>C:\Progra~1\PostgreSQL\${database.version}\bin\psql.exe -U ${database.username} -f C:\temporary\create.sql</remote-schema-command>
 		<sql-replacement>
 			<create-schema>
@@ -145,7 +140,6 @@
 	<sql.server>
 		<device-name></device-name>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
-		<family>sql-server</family>
 		<remote-schema-command>osql -n -U ${database.username} -P ${database.password} -i C:\temporary\create.sql</remote-schema-command>
 		<sql-replacement>
 			<create-schema>
@@ -173,7 +167,6 @@
 	<sybase>
 		<device-name>master</device-name>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
-		<family>sybase</family>
 		<remote-schema-command>isql -U ${database.username} -P ${database.password} -i C:\temporary\create.sql</remote-schema-command>
 		<sql-replacement>
 			<create-schema>

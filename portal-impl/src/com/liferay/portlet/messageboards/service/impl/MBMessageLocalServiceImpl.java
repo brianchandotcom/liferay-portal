@@ -53,6 +53,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -2064,16 +2065,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				company.getMx(), fromAddress);
 		}
 
-		String subject = null;
-		String body = null;
+		LocalizedValuesMap subjectLocalizedValuesMap = null;
+		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
-			subject = mbSettings.getEmailMessageUpdatedSubject();
-			body = mbSettings.getEmailMessageUpdatedBody();
+			subjectLocalizedValuesMap =
+				mbSettings.getEmailMessageUpdatedSubject();
+			bodyLocalizedValuesMap = mbSettings.getEmailMessageUpdatedBody();
 		}
 		else {
-			subject = mbSettings.getEmailMessageAddedSubject();
-			body = mbSettings.getEmailMessageAddedBody();
+			subjectLocalizedValuesMap =
+				mbSettings.getEmailMessageAddedSubject();
+			bodyLocalizedValuesMap = mbSettings.getEmailMessageAddedBody();
 		}
 
 		boolean htmlFormat = mbSettings.isEmailHtmlFormat();
@@ -2115,7 +2118,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		SubscriptionSender subscriptionSenderPrototype =
 			new MBSubscriptionSender();
 
-		subscriptionSenderPrototype.setBody(body);
 		subscriptionSenderPrototype.setBulk(
 			PropsValues.MESSAGE_BOARDS_EMAIL_BULK);
 		subscriptionSenderPrototype.setClassName(message.getModelClassName());
@@ -2134,6 +2136,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSenderPrototype.setFrom(fromAddress, fromName);
 		subscriptionSenderPrototype.setHtmlFormat(htmlFormat);
 		subscriptionSenderPrototype.setInReplyTo(inReplyTo);
+		subscriptionSenderPrototype.setLocalizedBodyMap(bodyLocalizedValuesMap);
+		subscriptionSenderPrototype.setLocalizedSubjectMap(
+			subjectLocalizedValuesMap);
 		subscriptionSenderPrototype.setMailId(
 			MBUtil.MESSAGE_POP_PORTLET_PREFIX, message.getCategoryId(),
 			message.getMessageId());
@@ -2152,7 +2157,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSenderPrototype.setReplyToAddress(replyToAddress);
 		subscriptionSenderPrototype.setScopeGroupId(message.getGroupId());
 		subscriptionSenderPrototype.setServiceContext(serviceContext);
-		subscriptionSenderPrototype.setSubject(subject);
 		subscriptionSenderPrototype.setUserId(message.getUserId());
 
 		SubscriptionSender subscriptionSender =

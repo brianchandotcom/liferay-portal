@@ -3,9 +3,5 @@
 		<case comparator="startsWith" locator-key1="ROLE_TABLE_TITLE">
 			<execute function="Click#clickAtAndWait" />
 		</case>
-
-		<case locator-key1="ROLES_SEARCH_BUTTON">
-			<execute function="Click#textClickAtAndWait" value1="Search" />
-		</case>
 	</command>
 </definition>

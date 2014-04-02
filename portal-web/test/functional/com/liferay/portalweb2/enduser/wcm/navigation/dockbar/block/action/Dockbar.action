@@ -73,7 +73,7 @@
 		</case>
 
 		<case locator-key1="ADMIN">
-			<execute function="Click#textClickAtClickDockbar" value1="Admin" />
+			<execute function="Click#textClickAtClickDockbar" />
 		</case>
 
 		<case locator-key1="EDIT">
@@ -81,7 +81,7 @@
 		</case>
 
 		<case locator-key1="MY_SITES">
-			<execute function="Click#textClickAtClickDockbar" value1="My Sites" />
+			<execute function="Click#textClickAtClickDockbar" />
 		</case>
 
 		<case locator-key1="USER_NAME">

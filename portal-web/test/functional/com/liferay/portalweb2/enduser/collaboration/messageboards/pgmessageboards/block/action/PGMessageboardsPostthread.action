@@ -5,12 +5,6 @@
 		</case>
 	</command>
 
-	<command name="click">
-		<case locator-key1="PUBLISH_BUTTON">
-			<execute function="Click#textClickAtAndWait" value1="Publish" />
-		</case>
-	</command>
-
 	<command name="type">
 		<case locator-key1="BODY_FIELD">
 			<execute function="Type#typeFrameWaitForCKEditor" />

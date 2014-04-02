@@ -882,7 +882,7 @@ public class LiferaySeleniumHelper {
 
 		sb.append(".setHTML(\"");
 		sb.append(HtmlUtil.escapeJS(value.replace("\\", "\\\\")));
-		sb.append("\")");
+		sb.append("\");");
 
 		liferaySelenium.runScript(sb.toString());
 	}

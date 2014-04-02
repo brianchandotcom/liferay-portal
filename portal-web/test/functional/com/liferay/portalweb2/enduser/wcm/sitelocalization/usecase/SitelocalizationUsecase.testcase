@@ -299,7 +299,7 @@
 
 		<execute macro="Page#gotoCPLocalized">
 			<var name="localizedControlPanel" value="Panel de control" />
-			<var name="localizedportletName" value="Configuración del Portal" />
+			<var name="localizedPortletName" value="Configuración del Portal" />
 		</execute>
 
 		<execute macro="PortalSettings#viewCurrentDefaultPortalLanguageCP">

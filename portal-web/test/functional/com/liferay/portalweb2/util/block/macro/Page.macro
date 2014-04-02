@@ -73,6 +73,7 @@
 
 	<command name="assertLocalizedPG">
 		<execute action="PGSignin#assertTextEquals" locator-key1="PORTLET_CONTENT_LOCALIZED" value1="${localizedContent}" />
+
 		<execute action="Dockbar#assertTextEquals" locator-key1="ADMIN" value1="${localizedAdmin}" />
 	</command>
 
@@ -220,9 +221,9 @@
 		<description message="Navigate to Site Administration > Configuration > ${portletName}." />
 
 		<execute macro="Page#gotoCmdLocalizedCP">
-			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONFIGURATION_LOCALIZED" />
 			<var name="localizedPortletCategoryName" value="${localizedPortletCategoryName}" />
 			<var name="localizedPortletName" value="${localizedPortletName}" />
+			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONFIGURATION_LOCALIZED" />
 		</execute>
 	</command>
 

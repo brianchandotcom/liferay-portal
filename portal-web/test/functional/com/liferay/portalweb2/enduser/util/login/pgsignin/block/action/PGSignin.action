@@ -1,15 +1,15 @@
 <definition>
 	<command name="assertTextEquals">
 		<case locator-key1="PORTLET_CONTENT_LOCALIZED">
-			<execute function="AssertTextEquals#assertPartialText" value1="You are signed in as" />
+			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 
 		<case locator-key1="PORTLET_CONTENT">
-			<execute function="AssertTextEquals#assertPartialText" value1="You are signed in as" />
+			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 
 		<case locator-key1="PORTLET_TITLE">
-			<execute function="AssertTextEquals#assertText" value1="Sign In" />
+			<execute function="AssertTextEquals#assertText" />
 		</case>
 	</command>
 </definition>

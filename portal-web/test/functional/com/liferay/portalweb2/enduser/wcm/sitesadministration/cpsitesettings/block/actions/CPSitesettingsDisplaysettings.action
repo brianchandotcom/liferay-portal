@@ -1,10 +1,4 @@
 <definition>
-	<command name="assertClick">
-		<case locator-key1="AVAILABLE_LANGUAGES_AVAILABLE_SELECT">
-			<execute function="AssertClick#assertPartialTextClickAt" />
-		</case>
-	</command>
-
 	<command name="assertTextEquals">
 		<case locator-key1="AVAILABLE_LANGUAGES_AVAILABLE_SELECT">
 			<execute function="AssertTextEquals#assertPartialText" />

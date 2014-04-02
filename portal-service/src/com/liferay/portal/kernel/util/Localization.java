@@ -120,8 +120,8 @@ public interface Localization {
 
 	/**
 	 * Returns the localized string from the localizations XML in the language,
-	 * optionally using the default language if no localization exists for
-	 * the requested language. If no localization exists, returns the default
+	 * optionally using the default language if no localization exists for the
+	 * requested language. If no localization exists, returns the default
 	 * value.
 	 *
 	 * @param  xml the localizations XML
@@ -129,9 +129,9 @@ public interface Localization {
 	 * @param  useDefault whether to use the default language if no localization
 	 *         exists for the requested language
 	 * @param  defaultValue the return value if no localization exists
-	 * @return the localized string. If <code>useDefault</code> is
-	 *         <code>false</code> and no localization exists for the requested
-	 *         language, the <code>defaultDefault</code> will be returned.
+	 * @return the localized string, or the <code>defaultValue</code> if
+	 *         <code>useDefault</code> is <code>false</code> and no localization
+	 *         exists for the requested language
 	 */
 	public String getLocalization(
 		String xml, String requestedLanguageId, boolean useDefault,
@@ -251,8 +251,8 @@ public interface Localization {
 	 *         strings. Each localization will be loaded from a parameter with
 	 *         this prefix, followed by an underscore, and the language ID.
 	 * @param  defaultValue the return value if no localization exists
-	 * @return the locales and localized strings. If no localization exists, the
-	 *         <code>defaultDefault</code> will be returned.
+	 * @return the locales and localized strings, or the
+	 *         <code>defaultValue</code> if no localization exists
 	 */
 	public String getLocalizationXmlFromPreferences(
 		PortletPreferences preferences, PortletRequest portletRequest,

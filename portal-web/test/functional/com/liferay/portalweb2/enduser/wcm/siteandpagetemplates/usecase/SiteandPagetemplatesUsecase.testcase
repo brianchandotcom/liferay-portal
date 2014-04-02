@@ -64,7 +64,7 @@
 		</execute>
 	</command>
 
-	<command name="SitesDynamicTemplateInheritance" priority="4">
+	<command name="SitesDynamicTemplateInheritance" known-issues="LPS-45472" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

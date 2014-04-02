@@ -1036,7 +1036,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAPPortletAsNewUserSiteAdministratorViaUserSite" priority="4">
+	<command name="ViewAPPortletAsNewUserSiteAdministratorViaUserSite" known-issues="LPS-45472" priority="4">
 		<var name="pageName" value="Asset Publisher Page" />
 		<var name="portletName" value="Asset Publisher" />
 		<var name="siteName" value="Site Name" />

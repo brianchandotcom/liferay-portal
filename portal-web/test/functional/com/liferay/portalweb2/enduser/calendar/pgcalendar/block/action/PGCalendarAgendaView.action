@@ -1,4 +1,10 @@
 <definition>
+	<command name="assertClick">
+		<case locator-key1="SCHEDULER_EVENT_SPECIFIC">
+			<execute function="AssertClick#assertPartialTextClickAt" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="SCHEDULER_EVENT_SPECIFIC">
 			<execute function="AssertTextEquals#assertPartialText" />

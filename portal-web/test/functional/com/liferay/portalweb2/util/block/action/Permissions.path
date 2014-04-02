@@ -211,6 +211,17 @@
 	<td>//input[@id='${key_roleName}_ACTION_VIEW']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EVENT_PERMISSIONS-->
+<tr>
+	<td>EVENT_PERMISSIONS_VIEW_EVENT_DETAILS_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_VIEW_BOOKING_DETAILS']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

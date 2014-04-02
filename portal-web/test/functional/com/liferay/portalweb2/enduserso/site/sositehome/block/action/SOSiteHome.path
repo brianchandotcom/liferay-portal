@@ -229,18 +229,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BOOKMARKS_ENTRY_LINK_INCREMENT</td>
-	<td>//tr[contains(.,'${number}')]/td/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BOOKMARKS_ENTRY_ACTIONS</td>
 	<td>//tr[contains(.,'${key_bookmarksEntryName}')]//a[@title='Actions']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BOOKMARKS_ENTRY_ACTIONS_INCREMENT</td>
-	<td>//tr[contains(.,'${number}')]//a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>
@@ -291,9 +281,9 @@
 	<td>Yahoo</td>
 </tr>
 <tr>
-	<td>BOOKMARKS_POP_UP_MSN</td>
-	<td>title=MSN.com</td>
-	<td>MSN</td>
+	<td>BOOKMARKS_POP_UP_BING</td>
+	<td>title=Bing</td>
+	<td>Bing</td>
 </tr>
 <tr>
 	<td>BOOKMARKS_POP_UP_IMAGE_GOOGLE</td>
@@ -306,9 +296,9 @@
 	<td>Yahoo</td>
 </tr>
 <tr>
-	<td>BOOKMARKS_POP_UP_IMAGE_MSN</td>
-	<td>//img[@alt='MSN Logo']</td>
-	<td>MSN</td>
+	<td>BOOKMARKS_POP_UP_IMAGE_BING</td>
+	<td>//div[contains(@class,'logo') and contains(.,'Bing')]</td>
+	<td>Bing</td>
 </tr>
 <tr>
 	<td>BOOKMARKS_NULL_WINDOW</td>
@@ -425,42 +415,22 @@
 </tr>
 <tr>
 	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE</td>
-	<td>//div[@class='today-events']//span[@class='event-name']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_INCREMENT</td>
-	<td>//div[@class='today-events']//div[@class='event' and contains(.,'${number}')]/span[@class='event-name']/a</td>
+	<td>//div[@class='today-events']//div[@class='event' and contains(.,'${key_eventTitle}')]/span[@class='event-name']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME</td>
-	<td>//div[@class='today-events']//span[@class='event-time']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME_INCREMENT</td>
-	<td>//div[@class='today-events']//div[@class='event' and contains(.,'${number}')]/span[@class='event-time']</td>
+	<td>//div[@class='today-events']//div[@class='event' and contains(.,'${key_eventTitle}')]/span[@class='event-time']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE</td>
-	<td>//div[@class='upcoming-events']//span[@class='event-name']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_INCREMENT</td>
-	<td>//div[@class='upcoming-events']//div[@class='event' and contains(.,'${number}')]/span[@class='event-name']/a</td>
+	<td>//div[@class='upcoming-events']//div[@class='event' and contains(.,'${key_eventTitle}')]/span[@class='event-name']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME</td>
-	<td>//div[@class='upcoming-events']//span[@class='event-time']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME_INCREMENT</td>
-	<td>//div[@class='upcoming-events']//div[@class='event' and contains(.,'${number}')]/span[@class='event-time']</td>
+	<td>//div[@class='upcoming-events']//div[@class='event' and contains(.,'${key_eventTitle}')]/span[@class='event-time']</td>
 	<td></td>
 </tr>
 <tr>

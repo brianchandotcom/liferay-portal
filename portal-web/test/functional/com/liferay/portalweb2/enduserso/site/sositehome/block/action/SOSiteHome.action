@@ -12,15 +12,7 @@
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 
-		<case locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_INCREMENT">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
 		<case locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_INCREMENT">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
@@ -64,7 +56,7 @@
 			<execute function="Close#closeWindow" />
 		</case>
 
-		<case locator-key1="BOOKMARKS_POP_UP_MSN">
+		<case locator-key1="BOOKMARKS_POP_UP_BING">
 			<execute function="Close#closeWindow" />
 		</case>
 

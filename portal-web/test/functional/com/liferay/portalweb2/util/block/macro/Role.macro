@@ -214,7 +214,7 @@
 					</then>
 				</elseif>
 				<elseif>
-					<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_SITES_SITES" />
+					<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_USERS_USER_GROUPS" />
 					<then>
 						<var name="permissionNavigationKey" value="CONTROL_PANEL_USERS_USER_GROUPS" />
 						<var name="permissionNavigationValue" value="User Groups" />
@@ -490,7 +490,7 @@
 				</then>
 			</elseif>
 			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_SITES_SITES" />
+				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_USERS_USER_GROUPS" />
 				<then>
 					<var name="permissionNavigationKey" value="CONTROL_PANEL_USERS_USER_GROUPS" />
 					<var name="permissionNavigationValue" value="User Groups" />

@@ -127,7 +127,7 @@ if (ratingsEntry != null) {
 											</c:otherwise>
 										</c:choose>
 
-										(<%= ratingsStats.getTotalEntries() %> <liferay-ui:message key='<%= (ratingsStats.getTotalEntries() == 1) ? "vote" : "votes" %>' />)
+										<%= StringPool.SPACE %>(<%= ratingsStats.getTotalEntries() %> <liferay-ui:message key='<%= (ratingsStats.getTotalEntries() == 1) ? "vote" : "votes" %>' />)
 									</div>
 
 									<c:choose>

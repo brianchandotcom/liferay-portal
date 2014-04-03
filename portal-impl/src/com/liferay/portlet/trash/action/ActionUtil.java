@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portlet.trash.DuplicateEntryException;
+import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
@@ -52,11 +52,11 @@ public class ActionUtil {
 
 			jsonObject.put("success", true);
 		}
-		catch (DuplicateEntryException dee) {
-			jsonObject.put("duplicateEntryId", dee.getDuplicateEntryId());
-			jsonObject.put("oldName", dee.getOldName());
+		catch (RestoreEntryException ree) {
+			jsonObject.put("duplicateEntryId", ree.getDuplicateEntryId());
+			jsonObject.put("oldName", ree.getOldName());
 			jsonObject.put("success", false);
-			jsonObject.put("trashEntryId", dee.getTrashEntryId());
+			jsonObject.put("trashEntryId", ree.getTrashEntryId());
 		}
 
 		return jsonObject;

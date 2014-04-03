@@ -123,6 +123,8 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 					</c:choose>
 
 					<%
+					boolean filterByMetadata = false;
+
 					String[] metadataFields = new String[] {"author", "categories", "tags"};
 					%>
 

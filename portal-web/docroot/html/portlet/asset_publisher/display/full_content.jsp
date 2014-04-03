@@ -240,6 +240,8 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		<div class="asset-metadata">
 
 			<%
+			boolean filterByMetadata = true;
+
 			String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
 			%>
 

@@ -118,6 +118,8 @@ viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL,
 		<div class="asset-metadata">
 
 			<%
+			boolean filterByMetadata = true;
+
 			String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
 			%>
 

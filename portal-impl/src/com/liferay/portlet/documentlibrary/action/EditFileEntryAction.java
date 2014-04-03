@@ -174,9 +174,6 @@ public class EditFileEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.CHECKOUT)) {
 				checkOutFileEntries(actionRequest);
 			}
-			else if (cmd.equals(Constants.MOVE_FROM_TRASH)) {
-				moveFileEntries(actionRequest);
-			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteFileEntry(actionRequest, true);
 			}
@@ -193,9 +190,7 @@ public class EditFileEntryAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.PREVIEW)) {
 			}
-			else if (!cmd.equals(Constants.MOVE_FROM_TRASH) &&
-					 !windowState.equals(LiferayWindowState.POP_UP)) {
-
+			else if (!windowState.equals(LiferayWindowState.POP_UP)) {
 				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
@@ -899,32 +894,6 @@ public class EditFileEntryAction extends PortletAction {
 		}
 		else {
 			throw e;
-		}
-	}
-
-	protected void moveFileEntries(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] fileEntryIds = null;
-
-		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
-
-		if (fileEntryId > 0) {
-			fileEntryIds = new long[] {fileEntryId};
-		}
-		else {
-			fileEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
-		}
-
-		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFileEntry.class.getName(), actionRequest);
-
-		for (long moveFileEntryId : fileEntryIds) {
-			DLAppServiceUtil.moveFileEntry(
-				moveFileEntryId, newFolderId, serviceContext);
 		}
 	}
 

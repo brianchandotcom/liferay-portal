@@ -107,9 +107,6 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 			else if (cmd.equals(Constants.EMPTY_TRASH)) {
 				emptyTrash(actionRequest);
 			}
-			else if (cmd.equals(Constants.MOVE_FROM_TRASH)) {
-				restoreAttachmentFromTrash(actionRequest, actionResponse);
-			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteAttachment(actionRequest, true);
 			}
@@ -388,24 +385,6 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 			WikiPageServiceUtil.restorePageAttachmentFromTrash(
 				page.getNodeId(), page.getTitle(), fileEntry.getTitle());
 		}
-	}
-
-	protected void restoreAttachmentFromTrash(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
-		String title = ParamUtil.getString(actionRequest, "title");
-		String fileName = ParamUtil.getString(actionRequest, "fileName");
-
-		JSONObject jsonObject =
-			com.liferay.portlet.trash.action.ActionUtil.checkEntry(
-				actionRequest);
-
-		writeJSON(actionRequest, actionResponse, jsonObject);
-
-		WikiPageServiceUtil.restorePageAttachmentFromTrash(
-			nodeId, title, fileName);
 	}
 
 	private static final String _TEMP_FOLDER_NAME =

@@ -759,7 +759,7 @@ public class LayoutImporter {
 			List<String> sourceLayoutsUuids, Element layoutElement)
 		throws Exception {
 
-		String action = layoutElement.attributeValue("action");
+		String action = layoutElement.attributeValue(Constants.ACTION);
 
 		if (!action.equals(Constants.SKIP)) {
 			StagedModelDataHandlerUtil.importStagedModel(
@@ -1084,7 +1084,7 @@ public class LayoutImporter {
 		}
 
 		for (Element layoutElement : layoutElements) {
-			String action = layoutElement.attributeValue("action");
+			String action = layoutElement.attributeValue(Constants.ACTION);
 
 			if (action.equals(Constants.SKIP)) {
 				continue;

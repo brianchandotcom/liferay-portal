@@ -109,9 +109,6 @@
 		<execute action="PGApplicationdisplaytemplates#selectFrameTop" value1="relative=top" />
 		<execute action="PGApplicationdisplaytemplates#selectFrame" locator-key1="ADT_IFRAME" />
 		<execute action="PGApplicationdisplaytemplates#assertClick" locator-key1="ADD" value1="Add" />
-
-		<var name="key_adtType" value="${adtType}" />
-
 		<execute action="PGApplicationdisplaytemplates#assertClick" locator-key1="ADD_MENULIST_ADT_TEMPLATE" value1="${adtType} Template" />
 
 		<execute action="PGApplicationdisplaytemplatesAdd#type" locator-key1="NAME_FIELD" value1="${adtType} Test ADT" />

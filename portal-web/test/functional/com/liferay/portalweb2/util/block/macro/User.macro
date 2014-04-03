@@ -984,7 +984,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<if>
-			<isset var="notAdmin" />
+			<equals arg1="${notAdmin}" arg2="true" />
 			<then>
 				<execute action="CPUsersandorganizationsViewusers#assertElementNotPresent" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
 				<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_IMPERSONATE" value1="Impersonate User (Opens New Window)" />

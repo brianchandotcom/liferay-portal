@@ -546,7 +546,9 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 		String[] selectedFieldNames = queryConfig.getSelectedFieldNames();
 
-		if (ArrayUtil.isNotEmpty(selectedFieldNames)) {
+		if (ArrayUtil.isNotEmpty(selectedFieldNames) &&
+			!selectedFieldNames[0].equals(Field.ALL_FIELDS_ID)) {
+
 			fieldSelector = new SetBasedFieldSelector(
 				SetUtil.fromArray(selectedFieldNames),
 				Collections.<String>emptySet());

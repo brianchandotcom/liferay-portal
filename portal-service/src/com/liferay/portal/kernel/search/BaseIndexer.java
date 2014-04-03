@@ -517,6 +517,17 @@ public abstract class BaseIndexer implements Indexer {
 		try {
 			Hits hits = null;
 
+			QueryConfig queryConfig = searchContext.getQueryConfig();
+
+			if (ArrayUtil.isEmpty(queryConfig.getSelectedFieldNames()) &&
+				!ArrayUtil.isEmpty(getDefaultSelectedFieldNames())) {
+
+				queryConfig.setSelectedFieldNames(
+					getDefaultSelectedFieldNames());
+			}
+
+			addSelectedFacetFieldNames(searchContext, queryConfig);
+
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
@@ -1088,6 +1099,31 @@ public abstract class BaseIndexer implements Indexer {
 		searchContext.addFacet(multiValueFacet);
 	}
 
+	protected void addSelectedFacetFieldNames(
+		SearchContext searchContext, QueryConfig queryConfig) {
+
+		String[] selectedFieldNames = queryConfig.getSelectedFieldNames();
+
+		if (ArrayUtil.isEmpty(selectedFieldNames) ||
+			(selectedFieldNames.length == 1) &&
+			selectedFieldNames[0].equals(Field.ALL_FIELDS_ID)) {
+
+			return;
+		}
+
+		Set<String> selectedFieldNameSet = SetUtil.fromArray(
+			selectedFieldNames);
+
+		Set<String> facetNames = searchContext.getFacets().keySet();
+
+		selectedFieldNameSet.addAll(facetNames);
+
+		selectedFieldNames = selectedFieldNameSet.toArray(
+			new String[selectedFieldNameSet.size()]);
+
+		queryConfig.setSelectedFieldNames(selectedFieldNames);
+	}
+
 	protected void addStagingGroupKeyword(Document document, long groupId)
 		throws Exception {
 
@@ -1500,6 +1536,10 @@ public abstract class BaseIndexer implements Indexer {
 		return classNames[0];
 	}
 
+	protected String[] getDefaultSelectedFieldNames() {
+		return _defaultSelectedFieldNames;
+	}
+
 	protected Set<String> getLocalizedCountryNames(Country country) {
 		Set<String> countryNames = new HashSet<String>();
 
@@ -1657,6 +1697,12 @@ public abstract class BaseIndexer implements Indexer {
 		}
 	}
 
+	protected void setDefaultSelectedFieldNames(
+		String[] getDefaultSelectedFieldNames) {
+
+		_defaultSelectedFieldNames = getDefaultSelectedFieldNames;
+	}
+
 	protected void setFilterSearch(boolean filterSearch) {
 		_filterSearch = filterSearch;
 	}
@@ -1679,6 +1725,7 @@ public abstract class BaseIndexer implements Indexer {
 
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 
+	private String[] _defaultSelectedFieldNames;
 	private Document _document;
 	private boolean _filterSearch;
 	private boolean _indexerEnabled = true;

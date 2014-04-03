@@ -28,7 +28,7 @@ import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 import com.liferay.portlet.journal.util.JournalUtil;
-import com.liferay.portlet.trash.DuplicateEntryException;
+import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
@@ -251,13 +251,13 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 				folder.getGroupId(), containerModelId, originalTitle);
 
 		if (duplicateFolder != null) {
-			DuplicateEntryException dee = new DuplicateEntryException();
+			RestoreEntryException ree = new RestoreEntryException();
 
-			dee.setDuplicateEntryId(duplicateFolder.getFolderId());
-			dee.setOldName(duplicateFolder.getName());
-			dee.setTrashEntryId(trashEntryId);
+			ree.setDuplicateEntryId(duplicateFolder.getFolderId());
+			ree.setOldName(duplicateFolder.getName());
+			ree.setTrashEntryId(trashEntryId);
 
-			throw dee;
+			throw ree;
 		}
 	}
 

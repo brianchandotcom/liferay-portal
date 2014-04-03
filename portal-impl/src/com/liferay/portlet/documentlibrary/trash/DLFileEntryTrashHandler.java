@@ -42,7 +42,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.trash.DuplicateEntryException;
+import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -302,13 +302,13 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 				dlFileEntry.getGroupId(), containerModelId, originalTitle);
 
 		if (duplicateDLFileEntry != null) {
-			DuplicateEntryException dee = new DuplicateEntryException();
+			RestoreEntryException ree = new RestoreEntryException();
 
-			dee.setDuplicateEntryId(duplicateDLFileEntry.getFileEntryId());
-			dee.setOldName(duplicateDLFileEntry.getTitle());
-			dee.setTrashEntryId(entryId);
+			ree.setDuplicateEntryId(duplicateDLFileEntry.getFileEntryId());
+			ree.setOldName(duplicateDLFileEntry.getTitle());
+			ree.setTrashEntryId(entryId);
 
-			throw dee;
+			throw ree;
 		}
 	}
 

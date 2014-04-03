@@ -45,7 +45,7 @@ if (Validator.isNotNull(keywords)) {
 
 <liferay-util:include page="/html/portlet/trash/restore_path.jsp" />
 
-<liferay-ui:error exception="<%= DuplicateEntryException.class %>">
+<liferay-ui:error exception="<%= RestoreEntryException.class %>">
 	<liferay-ui:message key="unable-to-move-this-item-to-the-selected-destination" />
 </liferay-ui:error>
 

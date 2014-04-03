@@ -188,6 +188,21 @@ public class RuntimeVariables {
 		return true;
 	}
 
+	public static String regularExpression(
+		String content, String regex, int group) {
+
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(content);
+
+		String statement = "";
+
+		while (matcher.find()) {
+			statement = matcher.group(group);
+		}
+
+		return statement;
+	}
+
 	public static String replace(String text) {
 		return _instance._replace(text);
 	}

@@ -114,6 +114,18 @@
 	</#if>
 
 	);
+<#elseif varElement.attributeValue("input")??>
+	<#assign input = varElement.attributeValue("input")>
+
+	<#if varElement.attributeValue("pattern")??>
+		<#assign pattern = varElement.attributeValue("pattern")>
+	</#if>
+
+	<#if varElement.attributeValue("group")??>
+		<#assign matcher = varElement.attributeValue("group")>
+	</#if>
+
+	${variableContext}.put("${varName}", RuntimeVariables.regularExpression("${input}", "${pattern}", ${matcher}));
 <#else>
 	${variableContext}.put("${varName}", RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(varValue)}", ${variableContext}));
 </#if>

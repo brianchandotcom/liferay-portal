@@ -38,5 +38,12 @@
 			<var name="actual" value="${int}" />
 			<var name="expected" value="2" />
 		</execute>
+
+		<var name="regex" input="regularexpression=32132" pattern="[a-z]*=([0-9]*)" group="1" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${regex}" />
+			<var name="expected" value="32132" />
+		</execute>
 	</command>
 </definition>

@@ -33,9 +33,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * This is a convenience class that allows access to layouts, their names and
- * metadata from templates - e.g. in a theme's portal-normal.vm - where
- * accessing the full API is clumsy.
+ * Represents a portal navigation item, providing access to layouts and metadata
+ * from templates, which can be found in a theme's
+ * <code>portal-normal.vm</code>.
  *
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
@@ -43,18 +43,21 @@ import javax.servlet.http.HttpServletRequest;
 public class NavItem implements Serializable {
 
 	/**
-	 * Create a single level of NavItems from the list of given layouts.
-	 * NavItems for nested layouts are created lazily, e.g. only when they will
-	 * be accessed.
+	 * Creates a single level of navigation items from the list of given
+	 * layouts. Navigation items for nested layouts are only created when they
+	 * are accessed.
 	 *
-	 * On this level, no permission checks are performed - e.g. the resulting
-	 * list will contain all layouts passed as parameters. Children of these
-	 * NavItems will honor permissions though.
+	 * <p>
+	 * The layout list contains all layouts passed as parameters, so no
+	 * permission checks are performed. However, children of these navigation
+	 * items honor permissions.
+	 * </p>
 	 *
-	 * @param request the currently served HttpServletRequest
-	 * @param layouts the layouts that we need the NavItems for
-	 * @param template the template that this NavItem object is being used on
-	 * @return
+	 * @param  request the currently served {@link HttpServletRequest}
+	 * @param  layouts the list of layouts
+	 * @param  template the template to add navigation items to
+	 * @return a single level of navigation items from the list of given
+	 *         layouts, or <code>null</code> if no layouts could be found
 	 */
 	public static List<NavItem> fromLayouts(
 		HttpServletRequest request, List<Layout> layouts, Template template) {
@@ -83,10 +86,12 @@ public class NavItem implements Serializable {
 	}
 
 	/**
-	 * retrieve the child layouts that the current user has access to
+	 * Returns all child layouts that the current user has permission to access
+	 * from the navigation items.
 	 *
-	 * @return a list of the child pages, accessible by the current user
-	 * @throws Exception
+	 * @return the list of all child layouts that the current user has
+	 *         permission to access from the navigation items
+	 * @throws Exception if an exception occurred
 	 */
 	public List<NavItem> getChildren() throws Exception {
 		if (_children == null) {
@@ -100,37 +105,38 @@ public class NavItem implements Serializable {
 	}
 
 	/**
-	 * retrieve the underlying layout
+	 * Returns the navigation item's layout.
 	 *
-	 * @return the layout represented by this navItem
+	 * @return the navigation item's layout
 	 */
 	public Layout getLayout() {
 		return _layout;
 	}
 
 	/**
-	 * retrieve the underlying layout's ID
+	 * Returns the navigation item's layout ID.
 	 *
-	 * @return the layoutId represented by this navItem
+	 * @return the navigation item's layout ID
 	 */
 	public long getLayoutId() {
 		return _layout.getLayoutId();
 	}
 
 	/**
-	 * Retrieve the current page's name, properly HTML-escaped
+	 * Returns the HTML-escaped name of the navigation item's layout.
 	 *
-	 * @return this layout's name, escaped for safe use in HTML
+	 * @return the HTML-escaped name of the navigation item's layout
 	 */
 	public String getName() {
 		return HtmlUtil.escape(getUnescapedName());
 	}
 
 	/**
-	 * The underlying layout's full, absolute, URL (including the portal's URL
+	 * Returns the full, absolute URL (including the portal's URL) of the
+	 * navigation item's layout.
 	 *
-	 * @return the underlying layout's absolute URL
-	 * @throws Exception
+	 * @return the full, absolute URL of the navigation item's layout
+	 * @throws Exception if an exception occurred
 	 */
 	public String getRegularFullURL() throws Exception {
 		String portalURL = PortalUtil.getPortalURL(_request);
@@ -148,83 +154,71 @@ public class NavItem implements Serializable {
 	}
 
 	/**
-	 * get the underlying layout's regular URL.
+	 * Returns the regular URL of the navigation item's layout.
 	 *
-	 * @return the underlying layout's URL
-	 * @throws Exception
-	 * @see    Layout#getRegularURL(request)
-	 * @see    #getRegularFullURL()
+	 * @return the regular URL of the navigation item's layout
+	 * @throws Exception if an exception occurred
 	 */
 	public String getRegularURL() throws Exception {
 		return _layout.getRegularURL(_request);
 	}
 
-	/**
-	 * @return
-	 * @throws Exception
-	 * @see    Layout#getResetLayoutURL(HttpServletRequest)
-	 */
 	public String getResetLayoutURL() throws Exception {
 		return _layout.getResetLayoutURL(_request);
 	}
 
-	/**
-	 * @return
-	 * @throws Exception
-	 * @see    Layout#getResetMaxStateURL(HttpServletRequest)
-	 */
 	public String getResetMaxStateURL() throws Exception {
 		return _layout.getResetMaxStateURL(_request);
 	}
 
 	/**
-	 * the underlying layout's target
+	 * Returns the target of the navigation item's layout.
 	 *
-	 * @return the underlying layout's target
-	 * @see    Layout#getTarget()
+	 * @return the target of the navigation item's layout
 	 */
 	public String getTarget() {
 		return _layout.getTarget();
 	}
 
 	/**
-	 * the underlying layout's title in the locale that the current request is
-	 * served in.
+	 * Returns the title of the navigation item's layout in the current
+	 * request's locale.
 	 *
-	 * @return title of the layout this navItem represents
+	 * @return the title of the navigation item's layout in the current
+	 *         request's locale
 	 */
 	public String getTitle() {
 		return _layout.getTitle(_themeDisplay.getLocale());
 	}
 
 	/**
-	 * the raw, unescaped, name of the represented layout in the locale that the
-	 * current request is served in
+	 * Returns the unescaped name of the navigation item's layout in the current
+	 * request's locale.
 	 *
-	 * @return the unescaped name of the layout this navItem represents
-	 * @see    NavItem#getName()
+	 * @return the unescaped name of the navigation item's layout in the current
+	 *         request's locale
 	 */
 	public String getUnescapedName() {
 		return _layout.getName(_themeDisplay.getLocale());
 	}
 
 	/**
-	 * The URL of the layout that this navItem represents, escaped for use in a
-	 * href element.
+	 * Returns the HTML-escaped URL of the navigation item's layout.
 	 *
-	 * @return the URL of the page represented by this navItem
-	 * @throws Exception
+	 * @return the HTML-escaped URL of the navigation item's layout
+	 * @throws Exception if an exception occurred
 	 */
 	public String getURL() throws Exception {
 		return HtmlUtil.escapeHREF(getRegularFullURL());
 	}
 
 	/**
-	 * information on the existence of child layouts for the layout represented
-	 * by this navItem.
+	 * Returns <code>true</code> if the navigation item's layout has child
+	 * layouts.
 	 *
-	 * @return
-	 * @throws Exception
+	 * @return <code>true</code> if the navigation item's layout has child
+	 *         layouts; <code>false</code> otherwise
+	 * @throws Exception if an exception occurred
 	 */
 	public boolean hasChildren() throws Exception {
 		List<NavItem> children = getChildren();
@@ -250,11 +244,6 @@ public class NavItem implements Serializable {
 			_themeDisplay.isTilesSelectable(), _themeDisplay.getLayout());
 	}
 
-	/**
-	 * @return
-	 * @throws Exception
-	 * @see    Layout#isSelected(boolean, Layout, long)
-	 */
 	public boolean isSelected() throws Exception {
 		return _layout.isSelected(
 			_themeDisplay.isTilesSelectable(), _themeDisplay.getLayout(),

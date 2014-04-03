@@ -21,8 +21,18 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class RestoreEntryException extends PortalException {
 
+	public static final int DUPLICATE = 1;
+
+	public static final int NO_VALID_CONTAINER = 2;
+
 	public RestoreEntryException() {
 		super();
+	}
+
+	public RestoreEntryException(int type) {
+		super();
+
+		_type = type;
 	}
 
 	public RestoreEntryException(String msg) {
@@ -49,6 +59,10 @@ public class RestoreEntryException extends PortalException {
 		return _trashEntryId;
 	}
 
+	public int getType() {
+		return _type;
+	}
+
 	public void setDuplicateEntryId(long duplicateEntryId) {
 		_duplicateEntryId = duplicateEntryId;
 	}
@@ -61,8 +75,13 @@ public class RestoreEntryException extends PortalException {
 		_trashEntryId = trashEntryId;
 	}
 
+	public void setType(int type) {
+		_type = type;
+	}
+
 	private long _duplicateEntryId;
 	private String _oldName;
 	private long _trashEntryId;
+	private int _type;
 
 }

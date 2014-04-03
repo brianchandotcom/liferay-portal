@@ -1447,6 +1447,7 @@
 		<reference package-path="com.liferay.portal" entity="PasswordPolicy" />
 		<reference package-path="com.liferay.portal" entity="PasswordPolicyRel" />
 		<reference package-path="com.liferay.portal" entity="Phone" />
+		<reference package-path="com.liferay.portal" entity="Region" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="Role" />
 		<reference package-path="com.liferay.portal" entity="User" />

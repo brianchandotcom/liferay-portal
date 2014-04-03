@@ -61,7 +61,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), parentFolder.getFolderId(), false,
+			_group.getGroupId(), parentFolder.getFolderId(),
 			ServiceTestUtil.randomString());
 
 		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
@@ -83,7 +83,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 			_group.getGroupId(), grandparentFolder.getFolderId());
 
 		DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), parentFolder.getFolderId(), false,
+			_group.getGroupId(), parentFolder.getFolderId(),
 			ServiceTestUtil.randomString());
 
 		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
@@ -102,7 +102,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), parentFolder.getFolderId(), false,
+			_group.getGroupId(), parentFolder.getFolderId(),
 			ServiceTestUtil.randomString());
 
 		DLFileShortcut dlFileShortcut = DLAppTestUtil.addDLFileShortcut(
@@ -128,7 +128,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 			_group.getGroupId(), grandparentFolder.getFolderId());
 
 		DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), parentFolder.getFolderId(), false,
+			_group.getGroupId(), parentFolder.getFolderId(),
 			ServiceTestUtil.randomString());
 
 		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());

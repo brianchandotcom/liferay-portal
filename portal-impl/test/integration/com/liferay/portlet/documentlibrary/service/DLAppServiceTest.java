@@ -46,6 +46,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import java.io.ByteArrayInputStream;
@@ -78,7 +79,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		super.setUp();
 
 		_fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), false,
+			group.getGroupId(), parentFolder.getFolderId(),
 			"Test DLAppService.txt");
 
 		_userIds = new long[ServiceTestUtil.THREAD_COUNT];
@@ -384,7 +385,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		String fileName = "TestVersion.txt";
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), false, fileName);
+			group.getGroupId(), parentFolder.getFolderId(), fileName);
 
 		Assert.assertEquals(
 			"Version label incorrect after add", "1.0", fileEntry.getVersion());
@@ -404,9 +405,14 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	}
 
 	protected FileEntry addFileEntry(boolean rootFolder) throws Exception {
+		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (!rootFolder) {
+			folderId = parentFolder.getFolderId();
+		}
+
 		return DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), rootFolder,
-			"Title.txt");
+			group.getGroupId(), folderId, "Title.txt");
 	}
 
 	protected void search(
@@ -508,7 +514,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		protected void doRun() throws Exception {
 			try {
 				FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-					group.getGroupId(), parentFolder.getFolderId(), false,
+					group.getGroupId(), parentFolder.getFolderId(),
 					"Test-" + _index + ".txt");
 
 				_fileEntryIds[_index] = fileEntry.getFileEntryId();

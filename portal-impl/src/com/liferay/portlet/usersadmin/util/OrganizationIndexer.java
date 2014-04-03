@@ -55,9 +55,13 @@ public class OrganizationIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {Organization.class.getName()};
 
+	public static final String[] DEFAULT_SELECTED_FIELD_NAMES =
+		{Field.COMPANY_ID, Field.ORGANIZATION_ID, Field.UID};
+
 	public static final String PORTLET_ID = PortletKeys.USERS_ADMIN;
 
 	public OrganizationIndexer() {
+		setDefaultSelectedFieldNames(DEFAULT_SELECTED_FIELD_NAMES);
 		setIndexerEnabled(PropsValues.ORGANIZATIONS_INDEXER_ENABLED);
 		setPermissionAware(true);
 		setStagingAware(false);

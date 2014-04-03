@@ -77,6 +77,10 @@ public class SeleniumBuilderFileUtil {
 
 		_componentNames = ListUtil.fromArray(
 			StringUtil.split(properties.getProperty("component.names")));
+
+		_testrayAvailableComponentNames = ListUtil.fromArray(
+			StringUtil.split(
+				properties.getProperty("testray.available.component.names")));
 	}
 
 	public String escapeHtml(String input) {
@@ -1868,6 +1872,7 @@ public class SeleniumBuilderFileUtil {
 			"set-up", "take-screenshot", "td", "tear-down", "then", "tr",
 			"while", "var"
 		});
+	private static List<String> _testrayAvailableComponentNames;
 
 	private String _baseDirName;
 	private Pattern _pathTrElementStatementPattern = Pattern.compile(

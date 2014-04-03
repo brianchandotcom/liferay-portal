@@ -112,19 +112,18 @@ AUI.add(
 					_toggleMenu: function(event, target) {
 						var instance = this;
 
+						var open = !instance.get('open');
 						var toggle = instance.get('toggle');
 						var toggleTouch = instance.get('toggleTouch');
 
 						var handleId = instance._handleId;
 
-						var openMenu = !instance.get('open');
-
-						instance._toggleContent(openMenu);
+						instance._toggleContent(open);
 
 						if (!toggle) {
 							var handle = Liferay.Data[handleId];
 
-							if (openMenu && !handle) {
+							if (open && !handle) {
 								handle = target.on(
 									instance._getEventOutside(event),
 									function(event) {

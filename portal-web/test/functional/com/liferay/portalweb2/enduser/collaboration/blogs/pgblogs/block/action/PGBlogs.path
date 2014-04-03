@@ -338,7 +338,7 @@
 </tr>
 <tr>
 	<td>DRAFT_ENTRY_EDIT</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'draft') and contains(.,'${key_entryTitle}')]//div[contains(@class,'edit-actions')]//span/a/span[.='Edit']</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'draft') and contains(.,'${key_entryTitle}')]//ul[contains(@class,'edit-actions')]//span/a/span[.='Edit']</td>
 	<td></td>
 </tr>
 <tr>

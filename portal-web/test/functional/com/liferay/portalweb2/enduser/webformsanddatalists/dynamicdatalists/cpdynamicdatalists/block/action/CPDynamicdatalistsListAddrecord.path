@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>FIELD_LABEL</td>
-	<td>//div[@data-fieldname='${key_fieldName}']//label</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//label | //div[@data-fieldname='${key_fieldName}']//span</td>
 	<td></td>
 </tr>
 <tr>

@@ -253,6 +253,23 @@
 		<execute action="PGCalendar#assertTextNotPresent" value1="${eventTitle}" />
 	</command>
 
+	<command name="deleteViaAgendaViewPG">
+		<var name="key_eventTitle" value="${eventTitle}" />
+
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Agenda" />
+		</execute>
+
+		<execute action="PGCalendarAgendaView#assertClick" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
+
+		<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
+		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
+		<execute action="PGCalendar#confirm" locator-key1="CONFIRMATION" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
+
+		<execute action="PGCalendarAgendaView#assertElementNotPresent" locator-key1="SCHEDULER_EVENT_SPECIFIC" />
+		<execute action="PGCalendarAgendaView#assertTextNotPresent" value1="${eventTitle}" />
+	</command>
+
 	<command name="editPG">
 		<if>
 			<isset var="endDateTimeEdit" />
@@ -316,6 +333,70 @@
 
 		<execute action="PGCalendar#assertElementPresent" locator-key1="SCHEDULER_EVENT_REGULAR" />
 		<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_REGULAR_TITLE" value1="${eventTitleEdit}" />
+	</command>
+
+	<command name="editViaAgendaViewPG">
+		<if>
+			<isset var="endDateTimeEdit" />
+			<then>
+				<var name="endDateTime" value="${endDateTimeEdit}" />
+			</then>
+			<else>
+				<var name="endDateTime" value="09:30 AM" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="startDateTimeEdit" />
+			<then>
+				<var name="startDateTime" value="${startDateTimeEdit}" />
+			</then>
+			<else>
+				<var name="startDateTime" value="08:30 AM" />
+			</else>
+		</if>
+
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Agenda" />
+		</execute>
+
+		<var name="key_eventTitle" value="${eventTitle}" />
+
+		<execute action="PGCalendarAgendaView#assertClick" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
+
+		<execute action="PGCalendar#assertTextEquals" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
+		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
+
+		<execute action="PGCalendarEditevent#selectFrame" locator-key1="EDIT_EVENT_IFRAME" />
+		<execute action="PGCalendarEditevent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${eventTitle}" />
+		<execute action="PGCalendarEditevent#type" locator-key1="TITLE_FIELD" value1="${eventTitleEdit}" />
+		<execute action="PGCalendarEditevent#assertElementPresent" locator-key1="START_DATE" />
+		<execute action="PGCalendarEditevent#assertElementPresent" locator-key1="START_DATE_TIME" />
+		<execute action="PGCalendarEditevent#assertElementPresent" locator-key1="END_DATE" />
+		<execute action="PGCalendarEditevent#assertElementPresent" locator-key1="END_DATE_TIME" />
+
+		<var name="endDate" path="PGCalendarEditevent" locator-key="END_DATE" />
+		<var name="startDate" path="PGCalendarEditevent" locator-key="START_DATE" />
+
+		<execute action="PGCalendarEditevent#type" locator-key1="START_DATE_TIME" value1="${startDateTime}" />
+		<execute action="PGCalendarEditevent#click" locator-key1="START_DATE_TIME" />
+		<execute action="PGCalendarEditevent#type" locator-key1="END_DATE_TIME" value1="${endDateTime}" />
+		<execute action="PGCalendarEditevent#click" locator-key1="END_DATE_TIME" />
+		<execute action="PGCalendarEditevent#pause" locator1="1000" />
+		<execute action="PGCalendarEditevent#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="PGCalendarEditevent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGCalendarEditevent#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Agenda" />
+		</execute>
+
+		<execute action="PGCalendarAgendaView#assertTextEquals" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitleEdit}" />
 	</command>
 
 	<command name="selectCalendarPG">

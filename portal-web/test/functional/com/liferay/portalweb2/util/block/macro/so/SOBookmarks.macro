@@ -41,7 +41,36 @@
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="BOOKMARKS_ENTRY_LINK" value1="${bookmarksEntryNameEdit}" />
 	</command>
 
+	<command name="removeViewPermissionsBookmarksEntry">
+		<var name="key_bookmarksEntryName" value="${bookmarksEntryName}" />
+
+		<execute action="SOSiteHome#assertClick" locator-key1="BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
+		<execute action="SOSiteHome#assertClick" locator-key1="ACTIONS_MENULIST_PERMISSIONS" value1="Permissions" />
+
+		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${bookmarksEntryName}" />
+		<execute action="Permissions#uncheck" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Permissions#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="viewBookmarksEntry">
+		<var name="key_bookmarksEntryName" value="${bookmarksEntryName}" />
+
+		<execute macro="SOBookmarks#viewBookmarksEntryPopUp" />
+
+		<execute action="SOSiteHome#assertClick" locator-key1="BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
+		<execute action="SOSiteHome#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="SOSiteHomeBookmarksAdd#assertTextEquals" locator-key1="NAME_FIELD" value1="${bookmarksEntryName}" />
+		<execute action="SOSiteHomeBookmarksAdd#assertTextEquals" locator-key1="URL_FIELD" value1="${bookmarksEntryUrl}" />
+		<execute action="SOSiteHomeBookmarksAdd#assertTextEquals" locator-key1="DESCRIPTION_FIELD" value1="${bookmarksEntryDescription}" />
+	</command>
+
+	<command name="viewBookmarksEntryPopUp">
 		<var name="key_bookmarksEntryName" value="${bookmarksEntryName}" />
 
 		<execute action="SOSiteHome#click" locator-key1="BOOKMARKS_ENTRY_LINK" />
@@ -62,17 +91,10 @@
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOSiteHome#selectWindow" locator-key1="BOOKMARKS_POP_UP_MSN" />
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="BOOKMARKS_POP_UP_IMAGE_MSN" />
-				<execute action="SOSiteHome#close" locator-key1="BOOKMARKS_POP_UP_MSN" />
+				<execute action="SOSiteHome#selectWindow" locator-key1="BOOKMARKS_POP_UP_BING" />
+				<execute action="SOSiteHome#assertElementPresent" locator-key1="BOOKMARKS_POP_UP_IMAGE_BING" />
+				<execute action="SOSiteHome#close" locator-key1="BOOKMARKS_POP_UP_BING" />
 			</else>
 		</if>
-
-		<execute action="SOSiteHome#assertClick" locator-key1="BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
-		<execute action="SOSiteHome#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
-
-		<execute action="SOSiteHomeBookmarksAdd#assertTextEquals" locator-key1="NAME_FIELD" value1="${bookmarksEntryName}" />
-		<execute action="SOSiteHomeBookmarksAdd#assertTextEquals" locator-key1="URL_FIELD" value1="${bookmarksEntryUrl}" />
-		<execute action="SOSiteHomeBookmarksAdd#assertTextEquals" locator-key1="DESCRIPTION_FIELD" value1="${bookmarksEntryDescription}" />
 	</command>
 </definition>

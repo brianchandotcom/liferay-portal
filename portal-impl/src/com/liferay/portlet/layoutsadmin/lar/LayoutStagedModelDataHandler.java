@@ -375,7 +375,9 @@ public class LayoutStagedModelDataHandler
 
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-				if(!group.isLayoutPrototype() && !group.isLayoutSetPrototype()){
+				if (!group.isLayoutPrototype() &&
+					!group.isLayoutSetPrototype()) {
+
 					importedLayout.setSourcePrototypeLayoutUuid(
 						layout.getSourcePrototypeLayoutUuid());
 				}

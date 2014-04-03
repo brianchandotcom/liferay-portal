@@ -552,6 +552,27 @@
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="attemptImpersonateCP">
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<if>
+			<isset var="notAdmin" />
+			<then>
+				<execute action="CPUsersandorganizationsViewusers#assertElementNotPresent" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+				<execute action="CPUsersandorganizationsViewusers#assertElementNotPresent" locator-key1="USER_TABLE_IMPERSONATE" value1="Impersonate User (Opens New Window)" />
+			</then>
+			<else>
+				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+				<execute action="CPUsersandorganizationsViewusers#assertElementNotPresent" locator-key1="USER_MENULIST_IMPERSONATE_USER" value1="Impersonate User (Opens New Window)" />
+			</else>
+		</if>
+	</command>
+
 	<command name="basicSearchCP">
 		<if>
 			<equals arg1="${userBasicSearch}" arg2="Basic" />
@@ -962,8 +983,17 @@
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_MENULIST_IMPERSONATE_USER" value1="Impersonate User (Opens New Window)" />
+		<if>
+			<isset var="notAdmin" />
+			<then>
+				<execute action="CPUsersandorganizationsViewusers#assertElementNotPresent" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+				<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_IMPERSONATE" value1="Impersonate User (Opens New Window)" />
+			</then>
+			<else>
+				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+				<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_MENULIST_IMPERSONATE_USER" value1="Impersonate User (Opens New Window)" />
+			</else>
+		</if>
 
 		<execute action="Home#selectWindow" locator1="title=Welcome - Liferay" />
 

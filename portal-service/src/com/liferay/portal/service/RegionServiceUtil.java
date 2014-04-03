@@ -66,6 +66,11 @@ public class RegionServiceUtil {
 		return getService().addRegion(countryId, regionCode, name, active);
 	}
 
+	public static com.liferay.portal.model.Region fetchRegion(long regionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchRegion(regionId);
+	}
+
 	public static com.liferay.portal.model.Region fetchRegion(long countryId,
 		java.lang.String regionCode)
 		throws com.liferay.portal.kernel.exception.SystemException {

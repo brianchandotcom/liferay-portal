@@ -31,6 +31,7 @@ import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.persistence.UserGroupActionableDynamicQuery;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.usersadmin.util.UsersAdmin;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,6 +55,8 @@ public class UserGroupIndexer extends BaseIndexer {
 	public static final String PORTLET_ID = PortletKeys.USER_GROUPS_ADMIN;
 
 	public UserGroupIndexer() {
+		setDefaultSelectedFieldNames(
+			UsersAdmin.USER_GROUP_SELECTED_FIELD_NAMES);
 		setIndexerEnabled(PropsValues.USER_GROUPS_INDEXER_ENABLED);
 		setPermissionAware(true);
 		setStagingAware(false);

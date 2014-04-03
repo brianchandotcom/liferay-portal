@@ -435,6 +435,18 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>lib/development/jsch.jar</file-name>
+		<version>0.1.51</version>
+		<project-name>JSch</project-name>
+		<project-url>http://www.jcraft.com/jsch/</project-url>
+		<licenses>
+			<license>
+				<license-name>BSD Style License</license-name>
+				<license-url>http://www.jcraft.com/jsch/LICENSE.txt</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/development/jserrorcollector.jar</file-name>
 		<version>c7d2d9161321e9aa09bbbf566bce2922d169b9dd</version>
 		<project-name>JSErrorCollector</project-name>

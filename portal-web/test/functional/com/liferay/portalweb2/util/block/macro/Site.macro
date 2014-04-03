@@ -104,7 +104,7 @@
 		</if>
 
 		<execute action="CPSitesAdd#type" locator-key1="DETAILS_NAME" value1="${siteName}" />
-		<execute action="CPSitesAdd#click" locator-key1="MENU_SAVE" />
+		<execute action="CPSitesAdd#click" locator-key1="MENU_SAVE" value1="Save" />
 
 		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SITE_TITLE" value1="${siteName}" />
 
@@ -269,15 +269,15 @@
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute action="CPSitemembershipsAssignuserrolesUser#click" locator-key1="AVAILABLE" />
+		<execute action="CPSitemembershipsAssignuserrolesUser#assertClick" locator-key1="AVAILABLE" value1="Available" />
 		<execute action="CPSitemembershipsAssignuserrolesUser#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
 		<execute action="CPSitemembershipsAssignuserrolesUser#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute action="CPSitemembershipsAssignuserrolesUser#check" locator-key1="USER_TABLE_CHECKBOX" />
-		<execute action="CPSitemembershipsAssignuserrolesUser#click" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" />
+		<execute action="CPSitemembershipsAssignuserrolesUser#assertClick" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
 		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="CPSitemembershipsAssignuserrolesUser#click" locator-key1="CURRENT" />
+		<execute action="CPSitemembershipsAssignuserrolesUser#assertClick" locator-key1="CURRENT" value1="Current" />
 
 		<if>
 			<isset var="userMiddleName" />
@@ -745,7 +745,7 @@
 		<execute action="CPSites#assertClick" locator-key1="ADD" value1="Add" />
 		<execute action="CPSites#assertClick" locator-key1="ADD_BLANK_SITE" value1="Blank Site" />
 		<execute action="CPSitesAdd#type" locator-key1="DETAILS_NAME" value1="${siteName}" />
-		<execute action="CPSitesAdd#click" locator-key1="MENU_SAVE" />
+		<execute action="CPSitesAdd#click" locator-key1="MENU_SAVE" value1="Save" />
 
 		<if>
 			<equals arg1="${siteNameInvalid}" arg2="Duplicate" />

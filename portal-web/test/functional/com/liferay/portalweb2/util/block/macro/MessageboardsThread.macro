@@ -3,17 +3,17 @@
 	<var name="userName" value="Test Test" />
 
 	<command name="addCP">
-		<execute action="CPMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
+		<execute action="CPMessageboards#assertClick" locator-key1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
 		<execute action="CPMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
 		<execute action="CPMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBody}" />
-		<execute action="CPMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
+		<execute action="CPMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCPWithAttachment">
-		<execute action="CPMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
+		<execute action="CPMessageboards#assertClick" locator-key1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
 		<execute action="CPMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
 		<execute action="CPMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBody}" />
@@ -26,7 +26,7 @@
 		</if>
 
 		<execute action="CPMessageboardsPostthread#uploadCommonFile" locator-key1="ATTACHMENTS_BROWSE_FIELD" value1="${mbAttachmentFile}" />
-		<execute action="CPMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
+		<execute action="CPMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -76,7 +76,7 @@
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
+		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
@@ -100,7 +100,7 @@
 	</command>
 
 	<command name="addWithWorkflowCP">
-		<execute action="CPMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
+		<execute action="CPMessageboards#assertClick" locator-key1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
 		<execute action="CPMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
 		<execute action="CPMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBody}" />
@@ -151,10 +151,10 @@
 			<condition action="CPMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_EDIT_1" />
 			<then>
 				<execute action="CPMessageboardsThread#makeVisible" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
-				<execute action="CPMessageboardsThread#click" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
+				<execute action="CPMessageboardsThread#assertClick" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
 			</then>
 			<else>
-				<execute action="CPMessageboardsThread#click" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
+				<execute action="CPMessageboardsThread#assertClick" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
 			</else>
 		</if>
 
@@ -181,7 +181,7 @@
 		</if>
 
 		<execute action="CPMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBodyEdit}" />
-		<execute action="CPMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
+		<execute action="CPMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -195,10 +195,10 @@
 			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_EDIT_1" />
 			<then>
 				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
-				<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
+				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
 			</then>
 			<else>
-				<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
+				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
 			</else>
 		</if>
 
@@ -214,10 +214,10 @@
 		<if>
 			<equals arg1="${saveAsDraft}" arg2="true" />
 			<then>
-				<execute action="PGMessageboardsPostthread#click" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+				<execute action="PGMessageboardsPostthread#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 			</then>
 			<else>
-				<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
+				<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 			</else>
 		</if>
 
@@ -357,7 +357,7 @@
 		<execute action="CPMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
 
 		<execute action="CPMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadReplyBody}" />
-		<execute action="CPMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
+		<execute action="CPMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -371,10 +371,10 @@
 			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_REPLY_1" />
 			<then>
 				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
-				<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
+				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
 			</then>
 			<else>
-				<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
+				<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
 			</else>
 		</if>
 
@@ -451,8 +451,8 @@
 		<if>
 			<condition action="CPMessageboards#isElementPresent" locator-key1="THREAD_TABLE_ALL_CHECKBOX" />
 			<then>
-				<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_ALL_CHECKBOX" />
-				<execute action="CPMessageboards#click" locator-key1="THREADS_RECYCLE_BIN_BUTTON" />
+				<execute action="CPMessageboards#check" locator-key1="THREAD_TABLE_ALL_CHECKBOX" />
+				<execute action="CPMessageboards#assertClick" locator-key1="THREADS_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
 				<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
@@ -501,7 +501,7 @@
 		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_VIEWS" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="CPMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
@@ -625,7 +625,7 @@
 		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_VIEWS" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="CPMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />

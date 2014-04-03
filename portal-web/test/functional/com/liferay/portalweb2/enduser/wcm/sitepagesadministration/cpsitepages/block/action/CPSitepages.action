@@ -21,45 +21,11 @@
 
 	<command name="assertTextEquals">
 		<case locator-key1="SUCCESS_MESSAGE">
-			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+			<execute function="AssertTextEquals#assertText" />
 		</case>
 
 		<case locator-key1="INCOMPLETE_STAGING_PAGE_VARIATION_INFO_MESSAGE">
 			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-	</command>
-
-	<command name="click">
-		<case locator-key1="NAVIGATION_PRIVATE_PAGES">
-			<execute function="Click#textClickAtAndWait" value1="Private Pages" />
-		</case>
-
-		<case locator-key1="NAVIGATION_PUBLIC_PAGES">
-			<execute function="Click#textClickAtAndWait" value1="Public Pages" />
-		</case>
-
-		<case locator-key1="SAVE_BUTTON">
-			<execute function="Click#textClickAtAndWait" value1="Save" />
-		</case>
-
-		<case locator-key1="TOOLBAR_ADD_CHILD_PAGE">
-			<execute function="Click#textClickAt" value1="Add Child Page" />
-		</case>
-
-		<case locator-key1="TOOLBAR_ADD_PAGE">
-			<execute function="Click#textClickAt" value1="Add Page" />
-		</case>
-
-		<case locator-key1="TOOLBAR_DELETE">
-			<execute function="Click#textClickAt" value1="Delete" />
-		</case>
-
-		<case locator-key1="TOOLBAR_EXPORT">
-			<execute function="Click#textClickAt" value1="Export" />
-		</case>
-
-		<case locator-key1="TOOLBAR_IMPORT">
-			<execute function="Click#textClickAt" value1="Import" />
 		</case>
 	</command>
 

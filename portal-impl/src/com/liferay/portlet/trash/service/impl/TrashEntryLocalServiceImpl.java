@@ -151,14 +151,18 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 					companyId, start, end);
 
 				for (Group group : groups) {
+					List<TrashEntry> entries = null;
+
 					if (!TrashUtil.isTrashEnabled(group.getGroupId())) {
-						return;
+						entries = trashEntryPersistence.findByGroupId(
+							group.getGroupId());
 					}
+					else {
+						Date date = getMaxAge(group);
 
-					Date date = getMaxAge(group);
-
-					List<TrashEntry> entries = trashEntryPersistence.findByG_LtCD(
-						group.getGroupId(), date);
+						entries = trashEntryPersistence.findByG_LtCD(
+							group.getGroupId(), date);
+					}
 
 					for (TrashEntry entry : entries) {
 						TrashHandler trashHandler =

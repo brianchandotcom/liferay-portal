@@ -76,7 +76,7 @@ public class ExportLayoutsAction extends PortletAction {
 		}
 
 		try {
-			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+			long groupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 			boolean privateLayout = ParamUtil.getBoolean(
 				actionRequest, "privateLayout");
 			long[] layoutIds = getLayoutIds(actionRequest);

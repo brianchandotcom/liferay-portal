@@ -18,14 +18,12 @@ import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.util.ContentUtil;
+import com.liferay.portal.settings.Settings;
+import com.liferay.portlet.wiki.WikiSettings;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 /**
@@ -34,44 +32,34 @@ import javax.portlet.PortletRequest;
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
 
 	@Override
-	public void postProcessPortletPreferences(
-			long companyId, PortletRequest portletRequest,
-			PortletPreferences portletPreferences)
-		throws Exception {
+	public void postProcess(
+			long companyId, PortletRequest portletRequest, Settings settings) {
 
-		String emailFromAddress = PortalUtil.getEmailFromAddress(
-			portletPreferences, companyId,
-			PropsValues.WIKI_EMAIL_FROM_ADDRESS);
+		WikiSettings wikiSettings = new WikiSettings(settings);
 
 		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromAddress",
-			emailFromAddress);
-
-		String emailFromName = PortalUtil.getEmailFromName(
-			portletPreferences, companyId, PropsValues.WIKI_EMAIL_FROM_NAME);
+			portletRequest, settings, "emailFromAddress",
+			wikiSettings.getEmailFromAddress());
 
 		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromName", emailFromName);
+			portletRequest, settings, "emailFromName",
+			wikiSettings.getEmailFromName());
 
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailPageAddedBody_" + languageId,
-			ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_BODY));
+			portletRequest, settings, "emailPageAddedBody_" + languageId,
+			wikiSettings.getEmailPageAddedBody());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailPageAddedSubject_" + languageId,
-			ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_SUBJECT));
+			portletRequest, settings, "emailPageAddedSubject_" + languageId,
+			wikiSettings.getEmailPageAddedSubject());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailPageUpdatedBody_" + languageId,
-			ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_BODY));
+			portletRequest, settings, "emailPageUpdatedBody_" + languageId,
+			wikiSettings.getEmailPageUpdatedBody());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailPageUpdatedSubject_" + languageId,
-			ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_SUBJECT));
+			portletRequest, settings, "emailPageUpdatedSubject_" + languageId,
+			wikiSettings.getEmailPageUpdatedSubject());
 	}
 
 	@Override

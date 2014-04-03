@@ -15,14 +15,12 @@
 package com.liferay.portlet.wiki;
 
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
 import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.ContentUtil;
 
 /**
  * @author Iván Zaera

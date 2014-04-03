@@ -53,9 +53,13 @@ public class AssetCategoryIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {AssetCategory.class.getName()};
 
+	public static final String[] DEFAULT_SELECTED_FIELD_NAMES =
+		{Field.COMPANY_ID, Field.GROUP_ID, Field.UID, Field.ASSET_CATEGORY_ID};
+
 	public static final String PORTLET_ID = PortletKeys.ASSET_CATEGORIES_ADMIN;
 
 	public AssetCategoryIndexer() {
+		setDefaultSelectedFieldNames(DEFAULT_SELECTED_FIELD_NAMES);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}

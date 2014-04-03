@@ -53,9 +53,14 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 	public static final String[] CLASS_NAMES =
 		{AssetVocabulary.class.getName()};
 
+	public static final String[] DEFAULT_SELECTED_FIELD_NAMES = {
+		Field.COMPANY_ID, Field.GROUP_ID, Field.UID, Field.ASSET_VOCABULARY_ID
+	};
+
 	public static final String PORTLET_ID = PortletKeys.ASSET_CATEGORIES_ADMIN;
 
 	public AssetVocabularyIndexer() {
+		setDefaultSelectedFieldNames(DEFAULT_SELECTED_FIELD_NAMES);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}

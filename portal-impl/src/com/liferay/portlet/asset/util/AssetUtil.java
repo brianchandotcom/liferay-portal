@@ -116,9 +116,6 @@ public class AssetUtil {
 		CharPool.SLASH, CharPool.STAR, CharPool.TILDE
 	};
 
-	public static final String[] SELECTED_FIELD_NAMES =
-		{Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK};
-
 	public static Set<String> addLayoutTags(
 		HttpServletRequest request, List<AssetTag> tags) {
 
@@ -716,7 +713,7 @@ public class AssetUtil {
 		AssetSearcher assetSearcher = getAssetSearcher(
 			searchContext, assetEntryQuery, start, end);
 
-		Hits hits = assetSearcher.search(searchContext, SELECTED_FIELD_NAMES);
+		Hits hits = assetSearcher.search(searchContext);
 
 		List<AssetEntry> assetEntries = getAssetEntries(hits);
 

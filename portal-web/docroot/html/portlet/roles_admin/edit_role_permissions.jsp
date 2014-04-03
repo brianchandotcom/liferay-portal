@@ -280,7 +280,8 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 						permissionNavigationDataContainer.appendChild(noResultsNode);
 					}
 				},
-			400)
+				500
+			)
 		);
 	}
 

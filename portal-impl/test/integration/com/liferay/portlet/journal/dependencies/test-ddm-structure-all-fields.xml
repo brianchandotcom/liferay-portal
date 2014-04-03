@@ -30,12 +30,12 @@
 		</meta-data>
 	</dynamic-element>
 	<dynamic-element dataType="string" indexType="" multiple="true" name="multi-list" repeatable="false" required="false" showLabel="true" type="select" >
-		<dynamic-element name="001" type="option" value="Item 01">
+		<dynamic-element name="multi-list-001" type="option" value="Item 01">
 			<meta-data locale="en_US">
 				<entry name="label"><![CDATA[Item 01]]></entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="002" type="option" value="Item 02">
+		<dynamic-element name="multi-list-002" type="option" value="Item 02">
 			<meta-data locale="en_US">
 				<entry name="label"><![CDATA[Item 02]]></entry>
 			</meta-data>
@@ -47,12 +47,12 @@
 		</meta-data>
 	</dynamic-element>
 	<dynamic-element dataType="string" indexType="" name="list" repeatable="false" required="false" showLabel="true" type="select">
-		<dynamic-element name="001" type="option" value="Item 01">
+		<dynamic-element name="list-001" type="option" value="Item 01">
 			<meta-data locale="en_US">
 				<entry name="label"><![CDATA[Item 01]]></entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="002" type="option" value="Item 02">
+		<dynamic-element name="list-002" type="option" value="Item 02">
 			<meta-data locale="en_US">
 				<entry name="label"><![CDATA[Item 02]]></entry>
 			</meta-data>

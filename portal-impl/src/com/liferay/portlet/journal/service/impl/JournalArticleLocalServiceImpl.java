@@ -3180,14 +3180,18 @@ public class JournalArticleLocalServiceImpl
 			long groupId, String articleId, long newFolderId)
 		throws PortalException, SystemException {
 
+		JournalArticle article = getLatestArticle(groupId, articleId);
+
+		validateDDMStructureId(groupId, newFolderId, article.getStructureId());
+
 		List<JournalArticle> articles = journalArticlePersistence.findByG_A(
 			groupId, articleId);
 
-		for (JournalArticle article : articles) {
-			article.setFolderId(newFolderId);
-			article.setTreePath(article.buildTreePath());
+		for (JournalArticle curArticle : articles) {
+			curArticle.setFolderId(newFolderId);
+			curArticle.setTreePath(curArticle.buildTreePath());
 
-			journalArticlePersistence.update(article);
+			journalArticlePersistence.update(curArticle);
 		}
 
 		return getArticle(groupId, articleId);

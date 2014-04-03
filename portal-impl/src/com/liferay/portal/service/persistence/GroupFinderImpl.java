@@ -81,6 +81,9 @@ public class GroupFinderImpl
 	public static final String FIND_BY_SYSTEM =
 		GroupFinder.class.getName() + ".findBySystem";
 
+	public static final String FIND_BY_TRASH_ENTRIES =
+		GroupFinder.class.getName() + ".findByTrashEntries";
+
 	public static final String FIND_BY_C_C =
 		GroupFinder.class.getName() + ".findByC_C";
 
@@ -439,6 +442,35 @@ public class GroupFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_SYSTEM);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("Group_", GroupImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<Group> findByTrashEntries(long companyId, int start, int end)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_TRASH_ENTRIES);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

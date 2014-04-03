@@ -271,6 +271,26 @@
 			)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByTrashEntries">
+		<![CDATA[
+			SELECT
+				{Group_.*}
+			FROM
+				Group_
+			INNER JOIN
+				(
+					SELECT
+						DISTINCT groupId
+					FROM
+						TrashEntry
+				)
+				TEMP_TABLE ON
+					TEMP_TABLE.groupId = Group_.groupId
+			WHERE
+				(Group_.companyId = ?) AND
+				(Group_.site = [$TRUE$])
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_C">
 		<![CDATA[
 			SELECT

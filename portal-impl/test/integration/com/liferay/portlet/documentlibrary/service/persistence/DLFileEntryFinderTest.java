@@ -1028,7 +1028,7 @@ public class DLFileEntryFinderTest {
 		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_M(
 			_folderDefaultRepository.getUserId(), null, queryDefinition);
 
-		Assert.assertEquals(dlFileEntries.size(), 1);
+		Assert.assertEquals(1, dlFileEntries.size());
 
 		DLFileEntry dlFileEntry = dlFileEntries.get(0);
 
@@ -1046,7 +1046,7 @@ public class DLFileEntryFinderTest {
 		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_BothRepositories(
 			_folderDefaultRepository.getUserId(), null, queryDefinition);
 
-		Assert.assertEquals(dlFileEntries.size(), 2);
+		Assert.assertEquals(2, dlFileEntries.size());
 	}
 
 	@Test
@@ -1060,7 +1060,7 @@ public class DLFileEntryFinderTest {
 		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_DefaultRepository(
 			_folderDefaultRepository.getUserId(), null, queryDefinition);
 
-		Assert.assertEquals(dlFileEntries.size(), 1);
+		Assert.assertEquals(1, dlFileEntries.size());
 
 		DLFileEntry dlFileEntry = dlFileEntries.get(0);
 
@@ -1078,7 +1078,7 @@ public class DLFileEntryFinderTest {
 		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_EmptyRepositories(
 			_folderDefaultRepository.getUserId(), null, queryDefinition);
 
-		Assert.assertEquals(dlFileEntries.size(), 2);
+		Assert.assertEquals(2, dlFileEntries.size());
 	}
 
 	@Test
@@ -1092,7 +1092,7 @@ public class DLFileEntryFinderTest {
 		List<DLFileEntry> dlFileEntries = doFindBy_G_U_F_R_M_NewRepository(
 			_folderNewRepository.getUserId(), null, queryDefinition);
 
-		Assert.assertEquals(dlFileEntries.size(), 1);
+		Assert.assertEquals(1, dlFileEntries.size());
 
 		DLFileEntry dlFileEntry = dlFileEntries.get(0);
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.trash.service.impl;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
@@ -127,15 +129,17 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 	@Override
 	public void checkEntries() throws PortalException, SystemException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new GroupActionableDynamicQuery() {
+		for (long companyId : PortalUtil.getCompanyIds()) {
+			if (!PrefsPropsUtil.getBoolean(
+					companyId, PropsKeys.TRASH_ENABLED)) {
 
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
+				continue;
+			}
 
-				Group group = (Group)object;
+			List<Group> groups = groupFinder.findByTrashEntries(
+				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+			for (Group group : groups) {
 				if (!TrashUtil.isTrashEnabled(group.getGroupId())) {
 					return;
 				}
@@ -153,10 +157,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 					trashHandler.deleteTrashEntry(entry.getClassPK());
 				}
 			}
-
-		};
-
-		actionableDynamicQuery.performActions();
+		}
 	}
 
 	/**

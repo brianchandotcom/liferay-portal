@@ -450,6 +450,27 @@ Error-Prone was automatically installed. Please rerun your task.
 
 	<if>
 		<not>
+			<available file="${ant.home}/lib/jsch.jar" />
+		</not>
+		<then>
+			<trycatch>
+				<try>
+					<copy file="${project.dir}/lib/development/jsch.jar" todir="${ant.home}/lib" />
+				</try>
+				<catch>
+					<fail>
+.
+
+Please manually copy ${project.dir}/lib/development/jsch.jar to ${ant.home}/lib
+to install JSch. Then rerun your task.
+					</fail>
+				</catch>
+			</trycatch>
+		</then>
+	</if>
+
+	<if>
+		<not>
 			<isset property="env.ANT_OPTS" />
 		</not>
 		<then>

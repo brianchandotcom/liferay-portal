@@ -300,6 +300,7 @@
 				<classpath mode="compile">lib/development/jhighlight.jar</classpath>
 				<classpath mode="compile">lib/development/jms.jar</classpath>
 				<classpath mode="compile">lib/development/jndi.jar</classpath>
+				<classpath mode="compile">lib/development/jsch.jar</classpath>
 				<classpath mode="compile">lib/development/jserrorcollector.jar</classpath>
 				<classpath mode="compile">lib/development/jsp-api.jar</classpath>
 				<classpath mode="compile">lib/development/jta.jar</classpath>

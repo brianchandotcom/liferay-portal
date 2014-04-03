@@ -253,6 +253,12 @@
 		</default>
 	</command>
 
+	<command name="mouseMove">
+		<default>
+			<execute function="MouseMove#mouseMove" />
+		</default>
+	</command>
+
 	<command name="mouseOver">
 		<default>
 			<description message="Mouse over the ${locator1}." />

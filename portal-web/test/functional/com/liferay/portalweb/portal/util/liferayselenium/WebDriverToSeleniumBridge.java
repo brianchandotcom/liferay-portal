@@ -1095,8 +1095,6 @@ public class WebDriverToSeleniumBridge
 
 		actions.moveToElement(webElement);
 
-		actions.clickAndHold(webElement);
-
 		Action action = actions.build();
 
 		action.perform();
@@ -1121,13 +1119,9 @@ public class WebDriverToSeleniumBridge
 			int y = GetterUtil.getInteger(coords[1]);
 
 			actions.moveToElement(webElement, x, y);
-
-			actions.clickAndHold(webElement);
 		}
 		else {
 			actions.moveToElement(webElement);
-
-			actions.clickAndHold(webElement);
 		}
 
 		Action action = actions.build();

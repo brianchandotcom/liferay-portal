@@ -95,7 +95,7 @@ public interface TrashHandler {
 			String referrerClassName)
 		throws PortalException, SystemException;
 
-	public void checkDuplicateEntry(
+	public void checkRestorableEntry(
 			long classPK, long containerModelId, String newName)
 		throws PortalException, SystemException;
 
@@ -116,7 +116,7 @@ public interface TrashHandler {
 	 *         destination container
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void checkDuplicateTrashEntry(
+	public void checkRestorableEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
 		throws PortalException, SystemException;
 

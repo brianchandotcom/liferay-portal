@@ -47,7 +47,7 @@ public class ActionUtil {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			trashHandler.checkDuplicateTrashEntry(
+			trashHandler.checkRestorableEntry(
 				entry, TrashEntryConstants.DEFAULT_CONTAINER_ID, newName);
 
 			jsonObject.put("success", true);

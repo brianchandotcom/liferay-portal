@@ -407,11 +407,11 @@
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
-		<execute macro="SODashboard#addPage">
+		<execute macro="SOUserBar#addPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="SODashboard#addPortlet">
+		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -524,11 +524,11 @@
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
-		<execute macro="SODashboard#addPage">
+		<execute macro="SOUserBar#addPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="SODashboard#addPortlet">
+		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -564,11 +564,11 @@
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
-		<execute macro="SODashboard#addPage">
+		<execute macro="SOUserBar#addPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="SODashboard#addPortlet">
+		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 

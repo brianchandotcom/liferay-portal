@@ -105,10 +105,6 @@ import javax.portlet.PortletURL;
  */
 public abstract class BaseIndexer implements Indexer {
 
-	public BaseIndexer() {
-		_document = new DocumentImpl();
-	}
-
 	@Override
 	public void addRelatedEntryFields(Document document, Object obj)
 		throws Exception {
@@ -1679,7 +1675,7 @@ public abstract class BaseIndexer implements Indexer {
 
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 
-	private Document _document;
+	private Document _document = new DocumentImpl();
 	private boolean _filterSearch;
 	private boolean _indexerEnabled = true;
 	private IndexerPostProcessor[] _indexerPostProcessors =

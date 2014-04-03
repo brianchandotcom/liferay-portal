@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.Locale;
 
@@ -37,7 +38,14 @@ public class AssetIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {AssetEntry.class.getName()};
 
+	public static final String[] DEFAULT_SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK};
+
 	public static final String PORTLET_ID = PortletKeys.ASSET_PUBLISHER;
+
+	public AssetIndexer() {
+		setDefaultSelectedFieldNames(DEFAULT_SELECTED_FIELD_NAMES);
+	}
 
 	@Override
 	public String[] getClassNames() {

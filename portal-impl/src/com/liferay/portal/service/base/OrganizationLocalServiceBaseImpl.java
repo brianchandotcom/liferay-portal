@@ -46,6 +46,7 @@ import com.liferay.portal.service.persistence.PasswordPolicyFinder;
 import com.liferay.portal.service.persistence.PasswordPolicyPersistence;
 import com.liferay.portal.service.persistence.PasswordPolicyRelPersistence;
 import com.liferay.portal.service.persistence.PhonePersistence;
+import com.liferay.portal.service.persistence.RegionPersistence;
 import com.liferay.portal.service.persistence.RoleFinder;
 import com.liferay.portal.service.persistence.RolePersistence;
 import com.liferay.portal.service.persistence.UserFinder;
@@ -1472,6 +1473,43 @@ public abstract class OrganizationLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the region remote service.
+	 *
+	 * @return the region remote service
+	 */
+	public com.liferay.portal.service.RegionService getRegionService() {
+		return regionService;
+	}
+
+	/**
+	 * Sets the region remote service.
+	 *
+	 * @param regionService the region remote service
+	 */
+	public void setRegionService(
+		com.liferay.portal.service.RegionService regionService) {
+		this.regionService = regionService;
+	}
+
+	/**
+	 * Returns the region persistence.
+	 *
+	 * @return the region persistence
+	 */
+	public RegionPersistence getRegionPersistence() {
+		return regionPersistence;
+	}
+
+	/**
+	 * Sets the region persistence.
+	 *
+	 * @param regionPersistence the region persistence
+	 */
+	public void setRegionPersistence(RegionPersistence regionPersistence) {
+		this.regionPersistence = regionPersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -1921,6 +1959,10 @@ public abstract class OrganizationLocalServiceBaseImpl
 	protected com.liferay.portal.service.PhoneService phoneService;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
+	@BeanReference(type = com.liferay.portal.service.RegionService.class)
+	protected com.liferay.portal.service.RegionService regionService;
+	@BeanReference(type = RegionPersistence.class)
+	protected RegionPersistence regionPersistence;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.RoleLocalService.class)

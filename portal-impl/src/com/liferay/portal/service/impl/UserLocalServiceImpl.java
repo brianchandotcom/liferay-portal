@@ -137,7 +137,6 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
@@ -5915,12 +5914,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		if (sort != null) {
 			searchContext.setSorts(sort);
@@ -6051,8 +6048,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
 
 		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(
-				searchContext, UsersAdmin.USER_SELECTED_FIELD_NAMES);
+			Hits hits = indexer.search(searchContext);
 
 			List<User> users = UsersAdminUtil.getUsers(hits);
 

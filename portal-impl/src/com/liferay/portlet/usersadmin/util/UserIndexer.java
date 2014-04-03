@@ -64,9 +64,13 @@ public class UserIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {User.class.getName()};
 
+	public static final String[] DEFAULT_SELECTED_FIELD_NAMES =
+		{Field.COMPANY_ID, Field.UID, Field.USER_ID};
+
 	public static final String PORTLET_ID = PortletKeys.USERS_ADMIN;
 
 	public UserIndexer() {
+		setDefaultSelectedFieldNames(DEFAULT_SELECTED_FIELD_NAMES);
 		setIndexerEnabled(PropsValues.USERS_INDEXER_ENABLED);
 		setPermissionAware(true);
 		setStagingAware(false);

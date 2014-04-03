@@ -76,6 +76,12 @@ public class GroupFinderUtil {
 		return getFinder().findBySystem(companyId);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Group> findByTrashEntries(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByTrashEntries(companyId, start, end);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Group> findByCompanyId(
 		long companyId,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,

@@ -302,7 +302,8 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 				dlFileEntry.getGroupId(), containerModelId, originalTitle);
 
 		if (duplicateDLFileEntry != null) {
-			RestoreEntryException ree = new RestoreEntryException();
+			RestoreEntryException ree = new RestoreEntryException(
+				RestoreEntryException.DUPLICATE);
 
 			ree.setDuplicateEntryId(duplicateDLFileEntry.getFileEntryId());
 			ree.setOldName(duplicateDLFileEntry.getTitle());

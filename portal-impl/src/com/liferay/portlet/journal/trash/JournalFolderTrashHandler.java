@@ -251,7 +251,8 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 				folder.getGroupId(), containerModelId, originalTitle);
 
 		if (duplicateFolder != null) {
-			RestoreEntryException ree = new RestoreEntryException();
+			RestoreEntryException ree = new RestoreEntryException(
+				RestoreEntryException.DUPLICATE);
 
 			ree.setDuplicateEntryId(duplicateFolder.getFolderId());
 			ree.setOldName(duplicateFolder.getName());

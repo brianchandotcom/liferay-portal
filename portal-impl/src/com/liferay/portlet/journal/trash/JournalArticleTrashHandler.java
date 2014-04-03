@@ -285,7 +285,8 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			(journalArticleResource.getPrimaryKey() !=
 				originalArticleResource.getPrimaryKey())) {
 
-			RestoreEntryException ree = new RestoreEntryException();
+			RestoreEntryException ree = new RestoreEntryException(
+				RestoreEntryException.DUPLICATE);
 
 			JournalArticle duplicateArticle =
 				JournalArticleLocalServiceUtil.getArticle(

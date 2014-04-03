@@ -97,7 +97,8 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 				containerModelId, originalTitle);
 
 		if (pageResource != null) {
-			RestoreEntryException ree = new RestoreEntryException();
+			RestoreEntryException ree = new RestoreEntryException(
+				RestoreEntryException.DUPLICATE);
 
 			WikiPage duplicatePage = WikiPageLocalServiceUtil.getLatestPage(
 				pageResource.getResourcePrimKey(), WorkflowConstants.STATUS_ANY,

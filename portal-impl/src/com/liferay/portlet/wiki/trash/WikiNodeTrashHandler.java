@@ -69,7 +69,8 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 			node.getGroupId(), originalTitle);
 
 		if (duplicateNode != null) {
-			RestoreEntryException ree = new RestoreEntryException();
+			RestoreEntryException ree = new RestoreEntryException(
+				RestoreEntryException.DUPLICATE);
 
 			ree.setDuplicateEntryId(duplicateNode.getNodeId());
 			ree.setOldName(duplicateNode.getName());

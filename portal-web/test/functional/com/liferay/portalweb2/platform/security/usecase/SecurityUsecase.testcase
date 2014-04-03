@@ -5,8 +5,79 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="PortalSettings#tearDownAuthenticationCP" />
+
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
+
+	<command name="AuthenticationCAS" priority="5">
+		<property name="web.plugins.includes" value="cas-web" />
+
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#editConfigurationAuthenticationGeneral">
+			<var name="authenticationMethod" value="By Screen Name" />
+		</execute>
+
+		<execute macro="PortalSettings#editConfigurationAuthenticationCAS">
+			<var name="casLoginURL" value="http://localhost:8080/cas-web/login" />
+			<var name="casLogoutURL" value="http://localhost:8080/cas-web/logout" />
+			<var name="casServerURL" value="http://localhost:8080/cas-web" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute action="CAS#assertTextEquals" locator-key1="APP_NAME_HEADER" value1="Central Authentication Service (CAS)" />
+		<execute action="CAS#assertTextEquals" locator-key1="LOGOUT_SUCCESSFUL_HEADER" value1="Logout successful" />
+		<execute action="CAS#assertTextEquals" locator-key1="LOGOUT_SUCCESSFUL_MESSAGE_1" value1="You have successfully logged out of the Central Authentication Service." />
+		<execute action="CAS#assertTextEquals" locator-key1="LOGOUT_SUCCESSFUL_MESSAGE_2" value1="For security reasons, exit your web browser." />
+
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#assertClick" locator-key1="USER_SIGN_IN" value1="Sign In" />
+
+		<execute action="CAS#type" locator-key1="NETID_FIELD" value1="${userScreenName}" />
+		<execute action="CAS#type" locator-key1="PASSWORD_FIELD" value1="${userScreenName}" />
+		<execute action="CAS#assertClick" locator-key1="LOGIN_BUTTON" value1="LOGIN" />
+
+		<var name="key_pageName" value="Welcome" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="Welcome" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="authenticationMethod" value="By Screen Name" />
+			<var name="userScreenName" value="test" />
+		</execute>
+	</command>
 
 	<command name="ValidateForwardURLPG" priority="4">
 		<execute action="Home#open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />

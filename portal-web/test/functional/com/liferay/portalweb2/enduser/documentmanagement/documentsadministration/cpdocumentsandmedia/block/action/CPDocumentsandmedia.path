@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_MANAGE</td>
-	<td>//li[@class=' dropdown']/a[contains(.,'Manage')]</td>
+	<td>//ul[@id='_20_toolbarContainer']/li/a/span[contains(.,'Manage')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -227,12 +227,12 @@
 <!--MANAGE_MENULIST-->
 <tr>
 	<td>MANAGE_MENULIST_DOCUMENT_TYPES</td>
-	<td>//ul[@class='dropdown-menu ']/li/a[contains(.,'Document Types')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Document Types')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MANAGE_MENULIST_METADATA_SETS</td>
-	<td>//ul[@class='dropdown-menu ']/li/a[contains(.,'Metadata Sets')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Metadata Sets')]</td>
 	<td></td>
 </tr>
 <tr>

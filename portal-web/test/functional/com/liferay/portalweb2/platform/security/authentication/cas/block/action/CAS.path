@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>CAS</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CAS</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CAS</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_NAME_HEADER</td>
+	<td>//h1[@id='app-name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGOUT_SUCCESSFUL_HEADER</td>
+	<td>//h2[contains(.,'Logout successful')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGOUT_SUCCESSFUL_MESSAGE_1</td>
+	<td>//div[@id='msg' and @class='success']/p[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGOUT_SUCCESSFUL_MESSAGE_2</td>
+	<td>//div[@id='msg' and @class='success']/p[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NETID_FIELD</td>
+	<td>//input[@id='username']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_FIELD</td>
+	<td>//input[@id='password']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_BUTTON</td>
+	<td>//input[@value='LOGIN']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

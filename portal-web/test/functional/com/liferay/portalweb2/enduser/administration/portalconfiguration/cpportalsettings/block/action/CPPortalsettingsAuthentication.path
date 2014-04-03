@@ -125,6 +125,52 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--AUTHENTICATION_CAS-->
+<tr>
+	<td>AUTHENTICATION_CAS_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_130_cas.auth.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_LOGIN_URL_FIELD</td>
+	<td>//input[@id='_130_cas.login.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_LOGOUT_URL_FIELD</td>
+	<td>//input[@id='_130_cas.logout.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVER_NAME_FIELD</td>
+	<td>//input[@id='_130_cas.server.name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVER_URL_FIELD</td>
+	<td>//input[@id='_130_cas.server.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVICE_URL_FIELD</td>
+	<td>//input[@id='_130_cas.service.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_FIELD</td>
+	<td>//input[@id='_130_cas.no.such.user.redirect.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON</td>
+	<td>//button[contains(.,'Test CAS Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--AUTHENTICATION_LDAP-->
 <tr>
 	<td>AUTHENTICATION_LDAP_ENABLED_CHECKBOX</td>

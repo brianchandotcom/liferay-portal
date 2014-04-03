@@ -114,6 +114,33 @@
 		<execute action="CPPortalsettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="editConfigurationAuthenticationCAS">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_CAS" value1="CAS" />
+		<execute action="CPPortalsettingsAuthentication#check" locator-key1="AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#type" locator-key1="AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="${casLoginURL}" />
+		<execute action="CPPortalsettingsAuthentication#type" locator-key1="AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="${casLogoutURL}" />
+		<execute action="CPPortalsettingsAuthentication#type" locator-key1="AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="${casServerURL}" />
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON" value1="Test CAS Configuration" />
+
+		<execute action="CPPortalsettingsAuthenticationTestcasconfiguration#assertTextEquals" locator-key1="LOGIN_URL_SUCCESS_MESSAGE" value1="Pass" />
+		<execute action="CPPortalsettingsAuthenticationTestcasconfiguration#assertTextEquals" locator-key1="LOGOUT_URL_SUCCESS_MESSAGE" value1="Pass" />
+		<execute action="CPPortalsettingsAuthenticationTestcasconfiguration#assertTextEquals" locator-key1="SERVER_URL_SUCCESS_MESSAGE" value1="Pass" />
+		<execute action="CPPortalsettingsAuthenticationTestcasconfiguration#click" locator-key1="CLOSE_ICON_BUTTON" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="editConfigurationAuthenticationGeneral">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#select" locator-key1="AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="${authenticationMethod}" />
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
 		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_USERS" value1="Users" />
 
@@ -205,6 +232,28 @@
 		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="RESERVED_CREDENTIALS_TAB" value1="Reserved Credentials" />
 		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
+	</command>
+
+	<command name="tearDownAuthenticationCP">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#select" locator-key1="AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="By Email Address" />
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_CAS" value1="CAS" />
+		<execute action="CPPortalsettingsAuthentication#uncheck" locator-key1="AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#type" locator-key1="AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="https://localhost:8443/cas-web/login" />
+		<execute action="CPPortalsettingsAuthentication#type" locator-key1="AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="https://localhost:8443/cas-web/logout" />
+		<execute action="CPPortalsettingsAuthentication#type" locator-key1="AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="https://localhost:8443/cas-web" />
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownCP">

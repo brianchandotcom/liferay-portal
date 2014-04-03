@@ -122,10 +122,10 @@
 	</#if>
 
 	<#if varElement.attributeValue("group")??>
-		<#assign matcher = varElement.attributeValue("group")>
+		<#assign group = varElement.attributeValue("group")>
 	</#if>
 
-	${variableContext}.put("${varName}", RuntimeVariables.regularExpression("${input}", "${pattern}", ${matcher}));
+	${variableContext}.put("${varName}", RuntimeVariables.replaceRegularExpression("${input}", "${pattern}", ${group}));
 <#else>
 	${variableContext}.put("${varName}", RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(varValue)}", ${variableContext}));
 </#if>

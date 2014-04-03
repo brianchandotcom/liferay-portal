@@ -429,12 +429,10 @@ public class AssetVocabularyLocalServiceImpl
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[]{groupId});
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		searchContext.setStart(start);
 
@@ -460,8 +458,7 @@ public class AssetVocabularyLocalServiceImpl
 			AssetVocabulary.class);
 
 		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(
-				searchContext, AssetVocabularyUtil.SELECTED_FIELD_NAMES);
+			Hits hits = indexer.search(searchContext);
 
 			List<AssetVocabulary> vocabularies =
 				AssetVocabularyUtil.getVocabularies(hits);

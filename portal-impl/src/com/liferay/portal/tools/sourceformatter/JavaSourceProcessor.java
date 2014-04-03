@@ -1269,6 +1269,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
+			// LPS-45649
+
+			if (trimmedLine.startsWith("throw new IOException(") &&
+				line.contains("e.getMessage()")) {
+
+				line = StringUtil.replace(
+					line, ".getMessage()", StringPool.BLANK);
+			}
+
 			checkStringBundler(trimmedLine, fileName, lineCount);
 
 			if (trimmedLine.startsWith("* @deprecated") &&

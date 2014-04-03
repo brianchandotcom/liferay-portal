@@ -89,6 +89,10 @@ public class ContentTransformerListener extends BaseTransformerListener {
 	}
 
 	protected String injectEditInPlace(String script, Document document) {
+		if (!script.contains("$editInPlace(")) {
+			return script;
+		}
+
 		try {
 			List<Node> nodes = document.selectNodes("//dynamic-element");
 
@@ -123,7 +127,10 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		try {
 			Element rootElement = document.getRootElement();
 
-			replace(rootElement, tokens);
+			long articleGroupId = GetterUtil.getLong(
+				tokens.get("article_group_id"));
+
+			replace(rootElement, articleGroupId);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -132,12 +139,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		}
 	}
 
-	protected void replace(Element root, Map<String, String> tokens)
-		throws Exception {
-
-		long articleGroupId = GetterUtil.getLong(
-			tokens.get("article_group_id"));
-
+	protected void replace(Element root, long articleGroupId) throws Exception {
 		for (Element el : root.elements()) {
 			Element dynamicContent = el.element("dynamic-content");
 
@@ -181,7 +183,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 				}
 			}
 
-			replace(el, tokens);
+			replace(el, articleGroupId);
 		}
 	}
 

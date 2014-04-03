@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -128,25 +126,6 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			filterByLanguage(
 				defaultLanguageElement, languageId, defaultLanguageId);
 		}
-	}
-
-	protected String filterByLanguage(String xml, String languageId) {
-		if (xml == null) {
-			return null;
-		}
-
-		try {
-			Document document = SAXReaderUtil.read(xml);
-
-			filterByLanguage(document, languageId);
-
-			xml = DDMXMLUtil.formatXML(document);
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
-
-		return xml;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

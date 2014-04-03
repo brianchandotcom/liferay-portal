@@ -152,9 +152,9 @@ String iconMenuId = null;
 
 					<c:if test="<%= hasUpdatePermission && !folder.isMountPoint() %>">
 						<portlet:renderURL var="moveURL">
-							<portlet:param name="struts_action" value="/document_library/move_folder" />
+							<portlet:param name="struts_action" value="/document_library/move_entry" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+							<portlet:param name="folderIds" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 						</portlet:renderURL>
 
@@ -378,7 +378,7 @@ String iconMenuId = null;
 
 				<c:if test="<%= hasUpdatePermission && ((folder == null) || !folder.isMountPoint()) %>">
 					<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_LIBRARY %>" var="moveURL">
-						<portlet:param name="struts_action" value="/document_library/move_folder" />
+						<portlet:param name="struts_action" value="/document_library/move_entry" />
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_FROM_TRASH %>" />
 						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />

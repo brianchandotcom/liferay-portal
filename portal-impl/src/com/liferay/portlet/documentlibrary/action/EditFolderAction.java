@@ -75,11 +75,8 @@ public class EditFolderAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteFolders(actionRequest, false);
 			}
-			else if (cmd.equals(Constants.MOVE)) {
-				moveFolders(actionRequest, false);
-			}
 			else if (cmd.equals(Constants.MOVE_FROM_TRASH)) {
-				moveFolders(actionRequest, true);
+				moveFolders(actionRequest);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteFolders(actionRequest, true);
@@ -187,10 +184,7 @@ public class EditFolderAction extends PortletAction {
 		}
 	}
 
-	protected void moveFolders(
-			ActionRequest actionRequest, boolean moveFromTrash)
-		throws Exception {
-
+	protected void moveFolders(ActionRequest actionRequest) throws Exception {
 		long[] folderIds = null;
 
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
@@ -210,14 +204,8 @@ public class EditFolderAction extends PortletAction {
 			DLFileEntry.class.getName(), actionRequest);
 
 		for (long moveFolderId : folderIds) {
-			if (moveFromTrash) {
-				DLAppServiceUtil.moveFolderFromTrash(
-					moveFolderId, parentFolderId, serviceContext);
-			}
-			else {
-				DLAppServiceUtil.moveFolder(
-					moveFolderId, parentFolderId, serviceContext);
-			}
+			DLAppServiceUtil.moveFolderFromTrash(
+				moveFolderId, parentFolderId, serviceContext);
 		}
 	}
 

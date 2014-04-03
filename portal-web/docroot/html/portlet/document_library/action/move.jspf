@@ -21,12 +21,12 @@
 		PortletURL moveURL = liferayPortletResponse.createRenderURL(PortletKeys.DOCUMENT_LIBRARY);
 
 		if (fileShortcut != null) {
-			moveURL.setParameter("struts_action", "/document_library/move_file_shortcut");
-			moveURL.setParameter("fileShortcutId", String.valueOf(fileShortcut.getFileShortcutId()));
+			moveURL.setParameter("struts_action", "/document_library/move_entry");
+			moveURL.setParameter("fileShortcutIds", String.valueOf(fileShortcut.getFileShortcutId()));
 		}
 		else {
-			moveURL.setParameter("struts_action", "/document_library/move_file_entry");
-			moveURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+			moveURL.setParameter("struts_action", "/document_library/move_entry");
+			moveURL.setParameter("fileEntryIds", String.valueOf(fileEntry.getFileEntryId()));
 		}
 
 		if (portletName.equals(PortletKeys.TRASH)) {

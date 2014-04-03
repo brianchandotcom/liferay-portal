@@ -370,29 +370,6 @@ String iconMenuId = null;
 					/>
 				</c:if>
 			</c:when>
-			<c:when test="<%= portletName.equals(PortletKeys.TRASH) %>">
-
-				<%
-				boolean hasUpdatePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE);
-				%>
-
-				<c:if test="<%= hasUpdatePermission && ((folder == null) || !folder.isMountPoint()) %>">
-					<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_LIBRARY %>" var="moveURL">
-						<portlet:param name="struts_action" value="/document_library/move_entry" />
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_FROM_TRASH %>" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-						<portlet:param name="parentFolderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-					</liferay-portlet:renderURL>
-
-					<liferay-ui:icon
-						image="submit"
-						message="move"
-						url="<%= moveURL %>"
-					/>
-				</c:if>
-			</c:when>
 		</c:choose>
 
 		<c:if test="<%= hasViewPermission && portletDisplay.isWebDAVEnabled() && ((folder == null) || (folder.getRepositoryId() == scopeGroupId)) %>">

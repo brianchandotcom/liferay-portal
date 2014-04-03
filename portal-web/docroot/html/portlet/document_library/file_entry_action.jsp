@@ -100,7 +100,6 @@ else if (fileEntry != null) {
 
 boolean checkedOut = fileEntry.isCheckedOut();
 boolean hasLock = fileEntry.hasLock();
-boolean restore = false;
 
 PortletURL viewFolderURL = liferayPortletResponse.createRenderURL();
 

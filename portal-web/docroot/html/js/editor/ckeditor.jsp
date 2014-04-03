@@ -142,6 +142,12 @@ if (!inlineEdit) {
 				data = '';
 			}
 
+			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && (inlineEditSaveURL != null)) %>">
+				if (!window['<%= name %>'].instanceReady) {
+					data = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
+				}
+			</c:if>
+
 			return data;
 		},
 
@@ -152,6 +158,8 @@ if (!inlineEdit) {
 		getText: function() {
 			return window['<%= name %>'].getCkData();
 		},
+
+		instanceReady: false,
 
 		<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
 			onBlurCallback: function() {
@@ -282,6 +290,8 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 			</c:if>
 
 			window['<%= name %>']._setStyles();
+
+			window['<%= name %>'].instanceReady = true;
 		}
 
 		<%

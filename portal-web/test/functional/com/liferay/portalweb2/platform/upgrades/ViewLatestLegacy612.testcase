@@ -1,0 +1,4 @@
+<definition component-name="portal-upgrades" extends="ViewLatestLegacySmoke">
+	<property name="custom.properties" value="dl.store.impl=com.liferay.portlet.documentlibrary.store.DBStore$${line.separator}session.tracker.persistence.enabled=true$${line.separator}live.users.enabled=true" />
+	<property name="portal.version" value="6.1.2" />
+</definition>

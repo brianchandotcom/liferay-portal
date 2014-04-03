@@ -77,6 +77,10 @@ public class SeleniumBuilderFileUtil {
 
 		_componentNames = ListUtil.fromArray(
 			StringUtil.split(properties.getProperty("component.names")));
+
+		_allowedTestrayComponentNames = ListUtil.fromArray(
+			StringUtil.split(properties.getProperty(
+				"allowed.testray.component.names")));
 	}
 
 	public String escapeHtml(String input) {
@@ -1849,6 +1853,7 @@ public class SeleniumBuilderFileUtil {
 		new String[] {
 			"arg1", "arg2", "message", "string", "substring", "value"
 		});
+	private static List<String> _allowedTestrayComponentNames;
 	private static List<String> _allowedVarAttributes = ListUtil.fromArray(
 		new String[] {
 			"attribute", "group", "input", "line-number", "locator",

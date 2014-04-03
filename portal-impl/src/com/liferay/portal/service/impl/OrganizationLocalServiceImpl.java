@@ -43,11 +43,13 @@ import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.model.Region;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -63,7 +65,6 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.OrganizationIdComparator;
 import com.liferay.portal.util.comparator.OrganizationNameComparator;
-import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -1404,17 +1405,58 @@ public class OrganizationLocalServiceImpl
 			LinkedHashMap<String, Object> params)
 		throws SystemException {
 
-		String parentOrganizationIdComparator = StringPool.EQUAL;
+		if (!PropsValues.ORGANIZATIONS_INDEXER_ENABLED ||
+			!PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX) {
 
-		if (parentOrganizationId ==
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
+			String parentOrganizationIdComparator = StringPool.EQUAL;
 
-			parentOrganizationIdComparator = StringPool.NOT_EQUAL;
+			if (parentOrganizationId ==
+					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
+
+				parentOrganizationIdComparator = StringPool.NOT_EQUAL;
+			}
+
+			return organizationFinder.countByKeywords(
+				companyId, parentOrganizationId, parentOrganizationIdComparator,
+				keywords, type, regionId, countryId, params);
 		}
 
-		return organizationFinder.countByKeywords(
-			companyId, parentOrganizationId, parentOrganizationIdComparator,
-			keywords, type, regionId, countryId, params);
+		try {
+			String name = null;
+			String street = null;
+			String city = null;
+			String zip = null;
+			boolean andOperator = false;
+
+			if (Validator.isNotNull(keywords)) {
+				name = keywords;
+				street = keywords;
+				city = keywords;
+				zip = keywords;
+			}
+			else {
+				andOperator = true;
+			}
+
+			if (params != null) {
+				params.put("keywords", keywords);
+			}
+
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+							Organization.class);
+
+			SearchContext searchContext = buildSearchContext(
+				companyId, parentOrganizationId, name, type, street, city, zip,
+				regionId, countryId, params, andOperator, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+			Hits hits = indexer.search(searchContext);
+
+			return hits.getLength();
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	/**
@@ -1454,18 +1496,39 @@ public class OrganizationLocalServiceImpl
 			boolean andOperator)
 		throws SystemException {
 
-		String parentOrganizationIdComparator = StringPool.EQUAL;
+		if (!PropsValues.ORGANIZATIONS_INDEXER_ENABLED ||
+			!PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX) {
 
-		if (parentOrganizationId ==
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
+			String parentOrganizationIdComparator = StringPool.EQUAL;
 
-			parentOrganizationIdComparator = StringPool.NOT_EQUAL;
+			if (parentOrganizationId ==
+					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
+
+				parentOrganizationIdComparator = StringPool.NOT_EQUAL;
+			}
+
+			return organizationFinder.countByC_PO_N_T_S_C_Z_R_C(
+				companyId, parentOrganizationId, parentOrganizationIdComparator,
+				name, type, street, city, zip, regionId, countryId, params,
+				andOperator);
 		}
 
-		return organizationFinder.countByC_PO_N_T_S_C_Z_R_C(
-			companyId, parentOrganizationId, parentOrganizationIdComparator,
-			name, type, street, city, zip, regionId, countryId, params,
-			andOperator);
+		try {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				Organization.class);
+
+			SearchContext searchContext = buildSearchContext(
+				companyId, parentOrganizationId, name, type, street, city, zip,
+				regionId, countryId, params, andOperator, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+			Hits hits = indexer.search(searchContext);
+
+			return hits.getLength();
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	@Override
@@ -1521,8 +1584,7 @@ public class OrganizationLocalServiceImpl
 			region, country, params, andSearch, start, end, sort);
 
 		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(
-				searchContext, UsersAdmin.ORGANIZATION_SELECTED_FIELD_NAMES);
+			Hits hits = indexer.search(searchContext);
 
 			List<Organization> organizations = UsersAdminUtil.getOrganizations(
 				hits);
@@ -1867,6 +1929,34 @@ public class OrganizationLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
+			long companyId, long parentOrganizationId, String name, String type,
+			String street, String city, String zip, Long regionId,
+			Long countryId, LinkedHashMap<String, Object> params,
+			boolean andSearch, int start, int end, Sort sort)
+		throws PortalException, SystemException {
+
+		String countryName = null;
+
+		if (countryId != null) {
+			Country country = countryService.fetchCountry(countryId);
+
+			countryName = country.getName();
+		}
+
+		String regionCode = null;
+
+		if (regionId != null) {
+			Region region = regionService.fetchRegion(regionId);
+
+			regionCode = region.getRegionCode();
+		}
+
+		return buildSearchContext(
+			companyId, parentOrganizationId, name, type, street, city, zip,
+			regionCode, countryName, params, andSearch, start, end, sort);
+	}
+
+	protected SearchContext buildSearchContext(
 		long companyId, long parentOrganizationId, String name, String type,
 		String street, String city, String zip, String region, String country,
 		LinkedHashMap<String, Object> params, boolean andSearch, int start,
@@ -1903,12 +1993,10 @@ public class OrganizationLocalServiceImpl
 			}
 		}
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		if (sort != null) {
 			searchContext.setSorts(sort);

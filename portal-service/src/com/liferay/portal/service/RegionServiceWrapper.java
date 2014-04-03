@@ -59,6 +59,12 @@ public class RegionServiceWrapper implements RegionService,
 	}
 
 	@Override
+	public com.liferay.portal.model.Region fetchRegion(long regionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _regionService.fetchRegion(regionId);
+	}
+
+	@Override
 	public com.liferay.portal.model.Region fetchRegion(long countryId,
 		java.lang.String regionCode)
 		throws com.liferay.portal.kernel.exception.SystemException {

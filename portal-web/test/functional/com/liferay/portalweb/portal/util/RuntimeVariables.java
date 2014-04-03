@@ -192,6 +192,22 @@ public class RuntimeVariables {
 		return _instance._replace(text);
 	}
 
+	public static String replaceRegularExpression(
+		String content, String regex, int group) {
+
+		Pattern pattern = Pattern.compile(regex);
+
+		Matcher matcher = pattern.matcher(content);
+
+		String statement = "";
+
+		if (matcher.find()) {
+			statement = matcher.group(group);
+		}
+
+		return statement;
+	}
+
 	public static void setValue(String key, String value) {
 		_instance._setValue(key, value);
 	}

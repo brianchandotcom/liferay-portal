@@ -716,7 +716,7 @@
 
 		<execute macro="DDLTemplate#addDisplayTemplateCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlDisplayTemplateLanguage" value="FreeMarker (.ftl)" />
+			<var name="ddlDisplayTemplateLanguage" value="${ddlDisplayTemplateLanguage}" />
 			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
 			<var name="ddlDisplayTemplateScriptFile" value="ddl_template_freemarker_1.ftl" />
 		</execute>
@@ -795,7 +795,7 @@
 		<property name="custom.properties" value="freemarker.engine.restricted.variables=$${line.separator}velocity.engine.restricted.variables=" />
 
 		<var name="ddlDataDefinitionName" value="Data Definition" />
-		<var name="ddlDisplayTemplateLanguage" value="FreeMarker (.ftl)" />
+		<var name="ddlDisplayTemplateLanguage" value="Velocity (.vm)" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
@@ -824,7 +824,7 @@
 
 		<execute macro="DDLTemplate#addDisplayTemplateCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlDisplayTemplateLanguage" value="Velocity (.vm)" />
+			<var name="ddlDisplayTemplateLanguage" value="${ddlDisplayTemplateLanguage}" />
 			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
 			<var name="ddlDisplayTemplateScriptFile" value="ddl_template_velocity_1.vm" />
 		</execute>
@@ -897,5 +897,135 @@
 
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[1]" value1="Name1" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[2]" value1="Name2" />
+	</command>
+
+	<command name="ViewListRecordWithVelocityDisplayTemplate" priority="4">
+		<property name="custom.properties" value="freemarker.engine.restricted.variables=$${line.separator}velocity.engine.restricted.variables=" />
+
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
+		<var name="ddlDisplayTemplateLanguage" value="Velocity (.vm)" />
+		<var name="ddlDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
+		<var name="ddlDisplayTemplateScript">
+			<![CDATA[
+				#set ($ddlRecordLocalService = $serviceLocator.findService("com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalService"))${line.separator}${line.separator}
+
+				#set ($records = $ddlRecordLocalService.getRecords($reserved_record_set_id))${line.separator}${line.separator}
+
+				#if (!$records.isEmpty())${line.separator}
+					#foreach ($cur_record in $records)${line.separator}${line.separator}
+
+	   				 $cur_record.getFieldValue("Name", $locale)${line.separator}${line.separator}
+
+					<br/> <br/>${line.separator}${line.separator}
+
+					#end${line.separator}
+				#end
+			]]>
+		</var>
+		<var name="ddlListDescription" value="List Description" />
+		<var name="ddlListName" value="List Name" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Name" />
+		<var name="fieldName" value="Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLTemplate#addDisplayTemplateCP">
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDisplayTemplateLanguage" value="${ddlDisplayTemplateLanguage}" />
+			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
+			<var name="ddlDisplayTemplateScript" value="${ddlDisplayTemplateScript}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListDescription" value="${ddlListDescription}" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Name1" />
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="Name2" />
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLList#selectPGViaDDLDisplay">
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLTemplate#selectDisplayTemplatePGViaDDLDisplay">
+			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGDynamicdatalists#assertTextPresent" locator1="//div[@class='portlet-body']/form" value1="Name1" />
+		<execute action="PGDynamicdatalists#assertTextPresent" locator1="//div[@class='portlet-body']/form" value1="Name2" />
 	</command>
 </definition>

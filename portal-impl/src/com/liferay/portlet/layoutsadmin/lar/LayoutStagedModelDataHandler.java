@@ -77,6 +77,7 @@ import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -368,16 +369,16 @@ public class LayoutStagedModelDataHandler
 			else {
 				importedLayout.setCreateDate(layout.getCreateDate());
 				importedLayout.setModifiedDate(layout.getModifiedDate());
-				importedLayout.setLayoutPrototypeUuid(
-					layout.getLayoutPrototypeUuid());
-				importedLayout.setLayoutPrototypeLinkEnabled(
-					layout.isLayoutPrototypeLinkEnabled());
 
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 				if (!group.isLayoutPrototype() &&
 					!group.isLayoutSetPrototype()) {
 
+					importedLayout.setLayoutPrototypeUuid(
+						layout.getLayoutPrototypeUuid());
+					importedLayout.setLayoutPrototypeLinkEnabled(
+						layout.isLayoutPrototypeLinkEnabled());
 					importedLayout.setSourcePrototypeLayoutUuid(
 						layout.getSourcePrototypeLayoutUuid());
 				}

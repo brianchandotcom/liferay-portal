@@ -8,4 +8,10 @@
 			<execute function="AssertClick#assertTextClick" />
 		</case>
 	</command>
+
+	<command name="type">
+		<case locator-key1="SCRIPT_CONTENT_FIELD">
+			<execute function="Type#typeAceEditor" />
+		</case>
+	</command>
 </definition>

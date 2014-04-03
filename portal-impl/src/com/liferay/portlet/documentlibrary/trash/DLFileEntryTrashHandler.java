@@ -58,22 +58,22 @@ import javax.portlet.PortletRequest;
 public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 	@Override
-	public void checkDuplicateEntry(
+	public void checkRestorableEntry(
 			long classPK, long containerModelId, String newName)
 		throws PortalException, SystemException {
 
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-		checkDuplicateEntry(
+		checkRestorableEntry(
 			classPK, 0, containerModelId, dlFileEntry.getTitle(), newName);
 	}
 
 	@Override
-	public void checkDuplicateTrashEntry(
+	public void checkRestorableEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
 		throws PortalException, SystemException {
 
-		checkDuplicateEntry(
+		checkRestorableEntry(
 			trashEntry.getClassPK(), trashEntry.getEntryId(), containerModelId,
 			trashEntry.getTypeSettingsProperty("title"), newName);
 	}
@@ -282,7 +282,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
 	}
 
-	protected void checkDuplicateEntry(
+	protected void checkRestorableEntry(
 			long classPK, long entryId, long containerModelId,
 			String originalTitle, String newName)
 		throws PortalException, SystemException {

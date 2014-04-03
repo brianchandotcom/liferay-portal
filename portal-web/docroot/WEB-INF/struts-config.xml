@@ -903,18 +903,8 @@
 
 		<action path="/journal/get_latest_article_content" type="com.liferay.portlet.journal.action.GetLatestArticleContentAction" />
 
-		<action path="/journal/move_article" type="com.liferay.portlet.journal.action.EditArticleAction">
-			<forward name="portlet.journal.edit_article" path="portlet.journal.move_article" />
-			<forward name="portlet.journal.error" path="portlet.journal.error" />
-		</action>
-
 		<action path="/journal/move_entry" type="com.liferay.portlet.journal.action.EditEntryAction">
 			<forward name="portlet.journal.edit_entry" path="portlet.journal.move_entries" />
-			<forward name="portlet.journal.error" path="portlet.journal.error" />
-		</action>
-
-		<action path="/journal/move_folder" type="com.liferay.portlet.journal.action.EditFolderAction">
-			<forward name="portlet.journal.edit_folder" path="portlet.journal.move_folder" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
 

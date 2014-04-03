@@ -1,4 +1,39 @@
 <definition>
+	<command name="assignOrganizationRoleCP">
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Social Office Configurations" />
+		</execute>
+
+		<execute action="SOConfigurations#click" locator-key1="ORGANIZATIONS" />
+		<execute action="SOConfigurations#click" locator-key1="STATUS_AVAILABLE" />
+		<execute action="SOConfigurations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
+		<execute action="SOConfigurations#click" locator-key1="SEARCH_BUTTON" />
+		<execute action="SOConfigurations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="SOConfigurations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
+		<execute action="SOConfigurations#check" locator-key1="ORGANIZATION_TABLE_CHECKBOX" />
+		<execute action="SOConfigurations#click" locator-key1="SAVE_BUTTON" />
+		<execute action="SOConfigurations#assertTextEquals" locator-key1="SUCCESS_MESSAGE_1" value1="Your request completed successfully." />
+	</command>
+
+	<command name="assignUserGroupRoleCP">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Social Office Configurations" />
+		</execute>
+
+		<execute action="SOConfigurations#click" locator-key1="USER_GROUPS" />
+		<execute action="SOConfigurations#click" locator-key1="STATUS_AVAILABLE" />
+		<execute action="SOConfigurations#type" locator-key1="SEARCH_FIELD" value1="${userGroupName}" />
+		<execute action="SOConfigurations#click" locator-key1="SEARCH_BUTTON" />
+		<execute action="SOConfigurations#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute action="SOConfigurations#check" locator-key1="USER_GROUP_TABLE_CHECKBOX" />
+		<execute action="SOConfigurations#click" locator-key1="SAVE_BUTTON" />
+		<execute action="SOConfigurations#assertTextEquals" locator-key1="SUCCESS_MESSAGE_1" value1="Your request completed successfully." />
+	</command>
+
 	<command name="assignUserRoleCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -11,6 +46,41 @@
 		<execute action="SOConfigurations#click" locator-key1="SEARCH_BUTTON" />
 		<execute action="SOConfigurations#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute action="SOConfigurations#check" locator-key1="USER_TABLE_CHECKBOX" />
+		<execute action="SOConfigurations#click" locator-key1="SAVE_BUTTON" />
+		<execute action="SOConfigurations#assertTextEquals" locator-key1="SUCCESS_MESSAGE_1" value1="Your request completed successfully." />
+	</command>
+
+	<command name="unassignOrganizationRoleCP">
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Social Office Configurations" />
+		</execute>
+
+		<execute action="SOConfigurations#click" locator-key1="ORGANIZATIONS" />
+		<execute action="SOConfigurations#click" locator-key1="STATUS_CURRENT" />
+		<execute action="SOConfigurations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
+		<execute action="SOConfigurations#click" locator-key1="SEARCH_BUTTON" />
+		<execute action="SOConfigurations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="SOConfigurations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
+		<execute action="SOConfigurations#uncheck" locator-key1="ORGANIZATION_TABLE_CHECKBOX" />
+		<execute action="SOConfigurations#click" locator-key1="SAVE_BUTTON" />
+		<execute action="SOConfigurations#assertTextEquals" locator-key1="SUCCESS_MESSAGE_1" value1="Your request completed successfully." />
+	</command>
+
+	<command name="unassignUserGroupRoleCP">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Social Office Configurations" />
+		</execute>
+
+		<execute action="SOConfigurations#click" locator-key1="USER_GROUPS" />
+		<execute action="SOConfigurations#click" locator-key1="STATUS_CURRENT" />
+		<execute action="SOConfigurations#type" locator-key1="SEARCH_FIELD" value1="${userGroupName}" />
+		<execute action="SOConfigurations#click" locator-key1="SEARCH_BUTTON" />
+		<execute action="SOConfigurations#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute action="SOConfigurations#uncheck" locator-key1="USER_GROUP_TABLE_CHECKBOX" />
 		<execute action="SOConfigurations#click" locator-key1="SAVE_BUTTON" />
 		<execute action="SOConfigurations#assertTextEquals" locator-key1="SUCCESS_MESSAGE_1" value1="Your request completed successfully." />
 	</command>

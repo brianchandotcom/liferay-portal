@@ -57,6 +57,27 @@
 		</execute>
 	</command>
 
+	<command name="assignMembersOrganizationsCP">
+		<var name="key_roleName" value="${roleName}" />
+
+		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
+		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute action="CPRolesAssignmembersUsers#assertClick" locator-key1="MEMBERS_ORGANIZATIONS" value1="Organizations" />
+
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute action="CPRolesAssignmembersOrganizations#assertClick" locator-key1="AVAILABLE" value1="Available" />
+		<execute action="CPRolesAssignmembersOrganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
+		<execute action="CPRolesAssignmembersOrganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPRolesAssignmembersOrganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPRolesAssignmembersOrganizations#check" locator-key1="ORGANIZATION_TABLE_CHECKBOX" />
+		<execute action="CPRolesAssignmembersOrganizations#assertClick" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute action="CPRolesAssignmembersOrganizations#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPRolesAssignmembersOrganizations#assertChecked" locator-key1="ORGANIZATION_TABLE_CHECKBOX" />
+	</command>
+
 	<command name="assignMembersSitesCP">
 		<var name="key_roleName" value="${roleName}" />
 
@@ -408,6 +429,26 @@
 		</while>
 	</command>
 
+	<command name="unassignMembersOrganizationsCP">
+		<var name="key_roleName" value="${roleName}" />
+
+		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
+		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute action="CPRolesAssignmembersUsers#assertClick" locator-key1="MEMBERS_ORGANIZATIONS" value1="Organizations" />
+
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute action="CPRolesAssignmembersOrganizations#assertClick" locator-key1="CURRENT" value1="Current" />
+		<execute action="CPRolesAssignmembersOrganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
+		<execute action="CPRolesAssignmembersOrganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPRolesAssignmembersOrganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPRolesAssignmembersOrganizations#uncheck" locator-key1="ORGANIZATION_TABLE_CHECKBOX" />
+		<execute action="CPRolesAssignmembersOrganizations#assertClick" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute action="CPRolesAssignmembersOrganizations#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="unassignMembersSitesCP">
 		<var name="key_roleName" value="${roleName}" />
 
@@ -427,6 +468,26 @@
 		<execute action="CPRolesAssignmembersSites#assertClick" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
 		<execute action="CPRolesAssignmembersSites#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPRolesAssignmembersSites#assertNotChecked" locator-key1="SITE_TABLE_CHECKBOX" />
+	</command>
+
+	<command name="unassignMembersUserGroupsCP">
+		<var name="key_roleName" value="${roleName}" />
+
+		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
+		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute action="CPRolesAssignmembersUsers#assertClick" locator-key1="MEMBERS_USER_GROUPS" value1="User Groups" />
+
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPRolesAssignmembersUsergroups#assertClick" locator-key1="CURRENT" value1="Current" />
+		<execute action="CPRolesAssignmembersUsergroups#type" locator-key1="SEARCH_FIELD" value1="${userGroupName}" />
+		<execute action="CPRolesAssignmembersUsergroups#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPRolesAssignmembersUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute action="CPRolesAssignmembersUsergroups#uncheck" locator-key1="USER_GROUP_TABLE_CHECKBOX" />
+		<execute action="CPRolesAssignmembersUsergroups#assertClick" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute action="CPRolesAssignmembersUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="unassignRegRoleCP">

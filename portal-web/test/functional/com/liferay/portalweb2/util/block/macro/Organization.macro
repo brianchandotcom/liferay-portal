@@ -114,7 +114,17 @@
 		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="CURRENT" value1="Current" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertChecked" locator-key1="USER_TABLE_CHECKBOX" />
-		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />
+
+		<if>
+			<isset var="userMiddleName" />
+			<then>
+				<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_USER_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
+			</then>
+			<else>
+				<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />
+			</else>
+		</if>
+
 		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 

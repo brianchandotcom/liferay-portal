@@ -446,9 +446,14 @@
 
 		<execute action="Dockbar#click" locator-key1="ADD_PAGE_TYPE_RADIO" value1="${pageType}" />
 
-		<execute macro="Page#addPageTypePanelPG">
-			<var name="portletNameList" value="${portletNameList}" />
-		</execute>
+		<if>
+			<equals arg1="${pageType}" arg2="Panel" />
+			<then>
+				<execute macro="Page#addPageTypePanelPG">
+					<var name="portletNameList" value="${portletNameList}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="tearDownPG">

@@ -53,6 +53,7 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -2526,21 +2527,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		String fromName = wikiSettings.getEmailFromName();
 		String fromAddress = wikiSettings.getEmailFromAddress();
 
-		String subject = null;
-		String body = null;
+		LocalizedValuesMap subjectLocalizedValuesMap = null;
+		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (update) {
-			subject = wikiSettings.getEmailPageUpdatedSubject();
-			body = wikiSettings.getEmailPageUpdatedBody();
+			subjectLocalizedValuesMap =
+				wikiSettings.getEmailPageUpdatedSubject();
+			bodyLocalizedValuesMap = wikiSettings.getEmailPageUpdatedBody();
 		}
 		else {
-			subject = wikiSettings.getEmailPageAddedSubject();
-			body = wikiSettings.getEmailPageAddedBody();
+			subjectLocalizedValuesMap = wikiSettings.getEmailPageAddedSubject();
+			bodyLocalizedValuesMap = wikiSettings.getEmailPageAddedBody();
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		subscriptionSender.setBody(body);
 		subscriptionSender.setClassName(page.getModelClassName());
 		subscriptionSender.setClassPK(page.getPageId());
 		subscriptionSender.setCompanyId(page.getCompanyId());
@@ -2560,6 +2561,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		subscriptionSender.setEntryURL(pageURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setLocalizedBodyMap(bodyLocalizedValuesMap);
+		subscriptionSender.setLocalizedSubjectMap(subjectLocalizedValuesMap);
 		subscriptionSender.setMailId(
 			"wiki_page", page.getNodeId(), page.getPageId());
 
@@ -2577,7 +2580,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(node.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(page.getUserId());
 
 		subscriptionSender.addPersistedSubscribers(

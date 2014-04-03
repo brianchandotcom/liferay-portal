@@ -67,6 +67,34 @@ public abstract class BaseTrashHandler implements TrashHandler {
 			extraDataJSONObject.toString());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #checkRestorableEntry(long, long, String)}
+	 */
+	@Deprecated
+	@Override
+	@SuppressWarnings("unused")
+	public void checkDuplicateEntry(
+			long classPK, long containerModelId, String newName)
+		throws PortalException, SystemException {
+
+		checkRestorableEntry(classPK, containerModelId, newName);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #checkRestorableEntry(TrashEntry, long, String)}
+	 */
+	@Deprecated
+	@Override
+	@SuppressWarnings("unused")
+	public void checkDuplicateTrashEntry(
+			TrashEntry trashEntry, long containerModelId, String newName)
+		throws PortalException, SystemException {
+
+		checkRestorableEntry(trashEntry, containerModelId, newName);
+	}
+
 	@Override
 	@SuppressWarnings("unused")
 	public void checkRestorableEntry(

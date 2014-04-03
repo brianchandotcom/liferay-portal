@@ -95,6 +95,39 @@ public interface TrashHandler {
 			String referrerClassName)
 		throws PortalException, SystemException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #checkRestorableEntry(long, long, String)}
+	 */
+	@Deprecated
+	public void checkDuplicateEntry(
+			long classPK, long containerModelId, String newName)
+		throws PortalException, SystemException;
+
+	/**
+	 * Checks if a duplicate trash entry already exists in the destination
+	 * container.
+	 *
+	 * <p>
+	 * This method is used to check for duplicates when a trash entry is being
+	 * restored or moved out of the Recycle Bin.
+	 * </p>
+	 *
+	 * @param  trashEntry the trash entry to check
+	 * @param  containerModelId the primary key of the destination (e.g. folder)
+	 * @param  newName the new name to be assigned to the trash entry
+	 *         (optionally <code>null</code> to forego renaming the trash entry)
+	 * @throws PortalException if a duplicate trash entry already existed in the
+	 *         destination container
+	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #checkRestorableEntry(TrashEntry, long, String)}
+	 */
+	@Deprecated
+	public void checkDuplicateTrashEntry(
+			TrashEntry trashEntry, long containerModelId, String newName)
+		throws PortalException, SystemException;
+
 	public void checkRestorableEntry(
 			long classPK, long containerModelId, String newName)
 		throws PortalException, SystemException;

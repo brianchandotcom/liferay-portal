@@ -343,7 +343,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewSelectedPG">
-			<var name="selectedAsset" value="${selectedAsset}" />
+			<var name="selectedAssetConfiguration" value="${selectedAsset}" />
 		</execute>
 	</command>
 
@@ -359,7 +359,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewSelectedPG">
-			<var name="selectedAsset" value="${selectedAsset}" />
+			<var name="selectedAssetConfiguration" value="${selectedAsset}" />
 		</execute>
 	</command>
 
@@ -375,7 +375,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewSelectedPG">
-			<var name="selectedAsset" value="${selectedAsset}" />
+			<var name="selectedAssetConfiguration" value="${selectedAsset}" />
 		</execute>
 	</command>
 

@@ -25,6 +25,7 @@ import com.liferay.portal.NoSuchLayoutPrototypeException;
 import com.liferay.portal.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -77,15 +78,21 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
+import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.sites.util.Sites;
 
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NavigableSet;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -734,6 +741,10 @@ public class LayoutImporter {
 			}
 		}
 
+		// Page priorities
+
+		updateLayoutPriorities(portletDataContext);
+
 		// Deletion system events
 
 		_deletionSystemEventImporter.importDeletionSystemEvents(
@@ -751,7 +762,7 @@ public class LayoutImporter {
 			List<String> sourceLayoutsUuids, Element layoutElement)
 		throws Exception {
 
-		String action = layoutElement.attributeValue("action");
+		String action = layoutElement.attributeValue(Constants.ACTION);
 
 		if (!action.equals(Constants.SKIP)) {
 			StagedModelDataHandlerUtil.importStagedModel(
@@ -887,6 +898,108 @@ public class LayoutImporter {
 		}
 	}
 
+	protected void updateLayoutPriorities(PortletDataContext portletDataContext)
+		throws PortalException, SystemException {
+
+		Map<Long, Layout> layouts =
+			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class + ".layout");
+
+		Map<Long, NavigableSet<Layout>> layoutMap =
+			new HashMap<Long, NavigableSet<Layout>>();
+
+		List<Layout> importedLayouts = new LinkedList<Layout>();
+
+		// Gathering imported layouts and create a NavigableSet for each
+		// parentLayoutId to handle each priority queue separately
+
+		for (Element layoutElement : _layoutElements) {
+			String action = layoutElement.attributeValue(Constants.ACTION);
+
+			if (action.equals(Constants.ADD)) {
+				long layoutId = GetterUtil.getLong(
+					layoutElement.attributeValue("layout-id"));
+
+				Layout layout = layouts.get(layoutId);
+
+				NavigableSet<Layout> childLayouts = layoutMap.get(
+					layout.getParentLayoutId());
+
+				if (childLayouts == null) {
+					layoutMap.put(
+						layout.getParentLayoutId(),
+						new TreeSet<Layout>(new LayoutPriorityComparator()));
+				}
+
+				importedLayouts.add(
+					LayoutLocalServiceUtil.getLayout(layout.getPlid()));
+			}
+		}
+
+		List<Layout> groupLayouts = LayoutLocalServiceUtil.getLayouts(
+			portletDataContext.getGroupId(),
+			portletDataContext.isPrivateLayout());
+
+		List<Layout> unmodifiedLayouts = new LinkedList<Layout>(groupLayouts);
+
+		unmodifiedLayouts.removeAll(importedLayouts);
+
+		// Priorities are up-to date if there are no unmodified layouts
+
+		if (unmodifiedLayouts.isEmpty()) {
+			return;
+		}
+
+		// Fill the sets with the layouts which weren't updated by the import.
+		// If there isn't any updated/new layout under a parent, there is
+		// nothing to do
+
+		for (Layout unmodifiedLayout : unmodifiedLayouts) {
+			NavigableSet<Layout> childLayouts = layoutMap.get(
+				unmodifiedLayout.getParentLayoutId());
+
+			if (childLayouts != null) {
+				childLayouts.add(unmodifiedLayout);
+			}
+		}
+
+		for (Layout importedLayout : importedLayouts) {
+			NavigableSet<Layout> childLayouts = layoutMap.get(
+				importedLayout.getParentLayoutId());
+
+			if (childLayouts.isEmpty()) {
+				continue;
+			}
+
+			SortedSet<Layout> tailSet = childLayouts.tailSet(
+				importedLayout, true);
+
+			int priority = importedLayout.getPriority();
+
+			// If a layout's priority collides with an existing one, then we
+			// "push it back" by 1, and do it until there is no collision.
+			// Break, if there was a "hole" in the priority queue and we don't
+			// have to push back more layouts
+
+			for (Layout tailLayout : tailSet) {
+				if (tailLayout.getPriority() == priority) {
+					tailLayout.setPriority(++priority);
+				}
+				else {
+					break;
+				}
+			}
+
+			childLayouts.add(importedLayout);
+		}
+
+		for (NavigableSet<Layout> childLayouts : layoutMap.values()) {
+			for (Layout childLayout : childLayouts) {
+				LayoutUtil.update(childLayout);
+			}
+		}
+	}
+
 	protected void validateFile(PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -974,7 +1087,7 @@ public class LayoutImporter {
 		}
 
 		for (Element layoutElement : layoutElements) {
-			String action = layoutElement.attributeValue("action");
+			String action = layoutElement.attributeValue(Constants.ACTION);
 
 			if (action.equals(Constants.SKIP)) {
 				continue;

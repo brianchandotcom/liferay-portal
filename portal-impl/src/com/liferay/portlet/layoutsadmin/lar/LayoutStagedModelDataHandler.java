@@ -151,7 +151,7 @@ public class LayoutStagedModelDataHandler
 
 		populateElementLayoutMetadata(layoutElement, layout);
 
-		layoutElement.addAttribute("action", Constants.ADD);
+		layoutElement.addAttribute(Constants.ACTION, Constants.ADD);
 
 		portletDataContext.setPlid(layout.getPlid());
 

@@ -577,7 +577,7 @@ public class LayoutExporter {
 			Element layoutElement = portletDataContext.getExportDataElement(
 				layout);
 
-			layoutElement.addAttribute("action", Constants.SKIP);
+			layoutElement.addAttribute(Constants.ACTION, Constants.SKIP);
 
 			return;
 		}

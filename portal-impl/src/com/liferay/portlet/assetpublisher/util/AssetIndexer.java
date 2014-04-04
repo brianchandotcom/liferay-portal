@@ -39,6 +39,11 @@ public class AssetIndexer extends BaseIndexer {
 
 	public static final String PORTLET_ID = PortletKeys.ASSET_PUBLISHER;
 
+	public AssetIndexer() {
+		setDefaultSelectedFieldNames(
+			new String[] {Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK});
+	}
+
 	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;

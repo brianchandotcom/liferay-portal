@@ -33,9 +33,6 @@ import java.util.List;
  */
 public class AssetCategoryUtil {
 
-	public static final String[] SELECTED_FIELD_NAMES =
-		{Field.COMPANY_ID, Field.GROUP_ID, Field.UID, Field.ASSET_CATEGORY_ID};
-
 	public static List<AssetCategory> getCategories(Hits hits)
 		throws PortalException, SystemException {
 

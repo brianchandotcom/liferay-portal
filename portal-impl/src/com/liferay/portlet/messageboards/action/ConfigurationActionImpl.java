@@ -25,11 +25,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.settings.Settings;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.util.ContentUtil;
+import com.liferay.portlet.messageboards.MBSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,6 @@ import java.util.TreeMap;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 /**
@@ -49,48 +47,35 @@ import javax.portlet.PortletRequest;
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
 
 	@Override
-	public void postProcessPortletPreferences(
-			long companyId, PortletRequest portletRequest,
-			PortletPreferences portletPreferences)
-		throws Exception {
+	public void postProcess(
+		long companyId, PortletRequest portletRequest, Settings settings) {
 
-		String emailFromAddress = PortalUtil.getEmailFromAddress(
-			portletPreferences, companyId,
-			PropsValues.MESSAGE_BOARDS_EMAIL_FROM_ADDRESS);
+		MBSettings mbSettings = new MBSettings(settings);
 
 		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromAddress",
-			emailFromAddress);
-
-		String emailFromName = PortalUtil.getEmailFromName(
-			portletPreferences, companyId, PropsValues.MESSAGE_BOARDS_EMAIL_FROM_NAME);
+			portletRequest, settings, "emailFromAddress",
+			mbSettings.getEmailFromAddress());
 
 		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromName", emailFromName);
+			portletRequest, settings, "emailFromName",
+			mbSettings.getEmailFromName());
 
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailMessageAddedBody_" + languageId,
-			ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY));
+			portletRequest, settings, "emailMessageAddedBody_" + languageId,
+			mbSettings.getEmailMessageAddedBody());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailMessageAddedSubject_" + languageId,
-			ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT));
+			portletRequest, settings, "emailMessageAddedSubject_" + languageId,
+			mbSettings.getEmailMessageAddedSubject());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailMessageUpdatedBody_" + languageId,
-			ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY));
+			portletRequest, settings, "emailMessageUpdatedBody_" + languageId,
+			mbSettings.getEmailMessageUpdatedBody());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
+			portletRequest, settings,
 			"emailMessageUpdatedSubject_" + languageId,
-			ContentUtil.get(
-				PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT));
+			mbSettings.getEmailMessageUpdatedSubject());
 	}
 
 	@Override

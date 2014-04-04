@@ -96,21 +96,21 @@ wikiSettings = WikiUtil.getWikiSettings(themeDisplay.getSiteGroupId(), request);
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= wikiSettings.getEmailPageAddedBody().getLocalizationXml() %>"
+				emailBody="<%= wikiSettings.getEmailPageAddedBodyXml() %>"
 				emailDefinitionTerms="<%= definitionTerms %>"
 				emailEnabled="<%= wikiSettings.getEmailPageAddedEnabled() %>"
 				emailParam="emailPageAdded"
-				emailSubject="<%= wikiSettings.getEmailPageAddedSubject().getLocalizationXml() %>"
+				emailSubject="<%= wikiSettings.getEmailPageAddedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= wikiSettings.getEmailPageUpdatedBody().getLocalizationXml() %>"
+				emailBody="<%= wikiSettings.getEmailPageUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= definitionTerms %>"
 				emailEnabled="<%= wikiSettings.getEmailPageUpdatedEnabled() %>"
 				emailParam="emailPageUpdated"
-				emailSubject="<%= wikiSettings.getEmailPageUpdatedSubject().getLocalizationXml() %>"
+				emailSubject="<%= wikiSettings.getEmailPageUpdatedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 

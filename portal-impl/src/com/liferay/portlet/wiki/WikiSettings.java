@@ -52,6 +52,10 @@ public class WikiSettings extends BaseServiceSettings {
 		return typedSettings.getLocalizedValuesMap("emailPageAddedBody");
 	}
 
+	public String getEmailPageAddedBodyXml() {
+		return getEmailPageAddedBody().getLocalizationXml();
+	}
+
 	public boolean getEmailPageAddedEnabled() {
 		return typedSettings.getBooleanValue("emailPageAddedEnabled");
 	}
@@ -60,8 +64,16 @@ public class WikiSettings extends BaseServiceSettings {
 		return typedSettings.getLocalizedValuesMap("emailPageAddedSubject");
 	}
 
+	public String getEmailPageAddedSubjectXml() {
+		return getEmailPageAddedSubject().getLocalizationXml();
+	}
+
 	public LocalizedValuesMap getEmailPageUpdatedBody() {
 		return typedSettings.getLocalizedValuesMap("emailPageUpdatedBody");
+	}
+
+	public String getEmailPageUpdatedBodyXml() {
+		return getEmailPageUpdatedBody().getLocalizationXml();
 	}
 
 	public boolean getEmailPageUpdatedEnabled() {
@@ -70,6 +82,10 @@ public class WikiSettings extends BaseServiceSettings {
 
 	public LocalizedValuesMap getEmailPageUpdatedSubject() {
 		return typedSettings.getLocalizedValuesMap("emailPageUpdatedSubject");
+	}
+
+	public String getEmailPageUpdatedSubjectXml() {
+		return getEmailPageUpdatedSubject().getLocalizationXml();
 	}
 
 	public boolean getEnableCommentRatings() {

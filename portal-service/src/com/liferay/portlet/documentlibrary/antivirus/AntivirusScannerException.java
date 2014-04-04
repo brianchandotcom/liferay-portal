@@ -18,11 +18,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Michael C. Han
+ * @author Hugo Huijser
  */
 public class AntivirusScannerException extends PortalException {
 
+	public static final int EXECUTION_FAILURE = 1;
+
+	public static final int VIRUS_DETECTED = 2;
+
 	public AntivirusScannerException() {
 		super();
+	}
+
+	public AntivirusScannerException(int type) {
+		_type = type;
 	}
 
 	public AntivirusScannerException(String msg) {
@@ -36,5 +45,19 @@ public class AntivirusScannerException extends PortalException {
 	public AntivirusScannerException(Throwable cause) {
 		super(cause);
 	}
+
+	public String getMessageKey() {
+		if (_type == EXECUTION_FAILURE) {
+			return "antivirus-scan-failed";
+		}
+
+		if (_type == VIRUS_DETECTED) {
+			return "a-virus-was-detected-in-the-file";
+		}
+
+		return null;
+	}
+
+	private int _type;
 
 }

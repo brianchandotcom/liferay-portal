@@ -9,8 +9,7 @@
 				export ANT_HOME=/opt/ant
 				export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=512m"
 				export JAVA_HOME=/opt/jvms/default_jdk
-				export MAVEN_HOME=/opt/maven
-				export PATH=$PATH:/opt/ant/bin:/opt/jvms/default_jdk/bin:/opt/maven/bin:/home/zsyxc/localwork/bin:/usr/lib/git-core
+				export PATH=$PATH:$JAVA_HOME/bin:$ANT_HOME/bin
 				export SSH_TTY=/dev/pts/7
 
 				cd /home/trunks/svn/benchmark/trunk/

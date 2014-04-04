@@ -94,6 +94,6 @@
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>DuplicateEntry</exception>
+		<exception>RestoreEntry</exception>
 	</exceptions>
 </service-builder>

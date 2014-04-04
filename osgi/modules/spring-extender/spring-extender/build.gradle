@@ -11,4 +11,4 @@ dependencies {
 	)
 }
 
-project.ext.deployDir = project.hasProperty('osgiLibDir') ? project.osgiLibDir + "/core" : null
+project.ext.deployDir = project.hasProperty('osgiLibDir') ? project.osgiLibDir + "/portal" : null

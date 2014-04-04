@@ -105,6 +105,11 @@ import javax.portlet.PortletURL;
  */
 public abstract class BaseIndexer implements Indexer {
 
+	public static final String[] DEFAULT_SELECTED_FIELD_NAMES =
+		{Field.COMPANY_ID, Field.GROUP_ID, Field.UID, Field.CLASS_NAME_ID,
+			Field.CLASS_PK, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.VERSION};
+
 	@Override
 	public void addRelatedEntryFields(Document document, Object obj)
 		throws Exception {

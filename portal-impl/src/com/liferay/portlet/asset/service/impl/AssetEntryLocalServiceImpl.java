@@ -443,12 +443,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			searchContext.setGroupIds(groupIds);
 			searchContext.setKeywords(keywords);
 
-			QueryConfig queryConfig = new QueryConfig();
+			QueryConfig queryConfig = searchContext.getQueryConfig();
 
 			queryConfig.setHighlightEnabled(false);
 			queryConfig.setScoreEnabled(false);
-
-			searchContext.setQueryConfig(queryConfig);
 
 			searchContext.setStart(start);
 			searchContext.setUserId(userId);
@@ -505,12 +503,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 				getClassNames(companyId, className));
 			searchContext.setGroupIds(groupIds);
 
-			QueryConfig queryConfig = new QueryConfig();
+			QueryConfig queryConfig = searchContext.getQueryConfig();
 
 			queryConfig.setHighlightEnabled(false);
 			queryConfig.setScoreEnabled(false);
-
-			searchContext.setQueryConfig(queryConfig);
 
 			searchContext.setStart(start);
 			searchContext.setUserId(userId);

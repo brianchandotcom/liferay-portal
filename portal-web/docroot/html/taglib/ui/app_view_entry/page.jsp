@@ -47,6 +47,7 @@ String thumbnailDivStyle = (String)request.getAttribute("liferay-ui:app-view-ent
 String thumbnailSrc = (String)request.getAttribute("liferay-ui:app-view-entry:thumbnailSrc");
 String thumbnailStyle = (String)request.getAttribute("liferay-ui:app-view-entry:thumbnailStyle");
 String title = (String)request.getAttribute("liferay-ui:app-view-entry:title");
+String type = (String)request.getAttribute("liferay-ui:app-view-entry:type");
 String url = (String)request.getAttribute("liferay-ui:app-view-entry:url");
 String version = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:version"));
 
@@ -161,6 +162,16 @@ if (showLinkTitle) {
 					</c:if>
 
 					<dl>
+						<c:if test="<%= Validator.isNotNull(type) %>">
+							<dt>
+								<liferay-ui:message key="type" />:
+							</dt>
+
+							<dd>
+								<%= type %>
+							</dd>
+						</c:if>
+
 						<c:if test="<%= (groupId > 0) && (groupId != scopeGroupId) %>">
 
 							<%

@@ -193,6 +193,18 @@
 			<var name="siteURL" value="${siteURLTemp}" />
 		</execute>
 
+		<if>
+			<condition action="SOUserBar#isElementPresent" locator-key1="USER_BAR" />
+			<then>
+				<if>
+					<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+					<then>
+						<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+					</then>
+				</if>
+			</then>
+		</if>
+
 		<execute action="Dockbar#click" locator-key1="EDIT" />
 		<execute action="Dockbar#click" locator-key1="EDIT_PERMISSIONS" />
 

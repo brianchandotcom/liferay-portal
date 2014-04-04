@@ -99,6 +99,58 @@
 	<td>//tr[contains(.,'${key_userScreenName}')]/td[3]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATION_TABLE-->
+<tr>
+	<td>ORGANIZATION_TABLE_ALL_CHECKBOX</td>
+	<td>//input[@name='_1_WAR_soconfigurationsportlet_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[1]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_GROUP_TABLE-->
+<tr>
+	<td>USER_GROUP_GROUP_ALL_CHECKBOX</td>
+	<td>//input[@name='_1_WAR_soconfigurationsportlet_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

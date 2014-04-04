@@ -1,4 +1,88 @@
 <definition>
+	<command name="addPage">
+		<if>
+			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<then>
+				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+			</then>
+		</if>
+
+		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
+		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+
+		<if>
+			<isset var="pageType" />
+			<then>
+				<execute macro="Page#selectPageTypeRadioPG">
+					<var name="pageType" value="${pageType}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
+	</command>
+
+	<command name="addPortlet">
+		<var name="portletTypeKey" value="PORTLET" />
+
+		<if>
+			<equals arg1="${portletName}" arg2="Map" />
+			<then>
+				<var name="portletName" value="Where are the Liferay members?" />
+			</then>
+			<elseif>
+				<equals arg1="${portletName}" arg2="Requests" />
+				<then>
+					<var name="portletTypeKey" value="PORTLET_BORDERLESS" />
+				</then>
+			</elseif>
+		</if>
+
+		<var name="i" value="1" />
+
+		<while>
+			<not>
+				<equals arg1="${i}" arg2="5" />
+			</not>
+			<then>
+				<var name="i" value="${i?increment()}" />
+				<var name="key_portletName" value="${portletName}" />
+
+				<execute action="Home#refresh" />
+
+				<execute action="Dockbar#pause" locator1="1000" />
+
+				<if>
+					<and>
+						<condition action="Home#isElementNotPresent" locator-key1="${portletTypeKey}" />
+					</and>
+					<then>
+						<if>
+							<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+							<then>
+								<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+							</then>
+						</if>
+
+						<execute macro="Portlet#addPGCmd">
+							<var name="portletName" value="${portletName}" />
+						</execute>
+					</then>
+					<else>
+						<var name="i" value="5" />
+					</else>
+				</if>
+			</then>
+		</while>
+
+		<execute action="Home#assertElementPresent" locator-key1="${portletTypeKey}" />
+	</command>
+
 	<command name="addSOSite">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 

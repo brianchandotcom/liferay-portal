@@ -450,27 +450,6 @@ Error-Prone was automatically installed. Please rerun your task.
 
 	<if>
 		<not>
-			<available file="${ant.home}/lib/jsch.jar" />
-		</not>
-		<then>
-			<trycatch>
-				<try>
-					<copy file="${project.dir}/lib/development/jsch.jar" todir="${ant.home}/lib" />
-				</try>
-				<catch>
-					<fail>
-.
-
-Please manually copy ${project.dir}/lib/development/jsch.jar to ${ant.home}/lib
-to install JSch. Then rerun your task.
-					</fail>
-				</catch>
-			</trycatch>
-		</then>
-	</if>
-
-	<if>
-		<not>
 			<isset property="env.ANT_OPTS" />
 		</not>
 		<then>
@@ -794,6 +773,75 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					</if>
 				</sequential>
 			</for>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="execute-ssh">
+		<attribute name="ssh.host" default="${ssh.host}" />
+		<attribute name="ssh.password" default="${ssh.password}" />
+		<attribute name="ssh.username" default="${ssh.username}" />
+
+		<text name="commands" />
+
+		<sequential>
+			<if>
+				<not>
+					<available file="${ant.home}/lib/jsch.jar" />
+				</not>
+				<then>
+					<trycatch>
+						<try>
+							<copy file="${project.dir}/lib/development/jsch.jar" todir="${ant.home}/lib" />
+						</try>
+						<catch>
+							<fail>
+.
+
+Please manually copy ${project.dir}/lib/development/jsch.jar to ${ant.home}/lib
+to install JSch. Then rerun your task.
+							</fail>
+						</catch>
+					</trycatch>
+
+					<if>
+						<available file="${ant.home}/lib/jsch.jar" />
+						<then>
+							<fail>
+.
+
+Task cannot continue because JSch is not installed.
+
+JSch was automatically installed. Please rerun your task.
+							</fail>
+						</then>
+					</if>
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<or>
+						<isset property="ssh.host" />
+						<isset property="ssh.password" />
+						<isset property="ssh.username" />
+					</or>
+				</not>
+				<then>
+					<fail>
+.
+
+Please set $${ssh.host}, $${ssh.password}, $${ssh.username}. Then rerun your task.
+					</fail>
+				</then>
+			</if>
+
+			<sshexec
+				command="@{commands}"
+				host="@{ssh.host}"
+				password="@{ssh.password}"
+				trust="true"
+				username="@{ssh.username}"
+			/>
 		</sequential>
 	</macrodef>
 

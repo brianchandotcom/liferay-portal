@@ -537,10 +537,16 @@ public class VideoProcessorImpl
 			getPreviewFilePath(fileVersion, containerType), destinationFile);
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Xuggler generation of a " + containerType + " preview " +
-					"video for " + fileVersion.getTitle() + " took " +
-						stopWatch.getTime());
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("Xuggler generation of a ");
+			sb.append(containerType);
+			sb.append(" preview video for ");
+			sb.append(fileVersion.getTitle());
+			sb.append(" took ");
+			sb.append(stopWatch.getTime());
+
+			_log.info(sb.toString());
 		}
 	}
 

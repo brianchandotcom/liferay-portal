@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
@@ -420,10 +421,16 @@ public class PDFProcessorImpl
 			if (_log.isInfoEnabled()) {
 				int previewFileCount = getPreviewFileCount(fileVersion);
 
-				_log.info(
-					"Ghostscript generation of " + previewFileCount +
-						" preview pages for " + fileVersion.getTitle() +
-							" took " + stopWatch.getTime());
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("Ghostscript generation of ");
+				sb.append(previewFileCount);
+				sb.append(" preview pages for ");
+				sb.append(fileVersion.getTitle());
+				sb.append(" took ");
+				sb.append(stopWatch.getTime());
+
+				_log.info(sb.toString());
 			}
 		}
 

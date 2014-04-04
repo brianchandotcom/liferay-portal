@@ -535,21 +535,6 @@
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 		</action>
 
-		<action path="/document_library/move_file_entry" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction">
-			<forward name="portlet.document_library.edit_file_entry" path="portlet.document_library.move_file_entry" />
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-		</action>
-
-		<action path="/document_library/move_file_shortcut" type="com.liferay.portlet.documentlibrary.action.EditFileShortcutAction">
-			<forward name="portlet.document_library.edit_file_shortcut" path="portlet.document_library.move_file_shortcut" />
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-		</action>
-
-		<action path="/document_library/move_folder" type="com.liferay.portlet.documentlibrary.action.EditFolderAction">
-			<forward name="portlet.document_library.edit_folder" path="portlet.document_library.move_folder" />
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-		</action>
-
 		<action path="/document_library/search" type="com.liferay.portlet.documentlibrary.action.SearchAction">
 			<forward name="portlet.document_library.view" path="portlet.document_library.view" />
 		</action>
@@ -903,18 +888,8 @@
 
 		<action path="/journal/get_latest_article_content" type="com.liferay.portlet.journal.action.GetLatestArticleContentAction" />
 
-		<action path="/journal/move_article" type="com.liferay.portlet.journal.action.EditArticleAction">
-			<forward name="portlet.journal.edit_article" path="portlet.journal.move_article" />
-			<forward name="portlet.journal.error" path="portlet.journal.error" />
-		</action>
-
 		<action path="/journal/move_entry" type="com.liferay.portlet.journal.action.EditEntryAction">
 			<forward name="portlet.journal.edit_entry" path="portlet.journal.move_entries" />
-			<forward name="portlet.journal.error" path="portlet.journal.error" />
-		</action>
-
-		<action path="/journal/move_folder" type="com.liferay.portlet.journal.action.EditFolderAction">
-			<forward name="portlet.journal.edit_folder" path="portlet.journal.move_folder" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
 

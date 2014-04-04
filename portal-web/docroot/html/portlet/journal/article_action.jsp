@@ -53,11 +53,11 @@ else {
 
 		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
 			<portlet:renderURL var="moveURL">
-				<portlet:param name="struts_action" value="/journal/move_article" />
+				<portlet:param name="struts_action" value="/journal/move_entry" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
-				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+				<portlet:param name="articleIds" value="<%= article.getArticleId() %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:icon

@@ -71,9 +71,6 @@ public class EditFolderAction extends PortletAction {
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteFolders(actionRequest, true);
 			}
-			else if (cmd.equals(Constants.MOVE)) {
-				moveFolder(actionRequest);
-			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribeFolder(actionRequest);
 			}
@@ -167,19 +164,6 @@ public class EditFolderAction extends PortletAction {
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
-	}
-
-	protected void moveFolder(ActionRequest actionRequest) throws Exception {
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
-
-		long parentFolderId = ParamUtil.getLong(
-			actionRequest, "parentFolderId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			JournalFolder.class.getName(), actionRequest);
-
-		JournalFolderServiceUtil.moveFolder(
-			folderId, parentFolderId, serviceContext);
 	}
 
 	protected void subscribeFolder(ActionRequest actionRequest)

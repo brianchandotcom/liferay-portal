@@ -71,9 +71,9 @@ else {
 					/>
 
 					<portlet:renderURL var="moveURL">
-						<portlet:param name="struts_action" value="/journal/move_folder" />
+						<portlet:param name="struts_action" value="/journal/move_entry" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
+						<portlet:param name="folderIds" value="<%= String.valueOf(folder.getFolderId()) %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon

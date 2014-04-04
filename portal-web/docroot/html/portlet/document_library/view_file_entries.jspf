@@ -28,7 +28,7 @@
 	<%
 	EntriesChecker entriesChecker = null;
 
-	boolean showDeleteButton = permissionChecker.hasPermission(scopeGroupId, DLFileEntryConstants.getClassName(), scopeGroupId, ActionKeys.DELETE) && !portletName.equals(PortletKeys.TRASH);
+	boolean showDeleteButton = permissionChecker.hasPermission(scopeGroupId, DLFileEntryConstants.getClassName(), scopeGroupId, ActionKeys.DELETE);
 
 	if (showActions && showDeleteButton) {
 		entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
@@ -112,13 +112,7 @@
 				if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW)) {
 					PortletURL tempRowURL = renderResponse.createRenderURL();
 
-					if (portletName.equals(PortletKeys.TRASH)) {
-						tempRowURL.setParameter("struts_action", "/trash/view_content");
-						tempRowURL.setParameter("redirect", currentURL);
-						tempRowURL.setParameter("className", DLFileEntryConstants.getClassName());
-						tempRowURL.setParameter("classPK", String.valueOf(fileEntry.getPrimaryKey()));
-					}
-					else if (fileShortcut == null) {
+					if (fileShortcut == null) {
 						tempRowURL.setParameter("struts_action", "/document_library_display/view_file_entry");
 						tempRowURL.setParameter("redirect", currentURL);
 						tempRowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));

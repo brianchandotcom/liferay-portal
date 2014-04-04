@@ -34,17 +34,7 @@ FileVersion fileVersion = (FileVersion)objArray[1];
 	/>
 
 	<portlet:renderURL var="viewFileVersionURL">
-		<c:choose>
-			<c:when test="<%= portletName.equals(PortletKeys.TRASH) %>">
-				<portlet:param name="struts_action" value="/trash/view_content" />
-				<portlet:param name="className" value="<%= DLFileEntryConstants.getClassName() %>" />
-				<portlet:param name="classPK" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-			</c:when>
-			<c:otherwise>
-				<portlet:param name="struts_action" value="/document_library/view_file_entry" />
-			</c:otherwise>
-		</c:choose>
-
+		<portlet:param name="struts_action" value="/document_library/view_file_entry" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 		<portlet:param name="version" value="<%= fileVersion.getVersion() %>" />

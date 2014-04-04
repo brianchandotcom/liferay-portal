@@ -57,9 +57,6 @@ public class EditMessageAttachmentsAction extends PortletAction {
 			else if (cmd.equals(Constants.EMPTY_TRASH)) {
 				emptyTrash(actionRequest);
 			}
-			else if (cmd.equals(Constants.MOVE_FROM_TRASH)) {
-				restoreAttachmentFromTrash(actionRequest);
-			}
 
 			if (Validator.isNotNull(cmd)) {
 				String redirect = ParamUtil.getString(
@@ -124,17 +121,6 @@ public class EditMessageAttachmentsAction extends PortletAction {
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
 		MBMessageServiceUtil.deleteMessageAttachments(messageId);
-	}
-
-	protected void restoreAttachmentFromTrash(ActionRequest actionRequest)
-		throws PortalException, SystemException {
-
-		long messageId = ParamUtil.getLong(actionRequest, "messageId");
-
-		String fileName = ParamUtil.getString(actionRequest, "fileName");
-
-		MBMessageServiceUtil.restoreMessageAttachmentFromTrash(
-			messageId, fileName);
 	}
 
 }

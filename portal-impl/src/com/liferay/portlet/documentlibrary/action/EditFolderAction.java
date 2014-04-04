@@ -75,12 +75,6 @@ public class EditFolderAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteFolders(actionRequest, false);
 			}
-			else if (cmd.equals(Constants.MOVE)) {
-				moveFolders(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.MOVE_FROM_TRASH)) {
-				moveFolders(actionRequest, true);
-			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteFolders(actionRequest, true);
 			}
@@ -184,40 +178,6 @@ public class EditFolderAction extends PortletAction {
 			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
 			hideDefaultSuccessMessage(actionRequest);
-		}
-	}
-
-	protected void moveFolders(
-			ActionRequest actionRequest, boolean moveFromTrash)
-		throws Exception {
-
-		long[] folderIds = null;
-
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
-
-		if (folderId > 0) {
-			folderIds = new long[] {folderId};
-		}
-		else {
-			folderIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "folderIds"), 0L);
-		}
-
-		long parentFolderId = ParamUtil.getLong(
-			actionRequest, "parentFolderId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFileEntry.class.getName(), actionRequest);
-
-		for (long moveFolderId : folderIds) {
-			if (moveFromTrash) {
-				DLAppServiceUtil.moveFolderFromTrash(
-					moveFolderId, parentFolderId, serviceContext);
-			}
-			else {
-				DLAppServiceUtil.moveFolder(
-					moveFolderId, parentFolderId, serviceContext);
-			}
 		}
 	}
 

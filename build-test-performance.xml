@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-performance" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="run-performance-test">
+		<execute-ssh>
+			<![CDATA[
+				export ANT_HOME=/opt/ant
+				export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=512m"
+				export JAVA_HOME=/opt/jvms/default_jdk
+				export MAVEN_HOME=/opt/maven
+				export PATH=$PATH:/opt/ant/bin:/opt/jvms/default_jdk/bin:/opt/maven/bin:/home/zsyxc/localwork/bin:/usr/lib/git-core
+				export SSH_TTY=/dev/pts/7
+
+				cd /home/trunks/svn/benchmark/trunk/
+
+				ant stop all-database all-portal start-visualvm all-grinder all-sample stop
+			]]>
+		</execute-ssh>
+	</target>
+</project>

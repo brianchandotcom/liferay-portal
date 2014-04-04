@@ -399,6 +399,10 @@ public class DataFactory {
 		return _classNameModelsMap.get(BlogsEntry.class.getName());
 	}
 
+	public long getClassNameId(String className) {
+		return _classNameModelsMap.get(className);
+	}
+
 	public List<ClassNameModel> getClassNameModels() {
 		return _classNameModels;
 	}

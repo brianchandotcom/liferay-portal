@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<classpath>
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="spring-extender/src/main/java" />
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="spring-extender/src/main/resources" />
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="spring-extender/src/test/java" />
+	<classpathentry kind="src" path="/portal-master" />
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/junit.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/mockito.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-mockito.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/hibernate3.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/spring-beans.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/spring-context.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/spring-core.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/spring-jdbc.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/spring-orm.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/spring-transaction.jar" />
+	<classpathentry kind="lib" path="/portal-master/osgi/lib/common/core/osgi.core.jar" />
+	<classpathentry kind="lib" path="/portal-master/osgi/lib/common/portal/gemini-blueprint-core.jar" />
+	<classpathentry kind="lib" path="/portal-master/osgi/lib/common/portal/gemini-blueprint-extender.jar" />
+	<classpathentry kind="lib" path="/portal-master/osgi/lib/common/portal/gemini-blueprint-io.jar" />
+	<classpathentry kind="output" path="bin" />
+</classpath>

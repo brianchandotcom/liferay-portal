@@ -51,9 +51,13 @@ public class UserGroupIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {UserGroup.class.getName()};
 
+	public static final String[] DEFAULT_SELECTED_FIELD_NAMES =
+		{Field.COMPANY_ID, Field.UID, Field.USER_GROUP_ID};
+
 	public static final String PORTLET_ID = PortletKeys.USER_GROUPS_ADMIN;
 
 	public UserGroupIndexer() {
+		setDefaultSelectedFieldNames(DEFAULT_SELECTED_FIELD_NAMES);
 		setIndexerEnabled(PropsValues.USER_GROUPS_INDEXER_ENABLED);
 		setPermissionAware(true);
 		setStagingAware(false);

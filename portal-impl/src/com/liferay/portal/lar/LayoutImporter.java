@@ -412,8 +412,8 @@ public class LayoutImporter {
 		}
 
 		if (Validator.isNotNull(layoutSetPrototypeUuid) &&
-			!group.isLayoutPrototype() &&
-			!group.isLayoutSetPrototype()) {
+				!group.isLayoutPrototype() &&
+					!group.isLayoutSetPrototype()) {
 
 			layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 			layoutSet.setLayoutSetPrototypeLinkEnabled(

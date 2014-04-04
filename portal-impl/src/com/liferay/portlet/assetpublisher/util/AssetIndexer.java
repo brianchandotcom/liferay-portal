@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.Locale;
 

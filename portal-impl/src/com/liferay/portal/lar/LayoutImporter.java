@@ -411,10 +411,7 @@ public class LayoutImporter {
 				_headerElement.attributeValue("type-uuid"));
 		}
 
-		if (Validator.isNotNull(layoutSetPrototypeUuid) &&
-				!group.isLayoutPrototype() &&
-					!group.isLayoutSetPrototype()) {
-
+		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
 			layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 			layoutSet.setLayoutSetPrototypeLinkEnabled(
 				layoutSetPrototypeLinkEnabled);

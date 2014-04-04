@@ -33,10 +33,6 @@ import java.util.List;
  */
 public class AssetVocabularyUtil {
 
-	public static final String[] SELECTED_FIELD_NAMES = {
-		Field.COMPANY_ID, Field.GROUP_ID, Field.UID, Field.ASSET_VOCABULARY_ID
-	};
-
 	public static List<AssetVocabulary> getVocabularies(Hits hits)
 		throws PortalException, SystemException {
 

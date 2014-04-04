@@ -14,10 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.antivirus;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import java.io.File;
-import java.io.IOException;
 
 /**
  * @author Michael C. Han
@@ -25,17 +22,15 @@ import java.io.IOException;
 public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 
 	@Override
-	public void scan(File file)
-		throws AntivirusScannerException, SystemException {
-
-		ProcessBuilder processBuilder = new ProcessBuilder(
-			"clamscan", "--stdout", "--no-summary", file.getAbsolutePath());
-
-		processBuilder.redirectErrorStream(true);
-
+	public void scan(File file) throws AntivirusScannerException {
 		Process process = null;
 
 		try {
+			ProcessBuilder processBuilder = new ProcessBuilder(
+				"clamscan", "--stdout", "--no-summary", file.getAbsolutePath());
+
+			processBuilder.redirectErrorStream(true);
+
 			process = processBuilder.start();
 
 			process.waitFor();
@@ -51,11 +46,9 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 					AntivirusScannerException.EXECUTION_FAILURE);
 			}
 		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to scan file", ioe);
-		}
-		catch (InterruptedException ie) {
-			throw new SystemException("Unable to scan file", ie);
+		catch (Exception e) {
+			throw new AntivirusScannerException(
+				AntivirusScannerException.EXECUTION_FAILURE);
 		}
 		finally {
 			if (process != null) {

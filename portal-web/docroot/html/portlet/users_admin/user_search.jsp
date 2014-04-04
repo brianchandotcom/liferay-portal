@@ -31,12 +31,12 @@ UserDisplayTerms displayTerms = (UserDisplayTerms)searchContainer.getDisplayTerm
 	<%@ include file="/html/portlet/directory/user_search_user_name.jspf" %>
 
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= displayTerms.SCREEN_NAME %>" size="20" value="<%= displayTerms.getScreenName() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.SCREEN_NAME %>" size="20" value="<%= displayTerms.getScreenName() %>" />
 
-		<aui:input inlineField="<%= true %>" name="<%= displayTerms.EMAIL_ADDRESS %>" size="20" value="<%= displayTerms.getEmailAddress() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.EMAIL_ADDRESS %>" size="20" value="<%= displayTerms.getEmailAddress() %>" />
 
 		<c:if test="<%= showActiveUserSelect %>">
-			<aui:select inlineField="<%= true %>" name="<%= displayTerms.STATUS %>" value="<%= displayTerms.getStatus() %>">
+			<aui:select inlineField="<%= true %>" name="<%= UserDisplayTerms.STATUS %>" value="<%= displayTerms.getStatus() %>">
 				<aui:option label="any-status" value="<%= WorkflowConstants.STATUS_ANY %>" />
 				<aui:option label="active" value="<%= WorkflowConstants.STATUS_APPROVED %>" />
 				<aui:option label="inactive" value="<%= WorkflowConstants.STATUS_INACTIVE %>" />

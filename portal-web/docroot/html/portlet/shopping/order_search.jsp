@@ -24,9 +24,9 @@ OrderDisplayTerms displayTerms = (OrderDisplayTerms)searchContainer.getDisplayTe
 
 <aui:fieldset column="<%= true %>">
 	<aui:col width="<%= 33 %>">
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= displayTerms.NUMBER %>" size="20" type="text" value="<%= displayTerms.getNumber() %>" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= OrderDisplayTerms.NUMBER %>" size="20" type="text" value="<%= displayTerms.getNumber() %>" />
 
-		<aui:select label="" name="<%= displayTerms.AND_OPERATOR %>" title="and-or-operator">
+		<aui:select label="" name="<%= OrderDisplayTerms.AND_OPERATOR %>" title="and-or-operator">
 			<aui:option label="and" selected="<%= displayTerms.isAndOperator() %>" value="1" />
 			<aui:option label="or" selected="<%= !displayTerms.isAndOperator() %>" value="0" />
 		</aui:select>
@@ -37,7 +37,7 @@ OrderDisplayTerms displayTerms = (OrderDisplayTerms)searchContainer.getDisplayTe
 	</aui:col>
 
 	<aui:col width="<%= 33 %>">
-		<aui:select name="<%= displayTerms.STATUS %>" showEmptyOption="<%= true %>">
+		<aui:select name="<%= OrderDisplayTerms.STATUS %>" showEmptyOption="<%= true %>">
 
 			<%
 			for (int i = 0; i < ShoppingOrderConstants.STATUSES.length; i++) {
@@ -51,7 +51,7 @@ OrderDisplayTerms displayTerms = (OrderDisplayTerms)searchContainer.getDisplayTe
 
 		</aui:select>
 
-		<aui:input name="<%= displayTerms.EMAIL_ADDRESS %>" size="20" type="text" value="<%= displayTerms.getEmailAddress() %>" />
+		<aui:input name="<%= OrderDisplayTerms.EMAIL_ADDRESS %>" size="20" type="text" value="<%= displayTerms.getEmailAddress() %>" />
 	</aui:col>
 </aui:fieldset>
 

@@ -28,8 +28,8 @@ RecordSetDisplayTerms displayTerms = new RecordSetDisplayTerms(renderRequest);
 >
 
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= displayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= RecordSetDisplayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
 
-		<aui:input inlineField="<%= true %>" name="<%= displayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= RecordSetDisplayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>

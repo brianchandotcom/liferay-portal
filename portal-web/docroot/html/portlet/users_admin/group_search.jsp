@@ -29,8 +29,8 @@ GroupDisplayTerms displayTerms = (GroupDisplayTerms)searchContainer.getDisplayTe
 	id="toggle_id_users_admin_group_search"
 >
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= displayTerms.NAME %>" size="30" value="<%= displayTerms.getName() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= GroupDisplayTerms.NAME %>" size="30" value="<%= displayTerms.getName() %>" />
 
-		<aui:input inlineField="<%= true %>" name="<%= displayTerms.DESCRIPTION %>" size="30" value="<%= displayTerms.getDescription() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= GroupDisplayTerms.DESCRIPTION %>" size="30" value="<%= displayTerms.getDescription() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>

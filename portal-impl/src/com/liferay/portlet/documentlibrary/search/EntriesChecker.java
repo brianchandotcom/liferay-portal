@@ -70,7 +70,17 @@ public class EntriesChecker extends RowChecker {
 	@Override
 	public String getAllRowsCheckBox() {
 		if (_documentLibraryDisplayPortlet) {
-			return getAllRowsCheckbox(getAllRowIds(), getEntryRowIds());
+			return getAllRowsCheckbox(null, getAllRowIds(), getEntryRowIds());
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getAllRowsCheckBox(HttpServletRequest request) {
+		if (_documentLibraryDisplayPortlet) {
+			return getAllRowsCheckbox(
+				request, getAllRowIds(), getEntryRowIds());
 		}
 
 		return null;

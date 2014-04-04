@@ -39,7 +39,7 @@ if (end > total) {
 
 if (rowChecker != null) {
 	if (headerNames != null) {
-		headerNames.add(0, rowChecker.getAllRowsCheckBox());
+		headerNames.add(0, rowChecker.getAllRowsCheckBox(request));
 
 		normalizedHeaderNames.add(0, "rowChecker");
 	}

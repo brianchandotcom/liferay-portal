@@ -61,7 +61,12 @@ public class RowChecker {
 	}
 
 	public String getAllRowsCheckBox() {
-		return getAllRowsCheckbox(_allRowIds, StringUtil.quote(_rowIds));
+		return getAllRowsCheckBox(null);
+	}
+
+	public String getAllRowsCheckBox(HttpServletRequest request) {
+		return getAllRowsCheckbox(
+			request, _allRowIds, StringUtil.quote(_rowIds));
 	}
 
 	public String getAllRowsId() {
@@ -150,14 +155,38 @@ public class RowChecker {
 		_valign = valign;
 	}
 
-	protected String getAllRowsCheckbox(String name, String checkBoxRowIds) {
+	protected String getAllRowsCheckbox(
+		HttpServletRequest request, String name, String checkBoxRowIds) {
+
 		if (Validator.isNull(name)) {
 			return StringPool.BLANK;
 		}
 
-		StringBuilder sb = new StringBuilder(9);
+		StringBuilder sb = new StringBuilder(20);
 
-		sb.append("<input name=\"");
+		String id = null;
+
+		if (request != null) {
+			id = PortalUtil.generateRandomKey(request, name);
+
+			sb.append("<label class=\"hide-accessible\" for=\"");
+			sb.append(_portletResponse.getNamespace());
+			sb.append(id);
+			sb.append("\">");
+			sb.append(LanguageUtil.get(request.getLocale(), "select-all"));
+			sb.append("</label>");
+		}
+
+		sb.append("<input ");
+
+		if (id != null) {
+			sb.append("id=\"");
+			sb.append(_portletResponse.getNamespace());
+			sb.append(id);
+			sb.append("\" ");
+		}
+
+		sb.append("name=\"");
 		sb.append(name);
 		sb.append("\" type=\"checkbox\" ");
 		sb.append("onClick=\"Liferay.Util.checkAll(");

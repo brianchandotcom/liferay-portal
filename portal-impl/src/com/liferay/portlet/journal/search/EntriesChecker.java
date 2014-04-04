@@ -60,6 +60,11 @@ public class EntriesChecker extends RowChecker {
 	}
 
 	@Override
+	public String getAllRowsCheckBox(HttpServletRequest request) {
+		return null;
+	}
+
+	@Override
 	public String getRowCheckBox(
 		HttpServletRequest request, boolean checked, boolean disabled,
 		String primaryKey) {

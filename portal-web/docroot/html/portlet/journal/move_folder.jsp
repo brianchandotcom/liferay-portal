@@ -97,8 +97,9 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", J
 				{
 					dialog: {
 						constrain: true,
+						destroyOnHide: true,
 						modal: true,
-						width: 680
+						width: 1024
 					},
 					id: '<portlet:namespace />selectFolder',
 					title: '<liferay-ui:message arguments="folder" key="select-x" />',

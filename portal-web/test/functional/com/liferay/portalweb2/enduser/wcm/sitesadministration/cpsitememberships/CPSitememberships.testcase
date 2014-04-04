@@ -551,7 +551,7 @@
 			<var name="siteScopeName" value="${orgName1}" />
 		</execute>
 
-		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_LABEL" value1="1 User" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="ORGANIZATION_TABLE_LABEL" value1="1 Organization" />
 
 		<execute macro="Site#viewMemberOrganizationCP">
 			<var name="orgName" value="${orgName1}" />

@@ -169,6 +169,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void makeVisible(String locator);
 
+	public void mouseRelease();
+
 	public void paste(String locator);
 
 	public void pause(String waitTime) throws Exception;

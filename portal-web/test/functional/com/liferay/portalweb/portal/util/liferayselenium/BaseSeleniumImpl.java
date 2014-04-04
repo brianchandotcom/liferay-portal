@@ -455,6 +455,10 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void mouseRelease() {
+	}
+
+	@Override
 	public void paste(String location) {
 		super.type(location, _clipBoard);
 	}

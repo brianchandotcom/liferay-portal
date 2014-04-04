@@ -32,6 +32,8 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.internal.WrapsDriver;
 
 /**
@@ -581,6 +583,23 @@ public abstract class BaseWebDriverImpl
 		WebElement locatorWebElement = getWebElement(locator);
 
 		javascriptExecutor.executeScript(sb.toString(), locatorWebElement);
+	}
+
+	@Override
+	public void mouseRelease() {
+		WebElement bodyWebElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		Actions actions = new Actions(webDriver);
+
+		actions.release();
+
+		Action action = actions.build();
+
+		action.perform();
 	}
 
 	@Override

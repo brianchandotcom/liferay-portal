@@ -1,5 +1,11 @@
 apply plugin: "java"
 
+allprojects {
+	repositories {
+		mavenCentral()
+	}
+}
+
 ext.liferayProjectDir = project.hasProperty('singleModule') ? "${rootDir}/../.." : "${rootDir}/../../.."
 
 sourceCompatibility = 1.6

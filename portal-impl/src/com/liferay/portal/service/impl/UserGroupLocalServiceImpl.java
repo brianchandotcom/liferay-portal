@@ -50,7 +50,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.UserGroupLocalServiceBaseImpl;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.io.File;
@@ -768,8 +767,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			companyId, name, description, params, andSearch, start, end, sort);
 
 		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(
-				searchContext, UsersAdmin.USER_GROUP_SELECTED_FIELD_NAMES);
+			Hits hits = indexer.search(searchContext);
 
 			List<UserGroup> userGroups = UsersAdminUtil.getUserGroups(hits);
 

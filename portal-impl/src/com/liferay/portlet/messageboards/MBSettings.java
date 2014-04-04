@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards;
 
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
 import com.liferay.portal.settings.LocalizedValuesMap;
@@ -46,16 +45,33 @@ public class MBSettings extends BaseServiceSettings {
 		return typedSettings.getLocalizedValuesMap("emailMessageAddedBody");
 	}
 
+	public String getEmailMessageAddedBodyXml() {
+		return getEmailMessageAddedBody().getLocalizationXml();
+	}
+
 	public LocalizedValuesMap getEmailMessageAddedSubject() {
 		return typedSettings.getLocalizedValuesMap("emailMessageAddedSubject");
+	}
+
+	public String getEmailMessageAddedSubjectXml() {
+		return getEmailMessageAddedSubject().getLocalizationXml();
 	}
 
 	public LocalizedValuesMap getEmailMessageUpdatedBody() {
 		return typedSettings.getLocalizedValuesMap("emailMessageUpdatedBody");
 	}
 
+	public String getEmailMessageUpdatedBodyXml() {
+		return getEmailMessageUpdatedBody().getLocalizationXml();
+	}
+
 	public LocalizedValuesMap getEmailMessageUpdatedSubject() {
-		return typedSettings.getLocalizedValuesMap("emailMessageUpdatedSubject");
+		return typedSettings.getLocalizedValuesMap(
+			"emailMessageUpdatedSubject");
+	}
+
+	public String getEmailMessageUpdatedSubjectXml() {
+		return getEmailMessageUpdatedSubject().getLocalizationXml();
 	}
 
 	public String getMessageFormat() {

@@ -598,6 +598,16 @@ public class AssetPublisherDisplayContext {
 				return _enablePermissions;
 			}
 
+			if ((PropsValues.HIGHEST_RATED_ASSETS_SHOW_PERMISSIONS_ENABLED &&
+					portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS)) ||
+				(PropsValues.MOST_VIEWED_ASSETS_SHOW_PERMISSIONS_ENABLED &&
+					portletName.equals(PortletKeys.MOST_VIEWED_ASSETS))) {
+
+				_enablePermissions = true;
+
+				return _enablePermissions;
+			}
+
 			_enablePermissions = GetterUtil.getBoolean(
 				_portletPreferences.getValue("enablePermissions", null));
 		}

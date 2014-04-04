@@ -169,7 +169,6 @@
 				<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName}" />
 				<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-				<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_ADVANCED" />
 				<execute action="CPUsersandorganizationsViewusers#type" locator-key1="ADVANCED_SEARCH_FIRST_NAME_FIELD" value1="${userFirstName}1" />
 				<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 				<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />
@@ -186,7 +185,6 @@
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName}" />
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-					<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_ADVANCED" />
 					<execute action="CPUsersandorganizationsViewusers#type" locator-key1="ADVANCED_SEARCH_MIDDLE_NAME_FIELD" value1="${userMiddleName}1" />
 					<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />
@@ -204,7 +202,6 @@
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName}" />
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-					<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_ADVANCED" />
 					<execute action="CPUsersandorganizationsViewusers#type" locator-key1="ADVANCED_SEARCH_LAST_NAME_FIELD" value1="${userLastName}1" />
 					<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />
@@ -222,7 +219,6 @@
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName}" />
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-					<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_ADVANCED" />
 					<execute action="CPUsersandorganizationsViewusers#type" locator-key1="ADVANCED_SEARCH_SCREEN_NAME_FIELD" value1="${userScreenName}1" />
 					<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />
@@ -240,7 +236,6 @@
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName}" />
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-					<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_ADVANCED" />
 					<execute action="CPUsersandorganizationsViewusers#type" locator-key1="ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}1" />
 					<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />

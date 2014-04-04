@@ -33,7 +33,7 @@ import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 import com.liferay.portlet.journal.util.JournalUtil;
-import com.liferay.portlet.trash.DuplicateEntryException;
+import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
@@ -48,23 +48,23 @@ import javax.portlet.PortletRequest;
 public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 
 	@Override
-	public void checkDuplicateEntry(
+	public void checkRestorableEntry(
 			long classPK, long containerModelId, String newName)
 		throws PortalException, SystemException {
 
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
 
-		checkDuplicateEntry(
+		checkRestorableEntry(
 			classPK, 0, containerModelId, article.getArticleId(), newName);
 	}
 
 	@Override
-	public void checkDuplicateTrashEntry(
+	public void checkRestorableEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
 		throws PortalException, SystemException {
 
-		checkDuplicateEntry(
+		checkRestorableEntry(
 			trashEntry.getClassPK(), trashEntry.getEntryId(), containerModelId,
 			trashEntry.getTypeSettingsProperty("title"), newName);
 	}
@@ -262,7 +262,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			articleResource);
 	}
 
-	protected void checkDuplicateEntry(
+	protected void checkRestorableEntry(
 			long classPK, long trashEntryId, long containerModelId,
 			String originalTitle, String newName)
 		throws PortalException, SystemException {
@@ -285,17 +285,18 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			(journalArticleResource.getPrimaryKey() !=
 				originalArticleResource.getPrimaryKey())) {
 
-			DuplicateEntryException dee = new DuplicateEntryException();
+			RestoreEntryException ree = new RestoreEntryException(
+				RestoreEntryException.DUPLICATE);
 
 			JournalArticle duplicateArticle =
 				JournalArticleLocalServiceUtil.getArticle(
 					originalArticleResource.getGroupId(), originalTitle);
 
-			dee.setDuplicateEntryId(duplicateArticle.getResourcePrimKey());
-			dee.setOldName(duplicateArticle.getArticleId());
-			dee.setTrashEntryId(trashEntryId);
+			ree.setDuplicateEntryId(duplicateArticle.getResourcePrimKey());
+			ree.setOldName(duplicateArticle.getArticleId());
+			ree.setTrashEntryId(trashEntryId);
 
-			throw dee;
+			throw ree;
 		}
 	}
 

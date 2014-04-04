@@ -34,7 +34,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.trash.DuplicateEntryException;
+import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
@@ -75,7 +75,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public void checkDuplicateTrashEntry(
+	public void checkRestorableEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
 		throws PortalException, SystemException {
 
@@ -97,17 +97,18 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 				containerModelId, originalTitle);
 
 		if (pageResource != null) {
-			DuplicateEntryException dee = new DuplicateEntryException();
+			RestoreEntryException ree = new RestoreEntryException(
+				RestoreEntryException.DUPLICATE);
 
 			WikiPage duplicatePage = WikiPageLocalServiceUtil.getLatestPage(
 				pageResource.getResourcePrimKey(), WorkflowConstants.STATUS_ANY,
 				false);
 
-			dee.setDuplicateEntryId(duplicatePage.getResourcePrimKey());
-			dee.setOldName(duplicatePage.getTitle());
-			dee.setTrashEntryId(trashEntry.getEntryId());
+			ree.setDuplicateEntryId(duplicatePage.getResourcePrimKey());
+			ree.setOldName(duplicatePage.getTitle());
+			ree.setTrashEntryId(trashEntry.getEntryId());
 
-			throw dee;
+			throw ree;
 		}
 	}
 

@@ -341,11 +341,11 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		TrashEntry trashEntry = trashHandler.getTrashEntry(classPK);
 
 		if (trashEntry.isTrashEntry(className, classPK)) {
-			trashHandler.checkDuplicateTrashEntry(
+			trashHandler.checkRestorableEntry(
 				trashEntry, destinationContainerModelId, StringPool.BLANK);
 		}
 		else {
-			trashHandler.checkDuplicateEntry(
+			trashHandler.checkRestorableEntry(
 				classPK, destinationContainerModelId, StringPool.BLANK);
 		}
 
@@ -430,7 +430,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 			trashHandler.deleteTrashEntry(overrideClassPK);
 
-			trashHandler.checkDuplicateTrashEntry(
+			trashHandler.checkRestorableEntry(
 				entry, TrashEntryConstants.DEFAULT_CONTAINER_ID, null);
 		}
 		else if (name != null) {
@@ -442,7 +442,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 					TrashPermissionException.RESTORE_RENAME);
 			}
 
-			trashHandler.checkDuplicateTrashEntry(
+			trashHandler.checkRestorableEntry(
 				entry, TrashEntryConstants.DEFAULT_CONTAINER_ID, name);
 
 			trashHandler.updateTitle(entry.getClassPK(), name);

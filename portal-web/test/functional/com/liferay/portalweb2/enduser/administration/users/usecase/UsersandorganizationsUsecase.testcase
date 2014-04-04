@@ -4,7 +4,14 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
 		<execute macro="User#tearDownCP" />
+
+		<execute macro="Role#tearDownCP" />
 
 		<execute macro="Site#tearDownCP" />
 
@@ -30,6 +37,155 @@
 
 		<execute action="Home#click" locator-key1="SCOPE_SELECTOR_MENULIST_ITEM" />
 		<execute action="Home#assertElementNotPresent" locator-key1="SITE_ADMINISTRATION_CONFIGURATION_SITE_SETTINGS" value1="Site Settings" />
+	</command>
+
+	<command name="ImpersonatingAdministratorandOwner" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Impersonating Role Name" />
+		</execute>
+
+		<execute macro="Role#editPermissionCmdCP">
+			<var name="define" value="true" />
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_ACCESS_IN_CONTROL_PANEL,CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_VIEW,CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_USER_IMPERSONATE,CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_USER_VIEW" />
+			<var name="roleName" value="Impersonating Role Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea3@liferay.com" />
+			<var name="userFirstName" value="userfn3" />
+			<var name="userLastName" value="userln3" />
+			<var name="userScreenName" value="usersn3" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Impersonating Role Name" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Administrator" />
+			<var name="userScreenName" value="usersn3" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
+		</execute>
+
+		<execute macro="Page#gotoCP" />
+
+		<execute macro="User#impersonateCP">
+			<var name="notAdmin" value="true" />
+			<var name="userScreenName" value="userfn2 userln2" />
+		</execute>
+
+		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Welcome - Liferay" />
+		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Liferay" />
+
+		<execute macro="Page#gotoCP" />
+
+		<execute macro="User#attemptImpersonateCP">
+			<var name="notAdmin" value="true" />
+			<var name="userScreenName" value="userfn3 userln3" />
+		</execute>
+
+		<execute macro="Page#gotoCP" />
+
+		<execute macro="User#attemptImpersonateCP">
+			<var name="notAdmin" value="true" />
+			<var name="userScreenName" value="test" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Administrator" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#impersonateCP">
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Welcome - Liferay" />
+		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Liferay" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#impersonateCP">
+			<var name="userScreenName" value="usersn3" />
+		</execute>
+
+		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Welcome - Liferay" />
+		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Liferay" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#impersonateCP">
+			<var name="userScreenName" value="test" />
+		</execute>
+
+		<execute action="CPUsersandorganizationsViewusers#close" locator1="title=Welcome - Liferay" />
+		<execute action="CPUsersandorganizationsViewusers#selectWindow" locator1="title=Users and Organizations - Liferay" />
 	</command>
 
 	<command name="MultipleUsersandOrganizations" priority="4">

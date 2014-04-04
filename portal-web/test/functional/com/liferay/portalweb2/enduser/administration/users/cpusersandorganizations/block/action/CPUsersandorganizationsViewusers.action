@@ -12,4 +12,10 @@
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
+
+	<command name="close">
+		<default>
+			<execute function="Close#closeWindow" />
+		</default>
+	</command>
 </definition>

@@ -106,6 +106,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_VIEW</td>
+	<td>//input[@value='125VIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_USER_IMPERSONATE</td>
+	<td>//input[@value='com.liferay.portal.model.UserIMPERSONATE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_USER_VIEW</td>
+	<td>//input[@value='com.liferay.portal.model.UserVIEW']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

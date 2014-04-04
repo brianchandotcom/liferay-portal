@@ -84,8 +84,6 @@
 	</command>
 
 	<command name="addSOSite">
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
 		<if>
 			<condition action="SOUserBar#isElementPresent" locator-key1="GO_TO_ADD_SITE_BUTTON" />
 			<then>
@@ -125,15 +123,36 @@
 		<execute action="SOUserBarAddSite#type" locator-key1="NAME_FIELD" value1="${siteName}" />
 		<execute action="SOUserBarAddSite#type" locator-key1="DESCRIPTION_FIELD" value1="${siteDescription}" />
 		<execute action="SOUserBarAddSite#click" locator-key1="NEXT_BUTTON" />
-		<execute action="SOUserBarAddSite#select" locator-key1="DEFAULT_PAGES_SELECT" value1="Default Social Office Site" />
 
-		<execute action="SOUserBarAddSite#check" locator-key1="HOME_CHECKBOX" />
-		<execute action="SOUserBarAddSite#check" locator-key1="CALENDAR_CHECKBOX" />
-		<execute action="SOUserBarAddSite#check" locator-key1="DOCUMENTS_CHECKBOX" />
-		<execute action="SOUserBarAddSite#check" locator-key1="FORUMS_CHECKBOX" />
-		<execute action="SOUserBarAddSite#check" locator-key1="BLOGS_CHECKBOX" />
-		<execute action="SOUserBarAddSite#check" locator-key1="WIKI_CHECKBOX" />
-		<execute action="SOUserBarAddSite#check" locator-key1="MEMBERS_CHECKBOX" />
+		<if>
+			<isset var="defaultPages" />
+			<then>
+				<execute action="SOUserBarAddSite#select" locator-key1="DEFAULT_PAGES_SELECT" value1="${defaultPages}" />
+
+				<if>
+					<equals arg1="$[defaultPages}" arg2="None" />
+					<then>
+						<execute action="SOUserBarAddSite#assertElementNotPresent" locator-key1="HOME_CHECKBOX" />
+						<execute action="SOUserBarAddSite#assertElementNotPresent" locator-key1="CALENDAR_CHECKBOX" />
+						<execute action="SOUserBarAddSite#assertElementNotPresent" locator-key1="DOCUMENTS_CHECKBOX" />
+						<execute action="SOUserBarAddSite#assertElementNotPresent" locator-key1="FORUMS_CHECKBOX" />
+						<execute action="SOUserBarAddSite#assertElementNotPresent" locator-key1="BLOGS_CHECKBOX" />
+						<execute action="SOUserBarAddSite#assertElementNotPresent" locator-key1="WIKI_CHECKBOX" />
+						<execute action="SOUserBarAddSite#assertElementNotPresent" locator-key1="MEMBERS_CHECKBOX" />
+					</then>
+				</if>
+			</then>
+			<else>
+				<execute action="SOUserBarAddSite#select" locator-key1="DEFAULT_PAGES_SELECT" value1="Default Social Office Site" />
+				<execute action="SOUserBarAddSite#check" locator-key1="HOME_CHECKBOX" />
+				<execute action="SOUserBarAddSite#check" locator-key1="CALENDAR_CHECKBOX" />
+				<execute action="SOUserBarAddSite#check" locator-key1="DOCUMENTS_CHECKBOX" />
+				<execute action="SOUserBarAddSite#check" locator-key1="FORUMS_CHECKBOX" />
+				<execute action="SOUserBarAddSite#check" locator-key1="BLOGS_CHECKBOX" />
+				<execute action="SOUserBarAddSite#check" locator-key1="WIKI_CHECKBOX" />
+				<execute action="SOUserBarAddSite#check" locator-key1="MEMBERS_CHECKBOX" />
+			</else>
+		</if>
 
 		<if>
 			<equals arg1="${siteType}" arg2="Private" />

@@ -38,8 +38,6 @@ if (article.getVersion() > JournalArticleConstants.VERSION_DEFAULT) {
 String articleImageURL = article.getArticleImageURL(themeDisplay);
 
 DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), article.getStructureId(), true);
-
-String type = ddmStructure.getName(locale);
 %>
 
 <liferay-ui:app-view-entry
@@ -67,7 +65,7 @@ String type = ddmStructure.getName(locale);
 	thumbnailSrc='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
 	title="<%= article.getTitle(locale) %>"
-	type="<%= type %>"
+	type="<%= ddmStructure.getName(locale) %>"
 	url="<%= tempRowURL.toString() %>"
 	version="<%= String.valueOf(article.getVersion()) %>"
 />

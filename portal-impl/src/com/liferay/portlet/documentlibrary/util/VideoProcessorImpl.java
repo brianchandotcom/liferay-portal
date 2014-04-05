@@ -316,13 +316,9 @@ public class VideoProcessorImpl
 			FileVersion fileVersion, File file, int height, int width)
 		throws Exception {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isInfoEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		String tempFileId = DLUtil.getTempFileId(
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
@@ -378,9 +374,15 @@ public class VideoProcessorImpl
 			storeThumbnailImages(fileVersion, thumbnailTempFile);
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Xuggler generated a thumbnail for " +
-						fileVersion.getTitle() + " in " + stopWatch);
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Xuggler generation of a thumbnail for ");
+				sb.append(fileVersion.getTitle());
+				sb.append(" took ");
+				sb.append(stopWatch.getTime());
+				sb.append(" ms");
+
+				_log.info(sb.toString());
 			}
 		}
 		catch (Exception e) {
@@ -498,13 +500,9 @@ public class VideoProcessorImpl
 			return;
 		}
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isInfoEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
 			ProcessCallable<String> processCallable =
@@ -544,9 +542,17 @@ public class VideoProcessorImpl
 			getPreviewFilePath(fileVersion, containerType), destinationFile);
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Xuggler generated a " + containerType + " preview video for " +
-					fileVersion.getTitle() + " in " + stopWatch);
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("Xuggler generation of a ");
+			sb.append(containerType);
+			sb.append(" preview video for ");
+			sb.append(fileVersion.getTitle());
+			sb.append(" took ");
+			sb.append(stopWatch.getTime());
+			sb.append(" ms");
+
+			_log.info(sb.toString());
 		}
 	}
 

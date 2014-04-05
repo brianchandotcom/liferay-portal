@@ -626,23 +626,27 @@ public class LuceneHelperImpl implements LuceneHelper {
 			return;
 		}
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Start loading Lucene index files for company " + companyId);
-
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
 		}
 
 		indexAccessor.loadIndex(inputStream);
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Finished loading index files for company " + companyId +
-					" in " + stopWatch.getTime() + " ms");
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Loading index files for {company=");
+			sb.append(companyId);
+			sb.append("} took ");
+			sb.append(stopWatch.getTime());
+			sb.append(" ms");
+
+			_log.info(sb.toString());
 		}
 	}
 

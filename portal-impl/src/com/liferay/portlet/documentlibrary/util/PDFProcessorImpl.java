@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
@@ -411,41 +412,46 @@ public class PDFProcessorImpl
 		throws Exception {
 
 		if (_isGeneratePreview(fileVersion)) {
-			StopWatch stopWatch = null;
+			StopWatch stopWatch = new StopWatch();
 
-			if (_log.isInfoEnabled()) {
-				stopWatch = new StopWatch();
-
-				stopWatch.start();
-			}
+			stopWatch.start();
 
 			_generateImagesGS(fileVersion, file, false);
 
 			if (_log.isInfoEnabled()) {
 				int previewFileCount = getPreviewFileCount(fileVersion);
 
-				_log.info(
-					"Ghostscript generated " + previewFileCount +
-						" preview pages for " + fileVersion.getTitle() +
-							" in " + stopWatch);
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("Ghostscript generation of ");
+				sb.append(previewFileCount);
+				sb.append(" preview pages for ");
+				sb.append(fileVersion.getTitle());
+				sb.append(" took ");
+				sb.append(stopWatch.getTime());
+				sb.append(" ms");
+
+				_log.info(sb.toString());
 			}
 		}
 
 		if (_isGenerateThumbnail(fileVersion)) {
-			StopWatch stopWatch = null;
+			StopWatch stopWatch = new StopWatch();
 
-			if (_log.isInfoEnabled()) {
-				stopWatch = new StopWatch();
-
-				stopWatch.start();
-			}
+			stopWatch.start();
 
 			_generateImagesGS(fileVersion, file, true);
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Ghostscript generated a thumbnail for " +
-						fileVersion.getTitle() + " in " + stopWatch);
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Ghostscript generation of a thumbnail for ");
+				sb.append(fileVersion.getTitle());
+				sb.append(" took ");
+				sb.append(stopWatch.getTime());
+				sb.append(" ms");
+
+				_log.info(sb.toString());
 			}
 		}
 	}

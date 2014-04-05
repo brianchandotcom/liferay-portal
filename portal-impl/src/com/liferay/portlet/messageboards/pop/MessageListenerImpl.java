@@ -124,13 +124,11 @@ public class MessageListenerImpl implements MessageListener {
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs = null;
 
 		try {
-			StopWatch stopWatch = null;
+			StopWatch stopWatch = new StopWatch();
+
+			stopWatch.start();
 
 			if (_log.isDebugEnabled()) {
-				stopWatch = new StopWatch();
-
-				stopWatch.start();
-
 				_log.debug("Deliver message from " + from + " to " + recipient);
 			}
 
@@ -233,7 +231,7 @@ public class MessageListenerImpl implements MessageListener {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Delivering message takes " + stopWatch.getTime() + " ms");
+					"Message delivery took " + stopWatch.getTime() + " ms");
 			}
 		}
 		catch (PrincipalException pe) {

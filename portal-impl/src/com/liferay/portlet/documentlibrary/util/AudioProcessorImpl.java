@@ -349,13 +349,9 @@ public class AudioProcessorImpl
 			return;
 		}
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isInfoEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		try {
 			if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
@@ -406,10 +402,17 @@ public class AudioProcessorImpl
 			getPreviewFilePath(fileVersion, containerType), destFile);
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Xuggler generated a " + containerType + " preview audio for " +
-					fileVersion.getFileVersionId() + " in " +
-						stopWatch.getTime() + "ms");
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("Xuggler generation for a ");
+			sb.append(containerType);
+			sb.append(" preview audio for ");
+			sb.append(fileVersion.getFileVersionId());
+			sb.append(" took ");
+			sb.append(stopWatch.getTime());
+			sb.append(" ms");
+
+			_log.info(sb.toString());
 		}
 	}
 

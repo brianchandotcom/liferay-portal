@@ -402,14 +402,12 @@ public class RuntimePageImpl implements RuntimePage {
 			List<PortletRenderer> portletRenderers = entry.getValue();
 
 			if (portletParallelRender && (portletRenderers.size() > 1)) {
-				StopWatch stopWatch = null;
+				StopWatch stopWatch = new StopWatch();
+
+				stopWatch.start();
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("Start parallel rendering");
-
-					stopWatch = new StopWatch();
-
-					stopWatch.start();
 				}
 
 				if (lock == null) {
@@ -437,22 +435,24 @@ public class RuntimePageImpl implements RuntimePage {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Finished parallel rendering in " +
-							stopWatch.getTime() + " ms");
+						"Parallel rendering took " + stopWatch.getTime() +
+							" ms");
 				}
 			}
 			else {
-				StopWatch stopWatch = null;
+				StopWatch portletStopWatch = new StopWatch();
+
+				StopWatch stopWatch = new StopWatch();
+
+				stopWatch.start();
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("Start serial rendering");
-
-					stopWatch = new StopWatch();
-
-					stopWatch.start();
 				}
 
 				for (PortletRenderer portletRenderer : portletRenderers) {
+					portletStopWatch.start();
+
 					Portlet portlet = portletRenderer.getPortlet();
 
 					contentsMap.put(
@@ -460,16 +460,23 @@ public class RuntimePageImpl implements RuntimePage {
 						portletRenderer.render(request, response));
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Serially rendered portlet " +
-								portlet.getPortletId() + " in " +
-									stopWatch.getTime() + " ms");
+						StringBundler sb = new StringBundler(5);
+
+						sb.append("Serially rendering portlet {portletId=");
+						sb.append(portlet.getPortletId());
+						sb.append("} took ");
+						sb.append(portletStopWatch.getTime());
+						sb.append(" ms");
+
+						_log.debug(sb.toString());
 					}
+
+					portletStopWatch.reset();
 				}
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Finished serial rendering in " + stopWatch.getTime() +
+						"Serial rendering took " + stopWatch.getTime() +
 							" ms");
 				}
 			}

@@ -308,13 +308,9 @@ public class InvokerPortletImpl implements InvokerPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		try {
 			invokeAction(actionRequest, actionResponse);
@@ -325,14 +321,15 @@ public class InvokerPortletImpl implements InvokerPortlet {
 		}
 
 		if (_log.isDebugEnabled()) {
-			if (stopWatch != null) {
-				_log.debug(
-					"processAction for " + _portletId + " takes " +
-						stopWatch.getTime() + " ms");
-			}
-			else {
-				_log.debug("processAction for " + _portletId + " is finished");
-			}
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("processAction for {portletId=");
+			sb.append(_portletId);
+			sb.append("} took ");
+			sb.append(stopWatch.getTime());
+			sb.append(" ms");
+
+			_log.debug(sb.toString());
 		}
 	}
 
@@ -341,20 +338,22 @@ public class InvokerPortletImpl implements InvokerPortlet {
 			EventRequest eventRequest, EventResponse eventResponse)
 		throws IOException, PortletException {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		invokeEvent(eventRequest, eventResponse);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"processEvent for " + _portletId + " takes " +
-					stopWatch.getTime() + " ms");
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("processEvent for {portletId=");
+			sb.append(_portletId);
+			sb.append("} took ");
+			sb.append(stopWatch.getTime());
+			sb.append(" ms");
+
+			_log.debug(sb.toString());
 		}
 	}
 
@@ -371,13 +370,9 @@ public class InvokerPortletImpl implements InvokerPortlet {
 			throw portletException;
 		}
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		String remoteUser = renderRequest.getRemoteUser();
 
@@ -447,9 +442,15 @@ public class InvokerPortletImpl implements InvokerPortlet {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"render for " + _portletId + " takes " + stopWatch.getTime() +
-					" ms");
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("render for {portletId=");
+			sb.append(_portletId);
+			sb.append("} took ");
+			sb.append(stopWatch.getTime());
+			sb.append(" ms");
+
+			_log.debug(sb.toString());
 		}
 	}
 
@@ -458,13 +459,9 @@ public class InvokerPortletImpl implements InvokerPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		try {
 			invokeResource(resourceRequest, resourceResponse);
@@ -475,9 +472,15 @@ public class InvokerPortletImpl implements InvokerPortlet {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"serveResource for " + _portletId + " takes " +
-					stopWatch.getTime() + " ms");
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("serveResource for {portletId=");
+			sb.append(_portletId);
+			sb.append("} took ");
+			sb.append(stopWatch.getTime());
+			sb.append(" ms");
+
+			_log.debug(sb.toString());
 		}
 	}
 

@@ -1387,13 +1387,9 @@ public class ServicePreAction extends Action {
 	public void run(HttpServletRequest request, HttpServletResponse response)
 		throws ActionException {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		try {
 			servicePre(request, response);
@@ -1403,7 +1399,7 @@ public class ServicePreAction extends Action {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Running takes " + stopWatch.getTime() + " ms");
+			_log.debug("Running took " + stopWatch.getTime() + " ms");
 		}
 	}
 

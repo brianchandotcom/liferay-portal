@@ -94,13 +94,9 @@ public class DynamicCSSUtil {
 			return content;
 		}
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		// Request will only be null when called by StripFilterTest
 
@@ -163,9 +159,15 @@ public class DynamicCSSUtil {
 				cacheResourceURLConnection.getInputStream());
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Loading SASS cache from " + cacheResourceURL.getPath() +
-						" takes " + stopWatch.getTime() + " ms");
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Loading SASS cache from {cacheResourceURLPath=");
+				sb.append(cacheResourceURL.getPath());
+				sb.append("} took ");
+				sb.append(stopWatch.getTime());
+				sb.append(" ms");
+
+				_log.debug(sb.toString());
 			}
 		}
 		else {
@@ -207,9 +209,15 @@ public class DynamicCSSUtil {
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Parsing SASS for " + resourcePath + " takes " +
-						stopWatch.getTime() + " ms");
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Parsing SASS for {resourcePath=");
+				sb.append(resourcePath);
+				sb.append("} took ");
+				sb.append(stopWatch.getTime());
+				sb.append(" ms");
+
+				_log.debug(sb.toString());
 			}
 		}
 

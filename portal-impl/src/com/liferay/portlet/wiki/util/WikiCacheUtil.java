@@ -51,13 +51,9 @@ public class WikiCacheUtil {
 		long nodeId, String title, PortletURL viewPageURL,
 		PortletURL editPageURL, String attachmentURLPrefix) {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		String key = _encodeKey(nodeId, title, viewPageURL.toString());
 
@@ -71,10 +67,21 @@ public class WikiCacheUtil {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"getDisplay for {" + nodeId + ", " + title + ", " +
-					viewPageURL + ", " + editPageURL + "} takes " +
-						stopWatch.getTime() + " ms");
+			StringBundler sb = new StringBundler(11);
+
+			sb.append("getDisplay for {nodeId=");
+			sb.append(nodeId);
+			sb.append(", title=");
+			sb.append(title);
+			sb.append(", viewPageURL=");
+			sb.append(viewPageURL);
+			sb.append(", editPageURL=");
+			sb.append(editPageURL);
+			sb.append("} took ");
+			sb.append(stopWatch.getTime());
+			sb.append(" ms");
+
+			_log.debug(sb.toString());
 		}
 
 		return pageDisplay;

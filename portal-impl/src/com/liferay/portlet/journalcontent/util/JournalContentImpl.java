@@ -123,13 +123,9 @@ public class JournalContentImpl implements JournalContent {
 		String viewMode, String languageId, int page,
 		PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay) {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		articleId = StringUtil.toUpperCase(GetterUtil.getString(articleId));
 		ddmTemplateKey = StringUtil.toUpperCase(
@@ -183,10 +179,25 @@ public class JournalContentImpl implements JournalContent {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"getDisplay for {" + groupId + ", " + articleId + ", " +
-					ddmTemplateKey + ", " + viewMode + ", " + languageId +
-						", " + page + "} takes " + stopWatch.getTime() + " ms");
+			StringBundler sb = new StringBundler(15);
+
+			sb.append("getDisplay for {groupId=");
+			sb.append(groupId);
+			sb.append(", articleId=");
+			sb.append(articleId);
+			sb.append(", ddmTemplateKey=");
+			sb.append(ddmTemplateKey);
+			sb.append(", viewMode=");
+			sb.append(viewMode);
+			sb.append(", languageId=");
+			sb.append(languageId);
+			sb.append(", page=");
+			sb.append(page);
+			sb.append("} took ");
+			sb.append(stopWatch.getTime());
+			sb.append(" ms");
+
+			_log.debug(sb.toString());
 		}
 
 		return articleDisplay;

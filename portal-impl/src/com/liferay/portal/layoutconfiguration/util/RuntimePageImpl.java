@@ -401,11 +401,11 @@ public class RuntimePageImpl implements RuntimePage {
 
 			List<PortletRenderer> portletRenderers = entry.getValue();
 
-			StopWatch stopWatch = new StopWatch();
-
-			stopWatch.start();
-
 			if (portletParallelRender && (portletRenderers.size() > 1)) {
+				StopWatch stopWatch = new StopWatch();
+
+				stopWatch.start();
+
 				if (_log.isDebugEnabled()) {
 					_log.debug("Start parallel rendering");
 				}
@@ -441,6 +441,10 @@ public class RuntimePageImpl implements RuntimePage {
 			}
 			else {
 				StopWatch portletStopWatch = new StopWatch();
+
+				StopWatch stopWatch = new StopWatch();
+
+				stopWatch.start();
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("Start serial rendering");

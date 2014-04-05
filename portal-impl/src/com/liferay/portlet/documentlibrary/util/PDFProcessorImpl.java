@@ -429,6 +429,7 @@ public class PDFProcessorImpl
 				sb.append(fileVersion.getTitle());
 				sb.append(" took ");
 				sb.append(stopWatch.getTime());
+				sb.append(" ms");
 
 				_log.info(sb.toString());
 			}
@@ -442,10 +443,15 @@ public class PDFProcessorImpl
 			_generateImagesGS(fileVersion, file, true);
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Ghostscript generation of a thumbnail for " +
-						fileVersion.getTitle() + " took " +
-							stopWatch.getTime());
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Ghostscript generation of a thumbnail for ");
+				sb.append(fileVersion.getTitle());
+				sb.append(" took ");
+				sb.append(stopWatch.getTime());
+				sb.append(" ms");
+
+				_log.info(sb.toString());
 			}
 		}
 	}

@@ -374,10 +374,15 @@ public class VideoProcessorImpl
 			storeThumbnailImages(fileVersion, thumbnailTempFile);
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Xuggler generation of a thumbnail for " +
-						fileVersion.getTitle() + " took " +
-							stopWatch.getTime());
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Xuggler generation of a thumbnail for ");
+				sb.append(fileVersion.getTitle());
+				sb.append(" took ");
+				sb.append(stopWatch.getTime());
+				sb.append(" ms");
+
+				_log.info(sb.toString());
 			}
 		}
 		catch (Exception e) {
@@ -537,7 +542,7 @@ public class VideoProcessorImpl
 			getPreviewFilePath(fileVersion, containerType), destinationFile);
 
 		if (_log.isInfoEnabled()) {
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(7);
 
 			sb.append("Xuggler generation of a ");
 			sb.append(containerType);
@@ -545,6 +550,7 @@ public class VideoProcessorImpl
 			sb.append(fileVersion.getTitle());
 			sb.append(" took ");
 			sb.append(stopWatch.getTime());
+			sb.append(" ms");
 
 			_log.info(sb.toString());
 		}

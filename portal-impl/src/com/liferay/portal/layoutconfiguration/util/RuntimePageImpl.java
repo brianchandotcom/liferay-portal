@@ -440,11 +440,15 @@ public class RuntimePageImpl implements RuntimePage {
 				}
 			}
 			else {
+				StopWatch portletStopWatch = new StopWatch();
+
 				if (_log.isDebugEnabled()) {
 					_log.debug("Start serial rendering");
 				}
 
 				for (PortletRenderer portletRenderer : portletRenderers) {
+					portletStopWatch.start();
+
 					Portlet portlet = portletRenderer.getPortlet();
 
 					contentsMap.put(
@@ -457,11 +461,13 @@ public class RuntimePageImpl implements RuntimePage {
 						sb.append("Serially rendering portlet {portletId=");
 						sb.append(portlet.getPortletId());
 						sb.append("} took ");
-						sb.append(stopWatch.getTime());
+						sb.append(portletStopWatch.getTime());
 						sb.append(" ms");
 
 						_log.debug(sb.toString());
 					}
+
+					portletStopWatch.reset();
 				}
 
 				if (_log.isDebugEnabled()) {

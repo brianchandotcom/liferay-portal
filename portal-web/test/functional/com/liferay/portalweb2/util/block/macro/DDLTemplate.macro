@@ -24,6 +24,13 @@
 		</if>
 
 		<if>
+			<isset var="ddlDisplayTemplateScript" />
+			<then>
+				<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#type" locator-key1="SCRIPT_CONTENT_FIELD" value1="${ddlDisplayTemplateScript}" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="ddlDisplayTemplateScriptFile" />
 			<then>
 				<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#uploadCommonFile" locator-key1="SCRIPT_FILE_FIELD" value1="${ddlDisplayTemplateScriptFile}" />

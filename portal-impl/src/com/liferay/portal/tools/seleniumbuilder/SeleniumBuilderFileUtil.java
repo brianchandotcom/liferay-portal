@@ -564,6 +564,12 @@ public class SeleniumBuilderFileUtil {
 				prefix + "Description '" + string1 +
 					"' must title convention in " + suffix);
 		}
+		else if (errorCode == 3001) {
+			throw new IllegalArgumentException(
+				prefix + "The property '" + string1 +
+					"' has an invalid component name '" + string2 + "' in " +
+						suffix);
+		}
 		else {
 			throw new IllegalArgumentException(prefix + suffix);
 		}
@@ -1696,6 +1702,34 @@ public class SeleniumBuilderFileUtil {
 			}
 			else {
 				throwValidationException(1002, fileName, element, elementName);
+			}
+		}
+
+		elements = getAllChildElements(rootElement, "property");
+
+		for (Element element : elements) {
+			String name = element.attributeValue("name");
+			String value = element.attributeValue("value");
+
+			if (name.equals("testray.component.names")) {
+				List<String> testrayComponentNames = ListUtil.fromArray(
+					StringUtil.split(value));
+
+				for (String testrayComponentName : testrayComponentNames) {
+					if (!_testrayAvailableComponentNames.contains(
+							testrayComponentName)) {
+
+						throwValidationException(
+							3001, fileName, element, name,
+							testrayComponentName);
+					}
+				}
+			}
+			else if (name.equals("testray.main.component.name")) {
+				if (!_testrayAvailableComponentNames.contains(value)) {
+					throwValidationException(
+						3001, fileName, element, name, value);
+				}
 			}
 		}
 	}

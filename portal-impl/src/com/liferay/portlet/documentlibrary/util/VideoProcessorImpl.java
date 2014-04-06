@@ -376,7 +376,8 @@ public class VideoProcessorImpl
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Xuggler generated a thumbnail for " +
-						fileVersion.getTitle() + " in " + stopWatch);
+						fileVersion.getTitle() + " in " + stopWatch.getTime() +
+							" ms");
 			}
 		}
 		catch (Exception e) {
@@ -538,7 +539,8 @@ public class VideoProcessorImpl
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Xuggler generated a " + containerType + " preview video for " +
-					fileVersion.getTitle() + " in " + stopWatch);
+					fileVersion.getTitle() + " in " + stopWatch.getTime() +
+						" ms");
 		}
 	}
 

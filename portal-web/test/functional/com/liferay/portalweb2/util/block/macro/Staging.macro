@@ -389,6 +389,17 @@
 		<execute action="Home#refresh" />
 	</command>
 
+	<command name="publishToLiveNowViaPortletCP">
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_EXPORT_IMPORT" />
+
+		<execute action="BasePortletStaging#selectFrame" locator-key1="EXPORT_IMPORT_STAGING_IFRAME" />
+		<execute action="BasePortletStaging#assertClick" locator-key1="STAGING_NAVIGATION" value1="Staging" />
+		<execute action="BasePortletStaging#assertClick" locator-key1="STAGING_PUBLISH_TO_LIVE_BUTTON" value1="Publish to Live" />
+		<execute action="BasePortletStaging#confirm" locator-key1="STAGING_CONFIRMATION" value1="Are you sure you want to publish to live and update the existing portlet data?" />
+		<execute action="BasePortletStaging#selectFrameTop" />
+	</command>
+
 	<command name="redoStagingPageVersioningPG">
 		<if>
 			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
@@ -598,6 +609,19 @@
 		</if>
 	</command>
 
+	<command name="viewNoPublishContentCountViaPortletStagingCP">
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_EXPORT_IMPORT" />
+
+		<execute action="BasePortletStaging#selectFrame" locator-key1="EXPORT_IMPORT_STAGING_IFRAME" />
+		<execute action="BasePortletStaging#assertClick" locator-key1="STAGING_NAVIGATION" value1="Staging" />
+		<execute action="BasePortletStaging#assertElementNotPresent" locator-key1="STAGING_CONTENT_COUNT" />
+		<execute action="BasePortletStaging#assertElementNotPresent" locator-key1="STAGING_CONTENT_INFO" />
+		<execute action="BasePortletStaging#assertTextEquals" locator-key1="STAGING_DATE_RANGE" value1="${stagingDateRange}" />
+
+		<execute action="BasePortletStaging#selectFrameTop" />
+	</command>
+
 	<command name="viewPageVariationPG">
 		<if>
 			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
@@ -609,6 +633,18 @@
 		<var name="key_pageVariationName" value="${pageVariationName}" />
 
 		<execute action="PGStaging#assertTextEquals" locator-key1="PAGE_VARIATION" value1="${pageVariationName}" />
+	</command>
+
+	<command name="viewPublishContentCountViaPortletStagingCP">
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_EXPORT_IMPORT" />
+
+		<execute action="BasePortletStaging#selectFrame" locator-key1="EXPORT_IMPORT_STAGING_IFRAME" />
+		<execute action="BasePortletStaging#assertClick" locator-key1="STAGING_NAVIGATION" value1="Staging" />
+		<execute action="BasePortletStaging#assertTextEquals" locator-key1="STAGING_CONTENT_COUNT" value1="${contentCount}" />
+		<execute action="BasePortletStaging#assertTextEquals" locator-key1="STAGING_CONTENT_INFO" value1="${contentInformation}" />
+		<execute action="BasePortletStaging#assertTextEquals" locator-key1="STAGING_DATE_RANGE" value1="${stagingDateRange}" />
+		<execute action="BasePortletStaging#selectFrameTop" />
 	</command>
 
 	<command name="viewSitePagesVariationPG">

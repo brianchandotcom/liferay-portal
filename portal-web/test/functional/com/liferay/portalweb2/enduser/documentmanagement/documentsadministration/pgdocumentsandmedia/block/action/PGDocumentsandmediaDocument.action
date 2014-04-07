@@ -13,5 +13,9 @@
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+
+		<case comparator="startsWith" locator-key1="MARKETING_">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 </definition>

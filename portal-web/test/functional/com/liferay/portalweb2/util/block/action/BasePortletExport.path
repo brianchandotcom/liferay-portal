@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>BaseExportLAR</title>
+<title>BasePortletExport</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">BaseExportLAR</td></tr>
+<tr><td rowspan="1" colspan="3">BasePortletExport</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>BaseExportLAR</td>
+	<td>BasePortletExport</td>
 </tr>
 <tr>
 	<td></td>
@@ -19,13 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXPORT_IMPORT_IFRAME</td>
-	<td>//iframe[contains(@id,'_configurationIframeDialog_iframe_')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
+	<td>EXPORT_IFRAME</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,11 +47,6 @@
 <tr>
 	<td>NAVIGATION_EXPORT</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Export')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_IMPORT</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>

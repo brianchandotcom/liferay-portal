@@ -963,6 +963,91 @@
 		</execute>
 	</command>
 
+	<command name="RestoreDMDocumentFromFolderCP" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMFolder#addCP">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMFolder#gotoCP">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description 1" />
+			<var name="dmDocumentTitle" value="DM Document Title 1" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMFolder#gotoCP">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description 2" />
+			<var name="dmDocumentTitle" value="DM Document Title 2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMFolder#gotoCP">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description 3" />
+			<var name="dmDocumentTitle" value="DM Document Title 3" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMFolder#moveToRecycleBinCP">
+			<var name="assetType" value="Documents Folder" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="RecycleBin#restoreContentFromFolderCP">
+			<var name="assetName" value="DM Folder Name" />
+			<var name="assetRestoreLocation" value="Home" />
+			<var name="assetType" value="Documents Folder" />
+			<var name="assetType2" value="Document" />
+			<var name="documentName" value="DM Document Title 2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentTitle" value="DM Document Title 2" />
+		</execute>
+	</command>
+
 	<command name="RestoreMessageboardsThreadViaRBCP" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
@@ -1048,6 +1133,231 @@
 			<var name="threadSubject" value="MB Subject" />
 			<var name="userName" value="Test Test" />
 			<var name="userName2" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="RestoreWebContentFromFolderCP" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#addCP">
+			<var name="folderDescription" value="WC Folder Description" />
+			<var name="folderName" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name" />
+			<var name="webContentTitle" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#moveToRecycleBinCP">
+			<var name="folderName" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="RecycleBin#restoreContentFromFolderCP">
+			<var name="assetName" value="WC Folder Name" />
+			<var name="assetRestoreLocation" value="Home" />
+			<var name="assetType" value="Web Content Folder" />
+			<var name="assetType2" value="Web Content Article" />
+			<var name="documentName" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+	</command>
+
+	<command name="RestoreWebContentWithArticleVersions" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#addCP">
+			<var name="folderDescription" value="WC Folder Description" />
+			<var name="folderName" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name" />
+			<var name="webContentTitle" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name" />
+			<var name="webContentTitle" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="WebContent#editCP">
+			<var name="webContentContentEdit" value="Web Content Content Edit 1" />
+			<var name="webContentTitle" value="Web Content Title" />
+			<var name="webContentTitleEdit" value="Web Content Title Edit 1" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name" />
+			<var name="webContentTitle" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="WebContent#editCP">
+			<var name="webContentContentEdit" value="Web Content Content Edit 2" />
+			<var name="webContentTitle" value="Web Content Title Edit 1" />
+			<var name="webContentTitleEdit" value="Web Content Title Edit 2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name" />
+			<var name="webContentTitle" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="WebContent#editCP">
+			<var name="webContentContentEdit" value="Web Content Content Edit 3" />
+			<var name="webContentTitle" value="Web Content Title Edit 2" />
+			<var name="webContentTitleEdit" value="Web Content Title Edit 3" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name" />
+			<var name="webContentTitle" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="WebContent#expireSpecificVersionCP">
+			<var name="webContentList" value="Web Content Title Edit 1,Web Content Title Edit 2" />
+			<var name="webContentTitle" value="Web Content Title Edit 3" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name" />
+			<var name="webContentTitle" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="WebContent#editCP">
+			<var name="saveAsDraft" value="true" />
+			<var name="webContentContentEdit" value="Web Content Content Edit Draft" />
+			<var name="webContentTitle" value="Web Content Title Edit 3" />
+			<var name="webContentTitleEdit" value="Web Content Title Edit Draft" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#moveToRecycleBinCP">
+			<var name="folderName" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="RecycleBin#restoreCP">
+			<var name="assetName" value="WC Folder Name" />
+			<var name="assetRestoreLocation" value="Home" />
+			<var name="assetType" value="Web Content Folder" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name" />
+			<var name="webContentTitle" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="WebContent#gotoViewSpecificVersionHistoryCP">
+			<var name="webContentTitle" value="Web Content Title Edit Draft" />
+		</execute>
+
+		<execute macro="WebContent#viewSpecificVersionHistoryCP">
+			<var name="webContentStatus" value="Approved" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewSpecificVersionHistoryCP">
+			<var name="webContentStatus" value="Expired" />
+			<var name="webContentTitle" value="Web Content Title Edit 1" />
+		</execute>
+
+		<execute macro="WebContent#viewSpecificVersionHistoryCP">
+			<var name="webContentStatus" value="Expired" />
+			<var name="webContentTitle" value="Web Content Title Edit 2" />
+		</execute>
+
+		<execute macro="WebContent#viewSpecificVersionHistoryCP">
+			<var name="webContentStatus" value="Approved" />
+			<var name="webContentTitle" value="Web Content Title Edit 3" />
+		</execute>
+
+		<execute macro="WebContent#viewSpecificVersionHistoryCP">
+			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="Web Content Title Edit Draft" />
 		</execute>
 	</command>
 </definition>

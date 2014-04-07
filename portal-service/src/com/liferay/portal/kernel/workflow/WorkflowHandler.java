@@ -16,9 +16,11 @@ package com.liferay.portal.kernel.workflow;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.model.WorkflowDefinitionLink;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 
@@ -49,6 +51,10 @@ public interface WorkflowHandler {
 	public String getClassName();
 
 	public String getIconPath(LiferayPortletRequest liferayPortletRequest);
+
+	public String getNotificationLink(
+		JSONObject notificationPayload, ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(long,

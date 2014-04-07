@@ -33,7 +33,6 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
@@ -95,15 +94,7 @@ public class LanguageResources {
 	}
 
 	public static ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle resourceBundle = _resourceBundles.get(locale);
-
-		if (resourceBundle == null) {
-			resourceBundle = new LanguageResourcesBundle(locale);
-
-			_resourceBundles.put(locale, resourceBundle);
-		}
-
-		return resourceBundle;
+		return new LanguageResourcesBundle(locale);
 	}
 
 	public static Locale getSuperLocale(Locale locale) {
@@ -155,8 +146,6 @@ public class LanguageResources {
 		newLanguageMap.putAll(languageMap);
 
 		_languageMaps.put(locale, newLanguageMap);
-
-		_removeResourceBundle(locale);
 
 		return oldLanguageMap;
 	}
@@ -247,32 +236,14 @@ public class LanguageResources {
 		return properties;
 	}
 
-	private static void _removeResourceBundle(Locale locale) {
-		_resourceBundles.remove(locale);
-
-		Set<Locale> parentLocaleChildren = _parentChildrenMap.get(locale);
-
-		if (parentLocaleChildren != null) {
-			for (Locale childLocale : parentLocaleChildren) {
-				_removeResourceBundle(childLocale);
-			}
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(LanguageResources.class);
 
 	private static Locale _blankLocale = new Locale(StringPool.BLANK);
 	private static String[] _configNames;
 	private static Map<Locale, Map<String, String>> _languageMaps =
 		new ConcurrentHashMap<Locale, Map<String, String>>(64);
-	private static ConcurrentHashMap<Locale, Set<Locale>> _parentChildrenMap =
-		new ConcurrentHashMap<Locale, Set<Locale>>();
-	private static Map<Locale, ResourceBundle> _resourceBundles =
-		new ConcurrentHashMap<Locale, ResourceBundle>(64);
 
 	private static class LanguageResourcesBundle extends ResourceBundle {
-
-		private Locale _locale;
 
 		private LanguageResourcesBundle(Locale locale) {
 			_locale = locale;
@@ -286,21 +257,7 @@ public class LanguageResources {
 			Locale superLocale = getSuperLocale(locale);
 
 			if (superLocale != null) {
-				ResourceBundle parentBundle = getResourceBundle(superLocale);
-
-				setParent(parentBundle);
-
-				Set<Locale> parentLocaleChildren = _parentChildrenMap.get(
-					superLocale);
-
-				if (parentLocaleChildren == null) {
-					_parentChildrenMap.putIfAbsent(
-						superLocale, new HashSet<Locale>());
-				}
-
-				parentLocaleChildren = _parentChildrenMap.get(superLocale);
-
-				parentLocaleChildren.add(locale);
+				setParent(new LanguageResourcesBundle(superLocale));
 			}
 		}
 
@@ -349,6 +306,8 @@ public class LanguageResources {
 		}
 
 		private Map<String, String> _languageMap;
+		private Locale _locale;
+
 	}
 
 }

@@ -64,6 +64,21 @@
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td>Info Message</td>
 </tr>
+<tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
 <!---->
 <!--ADVANCED_SEARCH-->
 <tr>
@@ -125,7 +140,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_templateName}')]//a[@id='_166_ddmTemplatesSearchContainer_1_menu']</td>
+	<td>//tr[contains(.,'${key_templateName}')]//a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>
@@ -152,7 +167,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_MENULIST_DELETE</td>
-	<td>//a[@id='_166_ddmTemplatesSearchContainer_1_menu_delete']</td>
+	<td>//a[contains(@id,'_166_ddmTemplatesSearchContainer') and contains(.,'Delete')]/span</td>
 	<td></td>
 </tr>
 </tbody>

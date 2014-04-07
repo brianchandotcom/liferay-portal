@@ -60,9 +60,24 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-error')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td>Info Message</td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
 </tr>
 <!---->
 <!--ADVANCED_SEARCH-->
@@ -161,7 +176,7 @@
 </tr>
 <tr>
 	<td>STRUCTURE_MENULIST_DELETE</td>
-	<td>//a[@id='_166_ddmStructuresSearchContainer_1_menu_delete']</td>
+	<td>//a[contains(@id,'_166_ddmStructuresSearchContainer') and contains(.,'Delete')]/span</td>
 	<td></td>
 </tr>
 </tbody>

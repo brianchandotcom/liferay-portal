@@ -390,6 +390,42 @@
 	<td>//div[@class='asset-details-content']//span[@class='webdav-url']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MARKETING-->
+<tr>
+	<td>MARKETING_SELECT</td>
+	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_marketingSelect}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKETING_CAMPAIGN_THEME</td>
+	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_campaignTheme}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKETING_BUSINESS_GOAL</td>
+	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_businessGoal}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKETING_NEEDS_LEGAL_REVIEW</td>
+	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_legalReview}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKETING_BANNER_NAME</td>
+	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_bannerName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKETING_BANNER_DESCRIPTION</td>
+	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_bannerDescription}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

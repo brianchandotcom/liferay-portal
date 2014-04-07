@@ -226,7 +226,8 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		JournalArticle article = (JournalArticle)baseModel;
 
 		return JournalTestUtil.updateArticle(
-			article, keywords, article.getContent(), serviceContext);
+			article, keywords, article.getContent(), false, true,
+			serviceContext);
 	}
 
 	@Override

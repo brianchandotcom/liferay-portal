@@ -488,7 +488,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		throws Exception {
 
 		return DLAppTestUtil.updateFileEntry(
-			group.getGroupId(), fileEntryId, fileName, fileName, majorVersion);
+			group.getGroupId(), fileEntryId, fileName, fileName, majorVersion,
+			true, true);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DLAppServiceTest.class);

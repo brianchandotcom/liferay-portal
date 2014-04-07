@@ -30,6 +30,10 @@ import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
 import java.io.File;
+import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Julio Camarero
@@ -104,9 +108,7 @@ public class WikiTestUtil {
 				serviceContext);
 
 			if (approved) {
-				page = WikiPageLocalServiceUtil.updateStatus(
-					userId, page.getResourcePrimKey(),
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
+				page = updateStatus(page, serviceContext);
 			}
 
 			return page;
@@ -137,9 +139,7 @@ public class WikiTestUtil {
 				false, parentTitle, null, serviceContext);
 
 			if (approved) {
-				page = WikiPageLocalServiceUtil.updateStatus(
-					userId, page.getResourcePrimKey(),
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
+				page = updateStatus(page, serviceContext);
 			}
 
 			return page;
@@ -204,7 +204,7 @@ public class WikiTestUtil {
 
 		return updatePage(
 			page, page.getUserId(), ServiceTestUtil.randomString(),
-			page.getContent(), serviceContext);
+			page.getContent(), true, serviceContext);
 	}
 
 	public static WikiPage updatePage(
@@ -213,18 +213,54 @@ public class WikiTestUtil {
 		throws Exception {
 
 		return updatePage(
-			page, userId, page.getTitle(), content, serviceContext);
+			page, userId, page.getTitle(), content, true, serviceContext);
 	}
 
 	public static WikiPage updatePage(
 			WikiPage page, long userId, String title, String content,
-			ServiceContext serviceContext)
+			boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
-		return WikiPageLocalServiceUtil.updatePage(
-			userId, page.getNodeId(), page.getTitle(), page.getVersion(),
-			content, page.getSummary(), false, page.getFormat(),
-			page.getParentTitle(), page.getRedirectTitle(), serviceContext);
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		try {
+			WorkflowThreadLocal.setEnabled(true);
+
+			serviceContext = (ServiceContext)serviceContext.clone();
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			page = WikiPageLocalServiceUtil.updatePage(
+				userId, page.getNodeId(), title, page.getVersion(), content,
+				page.getSummary(), false, page.getFormat(),
+				page.getParentTitle(), page.getRedirectTitle(), serviceContext);
+
+			if (approved) {
+				page = updateStatus(page, serviceContext);
+			}
+
+			return page;
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
+	}
+
+	private static WikiPage updateStatus(
+			WikiPage page, ServiceContext serviceContext)
+		throws Exception {
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+
+		page = WikiPageLocalServiceUtil.updateStatus(
+			page.getUserId(), page, WorkflowConstants.STATUS_APPROVED,
+			workflowContext, serviceContext);
+
+		return page;
 	}
 
 }

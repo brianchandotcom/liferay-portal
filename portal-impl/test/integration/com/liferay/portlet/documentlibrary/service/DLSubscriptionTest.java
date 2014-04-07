@@ -69,8 +69,8 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), group.getGroupId(), containerModelId);
+		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
+			group.getGroupId(), group.getGroupId(), containerModelId, true);
 
 		return fileEntry.getFileEntryId();
 	}

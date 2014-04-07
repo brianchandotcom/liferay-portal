@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -38,10 +39,13 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
@@ -208,9 +212,7 @@ public class MBTestUtil {
 			categoryId, subject, body, serviceContext);
 
 		if (!approved) {
-			return MBMessageLocalServiceUtil.updateStatus(
-				message.getStatusByUserId(), message.getMessageId(),
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
+			message = updateStatus(message, serviceContext);
 		}
 
 		return message;
@@ -309,19 +311,38 @@ public class MBTestUtil {
 			classPK);
 	}
 
-	public static MBMessage updateMessage(MBMessage message) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			message.getGroupId());
+	public static MBMessage updateMessage(MBMessage message, boolean approved)
+		throws Exception {
 
-		serviceContext.setCommand(Constants.UPDATE);
-		serviceContext.setLayoutFullURL("http://localhost");
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
-		return MBMessageLocalServiceUtil.updateMessage(
-			TestPropsValues.getUserId(), message.getMessageId(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
-			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
-			Collections.<String>emptyList(), message.getPriority(),
-			message.isAllowPingbacks(), serviceContext);
+		try {
+			WorkflowThreadLocal.setEnabled(true);
+
+			ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+				message.getGroupId());
+
+			serviceContext.setCommand(Constants.UPDATE);
+			serviceContext.setLayoutFullURL("http://localhost");
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			message = MBMessageLocalServiceUtil.updateMessage(
+				TestPropsValues.getUserId(), message.getMessageId(),
+				ServiceTestUtil.randomString(),
+				ServiceTestUtil.randomString(50), Collections.EMPTY_LIST,
+				Collections.EMPTY_LIST, message.getPriority(),
+				message.isAllowPingbacks(), serviceContext);
+
+			if (approved) {
+				message = updateStatus(message, serviceContext);
+			}
+
+			return message;
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
 	}
 
 	protected static MBMessage addMessage(
@@ -362,6 +383,22 @@ public class MBTestUtil {
 			allowPingbacks, serviceContext);
 
 		return MBMessageLocalServiceUtil.getMessage(message.getMessageId());
+	}
+
+	protected static MBMessage updateStatus(
+			MBMessage message, ServiceContext serviceContext)
+		throws Exception {
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+
+		message = MBMessageLocalServiceUtil.updateStatus(
+			message.getUserId(), message.getMessageId(),
+			WorkflowConstants.STATUS_APPROVED, workflowContext, serviceContext);
+
+		return message;
 	}
 
 }

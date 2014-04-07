@@ -33,13 +33,16 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alexander Chow

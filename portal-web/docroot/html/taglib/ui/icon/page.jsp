@@ -118,10 +118,10 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 				<c:when test="<%= Validator.isNotNull(src) %>">
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(id) %>">
-							<img id="<%= id %>" src="<%= src %>" <%= details %> />
+							<img alt="<%= (message != null) ? message : StringPool.BLANK %>" id="<%= id %>" src="<%= src %>" <%= details %> />
 						</c:when>
 						<c:otherwise>
-							<img src="<%= src %>" <%= details %> />
+							<img alt="<%= (message != null) ? message : StringPool.BLANK %>" src="<%= src %>" <%= details %> />
 						</c:otherwise>
 					</c:choose>
 				</c:when>

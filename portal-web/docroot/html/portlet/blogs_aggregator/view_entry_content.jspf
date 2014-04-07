@@ -82,7 +82,7 @@
 				}
 				%>
 
-				<a href="<%= viewAllEntriesURL %>"><img align="left" border="0" hspace="0" src="<%= portraitUrl %>" width="65" /></a>
+				<a href="<%= viewAllEntriesURL %>"><img align="left" alt="<liferay-ui:message key="portrait" />" border="0" hspace="0" src="<%= portraitUrl %>" width="65" /></a>
 			</c:if>
 			<c:choose>
 				<c:when test='<%= displayStyle.startsWith("abstract") %>'>

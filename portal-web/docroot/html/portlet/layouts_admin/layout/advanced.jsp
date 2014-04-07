@@ -71,7 +71,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			if (!layoutLogo) {
 				var layoutNavItem = A.one('#layout_<%= selLayout.getLayoutId() %> span');
 
-				layoutLogo = A.Node.create('<img class="layout-logo-<%= selLayout.getPlid() %>" src="' + logoURL + '" />');
+				layoutLogo = A.Node.create('<img alt="<liferay-ui:message key="logo" />" class="layout-logo-<%= selLayout.getPlid() %>" src="' + logoURL + '" />');
 
 				if (layoutNavItem) {
 					layoutNavItem.prepend(layoutLogo);

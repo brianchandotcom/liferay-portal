@@ -74,7 +74,9 @@ for (int j = 0; j < folderColumns.length; j++) {
 				}
 
 				buffer.append("<span class=\"entry-thumbnail\">");
-				buffer.append("<img align=\"left\" border=\"0\" src=\"");
+				buffer.append("<img align=\"left\" alt=\"");
+				buffer.append(LanguageUtil.get(locale, "thumbnail"));
+				buffer.append("\" border=\"0\" src=\"\");");
 				buffer.append(HtmlUtil.escapeHREF(themeDisplay.getPathThemeImages()));
 
 				if (curFolder.isMountPoint()) {

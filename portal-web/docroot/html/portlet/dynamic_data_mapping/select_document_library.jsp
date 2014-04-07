@@ -185,9 +185,11 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 
 			// Name
 
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(6);
 
-			sb.append("<img align=\"left\" border=\"0\" src=\"");
+			sb.append("<img align=\"left\" alt=\"");
+			sb.append(LanguageUtil.get(locale, "folder"));
+			sb.append("\" border=\"0\" src=\"");
 			sb.append(HtmlUtil.escapeAttribute(themeDisplay.getPathThemeImages()));
 			sb.append("/common/folder.png\">");
 			sb.append(HtmlUtil.escape(curFolder.getName()));

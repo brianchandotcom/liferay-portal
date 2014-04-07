@@ -21,5 +21,25 @@
 		<case locator-key1="DISCONNECT_BUTTON">
 			<execute function="AssertElementNotPresent#assertNotVisible" />
 		</case>
+
+		<case locator-key1="FOLLOW_BUTTON">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+
+		<case locator-key1="UNFOLLOW_BUTTON">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+
+		<case locator-key1="BLOCK_BUTTON">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+
+		<case locator-key1="UNBLOCK_BUTTON">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+
+		<case locator-key1="BLOCKED_MESSAGE">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
 	</command>
 </definition>

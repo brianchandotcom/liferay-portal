@@ -269,6 +269,12 @@ AUI.add(
 						return ids;
 					},
 
+					getSize: function() {
+						var instance = this;
+
+						return instance._ids.length;
+					},
+
 					updateDataStore: function(ids) {
 						var instance = this;
 

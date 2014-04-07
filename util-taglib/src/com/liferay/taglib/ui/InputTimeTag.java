@@ -101,7 +101,7 @@ public class InputTimeTag extends IncludeTag {
 			"liferay-ui:input-time:amPmValue", String.valueOf(_amPmValue));
 		request.setAttribute("liferay-ui:input-time:cssClass", _cssClass);
 		request.setAttribute(
-			"liferay-ui:input-time:dateParam", String.valueOf(_dateParam));
+			"liferay-ui:input-time:dateParam", _dateParam);
 		request.setAttribute("liferay-ui:input-time:dateValue", _dateValue);
 		request.setAttribute(
 			"liferay-ui:input-time:disabled", String.valueOf(_disabled));

@@ -16,6 +16,9 @@
 
 <%@ include file="/html/taglib/aui/form/init.jsp" %>
 
+	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
+		</fieldset>
+	</c:if>
 </form>
 
 <aui:script use="liferay-form">
@@ -61,4 +64,8 @@
 			</c:if>
 		}
 	);
+
+	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
+		A.one('#<%= namespace + name %> fieldset').removeAttribute('disabled');
+	</c:if>
 </aui:script>

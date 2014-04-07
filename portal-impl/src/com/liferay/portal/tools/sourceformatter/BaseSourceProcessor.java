@@ -412,20 +412,25 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				"<%--\n" + copyright + "\n--%>");
 		}
 
-		int x = content.indexOf("* Copyright (c) 2000-20");
+		int x = content.indexOf("* Copyright (c) 2000-");
 
 		if (x == -1) {
 			return content;
 		}
 
-		int y = copyright.indexOf("* Copyright (c) 2000-20");
+		int y = content.indexOf("Liferay", x);
 
-		if (y == -1) {
+		String contentCopyrightYear = content.substring(x, y);
+
+		x = copyright.indexOf("* Copyright (c) 2000-");
+
+		if (x == -1) {
 			return content;
 		}
 
-		String contentCopyrightYear = content.substring(x, x + 25);
-		String copyrightYear = copyright.substring(y, y + 25);
+		y = copyright.indexOf("Liferay", x);
+
+		String copyrightYear = copyright.substring(x, y);
 
 		return StringUtil.replace(content, contentCopyrightYear, copyrightYear);
 	}

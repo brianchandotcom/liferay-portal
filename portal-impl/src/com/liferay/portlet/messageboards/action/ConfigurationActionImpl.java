@@ -55,7 +55,6 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		removeDefaultValue(
 			portletRequest, settings, "emailFromAddress",
 			mbSettings.getEmailFromAddress());
-
 		removeDefaultValue(
 			portletRequest, settings, "emailFromName",
 			mbSettings.getEmailFromName());

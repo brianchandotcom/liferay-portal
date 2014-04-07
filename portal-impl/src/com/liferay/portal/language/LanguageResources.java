@@ -305,23 +305,6 @@ public class LanguageResources {
 		}
 
 		@Override
-		public boolean containsKey(String key) {
-			if (key == null) {
-				throw new NullPointerException();
-			}
-
-			if (_languageMap.containsKey(key)) {
-				return true;
-			}
-
-			if (parent != null) {
-				return parent.containsKey(key);
-			}
-
-			return false;
-		}
-
-		@Override
 		protected Set<String> handleKeySet() {
 			return _languageMap.keySet();
 		}

@@ -33,6 +33,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -106,7 +107,12 @@ public class EditEntryAction extends PortletAction {
 			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof TrashPermissionException) {
+			if (e instanceof RestoreEntryException) {
+				RestoreEntryException ree = (RestoreEntryException)e;
+
+				SessionErrors.add(actionRequest, ree.getClass(), ree);
+			}
+			else if (e instanceof TrashPermissionException) {
 				TrashPermissionException tpe = (TrashPermissionException)e;
 
 				SessionErrors.add(actionRequest, tpe.getClass(), tpe);

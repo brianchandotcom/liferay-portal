@@ -29,7 +29,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.trash.DuplicateEntryException;
+import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.wiki.asset.WikiNodeTrashRenderer;
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -52,7 +52,7 @@ import javax.portlet.PortletURL;
 public class WikiNodeTrashHandler extends BaseTrashHandler {
 
 	@Override
-	public void checkDuplicateTrashEntry(
+	public void checkRestorableEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
 		throws PortalException, SystemException {
 
@@ -69,13 +69,14 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 			node.getGroupId(), originalTitle);
 
 		if (duplicateNode != null) {
-			DuplicateEntryException dee = new DuplicateEntryException();
+			RestoreEntryException ree = new RestoreEntryException(
+				RestoreEntryException.DUPLICATE);
 
-			dee.setDuplicateEntryId(duplicateNode.getNodeId());
-			dee.setOldName(duplicateNode.getName());
-			dee.setTrashEntryId(trashEntry.getEntryId());
+			ree.setDuplicateEntryId(duplicateNode.getNodeId());
+			ree.setOldName(duplicateNode.getName());
+			ree.setTrashEntryId(trashEntry.getEntryId());
 
-			throw dee;
+			throw ree;
 		}
 	}
 

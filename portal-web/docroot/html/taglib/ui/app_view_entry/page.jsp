@@ -23,6 +23,7 @@ long assetCategoryClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:
 String assetTagClassName = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:assetTagClassName"));
 long assetTagClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:app-view-entry:assetTagClassPK"));
 String author = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:author"));
+String classTypeName = (String)request.getAttribute("liferay-ui:app-view-entry:classTypeName");
 Date createDate = GetterUtil.getDate(request.getAttribute("liferay-ui:app-view-entry:createDate"), DateFormatFactoryUtil.getDate(locale), null);
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:app-view-entry:cssClass"));
 Date expirationDate = GetterUtil.getDate(request.getAttribute("liferay-ui:app-view-entry:expirationDate"), DateFormatFactoryUtil.getDate(locale), null);
@@ -47,7 +48,6 @@ String thumbnailDivStyle = (String)request.getAttribute("liferay-ui:app-view-ent
 String thumbnailSrc = (String)request.getAttribute("liferay-ui:app-view-entry:thumbnailSrc");
 String thumbnailStyle = (String)request.getAttribute("liferay-ui:app-view-entry:thumbnailStyle");
 String title = (String)request.getAttribute("liferay-ui:app-view-entry:title");
-String type = (String)request.getAttribute("liferay-ui:app-view-entry:type");
 String url = (String)request.getAttribute("liferay-ui:app-view-entry:url");
 String version = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:version"));
 
@@ -162,13 +162,13 @@ if (showLinkTitle) {
 					</c:if>
 
 					<dl>
-						<c:if test="<%= Validator.isNotNull(type) %>">
+						<c:if test="<%= Validator.isNotNull(classTypeName) %>">
 							<dt>
 								<liferay-ui:message key="type" />:
 							</dt>
 
 							<dd>
-								<%= type %>
+								<%= classTypeName %>
 							</dd>
 						</c:if>
 

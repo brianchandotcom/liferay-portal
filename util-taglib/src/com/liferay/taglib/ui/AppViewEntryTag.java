@@ -57,6 +57,10 @@ public class AppViewEntryTag extends IncludeTag {
 		_author = author;
 	}
 
+	public void setClassTypeName(String classTypeName) {
+		_classTypeName = classTypeName;
+	}
+
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
 	}
@@ -155,10 +159,6 @@ public class AppViewEntryTag extends IncludeTag {
 		_title = HtmlUtil.unescape(title);
 	}
 
-	public void setType(String type) {
-		_type = type;
-	}
-
 	public void setUrl(String url) {
 		_url = url;
 	}
@@ -175,6 +175,7 @@ public class AppViewEntryTag extends IncludeTag {
 		_assetTagClassName = null;
 		_assetTagClassPK = 0;
 		_author = null;
+		_classTypeName = null;
 		_createDate = null;
 		_cssClass = null;
 		_data = null;
@@ -199,7 +200,6 @@ public class AppViewEntryTag extends IncludeTag {
 		_thumbnailSrc = null;
 		_thumbnailStyle = null;
 		_title = null;
-		_type = null;
 		_url = null;
 		_version = null;
 	}
@@ -228,6 +228,8 @@ public class AppViewEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-entry:assetTagClassPK", _assetTagClassPK);
 		request.setAttribute("liferay-ui:app-view-entry:author", _author);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:classTypeName", _classTypeName);
 		request.setAttribute(
 			"liferay-ui:app-view-entry:createDate", _createDate);
 		request.setAttribute("liferay-ui:app-view-entry:cssClass", _cssClass);
@@ -270,7 +272,6 @@ public class AppViewEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-entry:thumbnailStyle", _thumbnailStyle);
 		request.setAttribute("liferay-ui:app-view-entry:title", _title);
-		request.setAttribute("liferay-ui:app-view-entry:type", _type);
 		request.setAttribute("liferay-ui:app-view-entry:version", _version);
 		request.setAttribute("liferay-ui:app-view-entry:url", _url);
 	}
@@ -286,6 +287,7 @@ public class AppViewEntryTag extends IncludeTag {
 	private String _assetTagClassName;
 	private long _assetTagClassPK;
 	private String _author;
+	private String _classTypeName;
 	private Date _createDate;
 	private String _cssClass;
 	private Map<String, Object> _data;
@@ -310,7 +312,6 @@ public class AppViewEntryTag extends IncludeTag {
 	private String _thumbnailSrc;
 	private String _thumbnailStyle;
 	private String _title;
-	private String _type;
 	private String _url;
 	private String _version;
 

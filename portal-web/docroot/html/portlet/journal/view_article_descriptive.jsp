@@ -47,6 +47,7 @@ DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDispl
 	assetTagClassName="<%= JournalArticle.class.getName() %>"
 	assetTagClassPK="<%= article.getResourcePrimKey() %>"
 	author="<%= article.getUserName() %>"
+	classTypeName="<%= ddmStructure.getName(locale) %>"
 	createDate="<%= createDate %>"
 	description="<%= article.getDescription(locale) %>"
 	displayDate="<%= article.getDisplayDate() %>"
@@ -65,7 +66,6 @@ DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDispl
 	thumbnailSrc='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
 	title="<%= article.getTitle(locale) %>"
-	type="<%= ddmStructure.getName(locale) %>"
 	url="<%= tempRowURL.toString() %>"
 	version="<%= String.valueOf(article.getVersion()) %>"
 />

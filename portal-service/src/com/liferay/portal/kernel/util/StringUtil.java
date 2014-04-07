@@ -2417,8 +2417,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * Replaces all occurrences of the of the keywords found in the substring,
-	 * defined by the beginning and ending strings, with the new values.
+	 * Replaces all occurrences of the keywords found in the substring, defined
+	 * by the beginning and ending strings, with the new values.
 	 *
 	 * <p>
 	 * For example, with the following initialized variables:
@@ -2789,9 +2789,9 @@ public class StringUtil {
 	}
 
 	/**
-	 * Replaces all occurrences of the of the keywords found in the substring,
-	 * defined by the beginning and ending strings, with the new values. The
-	 * result is returned as a {@link StringBundler}.
+	 * Replaces all occurrences of the keywords found in the substring, defined
+	 * by the beginning and ending strings, with the new values. The result is
+	 * returned as a {@link StringBundler}.
 	 *
 	 * <p>
 	 * For example, with the following initialized variables:
@@ -2822,10 +2822,10 @@ public class StringUtil {
 	 *         string is excluded from the result.
 	 * @param  values the key-value map values
 	 * @return a string bundler representing the original string with all
-	 *         occurrences of the of the keywords found in the substring,
-	 *         replaced with the new values. <code>null</code> is returned if
-	 *         the original string, the beginning string, the ending string, or
-	 *         the key-map values are <code>null</code>.
+	 *         occurrences of the keywords found in the substring, replaced with
+	 *         the new values. <code>null</code> is returned if the original
+	 *         string, the beginning string, the ending string, or the key-map
+	 *         values are <code>null</code>.
 	 * @see    #replace(String, String, String, Map)
 	 */
 	public static StringBundler replaceToStringBundler(
@@ -2871,22 +2871,22 @@ public class StringUtil {
 	}
 
 	/**
-	 * Replaces all occurrences of the of the keywords found in the substring,
-	 * defined by the beginning and ending strings, with the new values. The
-	 * result is returned as a {@link StringBundler}.
+	 * Replaces all occurrences of the keywords found in the substring, defined
+	 * by the beginning and ending strings, with the new values. The result is
+	 * returned as a {@link StringBundler}.
 	 *
 	 * @param  s the original string
 	 * @param  begin the string preceding the substring to be modified. This
 	 *         string is removed from the result.
 	 * @param  end the string following the substring to be modified. This
 	 *         string is removed from the result.
-	 * @param  values the key-value map values, which has a string keys and
-	 *         {@link StringBundler} values
+	 * @param  values the key-value map values, which has string keys and {@link
+	 *         StringBundler} values
 	 * @return a string bundler representing the original string with all
-	 *         occurrences of the of the keywords found in the substring,
-	 *         replaced with the new values. <code>null</code> is returned if
-	 *         the original string, the beginning string, the ending string, or
-	 *         the key-map values are <code>null</code>.
+	 *         occurrences of the keywords found in the substring, replaced with
+	 *         the new values. <code>null</code> is returned if the original
+	 *         string, the beginning string, the ending string, or the key-map
+	 *         values are <code>null</code>.
 	 */
 	public static StringBundler replaceWithStringBundler(
 		String s, String begin, String end, Map<String, StringBundler> values) {

@@ -232,6 +232,7 @@
 				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
 			</then>
 		</if>
+
 		<if>
 			<condition action="SOUserBar#isElementNotPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
@@ -335,6 +336,7 @@
 				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
 			</then>
 		</if>
+
 		<if>
 			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>

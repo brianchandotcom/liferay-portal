@@ -175,15 +175,12 @@ public class UploadImageAction extends PortletAction {
 			throw new ImageTypeException();
 		}
 
-		String sourceFileName = uploadPortletRequest.getFileName("fileName");
-
-		sourceFileName = getTempImageFileName(portletRequest).concat(
-			StringPool.UNDERLINE).concat(sourceFileName);
+		String fileName = uploadPortletRequest.getFileName("fileName");
 
 		try {
 			TempFileUtil.deleteTempFile(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				sourceFileName, getTempImageFolderName());
+				fileName, getTempImageFolderName());
 		}
 		catch (Exception e) {
 		}
@@ -195,8 +192,7 @@ public class UploadImageAction extends PortletAction {
 
 			return TempFileUtil.addTempFile(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				sourceFileName, getTempImageFolderName(), inputStream,
-				contentType);
+				fileName, getTempImageFolderName(), inputStream, contentType);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);

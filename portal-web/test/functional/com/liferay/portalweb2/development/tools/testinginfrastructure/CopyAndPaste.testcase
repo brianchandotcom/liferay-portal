@@ -1,0 +1,42 @@
+<definition component-name="portal-tools">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="Smoke" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page1" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page1" />
+		</execute>
+
+		<var name="entryContent" value="Copied Text" />
+		<var name="entryTitle" value="Title" />
+
+		<execute action="PGBlogs#assertClick" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
+
+		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+
+		<execute action="PGBlogsAdd#copy" locator-key1="CONTENT_FIELD" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page1" />
+		</execute>
+
+		<execute action="PGBlogs#assertClick" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
+
+		<execute action="PGBlogsAdd#paste" locator-key1="CONTENT_FIELD" />
+
+		<execute action="Home#pause" locator1="5000" />
+	</command>
+</definition>

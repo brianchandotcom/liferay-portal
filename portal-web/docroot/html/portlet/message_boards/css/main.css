@@ -1,14 +1,13 @@
 @import "compass";
+@import "mixins";
 
 .portlet-asset-publisher, .portlet-message-boards, .portlet-trash {
-	.category-buttons {
+	.category-buttons, .category-subscriptions {
 		clear: both;
 		margin-bottom: 1em;
 	}
 
 	.category-subscriptions {
-		clear: both;
-		margin-bottom: 1em;
 		overflow: hidden;
 	}
 
@@ -54,7 +53,7 @@
 			font-size: 1em;
 		}
 
-		ul {
+		ul, .deleted-input {
 			list-style: none;
 		}
 
@@ -63,7 +62,6 @@
 		}
 
 		.deleted-input {
-			list-style: none;
 			margin-left: -2em;
 			padding: 0;
 		}
@@ -76,7 +74,6 @@
 	.message-container {
 		border: 1px solid #CCC;
 		margin: 5px 0 0 0;
-		overflow: auto;
 
 		table {
 			border-collapse: collapse;
@@ -90,15 +87,22 @@
 		td {
 			border-width: 0;
 		}
+
+		.user-info {
+			border-right: 1px solid #CCC;
+			padding: 5px;
+		}
+	}
+
+	.thread-bottom, .thread-top {
+		padding: 3px 5px;
 	}
 
 	.thread-top {
-		border-bottom: 1px solid #CCC;
-		padding: 3px 5px;
+		border-bottom: 1px solid #EEE;
 	}
 
 	.thread-bottom {
-		padding: 3px 5px;
 		vertical-align: bottom;
 	}
 
@@ -111,7 +115,7 @@
 		width: 150px;
 	}
 
-	.subject {
+	.edit-controls li, .subject {
 		float: left;
 	}
 
@@ -119,10 +123,11 @@
 		float: right;
 
 		li {
-			float: left;
 			margin-right: 10px;
 		}
 	}
+
+
 
 	.thread-body {
 		overflow: hidden;
@@ -135,6 +140,7 @@
 
 	.message-container .user-info {
 		border-right: 1px solid #CCC;
+
 		padding: 5px;
 
 		.user-name {
@@ -150,11 +156,7 @@
 		margin-bottom: 1em;
 	}
 
-	.message-boards-panels {
-		border-width: 0;
-	}
-
-	.statistics-panel {
+	.message-boards-panels, .statistics-panel {
 		border-width: 0;
 	}
 
@@ -204,14 +206,16 @@
 		width: 48px;
 	}
 
+	.answered, .unanswered {
+		color: #FFF;
+	}
+
 	.answered {
 		background-color: #5BA018;
-		color: #FFF;
 	}
 
 	.unanswered {
 		background-color: #CF4937;
-		color: #FFF;
 	}
 
 	.count {
@@ -228,13 +232,15 @@
 		width: 100%;
 	}
 
+
 	.thread-controls {
 		border: 1px solid #CCC;
 		margin-bottom: 5px;
 		padding: 3px 5px;
 	}
 
-	.thread-navigation {
+
+	.thread-navigation, .thread-priority {
 		float: left;
 	}
 
@@ -248,13 +254,12 @@
 
 	.thread-priority {
 		border-width: 0;
-		float: left;
 	}
 
 	.message-container .thread-message-view, .thread-view {
 		border-collapse: collapse;
-		min-width: 400px;
 		padding: 0;
+		min-width: 400px;
 		width: 100%;
 	}
 
@@ -380,6 +385,90 @@
 	.search-root-entry {
 		color: #999;
 		float: right;
+	}
+
+	@include respond-to(phone, tablet) {
+		.message-container {
+			table, tbody, td, th, thead, tr {
+				display: block;
+			}
+
+			thead tr {
+				left: -9999px;
+				position: absolute;
+				top: -9999px;
+			}
+
+			td {
+				position: relative;
+
+				&:before {
+					left: 6px;
+					padding-right: 10px;
+					position: absolute;
+					top: 6px;
+					white-space: nowrap;
+					width: 45%;
+				}
+			}
+
+			.thread-bottom, td.user-info {
+				border-width: 0;
+			}
+
+			.thread-message-view {
+				min-width: 0;
+			}
+
+			.edit-controls li, .taglib-ratings, .taglib-user-display > a, .taglib-user-display .user-details {
+				display: inline-block;
+			}
+
+			.edit-controls, .edit-controls li, .subject, .taglib-flags, .thumbs {
+				float: none;
+			}
+
+			.edit-controls li {
+				margin-right: 0;
+			}
+
+			.taglib-user-display {
+				> a {
+					margin-right: 1em;
+				}
+
+				.user-details {
+					margin: 0 1em 0 0;
+				}
+
+				.avatar {
+					float: left;
+				}
+
+				.user-name {
+					text-align: left;
+				}
+			}
+
+			.taglib-flags {
+				margin-left: 0;
+			}
+
+			td.user-info {
+				padding: 0;
+				width: auto;
+			}
+
+			.thumbs {
+				margin: 0;
+			}
+		}
+
+		.thread-controls {
+			border-width: 0;
+			margin: 0;
+			padding: 0;
+		}
 	}
 }
 

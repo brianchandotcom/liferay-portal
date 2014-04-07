@@ -40,6 +40,28 @@
 		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
+	<command name="addDMMarketingBannerCP">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_MARKETING_BANNER" value1="Marketing Banner" />
+
+		<execute action="CPDocumentsandmediaAddMarketingbanner#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#select" locator-key1="MARKETING_SELECT" value1="${marketingSelect}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#select" locator-key1="CAMPAIGN_THEME_SELECT" value1="${campaignTheme}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#select" locator-key1="BUSINESS_GOAL_SELECT" value1="${businessGoal}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#click" locator-key1="NEEDS_LEGAL_REVIEW_${legalReview}_RADIO" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#type" locator-key1="BANNER_NAME_FIELD" value1="${bannerName}" />
+		<execute action="CPDocumentsandmediaAddMarketingbanner#type" locator-key1="BANNER_DESCRIPTION_FIELD" value1="${bannerDescription}" />
+
+		<execute action="CPDocumentsandmediaAddMarketingbanner#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+	</command>
+
 	<command name="addDocumentTypePG">
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
@@ -837,6 +859,32 @@
 				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="VERSION_HISTORY_TABLE_SIZE" value1="${dmDocumentSize}" />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewDMMarketingBannerPG">
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+
+		<var name="key_marketingSelect" value="${marketingSelect}" />
+
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="MARKETING_SELECT" value1="${marketingSelect}" />
+
+		<var name="key_campaignTheme" value="${campaignTheme}" />
+
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="MARKETING_CAMPAIGN_THEME" value1="${campaignTheme}" />
+
+		<var name="key_legalReview" value="${legalReview}" />
+
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="MARKETING_NEEDS_LEGAL_REVIEW" value1="${legalReview}" />
+
+		<var name="key_bannerName" value="${bannerName}" />
+
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="MARKETING_BANNER_NAME" value1="${bannerName}" />
+
+		<var name="key_bannerDescription" value="${bannerDescription}" />
+
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="MARKETING_BANNER_DESCRIPTION" value1="${bannerDescription}" />
 	</command>
 
 	<command name="viewDocumentAuthorCmdPG">

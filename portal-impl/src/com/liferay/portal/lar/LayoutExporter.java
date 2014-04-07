@@ -271,13 +271,9 @@ public class LayoutExporter {
 			startDate = null;
 		}
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isInfoEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		LayoutCache layoutCache = new LayoutCache();
 
@@ -551,13 +547,8 @@ public class LayoutExporter {
 			document, portletDataContext.getManifestSummary());
 
 		if (_log.isInfoEnabled()) {
-			if (stopWatch != null) {
-				_log.info(
-					"Exporting layouts takes " + stopWatch.getTime() + " ms");
-			}
-			else {
-				_log.info("Exporting layouts is finished");
-			}
+			_log.info(
+				"Exporting layouts takes " + stopWatch.getTime() + " ms");
 		}
 
 		portletDataContext.addZipEntry(

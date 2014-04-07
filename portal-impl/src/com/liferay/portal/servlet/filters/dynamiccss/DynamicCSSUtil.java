@@ -94,13 +94,9 @@ public class DynamicCSSUtil {
 			return content;
 		}
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		// Request will only be null when called by StripFilterTest
 

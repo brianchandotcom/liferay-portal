@@ -31,13 +31,11 @@ public abstract class ConvertProcess {
 				return;
 			}
 
-			StopWatch stopWatch = null;
+			StopWatch stopWatch = new StopWatch();
+
+			stopWatch.start();
 
 			if (_log.isInfoEnabled()) {
-				stopWatch = new StopWatch();
-
-				stopWatch.start();
-
 				_log.info("Starting conversion for " + getClass().getName());
 			}
 

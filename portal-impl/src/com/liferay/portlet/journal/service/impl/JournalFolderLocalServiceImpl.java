@@ -695,6 +695,27 @@ public class JournalFolderLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		JournalFolder folder = null;
+
+		if (folderId > JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			folder = updateFolderAndDDMStructures(
+				userId, folderId, parentFolderId, name, description,
+				ddmStructureIds, overrideDDMStructures, mergeWithParentFolder,
+				serviceContext);
+		}
+
+		return folder;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public JournalFolder updateFolderAndDDMStructures(
+			long userId, long folderId, long parentFolderId, String name,
+			String description, long[] ddmStructureIds,
+			boolean overrideDDMStructures, boolean mergeWithParentFolder,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
 		// Merge folders
 
 		if (!overrideDDMStructures) {

@@ -6,6 +6,7 @@
 
 	<var name="adminEmailAddress" value="test@liferay.com" />
 	<var name="adminName" value="Test Test" />
+	<var name="adminScreenName" value="test" />
 
 	<set-up>
 		<execute macro="SOUser#firstLoginPG" />
@@ -981,7 +982,11 @@
 		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
 
-		<execute macro="SOUser#addUserWithSORole">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
@@ -989,35 +994,13 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="SOMessages#sendMessage">
-			<var name="messageBody" value="${messageBody}" />
-			<var name="messageSubject" value="${messageSubject}" />
-			<var name="recipientName" value="${userName}" />
-			<var name="recipientScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="SOMessages#viewMessage">
-			<var name="connectionName" value="${userName}" />
-			<var name="messageBody" value="${messageBody}" />
-			<var name="messageSubject" value="${messageSubject}" />
-			<var name="senderName" value="${adminName}" />
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -1025,15 +1008,65 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Page#addPG">
+			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${userScreenName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+			<var name="siteName" value="${userScreenName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${adminScreenName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="recipientName" value="${adminName}" />
+			<var name="recipientScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${userScreenName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${adminName}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
-			<var name="senderName" value="${adminName}" />
+			<var name="senderName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Messages" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessage">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="senderName" value="${userName}" />
 		</execute>
 	</command>
 
@@ -1338,9 +1371,12 @@
 	</command>
 
 	<command name="SendReplyMessageAttachmentPortal" priority="5">
-		<var name="messageAttachmentFile" value="Document_1.jpg" />
+		<var name="messageAttachmentFile1" value="Document_1.jpg" />
+		<var name="messageAttachmentFile2" value="Document_2.jpg" />
+		<var name="messageAttachmentFile3" value="Document_3.jpg" />
 		<var name="messageBody" value="Message Body" />
-		<var name="messageReplyBody" value="Message Reply Body" />
+		<var name="messageReplyBody1" value="Message Reply1 Body" />
+		<var name="messageReplyBody2" value="Message Reply2 Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Private Messaging Page" />
 		<var name="portletName" value="Private Messaging" />
@@ -1352,7 +1388,11 @@
 		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
 
-		<execute macro="SOUser#addUserWithSORole">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
@@ -1360,24 +1400,13 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="SOMessages#sendMessage">
-			<var name="messageBody" value="${messageBody}" />
-			<var name="messageSubject" value="${messageSubject}" />
-			<var name="recipientName" value="${userName}" />
-			<var name="recipientScreenName" value="${userScreenName}" />
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -1385,39 +1414,34 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="SOMessages#viewMessageNotification">
-			<var name="messageBody" value="${messageBody}" />
-			<var name="senderName" value="${adminName}" />
+		<execute macro="Page#addPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${userScreenName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+			<var name="siteName" value="${userScreenName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${adminScreenName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="SOMessages#viewMessage">
-			<var name="connectionName" value="${adminName}" />
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
-			<var name="senderName" value="${adminName}" />
-		</execute>
-
-		<execute macro="SOMessages#sendReplyMessage">
-			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
-			<var name="messageReplyBody" value="${messageReplyBody}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="SOMessages#viewReplyMessage">
-			<var name="connectionName" value="${adminName}" />
-			<var name="messageBody" value="${messageBody}" />
-			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
-			<var name="messageReplyBody" value="${messageReplyBody}" />
-			<var name="messageSubject" value="${messageSubject}" />
-			<var name="replySenderName" value="${userName}" />
-			<var name="senderName" value="${adminName}" />
+			<var name="recipientName" value="${adminName}" />
+			<var name="recipientScreenName" value="${adminScreenName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -1426,22 +1450,118 @@
 		</execute>
 
 		<execute macro="SOMessages#viewMessageNotification">
-			<var name="messageBody" value="${messageReplyBody}" />
+			<var name="messageBody" value="${messageBody}" />
 			<var name="senderName" value="${userName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Messages" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessage">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageAttachmentFile" value="${messageAttachmentFile1}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="senderName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMessages#sendReplyMessage">
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile2}" />
+			<var name="messageReplyBody" value="${messageReplyBody1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Messages" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
 		</execute>
 
 		<execute macro="SOMessages#viewReplyMessage">
 			<var name="connectionName" value="${userName}" />
 			<var name="messageBody" value="${messageBody}" />
-			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
-			<var name="messageReplyBody" value="${messageReplyBody}" />
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile2}" />
+			<var name="messageReplyBody" value="${messageReplyBody1}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="replySenderName" value="${adminName}" />
+			<var name="senderName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody1}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${adminScreenName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewReplyMessage">
+			<var name="connectionName" value="${adminName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile2}" />
+			<var name="messageReplyBody" value="${messageReplyBody1}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="replySenderName" value="${adminName}" />
+			<var name="senderName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMessages#sendReplyMessage">
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile3}" />
+			<var name="messageReplyBody" value="${messageReplyBody2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${adminScreenName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewReplyMessage">
+			<var name="connectionName" value="${adminName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile3}" />
+			<var name="messageReplyBody" value="${messageReplyBody2}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="replySenderName" value="${userName}" />
-			<var name="senderName" value="${adminName}" />
+			<var name="senderName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessageNotification">
+			<var name="messageBody" value="${messageReplyBody2}" />
+			<var name="senderName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Messages" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewReplyMessage">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile3}" />
+			<var name="messageReplyBody" value="${messageReplyBody2}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="replySenderName" value="${userName}" />
+			<var name="senderName" value="${userName}" />
 		</execute>
 	</command>
 </definition>

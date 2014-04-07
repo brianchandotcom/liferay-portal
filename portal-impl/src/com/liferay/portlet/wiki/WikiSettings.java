@@ -15,13 +15,12 @@
 package com.liferay.portlet.wiki;
 
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
+import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.ContentUtil;
 
 /**
  * @author Iván Zaera
@@ -49,52 +48,54 @@ public class WikiSettings extends BaseServiceSettings {
 		return typedSettings.getValue("emailFromName");
 	}
 
-	public String getEmailPageAddedBody() {
-		String emailPageAddedBody = typedSettings.getValue(
-			"emailPageAddedBody");
+	public LocalizedValuesMap getEmailPageAddedBody() {
+		return typedSettings.getLocalizedValuesMap("emailPageAddedBody");
+	}
 
-		if (Validator.isNotNull(emailPageAddedBody)) {
-			return emailPageAddedBody;
-		}
+	public String getEmailPageAddedBodyXml() {
+		LocalizedValuesMap emailPageAddedBodyMap = getEmailPageAddedBody();
 
-		return ContentUtil.get(
-			typedSettings.getValue(PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY));
+		return emailPageAddedBodyMap.getLocalizationXml();
 	}
 
 	public boolean getEmailPageAddedEnabled() {
 		return typedSettings.getBooleanValue("emailPageAddedEnabled");
 	}
 
-	public String getEmailPageAddedSubject() {
-		return typedSettings.getValue("emailPageAddedSubject");
+	public LocalizedValuesMap getEmailPageAddedSubject() {
+		return typedSettings.getLocalizedValuesMap("emailPageAddedSubject");
 	}
 
-	public String getEmailPageUpdatedBody() {
-		String emailPageUpdatedBody = typedSettings.getValue(
-			"emailPageUpdatedBody");
+	public String getEmailPageAddedSubjectXml() {
+		LocalizedValuesMap emailPageAddedSubjectMap =
+			getEmailPageAddedSubject();
 
-		if (Validator.isNotNull(emailPageUpdatedBody)) {
-			return emailPageUpdatedBody;
-		}
+		return emailPageAddedSubjectMap.getLocalizationXml();
+	}
 
-		return ContentUtil.get(
-			typedSettings.getValue(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY));
+	public LocalizedValuesMap getEmailPageUpdatedBody() {
+		return typedSettings.getLocalizedValuesMap("emailPageUpdatedBody");
+	}
+
+	public String getEmailPageUpdatedBodyXml() {
+		LocalizedValuesMap emailPageUpdatedBodyMap = getEmailPageUpdatedBody();
+
+		return emailPageUpdatedBodyMap.getLocalizationXml();
 	}
 
 	public boolean getEmailPageUpdatedEnabled() {
 		return typedSettings.getBooleanValue("emailPageUpdatedEnabled");
 	}
 
-	public String getEmailPageUpdatedSubject() {
-		String emailPageUpdatedSubject = typedSettings.getValue(
-			"emailPageUpdatedSubject");
+	public LocalizedValuesMap getEmailPageUpdatedSubject() {
+		return typedSettings.getLocalizedValuesMap("emailPageUpdatedSubject");
+	}
 
-		if (Validator.isNotNull(emailPageUpdatedSubject)) {
-			return emailPageUpdatedSubject;
-		}
+	public String getEmailPageUpdatedSubjectXml() {
+		LocalizedValuesMap emailPageUpdatedSubjectMap =
+			getEmailPageUpdatedSubject();
 
-		return ContentUtil.get(
-			typedSettings.getValue(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT));
+		return emailPageUpdatedSubjectMap.getLocalizationXml();
 	}
 
 	public boolean getEnableCommentRatings() {
@@ -167,12 +168,19 @@ public class WikiSettings extends BaseServiceSettings {
 			"emailFromName", PropsKeys.WIKI_EMAIL_FROM_NAME,
 			PropsKeys.ADMIN_EMAIL_FROM_NAME);
 		_fallbackKeys.add(
+			"emailPageAddedBody", PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY);
+		_fallbackKeys.add(
 			"emailPageAddedEnabled", PropsKeys.WIKI_EMAIL_PAGE_ADDED_ENABLED);
 		_fallbackKeys.add(
 			"emailPageAddedSubject", PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT);
 		_fallbackKeys.add(
+			"emailPageUpdatedBody", PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY);
+		_fallbackKeys.add(
 			"emailPageUpdatedEnabled",
 			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_ENABLED);
+		_fallbackKeys.add(
+			"emailPageUpdatedSubject",
+			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT);
 		_fallbackKeys.add(
 			"enableCommentRatings", PropsKeys.WIKI_COMMENT_RATINGS_ENABLED);
 		_fallbackKeys.add(

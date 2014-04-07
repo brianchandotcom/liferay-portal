@@ -96,21 +96,21 @@ wikiSettings = WikiUtil.getWikiSettings(themeDisplay.getSiteGroupId(), request);
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= wikiSettings.getEmailPageAddedBody() %>"
+				emailBody="<%= wikiSettings.getEmailPageAddedBodyXml() %>"
 				emailDefinitionTerms="<%= definitionTerms %>"
 				emailEnabled="<%= wikiSettings.getEmailPageAddedEnabled() %>"
 				emailParam="emailPageAdded"
-				emailSubject="<%= wikiSettings.getEmailPageAddedSubject() %>"
+				emailSubject="<%= wikiSettings.getEmailPageAddedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= wikiSettings.getEmailPageUpdatedBody() %>"
+				emailBody="<%= wikiSettings.getEmailPageUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= definitionTerms %>"
 				emailEnabled="<%= wikiSettings.getEmailPageUpdatedEnabled() %>"
 				emailParam="emailPageUpdated"
-				emailSubject="<%= wikiSettings.getEmailPageAddedSubject() %>"
+				emailSubject="<%= wikiSettings.getEmailPageUpdatedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
@@ -136,8 +136,6 @@ wikiSettings = WikiUtil.getWikiSettings(themeDisplay.getSiteGroupId(), request);
 		window,
 		'<portlet:namespace />saveConfiguration',
 		function() {
-			<portlet:namespace />saveEmails();
-
 			document.<portlet:namespace />fm.<portlet:namespace />visibleNodes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentVisibleNodes);
 
 			document.<portlet:namespace />fm.<portlet:namespace />hiddenNodes.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />availableVisibleNodes);
@@ -146,18 +144,4 @@ wikiSettings = WikiUtil.getWikiSettings(themeDisplay.getSiteGroupId(), request);
 		},
 		['liferay-util-list-fields']
 	);
-
-	function <portlet:namespace />saveEmails() {
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailPageAddedBody--'].value = window['<portlet:namespace />emailPageAdded'].getHTML();
-		}
-		catch (e) {
-		}
-
-		try {
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailPageUpdatedBody--'].value = window['<portlet:namespace />emailPageUpdated'].getHTML();
-		}
-		catch (e) {
-		}
-	}
 </aui:script>

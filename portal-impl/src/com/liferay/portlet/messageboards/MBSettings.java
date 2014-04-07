@@ -16,13 +16,11 @@ package com.liferay.portlet.messageboards;
 
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.util.MBUtil;
-import com.liferay.util.ContentUtil;
 import com.liferay.util.RSSUtil;
 
 /**
@@ -43,55 +41,19 @@ public class MBSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailMessageAddedBody() {
-		String emailMessageAddedBody = typedSettings.getValue(
-			"emailMessageAddedBody");
-
-		if (Validator.isNotNull(emailMessageAddedBody)) {
-			return emailMessageAddedBody;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(
-				PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY));
+		return typedSettings.getValue("emailMessageAddedBody");
 	}
 
 	public String getEmailMessageAddedSubject() {
-		String emailMessageAddedSubject = typedSettings.getValue(
-			"emailMessageAddedSubject");
-
-		if (Validator.isNotNull(emailMessageAddedSubject)) {
-			return emailMessageAddedSubject;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(
-				PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT));
+		return typedSettings.getValue("emailMessageAddedSubject");
 	}
 
 	public String getEmailMessageUpdatedBody() {
-		String emailMessageUpdatedBody = typedSettings.getValue(
-			"emailMessageUpdatedBody");
-
-		if (Validator.isNotNull(emailMessageUpdatedBody)) {
-			return emailMessageUpdatedBody;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(
-				PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY));
+		return typedSettings.getValue("emailMessageUpdatedBody");
 	}
 
 	public String getEmailMessageUpdatedSubject() {
-		String emailMessageUpdatedSubject = typedSettings.getValue(
-			"emailMessageUpdatedSubject");
-
-		if (Validator.isNotNull(emailMessageUpdatedSubject)) {
-			return emailMessageUpdatedSubject;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(
-				PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT));
+		return typedSettings.getValue("emailMessageUpdatedSubject");
 	}
 
 	public String getMessageFormat() {
@@ -187,11 +149,23 @@ public class MBSettings extends BaseServiceSettings {
 		_fallbackKeys.add(
 			"emailHtmlFormat", PropsKeys.MESSAGE_BOARDS_EMAIL_HTML_FORMAT);
 		_fallbackKeys.add(
+			"emailMessageAddedBody",
+			PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY);
+		_fallbackKeys.add(
 			"emailMessageAddedEnabled",
 			PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_ENABLED);
 		_fallbackKeys.add(
+			"emailMessageAddedSubject",
+			PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT);
+		_fallbackKeys.add(
+			"emailMessageUpdatedBody",
+			PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY);
+		_fallbackKeys.add(
 			"emailMessageUpdatedEnabled",
 			PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_ENABLED);
+		_fallbackKeys.add(
+			"emailMessageUpdatedSubject",
+			PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT);
 		_fallbackKeys.add(
 			"enableFlags", PropsKeys.MESSAGE_BOARDS_FLAGS_ENABLED);
 		_fallbackKeys.add(

@@ -169,6 +169,7 @@ public class BlogsSettings extends BaseServiceSettings {
 		_fallbackKeys.add("enableRatings", PropsKeys.BLOGS_RATINGS_ENABLED);
 		_fallbackKeys.add(
 			"enableRelatedAssets", PropsKeys.BLOGS_RELATED_ASSETS_ENABLED);
+		_fallbackKeys.add("enableRss", PropsKeys.BLOGS_RSS_ENABLED);
 		_fallbackKeys.add(
 			"enableSocialBookmarks", PropsKeys.BLOGS_SOCIAL_BOOKMARKS_ENABLED);
 		_fallbackKeys.add("displayStyle", PropsKeys.BLOGS_DISPLAY_STYLE);

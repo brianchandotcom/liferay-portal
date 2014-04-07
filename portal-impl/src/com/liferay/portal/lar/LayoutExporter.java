@@ -547,8 +547,7 @@ public class LayoutExporter {
 			document, portletDataContext.getManifestSummary());
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Exporting layouts takes " + stopWatch.getTime() + " ms");
+			_log.info("Exporting layouts takes " + stopWatch.getTime() + " ms");
 		}
 
 		portletDataContext.addZipEntry(

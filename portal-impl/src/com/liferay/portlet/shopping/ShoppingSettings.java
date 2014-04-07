@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
 import com.liferay.portal.settings.Settings;
-import com.liferay.util.ContentUtil;
 
 import java.util.Currency;
 import java.util.Locale;
@@ -138,16 +137,7 @@ public class ShoppingSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailOrderConfirmationBody() {
-		String emailOrderConfirmationBody = typedSettings.getValue(
-			"emailOrderConfirmationBody");
-
-		if (Validator.isNotNull(emailOrderConfirmationBody)) {
-			return emailOrderConfirmationBody;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(
-				PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_BODY));
+		return typedSettings.getValue("emailOrderConfirmationBody");
 	}
 
 	public boolean getEmailOrderConfirmationEnabled() {
@@ -155,29 +145,11 @@ public class ShoppingSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailOrderConfirmationSubject() {
-		String emailOrderConfirmationSubject = typedSettings.getValue(
-			"emailOrderConfirmationSubject");
-
-		if (Validator.isNotNull(emailOrderConfirmationSubject)) {
-			return emailOrderConfirmationSubject;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(
-				PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_SUBJECT));
+		return typedSettings.getValue("emailOrderConfirmationSubject");
 	}
 
 	public String getEmailOrderShippingBody() {
-		String emailOrderShippingBody = typedSettings.getValue(
-			"emailOrderShippingBody");
-
-		if (Validator.isNotNull(emailOrderShippingBody)) {
-			return emailOrderShippingBody;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(
-				PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_BODY));
+		return typedSettings.getValue("emailOrderShippingBody");
 	}
 
 	public boolean getEmailOrderShippingEnabled() {
@@ -185,16 +157,7 @@ public class ShoppingSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailOrderShippingSubject() {
-		String emailOrderShippingSubject = typedSettings.getValue(
-			"emailOrderShippingSubject");
-
-		if (Validator.isNotNull(emailOrderShippingSubject)) {
-			return emailOrderShippingSubject;
-		}
-
-		return ContentUtil.get(
-			typedSettings.getValue(
-				PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_SUBJECT));
+		return typedSettings.getValue("emailOrderShippingSubject");
 	}
 
 	public String[] getInsurance() {
@@ -263,11 +226,23 @@ public class ShoppingSettings extends BaseServiceSettings {
 			"emailFromName", PropsKeys.SHOPPING_EMAIL_FROM_NAME,
 			PropsKeys.ADMIN_EMAIL_FROM_NAME);
 		_fallbackKeys.add(
+			"emailOrderConfirmationBody",
+			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_BODY);
+		_fallbackKeys.add(
 			"emailOrderConfirmationEnabled",
 			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_ENABLED);
 		_fallbackKeys.add(
+			"emailOrderConfirmationSubject",
+			PropsKeys.SHOPPING_EMAIL_ORDER_CONFIRMATION_SUBJECT);
+		_fallbackKeys.add(
+			"emailOrderShippingBody",
+			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_BODY);
+		_fallbackKeys.add(
 			"emailOrderShippingEnabled",
 			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_ENABLED);
+		_fallbackKeys.add(
+			"emailOrderShippingSubject",
+			PropsKeys.SHOPPING_EMAIL_ORDER_SHIPPING_SUBJECT);
 		_fallbackKeys.add("insurance", PropsKeys.SHOPPING_INSURANCE);
 		_fallbackKeys.add(
 			"insuranceFormula", PropsKeys.SHOPPING_INSURANCE_FORMULA);

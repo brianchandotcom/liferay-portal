@@ -20,7 +20,6 @@ import com.liferay.portal.settings.FallbackKeys;
 import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Iván Zaera
@@ -103,19 +102,11 @@ public class WikiSettings extends BaseServiceSettings {
 	}
 
 	public boolean getEnableComments() {
-		if (!PropsValues.WIKI_PAGE_COMMENTS_ENABLED) {
-			return false;
-		}
-
-		return typedSettings.getBooleanValue("enableComments", true);
+		return typedSettings.getBooleanValue("enableComments");
 	}
 
 	public boolean getEnablePageRatings() {
-		if (!PropsValues.WIKI_PAGE_RATINGS_ENABLED) {
-			return false;
-		}
-
-		return typedSettings.getBooleanValue("enablePageRatings", true);
+		return typedSettings.getBooleanValue("enablePageRatings");
 	}
 
 	public boolean getEnableRelatedAssets() {
@@ -127,7 +118,7 @@ public class WikiSettings extends BaseServiceSettings {
 			return false;
 		}
 
-		return typedSettings.getBooleanValue("enableRss", true);
+		return typedSettings.getBooleanValue("enableRss");
 	}
 
 	public String[] getHiddenNodes() {
@@ -182,9 +173,14 @@ public class WikiSettings extends BaseServiceSettings {
 			"emailPageUpdatedSubject",
 			PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT);
 		_fallbackKeys.add(
+			"enableComments", PropsKeys.WIKI_PAGE_COMMENTS_ENABLED);
+		_fallbackKeys.add(
 			"enableCommentRatings", PropsKeys.WIKI_COMMENT_RATINGS_ENABLED);
 		_fallbackKeys.add(
+			"enablePageRatings", PropsKeys.WIKI_PAGE_RATINGS_ENABLED);
+		_fallbackKeys.add(
 			"enableRelatedAssets", PropsKeys.WIKI_RELATED_ASSETS_ENABLED);
+		_fallbackKeys.add("enableRss", PropsKeys.WIKI_RSS_ENABLED);
 		_fallbackKeys.add(
 			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 		_fallbackKeys.add(

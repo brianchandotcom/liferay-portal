@@ -1383,8 +1383,15 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			String uuid = referenceElement.attributeValue("uuid");
 
+			Map<Long, Long> groupIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					Group.class);
+
+			long importGroupId = MapUtil.getLong(
+				groupIds, groupId, portletDataContext.getScopeGroupId());
+
 			FileEntry importedFileEntry = FileEntryUtil.fetchByUUID_R(
-				uuid, groupId);
+				uuid, importGroupId);
 
 			if (importedFileEntry == null) {
 				continue;

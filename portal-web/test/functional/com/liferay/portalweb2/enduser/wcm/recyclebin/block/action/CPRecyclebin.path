@@ -156,6 +156,37 @@
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECYCLE_BIN_FOLDER-->
+<tr>
+	<td>RECYCLE_BIN_FOLDER_DOCUMENT_NAME</td>
+	<td>//div[@id='_182_trashRenderersSearchContainer']//tr[contains(.,'${key_assetName}')]/td/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_FOLDER_ACTIONS</td>
+	<td>//div[@id='_182_trashRenderersSearchContainer']//tr[contains(.,'${key_assetName}')]/td/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_FOLDER_WARNING_IFRAME</td>
+	<td>//iframe[@id='_182_selectFolder_iframe_']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_FOLDER_WARNING_INFO</td>
+	<td>//div[contains(@class,'alert-block')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_FOLDER_WARNING_CHOOSE_THIS_FOLDER_BUTTON</td>
+	<td>//button[contains(.,'Choose This Folder')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

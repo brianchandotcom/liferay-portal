@@ -20,10 +20,10 @@
 </tr>
 <tr>
 	<td>EXTEND_ACTION_PATH</td>
- 	<td>CPWebcontentAddwebcontent</td>
- 	<td></td>
- </tr>
- <tr>
+	<td>CPWebcontentAddwebcontent</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -56,6 +56,11 @@
 <tr>
 	<td>AVAILABLE_TRANSLATIONS_LINK</td>
 	<td>//a[contains(@class,'journal-article-translation') and contains(.,'${key_localizedLanguage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -103,6 +108,47 @@
 <tr>
 	<td>MENU_CUSTOM_FIELDS</td>
 	<td>//a[@id='_15_customFieldsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VIEW_HISTORY-->
+<tr>
+	<td>VIEW_HISTORY_COMPARE_VERSIONS_BUTTON</td>
+	<td>//button[@id='_15_compare']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_HISTORY_EXPIRE_BUTTON</td>
+	<td>//button[@id='_15_expire']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_HISTORY_DELETE_BUTTON</td>
+	<td>//button[@id='_15_delete']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_HISTORY_ALL_CHECKBOX</td>
+	<td>//input[@name='_15_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_HISTORY_VERSION_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_HISTORY_VERSION_TITLE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_HISTORY_VERSION_STATUS</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[5]</td>
 	<td></td>
 </tr>
 </tbody>

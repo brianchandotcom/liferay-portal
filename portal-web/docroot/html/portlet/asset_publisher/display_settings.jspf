@@ -117,7 +117,7 @@
 
 	<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableFlags() %>" />
 
-	<c:if test="<%= (rootPortletId.equals(PortletKeys.HIGHEST_RATED_ASSETS) && PropsValues.HIGHEST_RATED_ASSETS_SHOW_PERMISSIONS_ENABLED) || (rootPortletId.equals(PortletKeys.MOST_VIEWED_ASSETS) && PropsValues.MOST_VIEWED_ASSETS_SHOW_PERMISSIONS_ENABLED) || !PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
+	<c:if test="<%= assetPublisherDisplayContext.isShowEnablePermissions() %>">
 		<aui:input name="preferences--enablePermissions--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnablePermissions() %>" />
 	</c:if>
 

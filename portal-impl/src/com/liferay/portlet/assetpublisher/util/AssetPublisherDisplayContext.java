@@ -598,10 +598,10 @@ public class AssetPublisherDisplayContext {
 				return _enablePermissions;
 			}
 
-			if ((PropsValues.HIGHEST_RATED_ASSETS_SHOW_PERMISSIONS_ENABLED &&
-					portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS)) ||
-				(PropsValues.MOST_VIEWED_ASSETS_SHOW_PERMISSIONS_ENABLED &&
-					portletName.equals(PortletKeys.MOST_VIEWED_ASSETS))) {
+			if ((!PropsValues.HIGHEST_RATED_ASSETS_SHOW_PERMISSIONS_ENABLED &&
+				 portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS)) ||
+				(!PropsValues.MOST_VIEWED_ASSETS_SHOW_PERMISSIONS_ENABLED &&
+				 portletName.equals(PortletKeys.MOST_VIEWED_ASSETS))) {
 
 				_enablePermissions = true;
 
@@ -773,6 +773,21 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _showContextLink;
+	}
+
+	public Boolean isShowEnablePermissions() {
+		String portletName = getPortletName();
+
+		if ((portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) &&
+			 PropsValues.HIGHEST_RATED_ASSETS_SHOW_PERMISSIONS_ENABLED) ||
+			(portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) &&
+			 PropsValues.MOST_VIEWED_ASSETS_SHOW_PERMISSIONS_ENABLED) ||
+			!PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowExtraInfo() {

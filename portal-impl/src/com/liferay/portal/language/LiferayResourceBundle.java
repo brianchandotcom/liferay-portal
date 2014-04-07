@@ -66,6 +66,19 @@ public class LiferayResourceBundle extends ResourceBundle {
 	}
 
 	@Override
+	public boolean containsKey(String key) {
+		if (_map.containsKey(key)) {
+			return true;
+		}
+
+		if (parent != null) {
+			return parent.containsKey(key);
+		}
+
+		return false;
+	}
+
+	@Override
 	public Enumeration<String> getKeys() {
 		final Set<String> keys = _map.keySet();
 
@@ -125,23 +138,7 @@ public class LiferayResourceBundle extends ResourceBundle {
 			throw new NullPointerException();
 		}
 
-		String value = _map.get(key);
-
-		if ((value == null) && ResourceBundleThreadLocal.isReplace()) {
-			if (parent != null) {
-				try {
-					value = parent.getString(key);
-				}
-				catch (MissingResourceException mre) {
-				}
-			}
-
-			if (value == null) {
-				value = ResourceBundleUtil.NULL_VALUE;
-			}
-		}
-
-		return value;
+		return _map.get(key);
 	}
 
 	private Map<String, String> _map;

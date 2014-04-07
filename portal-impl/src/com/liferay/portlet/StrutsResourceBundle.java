@@ -14,15 +14,17 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.EnumerationUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ResourceBundleThreadLocal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.language.LanguageResources;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
@@ -34,11 +36,26 @@ public class StrutsResourceBundle extends ResourceBundle {
 	public StrutsResourceBundle(String portletName, Locale locale) {
 		_portletName = portletName;
 		_locale = locale;
+
+		setParent(LanguageResources.getResourceBundle(locale));
+	}
+
+	@Override
+	public boolean containsKey(String key) {
+		if (_keys.contains(key)) {
+			key = key.concat(StringPool.PERIOD).concat(_portletName);
+
+			return parent.containsKey(key);
+		}
+
+		return parent.containsKey(key);
 	}
 
 	@Override
 	public Enumeration<String> getKeys() {
-		return Collections.enumeration(LanguageUtil.getKeys(_locale));
+		Enumeration<String> enumeration = Collections.enumeration(_keys);
+
+		return EnumerationUtil.compose(enumeration, parent.getKeys());
 	}
 
 	@Override
@@ -52,23 +69,30 @@ public class StrutsResourceBundle extends ResourceBundle {
 			throw new NullPointerException();
 		}
 
-		if (key.equals(JavaConstants.JAVAX_PORTLET_DESCRIPTION) ||
-			key.equals(JavaConstants.JAVAX_PORTLET_KEYWORDS) ||
-			key.equals(JavaConstants.JAVAX_PORTLET_LONG_TITLE) ||
-			key.equals(JavaConstants.JAVAX_PORTLET_SHORT_TITLE) ||
-			key.equals(JavaConstants.JAVAX_PORTLET_TITLE)) {
-
+		if (_keys.contains(key)) {
 			key = key.concat(StringPool.PERIOD).concat(_portletName);
+
+			if (parent.containsKey(key)) {
+				try {
+					return parent.getObject(key);
+				}
+				catch (MissingResourceException mre) {
+					return null;
+				}
+			}
 		}
 
-		String value = LanguageUtil.get(_locale, key);
-
-		if ((value == null) && ResourceBundleThreadLocal.isReplace()) {
-			value = ResourceBundleUtil.NULL_VALUE;
-		}
-
-		return value;
+		return null;
 	}
+
+	private static List<String> _keys = Arrays.asList(
+		new String[]{
+			JavaConstants.JAVAX_PORTLET_DESCRIPTION,
+			JavaConstants.JAVAX_PORTLET_KEYWORDS,
+			JavaConstants.JAVAX_PORTLET_LONG_TITLE,
+			JavaConstants.JAVAX_PORTLET_SHORT_TITLE,
+			JavaConstants.JAVAX_PORTLET_TITLE
+		});
 
 	private Locale _locale;
 	private String _portletName;

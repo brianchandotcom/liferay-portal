@@ -16,8 +16,6 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.util.EnumerationUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ResourceBundleThreadLocal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.model.PortletInfo;
 
 import java.util.Arrays;
@@ -25,7 +23,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
@@ -45,6 +42,18 @@ public class PortletResourceBundle extends ResourceBundle {
 		parent = parentResourceBundle;
 
 		_portletInfo = portletInfo;
+	}
+
+	@Override
+	public boolean containsKey(String key) {
+		if (_keys.contains(key) && _getJavaxPortletString(key) != null) {
+			return true;
+		}
+		if (parent != null) {
+			return parent.containsKey(key);
+		}
+
+		return false;
 	}
 
 	@Override
@@ -73,25 +82,11 @@ public class PortletResourceBundle extends ResourceBundle {
 			throw new NullPointerException();
 		}
 
-		String value = null;
-
-		if (parent != null) {
-			try {
-				value = parent.getString(key);
-			}
-			catch (MissingResourceException mre) {
-			}
+		if (parent != null && parent.containsKey(key)) {
+			return parent.getString(key);
 		}
 
-		if ((value == null) || value.equals(ResourceBundleUtil.NULL_VALUE)) {
-			value = _getJavaxPortletString(key);
-		}
-
-		if ((value == null) && ResourceBundleThreadLocal.isReplace()) {
-			value = ResourceBundleUtil.NULL_VALUE;
-		}
-
-		return value;
+		return _getJavaxPortletString(key);
 	}
 
 	private String _getJavaxPortletString(String key) {

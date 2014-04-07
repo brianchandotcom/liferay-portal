@@ -37,10 +37,7 @@ public abstract class BaseSearchResultPermissionFilter
 
 		String[] selectedFieldNames = queryConfig.getSelectedFieldNames();
 
-		if (ArrayUtil.isNotEmpty(selectedFieldNames) &&
-			(selectedFieldNames.length == 1) &&
-			selectedFieldNames[0].equals(Field.ANY)) {
-
+		if (!queryConfig.isAllFieldsSelected()) {
 			selectedFieldNames = ArrayUtil.append(
 				selectedFieldNames, _PERMISSION_SELECTED_FIELD_NAMES);
 

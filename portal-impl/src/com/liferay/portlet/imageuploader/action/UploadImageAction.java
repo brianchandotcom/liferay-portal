@@ -130,70 +130,8 @@ public class UploadImageAction extends PortletAction {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portal.error");
-			}
-			else if (e instanceof FileExtensionException ||
-					 e instanceof FileSizeException ||
-					 e instanceof ImageTypeException ||
-					 e instanceof NoSuchFileException ||
-					 e instanceof UploadException) {
-
-				if (cmd.equals(Constants.ADD_TEMP)) {
-					hideDefaultErrorMessage(actionRequest);
-
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)actionRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					String errorMessage = StringPool.BLANK;
-
-					if (e instanceof FileExtensionException) {
-						errorMessage = themeDisplay.translate(
-							"please-enter-a-file-with-a-valid-extension-x",
-							StringUtil.merge(
-								PropsValues.DL_FILE_EXTENSIONS,
-								StringPool.COMMA));
-					}
-					else if (e instanceof FileSizeException) {
-						if (maxFileSize == 0) {
-							maxFileSize = PrefsPropsUtil.getLong(
-								PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-						}
-
-						errorMessage = themeDisplay.translate(
-							"please-enter-a-file-with-a-valid-file-size-no" +
-								"-larger-than-x",
-							TextFormatter.formatStorageSize(
-								maxFileSize, themeDisplay.getLocale()));
-					}
-					else if (e instanceof ImageTypeException) {
-						errorMessage = themeDisplay.translate(
-							"please-enter-a-file-with-a-valid-file-type");
-					}
-					else if (e instanceof NoSuchFileException ||
-							 e instanceof UploadException) {
-
-						errorMessage = themeDisplay.translate(
-							"an-unexpected-error-occurred-while-uploading" +
-								"-your-file");
-					}
-
-					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-					jsonObject.put("errorMessage", errorMessage);
-
-					writeJSON(actionRequest, actionResponse, jsonObject);
-				}
-				else {
-					SessionErrors.add(actionRequest, e.getClass());
-				}
-			}
-			else {
-				throw e;
-			}
+			handleUploadException(
+				actionRequest, actionResponse, cmd, maxFileSize, e);
 		}
 	}
 
@@ -284,6 +222,76 @@ public class UploadImageAction extends PortletAction {
 		Class<?> clazz = getClass();
 
 		return clazz.getName();
+	}
+
+	protected void handleUploadException(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String cmd, long maxFileSize, Exception e)
+		throws Exception {
+
+		if (e instanceof PrincipalException) {
+			SessionErrors.add(actionRequest, e.getClass());
+
+			setForward(actionRequest, "portal.error");
+		}
+		else if (e instanceof FileExtensionException ||
+				 e instanceof FileSizeException ||
+				 e instanceof ImageTypeException ||
+				 e instanceof NoSuchFileException ||
+				 e instanceof UploadException) {
+
+			if (cmd.equals(Constants.ADD_TEMP)) {
+				hideDefaultErrorMessage(actionRequest);
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				String errorMessage = StringPool.BLANK;
+
+				if (e instanceof FileExtensionException) {
+					errorMessage = themeDisplay.translate(
+						"please-enter-a-file-with-a-valid-extension-x",
+						StringUtil.merge(
+							PropsValues.DL_FILE_EXTENSIONS, StringPool.COMMA));
+				}
+				else if (e instanceof FileSizeException) {
+					if (maxFileSize == 0) {
+						maxFileSize = PrefsPropsUtil.getLong(
+							PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+					}
+
+					errorMessage = themeDisplay.translate(
+						"please-enter-a-file-with-a-valid-file-size-no" +
+							"-larger-than-x",
+						TextFormatter.formatStorageSize(
+							maxFileSize, themeDisplay.getLocale()));
+				}
+				else if (e instanceof ImageTypeException) {
+					errorMessage = themeDisplay.translate(
+						"please-enter-a-file-with-a-valid-file-type");
+				}
+				else if (e instanceof NoSuchFileException ||
+						 e instanceof UploadException) {
+
+					errorMessage = themeDisplay.translate(
+						"an-unexpected-error-occurred-while-uploading" +
+							"-your-file");
+				}
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+				jsonObject.put("errorMessage", errorMessage);
+
+				writeJSON(actionRequest, actionResponse, jsonObject);
+			}
+			else {
+				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+		}
+		else {
+			throw e;
+		}
 	}
 
 	protected FileEntry saveTempImageFile(ActionRequest actionRequest)

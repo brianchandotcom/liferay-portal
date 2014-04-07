@@ -105,7 +105,7 @@ blogsSettings = BlogsUtil.getBlogsSettings(scopeGroupId, request);
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 					emailEnabled="<%= blogsSettings.getEmailEntryUpdatedEnabled() %>"
 				emailParam="emailEntryUpdated"
-				emailSubject="<%= blogsSettings.getEmailEntryAddedSubjectXml() %>"
+				emailSubject="<%= blogsSettings.getEmailEntryUpdatedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 

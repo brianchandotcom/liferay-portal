@@ -422,6 +422,19 @@ public class ExportImportHelperUtil {
 	}
 
 	public static MissingReferences validateMissingReferences(
+			final PortletDataContext portletDataContext)
+		throws Exception {
+
+		return getExportImportHelper().validateMissingReferences(
+			portletDataContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #validateMissingReferences(PortletDataContext)}
+	 */
+	@Deprecated
+	public static MissingReferences validateMissingReferences(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
 		throws Exception {

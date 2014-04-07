@@ -299,6 +299,15 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	public MissingReferences validateMissingReferences(
+			final PortletDataContext portletDataContext)
+		throws Exception;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #validateMissingReferences(PortletDataContext)}
+	 */
+	@Deprecated
+	public MissingReferences validateMissingReferences(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
 		throws Exception;

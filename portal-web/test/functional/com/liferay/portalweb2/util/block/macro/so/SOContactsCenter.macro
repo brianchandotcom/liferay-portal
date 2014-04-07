@@ -73,6 +73,64 @@
 		</execute>
 	</command>
 
+	<command name="blockUser">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="BLOCK_BUTTON" value1="Block" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="BLOCKED_MESSAGE" value1="Blocked" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="UNBLOCK_BUTTON" value1="Unblock" />
+		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="CONNECT_BUTTON" />
+		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="FOLLOW_BUTTON" />
+	</command>
+
+	<command name="blockUserSelectedUsersList">
+		<execute macro="SOContactsCenter#selectUsers" />
+
+		<execute action="SOContactscenter#assertClick" locator-key1="BLOCK_BUTTON" value1="Block" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have blocked this user." />
+
+		<if>
+			<isset var="numberOfUsersBlocked" />
+			<then>
+				<var name="userNumber" value="0" />
+
+				<while>
+					<not>
+						<equals arg1="${userNumber}" arg2="${numberOfUsersBlocked}" />
+					</not>
+					<then>
+						<var name="userNumber" value="${userNumber?increment()}" />
+
+						<var name="key_userListName" value="${userNumber}" />
+
+						<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
+						<execute action="SOContactscenter#assertTextEquals" locator-key1="SELECTED_USERS_LIST_BLOCKED_MESSAGE" value1="Blocked" />
+					</then>
+				</while>
+			</then>
+			<else>
+				<var name="userListName" value="${userListName}" />
+
+				<var name="key_userListName" value="${userListName}" />
+
+				<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
+				<execute action="SOContactscenter#assertTextEquals" locator-key1="SELECTED_USERS_LIST_NAME" value1="${userListName}" />
+				<execute action="SOContactscenter#assertTextEquals" locator-key1="SELECTED_USERS_LIST_EMAIL" value1="${userEmailAddress}" />
+				<execute action="SOContactscenter#assertTextEquals" locator-key1="SELECTED_USERS_LIST_BLOCKED_MESSAGE" value1="Blocked" />
+			</else>
+		</if>
+
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="UNBLOCK_BUTTON" value1="Unblock" />
+	</command>
+
 	<command name="confirmRequestToConnect">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
@@ -455,6 +513,64 @@
 		</while>
 	</command>
 
+	<command name="unblockUser">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="UNBLOCK_BUTTON" value1="Unblock" />
+		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="BLOCKED_MESSAGE" value1="Blocked" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONNECT_BUTTON" value1="Connect" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="FOLLOW_BUTTON" value1="Follow" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="BLOCK_BUTTON" value1="Block" />
+	</command>
+
+	<command name="unblockUserSelectedUsersList">
+		<execute macro="SOContactsCenter#selectUsers" />
+
+		<execute action="SOContactscenter#assertClick" locator-key1="UNBLOCK_BUTTON" value1="Unblock" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have unblocked this user." />
+
+		<if>
+			<isset var="numberOfUsersBlocked" />
+			<then>
+				<var name="userNumber" value="0" />
+
+				<while>
+					<not>
+						<equals arg1="${userNumber}" arg2="${numberOfUsersBlocked}" />
+					</not>
+					<then>
+						<var name="userNumber" value="${userNumber?increment()}" />
+
+						<var name="key_userListName" value="${userNumber}" />
+
+						<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
+						<execute action="SOContactscenter#assertElementNotPresent" locator-key1="SELECTED_USERS_LIST_BLOCKED_MESSAGE" value1="Blocked" />
+					</then>
+				</while>
+			</then>
+			<else>
+				<var name="userListName" value="${userListName}" />
+
+				<var name="key_userListName" value="${userListName}" />
+
+				<execute action="SOContactscenter#assertElementPresent" locator-key1="SELECTED_USERS_LIST_THUMB" />
+				<execute action="SOContactscenter#assertTextEquals" locator-key1="SELECTED_USERS_LIST_NAME" value1="${userListName}" />
+				<execute action="SOContactscenter#assertTextEquals" locator-key1="SELECTED_USERS_LIST_EMAIL" value1="${userEmailAddress}" />
+				<execute action="SOContactscenter#assertElementNotPresent" locator-key1="SELECTED_USERS_LIST_BLOCKED_MESSAGE" value1="Blocked" />
+			</else>
+		</if>
+
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="BLOCK_BUTTON" value1="Block" />
+	</command>
+
 	<command name="unfollowUser">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Contacts Center" />
@@ -509,6 +625,45 @@
 		</if>
 
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="FOLLOW_BUTTON" value1="Follow" />
+	</command>
+
+	<command name="viewBlockedUser">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#pause" value1="1000" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="UNBLOCK_BUTTON" value1="Unblock" />
+		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="CONNECT_BUTTON" />
+		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="FOLLOW_BUTTON" />
+		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="BLOCK_BUTTON" />
+	</command>
+
+	<command name="viewBlockingUser">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Contacts Center" />
+			<var name="soDashboard" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userFirstName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#pause" value1="1000" />
+		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="BLOCK_BUTTON" value1="Block" />
+		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="CONNECT_BUTTON" />
+		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="FOLLOW_BUTTON" />
 	</command>
 
 	<command name="viewConnection">
@@ -646,5 +801,8 @@
 		<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONNECT_BUTTON" value1="Connect" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="FOLLOW_BUTTON" value1="Follow" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="BLOCK_BUTTON" value1="Block" />
 	</command>
 </definition>

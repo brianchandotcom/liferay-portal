@@ -41,10 +41,8 @@ AUI.add(
 						instance._cropRegionNode = instance.one('#cropRegion');
 						instance._fileNameNode = instance.one('#fileName');
 						instance._formNode = instance.one('#fm');
-						instance._formValidator = Liferay.Form.get(instance._formNode.attr('id')).formValidator;
 						instance._portraitPreviewImg = instance.one('#portraitPreviewImg');
 						instance._submitButton = instance.one('#submitButton');
-						instance._tempImageFileName = instance.one('#tempImageFileName').val();
 					},
 
 					bindUI: function() {
@@ -107,14 +105,15 @@ AUI.add(
 							}
 
 							if (responseText.tempImageFileName) {
-								instance._tempImageFileName = responseText.tempImageFileName;
-
 								var previewURL = instance.get('previewURL');
 
 								previewURL = Liferay.Util.addParams(instance.get('namespace') + 'tempImageFileName=' + responseText.tempImageFileName, previewURL);
 								previewURL = Liferay.Util.addParams('t=' + Lang.now(), previewURL);
 
 								portraitPreviewImg.attr('src', previewURL);
+
+								instance.one('#previewURL').val(previewURL);
+								instance.one('#tempImageFileName').val(responseText.tempImageFileName);
 							}
 						}
 
@@ -175,9 +174,11 @@ AUI.add(
 					_onFileNameChange: function(event) {
 						var instance = this;
 
-						instance._formValidator.validateField(instance._fileNameNode);
+						var formValidator = Liferay.Form.get(instance._formNode.attr('id')).formValidator;
 
-						if (!instance._formValidator.hasErrors()) {
+						formValidator.validateField(instance._fileNameNode);
+
+						if (!formValidator.hasErrors()) {
 							var imageCropper = instance._imageCropper;
 							var portraitPreviewImg = instance._portraitPreviewImg;
 
@@ -271,9 +272,6 @@ AUI.add(
 
 							instance._cropRegionNode.val(A.JSON.stringify(cropRegion));
 						}
-
-						instance.one('#previewURL').val(portraitPreviewImg.attr('src'));
-						instance.one('#tempImageFileName').val(instance._tempImageFileName);
 					},
 
 					_setCropBackgroundSize: function(width, height) {

@@ -249,7 +249,7 @@ public class DocumentImplTest {
 	protected void checkSearchContext(SearchContext searchContext)
 		throws Exception {
 
-		Hits results = _indexer.search(searchContext);
+		Hits results = _indexer.search(searchContext, Field.ANY);
 
 		for (Document document : results.getDocs()) {
 			String screenName = document.get("screenName");

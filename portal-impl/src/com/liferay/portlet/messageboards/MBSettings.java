@@ -46,7 +46,9 @@ public class MBSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailMessageAddedBodyXml() {
-		return getEmailMessageAddedBody().getLocalizationXml();
+		LocalizedValuesMap emailMessageBody = getEmailMessageAddedBody();
+
+		return emailMessageBody.getLocalizationXml();
 	}
 
 	public LocalizedValuesMap getEmailMessageAddedSubject() {
@@ -54,7 +56,10 @@ public class MBSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailMessageAddedSubjectXml() {
-		return getEmailMessageAddedSubject().getLocalizationXml();
+		LocalizedValuesMap emailMessageAddedSubject =
+			getEmailMessageAddedSubject();
+
+		return emailMessageAddedSubject.getLocalizationXml();
 	}
 
 	public LocalizedValuesMap getEmailMessageUpdatedBody() {
@@ -62,7 +67,10 @@ public class MBSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailMessageUpdatedBodyXml() {
-		return getEmailMessageUpdatedBody().getLocalizationXml();
+		LocalizedValuesMap emailMessageUpdatedBody =
+			getEmailMessageUpdatedBody();
+
+		return emailMessageUpdatedBody.getLocalizationXml();
 	}
 
 	public LocalizedValuesMap getEmailMessageUpdatedSubject() {
@@ -71,7 +79,10 @@ public class MBSettings extends BaseServiceSettings {
 	}
 
 	public String getEmailMessageUpdatedSubjectXml() {
-		return getEmailMessageUpdatedSubject().getLocalizationXml();
+		LocalizedValuesMap emailMessageUpdatedSubject =
+			getEmailMessageUpdatedSubject();
+
+		return emailMessageUpdatedSubject.getLocalizationXml();
 	}
 
 	public String getMessageFormat() {

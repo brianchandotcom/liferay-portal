@@ -1017,6 +1017,27 @@ public class LayoutImporter {
 			throw new LARTypeException(larType);
 		}
 
+		String layoutsImportMode = MapUtil.getString(
+			portletDataContext.getParameterMap(),
+			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE);
+
+		Group group = GroupLocalServiceUtil.fetchGroup(
+			portletDataContext.getGroupId());
+
+		if (larType.equals("layout-set-prototype") &&
+			!group.isLayoutSetPrototype() &&
+			!layoutsImportMode.equals(
+				PortletDataHandlerKeys.
+					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+
+			throw new LARTypeException(
+				"Site template can be only imported to a site template");
+		}
+
+		if (larType.equals("layout-set") && group.isLayoutSetPrototype()) {
+			throw new LARTypeException("Site can be only imported to a site");
+		}
+
 		// Available locales
 
 		Locale[] sourceAvailableLocales = LocaleUtil.fromLanguageIds(

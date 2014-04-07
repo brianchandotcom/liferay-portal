@@ -859,13 +859,7 @@ public class LanguageImpl implements Language, Serializable {
 			return null;
 		}
 
-		String value = ResourceBundleUtil.getString(resourceBundle, key);
-
-		if (value != null) {
-			return LanguageResources.fixValue(value);
-		}
-
-		if (value == null) {
+		if (!resourceBundle.containsKey(key)) {
 			if ((key.length() > 0) &&
 				(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
 
@@ -877,9 +871,29 @@ public class LanguageImpl implements Language, Serializable {
 					return _get(resourceBundle, key);
 				}
 			}
+
+			return null;
+		}
+
+		String value = ResourceBundleUtil.getString(resourceBundle, key);
+
+		if (value != null) {
+			return LanguageResources.fixValue(value);
 		}
 
 		return value;
+		}
+
+	private String _get(
+			ResourceBundle resourceBundle, String key, String defaultValue) {
+
+		String value = _get(resourceBundle, key);
+
+		if (value != null) {
+		return value;
+	}
+
+		return defaultValue;
 	}
 
 	private String _getCharset(Locale locale) {

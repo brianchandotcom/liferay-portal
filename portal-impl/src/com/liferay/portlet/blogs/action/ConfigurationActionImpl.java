@@ -39,15 +39,12 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 
 		BlogsSettings blogsSettings = new BlogsSettings(settings);
 
-		String emailFromAddress = blogsSettings.getEmailFromAddress();
-
 		removeDefaultValue(
-			portletRequest, settings, "emailFromAddress", emailFromAddress);
-
-		String emailFromName = blogsSettings.getEmailFromName();
-
+			portletRequest, settings, "emailFromAddress",
+			blogsSettings.getEmailFromAddress());
 		removeDefaultValue(
-			portletRequest, settings, "emailFromName", emailFromName);
+			portletRequest, settings, "emailFromName",
+			blogsSettings.getEmailFromName());
 
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());

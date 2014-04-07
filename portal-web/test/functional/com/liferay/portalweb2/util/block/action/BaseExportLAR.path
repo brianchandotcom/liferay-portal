@@ -96,6 +96,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--PERMISSIONS-->
+<tr>
+	<td>PERMISSIONS_CHECK_BOX</td>
+	<td>//label[contains(.,'Permissions')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CURRENT_AND_PREVIOUS-->
 <tr>
 	<td>CURRENT_AND_PREVIOUS_INFO_MESSAGE</td>

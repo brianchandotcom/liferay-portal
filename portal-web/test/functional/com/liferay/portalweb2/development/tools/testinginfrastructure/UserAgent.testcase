@@ -1,0 +1,7 @@
+<definition component-name="portal-tools">
+	<command name="BrowseGoogle" priority="5">
+		<execute action="Home#open" locator1="www.google.com" />
+
+		<execute action="CPSites#pause" locator1="5000" />
+	</command>
+</definition>

@@ -79,9 +79,9 @@ import javax.servlet.http.HttpServletRequest;
  *
  * <p>
  * The UI name for a layout is "page." Thus, a layout represents a page in the
- * portal. A single page is either part of the public or private layout set
- * of a group (site). Layouts can be organized hierarchically and are summarized
- * in a {@link LayoutSet}.
+ * portal. A single page is either part of the public or private layout set of a
+ * group (site). Layouts can be organized hierarchically and are summarized in a
+ * {@link LayoutSet}.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -955,7 +955,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 		return false;
 	}
-	
+
 	/**
 	 * Returns <code>true</code> if the current layout can hold embedded
 	 * portlets.

@@ -181,11 +181,13 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 			LanguageUtil.get(locale, key, defaultValue));
 	}
 
+	@Deprecated
 	@Override
 	public String get(PageContext pageContext, String key) {
 		return UnicodeFormatter.toString(LanguageUtil.get(pageContext, key));
 	}
 
+	@Deprecated
 	@Override
 	public String get(
 		PageContext pageContext, String key, String defaultValue) {

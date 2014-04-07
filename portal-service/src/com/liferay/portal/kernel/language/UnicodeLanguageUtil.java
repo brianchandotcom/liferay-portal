@@ -146,10 +146,12 @@ public class UnicodeLanguageUtil {
 		return getUnicodeLanguage().get(locale, key, defaultValue);
 	}
 
+	@Deprecated
 	public static String get(PageContext pageContext, String key) {
 		return getUnicodeLanguage().get(pageContext, key);
 	}
 
+	@Deprecated
 	public static String get(
 		PageContext pageContext, String key, String defaultValue) {
 

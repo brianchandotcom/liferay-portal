@@ -179,19 +179,15 @@ public class BookmarksFolderServiceTest {
 			Assert.assertEquals(
 				entry.getCompanyId(),
 				GetterUtil.getLong(doc.get(Field.COMPANY_ID)));
-			AssertUtils.assertEqualsIgnoreCase(
-				entry.getDescription(), doc.get(Field.DESCRIPTION));
+			Assert.assertEquals(
+				BookmarksEntry.class.getName(),
+				doc.get(Field.ENTRY_CLASS_NAME));
 			Assert.assertEquals(
 				entry.getEntryId(),
 				GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK)));
-			Assert.assertEquals(
-				entry.getGroupId(),
-				GetterUtil.getLong(doc.get(Field.GROUP_ID)));
 			AssertUtils.assertEqualsIgnoreCase(
 				entry.getName(), doc.get(Field.TITLE));
 			Assert.assertEquals(entry.getUrl(), doc.get(Field.URL));
-			Assert.assertEquals(
-				entry.getFolderId(), GetterUtil.getLong(doc.get("folderId")));
 		}
 	}
 

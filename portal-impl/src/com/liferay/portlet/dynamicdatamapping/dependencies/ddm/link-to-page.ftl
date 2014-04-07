@@ -37,7 +37,7 @@
 				groupId = scopeGroupId
 				level = level + 1
 				parentLayoutId = curLayout.getLayoutId()
-				privateLayout = false
+				privateLayout = privateLayout
 				selectedPlid = selectedPlid
 			/>
 		</#list>

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -115,8 +114,6 @@ public interface Language {
 	public String getBCP47LanguageId(PortletRequest portletRequest);
 
 	public String getCharset(Locale locale);
-
-	public Set<String> getKeys(Locale locale);
 
 	public String getLanguageId(HttpServletRequest request);
 

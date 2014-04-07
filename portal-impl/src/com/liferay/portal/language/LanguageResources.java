@@ -73,20 +73,6 @@ public class LanguageResources {
 		}
 	}
 
-	public static Set<String> getKeys(Locale locale) {
-		if (locale == null) {
-			return null;
-		}
-
-		Map<String, String> languageMap = _languageMaps.get(locale);
-
-		if (languageMap == null) {
-			languageMap = _loadLocale(locale);
-		}
-
-		return languageMap.keySet();
-	}
-
 	public static String getMessage(Locale locale, String key) {
 		if (locale == null) {
 			return null;

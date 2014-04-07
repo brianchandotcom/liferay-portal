@@ -493,11 +493,6 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
-	public Set<String> getKeys(Locale locale) {
-		return LanguageResources.getKeys(locale);
-	}
-
-	@Override
 	public String getLanguageId(HttpServletRequest request) {
 		String languageId = ParamUtil.getString(request, "languageId");
 

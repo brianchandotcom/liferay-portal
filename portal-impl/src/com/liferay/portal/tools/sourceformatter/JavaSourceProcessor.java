@@ -1278,6 +1278,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					line, ".getMessage()", StringPool.BLANK);
 			}
 
+			// LPS-45492
+
+			if (trimmedLine.contains("StopWatch stopWatch = null;")) {
+				processErrorMessage(
+					fileName,
+					"Do not set stopwatch to null: " + fileName + " " +
+						lineCount);
+			}
+
 			checkStringBundler(trimmedLine, fileName, lineCount);
 
 			if (trimmedLine.startsWith("* @deprecated") &&

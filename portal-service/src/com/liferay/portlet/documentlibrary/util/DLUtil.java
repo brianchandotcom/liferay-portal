@@ -180,6 +180,13 @@ public class DLUtil {
 			request, emailFromAddress, emailFromName);
 	}
 
+	public static boolean getEmailFileEntryAnyEventEnabled(
+		DLSettings dlSettings) {
+
+		return dlSettings.getEmailFileEntryAddedEnabled() ||
+			dlSettings.getEmailFileEntryUpdatedEnabled();
+	}
+
 	public static Map<String, String> getEmailFromDefinitionTerms(
 		RenderRequest request, String emailFromAddress, String emailFromName) {
 

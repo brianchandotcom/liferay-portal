@@ -643,6 +643,8 @@ public interface PropsKeys {
 
 	public static final String DL_CHAR_LAST_BLACKLIST = "dl.char.last.blacklist";
 
+	public static final String DL_COMMENT_RATINGS_ENABLED = "dl.comment.ratings.enabled";
+
 	public static final String DL_COMPARABLE_FILE_EXTENSIONS = "dl.comparable.file.extensions";
 
 	public static final String DL_DEFAULT_DISPLAY_VIEW = "dl.default.display.view";
@@ -765,13 +767,23 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_RANK_MAX_SIZE = "dl.file.rank.max.size";
 
+	public static final String DL_FOLDERS_SEARCH_VISIBLE = "dl.folders.search.visible";
+
+	public static final String DL_HEADER_VISIBLE = "dl.header.visible";
+
 	public static final String DL_NAME_BLACKLIST = "dl.name.blacklist";
 
 	public static final String DL_PUBLISH_TO_LIVE_BY_DEFAULT = "dl.publish.to.live.by.default";
 
+	public static final String DL_RATINGS_ENABLED = "dl.ratings.enabled";
+
+	public static final String DL_RELATED_ASSETS_ENABLED = "dl.related.assets.enabled";
+
 	public static final String DL_REPOSITORY_CMIS_DELETE_DEPTH = "dl.repository.cmis.delete.depth";
 
 	public static final String DL_REPOSITORY_IMPL = "dl.repository.impl";
+
+	public static final String DL_ROOT_FOLDER_ID = "dl.root.folder.id";
 
 	public static final String DL_SHOW_LIFERAY_SYNC_MESSAGE = "dl.show.liferay.sync.message";
 

@@ -252,7 +252,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 %>
 
 <div class="subscribe-action">
-	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE) && ((folder == null) || folder.isSupportsSubscribing()) && dlSettings.getEmailFileEntryAnyEventEnabled() %>">
+	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE) && ((folder == null) || folder.isSupportsSubscribing()) && DLUtil.getEmailFileEntryAnyEventEnabled(dlSettings) %>">
 
 		<%
 		boolean subscribed = false;

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary;
 
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
@@ -47,21 +46,38 @@ public class DLSettings extends BaseServiceSettings {
 		return typedSettings.getLocalizedValuesMap("emailFileEntryAddedBody");
 	}
 
+	public String getEmailFileEntryAddedBodyXml() {
+		LocalizedValuesMap emailFileEntryAddedBody =
+			getEmailFileEntryAddedBody();
+
+		return emailFileEntryAddedBody.getLocalizationXml();
+	}
+
 	public boolean getEmailFileEntryAddedEnabled() {
 		return typedSettings.getBooleanValue("emailFileEntryAddedEnabled");
 	}
 
 	public LocalizedValuesMap getEmailFileEntryAddedSubject() {
-		return typedSettings.getLocalizedValuesMap("emailFileEntryAddedSubject");
+		return typedSettings.getLocalizedValuesMap(
+			"emailFileEntryAddedSubject");
 	}
 
-	public boolean getEmailFileEntryAnyEventEnabled() {
-		return getEmailFileEntryAddedEnabled() ||
-			getEmailFileEntryUpdatedEnabled();
+	public String getEmailFileEntryAddedSubjectXml() {
+		LocalizedValuesMap emailFileEntryAddedSubject =
+			getEmailFileEntryAddedSubject();
+
+		return emailFileEntryAddedSubject.getLocalizationXml();
 	}
 
 	public LocalizedValuesMap getEmailFileEntryUpdatedBody() {
 		return typedSettings.getLocalizedValuesMap("emailFileEntryUpdatedBody");
+	}
+
+	public String getEmailFileEntryUpdatedBodyXml() {
+		LocalizedValuesMap emailFileEntryUpdatedBody =
+			getEmailFileEntryUpdatedBody();
+
+		return emailFileEntryUpdatedBody.getLocalizationXml();
 	}
 
 	public boolean getEmailFileEntryUpdatedEnabled() {
@@ -69,7 +85,15 @@ public class DLSettings extends BaseServiceSettings {
 	}
 
 	public LocalizedValuesMap getEmailFileEntryUpdatedSubject() {
-		return typedSettings.getLocalizedValuesMap("emailFileEntryUpdatedSubject");
+		return typedSettings.getLocalizedValuesMap(
+			"emailFileEntryUpdatedSubject");
+	}
+
+	public String getEmailFileEntryUpdatedSubjectXml() {
+		LocalizedValuesMap emailFileEntryUpdatedSubject =
+			getEmailFileEntryUpdatedSubject();
+
+		return emailFileEntryUpdatedSubject.getLocalizationXml();
 	}
 
 	public String getEmailFromAddress() {
@@ -81,20 +105,19 @@ public class DLSettings extends BaseServiceSettings {
 	}
 
 	public boolean getEnableCommentRatings() {
-		return typedSettings.getBooleanValue("enableCommentRatings", true);
+		return typedSettings.getBooleanValue("enableCommentRatings");
 	}
 
 	public boolean getEnableRatings() {
-		return typedSettings.getBooleanValue("enableRatings", true);
+		return typedSettings.getBooleanValue("enableRatings");
 	}
 
 	public boolean getEnableRelatedAssets() {
-		return typedSettings.getBooleanValue("enableRelatedAssets", true);
+		return typedSettings.getBooleanValue("enableRelatedAssets");
 	}
 
 	public int getEntriesPerPage() {
-		return typedSettings.getIntegerValue(
-			"entriesPerPage", SearchContainer.DEFAULT_DELTA);
+		return typedSettings.getIntegerValue("entriesPerPage");
 	}
 
 	public String getEntryColumns() {
@@ -108,8 +131,7 @@ public class DLSettings extends BaseServiceSettings {
 	}
 
 	public long getRootFolderId() {
-		return typedSettings.getLongValue(
-			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		return typedSettings.getLongValue("rootFolderId");
 	}
 
 	public boolean getShowActions() {
@@ -125,11 +147,11 @@ public class DLSettings extends BaseServiceSettings {
 	}
 
 	public boolean getShowFoldersSearch() {
-		return typedSettings.getBooleanValue("showFoldersSearch", true);
+		return typedSettings.getBooleanValue("showFoldersSearch");
 	}
 
 	public boolean getShowHeader() {
-		return typedSettings.getBooleanValue("showHeader", true);
+		return typedSettings.getBooleanValue("showHeader");
 	}
 
 	public boolean getShowMinimalActionButtons() {
@@ -169,6 +191,17 @@ public class DLSettings extends BaseServiceSettings {
 		_fallbackKeys.add(
 			"emailFromName", PropsKeys.DL_EMAIL_FROM_NAME,
 			PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		_fallbackKeys.add(
+			"enableCommentRatings", PropsKeys.DL_COMMENT_RATINGS_ENABLED);
+		_fallbackKeys.add("enableRatings", PropsKeys.DL_RATINGS_ENABLED);
+		_fallbackKeys.add(
+			"enableRelatedAssets", PropsKeys.DL_RELATED_ASSETS_ENABLED);
+		_fallbackKeys.add(
+			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		_fallbackKeys.add("rootFolderId", PropsKeys.DL_ROOT_FOLDER_ID);
+		_fallbackKeys.add(
+			"showFoldersSearch", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
+		_fallbackKeys.add("showHeader", PropsKeys.DL_HEADER_VISIBLE);
 
 		Set<String> allMimeTypes = DLUtil.getAllMediaGalleryMimeTypes();
 

@@ -23,6 +23,7 @@ long assetCategoryClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:
 String assetTagClassName = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:assetTagClassName"));
 long assetTagClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:app-view-entry:assetTagClassPK"));
 String author = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:author"));
+String classTypeName = (String)request.getAttribute("liferay-ui:app-view-entry:classTypeName");
 Date createDate = GetterUtil.getDate(request.getAttribute("liferay-ui:app-view-entry:createDate"), DateFormatFactoryUtil.getDate(locale), null);
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:app-view-entry:cssClass"));
 Date expirationDate = GetterUtil.getDate(request.getAttribute("liferay-ui:app-view-entry:expirationDate"), DateFormatFactoryUtil.getDate(locale), null);
@@ -161,6 +162,16 @@ if (showLinkTitle) {
 					</c:if>
 
 					<dl>
+						<c:if test="<%= Validator.isNotNull(classTypeName) %>">
+							<dt>
+								<liferay-ui:message key="type" />:
+							</dt>
+
+							<dd>
+								<%= classTypeName %>
+							</dd>
+						</c:if>
+
 						<c:if test="<%= (groupId > 0) && (groupId != scopeGroupId) %>">
 
 							<%

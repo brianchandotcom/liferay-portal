@@ -57,6 +57,10 @@ public class AppViewEntryTag extends IncludeTag {
 		_author = author;
 	}
 
+	public void setClassTypeName(String classTypeName) {
+		_classTypeName = classTypeName;
+	}
+
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
 	}
@@ -171,6 +175,7 @@ public class AppViewEntryTag extends IncludeTag {
 		_assetTagClassName = null;
 		_assetTagClassPK = 0;
 		_author = null;
+		_classTypeName = null;
 		_createDate = null;
 		_cssClass = null;
 		_data = null;
@@ -223,6 +228,8 @@ public class AppViewEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-entry:assetTagClassPK", _assetTagClassPK);
 		request.setAttribute("liferay-ui:app-view-entry:author", _author);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:classTypeName", _classTypeName);
 		request.setAttribute(
 			"liferay-ui:app-view-entry:createDate", _createDate);
 		request.setAttribute("liferay-ui:app-view-entry:cssClass", _cssClass);
@@ -280,6 +287,7 @@ public class AppViewEntryTag extends IncludeTag {
 	private String _assetTagClassName;
 	private long _assetTagClassPK;
 	private String _author;
+	private String _classTypeName;
 	private Date _createDate;
 	private String _cssClass;
 	private Map<String, Object> _data;

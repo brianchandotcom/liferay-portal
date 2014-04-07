@@ -36,6 +36,8 @@ if (article.getVersion() > JournalArticleConstants.VERSION_DEFAULT) {
 }
 
 String articleImageURL = article.getArticleImageURL(themeDisplay);
+
+DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), article.getStructureId(), true);
 %>
 
 <liferay-ui:app-view-entry
@@ -45,6 +47,7 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 	assetTagClassName="<%= JournalArticle.class.getName() %>"
 	assetTagClassPK="<%= article.getResourcePrimKey() %>"
 	author="<%= article.getUserName() %>"
+	classTypeName="<%= ddmStructure.getName(locale) %>"
 	createDate="<%= createDate %>"
 	description="<%= article.getDescription(locale) %>"
 	displayDate="<%= article.getDisplayDate() %>"

@@ -189,6 +189,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>classTypeName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>version</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

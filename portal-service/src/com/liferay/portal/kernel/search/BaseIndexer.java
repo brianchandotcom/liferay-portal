@@ -1721,11 +1721,7 @@ public abstract class BaseIndexer implements Indexer {
 
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 
-	private String[] _defaultSelectedFieldNames = {
-		Field.CLASS_NAME_ID, Field.CLASS_PK, Field.COMPANY_ID,
-		Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.UID,
-		Field.VERSION
-	};
+	private String[] _defaultSelectedFieldNames;
 	private Document _document = new DocumentImpl();
 	private boolean _filterSearch;
 	private boolean _indexerEnabled = true;

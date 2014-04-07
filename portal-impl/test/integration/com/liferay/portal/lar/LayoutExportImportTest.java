@@ -14,19 +14,23 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.StagingLocalServiceUtil;
+import com.liferay.portal.service.persistence.LayoutSetPrototypeUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -123,6 +127,44 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		testAvailableLocales(
 			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN},
 			new Locale[] {LocaleUtil.US, LocaleUtil.GERMANY}, true);
+	}
+
+	@Test
+	@Transactional
+	public void testExportImportLayoutsInvalidLARType() throws Exception {
+		LayoutSetPrototypeUtil.removeAll();
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(
+				ServiceTestUtil.randomString());
+
+		long[] layoutIds = new long[0];
+
+		// Import LayoutSetPrototype to LayoutSet
+
+		group = layoutSetPrototype.getGroup();
+		importedGroup = GroupTestUtil.addGroup();
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+
+		// Import LayoutSet to LayoutSetPrototype
+
+		group = GroupTestUtil.addGroup();
+		importedGroup = layoutSetPrototype.getGroup();
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
 	}
 
 	@Test

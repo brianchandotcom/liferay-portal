@@ -62,6 +62,10 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 	public static final String PORTLET_ID = PortletKeys.BOOKMARKS;
 
 	public BookmarksEntryIndexer() {
+		setDefaultSelectedFieldNames(
+			new String[] {
+				Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+				Field.TITLE, Field.UID, Field.URL});
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}

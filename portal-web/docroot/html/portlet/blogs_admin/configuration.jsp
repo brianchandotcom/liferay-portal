@@ -91,21 +91,21 @@ blogsSettings = BlogsUtil.getBlogsSettings(scopeGroupId, request);
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= blogsSettings.getEmailEntryAddedBody().getLocalizationXml() %>"
+				emailBody="<%= blogsSettings.getEmailEntryAddedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= blogsSettings.getEmailEntryAddedEnabled() %>"
 				emailParam="emailEntryAdded"
-				emailSubject="<%= blogsSettings.getEmailEntryAddedSubject().getLocalizationXml() %>"
+				emailSubject="<%= blogsSettings.getEmailEntryAddedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= blogsSettings.getEmailEntryUpdatedBody().getLocalizationXml() %>"
+				emailBody="<%= blogsSettings.getEmailEntryUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 					emailEnabled="<%= blogsSettings.getEmailEntryUpdatedEnabled() %>"
 				emailParam="emailEntryUpdated"
-				emailSubject="<%= blogsSettings.getEmailEntryAddedSubject().getLocalizationXml() %>"
+				emailSubject="<%= blogsSettings.getEmailEntryAddedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 

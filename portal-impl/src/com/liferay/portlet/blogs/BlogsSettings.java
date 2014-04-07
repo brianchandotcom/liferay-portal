@@ -43,6 +43,12 @@ public class BlogsSettings extends BaseServiceSettings {
 		return typedSettings.getLocalizedValuesMap("emailEntryAddedBody");
 	}
 
+	public String getEmailEntryAddedBodyXml() {
+		LocalizedValuesMap emailEntryAddedBodyMap = getEmailEntryAddedBody();
+
+		return emailEntryAddedBodyMap.getLocalizationXml();
+	}
+
 	public boolean getEmailEntryAddedEnabled() {
 		return typedSettings.getBooleanValue("emailEntryAddedEnabled");
 	}
@@ -51,8 +57,22 @@ public class BlogsSettings extends BaseServiceSettings {
 		return typedSettings.getLocalizedValuesMap("emailEntryAddedSubject");
 	}
 
+	public String getEmailEntryAddedSubjectXml() {
+		LocalizedValuesMap emailEntryAddedSubjectMap =
+			getEmailEntryAddedSubject();
+
+		return emailEntryAddedSubjectMap.getLocalizationXml();
+	}
+
 	public LocalizedValuesMap getEmailEntryUpdatedBody() {
 		return typedSettings.getLocalizedValuesMap("emailEntryUpdatedBody");
+	}
+
+	public String getEmailEntryUpdatedBodyXml() {
+		LocalizedValuesMap emailEntryUpdatedBodyMap =
+			getEmailEntryUpdatedBody();
+
+		return emailEntryUpdatedBodyMap.getLocalizationXml();
 	}
 
 	public boolean getEmailEntryUpdatedEnabled() {
@@ -61,6 +81,13 @@ public class BlogsSettings extends BaseServiceSettings {
 
 	public LocalizedValuesMap getEmailEntryUpdatedSubject() {
 		return typedSettings.getLocalizedValuesMap("emailEntryUpdatedSubject");
+	}
+
+	public String getEmailEntryUpdatedSubjectXml() {
+		LocalizedValuesMap emailEntryUpdatedSubjectMap =
+			getEmailEntryUpdatedSubject();
+
+		return emailEntryUpdatedSubjectMap.getLocalizationXml();
 	}
 
 	public String getEmailFromAddress() {

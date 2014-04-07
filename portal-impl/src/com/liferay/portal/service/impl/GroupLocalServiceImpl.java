@@ -114,6 +114,7 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -2466,7 +2467,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				keywordsArray, params, andOperator, start, end, obc);
 		}
 
-		List<Group> groups = doSearch(
+		Collection<Group> groups = doSearch(
 			companyId, classNameIds, parentGroupId, keywordsArray,
 			keywordsArray, params, andOperator);
 
@@ -2581,7 +2582,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				params, andOperator, start, end, obc);
 		}
 
-		List<Group> groups = doSearch(
+		Collection<Group> groups = doSearch(
 			companyId, classNameIds, parentGroupId, names, descriptions, params,
 			andOperator);
 
@@ -3064,7 +3065,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				keywordsArray, params, andOperator);
 		}
 
-		List<Group> groups = doSearch(
+		Collection<Group> groups = doSearch(
 			companyId, classNameIds, parentGroupId, keywordsArray,
 			keywordsArray, params, andOperator);
 
@@ -3112,7 +3113,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				params, andOperator);
 		}
 
-		List<Group> groups = doSearch(
+		Collection<Group> groups = doSearch(
 			companyId, classNameIds, parentGroupId, names, descriptions, params,
 			andOperator);
 
@@ -3772,7 +3773,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
-	protected List<Group> doSearch(
+	protected Collection<Group> doSearch(
 			long companyId, long[] classNameIds, long parentGroupId,
 			String[] names, String[] descriptions,
 			LinkedHashMap<String, Object> params, boolean andOperator)
@@ -3796,7 +3797,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Boolean site = (Boolean)params.remove("site");
 		List<Integer> types = (List<Integer>)params.remove("types");
 
-		List<Group> groups = new ArrayList<Group>();
+		Collection<Group> groups = null;
+
+		Long userId = (Long)params.remove("usersGroups");
+
+		if (userId == null) {
+			groups = new ArrayList<Group>();
+		}
+		else {
+			groups = new HashSet<Group>();
+		}
 
 		for (long classNameId : classNameIds) {
 			groups.addAll(groupPersistence.findByC_C(companyId, classNameId));
@@ -4005,25 +4015,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
-		// Join by Groups_Roles
-
-		Long userId = (Long)params.remove("usersGroups");
-
 		if (userId == null) {
 			return groups;
 		}
 
-		Set<Group> resultGroups = new HashSet<Group>(groups);
-
-		Long roleId = (Long)params.remove("groupsRoles");
-
-		if (roleId != null) {
-			resultGroups.retainAll(rolePersistence.getGroups(roleId));
-		}
-
 		// Join by Users_Groups
 
-		resultGroups.retainAll(userPersistence.getGroups(userId));
+		Set<Group> joinedGroups = new HashSet<Group>(
+			userPersistence.getGroups(userId));
 
 		boolean inherit = GetterUtil.getBoolean(params.remove("inherit"), true);
 
@@ -4039,7 +4038,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				for (Group group : groups) {
 					if (organizationId == group.getClassPK()) {
-						resultGroups.add(group);
+						joinedGroups.add(group);
 					}
 				}
 			}
@@ -4047,15 +4046,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// Join by Groups_Orgs and Users_Orgs
 
 			for (Organization organization : organizations) {
-				List<Group> tempGroups = new ArrayList<Group>(groups);
-
-				tempGroups.retainAll(
+				joinedGroups.addAll(
 					organizationPersistence.getGroups(
 						organization.getOrganizationId()));
-
-				if (!tempGroups.isEmpty()) {
-					resultGroups.addAll(tempGroups);
-				}
 			}
 
 			// Join by Groups_UserGroups and Users_UserGroups
@@ -4063,14 +4056,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			List<UserGroup> userGroups = userPersistence.getUserGroups(userId);
 
 			for (UserGroup userGroup : userGroups) {
-				List<Group> tempGroups = new ArrayList<Group>(groups);
-
-				tempGroups.retainAll(
+				joinedGroups.addAll(
 					userGroupPersistence.getGroups(userGroup.getUserGroupId()));
-
-				if (!tempGroups.isEmpty()) {
-					resultGroups.addAll(tempGroups);
-				}
 			}
 		}
 
@@ -4078,7 +4065,24 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			_log.debug("Unprocessed parameters " + MapUtil.toString(params));
 		}
 
-		return new ArrayList<Group>(resultGroups);
+		// Join by Groups_Roles
+
+		Long roleId = (Long)params.remove("groupsRoles");
+
+		if (roleId != null) {
+			joinedGroups.retainAll(rolePersistence.getGroups(roleId));
+		}
+
+		if (joinedGroups.size() > groups.size()) {
+			groups.retainAll(joinedGroups);
+
+			return groups;
+		}
+		else {
+			joinedGroups.retainAll(groups);
+
+			return joinedGroups;
+		}
 	}
 
 	protected long[] getClassNameIds() {
@@ -4421,16 +4425,25 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected List<Group> sort(
-		List<Group> groups, int start, int end, OrderByComparator obc) {
+		Collection<Group> groups, int start, int end, OrderByComparator obc) {
 
 		if (obc == null) {
 			obc = new GroupNameComparator(true);
 		}
 
-		Collections.sort(groups, obc);
+		List<Group> groupList = null;
+
+		if (groups instanceof List) {
+			groupList = (List<Group>)groups;
+		}
+		else {
+			groupList = new ArrayList<Group>(groups);
+		}
+
+		Collections.sort(groupList, obc);
 
 		return Collections.unmodifiableList(
-			ListUtil.subList(groups, start, end));
+			ListUtil.subList(groupList, start, end));
 	}
 
 	protected void unscheduleStaging(Group group) {

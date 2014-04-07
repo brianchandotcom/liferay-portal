@@ -261,22 +261,8 @@ public class EditGroupAssignmentsAction extends PortletAction {
 		long[] removeRoleIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeRoleIds"), 0L);
 
-		if (addRoleIds.length > 0) {
-			if (!UserLocalServiceUtil.hasGroupUser(groupId, user.getUserId())) {
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(actionRequest);
-
-				long[] userIds = new long[] {user.getUserId()};
-
-				UserServiceUtil.addGroupUsers(groupId, userIds, serviceContext);
-
-				LiveUsers.joinGroup(user.getCompanyId(), groupId, userIds);
-			}
-
-			UserGroupRoleServiceUtil.addUserGroupRoles(
-				user.getUserId(), groupId, addRoleIds);
-		}
-
+		UserGroupRoleServiceUtil.addUserGroupRoles(
+			user.getUserId(), groupId, addRoleIds);
 		UserGroupRoleServiceUtil.deleteUserGroupRoles(
 			user.getUserId(), groupId, removeRoleIds);
 	}

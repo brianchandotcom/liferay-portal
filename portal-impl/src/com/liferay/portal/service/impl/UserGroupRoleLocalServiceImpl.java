@@ -41,6 +41,8 @@ public class UserGroupRoleLocalServiceImpl
 
 		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
 
+		groupPersistence.addUser(groupId, userId);
+
 		for (long roleId : roleIds) {
 			UserGroupRole userGroupRole = addUserGroupRole(
 				userId, groupId, roleId);
@@ -59,6 +61,8 @@ public class UserGroupRoleLocalServiceImpl
 		throws SystemException {
 
 		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+
+		groupPersistence.addUsers(groupId, userIds);
 
 		for (long userId : userIds) {
 			UserGroupRole userGroupRole = addUserGroupRole(

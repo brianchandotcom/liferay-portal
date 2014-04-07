@@ -141,6 +141,10 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="WebContentDisplayPortlet#selectWebContentGlobalStructure">
 			<var name="selectStructureName" value="Basic Web Content" />
 			<var name="structureName" value="Global WC Structure Name" />

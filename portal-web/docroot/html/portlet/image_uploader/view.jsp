@@ -23,10 +23,10 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 %>
 
-<portlet:resourceURL var="previewURL">
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="previewURL">
 	<portlet:param name="struts_action" value="/image_uploader/view" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" />
-</portlet:resourceURL>
+</liferay-portlet:resourceURL>
 
 <c:choose>
 	<c:when test='<%= SessionMessages.contains(renderRequest, "imageUploaded") %>'>

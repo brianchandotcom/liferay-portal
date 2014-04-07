@@ -46,9 +46,10 @@ public class PortletResourceBundle extends ResourceBundle {
 
 	@Override
 	public boolean containsKey(String key) {
-		if (_keys.contains(key) && _getJavaxPortletString(key) != null) {
+		if (_keys.contains(key) && (_getJavaxPortletString(key) != null)) {
 			return true;
 		}
+
 		if (parent != null) {
 			return parent.containsKey(key);
 		}
@@ -82,7 +83,7 @@ public class PortletResourceBundle extends ResourceBundle {
 			throw new NullPointerException();
 		}
 
-		if (parent != null && parent.containsKey(key)) {
+		if ((parent != null) && parent.containsKey(key)) {
 			return parent.getString(key);
 		}
 

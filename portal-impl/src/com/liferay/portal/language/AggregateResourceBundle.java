@@ -57,16 +57,17 @@ public class AggregateResourceBundle extends ResourceBundle {
 		Object object = null;
 
 		for (ResourceBundle resourceBundle : _resourceBundles) {
-
 			if (!resourceBundle.containsKey(key)) {
 				continue;
 			}
+
 			try {
 				object = resourceBundle.getObject(key);
 			}
 			catch (MissingResourceException mre) {
 				continue;
 			}
+
 			if (object != null) {
 				return object;
 			}

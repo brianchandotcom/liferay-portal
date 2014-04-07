@@ -53,6 +53,7 @@ public class ResourceBundleUtil {
 		if (!resourceBundle.containsKey(key)) {
 			return null;
 		}
+
 		try {
 			return resourceBundle.getString(key);
 		}

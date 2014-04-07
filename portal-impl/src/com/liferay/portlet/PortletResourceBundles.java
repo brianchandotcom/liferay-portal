@@ -83,7 +83,7 @@ public class PortletResourceBundles {
 		if (resourceBundle == null) {
 			try {
 				resourceBundle = new PropertyResourceBundle(
-						new UnsyncByteArrayInputStream(new byte[0]));
+					new UnsyncByteArrayInputStream(new byte[0]));
 
 				resourceBundles.put(languageId, resourceBundle);
 			}

@@ -175,18 +175,6 @@ public class LanguageResources {
 		return oldLanguageMap;
 	}
 
-	private static void _removeResourceBundle(Locale locale) {
-		_resourceBundles.remove(locale);
-
-		Set<Locale> parentLocaleChildren = _parentChildrenMap.get(locale);
-
-		if (parentLocaleChildren != null) {
-			for (Locale childLocale : parentLocaleChildren) {
-				_removeResourceBundle(childLocale);
-			}
-		}
-	}
-
 	public void setConfig(String config) {
 		_configNames = StringUtil.split(
 			config.replace(CharPool.PERIOD, CharPool.SLASH));
@@ -273,17 +261,28 @@ public class LanguageResources {
 		return properties;
 	}
 
+	private static void _removeResourceBundle(Locale locale) {
+		_resourceBundles.remove(locale);
+
+		Set<Locale> parentLocaleChildren = _parentChildrenMap.get(locale);
+
+		if (parentLocaleChildren != null) {
+			for (Locale childLocale : parentLocaleChildren) {
+				_removeResourceBundle(childLocale);
+			}
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(LanguageResources.class);
 
 	private static Locale _blankLocale = new Locale(StringPool.BLANK);
 	private static String[] _configNames;
 	private static Map<Locale, Map<String, String>> _languageMaps =
 		new ConcurrentHashMap<Locale, Map<String, String>>(64);
-	private static Map<Locale, ResourceBundle> _resourceBundles =
-		new ConcurrentHashMap<Locale, ResourceBundle>(64);
 	private static ConcurrentHashMap<Locale, Set<Locale>> _parentChildrenMap =
 		new ConcurrentHashMap<Locale, Set<Locale>>();
-
+	private static Map<Locale, ResourceBundle> _resourceBundles =
+		new ConcurrentHashMap<Locale, ResourceBundle>(64);
 
 	private static class LanguageResourcesBundle extends ResourceBundle {
 
@@ -313,8 +312,7 @@ public class LanguageResources {
 						superLocale, new HashSet<Locale>());
 				}
 
-				parentLocaleChildren = _parentChildrenMap.get(
-					superLocale);
+				parentLocaleChildren = _parentChildrenMap.get(superLocale);
 
 				parentLocaleChildren.add(locale);
 			}

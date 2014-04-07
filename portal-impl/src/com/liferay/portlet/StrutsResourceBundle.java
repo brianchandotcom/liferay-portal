@@ -86,7 +86,7 @@ public class StrutsResourceBundle extends ResourceBundle {
 	}
 
 	private static List<String> _keys = Arrays.asList(
-		new String[]{
+		new String[] {
 			JavaConstants.JAVAX_PORTLET_DESCRIPTION,
 			JavaConstants.JAVAX_PORTLET_KEYWORDS,
 			JavaConstants.JAVAX_PORTLET_LONG_TITLE,

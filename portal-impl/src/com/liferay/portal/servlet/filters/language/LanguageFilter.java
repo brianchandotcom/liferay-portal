@@ -15,7 +15,6 @@
 package com.liferay.portal.servlet.filters.language;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.language.UnicodeLanguage;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -116,8 +115,9 @@ public class LanguageFilter extends BasePortalFilter {
 		ResourceBundle resourceBundle = null;
 
 		if (_portletConfig != null) {
-				resourceBundle = _portletConfig.getResourceBundle(locale);
+			resourceBundle = _portletConfig.getResourceBundle(locale);
 		}
+
 		if (resourceBundle == null) {
 			resourceBundle = LanguageResources.getResourceBundle(locale);
 		}

@@ -38,7 +38,7 @@
 		<execute action="CPRecyclebin#selectFrame" locator-key1="RECYCLE_BIN_FOLDER_WARNING_IFRAME" />
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_FOLDER_WARNING_INFO" value1="The original folder does not exist anymore. Choose a different folder to restore ${documentName}." />
 		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_FOLDER_WARNING_CHOOSE_THIS_FOLDER_BUTTON" value1="Choose This Folder" />
-		<execute action="CPRecyclebin#selectFrameTop" />
+		<execute action="CPRecyclebin#selectFrameTop" value1="relative=top" />
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The ${assetType2} ${documentName} was restored to ${assetRestoreLocation}." />
 	</command>
 

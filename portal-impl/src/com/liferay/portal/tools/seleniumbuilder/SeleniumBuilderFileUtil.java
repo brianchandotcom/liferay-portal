@@ -570,6 +570,10 @@ public class SeleniumBuilderFileUtil {
 					"' has an invalid component name '" + string2 + "' in " +
 						suffix);
 		}
+		else if (errorCode == 3002) {
+			throw new IllegalArgumentException(
+				prefix + "Missing property '" + string1 + "' for " + suffix);
+		}
 		else {
 			throw new IllegalArgumentException(prefix + suffix);
 		}
@@ -1729,6 +1733,47 @@ public class SeleniumBuilderFileUtil {
 				if (!_testrayAvailableComponentNames.contains(value)) {
 					throwValidationException(
 						3001, fileName, element, name, value);
+				}
+			}
+		}
+
+		elements = rootElement.elements("property");
+
+		boolean rootTestrayMainComponentNameFound = false;
+
+		for (Element element : elements) {
+			String name = element.attributeValue("name");
+
+			if (name.equals("testray.main.component.name")) {
+				rootTestrayMainComponentNameFound = true;
+
+				break;
+			}
+		}
+
+		if (!rootTestrayMainComponentNameFound) {
+			elements = rootElement.elements("command");
+
+			for (Element element : elements) {
+				List<Element> propertyElements = getAllChildElements(
+					element, "property");
+
+				boolean commandTestrayMainComponentNameFound = false;
+
+				for (Element propertyElement : propertyElements) {
+					String propertyName = propertyElement.attributeValue(
+						"name");
+
+					if (propertyName.equals("testray.main.component.name")) {
+						commandTestrayMainComponentNameFound = true;
+
+						break;
+					}
+				}
+
+				if (!commandTestrayMainComponentNameFound) {
+					throwValidationException(
+						3002, fileName, element, "testray.main.component.name");
 				}
 			}
 		}

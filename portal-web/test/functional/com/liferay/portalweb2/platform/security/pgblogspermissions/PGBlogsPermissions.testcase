@@ -1,4 +1,6 @@
 <definition component-name="portal-security">
+	<property name="testray.main.component.name" value="Security" />
+
 	<var name="pageName" value="Blogs Page" />
 	<var name="portletName" value="Blogs" />
 

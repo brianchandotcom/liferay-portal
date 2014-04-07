@@ -1,4 +1,6 @@
 <definition component-name="portal-personalization-and-customization">
+	<property name="testray.main.component.name" value="Personalization and Customization" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>

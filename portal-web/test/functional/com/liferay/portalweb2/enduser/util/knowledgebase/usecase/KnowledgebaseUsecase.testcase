@@ -1,4 +1,6 @@
 <definition component-name="portal-util-misc">
+	<property name="testray.main.component.name" value="Util" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>

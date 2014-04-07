@@ -1,4 +1,6 @@
 <definition component-name="portal-sample-portlet-plugins">
+	<property name="testray.main.component.name" value="Sample Portlet Plugins" />
+
 	<var name="pageName" value="Sample PHP Page" />
 	<var name="portletName" value="Sample PHP" />
 

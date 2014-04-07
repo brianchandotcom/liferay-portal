@@ -1,4 +1,6 @@
 <definition component-name="portal-search">
+	<property name="testray.main.component.name" value="Search" />
+
 	<var name="searchPageName" value="Search Page" />
 	<var name="searchPortletName" value="Search" />
 

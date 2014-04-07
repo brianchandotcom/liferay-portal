@@ -1,4 +1,6 @@
 <definition component-name="portal-user-interface">
+	<property name="testray.main.component.name" value="User Interface" />
+
 	<tear-down>
 		<execute macro="User#logoutPG" />
 	</tear-down>

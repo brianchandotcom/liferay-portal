@@ -1,4 +1,6 @@
 <definition component-name="portal-wcm">
+	<property name="testray.main.component.name" value="WCM" />
+
 	<var name="pageName" value="Blogs Page" />
 
 	<set-up>

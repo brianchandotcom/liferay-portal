@@ -406,11 +406,23 @@
 			</then>
 		</if>
 
-		<var name="key_tagName" value="${tagName}" />
+		<if>
+			<isset var="tagNameList" />
+			<then>
+				<for list="${tagNameList}" param="tagName">
+					<execute action="PGBlogsAdd#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+					<execute action="PGBlogsAdd#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+				</for>
+			</then>
+			<else>
+				<var name="key_tagName" value="${tagName}" />
 
-		<execute action="PGBlogsAdd#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
-		<execute action="PGBlogsAdd#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
-		<execute action="PGBlogsAdd#assertElementPresent" locator-key1="CATEGORIZATION_TAG" value1="${tagName}" />
+				<execute action="PGBlogsAdd#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+				<execute action="PGBlogsAdd#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+				<execute action="PGBlogsAdd#assertElementPresent" locator-key1="CATEGORIZATION_TAG" value1="${tagName}" />
+			</else>
+		</if>
+
 	</command>
 
 	<command name="addWithTrackbackURLPG">
@@ -1124,6 +1136,28 @@
 		<execute action="PGBlogsEntry#assertElementNotPresent" locator-key1="AVERAGE_STAR_EMPTY_2" />
 	</command>
 
+	<command name="viewRate4StarsSpecificEntryPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="SPECIFIC_ENTRY_AVERAGE" value1="Average (1 Vote)" />
+
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="SPECIFIC_ENTRY_YOUR_RATING_STAR_1" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="SPECIFIC_ENTRY_YOUR_RATING_STAR_2" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="SPECIFIC_ENTRY_YOUR_RATING_STAR_3" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="SPECIFIC_ENTRY_YOUR_RATING_STAR_4" />
+		<execute action="PGBlogsEntry#assertElementNotPresent" locator-key1="SPECIFIC_ENTRY_YOUR_RATING_STAR_5" />
+		<execute action="PGBlogsEntry#assertElementNotPresent" locator-key1="SPECIFIC_ENTRY_AVERAGE_STAR_EMPTY_1" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="SPECIFIC_ENTRY_YOUR_RATING_STAR_EMPTY_5" />
+
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="SPECIFIC_ENTRY_AVERAGE_STAR_1" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="SPECIFIC_ENTRY_AVERAGE_STAR_2" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="SPECIFIC_ENTRY_AVERAGE_STAR_3" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="SPECIFIC_ENTRY_AVERAGE_STAR_4" />
+		<execute action="PGBlogsEntry#assertElementNotPresent" locator-key1="SPECIFIC_ENTRY_AVERAGE_STAR_5" />
+		<execute action="PGBlogsEntry#assertElementNotPresent" locator-key1="SPECIFIC_ENTRY_AVERAGE_STAR_EMPTY_1" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="SPECIFIC_ENTRY_AVERAGE_STAR_EMPTY_5" />
+	</command>
+
 	<command name="viewRSS">
 		<execute action="Home#open" locator1="http://localhost:8080/web/guest/blogs-page/-/blogs/rss" />
 
@@ -1143,13 +1177,30 @@
 
 	<command name="viewTagPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
-		<var name="key_tagName" value="${tagName?lowercase()}" />
-		<var name="tagName" value="${tagName?lowercase()}" />
 
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TAG" value1="${tagName}" />
-		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TAG" value1="${tagName}" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="TAG_FILTER_TITLE" value1="Entries with tag ${tagName} ." />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<if>
+			<isset var="tagNameList" />
+			<then>
+				<for list="${tagNameList}" param="tagName">
+					<var name="key_tagName" value="${tagName?lowercase()}" />
+					<var name="tagName" value="${tagName?lowercase()}" />
+
+					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TAG" value1="${tagName}" />
+					<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TAG" value1="${tagName}" />
+					<execute action="PGBlogs#assertTextEquals" locator-key1="TAG_FILTER_TITLE" value1="Entries with tag ${tagName} ." />
+					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+				</for>
+			</then>
+			<else>
+				<var name="key_tagName" value="${tagName?lowercase()}" />
+				<var name="tagName" value="${tagName?lowercase()}" />
+
+				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TAG" value1="${tagName}" />
+				<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TAG" value1="${tagName}" />
+				<execute action="PGBlogs#assertTextEquals" locator-key1="TAG_FILTER_TITLE" value1="Entries with tag ${tagName} ." />
+				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewViewCountCP">
@@ -1214,6 +1265,35 @@
 		<var name="entryViewCount" value="${entryViewCount?increment()}" />
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
+	</command>
+
+	<command name="viewViewPermissionsPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${entryTitle}" />
+
+		<if>
+			<equals arg1="${viewPermissionValue}" arg2="checked" />
+			<then>
+				<execute action="Permissions#assertChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+			</then>
+			<elseif>
+				<equals arg1="${viewPermissionValue}" arg2="unchecked" />
+				<then>
+					<execute action="Permissions#assertNotChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="Permissions#assertChecked" locator-key1="CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+			</else>
+		</if>
+
+		<execute action="Permissions#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewWithAbstractDisplayTemplatePG">

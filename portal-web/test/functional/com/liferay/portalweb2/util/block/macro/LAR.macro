@@ -7,6 +7,13 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${exportPermissions}" arg2="true" />
+			<then>
+				<execute action="BasePortletExport#check" locator-key1="PERMISSIONS_CHECKBOX" />
+			</then>
+		</if>
+
 		<execute action="BasePortletExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
 
 		<var name="key_larFileName" value="${larFileName}" />
@@ -17,12 +24,55 @@
 		<execute action="BasePortletExport#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="exportSiteCmd">
+		<if>
+			<isset var="larFileName" />
+			<then>
+				<execute action="CPSitepagesExport#type" locator-key1="EXPORT_FILE_NAME" value1="${larFileName}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${exportPermissions}" arg2="true" />
+			<then>
+				<execute action="CPSitepagesExport#check" locator-key1="PERMISSIONS_CHECKBOX" />
+			</then>
+		</if>
+
+		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
+
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute action="CPSitepagesExport#assertClick" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${larFileName}" />
+		<execute action="CPSitepagesExport#downloadTempFile" locator1="${larFileName}" />
+		<execute action="CPSitepagesExport#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="exportDDL">
 		<execute macro="LAR#gotoExportImportCmd" />
 
 		<execute macro="LAR#exportCmd">
 			<var name="larFileName" value="${larFileName}" />
 		</execute>
+	</command>
+
+	<command name="exportSiteCP">
+		<execute macro="LAR#gotoExportSiteCmd" />
+
+		<execute macro="LAR#exportSiteCmd">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+	</command>
+
+	<command name="gotoExportSiteCmd">
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_EXPORT" value1="Export" />
+
+		<execute action="CPSitepagesExport#selectFrame" locator-key1="EXPORT_IFRAME" />
 	</command>
 
 	<command name="gotoExportImportCmd">
@@ -33,11 +83,42 @@
 		<execute action="BasePortletExport#selectFrame" locator-key1="EXPORT_IFRAME" />
 	</command>
 
+	<command name="gotoImportSiteCmd">
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_IMPORT" value1="Import" />
+
+		<execute action="CPSitepagesImport#selectFrame" locator-key1="IMPORT_IFRAME" />
+	</command>
+
 	<command name="importCmd">
+		<if>
+			<equals arg1="${importPermissions}" arg2="true" />
+			<then>
+				<execute action="BasePortletExport#check" locator-key1="PERMISSIONS_CHECKBOX" />
+			</then>
+		</if>
+
 		<execute action="BasePortletImport#assertClick" locator-key1="CONTINUE_BUTTON" value1="Continue" />
 		<execute action="BasePortletImport#assertClick" locator-key1="IMPORT_BUTTON" value1="Import" />
 		<execute action="BasePortletImport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
 		<execute action="BasePortletImport#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="importSiteCmd">
+		<if>
+			<equals arg1="${importPermissions}" arg2="true" />
+			<then>
+				<execute action="CPSitepagesImport#check" locator-key1="PERMISSIONS_CHECKBOX" />
+			</then>
+		</if>
+
+		<execute action="CPSitepagesImport#assertClick" locator-key1="CONTINUE_BUTTON" value1="Continue" />
+		<execute action="CPSitepagesImport#assertClick" locator-key1="IMPORT_BUTTON" value1="Import" />
+		<execute action="CPSitepagesImport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
+		<execute action="CPSitepagesImport#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="importDDL">
@@ -48,6 +129,18 @@
 		</execute>
 
 		<execute macro="LAR#importCmd" />
+	</command>
+
+	<command name="importSiteCP">
+		<execute macro="LAR#gotoImportSiteCmd" />
+
+		<execute macro="LAR#selectImportFileSiteCmd">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+
+		<execute macro="LAR#importSiteCmd">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
 	</command>
 
 	<command name="selectImportFileCmd">
@@ -62,6 +155,17 @@
 		<execute action="BasePortletImport#assertTextEquals" locator-key1="FILE_NAME" value1="${larFileName}" />
 	</command>
 
+	<command name="selectImportFileSiteCmd">
+		<execute action="CPSitepagesImport#assertClick" locator-key1="NEW_IMPORT_PROCESS_NAVIGATION" value1="New Import Process" />
+		<execute action="CPSitepagesImport#assertClick" locator-key1="SELECT_FILE_BUTTON" value1="Select File" />
+
+		<execute action="Sikuli#uploadTempFile" locator-key1="FILE_DIALOG" value1="${larFileName}" />
+
+		<execute action="CPSitepagesImport#assertTextEquals" locator-key1="FILE_TITLE" value1="${larFileName}" />
+		<execute action="CPSitepagesImport#assertClick" locator-key1="CONTINUE_BUTTON" value1="Continue" />
+		<execute action="CPSitepagesImport#assertTextEquals" locator-key1="FILE_NAME" value1="${larFileName}" />
+	</command>
+	
 	<command name="viewSitePagesExportApplications">
 		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_EXPORT" value1="Export" />
 

@@ -66,8 +66,7 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 			portletRequest, settings, "emailOrderShippingBody_" + languageId,
 			shoppingSettings.getEmailOrderShippingBody());
 		removeDefaultValue(
-			portletRequest, settings,
-			"emailOrderShippingSubject_" + languageId,
+			portletRequest, settings, "emailOrderShippingSubject_" + languageId,
 			shoppingSettings.getEmailOrderShippingSubject());
 	}
 

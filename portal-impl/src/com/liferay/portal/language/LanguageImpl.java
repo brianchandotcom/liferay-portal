@@ -371,13 +371,11 @@ public class LanguageImpl implements Language, Serializable {
 		return _get(resourceBundle, key, defaultValue);
 	}
 
-	@Deprecated
 	@Override
 	public String get(PageContext pageContext, String key) {
 		return get(pageContext, key, key);
 	}
 
-	@Deprecated
 	@Override
 	public String get(
 		PageContext pageContext, String key, String defaultValue) {

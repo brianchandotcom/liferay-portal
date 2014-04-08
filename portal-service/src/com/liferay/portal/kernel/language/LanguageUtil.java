@@ -161,12 +161,10 @@ public class LanguageUtil {
 		return getLanguage().get(locale, key, defaultValue);
 	}
 
-	@Deprecated
 	public static String get(PageContext pageContext, String key) {
 		return getLanguage().get(pageContext, key);
 	}
 
-	@Deprecated
 	public static String get(
 		PageContext pageContext, String key, String defaultValue) {
 

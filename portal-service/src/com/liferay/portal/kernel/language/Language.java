@@ -92,10 +92,8 @@ public interface Language {
 
 	public String get(Locale locale, String key, String defaultValue);
 
-	@Deprecated
 	public String get(PageContext pageContext, String key);
 
-	@Deprecated
 	public String get(PageContext pageContext, String key, String defaultValue);
 
 	public String get(ResourceBundle resourceBundle, String key);

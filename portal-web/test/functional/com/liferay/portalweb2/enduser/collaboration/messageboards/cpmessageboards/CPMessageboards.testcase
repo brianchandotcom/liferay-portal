@@ -146,18 +146,19 @@
 	</command>
 
 	<command name="ViewAnonymousPostingAllowedCheckboxConfiguration" priority="4">
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute macro="MessageboardsPortlet#viewAnonymousPostingInPostNewThreadCP" />
+		<execute macro="MessageboardsThread#viewAnonymousPostingCheckboxCP" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="MessageboardsPortlet#disableAnonymousPostingAllowanceCP" />
+		<execute macro="MessageboardsPortlet#configureAnonymousPostingCP">
+			<var name="anonymousPostingEnabled" value="false" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
@@ -167,12 +168,14 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="MessageboardsPortlet#viewNoAnonymousPostingAllowanceCP" />
+		<execute macro="MessageboardsPortlet#viewAnonymousPostingConfigurationCP">
+			<var name="anonymousPostingEnabled" value="false" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute macro="MessageboardsPortlet#viewNoAnonymousPostingInPostNewThreadCP" />
+		<execute macro="MessageboardsThread#viewNoAnonymousPostingCheckboxCP" />
 	</command>
 </definition>

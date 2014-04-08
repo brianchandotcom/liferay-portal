@@ -12,6 +12,11 @@ AUI.add(
 						validator: '_validateContent'
 					},
 
+					open: {
+						validator: Lang.isBoolean,
+						value: false
+					},
+
 					toggle: {
 						validator: Lang.isBoolean,
 						value: false
@@ -100,24 +105,25 @@ AUI.add(
 						var instance = this;
 
 						instance._content.toggleClass('open', force);
+
+						instance.set('open', force);
 					},
 
 					_toggleMenu: function(event, target) {
 						var instance = this;
 
+						var open = !instance.get('open');
 						var toggle = instance.get('toggle');
 						var toggleTouch = instance.get('toggleTouch');
 
 						var handleId = instance._handleId;
 
-						instance._toggleContent();
-
-						var menuOpen = instance._content.item(0).hasClass('open');
+						instance._toggleContent(open);
 
 						if (!toggle) {
 							var handle = Liferay.Data[handleId];
 
-							if (menuOpen && !handle) {
+							if (open && !handle) {
 								handle = target.on(
 									instance._getEventOutside(event),
 									function(event) {

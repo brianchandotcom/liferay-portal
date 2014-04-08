@@ -16,12 +16,12 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.base.UserGroupGroupRoleServiceBaseImpl;
+import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
 
 /**
  * @author Brett Swaim
+ * @author Akos Thurzo
  */
 public class UserGroupGroupRoleServiceImpl
 	extends UserGroupGroupRoleServiceBaseImpl {
@@ -31,11 +31,7 @@ public class UserGroupGroupRoleServiceImpl
 			long userGroupId, long groupId, long[] roleIds)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isGroupOwner(groupId)) {
-			throw new PrincipalException();
-		}
+		checkPermission(groupId, roleIds);
 
 		userGroupGroupRoleLocalService.addUserGroupGroupRoles(
 			userGroupId, groupId, roleIds);
@@ -46,11 +42,7 @@ public class UserGroupGroupRoleServiceImpl
 			long[] userGroupIds, long groupId, long roleId)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isGroupOwner(groupId)) {
-			throw new PrincipalException();
-		}
+		checkPermission(groupId, new long[] {roleId});
 
 		userGroupGroupRoleLocalService.addUserGroupGroupRoles(
 			userGroupIds, groupId, roleId);
@@ -61,11 +53,7 @@ public class UserGroupGroupRoleServiceImpl
 			long userGroupId, long groupId, long[] roleIds)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isGroupOwner(groupId)) {
-			throw new PrincipalException();
-		}
+		checkPermission(groupId, roleIds);
 
 		userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(
 			userGroupId, groupId, roleIds);
@@ -76,14 +64,19 @@ public class UserGroupGroupRoleServiceImpl
 			long[] userGroupIds, long groupId, long roleId)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isGroupOwner(groupId)) {
-			throw new PrincipalException();
-		}
+		checkPermission(groupId, new long[] {roleId});
 
 		userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(
 			userGroupIds, groupId, roleId);
+	}
+
+	protected void checkPermission(long groupId, long[] roleIds)
+		throws PortalException, SystemException {
+
+		for (long roleId : roleIds) {
+			UserGroupRolePermissionUtil.check(
+				getPermissionChecker(), groupId, roleId);
+		}
 	}
 
 }

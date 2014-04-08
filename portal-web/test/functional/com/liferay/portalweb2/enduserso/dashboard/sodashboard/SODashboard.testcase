@@ -5,10 +5,6 @@
 	<property name="theme.plugins.includes" value="so-theme" />
 	<property name="web.plugins.includes" value="resources-importer-web" />
 
-	<set-up>
-		<execute macro="SOUser#firstLoginPG" />
-	</set-up>
-
 	<var name="adminEmailAddress" value="test@liferay.com" />
 	<var name="adminFirstName" value="Test" />
 	<var name="adminLastName" value="Test" />
@@ -16,6 +12,28 @@
 	<var name="adminName" value="Test Test" />
 	<var name="adminScreenName" value="test" />
 	<var name="soPage" value="true" />
+
+	<set-up>
+		<execute macro="SOUser#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="SOUserBar#tearDownNotifications" />
+
+		<execute macro="SOMicroblogs#tearDownMicroblogsEntry" />
+
+		<execute macro="SOAnnouncementsEntry#tearDownPG" />
+
+		<execute macro="SOUser#tearDownCP" />
+
+		<execute macro="SOCalendarEvent#tearDownPG" />
+
+		<execute macro="SODashboard#tearDownCP" />
+
+		<execute macro="SOTasks#tearDownTask" />
+
+		<execute macro="SOSite#tearDownCP" />
+	</tear-down>
 
 	<command name="AddSOAnnouncementsEntry" priority="5">
 		<var name="distributionScope" value="General" />
@@ -514,6 +532,93 @@
 		<execute macro="SODashboard#viewUpcomingTaskNone">
 			<var name="taskDescription" value="${taskDescription}" />
 		</execute>
+	</command>
+
+	<command name="ViewEvent2DaysIntoFutureEventsDisplay" priority="3">
+		<var name="eventTitle1" value="Calendar Event1 Title" />
+		<var name="eventTitle2" value="Calendar Event2 Title" />
+		<var name="eventTitle3" value="Calendar Event3 Title" />
+		<var name="eventType" value="Regular" />
+		<var name="pageName" value="Calendar Page" />
+		<var name="portletName" value="Calendar" />
+		<var name="soPage" value="true" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute macro="SOUserBar#addPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addPortlet">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#addRepeatingEventsPG">
+			<var name="eventTitle" value="${eventTitle1}" />
+			<var name="numberOfRepeats" value="3" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="1" />
+			<var name="eventTitle" value="${eventTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="2" />
+			<var name="eventTitle" value="${eventTitle3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#deleteFutureEventPG">
+			<var name="daysIntoFuture" value="0" />
+			<var name="eventTitle" value="${eventTitle1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+			<var name="eventTitle" value="${eventTitle2}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute action="SODashboard#assertTextNotPresent" value1="${eventTitle3}" />
+
+		<execute macro="SOEvents#configureEventsPortletDisplayDays">
+			<var name="maxDisplayDays" value="2" />
+		</execute>
+
+		<execute macro="SODashboard#viewUpcomingEvent">
+			<var name="eventTitle" value="${eventTitle3}" />
+			<var name="userName" value="${adminName}" />
+		</execute>
+
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
 	</command>
 
 	<command name="ViewEventEventsDisplay" priority="5">
@@ -1059,22 +1164,4 @@
 		<execute action="SOMicroblogs#assertTextEquals" locator1="xpath=(//span[@class='action comment']/a)[2]" value1="1 Comment" />
 		<execute action="SOMicroblogs#assertTextEquals" locator1="//span[@class='action repost']/a" value1="Repost" />
 	</command>
-
-	<tear-down>
-		<execute macro="SOUserBar#tearDownNotifications" />
-
-		<execute macro="SOMicroblogs#tearDownMicroblogsEntry" />
-
-		<execute macro="SOAnnouncementsEntry#tearDownPG" />
-
-		<execute macro="SOUser#tearDownCP" />
-
-		<execute macro="SOCalendarEvent#tearDownPG" />
-
-		<execute macro="SODashboard#tearDownCP" />
-
-		<execute macro="SOTasks#tearDownTask" />
-
-		<execute macro="SOSite#tearDownCP" />
-	</tear-down>
 </definition>

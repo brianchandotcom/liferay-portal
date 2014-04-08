@@ -38,6 +38,12 @@ public class AntivirusScannerException extends PortalException {
 		super(msg);
 	}
 
+	public AntivirusScannerException(String msg, int type) {
+		super(msg);
+
+		_type = type;
+	}
+
 	public AntivirusScannerException(String msg, Throwable cause) {
 		super(msg, cause);
 	}

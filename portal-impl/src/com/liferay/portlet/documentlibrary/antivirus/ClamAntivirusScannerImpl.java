@@ -39,6 +39,7 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 
 			if (exitValue == 1) {
 				throw new AntivirusScannerException(
+					"Virus detected in " + file.getAbsolutePath(),
 					AntivirusScannerException.VIRUS_DETECTED);
 			}
 			else if (exitValue >= 2) {

@@ -290,7 +290,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			notification = new Liferay.Notice(
 				{
 					closeText: false,
-					content: '<liferay-ui:message key="sorry,-we-were-not-able-to-access-the-server" />' + '<button type="button" class="close">&times;</button>',
+					content: '<liferay-ui:message key="sorry,-we-were-not-able-to-access-the-server" /><button class="close" type="button">&times;</button>',
 					noticeClass: 'hide',
 					timeout: 10000,
 					toggleText: false,

@@ -83,18 +83,18 @@ public class EditExportConfigurationAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteExportImportConfiguration(actionRequest, false);
 			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteExportImportConfiguration(actionRequest, true);
-			}
 			else if (cmd.equals(Constants.EXPORT)) {
 				ExportImportConfigurationHelper.
 					exportLayoutsByExportImportConfiguration(actionRequest);
 			}
-			else if (Validator.isNull(cmd)) {
-				addSessionMessages(actionRequest);
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteExportImportConfiguration(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.RELAUNCH)) {
 				relaunchExportLayoutConfiguration(actionRequest);
+			}
+			else if (Validator.isNull(cmd)) {
+				addSessionMessages(actionRequest);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");

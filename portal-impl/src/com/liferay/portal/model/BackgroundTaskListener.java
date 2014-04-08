@@ -38,24 +38,24 @@ public class BackgroundTaskListener extends BaseModelListener<BackgroundTask> {
 		long exportImportConfigurationId = MapUtil.getLong(
 			taskContextMap, "exportImportConfigurationId");
 
-		if (exportImportConfigurationId > 0) {
-			try {
-				ExportImportConfiguration exportImportConfiguration =
-					ExportImportConfigurationLocalServiceUtil.
-						getExportImportConfiguration(
-							exportImportConfigurationId);
+		if (exportImportConfigurationId == 0) {
+			return;
+		}
 
-				if (exportImportConfiguration.getStatus() ==
-						WorkflowConstants.STATUS_DRAFT) {
+		try {
+			ExportImportConfiguration exportImportConfiguration =
+				ExportImportConfigurationLocalServiceUtil.
+					getExportImportConfiguration(exportImportConfigurationId);
 
-					ExportImportConfigurationLocalServiceUtil.
-						deleteExportImportConfiguration(
-							exportImportConfiguration);
-				}
+			if (exportImportConfiguration.getStatus() ==
+					WorkflowConstants.STATUS_DRAFT) {
+
+				ExportImportConfigurationLocalServiceUtil.
+					deleteExportImportConfiguration(exportImportConfiguration);
 			}
-			catch (Exception e) {
-				throw new ModelListenerException(e);
-			}
+		}
+		catch (Exception e) {
+			throw new ModelListenerException(e);
 		}
 	}
 

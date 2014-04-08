@@ -304,4 +304,12 @@
 			</execute>
 		</for>
 	</command>
+
+	<command name="viewViaAddMenuCP">
+		<var name="key_structureName" value="${structureName}" />
+
+		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPWebcontent#assertElementPresent" locator-key1="ADD_MENULIST_STRUCTURE_NAME" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ADD_MENULIST_STRUCTURE_NAME" value1="${structureName}" />
+	</command>
 </definition>

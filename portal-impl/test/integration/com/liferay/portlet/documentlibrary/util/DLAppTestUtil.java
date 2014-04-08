@@ -172,11 +172,13 @@ public abstract class DLAppTestUtil {
 
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		if (workflowEnabled && !approved) {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+		else {
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 		}
 
 		FileEntry fileEntry = addFileEntry(
@@ -460,8 +462,8 @@ public abstract class DLAppTestUtil {
 		throws Exception {
 
 		return RepositoryLocalServiceUtil.addRepository(
-				userId, groupId, classNameId, parentFolderId, name, description,
-				portletId, typeSettingsProperties, hidden, serviceContext);
+			userId, groupId, classNameId, parentFolderId, name, description,
+			portletId, typeSettingsProperties, hidden, serviceContext);
 	}
 
 	public static RepositoryEntry addRepositoryEntry(
@@ -492,8 +494,8 @@ public abstract class DLAppTestUtil {
 		throws Exception {
 
 		return updateFileEntry(
-				groupId, fileEntryId, ServiceTestUtil.randomString(),
-				ServiceTestUtil.randomString(), majorVersion, true, true);
+			groupId, fileEntryId, ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(), majorVersion, true, true);
 	}
 
 	public static FileEntry updateFileEntry(
@@ -543,11 +545,13 @@ public abstract class DLAppTestUtil {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		if (workflowEnabled && !approved) {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+		else {
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 		}
 
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
@@ -638,8 +642,8 @@ public abstract class DLAppTestUtil {
 		Map<String, Serializable> workflowContext =
 			new HashMap<String, Serializable>();
 
-		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
 
 		DLAppHelperLocalServiceUtil.updateStatus(
 			TestPropsValues.getUserId(), fileEntry,

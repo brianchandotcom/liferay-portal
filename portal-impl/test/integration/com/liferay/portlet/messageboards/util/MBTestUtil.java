@@ -368,12 +368,13 @@ public class MBTestUtil {
 		}
 
 		if (workflowEnabled) {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
 			if (approved) {
 				serviceContext.setWorkflowAction(
 					WorkflowConstants.ACTION_PUBLISH);
+			}
+			else {
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
 			}
 		}
 

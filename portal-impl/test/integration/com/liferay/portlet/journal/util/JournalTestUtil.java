@@ -164,12 +164,13 @@ public class JournalTestUtil {
 		if (workflowEnabled) {
 			serviceContext = (ServiceContext)serviceContext.clone();
 
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
 			if (approved) {
 				serviceContext.setWorkflowAction(
 					WorkflowConstants.ACTION_PUBLISH);
+			}
+			else {
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
 			}
 		}
 
@@ -705,7 +706,7 @@ public class JournalTestUtil {
 
 		return updateArticle(
 			article, title, content, false, false,
-				ServiceTestUtil.getServiceContext());
+			ServiceTestUtil.getServiceContext());
 	}
 
 	public static JournalArticle updateArticle(

@@ -1226,10 +1226,10 @@ public class DLImpl implements DL {
 		Map<String, Serializable> workflowContext =
 			new HashMap<String, Serializable>();
 
-		workflowContext.put("event", syncEventType);
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_URL,
 			getEntryURL(dlFileVersion, serviceContext));
+		workflowContext.put("event", syncEventType);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(), userId,

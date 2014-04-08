@@ -2560,7 +2560,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		subscriptionSender.setClassPK(page.getPageId());
 		subscriptionSender.setCompanyId(page.getCompanyId());
 
-		WikiNode node = wikiNodePersistence.findByPrimaryKey(page.getNodeId());
+		WikiNode node = page.getNode();
 
 		subscriptionSender.setContextAttributes(
 			"[$DIFFS_URL$]",
@@ -2569,6 +2569,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getModifiedDate(), "[$PAGE_ID$]", page.getPageId(),
 			"[$PAGE_SUMMARY$]", page.getSummary(), "[$PAGE_TITLE$]", pageTitle,
 			"[$PAGE_URL$]", pageURL);
+
 		subscriptionSender.setContextAttribute(
 			"[$PAGE_CONTENT$]", pageContent, false);
 		subscriptionSender.setContextAttribute(

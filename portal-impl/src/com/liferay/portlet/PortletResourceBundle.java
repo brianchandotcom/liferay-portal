@@ -14,16 +14,17 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.kernel.util.EnumerationUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.model.PortletInfo;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.List;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -41,31 +42,44 @@ public class PortletResourceBundle extends ResourceBundle {
 
 		parent = parentResourceBundle;
 
-		_portletInfo = portletInfo;
-	}
+		String title = portletInfo.getTitle();
 
-	@Override
-	public boolean containsKey(String key) {
-		if (_keys.contains(key) && (_getJavaxPortletString(key) != null)) {
-			return true;
+		if (title != null) {
+			_portletInfos.put(JavaConstants.JAVAX_PORTLET_TITLE, title);
 		}
 
-		if (parent != null) {
-			return parent.containsKey(key);
+		String shortTitle = portletInfo.getShortTitle();
+
+		if (shortTitle != null) {
+			_portletInfos.put(
+				JavaConstants.JAVAX_PORTLET_SHORT_TITLE, shortTitle);
 		}
 
-		return false;
+		String keywords = portletInfo.getKeywords();
+
+		if (keywords != null) {
+			_portletInfos.put(JavaConstants.JAVAX_PORTLET_KEYWORDS, keywords);
+		}
+
+		String description = portletInfo.getDescription();
+
+		if (description != null) {
+			_portletInfos.put(
+				JavaConstants.JAVAX_PORTLET_DESCRIPTION, description);
+		}
 	}
 
 	@Override
 	public Enumeration<String> getKeys() {
-		Enumeration<String> enumeration = Collections.enumeration(_keys);
-
 		if (parent == null) {
-			return enumeration;
+			return Collections.enumeration(_portletInfos.keySet());
 		}
 
-		return EnumerationUtil.compose(parent.getKeys(), enumeration);
+		Set<String> keySet = new HashSet<String>(parent.keySet());
+
+		keySet.addAll(_portletInfos.keySet());
+
+		return Collections.enumeration(keySet);
 	}
 
 	@Override
@@ -87,34 +101,14 @@ public class PortletResourceBundle extends ResourceBundle {
 			return parent.getString(key);
 		}
 
-		return _getJavaxPortletString(key);
+		return _portletInfos.get(key);
 	}
 
-	private String _getJavaxPortletString(String key) {
-		if (key.equals(JavaConstants.JAVAX_PORTLET_TITLE)) {
-			return _portletInfo.getTitle();
-		}
-		else if (key.equals(JavaConstants.JAVAX_PORTLET_SHORT_TITLE)) {
-			return _portletInfo.getShortTitle();
-		}
-		else if (key.equals(JavaConstants.JAVAX_PORTLET_KEYWORDS)) {
-			return _portletInfo.getKeywords();
-		}
-		else if (key.equals(JavaConstants.JAVAX_PORTLET_DESCRIPTION)) {
-			return _portletInfo.getDescription();
-		}
-
-		return null;
+	@Override
+	protected Set<String> handleKeySet() {
+		return _portletInfos.keySet();
 	}
 
-	private static List<String> _keys = Arrays.asList(
-		new String[] {
-			JavaConstants.JAVAX_PORTLET_DESCRIPTION,
-			JavaConstants.JAVAX_PORTLET_KEYWORDS,
-			JavaConstants.JAVAX_PORTLET_SHORT_TITLE,
-			JavaConstants.JAVAX_PORTLET_TITLE
-		});
-
-	private PortletInfo _portletInfo;
+	private Map<String, String> _portletInfos = new HashMap<String, String>();
 
 }

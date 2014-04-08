@@ -2494,4 +2494,195 @@ public interface DDMStructurePersistence extends BasePersistence<DDMStructure> {
 	public void setDLFileEntryTypes(long pk,
 		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> dlFileEntryTypes)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the journal folders associated with the d d m structure.
+	*
+	* @param pk the primary key of the d d m structure
+	* @return the journal folders associated with the d d m structure
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getJournalFolders(
+		long pk) throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the journal folders associated with the d d m structure.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the d d m structure
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @return the range of journal folders associated with the d d m structure
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getJournalFolders(
+		long pk, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the journal folders associated with the d d m structure.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the d d m structure
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of journal folders associated with the d d m structure
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getJournalFolders(
+		long pk, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of journal folders associated with the d d m structure.
+	*
+	* @param pk the primary key of the d d m structure
+	* @return the number of journal folders associated with the d d m structure
+	* @throws SystemException if a system exception occurred
+	*/
+	public int getJournalFoldersSize(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns <code>true</code> if the journal folder is associated with the d d m structure.
+	*
+	* @param pk the primary key of the d d m structure
+	* @param journalFolderPK the primary key of the journal folder
+	* @return <code>true</code> if the journal folder is associated with the d d m structure; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean containsJournalFolder(long pk, long journalFolderPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns <code>true</code> if the d d m structure has any journal folders associated with it.
+	*
+	* @param pk the primary key of the d d m structure to check for associations with journal folders
+	* @return <code>true</code> if the d d m structure has any journal folders associated with it; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean containsJournalFolders(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds an association between the d d m structure and the journal folder. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the d d m structure
+	* @param journalFolderPK the primary key of the journal folder
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addJournalFolder(long pk, long journalFolderPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds an association between the d d m structure and the journal folder. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the d d m structure
+	* @param journalFolder the journal folder
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addJournalFolder(long pk,
+		com.liferay.portlet.journal.model.JournalFolder journalFolder)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds an association between the d d m structure and the journal folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the d d m structure
+	* @param journalFolderPKs the primary keys of the journal folders
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addJournalFolders(long pk, long[] journalFolderPKs)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds an association between the d d m structure and the journal folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the d d m structure
+	* @param journalFolders the journal folders
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addJournalFolders(long pk,
+		java.util.List<com.liferay.portlet.journal.model.JournalFolder> journalFolders)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Clears all associations between the d d m structure and its journal folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the d d m structure to clear the associated journal folders from
+	* @throws SystemException if a system exception occurred
+	*/
+	public void clearJournalFolders(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the association between the d d m structure and the journal folder. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the d d m structure
+	* @param journalFolderPK the primary key of the journal folder
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeJournalFolder(long pk, long journalFolderPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the association between the d d m structure and the journal folder. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the d d m structure
+	* @param journalFolder the journal folder
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeJournalFolder(long pk,
+		com.liferay.portlet.journal.model.JournalFolder journalFolder)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the association between the d d m structure and the journal folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the d d m structure
+	* @param journalFolderPKs the primary keys of the journal folders
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeJournalFolders(long pk, long[] journalFolderPKs)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the association between the d d m structure and the journal folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the d d m structure
+	* @param journalFolders the journal folders
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeJournalFolders(long pk,
+		java.util.List<com.liferay.portlet.journal.model.JournalFolder> journalFolders)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Sets the journal folders associated with the d d m structure, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the d d m structure
+	* @param journalFolderPKs the primary keys of the journal folders to be associated with the d d m structure
+	* @throws SystemException if a system exception occurred
+	*/
+	public void setJournalFolders(long pk, long[] journalFolderPKs)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Sets the journal folders associated with the d d m structure, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the d d m structure
+	* @param journalFolders the journal folders to be associated with the d d m structure
+	* @throws SystemException if a system exception occurred
+	*/
+	public void setJournalFolders(long pk,
+		java.util.List<com.liferay.portlet.journal.model.JournalFolder> journalFolders)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -87,6 +87,15 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getFolderDDMStructures(
+		long[] groupIds, long folderId, boolean inherited)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderService.getFolderDDMStructures(groupIds, folderId,
+			inherited);
+	}
+
+	@Override
 	public java.util.List<java.lang.Long> getFolderIds(long groupId,
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -258,6 +267,20 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_journalFolderService.unsubscribe(groupId, folderId);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
+		java.util.List<java.lang.Long> ddmStructureIds,
+		boolean overrideDDMStructures, boolean mergeWithParentFolder,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderService.updateFolder(folderId, parentFolderId,
+			name, description, ddmStructureIds, overrideDDMStructures,
+			mergeWithParentFolder, serviceContext);
 	}
 
 	@Override

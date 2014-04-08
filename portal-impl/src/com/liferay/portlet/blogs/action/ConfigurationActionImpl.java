@@ -72,8 +72,8 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (Validator.isNotNull(cmd)) {
-			validateEmail(actionRequest, "emailEntryAdded", true);
-			validateEmail(actionRequest, "emailEntryUpdated", true);
+			validateEmail(actionRequest, "emailEntryAdded");
+			validateEmail(actionRequest, "emailEntryUpdated");
 			validateEmailFrom(actionRequest);
 		}
 

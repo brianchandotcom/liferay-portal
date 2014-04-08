@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
@@ -646,21 +647,24 @@ public class ShoppingOrderLocalServiceImpl
 		String toName = user.getFullName();
 		String toAddress = user.getEmailAddress();
 
-		String subject = null;
-		String body = null;
+		LocalizedValuesMap subjectLocalizedValuesMap = null;
+		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (emailType.equals("confirmation")) {
-			subject = shoppingSettings.getEmailOrderConfirmationSubject();
-			body = shoppingSettings.getEmailOrderConfirmationBody();
+			subjectLocalizedValuesMap =
+				shoppingSettings.getEmailOrderConfirmationSubject();
+			bodyLocalizedValuesMap =
+				shoppingSettings.getEmailOrderConfirmationBody();
 		}
 		else if (emailType.equals("shipping")) {
-			subject = shoppingSettings.getEmailOrderShippingSubject();
-			body = shoppingSettings.getEmailOrderShippingBody();
+			subjectLocalizedValuesMap =
+				shoppingSettings.getEmailOrderShippingSubject();
+			bodyLocalizedValuesMap =
+				shoppingSettings.getEmailOrderShippingBody();
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(order.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$ORDER_BILLING_ADDRESS$]", billingAddress, "[$ORDER_CURRENCY$]",
@@ -669,11 +673,12 @@ public class ShoppingOrderLocalServiceImpl
 			total);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setLocalizedBodyMap(bodyLocalizedValuesMap);
+		subscriptionSender.setLocalizedSubjectMap(subjectLocalizedValuesMap);
 		subscriptionSender.setMailId("shopping_order", order.getOrderId());
 		subscriptionSender.setPortletId(PortletKeys.SHOPPING);
 		subscriptionSender.setScopeGroupId(order.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUserId(order.getUserId());
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);

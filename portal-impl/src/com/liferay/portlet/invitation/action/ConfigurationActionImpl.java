@@ -56,7 +56,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateEmail(actionRequest, "emailMessage", true);
+		validateEmail(actionRequest, "emailMessage");
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

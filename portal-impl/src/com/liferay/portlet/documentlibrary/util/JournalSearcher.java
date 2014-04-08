@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.search.BaseSearcher;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -34,6 +35,11 @@ public class JournalSearcher extends BaseSearcher {
 	}
 
 	public JournalSearcher() {
+		setDefaultSelectedFieldNames(
+			new String[] {
+				Field.ARTICLE_ID, Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
+				Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.TITLE,
+				Field.VERSION, Field.UID});
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}

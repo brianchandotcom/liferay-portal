@@ -37,18 +37,15 @@ public abstract class BaseSearchResultPermissionFilter
 	public Hits search(SearchContext searchContext) throws SearchException {
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		String[] selectedFieldNames = queryConfig.getSelectedFieldNames();
-
 		if (!queryConfig.isAllFieldsSelected()) {
 			Set<String> selectedFieldNameSet = SetUtil.fromArray(
-				selectedFieldNames);
+				queryConfig.getSelectedFieldNames());
 
 			selectedFieldNameSet.addAll(_PERMISSION_SELECTED_FIELD_NAMES);
 
-			selectedFieldNames = selectedFieldNameSet.toArray(
-				new String[selectedFieldNameSet.size()]);
-
-			queryConfig.setSelectedFieldNames(selectedFieldNames);
+			queryConfig.setSelectedFieldNames(
+				selectedFieldNameSet.toArray(
+					new String[selectedFieldNameSet.size()]));
 		}
 
 		int end = searchContext.getEnd();

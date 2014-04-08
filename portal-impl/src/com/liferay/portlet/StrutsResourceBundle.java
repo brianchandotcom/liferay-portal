@@ -14,18 +14,18 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.kernel.util.EnumerationUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.language.ResourceBundleEnumeration;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Enumeration;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -42,10 +42,12 @@ public class StrutsResourceBundle extends ResourceBundle {
 
 	@Override
 	public boolean containsKey(String key) {
-		if (_keys.contains(key)) {
-			key = key.concat(StringPool.PERIOD).concat(_portletName);
+		if (key == null) {
+			throw new NullPointerException();
+		}
 
-			return parent.containsKey(key);
+		if (_keys.contains(key)) {
+			key = _buildKey(key);
 		}
 
 		return parent.containsKey(key);
@@ -53,9 +55,15 @@ public class StrutsResourceBundle extends ResourceBundle {
 
 	@Override
 	public Enumeration<String> getKeys() {
-		Enumeration<String> enumeration = Collections.enumeration(_keys);
+		Set<String> keySet = new HashSet<String>();
 
-		return EnumerationUtil.compose(enumeration, parent.getKeys());
+		for (String key : _keys) {
+			if (parent.containsKey(_buildKey(key))) {
+				keySet.add(key);
+			}
+		}
+
+		return new ResourceBundleEnumeration(keySet, parent.getKeys());
 	}
 
 	@Override
@@ -70,22 +78,26 @@ public class StrutsResourceBundle extends ResourceBundle {
 		}
 
 		if (_keys.contains(key)) {
-			key = key.concat(StringPool.PERIOD).concat(_portletName);
+			key = _buildKey(key);
+		}
 
-			if (parent.containsKey(key)) {
-				try {
-					return parent.getObject(key);
-				}
-				catch (MissingResourceException mre) {
-					return null;
-				}
+		if (parent.containsKey(key)) {
+			try {
+				return parent.getObject(key);
+			}
+			catch (MissingResourceException mre) {
+				return null;
 			}
 		}
 
 		return null;
 	}
 
-	private static List<String> _keys = Arrays.asList(
+	private String _buildKey(String key) {
+		return key.concat(StringPool.PERIOD).concat(_portletName);
+	}
+
+	private static Set<String> _keys = SetUtil.fromArray(
 		new String[] {
 			JavaConstants.JAVAX_PORTLET_DESCRIPTION,
 			JavaConstants.JAVAX_PORTLET_KEYWORDS,

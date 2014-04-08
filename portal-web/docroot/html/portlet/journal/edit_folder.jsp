@@ -54,6 +54,7 @@ boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWith
 
 	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-folder-name" />
 	<liferay-ui:error exception="<%= FolderNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="you-can-not-select-the-structures-for-this-folder-because-at-least-one-web-content-has-other-structure" />
 
 	<aui:model-context bean="<%= folder %>" model="<%= JournalFolder.class %>" />
 

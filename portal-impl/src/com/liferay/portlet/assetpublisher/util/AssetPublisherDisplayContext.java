@@ -776,7 +776,7 @@ public class AssetPublisherDisplayContext {
 			return false;
 		}
 
-		return PropsValues.ASSET_PUBLISHER_SHOW_PERMISSIONS_ENABLED;
+		return PropsValues.ASSET_PUBLISHER_PERMISSION_CHECKING_CONFIGURABLE;
 	}
 
 	public boolean isShowExtraInfo() {

@@ -83,6 +83,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -418,6 +420,10 @@ public class ServiceBuilder {
 
 		if (!jalopyXmlFile.exists()) {
 			jalopyXmlFile = new File("../../misc/jalopy.xml");
+		}
+
+		if (!jalopyXmlFile.exists()) {
+			jalopyXmlFile = _readJalopyConfFromClasspath();
 		}
 
 		try {
@@ -1705,6 +1711,20 @@ public class ServiceBuilder {
 		fileName = fileName.substring(x + 4, y);
 
 		return StringUtil.replace(fileName, "/", ".");
+	}
+
+	private static File _readJalopyConfFromClasspath() {
+		ClassLoader classLoader = ServiceBuilder.class.getClassLoader();
+
+		URL jalopyURL = classLoader.getResource("jalopy.xml");
+
+		try {
+			return new File(jalopyURL.toURI());
+		}
+		catch (Exception e) {
+			throw new RuntimeException(
+				"No jalopy conf could be found in classpath", e);
+		}
 	}
 
 	private void _addIndexMetadata(

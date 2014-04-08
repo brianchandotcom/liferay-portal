@@ -569,6 +569,7 @@
 		<exception>FeedTargetLayoutFriendlyUrl</exception>
 		<exception>FeedTargetPortletId</exception>
 		<exception>FolderName</exception>
+		<exception>InvalidDDMStructure</exception>
 		<exception>RequiredStructure</exception>
 		<exception>RequiredTemplate</exception>
 		<exception>StructureId</exception>

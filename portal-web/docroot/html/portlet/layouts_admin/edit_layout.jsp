@@ -115,22 +115,24 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 	</div>
 </c:if>
 
-<aui:nav-bar>
-	<aui:nav id="layoutsNav">
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.ADD_LAYOUT) && showAddAction && PortalUtil.isLayoutParentable(selLayout) %>">
-			<aui:nav-item data-value="add-child-page" iconCssClass="icon-plus" label="add-child-page" />
-		</c:if>
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.PERMISSIONS) %>">
-			<aui:nav-item data-value="permissions" iconCssClass="icon-lock" label="permissions" />
-		</c:if>
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.DELETE) %>">
-			<aui:nav-item data-value="delete" iconCssClass="icon-remove" label="delete" />
-		</c:if>
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
-			<aui:nav-item data-value="copy-applications" iconCssClass="icon-list-alt" label="copy-applications" />
-		</c:if>
-	</aui:nav>
-</aui:nav-bar>
+<c:if test="<%= !group.isLayoutPrototype() && (selLayout != null) %>">
+	<aui:nav-bar>
+		<aui:nav id="layoutsNav">
+			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.ADD_LAYOUT) && showAddAction && PortalUtil.isLayoutParentable(selLayout) %>">
+				<aui:nav-item data-value="add-child-page" iconCssClass="icon-plus" label="add-child-page" />
+			</c:if>
+			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.PERMISSIONS) %>">
+				<aui:nav-item data-value="permissions" iconCssClass="icon-lock" label="permissions" />
+			</c:if>
+			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.DELETE) %>">
+				<aui:nav-item data-value="delete" iconCssClass="icon-remove" label="delete" />
+			</c:if>
+			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
+				<aui:nav-item data-value="copy-applications" iconCssClass="icon-list-alt" label="copy-applications" />
+			</c:if>
+		</aui:nav>
+	</aui:nav-bar>
+</c:if>
 
 <portlet:actionURL var="editLayoutURL">
 	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />

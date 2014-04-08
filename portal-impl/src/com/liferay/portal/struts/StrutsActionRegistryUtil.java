@@ -100,10 +100,11 @@ public class StrutsActionRegistryUtil {
 
 		properties.put("path", path);
 
-		ServiceRegistration<?> serviceRegistration = registry.registerService(
-			StrutsAction.class, strutsAction, properties);
+		ServiceRegistration<StrutsAction> serviceRegistration =
+			registry.registerService(
+				StrutsAction.class, strutsAction, properties);
 
-		_serviceRegistrations.put(path, serviceRegistration);
+		_strutsActionServiceRegistrations.put(path, serviceRegistration);
 	}
 
 	private void _register(
@@ -115,15 +116,23 @@ public class StrutsActionRegistryUtil {
 
 		properties.put("path", path);
 
-		ServiceRegistration<?> serviceRegistration = registry.registerService(
-			StrutsPortletAction.class, strutsPortletAction, properties);
+		ServiceRegistration<StrutsPortletAction> serviceRegistration =
+			registry.registerService(
+				StrutsPortletAction.class, strutsPortletAction, properties);
 
-		_serviceRegistrations.put(path, serviceRegistration);
+		_strutsPortletActionServiceRegistrations.put(path, serviceRegistration);
 	}
 
 	private void _unregister(String path) {
 		ServiceRegistration<?> serviceRegistration =
-			_serviceRegistrations.remove(path);
+			_strutsActionServiceRegistrations.remove(path);
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
+
+		serviceRegistration = _strutsPortletActionServiceRegistrations.remove(
+			path);
 
 		if (serviceRegistration != null) {
 			serviceRegistration.unregister();
@@ -135,9 +144,13 @@ public class StrutsActionRegistryUtil {
 
 	private Map<String, Action> _actions =
 		new ConcurrentHashMap<String, Action>();
-	private StringServiceRegistrationMap<?> _serviceRegistrations =
-		new StringServiceRegistrationMap<Object>();
 	private ServiceTracker<?, Action> _serviceTracker;
+	private StringServiceRegistrationMap<StrutsAction>
+		_strutsActionServiceRegistrations =
+			new StringServiceRegistrationMap<StrutsAction>();
+	private StringServiceRegistrationMap<StrutsPortletAction>
+		_strutsPortletActionServiceRegistrations =
+			new StringServiceRegistrationMap<StrutsPortletAction>();
 
 	private class ActionServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Action> {

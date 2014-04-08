@@ -116,6 +116,7 @@ import com.liferay.portlet.journal.ArticleTitleException;
 import com.liferay.portlet.journal.ArticleTypeException;
 import com.liferay.portlet.journal.ArticleVersionException;
 import com.liferay.portlet.journal.DuplicateArticleIdException;
+import com.liferay.portlet.journal.InvalidDDMStructureException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.StructureXsdException;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -328,6 +329,8 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		Date now = new Date();
+
+		validateDDMStructureId(groupId, folderId, ddmStructureKey);
 
 		validate(
 			user.getCompanyId(), groupId, classNameId, articleId, autoArticleId,
@@ -6841,6 +6844,33 @@ public class JournalArticleLocalServiceImpl
 				throw new StorageFieldRequiredException();
 			}
 		}
+	}
+
+	protected void validateDDMStructureId(
+			long groupId, long folderId, String ddmStructureKey)
+		throws PortalException, SystemException {
+
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			PortalUtil.getSiteGroupId(groupId),
+			classNameLocalService.getClassNameId(JournalArticle.class),
+			ddmStructureKey, true);
+
+		List<DDMStructure> ddmStructures =
+			ddmStructureLocalService.getFolderStructures(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId,
+				true);
+
+		for (DDMStructure curDDMStructure : ddmStructures) {
+			if (curDDMStructure.getStructureId() ==
+					ddmStructure.getStructureId()) {
+
+				return;
+			}
+		}
+
+		throw new InvalidDDMStructureException(
+			"Invalid structure " + ddmStructure.getStructureId() +
+				" for folder " + folderId);
 	}
 
 	private static final long _JOURNAL_ARTICLE_CHECK_INTERVAL =

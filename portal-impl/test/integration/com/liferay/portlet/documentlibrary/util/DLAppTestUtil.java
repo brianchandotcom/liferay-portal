@@ -400,8 +400,8 @@ public abstract class DLAppTestUtil {
 		}
 
 		return DLAppLocalServiceUtil.addFolder(
-				TestPropsValues.getUserId(), repositoryId, parentFolderId, name,
-				description, serviceContext);
+			TestPropsValues.getUserId(), repositoryId, parentFolderId, name,
+			description, serviceContext);
 	}
 
 	public static Folder addFolder(
@@ -410,8 +410,8 @@ public abstract class DLAppTestUtil {
 		throws Exception {
 
 		return addFolder(
-				serviceContext.getScopeGroupId(), parentFolderId, name,
-				deleteExisting, serviceContext);
+			serviceContext.getScopeGroupId(), parentFolderId, name,
+			deleteExisting, serviceContext);
 	}
 
 	public static Folder addFolder(

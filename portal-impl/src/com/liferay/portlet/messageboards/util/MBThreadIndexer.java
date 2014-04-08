@@ -59,6 +59,11 @@ public class MBThreadIndexer extends BaseIndexer {
 	public static final String PORTLET_ID = PortletKeys.MESSAGE_BOARDS;
 
 	public MBThreadIndexer() {
+		setDefaultSelectedFieldNames(
+			new String[] {
+				Field.CLASS_NAME_ID, Field.CLASS_PK, Field.COMPANY_ID,
+				Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.PORTLET_ID,
+				Field.UID});
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}

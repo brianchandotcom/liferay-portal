@@ -19,7 +19,7 @@
 		<execute macro="UserGroup#tearDownCP" />
 	</tear-down>
 
-	<command name="AddOrganizationSitesAndDeactivate" known-issues="LPS-45472" priority="5">
+	<command name="AddOrganizationSitesAndDeactivate" priority="5">
 		<var name="allowManualMembershipManagement" value="true" />
 		<var name="membershipType" value="Open" />
 		<var name="org1Name" value="Organization Name 1" />
@@ -424,7 +424,7 @@
 		</execute>
 	</command>
 
-	<command name="SitesDeactivated" known-issues="LPS-45472" priority="3">
+	<command name="SitesDeactivated" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -667,7 +667,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteTeamsPermissions" known-issues="LPS-45472" priority="4">
+	<command name="SiteTeamsPermissions" priority="4">
 		<var name="pageName" value="Blog Page Template" />
 		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
 		<var name="permissionInLineCheckLists" value="ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW" />

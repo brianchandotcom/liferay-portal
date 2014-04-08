@@ -238,50 +238,47 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 		permissionNavigationSearch.on(
 			'results',
-			A.debounce(
-				function(event) {
-					permissionNavigationItems.each(
-						function(item, index, collection) {
-							item.ancestor().addClass('hide');
-						}
-					);
-
-					AArray.each(
-						event.results,
-						function(item, index, collection) {
-							item.raw.node.removeClass('hide');
-						}
-					);
-
-					var foundVisibleSection;
-
-					permissionNavigationSectionsNode.each(
-						function(item, index, collection) {
-							var action = 'addClass';
-
-							var visibleItem = item.one('.permission-navigation-item-container:not(.hide)');
-
-							if (visibleItem) {
-								action = 'removeClass';
-
-								foundVisibleSection = true;
-							}
-
-							item[action]('hide');
-						}
-					);
-
-					var noResultsNode = getNoResultsNode();
-
-					if (foundVisibleSection) {
-						noResultsNode.remove();
+			function(event) {
+				permissionNavigationItems.each(
+					function(item, index, collection) {
+						item.ancestor().addClass('hide');
 					}
-					else {
-						permissionNavigationDataContainer.appendChild(noResultsNode);
+				);
+
+				AArray.each(
+					event.results,
+					function(item, index, collection) {
+						item.raw.node.removeClass('hide');
 					}
-				},
-				500
-			)
+				);
+
+				var foundVisibleSection;
+
+				permissionNavigationSectionsNode.each(
+					function(item, index, collection) {
+						var action = 'addClass';
+
+						var visibleItem = item.one('.permission-navigation-item-container:not(.hide)');
+
+						if (visibleItem) {
+							action = 'removeClass';
+
+							foundVisibleSection = true;
+						}
+
+						item[action]('hide');
+					}
+				);
+
+				var noResultsNode = getNoResultsNode();
+
+				if (foundVisibleSection) {
+					noResultsNode.remove();
+				}
+				else {
+					permissionNavigationDataContainer.appendChild(noResultsNode);
+				}
+			}
 		);
 	}
 
@@ -383,7 +380,6 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		function(event) {
 			togglerDelegate = new A.TogglerDelegate(
 				{
-					animated: true,
 					container: <portlet:namespace />permissionNavigationDataContainer,
 					content: '.permission-navigation-item-content',
 					header: '.permission-navigation-item-header'

@@ -122,6 +122,23 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap[] getFolderDDMStructures(
+		long[] groupIds, long folderId, boolean inherited)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> returnValue =
+				JournalFolderServiceUtil.getFolderDDMStructures(groupIds,
+					folderId, inherited);
+
+			return com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static java.lang.Long[] getFolderIds(long groupId, long folderId)
 		throws RemoteException {
 		try {
@@ -415,6 +432,27 @@ public class JournalFolderServiceSoap {
 		throws RemoteException {
 		try {
 			JournalFolderServiceUtil.unsubscribe(groupId, folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.journal.model.JournalFolderSoap updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, Long[] ddmStructureIds,
+		boolean overrideDDMStructures, boolean mergeWithParentFolder,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.updateFolder(folderId,
+					parentFolderId, name, description,
+					ListUtil.toList(ddmStructureIds), overrideDDMStructures,
+					mergeWithParentFolder, serviceContext);
+
+			return com.liferay.portlet.journal.model.JournalFolderSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

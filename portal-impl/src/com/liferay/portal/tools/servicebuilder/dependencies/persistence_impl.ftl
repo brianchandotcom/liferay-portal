@@ -10,7 +10,7 @@
 
 <#assign finderFieldSQLSuffix = "_SQL">
 
-package ${packagePath}.service.persistence;
+package ${packagePath}.service.persistence.impl;
 
 <#assign noSuchEntity = serviceBuilder.getNoSuchEntityException(entity)>
 
@@ -18,6 +18,13 @@ import ${packagePath}.${noSuchEntity}Exception;
 import ${packagePath}.model.${entity.name};
 import ${packagePath}.model.impl.${entity.name}Impl;
 import ${packagePath}.model.impl.${entity.name}ModelImpl;
+
+import ${packagePath}.service.persistence.${entity.name}Persistence;
+
+<#if entity.hasCompoundPK()>
+	import ${packagePath}.service.persistence.${entity.PKClassName};
+</#if>
+
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;

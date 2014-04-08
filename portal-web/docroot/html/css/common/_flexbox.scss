@@ -1,5 +1,7 @@
 @import "compass/css3/shared";
 
+/* ---------- Flex containers ---------- */
+
 @mixin flexbox {
 	@include experimental-value(display, box, -moz, -webkit, not -o, not -ms, not -khtml, not official);
 	@include experimental-value(display, flex, -moz, -webkit, not -o, not -ms, not -khtml, official);
@@ -11,6 +13,8 @@
 	@include experimental-value(display, inline-flex, -moz, -webkit, not -o, not -ms, not -khtml, official);
 	@include experimental-value(display, inline-flexbox, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
 }
+
+/* ---------- Flex container behavior ---------- */
 
 @mixin flex-direction($value: row) {
 	$direction-value: normal;
@@ -47,34 +51,21 @@
 	@include experimental(flex-flow, $values, -moz, -webkit, not -o, -ms, not -khtml, official);
 }
 
-@mixin order($int: 0) {
-	@include experimental(box-ordinal-group, $int, -moz, -webkit, not -o, not -ms, not -khtml, not official);
-	@include experimental(flex-order, $int, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
-	@include experimental(order, $int, -moz, -webkit, not -o, -ms, not -khtml, official);
-}
+/* ---------- Flex container alignment ---------- */
 
-@mixin flex-grow($int: 0) {
-	@include experimental(flex-grow, $int, -moz, -webkit, not -o, not -ms, not -khtml, official);
-	@include experimental(flex-positive, $int, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
-}
+@mixin align-content($value: stretch) {
+	$align-value: $value;
 
-@mixin flex-shrink($int: 1) {
-	@include experimental(flex-shrink, $int, -moz, -webkit, not -o, not -ms, not -khtml, official);
-	@include experimental(flex-negative, $int, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
-}
-
-@mixin flex-basis($value: auto) {
-	@include experimental(flex-basis, $value, -moz, -webkit, not -o, not -ms, not -khtml, official);
-	@include experimental(flex-preferred-size, $value, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
-}
-
-@mixin flex($values, $flex-width: false) {
-	@include experimental(box-flex, $values, -moz, -webkit, not -o, not -ms, not -khtml, not official);
-	@include experimental(flex, $values, -moz, -webkit, not -o, -ms, not -khtml, official);
-
-	@if $flex-width {
-		width: $flex-width;
+	@if $value == "flex-start" {
+		$align-value: start;
 	}
+	@else if $value == "flex-end" {
+		$align-value: end;
+	}
+
+	@include experimental(flex-line-pack, $align-value, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
+
+	@include experimental(align-content, $value, -moz, -webkit, not -o, not -ms, not -khtml, official);
 }
 
 @mixin justify-content($value: flex-start) {
@@ -92,6 +83,40 @@
 	@include experimental(justify-content, flex-start, -moz, -webkit, not -o, not -ms, not -khtml, official);
 }
 
+/* ---------- Flex items ---------- */
+
+@mixin flex($values, $flex-width: false) {
+	@include experimental(box-flex, $values, -moz, -webkit, not -o, not -ms, not -khtml, not official);
+	@include experimental(flex, $values, -moz, -webkit, not -o, -ms, not -khtml, official);
+
+	@if $flex-width {
+		width: $flex-width;
+	}
+}
+
+@mixin flex-basis($value: auto) {
+	@include experimental(flex-basis, $value, -moz, -webkit, not -o, not -ms, not -khtml, official);
+	@include experimental(flex-preferred-size, $value, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
+}
+
+@mixin flex-grow($int: 0) {
+	@include experimental(flex-grow, $int, -moz, -webkit, not -o, not -ms, not -khtml, official);
+	@include experimental(flex-positive, $int, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
+}
+
+@mixin flex-shrink($int: 1) {
+	@include experimental(flex-shrink, $int, -moz, -webkit, not -o, not -ms, not -khtml, official);
+	@include experimental(flex-negative, $int, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
+}
+
+@mixin order($int: 0) {
+	@include experimental(box-ordinal-group, $int, -moz, -webkit, not -o, not -ms, not -khtml, not official);
+	@include experimental(flex-order, $int, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
+	@include experimental(order, $int, -moz, -webkit, not -o, -ms, not -khtml, official);
+}
+
+/* ---------- Flex item alignment ---------- */
+
 @mixin align-items($value: stretch) {
 	$align-value: $value;
 
@@ -104,6 +129,7 @@
 
 	@include experimental(box-align, $align-value, not -moz, -webkit, not -o, not -ms, not -khtml, not official);
 	@include experimental(flex-align, $align-value, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
+
 	@include experimental(align-items, $value, -moz, -webkit, not -o, not -ms, not -khtml, official);
 }
 
@@ -118,19 +144,6 @@
 	}
 
 	@include experimental(flex-item-align, $align-value, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
+
 	@include experimental(align-self, $value, -moz, -webkit, not -o, not -ms, not -khtml, official);
-}
-
-@mixin align-content($value: stretch) {
-	$align-value: $value;
-
-	@if $value == "flex-start" {
-		$align-value: start;
-	}
-	@else if $value == "flex-end" {
-		$align-value: end;
-	}
-
-	@include experimental(flex-line-pack, $align-value, not -moz, not -webkit, not -o, -ms, not -khtml, not official);
-	@include experimental(align-content, $value, -moz, -webkit, not -o, not -ms, not -khtml, official);
 }

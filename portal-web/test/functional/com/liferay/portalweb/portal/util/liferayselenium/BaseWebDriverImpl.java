@@ -63,14 +63,10 @@ public abstract class BaseWebDriverImpl
 				_sikuliImagesDirName, "linux", "windows");
 		}
 
-		int x = 0;
-		int y = 0;
+		int x = 1065;
+		int y = 1250;
 
-		if (!TestPropsValues.MOBILE_DEVICE_ENABLED) {
-			x = 1065;
-			y = 1250;
-		}
-		else {
+		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
 			String[] screenResolution = StringUtil.split(
 				TestPropsValues.MOBILE_RESOLUTION, "x");
 

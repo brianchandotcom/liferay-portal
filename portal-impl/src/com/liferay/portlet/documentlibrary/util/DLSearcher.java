@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.search.BaseSearcher;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -34,6 +35,11 @@ public class DLSearcher extends BaseSearcher {
 	}
 
 	public DLSearcher() {
+		setDefaultSelectedFieldNames(
+			new String[] {
+				Field.CLASS_NAME_ID, Field.CLASS_PK, Field.COMPANY_ID,
+				Field.CONTENT, Field.DESCRIPTION, Field.ENTRY_CLASS_NAME,
+				Field.ENTRY_CLASS_PK, Field.TITLE, Field.VERSION, Field.UID});
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}

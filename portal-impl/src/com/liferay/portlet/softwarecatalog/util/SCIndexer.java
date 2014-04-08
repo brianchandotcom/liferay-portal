@@ -58,6 +58,10 @@ public class SCIndexer extends BaseIndexer {
 	public static final String PORTLET_ID = PortletKeys.SOFTWARE_CATALOG;
 
 	public SCIndexer() {
+		setDefaultSelectedFieldNames(
+			new String[] {
+				Field.COMPANY_ID, Field.CONTENT, Field.ENTRY_CLASS_NAME,
+				Field.ENTRY_CLASS_PK, Field.TITLE, Field.UID});
 		setStagingAware(false);
 	}
 

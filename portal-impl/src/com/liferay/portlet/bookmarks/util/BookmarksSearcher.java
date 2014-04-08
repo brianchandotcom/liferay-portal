@@ -15,6 +15,7 @@
 package com.liferay.portlet.bookmarks.util;
 
 import com.liferay.portal.kernel.search.BaseSearcher;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
@@ -34,6 +35,8 @@ public class BookmarksSearcher extends BaseSearcher {
 	}
 
 	public BookmarksSearcher() {
+		setDefaultSelectedFieldNames(
+			new String[] {Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK});
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}

@@ -76,8 +76,8 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateEmail(actionRequest, "emailOrderConfirmation", true);
-		validateEmail(actionRequest, "emailOrderShipping", true);
+		validateEmail(actionRequest, "emailOrderConfirmation");
+		validateEmail(actionRequest, "emailOrderShipping");
 		validateEmailFrom(actionRequest);
 
 		updateCcTypes(actionRequest);

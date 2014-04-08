@@ -93,8 +93,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 	protected void validate(ActionRequest actionRequest) throws Exception {
 		validateDisplayStyleViews(actionRequest);
-		validateEmail(actionRequest, "emailFileEntryAdded", true);
-		validateEmail(actionRequest, "emailFileEntryUpdated", true);
+		validateEmail(actionRequest, "emailFileEntryAdded");
+		validateEmail(actionRequest, "emailFileEntryUpdated");
 		validateEmailFrom(actionRequest);
 		validateRootFolder(actionRequest);
 	}

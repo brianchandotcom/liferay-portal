@@ -110,12 +110,12 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		validateEmail(actionRequest, "emailArticleAdded", true);
-		validateEmail(actionRequest, "emailArticleApprovalDenied", true);
-		validateEmail(actionRequest, "emailArticleApprovalGranted", true);
-		validateEmail(actionRequest, "emailArticleApprovalRequested", true);
-		validateEmail(actionRequest, "emailArticleReview", true);
-		validateEmail(actionRequest, "emailArticleUpdated", true);
+		validateEmail(actionRequest, "emailArticleAdded");
+		validateEmail(actionRequest, "emailArticleApprovalDenied");
+		validateEmail(actionRequest, "emailArticleApprovalGranted");
+		validateEmail(actionRequest, "emailArticleApprovalRequested");
+		validateEmail(actionRequest, "emailArticleReview");
+		validateEmail(actionRequest, "emailArticleUpdated");
 		validateEmailFrom(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);

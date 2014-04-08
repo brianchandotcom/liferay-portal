@@ -312,26 +312,20 @@ public class SettingsConfigurationAction
 	}
 
 	protected void validateEmail(
-		ActionRequest actionRequest, String emailParam, boolean localized) {
+		ActionRequest actionRequest, String emailParam) {
 
 		boolean emailEnabled = GetterUtil.getBoolean(
 			getParameter(actionRequest, emailParam + "Enabled"));
 		String emailSubject = null;
 		String emailBody = null;
 
-		if (localized) {
-			String languageId = LocaleUtil.toLanguageId(
-				LocaleUtil.getSiteDefault());
+		String languageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
 
-			emailSubject = getLocalizedParameter(
-				actionRequest, emailParam + "Subject", languageId);
-			emailBody = getLocalizedParameter(
-				actionRequest, emailParam + "Body", languageId);
-		}
-		else {
-			emailSubject = getParameter(actionRequest, emailParam + "Subject");
-			emailBody = getParameter(actionRequest, emailParam + "Body");
-		}
+		emailSubject = getLocalizedParameter(
+			actionRequest, emailParam + "Subject", languageId);
+		emailBody = getLocalizedParameter(
+			actionRequest, emailParam + "Body", languageId);
 
 		if (emailEnabled) {
 			if (Validator.isNull(emailSubject)) {

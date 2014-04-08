@@ -125,6 +125,8 @@ public interface PropsKeys {
 
 	public static final String ASSET_PUBLISHER_EMAIL_FROM_NAME = "asset.publisher.email.from.name";
 
+	public static final String ASSET_PUBLISHER_SHOW_PERMISSIONS_ENABLED = "asset.publisher.show.permissions.enabled";
+
 	public static final String ASSET_PUBLISHER_QUERY_FORM_CONFIGURATION = "asset.publisher.query.form.configuration";
 
 	public static final String ASSET_PUBLISHER_SEARCH_WITH_INDEX = "asset.publisher.search.with.index";
@@ -943,8 +945,6 @@ public interface PropsKeys {
 
 	public static final String HIBERNATE_JDBC_BATCH_SIZE = "hibernate.jdbc.batch_size";
 
-	public static final String HIGHEST_RATED_ASSETS_SHOW_PERMISSIONS_ENABLED = "highest.rated.assets.show.permissions.enabled";
-
 	public static final String HOT_DEPLOY_LISTENERS = "hot.deploy.listeners";
 
 	public static final String HOT_UNDEPLOY_ENABLED = "hot.undeploy.enabled";
@@ -1746,8 +1746,6 @@ public interface PropsKeys {
 	public static final String MONITORING_PORTLET_RESOURCE_REQUEST = "monitoring.portlet.resource.request";
 
 	public static final String MONITORING_SHOW_PER_REQUEST_DATA_SAMPLE = "monitoring.show.per.request.data.sample";
-
-	public static final String MOST_VIEWED_ASSETS_SHOW_PERMISSIONS_ENABLED = "most.viewed.assets.show.permissions.enabled";
 
 	public static final String MSN_LOGIN = "msn.login";
 

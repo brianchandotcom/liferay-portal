@@ -223,21 +223,21 @@ shoppingSettings = ShoppingUtil.getShoppingSettings(themeDisplay.getSiteGroupId(
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= shoppingSettings.getEmailOrderConfirmationBody() %>"
+				emailBody="<%= shoppingSettings.getEmailOrderConfirmationBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= shoppingSettings.getEmailOrderConfirmationEnabled() %>"
 				emailParam="emailOrderConfirmation"
-				emailSubject="<%= shoppingSettings.getEmailOrderConfirmationSubject() %>"
+				emailSubject="<%= shoppingSettings.getEmailOrderConfirmationSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= shoppingSettings.getEmailOrderShippingBody() %>"
+				emailBody="<%= shoppingSettings.getEmailOrderShippingBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= shoppingSettings.getEmailOrderShippingEnabled() %>"
 				emailParam="emailOrderShipping"
-				emailSubject="<%= shoppingSettings.getEmailOrderShippingSubject() %>"
+				emailSubject="<%= shoppingSettings.getEmailOrderShippingSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

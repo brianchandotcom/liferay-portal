@@ -125,6 +125,8 @@ public interface PropsKeys {
 
 	public static final String ASSET_PUBLISHER_EMAIL_FROM_NAME = "asset.publisher.email.from.name";
 
+	public static final String ASSET_PUBLISHER_SHOW_PERMISSIONS_ENABLED = "asset.publisher.show.permissions.enabled";
+
 	public static final String ASSET_PUBLISHER_QUERY_FORM_CONFIGURATION = "asset.publisher.query.form.configuration";
 
 	public static final String ASSET_PUBLISHER_SEARCH_WITH_INDEX = "asset.publisher.search.with.index";

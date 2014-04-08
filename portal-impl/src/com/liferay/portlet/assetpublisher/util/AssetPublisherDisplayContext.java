@@ -598,6 +598,12 @@ public class AssetPublisherDisplayContext {
 				return _enablePermissions;
 			}
 
+			if (!PropsValues.ASSET_PUBLISHER_SHOW_PERMISSIONS_ENABLED) {
+				_enablePermissions = true;
+
+				return _enablePermissions;
+			}
+
 			_enablePermissions = GetterUtil.getBoolean(
 				_portletPreferences.getValue("enablePermissions", null));
 		}
@@ -763,6 +769,14 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _showContextLink;
+	}
+
+	public Boolean isShowEnablePermissions() {
+		if (PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
+			return false;
+		}
+
+		return PropsValues.ASSET_PUBLISHER_SHOW_PERMISSIONS_ENABLED;
 	}
 
 	public boolean isShowExtraInfo() {

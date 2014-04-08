@@ -101,6 +101,10 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		return _helpTextCssClass;
 	}
 
+	public boolean getHideLabel() {
+		return _hideLabel;
+	}
+
 	public java.lang.String getId() {
 		return _id;
 	}
@@ -307,6 +311,12 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("helpTextCssClass", helpTextCssClass);
 	}
 
+	public void setHideLabel(boolean hideLabel) {
+		_hideLabel = hideLabel;
+
+		setScopedAttribute("hideLabel", hideLabel);
+	}
+
 	public void setId(java.lang.String id) {
 		_id = id;
 
@@ -482,6 +492,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_formName = null;
 		_helpMessage = null;
 		_helpTextCssClass = "add-on";
+		_hideLabel = false;
 		_id = null;
 		_ignoreRequestValue = false;
 		_includeHiddenField = true;
@@ -534,6 +545,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "formName", _formName);
 		setNamespacedAttribute(request, "helpMessage", _helpMessage);
 		setNamespacedAttribute(request, "helpTextCssClass", _helpTextCssClass);
+		setNamespacedAttribute(request, "hideLabel", _hideLabel);
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "ignoreRequestValue", _ignoreRequestValue);
 		setNamespacedAttribute(request, "includeHiddenField", _includeHiddenField);
@@ -584,6 +596,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _formName = null;
 	private java.lang.String _helpMessage = null;
 	private java.lang.String _helpTextCssClass = "add-on";
+	private boolean _hideLabel = false;
 	private java.lang.String _id = null;
 	private boolean _ignoreRequestValue = false;
 	private boolean _includeHiddenField = true;

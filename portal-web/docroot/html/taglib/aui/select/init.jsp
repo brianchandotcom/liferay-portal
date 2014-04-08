@@ -26,6 +26,7 @@ java.util.Map<java.lang.String, java.lang.Object> data = (java.util.Map<java.lan
 boolean disabled = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:select:disabled")));
 boolean first = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:select:first")));
 java.lang.String helpMessage = GetterUtil.getString((java.lang.String)request.getAttribute("aui:select:helpMessage"));
+boolean hideLabel = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:select:hideLabel")), false);
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:select:id"));
 boolean ignoreRequestValue = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:select:ignoreRequestValue")));
 boolean inlineField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:select:inlineField")));

@@ -365,10 +365,35 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public String get(Locale locale, String key, String defaultValue) {
-		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
-			locale);
+		if (PropsValues.TRANSLATIONS_DISABLED) {
+			return key;
+		}
 
-		return get(resourceBundle, key, defaultValue);
+		if ((locale == null) || (key == null)) {
+			return defaultValue;
+		}
+
+		String value = LanguageResources.getMessage(locale, key);
+
+		if (value != null) {
+			return LanguageResources.fixValue(value);
+		}
+
+		if (value == null) {
+			if ((key.length() > 0) &&
+				(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
+
+				int pos = key.lastIndexOf(CharPool.OPEN_BRACKET);
+
+				if (pos != -1) {
+					key = key.substring(0, pos);
+
+					return get(locale, key, defaultValue);
+				}
+			}
+		}
+
+		return defaultValue;
 	}
 
 	@Override

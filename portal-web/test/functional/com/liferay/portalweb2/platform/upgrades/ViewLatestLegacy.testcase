@@ -1,4 +1,6 @@
 <definition component-name="portal-upgrades" ignore="true">
+	<property name="testray.main.component.name" value="Upgrades" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>

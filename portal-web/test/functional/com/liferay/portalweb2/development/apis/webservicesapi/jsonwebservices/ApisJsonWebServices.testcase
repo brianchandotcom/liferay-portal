@@ -1,4 +1,6 @@
 <definition component-name="portal-apis">
+	<property name="testray.main.component.name" value="APIs" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>

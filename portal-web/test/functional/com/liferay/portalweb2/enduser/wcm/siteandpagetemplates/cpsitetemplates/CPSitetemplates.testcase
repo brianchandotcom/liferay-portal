@@ -1,4 +1,6 @@
 <definition component-name="portal-wcm">
+	<property name="testray.main.component.name" value="WCM" />
+
 	<var name="portletName" value="Site Templates" />
 	<var name="siteName" value="Site Name" />
 	<var name="siteTemplateName" value="Site Template Name" />

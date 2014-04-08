@@ -1,4 +1,6 @@
 <definition component-name="portal-permissions">
+	<property name="testray.main.component.name" value="Permissions" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>

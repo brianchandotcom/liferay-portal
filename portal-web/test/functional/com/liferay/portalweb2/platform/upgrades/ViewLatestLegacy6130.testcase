@@ -1,3 +1,4 @@
 <definition component-name="portal-upgrades" extends="ViewLatestLegacySmoke">
 	<property name="portal.version" value="6.1.30" />
+	<property name="testray.main.component.name" value="Upgrades" />
 </definition>

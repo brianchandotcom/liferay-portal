@@ -1,4 +1,6 @@
 <definition component-name="portal-social-networking">
+	<property name="testray.main.component.name" value="Social Networking" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>

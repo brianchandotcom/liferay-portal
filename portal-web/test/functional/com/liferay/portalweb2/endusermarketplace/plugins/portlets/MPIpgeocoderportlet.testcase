@@ -1,4 +1,6 @@
 <definition component-name="marketplace-plugins-ip-geocoder-portlet">
+	<property name="testray.main.component.name" value="Plugin Installer" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 

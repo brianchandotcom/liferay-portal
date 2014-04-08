@@ -1,4 +1,6 @@
 <definition component-name="portal-collaboration" extends="fail">
+	<property name="testray.main.component.name" value="Collaboration" />
+
 	<command name="name" priority="5">
 		<var name="name" value="value" />
 	</command>

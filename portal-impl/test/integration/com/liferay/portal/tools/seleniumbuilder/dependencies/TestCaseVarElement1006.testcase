@@ -1,3 +1,5 @@
 <definition component-name="portal-collaboration">
+	<property name="testray.main.component.name" value="Collaboration" />
+
 	<var name="" value="value" />
 </definition>

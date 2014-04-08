@@ -1,4 +1,6 @@
 <definition component-name="portal-web-forms-and-data-lists">
+	<property name="testray.main.component.name" value="Web Forms and Data Lists" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>

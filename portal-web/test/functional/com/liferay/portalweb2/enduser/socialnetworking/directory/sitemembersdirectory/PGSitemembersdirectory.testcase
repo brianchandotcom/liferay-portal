@@ -1,4 +1,6 @@
 <definition component-name="portal-social-networking">
+	<property name="testray.main.component.name" value="Social Networking" />
+
 	<var name="pageName" value="Site Members Directory Page" />
 	<var name="portletName" value="Site Members Directory" />
 

@@ -1,4 +1,6 @@
 <definition component-name="portal-collaboration">
+	<property name="testray.main.component.name" value="Collaboration" />
+
 	<command name="name" priority="5">
 		<execute action="BaseLiferay#click" locator-key1="PAGE_NAME_X" />
 	</command>

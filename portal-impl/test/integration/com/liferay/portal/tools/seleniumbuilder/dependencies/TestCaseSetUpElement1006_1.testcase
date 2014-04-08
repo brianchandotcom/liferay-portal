@@ -1,4 +1,6 @@
 <definition component-name="portal-collaboration" extends="TestCase">
+	<property name="testray.main.component.name" value="Collaboration" />
+
 	<set-up>
 		<execute test-case="" />
 	</set-up>

@@ -1,4 +1,6 @@
 <definition component-name="portal-collaboration">
+	<property name="testray.main.component.name" value="Collaboration" />
+
 	<var name="pageName" value="Announcements Page" />
 	<var name="portletName" value="Announcements" />
 

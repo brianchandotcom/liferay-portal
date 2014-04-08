@@ -1,4 +1,6 @@
 <definition component-name="portal-tools">
+	<property name="testray.main.component.name" value="Tools" />
+
 	<var name="commitMessage" value="LPS-40675" />
 	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-5720" />
 	<var name="ticketSummary" value="LIFERAYQA-5720: Implement storeAttribute" />

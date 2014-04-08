@@ -1,5 +1,6 @@
 <definition component-name="portal-social-networking">
 	<property name="portlet.plugins.includes" value="social-networking-portlet" />
+	<property name="testray.main.component.name" value="Social Networking" />
 
 	<var name="pageName" value="Friends Directory Page" />
 	<var name="portletName" value="Friends Directory" />

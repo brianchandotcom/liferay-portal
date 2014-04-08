@@ -14,9 +14,6 @@
 
 package com.liferay.portal.search.lucene;
 
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
@@ -26,10 +23,8 @@ import java.io.IOException;
 import java.lang.Thread.State;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -69,12 +64,6 @@ public class IndexSearcherManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PortalExecutorManagerUtil portalExecutorManagerUtil =
-			new PortalExecutorManagerUtil();
-
-		portalExecutorManagerUtil.setPortalExecutorManager(
-			new MockPortalExecutorManager());
-
 		IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
 			Version.LUCENE_35, new StandardAnalyzer(Version.LUCENE_35));
 
@@ -352,57 +341,5 @@ public class IndexSearcherManagerTest {
 	private Directory _directory;
 	private IndexSearcherManager _indexSearcherManager;
 	private IndexWriter _indexWriter;
-
-	private class MockPortalExecutorManager implements PortalExecutorManager {
-
-		@Override
-		public <T> Future<T> execute(String name, Callable<T> callable) {
-			return null;
-		}
-
-		@Override
-		public <T> T execute(
-			String name, Callable<T> callable, long timeout,
-			TimeUnit timeUnit) {
-
-			return null;
-		}
-
-		@Override
-		public ThreadPoolExecutor getPortalExecutor(String name) {
-			return null;
-		}
-
-		@Override
-		public ThreadPoolExecutor getPortalExecutor(
-			String name, boolean createIfAbsent) {
-
-			return null;
-		}
-
-		@Override
-		public ThreadPoolExecutor registerPortalExecutor(
-			String name, ThreadPoolExecutor threadPoolExecutor) {
-
-			return null;
-		}
-
-		@Override
-		public void shutdown() {
-		}
-
-		@Override
-		public void shutdown(boolean interrupt) {
-		}
-
-		@Override
-		public void shutdown(String name) {
-		}
-
-		@Override
-		public void shutdown(String name, boolean interrupt) {
-		}
-
-	}
 
 }

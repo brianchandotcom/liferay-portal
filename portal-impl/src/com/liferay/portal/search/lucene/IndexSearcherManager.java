@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.lucene;
 
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
-
 import java.io.IOException;
 
 import org.apache.lucene.index.IndexReader;
@@ -88,9 +86,6 @@ public class IndexSearcherManager {
 		_indexSearcher = null;
 
 		release(indexSearcher);
-
-		PortalExecutorManagerUtil.shutdown(
-			IndexSearcherManager.class.getName());
 	}
 
 	public synchronized void invalidate() {
@@ -108,10 +103,7 @@ public class IndexSearcherManager {
 	}
 
 	private IndexSearcher _createIndexSearcher(IndexReader indexReader) {
-		IndexSearcher indexSearcher = new IndexSearcher(
-			indexReader,
-			PortalExecutorManagerUtil.getPortalExecutor(
-				IndexSearcherManager.class.getName()));
+		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
 
 		indexSearcher.setDefaultFieldSortScoring(true, false);
 		indexSearcher.setSimilarity(new FieldWeightSimilarity());

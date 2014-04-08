@@ -136,6 +136,10 @@
 	.message-container .user-info {
 		border-right: 1px solid #CCC;
 		padding: 5px;
+
+		.user-name {
+			@include hyphenation;
+		}
 	}
 
 	.clear {

@@ -38,6 +38,35 @@
 		<execute action="PGCalendarAddevent#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="deleteFutureEventPG">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Agenda" />
+		</execute>
+
+		<var name="dayNumber" value="0" />
+
+		<while>
+			<not>
+				<equals arg1="${dayNumber}" arg2="${daysIntoFuture}" />
+			</not>
+			<then>
+				<var name="dayNumber" value="${dayNumber?increment()}" />
+
+				<execute action="PGCalendar#click" locator-key1="VIEW_NEXT_BUTTON" />
+			</then>
+		</while>
+
+		<execute action="PGCalendarAgendaView#click" locator-key1="SCHEDULER_EVENT_GENERIC" />
+
+		<execute action="PGCalendar#click" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
+
+		<execute action="PGCalendarDeleteRecurringEvent#click" locator-key1="ONLY_THIS_INSTANCE_BUTTON" />
+
+		<var name="key_eventTitle" value="${eventTitle}" />
+
+		<execute action="PGCalendarAgendaView#assertElementNotPresent" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
+	</command>
+
 	<command name="editFutureEventPG">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Agenda" />

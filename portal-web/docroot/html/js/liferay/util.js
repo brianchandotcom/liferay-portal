@@ -392,6 +392,22 @@
 			return columnId;
 		},
 
+		getGeolocation: function(callback) {
+			if (callback && navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(
+					function(position) {
+						callback.apply(
+							this,
+							[
+								position.coords.latitude,
+								position.coords.longitude
+							]
+						);
+					}
+				);
+			}
+		},
+
 		getOpener: function() {
 			var openingWindow = Window._opener;
 

@@ -10,61 +10,53 @@
 	<#assign longitude = geolocationJSONObject.getDouble("longitude")>
 </#if>
 
-<@aui["field-wrapper"] data=data>
-	<@aui.button onClick="window['${portletNamespace}${namespacedFieldName}geolocation']();" value="geolocate" />
+<@aui["field-wrapper"] cssClass="geolocation-field" data=data required=required>
+	<@aui.input inlineField=true label='${languageUtil.get(locale, "latitude")}' name="${namespacedFieldName}Latitude" readonly="readonly" type="text" value="${latitude}" />
 
-	<@aui.input inlineField=true label='${languageUtil.get(locale, "latitude")}' name="${namespacedFieldName}Latitude" readonly="readonly" type="text" value="${latitude}">
-		<#if required>
-			<@aui.validator name="required" />
-		</#if>
-	</@aui.input>
-
-	<@aui.input inlineField=true label='${languageUtil.get(locale, "longitude")}' name="${namespacedFieldName}Longitude" readonly="readonly" type="text" value="${longitude}">
-		<#if required>
-			<@aui.validator name="required" />
-		</#if>
-	</@aui.input>
+	<@aui.input inlineField=true label='${languageUtil.get(locale, "longitude")}' name="${namespacedFieldName}Longitude" readonly="readonly" type="text" value="${longitude}" />
 
 	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
+
+	<@aui["button-row"]>
+		<@aui.button onClick="window['${portletNamespace}${namespacedFieldName}SetGeolocation']();" value="geolocate" />
+	</@>
 
 	${fieldStructure.children}
 </@>
 
 <@aui.script>
-	window['${portletNamespace}${namespacedFieldName}geolocation'] = function() {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(window['${portletNamespace}${namespacedFieldName}setGeolocation']);
-		}
-	};
-
 	Liferay.provide(
 		window,
-		'${portletNamespace}${namespacedFieldName}setGeolocation',
+		'${portletNamespace}${namespacedFieldName}SetGeolocation',
 		function(position) {
 			var A = AUI();
 
-			var latitude = position.coords.latitude;
-			var longitude = position.coords.longitude;
-
-			var inputNode = A.one('#${portletNamespace}${namespacedFieldName}');
-
-			inputNode.val(
-				A.JSON.stringify(
-					{
-						latitude: latitude,
-						longitude: longitude
-					}
-				)
-			);
-
 			var latitudeNode = A.one('#${portletNamespace}${namespacedFieldName}Latitude');
 
-			latitudeNode.val(latitude);
+			latitudeNode.val('<@liferay_ui.message key="loading" />');
 
 			var longitudeNode = A.one('#${portletNamespace}${namespacedFieldName}Longitude');
 
-			longitudeNode.val(longitude);
+			longitudeNode.val('<@liferay_ui.message key="loading" />');
+
+			Liferay.Util.getGeolocation(
+				function(latitude, longitude) {
+					var inputNode = A.one('#${portletNamespace}${namespacedFieldName}');
+
+					inputNode.val(
+						A.JSON.stringify(
+							{
+								latitude: latitude,
+								longitude: longitude
+							}
+						)
+					);
+
+					latitudeNode.val(latitude);
+					longitudeNode.val(longitude);
+				}
+			);
 		},
-		['json']
+		['aui-base', 'json']
 	);
 </@>

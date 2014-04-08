@@ -10,6 +10,10 @@
 			content: '\0000a0';
 		}
 	}
+
+	.control-group.geolocation-field .button-holder .btn {
+		margin-top: 0;
+	}
 }
 
 .portlet-dynamic-data-lists .control-group.field-wrapper .btn {

@@ -16,14 +16,16 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Tina Tian
@@ -38,8 +40,13 @@ public abstract class BaseSearchResultPermissionFilter
 		String[] selectedFieldNames = queryConfig.getSelectedFieldNames();
 
 		if (!queryConfig.isAllFieldsSelected()) {
-			selectedFieldNames = ArrayUtil.append(
-				selectedFieldNames, _PERMISSION_SELECTED_FIELD_NAMES);
+			Set<String> selectedFieldNameSet = SetUtil.fromArray(
+				selectedFieldNames);
+
+			selectedFieldNameSet.addAll(_PERMISSION_SELECTED_FIELD_NAMES);
+
+			selectedFieldNames = selectedFieldNameSet.toArray(
+				new String[selectedFieldNameSet.size()]);
 
 			queryConfig.setSelectedFieldNames(selectedFieldNames);
 		}
@@ -158,7 +165,7 @@ public abstract class BaseSearchResultPermissionFilter
 					PropsKeys.
 						INDEX_PERMISSION_FILTER_SEARCH_AMPLIFICATION_FACTOR));
 
-	private static final String[] _PERMISSION_SELECTED_FIELD_NAMES =
-		{Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK};
+	private static final List<String> _PERMISSION_SELECTED_FIELD_NAMES =
+		Arrays.asList(Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK);
 
 }

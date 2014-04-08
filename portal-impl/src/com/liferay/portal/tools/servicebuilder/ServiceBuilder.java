@@ -1777,7 +1777,7 @@ public class ServiceBuilder {
 		// Write file
 
 		File ejbFile = new File(
-			_serviceOutputPath + "/service/persistence/" +
+			_outputPath + "/service/persistence/impl/" +
 				entity.getName() + "ActionableDynamicQuery.java");
 
 		writeFile(ejbFile, content, _author);
@@ -1919,7 +1919,7 @@ public class ServiceBuilder {
 		// Write file
 
 		File ejbFile = new File(
-			_serviceOutputPath + "/service/persistence/" +
+			_outputPath + "/service/persistence/impl/" +
 				entity.getName() + "ExportActionableDynamicQuery.java");
 
 		writeFile(ejbFile, content, _author);
@@ -2031,7 +2031,7 @@ public class ServiceBuilder {
 		}
 
 		JavaClass javaClass = _getJavaClass(
-			_outputPath + "/service/persistence/" + entity.getName() +
+			_outputPath + "/service/persistence/impl/" + entity.getName() +
 				"FinderImpl.java");
 
 		Map<String, Object> context = _getContext();
@@ -2070,7 +2070,7 @@ public class ServiceBuilder {
 		}
 
 		JavaClass javaClass = _getJavaClass(
-			_outputPath + "/service/persistence/" + entity.getName() +
+			_outputPath + "/service/persistence/impl/" + entity.getName() +
 				"FinderImpl.java");
 
 		Map<String, Object> context = _getContext();
@@ -2105,7 +2105,7 @@ public class ServiceBuilder {
 
 	private void _createHbm(Entity entity) {
 		File ejbFile = new File(
-			_outputPath + "/service/persistence/" + entity.getName() +
+			_outputPath + "/service/persistence/impl/" + entity.getName() +
 				"HBM.java");
 
 		if (ejbFile.exists()) {
@@ -2117,7 +2117,7 @@ public class ServiceBuilder {
 
 	private void _createHbmUtil(Entity entity) {
 		File ejbFile = new File(
-			_outputPath + "/service/persistence/" + entity.getName() +
+			_outputPath + "/service/persistence/impl/" + entity.getName() +
 				"HBMUtil.java");
 
 		if (ejbFile.exists()) {
@@ -2458,7 +2458,7 @@ public class ServiceBuilder {
 
 	private void _createPersistence(Entity entity) throws Exception {
 		JavaClass javaClass = _getJavaClass(
-			_outputPath + "/service/persistence/" + entity.getName() +
+			_outputPath + "/service/persistence/impl/" + entity.getName() +
 				"PersistenceImpl.java");
 
 		Map<String, Object> context = _getContext();
@@ -2508,10 +2508,22 @@ public class ServiceBuilder {
 		// Write file
 
 		File ejbFile = new File(
-			_outputPath + "/service/persistence/" + entity.getName() +
+			_outputPath + "/service/persistence/impl/" + entity.getName() +
 				"PersistenceImpl.java");
 
 		writeFile(ejbFile, content, _author);
+
+		File persistenceImpl = new File(
+			_outputPath + "/service/persistence/" + entity.getName() +
+				"PersistenceImpl.java");
+
+		if (persistenceImpl.exists()) {
+			persistenceImpl.delete();
+
+			System.out.println(
+				"Relocated file " + persistenceImpl + " to " +
+					ejbFile.getAbsoluteFile());
+		}
 	}
 
 	private void _createPersistenceTest(Entity entity) throws Exception {
@@ -2534,7 +2546,7 @@ public class ServiceBuilder {
 
 	private void _createPersistenceUtil(Entity entity) throws Exception {
 		JavaClass javaClass = _getJavaClass(
-			_outputPath + "/service/persistence/" + entity.getName() +
+			_outputPath + "/service/persistence/impl/" + entity.getName() +
 				"PersistenceImpl.java");
 
 		Map<String, Object> context = _getContext();
@@ -4129,6 +4141,7 @@ public class ServiceBuilder {
 			ClassLibrary classLibrary = new ClassLibrary();
 
 			classLibrary.addClassLoader(getClass().getClassLoader());
+			classLibrary.addSourceFolder(new File(_implDir));
 
 			JavaDocBuilder builder = new JavaDocBuilder(classLibrary);
 
@@ -4345,18 +4358,10 @@ public class ServiceBuilder {
 			entityElement.attributeValue("remote-service"), true);
 		String persistenceClass = GetterUtil.getString(
 			entityElement.attributeValue("persistence-class"),
-			_packagePath + ".service.persistence." + ejbName +
+			_packagePath + ".service.persistence.impl." + ejbName +
 				"PersistenceImpl");
 
-		String finderClass = "";
-
-		if (FileUtil.exists(
-				_outputPath + "/service/persistence/" + ejbName +
-					"FinderImpl.java")) {
-
-			finderClass =
-				_packagePath + ".service.persistence." + ejbName + "FinderImpl";
-		}
+		String finderClass = _relocateFinderImpl(ejbName);
 
 		String dataSource = entityElement.attributeValue("data-source");
 		String sessionFactory = entityElement.attributeValue("session-factory");
@@ -4797,6 +4802,66 @@ public class ServiceBuilder {
 		StringUtil.readLines(classLoader.getResourceAsStream(fileName), lines);
 
 		return lines;
+	}
+
+	private String _relocateFinderImpl(String name) throws IOException {
+		File finderImplFile = new File(
+			_outputPath + "/service/persistence/" + name + "FinderImpl.java");
+
+		String relocatedFinderImplFolder =
+			_outputPath + "/service/persistence/impl/";
+
+		String relocatedFinderImplPath =
+			relocatedFinderImplFolder + name + "FinderImpl.java";
+
+		File relocatedFinderFile = new File(relocatedFinderImplPath);
+
+		String finderClass = "";
+
+		if (finderImplFile.exists()) {
+			String content = FileUtil.read(finderImplFile);
+
+			String replacedContent = content.replaceFirst(
+				"(package com.liferay.[^;]*)","$1.impl" );
+
+			replacedContent = replacedContent.replaceFirst(
+				"(package com.liferay.[^;]*)",
+				"$1;\n\nimport " + _packagePath + ".service.persistence.*");
+
+			FileUtil.mkdirs(relocatedFinderImplFolder);
+
+			finderClass =
+				_packagePath + ".service.persistence.impl." + name +
+					"FinderImpl";
+
+			// The strip process will generate an import package with a
+			// wildcard. This kind of instruction will make our source
+			// formatting tool to complain, so we will need to
+			// reformat this imports by ourselves .
+
+			// This will only happen the first time we are relocating an old
+			// non modular FinderImpl
+
+			JavaSourceProcessor.stripJavaImports(
+				replacedContent, _outputPath + "/service/persistence/impl/",
+				finderClass);
+
+			FileUtil.write(relocatedFinderImplPath, replacedContent);
+
+			finderImplFile.delete();
+
+			System.out.println(
+				"Relocated file " + finderImplFile.getAbsoluteFile() + " to " +
+					relocatedFinderImplPath);
+
+		}
+		else if (relocatedFinderFile.exists()) {
+			finderClass =
+				_packagePath + ".service.persistence.impl." + name +
+					"FinderImpl";
+		}
+
+		return finderClass;
 	}
 
 	private void _resolveEntity(Entity entity) throws IOException {

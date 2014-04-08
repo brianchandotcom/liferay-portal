@@ -396,12 +396,10 @@
 			if (callback && navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(
 					function(position) {
-						callback.apply(
+						callback.call(
 							this,
-							[
-								position.coords.latitude,
-								position.coords.longitude
-							]
+							position.coords.latitude,
+							position.coords.longitude
 						);
 					}
 				);

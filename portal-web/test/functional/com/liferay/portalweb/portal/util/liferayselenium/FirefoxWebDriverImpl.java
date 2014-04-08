@@ -75,7 +75,7 @@ public class FirefoxWebDriverImpl extends BaseWebDriverImpl {
 		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
 			_firefoxProfile.setPreference(
 				"general.useragent.override",
-				TestPropsValues.MOBILE_USER_AGENT);
+				TestPropsValues.MOBILE_DEVICE_USER_AGENT);
 		}
 	}
 

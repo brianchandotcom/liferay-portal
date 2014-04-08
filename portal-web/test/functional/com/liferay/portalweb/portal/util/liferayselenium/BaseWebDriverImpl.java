@@ -68,7 +68,7 @@ public abstract class BaseWebDriverImpl
 
 		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
 			String[] screenResolution = StringUtil.split(
-				TestPropsValues.MOBILE_RESOLUTION, "x");
+				TestPropsValues.MOBILE_DEVICE_RESOLUTION, "x");
 
 			x = GetterUtil.getInteger(screenResolution[0]);
 			y = GetterUtil.getInteger(screenResolution[1]);

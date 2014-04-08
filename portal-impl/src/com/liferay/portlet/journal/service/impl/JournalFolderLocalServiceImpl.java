@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
@@ -43,6 +45,7 @@ import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.journal.DuplicateFolderNameException;
 import com.liferay.portlet.journal.FolderNameException;
+import com.liferay.portlet.journal.InvalidDDMStructureException;
 import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -446,6 +449,8 @@ public class JournalFolderLocalServiceImpl
 
 		parentFolderId = getParentFolderId(folder, parentFolderId);
 
+		validateFolderDDMStructures(folder.getFolderId(), parentFolderId);
+
 		validateFolder(
 			folder.getFolderId(), folder.getGroupId(), parentFolderId,
 			folder.getName());
@@ -722,6 +727,8 @@ public class JournalFolderLocalServiceImpl
 			ddmStructureIds = new long[0];
 		}
 
+		validateArticleDDMStructures(folderId, ddmStructureIds);
+
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
 			folderId);
 
@@ -826,6 +833,32 @@ public class JournalFolderLocalServiceImpl
 		indexer.reindex(folder);
 
 		return folder;
+	}
+
+	@Override
+	public void validateFolderDDMStructures(long folderId, long parentFolderId)
+		throws PortalException, SystemException {
+
+		JournalFolder parentFolder = journalFolderLocalService.fetchFolder(
+			parentFolderId);
+
+		List<DDMStructure> journalFolderDDMStructures =
+			ddmStructureLocalService.getJournalFolderStructures(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					parentFolder.getGroupId()),
+				parentFolder.getFolderId(),
+				!parentFolder.isOverrideDDMStructures());
+
+		long[] ddmStructureIds = new long[journalFolderDDMStructures.size()];
+
+		for (int i = 0; i < journalFolderDDMStructures.size(); i++) {
+			DDMStructure journalFolderDDMStructure =
+				journalFolderDDMStructures.get(i);
+
+			ddmStructureIds[i] = journalFolderDDMStructure.getStructureId();
+		}
+
+		validateArticleDDMStructures(folderId, ddmStructureIds);
 	}
 
 	protected Set<Long> getDDMStructureIds(List<DDMStructure> ddmStructures) {
@@ -1169,6 +1202,55 @@ public class JournalFolderLocalServiceImpl
 
 				indexer.reindex(folder);
 			}
+		}
+	}
+
+	protected void validateArticleDDMStructures(
+			long folderId, long[] ddmStructureIds)
+		throws PortalException, SystemException {
+
+		if (ArrayUtil.isEmpty(ddmStructureIds)) {
+			return;
+		}
+
+		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
+			folderId);
+
+		List<JournalArticle> articles = journalArticleLocalService.getArticles(
+			folder.getGroupId(), folderId);
+
+		if (!articles.isEmpty()) {
+			long classNameId = classNameLocalService.getClassNameId(
+				JournalArticle.class);
+
+			for (JournalArticle article : articles) {
+				DDMStructure ddmStructure =
+					ddmStructureLocalService.fetchStructure(
+						article.getGroupId(), classNameId,
+						article.getStructureId(), true);
+
+				if (ddmStructure == null) {
+					throw new InvalidDDMStructureException();
+				}
+
+				if (!ArrayUtil.contains(
+						ddmStructureIds, ddmStructure.getStructureId())) {
+
+					throw new InvalidDDMStructureException();
+				}
+			}
+		}
+
+		List<JournalFolder> folders = journalFolderPersistence.findByG_P(
+			folder.getGroupId(), folder.getFolderId());
+
+		if (folders.isEmpty()) {
+			return;
+		}
+
+		for (JournalFolder curFolder : folders) {
+			validateArticleDDMStructures(
+				curFolder.getFolderId(), ddmStructureIds);
 		}
 	}
 

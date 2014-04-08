@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.EnumerationUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -294,14 +293,13 @@ public class LanguageResources {
 
 		@Override
 		public Enumeration<String> getKeys() {
-			Enumeration<String> enumeration = Collections.enumeration(
-				_languageMap.keySet());
+			Set<String> keySet = _languageMap.keySet();
 
 			if (parent == null) {
-				return enumeration;
+				return Collections.enumeration(keySet);
 			}
 
-			return EnumerationUtil.compose(enumeration, parent.getKeys());
+			return new ResourceBundleEnumeration(keySet, parent.getKeys());
 		}
 
 		@Override

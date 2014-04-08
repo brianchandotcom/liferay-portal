@@ -98,33 +98,26 @@ public class LanguageResources {
 	}
 
 	public static Locale getSuperLocale(Locale locale) {
-		String variant = locale.getVariant();
+		Locale superLocale = _superLocales.get(locale);
 
-		if (variant.length() > 0) {
-			return new Locale(locale.getLanguage(), locale.getCountry());
-		}
-
-		String country = locale.getCountry();
-
-		if (country.length() > 0) {
-			Locale priorityLocale = LanguageUtil.getLocale(
-				locale.getLanguage());
-
-			if ((priorityLocale != null) && !locale.equals(priorityLocale)) {
-				return new Locale(
-					priorityLocale.getLanguage(), priorityLocale.getCountry());
+		if (superLocale != null) {
+			if (superLocale == _nullLocale) {
+				return null;
 			}
 
-			return LocaleUtil.fromLanguageId(locale.getLanguage(), false, true);
+			return superLocale;
 		}
 
-		String language = locale.getLanguage();
+		superLocale = _getSuperLocale(locale);
 
-		if (language.length() > 0) {
-			return _blankLocale;
+		if (superLocale == null) {
+			_superLocales.put(locale, _nullLocale);
+		}
+		else {
+			_superLocales.put(locale, superLocale);
 		}
 
-		return null;
+		return superLocale;
 	}
 
 	public static Map<String, String> putLanguageMap(
@@ -153,6 +146,36 @@ public class LanguageResources {
 	public void setConfig(String config) {
 		_configNames = StringUtil.split(
 			config.replace(CharPool.PERIOD, CharPool.SLASH));
+	}
+
+	private static Locale _getSuperLocale(Locale locale) {
+		String variant = locale.getVariant();
+
+		if (variant.length() > 0) {
+			return new Locale(locale.getLanguage(), locale.getCountry());
+		}
+
+		String country = locale.getCountry();
+
+		if (country.length() > 0) {
+			Locale priorityLocale = LanguageUtil.getLocale(
+				locale.getLanguage());
+
+			if ((priorityLocale != null) && !locale.equals(priorityLocale)) {
+				return new Locale(
+					priorityLocale.getLanguage(), priorityLocale.getCountry());
+			}
+
+			return LocaleUtil.fromLanguageId(locale.getLanguage(), false, true);
+		}
+
+		String language = locale.getLanguage();
+
+		if (language.length() > 0) {
+			return _blankLocale;
+		}
+
+		return null;
 	}
 
 	private static Map<String, String> _loadLocale(Locale locale) {
@@ -242,6 +265,9 @@ public class LanguageResources {
 	private static String[] _configNames;
 	private static Map<Locale, Map<String, String>> _languageMaps =
 		new ConcurrentHashMap<Locale, Map<String, String>>(64);
+	private static Locale _nullLocale = new Locale(StringPool.BLANK);
+	private static Map<Locale, Locale> _superLocales =
+		new ConcurrentHashMap<Locale, Locale>();
 
 	private static class LanguageResourcesBundle extends ResourceBundle {
 

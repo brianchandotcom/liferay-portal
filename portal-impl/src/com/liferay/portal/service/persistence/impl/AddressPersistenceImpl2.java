@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.service.persistence;
+package com.liferay.portal.service.persistence.impl;
 
 /**
  * @author Brian Wing Shun Chan

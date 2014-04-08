@@ -30,7 +30,7 @@
 		<column name="type" type="String" />
 		<column name="size" type="String" />
 	</entity>
-	<entity name="Address" uuid="true" local-service="true" remote-service="true" persistence-class="com.liferay.portal.service.persistence.AddressPersistenceImpl2">
+	<entity name="Address" uuid="true" local-service="true" remote-service="true" persistence-class="com.liferay.portal.service.persistence.impl.AddressPersistenceImpl2">
 
 		<!-- PK fields -->
 

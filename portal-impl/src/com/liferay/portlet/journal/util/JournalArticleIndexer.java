@@ -89,6 +89,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 	public static final String PORTLET_ID = PortletKeys.JOURNAL;
 
 	public JournalArticleIndexer() {
+		setDefaultSelectedFieldNames(
+			new String[] {
+				Field.ARTICLE_ID, Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
+				Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.TITLE,
+				Field.VERSION, Field.UID});
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -137,7 +142,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 			Field.CLASS_NAME_ID);
 
 		if ((classNameId != null) && (classNameId.longValue() != 0)) {
-			contextQuery.addRequiredTerm("classNameId", classNameId.toString());
+			contextQuery.addRequiredTerm(
+				Field.CLASS_NAME_ID, classNameId.toString());
 		}
 
 		addStatus(contextQuery, searchContext);
@@ -221,7 +227,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		addSearchTerm(searchQuery, searchContext, Field.TYPE, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
-		addSearchTerm(searchQuery, searchContext, "articleId", false);
+		addSearchTerm(searchQuery, searchContext, Field.ARTICLE_ID, false);
 
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
@@ -375,7 +381,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			articleId = TrashUtil.getOriginalTitle(articleId);
 		}
 
-		document.addKeyword("articleId", articleId);
+		document.addKeyword(Field.ARTICLE_ID, articleId);
 		document.addKeyword("ddmStructureKey", article.getStructureId());
 		document.addKeyword("ddmTemplateKey", article.getTemplateId());
 		document.addDate("displayDate", article.getDisplayDate());
@@ -438,7 +444,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			document, snippetLocale, portletRequest, portletResponse);
 
 		String groupId = document.get(Field.GROUP_ID);
-		String articleId = document.get("articleId");
+		String articleId = document.get(Field.ARTICLE_ID);
 		String version = document.get(Field.VERSION);
 
 		portletURL.setParameter("struts_action", "/journal/edit_article");
@@ -570,7 +576,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		try {
 			long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
-			String articleId = document.get("articleId");
+			String articleId = document.get(Field.ARTICLE_ID);
 			double version = GetterUtil.getDouble(document.get(Field.VERSION));
 			PortletRequestModel portletRequestModel = new PortletRequestModel(
 				portletRequest, portletResponse);

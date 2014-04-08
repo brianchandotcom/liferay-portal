@@ -14,11 +14,12 @@
 
 package com.liferay.portal.language;
 
-import com.liferay.portal.kernel.util.EnumerationUtil;
-
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * @author Carlos Sierra Andrés
@@ -31,6 +32,10 @@ public class AggregateResourceBundle extends ResourceBundle {
 
 	@Override
 	public boolean containsKey(String key) {
+		if (key == null) {
+			throw new NullPointerException();
+		}
+
 		for (ResourceBundle resourceBundle : _resourceBundles) {
 			if (resourceBundle.containsKey(key)) {
 				return true;
@@ -42,19 +47,14 @@ public class AggregateResourceBundle extends ResourceBundle {
 
 	@Override
 	public Enumeration<String> getKeys() {
-		Enumeration<String>[] enumerations =
-			new Enumeration[_resourceBundles.length];
-
-		for (int i = 0; i < _resourceBundles.length; i++) {
-			enumerations[i] = _resourceBundles[i].getKeys();
-		}
-
-		return EnumerationUtil.<String>compose(enumerations);
+		return Collections.enumeration(handleKeySet());
 	}
 
 	@Override
 	protected Object handleGetObject(String key) {
-		Object object = null;
+		if (key == null) {
+			throw new NullPointerException();
+		}
 
 		for (ResourceBundle resourceBundle : _resourceBundles) {
 			if (!resourceBundle.containsKey(key)) {
@@ -62,20 +62,29 @@ public class AggregateResourceBundle extends ResourceBundle {
 			}
 
 			try {
-				object = resourceBundle.getObject(key);
+				return resourceBundle.getObject(key);
 			}
 			catch (MissingResourceException mre) {
-				continue;
-			}
-
-			if (object != null) {
-				return object;
 			}
 		}
 
-		return object;
+		return null;
 	}
 
+	@Override
+	protected Set<String> handleKeySet() {
+		if (_keySet == null) {
+			_keySet = new HashSet<String>();
+
+			for (ResourceBundle resourceBundle : _resourceBundles) {
+				_keySet.addAll(resourceBundle.keySet());
+			}
+		}
+
+		return _keySet;
+	}
+
+	private Set<String> _keySet;
 	private ResourceBundle[] _resourceBundles;
 
 }

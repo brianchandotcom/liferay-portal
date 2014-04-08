@@ -15,23 +15,48 @@ AUI.add(
 
 					var menuOpen = menuNew.hasClass(STR_OPEN);
 
-					if (menuOpen) {
-						Liferay.fire('hideNavigationMenu', mapHover);
-					}
-					else {
+					var handleId = menuNew.attr('id') + 'Handle';
+
+					var handle = Liferay.Data[handleId];
+
+					if (!menuOpen) {
 						Liferay.fire('showNavigationMenu', mapHover);
 
-						if ((menuOld && menuOld.hasClass(STR_OPEN)) && (menuOld != menuNew)) {
-							menuOld.removeClass(STR_OPEN);
-							menuOld.removeClass('hover');
+						var handle = menuNew.on(
+							['clickoutside', 'touchstartoutside'],
+							function() {
+								Liferay.fire(
+									'hideNavigationMenu',
+									{
+										menu: menuNew
+									}
+								);
+
+								Liferay.Data[handleId] = null;
+
+								handle.detach();
+							}
+						);
+					}
+					else {
+						Liferay.fire('hideNavigationMenu', mapHover);
+
+						if (handle) {
+							handle.detach();
+
+							handle = null;
 						}
 					}
+
+					Liferay.Data[handleId] = handle;
 				},
 
 				_initChildMenuHandlers: function(navigation) {
 					var instance = this;
 
 					if (navigation) {
+						A.Event.defineOutside('touchstart');
+
 						navigation.delegate(['click', 'touchstart'], instance._onTouchClick, '> li > a', instance);
 					}
 				},

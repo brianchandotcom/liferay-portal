@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -406,6 +407,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 			checkSystemRole(companyId, name, descriptionMap, type);
 		}
+
+		// Assign view permission to all users on system roles
+
+		String[] userViewableRoles = ArrayUtil.append(
+			systemRoles, systemOrganizationRoles, systemSiteRoles);
+
+		addUserViewPermission(companyId, userViewableRoles);
 	}
 
 	/**
@@ -1485,6 +1493,31 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		rolePersistence.update(role);
 
 		return role;
+	}
+
+	protected void addUserViewPermission(long companyId, String[] roleNames)
+		throws PortalException, SystemException {
+
+		Role userRole = getRole(companyId, RoleConstants.USER);
+
+		for (String roleName : roleNames) {
+			Role role = getRole(companyId, roleName);
+
+			String name = Role.class.getName();
+			String[] actionIds = new String[]{ActionKeys.VIEW};
+
+			if (resourceBlockLocalService.isSupported(name)) {
+				resourceBlockLocalService.setIndividualScopePermissions(
+					companyId, 0, name, role.getRoleId(), userRole.getRoleId(),
+					Arrays.asList(actionIds));
+			}
+			else {
+				resourcePermissionLocalService.setResourcePermissions(
+					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(role.getRoleId()), userRole.getRoleId(),
+					actionIds);
+			}
+		}
 	}
 
 	protected void checkSystemRole(

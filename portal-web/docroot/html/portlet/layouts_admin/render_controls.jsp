@@ -17,11 +17,11 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-String action = ParamUtil.getString(request, "render_controls.jsp-action");
+String action = (String)request.getAttribute("render_controls.jsp-action");
 PortletDataHandlerControl[] controls = (PortletDataHandlerControl[])request.getAttribute("render_controls.jsp-controls");
 ManifestSummary manifestSummary = (ManifestSummary)request.getAttribute("render_controls.jsp-manifestSummary");
 Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("render_controls.jsp-parameterMap"), Collections.emptyMap());
-String portletId = ParamUtil.getString(request, "render_controls.jsp-portletId");
+String portletId = (String)request.getAttribute("render_controls.jsp-portletId");
 
 control:
 for (int i = 0; i < controls.length; i++) {
@@ -55,7 +55,7 @@ for (int i = 0; i < controls.length; i++) {
 
 				PortletDataHandlerControl[] children = control.getChildren();
 
-				String controlName = Validator.isNotNull(control.getNamespace()) ? control.getNamespacedControlName() : control.getControlName() + StringPool.UNDERLINE + portletId;
+				String controlName = (Validator.isNotNull(control.getNamespace()) ? control.getNamespacedControlName() : control.getControlName()) + StringPool.UNDERLINE + portletId;
 				%>
 
 				<aui:input data="<%= data %>" disabled="<%= controls[i].isDisabled() %>" helpMessage="<%= control.getHelpMessage(locale, action) %>" label="<%= controlLabel %>" name="<%= controlName %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, controlName, control.getDefaultState()) %>" />

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.trash.service.impl;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -29,11 +28,13 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
@@ -127,36 +128,52 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 	@Override
 	public void checkEntries() throws PortalException, SystemException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			new GroupActionableDynamicQuery() {
+		for (long companyId : PortalUtil.getCompanyIds()) {
+			if (!PrefsPropsUtil.getBoolean(
+					companyId, PropsKeys.TRASH_ENABLED)) {
 
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
-
-				Group group = (Group)object;
-
-				if (!TrashUtil.isTrashEnabled(group.getGroupId())) {
-					return;
-				}
-
-				Date date = getMaxAge(group);
-
-				List<TrashEntry> entries = trashEntryPersistence.findByG_LtCD(
-					group.getGroupId(), date);
-
-				for (TrashEntry entry : entries) {
-					TrashHandler trashHandler =
-						TrashHandlerRegistryUtil.getTrashHandler(
-							entry.getClassName());
-
-					trashHandler.deleteTrashEntry(entry.getClassPK());
-				}
+				continue;
 			}
 
-		};
+			int count = groupFinder.countByTrashEntries(companyId);
 
-		actionableDynamicQuery.performActions();
+			if (count == 0) {
+				continue;
+			}
+
+			int pages = count / Indexer.DEFAULT_INTERVAL;
+
+			for (int i = 0; i <= pages; i++) {
+				int start = (i * Indexer.DEFAULT_INTERVAL);
+				int end = start + Indexer.DEFAULT_INTERVAL;
+
+				List<Group> groups = groupFinder.findByTrashEntries(
+					companyId, start, end);
+
+				for (Group group : groups) {
+					List<TrashEntry> entries = null;
+
+					if (!TrashUtil.isTrashEnabled(group.getGroupId())) {
+						entries = trashEntryPersistence.findByGroupId(
+							group.getGroupId());
+					}
+					else {
+						Date date = getMaxAge(group);
+
+						entries = trashEntryPersistence.findByG_LtCD(
+							group.getGroupId(), date);
+					}
+
+					for (TrashEntry entry : entries) {
+						TrashHandler trashHandler =
+							TrashHandlerRegistryUtil.getTrashHandler(
+								entry.getClassName());
+
+						trashHandler.deleteTrashEntry(entry.getClassPK());
+					}
+				}
+			}
+		}
 	}
 
 	/**

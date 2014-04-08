@@ -60,6 +60,9 @@ public class GroupFinderImpl
 	public static final String COUNT_BY_LAYOUTS =
 		GroupFinder.class.getName() + ".countByLayouts";
 
+	public static final String COUNT_BY_TRASH_ENTRIES =
+		GroupFinder.class.getName() + ".countByTrashEntries";
+
 	public static final String COUNT_BY_GROUP_ID =
 		GroupFinder.class.getName() + ".countByGroupId";
 
@@ -80,6 +83,9 @@ public class GroupFinderImpl
 
 	public static final String FIND_BY_SYSTEM =
 		GroupFinder.class.getName() + ".findBySystem";
+
+	public static final String FIND_BY_TRASH_ENTRIES =
+		GroupFinder.class.getName() + ".findByTrashEntries";
 
 	public static final String FIND_BY_C_C =
 		GroupFinder.class.getName() + ".findByC_C";
@@ -154,13 +160,50 @@ public class GroupFinderImpl
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity("Group_", GroupImpl.class);
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
 			qPos.add(parentGroupId);
 			qPos.add(site);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public int countByTrashEntries(long companyId) throws SystemException {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_TRASH_ENTRIES);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -439,6 +482,35 @@ public class GroupFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_SYSTEM);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("Group_", GroupImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<Group> findByTrashEntries(long companyId, int start, int end)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_TRASH_ENTRIES);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

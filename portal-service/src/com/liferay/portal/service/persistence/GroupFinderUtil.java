@@ -30,6 +30,11 @@ public class GroupFinderUtil {
 		return getFinder().countByLayouts(companyId, parentGroupId, site);
 	}
 
+	public static int countByTrashEntries(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().countByTrashEntries(companyId);
+	}
+
 	public static int countByG_U(long groupId, long userId, boolean inherit)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().countByG_U(groupId, userId, inherit);
@@ -74,6 +79,12 @@ public class GroupFinderUtil {
 		long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findBySystem(companyId);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> findByTrashEntries(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByTrashEntries(companyId, start, end);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Group> findByCompanyId(

@@ -282,7 +282,8 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		FileEntry fileEntry = DLAppTestUtil.updateFileEntry(
 			serviceContext.getScopeGroupId(), dlFileEntry.getFileEntryId(),
-			null, dlFileEntry.getMimeType(), keywords, true, serviceContext);
+			null, dlFileEntry.getMimeType(), keywords, true, true, true,
+			serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
 	}

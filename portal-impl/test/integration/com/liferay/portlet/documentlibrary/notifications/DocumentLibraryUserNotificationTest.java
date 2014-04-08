@@ -46,8 +46,9 @@ public class DocumentLibraryUserNotificationTest
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), group.getGroupId(), _folder.getFolderId());
+		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
+			group.getGroupId(), group.getGroupId(), _folder.getFolderId(),
+			true);
 
 		return (BaseModel<?>)fileEntry.getModel();
 	}
@@ -73,8 +74,9 @@ public class DocumentLibraryUserNotificationTest
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppTestUtil.updateFileEntry(
-			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(), false);
+		FileEntry fileEntry = DLAppTestUtil.updateFileEntryWithWorkflow(
+			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(), false,
+			true);
 
 		return (BaseModel<?>)fileEntry.getModel();
 	}

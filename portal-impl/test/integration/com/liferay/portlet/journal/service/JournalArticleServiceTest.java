@@ -571,7 +571,8 @@ public class JournalArticleServiceTest {
 		}
 
 		return JournalTestUtil.updateArticle(
-			article, "Version 2", article.getContent(), serviceContext);
+			article, "Version 2", article.getContent(), false, true,
+			serviceContext);
 	}
 
 	private JournalArticle _article;

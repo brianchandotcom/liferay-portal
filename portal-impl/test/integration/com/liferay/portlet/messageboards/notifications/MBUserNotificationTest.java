@@ -68,7 +68,7 @@ public class MBUserNotificationTest extends BaseUserNotificationTestCase {
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		return MBTestUtil.updateMessage((MBMessage)baseModel);
+		return MBTestUtil.updateMessage((MBMessage)baseModel, true);
 	}
 
 	private MBCategory _category;

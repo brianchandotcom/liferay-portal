@@ -61,7 +61,7 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		return BlogsTestUtil.updateEntry((BlogsEntry)baseModel);
+		return BlogsTestUtil.updateEntry((BlogsEntry)baseModel, true);
 	}
 
 }

@@ -23,6 +23,7 @@ import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -30,7 +31,9 @@ import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
+import com.liferay.portlet.PortletInstanceFactoryUtil;
 
 import java.util.List;
 
@@ -287,6 +290,33 @@ public class LayoutTypePortletTest {
 		portletId = layoutTypePortlet.addPortletId(user.getUserId(), portletId);
 
 		Assert.assertNotNull(portletId);
+	}
+
+	@Test
+	@Transactional
+	public void testGetAllPortlets() throws Exception {
+		LayoutTypePortlet layoutTypePortlet = getLayoutTypePortlet();
+
+		Layout layout = layoutTypePortlet.getLayout();
+
+		User user = UserTestUtil.addUser(
+			ServiceTestUtil.randomString(), layout.getGroupId());
+
+		String portletId = layoutTypePortlet.addPortletId(
+			user.getUserId(), PortletKeys.JOURNAL_CONTENT);
+
+		List<Portlet> portlets = layoutTypePortlet.getAllPortlets();
+
+		Assert.assertEquals(1, portlets.size());
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			TestPropsValues.getCompanyId(), portletId);
+
+		PortletInstanceFactoryUtil.destroy(portlet);
+
+		portlets = layoutTypePortlet.getAllPortlets();
+
+		Assert.assertEquals(0, portlets.size());
 	}
 
 	@Test

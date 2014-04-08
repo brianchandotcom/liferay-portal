@@ -144,7 +144,7 @@ public class ShoppingSettings extends BaseServiceSettings {
 		return emailOrderConfirmationBody;
 	}
 
-	public LocalizedValuesMap getEmailOrderConfirmationBodyXml() {
+	public String getEmailOrderConfirmationBodyXml() {
 		LocalizedValuesMap emailOrderConfirmationBodyMap =
 			getEmailOrderConfirmationBody();
 
@@ -160,10 +160,10 @@ public class ShoppingSettings extends BaseServiceSettings {
 			typedSettings.getLocalizedValuesMap(
 				"emailOrderConfirmationSubject");
 
-		return emailOrderConfirmationSubject
+		return emailOrderConfirmationSubject;
 	}
 
-	public LocalizedValuesMap getEmailOrderConfirmationSubjectXml() {
+	public String getEmailOrderConfirmationSubjectXml() {
 		LocalizedValuesMap emailOrderConfirmationSubjectMap =
 			getEmailOrderConfirmationSubject();
 
@@ -174,7 +174,7 @@ public class ShoppingSettings extends BaseServiceSettings {
 		return typedSettings.getLocalizedValuesMap("emailOrderShippingBody");
 	}
 
-	public LocalizedValuesMap getEmailOrderShippingBodyXml() {
+	public String getEmailOrderShippingBodyXml() {
 		LocalizedValuesMap emailOrderShippingBodyMap =
 			getEmailOrderShippingBody();
 
@@ -189,7 +189,7 @@ public class ShoppingSettings extends BaseServiceSettings {
 		return typedSettings.getLocalizedValuesMap("emailOrderShippingSubject");
 	}
 
-	public LocalizedValuesMap getEmailOrderShippingSubjectXml() {
+	public String getEmailOrderShippingSubjectXml() {
 		LocalizedValuesMap emailOrderShippingSubjectMap =
 			getEmailOrderShippingSubject();
 

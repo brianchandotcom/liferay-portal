@@ -250,11 +250,7 @@ catch (NoSuchArticleException nsae) {
 			for (String conversion : conversions) {
 			%>
 
-				<label class="checkbox inline">
-					<input <%= ArrayUtil.contains(extensions, conversion) ? "checked": "" %> <%= openOfficeServerEnabled ? "" : "disabled" %> name="<portlet:namespace />extensions" type="checkbox" value="<%= conversion %>" />
-
-					<%= StringUtil.toUpperCase(conversion) %>
-				</label>
+				<aui:input checked="<%= ArrayUtil.contains(extensions, conversion) %>" disabled="<%= !openOfficeServerEnabled %>" id='<%= "extensions" + conversion %>' includeHiddenField="<%= false %>" inlineField="<%= true %>" label="<%= StringUtil.toUpperCase(conversion) %>" name="extensions" type="checkbox" value="<%= conversion %>" />
 
 			<%
 			}

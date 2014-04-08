@@ -35,7 +35,7 @@
 		/>
 	</div>
 
-	<aui:select cssClass="hidden-field abstract-length" helpMessage="abstract-length-key-help" name="preferences--abstractLength--" value="<%= assetPublisherDisplayContext.getAbstractLength() %>">
+	<aui:select cssClass="abstract-length hidden-field" helpMessage="abstract-length-key-help" name="preferences--abstractLength--" value="<%= assetPublisherDisplayContext.getAbstractLength() %>">
 		<aui:option label="100" />
 		<aui:option label="200" />
 		<aui:option label="300" />
@@ -49,7 +49,7 @@
 
 	<aui:input cssClass="hidden-field show-extra-info" name="preferences--showExtraInfo--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowExtraInfo() %>" />
 
-	<aui:select cssClass="hidden-field asset-link-behavior" name="preferences--assetLinkBehavior--">
+	<aui:select cssClass="asset-link-behavior hidden-field" name="preferences--assetLinkBehavior--">
 		<aui:option label="show-full-content" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorShowFullContent() %>" value="showFullContent" />
 		<aui:option label="view-in-context" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet() %>" value="viewInPortlet" />
 	</aui:select>
@@ -102,9 +102,7 @@
 			for (String conversion : conversions) {
 			%>
 
-			<aui:field-wrapper inlineField="<%= true %>" inlineLabel="left" label="<%= StringUtil.toUpperCase(conversion) %>" name='<%= "extensions" + conversion %>'>
-				<input <%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) ? "checked": "" %> <%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() ? "disabled" : "" %> id="<portlet:namespace />extensions<%= conversion %>" name="<portlet:namespace />extensions" type="checkbox" value="<%= conversion %>" />
-			</aui:field-wrapper>
+				<aui:input checked="<%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) %>" disabled="<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() %>" id='<%= "extensions" + conversion %>' includeHiddenField="<%= false %>" inlineField="<%= true %>" label="<%= StringUtil.toUpperCase(conversion) %>" name="extensions" type="checkbox" value="<%= conversion %>" />
 
 			<%
 			}

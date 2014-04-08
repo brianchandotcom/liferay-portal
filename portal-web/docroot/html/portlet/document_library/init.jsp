@@ -29,7 +29,6 @@ page import="com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException
 page import="com.liferay.portlet.documentlibrary.DuplicateFileException" %><%@
 page import="com.liferay.portlet.documentlibrary.DuplicateFolderNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.DuplicateRepositoryNameException" %><%@
-page import="com.liferay.portlet.documentlibrary.FileExtensionException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileMimeTypeException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileShortcutPermissionException" %><%@

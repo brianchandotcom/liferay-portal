@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -37,7 +38,6 @@ import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
-import com.liferay.portlet.trash.util.Trash;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Calendar;
@@ -384,8 +384,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			SearchContext searchContext = buildSearchContext(
 				companyId, groupId, userId, keywords, start, end, sort);
 
-			Hits hits = indexer.search(
-				searchContext, Trash.SELECTED_FIELD_NAMES);
+			Hits hits = indexer.search(searchContext);
 
 			List<TrashEntry> trashEntries = TrashUtil.getEntries(hits);
 
@@ -407,6 +406,10 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		searchContext.setEnd(end);
 		searchContext.setKeywords(keywords);
 		searchContext.setGroupIds(new long[] {groupId});
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
 
 		if (sort != null) {
 			searchContext.setSorts(sort);

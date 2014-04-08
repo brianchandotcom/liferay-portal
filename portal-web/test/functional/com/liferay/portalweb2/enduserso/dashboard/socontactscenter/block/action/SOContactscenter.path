@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLOCKED_MESSAGE</td>
+	<td>//span[contains(@class,'block')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_CONTACT_BUTTON</td>
 	<td>//button[contains(@id,'addContact')]</td>
 	<td></td>

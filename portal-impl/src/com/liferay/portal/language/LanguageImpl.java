@@ -368,7 +368,7 @@ public class LanguageImpl implements Language, Serializable {
 		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
 			locale);
 
-		return _get(resourceBundle, key, defaultValue);
+		return get(resourceBundle, key, defaultValue);
 	}
 
 	@Override
@@ -384,28 +384,25 @@ public class LanguageImpl implements Language, Serializable {
 			return defaultValue;
 		}
 
-		String value = null;
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
 
-		ResourceBundle resourceBundle = _getResourceBundle(pageContext);
+		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		if (resourceBundle != null) {
-			value = _get(resourceBundle, key);
+		Locale locale = _getLocale(request);
+
+		if (portletConfig == null) {
+			return get(locale, key, defaultValue);
 		}
 
-		if (value == null) {
-			HttpServletRequest request =
-				(HttpServletRequest)pageContext.getRequest();
+		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
 
-			Locale locale = _getLocale(request);
-
-			value = _get(LanguageResources.getResourceBundle(locale), key);
+		if (resourceBundle.containsKey(key)) {
+			return _get(resourceBundle, key);
 		}
 
-		if (value == null) {
-			value = defaultValue;
-		}
-
-		return value;
+		return get(locale, key, defaultValue);
 	}
 
 	@Override
@@ -417,23 +414,13 @@ public class LanguageImpl implements Language, Serializable {
 	public String get(
 		ResourceBundle resourceBundle, String key, String defaultValue) {
 
-		try {
-			String value = _get(resourceBundle, key, defaultValue);
+		String value = _get(resourceBundle, key);
 
-			if (value != null) {
-				return value;
-			}
-			else {
-				return defaultValue;
-			}
+		if (value != null) {
+			return value;
 		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
 
-			return defaultValue;
-		}
+		return defaultValue;
 	}
 
 	@Override
@@ -834,41 +821,25 @@ public class LanguageImpl implements Language, Serializable {
 			return null;
 		}
 
-		if (!resourceBundle.containsKey(key)) {
-			if ((key.length() > 0) &&
-				(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
-
-				int pos = key.lastIndexOf(CharPool.OPEN_BRACKET);
-
-				if (pos != -1) {
-					key = key.substring(0, pos);
-
-					return _get(resourceBundle, key);
-				}
-			}
-
-			return null;
-		}
-
 		String value = ResourceBundleUtil.getString(resourceBundle, key);
 
 		if (value != null) {
 			return LanguageResources.fixValue(value);
 		}
 
-		return value;
-	}
+		if ((key.length() > 0) &&
+			(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
 
-	private String _get(
-			ResourceBundle resourceBundle, String key, String defaultValue) {
+			int pos = key.lastIndexOf(CharPool.OPEN_BRACKET);
 
-		String value = _get(resourceBundle, key);
+			if (pos != -1) {
+				key = key.substring(0, pos);
 
-		if (value != null) {
-			return value;
+				return _get(resourceBundle, key);
+			}
 		}
 
-		return defaultValue;
+		return null;
 	}
 
 	private String _getCharset(Locale locale) {
@@ -897,26 +868,6 @@ public class LanguageImpl implements Language, Serializable {
 
 	private Locale _getLocale(String languageCode) {
 		return _localesMap.get(languageCode);
-	}
-
-	private ResourceBundle _getResourceBundle(PageContext pageContext) {
-		if (pageContext == null) {
-			return null;
-		}
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		Locale locale = _getLocale(request);
-
-		if (portletConfig != null) {
-			return portletConfig.getResourceBundle(locale);
-		}
-
-		return null;
 	}
 
 	private void _initGroupLocales(long groupId) {

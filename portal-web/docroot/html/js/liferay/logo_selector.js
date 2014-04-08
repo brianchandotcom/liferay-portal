@@ -109,6 +109,7 @@ AUI.add(
 
 						Liferay.Util.openWindow(
 							{
+								cache: false,
 								dialog: {
 									destroyOnHide: true,
 									width: 600

@@ -290,6 +290,10 @@
 		margin-bottom: 5px;
 	}
 
+	.asset-metadata .tags .tag {
+		@include hyphenation;
+	}
+
 	.asset-summary, .asset-title {
 		@include ellipsis;
 	}

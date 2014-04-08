@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var	NAME = 'menutoggle';
+		var NAME = 'menutoggle';
 
 		var MenuToggle = A.Component.create(
 			{

@@ -29,6 +29,9 @@
 
 	<propertycopy from="liferay.portal.${liferay.portal.branch}.bundle" name="liferay.portal.bundle" />
 
+	<propertycopy from="mobile.device.resolution[${mobile.device.type}]" name="mobile.resolution" />
+	<propertycopy from="mobile.device.user.agent[${mobile.device.type}]" name="mobile.user.agent" />
+
 	<propertycopy from="operating.system.${operating.system.type}.version" name="operating.system.version" />
 
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
@@ -1710,6 +1713,17 @@ tck.url=true</echo>
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					theme.ids=${legacy.theme.ids}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					mobile.device.enabled=${mobile.device.enabled}
+					mobile.resolution=${mobile.resolution}
+					mobile.user.agent=${mobile.user.agent}
 				</echo>
 			</then>
 		</if>

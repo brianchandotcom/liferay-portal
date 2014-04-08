@@ -63,11 +63,22 @@ public abstract class BaseWebDriverImpl
 				_sikuliImagesDirName, "linux", "windows");
 		}
 
+		int x = 1065;
+		int y = 1250;
+
+		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
+			String[] screenResolution = StringUtil.split(
+				TestPropsValues.MOBILE_RESOLUTION, "x");
+
+			x = GetterUtil.getInteger(screenResolution[0]);
+			y = GetterUtil.getInteger(screenResolution[1]);
+		}
+
 		WebDriver.Options options = webDriver.manage();
 
 		WebDriver.Window window = options.window();
 
-		window.setSize(new Dimension(1065, 1250));
+		window.setSize(new Dimension(x, y));
 
 		webDriver.get(browserURL);
 	}

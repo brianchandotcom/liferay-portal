@@ -858,6 +858,9 @@
 				<entry key="document-library">
 					<bean class="com.liferay.portlet.dynamicdatamapping.storage.DocumentLibraryFieldRenderer" />
 				</entry>
+				<entry key="geolocation">
+					<bean class="com.liferay.portlet.dynamicdatamapping.storage.GeolocationFieldRenderer" />
+				</entry>
 				<entry key="link-to-page">
 					<bean class="com.liferay.portlet.dynamicdatamapping.storage.LinkToPageFieldRenderer" />
 				</entry>

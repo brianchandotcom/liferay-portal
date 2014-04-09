@@ -63,6 +63,7 @@
 			<xs:enumeration value="date" />
 			<xs:enumeration value="double" />
 			<xs:enumeration value="float" />
+			<xs:enumeration value="geolocation" />
 			<xs:enumeration value="integer" />
 			<xs:enumeration value="long" />
 			<xs:enumeration value="number" />

@@ -791,6 +791,12 @@ AUI.add(
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
+					iconClass: 'icon-globe',
+					label: Liferay.Language.get('geolocation'),
+					type: 'ddm-geolocation'
+				},
+				{
+					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
 					iconClass: 'icon-fb-integer',
 					label: Liferay.Language.get('integer'),
 					type: 'ddm-integer'

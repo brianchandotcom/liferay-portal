@@ -183,7 +183,10 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 			}
 			%>
 
+			window['<%= name %>'].instanceReady = true;
 		},
+
+		instanceReady: false,
 
 		<%
 		if (Validator.isNotNull(onChangeMethod)) {

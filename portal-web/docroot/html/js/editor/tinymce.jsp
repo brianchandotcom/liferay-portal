@@ -69,7 +69,16 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		},
 
 		getHTML: function() {
-			return tinyMCE.editors['<%= name %>'].getContent();
+			var data;
+
+			if (!window['<%= name %>'].instanceReady && window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
+				data = <%= HtmlUtil.escape(namespace + initMethod) %>();
+			}
+			else {
+				data = tinyMCE.editors['<%= name %>'].getContent();
+			}
+
+			return data;
 		},
 
 		init: function(value) {
@@ -96,7 +105,11 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 					A.one(iframeDoc).addClass('aui');
 				}
 			}
+
+			window['<%= name %>'].instanceReady = true;
 		},
+
+		instanceReady: false,
 
 		<%
 		if (Validator.isNotNull(onChangeMethod)) {

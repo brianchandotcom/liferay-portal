@@ -16,5 +16,10 @@
 
 <%@ include file="/html/taglib/aui/form/init.jsp" %>
 
-<form action="<%= HtmlUtil.escape(action) %>" class="form <%= cssClass %> <%= inlineLabels ? "field-labels-inline" : StringPool.BLANK %>" id="<%= namespace + name %>" method="<%= method %>" name="<%= namespace + name %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
-	<input name="<%= namespace %>formDate" type="hidden" value="<%= System.currentTimeMillis() %>" />
+<form action="<%= HtmlUtil.escape(action) %>" class="form <%= cssClass %> <%= inlineLabels ? "field-labels-inline" : StringPool.BLANK %>"  id="<%= namespace + name %>" method="<%= method %>" name="<%= namespace + name %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+
+	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
+		<fieldset disabled>
+	</c:if>
+
+			<input name="<%= namespace %>formDate" type="hidden" value="<%= System.currentTimeMillis() %>" />

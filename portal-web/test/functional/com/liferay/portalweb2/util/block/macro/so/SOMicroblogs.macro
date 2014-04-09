@@ -42,7 +42,15 @@
 		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_CONTENT_COUNTDOWN" value1="${microblogsEntryCharacterCountdown}" />
 		<execute action="SOMicroblogs#click" locator-key1="POST_BUTTON" />
 
-		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+		<if>
+			<isset var="microblogsEntryPartialContent" />
+			<then>
+				<var name="key_microblogsEntryContent" value="${microblogsEntryPartialContent}" />
+			</then>
+			<else>
+				<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+			</else>
+		</if>
 
 		<execute action="SOMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
 	</command>
@@ -426,7 +434,15 @@
 	</command>
 
 	<command name="viewMicroblogsEntryAuthor">
-		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+		<if>
+			<isset var="microblogsEntryPartialContent" />
+			<then>
+				<var name="key_microblogsEntryContent" value="${microblogsEntryPartialContent}" />
+			</then>
+			<else>
+				<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+			</else>
+		</if>
 
 		<if>
 			<isset var="microblogsEntryRepostAuthorName" />
@@ -459,7 +475,16 @@
 
 	<command name="viewMicroblogsEntryCommentLink">
 		<var name="key_microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
-		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+
+		<if>
+			<isset var="microblogsEntryPartialContent" />
+			<then>
+				<var name="key_microblogsEntryContent" value="${microblogsEntryPartialContent}" />
+			</then>
+			<else>
+				<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+			</else>
+		</if>
 
 		<if>
 			<isset var="commentCount" />
@@ -621,7 +646,15 @@
 	</command>
 
 	<command name="viewMicroblogsEntryViewableByEveryone">
-		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+		<if>
+			<isset var="microblogsEntryPartialContent" />
+			<then>
+				<var name="key_microblogsEntryContent" value="${microblogsEntryPartialContent}" />
+			</then>
+			<else>
+				<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+			</else>
+		</if>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
@@ -663,7 +696,15 @@
 	</command>
 
 	<command name="viewOwnMicroblogsEntry">
-		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+		<if>
+			<isset var="microblogsEntryPartialContent" />
+			<then>
+				<var name="key_microblogsEntryContent" value="${microblogsEntryPartialContent}" />
+			</then>
+			<else>
+				<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
+			</else>
+		</if>
 
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 

@@ -87,6 +87,15 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	}
 
 	@Override
+	public java.util.List<java.lang.Long> getFolderDDMStructureIds(
+		long[] groupIds, long folderId, boolean inherited)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderService.getFolderDDMStructureIds(groupIds,
+			folderId, inherited);
+	}
+
+	@Override
 	public java.util.List<java.lang.Long> getFolderIds(long groupId,
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -269,6 +278,20 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolderService.updateFolder(folderId, parentFolderId,
 			name, description, mergeWithParentFolder, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
+		java.util.List<java.lang.Long> ddmStructureIds,
+		boolean overrideDDMStructures, boolean mergeWithParentFolder,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderService.updateFolder(folderId, parentFolderId,
+			name, description, ddmStructureIds, overrideDDMStructures,
+			mergeWithParentFolder, serviceContext);
 	}
 
 	/**

@@ -66,6 +66,7 @@ public class JournalFolderWrapper implements JournalFolder,
 		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("overrideDDMStructures", getOverrideDDMStructures());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -146,6 +147,13 @@ public class JournalFolderWrapper implements JournalFolder,
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Boolean overrideDDMStructures = (Boolean)attributes.get(
+				"overrideDDMStructures");
+
+		if (overrideDDMStructures != null) {
+			setOverrideDDMStructures(overrideDDMStructures);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -453,6 +461,36 @@ public class JournalFolderWrapper implements JournalFolder,
 	@Override
 	public void setDescription(java.lang.String description) {
 		_journalFolder.setDescription(description);
+	}
+
+	/**
+	* Returns the override d d m structures of this journal folder.
+	*
+	* @return the override d d m structures of this journal folder
+	*/
+	@Override
+	public boolean getOverrideDDMStructures() {
+		return _journalFolder.getOverrideDDMStructures();
+	}
+
+	/**
+	* Returns <code>true</code> if this journal folder is override d d m structures.
+	*
+	* @return <code>true</code> if this journal folder is override d d m structures; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isOverrideDDMStructures() {
+		return _journalFolder.isOverrideDDMStructures();
+	}
+
+	/**
+	* Sets whether this journal folder is override d d m structures.
+	*
+	* @param overrideDDMStructures the override d d m structures of this journal folder
+	*/
+	@Override
+	public void setOverrideDDMStructures(boolean overrideDDMStructures) {
+		_journalFolder.setOverrideDDMStructures(overrideDDMStructures);
 	}
 
 	/**

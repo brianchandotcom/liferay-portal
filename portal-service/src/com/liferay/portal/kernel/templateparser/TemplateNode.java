@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -192,7 +194,20 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		}
 
 		sb.append(StringPool.SLASH);
-		sb.append("@group_id@");
+
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(getLayoutGroupId());
+
+			String name = group.getFriendlyURL();
+
+			name = name.substring(1);
+
+			sb.append(name);
+		}
+		catch (Exception e) {
+			sb.append("@group_id@");
+		}
+
 		sb.append(StringPool.SLASH);
 		sb.append(getLayoutId());
 
@@ -226,10 +241,17 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	protected String getLayoutType() {
 		String data = (String)get("data");
 
-		int pos = data.indexOf(CharPool.AT);
+		int pos1 = data.indexOf(CharPool.AT);
 
-		if (pos != -1) {
-			data = data.substring(pos + 1);
+		int pos2 = data.lastIndexOf(CharPool.AT);
+
+		if ((pos1 != -1) && (pos2 != -1)) {
+			if (pos1 == pos2) {
+				data = data.substring(pos1 + 1);
+			}
+			else {
+				data = data.substring(pos1 + 1, pos2);
+			}
 		}
 
 		return data;

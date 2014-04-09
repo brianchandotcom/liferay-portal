@@ -5,7 +5,7 @@
 		<dynamic-content language-id="en_US"><![CDATA[[$LAYOUT_ID_PRIVATE$]@private]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element name="link_to_page2" type="link_to_layout" index-type="keyword">
-		<dynamic-content language-id="en_US"><![CDATA[[$LAYOUT_ID_PRIVATE$]@private-group@[$GROUP_ID_PRIVATE$]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[[$LAYOUT_ID_PRIVATE$]@private-user@[$GROUP_ID_PRIVATE$]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element name="link_to_page3" type="link_to_layout" index-type="keyword">
 		<dynamic-content language-id="en_US"><![CDATA[[$LAYOUT_ID_PUBLIC$]@public]></dynamic-content>

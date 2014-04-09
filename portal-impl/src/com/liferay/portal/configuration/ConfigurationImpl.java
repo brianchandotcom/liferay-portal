@@ -113,6 +113,8 @@ public class ConfigurationImpl
 
 			configurations.add(0, newConfiguration);
 
+			_properties = null;
+
 			clearCache();
 		}
 		catch (Exception e) {
@@ -255,6 +257,9 @@ public class ConfigurationImpl
 
 	@Override
 	public Properties getProperties() {
+		if (_properties != null) {
+			return _properties;
+		}
 
 		// For some strange reason, componentProperties.getProperties() returns
 		// values with spaces after commas. So a property setting of "xyz=1,2,3"
@@ -264,7 +269,7 @@ public class ConfigurationImpl
 		// method fixes the weird behavior by returning properties with the
 		// correct values.
 
-		Properties properties = new Properties();
+		_properties = new Properties();
 
 		ComponentProperties componentProperties = getComponentProperties();
 
@@ -277,10 +282,10 @@ public class ConfigurationImpl
 			String key = (String)entry.getKey();
 			String value = (String)entry.getValue();
 
-			properties.setProperty(key, value);
+			_properties.setProperty(key, value);
 		}
 
-		return properties;
+		return _properties;
 	}
 
 	@Override
@@ -331,6 +336,8 @@ public class ConfigurationImpl
 						configuration);
 				}
 			}
+
+			_properties = null;
 
 			clearCache();
 		}
@@ -461,6 +468,7 @@ public class ConfigurationImpl
 
 	private ComponentConfiguration _componentConfiguration;
 	private Set<String> _printedSources = new HashSet<String>();
+	private Properties _properties;
 	private Map<String, Object> _values =
 		new ConcurrentHashMap<String, Object>();
 

@@ -29,6 +29,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
@@ -77,6 +78,16 @@ public class CompanyLocalServiceTest {
 
 		_mockServletContext = new MockServletContext(
 			"file:" + file.getAbsolutePath(), new FileSystemResourceLoader());
+
+		_threadLocalCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId((
+			PortalInstances.getDefaultCompanyId()));
+	}
+
+	@After
+	public void tearDown() {
+		CompanyThreadLocal.setCompanyId(_threadLocalCompanyId);
 	}
 
 	@Test
@@ -453,6 +464,7 @@ public class CompanyLocalServiceTest {
 		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 	}
 
+	private long _threadLocalCompanyId;
 	private MockServletContext _mockServletContext;
 
 }

@@ -115,7 +115,7 @@
 		</execute>
 	</command>
 
-	<command name="EditPageTemplateAndAssertPageNameChange" priority="4">
+	<command name="ViewEditedPageTemplatePageName" priority="4">
 		<property name="testray.component.names" value="Site and Page Templates" />
 
 		<var name="pageTemplateName" value="Page Template Name" />

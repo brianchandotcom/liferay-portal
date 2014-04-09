@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.xml;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.IOException;
 
 import java.util.Iterator;
@@ -23,6 +25,7 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface Element extends Branch {
 
 	public void add(Attribute attribute);

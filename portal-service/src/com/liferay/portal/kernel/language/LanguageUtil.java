@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.language;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
@@ -33,6 +35,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class LanguageUtil {
 
 	public static String format(

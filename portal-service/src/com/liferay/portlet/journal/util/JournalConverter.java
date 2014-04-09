@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -22,6 +24,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
  * @author Marcellus Tavares
  * @author Bruno Basto
  */
+@ProviderType
 public interface JournalConverter {
 
 	public String getContent(DDMStructure ddmStructure, Fields ddmFields)

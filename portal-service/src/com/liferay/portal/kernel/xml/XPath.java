@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.xml;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface XPath extends Serializable {
 
 	public boolean booleanValueOf(Object context);

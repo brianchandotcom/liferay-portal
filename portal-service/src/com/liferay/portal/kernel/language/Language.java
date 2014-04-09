@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.language;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -30,6 +32,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface Language {
 
 	public String format(Locale locale, String pattern, List<Object> arguments);

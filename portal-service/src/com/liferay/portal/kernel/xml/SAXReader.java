@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.xml;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
@@ -27,6 +29,7 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface SAXReader {
 
 	public Attribute createAttribute(

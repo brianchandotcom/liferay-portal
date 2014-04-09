@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.xml;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface ProcessingInstruction extends Node {
 
 	public String getTarget();

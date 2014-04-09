@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -46,6 +48,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
  * @author Bruno Farache
  * @author Marcellus Tavares
  */
+@ProviderType
 public class WorkflowHandlerRegistryUtil {
 
 	public static List<WorkflowHandler> getScopeableWorkflowHandlers() {

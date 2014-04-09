@@ -221,17 +221,26 @@ public class InputTag extends BaseInputTag {
 		String forLabel = id;
 
 		if (Validator.equals(type,"assetTags")) {
-			forLabel += "assetTagNames";
+			forLabel = forLabel.concat("assetTagNames");
 		}
-
-		if (Validator.equals(type, "checkbox")) {
+		else if (Validator.equals(type, "checkbox")) {
 			forLabel = forLabel.concat("Checkbox");
 		}
 
+		boolean hideLabel = getHideLabel();
 		String label = getLabel();
 
 		if (label == null) {
 			label = TextFormatter.format(name, TextFormatter.K);
+		}
+		else if (label.equals(StringPool.BLANK)) {
+			label = TextFormatter.format(name, TextFormatter.K);
+
+			hideLabel = true;
+		}
+
+		if ((type != null) && type.equals("image")) {
+			hideLabel = true;
 		}
 
 		String languageId = getLanguageId();
@@ -280,6 +289,7 @@ public class InputTag extends BaseInputTag {
 		setNamespacedAttribute(request, "field", field);
 		setNamespacedAttribute(request, "forLabel", forLabel);
 		setNamespacedAttribute(request, "formName", formName);
+		setNamespacedAttribute(request, "hideLabel", hideLabel);
 		setNamespacedAttribute(request, "id", id);
 		setNamespacedAttribute(request, "label", label);
 		setNamespacedAttribute(request, "model", model);

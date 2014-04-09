@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -428,7 +429,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			fileName, newContent, taglibSessionKeyPattern);
 
 		checkLanguageKeys(fileName, newContent, languageKeyPattern);
-		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern);
+		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern1);
+		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern2);
 		checkXSS(fileName, newContent);
 
 		compareAndAutoFixContent(file, fileName, content, newContent);
@@ -829,6 +831,26 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return duplicateImports;
+	}
+
+	@Override
+	protected String[] getLanguageKeys(Matcher matcher) {
+		String match = matcher.group();
+
+		if (match.startsWith("label=\"\"")) {
+			int index = match.indexOf("name=\"");
+
+			String languageKey = match.substring(index + 6);
+
+			index = languageKey.indexOf(CharPool.QUOTE);
+
+			languageKey = TextFormatter.format(
+				languageKey.substring(0, index), TextFormatter.K);
+
+			return new String[] {languageKey};
+		}
+
+		return super.getLanguageKeys(matcher);
 	}
 
 	protected String getTaglibRegex(String quoteType) {
@@ -1299,9 +1321,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private Pattern _jspIncludeFilePattern = Pattern.compile("/.*[.]jsp[f]?");
 	private boolean _stripJSPImports = true;
-	private Pattern _taglibLanguageKeyPattern = Pattern.compile(
+	private Pattern _taglibLanguageKeyPattern1 = Pattern.compile(
 		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +
 			"<=%\\[\\s]+\"");
+	private Pattern _taglibLanguageKeyPattern2 = Pattern.compile(
+		"label=\"\".*name=\"[^<=%\\[\\s]+\"");
 	private Properties _unusedVariablesExclusions;
 	private Pattern _xssPattern = Pattern.compile(
 		"\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");

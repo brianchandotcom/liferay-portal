@@ -36,13 +36,18 @@
 	<div class="<%= controlGroupCssClass %>">
 </c:if>
 
-<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) %>'>
-	<label <%= labelTag %>>
-		<c:if test='<%= !choiceField && !inlineLabel.equals("right") %>'>
-				<%= labelContent %>
-			</label>
-		</c:if>
-</c:if>
+<c:choose>
+	<c:when test='<%= Validator.isNotNull(label) && !hideLabel && !type.equals("assetCategories") && !type.equals("hidden") %>'>
+		<label <%= labelTag %>>
+			<c:if test='<%= !choiceField && !inlineLabel.equals("right") %>'>
+					<%= labelContent %>
+				</label>
+			</c:if>
+	</c:when>
+	<c:when test='<%= !type.equals("hidden") && !type.equals("image") %>'>
+		<label class="hidden-label" for="<%= forLabel %>"><liferay-ui:message key='<%= Validator.isNotNull(label) ? label : name %>' /></label>
+	</c:when>
+</c:choose>
 
 <c:if test="<%= Validator.isNotNull(prefix) || Validator.isNotNull(suffix) %>">
 	<div class="<%= addOnCssClass %>">
@@ -217,7 +222,7 @@
 
 			</c:when>
 			<c:otherwise>
-				<input class="<%= fieldCssClass %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" <%= (max != null) ? "max=\"" + max + "\"": StringPool.BLANK %> <%= (min != null) ? "min=\"" + min + "\"": StringPool.BLANK %> <%= multiple ? "multiple" : StringPool.BLANK %> name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> type="<%= Validator.isNull(type) ? "text" : type %>" <%= !type.equals("image") ? "value=\"" + HtmlUtil.escapeAttribute(valueString) + "\"" : StringPool.BLANK %> <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
+				<input <%= type.equals("image") ? "alt=\"" + LanguageUtil.get(pageContext, label) + "\"" : StringPool.BLANK %> class="<%= fieldCssClass %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" <%= (max != null) ? "max=\"" + max + "\"": StringPool.BLANK %> <%= (min != null) ? "min=\"" + min + "\"": StringPool.BLANK %> <%= multiple ? "multiple" : StringPool.BLANK %> name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> type="<%= Validator.isNull(type) ? "text" : type %>" <%= !type.equals("image") ? "value=\"" + HtmlUtil.escapeAttribute(valueString) + "\"" : StringPool.BLANK %> <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
 			</c:otherwise>
 		</c:choose>
 
@@ -236,7 +241,7 @@
 	</div>
 </c:if>
 
-<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) %>'>
+<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) && !hideLabel %>'>
 	<c:if test='<%= choiceField || inlineLabel.equals("right") %>'>
 			<%= labelContent %>
 		</label>

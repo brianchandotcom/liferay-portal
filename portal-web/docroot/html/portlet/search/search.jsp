@@ -60,12 +60,12 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 	<aui:input name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" type="hidden" value="<%= ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR) %>" />
 	<aui:input name="format" type="hidden" value="<%= format %>" />
 
-	<aui:fieldset cssClass="lfr-search" id="searchContainer">
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="search" name="keywords" size="30" value="<%= HtmlUtil.escape(keywords) %>" />
+	<aui:fieldset id="searchContainer">
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" hideLabel="<%= true %>" inlineField="<%= true %>" label="search" name="keywords" size="30" value="<%= HtmlUtil.escape(keywords) %>" />
 
-		<aui:input inlineField="<%= true %>" label="" name="search" src='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' title="search" type="image" />
+		<aui:input inlineField="<%= true %>" name="search" src='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' title="search" type="image" />
 
-		<aui:input inlineField="<%= true %>" label="" name="clearSearch" src='<%= themeDisplay.getPathThemeImages() + "/common/close.png" %>' title="clear-search" type="image" />
+		<aui:input inlineField="<%= true %>" name="clearSearch" src='<%= themeDisplay.getPathThemeImages() + "/common/close.png" %>' title="clear-search" type="image" />
 	</aui:fieldset>
 
 	<div class="lfr-token-list" id="<portlet:namespace />searchTokens">

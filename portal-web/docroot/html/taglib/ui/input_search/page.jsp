@@ -30,7 +30,7 @@ String value = ParamUtil.getString(request, name);
 %>
 
 <div class="<%= cssClass %>">
-	<label class="hide-accessible" for="<portlet:namespace /><%= id %>"><%= title %></label>
+	<label class="hidden-label" for="<portlet:namespace /><%= id %>"><liferay-ui:message key='<%= title %>' /></label>
 
 	<input class="search-query span9" id="<portlet:namespace /><%= id %>" name="<portlet:namespace /><%= name %>" placeholder="<%= placeholder %>" title="<%= title %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" />
 

@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.workflow;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -79,37 +78,37 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 	}
 
 	@Override
-	public String getIconPath(LiferayPortletRequest liferayPortletRequest) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return getIconPath(themeDisplay);
-	}
-
-	@Override
-	public String getNotificationLink(
-		JSONObject notificationPayload, ServiceContext serviceContext)
+	public String getEditWorkflowTaskURL(
+			long workflowTaskId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
 		try {
 			LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 				serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASKS,
 				PortalUtil.getControlPanelPlid(serviceContext.getCompanyId()),
 				PortletRequest.RENDER_PHASE);
 
-			String workflowTaskId = notificationPayload.getString(
-				"workflowTaskId");
-
 			portletURL.setControlPanelCategory("my");
 			portletURL.setParameter(
 				"struts_action", "/my_workflow_tasks/edit_workflow_task");
-			portletURL.setParameter("workflowTaskId", workflowTaskId);
+			portletURL.setParameter(
+				"workflowTaskId", String.valueOf(workflowTaskId));
 			portletURL.setWindowState(WindowState.MAXIMIZED);
 
 			return portletURL.toString();
-		} catch (WindowStateException wse) {
+		}
+		catch (WindowStateException wse) {
 			throw new PortalException(wse);
 		}
+	}
+
+	@Override
+	public String getIconPath(LiferayPortletRequest liferayPortletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return getIconPath(themeDisplay);
 	}
 
 	/**

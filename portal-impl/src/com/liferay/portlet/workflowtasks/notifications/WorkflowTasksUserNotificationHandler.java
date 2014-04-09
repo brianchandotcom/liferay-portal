@@ -53,19 +53,22 @@ public class WorkflowTasksUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
-		JSONObject payload = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		String className = payload.getString("entryClassName");
+		String entryClassName = jsonObject.getString("entryClassName");
 
-		WorkflowHandler wh = WorkflowHandlerRegistryUtil.getWorkflowHandler(
-			className);
+		WorkflowHandler workflowHandler =
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(entryClassName);
 
-		if (wh == null) {
+		if (workflowHandler == null) {
 			return null;
 		}
 
-		return wh.getNotificationLink(payload, serviceContext);
+		long workflowTaskId = jsonObject.getLong("workflowTaskId");
+
+		return workflowHandler.getEditWorkflowTaskURL(
+			workflowTaskId, serviceContext);
 	}
 
 }

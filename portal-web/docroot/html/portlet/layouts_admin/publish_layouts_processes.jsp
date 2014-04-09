@@ -21,6 +21,8 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 long groupId = ParamUtil.getLong(request, "groupId");
 long liveGroupId = ParamUtil.getLong(request, "liveGroupId");
+long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
+String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
 boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing");
 
 PortletURL renderURL = liferayPortletResponse.createRenderURL();
@@ -29,6 +31,8 @@ renderURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
 renderURL.setParameter("tabs2", "current-and-previous");
 renderURL.setParameter("closeRedirect", closeRedirect);
 renderURL.setParameter("groupId", String.valueOf(groupId));
+renderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
+renderURL.setParameter("layoutSetBranchName", layoutSetBranchName);
 renderURL.setParameter("localPublishing", String.valueOf(localPublishing));
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");

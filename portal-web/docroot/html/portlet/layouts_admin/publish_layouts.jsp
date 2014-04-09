@@ -93,8 +93,8 @@ if (stagingGroup != null) {
 	stagingGroupId = stagingGroup.getGroupId();
 }
 
-long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
-String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
+long layoutSetBranchId = MapUtil.getLong(parameterMap, "layoutSetBranchId", ParamUtil.getLong(request, "layoutSetBranchId"));
+String layoutSetBranchName = MapUtil.getString(parameterMap, "layoutSetBranchName", ParamUtil.getString(request, "layoutSetBranchName"));
 
 boolean localPublishing = true;
 
@@ -193,6 +193,8 @@ else {
 
 renderURL.setParameter("closeRedirect", closeRedirect);
 renderURL.setParameter("groupId", String.valueOf(stagingGroupId));
+renderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
+renderURL.setParameter("layoutSetBranchName", layoutSetBranchName);
 renderURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
 response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
@@ -545,6 +547,8 @@ else {
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 		<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+		<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
+		<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
 		<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 		<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 	</liferay-portlet:resourceURL>

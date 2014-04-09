@@ -12,7 +12,11 @@ compileJava {
 		ClassLoader classLoader = org.apache.tools.ant.Project.class.classLoader
 
 		configurations.jdt.each {
-			File file -> classLoader.addURL(file.toURI().toURL())
+			File file -> InjectJarFile:{
+				URI uri = file.toURI()
+
+				classLoader.addURL(uri.toURL())
+			}
 		}
 	}
 }

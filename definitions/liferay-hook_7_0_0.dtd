@@ -40,6 +40,7 @@ company.settings.form.authentication
 company.settings.form.configuration
 company.settings.form.identification
 company.settings.form.miscellaneous
+company.settings.form.social
 control.panel.entry.class.default
 convert.processes
 default.landing.page.path

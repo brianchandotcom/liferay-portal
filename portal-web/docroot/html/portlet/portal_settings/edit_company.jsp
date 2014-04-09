@@ -20,8 +20,9 @@
 String[] configurationSections = PropsValues.COMPANY_SETTINGS_FORM_CONFIGURATION;
 String[] identificationSections = PropsValues.COMPANY_SETTINGS_FORM_IDENTIFICATION;
 String[] miscellaneousSections = PropsValues.COMPANY_SETTINGS_FORM_MISCELLANEOUS;
+String[] socialSections = PropsValues.COMPANY_SETTINGS_FORM_SOCIAL;
 
-String[][] categorySections = {configurationSections, identificationSections, miscellaneousSections};
+String[][] categorySections = {configurationSections, identificationSections, miscellaneousSections, socialSections};
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -78,5 +79,5 @@ request.setAttribute("websites.classPK", company.getAccountId());
 </aui:script>
 
 <%!
-private static final String[] _CATEGORY_NAMES = {"configuration", "identification", "miscellaneous"};
+private static final String[] _CATEGORY_NAMES = {"configuration", "identification", "miscellaneous", "social"};
 %>

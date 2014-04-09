@@ -32,7 +32,6 @@ long exportImportConfigurationId = 0;
 ExportImportConfiguration exportImportConfiguration = null;
 Map<String, Serializable> exportImportConfigurationSettingsMap = Collections.emptyMap();
 Map<String, String[]> parameterMap = Collections.emptyMap();
-Map<Long, Boolean> layoutIdMap = Collections.emptyMap();
 
 if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId")) {
 	exportImportConfigurationId = (Long)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId");
@@ -44,7 +43,6 @@ if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "ex
 	exportImportConfigurationSettingsMap = (Map<String, Serializable>)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "settingsMap");
 
 	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
-	layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
 }
 else {
 	exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
@@ -55,7 +53,6 @@ else {
 		exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
 
 		parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
-		layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
 	}
 }
 

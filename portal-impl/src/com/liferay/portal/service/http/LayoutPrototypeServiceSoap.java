@@ -119,8 +119,8 @@ public class LayoutPrototypeServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(Map,
-	Map, boolean, ServiceContext)}
+	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(Map, Map,
+	boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.model.LayoutPrototypeSoap addLayoutPrototype(

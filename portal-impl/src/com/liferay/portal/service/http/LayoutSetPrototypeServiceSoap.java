@@ -192,8 +192,9 @@ public class LayoutSetPrototypeServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateLayoutSetPrototype(
-	long, Map, Map, boolean, boolean, ServiceContext)}
+	* @deprecated As of 7.0.0, replaced by {@link
+	#updateLayoutSetPrototype(long, Map, Map, boolean, boolean,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.model.LayoutSetPrototypeSoap updateLayoutSetPrototype(

@@ -170,8 +170,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_NAME = "AssetEntries_AssetCategories";
 	public static final Object[][] MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_COLUMNS =
 		{
-			{ "entryId", Types.BIGINT },
-			{ "categoryId", Types.BIGINT }
+			{ "categoryId", Types.BIGINT },
+			{ "entryId", Types.BIGINT }
 		};
 	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_SQL_CREATE =
 		"create table AssetEntries_AssetCategories (categoryId LONG not null,entryId LONG not null,primary key (categoryId, entryId))";

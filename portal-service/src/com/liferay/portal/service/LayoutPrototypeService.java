@@ -80,8 +80,8 @@ public interface LayoutPrototypeService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(Map,
-	Map, boolean, ServiceContext)}
+	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(Map, Map,
+	boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public com.liferay.portal.model.LayoutPrototype addLayoutPrototype(

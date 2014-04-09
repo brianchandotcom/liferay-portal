@@ -767,6 +767,28 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		_assetEntryLocalService.reindex(entries);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long[] groupIds, long userId, java.lang.String className,
+		long classTypeId, java.lang.String keywords, int status, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetEntryLocalService.search(companyId, groupIds, userId,
+			className, classTypeId, keywords, status, start, end);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long[] groupIds, long userId, java.lang.String className,
+		long classTypeId, java.lang.String userName, java.lang.String title,
+		java.lang.String description, java.lang.String assetCategoryIds,
+		java.lang.String assetTagNames, int status, boolean andSearch,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetEntryLocalService.search(companyId, groupIds, userId,
+			className, classTypeId, userName, title, description,
+			assetCategoryIds, assetTagNames, status, andSearch, start, end);
+	}
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
 	String, String, int, int, int)}
@@ -788,15 +810,6 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
 			className, keywords, status, start, end);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long[] groupIds, long userId, java.lang.String className,
-		long classType, java.lang.String keywords, int status, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return _assetEntryLocalService.search(companyId, groupIds, userId,
-			className, classType, keywords, status, start, end);
 	}
 
 	/**
@@ -828,19 +841,6 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
 			className, userName, title, description, assetCategoryIds,
 			assetTagNames, status, andSearch, start, end);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long[] groupIds, long userId, java.lang.String className,
-		long classType, java.lang.String userName, java.lang.String title,
-		java.lang.String description, java.lang.String assetCategoryIds,
-		java.lang.String assetTagNames, int status, boolean andSearch,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _assetEntryLocalService.search(companyId, groupIds, userId,
-			className, classType, userName, title, description,
-			assetCategoryIds, assetTagNames, status, andSearch, start, end);
 	}
 
 	/**

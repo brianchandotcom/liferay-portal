@@ -2010,13 +2010,13 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		DLSettings settings = DLUtil.getDLSettings(fileVersion.getGroupId());
+		DLSettings dlSettings = DLUtil.getDLSettings(fileVersion.getGroupId());
 
 		if (serviceContext.isCommandAdd() &&
-			settings.getEmailFileEntryAddedEnabled()) {
+			dlSettings.getEmailFileEntryAddedEnabled()) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-				 settings.getEmailFileEntryUpdatedEnabled()) {
+				 dlSettings.getEmailFileEntryUpdatedEnabled()) {
 		}
 		else {
 			return;
@@ -2025,19 +2025,19 @@ public class DLAppHelperLocalServiceImpl
 		String entryTitle = fileVersion.getTitle();
 		String entryURL = getEntryURL(fileVersion, serviceContext);
 
-		String fromName = settings.getEmailFromName();
-		String fromAddress = settings.getEmailFromAddress();
+		String fromName = dlSettings.getEmailFromName();
+		String fromAddress = dlSettings.getEmailFromAddress();
 
 		Map<Locale, String> localizedSubjectMap = null;
 		Map<Locale, String> localizedBodyMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
-			localizedSubjectMap = settings.getEmailFileEntryUpdatedSubject();
-			localizedBodyMap = settings.getEmailFileEntryUpdatedBody();
+			localizedSubjectMap = dlSettings.getEmailFileEntryUpdatedSubject();
+			localizedBodyMap = dlSettings.getEmailFileEntryUpdatedBody();
 		}
 		else {
-			localizedSubjectMap = settings.getEmailFileEntryAddedSubject();
-			localizedBodyMap = settings.getEmailFileEntryAddedBody();
+			localizedSubjectMap = dlSettings.getEmailFileEntryAddedSubject();
+			localizedBodyMap = dlSettings.getEmailFileEntryAddedBody();
 		}
 
 		FileEntry fileEntry = fileVersion.getFileEntry();

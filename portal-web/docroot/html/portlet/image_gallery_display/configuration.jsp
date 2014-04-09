@@ -32,7 +32,10 @@ catch (NoSuchFolderException nsfe) {
 }
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL">
+	<liferay-portlet:param name="serviceName" value="<%= DLConstants.SERVICE_NAME %>" />
+	<liferay-portlet:param name="settingsScope" value="group" />
+</liferay-portlet:actionURL>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 

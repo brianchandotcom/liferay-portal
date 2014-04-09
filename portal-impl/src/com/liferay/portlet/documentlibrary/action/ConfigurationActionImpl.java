@@ -49,7 +49,7 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 			LocaleUtil.getSiteDefault());
 
 		DLSettings dlSettings = new DLSettings(settings);
-	
+
 		removeDefaultValue(
 			portletRequest, settings, "emailFileEntryAddedBody_" + languageId,
 			dlSettings.getEmailFileEntryAddedBody());

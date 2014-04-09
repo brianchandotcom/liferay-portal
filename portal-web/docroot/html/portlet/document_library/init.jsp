@@ -96,7 +96,6 @@ int entriesPerPage = dlSettings.getEntriesPerPage();
 String[] displayViews = StringUtil.split(dlSettings.getDisplayViews());
 
 long rootFolderId = dlSettings.getRootFolderId();
-
 String rootFolderName = StringPool.BLANK;
 
 if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -125,11 +124,11 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 }
 
 boolean showActions = dlSettings.getShowActions();
-boolean showAssetMetadata = dlSettings.getShowAssetMetadata();
+boolean showAssetMetadata = ParamUtil.getBoolean(request, "showAssetMetadata");
 boolean showAddFolderButton = false;
 boolean showFolderMenu = dlSettings.getShowFolderMenu();
-boolean showHeader = dlSettings.getShowHeader();
-boolean showMinimalActionButtons = dlSettings.getShowMinimalActionButtons();
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+boolean showMinimalActionButtons = ParamUtil.getBoolean(request, "showMinimalActionButtons");
 boolean showTabs = dlSettings.getShowTabs();
 
 if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
@@ -146,7 +145,17 @@ else if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.eq
 
 boolean enableRelatedAssets = dlSettings.getEnableRelatedAssets();
 
-String allEntryColumns = DLUtil.getAllEntryColumns(showActions);
+String allEntryColumns = "name,size,status";
+
+if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
+	allEntryColumns += ",downloads";
+}
+
+if (showActions) {
+	allEntryColumns += ",action";
+}
+
+allEntryColumns += ",modified-date,create-date";
 
 String[] entryColumns = StringUtil.split(dlSettings.getEntryColumns());
 

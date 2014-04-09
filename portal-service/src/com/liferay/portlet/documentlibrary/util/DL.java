@@ -99,10 +99,6 @@ public interface DL {
 
 	public String getDDMStructureKey(String fileEntryTypeUuid);
 
-	String getDefaultEntryColumns(boolean showActions);
-
-	String getAllEntryColumns(boolean showActions);
-
 	public String getDeprecatedDDMStructureKey(DLFileEntryType dlFileEntryType);
 
 	public String getDeprecatedDDMStructureKey(long fileEntryTypeId);

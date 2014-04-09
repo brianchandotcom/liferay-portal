@@ -28,6 +28,7 @@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryP
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLActionsDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.util.DLConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %><%@
@@ -40,7 +41,9 @@ if (layout.isTypeControlPanel()) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.DOCUMENT_LIBRARY, null);
 }
 
-long rootFolderId = PrefsParamUtil.getLong(portletPreferences, request, "rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId);
+
+long rootFolderId = dlSettings.getRootFolderId();
 String rootFolderName = StringPool.BLANK;
 
 if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -59,7 +62,7 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 }
 
-boolean showFoldersSearch = PrefsParamUtil.getBoolean(portletPreferences, request, "showFoldersSearch", true);
+boolean showFoldersSearch = dlSettings.getShowFoldersSearch();
 
 String portletId = portletDisplay.getId();
 
@@ -67,19 +70,19 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletId = portletResource;
 }
 
-boolean showActions = PrefsParamUtil.getBoolean(portletPreferences, request, "showActions");
-boolean showFolderMenu = PrefsParamUtil.getBoolean(portletPreferences, request, "showFolderMenu");
-boolean showTabs = PrefsParamUtil.getBoolean(portletPreferences, request, "showTabs");
+boolean showActions = dlSettings.getShowActions();
+boolean showFolderMenu = dlSettings.getShowFolderMenu();
+boolean showTabs = dlSettings.getShowTabs();
 
-boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableRatings", null), true);
-boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null), true);
+boolean enableRatings = dlSettings.getEnableRatings();
+boolean enableCommentRatings = dlSettings.getEnableCommentRatings();
 
 String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLANK);
 long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 
-DLSettings dlSettings = DLUtil.getDLSettings(scopeGroupId, request);
+dlSettings = DLUtil.getDLSettings(scopeGroupId, request);
 %>
 
 <%@ include file="/html/portlet/image_gallery_display/init-ext.jsp" %>

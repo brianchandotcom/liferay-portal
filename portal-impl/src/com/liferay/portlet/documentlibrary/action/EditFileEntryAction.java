@@ -719,12 +719,12 @@ public class EditFileEntryAction extends PortletAction {
 			ThemeDisplay themeDisplay = (ThemeDisplay)
 				portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			DLSettings settings = DLUtil.getDLSettings(
+			DLSettings dlSettings = DLUtil.getDLSettings(
 				themeDisplay.getScopeGroupId());
 
 			Set<String> extensions = new HashSet<String>();
 
-			String[] mimeTypes = settings.getMediaGalleryMimeTypes();
+			String[] mimeTypes = dlSettings.getMediaGalleryMimeTypes();
 
 			for (String mimeType : mimeTypes) {
 				extensions.addAll(MimeTypesUtil.getExtensions(mimeType));
@@ -990,10 +990,10 @@ public class EditFileEntryAction extends PortletAction {
 				String portletName = portletConfig.getPortletName();
 
 				if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-					DLSettings settings = DLUtil.getDLSettings(
+					DLSettings dlSettings = DLUtil.getDLSettings(
 						themeDisplay.getScopeGroupId());
 
-					String[] mimeTypes = settings.getMediaGalleryMimeTypes();
+					String[] mimeTypes = dlSettings.getMediaGalleryMimeTypes();
 
 					if (Arrays.binarySearch(mimeTypes, contentType) < 0) {
 						throw new FileMimeTypeException(contentType);

@@ -377,12 +377,6 @@ public class DLImpl implements DL {
 	}
 
 	@Override
-	public String getAllEntryColumns(boolean showActions) {
-		return getDefaultEntryColumns(showActions) +
-			",modified-date,create-date";
-	}
-
-	@Override
 	public Set<String> getAllMediaGalleryMimeTypes() {
 		return _allMediaGalleryMimeTypes;
 	}
@@ -396,21 +390,6 @@ public class DLImpl implements DL {
 	public String getDDMStructureKey(String fileEntryTypeUuid) {
 		return _STRUCTURE_KEY_PREFIX +
 			StringUtil.toUpperCase(fileEntryTypeUuid);
-	}
-
-	@Override
-	public String getDefaultEntryColumns(boolean showActions) {
-		String defaultEntryColumns = "name,size,status";
-
-		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-			defaultEntryColumns += ",downloads";
-		}
-
-		if (showActions) {
-			defaultEntryColumns += ",action";
-		}
-
-		return defaultEntryColumns;
 	}
 
 	@Override
@@ -1287,7 +1266,6 @@ public class DLImpl implements DL {
 
 	private static Set<String> _allMediaGalleryMimeTypes =
 		new TreeSet<String>();
-	private static String _allMediaGalleryMimeTypesString;
 	private static Set<String> _fileIcons = new HashSet<String>();
 	private static Map<String, String> _genericNames =
 		new HashMap<String, String>();
@@ -1305,9 +1283,6 @@ public class DLImpl implements DL {
 			SetUtil.fromArray(
 				PropsUtil.getArray(
 					PropsKeys.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES)));
-
-		_allMediaGalleryMimeTypesString = StringUtil.merge(
-			_allMediaGalleryMimeTypes);
 
 		String[] fileIcons = null;
 

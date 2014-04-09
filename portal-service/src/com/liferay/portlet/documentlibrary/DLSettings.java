@@ -121,8 +121,23 @@ public class DLSettings extends BaseServiceSettings {
 	}
 
 	public String getEntryColumns() {
-		return typedSettings.getValue(
-			"entryColumns", DLUtil.getDefaultEntryColumns(getShowActions()));
+		return typedSettings.getValue("entryColumns");
+	}
+
+	public int getFileEntriesPerPage() {
+		return typedSettings.getIntegerValue("fileEntriesPerPage");
+	}
+
+	public String getFileEntryColumns() {
+		return typedSettings.getValue("fileEntryColumns");
+	}
+
+	public String getFolderColumns() {
+		return typedSettings.getValue("folderColumns");
+	}
+
+	public int getFoldersPerPage() {
+		return typedSettings.getIntegerValue("foldersPerPage");
 	}
 
 	public String[] getMediaGalleryMimeTypes() {
@@ -131,15 +146,12 @@ public class DLSettings extends BaseServiceSettings {
 	}
 
 	public long getRootFolderId() {
-		return typedSettings.getLongValue("rootFolderId");
+		return typedSettings.getLongValue(
+			"rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	public boolean getShowActions() {
 		return typedSettings.getBooleanValue("showActions");
-	}
-
-	public boolean getShowAssetMetadata() {
-		return typedSettings.getBooleanValue("showAssetMetadata");
 	}
 
 	public boolean getShowFolderMenu() {
@@ -150,12 +162,8 @@ public class DLSettings extends BaseServiceSettings {
 		return typedSettings.getBooleanValue("showFoldersSearch");
 	}
 
-	public boolean getShowHeader() {
-		return typedSettings.getBooleanValue("showHeader");
-	}
-
-	public boolean getShowMinimalActionButtons() {
-		return typedSettings.getBooleanValue("showMinimalActionButtons");
+	public boolean getShowSubfolders() {
+		return typedSettings.getBooleanValue("showSubfolders");
 	}
 
 	public boolean getShowTabs() {
@@ -198,10 +206,18 @@ public class DLSettings extends BaseServiceSettings {
 			"enableRelatedAssets", PropsKeys.DL_RELATED_ASSETS_ENABLED);
 		_fallbackKeys.add(
 			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		_fallbackKeys.add("rootFolderId", PropsKeys.DL_ROOT_FOLDER_ID);
+		_fallbackKeys.add("entryColumns", PropsKeys.DL_ENTRY_COLUMNS);
+		_fallbackKeys.add("fileEntryColumns", PropsKeys.DL_FILE_ENTRY_COLUMNS);
+		_fallbackKeys.add("folderColumns", PropsKeys.DL_FOLDER_COLUMNS);
+		_fallbackKeys.add(
+			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+		_fallbackKeys.add(
+			"fileEntriesPerPage",
+			PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 		_fallbackKeys.add(
 			"showFoldersSearch", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
-		_fallbackKeys.add("showHeader", PropsKeys.DL_HEADER_VISIBLE);
+		_fallbackKeys.add(
+			"showSubfolders", PropsKeys.DL_FOLDERS_SEARCH_VISIBLE);
 
 		Set<String> allMimeTypes = DLUtil.getAllMediaGalleryMimeTypes();
 

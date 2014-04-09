@@ -1600,24 +1600,6 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<portlet-preferences>
-			<preference>
-				<name>fileEntryColumns</name>
-				<value>name,size</value>
-			</preference>
-			<preference>
-				<name>folderColumns</name>
-				<value>name,num-of-folders,num-of-documents</value>
-			</preference>
-			<preference>
-				<name>showFoldersSearch</name>
-				<value>false</value>
-			</preference>
-			<preference>
-				<name>showSubfolders</name>
-				<value>true</value>
-			</preference>
-		</portlet-preferences>
 		<security-role-ref>
 			<role-name>power-user</role-name>
 		</security-role-ref>

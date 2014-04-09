@@ -29,8 +29,8 @@
 
 	<propertycopy from="liferay.portal.${liferay.portal.branch}.bundle" name="liferay.portal.bundle" />
 
-	<propertycopy from="mobile.device.resolution[${mobile.device.type}]" name="mobile.resolution" />
-	<propertycopy from="mobile.device.user.agent[${mobile.device.type}]" name="mobile.user.agent" />
+	<propertycopy from="mobile.device.resolution[${mobile.device.type}]" name="mobile.device.resolution" />
+	<propertycopy from="mobile.device.user.agent[${mobile.device.type}]" name="mobile.device.user.agent" />
 
 	<propertycopy from="operating.system.${operating.system.type}.version" name="operating.system.version" />
 
@@ -1722,8 +1722,8 @@ tck.url=true</echo>
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					mobile.device.enabled=${mobile.device.enabled}
-					mobile.resolution=${mobile.resolution}
-					mobile.user.agent=${mobile.user.agent}
+					mobile.device.resolution=${mobile.device.resolution}
+					mobile.device.user.agent=${mobile.device.user.agent}
 				</echo>
 			</then>
 		</if>

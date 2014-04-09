@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.service.BaseLocalService;
 
 import java.lang.reflect.InvocationTargetException;
@@ -27,6 +29,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * @author Brian Wing Shun Chan
@@ -49,7 +52,7 @@ public abstract class BaseActionableDynamicQuery
 	public void performActions(long startPrimaryKey, long endPrimaryKey)
 		throws PortalException, SystemException {
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+		final DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_clazz, _classLoader);
 
 		Property property = PropertyFactoryUtil.forName(
@@ -62,11 +65,43 @@ public abstract class BaseActionableDynamicQuery
 
 		addCriteria(dynamicQuery);
 
-		List<Object> objects = (List<Object>)executeDynamicQuery(
-			_dynamicQueryMethod, dynamicQuery);
+		Callable<Void> performActionsCallable = new Callable<Void>() {
 
-		for (Object object : objects) {
-			performAction(object);
+			@Override
+			public Void call() throws Exception {
+				List<Object> objects = (List<Object>)executeDynamicQuery(
+					_dynamicQueryMethod, dynamicQuery);
+
+				for (Object object : objects) {
+					performAction(object);
+				}
+
+				return null;
+			}
+
+		};
+
+		TransactionAttribute transactionAttribute = getTransactionAttribute();
+
+		try {
+			if (transactionAttribute == null) {
+				performActionsCallable.call();
+			}
+			else {
+				TransactionInvokerUtil.invoke(
+					transactionAttribute, performActionsCallable);
+			}
+		}
+		catch (Throwable t) {
+			if (t instanceof PortalException) {
+				throw (PortalException)t;
+			}
+
+			if (t instanceof SystemException) {
+				throw (SystemException)t;
+			}
+
+			throw new SystemException(t);
 		}
 	}
 
@@ -222,6 +257,10 @@ public abstract class BaseActionableDynamicQuery
 		return _searchEngineId;
 	}
 
+	protected TransactionAttribute getTransactionAttribute() {
+		return null;
+	}
+
 	protected void indexInterval() throws PortalException {
 		if ((_documents == null) || _documents.isEmpty()) {
 			return;
@@ -295,18 +334,50 @@ public abstract class BaseActionableDynamicQuery
 	protected void performActionsInSingleInterval()
 		throws PortalException, SystemException {
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+		final DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_clazz, _classLoader);
 
 		addDefaultCriteria(dynamicQuery);
 
 		addCriteria(dynamicQuery);
 
-		List<Object> objects = (List<Object>)executeDynamicQuery(
-			_dynamicQueryMethod, dynamicQuery);
+		Callable<Void> performActionsCallable = new Callable<Void>() {
 
-		for (Object object : objects) {
-			performAction(object);
+			@Override
+			public Void call() throws Exception {
+				List<Object> objects = (List<Object>)executeDynamicQuery(
+					_dynamicQueryMethod, dynamicQuery);
+
+				for (Object object : objects) {
+					performAction(object);
+				}
+
+				return null;
+			}
+
+		};
+
+		TransactionAttribute transactionAttribute = getTransactionAttribute();
+
+		try {
+			if (transactionAttribute == null) {
+				performActionsCallable.call();
+			}
+			else {
+				TransactionInvokerUtil.invoke(
+					transactionAttribute, performActionsCallable);
+			}
+		}
+		catch (Throwable t) {
+			if (t instanceof PortalException) {
+				throw (PortalException)t;
+			}
+
+			if (t instanceof SystemException) {
+				throw (SystemException)t;
+			}
+
+			throw new SystemException(t);
 		}
 
 		indexInterval();

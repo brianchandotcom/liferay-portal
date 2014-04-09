@@ -69,13 +69,14 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		},
 
 		getHTML: function() {
-			var data = tinyMCE.editors['<%= name %>'].getContent();
+			var data;
 
-			<c:if test="<%= Validator.isNotNull(initMethod) %>">
-				if (!window['<%= name %>'].instanceReady) {
-					data = <%= HtmlUtil.escape(namespace + initMethod) %>();
-				}
-			</c:if>
+			if (!window['<%= name %>'].instanceReady && window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
+				data = <%= HtmlUtil.escape(namespace + initMethod) %>();
+			}
+			else {
+				data = tinyMCE.editors['<%= name %>'].getContent();
+			}
 
 			return data;
 		},

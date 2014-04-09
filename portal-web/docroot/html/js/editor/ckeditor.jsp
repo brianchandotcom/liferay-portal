@@ -136,17 +136,18 @@ if (!inlineEdit) {
 		},
 
 		getCkData: function() {
-			var data = CKEDITOR.instances['<%= name %>'].getData();
+			var data;
 
-			if (CKEDITOR.env.gecko && (CKEDITOR.tools.trim(data) == '<br />')) {
-				data = '';
+			if (!window['<%= name %>'].instanceReady && window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
+				data = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
 			}
+			else {
+				data = CKEDITOR.instances['<%= name %>'].getData();
 
-			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && (inlineEditSaveURL != null)) %>">
-				if (!window['<%= name %>'].instanceReady) {
-					data = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
+				if (CKEDITOR.env.gecko && (CKEDITOR.tools.trim(data) == '<br />')) {
+					data = '';
 				}
-			</c:if>
+			}
 
 			return data;
 		},

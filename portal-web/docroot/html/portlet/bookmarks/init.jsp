@@ -16,7 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.bookmarks.EntryURLException" %><%@
+<%@ page import="com.liferay.portlet.bookmarks.BookmarksSettings" %><%@
+page import="com.liferay.portlet.bookmarks.EntryURLException" %><%@
 page import="com.liferay.portlet.bookmarks.FolderNameException" %><%@
 page import="com.liferay.portlet.bookmarks.NoSuchEntryException" %><%@
 page import="com.liferay.portlet.bookmarks.NoSuchFolderException" %><%@
@@ -32,6 +33,8 @@ page import="com.liferay.portlet.bookmarks.util.BookmarksSearcher" %><%@
 page import="com.liferay.portlet.bookmarks.util.BookmarksUtil" %>
 
 <%
+BookmarksSettings bookmarksSettings = BookmarksUtil.getBookmarksSettings(scopeGroupId);
+
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
 String portletResource = ParamUtil.getString(request, "portletResource");

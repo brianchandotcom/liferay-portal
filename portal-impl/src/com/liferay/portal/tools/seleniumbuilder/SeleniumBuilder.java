@@ -500,6 +500,16 @@ public class SeleniumBuilder {
 
 					testCaseProperties.add(sb.toString());
 				}
+
+				StringBundler sb = new StringBundler();
+
+				sb.append(testCaseName);
+				sb.append("TestCase.test");
+				sb.append(commandElement.attributeValue("name"));
+				sb.append(".testray.testcase.priority=");
+				sb.append(commandElement.attributeValue("priority"));
+
+				testCaseProperties.add(sb.toString());
 			}
 		}
 

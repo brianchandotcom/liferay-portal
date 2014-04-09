@@ -23,9 +23,4 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class StringServiceRegistrationMap<T>
 	extends ConcurrentHashMap<String, ServiceRegistration<T>> {
-
-	public void put(String key, ServiceRegistration<?> serviceRegistration) {
-		super.put(key, (ServiceRegistration<T>)serviceRegistration);
-	}
-
 }

@@ -1183,26 +1183,36 @@
 			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewSpecificPG">
+		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry1 Content" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
+			<var name="viewSpecificEntry" value="true" />
 		</execute>
 
 		<execute macro="RelatedAssets#viewPG">
 			<var name="assetTitle" value="Blogs Entry2 Title" />
 		</execute>
 
+		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_TITLE_IMAGE_2" />
+		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_TITLE_2" />
+		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_EDIT_2" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewSpecificPG">
+		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle" value="Blogs Entry2 Title" />
+			<var name="viewSpecificEntry" value="true" />
 		</execute>
 
 		<execute macro="RelatedAssets#viewPG">
 			<var name="assetTitle" value="Blogs Entry1 Title" />
 		</execute>
+
+		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_TITLE_IMAGE_2" />
+		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_TITLE_2" />
+		<execute action="PGRelatedassets#assertElementNotPresent" locator-key1="ASSET_EDIT_2" />
 	</command>
 </definition>

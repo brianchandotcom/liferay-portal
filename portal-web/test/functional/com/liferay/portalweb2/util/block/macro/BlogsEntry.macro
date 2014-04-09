@@ -358,9 +358,9 @@
 
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute action="PGRelatedassetsSelectwebcontent#selectFrame" locator-key1="IFRAME" />
-		<execute action="PGRelatedassetsSelectwebcontent#assertClick" locator-key1="ASSET_TABLE_CHOOSE" value1="Choose" />
-		<execute action="PGRelatedassetsSelectwebcontent#selectFrame" value1="relative=top" />
+		<execute action="PGRelatedassetsSelect#selectFrame" locator-key1="IFRAME" />
+		<execute action="PGRelatedassetsSelect#assertClick" locator-key1="ASSET_TABLE_CHOOSE" value1="Choose" />
+		<execute action="PGRelatedassetsSelect#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addScheduledPG">
@@ -1124,6 +1124,14 @@
 				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_GENERIC" value1="${entryContent}" />
 				<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE_GENERIC" value1="${entryTitle}" />
 			</then>
+			<elseif>
+				<equals arg1="${viewSpecificEntry}" arg2="true" />
+				<then>
+					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_SPECIFIC" value1="${entryContent}" />
+					<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+				</then>
+			</elseif>
 			<else>
 				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
@@ -1235,18 +1243,6 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SCHEDULED_ENTRY_STATUS" value1="Scheduled" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SCHEDULED_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SCHEDULED_ENTRY_CONTENT" value1="${entryContent}" />
-	</command>
-
-	<command name="viewSpecificPG">
-		<var name="key_entryContent" value="${entryContent}" />
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_SPECIFIC" value1="${entryContent}" />
-		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewTagPG">

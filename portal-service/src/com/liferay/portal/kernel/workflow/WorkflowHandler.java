@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.model.WorkflowDefinitionLink;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 
@@ -47,6 +48,10 @@ public interface WorkflowHandler {
 	public AssetRendererFactory getAssetRendererFactory();
 
 	public String getClassName();
+
+	public String getEditWorkflowTaskURL(
+			long workflowTaskId, ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	public String getIconPath(LiferayPortletRequest liferayPortletRequest);
 

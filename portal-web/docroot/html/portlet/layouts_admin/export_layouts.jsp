@@ -196,6 +196,7 @@ if (!cmd.equals(Constants.ADD)) {
 			<aui:form action='<%= cmd.equals(Constants.EXPORT) ? exportPagesURL : updateExportConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+				<aui:input name="actionType" type="hidden" value="export" />
 				<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
 				<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 				<aui:input name="liveGroupId" type="hidden" value="<%= String.valueOf(liveGroupId) %>" />
@@ -219,6 +220,11 @@ if (!cmd.equals(Constants.ADD)) {
 
 					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 						<aui:fieldset cssClass="options-group" label="pages">
+
+							<%
+							request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
+							%>
+
 							<liferay-util:include page="/html/portlet/layouts_admin/export_configuration/select_pages.jsp">
 								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

@@ -855,15 +855,25 @@ AUI.add(
 
 						var cmdNode = instance.byId('cmd');
 
+						var actionTypeNode = instance.byId('actionType');
+
 						if ((cmdNode.val() === 'add') || (cmdNode.val() === 'update')) {
 							var redirectNode = instance.byId('redirect');
 
 							var portletURL = Liferay.PortletURL.createURL(redirectNode.val());
 
-							portletURL.setParameter("struts_action", "/group_pages/edit_export_configuration");
 							portletURL.setParameter("cmd", cmdNode.val());
-							portletURL.setParameter("tabs2", "new-export-process");
-							portletURL.setParameter("exportNav", "custom");
+
+							if (actionTypeNode.val() === 'export') {
+								portletURL.setParameter("struts_action", "/group_pages/edit_export_configuration");
+								portletURL.setParameter("tabs2", "new-export-process");
+								portletURL.setParameter("exportConfigurationButtons", "custom");
+							}
+							else if (actionTypeNode.val() === 'publish') {
+								portletURL.setParameter("struts_action", "/layouts_admin/edit_publish_configuration");
+								portletURL.setParameter("tabs2", "new-publication-process");
+								portletURL.setParameter("publishConfigurationButtons", "custom");
+							}
 
 							var groupIdNode = instance.byId('groupId');
 

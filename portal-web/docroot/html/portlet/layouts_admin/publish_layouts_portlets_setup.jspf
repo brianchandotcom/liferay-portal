@@ -16,13 +16,13 @@
 
 <ul class="lfr-tree unstyled">
 	<li class="tree-item">
-		<aui:input checked="<%= true %>" helpMessage="all-applications-publish-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= true %>" />
+		<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" helpMessage="all-applications-publish-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= true %>" />
 
 		<div class="hide" id="<portlet:namespace />globalConfiguration">
 			<aui:fieldset cssClass="portlet-data-section" label="all-applications">
-				<aui:input label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="checkbox" value="<%= true %>" />
+				<aui:input label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_SETUP_ALL, true) %>" />
 
-				<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="checkbox" value="<%= true %>" />
+				<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL, true) %>" />
 			</aui:fieldset>
 		</div>
 
@@ -34,10 +34,10 @@
 			</li>
 		</ul>
 
-		<aui:input helpMessage="choose-applications-publish-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= false %>" />
+		<aui:input checked="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL, true) %>" helpMessage="choose-applications-publish-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= false %>" />
 
 		<ul class="hide options portlet-list select-options" id="<portlet:namespace />selectApplications">
-			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= true %>" />
+			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION, true) %>" />
 
 			<%
 			portletDataHandlerPortlets = ListUtil.sort(portletDataHandlerPortlets, new PortletTitleComparator(application, locale));
@@ -52,7 +52,7 @@
 			%>
 
 					<li class="tree-item">
-						<aui:input label="<%= portletTitle %>" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
+						<aui:input label="<%= portletTitle %>" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId(), true) %>" />
 
 						<div class="hide" id="<portlet:namespace />configuration_<%= portlet.getRootPortletId() %>">
 							<ul class="lfr-tree unstyled">

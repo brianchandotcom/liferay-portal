@@ -81,8 +81,7 @@ public class ConfigurationImpl
 	@Override
 	public void addProperties(Properties properties) {
 		try {
-			ComponentProperties componentProperties =
-				_componentConfiguration.getProperties();
+			ComponentProperties componentProperties = getComponentProperties();
 
 			ClassLoaderAggregateProperties classLoaderAggregateProperties =
 				(ClassLoaderAggregateProperties)
@@ -298,8 +297,7 @@ public class ConfigurationImpl
 	@Override
 	public void removeProperties(Properties properties) {
 		try {
-			ComponentProperties componentProperties =
-				_componentConfiguration.getProperties();
+			ComponentProperties componentProperties = getComponentProperties();
 
 			ClassLoaderAggregateProperties classLoaderAggregateProperties =
 				(ClassLoaderAggregateProperties)

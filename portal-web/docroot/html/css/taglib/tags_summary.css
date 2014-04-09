@@ -1,4 +1,8 @@
+@import "compass";
+
 .taglib-asset-tags-summary .tag {
+	@include hyphenation;
+
 	margin-bottom: 3px;
 	margin-right: 3px;
 	padding: 2px 5px 2px 20px;

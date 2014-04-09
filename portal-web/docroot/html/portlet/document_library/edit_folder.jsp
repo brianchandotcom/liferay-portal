@@ -31,9 +31,7 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", D
 
 boolean rootFolder = ParamUtil.getBoolean(request, "rootFolder");
 
-boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed()
-                          && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null)
-                          && (DLPermission.contains(themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(), ActionKeys.ADD_DOCUMENT) || DLPermission.contains(themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(), ActionKeys.UPDATE));
+boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null) && DLFolderPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), folderId, ActionKeys.UPDATE);
 
 List<WorkflowDefinition> workflowDefinitions = null;
 

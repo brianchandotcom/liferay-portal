@@ -452,8 +452,9 @@ public class PluginsEnvironmentBuilder {
 			addClasspathEntry(
 				sb, "/portal/lib/development/powermock-mockito.jar");
 			addClasspathEntry(sb, "/portal/lib/development/spring-test.jar");
-			addClasspathEntry(sb, "/portal/lib/portal/commons-io.jar");
-			addClasspathEntry(sb, "/portal/lib/portal/commons-lang.jar");
+
+			portalJars.add("commons-io.jar");
+			portalJars.add("commons-lang.jar");
 		}
 
 		addClasspathEntry(sb, "/portal/lib/development/activation.jar");

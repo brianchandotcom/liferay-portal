@@ -525,6 +525,8 @@ public interface PropsKeys {
 
 	public static final String COMPANY_SETTINGS_FORM_MISCELLANEOUS = "company.settings.form.miscellaneous";
 
+	public static final String COMPANY_SETTINGS_FORM_SOCIAL = "company.settings.form.social";
+
 	public static final String CONTROL_PANEL_DEFAULT_ENTRY_CLASS = "control.panel.default.entry.class";
 
 	public static final String CONTROL_PANEL_HOME_PORTLET_ID = "control.panel.home.portlet.id";

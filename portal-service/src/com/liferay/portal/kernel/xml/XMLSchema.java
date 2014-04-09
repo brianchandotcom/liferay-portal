@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.xml;
 
+import aQute.bnd.annotation.ProviderType;
+
 import org.xml.sax.InputSource;
 
 /**
  * @author Marcellus Tavares
  */
+@ProviderType
 public interface XMLSchema {
 
 	public String getPublicId();

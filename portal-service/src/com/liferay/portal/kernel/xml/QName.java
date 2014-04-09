@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.xml;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface QName extends Serializable {
 
 	public String getLocalPart();

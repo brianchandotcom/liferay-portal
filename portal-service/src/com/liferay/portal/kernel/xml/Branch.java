@@ -14,12 +14,15 @@
 
 package com.liferay.portal.kernel.xml;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface Branch extends Node {
 
 	public void add(Comment comment);

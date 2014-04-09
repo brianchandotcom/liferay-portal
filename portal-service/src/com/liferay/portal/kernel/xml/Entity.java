@@ -14,8 +14,11 @@
 
 package com.liferay.portal.kernel.xml;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface Entity extends Node {
 }

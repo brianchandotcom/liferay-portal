@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.notifications;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -31,6 +33,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
  * @author Brian Wing Shun Chan
  * @author Sergio González
  */
+@ProviderType
 public abstract class BaseModelUserNotificationHandler
 	extends BaseUserNotificationHandler {
 

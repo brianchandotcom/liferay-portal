@@ -14,12 +14,15 @@
 
 package com.liferay.portal.kernel.xml;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Marcellus Tavares
  */
+@ProviderType
 public abstract class BaseVisitor<T> implements Visitor<T> {
 
 	@Override

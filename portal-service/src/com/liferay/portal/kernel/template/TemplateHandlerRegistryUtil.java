@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.template;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -32,6 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Juan Fernández
  */
+@ProviderType
 public class TemplateHandlerRegistryUtil {
 
 	public static long[] getClassNameIds() {

@@ -14,9 +14,12 @@
 
 package com.liferay.portal.kernel.xml;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface Document extends Branch, Cloneable {
 
 	public Document addComment(String comment);

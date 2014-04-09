@@ -33,11 +33,16 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ETagFilter extends BasePortalFilter {
 
+	public static final String SKIP_FILTER =
+		ETagFilter.class.getName() + "SKIP_FILTER";
+
 	@Override
 	public boolean isFilterEnabled(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		if (ParamUtil.getBoolean(request, _ETAG, true)) {
+		if (ParamUtil.getBoolean(request, _ETAG, true) &&
+			(request.getAttribute(SKIP_FILTER) == null)) {
+
 			return true;
 		}
 		else {
@@ -66,6 +71,8 @@ public class ETagFilter extends BasePortalFilter {
 			restrictedByteBufferCacheServletResponse =
 				new RestrictedByteBufferCacheServletResponse(
 					response, PropsValues.ETAG_RESPONSE_SIZE_MAX);
+
+		request.setAttribute(SKIP_FILTER, Boolean.TRUE);
 
 		processFilter(
 			ETagFilter.class, request, restrictedByteBufferCacheServletResponse,

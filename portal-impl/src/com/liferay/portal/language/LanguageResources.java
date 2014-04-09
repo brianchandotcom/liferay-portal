@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -70,16 +71,6 @@ public class LanguageResources {
 		}
 	}
 
-	public static Set<String> getKeys(Locale locale) {
-		Map<String, String> languageMap = _languageMaps.get(locale);
-
-		if (languageMap != null) {
-			return languageMap.keySet();
-		}
-
-		return null;
-	}
-
 	public static String getMessage(Locale locale, String key) {
 		if (locale == null) {
 			return null;
@@ -101,34 +92,31 @@ public class LanguageResources {
 		}
 	}
 
+	public static ResourceBundle getResourceBundle(Locale locale) {
+		return new LanguageResourcesBundle(locale);
+	}
+
 	public static Locale getSuperLocale(Locale locale) {
-		String variant = locale.getVariant();
+		Locale superLocale = _superLocales.get(locale);
 
-		if (variant.length() > 0) {
-			return new Locale(locale.getLanguage(), locale.getCountry());
-		}
-
-		String country = locale.getCountry();
-
-		if (country.length() > 0) {
-			Locale priorityLocale = LanguageUtil.getLocale(
-				locale.getLanguage());
-
-			if ((priorityLocale != null) && !locale.equals(priorityLocale)) {
-				return new Locale(
-					priorityLocale.getLanguage(), priorityLocale.getCountry());
+		if (superLocale != null) {
+			if (superLocale == _nullLocale) {
+				return null;
 			}
 
-			return LocaleUtil.fromLanguageId(locale.getLanguage(), false, true);
+			return superLocale;
 		}
 
-		String language = locale.getLanguage();
+		superLocale = _getSuperLocale(locale);
 
-		if (language.length() > 0) {
-			return _blankLocale;
+		if (superLocale == null) {
+			_superLocales.put(locale, _nullLocale);
+		}
+		else {
+			_superLocales.put(locale, superLocale);
 		}
 
-		return null;
+		return superLocale;
 	}
 
 	public static Map<String, String> putLanguageMap(
@@ -157,6 +145,36 @@ public class LanguageResources {
 	public void setConfig(String config) {
 		_configNames = StringUtil.split(
 			config.replace(CharPool.PERIOD, CharPool.SLASH));
+	}
+
+	private static Locale _getSuperLocale(Locale locale) {
+		String variant = locale.getVariant();
+
+		if (variant.length() > 0) {
+			return new Locale(locale.getLanguage(), locale.getCountry());
+		}
+
+		String country = locale.getCountry();
+
+		if (country.length() > 0) {
+			Locale priorityLocale = LanguageUtil.getLocale(
+				locale.getLanguage());
+
+			if ((priorityLocale != null) && !locale.equals(priorityLocale)) {
+				return new Locale(
+					priorityLocale.getLanguage(), priorityLocale.getCountry());
+			}
+
+			return LocaleUtil.fromLanguageId(locale.getLanguage(), false, true);
+		}
+
+		String language = locale.getLanguage();
+
+		if (language.length() > 0) {
+			return _blankLocale;
+		}
+
+		return null;
 	}
 
 	private static Map<String, String> _loadLocale(Locale locale) {
@@ -246,5 +264,57 @@ public class LanguageResources {
 	private static String[] _configNames;
 	private static Map<Locale, Map<String, String>> _languageMaps =
 		new ConcurrentHashMap<Locale, Map<String, String>>(64);
+	private static Locale _nullLocale = new Locale(StringPool.BLANK);
+	private static Map<Locale, Locale> _superLocales =
+		new ConcurrentHashMap<Locale, Locale>();
+
+	private static class LanguageResourcesBundle extends ResourceBundle {
+
+		private LanguageResourcesBundle(Locale locale) {
+			_locale = locale;
+
+			_languageMap = _languageMaps.get(locale);
+
+			if (_languageMap == null) {
+				_languageMap = _loadLocale(locale);
+			}
+
+			Locale superLocale = getSuperLocale(locale);
+
+			if (superLocale != null) {
+				setParent(new LanguageResourcesBundle(superLocale));
+			}
+		}
+
+		@Override
+		protected Object handleGetObject(String key) {
+			return _languageMap.get(key);
+		}
+
+		@Override
+		public Enumeration<String> getKeys() {
+			Set<String> keySet = _languageMap.keySet();
+
+			if (parent == null) {
+				return Collections.enumeration(keySet);
+			}
+
+			return new ResourceBundleEnumeration(keySet, parent.getKeys());
+		}
+
+		@Override
+		protected Set<String> handleKeySet() {
+			return _languageMap.keySet();
+		}
+
+		@Override
+		public Locale getLocale() {
+			return _locale;
+		}
+
+		private Map<String, String> _languageMap;
+		private Locale _locale;
+
+	}
 
 }

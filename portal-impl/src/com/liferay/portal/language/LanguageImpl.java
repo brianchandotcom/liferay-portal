@@ -59,7 +59,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -440,17 +439,10 @@ public class LanguageImpl implements Language, Serializable {
 	public String get(
 		ResourceBundle resourceBundle, String key, String defaultValue) {
 
-		try {
-			String value = _get(resourceBundle, key);
+		String value = _get(resourceBundle, key);
 
-			if (value != null) {
-				return value;
-			}
-		}
-		catch (MissingResourceException mre) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(mre, mre);
-			}
+		if (value != null) {
+			return value;
 		}
 
 		return defaultValue;
@@ -508,11 +500,6 @@ public class LanguageImpl implements Language, Serializable {
 	@Override
 	public String getCharset(Locale locale) {
 		return _getInstance()._getCharset(locale);
-	}
-
-	@Override
-	public Set<String> getKeys(Locale locale) {
-		return LanguageResources.getKeys(locale);
 	}
 
 	@Override
@@ -865,21 +852,19 @@ public class LanguageImpl implements Language, Serializable {
 			return LanguageResources.fixValue(value);
 		}
 
-		if (value == null) {
-			if ((key.length() > 0) &&
-				(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
+		if ((key.length() > 0) &&
+			(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
 
-				int pos = key.lastIndexOf(CharPool.OPEN_BRACKET);
+			int pos = key.lastIndexOf(CharPool.OPEN_BRACKET);
 
-				if (pos != -1) {
-					key = key.substring(0, pos);
+			if (pos != -1) {
+				key = key.substring(0, pos);
 
-					return _get(resourceBundle, key);
-				}
+				return _get(resourceBundle, key);
 			}
 		}
 
-		return value;
+		return null;
 	}
 
 	private String _getCharset(Locale locale) {

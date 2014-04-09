@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import java.text.MessageFormat;
 
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
@@ -24,8 +25,6 @@ import java.util.ResourceBundle;
  * @author Neil Griffin
  */
 public class ResourceBundleUtil {
-
-	public static final String NULL_VALUE = "NULL_VALUE";
 
 	public static String getString(
 		ResourceBundle resourceBundle, Locale locale, String key,
@@ -51,22 +50,16 @@ public class ResourceBundleUtil {
 	}
 
 	public static String getString(ResourceBundle resourceBundle, String key) {
-		ResourceBundleThreadLocal.setReplace(true);
-
-		String value = null;
+		if (!resourceBundle.containsKey(key)) {
+			return null;
+		}
 
 		try {
-			value = resourceBundle.getString(key);
+			return resourceBundle.getString(key);
 		}
-		finally {
-			ResourceBundleThreadLocal.setReplace(false);
+		catch (MissingResourceException mre) {
+			return null;
 		}
-
-		if (NULL_VALUE.equals(value)) {
-			value = null;
-		}
-
-		return value;
 	}
 
 }

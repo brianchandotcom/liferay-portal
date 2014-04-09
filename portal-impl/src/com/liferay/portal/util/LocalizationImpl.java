@@ -1100,14 +1100,16 @@ public class LocalizationImpl implements Localization {
 
 		String value = null;
 
-		try {
-			value = resourceBundle.getString(key);
+		if (resourceBundle.containsKey(key)) {
+			try {
+				value = resourceBundle.getString(key);
 
-			value = new String(
-				value.getBytes(StringPool.ISO_8859_1), StringPool.UTF8);
-		}
+				value = new String(
+					value.getBytes(StringPool.ISO_8859_1), StringPool.UTF8);
+			}
 
-		catch (Exception e) {
+			catch (Exception e) {
+			}
 		}
 
 		if (Validator.isNotNull(value)) {

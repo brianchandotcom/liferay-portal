@@ -422,7 +422,6 @@
 				<execute action="PGBlogsAdd#assertElementPresent" locator-key1="CATEGORIZATION_TAG" value1="${tagName}" />
 			</else>
 		</if>
-
 	</command>
 
 	<command name="addWithTrackbackURLPG">

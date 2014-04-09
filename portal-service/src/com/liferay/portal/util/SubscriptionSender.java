@@ -526,10 +526,21 @@ public class SubscriptionSender implements Serializable {
 
 		String emailAddress = to.getAddress();
 
-		User user = UserLocalServiceUtil.getUserByEmailAddress(
+		User user = UserLocalServiceUtil.fetchUserByEmailAddress(
 			companyId, emailAddress);
 
-		sendNotification(user);
+		if (user == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"User with verified e-mail address " + emailAddress +
+						" does not exist");
+			}
+
+			sendEmail(to, locale);
+		}
+		else {
+			sendNotification(user);
+		}
 	}
 
 	/**

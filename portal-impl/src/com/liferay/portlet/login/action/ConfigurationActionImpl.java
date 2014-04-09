@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.login.util.LoginUtil;
 import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
@@ -38,13 +37,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			long companyId, PortletRequest portletRequest,
 			PortletPreferences portletPreferences)
 		throws SystemException {
-
-		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromAddress",
-			LoginUtil.getEmailFromName(portletPreferences, companyId));
-		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromName",
-			LoginUtil.getEmailFromName(portletPreferences, companyId));
 
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());

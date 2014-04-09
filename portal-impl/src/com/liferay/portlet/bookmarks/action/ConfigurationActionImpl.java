@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.portlet.bookmarks.util.BookmarksUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.util.ContentUtil;
 
@@ -42,13 +41,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			long companyId, PortletRequest portletRequest,
 			PortletPreferences portletPreferences)
 		throws SystemException {
-
-		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromAddress",
-			BookmarksUtil.getEmailFromAddress(portletPreferences, companyId));
-		removeDefaultValue(
-			portletRequest, portletPreferences, "emailFromName",
-			BookmarksUtil.getEmailFromName(portletPreferences, companyId));
 
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());

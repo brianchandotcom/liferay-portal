@@ -176,6 +176,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_SPECIFIC</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved')]//div[@class='entry-body']/div[contains(.,'${key_entryContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_ABSTRACT</td>
 	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']</td>
 	<td></td>
@@ -303,6 +308,21 @@
 <tr>
 	<td>ENTRY_VOCABULARY_CATEGORIZATION_LINK</td>
 	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span[contains(.,'${key_vocabularyName}:') and contains(.,'${key_categoryName}')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_RELATED_ASSETS_HEADER</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div/div[contains(@class,'asset-links')]/h2[contains(.,'Related Assets:')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_RELATED_ASSETS_LINK_IMAGE</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div/div[contains(@class,'asset-links')]/ul//a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_RELATED_ASSETS_TITLE</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div/div[contains(@class,'asset-links')]/ul//a[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

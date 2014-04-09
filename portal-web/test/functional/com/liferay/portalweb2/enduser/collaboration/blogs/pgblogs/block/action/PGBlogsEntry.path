@@ -59,6 +59,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_RELATED_ASSETS_HEADER</td>
+	<td>//div[@class='entry-links']//h2[contains(.,'Related Assets:')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_RELATED_ASSETS_LINK_IMAGE</td>
+	<td>//div[@class='entry-links']//a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_RELATED_ASSETS_TITLE</td>
+	<td>//div[@class='entry-links']//a/span[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRMATION</td>
 	<td></td>
 	<td></td>

@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>PGRelatedassetsSelect</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGRelatedassetsSelect</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGRelatedassetsSelect</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>IFRAME</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_ADVANCED_MENULIST</td>
+	<td>//div[@class='advanced-search']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[contains(@id,'_asset_searchkeywords')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_TABLE-->
+<tr>
+	<td>ASSET_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_USER_NAME</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_SITE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_CHOOSE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td/button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

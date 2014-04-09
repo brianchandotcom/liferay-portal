@@ -1506,17 +1506,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			String name = Role.class.getName();
 			String[] actionIds = new String[]{ActionKeys.VIEW};
 
-			if (resourceBlockLocalService.isSupported(name)) {
-				resourceBlockLocalService.setIndividualScopePermissions(
-					companyId, 0, name, role.getRoleId(), userRole.getRoleId(),
-					Arrays.asList(actionIds));
-			}
-			else {
-				resourcePermissionLocalService.setResourcePermissions(
-					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(role.getRoleId()), userRole.getRoleId(),
-					actionIds);
-			}
+			resourcePermissionLocalService.setResourcePermissions(
+				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(role.getRoleId()), userRole.getRoleId(),
+				actionIds);
 		}
 	}
 

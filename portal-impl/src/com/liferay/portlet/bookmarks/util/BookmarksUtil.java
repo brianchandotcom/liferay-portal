@@ -25,21 +25,20 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.settings.ParameterMapSettings;
+import com.liferay.portal.settings.Settings;
+import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.bookmarks.BookmarksSettings;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
@@ -56,10 +55,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
@@ -195,6 +192,28 @@ public class BookmarksUtil {
 		return sb.toString();
 	}
 
+	public static BookmarksSettings getBookmarksSettings(long groupId)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, BookmarksConstants.SERVICE_NAME);
+
+		return new BookmarksSettings(settings);
+	}
+
+	public static BookmarksSettings getBookmarksSettings(
+			long groupId, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
+			groupId, BookmarksConstants.SERVICE_NAME);
+
+		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
+			settings, request.getParameterMap());
+
+		return new BookmarksSettings(parameterMapSettings);
+	}
+
 	public static String getControlPanelLink(
 			PortletRequest portletRequest, long folderId)
 		throws PortalException, SystemException {
@@ -258,84 +277,6 @@ public class BookmarksUtil {
 				themeDisplay.getLocale(), "the-name-of-the-email-recipient"));
 
 		return definitionTerms;
-	}
-
-	public static Map<Locale, String> getEmailEntryAddedBodyMap(
-		PortletPreferences preferences) {
-
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailEntryAddedBody",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_BODY);
-	}
-
-	public static boolean getEmailEntryAddedEnabled(
-		PortletPreferences preferences) {
-
-		String emailEntryAddedEnabled = preferences.getValue(
-			"emailEntryAddedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailEntryAddedEnabled)) {
-			return GetterUtil.getBoolean(emailEntryAddedEnabled);
-		}
-		else {
-			return GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_ENABLED));
-		}
-	}
-
-	public static Map<Locale, String> getEmailEntryAddedSubjectMap(
-		PortletPreferences preferences) {
-
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailEntryAddedSubject",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT);
-	}
-
-	public static Map<Locale, String> getEmailEntryUpdatedBodyMap(
-		PortletPreferences preferences) {
-
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailEntryUpdatedBody",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_BODY);
-	}
-
-	public static boolean getEmailEntryUpdatedEnabled(
-		PortletPreferences preferences) {
-
-		String emailEntryUpdatedEnabled = preferences.getValue(
-			"emailEntryUpdatedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailEntryUpdatedEnabled)) {
-			return GetterUtil.getBoolean(emailEntryUpdatedEnabled);
-		}
-		else {
-			return GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_ENABLED));
-		}
-	}
-
-	public static Map<Locale, String> getEmailEntryUpdatedSubjectMap(
-		PortletPreferences preferences) {
-
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailEntryUpdatedSubject",
-			PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_SUBJECT);
-	}
-
-	public static String getEmailFromAddress(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
-
-		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsValues.BOOKMARKS_EMAIL_FROM_ADDRESS);
-	}
-
-	public static String getEmailFromName(
-			PortletPreferences preferences, long companyId)
-		throws SystemException {
-
-		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsValues.BOOKMARKS_EMAIL_FROM_NAME);
 	}
 
 	public static List<Object> getEntries(Hits hits) {

@@ -648,7 +648,7 @@ public abstract class DLAppTestUtil {
 		DLAppHelperLocalServiceUtil.updateStatus(
 			TestPropsValues.getUserId(), fileEntry,
 			fileEntry.getLatestFileVersion(), WorkflowConstants.STATUS_PENDING,
-			WorkflowConstants.STATUS_APPROVED, workflowContext, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
 	}
 
 	private static final String _CONTENT =

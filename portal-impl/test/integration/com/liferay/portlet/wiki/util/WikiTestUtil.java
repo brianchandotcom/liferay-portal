@@ -258,7 +258,7 @@ public class WikiTestUtil {
 
 		page = WikiPageLocalServiceUtil.updateStatus(
 			page.getUserId(), page, WorkflowConstants.STATUS_APPROVED,
-			workflowContext, serviceContext);
+			serviceContext, workflowContext);
 
 		return page;
 	}

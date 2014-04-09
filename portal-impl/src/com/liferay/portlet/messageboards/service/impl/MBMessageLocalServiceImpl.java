@@ -1629,11 +1629,27 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return message;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
+	 *             int, ServiceContext, Map)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessage updateStatus(
 			long userId, long messageId, int status,
-			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateStatus(
+			userId, messageId, status, serviceContext,
+			new HashMap<String, Serializable>());
+	}
+
+	@Override
+	public MBMessage updateStatus(
+			long userId, long messageId, int status,
+			ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 
 		// Message
@@ -1801,22 +1817,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		return message;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
-	 *             int, Map, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public MBMessage updateStatus(
-			long userId, long messageId, int status,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		return updateStatus(
-			userId, messageId, status, new HashMap<String, Serializable>(),
-			serviceContext);
 	}
 
 	@Override

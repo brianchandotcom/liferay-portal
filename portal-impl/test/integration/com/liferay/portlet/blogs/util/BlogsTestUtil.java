@@ -230,7 +230,7 @@ public class BlogsTestUtil {
 
 		return BlogsEntryLocalServiceUtil.updateStatus(
 			entry.getUserId(), entry.getEntryId(),
-			WorkflowConstants.STATUS_APPROVED, workflowContext, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
 	}
 
 }

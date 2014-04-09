@@ -2130,15 +2130,31 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		return updateStatus(
-			userId, page, status, new HashMap<String, Serializable>(),
-			serviceContext);
+			userId, page, status, serviceContext,
+			new HashMap<String, Serializable>());
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, WikiPage,
+	 *             int, ServiceContext, Map)}
+	 */
+	@Deprecated
+	@Override
+	public WikiPage updateStatus(
+			long userId, WikiPage page, int status,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateStatus(
+			userId, page, status, serviceContext,
+			new HashMap<String, Serializable>());
 	}
 
 	@Override
 	public WikiPage updateStatus(
 			long userId, WikiPage page, int status,
-			Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 
 		// Page
@@ -2287,22 +2303,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		indexer.reindex(page);
 
 		return wikiPagePersistence.update(page);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, WikiPage,
-	 *             int, Map, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public WikiPage updateStatus(
-			long userId, WikiPage page, int status,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		return updateStatus(
-			userId, page, status, new HashMap<String, Serializable>(),
-			serviceContext);
 	}
 
 	@Override

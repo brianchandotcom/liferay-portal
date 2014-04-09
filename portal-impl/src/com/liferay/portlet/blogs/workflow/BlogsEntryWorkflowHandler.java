@@ -60,7 +60,7 @@ public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler {
 			"serviceContext");
 
 		return BlogsEntryLocalServiceUtil.updateStatus(
-			userId, classPK, status, workflowContext, serviceContext);
+			userId, classPK, status, serviceContext, workflowContext);
 	}
 
 	@Override

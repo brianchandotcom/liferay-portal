@@ -397,7 +397,7 @@ public class MBTestUtil {
 
 		message = MBMessageLocalServiceUtil.updateStatus(
 			message.getUserId(), message.getMessageId(),
-			WorkflowConstants.STATUS_APPROVED, workflowContext, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
 
 		return message;
 	}

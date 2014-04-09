@@ -365,7 +365,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 		DLFileEntryLocalServiceUtil.updateStatus(
 			fileVersion.getUserId(), fileVersion.getFileVersionId(), status,
-			workflowContext, serviceContext);
+			serviceContext, workflowContext);
 	}
 
 	protected void updateFileUploadReferences(DDMStructure ddmStructure)

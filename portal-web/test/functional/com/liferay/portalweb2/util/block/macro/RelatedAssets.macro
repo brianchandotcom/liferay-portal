@@ -1,0 +1,14 @@
+<definition>
+	<command name="viewPG">
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="PGRelatedassets#assertElementPresent" locator-key1="ASSET_TITLE_IMAGE" />
+		<execute action="PGRelatedassets#assertTextEquals" locator-key1="ASSET_TITLE" value1="${assetTitle}" />
+		<execute action="PGRelatedassets#assertElementPresent" locator-key1="ASSET_EDIT" />
+	</command>
+
+	<command name="viewPortletWithoutAssetsPG">
+		<execute action="PGRelatedassets#assertTextEquals" locator-key1="TITLE" value1="Related Assets" />
+		<execute action="PGRelatedassets#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no related assets available. This application will show all assets related to the main asset of the current page." />
+	</command>
+</definition>

@@ -234,6 +234,16 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${entryAddRelatedAsset}" arg2="true" />
+			<then>
+				<execute macro="BlogsEntry#addRelatedAssetPG">
+					<var name="assetTitle" value="${assetTitle}" />
+					<var name="assetType" value="${assetType}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<if>
@@ -292,6 +302,16 @@
 				</execute>
 			</then>
 		</if>
+
+		<if>
+			<equals arg1="${entryAddRelatedAsset}" arg2="true" />
+			<then>
+				<execute macro="BlogsEntry#viewRelatedAssetPG">
+					<var name="assetTitle" value="${assetTitle}" />
+					<var name="assetType" value="${assetType}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="addPGViaAP">
@@ -320,6 +340,27 @@
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${entryContent}" />
+	</command>
+
+	<command name="addRelatedAssetPG">
+		<if>
+			<condition action="PGBlogsAdd#isElementNotPresent" locator-key1="RELATED_ASSETS_SELECT_MENULIST" />
+			<then>
+				<execute action="PGBlogsAdd#click" locator-key1="RELATED_ASSETS_DROPDOWN_COLLAPSED" />
+				<execute action="PGBlogsAdd#assertElementPresent" locator-key1="RELATED_ASSETS_DROPDOWN" />
+			</then>
+		</if>
+
+		<var name="key_assetType" value="${assetType}" />
+
+		<execute action="PGBlogsAdd#assertClick" locator-key1="RELATED_ASSETS_SELECT_MENULIST" value1="Select" />
+		<execute action="PGBlogsAdd#assertClick" locator-key1="RELATED_ASSETS_MENULIST_SELECTION" value1="${assetType}" />
+
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="PGRelatedassetsSelectwebcontent#selectFrame" locator-key1="IFRAME" />
+		<execute action="PGRelatedassetsSelectwebcontent#assertClick" locator-key1="ASSET_TABLE_CHOOSE" value1="Choose" />
+		<execute action="PGRelatedassetsSelectwebcontent#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addScheduledPG">
@@ -844,6 +885,17 @@
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_CONTENT" value1="${entryContent}" />
 	</command>
 
+	<command name="viewAsRelatedAssetPG">
+		<var name="key_assetTitle" value="${assetTitle}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_RELATED_ASSETS_HEADER" value1="Related Assets:" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="ENTRY_RELATED_ASSETS_LINK_IMAGE" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_RELATED_ASSETS_TITLE" value1="${assetTitle}" />
+	</command>
+
 	<command name="viewCategoryPG">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
@@ -1062,6 +1114,7 @@
 	</command>
 
 	<command name="viewPG">
+		<var name="key_entryContent" value="${entryContent}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<if>
@@ -1157,6 +1210,16 @@
 		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="SPECIFIC_ENTRY_AVERAGE_STAR_EMPTY_5" />
 	</command>
 
+	<command name="viewRelatedAssetPG">
+		<var name="key_assetTitle" value="${assetTitle}" />
+		<var name="key_assetType" value="${assetType}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_RELATED_ASSETS_HEADER" value1="Related Assets:" />
+		<execute action="PGBlogs#assertElementPresent" locator-key1="ENTRY_RELATED_ASSETS_LINK_IMAGE" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_RELATED_ASSETS_TITLE" value1="${assetTitle}" />
+	</command>
+
 	<command name="viewRSS">
 		<execute action="Home#open" locator1="http://localhost:8080/web/guest/blogs-page/-/blogs/rss" />
 
@@ -1172,6 +1235,18 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SCHEDULED_ENTRY_STATUS" value1="Scheduled" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SCHEDULED_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SCHEDULED_ENTRY_CONTENT" value1="${entryContent}" />
+	</command>
+
+	<command name="viewSpecificPG">
+		<var name="key_entryContent" value="${entryContent}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_SPECIFIC" value1="${entryContent}" />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewTagPG">

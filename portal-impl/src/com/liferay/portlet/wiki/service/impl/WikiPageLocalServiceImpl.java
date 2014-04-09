@@ -2559,6 +2559,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		subscriptionSender.setClassName(page.getModelClassName());
 		subscriptionSender.setClassPK(page.getPageId());
 		subscriptionSender.setCompanyId(page.getCompanyId());
+		subscriptionSender.setContextAttribute(
+			"[$PAGE_CONTENT$]", pageContent, false);
+		subscriptionSender.setContextAttribute(
+			"[$PAGE_DIFFS$]", DiffHtmlUtil.replaceStyles(pageDiffs), false);
 
 		WikiNode node = page.getNode();
 
@@ -2570,10 +2574,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			"[$PAGE_SUMMARY$]", page.getSummary(), "[$PAGE_TITLE$]", pageTitle,
 			"[$PAGE_URL$]", pageURL);
 
-		subscriptionSender.setContextAttribute(
-			"[$PAGE_CONTENT$]", pageContent, false);
-		subscriptionSender.setContextAttribute(
-			"[$PAGE_DIFFS$]", DiffHtmlUtil.replaceStyles(pageDiffs), false);
 		subscriptionSender.setContextUserPrefix("PAGE");
 		subscriptionSender.setEntryTitle(pageTitle);
 		subscriptionSender.setEntryURL(pageURL);

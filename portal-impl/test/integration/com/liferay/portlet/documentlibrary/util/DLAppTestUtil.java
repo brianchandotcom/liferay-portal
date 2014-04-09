@@ -635,7 +635,7 @@ public abstract class DLAppTestUtil {
 			serviceContext);
 	}
 
-	private static void updateStatus(
+	protected static void updateStatus(
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws Exception {
 

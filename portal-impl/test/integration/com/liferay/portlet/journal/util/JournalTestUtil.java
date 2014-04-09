@@ -718,12 +718,13 @@ public class JournalTestUtil {
 		if (workflowEnabled) {
 			serviceContext = (ServiceContext)serviceContext.clone();
 
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
 			if (approved) {
 				serviceContext.setWorkflowAction(
 					WorkflowConstants.ACTION_PUBLISH);
+			}
+			else {
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
 			}
 		}
 

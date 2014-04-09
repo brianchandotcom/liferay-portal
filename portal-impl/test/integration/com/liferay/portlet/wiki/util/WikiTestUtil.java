@@ -247,7 +247,7 @@ public class WikiTestUtil {
 		}
 	}
 
-	private static WikiPage updateStatus(
+	protected static WikiPage updateStatus(
 			WikiPage page, ServiceContext serviceContext)
 		throws Exception {
 

@@ -64,7 +64,11 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 					);
 				</c:if>
 			</c:if>
+
+			window['<%= name %>'].instanceReady = true;
 		},
+
+		instanceReady: false,
 
 		setHTML: function(value) {
 			document.getElementById('<%= name %>').value = value || '';

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.dynamicdatalists.service.persistence.impl;
 
-import com.liferay.portlet.dynamicdatalists.service.persistence.*;
-
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -30,6 +28,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordImpl;
+import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordFinder;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Iterator;

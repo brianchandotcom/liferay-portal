@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.bookmarks.service.persistence.impl;
 
-import com.liferay.portlet.bookmarks.service.persistence.*;
-
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -32,6 +30,9 @@ import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksFolderImpl;
+import com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryUtil;
+import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder;
+import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;

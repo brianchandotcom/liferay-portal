@@ -14,15 +14,13 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.portal.service.persistence.*;
-
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.impl.UserGroupRoleImpl;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.UserGroupRoleFinder;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.List;

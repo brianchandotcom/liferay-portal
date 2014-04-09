@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.messageboards.service.persistence.impl;
 
-import com.liferay.portlet.messageboards.service.persistence.*;
-
 import com.liferay.portal.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -40,6 +38,7 @@ import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Collections;

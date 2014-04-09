@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence.impl;
 
-import com.liferay.portlet.journal.service.persistence.*;
-
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -37,6 +35,8 @@ import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
+import com.liferay.portlet.journal.service.persistence.JournalArticleFinder;
+import com.liferay.portlet.journal.service.persistence.JournalArticleUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Timestamp;

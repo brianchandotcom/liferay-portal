@@ -14,8 +14,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.portal.service.persistence.*;
-
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -26,7 +24,8 @@ import com.liferay.portal.model.LayoutReference;
 import com.liferay.portal.model.LayoutSoap;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.impl.LayoutImpl;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.LayoutFinder;
+import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;

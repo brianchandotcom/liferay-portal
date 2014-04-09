@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.messageboards.service.persistence.impl;
 
-import com.liferay.portlet.messageboards.service.persistence.*;
-
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -33,6 +31,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
+import com.liferay.portlet.messageboards.service.persistence.MBThreadFinder;
+import com.liferay.portlet.messageboards.service.persistence.MBThreadUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Date;

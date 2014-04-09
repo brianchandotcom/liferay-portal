@@ -6,6 +6,24 @@ sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
 configurations {
+	jdt
+}
+
+dependencies {
+	jdt files(["${liferayProjectDir}/lib/development/ecj.jar"])
+}
+
+compileJava {
+	options.compiler = "org.eclipse.jdt.core.JDTCompilerAdapter"
+	doFirst {
+		ClassLoader antClassLoader = org.apache.tools.ant.Project.class.classLoader
+		configurations.jdt.each {
+			File file -> antClassLoader.addURL(file.toURI().toURL())
+		}
+	}
+}
+
+configurations {
 	bnd
 }
 

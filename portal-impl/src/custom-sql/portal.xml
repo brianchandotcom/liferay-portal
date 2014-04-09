@@ -51,6 +51,7 @@
 						(ResourcePermission.companyId = [$COMPANY_ID$]) AND
 						(ResourcePermission.name = '[$CLASS_NAME$]') AND
 						(MOD(ResourcePermission.actionIds, 2) = 1) AND
+						(ResourcePermission.scope = [$RESOURCE_SCOPE_INDIVIDUAL$]) AND
 						[$ROLE_IDS_OR_OWNER_ID$]
 				)
 			InlineSQLResourcePermission ON

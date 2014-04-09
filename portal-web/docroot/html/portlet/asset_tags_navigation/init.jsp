@@ -16,7 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.util.comparator.AssetTagCountComparator" %>
+<%@ page import="com.liferay.portlet.asset.util.comparator.AssetRendererFactoryTypeComparator" %><%@
+page import="com.liferay.portlet.asset.util.comparator.AssetTagCountComparator" %>
 
 <%
 long classNameId = PrefsParamUtil.getLong(portletPreferences, request, "classNameId");

@@ -24,6 +24,7 @@ page import="com.liferay.portlet.asset.NoSuchTagException" %><%@
 page import="com.liferay.portlet.asset.NoSuchTagPropertyException" %><%@
 page import="com.liferay.portlet.asset.model.AssetTagProperty" %><%@
 page import="com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil" %><%@
+page import="com.liferay.portlet.asset.util.comparator.AssetRendererFactoryTypeComparator" %><%@
 page import="com.liferay.portlet.assetpublisher.search.AssetDisplayTerms" %><%@
 page import="com.liferay.portlet.assetpublisher.search.AssetSearch" %><%@
 page import="com.liferay.portlet.assetpublisher.util.AssetPublisherDisplayContext" %><%@

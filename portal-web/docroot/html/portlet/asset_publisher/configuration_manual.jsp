@@ -116,7 +116,9 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 							assetBrowserURL.setPortletMode(PortletMode.VIEW);
 							assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
-							for (AssetRendererFactory curRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId())) {
+							List <AssetRendererFactory> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeComparator(locale));
+
+							for (AssetRendererFactory curRendererFactory : assetRendererFactories) {
 								if (!curRendererFactory.isSelectable()) {
 									continue;
 								}

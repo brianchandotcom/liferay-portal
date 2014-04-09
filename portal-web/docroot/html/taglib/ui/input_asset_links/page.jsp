@@ -95,7 +95,9 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 <liferay-ui:icon-menu cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' id='<%= randomNamespace + "inputAssetLinks" %>' message="select" showWhenSingleIcon="<%= true %>">
 
 	<%
-	for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId())) {
+	List <AssetRendererFactory> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeComparator(locale));
+
+	for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
 		if (assetRendererFactory.isLinkable() && assetRendererFactory.isSelectable()) {
 			if (assetEntryId > 0) {
 				assetBrowserURL.setParameter("refererAssetEntryId", String.valueOf(assetEntryId));

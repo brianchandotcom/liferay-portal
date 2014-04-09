@@ -109,7 +109,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					</div>
 
 					<%
-					for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId())) {
+					List <AssetRendererFactory> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeComparator(locale));
+
+					for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
 						Map<Long, String> assetAvailableClassTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
 
 						if (assetAvailableClassTypes.isEmpty()) {

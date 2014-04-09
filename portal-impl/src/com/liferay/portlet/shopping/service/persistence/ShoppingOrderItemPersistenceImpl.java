@@ -769,6 +769,12 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 	public ShoppingOrderItem updateImpl(
 		com.liferay.portlet.shopping.model.ShoppingOrderItem shoppingOrderItem)
 		throws SystemException {
+		if (shoppingOrderItem.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				shoppingOrderItem.getPrimaryKey());
+		}
+
 		shoppingOrderItem = toUnwrappedModel(shoppingOrderItem);
 
 		boolean isNew = shoppingOrderItem.isNew();

@@ -2201,6 +2201,12 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	public MDRAction updateImpl(
 		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction)
 		throws SystemException {
+		if (mdrAction.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				mdrAction.getPrimaryKey());
+		}
+
 		mdrAction = toUnwrappedModel(mdrAction);
 
 		boolean isNew = mdrAction.isNew();

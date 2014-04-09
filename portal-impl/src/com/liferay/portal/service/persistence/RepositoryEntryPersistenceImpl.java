@@ -2524,6 +2524,12 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	public RepositoryEntry updateImpl(
 		com.liferay.portal.model.RepositoryEntry repositoryEntry)
 		throws SystemException {
+		if (repositoryEntry.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				repositoryEntry.getPrimaryKey());
+		}
+
 		repositoryEntry = toUnwrappedModel(repositoryEntry);
 
 		boolean isNew = repositoryEntry.isNew();

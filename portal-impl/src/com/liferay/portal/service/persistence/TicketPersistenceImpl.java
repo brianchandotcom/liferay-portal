@@ -565,6 +565,12 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	@Override
 	public Ticket updateImpl(com.liferay.portal.model.Ticket ticket)
 		throws SystemException {
+		if (ticket.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				ticket.getPrimaryKey());
+		}
+
 		ticket = toUnwrappedModel(ticket);
 
 		boolean isNew = ticket.isNew();

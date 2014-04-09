@@ -7667,6 +7667,12 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	@Override
 	public Group updateImpl(com.liferay.portal.model.Group group)
 		throws SystemException {
+		if (group.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				group.getPrimaryKey());
+		}
+
 		group = toUnwrappedModel(group);
 
 		boolean isNew = group.isNew();

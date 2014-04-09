@@ -3409,6 +3409,12 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	@Override
 	public MBBan updateImpl(com.liferay.portlet.messageboards.model.MBBan mbBan)
 		throws SystemException {
+		if (mbBan.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				mbBan.getPrimaryKey());
+		}
+
 		mbBan = toUnwrappedModel(mbBan);
 
 		boolean isNew = mbBan.isNew();

@@ -1812,6 +1812,12 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	public WorkflowDefinitionLink updateImpl(
 		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink)
 		throws SystemException {
+		if (workflowDefinitionLink.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				workflowDefinitionLink.getPrimaryKey());
+		}
+
 		workflowDefinitionLink = toUnwrappedModel(workflowDefinitionLink);
 
 		boolean isNew = workflowDefinitionLink.isNew();

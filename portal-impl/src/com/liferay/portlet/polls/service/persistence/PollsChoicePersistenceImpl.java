@@ -2503,6 +2503,12 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	public PollsChoice updateImpl(
 		com.liferay.portlet.polls.model.PollsChoice pollsChoice)
 		throws SystemException {
+		if (pollsChoice.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				pollsChoice.getPrimaryKey());
+		}
+
 		pollsChoice = toUnwrappedModel(pollsChoice);
 
 		boolean isNew = pollsChoice.isNew();

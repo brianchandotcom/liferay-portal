@@ -18228,6 +18228,12 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public BlogsEntry updateImpl(
 		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry)
 		throws SystemException {
+		if (blogsEntry.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				blogsEntry.getPrimaryKey());
+		}
+
 		blogsEntry = toUnwrappedModel(blogsEntry);
 
 		boolean isNew = blogsEntry.isNew();

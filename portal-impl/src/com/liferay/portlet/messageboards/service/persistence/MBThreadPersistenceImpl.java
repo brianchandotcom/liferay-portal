@@ -12998,6 +12998,12 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public MBThread updateImpl(
 		com.liferay.portlet.messageboards.model.MBThread mbThread)
 		throws SystemException {
+		if (mbThread.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				mbThread.getPrimaryKey());
+		}
+
 		mbThread = toUnwrappedModel(mbThread);
 
 		boolean isNew = mbThread.isNew();

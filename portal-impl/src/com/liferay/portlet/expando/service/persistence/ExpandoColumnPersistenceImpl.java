@@ -1936,6 +1936,12 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	public ExpandoColumn updateImpl(
 		com.liferay.portlet.expando.model.ExpandoColumn expandoColumn)
 		throws SystemException {
+		if (expandoColumn.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				expandoColumn.getPrimaryKey());
+		}
+
 		expandoColumn = toUnwrappedModel(expandoColumn);
 
 		boolean isNew = expandoColumn.isNew();

@@ -779,6 +779,12 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	public UserTrackerPath updateImpl(
 		com.liferay.portal.model.UserTrackerPath userTrackerPath)
 		throws SystemException {
+		if (userTrackerPath.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				userTrackerPath.getPrimaryKey());
+		}
+
 		userTrackerPath = toUnwrappedModel(userTrackerPath);
 
 		boolean isNew = userTrackerPath.isNew();

@@ -2157,6 +2157,12 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	public AssetTagProperty updateImpl(
 		com.liferay.portlet.asset.model.AssetTagProperty assetTagProperty)
 		throws SystemException {
+		if (assetTagProperty.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				assetTagProperty.getPrimaryKey());
+		}
+
 		assetTagProperty = toUnwrappedModel(assetTagProperty);
 
 		boolean isNew = assetTagProperty.isNew();

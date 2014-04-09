@@ -2462,6 +2462,12 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	public SystemEvent updateImpl(
 		com.liferay.portal.model.SystemEvent systemEvent)
 		throws SystemException {
+		if (systemEvent.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				systemEvent.getPrimaryKey());
+		}
+
 		systemEvent = toUnwrappedModel(systemEvent);
 
 		boolean isNew = systemEvent.isNew();

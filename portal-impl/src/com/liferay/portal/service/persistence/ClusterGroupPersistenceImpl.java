@@ -269,6 +269,12 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	public ClusterGroup updateImpl(
 		com.liferay.portal.model.ClusterGroup clusterGroup)
 		throws SystemException {
+		if (clusterGroup.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				clusterGroup.getPrimaryKey());
+		}
+
 		clusterGroup = toUnwrappedModel(clusterGroup);
 
 		boolean isNew = clusterGroup.isNew();

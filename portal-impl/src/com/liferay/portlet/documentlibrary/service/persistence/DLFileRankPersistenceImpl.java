@@ -2669,6 +2669,12 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	public DLFileRank updateImpl(
 		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank)
 		throws SystemException {
+		if (dlFileRank.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				dlFileRank.getPrimaryKey());
+		}
+
 		dlFileRank = toUnwrappedModel(dlFileRank);
 
 		boolean isNew = dlFileRank.isNew();

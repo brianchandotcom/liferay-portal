@@ -2917,6 +2917,12 @@ public class ExportImportConfigurationPersistenceImpl
 	public ExportImportConfiguration updateImpl(
 		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration)
 		throws SystemException {
+		if (exportImportConfiguration.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				exportImportConfiguration.getPrimaryKey());
+		}
+
 		exportImportConfiguration = toUnwrappedModel(exportImportConfiguration);
 
 		boolean isNew = exportImportConfiguration.isNew();

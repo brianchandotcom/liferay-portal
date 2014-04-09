@@ -1601,6 +1601,12 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	public SCProductScreenshot updateImpl(
 		com.liferay.portlet.softwarecatalog.model.SCProductScreenshot scProductScreenshot)
 		throws SystemException {
+		if (scProductScreenshot.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				scProductScreenshot.getPrimaryKey());
+		}
+
 		scProductScreenshot = toUnwrappedModel(scProductScreenshot);
 
 		boolean isNew = scProductScreenshot.isNew();

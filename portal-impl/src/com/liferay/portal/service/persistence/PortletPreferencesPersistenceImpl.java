@@ -4653,6 +4653,12 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences updateImpl(
 		com.liferay.portal.model.PortletPreferences portletPreferences)
 		throws SystemException {
+		if (portletPreferences.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				portletPreferences.getPrimaryKey());
+		}
+
 		portletPreferences = toUnwrappedModel(portletPreferences);
 
 		boolean isNew = portletPreferences.isNew();

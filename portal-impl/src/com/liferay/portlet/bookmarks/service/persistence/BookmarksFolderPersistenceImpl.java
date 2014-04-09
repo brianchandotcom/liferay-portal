@@ -7135,6 +7135,12 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	public BookmarksFolder updateImpl(
 		com.liferay.portlet.bookmarks.model.BookmarksFolder bookmarksFolder)
 		throws SystemException {
+		if (bookmarksFolder.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				bookmarksFolder.getPrimaryKey());
+		}
+
 		bookmarksFolder = toUnwrappedModel(bookmarksFolder);
 
 		boolean isNew = bookmarksFolder.isNew();

@@ -28818,6 +28818,12 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	public JournalArticle updateImpl(
 		com.liferay.portlet.journal.model.JournalArticle journalArticle)
 		throws SystemException {
+		if (journalArticle.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				journalArticle.getPrimaryKey());
+		}
+
 		journalArticle = toUnwrappedModel(journalArticle);
 
 		boolean isNew = journalArticle.isNew();

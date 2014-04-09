@@ -10604,6 +10604,12 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	public DLFileEntry updateImpl(
 		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
 		throws SystemException {
+		if (dlFileEntry.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				dlFileEntry.getPrimaryKey());
+		}
+
 		dlFileEntry = toUnwrappedModel(dlFileEntry);
 
 		boolean isNew = dlFileEntry.isNew();

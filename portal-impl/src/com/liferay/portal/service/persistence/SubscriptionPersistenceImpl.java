@@ -2532,6 +2532,12 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	public Subscription updateImpl(
 		com.liferay.portal.model.Subscription subscription)
 		throws SystemException {
+		if (subscription.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				subscription.getPrimaryKey());
+		}
+
 		subscription = toUnwrappedModel(subscription);
 
 		boolean isNew = subscription.isNew();

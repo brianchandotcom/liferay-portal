@@ -1435,6 +1435,12 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	@Override
 	public Team updateImpl(com.liferay.portal.model.Team team)
 		throws SystemException {
+		if (team.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				team.getPrimaryKey());
+		}
+
 		team = toUnwrappedModel(team);
 
 		boolean isNew = team.isNew();

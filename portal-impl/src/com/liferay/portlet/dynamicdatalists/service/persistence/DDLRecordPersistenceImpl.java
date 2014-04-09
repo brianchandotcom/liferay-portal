@@ -3209,6 +3209,12 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	public DDLRecord updateImpl(
 		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord)
 		throws SystemException {
+		if (ddlRecord.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				ddlRecord.getPrimaryKey());
+		}
+
 		ddlRecord = toUnwrappedModel(ddlRecord);
 
 		boolean isNew = ddlRecord.isNew();

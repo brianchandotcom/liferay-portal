@@ -5790,6 +5790,12 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public SocialRelation updateImpl(
 		com.liferay.portlet.social.model.SocialRelation socialRelation)
 		throws SystemException {
+		if (socialRelation.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				socialRelation.getPrimaryKey());
+		}
+
 		socialRelation = toUnwrappedModel(socialRelation);
 
 		boolean isNew = socialRelation.isNew();

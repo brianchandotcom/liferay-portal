@@ -739,6 +739,12 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	@Override
 	public Image updateImpl(com.liferay.portal.model.Image image)
 		throws SystemException {
+		if (image.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				image.getPrimaryKey());
+		}
+
 		image = toUnwrappedModel(image);
 
 		boolean isNew = image.isNew();

@@ -1526,6 +1526,12 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	public DDMStructureLink updateImpl(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink)
 		throws SystemException {
+		if (ddmStructureLink.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				ddmStructureLink.getPrimaryKey());
+		}
+
 		ddmStructureLink = toUnwrappedModel(ddmStructureLink);
 
 		boolean isNew = ddmStructureLink.isNew();

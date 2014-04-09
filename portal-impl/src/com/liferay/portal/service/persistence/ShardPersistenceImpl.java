@@ -837,6 +837,12 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	@Override
 	public Shard updateImpl(com.liferay.portal.model.Shard shard)
 		throws SystemException {
+		if (shard.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				shard.getPrimaryKey());
+		}
+
 		shard = toUnwrappedModel(shard);
 
 		boolean isNew = shard.isNew();

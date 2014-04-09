@@ -2962,6 +2962,12 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	public UserNotificationEvent updateImpl(
 		com.liferay.portal.model.UserNotificationEvent userNotificationEvent)
 		throws SystemException {
+		if (userNotificationEvent.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				userNotificationEvent.getPrimaryKey());
+		}
+
 		userNotificationEvent = toUnwrappedModel(userNotificationEvent);
 
 		boolean isNew = userNotificationEvent.isNew();

@@ -4658,6 +4658,12 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public Address updateImpl(com.liferay.portal.model.Address address)
 		throws SystemException {
+		if (address.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				address.getPrimaryKey());
+		}
+
 		address = toUnwrappedModel(address);
 
 		boolean isNew = address.isNew();

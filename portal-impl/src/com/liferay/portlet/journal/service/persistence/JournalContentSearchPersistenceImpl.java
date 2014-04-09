@@ -4785,6 +4785,12 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	public JournalContentSearch updateImpl(
 		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch)
 		throws SystemException {
+		if (journalContentSearch.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				journalContentSearch.getPrimaryKey());
+		}
+
 		journalContentSearch = toUnwrappedModel(journalContentSearch);
 
 		boolean isNew = journalContentSearch.isNew();

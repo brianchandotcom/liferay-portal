@@ -6917,6 +6917,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User updateImpl(com.liferay.portal.model.User user)
 		throws SystemException {
+		if (user.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				user.getPrimaryKey());
+		}
+
 		user = toUnwrappedModel(user);
 
 		boolean isNew = user.isNew();

@@ -4768,6 +4768,12 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	@Override
 	public WikiNode updateImpl(com.liferay.portlet.wiki.model.WikiNode wikiNode)
 		throws SystemException {
+		if (wikiNode.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				wikiNode.getPrimaryKey());
+		}
+
 		wikiNode = toUnwrappedModel(wikiNode);
 
 		boolean isNew = wikiNode.isNew();

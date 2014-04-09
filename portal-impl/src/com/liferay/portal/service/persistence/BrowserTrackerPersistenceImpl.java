@@ -532,6 +532,12 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	public BrowserTracker updateImpl(
 		com.liferay.portal.model.BrowserTracker browserTracker)
 		throws SystemException {
+		if (browserTracker.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				browserTracker.getPrimaryKey());
+		}
+
 		browserTracker = toUnwrappedModel(browserTracker);
 
 		boolean isNew = browserTracker.isNew();

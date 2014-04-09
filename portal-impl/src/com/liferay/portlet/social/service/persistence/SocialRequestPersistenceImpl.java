@@ -6438,6 +6438,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public SocialRequest updateImpl(
 		com.liferay.portlet.social.model.SocialRequest socialRequest)
 		throws SystemException {
+		if (socialRequest.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				socialRequest.getPrimaryKey());
+		}
+
 		socialRequest = toUnwrappedModel(socialRequest);
 
 		boolean isNew = socialRequest.isNew();

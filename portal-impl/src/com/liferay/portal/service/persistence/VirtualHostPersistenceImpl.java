@@ -838,6 +838,12 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	public VirtualHost updateImpl(
 		com.liferay.portal.model.VirtualHost virtualHost)
 		throws SystemException {
+		if (virtualHost.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				virtualHost.getPrimaryKey());
+		}
+
 		virtualHost = toUnwrappedModel(virtualHost);
 
 		boolean isNew = virtualHost.isNew();

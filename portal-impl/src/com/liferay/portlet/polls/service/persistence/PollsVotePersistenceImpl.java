@@ -2949,6 +2949,12 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	public PollsVote updateImpl(
 		com.liferay.portlet.polls.model.PollsVote pollsVote)
 		throws SystemException {
+		if (pollsVote.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				pollsVote.getPrimaryKey());
+		}
+
 		pollsVote = toUnwrappedModel(pollsVote);
 
 		boolean isNew = pollsVote.isNew();

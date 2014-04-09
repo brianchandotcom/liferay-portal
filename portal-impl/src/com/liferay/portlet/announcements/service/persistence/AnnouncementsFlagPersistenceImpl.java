@@ -1094,6 +1094,12 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	public AnnouncementsFlag updateImpl(
 		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag)
 		throws SystemException {
+		if (announcementsFlag.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				announcementsFlag.getPrimaryKey());
+		}
+
 		announcementsFlag = toUnwrappedModel(announcementsFlag);
 
 		boolean isNew = announcementsFlag.isNew();

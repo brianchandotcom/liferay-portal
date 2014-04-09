@@ -7508,6 +7508,12 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	public JournalFolder updateImpl(
 		com.liferay.portlet.journal.model.JournalFolder journalFolder)
 		throws SystemException {
+		if (journalFolder.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				journalFolder.getPrimaryKey());
+		}
+
 		journalFolder = toUnwrappedModel(journalFolder);
 
 		boolean isNew = journalFolder.isNew();

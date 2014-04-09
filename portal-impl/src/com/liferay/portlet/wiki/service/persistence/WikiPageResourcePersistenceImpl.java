@@ -1139,6 +1139,12 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	public WikiPageResource updateImpl(
 		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource)
 		throws SystemException {
+		if (wikiPageResource.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				wikiPageResource.getPrimaryKey());
+		}
+
 		wikiPageResource = toUnwrappedModel(wikiPageResource);
 
 		boolean isNew = wikiPageResource.isNew();

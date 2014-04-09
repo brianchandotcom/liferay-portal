@@ -2681,6 +2681,12 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	public DDMContent updateImpl(
 		com.liferay.portlet.dynamicdatamapping.model.DDMContent ddmContent)
 		throws SystemException {
+		if (ddmContent.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				ddmContent.getPrimaryKey());
+		}
+
 		ddmContent = toUnwrappedModel(ddmContent);
 
 		boolean isNew = ddmContent.isNew();

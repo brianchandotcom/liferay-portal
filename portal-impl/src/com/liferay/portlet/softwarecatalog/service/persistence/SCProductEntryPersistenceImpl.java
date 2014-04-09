@@ -2920,6 +2920,12 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	public SCProductEntry updateImpl(
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry)
 		throws SystemException {
+		if (scProductEntry.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				scProductEntry.getPrimaryKey());
+		}
+
 		scProductEntry = toUnwrappedModel(scProductEntry);
 
 		boolean isNew = scProductEntry.isNew();

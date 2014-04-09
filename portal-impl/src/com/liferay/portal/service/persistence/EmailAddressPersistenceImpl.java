@@ -4070,6 +4070,12 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	public EmailAddress updateImpl(
 		com.liferay.portal.model.EmailAddress emailAddress)
 		throws SystemException {
+		if (emailAddress.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				emailAddress.getPrimaryKey());
+		}
+
 		emailAddress = toUnwrappedModel(emailAddress);
 
 		boolean isNew = emailAddress.isNew();

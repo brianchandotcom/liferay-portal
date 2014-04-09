@@ -4012,6 +4012,12 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	public LayoutSetPrototype updateImpl(
 		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype)
 		throws SystemException {
+		if (layoutSetPrototype.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				layoutSetPrototype.getPrimaryKey());
+		}
+
 		layoutSetPrototype = toUnwrappedModel(layoutSetPrototype);
 
 		boolean isNew = layoutSetPrototype.isNew();

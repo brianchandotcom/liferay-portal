@@ -2622,6 +2622,12 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	public TrashEntry updateImpl(
 		com.liferay.portlet.trash.model.TrashEntry trashEntry)
 		throws SystemException {
+		if (trashEntry.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				trashEntry.getPrimaryKey());
+		}
+
 		trashEntry = toUnwrappedModel(trashEntry);
 
 		boolean isNew = trashEntry.isNew();

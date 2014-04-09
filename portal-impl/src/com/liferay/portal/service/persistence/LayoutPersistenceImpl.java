@@ -8383,6 +8383,12 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public Layout updateImpl(com.liferay.portal.model.Layout layout)
 		throws SystemException {
+		if (layout.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				layout.getPrimaryKey());
+		}
+
 		layout = toUnwrappedModel(layout);
 
 		boolean isNew = layout.isNew();

@@ -9820,6 +9820,12 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	public MBCategory updateImpl(
 		com.liferay.portlet.messageboards.model.MBCategory mbCategory)
 		throws SystemException {
+		if (mbCategory.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				mbCategory.getPrimaryKey());
+		}
+
 		mbCategory = toUnwrappedModel(mbCategory);
 
 		boolean isNew = mbCategory.isNew();

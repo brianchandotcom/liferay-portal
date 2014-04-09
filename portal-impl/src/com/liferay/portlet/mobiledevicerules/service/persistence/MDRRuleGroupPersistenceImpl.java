@@ -2557,6 +2557,12 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	public MDRRuleGroup updateImpl(
 		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup)
 		throws SystemException {
+		if (mdrRuleGroup.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				mdrRuleGroup.getPrimaryKey());
+		}
+
 		mdrRuleGroup = toUnwrappedModel(mdrRuleGroup);
 
 		boolean isNew = mdrRuleGroup.isNew();

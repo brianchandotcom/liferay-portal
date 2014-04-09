@@ -5117,6 +5117,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	public LayoutFriendlyURL updateImpl(
 		com.liferay.portal.model.LayoutFriendlyURL layoutFriendlyURL)
 		throws SystemException {
+		if (layoutFriendlyURL.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				layoutFriendlyURL.getPrimaryKey());
+		}
+
 		layoutFriendlyURL = toUnwrappedModel(layoutFriendlyURL);
 
 		boolean isNew = layoutFriendlyURL.isNew();

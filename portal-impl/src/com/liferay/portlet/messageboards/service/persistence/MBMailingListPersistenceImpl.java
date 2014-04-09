@@ -2476,6 +2476,12 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	public MBMailingList updateImpl(
 		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList)
 		throws SystemException {
+		if (mbMailingList.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				mbMailingList.getPrimaryKey());
+		}
+
 		mbMailingList = toUnwrappedModel(mbMailingList);
 
 		boolean isNew = mbMailingList.isNew();

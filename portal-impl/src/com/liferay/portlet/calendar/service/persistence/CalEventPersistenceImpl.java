@@ -7639,6 +7639,12 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent updateImpl(
 		com.liferay.portlet.calendar.model.CalEvent calEvent)
 		throws SystemException {
+		if (calEvent.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				calEvent.getPrimaryKey());
+		}
+
 		calEvent = toUnwrappedModel(calEvent);
 
 		boolean isNew = calEvent.isNew();

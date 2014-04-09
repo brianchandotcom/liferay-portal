@@ -6318,6 +6318,12 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	public SocialActivity updateImpl(
 		com.liferay.portlet.social.model.SocialActivity socialActivity)
 		throws SystemException {
+		if (socialActivity.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				socialActivity.getPrimaryKey());
+		}
+
 		socialActivity = toUnwrappedModel(socialActivity);
 
 		boolean isNew = socialActivity.isNew();

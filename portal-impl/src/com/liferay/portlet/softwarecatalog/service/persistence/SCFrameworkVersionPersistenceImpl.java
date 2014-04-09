@@ -2557,6 +2557,12 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	public SCFrameworkVersion updateImpl(
 		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion)
 		throws SystemException {
+		if (scFrameworkVersion.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				scFrameworkVersion.getPrimaryKey());
+		}
+
 		scFrameworkVersion = toUnwrappedModel(scFrameworkVersion);
 
 		boolean isNew = scFrameworkVersion.isNew();

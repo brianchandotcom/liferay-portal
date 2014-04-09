@@ -4984,6 +4984,12 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	public AnnouncementsEntry updateImpl(
 		com.liferay.portlet.announcements.model.AnnouncementsEntry announcementsEntry)
 		throws SystemException {
+		if (announcementsEntry.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				announcementsEntry.getPrimaryKey());
+		}
+
 		announcementsEntry = toUnwrappedModel(announcementsEntry);
 
 		boolean isNew = announcementsEntry.isNew();

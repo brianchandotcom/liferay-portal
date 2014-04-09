@@ -2714,6 +2714,12 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	public MBDiscussion updateImpl(
 		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion)
 		throws SystemException {
+		if (mbDiscussion.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				mbDiscussion.getPrimaryKey());
+		}
+
 		mbDiscussion = toUnwrappedModel(mbDiscussion);
 
 		boolean isNew = mbDiscussion.isNew();

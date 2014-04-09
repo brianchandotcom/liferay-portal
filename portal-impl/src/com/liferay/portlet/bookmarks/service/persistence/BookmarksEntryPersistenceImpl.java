@@ -12310,6 +12310,12 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	public BookmarksEntry updateImpl(
 		com.liferay.portlet.bookmarks.model.BookmarksEntry bookmarksEntry)
 		throws SystemException {
+		if (bookmarksEntry.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				bookmarksEntry.getPrimaryKey());
+		}
+
 		bookmarksEntry = toUnwrappedModel(bookmarksEntry);
 
 		boolean isNew = bookmarksEntry.isNew();

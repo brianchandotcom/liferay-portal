@@ -562,6 +562,12 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	public RatingsStats updateImpl(
 		com.liferay.portlet.ratings.model.RatingsStats ratingsStats)
 		throws SystemException {
+		if (ratingsStats.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				ratingsStats.getPrimaryKey());
+		}
+
 		ratingsStats = toUnwrappedModel(ratingsStats);
 
 		boolean isNew = ratingsStats.isNew();

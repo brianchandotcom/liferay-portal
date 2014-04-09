@@ -1202,6 +1202,12 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	public UserNotificationDelivery updateImpl(
 		com.liferay.portal.model.UserNotificationDelivery userNotificationDelivery)
 		throws SystemException {
+		if (userNotificationDelivery.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				userNotificationDelivery.getPrimaryKey());
+		}
+
 		userNotificationDelivery = toUnwrappedModel(userNotificationDelivery);
 
 		boolean isNew = userNotificationDelivery.isNew();

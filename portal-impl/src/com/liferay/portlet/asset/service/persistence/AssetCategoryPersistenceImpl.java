@@ -10714,6 +10714,12 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	public AssetCategory updateImpl(
 		com.liferay.portlet.asset.model.AssetCategory assetCategory)
 		throws SystemException {
+		if (assetCategory.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				assetCategory.getPrimaryKey());
+		}
+
 		assetCategory = toUnwrappedModel(assetCategory);
 
 		boolean isNew = assetCategory.isNew();

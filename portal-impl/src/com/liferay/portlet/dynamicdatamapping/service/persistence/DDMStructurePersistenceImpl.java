@@ -8871,6 +8871,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public DDMStructure updateImpl(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
 		throws SystemException {
+		if (ddmStructure.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				ddmStructure.getPrimaryKey());
+		}
+
 		ddmStructure = toUnwrappedModel(ddmStructure);
 
 		boolean isNew = ddmStructure.isNew();

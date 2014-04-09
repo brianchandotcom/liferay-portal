@@ -1568,6 +1568,12 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	public DDMStorageLink updateImpl(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink)
 		throws SystemException {
+		if (ddmStorageLink.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				ddmStorageLink.getPrimaryKey());
+		}
+
 		ddmStorageLink = toUnwrappedModel(ddmStorageLink);
 
 		boolean isNew = ddmStorageLink.isNew();

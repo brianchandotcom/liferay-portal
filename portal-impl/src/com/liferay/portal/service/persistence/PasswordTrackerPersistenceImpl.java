@@ -770,6 +770,12 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	public PasswordTracker updateImpl(
 		com.liferay.portal.model.PasswordTracker passwordTracker)
 		throws SystemException {
+		if (passwordTracker.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				passwordTracker.getPrimaryKey());
+		}
+
 		passwordTracker = toUnwrappedModel(passwordTracker);
 
 		boolean isNew = passwordTracker.isNew();

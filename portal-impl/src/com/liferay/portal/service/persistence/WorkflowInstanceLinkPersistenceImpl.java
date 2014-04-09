@@ -891,6 +891,12 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	public WorkflowInstanceLink updateImpl(
 		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink)
 		throws SystemException {
+		if (workflowInstanceLink.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				workflowInstanceLink.getPrimaryKey());
+		}
+
 		workflowInstanceLink = toUnwrappedModel(workflowInstanceLink);
 
 		boolean isNew = workflowInstanceLink.isNew();

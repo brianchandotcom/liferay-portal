@@ -1587,6 +1587,12 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	@Override
 	public Country updateImpl(com.liferay.portal.model.Country country)
 		throws SystemException {
+		if (country.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				country.getPrimaryKey());
+		}
+
 		country = toUnwrappedModel(country);
 
 		boolean isNew = country.isNew();

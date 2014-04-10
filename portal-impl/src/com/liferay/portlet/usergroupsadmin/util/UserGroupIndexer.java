@@ -55,7 +55,7 @@ public class UserGroupIndexer extends BaseIndexer {
 
 	public UserGroupIndexer() {
 		setDefaultSelectedFieldNames(
-			new String[] {Field.COMPANY_ID, Field.UID, Field.USER_GROUP_ID});
+			Field.COMPANY_ID, Field.UID, Field.USER_GROUP_ID);
 		setIndexerEnabled(PropsValues.USER_GROUPS_INDEXER_ENABLED);
 		setPermissionAware(true);
 		setStagingAware(false);

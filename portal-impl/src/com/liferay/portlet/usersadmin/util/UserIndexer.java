@@ -68,7 +68,7 @@ public class UserIndexer extends BaseIndexer {
 
 	public UserIndexer() {
 		setDefaultSelectedFieldNames(
-			new String[] {Field.COMPANY_ID, Field.UID, Field.USER_ID});
+			Field.COMPANY_ID, Field.UID, Field.USER_ID);
 		setIndexerEnabled(PropsValues.USERS_INDEXER_ENABLED);
 		setPermissionAware(true);
 		setStagingAware(false);

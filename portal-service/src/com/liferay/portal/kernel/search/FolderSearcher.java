@@ -33,7 +33,7 @@ public class FolderSearcher extends BaseSearcher {
 	}
 
 	public FolderSearcher() {
-		setDefaultSelectedFieldNames(new String[] {Field.TITLE});
+		setDefaultSelectedFieldNames(Field.TITLE);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}

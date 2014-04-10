@@ -36,10 +36,9 @@ public class DLSearcher extends BaseSearcher {
 
 	public DLSearcher() {
 		setDefaultSelectedFieldNames(
-			new String[] {
-				Field.CLASS_NAME_ID, Field.CLASS_PK, Field.COMPANY_ID,
-				Field.CONTENT, Field.DESCRIPTION, Field.ENTRY_CLASS_NAME,
-				Field.ENTRY_CLASS_PK, Field.TITLE, Field.VERSION, Field.UID});
+			Field.CLASS_NAME_ID, Field.CLASS_PK, Field.COMPANY_ID,
+			Field.CONTENT, Field.DESCRIPTION, Field.ENTRY_CLASS_NAME,
+			Field.ENTRY_CLASS_PK, Field.TITLE, Field.VERSION, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}

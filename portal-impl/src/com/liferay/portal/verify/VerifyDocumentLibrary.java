@@ -114,8 +114,15 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 	protected void checkDLFileEntryType() throws Exception {
 		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+			DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(0);
+
+		if (dlFileEntryType != null) {
+			DLFileEntryTypeLocalServiceUtil.deleteFileEntryType(
+				dlFileEntryType);
+		}
+
+		dlFileEntryType = DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
 		if (dlFileEntryType != null) {
 			return;

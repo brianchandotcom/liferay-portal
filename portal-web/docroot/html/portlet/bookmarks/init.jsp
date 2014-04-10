@@ -29,6 +29,7 @@ page import="com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUt
 page import="com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil" %><%@
 page import="com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission" %><%@
 page import="com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission" %><%@
+page import="com.liferay.portlet.bookmarks.util.BookmarksConstants" %><%@
 page import="com.liferay.portlet.bookmarks.util.BookmarksSearcher" %><%@
 page import="com.liferay.portlet.bookmarks.util.BookmarksUtil" %>
 
@@ -39,11 +40,7 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-if (layout.isTypeControlPanel()) {
-	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.BOOKMARKS, null);
-}
-
-long rootFolderId = PrefsParamUtil.getLong(portletPreferences, request, "rootFolderId", BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+long rootFolderId = bookmarksSettings.getRootFolderId();
 String rootFolderName = StringPool.BLANK;
 
 if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -62,11 +59,9 @@ if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 }
 
-boolean showFoldersSearch = PrefsParamUtil.getBoolean(portletPreferences, request, "showFoldersSearch", true);
-boolean showSubfolders = PrefsParamUtil.getBoolean(portletPreferences, request, "showSubfolders", true);
-int foldersPerPage = PrefsParamUtil.getInteger(portletPreferences, request, "foldersPerPage", SearchContainer.DEFAULT_DELTA);
-
-String defaultFolderColumns = "folder,num-of-folders,num-of-entries";
+boolean showFoldersSearch = bookmarksSettings.getShowFoldersSearch();
+boolean showSubfolders = bookmarksSettings.getShowSubfolders();
+int foldersPerPage = bookmarksSettings.getFoldersPerPage();
 
 String portletId = portletDisplay.getId();
 
@@ -74,30 +69,28 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletId = portletResource;
 }
 
+String allFolderColumns = "folder,num-of-folders,num-of-entries";
+
 if (portletId.equals(PortletKeys.BOOKMARKS)) {
-	defaultFolderColumns += ",action";
+	allFolderColumns += ",action";
 }
 
-String allFolderColumns = defaultFolderColumns;
-
-String[] folderColumns = StringUtil.split(PrefsParamUtil.getString(portletPreferences, request, "folderColumns", defaultFolderColumns));
+String[] folderColumns = bookmarksSettings.getFolderColumns();
 
 if (!portletId.equals(PortletKeys.BOOKMARKS)) {
 	folderColumns = ArrayUtil.remove(folderColumns, "action");
 }
 
-boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);
-int entriesPerPage = PrefsParamUtil.getInteger(portletPreferences, request, "entriesPerPage", SearchContainer.DEFAULT_DELTA);
+boolean enableRelatedAssets = bookmarksSettings.getEnableRelatedAssets();
+int entriesPerPage = bookmarksSettings.getEntriesPerPage();
 
-String defaultEntryColumns = "name,url,visits,modified-date";
+String allEntryColumns = "name,url,visits,modified-date";
 
 if (portletId.equals(PortletKeys.BOOKMARKS)) {
-	defaultEntryColumns += ",action";
+	allEntryColumns += ",action";
 }
 
-String allEntryColumns = defaultEntryColumns;
-
-String[] entryColumns = StringUtil.split(PrefsParamUtil.getString(portletPreferences, request, "entryColumns", defaultEntryColumns));
+String[] entryColumns = bookmarksSettings.getEntryColumns();
 
 if (!portletId.equals(PortletKeys.BOOKMARKS)) {
 	entryColumns = ArrayUtil.remove(entryColumns, "action");

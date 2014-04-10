@@ -482,6 +482,30 @@
 		<execute action="Home#assertElementNotPresent" locator-key1="CUSTOM_LOGO" />
 	</command>
 
+	<command name="viewFriendlyURLLanguageOptionsPG">
+		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" />
+
+		<if>
+			<condition action="DockbarEdit#isElementPresent" locator-key1="DETAILS_FRIENDLY_URL_TITLE" />
+			<then>
+				<execute action="DockbarEdit#click" locator-key1="TOOLBAR_DETAILS" />
+			</then>
+		</if>
+
+		<for list="${currentLanguageList}" param="languageKey">
+			<execute action="DockbarEdit#assertElementPresent" locator-key1="${languageKey}" />
+		</for>
+
+		<if>
+			<equals arg1="${negativeAssertion}" arg2="true" />
+			<then>
+				<for list="${noLanguageList}" param="languageKey">
+					<execute action="DockbarEdit#assertElementNotPresent" locator-key1="${languageKey}" />
+				</for>
+			</then>
+		</if>
+	</command>
+
 	<command name="viewNoPG">
 		<var name="key_pageName" value="${pageName}" />
 

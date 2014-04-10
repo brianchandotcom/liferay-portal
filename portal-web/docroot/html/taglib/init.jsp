@@ -18,7 +18,7 @@
 
 <%@ page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
-page import="com.liferay.taglib.ui.helper.InputAssetLinksTagHelper" %><%@
+page import="com.liferay.taglib.ui.util.InputAssetLinksDisplayContext" %><%@
 page import="com.liferay.taglib.util.InlineUtil" %>
 
 <%

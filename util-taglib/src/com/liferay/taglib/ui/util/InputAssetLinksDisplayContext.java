@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taglib.ui.helper;
+package com.liferay.taglib.ui.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -61,11 +61,11 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * This class is intended to extract code from tag's JSP file.
- * @author JM Navarro
+ * @author Jose M Navarro
  */
-public class InputAssetLinksTagHelper {
+public class InputAssetLinksDisplayContext {
 
-	public InputAssetLinksTagHelper(PageContext pageContext)
+	public InputAssetLinksDisplayContext(PageContext pageContext)
 		throws PortalException, SystemException {
 
 		super();

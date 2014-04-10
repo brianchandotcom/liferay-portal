@@ -17,19 +17,19 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-InputAssetLinksTagHelper viewHelper = new InputAssetLinksTagHelper(pageContext);
+InputAssetLinksDisplayContext displayContext = new InputAssetLinksDisplayContext(pageContext);
 %>
 
 <liferay-ui:icon-menu
 	cssClass="select-existing-selector"
 	icon='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>'
-	id='<%= viewHelper.getRandomNamespace() + "inputAssetLinks" %>'
+	id='<%= displayContext.getRandomNamespace() + "inputAssetLinks" %>'
 	message="select"
 	showWhenSingleIcon="<%= true %>"
 >
 
 	<%
-	for (Map<String, Object> entry : viewHelper.getSelectorEntries()) {
+	for (Map<String, Object> entry : displayContext.getSelectorEntries()) {
 	%>
 
 		<liferay-ui:icon
@@ -63,8 +63,8 @@ InputAssetLinksTagHelper viewHelper = new InputAssetLinksTagHelper(pageContext);
 	headerNames="type,title,scope,null"
 >
 	<liferay-ui:search-container-results
-		results="<%= viewHelper.getAssetLinks() %>"
-		total="<%= viewHelper.getAssetLinks().size() %>"
+		results="<%= displayContext.getAssetLinks() %>"
+		total="<%= displayContext.getAssetLinks().size() %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -74,12 +74,12 @@ InputAssetLinksTagHelper viewHelper = new InputAssetLinksTagHelper(pageContext);
 	>
 
 		<%
-		AssetEntry assetLinkEntry = viewHelper.getAssetLinkEntry(assetLink);
+		AssetEntry assetLinkEntry = displayContext.getAssetLinkEntry(assetLink);
 		%>
 
 		<liferay-ui:search-container-column-text
 			name="type"
-			value="<%= viewHelper.getAssetType(assetLinkEntry) %>"
+			value="<%= displayContext.getAssetType(assetLinkEntry) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
@@ -89,7 +89,7 @@ InputAssetLinksTagHelper viewHelper = new InputAssetLinksTagHelper(pageContext);
 
 		<liferay-ui:search-container-column-text
 			name="scope"
-			value="<%= HtmlUtil.escape(viewHelper.getGroupDescriptiveName(assetLinkEntry)) %>"
+			value="<%= HtmlUtil.escape(displayContext.getGroupDescriptiveName(assetLinkEntry)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text>
@@ -114,8 +114,8 @@ InputAssetLinksTagHelper viewHelper = new InputAssetLinksTagHelper(pageContext);
 						constrain: true,
 						modal: true
 					},
-					eventName: '<%= viewHelper.getEventName() %>',
-					id: '<%= viewHelper.getEventName() %>' + event.currentTarget.attr('id'),
+					eventName: '<%= displayContext.getEventName() %>',
+					id: '<%= displayContext.getEventName() %>' + event.currentTarget.attr('id'),
 					title: event.currentTarget.attr('data-title'),
 					uri: event.currentTarget.attr('data-href')
 				},

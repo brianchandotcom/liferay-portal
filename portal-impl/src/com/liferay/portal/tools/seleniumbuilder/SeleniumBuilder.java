@@ -466,8 +466,15 @@ public class SeleniumBuilder {
 			List<Element> rootPropertyElements = rootElement.elements(
 				"property");
 
+			StringBundler sb = new StringBundler();
+
+			sb.append(testCaseName);
+			sb.append("TestCase.all.testray.testcase.product.edition=CE");
+
+			testCaseProperties.add(sb.toString());
+
 			for (Element rootPropertyElement : rootPropertyElements) {
-				StringBundler sb = new StringBundler();
+				sb = new StringBundler();
 
 				sb.append(testCaseName);
 				sb.append("TestCase.all.");
@@ -488,7 +495,7 @@ public class SeleniumBuilder {
 						commandElement, "property");
 
 				for (Element commandPropertyElement : commandPropertyElements) {
-					StringBundler sb = new StringBundler();
+					sb = new StringBundler();
 
 					sb.append(testCaseName);
 					sb.append("TestCase.test");
@@ -501,7 +508,7 @@ public class SeleniumBuilder {
 					testCaseProperties.add(sb.toString());
 				}
 
-				StringBundler sb = new StringBundler();
+				sb = new StringBundler();
 
 				sb.append(testCaseName);
 				sb.append("TestCase.test");

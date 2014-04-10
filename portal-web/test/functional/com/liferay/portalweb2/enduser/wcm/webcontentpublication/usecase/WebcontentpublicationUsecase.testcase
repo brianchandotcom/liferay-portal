@@ -214,7 +214,7 @@
 		</execute>
 	</command>
 
-	<command name="AssetPublisherAssertAssetListScope" priority="4">
+	<command name="AssertAssetListScopeViaAssetPublisher" priority="4">
 		<var name="globalDocumentTypeDescription" value="Global Document Type Description" />
 		<var name="globalDocumentTypeFieldNames" value="Text" />
 		<var name="globalDocumentTypeName" value="Global Document Type Name" />

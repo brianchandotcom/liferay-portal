@@ -114,7 +114,7 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 									if (categoryPortlets.size() == 1) {
 										Portlet firstPortlet = categoryPortlets.get(0);
 
-										PortletURL redirectURL = PortalUtil.getSiteAdministrationURL(request, themeDisplay, firstPortlet.getPortletName());
+										PortletURL redirectURL = PortalUtil.getSiteAdministrationURL(request, themeDisplay, firstPortlet.getPortletId());
 
 										response.sendRedirect(redirectURL.toString());
 									}

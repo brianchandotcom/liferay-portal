@@ -3127,6 +3127,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		userNotificationEventImpl.setUserId(userNotificationEvent.getUserId());
 		userNotificationEventImpl.setType(userNotificationEvent.getType());
 		userNotificationEventImpl.setTimestamp(userNotificationEvent.getTimestamp());
+		userNotificationEventImpl.setDeliveryType(userNotificationEvent.getDeliveryType());
 		userNotificationEventImpl.setDeliverBy(userNotificationEvent.getDeliverBy());
 		userNotificationEventImpl.setDelivered(userNotificationEvent.isDelivered());
 		userNotificationEventImpl.setPayload(userNotificationEvent.getPayload());

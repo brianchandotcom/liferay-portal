@@ -1097,6 +1097,7 @@
 		<field name="userId" type="long" />
 		<field name="type" type="String" />
 		<field name="timestamp" type="long" />
+		<field name="deliveryType" type="int" />
 		<field name="deliverBy" type="long" />
 		<field name="delivered" type="boolean" />
 		<field name="payload" type="String">

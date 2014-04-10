@@ -1243,7 +1243,7 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/portal/cglib.jar</file-name>
+		<file-name>lib/portal/cglib-nodep.jar</file-name>
 		<version>2.2</version>
 		<project-name>Code Generation Library</project-name>
 		<project-url>http://cglib.sourceforge.net</project-url>

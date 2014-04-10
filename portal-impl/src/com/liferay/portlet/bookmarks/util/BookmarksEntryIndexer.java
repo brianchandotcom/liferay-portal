@@ -63,9 +63,8 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 
 	public BookmarksEntryIndexer() {
 		setDefaultSelectedFieldNames(
-			new String[] {
-				Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-				Field.TITLE, Field.UID, Field.URL});
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.TITLE, Field.UID, Field.URL);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}

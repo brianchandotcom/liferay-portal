@@ -36,12 +36,14 @@ public class JournalSearcher extends BaseSearcher {
 
 	public JournalSearcher() {
 		setDefaultSelectedFieldNames(
-			new String[] {
-				Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-				Field.GROUP_ID, Field.JOURNAL_ARTICLE_ID, Field.TITLE,
-				Field.VERSION, Field.UID});
+			Field.COMPANY_ID, Field.DEFAULT_LANGUAGE_ID, Field.ENTRY_CLASS_NAME,
+			Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.JOURNAL_ARTICLE_ID,
+			Field.VERSION, Field.UID);
+		setDefaultSelectedLocalizedFieldNames(
+			Field.CONTENT, Field.DESCRIPTION, Field.TITLE);
 		setFilterSearch(true);
 		setPermissionAware(true);
+		setSelectAllLocales(true);
 	}
 
 	@Override

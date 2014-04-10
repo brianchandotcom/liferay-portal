@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -383,6 +384,10 @@ public abstract class BaseIndexer implements Indexer {
 		return _permissionAware;
 	}
 
+	public boolean isSelectAllLocales() {
+		return _selectAllLocales;
+	}
+
 	@Override
 	public boolean isStagingAware() {
 		return _stagingAware;
@@ -515,11 +520,8 @@ public abstract class BaseIndexer implements Indexer {
 
 			QueryConfig queryConfig = searchContext.getQueryConfig();
 
-			if (ArrayUtil.isEmpty(queryConfig.getSelectedFieldNames()) &&
-				!ArrayUtil.isEmpty(getDefaultSelectedFieldNames())) {
-
-				queryConfig.setSelectedFieldNames(
-					getDefaultSelectedFieldNames());
+			if (ArrayUtil.isEmpty(queryConfig.getSelectedFieldNames())) {
+				addDefaultSelectedFieldNames(queryConfig);
 			}
 
 			addFacetSelectedFieldNames(searchContext, queryConfig);
@@ -562,6 +564,10 @@ public abstract class BaseIndexer implements Indexer {
 		queryConfig.setSelectedFieldNames(selectedFieldNames);
 
 		return search(searchContext);
+	}
+
+	public void setSelectAllLocales(boolean selectAllLocales) {
+		_selectAllLocales = selectAllLocales;
 	}
 
 	@Override
@@ -633,6 +639,40 @@ public abstract class BaseIndexer implements Indexer {
 		document.addLocalizedKeyword(
 			"localized_title", assetEntry.getTitleMap(), true);
 		document.addKeyword("visible", assetEntry.isVisible());
+	}
+
+	protected void addDefaultSelectedFieldNames(QueryConfig queryConfig) {
+		Set<String> selectedFieldNames = null;
+
+		if (!ArrayUtil.isEmpty(getDefaultSelectedFieldNames())) {
+			selectedFieldNames = SetUtil.fromArray(
+				getDefaultSelectedFieldNames());
+		}
+
+		if (!ArrayUtil.isEmpty(getDefaultSelectedLocalizedFieldNames())) {
+			if (selectedFieldNames == null) {
+				selectedFieldNames = new HashSet<String>();
+			}
+
+			if (isSelectAllLocales()) {
+				addSelectedLocalizedFieldNames(
+					selectedFieldNames,
+					LocaleUtil.toLanguageIds(
+						LanguageUtil.getSupportedLocales())
+				);
+			}
+			else {
+				addSelectedLocalizedFieldNames(
+					selectedFieldNames,
+					LocaleUtil.toLanguageId(queryConfig.getLocale()));
+			}
+		}
+
+		if ((selectedFieldNames != null) && !selectedFieldNames.isEmpty()) {
+			queryConfig.setSelectedFieldNames(
+				selectedFieldNames.toArray(
+					new String[selectedFieldNames.size()]));
+		}
 	}
 
 	protected void addFacetSelectedFieldNames(
@@ -1120,6 +1160,24 @@ public abstract class BaseIndexer implements Indexer {
 		searchContext.addFacet(multiValueFacet);
 	}
 
+	protected void addSelectedLocalizedFieldNames(
+		Set<String> selectedFieldNames, String... languageIds) {
+
+		for (String defaultLocalizedSelectedFieldName :
+				getDefaultSelectedLocalizedFieldNames()) {
+
+			selectedFieldNames.add(defaultLocalizedSelectedFieldName);
+
+			for (String languageId : languageIds) {
+				String localizedFieldName =
+					LocalizationUtil.getLocalizedName(
+						defaultLocalizedSelectedFieldName, languageId);
+
+				selectedFieldNames.add(localizedFieldName);
+			}
+		}
+	}
+
 	protected void addStagingGroupKeyword(Document document, long groupId)
 		throws Exception {
 
@@ -1536,6 +1594,10 @@ public abstract class BaseIndexer implements Indexer {
 		return _defaultSelectedFieldNames;
 	}
 
+	protected String[] getDefaultSelectedLocalizedFieldNames() {
+		return _defaultSelectedLocalizedFieldNames;
+	}
+
 	protected Set<String> getLocalizedCountryNames(Country country) {
 		Set<String> countryNames = new HashSet<String>();
 
@@ -1694,9 +1756,15 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected void setDefaultSelectedFieldNames(
-		String[] getDefaultSelectedFieldNames) {
+		String... defaultLocalizedFieldNames) {
 
-		_defaultSelectedFieldNames = getDefaultSelectedFieldNames;
+		_defaultSelectedFieldNames = defaultLocalizedFieldNames;
+	}
+
+	protected void setDefaultSelectedLocalizedFieldNames(
+		String... defaultLocalizedFieldNames) {
+
+		_defaultSelectedLocalizedFieldNames = defaultLocalizedFieldNames;
 	}
 
 	protected void setFilterSearch(boolean filterSearch) {
@@ -1722,6 +1790,7 @@ public abstract class BaseIndexer implements Indexer {
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 
 	private String[] _defaultSelectedFieldNames;
+	private String[] _defaultSelectedLocalizedFieldNames;
 	private Document _document = new DocumentImpl();
 	private boolean _filterSearch;
 	private boolean _indexerEnabled = true;
@@ -1729,6 +1798,7 @@ public abstract class BaseIndexer implements Indexer {
 		new IndexerPostProcessor[0];
 	private boolean _permissionAware;
 	private String _searchEngineId;
+	private boolean _selectAllLocales = false;
 	private boolean _stagingAware = true;
 
 }

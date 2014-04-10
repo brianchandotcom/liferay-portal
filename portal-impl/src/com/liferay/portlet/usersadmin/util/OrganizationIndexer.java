@@ -59,7 +59,7 @@ public class OrganizationIndexer extends BaseIndexer {
 
 	public OrganizationIndexer() {
 		setDefaultSelectedFieldNames(
-			new String[] {Field.COMPANY_ID, Field.ORGANIZATION_ID, Field.UID});
+			Field.COMPANY_ID, Field.ORGANIZATION_ID, Field.UID);
 		setIndexerEnabled(PropsValues.ORGANIZATIONS_INDEXER_ENABLED);
 		setPermissionAware(true);
 		setStagingAware(false);

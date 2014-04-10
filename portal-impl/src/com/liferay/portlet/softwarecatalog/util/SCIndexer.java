@@ -59,9 +59,8 @@ public class SCIndexer extends BaseIndexer {
 
 	public SCIndexer() {
 		setDefaultSelectedFieldNames(
-			new String[] {
-				Field.COMPANY_ID, Field.CONTENT, Field.ENTRY_CLASS_NAME,
-				Field.ENTRY_CLASS_PK, Field.TITLE, Field.UID});
+			Field.COMPANY_ID, Field.CONTENT, Field.ENTRY_CLASS_NAME,
+			Field.ENTRY_CLASS_PK, Field.TITLE, Field.UID);
 		setStagingAware(false);
 	}
 

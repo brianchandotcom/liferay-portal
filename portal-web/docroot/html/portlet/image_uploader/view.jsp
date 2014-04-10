@@ -78,7 +78,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 				</aui:input>
 
 				<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">
-					<img alt="image-preview" class="lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(currentImageURL) %>" />
+					<img alt="<liferay-ui:message key="image-preview" />" class="lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(currentImageURL) %>" />
 				</div>
 
 				<aui:button-row>

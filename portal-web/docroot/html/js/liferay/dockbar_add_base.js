@@ -2,15 +2,10 @@ AUI.add(
 	'liferay-dockbar-add-base',
 	function(A) {
 		var DDM = A.DD.DDM;
-
 		var Lang = A.Lang;
-
 		var Dockbar = Liferay.Dockbar;
-
 		var Layout = Liferay.Layout;
-
 		var Portlet = Liferay.Portlet;
-
 		var Util = Liferay.Util;
 
 		var PROXY_NODE_ITEM = Layout.PROXY_NODE_ITEM;
@@ -112,6 +107,17 @@ AUI.add(
 								focusItem.focus();
 							}
 						}
+
+						var addedMessage = instance.byId('addedMessage');
+
+						instance._hideAddedMessageTask = A.debounce(
+							function() {
+								addedMessage.hide(true);
+							},
+							2000
+						);
+
+						instance._addedMessage = addedMessage;
 
 						instance._bindUIDABase();
 					},
@@ -269,7 +275,6 @@ AUI.add(
 					_instanceablePortletFeedback: function (portletId) {
 						var instance = this;
 
-						var addedMessage = instance.byId('addedMessage');
 						var addedMessagePortlet = instance.byId('portletName');
 
 						var portletNameNode = A.one('[data-portlet-id=' + portletId + ']');
@@ -278,17 +283,10 @@ AUI.add(
 
 						addedMessagePortlet.setHTML(portletName);
 
-						var fadeOut = setTimeout(
-							function() {
-								addedMessage.hide(true);
-							},
-							2000
-						);
-
-						addedMessage.show(
+						instance._addedMessage.show(
 							true,
 							function() {
-								fadeOut;
+								instance._hideAddedMessageTask();
 							}
 						);
 					},

@@ -29,12 +29,12 @@ refererURL.setParameter("updateLayout", "true");
 	<aui:input name="refresh" type="hidden" value="<%= true %>" />
 
 	<span class="added-message hide" id="<portlet:namespace />addedMessage">
-		<span class="alert-success message"><img src="<%= themeDisplay.getPathThemeImages() %>/messages/success.png" /> <span id="<portlet:namespace />portletName"></span> <liferay-ui:message key="added" /></span>
+		<span class="alert-success message"><liferay-ui:icon image="../messages/success" /> <span id="<portlet:namespace />portletName"></span> <liferay-ui:message key="added" /></span>
 	</span>
 
 	<div class="row-fluid" id="<portlet:namespace />applicationList">
 		<c:if test="<%= layout.isTypePortlet() %>">
-			<div class="search-panel btn-toolbar">
+			<div class="btn-toolbar search-panel">
 				<aui:input cssClass="search-query span12" label="" name="searchApplication" type="text"  />
 			</div>
 		</c:if>
@@ -63,7 +63,7 @@ refererURL.setParameter("updateLayout", "true");
 				%>
 
 				<div class="lfr-add-content">
-					<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category lfr-component panel-page-category" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "highlighted") %>'>
+					<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-component lfr-content-category panel-page-category" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "highlighted") %>'>
 						<aui:nav collapsible="<%= false %>" cssClass="nav-list">
 
 							<%

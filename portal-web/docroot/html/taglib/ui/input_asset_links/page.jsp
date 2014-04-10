@@ -16,8 +16,6 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.taglib.ui.helper.InputAssetLinksTagHelper" %>
-
 <%
 InputAssetLinksTagHelper viewHelper = new InputAssetLinksTagHelper(pageContext);
 %>
@@ -31,15 +29,15 @@ InputAssetLinksTagHelper viewHelper = new InputAssetLinksTagHelper(pageContext);
 >
 
 	<%
-	for (AssetRendererFactory assetRendererFactory : viewHelper.getAssetRendererFactories()) {
+	for (Map<String, Object> entry : viewHelper.getSelectorEntries()) {
 	%>
 
 		<liferay-ui:icon
 			cssClass="asset-selector"
-			data="<%= viewHelper.getAssetBrowserData(assetRendererFactory) %>"
-			id="<%= viewHelper.getAssetBrowserId(assetRendererFactory) %>"
-			message="<%= viewHelper.getAssetBrowserMessage(assetRendererFactory) %>"
-			src="<%= viewHelper.getAssetBrowserSrc(assetRendererFactory) %>"
+			data='<%= (Map<String, Object>)entry.get("data") %>'
+			id='<%= entry.get("id").toString() %>'
+			message='<%= entry.get("message").toString() %>'
+			src='<%= entry.get("src").toString() %>'
 			url="javascript:;"
 		/>
 

@@ -51,10 +51,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 
 	<span class="toggle-details">[+]</span>
 
-	<span class="asset-entry-title">
-		<c:if test="<%= assetRenderer != null %>">
-			<img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" />
-		</c:if>
+	<span class="asset-entry-title <%= (assetRenderer != null) ? assetRenderer.getIconCssClass() : StringPool.BLANK %>">
 
 		<%
 		String name = document.get(locale, Field.NAME);

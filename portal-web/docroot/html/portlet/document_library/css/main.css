@@ -79,21 +79,11 @@
 			font-weight: bold;
 			margin-bottom: 1px;
 			padding: 5px;
-			padding-left: 25px;
 			position: relative;
-		}
-
-		.move-file {
-			background-image: url(@theme_image_path@/file_system/small/jpg.png);
-		}
-
-		.move-folder {
-			background-image: url(@theme_image_path@/common/folder.png);
 		}
 
 		.move-error {
 			background-color: #FDD;
-			background-image: url(@theme_image_path@/messages/error.png);
 			font-weight: normal;
 
 			@include opacity(0.6);

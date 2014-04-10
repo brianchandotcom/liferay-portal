@@ -71,9 +71,9 @@ viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL,
 
 	<li class="title-list <%= assetRendererFactory.getType() %>">
 		<liferay-ui:icon
+			iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 			label="<%= true %>"
 			message="<%= HtmlUtil.escape(title) %>"
-			src="<%= assetRenderer.getIconPath(renderRequest) %>"
 			url="<%= viewURL %>"
 		/>
 

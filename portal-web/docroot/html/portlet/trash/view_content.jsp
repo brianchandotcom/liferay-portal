@@ -132,10 +132,10 @@
 									name="name"
 								>
 									<liferay-ui:icon
+										iconCssClass="<%= curTrashRenderer.getIconCssClass() %>"
 										label="<%= true %>"
 										message="<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>"
 										method="get"
-										src="<%= curTrashRenderer.getIconPath(renderRequest) %>"
 										url="<%= rowURL.toString() %>"
 									/>
 								</liferay-ui:search-container-column-text>
@@ -191,10 +191,10 @@
 									name="name"
 								>
 									<liferay-ui:icon
+										iconCssClass="<%= curTrashRenderer.getIconCssClass() %>"
 										label="<%= true %>"
 										message="<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>"
 										method="get"
-										src="<%= curTrashRenderer.getIconPath(renderRequest) %>"
 										url="<%= rowURL.toString() %>"
 									/>
 								</liferay-ui:search-container-column-text>

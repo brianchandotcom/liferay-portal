@@ -184,9 +184,10 @@ if (Validator.isNotNull(keywords)) {
 			name="name"
 		>
 			<liferay-ui:icon
+				iconCssClass="<%= trashRenderer.getIconCssClass() %>"
 				label="<%= true %>"
 				message="<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>"
-				method="get" src="<%= trashRenderer.getIconPath(renderRequest) %>"
+				method="get"
 				url="<%= viewContentURLString %>"
 			/>
 
@@ -218,10 +219,10 @@ if (Validator.isNotNull(keywords)) {
 
 				<liferay-util:buffer var="rootEntryIcon">
 					<liferay-ui:icon
+						iconCssClass="<%= rootTrashRenderer.getIconCssClass() %>"
 						label="<%= true %>"
 						message="<%= HtmlUtil.escape(rootTrashRenderer.getTitle(locale)) %>"
 						method="get"
-						src="<%= rootTrashRenderer.getIconPath(renderRequest) %>"
 						url="<%= viewRootContentURLString %>"
 					/>
 				</liferay-util:buffer>

@@ -31,6 +31,8 @@ if (ArrayUtil.contains(folderColumns, "num-of-entries")) {
 	curEntriesCount = BookmarksEntryServiceUtil.getFoldersEntriesCount(scopeGroupId, subfolderIds);
 }
 
+AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(BookmarksFolder.class.getName());
+
 for (int j = 0; j < folderColumns.length; j++) {
 	String folderColumn = folderColumns[j];
 %>
@@ -56,8 +58,11 @@ for (int j = 0; j < folderColumns.length; j++) {
 				name="folder"
 			>
 
-				<a href="<%= rowURL %>">
-					<img alt='<%= LanguageUtil.get(pageContext, "folder") %>' class="label-icon" src="<%= themeDisplay.getPathThemeImages()  %>/common/folder.png" />
+				<%
+				AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
+				%>
+
+				<a class="<%= assetRenderer.getIconCssClass() %>" href="<%= rowURL %>">
 					<strong><%= curFolder.getName() %></strong>
 
 					<c:if test="<%= Validator.isNotNull(curFolder.getDescription()) %>">

@@ -92,10 +92,15 @@ for (JournalArticle curArticle : articles) {
 			<ul class="unstyled">
 
 				<%
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+
 				for (JournalFolder folder : validMoveFolders) {
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
 				%>
 
 					<li class="move-folder">
+						<i class="<%= assetRendererFactory.getIconCssClass() %>"></i>
+
 						<span class="folder-title">
 							<%= folder.getName() %>
 						</span>
@@ -118,10 +123,15 @@ for (JournalArticle curArticle : articles) {
 			<ul class="unstyled">
 
 				<%
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+
 				for (JournalFolder folder : invalidMoveFolders) {
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
 				%>
 
-					<li class="move-error move-folder">
+					<li class="icon-warning-sign move-error move-folder">
+						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
 						<span class="folder-title">
 							<%= folder.getName() %>
 						</span>
@@ -150,10 +160,15 @@ for (JournalArticle curArticle : articles) {
 			<ul class="unstyled">
 
 				<%
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+
 				for (JournalArticle validMoveArticle : validMoveArticles) {
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(validMoveArticle));
 				%>
 
 					<li class="move-article">
+						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
 						<span class="article-title" title="<%= HtmlUtil.escapeAttribute(validMoveArticle.getTitle(locale)) %>">
 							<%= HtmlUtil.escape(validMoveArticle.getTitle(locale)) %>
 						</span>
@@ -176,10 +191,15 @@ for (JournalArticle curArticle : articles) {
 			<ul class="unstyled">
 
 				<%
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+
 				for (JournalArticle invalidMoveArticle : invalidMoveArticles) {
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(invalidMoveArticle));
 				%>
 
-					<li class="move-article move-error">
+					<li class="icon-warning-sign move-article move-error">
+						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
 						<span class="article-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveArticle.getTitle()) %>">
 							<%= HtmlUtil.escape(invalidMoveArticle.getTitle()) %>
 						</span>

@@ -17,6 +17,14 @@ create table ExportImportConfiguration (
 	statusDate DATE null
 );
 
+alter table JournalFolder add overrideDDMStructures BOOLEAN;
+
+create table JournalFolders_DDMStructures (
+	structureId LONG not null,
+	folderId LONG not null,
+	primary key (structureId, folderId)
+);
+
 alter table Layout drop column iconImage;
 
 alter table LayoutRevision drop column iconImage;

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.TreeModelFinder;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -54,9 +55,10 @@ import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Juan Fernández
@@ -688,7 +690,7 @@ public class JournalFolderLocalServiceImpl
 	@Override
 	public JournalFolder updateFolder(
 			long userId, long folderId, long parentFolderId, String name,
-			String description, List<Long> ddmStructureIds,
+			String description, long[] ddmStructureIds,
 			boolean overrideDDMStructures, boolean mergeWithParentFolder,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -696,7 +698,7 @@ public class JournalFolderLocalServiceImpl
 		// Merge folders
 
 		if (!overrideDDMStructures) {
-			ddmStructureIds = Collections.emptyList();
+			ddmStructureIds = new long[0];
 		}
 
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
@@ -742,10 +744,11 @@ public class JournalFolderLocalServiceImpl
 
 	@Override
 	public void updateFolderDDMStructures(
-			JournalFolder folder, List<Long> ddmStructureIds)
+			JournalFolder folder, long[] ddmStructureIdsArray)
 		throws SystemException {
 
-		List<Long> originalDDMStructureIds = getDDMStructureIds(
+		Set<Long> ddmStructureIds = SetUtil.fromArray(ddmStructureIdsArray);
+		Set<Long> originalDDMStructureIds = getDDMStructureIds(
 			journalFolderPersistence.getDDMStructures(folder.getFolderId()));
 
 		if (ddmStructureIds.equals(originalDDMStructureIds)) {
@@ -804,8 +807,8 @@ public class JournalFolderLocalServiceImpl
 		return folder;
 	}
 
-	protected List<Long> getDDMStructureIds(List<DDMStructure> ddmStructures) {
-		List<Long> ddmStructureIds = new ArrayList<Long>();
+	protected Set<Long> getDDMStructureIds(List<DDMStructure> ddmStructures) {
+		Set<Long> ddmStructureIds = new HashSet<Long>();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			ddmStructureIds.add(ddmStructure.getStructureId());

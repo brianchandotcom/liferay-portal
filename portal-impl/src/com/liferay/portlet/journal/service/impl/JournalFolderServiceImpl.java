@@ -366,7 +366,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	@Override
 	public JournalFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
-			List<Long> ddmStructureIds, boolean overrideDDMStructures,
+			long[] ddmStructureIds, boolean overrideDDMStructures,
 			boolean mergeWithParentFolder, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 

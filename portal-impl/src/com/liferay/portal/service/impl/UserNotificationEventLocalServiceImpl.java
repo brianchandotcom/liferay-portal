@@ -257,6 +257,7 @@ public class UserNotificationEventLocalServiceImpl
 		return getArchivedUserNotificationEventsCount(userId, archived);
 	}
 
+	@Override
 	public List<UserNotificationEvent> sendUserNotificationEvents(
 			long userId, String portletId, int notificationType,
 			JSONObject notificationEventJSONObject)

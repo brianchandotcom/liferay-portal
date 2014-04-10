@@ -297,6 +297,7 @@
 		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="FIELD_SELECT_BUTTON" value1="Select" />
 
 		<execute action="PGDynamicdatalistsEditrecordSelectdocument#selectFrame" locator-key1="SELECT_DOCUMENT_IFRAME" />
+
 		<execute action="PGLogin#assertTextEquals" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
 
 		<execute action="Home#open" locator1="${adminEditURL}" />

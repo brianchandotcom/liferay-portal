@@ -953,10 +953,17 @@ create table JournalFolder (
 	treePath STRING null,
 	name VARCHAR(100) null,
 	description STRING null,
+	overrideDDMStructures BOOLEAN,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
 	statusDate DATE null
+);
+
+create table JournalFolders_DDMStructures (
+	structureId LONG not null,
+	folderId LONG not null,
+	primary key (structureId, folderId)
 );
 
 create table Layout (

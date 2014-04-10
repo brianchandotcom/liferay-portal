@@ -258,6 +258,14 @@ public class DDMStructureServiceUtil {
 		return getService().fetchStructure(groupId, classNameId, structureKey);
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderStructures(
+		long[] groupIds, long folderId, boolean inherited)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getJournalFolderStructures(groupIds, folderId, inherited);
+	}
+
 	/**
 	* Returns the structure with the ID.
 	*

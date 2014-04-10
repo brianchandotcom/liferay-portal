@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.BaseLocalService;
 
 import java.lang.reflect.InvocationTargetException;
@@ -27,52 +30,43 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public abstract class BaseActionableDynamicQuery
 	implements ActionableDynamicQuery {
 
 	@Override
 	public void performActions() throws PortalException, SystemException {
-		long count = doPerformCount();
+		long previousPrimaryKey = 0;
 
-		if (count > _interval) {
-			performActionsInMultipleIntervals();
-		}
-		else {
-			performActionsInSingleInterval();
-		}
-	}
+		while (true) {
+			long lastPrimaryKey = doPerformActions(previousPrimaryKey);
 
-	public void performActions(long startPrimaryKey, long endPrimaryKey)
-		throws PortalException, SystemException {
+			if (lastPrimaryKey < 0) {
+				return;
+			}
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			_clazz, _classLoader);
+			intervalCompleted(previousPrimaryKey, lastPrimaryKey);
 
-		Property property = PropertyFactoryUtil.forName(
-			_primaryKeyPropertyName);
-
-		dynamicQuery.add(property.ge(startPrimaryKey));
-		dynamicQuery.add(property.lt(endPrimaryKey));
-
-		addDefaultCriteria(dynamicQuery);
-
-		addCriteria(dynamicQuery);
-
-		List<Object> objects = (List<Object>)executeDynamicQuery(
-			_dynamicQueryMethod, dynamicQuery);
-
-		for (Object object : objects) {
-			performAction(object);
+			previousPrimaryKey = lastPrimaryKey;
 		}
 	}
 
 	@Override
 	public long performCount() throws PortalException, SystemException {
-		return doPerformCount();
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			_clazz, _classLoader);
+
+		addDefaultCriteria(dynamicQuery);
+
+		addCriteria(dynamicQuery);
+
+		return (Long)executeDynamicQuery(
+			_dynamicQueryCountMethod, dynamicQuery, getCountProjection());
 	}
 
 	@Override
@@ -178,16 +172,77 @@ public abstract class BaseActionableDynamicQuery
 		}
 	}
 
-	protected long doPerformCount() throws PortalException, SystemException {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+	protected long doPerformActions(long previousPrimaryKey)
+		throws PortalException, SystemException {
+
+		final DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_clazz, _classLoader);
+
+		Property property = PropertyFactoryUtil.forName(
+			_primaryKeyPropertyName);
+
+		dynamicQuery.add(property.gt(previousPrimaryKey));
+
+		dynamicQuery.setLimit(0, _interval);
+
+		dynamicQuery.addOrder(OrderFactoryUtil.asc(_primaryKeyPropertyName));
 
 		addDefaultCriteria(dynamicQuery);
 
 		addCriteria(dynamicQuery);
 
-		return (Long)executeDynamicQuery(
-			_dynamicQueryCountMethod, dynamicQuery, getCountProjection());
+		Callable<Long> performActionsCallable = new Callable<Long>() {
+
+			@Override
+			public Long call() throws Exception {
+				List<Object> objects = (List<Object>)executeDynamicQuery(
+					_dynamicQueryMethod, dynamicQuery);
+
+				if (objects.isEmpty()) {
+					return -1L;
+				}
+
+				for (Object object : objects) {
+					performAction(object);
+				}
+
+				if (objects.size() < _interval) {
+					return -1L;
+				}
+
+				BaseModel<?> baseModel = (BaseModel<?>)objects.get(
+					objects.size() - 1);
+
+				return (Long)baseModel.getPrimaryKeyObj();
+			}
+
+		};
+
+		TransactionAttribute transactionAttribute = getTransactionAttribute();
+
+		try {
+			if (transactionAttribute == null) {
+				return performActionsCallable.call();
+			}
+			else {
+				return TransactionInvokerUtil.invoke(
+					transactionAttribute, performActionsCallable);
+			}
+		}
+		catch (Throwable t) {
+			if (t instanceof PortalException) {
+				throw (PortalException)t;
+			}
+
+			if (t instanceof SystemException) {
+				throw (SystemException)t;
+			}
+
+			throw new SystemException(t);
+		}
+		finally {
+			indexInterval();
+		}
 	}
 
 	protected Object executeDynamicQuery(
@@ -222,6 +277,10 @@ public abstract class BaseActionableDynamicQuery
 		return _searchEngineId;
 	}
 
+	protected TransactionAttribute getTransactionAttribute() {
+		return null;
+	}
+
 	protected void indexInterval() throws PortalException {
 		if ((_documents == null) || _documents.isEmpty()) {
 			return;
@@ -240,77 +299,6 @@ public abstract class BaseActionableDynamicQuery
 
 	protected abstract void performAction(Object object)
 		throws PortalException, SystemException;
-
-	protected void performActionsInMultipleIntervals()
-		throws PortalException, SystemException {
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			_clazz, _classLoader);
-
-		Projection minPrimaryKeyProjection = ProjectionFactoryUtil.min(
-			_primaryKeyPropertyName);
-		Projection maxPrimaryKeyProjection = ProjectionFactoryUtil.max(
-			_primaryKeyPropertyName);
-
-		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
-
-		projectionList.add(minPrimaryKeyProjection);
-		projectionList.add(maxPrimaryKeyProjection);
-
-		dynamicQuery.setProjection(projectionList);
-
-		addDefaultCriteria(dynamicQuery);
-
-		addCriteria(dynamicQuery);
-
-		List<Object[]> results = (List<Object[]>)executeDynamicQuery(
-			_dynamicQueryMethod, dynamicQuery);
-
-		Object[] minAndMaxPrimaryKeys = results.get(0);
-
-		if ((minAndMaxPrimaryKeys[0] == null) ||
-			(minAndMaxPrimaryKeys[1] == null)) {
-
-			return;
-		}
-
-		long minPrimaryKey = (Long)minAndMaxPrimaryKeys[0];
-		long maxPrimaryKey = (Long)minAndMaxPrimaryKeys[1];
-
-		long startPrimaryKey = minPrimaryKey;
-		long endPrimaryKey = startPrimaryKey + _interval;
-
-		while (startPrimaryKey <= maxPrimaryKey) {
-			performActions(startPrimaryKey, endPrimaryKey);
-
-			indexInterval();
-
-			intervalCompleted(startPrimaryKey, endPrimaryKey);
-
-			startPrimaryKey = endPrimaryKey;
-			endPrimaryKey += _interval;
-		}
-	}
-
-	protected void performActionsInSingleInterval()
-		throws PortalException, SystemException {
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			_clazz, _classLoader);
-
-		addDefaultCriteria(dynamicQuery);
-
-		addCriteria(dynamicQuery);
-
-		List<Object> objects = (List<Object>)executeDynamicQuery(
-			_dynamicQueryMethod, dynamicQuery);
-
-		for (Object object : objects) {
-			performAction(object);
-		}
-
-		indexInterval();
-	}
 
 	private BaseLocalService _baseLocalService;
 	private ClassLoader _classLoader;

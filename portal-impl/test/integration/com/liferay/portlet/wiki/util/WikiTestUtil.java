@@ -203,8 +203,8 @@ public class WikiTestUtil {
 		serviceContext.setLayoutFullURL("http://localhost");
 
 		return updatePage(
-			page, page.getUserId(), ServiceTestUtil.randomString(),
-			page.getContent(), true, serviceContext);
+			page, page.getUserId(), page.getTitle(),
+			ServiceTestUtil.randomString(50), true, serviceContext);
 	}
 
 	public static WikiPage updatePage(

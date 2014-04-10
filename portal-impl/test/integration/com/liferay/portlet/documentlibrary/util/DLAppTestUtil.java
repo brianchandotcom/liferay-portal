@@ -140,7 +140,7 @@ public abstract class DLAppTestUtil {
 		throws Exception {
 
 		return addFileEntry(
-			groupId, repositoryId, folderId, ServiceTestUtil.randomString(),
+			groupId, repositoryId, folderId, ServiceTestUtil.randomString(), -1,
 			false, true);
 	}
 
@@ -164,7 +164,8 @@ public abstract class DLAppTestUtil {
 
 	public static FileEntry addFileEntry(
 			long groupId, long repositoryId, long folderId,
-			String sourceFileName, boolean workflowEnabled, boolean approved)
+			String sourceFileName, long fileEntryTypeId,
+			boolean workflowEnabled, boolean approved)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
@@ -173,12 +174,16 @@ public abstract class DLAppTestUtil {
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
 
-		if (workflowEnabled && !approved) {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
+		if (fileEntryTypeId != -1) {
+			serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
+		}
+
+		if (workflowEnabled && approved) {
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 		}
 		else {
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
 
 		FileEntry fileEntry = addFileEntry(
@@ -251,9 +256,8 @@ public abstract class DLAppTestUtil {
 		throws Exception {
 
 		return addFileEntry(
-			TestPropsValues.getUserId(), groupId, folderId, sourceFileName,
-			ContentTypes.TEXT_PLAIN, sourceFileName, null, fileEntryTypeId,
-			WorkflowConstants.ACTION_PUBLISH);
+			groupId, groupId, folderId, sourceFileName, fileEntryTypeId, true,
+			true);
 	}
 
 	public static FileEntry addFileEntry(
@@ -345,7 +349,7 @@ public abstract class DLAppTestUtil {
 		throws Exception {
 
 		return addFileEntry(
-			groupId, repositoryId, folderId, ServiceTestUtil.randomString(),
+			groupId, repositoryId, folderId, ServiceTestUtil.randomString(), -1,
 			true, approved);
 	}
 

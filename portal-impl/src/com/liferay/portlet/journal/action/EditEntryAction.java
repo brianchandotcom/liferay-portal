@@ -265,13 +265,13 @@ public class EditEntryAction extends PortletAction {
 				folderId, newFolderId, serviceContext);
 		}
 
+		List<String> invalidArticleIds = new ArrayList<String>();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		String[] articleIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "articleIds"));
-
-		List<String> invalidArticleIds = new ArrayList<String>();
 
 		for (String articleId : articleIds) {
 			try {

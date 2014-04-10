@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -30,7 +31,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.StagingLocalServiceUtil;
-import com.liferay.portal.service.persistence.LayoutSetPrototypeUtil;
+import com.liferay.portal.service.persistence.LayoutSetUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -107,6 +108,46 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
+	@Transactional
+	public void testExportImportLayoutPrototypeInvalidLARType()
+		throws Exception {
+
+		// Import LayoutPrototype to LayoutSet
+
+		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
+			ServiceTestUtil.randomString());
+
+		group = layoutPrototype.getGroup();
+		importedGroup = GroupTestUtil.addGroup();
+
+		long[] layoutIds = new long[0];
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+
+		// Import LayoutPrototype to LayoutSetPrototype
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(
+				ServiceTestUtil.randomString());
+
+		importedGroup = layoutSetPrototype.getGroup();
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+	}
+
+	@Test
 	public void testExportImportLayouts() throws Exception {
 		LayoutTestUtil.addLayout(
 			group.getGroupId(), ServiceTestUtil.randomString());
@@ -121,29 +162,20 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
-	public void testExportImportLayoutsInvalidAvailableLocales()
-		throws Exception {
-
-		testAvailableLocales(
-			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN},
-			new Locale[] {LocaleUtil.US, LocaleUtil.GERMANY}, true);
-	}
-
-	@Test
 	@Transactional
-	public void testExportImportLayoutsInvalidLARType() throws Exception {
-		LayoutSetPrototypeUtil.removeAll();
+	public void testExportImportLayoutSetInvalidLARType() throws Exception {
+		LayoutSetUtil.removeAll();
 
-		LayoutSetPrototype layoutSetPrototype =
-			LayoutTestUtil.addLayoutSetPrototype(
-				ServiceTestUtil.randomString());
+		// Import LayoutSet to LayoutPrototype
+
+		group = GroupTestUtil.addGroup();
+
+		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
+			ServiceTestUtil.randomString());
+
+		importedGroup = layoutPrototype.getGroup();
 
 		long[] layoutIds = new long[0];
-
-		// Import LayoutSetPrototype to LayoutSet
-
-		group = layoutSetPrototype.getGroup();
-		importedGroup = GroupTestUtil.addGroup();
 
 		try {
 			exportImportLayouts(layoutIds, getImportParameterMap());
@@ -155,7 +187,10 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		// Import LayoutSet to LayoutSetPrototype
 
-		group = GroupTestUtil.addGroup();
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(
+				ServiceTestUtil.randomString());
+
 		importedGroup = layoutSetPrototype.getGroup();
 
 		try {
@@ -165,6 +200,55 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 		catch (LARTypeException lte) {
 		}
+	}
+
+	@Test
+	@Transactional
+	public void testExportImportLayoutSetPrototypeInvalidLARType()
+		throws Exception {
+
+		// Import LayoutSetPrototype to LayoutSet
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(
+				ServiceTestUtil.randomString());
+
+		group = layoutSetPrototype.getGroup();
+		importedGroup = GroupTestUtil.addGroup();
+
+		long[] layoutIds = new long[0];
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+
+		// Import LayoutSetPrototype to LayoutPrototyope
+
+		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
+			ServiceTestUtil.randomString());
+
+		importedGroup = layoutPrototype.getGroup();
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+	}
+
+	@Test
+	public void testExportImportLayoutsInvalidAvailableLocales()
+		throws Exception {
+
+		testAvailableLocales(
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN},
+			new Locale[] {LocaleUtil.US, LocaleUtil.GERMANY}, true);
 	}
 
 	@Test

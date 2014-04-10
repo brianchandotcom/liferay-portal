@@ -89,11 +89,9 @@ public class SearchContextFactory {
 
 		// Query config
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setLocale(themeDisplay.getLocale());
-
-		searchContext.setQueryConfig(queryConfig);
 
 		return searchContext;
 	}

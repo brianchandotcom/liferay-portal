@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLBAR_DETAILS</td>
+	<td>//div[@id='_145_details']/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -67,6 +72,26 @@
 	<td></td>
 </tr>
 <!--DETAILS-->
+<tr>
+	<td>DETAILS_FRIENDLY_URL_TITLE</td>
+	<td>//label[@for='_145_friendlyURL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FRIENDLY_URL_ENGLISH_UNITED_STATES</td>
+	<td>//div[contains(@id,'friendlyURL')]//td[@data-value='en_US']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FRIENDLY_URL_SPANISH_SPAIN</td>
+	<td>//div[contains(@id,'friendlyURL')]//td[@data-value='es_ES']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FRIENDLY_URL_PORTUGUESE_BRAZIL</td>
+	<td>//div[contains(@id,'friendlyURL')]//td[@data-value='pt_BR']/a</td>
+	<td></td>
+</tr>
 <tr>
 	<td>DETAILS_TYPE_PAGE_OPTIONS</td>
 	<td>//div[contains(@id,'typeOptions')]//select[@id='_145_type']/option[@value='embedded']</td>

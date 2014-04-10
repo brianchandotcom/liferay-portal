@@ -250,11 +250,6 @@
 </tr>
 <!--ORGANIZATION_TABLE-->
 <tr>
-	<td>ORGANIZATION_TABLE_LABEL</td>
-	<td>//form[contains(@class,'form')]//div[@class='accordion-toggle']/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ORGANIZATION_TABLE_NAME</td>
 	<td>//div[contains(@id,'organizationsSearchContainerSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[1]</td>
 	<td></td>

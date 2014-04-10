@@ -328,6 +328,23 @@
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_WEBSITES_CONTENT" value1="${userWebsiteType} ${userWebsiteURL}" />
 	</command>
 
+	<command name="blockCCUser">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOProfile#assertClick" locator-key1="BLOCK_BUTTON" value1="Block" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="UNBLOCK_BUTTON" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="BLOCK_BUTTON" />
+	</command>
+
 	<command name="disconnectFromConnection">
 		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="${filterType}" />
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
@@ -821,6 +838,23 @@
 		<execute action="SOProfile#assertElementNotPresent" locator-key1="CONNECT_BUTTON" />
 	</command>
 
+	<command name="unblockCCUser">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOProfile#assertClick" locator-key1="UNBLOCK_BUTTON" value1="Unblock" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="BLOCK_BUTTON" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="UNBLOCK_BUTTON" />
+	</command>
+
 	<command name="unfollowCCUser">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
@@ -846,6 +880,33 @@
 	<command name="viewAddress">
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_ADDRESS_TITLE" value1="Addresses:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_ADDRESS_CONTENT" value1="${userAddressType} ${userAddressStreet1}, ${userAddressCity}, ${userAddressPostalCode}, ${userAddressRegion}, ${userAddressCountry} (Mailing)" />
+	</command>
+
+	<command name="viewBlockedUser">
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="UNBLOCK_BUTTON" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="CONNECT_BUTTON" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="FOLLOW_BUTTON" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="BLOCK_BUTTON" />
+	</command>
+
+	<command name="viewBlockingUser">
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="BLOCK_BUTTON" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="CONNECT_BUTTON" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="FOLLOW_BUTTON" />
 	</command>
 
 	<command name="viewConnection">
@@ -990,6 +1051,19 @@
 
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_TITLE" value1="Tags" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_CONTENT" value1="${userTag}" />
+	</command>
+
+	<command name="viewUser">
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="CONNECT_BUTTON" value1="Connect" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="FOLLOW_BUTTON" value1="Follow"  />
+		<execute action="SOProfile#assertTextEquals" locator-key1="BLOCK_BUTTON" value1="Block"  />
 	</command>
 
 	<command name="viewWebsite">

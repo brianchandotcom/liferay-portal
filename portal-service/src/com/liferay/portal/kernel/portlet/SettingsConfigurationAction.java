@@ -34,7 +34,6 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
-import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portal.settings.SettingsFactoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -287,32 +286,9 @@ public class SettingsConfigurationAction
 			"Invalid settings scope " + settingsScope);
 	}
 
-	@SuppressWarnings("unused")
 	protected void postProcess(
 			long companyId, PortletRequest portletRequest, Settings settings)
 		throws PortalException, SystemException {
-	}
-
-	protected void removeDefaultValue(
-		PortletRequest portletRequest, Settings settings, String key,
-		LocalizedValuesMap localizedValuesMap) {
-
-		removeDefaultValue(
-			portletRequest, settings, key,
-			localizedValuesMap.getDefaultValue());
-	}
-
-	protected void removeDefaultValue(
-		PortletRequest portletRequest, Settings settings, String key,
-		String defaultValue) {
-
-		String value = getParameter(portletRequest, key);
-
-		if (defaultValue.equals(value) ||
-			StringUtil.equalsIgnoreBreakLine(defaultValue, value)) {
-
-			settings.reset(key);
-		}
 	}
 
 	protected void setParameterNamePrefix(String parameterNamePrefix) {

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.Settings;
 import com.liferay.portlet.wiki.WikiSettings;
@@ -26,42 +25,11 @@ import com.liferay.portlet.wiki.WikiSettings;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
 
 /**
  * @author Bruno Farache
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
-
-	@Override
-	public void postProcess(
-		long companyId, PortletRequest portletRequest, Settings settings) {
-
-		WikiSettings wikiSettings = new WikiSettings(settings);
-
-		removeDefaultValue(
-			portletRequest, settings, "emailFromAddress",
-			wikiSettings.getEmailFromAddress());
-		removeDefaultValue(
-			portletRequest, settings, "emailFromName",
-			wikiSettings.getEmailFromName());
-
-		String languageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
-		removeDefaultValue(
-			portletRequest, settings, "emailPageAddedBody_" + languageId,
-			wikiSettings.getEmailPageAddedBody());
-		removeDefaultValue(
-			portletRequest, settings, "emailPageAddedSubject_" + languageId,
-			wikiSettings.getEmailPageAddedSubject());
-		removeDefaultValue(
-			portletRequest, settings, "emailPageUpdatedBody_" + languageId,
-			wikiSettings.getEmailPageUpdatedBody());
-		removeDefaultValue(
-			portletRequest, settings, "emailPageUpdatedSubject_" + languageId,
-			wikiSettings.getEmailPageUpdatedSubject());
-	}
 
 	@Override
 	public void processAction(

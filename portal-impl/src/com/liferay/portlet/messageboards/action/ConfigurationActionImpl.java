@@ -41,43 +41,11 @@ import java.util.TreeMap;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
-
-	@Override
-	public void postProcess(
-		long companyId, PortletRequest portletRequest, Settings settings) {
-
-		MBSettings mbSettings = new MBSettings(settings);
-
-		removeDefaultValue(
-			portletRequest, settings, "emailFromAddress",
-			mbSettings.getEmailFromAddress());
-		removeDefaultValue(
-			portletRequest, settings, "emailFromName",
-			mbSettings.getEmailFromName());
-
-		String languageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
-		removeDefaultValue(
-			portletRequest, settings, "emailMessageAddedBody_" + languageId,
-			mbSettings.getEmailMessageAddedBody());
-		removeDefaultValue(
-			portletRequest, settings, "emailMessageAddedSubject_" + languageId,
-			mbSettings.getEmailMessageAddedSubject());
-		removeDefaultValue(
-			portletRequest, settings, "emailMessageUpdatedBody_" + languageId,
-			mbSettings.getEmailMessageUpdatedBody());
-		removeDefaultValue(
-			portletRequest, settings,
-			"emailMessageUpdatedSubject_" + languageId,
-			mbSettings.getEmailMessageUpdatedSubject());
-	}
 
 	@Override
 	public void processAction(
@@ -88,6 +56,7 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		validateEmail(actionRequest, "emailMessageAdded");
 		validateEmail(actionRequest, "emailMessageUpdated");
 		validateEmailFrom(actionRequest);
+
 		updateThreadPriorities(actionRequest);
 		updateUserRanks(actionRequest);
 

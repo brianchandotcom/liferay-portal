@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.Settings;
@@ -27,43 +26,12 @@ import com.liferay.portlet.blogs.BlogsSettings;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
 
 /**
  * @author Jorge Ferrer
  * @author Thiago Moreira
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
-
-	@Override
-	public void postProcess(
-		long companyId, PortletRequest portletRequest, Settings settings) {
-
-		BlogsSettings blogsSettings = new BlogsSettings(settings);
-
-		removeDefaultValue(
-			portletRequest, settings, "emailFromAddress",
-			blogsSettings.getEmailFromAddress());
-		removeDefaultValue(
-			portletRequest, settings, "emailFromName",
-			blogsSettings.getEmailFromName());
-
-		String languageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
-		removeDefaultValue(
-			portletRequest, settings, "emailEntryAddedBody_" + languageId,
-			blogsSettings.getEmailEntryAddedBody());
-		removeDefaultValue(
-			portletRequest, settings, "emailEntryAddedSubject_" + languageId,
-			blogsSettings.getEmailEntryAddedSubject());
-		removeDefaultValue(
-			portletRequest, settings, "emailEntryUpdatedBody_" + languageId,
-			blogsSettings.getEmailEntryUpdatedBody());
-		removeDefaultValue(
-			portletRequest, settings, "emailEntryUpdatedSubject_" + languageId,
-			blogsSettings.getEmailEntryUpdatedSubject());
-	}
 
 	@Override
 	public void processAction(

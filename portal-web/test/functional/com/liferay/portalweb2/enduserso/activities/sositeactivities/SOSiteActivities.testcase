@@ -19,6 +19,526 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
+	<command name="ViewBlockedUserActivitiesByAdminUsers" priority="3">
+		<var name="adminEmailAddress" value="test@liferay.com" />
+		<var name="adminFirstName" value="Test" />
+		<var name="adminListName" value="Test, Test" />
+		<var name="adminName" value="Test Test" />
+		<var name="microblogsEntryContent1" value="Microblogs Post1" />
+		<var name="microblogsEntryContent2" value="Microblogs Post2" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="threadBody1" value="MB Thread1 Message Body" />
+		<var name="threadBody2" value="MB Thread2 Message Body" />
+		<var name="threadSubject1" value="MB Thread1 Message Subject" />
+		<var name="threadSubject2" value="MB Thread2 Message Subject" />
+		<var name="userEmailAddress1" value="socialoffice01@liferay.com" />
+		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
+		<var name="userEmailAddress3" value="socialoffice03@liferay.com" />
+		<var name="userFirstName1" value="Social01" />
+		<var name="userFirstName2" value="Social02" />
+		<var name="userFirstName3" value="Social03" />
+		<var name="userLastName1" value="User01" />
+		<var name="userLastName2" value="User02" />
+		<var name="userLastName3" value="User03" />
+		<var name="userListName1" value="User01, Social01" />
+		<var name="userListName2" value="User02, Social02" />
+		<var name="userListName3" value="User03, Social03" />
+		<var name="userMiddleName1" value="Office01" />
+		<var name="userMiddleName2" value="Office02" />
+		<var name="userMiddleName3" value="Office03" />
+		<var name="userName1" value="Social01 Office01 User01" />
+		<var name="userName2" value="Social02 Office02 User02" />
+		<var name="userName3" value="Social03 Office03 User03" />
+		<var name="userScreenName1" value="socialoffice01" />
+		<var name="userScreenName2" value="socialoffice02" />
+		<var name="userScreenName3" value="socialoffice03" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userFirstName" value="${userFirstName1}" />
+			<var name="userLastName" value="${userLastName1}" />
+			<var name="userMiddleName" value="${userMiddleName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Administrator" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userMiddleName" value="${userMiddleName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Administrator" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userFirstName" value="${userFirstName3}" />
+			<var name="userLastName" value="${userLastName3}" />
+			<var name="userMiddleName" value="${userMiddleName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#addAllMembersCP" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
+			<var name="userLoginFullName" value="${userName1}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#requestToConnect">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userListName" value="${userListName3}" />
+			<var name="userName" value="${userName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#followUser">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userListName" value="${userListName3}" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
+			<var name="userLoginFullName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#confirmRequestToConnect">
+			<var name="senderName" value="${userName1}" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
+			<var name="microblogsEntryCharacterCountdown" value="134" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody1}" />
+			<var name="threadSubject" value="${threadSubject1}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
+			<var name="userLoginFullName" value="${userName1}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
+
+		<execute macro="SOActivities#viewForumsActivityEntry">
+			<var name="action" value="Wrote a new forum post." />
+			<var name="dashboardView" value="true" />
+			<var name="row" value="01" />
+			<var name="threadBody" value="${threadBody1}" />
+			<var name="threadSubject" value="${threadSubject1}" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOActivities#viewMicroblogsActivityEntry">
+			<var name="microblogsEntryAuthorName" value="${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
+			<var name="row" value="02" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#blockUser">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userListName" value="${userListName3}" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
+
+		<execute macro="SOActivities#viewForumsActivityEntry">
+			<var name="action" value="Wrote a new forum post." />
+			<var name="dashboardView" value="true" />
+			<var name="row" value="01" />
+			<var name="threadBody" value="${threadBody1}" />
+			<var name="threadSubject" value="${threadSubject1}" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOActivities#viewMicroblogsActivityEntry">
+			<var name="microblogsEntryAuthorName" value="${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
+			<var name="row" value="02" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#blockUser">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userListName" value="${userListName3}" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
+			<var name="userLoginFullName" value="${userName3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
+			<var name="microblogsEntryCharacterCountdown" value="134" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody2}" />
+			<var name="threadSubject" value="${threadSubject2}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
+			<var name="userLoginFullName" value="${userName1}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry1}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${userName3}" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry1}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${userName3}" />
+	</command>
+
+	<command name="ViewBlockedUserActivitiesByRegularUsers" priority="3">
+		<var name="adminEmailAddress" value="test@liferay.com" />
+		<var name="adminFirstName" value="Test" />
+		<var name="adminListName" value="Test, Test" />
+		<var name="adminName" value="Test Test" />
+		<var name="microblogsEntryContent1" value="Microblogs Post1" />
+		<var name="microblogsEntryContent2" value="Microblogs Post2" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+		<var name="threadBody1" value="MB Thread1 Message Body" />
+		<var name="threadBody2" value="MB Thread2 Message Body" />
+		<var name="threadSubject1" value="MB Thread1 Message Subject" />
+		<var name="threadSubject2" value="MB Thread2 Message Subject" />
+		<var name="userEmailAddress1" value="socialoffice01@liferay.com" />
+		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
+		<var name="userEmailAddress3" value="socialoffice03@liferay.com" />
+		<var name="userFirstName1" value="Social01" />
+		<var name="userFirstName2" value="Social02" />
+		<var name="userFirstName3" value="Social03" />
+		<var name="userLastName1" value="User01" />
+		<var name="userLastName2" value="User02" />
+		<var name="userLastName3" value="User03" />
+		<var name="userListName1" value="User01, Social01" />
+		<var name="userListName2" value="User02, Social02" />
+		<var name="userListName3" value="User03, Social03" />
+		<var name="userMiddleName1" value="Office01" />
+		<var name="userMiddleName2" value="Office02" />
+		<var name="userMiddleName3" value="Office03" />
+		<var name="userName1" value="Social01 Office01 User01" />
+		<var name="userName2" value="Social02 Office02 User02" />
+		<var name="userName3" value="Social03 Office03 User03" />
+		<var name="userScreenName1" value="socialoffice01" />
+		<var name="userScreenName2" value="socialoffice02" />
+		<var name="userScreenName3" value="socialoffice03" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userFirstName" value="${userFirstName1}" />
+			<var name="userLastName" value="${userLastName1}" />
+			<var name="userMiddleName" value="${userMiddleName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userMiddleName" value="${userMiddleName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userFirstName" value="${userFirstName3}" />
+			<var name="userLastName" value="${userLastName3}" />
+			<var name="userMiddleName" value="${userMiddleName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#addAllMembersCP" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
+			<var name="userLoginFullName" value="${userName1}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#requestToConnect">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userListName" value="${userListName3}" />
+			<var name="userName" value="${userName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#followUser">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userListName" value="${userListName3}" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
+			<var name="userLoginFullName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#confirmRequestToConnect">
+			<var name="senderName" value="${userName1}" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
+			<var name="microblogsEntryCharacterCountdown" value="134" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody1}" />
+			<var name="threadSubject" value="${threadSubject1}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
+			<var name="userLoginFullName" value="${userName1}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
+
+		<execute macro="SOActivities#viewForumsActivityEntry">
+			<var name="action" value="Wrote a new forum post." />
+			<var name="dashboardView" value="true" />
+			<var name="row" value="01" />
+			<var name="threadBody" value="${threadBody1}" />
+			<var name="threadSubject" value="${threadSubject1}" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOActivities#viewMicroblogsActivityEntry">
+			<var name="microblogsEntryAuthorName" value="${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
+			<var name="row" value="02" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#blockUser">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userListName" value="${userListName3}" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
+
+		<execute macro="SOActivities#viewForumsActivityEntry">
+			<var name="action" value="Wrote a new forum post." />
+			<var name="dashboardView" value="true" />
+			<var name="row" value="01" />
+			<var name="threadBody" value="${threadBody1}" />
+			<var name="threadSubject" value="${threadSubject1}" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOActivities#viewMicroblogsActivityEntry">
+			<var name="microblogsEntryAuthorName" value="${userName3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
+			<var name="row" value="02" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#blockUser">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userListName" value="${userListName3}" />
+			<var name="userName" value="${userName3}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
+			<var name="userLoginFullName" value="${userName3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
+			<var name="microblogsEntryCharacterCountdown" value="134" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Forums" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody2}" />
+			<var name="threadSubject" value="${threadSubject2}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
+			<var name="userLoginFullName" value="${userName1}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_CONNECTIONS" value1="Connections" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry1}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${userName3}" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_FOLLOWING" value1="Following" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody1}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadBody2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject1}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${threadSubject2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry1}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${microblogsEntry2}" />
+		<execute action="SOActivities#assertTextNotPresent" value1="${userName3}" />
+	</command>
+
 	<command name="ViewDMFolderDocumentSiteActivitiesSite" priority="5">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminName" value="Test Test" />
@@ -790,6 +1310,47 @@
 			<var name="row" value="06" />
 		</execute>
 
+		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_ME" value1="Me" />
+
+		<execute macro="SOActivities#viewBlogsActivityEntry">
+			<var name="action" value="Commented on a blog entry." />
+			<var name="commentContent" value="${entryComment}" />
+			<var name="commentCount" value="1" />
+			<var name="dashboardView" value="true" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="row" value="01" />
+			<var name="userName" value="${userFirstName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewActivityEntryComment">
+			<var name="commentContent" value="${entryComment}" />
+			<var name="commentCount" value="1" />
+			<var name="row" value="01" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewForumsActivityEntry">
+			<var name="action" value="Replied to ${adminName}'s forum post in ${categoryName}." />
+			<var name="dashboardView" value="true" />
+			<var name="row" value="02" />
+			<var name="threadBody" value="${threadReplyBody}" />
+			<var name="threadSubject" value="RE: ${threadSubject}" />
+			<var name="userName" value="${userFirstName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewMicroblogsCommentActivityEntry">
+			<var name="commentCount" value="1" />
+			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryCommentAuthorFirstName" value="${userFirstName}" />
+			<var name="microblogsEntryCommentAuthorName" value="${userName}" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+			<var name="row" value="03" />
+		</execute>
+
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -963,6 +1524,43 @@
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 			<var name="row" value="06" />
+		</execute>
+
+		<execute action="SOActivities#assertClick" locator-key1="NAVIGATION_ME" value1="Me" />
+
+		<execute macro="SOActivities#viewBlogsActivityEntry">
+			<var name="action" value="Wrote a new blog entry." />
+			<var name="commentCount" value="1" />
+			<var name="dashboardView" value="true" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="row" value="01" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewActivityEntryComment">
+			<var name="commentContent" value="${entryComment}" />
+			<var name="commentCount" value="1" />
+			<var name="row" value="01" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewForumsActivityEntry">
+			<var name="action" value="Wrote a new forum post in ${categoryName}." />
+			<var name="dashboardView" value="true" />
+			<var name="row" value="02" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${adminFirstName}" />
+		</execute>
+
+		<execute macro="SOActivities#viewMicroblogsActivityEntry">
+			<var name="commentCount" value="1" />
+			<var name="microblogsEntryAuthorFirstName" value="${adminFirstName}" />
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+			<var name="row" value="03" />
 		</execute>
 
 		<execute macro="Page#openURL">

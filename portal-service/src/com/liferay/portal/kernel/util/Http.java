@@ -68,6 +68,11 @@ public interface Http {
 
 	public String decodeURL(String url);
 
+	/**
+	 * @deprecated As of 7.0.0, unescapeSpaces is useless, just use
+	 *             {@link #decodeURL(java.lang.String)}
+	 */
+	@Deprecated
 	public String decodeURL(String url, boolean unescapeSpaces);
 
 	public String encodeParameters(String url);

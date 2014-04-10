@@ -29,12 +29,7 @@ public class URLCodecTest {
 	public void testDecodeURL() throws Exception {
 		for (int i = 0; i < _RAW_URLS.length; i++) {
 			String result = URLCodec.decodeURL(
-				_ENCODED_URLS[i], StringPool.UTF8, false);
-
-			Assert.assertEquals(_RAW_URLS[i], result);
-
-			result = URLCodec.decodeURL(
-				_ESCAPE_SPACES_ENCODED_URLS[i], StringPool.UTF8, true);
+				_ENCODED_URLS[i], StringPool.UTF8);
 
 			Assert.assertEquals(_RAW_URLS[i], result);
 		}

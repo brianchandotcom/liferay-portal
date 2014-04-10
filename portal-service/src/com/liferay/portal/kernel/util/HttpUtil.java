@@ -66,6 +66,11 @@ public class HttpUtil {
 		return getHttp().decodeURL(url);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, unescapeSpaces is useless, just use
+	 *             {@link #decodeURL(java.lang.String)}
+	 */
+	@Deprecated
 	public static String decodeURL(String url, boolean unescapeSpaces) {
 		return getHttp().decodeURL(url, unescapeSpaces);
 	}

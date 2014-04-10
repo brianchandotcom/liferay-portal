@@ -1189,8 +1189,7 @@ public class WebServerServlet extends HttpServlet {
 			return;
 		}
 
-		String fileName = HttpUtil.decodeURL(
-			HtmlUtil.escape(pathArray[2]), true);
+		String fileName = HttpUtil.decodeURL(HtmlUtil.escape(pathArray[2]));
 
 		if (fileEntry.isInTrash()) {
 			fileName = TrashUtil.getOriginalTitle(fileName);

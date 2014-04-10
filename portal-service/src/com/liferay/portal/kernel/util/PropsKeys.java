@@ -643,6 +643,8 @@ public interface PropsKeys {
 
 	public static final String DL_CHAR_LAST_BLACKLIST = "dl.char.last.blacklist";
 
+	public static final String DL_COMMENT_RATINGS_ENABLED = "dl.comment.ratings.enabled";
+
 	public static final String DL_COMPARABLE_FILE_EXTENSIONS = "dl.comparable.file.extensions";
 
 	public static final String DL_DEFAULT_DISPLAY_VIEW = "dl.default.display.view";
@@ -666,6 +668,10 @@ public interface PropsKeys {
 	public static final String DL_EMAIL_FROM_ADDRESS = "dl.email.from.address";
 
 	public static final String DL_EMAIL_FROM_NAME = "dl.email.from.name";
+
+	public static final String DL_ENTRY_COLUMNS = "dl.entry.columns";
+
+	public static final String DL_FILE_ENTRY_COLUMNS = "dl.file.entry.columns";
 
 	public static final String DL_FILE_ENTRY_COMMENTS_ENABLED = "dl.file.entry.comments.enabled";
 
@@ -765,9 +771,17 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_RANK_MAX_SIZE = "dl.file.rank.max.size";
 
+	public static final String DL_FOLDER_COLUMNS = "dl.folder.columns";
+
+	public static final String DL_FOLDERS_SEARCH_VISIBLE = "dl.folders.search.visible";
+
 	public static final String DL_NAME_BLACKLIST = "dl.name.blacklist";
 
 	public static final String DL_PUBLISH_TO_LIVE_BY_DEFAULT = "dl.publish.to.live.by.default";
+
+	public static final String DL_RATINGS_ENABLED = "dl.ratings.enabled";
+
+	public static final String DL_RELATED_ASSETS_ENABLED = "dl.related.assets.enabled";
 
 	public static final String DL_REPOSITORY_CMIS_DELETE_DEPTH = "dl.repository.cmis.delete.depth";
 
@@ -806,6 +820,8 @@ public interface PropsKeys {
 	public static final String DL_STORE_S3_TEMP_DIR_CLEAN_UP_EXPUNGE = "dl.store.s3.temp.dir.clean.up.expunge";
 
 	public static final String DL_STORE_S3_TEMP_DIR_CLEAN_UP_FREQUENCY = "dl.store.s3.temp.dir.clean.up.frequency";
+
+	public static final String DL_SUBFOLDERS_VISIBLE = "dl.subfolders.visible";
 
 	public static final String DOCKBAR_ADD_PORTLETS = "dockbar.add.portlets";
 

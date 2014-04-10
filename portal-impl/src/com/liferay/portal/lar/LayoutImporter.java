@@ -1024,6 +1024,21 @@ public class LayoutImporter {
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			portletDataContext.getGroupId());
 
+		if (larType.equals("layout-prototype") && !group.isLayoutPrototype() &&
+			!layoutsImportMode.equals(
+				PortletDataHandlerKeys.
+					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+
+			throw new LARTypeException(
+				"A page template can be only imported to a page template");
+		}
+
+		if (larType.equals("layout-set") &&
+			(group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+
+			throw new LARTypeException("A site can be only imported to a site");
+		}
+
 		if (larType.equals("layout-set-prototype") &&
 			!group.isLayoutSetPrototype() &&
 			!layoutsImportMode.equals(
@@ -1031,11 +1046,7 @@ public class LayoutImporter {
 					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
 			throw new LARTypeException(
-				"Site template can be only imported to a site template");
-		}
-
-		if (larType.equals("layout-set") && group.isLayoutSetPrototype()) {
-			throw new LARTypeException("Site can be only imported to a site");
+				"A site template can be only imported to a site template");
 		}
 
 		// Available locales

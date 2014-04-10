@@ -122,7 +122,11 @@ public class SettingsConfigurationAction
 			String name = entry.getKey();
 			String value = entry.getValue();
 
-			settings.setValue(name, value);
+			String oldValue = settings.getValue(name, null);
+
+			if (!StringUtil.equalsIgnoreBreakLine(value, oldValue)) {
+				settings.setValue(name, value);
+			}
 		}
 
 		Map<String, String[]> portletPreferencesMap =
@@ -136,7 +140,11 @@ public class SettingsConfigurationAction
 				String name = entry.getKey();
 				String[] values = entry.getValue();
 
-				settings.setValues(name, values);
+				String[] oldValues = settings.getValues(name, null);
+
+				if (!Validator.equals(values, oldValues)) {
+					settings.setValues(name, values);
+				}
 			}
 		}
 

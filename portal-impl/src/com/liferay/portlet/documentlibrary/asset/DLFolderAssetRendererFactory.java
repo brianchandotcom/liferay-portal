@@ -64,6 +64,11 @@ public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-folder-open";
+	}
+
+	@Override
 	public String getType() {
 		return TYPE;
 	}

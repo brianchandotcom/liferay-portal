@@ -82,6 +82,11 @@ public class WikiPageAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-copy";
+	}
+
+	@Override
 	public String getType() {
 		return TYPE;
 	}

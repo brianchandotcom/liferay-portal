@@ -103,6 +103,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	}
 
 	@Override
+	public String getIconCssClass() throws PortalException, SystemException {
+		return getAssetRendererFactory().getIconCssClass();
+	}
+
+	@Override
 	public String getIconPath(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

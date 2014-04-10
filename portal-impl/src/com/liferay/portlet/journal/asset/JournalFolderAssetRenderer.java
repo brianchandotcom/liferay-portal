@@ -76,6 +76,17 @@ public class JournalFolderAssetRenderer
 	}
 
 	@Override
+	public String getIconCssClass() throws PortalException, SystemException {
+		if (JournalFolderServiceUtil.getFoldersAndArticlesCount(
+				_folder.getGroupId(), _folder.getFolderId()) > 0) {
+
+			return "icon-folder-close";
+		}
+
+		return super.getIconCssClass();
+	}
+
+	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		try {
 			if (JournalFolderServiceUtil.getFoldersAndArticlesCount(

@@ -14,7 +14,6 @@
 
 		<execute action="CPBlogsConfiguration#doubleClick" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECTION" />
 		<execute action="CPBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
 		<execute action="CPBlogsConfiguration#assertElementPresent" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 

@@ -306,6 +306,12 @@ public class UserNotificationEventLocalServiceImpl
 					addUserNotificationEvent(userId, notificationEvent);
 
 				userNotificationEvents.add(userNotificationEvent);
+
+				if (userNotificationDeliveryType.getType() ==
+						UserNotificationDeliveryConstants.TYPE_PUSH) {
+
+					sendPushNotitication(userNotificationEvent);
+				}
 			}
 		}
 
@@ -348,6 +354,29 @@ public class UserNotificationEventLocalServiceImpl
 		}
 
 		return userNotificationEvents;
+	}
+
+	protected void sendPushNotitication(
+		final UserNotificationEvent userNotificationEvent) {
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					Message message = new Message();
+
+					message.put("userId", userNotificationEvent.getUserId());
+					message.put("data", userNotificationEvent.getPayload());
+
+					MessageBusUtil.sendMessage(
+						DestinationNames.PUSH_NOTIFICATION, message);
+
+					return null;
+				}
+
+			}
+		);
 	}
 
 }

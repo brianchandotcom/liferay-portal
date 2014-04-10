@@ -248,6 +248,19 @@ public class JournalFolderServiceUtil {
 			mergeWithParentFolder, serviceContext);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, long[] ddmStructureIds,
+		boolean overrideDDMStructures, boolean mergeWithParentFolder,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateFolder(folderId, parentFolderId, name, description,
+			ddmStructureIds, overrideDDMStructures, mergeWithParentFolder,
+			serviceContext);
+	}
+
 	public static JournalFolderService getService() {
 		if (_service == null) {
 			_service = (JournalFolderService)PortalBeanLocatorUtil.locate(JournalFolderService.class.getName());

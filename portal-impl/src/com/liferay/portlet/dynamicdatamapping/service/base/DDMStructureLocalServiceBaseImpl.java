@@ -48,6 +48,8 @@ import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureLi
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplatePersistence;
+import com.liferay.portlet.journal.service.persistence.JournalFolderFinder;
+import com.liferay.portlet.journal.service.persistence.JournalFolderPersistence;
 
 import java.io.Serializable;
 
@@ -508,6 +510,153 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addJournalFolderDDMStructure(long folderId, long structureId)
+		throws SystemException {
+		journalFolderPersistence.addDDMStructure(folderId, structureId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addJournalFolderDDMStructure(long folderId,
+		DDMStructure ddmStructure) throws SystemException {
+		journalFolderPersistence.addDDMStructure(folderId, ddmStructure);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addJournalFolderDDMStructures(long folderId, long[] structureIds)
+		throws SystemException {
+		journalFolderPersistence.addDDMStructures(folderId, structureIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addJournalFolderDDMStructures(long folderId,
+		List<DDMStructure> DDMStructures) throws SystemException {
+		journalFolderPersistence.addDDMStructures(folderId, DDMStructures);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void clearJournalFolderDDMStructures(long folderId)
+		throws SystemException {
+		journalFolderPersistence.clearDDMStructures(folderId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void deleteJournalFolderDDMStructure(long folderId, long structureId)
+		throws SystemException {
+		journalFolderPersistence.removeDDMStructure(folderId, structureId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void deleteJournalFolderDDMStructure(long folderId,
+		DDMStructure ddmStructure) throws SystemException {
+		journalFolderPersistence.removeDDMStructure(folderId, ddmStructure);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void deleteJournalFolderDDMStructures(long folderId,
+		long[] structureIds) throws SystemException {
+		journalFolderPersistence.removeDDMStructures(folderId, structureIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void deleteJournalFolderDDMStructures(long folderId,
+		List<DDMStructure> DDMStructures) throws SystemException {
+		journalFolderPersistence.removeDDMStructures(folderId, DDMStructures);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<DDMStructure> getJournalFolderDDMStructures(long folderId)
+		throws SystemException {
+		return journalFolderPersistence.getDDMStructures(folderId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<DDMStructure> getJournalFolderDDMStructures(long folderId,
+		int start, int end) throws SystemException {
+		return journalFolderPersistence.getDDMStructures(folderId, start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<DDMStructure> getJournalFolderDDMStructures(long folderId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		return journalFolderPersistence.getDDMStructures(folderId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int getJournalFolderDDMStructuresCount(long folderId)
+		throws SystemException {
+		return journalFolderPersistence.getDDMStructuresSize(folderId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public boolean hasJournalFolderDDMStructure(long folderId, long structureId)
+		throws SystemException {
+		return journalFolderPersistence.containsDDMStructure(folderId,
+			structureId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public boolean hasJournalFolderDDMStructures(long folderId)
+		throws SystemException {
+		return journalFolderPersistence.containsDDMStructures(folderId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void setJournalFolderDDMStructures(long folderId, long[] structureIds)
+		throws SystemException {
+		journalFolderPersistence.setDDMStructures(folderId, structureIds);
+	}
+
+	/**
 	 * Returns the d d m structure local service.
 	 *
 	 * @return the d d m structure local service
@@ -940,6 +1089,81 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the journal folder local service.
+	 *
+	 * @return the journal folder local service
+	 */
+	public com.liferay.portlet.journal.service.JournalFolderLocalService getJournalFolderLocalService() {
+		return journalFolderLocalService;
+	}
+
+	/**
+	 * Sets the journal folder local service.
+	 *
+	 * @param journalFolderLocalService the journal folder local service
+	 */
+	public void setJournalFolderLocalService(
+		com.liferay.portlet.journal.service.JournalFolderLocalService journalFolderLocalService) {
+		this.journalFolderLocalService = journalFolderLocalService;
+	}
+
+	/**
+	 * Returns the journal folder remote service.
+	 *
+	 * @return the journal folder remote service
+	 */
+	public com.liferay.portlet.journal.service.JournalFolderService getJournalFolderService() {
+		return journalFolderService;
+	}
+
+	/**
+	 * Sets the journal folder remote service.
+	 *
+	 * @param journalFolderService the journal folder remote service
+	 */
+	public void setJournalFolderService(
+		com.liferay.portlet.journal.service.JournalFolderService journalFolderService) {
+		this.journalFolderService = journalFolderService;
+	}
+
+	/**
+	 * Returns the journal folder persistence.
+	 *
+	 * @return the journal folder persistence
+	 */
+	public JournalFolderPersistence getJournalFolderPersistence() {
+		return journalFolderPersistence;
+	}
+
+	/**
+	 * Sets the journal folder persistence.
+	 *
+	 * @param journalFolderPersistence the journal folder persistence
+	 */
+	public void setJournalFolderPersistence(
+		JournalFolderPersistence journalFolderPersistence) {
+		this.journalFolderPersistence = journalFolderPersistence;
+	}
+
+	/**
+	 * Returns the journal folder finder.
+	 *
+	 * @return the journal folder finder
+	 */
+	public JournalFolderFinder getJournalFolderFinder() {
+		return journalFolderFinder;
+	}
+
+	/**
+	 * Sets the journal folder finder.
+	 *
+	 * @param journalFolderFinder the journal folder finder
+	 */
+	public void setJournalFolderFinder(JournalFolderFinder journalFolderFinder) {
+		this.journalFolderFinder = journalFolderFinder;
+	}
+
+	/**
 	 * Returns the d d m structure link local service.
 	 *
 	 * @return the d d m structure link local service
@@ -1160,6 +1384,14 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	protected DLFileEntryTypePersistence dlFileEntryTypePersistence;
 	@BeanReference(type = DLFileEntryTypeFinder.class)
 	protected DLFileEntryTypeFinder dlFileEntryTypeFinder;
+	@BeanReference(type = com.liferay.portlet.journal.service.JournalFolderLocalService.class)
+	protected com.liferay.portlet.journal.service.JournalFolderLocalService journalFolderLocalService;
+	@BeanReference(type = com.liferay.portlet.journal.service.JournalFolderService.class)
+	protected com.liferay.portlet.journal.service.JournalFolderService journalFolderService;
+	@BeanReference(type = JournalFolderPersistence.class)
+	protected JournalFolderPersistence journalFolderPersistence;
+	@BeanReference(type = JournalFolderFinder.class)
+	protected JournalFolderFinder journalFolderFinder;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService.class)
 	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService ddmStructureLinkLocalService;
 	@BeanReference(type = DDMStructureLinkPersistence.class)

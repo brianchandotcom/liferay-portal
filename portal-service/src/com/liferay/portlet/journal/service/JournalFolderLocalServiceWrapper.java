@@ -332,6 +332,171 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void addDDMStructureJournalFolder(long structureId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.addDDMStructureJournalFolder(structureId,
+			folderId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void addDDMStructureJournalFolder(long structureId,
+		com.liferay.portlet.journal.model.JournalFolder journalFolder)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.addDDMStructureJournalFolder(structureId,
+			journalFolder);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void addDDMStructureJournalFolders(long structureId, long[] folderIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.addDDMStructureJournalFolders(structureId,
+			folderIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void addDDMStructureJournalFolders(long structureId,
+		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.addDDMStructureJournalFolders(structureId,
+			JournalFolders);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void clearDDMStructureJournalFolders(long structureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.clearDDMStructureJournalFolders(structureId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void deleteDDMStructureJournalFolder(long structureId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.deleteDDMStructureJournalFolder(structureId,
+			folderId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void deleteDDMStructureJournalFolder(long structureId,
+		com.liferay.portlet.journal.model.JournalFolder journalFolder)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.deleteDDMStructureJournalFolder(structureId,
+			journalFolder);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void deleteDDMStructureJournalFolders(long structureId,
+		long[] folderIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.deleteDDMStructureJournalFolders(structureId,
+			folderIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void deleteDDMStructureJournalFolders(long structureId,
+		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.deleteDDMStructureJournalFolders(structureId,
+			JournalFolders);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
+		long structureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.getDDMStructureJournalFolders(structureId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
+		long structureId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.getDDMStructureJournalFolders(structureId,
+			start, end);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
+		long structureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.getDDMStructureJournalFolders(structureId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public int getDDMStructureJournalFoldersCount(long structureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.getDDMStructureJournalFoldersCount(structureId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public boolean hasDDMStructureJournalFolder(long structureId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.hasDDMStructureJournalFolder(structureId,
+			folderId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public boolean hasDDMStructureJournalFolders(long structureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.hasDDMStructureJournalFolders(structureId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void setDDMStructureJournalFolders(long structureId, long[] folderIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.setDDMStructureJournalFolders(structureId,
+			folderIds);
+	}
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean
@@ -554,6 +719,13 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
+	public long getOverridedDDMStructuresFolderId(long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.journal.NoSuchFolderException {
+		return _journalFolderLocalService.getOverridedDDMStructuresFolderId(folderId);
+	}
+
+	@Override
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
 		long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -636,6 +808,28 @@ public class JournalFolderLocalServiceWrapper
 		return _journalFolderLocalService.updateFolder(userId, folderId,
 			parentFolderId, name, description, mergeWithParentFolder,
 			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
+		long userId, long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, long[] ddmStructureIds,
+		boolean overrideDDMStructures, boolean mergeWithParentFolder,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.updateFolder(userId, folderId,
+			parentFolderId, name, description, ddmStructureIds,
+			overrideDDMStructures, mergeWithParentFolder, serviceContext);
+	}
+
+	@Override
+	public void updateFolderDDMStructures(
+		com.liferay.portlet.journal.model.JournalFolder folder,
+		long[] ddmStructureIdsArray)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.updateFolderDDMStructures(folder,
+			ddmStructureIdsArray);
 	}
 
 	@Override

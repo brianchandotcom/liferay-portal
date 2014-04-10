@@ -323,6 +323,9 @@ create index IX_EFD9CAC on JournalFolder (groupId, parentFolderId, status);
 create index IX_54F89E1F on JournalFolder (uuid_, companyId);
 create unique index IX_E002061 on JournalFolder (uuid_, groupId);
 
+create index IX_96F1BE5F on JournalFolders_DDMStructures (folderId);
+create index IX_6159D3DC on JournalFolders_DDMStructures (structureId);
+
 create index IX_C7FBC998 on Layout (companyId);
 create unique index IX_BC2C4231 on Layout (groupId, privateLayout, friendlyURL);
 create unique index IX_7162C27C on Layout (groupId, privateLayout, layoutId);

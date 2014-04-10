@@ -90,12 +90,13 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 			{ "treePath", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
+			{ "overrideDDMStructures", Types.BOOLEAN },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table JournalFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentFolderId LONG,treePath STRING null,name VARCHAR(100) null,description STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentFolderId LONG,treePath STRING null,name VARCHAR(100) null,description STRING null,overrideDDMStructures BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalFolder.parentFolderId ASC, journalFolder.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalFolder.parentFolderId ASC, JournalFolder.name ASC";
@@ -144,6 +145,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		model.setTreePath(soapModel.getTreePath());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setOverrideDDMStructures(soapModel.getOverrideDDMStructures());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -172,6 +174,18 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		return models;
 	}
 
+	public static final String MAPPING_TABLE_JOURNALFOLDERS_DDMSTRUCTURES_NAME = "JournalFolders_DDMStructures";
+	public static final Object[][] MAPPING_TABLE_JOURNALFOLDERS_DDMSTRUCTURES_COLUMNS =
+		{
+			{ "folderId", Types.BIGINT },
+			{ "structureId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_JOURNALFOLDERS_DDMSTRUCTURES_SQL_CREATE =
+		"create table JournalFolders_DDMStructures (structureId LONG not null,folderId LONG not null,primary key (structureId, folderId))";
+	public static final boolean FINDER_CACHE_ENABLED_JOURNALFOLDERS_DDMSTRUCTURES =
+		GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.JournalFolders_DDMStructures"),
+			true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.journal.model.JournalFolder"));
 
@@ -224,6 +238,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("overrideDDMStructures", getOverrideDDMStructures());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -307,6 +322,13 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Boolean overrideDDMStructures = (Boolean)attributes.get(
+				"overrideDDMStructures");
+
+		if (overrideDDMStructures != null) {
+			setOverrideDDMStructures(overrideDDMStructures);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -571,6 +593,22 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	@Override
 	public void setDescription(String description) {
 		_description = description;
+	}
+
+	@JSON
+	@Override
+	public boolean getOverrideDDMStructures() {
+		return _overrideDDMStructures;
+	}
+
+	@Override
+	public boolean isOverrideDDMStructures() {
+		return _overrideDDMStructures;
+	}
+
+	@Override
+	public void setOverrideDDMStructures(boolean overrideDDMStructures) {
+		_overrideDDMStructures = overrideDDMStructures;
 	}
 
 	@JSON
@@ -920,6 +958,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		journalFolderImpl.setTreePath(getTreePath());
 		journalFolderImpl.setName(getName());
 		journalFolderImpl.setDescription(getDescription());
+		journalFolderImpl.setOverrideDDMStructures(getOverrideDDMStructures());
 		journalFolderImpl.setStatus(getStatus());
 		journalFolderImpl.setStatusByUserId(getStatusByUserId());
 		journalFolderImpl.setStatusByUserName(getStatusByUserName());
@@ -1097,6 +1136,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 			journalFolderCacheModel.description = null;
 		}
 
+		journalFolderCacheModel.overrideDDMStructures = getOverrideDDMStructures();
+
 		journalFolderCacheModel.status = getStatus();
 
 		journalFolderCacheModel.statusByUserId = getStatusByUserId();
@@ -1123,7 +1164,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1149,6 +1190,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", overrideDDMStructures=");
+		sb.append(getOverrideDDMStructures());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append(", statusByUserId=");
@@ -1164,7 +1207,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.journal.model.JournalFolder");
@@ -1219,6 +1262,10 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>overrideDDMStructures</column-name><column-value><![CDATA[");
+		sb.append(getOverrideDDMStructures());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
@@ -1266,6 +1313,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	private String _name;
 	private String _originalName;
 	private String _description;
+	private boolean _overrideDDMStructures;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

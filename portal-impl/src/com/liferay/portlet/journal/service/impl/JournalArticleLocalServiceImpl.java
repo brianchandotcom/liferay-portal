@@ -6921,13 +6921,13 @@ public class JournalArticleLocalServiceImpl
 			classNameLocalService.getClassNameId(JournalArticle.class),
 			ddmStructureKey, true);
 
-		List<DDMStructure> ddmStructures =
+		List<DDMStructure> folderDDMStructures =
 			ddmStructureLocalService.getJournalFolderStructures(
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId,
 				true);
 
-		for (DDMStructure curDDMStructure : ddmStructures) {
-			if (curDDMStructure.getStructureId() ==
+		for (DDMStructure folderDDMStructure : folderDDMStructures) {
+			if (folderDDMStructure.getStructureId() ==
 					ddmStructure.getStructureId()) {
 
 				return;

@@ -321,20 +321,19 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
 
-		long groupId = article.getGroupId();
-
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
-			PortalUtil.getSiteGroupId(groupId),
+			PortalUtil.getSiteGroupId(article.getGroupId()),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			article.getStructureId(), true);
 
-		List<DDMStructure> ddmStructures =
+		List<DDMStructure> folderDDMStructures =
 			DDMStructureLocalServiceUtil.getJournalFolderStructures(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					article.getGroupId()),
 				containerModelId, true);
 
-		for (DDMStructure curDDMStructure : ddmStructures) {
-			if (curDDMStructure.getStructureId() ==
+		for (DDMStructure folderDDMStructure : folderDDMStructures) {
+			if (folderDDMStructure.getStructureId() ==
 					ddmStructure.getStructureId()) {
 
 				return;

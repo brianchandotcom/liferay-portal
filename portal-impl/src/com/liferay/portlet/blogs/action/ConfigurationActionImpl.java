@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -78,6 +80,13 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	@Override
+	protected Settings getSettings(ActionRequest actionRequest)
+		throws PortalException, SystemException {
+
+		return new BlogsSettings(super.getSettings(actionRequest));
 	}
 
 }

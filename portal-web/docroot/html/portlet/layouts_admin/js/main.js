@@ -31,6 +31,7 @@ AUI.add(
 					deleteMissingLayoutsNode: defaultConfig,
 					deletePortletDataNode: defaultConfig,
 					deletionsNode: defaultConfig,
+					exportLAR: defaultConfig,
 					form: defaultConfig,
 					incompleteProcessMessageNode: defaultConfig,
 					layoutSetSettingsNode: defaultConfig,
@@ -64,6 +65,7 @@ AUI.add(
 
 						instance._bindUI();
 
+						instance._exportLAR = config.exportLAR;
 						instance._layoutsExportTreeOutput = instance.byId(config.pageTreeId + 'Output');
 
 						instance._initLabels();
@@ -860,10 +862,18 @@ AUI.add(
 
 							var portletURL = Liferay.PortletURL.createURL(redirectNode.val());
 
-							portletURL.setParameter("struts_action", "/group_pages/edit_export_configuration");
 							portletURL.setParameter("cmd", cmdNode.val());
-							portletURL.setParameter("tabs2", "new-export-process");
-							portletURL.setParameter("exportNav", "custom");
+
+							if (instance._exportLAR) {
+								portletURL.setParameter("struts_action", "/group_pages/edit_export_configuration");
+								portletURL.setParameter("tabs2", "new-export-process");
+								portletURL.setParameter("exportConfigurationButtons", "custom");
+							}
+							else {
+								portletURL.setParameter("struts_action", "/layouts_admin/edit_publish_configuration");
+								portletURL.setParameter("tabs2", "new-publication-process");
+								portletURL.setParameter("publishConfigurationButtons", "custom");
+							}
 
 							var groupIdNode = instance.byId('groupId');
 

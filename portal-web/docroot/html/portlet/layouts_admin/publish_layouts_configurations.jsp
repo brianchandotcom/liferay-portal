@@ -18,6 +18,8 @@
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
+long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
+String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
 boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing");
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 %>
@@ -26,6 +28,8 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 	<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
+	<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
 	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 </portlet:renderURL>
 
@@ -37,6 +41,8 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 	<portlet:param name="tabs2" value="new-publication-process" />
 	<portlet:param name="publishConfigurationButtons" value="saved" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
+	<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
 	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 </liferay-portlet:renderURL>
 
@@ -70,7 +76,17 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 			/>
 		</liferay-ui:search-container-column-text>
 
+		<liferay-portlet:renderURL varImpl="rowURL">
+			<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+			<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+			<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+		</liferay-portlet:renderURL>
+
 		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
 			name="name"
 			value="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>"
 		/>

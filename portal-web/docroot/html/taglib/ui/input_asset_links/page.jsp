@@ -14,7 +14,13 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/input_asset_links/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
+
+<%@ page import="com.liferay.taglib.ui.helper.InputAssetLinksTagHelper" %>
+
+<%
+InputAssetLinksTagHelper viewHelper = new InputAssetLinksTagHelper(pageContext);
+%>
 
 <liferay-ui:icon-menu
 	cssClass="select-existing-selector"
@@ -27,14 +33,16 @@
 	<%
 	for (AssetRendererFactory assetRendererFactory : viewHelper.getAssetRendererFactories()) {
 	%>
+
 		<liferay-ui:icon
 			cssClass="asset-selector"
-			data="<%= viewHelper.getAssetBrowserData(assetRendererFactory)    %>"
-			id="<%= viewHelper.getAssetBrowserId(assetRendererFactory)      %>"
+			data="<%= viewHelper.getAssetBrowserData(assetRendererFactory) %>"
+			id="<%= viewHelper.getAssetBrowserId(assetRendererFactory) %>"
 			message="<%= viewHelper.getAssetBrowserMessage(assetRendererFactory) %>"
-			src="<%= viewHelper.getAssetBrowserSrc(assetRendererFactory)     %>"
+			src="<%= viewHelper.getAssetBrowserSrc(assetRendererFactory) %>"
 			url="javascript:;"
 		/>
+
 	<%
 	}
 	%>
@@ -68,31 +76,26 @@
 	>
 
 		<%
-		AssetEntry assetLinkEntry = viewHelper.getAssetLinkEntry(assetLink, true);
+		AssetEntry assetLinkEntry = viewHelper.getAssetLinkEntry(assetLink);
 		%>
 
 		<liferay-ui:search-container-column-text
 			name="type"
-			value="<%= viewHelper.getAssetColumnType(assetLinkEntry) %>"
+			value="<%= viewHelper.getAssetType(assetLinkEntry) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			name="title"
-			value="<%= viewHelper.getAssetColumnTitle(assetLinkEntry) %>"
+			value="<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			name="scope"
-			value="<%= viewHelper.getAssetColumnScope(assetLinkEntry) %>"
+			value="<%= HtmlUtil.escape(viewHelper.getGroupDescriptiveName(assetLinkEntry)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text>
-			<a class="modify-link"
-			   data-rowId="<%= assetLinkEntry.getEntryId() %>"
-			   href="javascript:;"
-			>
-				<%= removeLinkIcon %>
-			</a>
+			<a class="modify-link" data-rowId="<%= assetLinkEntry.getEntryId() %>" href="javascript:;"><%= removeLinkIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 

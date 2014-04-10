@@ -260,6 +260,27 @@
 			}
 		}
 
+		.added-message {
+			left: 0;
+
+			@include opacity(0);
+
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 410;
+
+			> .message {
+				display: inline-block;
+				text-align: center;
+				width: 100%;
+
+				img {
+					vertical-align: text-bottom;
+				}
+			}
+		}
+
 		@include respond-to(phone) {
 			.lfr-drag-portlet-message {
 				display: none;

@@ -291,6 +291,12 @@ AUI.add(
 
 					if (!panelVisible) {
 						BODY.detach('layoutControlsEsc|key');
+
+						if (panelId === STR_ADD_PANEL) {
+							Liferay.component('addApplication').destroy();
+							Liferay.component('addContent').destroy();
+							Liferay.component('addPage').destroy();
+						}
 					}
 
 					panelNode.toggle(panelVisible);

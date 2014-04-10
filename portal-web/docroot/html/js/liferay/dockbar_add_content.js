@@ -41,21 +41,21 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						instance._numItems.on('change', instance._onChangeNumItems, instance);
+						var eventHandles = [
+							instance._numItems.on('change', instance._onChangeNumItems, instance),
+							instance._entriesPanel.delegate(STR_CLICK, instance._addContent, SELECTOR_ADD_CONTENT_ITEM, instance),
+							Liferay.on('AddContent:changeDisplayStyle', instance._onChangeDisplayStyle, instance),
+							Liferay.on('AddContent:refreshContentList', instance._refreshContentList, instance),
+							Liferay.on('showTab', instance._onShowTab, instance),
+							Liferay.on(
+								'AddContent:addPortlet',
+								function(event) {
+									instance.addPortlet(event.node, event.options);
+								}
+							)
+						]
 
-						instance._entriesPanel.delegate(STR_CLICK, instance._addContent, SELECTOR_ADD_CONTENT_ITEM, instance);
-
-						Liferay.on(
-							'AddContent:addPortlet',
-							function(event) {
-								instance.addPortlet(event.node, event.options);
-							}
-						);
-
-						Liferay.on('AddContent:changeDisplayStyle', instance._onChangeDisplayStyle, instance);
-						Liferay.on('AddContent:refreshContentList', instance._refreshContentList, instance);
-
-						Liferay.on('showTab', instance._onShowTab, instance);
+						instance._eventHandles = instance._eventHandles.concat(eventHandles);
 					},
 
 					_onChangeDisplayStyle: function(event) {

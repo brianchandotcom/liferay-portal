@@ -209,4 +209,6 @@ refererURL.setParameter("updateLayout", "true");
 			srcNode: '#<portlet:namespace />applicationList'
 		}
 	);
+
+	Liferay.component('addApplication', addApplication);
 </aui:script>

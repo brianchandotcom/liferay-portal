@@ -119,6 +119,8 @@ AUI.add(
 
 						instance._addedMessage = addedMessage;
 
+						instance._eventHandles = [];
+
 						instance._bindUIDABase();
 					},
 
@@ -188,9 +190,7 @@ AUI.add(
 					_bindUIDABase: function() {
 						var instance = this;
 
-						instance._eventHandles = [
-							Liferay.after('showTab', instance._showTab, instance)
-						];
+						instance._eventHandles.push(Liferay.after('showTab', instance._showTab, instance));
 					},
 
 					_disablePortletEntry: function(portletId) {

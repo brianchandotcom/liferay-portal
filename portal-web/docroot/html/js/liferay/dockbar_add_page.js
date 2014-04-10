@@ -167,15 +167,15 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						instance._addForm.on('submit', instance._addPage, instance);
+						var eventHandles = [
+							instance._addForm.on('submit', instance._addPage, instance),
+							instance._cancelButton.on('click', instance._cancelAction, instance),
+							instance._hiddenCheckbox.on('change', instance._updateNavigationProxy, instance),
+							instance._nameInput.on('valuechange', instance._updateNavigationProxy, instance),
+							instance._togglerDelegate.on('toggler:expandedChange', instance._updateActivePage, instance)
+						];
 
-						instance._cancelButton.on('click', instance._cancelAction, instance);
-
-						instance._hiddenCheckbox.on('change', instance._updateNavigationProxy, instance);
-
-						instance._nameInput.on('valuechange', instance._updateNavigationProxy, instance);
-
-						instance._togglerDelegate.on('toggler:expandedChange', instance._updateActivePage, instance);
+						instance._eventHandles = instance._eventHandles.concat(eventHandles);
 					},
 
 					_cancelAction: function(event) {

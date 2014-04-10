@@ -438,6 +438,7 @@ create database lportal2 character set utf8;</echo>
 					<property name="testray.testcase.description" value="${testray.testcase.description}" />
 					<property name="testray.testcase.name" value="${testray.testcase.name}" />
 					<property name="testray.testcase.priority" value="${testray.testcase.priority}" />
+					<property name="testray.testcase.product.edition" value="${testray.testcase.product.edition}" />
 				</properties>
 			]]>
 		</property>

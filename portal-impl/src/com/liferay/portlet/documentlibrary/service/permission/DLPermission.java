@@ -60,7 +60,7 @@ public class DLPermission {
 					ResourceConstants.SCOPE_INDIVIDUAL,
 					String.valueOf(groupId));
 
-			if (count > 0) {
+			if (count <= 0) {
 				ResourceLocalServiceUtil.addResources(
 					permissionChecker.getCompanyId(), groupId, 0, RESOURCE_NAME,
 					groupId, false, true, true);

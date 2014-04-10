@@ -802,6 +802,12 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	@Override
 	public ListType updateImpl(com.liferay.portal.model.ListType listType)
 		throws SystemException {
+		if (listType.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				listType.getPrimaryKey());
+		}
+
 		listType = toUnwrappedModel(listType);
 
 		boolean isNew = listType.isNew();

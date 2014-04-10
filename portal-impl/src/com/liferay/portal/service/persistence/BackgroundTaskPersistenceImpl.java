@@ -7347,6 +7347,12 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	public BackgroundTask updateImpl(
 		com.liferay.portal.model.BackgroundTask backgroundTask)
 		throws SystemException {
+		if (backgroundTask.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				backgroundTask.getPrimaryKey());
+		}
+
 		backgroundTask = toUnwrappedModel(backgroundTask);
 
 		boolean isNew = backgroundTask.isNew();

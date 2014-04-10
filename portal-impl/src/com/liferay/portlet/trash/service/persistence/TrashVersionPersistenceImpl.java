@@ -1884,6 +1884,12 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	public TrashVersion updateImpl(
 		com.liferay.portlet.trash.model.TrashVersion trashVersion)
 		throws SystemException {
+		if (trashVersion.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				trashVersion.getPrimaryKey());
+		}
+
 		trashVersion = toUnwrappedModel(trashVersion);
 
 		boolean isNew = trashVersion.isNew();

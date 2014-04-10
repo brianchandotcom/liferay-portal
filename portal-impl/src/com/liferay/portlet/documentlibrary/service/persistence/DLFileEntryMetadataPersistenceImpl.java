@@ -2629,6 +2629,12 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	public DLFileEntryMetadata updateImpl(
 		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata)
 		throws SystemException {
+		if (dlFileEntryMetadata.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				dlFileEntryMetadata.getPrimaryKey());
+		}
+
 		dlFileEntryMetadata = toUnwrappedModel(dlFileEntryMetadata);
 
 		boolean isNew = dlFileEntryMetadata.isNew();

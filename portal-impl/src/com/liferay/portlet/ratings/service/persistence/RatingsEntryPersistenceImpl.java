@@ -2798,6 +2798,12 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	public RatingsEntry updateImpl(
 		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry)
 		throws SystemException {
+		if (ratingsEntry.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				ratingsEntry.getPrimaryKey());
+		}
+
 		ratingsEntry = toUnwrappedModel(ratingsEntry);
 
 		boolean isNew = ratingsEntry.isNew();

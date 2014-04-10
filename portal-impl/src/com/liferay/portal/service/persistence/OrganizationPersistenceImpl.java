@@ -6773,6 +6773,12 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	public Organization updateImpl(
 		com.liferay.portal.model.Organization organization)
 		throws SystemException {
+		if (organization.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				organization.getPrimaryKey());
+		}
+
 		organization = toUnwrappedModel(organization);
 
 		boolean isNew = organization.isNew();

@@ -1153,6 +1153,12 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	public ExpandoTable updateImpl(
 		com.liferay.portlet.expando.model.ExpandoTable expandoTable)
 		throws SystemException {
+		if (expandoTable.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				expandoTable.getPrimaryKey());
+		}
+
 		expandoTable = toUnwrappedModel(expandoTable);
 
 		boolean isNew = expandoTable.isNew();

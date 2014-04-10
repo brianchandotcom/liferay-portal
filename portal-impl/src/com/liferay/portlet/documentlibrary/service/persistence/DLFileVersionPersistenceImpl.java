@@ -5861,6 +5861,12 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public DLFileVersion updateImpl(
 		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion)
 		throws SystemException {
+		if (dlFileVersion.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				dlFileVersion.getPrimaryKey());
+		}
+
 		dlFileVersion = toUnwrappedModel(dlFileVersion);
 
 		boolean isNew = dlFileVersion.isNew();

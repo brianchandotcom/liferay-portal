@@ -3695,6 +3695,12 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	public PasswordPolicy updateImpl(
 		com.liferay.portal.model.PasswordPolicy passwordPolicy)
 		throws SystemException {
+		if (passwordPolicy.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				passwordPolicy.getPrimaryKey());
+		}
+
 		passwordPolicy = toUnwrappedModel(passwordPolicy);
 
 		boolean isNew = passwordPolicy.isNew();

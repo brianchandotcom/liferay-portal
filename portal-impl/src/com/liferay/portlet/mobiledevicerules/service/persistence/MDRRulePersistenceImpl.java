@@ -2181,6 +2181,12 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	public MDRRule updateImpl(
 		com.liferay.portlet.mobiledevicerules.model.MDRRule mdrRule)
 		throws SystemException {
+		if (mdrRule.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				mdrRule.getPrimaryKey());
+		}
+
 		mdrRule = toUnwrappedModel(mdrRule);
 
 		boolean isNew = mdrRule.isNew();

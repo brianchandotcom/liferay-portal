@@ -2365,6 +2365,12 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public MembershipRequest updateImpl(
 		com.liferay.portal.model.MembershipRequest membershipRequest)
 		throws SystemException {
+		if (membershipRequest.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				membershipRequest.getPrimaryKey());
+		}
+
 		membershipRequest = toUnwrappedModel(membershipRequest);
 
 		boolean isNew = membershipRequest.isNew();

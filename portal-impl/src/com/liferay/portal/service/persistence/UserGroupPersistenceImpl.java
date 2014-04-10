@@ -4302,6 +4302,12 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public UserGroup updateImpl(com.liferay.portal.model.UserGroup userGroup)
 		throws SystemException {
+		if (userGroup.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				userGroup.getPrimaryKey());
+		}
+
 		userGroup = toUnwrappedModel(userGroup);
 
 		boolean isNew = userGroup.isNew();

@@ -2953,6 +2953,12 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	public MBThreadFlag updateImpl(
 		com.liferay.portlet.messageboards.model.MBThreadFlag mbThreadFlag)
 		throws SystemException {
+		if (mbThreadFlag.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				mbThreadFlag.getPrimaryKey());
+		}
+
 		mbThreadFlag = toUnwrappedModel(mbThreadFlag);
 
 		boolean isNew = mbThreadFlag.isNew();

@@ -1011,6 +1011,12 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	public DLSyncEvent updateImpl(
 		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent)
 		throws SystemException {
+		if (dlSyncEvent.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				dlSyncEvent.getPrimaryKey());
+		}
+
 		dlSyncEvent = toUnwrappedModel(dlSyncEvent);
 
 		boolean isNew = dlSyncEvent.isNew();

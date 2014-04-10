@@ -1535,6 +1535,12 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	public ExpandoRow updateImpl(
 		com.liferay.portlet.expando.model.ExpandoRow expandoRow)
 		throws SystemException {
+		if (expandoRow.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				expandoRow.getPrimaryKey());
+		}
+
 		expandoRow = toUnwrappedModel(expandoRow);
 
 		boolean isNew = expandoRow.isNew();

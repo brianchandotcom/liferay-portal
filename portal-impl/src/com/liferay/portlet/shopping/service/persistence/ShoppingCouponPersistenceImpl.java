@@ -1059,6 +1059,12 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	public ShoppingCoupon updateImpl(
 		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon)
 		throws SystemException {
+		if (shoppingCoupon.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				shoppingCoupon.getPrimaryKey());
+		}
+
 		shoppingCoupon = toUnwrappedModel(shoppingCoupon);
 
 		boolean isNew = shoppingCoupon.isNew();

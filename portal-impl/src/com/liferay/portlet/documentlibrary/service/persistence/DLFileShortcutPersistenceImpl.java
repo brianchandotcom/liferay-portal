@@ -6140,6 +6140,12 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcut updateImpl(
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
 		throws SystemException {
+		if (dlFileShortcut.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				dlFileShortcut.getPrimaryKey());
+		}
+
 		dlFileShortcut = toUnwrappedModel(dlFileShortcut);
 
 		boolean isNew = dlFileShortcut.isNew();

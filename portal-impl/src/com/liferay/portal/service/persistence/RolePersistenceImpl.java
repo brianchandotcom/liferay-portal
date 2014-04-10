@@ -8721,6 +8721,12 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Role updateImpl(com.liferay.portal.model.Role role)
 		throws SystemException {
+		if (role.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				role.getPrimaryKey());
+		}
+
 		role = toUnwrappedModel(role);
 
 		boolean isNew = role.isNew();

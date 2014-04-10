@@ -561,6 +561,12 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	public WebDAVProps updateImpl(
 		com.liferay.portal.model.WebDAVProps webDAVProps)
 		throws SystemException {
+		if (webDAVProps.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				webDAVProps.getPrimaryKey());
+		}
+
 		webDAVProps = toUnwrappedModel(webDAVProps);
 
 		boolean isNew = webDAVProps.isNew();

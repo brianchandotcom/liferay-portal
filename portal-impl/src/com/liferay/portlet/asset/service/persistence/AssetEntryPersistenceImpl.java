@@ -3460,6 +3460,12 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	public AssetEntry updateImpl(
 		com.liferay.portlet.asset.model.AssetEntry assetEntry)
 		throws SystemException {
+		if (assetEntry.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				assetEntry.getPrimaryKey());
+		}
+
 		assetEntry = toUnwrappedModel(assetEntry);
 
 		boolean isNew = assetEntry.isNew();

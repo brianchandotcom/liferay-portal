@@ -2178,6 +2178,12 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	public AssetCategoryProperty updateImpl(
 		com.liferay.portlet.asset.model.AssetCategoryProperty assetCategoryProperty)
 		throws SystemException {
+		if (assetCategoryProperty.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				assetCategoryProperty.getPrimaryKey());
+		}
+
 		assetCategoryProperty = toUnwrappedModel(assetCategoryProperty);
 
 		boolean isNew = assetCategoryProperty.isNew();

@@ -18748,6 +18748,12 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public MBMessage updateImpl(
 		com.liferay.portlet.messageboards.model.MBMessage mbMessage)
 		throws SystemException {
+		if (mbMessage.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				mbMessage.getPrimaryKey());
+		}
+
 		mbMessage = toUnwrappedModel(mbMessage);
 
 		boolean isNew = mbMessage.isNew();

@@ -1961,6 +1961,12 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	public JournalArticleResource updateImpl(
 		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource)
 		throws SystemException {
+		if (journalArticleResource.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				journalArticleResource.getPrimaryKey());
+		}
+
 		journalArticleResource = toUnwrappedModel(journalArticleResource);
 
 		boolean isNew = journalArticleResource.isNew();

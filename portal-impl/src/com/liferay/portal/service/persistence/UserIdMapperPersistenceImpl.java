@@ -1422,6 +1422,12 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	public UserIdMapper updateImpl(
 		com.liferay.portal.model.UserIdMapper userIdMapper)
 		throws SystemException {
+		if (userIdMapper.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				userIdMapper.getPrimaryKey());
+		}
+
 		userIdMapper = toUnwrappedModel(userIdMapper);
 
 		boolean isNew = userIdMapper.isNew();

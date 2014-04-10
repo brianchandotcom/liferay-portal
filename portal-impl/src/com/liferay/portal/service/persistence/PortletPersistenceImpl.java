@@ -1080,6 +1080,12 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	@Override
 	public Portlet updateImpl(com.liferay.portal.model.Portlet portlet)
 		throws SystemException {
+		if (portlet.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				portlet.getPrimaryKey());
+		}
+
 		portlet = toUnwrappedModel(portlet);
 
 		boolean isNew = portlet.isNew();

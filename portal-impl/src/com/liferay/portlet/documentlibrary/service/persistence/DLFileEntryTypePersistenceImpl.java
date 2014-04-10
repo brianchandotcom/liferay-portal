@@ -3336,6 +3336,12 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	public DLFileEntryType updateImpl(
 		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
 		throws SystemException {
+		if (dlFileEntryType.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				dlFileEntryType.getPrimaryKey());
+		}
+
 		dlFileEntryType = toUnwrappedModel(dlFileEntryType);
 
 		boolean isNew = dlFileEntryType.isNew();

@@ -5956,6 +5956,12 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public LayoutRevision updateImpl(
 		com.liferay.portal.model.LayoutRevision layoutRevision)
 		throws SystemException {
+		if (layoutRevision.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				layoutRevision.getPrimaryKey());
+		}
+
 		layoutRevision = toUnwrappedModel(layoutRevision);
 
 		boolean isNew = layoutRevision.isNew();

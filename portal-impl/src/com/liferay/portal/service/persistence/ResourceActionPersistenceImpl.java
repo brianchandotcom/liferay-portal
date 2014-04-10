@@ -1161,6 +1161,12 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	public ResourceAction updateImpl(
 		com.liferay.portal.model.ResourceAction resourceAction)
 		throws SystemException {
+		if (resourceAction.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				resourceAction.getPrimaryKey());
+		}
+
 		resourceAction = toUnwrappedModel(resourceAction);
 
 		boolean isNew = resourceAction.isNew();

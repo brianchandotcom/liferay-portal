@@ -1622,6 +1622,12 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	public DDLRecordVersion updateImpl(
 		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion ddlRecordVersion)
 		throws SystemException {
+		if (ddlRecordVersion.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				ddlRecordVersion.getPrimaryKey());
+		}
+
 		ddlRecordVersion = toUnwrappedModel(ddlRecordVersion);
 
 		boolean isNew = ddlRecordVersion.isNew();

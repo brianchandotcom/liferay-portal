@@ -2038,6 +2038,12 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public SCLicense updateImpl(
 		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense)
 		throws SystemException {
+		if (scLicense.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				scLicense.getPrimaryKey());
+		}
+
 		scLicense = toUnwrappedModel(scLicense);
 
 		boolean isNew = scLicense.isNew();

@@ -4046,6 +4046,12 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	@Override
 	public Phone updateImpl(com.liferay.portal.model.Phone phone)
 		throws SystemException {
+		if (phone.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				phone.getPrimaryKey());
+		}
+
 		phone = toUnwrappedModel(phone);
 
 		boolean isNew = phone.isNew();

@@ -11492,6 +11492,12 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	public DDMTemplate updateImpl(
 		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate)
 		throws SystemException {
+		if (ddmTemplate.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				ddmTemplate.getPrimaryKey());
+		}
+
 		ddmTemplate = toUnwrappedModel(ddmTemplate);
 
 		boolean isNew = ddmTemplate.isNew();

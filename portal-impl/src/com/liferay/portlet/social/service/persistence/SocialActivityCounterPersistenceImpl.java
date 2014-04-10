@@ -2799,6 +2799,12 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	public SocialActivityCounter updateImpl(
 		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter)
 		throws SystemException {
+		if (socialActivityCounter.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				socialActivityCounter.getPrimaryKey());
+		}
+
 		socialActivityCounter = toUnwrappedModel(socialActivityCounter);
 
 		boolean isNew = socialActivityCounter.isNew();

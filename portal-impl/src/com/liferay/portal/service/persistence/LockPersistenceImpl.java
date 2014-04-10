@@ -2232,6 +2232,12 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	@Override
 	public Lock updateImpl(com.liferay.portal.model.Lock lock)
 		throws SystemException {
+		if (lock.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				lock.getPrimaryKey());
+		}
+
 		lock = toUnwrappedModel(lock);
 
 		boolean isNew = lock.isNew();

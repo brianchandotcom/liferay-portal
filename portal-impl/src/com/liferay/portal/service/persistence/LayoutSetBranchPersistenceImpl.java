@@ -3393,6 +3393,12 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	public LayoutSetBranch updateImpl(
 		com.liferay.portal.model.LayoutSetBranch layoutSetBranch)
 		throws SystemException {
+		if (layoutSetBranch.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				layoutSetBranch.getPrimaryKey());
+		}
+
 		layoutSetBranch = toUnwrappedModel(layoutSetBranch);
 
 		boolean isNew = layoutSetBranch.isNew();

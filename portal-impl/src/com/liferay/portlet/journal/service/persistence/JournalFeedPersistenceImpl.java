@@ -2861,6 +2861,12 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	public JournalFeed updateImpl(
 		com.liferay.portlet.journal.model.JournalFeed journalFeed)
 		throws SystemException {
+		if (journalFeed.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				journalFeed.getPrimaryKey());
+		}
+
 		journalFeed = toUnwrappedModel(journalFeed);
 
 		boolean isNew = journalFeed.isNew();

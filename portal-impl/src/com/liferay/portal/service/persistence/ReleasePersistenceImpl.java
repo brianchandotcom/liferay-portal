@@ -571,6 +571,12 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	@Override
 	public Release updateImpl(com.liferay.portal.model.Release release)
 		throws SystemException {
+		if (release.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				release.getPrimaryKey());
+		}
+
 		release = toUnwrappedModel(release);
 
 		boolean isNew = release.isNew();

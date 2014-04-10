@@ -2090,6 +2090,12 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	public MBStatsUser updateImpl(
 		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser)
 		throws SystemException {
+		if (mbStatsUser.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				mbStatsUser.getPrimaryKey());
+		}
+
 		mbStatsUser = toUnwrappedModel(mbStatsUser);
 
 		boolean isNew = mbStatsUser.isNew();

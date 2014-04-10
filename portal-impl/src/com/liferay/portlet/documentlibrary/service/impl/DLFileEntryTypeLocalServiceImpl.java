@@ -264,7 +264,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			return dlFolder.getDefaultFileEntryTypeId();
 		}
 		else {
-			return 0;
+			return DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 		}
 	}
 

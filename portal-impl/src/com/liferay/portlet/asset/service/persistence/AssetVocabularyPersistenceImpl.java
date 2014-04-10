@@ -4801,6 +4801,12 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	public AssetVocabulary updateImpl(
 		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary)
 		throws SystemException {
+		if (assetVocabulary.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				assetVocabulary.getPrimaryKey());
+		}
+
 		assetVocabulary = toUnwrappedModel(assetVocabulary);
 
 		boolean isNew = assetVocabulary.isNew();

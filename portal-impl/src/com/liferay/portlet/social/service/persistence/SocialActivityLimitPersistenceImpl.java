@@ -2250,6 +2250,12 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	public SocialActivityLimit updateImpl(
 		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit)
 		throws SystemException {
+		if (socialActivityLimit.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				socialActivityLimit.getPrimaryKey());
+		}
+
 		socialActivityLimit = toUnwrappedModel(socialActivityLimit);
 
 		boolean isNew = socialActivityLimit.isNew();

@@ -1101,6 +1101,12 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	public SCProductVersion updateImpl(
 		com.liferay.portlet.softwarecatalog.model.SCProductVersion scProductVersion)
 		throws SystemException {
+		if (scProductVersion.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				scProductVersion.getPrimaryKey());
+		}
+
 		scProductVersion = toUnwrappedModel(scProductVersion);
 
 		boolean isNew = scProductVersion.isNew();

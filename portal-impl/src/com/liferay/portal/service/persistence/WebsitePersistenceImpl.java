@@ -4052,6 +4052,12 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	@Override
 	public Website updateImpl(com.liferay.portal.model.Website website)
 		throws SystemException {
+		if (website.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				website.getPrimaryKey());
+		}
+
 		website = toUnwrappedModel(website);
 
 		boolean isNew = website.isNew();

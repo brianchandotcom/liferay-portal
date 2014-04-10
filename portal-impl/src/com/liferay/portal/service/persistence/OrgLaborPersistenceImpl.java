@@ -768,6 +768,12 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	@Override
 	public OrgLabor updateImpl(com.liferay.portal.model.OrgLabor orgLabor)
 		throws SystemException {
+		if (orgLabor.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				orgLabor.getPrimaryKey());
+		}
+
 		orgLabor = toUnwrappedModel(orgLabor);
 
 		boolean isNew = orgLabor.isNew();

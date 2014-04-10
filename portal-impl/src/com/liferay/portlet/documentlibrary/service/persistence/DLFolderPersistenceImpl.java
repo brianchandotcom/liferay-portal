@@ -9226,6 +9226,12 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	public DLFolder updateImpl(
 		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
 		throws SystemException {
+		if (dlFolder.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				dlFolder.getPrimaryKey());
+		}
+
 		dlFolder = toUnwrappedModel(dlFolder);
 
 		boolean isNew = dlFolder.isNew();

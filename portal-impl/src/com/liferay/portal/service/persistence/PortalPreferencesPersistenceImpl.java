@@ -576,6 +576,12 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	public PortalPreferences updateImpl(
 		com.liferay.portal.model.PortalPreferences portalPreferences)
 		throws SystemException {
+		if (portalPreferences.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				portalPreferences.getPrimaryKey());
+		}
+
 		portalPreferences = toUnwrappedModel(portalPreferences);
 
 		boolean isNew = portalPreferences.isNew();

@@ -1605,6 +1605,12 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	@Override
 	public LayoutSet updateImpl(com.liferay.portal.model.LayoutSet layoutSet)
 		throws SystemException {
+		if (layoutSet.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				layoutSet.getPrimaryKey());
+		}
+
 		layoutSet = toUnwrappedModel(layoutSet);
 
 		boolean isNew = layoutSet.isNew();

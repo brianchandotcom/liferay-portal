@@ -1157,6 +1157,12 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	public PluginSetting updateImpl(
 		com.liferay.portal.model.PluginSetting pluginSetting)
 		throws SystemException {
+		if (pluginSetting.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				pluginSetting.getPrimaryKey());
+		}
+
 		pluginSetting = toUnwrappedModel(pluginSetting);
 
 		boolean isNew = pluginSetting.isNew();

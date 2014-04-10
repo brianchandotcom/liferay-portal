@@ -2430,6 +2430,12 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	public DLContent updateImpl(
 		com.liferay.portlet.documentlibrary.model.DLContent dlContent)
 		throws SystemException {
+		if (dlContent.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				dlContent.getPrimaryKey());
+		}
+
 		dlContent = toUnwrappedModel(dlContent);
 
 		boolean isNew = dlContent.isNew();

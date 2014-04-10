@@ -1160,6 +1160,12 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	public ServiceComponent updateImpl(
 		com.liferay.portal.model.ServiceComponent serviceComponent)
 		throws SystemException {
+		if (serviceComponent.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				serviceComponent.getPrimaryKey());
+		}
+
 		serviceComponent = toUnwrappedModel(serviceComponent);
 
 		boolean isNew = serviceComponent.isNew();

@@ -2430,6 +2430,12 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	public JournalArticleImage updateImpl(
 		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage)
 		throws SystemException {
+		if (journalArticleImage.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				journalArticleImage.getPrimaryKey());
+		}
+
 		journalArticleImage = toUnwrappedModel(journalArticleImage);
 
 		boolean isNew = journalArticleImage.isNew();

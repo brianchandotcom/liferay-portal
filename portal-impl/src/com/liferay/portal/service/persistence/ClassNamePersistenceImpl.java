@@ -560,6 +560,12 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	@Override
 	public ClassName updateImpl(com.liferay.portal.model.ClassName className)
 		throws SystemException {
+		if (className.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				className.getPrimaryKey());
+		}
+
 		className = toUnwrappedModel(className);
 
 		boolean isNew = className.isNew();

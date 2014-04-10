@@ -1773,6 +1773,12 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	@Override
 	public Contact updateImpl(com.liferay.portal.model.Contact contact)
 		throws SystemException {
+		if (contact.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				contact.getPrimaryKey());
+		}
+
 		contact = toUnwrappedModel(contact);
 
 		boolean isNew = contact.isNew();

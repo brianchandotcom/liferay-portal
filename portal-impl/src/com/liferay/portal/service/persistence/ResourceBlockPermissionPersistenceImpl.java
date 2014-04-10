@@ -1581,6 +1581,12 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	public ResourceBlockPermission updateImpl(
 		com.liferay.portal.model.ResourceBlockPermission resourceBlockPermission)
 		throws SystemException {
+		if (resourceBlockPermission.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				resourceBlockPermission.getPrimaryKey());
+		}
+
 		resourceBlockPermission = toUnwrappedModel(resourceBlockPermission);
 
 		boolean isNew = resourceBlockPermission.isNew();

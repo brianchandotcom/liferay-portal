@@ -1882,6 +1882,12 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	public ResourceBlock updateImpl(
 		com.liferay.portal.model.ResourceBlock resourceBlock)
 		throws SystemException {
+		if (resourceBlock.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				resourceBlock.getPrimaryKey());
+		}
+
 		resourceBlock = toUnwrappedModel(resourceBlock);
 
 		boolean isNew = resourceBlock.isNew();

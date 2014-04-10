@@ -21181,6 +21181,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public WikiPage updateImpl(com.liferay.portlet.wiki.model.WikiPage wikiPage)
 		throws SystemException {
+		if (wikiPage.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				wikiPage.getPrimaryKey());
+		}
+
 		wikiPage = toUnwrappedModel(wikiPage);
 
 		boolean isNew = wikiPage.isNew();

@@ -1571,6 +1571,12 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	@Override
 	public Company updateImpl(com.liferay.portal.model.Company company)
 		throws SystemException {
+		if (company.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				company.getPrimaryKey());
+		}
+
 		company = toUnwrappedModel(company);
 
 		boolean isNew = company.isNew();

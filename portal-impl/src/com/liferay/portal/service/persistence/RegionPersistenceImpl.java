@@ -2090,6 +2090,12 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	@Override
 	public Region updateImpl(com.liferay.portal.model.Region region)
 		throws SystemException {
+		if (region.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				region.getPrimaryKey());
+		}
+
 		region = toUnwrappedModel(region);
 
 		boolean isNew = region.isNew();

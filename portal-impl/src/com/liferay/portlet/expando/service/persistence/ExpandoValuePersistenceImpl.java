@@ -5067,6 +5067,12 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	public ExpandoValue updateImpl(
 		com.liferay.portlet.expando.model.ExpandoValue expandoValue)
 		throws SystemException {
+		if (expandoValue.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				expandoValue.getPrimaryKey());
+		}
+
 		expandoValue = toUnwrappedModel(expandoValue);
 
 		boolean isNew = expandoValue.isNew();

@@ -268,6 +268,12 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	@Override
 	public Account updateImpl(com.liferay.portal.model.Account account)
 		throws SystemException {
+		if (account.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				account.getPrimaryKey());
+		}
+
 		account = toUnwrappedModel(account);
 
 		boolean isNew = account.isNew();

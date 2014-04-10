@@ -3145,6 +3145,12 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public AssetLink updateImpl(
 		com.liferay.portlet.asset.model.AssetLink assetLink)
 		throws SystemException {
+		if (assetLink.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				assetLink.getPrimaryKey());
+		}
+
 		assetLink = toUnwrappedModel(assetLink);
 
 		boolean isNew = assetLink.isNew();

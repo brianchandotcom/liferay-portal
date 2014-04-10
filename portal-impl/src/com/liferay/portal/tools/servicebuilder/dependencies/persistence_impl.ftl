@@ -457,6 +457,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	@Override
 	public ${entity.name} updateImpl(${packagePath}.model.${entity.name} ${entity.varName}) throws SystemException {
+		<#if (entity.getPKClassName() == "long") || (entity.getPKClassName() == "int")>
+			if (${entity.varName}.getPrimaryKey() <= 0) {
+				throw new IllegalArgumentException("Primary key needs to be a positive number:" + ${entity.varName}.getPrimaryKey());
+			}
+		</#if>
+
 		${entity.varName} = toUnwrappedModel(${entity.varName});
 
 		boolean isNew = ${entity.varName}.isNew();

@@ -3363,6 +3363,12 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement updateImpl(
 		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement)
 		throws SystemException {
+		if (socialActivityAchievement.getPrimaryKey() <= 0) {
+			throw new IllegalArgumentException(
+				"Primary key needs to be a positive number:" +
+				socialActivityAchievement.getPrimaryKey());
+		}
+
 		socialActivityAchievement = toUnwrappedModel(socialActivityAchievement);
 
 		boolean isNew = socialActivityAchievement.isNew();

@@ -329,7 +329,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			article.getStructureId(), true);
 
 		List<DDMStructure> ddmStructures =
-			DDMStructureLocalServiceUtil.getFolderStructures(
+			DDMStructureLocalServiceUtil.getJournalFolderStructures(
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
 				containerModelId, true);
 

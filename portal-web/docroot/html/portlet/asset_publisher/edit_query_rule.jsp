@@ -67,7 +67,7 @@ if (queryLogicIndex >= 0) {
 		/>
 	</div>
 
-	<div class="field categories-selector <%= Validator.equals(queryName, "assetCategories") ? StringPool.BLANK : "hide" %>">
+	<div class="categories-selector field <%= Validator.equals(queryName, "assetCategories") ? StringPool.BLANK : "hide" %>">
 		<liferay-ui:asset-categories-selector
 			curCategoryIds='<%= Validator.equals(queryName, "assetCategories") ? queryValues : null %>'
 			hiddenInput='<%= "queryCategoryIds" + index %>'

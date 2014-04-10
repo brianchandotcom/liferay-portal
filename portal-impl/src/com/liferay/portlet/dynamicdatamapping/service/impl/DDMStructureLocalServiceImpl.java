@@ -722,20 +722,22 @@ public class DDMStructureLocalServiceImpl
 
 	@Override
 	public List<DDMStructure> getJournalFolderStructures(
-			long[] groupIds, long folderId, boolean inherited)
+			long[] groupIds, long journalFolderId, boolean inherited)
 		throws PortalException, SystemException {
 
 		if (!inherited) {
-			return journalFolderPersistence.getDDMStructures(folderId);
+			return journalFolderPersistence.getDDMStructures(journalFolderId);
 		}
 
 		List<DDMStructure> structures = null;
 
-		folderId = journalFolderLocalService.getOverridedDDMStructuresFolderId(
-			folderId);
+		journalFolderId =
+			journalFolderLocalService.getOverridedDDMStructuresFolderId(
+				journalFolderId);
 
-		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			structures = journalFolderPersistence.getDDMStructures(folderId);
+		if (journalFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			structures = journalFolderPersistence.getDDMStructures(
+				journalFolderId);
 		}
 		else {
 			long classNameId = classNameLocalService.getClassNameId(

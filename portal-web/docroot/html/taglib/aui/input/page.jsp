@@ -37,7 +37,7 @@
 </c:if>
 
 <c:choose>
-	<c:when test='<%= Validator.isNotNull(label) && !hideLabel && !type.equals("assetCategories") && !type.equals("hidden") %>'>
+	<c:when test='<%= !hideLabel && Validator.isNotNull(label) && !type.equals("assetCategories") && !type.equals("hidden") %>'>
 		<label <%= labelTag %>>
 			<c:if test='<%= !choiceField && !inlineLabel.equals("right") %>'>
 					<%= labelContent %>
@@ -241,7 +241,7 @@
 	</div>
 </c:if>
 
-<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) && !hideLabel %>'>
+<c:if test='<%= !hideLabel && !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) %>'>
 	<c:if test='<%= choiceField || inlineLabel.equals("right") %>'>
 			<%= labelContent %>
 		</label>

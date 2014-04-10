@@ -193,7 +193,9 @@ public class RowChecker {
 
 		if (request != null) {
 			id = PortalUtil.generateRandomKey(request, value);
+		}
 
+		if (id != null) {
 			sb.append("<label class=\"hide-accessible\" for=\"");
 			sb.append(_portletResponse.getNamespace());
 			sb.append(id);

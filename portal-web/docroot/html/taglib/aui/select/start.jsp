@@ -18,7 +18,7 @@
 
 <div class="<%= controlGroupCss %>">
 	<c:choose>
-		<c:when test='<%= Validator.isNotNull(label) && !inlineLabel.equals("right") && !hideLabel %>'>
+		<c:when test='<%= !hideLabel && Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
 			<label <%= AUIUtil.buildLabel("select", inlineField, true, namespace + id) %>>
 				<liferay-ui:message key="<%= label %>" />
 

@@ -724,18 +724,18 @@ public class JournalFolderLocalServiceImpl
 
 		journalFolderPersistence.update(folder);
 
-		// DDMStructures
-
-		if (ddmStructureIds != null) {
-			updateFolderDDMStructures(folder, ddmStructureIds);
-		}
-
 		// Asset
 
 		updateAsset(
 			userId, folder, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
+
+		// Dynamic data mapping
+
+		if (ddmStructureIds != null) {
+			updateFolderDDMStructures(folder, ddmStructureIds);
+		}
 
 		return folder;
 	}

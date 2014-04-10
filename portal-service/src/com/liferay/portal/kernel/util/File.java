@@ -81,6 +81,9 @@ public interface File {
 
 	public String extractText(InputStream is, String fileName);
 
+	public String extractText(
+		InputStream is, String fileName, int maxStringLength);
+
 	public String[] find(String directory, String includes, String excludes);
 
 	public String getAbsolutePath(java.io.File file);

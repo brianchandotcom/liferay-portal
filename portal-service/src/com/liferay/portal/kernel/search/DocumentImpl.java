@@ -166,6 +166,13 @@ public class DocumentImpl implements Document {
 	}
 
 	@Override
+	public void addFile(
+		String name, InputStream is, String fileExt, int maxStringLength) {
+
+		addText(name, FileUtil.extractText(is, fileExt, maxStringLength));
+	}
+
+	@Override
 	public void addKeyword(String name, boolean value) {
 		addKeyword(name, String.valueOf(value));
 	}

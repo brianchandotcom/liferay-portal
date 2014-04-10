@@ -143,7 +143,7 @@ public class EntriesChecker extends RowChecker {
 		String checkBoxRowIds = sb.toString();
 
 		return getRowCheckBox(
-			checked, disabled,
+			request, checked, disabled,
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
 				name + "Checkbox",
 			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "Checkbox'",

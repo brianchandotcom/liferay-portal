@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS_CHECKBOX</td>
+	<td>//label[contains(.,'Permissions')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

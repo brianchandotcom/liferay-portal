@@ -25,7 +25,7 @@
 
 	<c:choose>
 		<c:when test="<%= BrowserSnifferUtil.isIe(request) && (BrowserSnifferUtil.getMajorVersion(request) < 9) %>">
-			<img alt="" class="user-avatar-image" src="<%= portraitURL %>" />
+			<img alt="<liferay-ui:message key="user-portrait" />" class="user-avatar-image" src="<%= portraitURL %>" />
 		</c:when>
 		<c:otherwise>
 			<span class="user-avatar-image" style="background-image: url('<%= portraitURL %>');"></span>

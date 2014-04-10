@@ -116,14 +116,14 @@
 								<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
 									<div class="lfr-preview-file-image-current-column">
 										<div class="lfr-preview-file-image-container">
-											<img class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
+											<img alt="<liferay-ui:message key="preview" />" class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
 										</div>
 									</div>
 								</div>
 							</div>
 						</c:when>
 						<c:otherwise>
-							<img class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
+							<img alt="<liferay-ui:message key="preview" />" class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
 						</c:otherwise>
 					</c:choose>
 				</c:when>
@@ -143,7 +143,7 @@
 						<div class="lfr-preview-file-content" id="<portlet:namespace />previewFileContent">
 							<div class="lfr-preview-file-image-current-column">
 								<div class="lfr-preview-file-image-container">
-									<img class="lfr-preview-file-image-current" id="<portlet:namespace />previewFileImage" src="<%= previewFileURL + "1" %>" />
+									<img alt="<liferay-ui:message key="preview" />" class="lfr-preview-file-image-current" id="<portlet:namespace />previewFileImage" src="<%= previewFileURL + "1" %>" />
 								</div>
 								<span class="lfr-preview-file-actions hide" id="<portlet:namespace />previewFileActions">
 									<span class="lfr-preview-file-toolbar" id="<portlet:namespace />previewToolbar"></span>

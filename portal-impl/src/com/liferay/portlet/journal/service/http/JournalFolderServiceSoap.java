@@ -442,5 +442,26 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.journal.model.JournalFolderSoap updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, Long[] ddmStructureIds,
+		boolean overrideDDMStructures, boolean mergeWithParentFolder,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.updateFolder(folderId,
+					parentFolderId, name, description,
+					ListUtil.toList(ddmStructureIds), overrideDDMStructures,
+					mergeWithParentFolder, serviceContext);
+
+			return com.liferay.portlet.journal.model.JournalFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(JournalFolderServiceSoap.class);
 }

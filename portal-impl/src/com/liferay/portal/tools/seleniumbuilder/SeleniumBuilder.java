@@ -506,6 +506,31 @@ public class SeleniumBuilder {
 				sb.append(testCaseName);
 				sb.append("TestCase.test");
 				sb.append(commandElement.attributeValue("name"));
+				sb.append(".testray.testcase.description=");
+
+				if (commandElement.attributeValue("description") != null) {
+					sb.append(commandElement.attributeValue("description"));
+				}
+
+				testCaseProperties.add(sb.toString());
+
+				sb = new StringBundler();
+
+				sb.append(testCaseName);
+				sb.append("TestCase.test");
+				sb.append(commandElement.attributeValue("name"));
+				sb.append(".testray.testcase.name=");
+				sb.append(testCaseName);
+				sb.append("#");
+				sb.append(commandElement.attributeValue("name"));
+
+				testCaseProperties.add(sb.toString());
+
+				sb = new StringBundler();
+
+				sb.append(testCaseName);
+				sb.append("TestCase.test");
+				sb.append(commandElement.attributeValue("name"));
 				sb.append(".testray.testcase.priority=");
 				sb.append(commandElement.attributeValue("priority"));
 

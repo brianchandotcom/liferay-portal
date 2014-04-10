@@ -261,13 +261,18 @@ public class HttpImpl implements Http {
 		return decodeURL(url, false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, unescapeSpaces is useless, just use
+	 *             {@link #decodeURL(java.lang.String)}
+	 */
+	@Deprecated
 	@Override
 	public String decodeURL(String url, boolean unescapeSpaces) {
 		if (Validator.isNull(url)) {
 			return url;
 		}
 
-		return URLCodec.decodeURL(url, StringPool.UTF8, unescapeSpaces);
+		return URLCodec.decodeURL(url, StringPool.UTF8);
 	}
 
 	public void destroy() {

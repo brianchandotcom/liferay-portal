@@ -175,7 +175,7 @@ public class JournalRSSUtil {
 			}
 			else if (pathArray.length == 5) {
 				folderId = GetterUtil.getLong(pathArray[3]);
-				title = HttpUtil.decodeURL(pathArray[4], true);
+				title = HttpUtil.decodeURL(pathArray[4]);
 			}
 			else if (pathArray.length > 5) {
 				uuid = pathArray[5];

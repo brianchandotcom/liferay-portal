@@ -341,7 +341,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		}
 
 		throw new RestoreEntryException(
-			RestoreEntryException.NOT_VALID_CONTAINER);
+			RestoreEntryException.INVALID_CONTAINER);
 	}
 
 	@Override

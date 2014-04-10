@@ -735,7 +735,9 @@ public class DDMStructureLocalServiceImpl
 			journalFolderLocalService.getOverridedDDMStructuresFolderId(
 				journalFolderId);
 
-		if (journalFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (journalFolderId !=
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
 			structures = journalFolderPersistence.getDDMStructures(
 				journalFolderId);
 		}

@@ -55,8 +55,8 @@ if (Validator.isNotNull(keywords)) {
 		<liferay-ui:message key="unable-to-move-this-item-to-the-selected-destination" />
 	</c:if>
 
-	<c:if test="<%= ree.getType() == RestoreEntryException.NOT_VALID_CONTAINER %>">
-		<liferay-ui:message key="the-destination-you-selected-is-not-a-valid-container.-please-select-a-different-destination" />
+	<c:if test="<%= ree.getType() == RestoreEntryException.INVALID_CONTAINER %>">
+		<liferay-ui:message key="the-destination-you-selected-is-an-invalid-container.-please-select-a-different-destination" />
 	</c:if>
 </liferay-ui:error>
 

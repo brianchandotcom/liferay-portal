@@ -91,7 +91,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 						<aui:option label="no" value="false" />
 					</aui:select>
 
-					<span class="alert alert-info hide form-hint" id="border-note">
+					<span class="alert alert-info form-hint hide" id="border-note">
 						<liferay-ui:message key="this-change-will-only-be-shown-after-you-refresh-the-page" />
 					</span>
 				</aui:fieldset>
@@ -329,7 +329,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 					</aui:row>
 				</aui:fieldset>
 
-				<aui:fieldset cssClass="spacing fieldset" id="spacing-styles">
+				<aui:fieldset cssClass="fieldset spacing" id="spacing-styles">
 					<aui:row>
 						<aui:col cssClass="lfr-padding use-for-all-column" width="<%= 50 %>">
 							<aui:fieldset label="padding">

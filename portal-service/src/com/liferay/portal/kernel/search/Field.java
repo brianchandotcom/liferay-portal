@@ -68,6 +68,8 @@ public class Field implements Serializable {
 
 	public static final String CREATE_DATE = "createDate";
 
+	public static final String DEFAULT_LANGUAGE_ID = "defaultLanguageId";
+
 	public static final String DESCRIPTION = "description";
 
 	public static final String ENTRY_CLASS_NAME = "entryClassName";

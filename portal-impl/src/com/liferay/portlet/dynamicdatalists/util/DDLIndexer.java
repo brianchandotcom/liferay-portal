@@ -65,9 +65,9 @@ public class DDLIndexer extends BaseIndexer {
 
 	public DDLIndexer() {
 		setDefaultSelectedFieldNames(
-			new String[] {
-				Field.COMPANY_ID, Field.DESCRIPTION, Field.ENTRY_CLASS_NAME,
-				Field.ENTRY_CLASS_PK, Field.TITLE, Field.UID});
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.UID);
+		setDefaultSelectedLocalizedFieldNames(Field.DESCRIPTION, Field.TITLE);
 		setFilterSearch(true);
 	}
 

@@ -840,17 +840,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return super.getLanguageKeys(matcher);
 		}
 
-		String group = matcher.group(1);
+		String languageKey = matcher.group(2);
 
-		if (group.equals("aui:") || group.equals("liferay-ui:")) {
-			String languageKey = matcher.group(2);
+		languageKey = TextFormatter.format(languageKey, TextFormatter.K);
 
-			languageKey = TextFormatter.format(languageKey, TextFormatter.K);
-
-			return new String[] {languageKey};
-		}
-
-		return super.getLanguageKeys(matcher);
+		return new String[] {languageKey};
 	}
 
 	protected String getTaglibRegex(String quoteType) {

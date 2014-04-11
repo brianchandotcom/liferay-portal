@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,6 +42,7 @@ import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.comparator.AssetCategoryComparator;
 import com.liferay.portlet.asset.AssetCategoryNameException;
 import com.liferay.portlet.asset.DuplicateCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -238,22 +238,14 @@ public class AssetCategoryLocalServiceImpl
 	public void deleteVocabularyCategories(long vocabularyId)
 		throws PortalException, SystemException {
 
-		OrderByComparator leftDescendingComparator =
-			OrderByComparatorFactoryUtil.getOrderByComparatorFactory().create(
-				"", "leftCategoryId", false);
-
 		List<AssetCategory> categories =
-			assetCategoryPersistence.findByVocabularyId(
-				vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				leftDescendingComparator);
+			assetCategoryPersistence.findByP_V(
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, vocabularyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new AssetCategoryComparator(false));
 
 		for (AssetCategory category : categories) {
-			if (category.getParentCategoryId() ==
-					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-
-				assetCategoryLocalService.deleteCategory(
-					category.getCategoryId());
-			}
+			deleteCategory(category.getCategoryId());
 		}
 	}
 

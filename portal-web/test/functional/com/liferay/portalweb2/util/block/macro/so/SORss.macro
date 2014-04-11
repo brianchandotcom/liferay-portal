@@ -78,4 +78,35 @@
 			</then>
 		</while>
 	</command>
+
+	<command name="viewRssFeedConfiguration">
+		<if>
+			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<then>
+				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+			</then>
+		</if>
+
+		<if>
+			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<then>
+				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+			</then>
+		</if>
+
+		<execute action="SOSiteHome#click" locator-key1="RSS_OPTIONS" />
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
+
+		<execute action="SOSiteHomeRssConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="SOSiteHomeRssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_TITLE_CHECKBOX" />
+		<execute action="SOSiteHomeRssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_PUBLISHED_DATE_CHECKBOX" />
+		<execute action="SOSiteHomeRssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION_CHECKBOX" />
+		<execute action="SOSiteHomeRssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_IMAGE_CHECKBOX" />
+		<execute action="SOSiteHomeRssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_ITEM_AUTHOR_CHECKBOX" />
+		<execute action="SOSiteHomeRssConfiguration#assertSelectedLabel" locator-key1="DISPLAY_SETTINGS_ENTRIES_PER_FEED_SELECT" value1="${entriesPerFeed}" />
+		<execute action="SOSiteHomeRssConfiguration#assertSelectedLabel" locator-key1="DISPLAY_SETTINGS_EXPANDED_ENTRIES_PER_FEED_SELECT" value1="${expandedEntriesPerFeed}" />
+		<execute action="SOSiteHomeRssConfiguration#selectFrameTop" />
+	</command>
 </definition>

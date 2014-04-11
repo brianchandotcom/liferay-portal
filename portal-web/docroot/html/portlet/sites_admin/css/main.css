@@ -14,4 +14,8 @@
 	.membership-restriction-container {
 		margin-top: 1em;
 	}
+
+	.interactions-settings, .interactions-users, .social-relations {
+		margin-left: 20px;
+	}
 }

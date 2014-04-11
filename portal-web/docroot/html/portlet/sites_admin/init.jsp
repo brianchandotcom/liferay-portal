@@ -58,6 +58,7 @@ page import="com.liferay.portlet.sitesadmin.search.TeamDisplayTerms" %><%@
 page import="com.liferay.portlet.sitesadmin.search.TeamSearch" %><%@
 page import="com.liferay.portlet.sitesadmin.search.UserGroupTeamChecker" %><%@
 page import="com.liferay.portlet.sitesadmin.search.UserTeamChecker" %><%@
+page import="com.liferay.portlet.social.model.SocialRelationConstants" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupGroupChecker" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationGroupChecker" %>

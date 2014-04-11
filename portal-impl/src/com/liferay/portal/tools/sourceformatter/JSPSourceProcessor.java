@@ -431,6 +431,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern1);
 		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern2);
 		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern3);
+
 		checkXSS(fileName, newContent);
 
 		compareAndAutoFixContent(file, fileName, content, newContent);
@@ -1323,8 +1324,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Pattern _taglibLanguageKeyPattern2 = Pattern.compile(
 		"(aui:)(?:input|select|field-wrapper) " +
 			"(?!.*label=(?:'|\").+(?:'|\").*name=\"[^<=%\\[\\s]+\")" +
-			"(?!.*name=\"[^<=%\\[\\s]+\".*type=\"hidden\")" +
-			".*name=\"([^<=%\\[\\s]+)\"");
+				"(?!.*name=\"[^<=%\\[\\s]+\".*type=\"hidden\")" +
+					".*name=\"([^<=%\\[\\s]+)\"");
 	private Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
 		"(liferay-ui:)(?:input-resource) " +
 			".*id=\"([^<=%\\[\\s]+)\"(?!.*label=(?:'|\").+(?:'|\"))");

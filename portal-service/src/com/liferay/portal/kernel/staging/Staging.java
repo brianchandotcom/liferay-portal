@@ -319,8 +319,9 @@ public interface Staging {
 		throws Exception;
 
 	public void validateRemote(
-			String remoteAddress, int remotePort, String remotePathContext,
-			boolean secureConnection, long remoteGroupId)
+			long groupId, String remoteAddress, int remotePort,
+			String remotePathContext, boolean secureConnection,
+			long remoteGroupId)
 		throws PortalException;
 
 }

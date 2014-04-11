@@ -65,6 +65,14 @@
 		</execute>
 	</command>
 
+	<command name="exportUserGroups">
+		<execute macro="LAR#gotoExportImportCmd" />
+
+		<execute macro="LAR#exportCmd">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+	</command>
+
 	<command name="gotoExportImportCmd">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Export / Import" />

@@ -30,6 +30,8 @@
 			<var name="siteScopeName" value="${globalSiteName}" />
 		</execute>
 
+		<execute macro="DMDocumentType#tearDownCP" />
+
 		<execute macro="BlogsEntry#tearDownCP" />
 
 		<execute macro="Vocabulary#tearDownCP" />
@@ -210,6 +212,54 @@
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content Edit" />
 		</execute>
+	</command>
+
+	<command name="AssertAssetListScopeViaAssetPublisher" priority="4">
+		<var name="globalDocumentTypeDescription" value="Global Document Type Description" />
+		<var name="globalDocumentTypeFieldNames" value="Text" />
+		<var name="globalDocumentTypeName" value="Global Document Type Name" />
+		<var name="localDocumentTypeDescription" value="Local Document Type Description" />
+		<var name="localDocumentTypeFieldNames" value="Text" />
+		<var name="localDocumentTypeName" value="Local Document Type Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="DMDocumentType#addCP">
+			<var name="dmDocumentTypeDescription" value="${globalDocumentTypeDescription}" />
+			<var name="dmDocumentTypeFieldNames" value="${globalDocumentTypeFieldNames}" />
+			<var name="dmDocumentTypeName" value="${globalDocumentTypeName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocumentType#addCP">
+			<var name="dmDocumentTypeDescription" value="${localDocumentTypeDescription}" />
+			<var name="dmDocumentTypeFieldNames" value="${localDocumentTypeFieldNames}" />
+			<var name="dmDocumentTypeName" value="${localDocumentTypeName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#goToConfigurationPG" />
+
+		<execute action="PGAssetpublisherConfiguration#click" locator-key1="ASSET_SELECTION_MANUAL" />
+
+		<execute action="PGAssetpublisherConfigurationManual#assertClick" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT" value1="Select" />
+
+		<var name="key_assetEntryType" value="${globalDocumentTypeName}" />
+
+		<execute action="PGAssetpublisherConfigurationManual#assertTextEquals" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="${globalDocumentTypeName}" />
+
+		<var name="key_assetEntryType" value="${localDocumentTypeName}" />
+
+		<execute action="PGAssetpublisherConfigurationManual#assertTextEquals" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="${localDocumentTypeName}" />
 	</command>
 
 	<command name="AssetPublisherCategoriesLocalization" priority="3">

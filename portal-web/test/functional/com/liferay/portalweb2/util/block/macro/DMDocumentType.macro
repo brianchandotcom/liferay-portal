@@ -1,4 +1,29 @@
 <definition>
+	<command name="addCP">
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="MANAGE_MENULIST_DOCUMENT_TYPES" value1="Document Types" />
+
+		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
+
+		<execute action="PGDocumentsandmediaManageDocumenttypes#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="NAME_FIELD" value1="${dmDocumentTypeName}" />
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dmDocumentTypeDescription}" />
+
+		<for list="${dmDocumentTypeFieldNames}" param="dmDocumentTypeFieldName">
+			<execute macro="DMDocumentType#addField">
+				<var name="field" value="${dmDocumentTypeFieldName}" />
+				<var name="fieldFieldLabel" value="${dmDocumentTypeFieldName}" />
+				<var name="fieldName" value="${dmDocumentTypeFieldName?replace(' ', '_')}" />
+			</execute>
+		</for>
+
+		<execute action="PGDocumentsandmediaManageDocumenttypes#selectFrame" locator-key1="DOCUMENT_TYPES_IFRAME" />
+
+		<execute action="PGDocumentsandmediaManageDocumenttypesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addField">
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 

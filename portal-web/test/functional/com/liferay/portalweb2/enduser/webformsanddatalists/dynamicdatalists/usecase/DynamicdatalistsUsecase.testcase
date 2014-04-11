@@ -6,6 +6,8 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="User#firstLoginPG" />
+
 		<execute macro="DDLTemplate#tearDownTemplateCP" />
 
 		<execute macro="DDLTemplate#tearDownTemplateCP">
@@ -131,6 +133,177 @@
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
+	</command>
+
+	<command name="AssertGuestCannotEditRecord" priority="4">
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition Name" />
+		<var name="ddlListDescription" value="List Description" />
+		<var name="ddlListName" value="List Name" />
+		<var name="ddlRecordFieldData1" value="Text" />
+		<var name="ddlRecordFieldData2" value="Document" />
+		<var name="document" value="Document_1.doc" />
+		<var name="field1" value="Text" />
+		<var name="field2" value="Documents and Media" />
+		<var name="fieldFieldLabel1" value="Text" />
+		<var name="fieldFieldLabel1Edit" value="Text Edit" />
+		<var name="fieldFieldLabel2" value="Document" />
+		<var name="fieldName1" value="Text" />
+		<var name="fieldName2" value="Document" />
+		<var name="localizedLanguage" value="Catalan (Spain)" />
+		<var name="pageName" value="Dynamic Data List Display Page" />
+		<var name="portletName" value="Dynamic Data List Display" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field1}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel1}" />
+			<var name="fieldName" value="${fieldName1}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field2}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel2}" />
+			<var name="fieldName" value="${fieldName2}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="DDLList#addPGViaDDLDisplay">
+			<var name="ddlListDescription" value="${ddlListDescription}" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#savePGViaDDLDisplay" />
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLRecord#addPGViaDDLDisplay">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData1}" />
+			<var name="field" value="${field1}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel1}" />
+			<var name="fieldName" value="${fieldName1}" />
+		</execute>
+
+		<execute macro="DDLRecord#populateField">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData2}" />
+			<var name="document" value="${document}" />
+			<var name="field" value="${field2}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel2}" />
+			<var name="fieldName" value="${fieldName2}" />
+		</execute>
+
+		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
+		<execute action="PGDynamicdatalists#pause" locator1="1000" />
+
+		<var name="adminViewURL" method="selenium#getLocation()" />
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLRecord#editPG" />
+
+		<execute action="PGDynamicdatalists#pause" locator1="1000" />
+
+		<var name="adminEditURL" method="selenium#getLocation()" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel1}" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData1}" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_TWO_NAME" value1="${fieldFieldLabel2}" />
+		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_TWO_RECORD_1" value1="Content is temporarily unavailable." />
+		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_GUEST_VIEW_LINK" value1="View" />
+
+		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel1} ${ddlRecordFieldData1}" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_2" value1="${fieldFieldLabel2}" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertElementNotPresent" locator-key1="EDIT_BUTTON" />
+
+		<execute action="Home#open" locator1="${adminViewURL}" />
+
+		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel1} ${ddlRecordFieldData1}" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertTextEquals" locator-key1="FIELD_2" value1="${fieldFieldLabel2}" />
+		<execute action="PGDynamicdatalistsDisplayrecord#assertElementNotPresent" locator-key1="EDIT_BUTTON" />
+
+		<execute action="Home#open" locator1="${adminEditURL}" />
+
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="ADD_TRANSLATION_BUTTON" value1="Add Translation" />
+
+		<var name="key_localizedLanguage" value="${localizedLanguage}" />
+
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="Catalan (Spain)" />
+
+		<execute action="PGDynamicdatalistsEditrecordRecordtranslation#selectFrame" locator-key1="RECORD_TRANSLATION_IFRAME" />
+		<execute action="PGDynamicdatalistsEditrecordRecordtranslation#assertClick" locator-key1="ADD_TRANSLATION_BUTTON" value1="Add Translation" />
+		<execute action="PGDynamicdatalistsEditrecordRecordtranslation#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute action="Home#open" locator1="${adminEditURL}" />
+
+		<execute action="PGDynamicdatalistsEditrecord#assertElementNotPresent" locator-key1="AVAILABLE_TRANSLATIONS_LINK" value1="${localizedLanguage}" />
+		<execute action="PGDynamicdatalistsEditrecord#type" locator-key1="FIELD_1" value1="${fieldFieldLabel1Edit}" />
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+
+		<execute action="Home#open" locator1="${adminEditURL}" />
+
+		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="FIELD_1" value1="${fieldFieldLabel1}" />
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="FIELD_SELECT_BUTTON" value1="Select" />
+
+		<execute action="PGDynamicdatalistsEditrecordSelectdocument#selectFrame" locator-key1="SELECT_DOCUMENT_IFRAME" />
+
+		<execute action="PGLogin#assertTextEquals" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
+
+		<execute action="Home#open" locator1="${adminEditURL}" />
+
+		<execute action="PGDynamicdatalistsEditrecord#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+		<execute action="PGDynamicdatalistsEditrecord#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="DeleteStructure" priority="5">

@@ -18,7 +18,17 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--RECENT_BLOGS-->
+<tr>
+	<td>RECENT_BLOGS_OPTIONS</td>
+	<td>//header[contains(.,'Recent Blogs')]//menu//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECENT_BLOGS_ENTRY-->
 <tr>
 	<td>RECENT_BLOGS_ENTRY_TITLE</td>
 	<td>//div[@class='entry-info' and contains(.,'${key_entryTitle}')]/span[@class='entry-title']</td>

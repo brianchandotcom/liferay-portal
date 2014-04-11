@@ -63,7 +63,7 @@ activityCounters.remove(SocialActivityCounterConstants.NAME_PARTICIPATION);
 		</div>
 
 		<div class="contribution-score">
-			<span class="statistics-label"><liferay-ui:message key='contribution-score' />:</span> <%= contributionActivityCounter.getCurrentValue() %>
+			<span class="statistics-label"><liferay-ui:message key="contribution-score" />:</span> <%= contributionActivityCounter.getCurrentValue() %>
 
 			<c:if test="<%= showTotals %>">
 				<span>(<liferay-ui:message key="total" />: <%= contributionActivityCounter.getTotalValue() %>)</span>
@@ -71,7 +71,7 @@ activityCounters.remove(SocialActivityCounterConstants.NAME_PARTICIPATION);
 		</div>
 
 		<div class="participation-score">
-			<span class="statistics-label"><liferay-ui:message key='participation-score' />:</span> <%= participationActivityCounter.getCurrentValue() %>
+			<span class="statistics-label"><liferay-ui:message key="participation-score" />:</span> <%= participationActivityCounter.getCurrentValue() %>
 
 			<c:if test="<%= showTotals %>">
 				<span>(<liferay-ui:message key="total" />: <%= participationActivityCounter.getTotalValue() %>)</span>

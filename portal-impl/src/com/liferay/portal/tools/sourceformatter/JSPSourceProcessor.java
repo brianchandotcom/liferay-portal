@@ -1117,8 +1117,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			if ((delimeter != CharPool.APOSTROPHE) &&
 				(delimeter != CharPool.QUOTE)) {
 
-				processErrorMessage(
-					fileName, "delimeter: " + fileName + " " + lineCount);
+				if (delimeter != CharPool.AMPERSAND) {
+					processErrorMessage(
+						fileName, "delimeter: " + fileName + " " + lineCount);
+				}
 
 				return line;
 			}
@@ -1198,10 +1200,24 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			s = s.substring(y + 1);
 
-			s = StringUtil.trimLeading(s);
+			if (s.startsWith(StringPool.GREATER_THAN)) {
+				x = s.indexOf(StringPool.SPACE);
 
-			previousAttribute = attribute;
-			previousAttributeAndValue = currentAttributeAndValue;
+				if (x == -1) {
+					return line;
+				}
+
+				s = s.substring(x + 1);
+
+				previousAttribute = null;
+				previousAttributeAndValue = null;
+			}
+			else {
+				s = StringUtil.trimLeading(s);
+
+				previousAttribute = attribute;
+				previousAttributeAndValue = currentAttributeAndValue;
+			}
 		}
 	}
 

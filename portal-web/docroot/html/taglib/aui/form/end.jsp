@@ -66,6 +66,6 @@
 	);
 
 	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
-		A.one('#<%= namespace + name %> fieldset').removeAttribute('disabled');
+		A.all('#<%= namespace + name %> .input-container').removeAttribute('disabled');
 	</c:if>
 </aui:script>

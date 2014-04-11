@@ -1857,8 +1857,9 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void validateRemote(
-			String remoteAddress, int remotePort, String remotePathContext,
-			boolean secureConnection, long remoteGroupId)
+			long groupId, String remoteAddress, int remotePort,
+			String remotePathContext, boolean secureConnection,
+			long remoteGroupId)
 		throws PortalException {
 
 		RemoteOptionsException roe = null;
@@ -1918,11 +1919,28 @@ public class StagingImpl implements Staging {
 			user.getPasswordEncrypted());
 
 		// Ping remote host and verify that the group exists in the same company
-		// as the remote user
+		// as the remote user and also verify that the groups are both company
+		// groups or not
 
 		try {
 			GroupServiceHttp.checkRemoteStagingGroup(
 				httpPrincipal, remoteGroupId);
+
+			Group remoteGroup = GroupServiceHttp.getGroup(
+				httpPrincipal, remoteGroupId);
+
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			if ((remoteGroup.isCompany() && !group.isCompany()) ||
+				(!remoteGroup.isCompany() && group.isCompany())) {
+
+				RemoteExportException ree = new RemoteExportException(
+					RemoteExportException.INVALID_GROUP);
+
+				ree.setGroupId(remoteGroupId);
+
+				throw ree;
+			}
 		}
 		catch (NoSuchGroupException nsge) {
 			RemoteExportException ree = new RemoteExportException(
@@ -2341,8 +2359,8 @@ public class StagingImpl implements Staging {
 			portletRequest, "remotePrivateLayout");
 
 		validateRemote(
-			remoteAddress, remotePort, remotePathContext, secureConnection,
-			remoteGroupId);
+			groupId, remoteAddress, remotePort, remotePathContext,
+			secureConnection, remoteGroupId);
 
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			portletRequest, groupId, privateLayout, 0, null,

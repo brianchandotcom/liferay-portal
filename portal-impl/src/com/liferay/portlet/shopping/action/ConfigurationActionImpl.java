@@ -14,10 +14,11 @@
 
 package com.liferay.portlet.shopping.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.settings.Settings;
@@ -31,44 +32,11 @@ import java.text.ParseException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
-
-	@Override
-	public void postProcess(
-		long companyId, PortletRequest portletRequest, Settings settings) {
-
-		ShoppingSettings shoppingSettings = new ShoppingSettings(settings);
-
-		removeDefaultValue(
-			portletRequest, settings, "emailFromAddress",
-			shoppingSettings.getEmailFromAddress());
-		removeDefaultValue(
-			portletRequest, settings, "emailFromName",
-			shoppingSettings.getEmailFromName());
-
-		String languageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
-		removeDefaultValue(
-			portletRequest, settings,
-			"emailOrderConfirmationBody_" + languageId,
-			shoppingSettings.getEmailOrderConfirmationBody());
-		removeDefaultValue(
-			portletRequest, settings,
-			"emailOrderConfirmationSubject_" + languageId,
-			shoppingSettings.getEmailOrderConfirmationSubject());
-		removeDefaultValue(
-			portletRequest, settings, "emailOrderShippingBody_" + languageId,
-			shoppingSettings.getEmailOrderShippingBody());
-		removeDefaultValue(
-			portletRequest, settings, "emailOrderShippingSubject_" + languageId,
-			shoppingSettings.getEmailOrderShippingSubject());
-	}
 
 	@Override
 	public void processAction(
@@ -86,6 +54,13 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		updateShippingCalculation(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	@Override
+	protected Settings getSettings(ActionRequest actionRequest)
+		throws PortalException, SystemException {
+
+		return new ShoppingSettings(super.getSettings(actionRequest));
 	}
 
 	protected void updateCcTypes(ActionRequest actionRequest) {

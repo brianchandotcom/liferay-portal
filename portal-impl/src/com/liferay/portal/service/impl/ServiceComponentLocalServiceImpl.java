@@ -39,6 +39,7 @@ import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.service.base.ServiceComponentLocalServiceBaseImpl;
 import com.liferay.portal.tools.servicebuilder.Entity;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -296,8 +297,10 @@ public class ServiceComponentLocalServiceImpl
 
 		CacheRegistryUtil.clear();
 
-		EntityCacheUtil.clearCache();
-		FinderCacheUtil.clearCache();
+		if (PropsValues.CLEAR_CACHE_ON_PLUGIN_UNDEPLOY) {
+			EntityCacheUtil.clearCache();
+			FinderCacheUtil.clearCache();
+		}
 	}
 
 	protected void doUpgradeDB(

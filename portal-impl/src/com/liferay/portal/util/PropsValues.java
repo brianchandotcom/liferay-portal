@@ -378,6 +378,10 @@ public class PropsValues {
 
 	public static final String CDN_HOST_HTTPS = PropsUtil.get(PropsKeys.CDN_HOST_HTTPS);
 
+	public static final boolean CLEAR_CACHE_ON_CONTEXT_INITIALIZATION = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.CLEAR_CACHE_ON_CONTEXT_INITIALIZATION));
+
+	public static final boolean CLEAR_CACHE_ON_PLUGIN_UNDEPLOY = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.CLEAR_CACHE_ON_PLUGIN_UNDEPLOY));
+
 	public static final boolean CLUSTER_EXECUTOR_DEBUG_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.CLUSTER_EXECUTOR_DEBUG_ENABLED));
 
 	public static final String CLUSTER_LINK_AUTODETECT_ADDRESS = PropsUtil.get(PropsKeys.CLUSTER_LINK_AUTODETECT_ADDRESS);

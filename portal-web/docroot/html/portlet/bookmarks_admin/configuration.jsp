@@ -58,7 +58,7 @@ catch (NoSuchFolderException nsfe) {
 		<liferay-ui:error key="rootFolderId" message="please-enter-a-valid-root-folder" />
 
 		<liferay-ui:section>
-			<%@ include file="/html/portlet/bookmarks/display_settings.jspf" %>
+			<%@ include file="/html/portlet/bookmarks_admin/display_settings.jspf" %>
 		</liferay-ui:section>
 
 		<liferay-ui:section>

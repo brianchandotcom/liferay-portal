@@ -53,6 +53,8 @@ public class PortletKeys {
 
 	public static final String BOOKMARKS = "28";
 
+	public static final String BOOKMARKS_ADMIN = "198";
+
 	public static final String BREADCRUMB = "73";
 
 	public static final String CALENDAR = "8";

@@ -178,6 +178,20 @@ public interface UserNotificationEventModel extends BaseModel<UserNotificationEv
 	public void setTimestamp(long timestamp);
 
 	/**
+	 * Returns the delivery type of this user notification event.
+	 *
+	 * @return the delivery type of this user notification event
+	 */
+	public int getDeliveryType();
+
+	/**
+	 * Sets the delivery type of this user notification event.
+	 *
+	 * @param deliveryType the delivery type of this user notification event
+	 */
+	public void setDeliveryType(int deliveryType);
+
+	/**
 	 * Returns the deliver by of this user notification event.
 	 *
 	 * @return the deliver by of this user notification event

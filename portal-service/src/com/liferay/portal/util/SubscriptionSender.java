@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.mail.SMTPAccount;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.notifications.NotificationEvent;
-import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
@@ -514,7 +512,7 @@ public class SubscriptionSender implements Serializable {
 				_bulkAddresses.add(bulkAddress);
 			}
 
-			sendWebsiteNotification(user);
+			sendUserNotification(user);
 		}
 		else {
 			sendNotification(user);
@@ -760,36 +758,23 @@ public class SubscriptionSender implements Serializable {
 
 	protected void sendNotification(User user) throws Exception {
 		sendEmailNotification(user);
-		sendWebsiteNotification(user);
+		sendUserNotification(user);
 	}
 
-	protected void sendWebsiteNotification(User user) throws Exception {
-		if (UserNotificationManagerUtil.isDeliver(
-				user.getUserId(), portletId, _notificationClassNameId,
-				_notificationType,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
+	protected void sendUserNotification(User user) throws Exception {
+		JSONObject notificationEventJSONObject =
+			JSONFactoryUtil.createJSONObject();
 
-			JSONObject notificationEventJSONObject =
-				JSONFactoryUtil.createJSONObject();
+		notificationEventJSONObject.put("className", _className);
+		notificationEventJSONObject.put("classPK", _classPK);
+		notificationEventJSONObject.put("entryTitle", _entryTitle);
+		notificationEventJSONObject.put("entryURL", _entryURL);
+		notificationEventJSONObject.put("notificationType", _notificationType);
+		notificationEventJSONObject.put("userId", user.getUserId());
 
-			notificationEventJSONObject.put("className", _className);
-			notificationEventJSONObject.put("classPK", _classPK);
-			notificationEventJSONObject.put("entryTitle", _entryTitle);
-			notificationEventJSONObject.put("entryURL", _entryURL);
-			notificationEventJSONObject.put(
-				"notificationType", _notificationType);
-			notificationEventJSONObject.put("userId", user.getUserId());
-
-			NotificationEvent notificationEvent =
-				NotificationEventFactoryUtil.createNotificationEvent(
-					System.currentTimeMillis(), portletId,
-					notificationEventJSONObject);
-
-			notificationEvent.setDeliveryRequired(0);
-
-			UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
-				user.getUserId(), notificationEvent);
-		}
+		UserNotificationEventLocalServiceUtil.sendUserNotificationEvents(
+			user.getUserId(), portletId, _notificationType,
+			notificationEventJSONObject);
 	}
 
 	protected String body;

@@ -439,6 +439,10 @@ public interface PropsKeys {
 
 	public static final String CDN_HOST_HTTPS = "cdn.host.https";
 
+	public static final String CLEAR_CACHE_ON_CONTEXT_INITIALIZATION = "clear.cache.on.context.initialization";
+
+	public static final String CLEAR_CACHE_ON_PLUGIN_UNDEPLOY = "clear.cache.on.plugin.undeploy";
+
 	public static final String CLUSTER_EXECUTOR_DEBUG_ENABLED = "cluster.executor.debug.enabled";
 
 	public static final String CLUSTER_LINK_AUTODETECT_ADDRESS = "cluster.link.autodetect.address";

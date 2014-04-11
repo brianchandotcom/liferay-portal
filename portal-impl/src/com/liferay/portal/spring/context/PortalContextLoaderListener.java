@@ -249,21 +249,23 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			_log.error(e, e);
 		}
 
-		FinderCacheUtil.clearCache();
-		FinderCacheUtil.clearLocalCache();
-		EntityCacheUtil.clearCache();
-		EntityCacheUtil.clearLocalCache();
-		PermissionCacheUtil.clearCache();
-		PermissionCacheUtil.clearLocalCache();
-		TemplateResourceLoaderUtil.clearCache();
-		WikiCacheUtil.clearCache(0);
+		if (PropsValues.CLEAR_CACHE_ON_CONTEXT_INITIALIZATION) {
+			FinderCacheUtil.clearCache();
+			FinderCacheUtil.clearLocalCache();
+			EntityCacheUtil.clearCache();
+			EntityCacheUtil.clearLocalCache();
+			PermissionCacheUtil.clearCache();
+			PermissionCacheUtil.clearLocalCache();
+			TemplateResourceLoaderUtil.clearCache();
+			WikiCacheUtil.clearCache(0);
 
-		ServletContextPool.clear();
+			ServletContextPool.clear();
 
-		CacheUtil.clearCache();
-		MultiVMPoolUtil.clear();
-		SingleVMPoolUtil.clear();
-		WebCachePoolUtil.clear();
+			CacheUtil.clearCache();
+			MultiVMPoolUtil.clear();
+			SingleVMPoolUtil.clear();
+			WebCachePoolUtil.clear();
+		}
 
 		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
 

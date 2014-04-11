@@ -72,6 +72,30 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
+	protected void checkForLiferayHookXML(String fileName) {
+		if (portalSource ||
+			(!fileName.endsWith("-hook/build.xml") &&
+			 !fileName.endsWith("-portlet/build.xml") &&
+			 !fileName.endsWith("-theme/build.xml"))) {
+
+			return;
+		}
+
+		String rootPath =
+			BASEDIR + fileName.substring(0, fileName.length() - 9);
+
+		if (!fileUtil.exists(rootPath + "docroot/WEB-INF/liferay-hook.xml") &&
+			(fileUtil.exists(rootPath + "docroot/META-INF/custom_jsps/") ||
+			 fileUtil.exists(rootPath + "docroot/WEB-INF/src/content/") ||
+			 fileUtil.exists(
+				 rootPath + "docroot/WEB-INF/src/portal.properties"))) {
+
+			processErrorMessage(
+				fileName,
+				"missing liferay-hook.xml: " + rootPath + "docroot/WEB-INF/");
+		}
+	}
+
 	protected String fixAntXMLProjectName(String fileName, String content) {
 		int x = 0;
 
@@ -328,6 +352,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			if (fileName.contains("/build") && !fileName.contains("/tools/")) {
 				newContent = formatAntXML(fileName, newContent);
+
+				// Check for a liferay-hook.xml file here as we assume that
+				// every hook/portlet/theme has a build.xml file
+
+				checkForLiferayHookXML(fileName);
 			}
 			else if (fileName.endsWith("structures.xml")) {
 				newContent = formatDDLStructuresXML(newContent);

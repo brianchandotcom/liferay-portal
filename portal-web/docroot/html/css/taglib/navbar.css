@@ -21,6 +21,14 @@
 			}
 		}
 	}
+
+	.search-panel {
+		margin-bottom: 0;
+
+		.control-group {
+			margin: 0 16px;
+		}
+	}
 }
 
 @include respond-to(phone, tablet) {

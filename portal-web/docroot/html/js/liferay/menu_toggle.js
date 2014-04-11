@@ -2,8 +2,21 @@ AUI.add(
 	'liferay-menu-toggle',
 	function(A) {
 		var Lang = A.Lang;
+		var AArray = A.Array;
+		var AEvent = A.Event;
+		var Util = Liferay.Util;
+
+		var CSS_HIDDEN = 'hidden';
 
 		var NAME = 'menutoggle';
+
+		var SELECTOR_NAV_ITEM_FILTER = '.nav-item-filter';
+
+		var TPL_INPUT_FILTER = '<div class="btn-toolbar search-panel">' +
+			'<div class="control-group">' +
+				'<input class="field search-query span12 focus nav-item-filter" placeholder="{placeholder}" type="text">' +
+			'</div>' +
+		'</div>';
 
 		var MenuToggle = A.Component.create(
 			{
@@ -12,9 +25,21 @@ AUI.add(
 						validator: '_validateContent'
 					},
 
+					maxDisplayItems: {
+						validator: Lang.isNumber,
+						value: 10
+					},
+
 					open: {
 						validator: Lang.isBoolean,
 						value: false
+					},
+
+					strings: {
+						validator: Lang.isObject,
+						value: {
+							placeholder: 'Search'
+						}
 					},
 
 					toggle: {
@@ -50,10 +75,44 @@ AUI.add(
 
 						instance._content = A.all(instance.get('content'));
 
-						A.Event.defineOutside('touchend');
-						A.Event.defineOutside('touchstart');
+						AEvent.defineOutside('touchend');
+						AEvent.defineOutside('touchstart');
 
 						instance._bindUI();
+					},
+
+					_addMenuFilter: function() {
+						var instance = this;
+
+						var menu = instance._content.one('.dropdown-menu');
+
+						if (!instance._menuFilter) {
+							var menuItems = menu.all('li');
+
+							var itemsSize = menuItems.size();
+
+							if (itemsSize > instance.get('maxDisplayItems')) {
+								menu.prepend(
+									Lang.sub(
+										TPL_INPUT_FILTER,
+										{
+											placeholder: instance.get('strings').placeholder
+										}
+									)
+								);
+
+								instance._createMenuFilter(menu, menuItems);
+
+								instance._menuFilter.on('results', instance._filterMenu, instance, menuItems);
+							}
+						}
+
+						setTimeout(
+							function() {
+								Util.focusFormField(menu.one(SELECTOR_NAV_ITEM_FILTER));
+							},
+							0
+						);
 					},
 
 					_bindUI: function() {
@@ -69,6 +128,52 @@ AUI.add(
 								}
 							);
 						}
+					},
+
+					_createMenuFilter: function(menu, menuItems) {
+						var instance = this;
+
+						instance._menuFilter = new MenuFilter(
+							{
+								inputNode: menu.one(SELECTOR_NAV_ITEM_FILTER),
+
+								minQueryLength: 0,
+
+								resultTextLocator: 'name',
+
+								resultFilters: 'phraseMatch',
+
+								source: function() {
+									var results = [];
+
+									menuItems.each(
+										function(node) {
+											results.push(
+												{
+													name: node.one('.nav-item-label').text(),
+													node: node
+												}
+											);
+										}
+									);
+
+									return results;
+								}(),
+
+								queryDelay: 0
+							}
+						);
+					},
+
+					_filterMenu: function(event, menuItems) {
+						menuItems.addClass(CSS_HIDDEN);
+
+						AArray.each(
+							event.results,
+							function(result) {
+								result.raw.node.removeClass(CSS_HIDDEN);
+							}
+						);
 					},
 
 					_getEventOutside: function(event) {
@@ -107,6 +212,10 @@ AUI.add(
 						instance._content.toggleClass('open', force);
 
 						instance.set('open', force);
+
+						if (force) {
+							instance._addMenuFilter();
+						}
 					},
 
 					_toggleMenu: function(event, target) {
@@ -152,7 +261,7 @@ AUI.add(
 						else {
 							var data = {};
 
-							data[handleId] = menuOpen ? 'open' : 'closed';
+							data[handleId] = open ? 'open' : 'closed';
 
 							Liferay.Store(data);
 						}
@@ -167,10 +276,29 @@ AUI.add(
 			}
 		);
 
+		var MenuFilter = A.Component.create(
+			{
+				NAME: 'menufilter',
+
+				EXTENDS: A.Base,
+
+				AUGMENTS: A.AutoCompleteBase,
+
+				prototype: {
+					initializer: function () {
+						var instance = this;
+
+						instance._bindUIACBase();
+						instance._syncUIACBase();
+					}
+				}
+			}
+		);
+
 		Liferay.MenuToggle = MenuToggle;
 	},
 	'',
 	{
-		requires: ['aui-node', 'event-move', 'event-outside', 'liferay-store']
+		requires: ['aui-node', 'autocomplete-base', 'autocomplete-filters', 'event-move', 'event-outside', 'liferay-store']
 	}
 );

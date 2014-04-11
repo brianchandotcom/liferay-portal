@@ -556,6 +556,21 @@ public class StagingUtil {
 			secureConnection, remoteGroupId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #validateRemote(long, String,
+	 *             int, String, boolean, long)}
+	 */
+	@Deprecated
+	public static void validateRemote(
+			String remoteAddress, int remotePort, String remotePathContext,
+			boolean secureConnection, long remoteGroupId)
+		throws PortalException {
+
+		getStaging().validateRemote(
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			remoteGroupId);
+	}
+
 	public void setStaging(Staging staging) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

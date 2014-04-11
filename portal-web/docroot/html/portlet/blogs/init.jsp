@@ -45,7 +45,7 @@ boolean enableComments = blogsSettings.getEnableComments();
 boolean enableCommentRatings = blogsSettings.getEnableCommentRatings();
 boolean enableSocialBookmarks = blogsSettings.getEnableSocialBookmarks();
 
-String socialBookmarksDisplayStyle = blogsSettings.getSocialBookmarksDisplayStyles()[0];
+String socialBookmarksDisplayStyle = blogsSettings.getSocialBookmarksDisplayStyle();
 
 String socialBookmarksDisplayPosition = blogsSettings.getSocialBookmarksDisplayPosition();
 String socialBookmarksTypes = blogsSettings.getSocialBookmarksTypes();

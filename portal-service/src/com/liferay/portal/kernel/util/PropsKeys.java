@@ -307,6 +307,8 @@ public interface PropsKeys {
 
 	public static final String BLOGS_SOCIAL_BOOKMARKS_DISPLAY_POSITION = "blogs.social.bookmarks.display.position";
 
+	public static final String BLOGS_SOCIAL_BOOKMARKS_DISPLAY_STYLE = "blogs.social.bookmarks.display.style";
+
 	public static final String BLOGS_SOCIAL_BOOKMARKS_ENABLED = "blogs.social.bookmarks.enabled";
 
 	public static final String BLOGS_TRACKBACK_ENABLED = "blogs.trackback.enabled";

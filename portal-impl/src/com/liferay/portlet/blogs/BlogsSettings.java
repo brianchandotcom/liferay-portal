@@ -150,8 +150,8 @@ public class BlogsSettings extends BaseServiceSettings {
 		return typedSettings.getValue("socialBookmarksDisplayPosition");
 	}
 
-	public String[] getSocialBookmarksDisplayStyles() {
-		return typedSettings.getValues("socialBookmarksDisplayStyle");
+	public String getSocialBookmarksDisplayStyle() {
+		return typedSettings.getValue("socialBookmarksDisplayStyle");
 	}
 
 	public String getSocialBookmarksTypes() {
@@ -207,7 +207,7 @@ public class BlogsSettings extends BaseServiceSettings {
 			PropsKeys.BLOGS_SOCIAL_BOOKMARKS_DISPLAY_POSITION);
 		_fallbackKeys.add(
 			"socialBookmarksDisplayStyle",
-			PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
+			PropsKeys.BLOGS_SOCIAL_BOOKMARKS_DISPLAY_STYLE);
 		_fallbackKeys.add(
 			"socialBookmarksTypes", PropsKeys.SOCIAL_BOOKMARK_TYPES);
 	}

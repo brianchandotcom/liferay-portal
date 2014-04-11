@@ -90,6 +90,22 @@ public class PortalImplGetSitesTest {
 	}
 
 	@Test
+	public void testGetSharedContentSiteGroupIdsDoesNotIncludeRepeatedSites()
+		throws Exception {
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			_group.getCompanyId());
+
+		long[] groupIds = getSharedContentSiteGroupIds();
+
+		for (int i = 0; i < groupIds.length; ++i) {
+			long currentGroup = groupIds[i];
+			groupIds[i] = -1;
+			Assert.assertFalse(ArrayUtil.contains(groupIds, currentGroup));
+		}
+	}
+
+	@Test
 	public void testGetSharedContentSiteGroupIdsFromGroup() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 

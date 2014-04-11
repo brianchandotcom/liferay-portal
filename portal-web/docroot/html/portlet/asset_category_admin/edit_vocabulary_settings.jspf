@@ -15,13 +15,15 @@
 --%>
 
 <%
-List<Long> availableClassNameIds = new ArrayList<Long>();
+List<AssetRendererFactory> availableAssetFactories = ListUtil.filter(
+	AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()),
+	new PredicateFilter() {
+		public boolean filter(Object object) {
+			AssetRendererFactory assetRendererFactory = (AssetRendererFactory)object;
 
-for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId())) {
-	if (assetRendererFactory.isCategorizable()) {
-		availableClassNameIds.add(assetRendererFactory.getClassNameId());
-	}
-}
+			return assetRendererFactory.isCategorizable();
+		}
+	});
 
 boolean required = false;
 
@@ -66,10 +68,10 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 						<aui:option label="all-asset-types" selected="<%= true %>" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_IDS %>" />
 
 						<%
-						for (long availableClassNameId : availableClassNameIds) {
+						for (AssetRendererFactory assetRendererFactory : availableAssetFactories) {
 						%>
 
-							<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, PortalUtil.getClassName(availableClassNameId)) %>" selected="<%= false %>" value="<%= availableClassNameId %>" />
+							<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= false %>" value="<%= assetRendererFactory.getClassNameId() %>" />
 
 						<%
 						}
@@ -100,17 +102,15 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 							<aui:option label="all-asset-types" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_IDS %>" />
 
 							<%
-							for (int i = 0; i < availableClassNameIds.size(); i++) {
-								long availableClassNameId = availableClassNameIds.get(i);
-
+							for (AssetRendererFactory assetRendererFactory : availableAssetFactories) {
 								boolean selected = false;
 
-								if (availableClassNameId == selectedClassNameIds[index]) {
+								if (assetRendererFactory.getClassNameId() == selectedClassNameIds[index]) {
 									selected = true;
 								}
 							%>
 
-								<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, PortalUtil.getClassName(availableClassNameId)) %>" selected="<%= selected %>" value="<%= availableClassNameId %>" />
+								<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, factory.getClassName()) %>" selected="<%= selected %>" value="<%= factory.getClassNameId() %>" />
 
 							<%
 							}

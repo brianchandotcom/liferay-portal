@@ -28,6 +28,57 @@ import org.junit.Test;
 public class ListUtilTest {
 
 	@Test
+	public void testFilterWithoutOutputList() {
+		List<String> list = new ArrayList<String>();
+		list.add("a");
+		list.add("b");
+		list.add("c");
+
+		List<String> expectedList = new ArrayList<String>();
+		expectedList.add("a");
+		expectedList.add("c");
+
+		PredicateFilter predicate = new PredicateFilter() {
+			@Override
+			public boolean filter(Object o) {
+				return !o.toString().equals("b");
+			}
+		};
+
+		List<String> actualList = ListUtil.filter(list, predicate);
+
+		Assert.assertEquals(expectedList, actualList);
+	}
+
+	@Test
+	public void testFilterWithOutputList() {
+		List<String> list = new ArrayList<String>();
+		list.add("a");
+		list.add("b");
+		list.add("c");
+
+		List<String> expectedList = new ArrayList<String>();
+		expectedList.add("0");
+		expectedList.add("a");
+		expectedList.add("c");
+
+		List<String> outputList = new ArrayList<String>();
+		outputList.add("0");
+
+		PredicateFilter predicate = new PredicateFilter() {
+			@Override
+			public boolean filter(Object o) {
+				return !o.toString().equals("b");
+			}
+		};
+
+		List<String> actualList = ListUtil.filter(list, outputList, predicate);
+
+		Assert.assertSame(outputList, actualList);
+		Assert.assertEquals(expectedList, actualList);
+	}
+
+	@Test
 	public void testRemoveEmptyElement() {
 		List<String> list = new ArrayList<String>();
 

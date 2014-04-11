@@ -88,6 +88,25 @@ public class ListUtil {
 		distinct(list, null);
 	}
 
+	public static <T> List<T> filter(
+		List<? extends T> inputList, List<T> outputList,
+		PredicateFilter<T> predicate) {
+
+		for (T item : inputList) {
+			if (predicate.filter(item)) {
+				outputList.add(item);
+			}
+		}
+
+		return outputList;
+	}
+
+	public static <T> List<T> filter(
+		List<? extends T> inputList, PredicateFilter<T> predicate) {
+
+		return filter(inputList, new ArrayList<T>(inputList.size()), predicate);
+	}
+
 	public static <E> List<E> fromArray(E[] array) {
 		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<E>();

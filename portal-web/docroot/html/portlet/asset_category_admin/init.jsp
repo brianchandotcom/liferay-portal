@@ -16,7 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.model.AssetCategoryConstants" %><%@
+<%@ page import="com.liferay.portal.kernel.util.PredicateFilter" %><%@
+page import="com.liferay.portlet.asset.model.AssetCategoryConstants" %><%@
 page import="com.liferay.portlet.asset.model.AssetCategoryProperty" %><%@
 page import="com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl" %><%@
 page import="com.liferay.portlet.asset.service.AssetCategoryPropertyServiceUtil" %><%@

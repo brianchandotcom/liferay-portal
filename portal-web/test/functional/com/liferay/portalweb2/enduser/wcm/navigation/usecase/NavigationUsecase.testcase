@@ -128,8 +128,6 @@
 			</execute>
 		</for>
 
-		<execute macro="PermissionsInline#savePermissionsPG" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

@@ -46,6 +46,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
+import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.asset.NoSuchCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -11741,9 +11742,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-			Session session = getCurrentSession();
+			if (PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
+				Session session = getCurrentSession();
 
-			session.clear();
+				session.clear();
+			}
 		}
 
 		assetCategory.setLeftCategoryId(leftCategoryId);
@@ -11891,9 +11894,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		Session session = getCurrentSession();
+		if (PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
+			Session session = getCurrentSession();
 
-		session.clear();
+			session.clear();
+		}
 	}
 
 	protected void updateChildrenTree(long groupId,

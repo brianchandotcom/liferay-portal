@@ -1,4 +1,31 @@
 <definition>
+	<command name="configureRecentBlogsPortletSelectionMethod">
+		<if>
+			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<then>
+				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+			</then>
+		</if>
+
+		<if>
+			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<then>
+				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+			</then>
+		</if>
+
+		<execute action="SOBlogs#click" locator-key1="RECENT_BLOGS_OPTIONS" />
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
+
+		<execute action="SOBlogsRecentBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="SOBlogsRecentBlogsConfiguration#select" locator-key1="SETUP_SELECTION_METHOD_SELECT" value1="${selectionMethod}" />
+		<execute action="SOBlogsRecentBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="SOBlogsRecentBlogsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="SOBlogsRecentBlogsConfiguration#selectFrameTop" />
+	</command>
+
 	<command name="viewBlogsEntryRecentBlogs">
 		<var name="key_entryTitle" value="${entryTitle}" />
 

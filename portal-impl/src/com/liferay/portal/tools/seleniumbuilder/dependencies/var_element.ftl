@@ -125,7 +125,7 @@
 		<#assign group = varElement.attributeValue("group")>
 	</#if>
 
-	${variableContext}.put("${varName}", RuntimeVariables.replaceRegularExpression("${input}", "${pattern}", ${group}));
+	${variableContext}.put("${varName}", RuntimeVariables.replaceRegularExpression(RuntimeVariables.evaluateVariable("${input}", ${variableContext}), "${pattern}", ${group}));
 <#else>
 	${variableContext}.put("${varName}", RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(varValue)}", ${variableContext}));
 </#if>

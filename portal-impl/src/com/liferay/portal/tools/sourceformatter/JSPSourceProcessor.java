@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -832,19 +831,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return duplicateImports;
-	}
-
-	@Override
-	protected String[] getLanguageKeys(Matcher matcher) {
-		if (matcher.groupCount() < 2) {
-			return super.getLanguageKeys(matcher);
-		}
-
-		String languageKey = matcher.group(2);
-
-		languageKey = TextFormatter.format(languageKey, TextFormatter.K);
-
-		return new String[] {languageKey};
 	}
 
 	protected String getTaglibRegex(String quoteType) {

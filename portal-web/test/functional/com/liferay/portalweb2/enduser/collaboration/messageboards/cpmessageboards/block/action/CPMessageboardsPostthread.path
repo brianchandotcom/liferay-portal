@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANONYMOUS_CHECKBOX</td>
+	<td>//input[@id='_162_anonymousCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
 	<td>//button[@id='_162_publishButton' and contains(.,'Submit for Publication')]</td>
 	<td></td>

@@ -9,6 +9,8 @@
 		<execute macro="MessageboardsCategory#tearDownCP" />
 
 		<execute macro="MessageboardsThread#tearDownCP" />
+
+		<execute macro="MessageboardsPortlet#tearDownConfigurationGeneralCP" />
 	</tear-down>
 
 	<command name="AddMBCategory" priority="5">
@@ -141,5 +143,39 @@
 		<execute macro="MessageboardsThread#viewDefaultCP">
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
+	</command>
+
+	<command name="ViewAnonymousPostingAllowedCheckboxConfiguration" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewAnonymousPostingCheckboxCP" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="MessageboardsPortlet#configureAnonymousPostingCP">
+			<var name="anonymousPostingEnabled" value="false" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="MessageboardsPortlet#viewAnonymousPostingConfigurationCP">
+			<var name="anonymousPostingEnabled" value="false" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewNoAnonymousPostingCheckboxCP" />
 	</command>
 </definition>

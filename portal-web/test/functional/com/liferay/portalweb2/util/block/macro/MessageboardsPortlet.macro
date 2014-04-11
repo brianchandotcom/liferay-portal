@@ -1,4 +1,25 @@
 <definition>
+	<command name="configureAnonymousPostingCP">
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+
+		<if>
+			<equals arg1="${anonymousPostingEnabled}" arg2="true" />
+			<then>
+				<execute action="CPMessageboardsConfiguration#check" locator-key1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+			</then>
+			<elseif>
+				<equals arg1="${anonymousPostingEnabled}" arg2="false" />
+				<then>
+					<execute action="CPMessageboardsConfiguration#uncheck" locator-key1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
 	<command name="configureMessageAddedEmailCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
@@ -138,6 +159,37 @@
 		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="tearDownConfigurationGeneralCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#check" locator-key1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="viewAnonymousPostingConfigurationCP">
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+
+		<if>
+			<equals arg1="${anonymousPostingEnabled}" arg2="true" />
+			<then>
+				<execute action="CPMessageboardsConfiguration#assertChecked" locator-key1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+			</then>
+			<elseif>
+				<equals arg1="${anonymousPostingEnabled}" arg2="false" />
+				<then>
+					<execute action="CPMessageboardsConfiguration#assertNotChecked" locator-key1="GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+				</then>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="viewBannedUserPG">

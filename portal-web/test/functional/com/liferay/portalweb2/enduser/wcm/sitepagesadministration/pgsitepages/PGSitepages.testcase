@@ -26,7 +26,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddEmbeddedPortlet" known-issues="LPS-44150" priority="5">
+	<command name="AddEmbeddedPortlet" priority="5">
 		<var name="fieldKey" value="EMBEDDED_PORTLETS" />
 		<var name="fieldLabel" value="embeddedPortlets" />
 		<var name="fieldName" value="Embedded Portlets" />

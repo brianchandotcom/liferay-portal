@@ -490,6 +490,12 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
+	<command name="viewAnonymousPostingCheckboxCP">
+		<execute action="CPMessageboards#assertClick" locator-key1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+
+		<execute action="CPMessageboardsPostthread#assertElementPresent" locator-key1="ANONYMOUS_CHECKBOX" />
+	</command>
+
 	<command name="viewCP">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
@@ -529,6 +535,12 @@
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_VIEWS" />
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_LAST_POST" />
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_ACTIONS" />
+	</command>
+
+	<command name="viewNoAnonymousPostingCheckboxCP">
+		<execute action="CPMessageboards#assertClick" locator-key1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+
+		<execute action="CPMessageboardsPostthread#assertElementNotPresent" locator-key1="ANONYMOUS_CHECKBOX" />
 	</command>
 
 	<command name="viewNoPG">

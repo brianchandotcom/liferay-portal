@@ -15,6 +15,7 @@
 package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -41,6 +42,7 @@ import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.comparator.AssetCategoryComparator;
 import com.liferay.portlet.asset.AssetCategoryNameException;
 import com.liferay.portlet.asset.DuplicateCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -237,15 +239,13 @@ public class AssetCategoryLocalServiceImpl
 		throws PortalException, SystemException {
 
 		List<AssetCategory> categories =
-			assetCategoryPersistence.findByVocabularyId(vocabularyId);
+			assetCategoryPersistence.findByP_V(
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, vocabularyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new AssetCategoryComparator(false));
 
 		for (AssetCategory category : categories) {
-			if (category.getParentCategoryId() ==
-					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-
-				assetCategoryLocalService.deleteCategory(
-					category.getCategoryId());
-			}
+			deleteCategory(category.getCategoryId());
 		}
 	}
 

@@ -11740,6 +11740,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			EntityCacheUtil.clearCache(AssetCategoryImpl.class);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+			getCurrentSession().clear();
 		}
 
 		assetCategory.setLeftCategoryId(leftCategoryId);
@@ -11886,6 +11888,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		EntityCacheUtil.clearCache(AssetCategoryImpl.class);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		getCurrentSession().clear();
 	}
 
 	protected void updateChildrenTree(long groupId,

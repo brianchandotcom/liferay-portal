@@ -59,7 +59,7 @@ public class PortalImplGetSitesTest {
 	}
 
 	@Test
-	public void testGetSharedContentSiteGroupIdsDoesNotIncludeRepeatedSites()
+	public void testGetSharedContentSiteGroupIdsDoesNotReturnRepeatedSites()
 		throws Exception {
 
 		long[] groupIds = getSharedContentSiteGroupIds();

@@ -17,6 +17,7 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
@@ -29,6 +30,9 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portlet.sites.util.Sites;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,6 +56,17 @@ public class PortalImplGetSitesTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addGroupAdminUser(_group);
+	}
+
+	@Test
+	public void testGetSharedContentSiteGroupIdsDoesNotIncludeRepeatedSites()
+		throws Exception {
+
+		long[] groupIds = getSharedContentSiteGroupIds();
+
+		Set<Long> set = new HashSet<Long>(ListUtil.toList(groupIds));
+
+		Assert.assertFalse(set.size() < groupIds.length);
 	}
 
 	@Test
@@ -87,22 +102,6 @@ public class PortalImplGetSitesTest {
 			ArrayUtil.contains(groupIds, childGroup.getGroupId()));
 		Assert.assertTrue(
 			ArrayUtil.contains(groupIds, grandchildGroup.getGroupId()));
-	}
-
-	@Test
-	public void testGetSharedContentSiteGroupIdsDoesNotIncludeRepeatedSites()
-		throws Exception {
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			_group.getCompanyId());
-
-		long[] groupIds = getSharedContentSiteGroupIds();
-
-		for (int i = 0; i < groupIds.length; ++i) {
-			long currentGroup = groupIds[i];
-			groupIds[i] = -1;
-			Assert.assertFalse(ArrayUtil.contains(groupIds, currentGroup));
-		}
 	}
 
 	@Test

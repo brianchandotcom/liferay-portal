@@ -26,8 +26,6 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId");
 long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWithParentFolderDisabled");
-
-boolean rootFolder = ParamUtil.getBoolean(request, "rootFolder");
 %>
 
 <portlet:actionURL var="editFolderURL">
@@ -139,7 +137,7 @@ boolean rootFolder = ParamUtil.getBoolean(request, "rootFolder");
 			/>
 		</liferay-ui:custom-attributes-available>
 
-		<c:if test="<%= rootFolder || (folder != null) %>">
+		<c:if test="<%= folder != null %>">
 
 			<%
 			List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getJournalFolderStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, false);
@@ -147,51 +145,47 @@ boolean rootFolder = ParamUtil.getBoolean(request, "rootFolder");
 			String headerNames = "name,null";
 			%>
 
-			<aui:field-wrapper helpMessage='<%= rootFolder ? "" : "structure-restrictions-help" %>' label='<%= rootFolder ? "" : "structure-restrictions" %>'>
-				<c:if test="<%= !rootFolder %>">
-					<aui:input checked="<%= !folder.isOverrideDDMStructures() %>" id="useDDMStructures" label="use-structure-restrictions-of-the-parent-folder" name="overrideDDMStructures" type="radio" value="<%= false %>" />
+			<aui:field-wrapper helpMessage="structure-restrictions-help" label="structure-restrictions">
+				<aui:input checked="<%= !folder.isOverrideDDMStructures() %>" id="useDDMStructures" label="use-structure-restrictions-of-the-parent-folder" name="overrideDDMStructures" type="radio" value="<%= false %>" />
 
-					<aui:input checked="<%= folder.isOverrideDDMStructures() %>" id="overrideDDMStructures" label="define-specific-structure-restrictions-for-this-folder" name="overrideDDMStructures" type="radio" value="<%= true %>" />
-				</c:if>
+				<aui:input checked="<%= folder.isOverrideDDMStructures() %>" id="overrideDDMStructures" label="define-specific-structure-restrictions-for-this-folder" name="overrideDDMStructures" type="radio" value="<%= true %>" />
 
 				<div id="<portlet:namespace />overrideParentSettings">
-					<c:if test="<%= !rootFolder %>">
-						<liferay-ui:search-container
-							headerNames="<%= headerNames %>"
-							total="<%= ddmStructures.size() %>"
+					<liferay-ui:search-container
+						headerNames="<%= headerNames %>"
+						total="<%= ddmStructures.size() %>"
+					>
+						<liferay-ui:search-container-results
+							results="<%= ddmStructures %>"
+						/>
+
+						<liferay-ui:search-container-row
+							className="com.liferay.portlet.dynamicdatamapping.model.DDMStructure"
+							escapedModel="<%= true %>"
+							keyProperty="structureId"
+							modelVar="ddmStructure"
 						>
-							<liferay-ui:search-container-results
-								results="<%= ddmStructures %>"
+							<liferay-ui:search-container-column-text
+								name="name"
+								value="<%= ddmStructure.getName(locale) %>"
 							/>
 
-							<liferay-ui:search-container-row
-								className="com.liferay.portlet.dynamicdatamapping.model.DDMStructure"
-								escapedModel="<%= true %>"
-								keyProperty="structureId"
-								modelVar="ddmStructure"
-							>
-								<liferay-ui:search-container-column-text
-									name="name"
-									value="<%= ddmStructure.getName(locale) %>"
-								/>
+							<liferay-ui:search-container-column-text>
+								<a class="modify-link" data-rowId="<%= ddmStructure.getStructureId() %>" href="javascript:;"><%= removeDDMStructureIcon %></a>
+							</liferay-ui:search-container-column-text>
+						</liferay-ui:search-container-row>
 
-								<liferay-ui:search-container-column-text>
-									<a class="modify-link" data-rowId="<%= ddmStructure.getStructureId() %>" href="javascript:;"><%= removeDDMStructureIcon %></a>
-								</liferay-ui:search-container-column-text>
-							</liferay-ui:search-container-row>
+						<liferay-ui:search-iterator paginate="<%= false %>" />
+					</liferay-ui:search-container>
 
-							<liferay-ui:search-iterator paginate="<%= false %>" />
-						</liferay-ui:search-container>
-
-						<liferay-ui:icon
-							cssClass="modify-link select-structure"
-							iconCssClass="icon-search"
-							label="<%= true %>"
-							linkCssClass="btn"
-							message="choose-structure"
-							url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
-						/>
-					</c:if>
+					<liferay-ui:icon
+						cssClass="modify-link select-structure"
+						iconCssClass="icon-search"
+						label="<%= true %>"
+						linkCssClass="btn"
+						message="choose-structure"
+						url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
+					/>
 				</div>
 			</aui:field-wrapper>
 		</c:if>

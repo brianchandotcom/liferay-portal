@@ -358,6 +358,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			else if (portalSource && fileName.endsWith("/tiles-defs.xml")) {
 				formatTilesDefsXML(fileName, newContent);
 			}
+			else if (!portalSource &&
+					 fileName.endsWith("WEB-INF/liferay-hook.xml")) {
+
+				formatLiferayHookXML(fileName, newContent);
+			}
 			else if ((portalSource && fileName.endsWith("WEB-INF/web.xml")) ||
 					 (!portalSource && fileName.endsWith("/web.xml"))) {
 
@@ -570,6 +575,32 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		sb.append("</routes>");
 
 		return sb.toString();
+	}
+
+	protected void formatLiferayHookXML(String fileName, String content) {
+		String docrootPath =
+			BASEDIR + fileName.substring(0, fileName.length() - 24);
+
+		if (!content.contains("<custom-jsp-dir>") &&
+			fileUtil.exists(docrootPath + "META-INF/custom_jsps/")) {
+
+			processErrorMessage(
+				fileName, "missing <custom-jsp-dir>: " + fileName);
+		}
+
+		if (!content.contains("<language-properties>") &&
+			fileUtil.exists(docrootPath + "WEB-INF/src/content/")) {
+
+			processErrorMessage(
+				fileName, "missing <language-properties>: " + fileName);
+		}
+
+		if (!content.contains("<portal-properties>") &&
+			fileUtil.exists(docrootPath + "WEB-INF/src/portal.properties")) {
+
+			processErrorMessage(
+				fileName, "missing <portal-properties>: " + fileName);
+		}
 	}
 
 	protected String formatPortletXML(String content)

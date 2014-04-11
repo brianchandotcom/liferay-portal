@@ -55,7 +55,7 @@ for (int i = 0; i < controls.length; i++) {
 
 				PortletDataHandlerControl[] children = control.getChildren();
 
-				String controlName = (Validator.isNotNull(control.getNamespace()) ? control.getNamespacedControlName() : control.getControlName()) + StringPool.UNDERLINE + portletId;
+				String controlName = Validator.isNotNull(control.getNamespace()) ? control.getNamespacedControlName() : control.getControlName() + StringPool.UNDERLINE + portletId;
 				%>
 
 				<aui:input data="<%= data %>" disabled="<%= controls[i].isDisabled() %>" helpMessage="<%= control.getHelpMessage(locale, action) %>" label="<%= controlLabel %>" name="<%= controlName %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, controlName, control.getDefaultState()) %>" />

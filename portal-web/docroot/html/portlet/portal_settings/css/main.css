@@ -15,4 +15,9 @@
 			padding-bottom: 0.5em;
 		}
 	}
+
+	.interactions-settings, .interactions-users, .social-relations {
+		margin-left: 20px;
+
+	}
 }

@@ -411,10 +411,7 @@ public class LayoutImporter {
 				_headerElement.attributeValue("type-uuid"));
 		}
 
-		if (Validator.isNotNull(layoutSetPrototypeUuid) &&
-			!group.isLayoutPrototype() &&
-			!group.isLayoutSetPrototype()) {
-
+		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
 			layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 			layoutSet.setLayoutSetPrototypeLinkEnabled(
 				layoutSetPrototypeLinkEnabled);
@@ -1018,6 +1015,38 @@ public class LayoutImporter {
 			!larType.equals("layout-set-prototype")) {
 
 			throw new LARTypeException(larType);
+		}
+
+		String layoutsImportMode = MapUtil.getString(
+			portletDataContext.getParameterMap(),
+			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE);
+
+		Group group = GroupLocalServiceUtil.fetchGroup(
+			portletDataContext.getGroupId());
+
+		if (larType.equals("layout-prototype") && !group.isLayoutPrototype() &&
+			!layoutsImportMode.equals(
+				PortletDataHandlerKeys.
+					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+
+			throw new LARTypeException(
+				"A page template can be only imported to a page template");
+		}
+
+		if (larType.equals("layout-set") &&
+			(group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+
+			throw new LARTypeException("A site can be only imported to a site");
+		}
+
+		if (larType.equals("layout-set-prototype") &&
+			!group.isLayoutSetPrototype() &&
+			!layoutsImportMode.equals(
+				PortletDataHandlerKeys.
+					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+
+			throw new LARTypeException(
+				"A site template can be only imported to a site template");
 		}
 
 		// Available locales

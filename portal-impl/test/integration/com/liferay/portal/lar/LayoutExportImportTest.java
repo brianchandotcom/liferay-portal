@@ -14,19 +14,24 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutPrototype;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.StagingLocalServiceUtil;
+import com.liferay.portal.service.persistence.LayoutSetUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -103,6 +108,46 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
+	@Transactional
+	public void testExportImportLayoutPrototypeInvalidLARType()
+		throws Exception {
+
+		// Import LayoutPrototype to LayoutSet
+
+		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
+			ServiceTestUtil.randomString());
+
+		group = layoutPrototype.getGroup();
+		importedGroup = GroupTestUtil.addGroup();
+
+		long[] layoutIds = new long[0];
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+
+		// Import LayoutPrototype to LayoutSetPrototype
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(
+				ServiceTestUtil.randomString());
+
+		importedGroup = layoutSetPrototype.getGroup();
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+	}
+
+	@Test
 	public void testExportImportLayouts() throws Exception {
 		LayoutTestUtil.addLayout(
 			group.getGroupId(), ServiceTestUtil.randomString());
@@ -114,6 +159,87 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Assert.assertEquals(
 			LayoutLocalServiceUtil.getLayoutsCount(group, false),
 			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
+	}
+
+	@Test
+	@Transactional
+	public void testExportImportLayoutSetInvalidLARType() throws Exception {
+		LayoutSetUtil.removeAll();
+
+		// Import LayoutSet to LayoutPrototype
+
+		group = GroupTestUtil.addGroup();
+
+		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
+			ServiceTestUtil.randomString());
+
+		importedGroup = layoutPrototype.getGroup();
+
+		long[] layoutIds = new long[0];
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+
+		// Import LayoutSet to LayoutSetPrototype
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(
+				ServiceTestUtil.randomString());
+
+		importedGroup = layoutSetPrototype.getGroup();
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+	}
+
+	@Test
+	@Transactional
+	public void testExportImportLayoutSetPrototypeInvalidLARType()
+		throws Exception {
+
+		// Import LayoutSetPrototype to LayoutSet
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(
+				ServiceTestUtil.randomString());
+
+		group = layoutSetPrototype.getGroup();
+		importedGroup = GroupTestUtil.addGroup();
+
+		long[] layoutIds = new long[0];
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+
+		// Import LayoutSetPrototype to LayoutPrototyope
+
+		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
+			ServiceTestUtil.randomString());
+
+		importedGroup = layoutPrototype.getGroup();
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
 	}
 
 	@Test

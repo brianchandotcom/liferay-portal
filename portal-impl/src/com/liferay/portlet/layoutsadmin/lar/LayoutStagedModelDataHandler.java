@@ -58,7 +58,6 @@ import com.liferay.portal.model.LayoutStagingHandler;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -369,19 +368,12 @@ public class LayoutStagedModelDataHandler
 			else {
 				importedLayout.setCreateDate(layout.getCreateDate());
 				importedLayout.setModifiedDate(layout.getModifiedDate());
-
-				Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-				if (!group.isLayoutPrototype() &&
-					!group.isLayoutSetPrototype()) {
-
-					importedLayout.setLayoutPrototypeUuid(
-						layout.getLayoutPrototypeUuid());
-					importedLayout.setLayoutPrototypeLinkEnabled(
-						layout.isLayoutPrototypeLinkEnabled());
-					importedLayout.setSourcePrototypeLayoutUuid(
-						layout.getSourcePrototypeLayoutUuid());
-				}
+				importedLayout.setLayoutPrototypeUuid(
+					layout.getLayoutPrototypeUuid());
+				importedLayout.setLayoutPrototypeLinkEnabled(
+					layout.isLayoutPrototypeLinkEnabled());
+				importedLayout.setSourcePrototypeLayoutUuid(
+					layout.getSourcePrototypeLayoutUuid());
 			}
 
 			importedLayout.setUuid(layout.getUuid());

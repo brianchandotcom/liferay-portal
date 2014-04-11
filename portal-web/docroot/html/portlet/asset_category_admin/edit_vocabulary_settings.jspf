@@ -112,7 +112,7 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 								}
 							%>
 
-								<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, factory.getClassName()) %>" selected="<%= selected %>" value="<%= factory.getClassNameId() %>" />
+								<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= selected %>" value="<%= assetRendererFactory.getClassNameId() %>" />
 
 							<%
 							}

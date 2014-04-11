@@ -85,9 +85,7 @@ AUI.add(
 			_bindUIACPreview: function() {
 				var instance = this;
 
-				if (!instance._eventHandles) {
-					instance._eventHandles = [];
-				}
+				instance._eventHandles = instance._eventHandles || [];
 
 				instance._eventHandles.push(
 					Liferay.Dockbar.getPanelNode(Liferay.Dockbar.ADD_PANEL).delegate(

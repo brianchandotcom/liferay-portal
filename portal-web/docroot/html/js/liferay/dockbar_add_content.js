@@ -53,7 +53,7 @@ AUI.add(
 									instance.addPortlet(event.node, event.options);
 								}
 							)
-						]
+						];
 
 						instance._eventHandles = instance._eventHandles.concat(eventHandles);
 					},

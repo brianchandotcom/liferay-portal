@@ -15,11 +15,12 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.NoSuchRepositoryEntryException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.Settings;
@@ -31,38 +32,12 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
 
 /**
  * @author Jorge Ferrer
  * @author Sergio González
  */
 public class ConfigurationActionImpl extends SettingsConfigurationAction {
-
-	@Override
-	public void postProcess(
-		long companyId, PortletRequest portletRequest, Settings settings) {
-
-		String languageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
-		DLSettings dlSettings = new DLSettings(settings);
-
-		removeDefaultValue(
-			portletRequest, settings, "emailFileEntryAddedBody_" + languageId,
-			dlSettings.getEmailFileEntryAddedBody());
-		removeDefaultValue(
-			portletRequest, settings,
-			"emailFileEntryAddedSubject_" + languageId,
-			dlSettings.getEmailFileEntryAddedSubject());
-		removeDefaultValue(
-			portletRequest, settings, "emailFileEntryUpdatedBody_" + languageId,
-			dlSettings.getEmailFileEntryUpdatedBody());
-		removeDefaultValue(
-			portletRequest, settings,
-			"emailFileEntryUpdatedSubject_" + languageId,
-			dlSettings.getEmailFileEntryUpdatedSubject());
-	}
 
 	@Override
 	public void processAction(
@@ -77,6 +52,13 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	@Override
+	protected Settings getSettings(ActionRequest actionRequest)
+		throws PortalException, SystemException {
+
+		return new DLSettings(super.getSettings(actionRequest));
 	}
 
 	protected void validate(ActionRequest actionRequest) throws Exception {

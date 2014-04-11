@@ -1169,6 +1169,91 @@
 		</execute>
 	</command>
 
+	<command name="SendMessageSpecialCharacters" priority="3">
+		<var name="messageBody" value="Today is Test Test&apos;s fake &quot;birthday&quot;. &lt;script&gt;alert(&quot;this is an xss test&quot;);&lt;/script&gt;." />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="pageName" value="Messages" />
+		<var name="partialMessageBody" value="Today is Test Test" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="partialMessageBody" value="${partialMessageBody}" />
+			<var name="recipientName" value="${userName}" />
+			<var name="recipientScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessage">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="partialMessageBody" value="${partialMessageBody}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute action="SOMessagesMessage#click" locator-key1="BACK_BUTTON" />
+
+		<execute macro="SOMessages#viewMessageList">
+			<var name="connectionName" value="${userName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="partialMessageBody" value="${partialMessageBody}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMessages#viewMessage">
+			<var name="connectionName" value="${adminName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="partialMessageBody" value="${partialMessageBody}" />
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute action="SOMessagesMessage#click" locator-key1="BACK_BUTTON" />
+
+		<execute macro="SOMessages#viewMessageList">
+			<var name="connectionName" value="${adminName}" />
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="partialMessageBody" value="${partialMessageBody}" />
+		</execute>
+	</command>
+
 	<command name="SendReplyMessage" priority="5">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody" value="Message Reply Body" />

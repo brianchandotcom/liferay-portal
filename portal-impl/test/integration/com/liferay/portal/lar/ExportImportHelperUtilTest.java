@@ -43,6 +43,7 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -492,6 +493,48 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	}
 
 	@Test
+	public void testImportLinksToLayoutsIdsReplacement() throws Exception {
+		LayoutTestUtil.addLayout(
+			_liveGroup.getGroupId(), ServiceTestUtil.randomString(), true);
+		LayoutTestUtil.addLayout(
+			_liveGroup.getGroupId(), ServiceTestUtil.randomString(), false);
+
+		exportImportLayouts(true);
+		exportImportLayouts(false);
+
+		Layout importedPrivateLayout =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				_stagingPrivateLayout.getUuid(), _liveGroup.getGroupId(), true);
+		Layout importedPublicLayout =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				_stagingPublicLayout.getUuid(), _liveGroup.getGroupId(), false);
+
+		String content = getContent("layout_links_ids_replacement.txt");
+
+		String expectedContent = replaceLinksToLayoutsParameters(
+			content, importedPrivateLayout, importedPublicLayout);
+
+		content = replaceLinksToLayoutsParameters(
+			content, _stagingPrivateLayout, _stagingPublicLayout);
+
+		Element rootElement =
+			_portletDataContextImport.getImportDataRootElement();
+
+		Element entryElement = rootElement.element("entry");
+
+		content = ExportImportHelperUtil.replaceExportContentReferences(
+			_portletDataContextExport, _referrerStagedModel, entryElement,
+			content, true);
+
+		String importedContent =
+			ExportImportHelperUtil.replaceImportContentReferences(
+				_portletDataContextImport, _referrerStagedModel, entryElement,
+				content, true);
+
+		Assert.assertEquals(expectedContent, importedContent);
+	}
+
+	@Test
 	public void testValidateMissingReferences() throws Exception {
 		String xml = replaceParameters(
 			getContent("missing_references.txt"), _fileEntry);
@@ -557,6 +600,16 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		sb.append(StringPool.CLOSE_BRACKET);
 
 		Assert.assertTrue(content.contains(sb.toString()));
+	}
+
+	protected void exportImportLayouts(boolean privateLayout) throws Exception {
+		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
+			_stagingGroup.getGroupId(), privateLayout, null,
+			new HashMap<String, String[]>(), null, null);
+
+		LayoutLocalServiceUtil.importLayouts(
+			TestPropsValues.getUserId(), _liveGroup.getGroupId(), privateLayout,
+			new HashMap<String, String[]>(), larFile);
 	}
 
 	protected String getContent(String fileName) throws Exception {

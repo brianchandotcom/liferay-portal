@@ -2982,6 +2982,7 @@
 
 		<column name="type" type="String" />
 		<column name="timestamp" type="long" />
+		<column name="deliveryType" type="int" />
 		<column name="deliverBy" type="long" />
 		<column name="delivered" type="boolean" />
 		<column name="payload" type="String" />

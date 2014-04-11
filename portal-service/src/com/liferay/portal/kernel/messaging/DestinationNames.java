@@ -119,6 +119,8 @@ public interface DestinationNames {
 
 	public static final String POLLER_RESPONSE = "liferay/poller_response";
 
+	public static final String PUSH_NOTIFICATION = "liferay/push_notification";
+
 	public static final String REPORT_COMPILER = "liferay/report_compiler";
 
 	public static final String REPORT_REQUEST = "liferay/report_request";

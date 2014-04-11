@@ -59,6 +59,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 		attributes.put("userId", getUserId());
 		attributes.put("type", getType());
 		attributes.put("timestamp", getTimestamp());
+		attributes.put("deliveryType", getDeliveryType());
 		attributes.put("deliverBy", getDeliverBy());
 		attributes.put("delivered", getDelivered());
 		attributes.put("payload", getPayload());
@@ -110,6 +111,12 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 
 		if (timestamp != null) {
 			setTimestamp(timestamp);
+		}
+
+		Integer deliveryType = (Integer)attributes.get("deliveryType");
+
+		if (deliveryType != null) {
+			setDeliveryType(deliveryType);
 		}
 
 		Long deliverBy = (Long)attributes.get("deliverBy");
@@ -317,6 +324,26 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	@Override
 	public void setTimestamp(long timestamp) {
 		_userNotificationEvent.setTimestamp(timestamp);
+	}
+
+	/**
+	* Returns the delivery type of this user notification event.
+	*
+	* @return the delivery type of this user notification event
+	*/
+	@Override
+	public int getDeliveryType() {
+		return _userNotificationEvent.getDeliveryType();
+	}
+
+	/**
+	* Sets the delivery type of this user notification event.
+	*
+	* @param deliveryType the delivery type of this user notification event
+	*/
+	@Override
+	public void setDeliveryType(int deliveryType) {
+		_userNotificationEvent.setDeliveryType(deliveryType);
 	}
 
 	/**

@@ -123,6 +123,8 @@ public class UserNotificationEventPersistenceTest {
 
 		newUserNotificationEvent.setTimestamp(ServiceTestUtil.nextLong());
 
+		newUserNotificationEvent.setDeliveryType(ServiceTestUtil.nextInt());
+
 		newUserNotificationEvent.setDeliverBy(ServiceTestUtil.nextLong());
 
 		newUserNotificationEvent.setDelivered(ServiceTestUtil.randomBoolean());
@@ -149,6 +151,8 @@ public class UserNotificationEventPersistenceTest {
 			newUserNotificationEvent.getType());
 		Assert.assertEquals(existingUserNotificationEvent.getTimestamp(),
 			newUserNotificationEvent.getTimestamp());
+		Assert.assertEquals(existingUserNotificationEvent.getDeliveryType(),
+			newUserNotificationEvent.getDeliveryType());
 		Assert.assertEquals(existingUserNotificationEvent.getDeliverBy(),
 			newUserNotificationEvent.getDeliverBy());
 		Assert.assertEquals(existingUserNotificationEvent.getDelivered(),
@@ -265,8 +269,8 @@ public class UserNotificationEventPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("UserNotificationEvent",
 			"mvccVersion", true, "uuid", true, "userNotificationEventId", true,
 			"companyId", true, "userId", true, "type", true, "timestamp", true,
-			"deliverBy", true, "delivered", true, "payload", true, "archived",
-			true);
+			"deliveryType", true, "deliverBy", true, "delivered", true,
+			"payload", true, "archived", true);
 	}
 
 	@Test
@@ -401,6 +405,8 @@ public class UserNotificationEventPersistenceTest {
 		userNotificationEvent.setType(ServiceTestUtil.randomString());
 
 		userNotificationEvent.setTimestamp(ServiceTestUtil.nextLong());
+
+		userNotificationEvent.setDeliveryType(ServiceTestUtil.nextInt());
 
 		userNotificationEvent.setDeliverBy(ServiceTestUtil.nextLong());
 

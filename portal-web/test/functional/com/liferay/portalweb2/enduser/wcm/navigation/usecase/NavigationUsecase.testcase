@@ -107,4 +107,61 @@
 
 		<execute action="PGNavigation#assertTextEquals" locator-key1="BREADCRUMB_ENTRY" value1="${pageName}" />
 	</command>
+
+	<command name="ViewNoAddPagePermissionsPG" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Navigation Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Navigation Page" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoPagePG">
+			<var name="pageName" value="Navigation Page" />
+		</execute>
+
+		<for list="CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_CONFIGURE_APPLICATIONS_CHECKBOX,CONTENT_PERMISSIONS_CUSTOMIZE_CHECKBOX,CONTENT_PERMISSIONS_DELETE_CHECKBOX,CONTENT_PERMISSIONS_DELETE_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX,CONTENT_PERMISSIONS_UPDATE_CHECKBOX,CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX" param="permissionDefinitionKey">
+			<execute macro="Role#definePermissionPG">
+				<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+				<var name="roleName" value="Power User" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Navigation Page" />
+		</execute>
+
+		<execute macro="Dockbar#viewAddTabsWithNoAddPagePermission" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG" />
+	</command>
 </definition>

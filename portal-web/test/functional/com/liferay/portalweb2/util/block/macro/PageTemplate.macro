@@ -62,6 +62,16 @@
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}" />
 	</command>
 
+	<command name="gotoPageTemplateViaEdit">
+		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute action="CPPagetemplates#assertClick" locator-key1="PAGE_TEMPLATE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPPagetemplates#assertClick" locator-key1="PAGE_TEMPLATE_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPPagetemplatesEdit#assertClick" locator-key1="OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />

@@ -1,0 +1,7 @@
+<definition>
+	<command name="viewPG">
+		<execute action="PGRelatedassets#assertElementPresent" locator-key1="ASSET_TITLE_IMAGE_1" />
+		<execute action="PGRelatedassets#assertTextEquals" locator-key1="ASSET_TITLE_1" value1="${assetTitle}" />
+		<execute action="PGRelatedassets#assertElementPresent" locator-key1="ASSET_EDIT_1" />
+	</command>
+</definition>

@@ -843,15 +843,6 @@
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="WIKI_PAGE_CHILD_PAGE_TITLE" value1="${wikiChildPageTitle}" />
 	</command>
 
-	<command name="viewCP">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute action="CPWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
-		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
-		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitle}" />
-		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
-	</command>
-	
 	<command name="viewCommentPG">
 		<var name="key_commentBody" value="${commentBody}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
@@ -862,7 +853,16 @@
 
 		<execute action="PGWiki#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${commentBody}" />
 	</command>
-	
+
+	<command name="viewCP">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="CPWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitle}" />
+		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
+	</command>
+
 	<command name="viewCustomADTSocialPG" >
 		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_FRONTPAGE" value1="FrontPage" />
 		<execute action="PGWiki#assertTextEquals" locator-key1="ADT_SOCIAL_WIKI_PAGE_TITLE" value1="FrontPage" />

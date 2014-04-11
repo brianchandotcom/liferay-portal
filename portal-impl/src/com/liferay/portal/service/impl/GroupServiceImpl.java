@@ -987,27 +987,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return filterGroups(groups);
 	}
 
-	@Override
-	public int searchCount(
-			long companyId, long[] classNameIds, String keywords,
-			LinkedHashMap<String, Object> params)
-		throws SystemException {
-
-		return groupLocalService.searchCount(
-			companyId, classNameIds, keywords, params);
-	}
-
-	@Override
-	public int searchCount(
-			long companyId, long[] classNameIds, String name,
-			String description, LinkedHashMap<String, Object> params,
-			boolean andOperator)
-		throws SystemException {
-
-		return groupLocalService.searchCount(
-			companyId, classNameIds, name, description, params, andOperator);
-	}
-
 	/**
 	 * Returns the number of groups and organization groups that match the name
 	 * and description, optionally including the user's inherited organizations

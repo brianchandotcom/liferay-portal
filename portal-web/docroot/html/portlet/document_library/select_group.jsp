@@ -72,10 +72,10 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 			}
 
 			if (searchTerms.isAdvancedSearch()) {
-				total = GroupServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
+				total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
 			}
 			else {
-				total = GroupServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getKeywords(), groupParams);
+				total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getKeywords(), groupParams);
 			}
 
 			total += additionalSites;

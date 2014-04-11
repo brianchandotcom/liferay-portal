@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -44,7 +46,7 @@ public class ResourceBundleTracker implements Closeable {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
-			"(&(javax.portlet.name= " + portletId + ")(language.id=*)" +
+			"(&(javax.portlet.name=" + _portletId + ")" +
 				"(objectClass=" + ResourceBundle.class.getName() + "))");
 
 		_serviceTracker = registry.trackServices(
@@ -82,7 +84,7 @@ public class ResourceBundleTracker implements Closeable {
 
 	public ResourceBundle getResouceBundle(String languageId) {
 		if (languageId == null) {
-			return null;
+			languageId = StringPool.BLANK;
 		}
 
 		return _resourceBundles.get(languageId);
@@ -131,8 +133,8 @@ public class ResourceBundleTracker implements Closeable {
 			ResourceBundle resourceBundle = registry.getService(
 				serviceReference);
 
-			String languageId = (String)serviceReference.getProperty(
-				"language.id");
+			String languageId = GetterUtil.getString(
+				(String)serviceReference.getProperty("language.id"));
 
 			_resourceBundles.put(languageId, resourceBundle);
 
@@ -154,8 +156,8 @@ public class ResourceBundleTracker implements Closeable {
 
 			registry.ungetService(serviceReference);
 
-			String languageId = (String)serviceReference.getProperty(
-				"language.id");
+			String languageId = GetterUtil.getString(
+				(String)serviceReference.getProperty("language.id"));
 
 			_resourceBundles.remove(languageId);
 		}

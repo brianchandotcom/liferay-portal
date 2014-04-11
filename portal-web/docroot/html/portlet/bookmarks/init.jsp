@@ -59,10 +59,6 @@ if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 }
 
-boolean showFoldersSearch = bookmarksSettings.getShowFoldersSearch();
-boolean showSubfolders = bookmarksSettings.getShowSubfolders();
-int foldersPerPage = bookmarksSettings.getFoldersPerPage();
-
 String portletId = portletDisplay.getId();
 
 if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
@@ -80,9 +76,6 @@ String[] folderColumns = bookmarksSettings.getFolderColumns();
 if (!portletId.equals(PortletKeys.BOOKMARKS)) {
 	folderColumns = ArrayUtil.remove(folderColumns, "action");
 }
-
-boolean enableRelatedAssets = bookmarksSettings.getEnableRelatedAssets();
-int entriesPerPage = bookmarksSettings.getEntriesPerPage();
 
 String allEntryColumns = "name,url,visits,modified-date";
 

@@ -36,11 +36,11 @@
 				</div>
 			</aui:field-wrapper>
 
-			<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= showFoldersSearch %>" />
+			<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= bookmarksSettings.getShowFoldersSearch() %>" />
 
-			<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= showSubfolders %>" />
+			<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= bookmarksSettings.getShowSubfolders() %>" />
 
-			<aui:input name="preferences--foldersPerPage--" size="2" type="text" value="<%= foldersPerPage %>" />
+			<aui:input name="preferences--foldersPerPage--" size="2" type="text" value="<%= bookmarksSettings.getFoldersPerPage() %>" />
 
 			<aui:field-wrapper label="show-columns">
 
@@ -85,9 +85,9 @@
 
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="bookmarksListingPanel" persistState="<%= true %>" title="bookmarks-listing">
 		<aui:fieldset>
-			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= bookmarksSettings.getEnableRelatedAssets() %>" />
 
-			<aui:input label="documents-per-page" name="preferences--entriesPerPage--" size="2" type="text" value="<%= entriesPerPage %>" />
+			<aui:input label="documents-per-page" name="preferences--entriesPerPage--" size="2" type="text" value="<%= bookmarksSettings.getEntriesPerPage() %>" />
 
 			<aui:field-wrapper label="show-columns">
 

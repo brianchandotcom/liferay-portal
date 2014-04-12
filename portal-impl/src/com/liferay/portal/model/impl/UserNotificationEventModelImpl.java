@@ -67,12 +67,13 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 			{ "userId", Types.BIGINT },
 			{ "type_", Types.VARCHAR },
 			{ "timestamp", Types.BIGINT },
+			{ "deliveryType", Types.INTEGER },
 			{ "deliverBy", Types.BIGINT },
 			{ "delivered", Types.BOOLEAN },
 			{ "payload", Types.CLOB },
 			{ "archived", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,timestamp LONG,deliverBy LONG,delivered BOOLEAN,payload TEXT null,archived BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,timestamp LONG,deliveryType INTEGER,deliverBy LONG,delivered BOOLEAN,payload TEXT null,archived BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table UserNotificationEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY userNotificationEvent.timestamp DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserNotificationEvent.timestamp DESC";
@@ -141,6 +142,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		attributes.put("userId", getUserId());
 		attributes.put("type", getType());
 		attributes.put("timestamp", getTimestamp());
+		attributes.put("deliveryType", getDeliveryType());
 		attributes.put("deliverBy", getDeliverBy());
 		attributes.put("delivered", getDelivered());
 		attributes.put("payload", getPayload());
@@ -195,6 +197,12 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		if (timestamp != null) {
 			setTimestamp(timestamp);
+		}
+
+		Integer deliveryType = (Integer)attributes.get("deliveryType");
+
+		if (deliveryType != null) {
+			setDeliveryType(deliveryType);
 		}
 
 		Long deliverBy = (Long)attributes.get("deliverBy");
@@ -353,6 +361,16 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	}
 
 	@Override
+	public int getDeliveryType() {
+		return _deliveryType;
+	}
+
+	@Override
+	public void setDeliveryType(int deliveryType) {
+		_deliveryType = deliveryType;
+	}
+
+	@Override
 	public long getDeliverBy() {
 		return _deliverBy;
 	}
@@ -469,6 +487,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		userNotificationEventImpl.setUserId(getUserId());
 		userNotificationEventImpl.setType(getType());
 		userNotificationEventImpl.setTimestamp(getTimestamp());
+		userNotificationEventImpl.setDeliveryType(getDeliveryType());
 		userNotificationEventImpl.setDeliverBy(getDeliverBy());
 		userNotificationEventImpl.setDelivered(getDelivered());
 		userNotificationEventImpl.setPayload(getPayload());
@@ -594,6 +613,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		userNotificationEventCacheModel.timestamp = getTimestamp();
 
+		userNotificationEventCacheModel.deliveryType = getDeliveryType();
+
 		userNotificationEventCacheModel.deliverBy = getDeliverBy();
 
 		userNotificationEventCacheModel.delivered = getDelivered();
@@ -613,7 +634,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -629,6 +650,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		sb.append(getType());
 		sb.append(", timestamp=");
 		sb.append(getTimestamp());
+		sb.append(", deliveryType=");
+		sb.append(getDeliveryType());
 		sb.append(", deliverBy=");
 		sb.append(getDeliverBy());
 		sb.append(", delivered=");
@@ -644,7 +667,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserNotificationEvent");
@@ -677,6 +700,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		sb.append(
 			"<column><column-name>timestamp</column-name><column-value><![CDATA[");
 		sb.append(getTimestamp());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>deliveryType</column-name><column-value><![CDATA[");
+		sb.append(getDeliveryType());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>deliverBy</column-name><column-value><![CDATA[");
@@ -716,6 +743,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	private boolean _setOriginalUserId;
 	private String _type;
 	private long _timestamp;
+	private int _deliveryType;
 	private long _deliverBy;
 	private boolean _delivered;
 	private boolean _originalDelivered;

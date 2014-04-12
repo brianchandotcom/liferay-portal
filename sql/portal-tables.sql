@@ -2300,6 +2300,7 @@ create table UserNotificationEvent (
 	userId LONG,
 	type_ VARCHAR(75) null,
 	timestamp LONG,
+	deliveryType INTEGER,
 	deliverBy LONG,
 	delivered BOOLEAN,
 	payload TEXT null,

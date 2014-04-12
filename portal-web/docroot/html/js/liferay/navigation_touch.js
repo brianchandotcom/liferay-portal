@@ -7,9 +7,9 @@ AUI.add(
 
 		var SELECTOR_LFR_NAV_SORTABLE = '.lfr-nav-sortable';
 
-		var STR_HANDLES = 'handles';
-
 		var TPL_DRAG_HANDLE = '<span class="drag-handle"><i class="icon-reorder"></i></span>';
+
+		var afterMakeSortable = Liferay.Navigation.prototype._afterMakeSortable;
 
 		A.mix(
 			Liferay.Navigation.prototype,
@@ -19,11 +19,13 @@ AUI.add(
 
 					var navItems = instance.get('navBlock').all(instance._navItemSelector);
 
+					var sortableDD = sortable.delegate.dd;
+
+					instance._sortableDD = sortableDD;
+
 					instance._createDragHandles(navItems);
 
-					var sortableDD = instance._sortableDD = sortable.delegate.dd;
-
-					sortableDD.removeInvalid('a');
+					afterMakeSortable(sortable);
 
 					sortableDD.plug(A.Plugin.DDConstrained);
 
@@ -52,9 +54,7 @@ AUI.add(
 				_onWindowResize: function() {
 					var instance = this;
 
-					var sortableDD = instance._sortableDD;
-
-					instance._toggleDragConfig(sortableDD);
+					instance._toggleDragConfig(instance._sortableDD);
 				},
 
 				_toggleDragConfig: function(dd) {

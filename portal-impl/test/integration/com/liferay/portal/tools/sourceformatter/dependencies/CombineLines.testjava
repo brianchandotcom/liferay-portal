@@ -28,18 +28,9 @@ public class CombineLines
 	}
 
 	public void method1(
-		String test1, String test2,
-		String test3, String test4) {
-
-		// These
-		// comments
-		// should
-		// all
-		// fit
-		// on
-		// one
-		// single
-		// line
+			String test1, String test2,
+			String test3, String test4)
+		throws Exception {
 
 		int i1 = 0;
 		int i2 = 0;

@@ -17,18 +17,23 @@
 <%@ include file="/html/portlet/asset_category_admin/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_asset_category_admin_edit_vocabulary") + StringPool.UNDERLINE;
-
 AssetVocabulary vocabulary = (AssetVocabulary)request.getAttribute(WebKeys.ASSET_VOCABULARY);
 
 long vocabularyId = BeanParamUtil.getLong(vocabulary, request, "vocabularyId");
+
+String formName = PortalUtil.generateRandomKey(request, "portlet_asset_category_admin_edit_vocabulary") +
+		StringPool.UNDERLINE + "fm";
 %>
 
 <portlet:actionURL var="editVocabularyURL">
 	<portlet:param name="struts_action" value="/asset_category_admin/edit_vocabulary" />
 </portlet:actionURL>
 
-<aui:form action="<%= editVocabularyURL %>" cssClass="update-vocabulary-form" method="get" name='<%= randomNamespace + "fm" %>'>
+<aui:form action="<%= editVocabularyURL %>"
+		  cssClass="update-vocabulary-form"
+		  method="get"
+		name="<%= formName %>" id="<portlet:namespace /><%= formName %>">
+
 	<div class="hide lfr-message-response" id="vocabularyMessagesEdit"></div>
 
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= vocabulary == null ? Constants.ADD : Constants.UPDATE %>" />
@@ -82,3 +87,29 @@ long vocabularyId = BeanParamUtil.getLong(vocabulary, request, "vocabularyId");
 		</div>
 	</aui:fieldset>
 </aui:form>
+
+<aui:script use="aui-base">
+
+	var form = A.one('#<portlet:namespace /><%= formName %>');
+
+	form.delegate(
+		'change',
+		function(event) {
+			var allSelectsClass = event.currentTarget.attr('name') + "-subtype";
+			allSelectsClass = allSelectsClass.replace("<portlet:namespace />", "");
+			console.log(allSelectsClass);
+			A.all("." + allSelectsClass).each(
+				function(item) {
+					item.hide();
+				}
+			);
+
+			var selectToShow = event.currentTarget.attr('name') + "-subtype-" + event.currentTarget.val();
+			var select = A.one('#' + selectToShow);
+			if (select !== null) {
+				select.show();
+			}
+		},
+		'.asset-type'
+	);
+</aui:script>

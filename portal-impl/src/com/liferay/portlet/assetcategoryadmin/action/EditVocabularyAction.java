@@ -103,11 +103,16 @@ public class EditVocabularyAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "indexes"), 0);
 
 		Set<Long> selectedClassNameIds = new LinkedHashSet<Long>();
+		Set<String> selectedClassTypeIds = new LinkedHashSet<String>();
 		Set<Long> requiredClassNameIds = new LinkedHashSet<Long>();
 
 		for (int index : indexes) {
 			long classNameId = ParamUtil.getLong(
 				actionRequest, "classNameId" + index);
+
+			long classTypeId = ParamUtil.getLong(
+				actionRequest,
+				"classNameId" + index + "-subtype-" + classNameId);
 
 			boolean required = ParamUtil.getBoolean(
 				actionRequest, "required" + index);
@@ -115,6 +120,7 @@ public class EditVocabularyAction extends PortletAction {
 			if (classNameId == AssetCategoryConstants.ALL_CLASS_NAME_IDS) {
 				selectedClassNameIds.clear();
 				selectedClassNameIds.add(classNameId);
+				selectedClassTypeIds.add(classNameId + ":" + classTypeId);
 
 				if (required) {
 					requiredClassNameIds.clear();
@@ -125,6 +131,7 @@ public class EditVocabularyAction extends PortletAction {
 			}
 			else {
 				selectedClassNameIds.add(classNameId);
+				selectedClassTypeIds.add(classNameId + ":" + classTypeId);
 
 				if (required) {
 					requiredClassNameIds.add(classNameId);
@@ -134,6 +141,8 @@ public class EditVocabularyAction extends PortletAction {
 
 		settingsProperties.setProperty(
 			"selectedClassNameIds", StringUtil.merge(selectedClassNameIds));
+		settingsProperties.setProperty(
+			"selectedClassTypeIds", StringUtil.merge(selectedClassTypeIds));
 		settingsProperties.setProperty(
 			"requiredClassNameIds", StringUtil.merge(requiredClassNameIds));
 

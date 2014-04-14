@@ -65,7 +65,7 @@ public class HtmlImpl implements Html {
 	 *         <code>null</code>
 	 */
 	@Override
-	public String auiCompatibleId(String text) {
+	public String getAUICompatibleId(String text) {
 		if (Validator.isNull(text)) {
 			return text;
 		}

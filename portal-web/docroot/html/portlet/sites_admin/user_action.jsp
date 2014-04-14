@@ -28,7 +28,7 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 %>
 
 <liferay-ui:icon-menu showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_USER_ROLES) %>">
 		<portlet:renderURL var="assignURL">
 			<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
 			<portlet:param name="tabs1" value="users" />
@@ -42,21 +42,21 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 			message="assign-site-roles"
 			url="<%= assignURL %>"
 		/>
+	</c:if>
 
-		<c:if test="<%= !(organizationUser || userGroupUser) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, user2.getUserId(), group.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipRequired(user2.getUserId(), group.getGroupId()) %>">
-			<portlet:actionURL var="removeURL">
-				<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
-				<portlet:param name="<%= Constants.CMD %>" value="group_users" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-				<portlet:param name="removeUserIds" value="<%= String.valueOf(user2.getUserId()) %>" />
-			</portlet:actionURL>
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) && !(organizationUser || userGroupUser) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, user2.getUserId(), group.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipRequired(user2.getUserId(), group.getGroupId()) %>">
+		<portlet:actionURL var="removeURL">
+			<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
+			<portlet:param name="<%= Constants.CMD %>" value="group_users" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+			<portlet:param name="removeUserIds" value="<%= String.valueOf(user2.getUserId()) %>" />
+		</portlet:actionURL>
 
-			<liferay-ui:icon
-				image="unassign_user"
-				message="remove-membership"
-				url="<%= removeURL %>"
-			/>
-		</c:if>
+		<liferay-ui:icon
+			image="unassign_user"
+			message="remove-membership"
+			url="<%= removeURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

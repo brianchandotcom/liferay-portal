@@ -1634,6 +1634,26 @@ public class JournalArticleLocalServiceImpl
 			article, ddmTemplateKey, viewMode, languageId, null, themeDisplay);
 	}
 
+	/**
+	 * Returns the web content matching the group, article ID, and version, and
+	 * associated with the DDM template.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  articleId the primary key of the web content article
+	 * @param  version the web content article's version
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  ddmTemplateKey the primary key of the web content article's DDM
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
+	 * @param  languageId the primary key of the language translation to get
+	 * @param  portletRequestModel the portlet request model object
+	 * @param  themeDisplay the theme display
+	 * @return the matching web content
+	 * @throws PortalException if a matching web content article or DDM template
+	 *         could not be found, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public String getArticleContent(
 			long groupId, String articleId, double version, String viewMode,
@@ -1718,6 +1738,25 @@ public class JournalArticleLocalServiceImpl
 			themeDisplay);
 	}
 
+	/**
+	 * Returns the latest web content matching the group and article ID, and
+	 * associated with DDM template key.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  articleId the primary key of the web content article
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  ddmTemplateKey the primary key of the web content article's DDM
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
+	 * @param  languageId the primary key of the language translation to get
+	 * @param  portletRequestModel the portlet request model object
+	 * @param  themeDisplay the theme display
+	 * @return the matching web content
+	 * @throws PortalException if a matching web content article or DDM template
+	 *         could not be found, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public String getArticleContent(
 			long groupId, String articleId, String viewMode,

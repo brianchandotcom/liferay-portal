@@ -1602,6 +1602,17 @@ public class ArrayUtil {
 		return newArray;
 	}
 
+	public static <T, A> A[] toArray(T[] list, Accessor<T, A> accessor) {
+		A[] aArray = (A[])Array.newInstance(
+			accessor.getAttributeClass(), list.length);
+
+		for (int i = 0; i < list.length; i++) {
+			aArray[i] = accessor.get(list[i]);
+		}
+
+		return aArray;
+	}
+
 	public static double[] toDoubleArray(Collection<Double> collection) {
 		double[] newArray = new double[collection.size()];
 

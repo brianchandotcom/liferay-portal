@@ -116,7 +116,7 @@
 		<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="STRUCTURE_TABLE_DESCRIPTION" value1="${structureDescription}" />
 	</command>
 
-	<command name="editFieldIndexableCP">
+	<command name="editFieldSettingCP">
 		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
 		<execute action="CPWebcontent#assertClick" locator-key1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
 
@@ -127,11 +127,27 @@
 
 		<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
 
-		<for list="${structureFieldNames}" param="structureFieldName">
-			<execute macro="DynamicDataMapping#editFieldIndexable">
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-			</execute>
-		</for>
+		<if>
+			<equals arg1="${indexable}" arg2="false" />
+			<then>
+				<for list="${structureFieldNames}" param="structureFieldName">
+					<execute macro="DynamicDataMapping#editFieldIndexable">
+						<var name="fieldFieldLabel" value="${structureFieldName}" />
+					</execute>
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${localizable}" arg2="false" />
+			<then>
+				<for list="${structureFieldNames}" param="structureFieldName">
+					<execute macro="DynamicDataMapping#editFieldLocalizable">
+						<var name="fieldFieldLabel" value="${structureFieldName}" />
+					</execute>
+				</for>
+			</then>
+		</if>
 
 		<execute action="CPWebcontentStructures#selectFrame" locator-key1="STRUCTURES_IFRAME" />
 

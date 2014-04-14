@@ -811,7 +811,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentStructures#editFieldIndexableCP">
+		<execute macro="WebContentStructures#editFieldSettingCP">
+			<var name="indexable" value="false" />
 			<var name="structureFieldNames" value="${structureFieldNames}" />
 			<var name="structureName" value="${structureName}" />
 		</execute>

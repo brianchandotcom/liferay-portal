@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_FIELD_LOCALIZED</td>
+	<td>//iframe[contains(@class,'cke_wysiwyg_frame cke_reset')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_FIELD</td>
 	<td>//body</td>
 	<td></td>

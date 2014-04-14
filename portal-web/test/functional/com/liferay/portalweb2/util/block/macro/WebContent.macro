@@ -275,7 +275,7 @@
 				<var name="key_languageKey" value="${defaultSiteLanguageKey}" />
 
 				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD_LOCALIZED" value1="${webContentTitle}" />
-				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
+				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD_LOCALIZED" value1="${webContentContent}" />
 				<execute action="PGWebcontentdisplayAddwebcontent#click" locator-key1="LOCALIZED_PUBLISH_BUTTON" />
 			</then>
 			<else>
@@ -370,6 +370,15 @@
 				<var name="key_fieldName" value="Text" />
 
 				<execute action="CPWebcontentEditwebcontentAddtranslation#type" locator-key1="TEXT_FIELD" value1="${localizedText}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="unlocalizableField" />
+			<then>
+				<var name="key_fieldName" value="${unlocalizableField}" />
+
+				<execute action="CPWebcontentEditwebcontentAddtranslation#assertTextNotPresent" locator-key1="${unlocalizableFieldLocator}" value1="${unlocalizableField}" />
 			</then>
 		</if>
 

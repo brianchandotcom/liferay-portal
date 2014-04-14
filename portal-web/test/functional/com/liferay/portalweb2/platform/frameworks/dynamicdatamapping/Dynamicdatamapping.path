@@ -182,6 +182,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_LOCALIZABLE</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Localizable')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETTINGS_OPTIONS</td>
 	<td>//td[contains(@class,'table-col-name') and contains(.,'Options')]/following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>

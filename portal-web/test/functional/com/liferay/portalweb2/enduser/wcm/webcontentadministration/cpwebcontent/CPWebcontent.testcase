@@ -123,6 +123,109 @@
 		</execute>
 	</command>
 
+	<command name="AddStructureWithSeparator" priority="4">
+		<var name="structureDescription" value="WC Structure Description" />
+		<var name="structureFieldNames" value="Separator" />
+		<var name="structureName" value="WC Structure Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureFieldNames" value="${structureFieldNames}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#viewCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureFieldNames" value="${structureFieldNames}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+	</command>
+
+	<command name="AddStructureWithUnlocalizableFields" priority="4">
+		<var name="localizedLanguage" value="Spanish (Spain)" />
+		<var name="localizedTitle" value="WC Contenido de la web Titulo" />
+		<var name="structureDescription" value="WC Structure Description" />
+		<var name="structureFieldNames1" value="Text,Text Box" />
+		<var name="structureFieldNames2" value="Text Box" />
+		<var name="structureName" value="WC Structure Name" />
+		<var name="templateDescription" value="WC Template Description" />
+		<var name="templateFieldNames" value="Text,Text Box" />
+		<var name="templateLanguage" value="ftl" />
+		<var name="templateName" value="WC Template Name" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureFieldNames" value="${structureFieldNames1}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#editFieldSettingCP">
+			<var name="localizable" value="false" />
+			<var name="structureFieldNames" value="${structureFieldNames2}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateFieldNames" value="${templateFieldNames}" />
+			<var name="templateName" value="${templateName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCPwithStructure">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateName" value="${templateName}" />
+			<var name="webContentText" value="${webContentText}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addTranslationCP">
+			<var name="localizedLanguage" value="${localizedLanguage}" />
+			<var name="unlocalizableField" value="${structureFieldNames2}" />
+			<var name="unlocalizableFieldLocator" value="TEXT_BOX_FIELD" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#viewCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureFieldNames" value="${structureFieldNames1}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+	</command>
+
 	<command name="AddTemplate" priority="5">
 		<var name="templateDescription" value="WC Template Description" />
 		<var name="templateName" value="WC Template Name" />

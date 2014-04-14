@@ -14,6 +14,10 @@
 			<execute function="Type#typeFrameWaitForCKEditor" />
 		</case>
 
+		<case locator-key1="CONTENT_FIELD_LOCALIZED">
+			<execute function="Type#typeFrameWaitForCKEditor" />
+		</case>
+
 		<case locator-key1="TITLE_FIELD">
 			<execute function="Type#typeWaitForCKEditor" />
 		</case>

@@ -57,13 +57,6 @@ public class HtmlImpl implements Html {
 
 	public static final int ESCAPE_MODE_URL = 5;
 
-	/**
-	 * Escapes the text so that it is safe to use in an HTML context.
-	 *
-	 * @param  text the text to escape
-	 * @return the escaped HTML text, or <code>null</code> if the text is
-	 *         <code>null</code>
-	 */
 	@Override
 	public String auiCompatibleId(String text) {
 		if (Validator.isNull(text)) {
@@ -123,6 +116,13 @@ public class HtmlImpl implements Html {
 		return sb.toString();
 	}
 
+	/**
+	 * Escapes the text so that it is safe to use in an HTML context.
+	 *
+	 * @param  text the text to escape
+	 * @return the escaped HTML text, or <code>null</code> if the text is
+	 *         <code>null</code>
+	 */
 	@Override
 	public String escape(String text) {
 		if (text == null) {

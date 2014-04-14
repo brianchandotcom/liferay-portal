@@ -68,7 +68,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace + name %>" name="<%= namespace + name %>" type="time" value="<%= format.format(calendar.getTime()) %>" />
 		</c:when>
 		<c:otherwise>
-			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace + name %>" name="<%= namespace + name %>" type="text" placeholder="<%= placeholder %>" value="<%= format.format(calendar.getTime()) %>" />
+			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace + name %>" name="<%= namespace + name %>" placeholder="<%= placeholder %>" type="text" value="<%= format.format(calendar.getTime()) %>" />
 		</c:otherwise>
 	</c:choose>
 
@@ -126,7 +126,18 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 
 				var container = instance.get('container');
 
-				return A.Date.parse(container.one('#<%= dateParam %>').val());
+				var dateVal = container.one('#<%= dateParam %>').val();
+
+				var time = A.Date.parse(dateVal);
+
+				if (!time) {
+					var hours = container.one('#<%= hourParam %>').val();
+					var minutes = container.one('#<%= minuteParam %>').val();
+
+					time = A.Date.parse(A.Date.aggregates.T, hours + ':' + minutes + ':0');
+				}
+
+				return time;
 			};
 
 			return timePicker;

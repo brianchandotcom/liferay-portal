@@ -553,7 +553,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 				// If the group is a staging group, check the live group.
 
-				if (group.isStagingGroup()) {
+				if (group.isStagingGroup() &&
+					!ResourceBlockLocalServiceUtil.isSupported(name)) {
+					
 					if (primKey.equals(String.valueOf(groupId))) {
 						primKey = String.valueOf(group.getLiveGroupId());
 					}

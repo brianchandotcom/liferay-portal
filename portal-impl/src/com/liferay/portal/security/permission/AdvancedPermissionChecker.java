@@ -555,7 +555,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 				if (group.isStagingGroup() &&
 					!ResourceBlockLocalServiceUtil.isSupported(name)) {
-					
+
 					if (primKey.equals(String.valueOf(groupId))) {
 						primKey = String.valueOf(group.getLiveGroupId());
 					}

@@ -266,7 +266,7 @@ boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWith
 
 			var tr = link.ancestor('tr');
 
-			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+			searchContainer.deleteRow(tr, link.attr('data-rowId'));
 		},
 		'.modify-link'
 	);

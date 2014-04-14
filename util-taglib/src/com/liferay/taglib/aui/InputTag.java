@@ -227,20 +227,21 @@ public class InputTag extends BaseInputTag {
 			forLabel = forLabel.concat("Checkbox");
 		}
 
-		boolean hideLabel = getHideLabel();
 		String label = getLabel();
 
 		if (label == null) {
 			label = TextFormatter.format(name, TextFormatter.K);
 		}
-		else if (label.equals(StringPool.BLANK)) {
-			label = TextFormatter.format(name, TextFormatter.K);
 
-			hideLabel = true;
-		}
+		String title = getTitle();
 
-		if ((type != null) && type.equals("image")) {
-			hideLabel = true;
+		if (title == null) {
+			if (label.equals(StringPool.BLANK)) {
+				title = TextFormatter.format(name, TextFormatter.K);
+			}
+			else {
+				title = label;
+			}
 		}
 
 		String languageId = getLanguageId();
@@ -289,10 +290,10 @@ public class InputTag extends BaseInputTag {
 		setNamespacedAttribute(request, "field", field);
 		setNamespacedAttribute(request, "forLabel", forLabel);
 		setNamespacedAttribute(request, "formName", formName);
-		setNamespacedAttribute(request, "hideLabel", String.valueOf(hideLabel));
 		setNamespacedAttribute(request, "id", id);
 		setNamespacedAttribute(request, "label", label);
 		setNamespacedAttribute(request, "model", model);
+		setNamespacedAttribute(request, "title", String.valueOf(title));
 		setNamespacedAttribute(request, "wrappedField", wrappedField);
 
 		request.setAttribute(getAttributeNamespace() + "value", getValue());

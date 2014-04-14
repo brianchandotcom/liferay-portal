@@ -102,7 +102,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 			%>
 
 			<div class="input-append">
-				<liferay-ui:input-resource id="toGroupName" label="name" url="<%= toGroupName %>" />
+				<liferay-ui:input-resource id="toGroupName" title="name" url="<%= toGroupName %>" />
 
 				<aui:button name="selectGroupButton" value="select" />
 			</div>
@@ -115,7 +115,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 			%>
 
 			<div class="input-append">
-				<liferay-ui:input-resource id="toFileEntryTitle" label="title" url="<%= toFileEntryTitle %>" />
+				<liferay-ui:input-resource id="toFileEntryTitle" title="title" url="<%= toFileEntryTitle %>" />
 
 				<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" value="select" />
 			</div>

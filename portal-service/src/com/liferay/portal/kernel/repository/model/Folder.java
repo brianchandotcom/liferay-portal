@@ -36,6 +36,16 @@ public interface Folder extends RepositoryModel<Folder> {
 				return folder.getFolderId();
 			}
 
+			@Override
+			public Class<Folder> getTClass() {
+				return Folder.class;
+			}
+
+			@Override
+			public Class<Long> getVClass() {
+				return Long.class;
+			}
+
 		};
 
 	public boolean containsPermission(

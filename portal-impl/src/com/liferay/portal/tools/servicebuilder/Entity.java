@@ -49,6 +49,16 @@ public class Entity {
 				return entity.getName();
 			}
 
+			@Override
+			public Class<Entity> getTClass() {
+				return Entity.class;
+			}
+
+			@Override
+			public Class<String> getVClass() {
+				return String.class;
+			}
+
 		};
 
 	public static EntityColumn getColumn(

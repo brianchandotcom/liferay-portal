@@ -32,6 +32,16 @@ public class License implements Serializable {
 				return license.getName();
 			}
 
+			@Override
+			public Class<License> getTClass() {
+				return License.class;
+			}
+
+			@Override
+			public Class<String> getVClass() {
+				return String.class;
+			}
+
 		};
 
 	public String getName() {

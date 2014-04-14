@@ -115,6 +115,16 @@ public interface PortletResourceAccessor
 			return false;
 		}
 
+		@Override
+		public Class<Portlet> getTClass() {
+			return Portlet.class;
+		}
+
+		@Override
+		public Class<List<String>> getVClass() {
+			throw new UnsupportedOperationException();
+		}
+
 	}
 
 	public static abstract class PortalPortletResourceAccessor
@@ -123,6 +133,16 @@ public interface PortletResourceAccessor
 		@Override
 		public boolean isPortalResource() {
 			return true;
+		}
+
+		@Override
+		public Class<Portlet> getTClass() {
+			return Portlet.class;
+		}
+
+		@Override
+		public Class<List<String>> getVClass() {
+			throw new UnsupportedOperationException();
 		}
 
 	}

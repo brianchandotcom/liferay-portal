@@ -19,6 +19,7 @@ import com.liferay.portal.settings.BaseServiceSettings;
 import com.liferay.portal.settings.FallbackKeys;
 import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.settings.Settings;
+import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 
 /**
  * @author Iván Zaera
@@ -107,7 +108,8 @@ public class BookmarksSettings extends BaseServiceSettings {
 	}
 
 	public long getRootFolderId() {
-		return typedSettings.getLongValue("rootFolderId");
+		return typedSettings.getLongValue(
+			"rootFolderId", BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	public boolean getShowFoldersSearch() {
@@ -149,15 +151,13 @@ public class BookmarksSettings extends BaseServiceSettings {
 		_fallbackKeys.add(
 			"entriesPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 		_fallbackKeys.add("entryColumns", PropsKeys.BOOKMARKS_ENTRY_COLUMNS);
-		_fallbackKeys.add(
-			"folderColumns", PropsKeys.BOOKMARKS_DEFAULT_FOLDER_COLUMNS);
+		_fallbackKeys.add("folderColumns", PropsKeys.BOOKMARKS_FOLDER_COLUMNS);
 		_fallbackKeys.add(
 			"foldersPerPage", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-		_fallbackKeys.add("rootFolderId", PropsKeys.BOOKMARKS_ROOT_FOLDER_ID);
 		_fallbackKeys.add(
-			"showFoldersSearch", PropsKeys.BOOKMARKS_SHOW_FOLDERS_SEARCH);
+			"showFoldersSearch", PropsKeys.BOOKMARKS_FOLDERS_SEARCH_VISIBLE);
 		_fallbackKeys.add(
-			"showSubfolders", PropsKeys.BOOKMARKS_SHOW_SUBFOLDERS);
+			"showSubfolders", PropsKeys.BOOKMARKS_SUBFOLDERS_VISIBLE);
 	}
 
 }

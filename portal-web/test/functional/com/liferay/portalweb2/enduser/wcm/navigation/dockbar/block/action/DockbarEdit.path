@@ -104,7 +104,7 @@
 </tr>
 <tr>
 	<td>ADD_PAGE_TYPE_RADIO</td>
-	<td>//label[@class='radio' and contains(.,'${key_pageType}')]/input</td>
+	<td>//label[@class='radio' and contains(.,'${key_pageTypeLayout}')]/input</td>
 	<td></td>
 </tr>
 </tbody>

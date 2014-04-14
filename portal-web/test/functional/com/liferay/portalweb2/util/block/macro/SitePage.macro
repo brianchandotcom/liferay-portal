@@ -123,10 +123,10 @@
 	</command>
 
 	<command name="changePageTypeLayoutPG">
-		<var name="key_pageType" value="${pageType}" />
+		<var name="key_pageTypeLayout" value="${pageTypeLayout}" />
 
 		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" value1="Edit" />
-		<execute action="DockbarEdit#click" locator-key1="ADD_PAGE_TYPE_RADIO" value1="${pageType}" />
+		<execute action="DockbarEdit#click" locator-key1="ADD_PAGE_TYPE_RADIO" value1="${pageTypeLayout}" />
 		<execute action="DockbarEdit#click" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
@@ -372,14 +372,14 @@
 		<if>
 			<equals arg1="${pageLayout}" arg2="1 Column" />
 			<then>
-				<execute action="Home#assertElementPresent" locator-key1="PAGE_COLUMN_1_LAYOUT_1" />
-				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_COLUMN_2_LAYOUT_70" />
+				<execute action="Home#assertVisible" locator-key1="PAGE_COLUMN_1_LAYOUT_1_COLUMN" />
+				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_COLUMN_2" />
 			</then>
 			<elseif>
 				<equals arg1="${pageLayout}" arg2="2 Column (30/70)" />
 				<then>
-					<execute action="Home#assertElementPresent" locator-key1="PAGE_COLUMN_1_LAYOUT_30" />
-					<execute action="Home#assertElementPresent" locator-key1="PAGE_COLUMN_2_LAYOUT_70" />
+					<execute action="Home#assertVisible" locator-key1="PAGE_COLUMN_1_LAYOUT_2_COLUMNS_30_SPLIT" />
+					<execute action="Home#assertVisible" locator-key1="PAGE_COLUMN_2_LAYOUT_2_COLUMNS_70_SPLIT" />
 				</then>
 			</elseif>
 		</if>

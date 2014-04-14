@@ -169,6 +169,10 @@ body.html-editor {
 
 /* ---------- Miscellaneous ---------- */
 
+span.alert {
+	display: inline-block;
+}
+
 .quick-access-nav {
 	position: absolute;
 	top: -1000px;

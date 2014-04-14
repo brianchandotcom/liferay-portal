@@ -40,12 +40,32 @@ public interface AssetTag extends AssetTagModel, PersistedModel {
 			public Long get(AssetTag assetTag) {
 				return assetTag.getTagId();
 			}
+
+			@Override
+			public Class<AssetTag> getTClass() {
+				return AssetTag.class;
+			}
+
+			@Override
+			public Class<Long> getVClass() {
+				return Long.class;
+			}
 		};
 
 	public static final Accessor<AssetTag, String> NAME_ACCESSOR = new Accessor<AssetTag, String>() {
 			@Override
 			public String get(AssetTag assetTag) {
 				return assetTag.getName();
+			}
+
+			@Override
+			public Class<AssetTag> getTClass() {
+				return AssetTag.class;
+			}
+
+			@Override
+			public Class<String> getVClass() {
+				return String.class;
 			}
 		};
 }

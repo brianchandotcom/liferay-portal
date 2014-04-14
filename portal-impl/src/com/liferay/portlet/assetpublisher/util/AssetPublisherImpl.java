@@ -1507,6 +1507,16 @@ public class AssetPublisherImpl implements AssetPublisher {
 				return assetEntry.getTitle(LocaleUtil.getSiteDefault());
 			}
 
+			@Override
+			public Class<AssetEntry> getTClass() {
+				return AssetEntry.class;
+			}
+
+			@Override
+			public Class<String> getVClass() {
+				return String.class;
+			}
+
 		};
 
 }

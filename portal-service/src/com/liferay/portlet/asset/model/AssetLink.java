@@ -40,12 +40,32 @@ public interface AssetLink extends AssetLinkModel, PersistedModel {
 			public Long get(AssetLink assetLink) {
 				return assetLink.getLinkId();
 			}
+
+			@Override
+			public Class<AssetLink> getTClass() {
+				return AssetLink.class;
+			}
+
+			@Override
+			public Class<Long> getVClass() {
+				return Long.class;
+			}
 		};
 
 	public static final Accessor<AssetLink, Long> ENTRY_ID2_ACCESSOR = new Accessor<AssetLink, Long>() {
 			@Override
 			public Long get(AssetLink assetLink) {
 				return assetLink.getEntryId2();
+			}
+
+			@Override
+			public Class<AssetLink> getTClass() {
+				return AssetLink.class;
+			}
+
+			@Override
+			public Class<Long> getVClass() {
+				return Long.class;
 			}
 		};
 }

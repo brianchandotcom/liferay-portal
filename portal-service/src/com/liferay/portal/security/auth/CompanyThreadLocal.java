@@ -51,18 +51,22 @@ public class CompanyThreadLocal {
 			_log.debug("setCompanyId " + companyId);
 		}
 
+		Long currentCompanyId = _companyId.get();
+
 		if (companyId > 0) {
 			try {
+				_companyId.set(companyId);
+
 				Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
 				LocaleThreadLocal.setDefaultLocale(company.getLocale());
 				TimeZoneThreadLocal.setDefaultTimeZone(company.getTimeZone());
 			}
 			catch (Exception e) {
+				_companyId.set(currentCompanyId);
+
 				_log.error(e, e);
 			}
-
-			_companyId.set(companyId);
 		}
 		else {
 			LocaleThreadLocal.setDefaultLocale(null);

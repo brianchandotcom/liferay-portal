@@ -243,6 +243,18 @@ AUI.add(
 						}
 					);
 
+					instance._sortable.delegate.dd.plug(
+						A.Plugin.DDConstrained,
+						{
+							constrain: sortableContainer
+						}
+					).plug(
+						A.Plugin.DDWinScroll,
+						{
+							horizontal: false
+						}
+					);
+
 					instance._syncSelectedSortList();
 				},
 
@@ -283,6 +295,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-template-deprecated', 'liferay-input-move-boxes', 'sortable']
+		requires: ['aui-base', 'aui-template-deprecated', 'dd-constrain', 'dd-scroll', 'liferay-input-move-boxes', 'sortable']
 	}
 );

@@ -44,6 +44,8 @@ public interface Html {
 
 	public String fromInputSafe(String text);
 
+	public String getAUICompatibleId(String text);
+
 	public String render(String html);
 
 	public String replaceMsWordCharacters(String text);

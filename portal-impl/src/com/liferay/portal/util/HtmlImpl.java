@@ -427,7 +427,7 @@ public class HtmlImpl implements Html {
 			sb.append(CharPool.UNDERLINE);
 
 			if (c != CharPool.UNDERLINE) {
-				sb.append(Integer.toHexString(c));
+				sb.append(StringUtil.toHexString(c));
 			}
 
 			sb.append(CharPool.UNDERLINE);

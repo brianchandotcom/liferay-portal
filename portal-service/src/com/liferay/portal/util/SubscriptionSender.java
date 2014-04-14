@@ -772,9 +772,27 @@ public class SubscriptionSender implements Serializable {
 		notificationEventJSONObject.put("notificationType", _notificationType);
 		notificationEventJSONObject.put("userId", user.getUserId());
 
-		UserNotificationEventLocalServiceUtil.sendUserNotificationEvents(
-			user.getUserId(), portletId, _notificationType,
-			notificationEventJSONObject);
+		if (UserNotificationManagerUtil.isDeliver(
+				user.getUserId(), portletId, _notificationClassNameId,
+				_notificationType,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
+
+			UserNotificationEventLocalServiceUtil.sendUserNotificationEvents(
+				user.getUserId(), portletId,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE,
+				notificationEventJSONObject);
+		}
+
+		if (UserNotificationManagerUtil.isDeliver(
+				user.getUserId(), portletId, _notificationClassNameId,
+				_notificationType,
+				UserNotificationDeliveryConstants.TYPE_PUSH)) {
+
+			UserNotificationEventLocalServiceUtil.sendUserNotificationEvents(
+				user.getUserId(), portletId,
+				UserNotificationDeliveryConstants.TYPE_PUSH,
+				notificationEventJSONObject);
+		}
 	}
 
 	protected String body;

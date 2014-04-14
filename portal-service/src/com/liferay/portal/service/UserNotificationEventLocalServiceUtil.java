@@ -450,25 +450,14 @@ public class UserNotificationEventLocalServiceUtil {
 		return getService().getUserNotificationEventsCount(userId, archived);
 	}
 
-	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> sendUserNotificationEvents(
-		long userId, java.lang.String portletId, int notificationType,
+	public static com.liferay.portal.model.UserNotificationEvent sendUserNotificationEvents(
+		long userId, java.lang.String portletId, int deliveryType,
 		com.liferay.portal.kernel.json.JSONObject notificationEventJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .sendUserNotificationEvents(userId, portletId,
-			notificationType, notificationEventJSONObject);
-	}
-
-	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> sendUserNotificationEvents(
-		long userId, java.lang.String portletId, long classNameId,
-		int notificationType,
-		com.liferay.portal.kernel.json.JSONObject notificationEventJSONObject)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .sendUserNotificationEvents(userId, portletId, classNameId,
-			notificationType, notificationEventJSONObject);
+				   .sendUserNotificationEvents(userId, portletId, deliveryType,
+			notificationEventJSONObject);
 	}
 
 	public static com.liferay.portal.model.UserNotificationEvent updateUserNotificationEvent(

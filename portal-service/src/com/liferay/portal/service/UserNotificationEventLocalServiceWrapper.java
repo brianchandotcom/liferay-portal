@@ -488,25 +488,13 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.model.UserNotificationEvent> sendUserNotificationEvents(
-		long userId, java.lang.String portletId, int notificationType,
+	public com.liferay.portal.model.UserNotificationEvent sendUserNotificationEvents(
+		long userId, java.lang.String portletId, int deliveryType,
 		com.liferay.portal.kernel.json.JSONObject notificationEventJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userNotificationEventLocalService.sendUserNotificationEvents(userId,
-			portletId, notificationType, notificationEventJSONObject);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.UserNotificationEvent> sendUserNotificationEvents(
-		long userId, java.lang.String portletId, long classNameId,
-		int notificationType,
-		com.liferay.portal.kernel.json.JSONObject notificationEventJSONObject)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userNotificationEventLocalService.sendUserNotificationEvents(userId,
-			portletId, classNameId, notificationType,
-			notificationEventJSONObject);
+			portletId, deliveryType, notificationEventJSONObject);
 	}
 
 	@Override

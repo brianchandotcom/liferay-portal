@@ -383,15 +383,8 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	public int getUserNotificationEventsCount(long userId, boolean archived)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portal.model.UserNotificationEvent> sendUserNotificationEvents(
-		long userId, java.lang.String portletId, int notificationType,
-		com.liferay.portal.kernel.json.JSONObject notificationEventJSONObject)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public java.util.List<com.liferay.portal.model.UserNotificationEvent> sendUserNotificationEvents(
-		long userId, java.lang.String portletId, long classNameId,
-		int notificationType,
+	public com.liferay.portal.model.UserNotificationEvent sendUserNotificationEvents(
+		long userId, java.lang.String portletId, int deliveryType,
 		com.liferay.portal.kernel.json.JSONObject notificationEventJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
-import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
-import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
@@ -35,7 +32,6 @@ import com.liferay.portal.service.base.UserNotificationEventLocalServiceBaseImpl
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
@@ -258,67 +254,26 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	@Override
-	public List<UserNotificationEvent> sendUserNotificationEvents(
-			long userId, String portletId, int notificationType,
+	public UserNotificationEvent sendUserNotificationEvents(
+			long userId, String portletId, int deliveryType,
 			JSONObject notificationEventJSONObject)
 		throws PortalException, SystemException {
 
-		return sendUserNotificationEvents(
-			userId, portletId, 0, notificationType,
-			notificationEventJSONObject);
-	}
+		NotificationEvent notificationEvent =
+			NotificationEventFactoryUtil.createNotificationEvent(
+				System.currentTimeMillis(), portletId,
+				notificationEventJSONObject);
 
-	@Override
-	public List<UserNotificationEvent> sendUserNotificationEvents(
-			long userId, String portletId, long classNameId,
-			int notificationType, JSONObject notificationEventJSONObject)
-		throws PortalException, SystemException {
+		notificationEvent.setDeliveryType(deliveryType);
 
-		List<UserNotificationEvent> userNotificationEvents =
-			new ArrayList<UserNotificationEvent>();
+		UserNotificationEvent userNotificationEvent = addUserNotificationEvent(
+			userId, notificationEvent);
 
-		UserNotificationDefinition userNotificationDefinition =
-			UserNotificationManagerUtil.fetchUserNotificationDefinition(
-				portletId, classNameId, notificationType);
-
-		Map<Integer, UserNotificationDeliveryType>
-			userNotificationDeliveryTypes =
-				userNotificationDefinition.getUserNotificationDeliveryTypes();
-
-		for (Map.Entry<Integer, UserNotificationDeliveryType> entry :
-				userNotificationDeliveryTypes.entrySet()) {
-
-			NotificationEvent notificationEvent =
-				NotificationEventFactoryUtil.createNotificationEvent(
-					System.currentTimeMillis(), portletId,
-					notificationEventJSONObject);
-
-			UserNotificationDeliveryType userNotificationDeliveryType =
-				entry.getValue();
-
-			notificationEvent.setDeliveryType(
-				userNotificationDeliveryType.getType());
-
-			if (!UserNotificationManagerUtil.isDeliver(
-					userId, notificationEvent.getType(), classNameId,
-					notificationType, userNotificationDeliveryType.getType())) {
-
-				continue;
-			}
-
-			UserNotificationEvent userNotificationEvent =
-				addUserNotificationEvent(userId, notificationEvent);
-
-			userNotificationEvents.add(userNotificationEvent);
-
-			if (userNotificationDeliveryType.getType() ==
-					UserNotificationDeliveryConstants.TYPE_PUSH) {
-
-				sendPushNotitication(userNotificationEvent);
-			}
+		if (deliveryType == UserNotificationDeliveryConstants.TYPE_PUSH) {
+			sendPushNotitication(userNotificationEvent);
 		}
 
-		return userNotificationEvents;
+		return userNotificationEvent;
 	}
 
 	@Override

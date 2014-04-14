@@ -522,7 +522,9 @@ public class JournalArticleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		Calendar calendar = CalendarFactoryUtil.getCalendar();
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
 
 		int displayDateMonth = calendar.get(Calendar.MONTH);
 		int displayDateDay = calendar.get(Calendar.DAY_OF_MONTH);

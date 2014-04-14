@@ -378,13 +378,17 @@ public class EditEntryAction extends PortletAction {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
 
 		String content = ParamUtil.getString(actionRequest, "content");
 
-		Calendar displayDateCal = CalendarFactoryUtil.getCalendar();
+		Calendar displayDateCal = CalendarFactoryUtil.getCalendar(
+			themeDisplay.getTimeZone());
 
 		displayDateCal.setTime(entry.getDisplayDate());
 

@@ -39,6 +39,16 @@ public interface Portlet extends PortletModel, PersistedModel {
 			public String get(Portlet portlet) {
 				return portlet.getPortletId();
 			}
+
+			@Override
+			public Class<Portlet> getTClass() {
+				return Portlet.class;
+			}
+
+			@Override
+			public Class<String> getVClass() {
+				return String.class;
+			}
 		};
 
 	/**

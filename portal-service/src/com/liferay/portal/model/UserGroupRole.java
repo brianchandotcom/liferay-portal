@@ -39,12 +39,32 @@ public interface UserGroupRole extends UserGroupRoleModel, PersistedModel {
 			public Long get(UserGroupRole userGroupRole) {
 				return userGroupRole.getGroupId();
 			}
+
+			@Override
+			public Class<UserGroupRole> getTClass() {
+				return UserGroupRole.class;
+			}
+
+			@Override
+			public Class<Long> getVClass() {
+				return Long.class;
+			}
 		};
 
 	public static final Accessor<UserGroupRole, Long> ROLE_ID_ACCESSOR = new Accessor<UserGroupRole, Long>() {
 			@Override
 			public Long get(UserGroupRole userGroupRole) {
 				return userGroupRole.getRoleId();
+			}
+
+			@Override
+			public Class<UserGroupRole> getTClass() {
+				return UserGroupRole.class;
+			}
+
+			@Override
+			public Class<Long> getVClass() {
+				return Long.class;
 			}
 		};
 

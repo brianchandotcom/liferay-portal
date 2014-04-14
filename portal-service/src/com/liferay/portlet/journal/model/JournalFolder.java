@@ -42,6 +42,16 @@ public interface JournalFolder extends JournalFolderModel, PersistedModel,
 			public Long get(JournalFolder journalFolder) {
 				return journalFolder.getFolderId();
 			}
+
+			@Override
+			public Class<JournalFolder> getTClass() {
+				return JournalFolder.class;
+			}
+
+			@Override
+			public Class<Long> getVClass() {
+				return Long.class;
+			}
 		};
 
 	public java.util.List<java.lang.Long> getAncestorFolderIds()

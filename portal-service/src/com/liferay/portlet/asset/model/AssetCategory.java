@@ -40,6 +40,16 @@ public interface AssetCategory extends AssetCategoryModel, PersistedModel {
 			public String get(AssetCategory assetCategory) {
 				return assetCategory.getUuid();
 			}
+
+			@Override
+			public Class<AssetCategory> getTClass() {
+				return AssetCategory.class;
+			}
+
+			@Override
+			public Class<String> getVClass() {
+				return String.class;
+			}
 		};
 
 	public static final Accessor<AssetCategory, Long> CATEGORY_ID_ACCESSOR = new Accessor<AssetCategory, Long>() {
@@ -47,12 +57,32 @@ public interface AssetCategory extends AssetCategoryModel, PersistedModel {
 			public Long get(AssetCategory assetCategory) {
 				return assetCategory.getCategoryId();
 			}
+
+			@Override
+			public Class<AssetCategory> getTClass() {
+				return AssetCategory.class;
+			}
+
+			@Override
+			public Class<Long> getVClass() {
+				return Long.class;
+			}
 		};
 
 	public static final Accessor<AssetCategory, String> NAME_ACCESSOR = new Accessor<AssetCategory, String>() {
 			@Override
 			public String get(AssetCategory assetCategory) {
 				return assetCategory.getName();
+			}
+
+			@Override
+			public Class<AssetCategory> getTClass() {
+				return AssetCategory.class;
+			}
+
+			@Override
+			public Class<String> getVClass() {
+				return String.class;
 			}
 		};
 

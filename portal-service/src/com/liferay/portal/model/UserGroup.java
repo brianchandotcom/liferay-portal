@@ -39,6 +39,16 @@ public interface UserGroup extends UserGroupModel, PersistedModel {
 			public String get(UserGroup userGroup) {
 				return userGroup.getName();
 			}
+
+			@Override
+			public Class<UserGroup> getTClass() {
+				return UserGroup.class;
+			}
+
+			@Override
+			public Class<String> getVClass() {
+				return String.class;
+			}
 		};
 
 	public com.liferay.portal.model.Group getGroup()

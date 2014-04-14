@@ -39,6 +39,16 @@ public interface Team extends TeamModel, PersistedModel {
 			public Long get(Team team) {
 				return team.getTeamId();
 			}
+
+			@Override
+			public Class<Team> getTClass() {
+				return Team.class;
+			}
+
+			@Override
+			public Class<Long> getVClass() {
+				return Long.class;
+			}
 		};
 
 	public com.liferay.portal.model.Role getRole()

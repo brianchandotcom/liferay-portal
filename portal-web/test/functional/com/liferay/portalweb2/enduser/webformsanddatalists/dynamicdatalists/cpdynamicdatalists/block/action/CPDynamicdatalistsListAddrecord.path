@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_LABEL_HIDDEN</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//label[@class='hidden-label'] | //div[@data-fieldname='${key_fieldName}']//span[@class='hidden-label']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BOOLEAN_CHECKBOX</td>
 	<td>//div[@data-fieldname='${key_fieldName}']//input[2]</td>
 	<td></td>

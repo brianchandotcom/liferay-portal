@@ -22,8 +22,6 @@ package com.liferay.portal.kernel.util;
  */
 public interface Html {
 
-	public String getAUICompatibleId(String text);
-
 	public String escape(String text);
 
 	public String escape(String text, int mode);
@@ -45,6 +43,8 @@ public interface Html {
 	public String extractText(String html);
 
 	public String fromInputSafe(String text);
+
+	public String getAUICompatibleId(String text);
 
 	public String render(String html);
 

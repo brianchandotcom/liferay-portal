@@ -313,24 +313,22 @@ public class Transformer {
 						}
 					}
 
-					if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
-						Element requestElement = null;
+					Element requestElement = null;
 
-						if (portletRequestModel != null) {
-							Document requestDocument = SAXReaderUtil.read(
-								portletRequestModel.toXML());
+					if (portletRequestModel != null) {
+						Document requestDocument = SAXReaderUtil.read(
+							portletRequestModel.toXML());
 
-							requestElement = requestDocument.getRootElement();
-						}
-						else {
-							requestElement = rootElement.element("request");
-						}
-
-						template.put(
-							"request", insertRequestVariables(requestElement));
-
-						template.put("xmlRequest", requestElement.asXML());
+						requestElement = requestDocument.getRootElement();
 					}
+					else {
+						requestElement = rootElement.element("request");
+					}
+
+					template.put(
+						"request", insertRequestVariables(requestElement));
+
+					template.put("xmlRequest", requestElement.asXML());
 				}
 
 				template.put("articleGroupId", articleGroupId);

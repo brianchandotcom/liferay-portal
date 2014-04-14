@@ -28,45 +28,6 @@ import org.junit.Test;
 public class HtmlImplTest {
 
 	@Test
-	public void testgetAUICompatibleId() {
-		Assert.assertNull(_htmlImpl.getAUICompatibleId(null));
-
-		Assert.assertEquals(
-			StringPool.BLANK, _htmlImpl.getAUICompatibleId(StringPool.BLANK));
-
-		Assert.assertEquals(
-			"hello_20_world", _htmlImpl.getAUICompatibleId("hello world"));
-
-		Assert.assertEquals(
-			"hello__world", _htmlImpl.getAUICompatibleId("hello_world"));
-
-		StringBundler actual = new StringBundler(53);
-
-		for (int i = 0; i <= 47; i++) {
-			actual.append(StringPool.ASCII_TABLE[i]);
-		}
-
-		actual.append(":;<=>?@[\\]^_`{|}~");
-		actual.append(CharPool.DELETE);
-		actual.append(CharPool.NO_BREAK_SPACE);
-		actual.append(CharPool.FIGURE_SPACE);
-		actual.append(CharPool.NARROW_NO_BREAK_SPACE);
-
-		StringBundler expected = new StringBundler(6);
-
-		expected.append("_0__1__2__3__4__5__6__7__8__9__a__b__c__d__e__f__10_");
-		expected.append("_11__12__13__14__15__16__17__18__19__1a__1b__1c__1d_");
-		expected.append("_1e__1f__20__21__22__23__24__25__26__27__28__29__2a_");
-		expected.append("_2b__2c__2d__2e__2f__3a__3b__3c__3d__3e__3f__40__5b_");
-		expected.append("_5c__5d__5e____60__7b__7c__7d__7e__7f__a0__2007_");
-		expected.append("_202f_");
-
-		Assert.assertEquals(
-			expected.toString(),
-			_htmlImpl.getAUICompatibleId(actual.toString()));
-	}
-
-	@Test
 	public void testEscapeBlank() {
 		assertUnchangedEscape("");
 	}
@@ -157,6 +118,45 @@ public class HtmlImplTest {
 			"onclick removal",
 			_htmlImpl.extractText(
 				"<div onclick=\"honk()\">onclick removal</div>"));
+	}
+
+	@Test
+	public void testgetAUICompatibleId() {
+		Assert.assertNull(_htmlImpl.getAUICompatibleId(null));
+
+		Assert.assertEquals(
+			StringPool.BLANK, _htmlImpl.getAUICompatibleId(StringPool.BLANK));
+
+		Assert.assertEquals(
+			"hello_20_world", _htmlImpl.getAUICompatibleId("hello world"));
+
+		Assert.assertEquals(
+			"hello__world", _htmlImpl.getAUICompatibleId("hello_world"));
+
+		StringBundler actual = new StringBundler(53);
+
+		for (int i = 0; i <= 47; i++) {
+			actual.append(StringPool.ASCII_TABLE[i]);
+		}
+
+		actual.append(":;<=>?@[\\]^_`{|}~");
+		actual.append(CharPool.DELETE);
+		actual.append(CharPool.NO_BREAK_SPACE);
+		actual.append(CharPool.FIGURE_SPACE);
+		actual.append(CharPool.NARROW_NO_BREAK_SPACE);
+
+		StringBundler expected = new StringBundler(6);
+
+		expected.append("_0__1__2__3__4__5__6__7__8__9__a__b__c__d__e__f__10_");
+		expected.append("_11__12__13__14__15__16__17__18__19__1a__1b__1c__1d_");
+		expected.append("_1e__1f__20__21__22__23__24__25__26__27__28__29__2a_");
+		expected.append("_2b__2c__2d__2e__2f__3a__3b__3c__3d__3e__3f__40__5b_");
+		expected.append("_5c__5d__5e____60__7b__7c__7d__7e__7f__a0__2007_");
+		expected.append("_202f_");
+
+		Assert.assertEquals(
+			expected.toString(),
+			_htmlImpl.getAUICompatibleId(actual.toString()));
 	}
 
 	@Test

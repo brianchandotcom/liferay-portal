@@ -55,14 +55,14 @@ public class CompanyThreadLocal {
 			try {
 				Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
+				_companyId.set(companyId);
+
 				LocaleThreadLocal.setDefaultLocale(company.getLocale());
 				TimeZoneThreadLocal.setDefaultTimeZone(company.getTimeZone());
 			}
 			catch (Exception e) {
 				_log.error(e, e);
 			}
-
-			_companyId.set(companyId);
 		}
 		else {
 			LocaleThreadLocal.setDefaultLocale(null);

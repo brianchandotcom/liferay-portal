@@ -61,11 +61,11 @@ if (!DateUtil.isFormatAmPm(locale)) {
 
 Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern, locale);
 
-String amPmParamId = HtmlUtil.auiCompatibleId(amPmParam);
-String dateParamId = HtmlUtil.auiCompatibleId(dateParam);
-String hourParamId = HtmlUtil.auiCompatibleId(hourParam);
-String minuteParamId = HtmlUtil.auiCompatibleId(minuteParam);
-String nameId = HtmlUtil.auiCompatibleId(name);
+String amPmParamId = HtmlUtil.getAUICompatibleId(amPmParam);
+String dateParamId = HtmlUtil.getAUICompatibleId(dateParam);
+String hourParamId = HtmlUtil.getAUICompatibleId(hourParam);
+String minuteParamId = HtmlUtil.getAUICompatibleId(minuteParam);
+String nameId = HtmlUtil.getAUICompatibleId(name);
 %>
 
 <span class="lfr-input-time <%= cssClass %>" id="<%= randomNamespace %>displayTime">

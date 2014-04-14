@@ -28,17 +28,17 @@ import org.junit.Test;
 public class HtmlImplTest {
 
 	@Test
-	public void testAuiCompatibleId() {
-		Assert.assertNull(_htmlImpl.auiCompatibleId(null));
+	public void testgetAUICompatibleId() {
+		Assert.assertNull(_htmlImpl.getAUICompatibleId(null));
 
 		Assert.assertEquals(
-			StringPool.BLANK, _htmlImpl.auiCompatibleId(StringPool.BLANK));
+			StringPool.BLANK, _htmlImpl.getAUICompatibleId(StringPool.BLANK));
 
 		Assert.assertEquals(
-			"hello_20_world", _htmlImpl.auiCompatibleId("hello world"));
+			"hello_20_world", _htmlImpl.getAUICompatibleId("hello world"));
 
 		Assert.assertEquals(
-			"hello__world", _htmlImpl.auiCompatibleId("hello_world"));
+			"hello__world", _htmlImpl.getAUICompatibleId("hello_world"));
 
 		StringBundler actual = new StringBundler(53);
 
@@ -62,7 +62,8 @@ public class HtmlImplTest {
 		expected.append("_202f_");
 
 		Assert.assertEquals(
-			expected.toString(), _htmlImpl.auiCompatibleId(actual.toString()));
+			expected.toString(),
+			_htmlImpl.getAUICompatibleId(actual.toString()));
 	}
 
 	@Test

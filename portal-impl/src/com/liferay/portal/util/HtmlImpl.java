@@ -58,7 +58,7 @@ public class HtmlImpl implements Html {
 	public static final int ESCAPE_MODE_URL = 5;
 
 	@Override
-	public String auiCompatibleId(String text) {
+	public String getAUICompatibleId(String text) {
 		if (Validator.isNull(text)) {
 			return text;
 		}

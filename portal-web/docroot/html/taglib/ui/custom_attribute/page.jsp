@@ -79,7 +79,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 							curValue = ParamUtil.getBoolean(request, "ExpandoAttribute--" + name + "--", curValue);
 							%>
 
-							<select id="<%= randomNamespace %><%= HtmlUtil.auiCompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--">
+							<select id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--">
 								<option <%= curValue ? "selected" : "" %> value="1"><liferay-ui:message key="true" /></option>
 								<option <%= !curValue ? "selected" : "" %> value="0"><liferay-ui:message key="false" /></option>
 							</select>
@@ -87,7 +87,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 						<c:when test="<%= type == ExpandoColumnConstants.BOOLEAN_ARRAY %>">
 						</c:when>
 						<c:when test="<%= type == ExpandoColumnConstants.DATE %>">
-							<span id="<%= randomNamespace %><%= HtmlUtil.auiCompatibleId(name) %>">
+							<span id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>">
 
 								<%
 								Calendar valueDate = CalendarFactoryUtil.getCalendar(timeZone, locale);
@@ -234,7 +234,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									double[] values = ParamUtil.getDoubleValues(request, "ExpandoAttribute--" + name + "--", (double[])value);
 									%>
 
-									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.auiCompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(values, StringPool.NEW_LINE) %></textarea>
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(values, StringPool.NEW_LINE) %></textarea>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -297,7 +297,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									float[] values = ParamUtil.getFloatValues(request, "ExpandoAttribute--" + name + "--", (float[])value);
 									%>
 
-									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.auiCompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge((float[])value, StringPool.NEW_LINE) %></textarea>
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge((float[])value, StringPool.NEW_LINE) %></textarea>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -360,7 +360,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									int[] values = ParamUtil.getIntegerValues(request, "ExpandoAttribute--" + name + "--", (int[])value);
 									%>
 
-									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.auiCompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(values, StringPool.NEW_LINE) %></textarea>
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(values, StringPool.NEW_LINE) %></textarea>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -423,7 +423,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									long[] values = ParamUtil.getLongValues(request, "ExpandoAttribute--" + name + "--", (long[])value);
 									%>
 
-									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.auiCompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(values, StringPool.NEW_LINE) %></textarea>
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(values, StringPool.NEW_LINE) %></textarea>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -486,7 +486,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									Number[] values = ParamUtil.getNumberValues(request, "ExpandoAttribute--" + name + "--", (Number[])value);
 									%>
 
-									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.auiCompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(values, StringPool.NEW_LINE) %></textarea>
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(values, StringPool.NEW_LINE) %></textarea>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -550,7 +550,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									short[] values = ParamUtil.getShortValues(request, "ExpandoAttribute--" + name + "--", (short[])value);
 									%>
 
-									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.auiCompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(values, StringPool.NEW_LINE) %></textarea>
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(values, StringPool.NEW_LINE) %></textarea>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -619,7 +619,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									}
 									%>
 
-									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.auiCompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= HtmlUtil.escape(StringUtil.merge(values, StringPool.NEW_LINE)) %></textarea>
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= HtmlUtil.escape(StringUtil.merge(values, StringPool.NEW_LINE)) %></textarea>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -655,7 +655,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 
 							<c:choose>
 								<c:when test="<%= propertyHeight > 0 %>">
-									<textarea class="lfr-input-text" id="<%= randomNamespace %><%= HtmlUtil.auiCompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"
+									<textarea class="lfr-input-text" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"
 										style="
 											<c:if test="<%= propertyHeight > 0 %>">
 												height: <%= propertyHeight %>px;
@@ -667,7 +667,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									><%= HtmlUtil.escape(String.valueOf(value)) %></textarea>
 								</c:when>
 								<c:otherwise>
-									<input class="lfr-input-text" id="<%= randomNamespace %><%= HtmlUtil.auiCompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"
+									<input class="lfr-input-text" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"
 										style="
 											<c:if test="<%= propertyWidth > 0 %>">
 												width: <%= propertyWidth %>px;
@@ -760,7 +760,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 
 				<c:if test="<%= editable || Validator.isNotNull(sb.toString()) %>">
 					<aui:field-wrapper label="<%= label ? localizedName : StringPool.BLANK %>">
-						<span id="<%= randomNamespace %><%= HtmlUtil.auiCompatibleId(name) %>"><%= HtmlUtil.escape(sb.toString()) %></span>
+						<span id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>"><%= HtmlUtil.escape(sb.toString()) %></span>
 					</aui:field-wrapper>
 				</c:if>
 			</c:otherwise>

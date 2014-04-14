@@ -22,7 +22,7 @@ package com.liferay.portal.kernel.util;
  */
 public interface Html {
 
-	public String auiCompatibleId(String text);
+	public String getAUICompatibleId(String text);
 
 	public String escape(String text);
 

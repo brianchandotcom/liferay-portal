@@ -60,10 +60,10 @@ else {
 
 Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern, locale);
 
-String dayParamId = HtmlUtil.auiCompatibleId(dayParam);
-String monthParamId = HtmlUtil.auiCompatibleId(monthParam);
-String nameId = HtmlUtil.auiCompatibleId(name);
-String yearParamId = HtmlUtil.auiCompatibleId(yearParam);
+String dayParamId = HtmlUtil.getAUICompatibleId(dayParam);
+String monthParamId = HtmlUtil.getAUICompatibleId(monthParam);
+String nameId = HtmlUtil.getAUICompatibleId(name);
+String yearParamId = HtmlUtil.getAUICompatibleId(yearParam);
 %>
 
 <span class="lfr-input-date <%= cssClass %>" id="<%= randomNamespace %>displayDate">

@@ -122,6 +122,14 @@
 		<execute action="CPSitepagesAddpage#assertChecked" locator-key1="PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 	</command>
 
+	<command name="changePageTypeLayoutPG">
+		<var name="key_pageType" value="${pageType}" />
+
+		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" value1="Edit" />
+		<execute action="DockbarEdit#click" locator-key1="ADD_PAGE_TYPE_RADIO" value1="${pageType}" />
+		<execute action="DockbarEdit#click" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="copyApplicationsFromPageToPagePG">
 		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" />
 		<execute action="DockbarEdit#assertClick" locator-key1="TOOLBAR_COPY_APPLICATIONS" value1="Copy Applications" />
@@ -358,6 +366,23 @@
 		<execute action="Dockbar#assertElementPresent" locator-key1="ADD_PAGE_LINK" />
 
 		<execute action="Home#refresh" />
+	</command>
+
+	<command name="viewPageLayoutPG">
+		<if>
+			<equals arg1="${pageLayout}" arg2="1 Column" />
+			<then>
+				<execute action="Home#assertElementPresent" locator-key1="PAGE_COLUMN_1_LAYOUT_1" />
+				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_COLUMN_2_LAYOUT_70" />
+			</then>
+			<elseif>
+				<equals arg1="${pageLayout}" arg2="2 Column (30/70)" />
+				<then>
+					<execute action="Home#assertElementPresent" locator-key1="PAGE_COLUMN_1_LAYOUT_30" />
+					<execute action="Home#assertElementPresent" locator-key1="PAGE_COLUMN_2_LAYOUT_70" />
+				</then>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="viewPagesCP">

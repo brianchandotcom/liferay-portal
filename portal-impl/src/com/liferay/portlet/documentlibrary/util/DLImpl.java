@@ -1244,7 +1244,7 @@ public class DLImpl implements DL {
 
 		HttpServletRequest request = serviceContext.getRequest();
 
-		if (request == null) {
+		if ((request == null) || (serviceContext.getThemeDisplay() == null)) {
 			return StringPool.BLANK;
 		}
 

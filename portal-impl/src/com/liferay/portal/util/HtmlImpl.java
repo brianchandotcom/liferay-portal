@@ -408,14 +408,10 @@ public class HtmlImpl implements Html {
 		for (int i = 0; i < text.length(); i++) {
 			char c = text.charAt(i);
 
-			if (!((c <= CharPool.SLASH) ||
-				  ((c >= CharPool.COLON) && (c <= CharPool.AT)) ||
-				  ((c >= CharPool.OPEN_BRACKET) && (c <= CharPool.PRIME)) ||
-				  ((c >= CharPool.OPEN_CURLY_BRACE) &&
-				   (c <= CharPool.DELETE)) ||
-				  (c == CharPool.NO_BREAK_SPACE) ||
-				  (c == CharPool.FIGURE_SPACE) ||
-				  (c == CharPool.NARROW_NO_BREAK_SPACE))) {
+			if (((c <= 127) && (Validator.isChar(c) || Validator.isDigit(c))) ||
+				((c > 127) && (c != CharPool.FIGURE_SPACE) &&
+				 (c != CharPool.NARROW_NO_BREAK_SPACE) &&
+				 (c != CharPool.NO_BREAK_SPACE))) {
 
 				continue;
 			}

@@ -155,7 +155,7 @@
 		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_DESCRIPTION" value1="${templateDescription}" />
 	</command>
 
-	<command name="deleteinWebContent">
+	<command name="deleteCP">
 		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
 		<execute action="CPWebcontent#assertClick" locator-key1="MANAGE_MENULIST_TEMPLATES" value1="Templates" />
 
@@ -167,26 +167,17 @@
 		<execute action="CPWebcontentTemplates#assertClick" locator-key1="TEMPLATE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPWebcontentTemplates#assertClick" locator-key1="TEMPLATE_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPWebcontentTemplates#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Required templates could not be deleted. They are referenced by web content." />
-	</command>
 
-	<command name="editInWebContentCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
-		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-
-		<execute action="CPWebcontentEditwebcontent#assertClick" locator-key1="SELECT_TEMPLATE" value1="Select" />
-
-		<var name="key_templateName" value="${templateName}" />
-
-		<execute action="CPWebcontentSelecttemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
-		<execute action="CPWebcontentSelecttemplate#assertClick" locator-key1="TEMPLATE_TABLE_CHOOSE" value1="Choose" />
-		<execute action="CPWebcontentSelecttemplate#confirm" locator-key1="CONFIRMATION" value1="Selecting a new template will delete all unsaved content. Do you want to proceed?" />
-
-		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-
-		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<if>
+			<equals arg1="${webContentHasReference}" arg2="true" />
+			<then>
+				<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+				<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Required templates could not be deleted. They are referenced by web content." />
+			</then>
+			<else>
+				<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</else>
+		</if>
 	</command>
 
 	<command name="tearDownCP">
@@ -285,13 +276,5 @@
 				<execute action="CPWebcontentTemplatesEdittemplate#assertTextEquals" locator-key1="SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
 			</then>
 		</if>
-	</command>
-
-	<command name="viewInWebContentCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
-		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-
-		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="SELECTED_TEMPLATE" value1="${templateName}" />
 	</command>
 </definition>

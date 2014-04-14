@@ -154,7 +154,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteTemplateAndStructureUsedWithBasicWebContent" priority="5">
+	<command name="DeleteTemplateAndStructureWithReferencedWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -180,7 +180,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithStructure">
+		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateName" value="WC Template Name" />
 			<var name="webContentText" value="WC WebContent Text" />
@@ -191,24 +191,27 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentStructures#deleteinWebContent">
+		<execute macro="WebContentStructures#deleteCP">
 			<var name="structureName" value="WC Structure Name" />
+			<var name="webContentHasReference" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentTemplates#deleteinWebContent">
+		<execute macro="WebContentTemplates#deleteCP">
 			<var name="templateName" value="WC Template Name" />
+			<var name="webContentHasReference" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentStructures#deleteinWebContent">
+		<execute macro="WebContentStructures#deleteCP">
 			<var name="structureName" value="WC Structure Name" />
+			<var name="webContentHasReference" value="true" />
 		</execute>
 	</command>
 
@@ -258,7 +261,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithStructure">
+		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateName" value="WC Template1 Name" />
 			<var name="webContentText" value="WC WebContent Text" />
@@ -269,7 +272,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentTemplates#editInWebContentCP">
+		<execute macro="WebContent#selectTemplateCP">
 			<var name="templateName" value="WC Template2 Name" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
@@ -278,7 +281,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentTemplates#viewInWebContentCP">
+		<execute macro="WebContent#viewSelectedTemplateCP">
 			<var name="templateName" value="WC Template2 Name" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
@@ -289,7 +292,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithCategorizationTypeCP">
+		<execute macro="WebContent#addWithCategorizationTypeCP">
 			<var name="categorizationType" value="Announcements" />
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
@@ -442,7 +445,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addCPwithStructure">
+		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="${structureName}" />
 			<var name="templateName" value="${templateName}" />
 			<var name="webContentText" value="${webContentText}" />

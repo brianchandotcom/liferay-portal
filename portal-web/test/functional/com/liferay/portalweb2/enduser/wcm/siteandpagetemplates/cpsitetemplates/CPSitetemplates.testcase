@@ -102,4 +102,178 @@
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 		</execute>
 	</command>
+
+	<command name="GuestViewPermissionsInSitetemplates" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="defaultURL" value="false" />
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute action="CPSitetemplates#close" locator1="home - Liferay" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoConfigurationPG">
+			<var name="portletName" value="Web Content Display" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Role#viewPermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="permissionFlagged" value="true" />
+			<var name="roleName" value="Guest" />
+		</execute>
+
+		<execute action="CPSitetemplates#close" locator1="home - Liferay" />
+	</command>
+
+	<command name="PortletPreferencesInSitetemplates" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="defaultURL" value="false" />
+			<var name="pageName" value="Page1 Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="defaultURL" value="false" />
+			<var name="portletName" value="Hello World" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="Page#addPG">
+			<var name="defaultURL" value="false" />
+			<var name="pageName" value="Page2 Name" />
+		</execute>
+
+		<execute action="CPSitetemplates#close" locator1="home - Liferay" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addSiteTemplateCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Page1 Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoConfigurationPG">
+			<var name="portletName" value="Hello World" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="Guest" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute action = "Home#assertClick" locator-key1 = "PAGE_TEMPLATE_3" value1 = "Page2 Name" />
+
+		<execute macro="Portlet#addPG">
+			<var name="defaultURL" value="false" />
+			<var name="portletName" value="Hello World" />
+		</execute>
+
+		<execute action="CPSitetemplates#close" locator1="home - Liferay" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Page1 Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoConfigurationPG">
+			<var name="portletName" value="Hello World" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Role#viewPermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="permissionFlagged" value="false" />
+			<var name="roleName" value="Guest" />
+		</execute>
+	</command>
+
+	<command name="ResetChanges" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCommunityCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="2" />
+			<var name="columnNumberTo" value="1" />
+			<var name="portletName" value="Polls Display" />
+		</execute>
+
+		<execute macro="SiteTemplates#resetChanges">
+			<var name="columnNumberTo" value="1" />
+			<var name="portletName" value="Polls Display" />
+		</execute>
+
+		<execute macro="SiteTemplates#viewResetChanges">
+			<var name="columnNumberFrom" value="2" />
+			<var name="portletName" value="Polls Display" />
+		</execute>
+	</command>
 </definition>

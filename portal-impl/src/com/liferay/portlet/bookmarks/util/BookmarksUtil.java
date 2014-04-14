@@ -222,7 +222,7 @@ public class BookmarksUtil {
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletKeys.BOOKMARKS,
+			portletRequest, PortletKeys.BOOKMARKS_ADMIN,
 			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
 			PortletRequest.RENDER_PHASE);
 

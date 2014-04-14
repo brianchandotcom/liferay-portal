@@ -183,7 +183,7 @@ if (folder != null) {
 		</aui:row>
 
 		<%
-		if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.BOOKMARKS)) {
+		if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.BOOKMARKS) || portletName.equals(PortletKeys.BOOKMARKS_ADMIN))) {
 			PortalUtil.setPageSubtitle(folder.getName(), request);
 			PortalUtil.setPageDescription(folder.getDescription(), request);
 		}

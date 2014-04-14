@@ -67,25 +67,25 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 
 String allFolderColumns = "folder,num-of-folders,num-of-entries";
 
-if (portletId.equals(PortletKeys.BOOKMARKS)) {
+if (portletId.equals(PortletKeys.BOOKMARKS) || portletId.equals(PortletKeys.BOOKMARKS_ADMIN)) {
 	allFolderColumns += ",action";
 }
 
 String[] folderColumns = bookmarksSettings.getFolderColumns();
 
-if (!portletId.equals(PortletKeys.BOOKMARKS)) {
+if (portletId.equals(PortletKeys.BOOKMARKS) || portletId.equals(PortletKeys.BOOKMARKS_ADMIN)) {
 	folderColumns = ArrayUtil.remove(folderColumns, "action");
 }
 
 String allEntryColumns = "name,url,visits,modified-date";
 
-if (portletId.equals(PortletKeys.BOOKMARKS)) {
+if (portletId.equals(PortletKeys.BOOKMARKS) || portletId.equals(PortletKeys.BOOKMARKS_ADMIN)) {
 	allEntryColumns += ",action";
 }
 
 String[] entryColumns = bookmarksSettings.getEntryColumns();
 
-if (!portletId.equals(PortletKeys.BOOKMARKS)) {
+if (portletId.equals(PortletKeys.BOOKMARKS) || portletId.equals(PortletKeys.BOOKMARKS_ADMIN)) {
 	entryColumns = ArrayUtil.remove(entryColumns, "action");
 }
 

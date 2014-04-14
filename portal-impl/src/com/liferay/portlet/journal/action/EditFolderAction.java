@@ -213,12 +213,18 @@ public class EditFolderAction extends PortletAction {
 				description, serviceContext);
 		}
 		else {
+			long[] ddmStructureIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "ddmStructuresSearchContainerPrimaryKeys"),
+				0L);
+			boolean overrideDDMStructures = ParamUtil.getBoolean(
+				actionRequest, "overrideDDMStructures");
 
 			// Update folder
 
 			JournalFolderServiceUtil.updateFolder(
-				folderId, parentFolderId, name, description,
-				mergeWithParentFolder, serviceContext);
+				folderId, parentFolderId, name, description, ddmStructureIds,
+				overrideDDMStructures, mergeWithParentFolder, serviceContext);
 		}
 	}
 

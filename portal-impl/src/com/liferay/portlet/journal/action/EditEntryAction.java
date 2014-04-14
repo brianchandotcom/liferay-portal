@@ -33,6 +33,7 @@ import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.journal.DuplicateArticleIdException;
 import com.liferay.portlet.journal.DuplicateFolderNameException;
+import com.liferay.portlet.journal.InvalidDDMStructureException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -136,7 +137,7 @@ public class EditEntryAction extends PortletAction {
 			}
 			else if (e instanceof DuplicateArticleIdException ||
 					 e instanceof DuplicateFolderNameException ||
-					 e instanceof NoSuchFolderException) {
+					 e instanceof InvalidDDMStructureException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}
@@ -264,6 +265,8 @@ public class EditEntryAction extends PortletAction {
 				folderId, newFolderId, serviceContext);
 		}
 
+		List<String> invalidArticleIds = new ArrayList<String>();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -271,8 +274,17 @@ public class EditEntryAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "articleIds"));
 
 		for (String articleId : articleIds) {
-			JournalArticleServiceUtil.moveArticle(
-				themeDisplay.getScopeGroupId(), articleId, newFolderId);
+			try {
+				JournalArticleServiceUtil.moveArticle(
+					themeDisplay.getScopeGroupId(), articleId, newFolderId);
+			}
+			catch (InvalidDDMStructureException idse) {
+				invalidArticleIds.add(articleId);
+			}
+		}
+
+		if (!invalidArticleIds.isEmpty()) {
+			throw new InvalidDDMStructureException();
 		}
 	}
 

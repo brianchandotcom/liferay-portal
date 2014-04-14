@@ -449,10 +449,15 @@
 		<column name="treePath" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+		<column name="overrideDDMStructures" type="boolean" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+
+		<!-- Relationships -->
+
+		<column name="ddmStructure" type="Collection" entity="com.liferay.portlet.dynamicdatamapping.DDMStructure" mapping-table="JournalFolders_DDMStructures" />
 
 		<!-- Order -->
 
@@ -505,6 +510,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="Subscription" />
@@ -512,6 +518,7 @@
 		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
+		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalArticle" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
@@ -562,6 +569,7 @@
 		<exception>FeedTargetLayoutFriendlyUrl</exception>
 		<exception>FeedTargetPortletId</exception>
 		<exception>FolderName</exception>
+		<exception>InvalidDDMStructure</exception>
 		<exception>RequiredStructure</exception>
 		<exception>RequiredTemplate</exception>
 		<exception>StructureId</exception>

@@ -138,6 +138,8 @@ public class JournalFolderPersistenceTest {
 
 		newJournalFolder.setDescription(ServiceTestUtil.randomString());
 
+		newJournalFolder.setOverrideDDMStructures(ServiceTestUtil.randomBoolean());
+
 		newJournalFolder.setStatus(ServiceTestUtil.nextInt());
 
 		newJournalFolder.setStatusByUserId(ServiceTestUtil.nextLong());
@@ -176,6 +178,8 @@ public class JournalFolderPersistenceTest {
 			newJournalFolder.getName());
 		Assert.assertEquals(existingJournalFolder.getDescription(),
 			newJournalFolder.getDescription());
+		Assert.assertEquals(existingJournalFolder.getOverrideDDMStructures(),
+			newJournalFolder.getOverrideDDMStructures());
 		Assert.assertEquals(existingJournalFolder.getStatus(),
 			newJournalFolder.getStatus());
 		Assert.assertEquals(existingJournalFolder.getStatusByUserId(),
@@ -399,8 +403,9 @@ public class JournalFolderPersistenceTest {
 			true, "folderId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "parentFolderId", true, "treePath", true,
-			"name", true, "description", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"name", true, "description", true, "overrideDDMStructures", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -572,6 +577,8 @@ public class JournalFolderPersistenceTest {
 		journalFolder.setName(ServiceTestUtil.randomString());
 
 		journalFolder.setDescription(ServiceTestUtil.randomString());
+
+		journalFolder.setOverrideDDMStructures(ServiceTestUtil.randomBoolean());
 
 		journalFolder.setStatus(ServiceTestUtil.nextInt());
 

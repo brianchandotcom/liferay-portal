@@ -50,6 +50,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
+import com.liferay.portlet.journal.service.persistence.JournalFolderPersistence;
 
 import java.io.Serializable;
 
@@ -8840,6 +8841,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		ddmStructureToDLFileEntryTypeTableMapper.deleteLeftPrimaryKeyTableMappings(ddmStructure.getPrimaryKey());
 
+		ddmStructureToJournalFolderTableMapper.deleteLeftPrimaryKeyTableMappings(ddmStructure.getPrimaryKey());
+
 		Session session = null;
 
 		try {
@@ -9720,6 +9723,299 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		}
 	}
 
+	/**
+	 * Returns all the journal folders associated with the d d m structure.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @return the journal folders associated with the d d m structure
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<com.liferay.portlet.journal.model.JournalFolder> getJournalFolders(
+		long pk) throws SystemException {
+		return getJournalFolders(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Returns a range of all the journal folders associated with the d d m structure.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @param start the lower bound of the range of d d m structures
+	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @return the range of journal folders associated with the d d m structure
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<com.liferay.portlet.journal.model.JournalFolder> getJournalFolders(
+		long pk, int start, int end) throws SystemException {
+		return getJournalFolders(pk, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the journal folders associated with the d d m structure.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @param start the lower bound of the range of d d m structures
+	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of journal folders associated with the d d m structure
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<com.liferay.portlet.journal.model.JournalFolder> getJournalFolders(
+		long pk, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		return ddmStructureToJournalFolderTableMapper.getRightBaseModels(pk,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the number of journal folders associated with the d d m structure.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @return the number of journal folders associated with the d d m structure
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int getJournalFoldersSize(long pk) throws SystemException {
+		long[] pks = ddmStructureToJournalFolderTableMapper.getRightPrimaryKeys(pk);
+
+		return pks.length;
+	}
+
+	/**
+	 * Returns <code>true</code> if the journal folder is associated with the d d m structure.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @param journalFolderPK the primary key of the journal folder
+	 * @return <code>true</code> if the journal folder is associated with the d d m structure; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public boolean containsJournalFolder(long pk, long journalFolderPK)
+		throws SystemException {
+		return ddmStructureToJournalFolderTableMapper.containsTableMapping(pk,
+			journalFolderPK);
+	}
+
+	/**
+	 * Returns <code>true</code> if the d d m structure has any journal folders associated with it.
+	 *
+	 * @param pk the primary key of the d d m structure to check for associations with journal folders
+	 * @return <code>true</code> if the d d m structure has any journal folders associated with it; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public boolean containsJournalFolders(long pk) throws SystemException {
+		if (getJournalFoldersSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Adds an association between the d d m structure and the journal folder. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @param journalFolderPK the primary key of the journal folder
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addJournalFolder(long pk, long journalFolderPK)
+		throws SystemException {
+		ddmStructureToJournalFolderTableMapper.addTableMapping(pk,
+			journalFolderPK);
+	}
+
+	/**
+	 * Adds an association between the d d m structure and the journal folder. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @param journalFolder the journal folder
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addJournalFolder(long pk,
+		com.liferay.portlet.journal.model.JournalFolder journalFolder)
+		throws SystemException {
+		ddmStructureToJournalFolderTableMapper.addTableMapping(pk,
+			journalFolder.getPrimaryKey());
+	}
+
+	/**
+	 * Adds an association between the d d m structure and the journal folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @param journalFolderPKs the primary keys of the journal folders
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addJournalFolders(long pk, long[] journalFolderPKs)
+		throws SystemException {
+		for (long journalFolderPK : journalFolderPKs) {
+			ddmStructureToJournalFolderTableMapper.addTableMapping(pk,
+				journalFolderPK);
+		}
+	}
+
+	/**
+	 * Adds an association between the d d m structure and the journal folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @param journalFolders the journal folders
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addJournalFolders(long pk,
+		List<com.liferay.portlet.journal.model.JournalFolder> journalFolders)
+		throws SystemException {
+		for (com.liferay.portlet.journal.model.JournalFolder journalFolder : journalFolders) {
+			ddmStructureToJournalFolderTableMapper.addTableMapping(pk,
+				journalFolder.getPrimaryKey());
+		}
+	}
+
+	/**
+	 * Clears all associations between the d d m structure and its journal folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the d d m structure to clear the associated journal folders from
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void clearJournalFolders(long pk) throws SystemException {
+		ddmStructureToJournalFolderTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+	}
+
+	/**
+	 * Removes the association between the d d m structure and the journal folder. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @param journalFolderPK the primary key of the journal folder
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeJournalFolder(long pk, long journalFolderPK)
+		throws SystemException {
+		ddmStructureToJournalFolderTableMapper.deleteTableMapping(pk,
+			journalFolderPK);
+	}
+
+	/**
+	 * Removes the association between the d d m structure and the journal folder. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @param journalFolder the journal folder
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeJournalFolder(long pk,
+		com.liferay.portlet.journal.model.JournalFolder journalFolder)
+		throws SystemException {
+		ddmStructureToJournalFolderTableMapper.deleteTableMapping(pk,
+			journalFolder.getPrimaryKey());
+	}
+
+	/**
+	 * Removes the association between the d d m structure and the journal folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @param journalFolderPKs the primary keys of the journal folders
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeJournalFolders(long pk, long[] journalFolderPKs)
+		throws SystemException {
+		for (long journalFolderPK : journalFolderPKs) {
+			ddmStructureToJournalFolderTableMapper.deleteTableMapping(pk,
+				journalFolderPK);
+		}
+	}
+
+	/**
+	 * Removes the association between the d d m structure and the journal folders. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @param journalFolders the journal folders
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeJournalFolders(long pk,
+		List<com.liferay.portlet.journal.model.JournalFolder> journalFolders)
+		throws SystemException {
+		for (com.liferay.portlet.journal.model.JournalFolder journalFolder : journalFolders) {
+			ddmStructureToJournalFolderTableMapper.deleteTableMapping(pk,
+				journalFolder.getPrimaryKey());
+		}
+	}
+
+	/**
+	 * Sets the journal folders associated with the d d m structure, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @param journalFolderPKs the primary keys of the journal folders to be associated with the d d m structure
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void setJournalFolders(long pk, long[] journalFolderPKs)
+		throws SystemException {
+		Set<Long> newJournalFolderPKsSet = SetUtil.fromArray(journalFolderPKs);
+		Set<Long> oldJournalFolderPKsSet = SetUtil.fromArray(ddmStructureToJournalFolderTableMapper.getRightPrimaryKeys(
+					pk));
+
+		Set<Long> removeJournalFolderPKsSet = new HashSet<Long>(oldJournalFolderPKsSet);
+
+		removeJournalFolderPKsSet.removeAll(newJournalFolderPKsSet);
+
+		for (long removeJournalFolderPK : removeJournalFolderPKsSet) {
+			ddmStructureToJournalFolderTableMapper.deleteTableMapping(pk,
+				removeJournalFolderPK);
+		}
+
+		newJournalFolderPKsSet.removeAll(oldJournalFolderPKsSet);
+
+		for (long newJournalFolderPK : newJournalFolderPKsSet) {
+			ddmStructureToJournalFolderTableMapper.addTableMapping(pk,
+				newJournalFolderPK);
+		}
+	}
+
+	/**
+	 * Sets the journal folders associated with the d d m structure, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the d d m structure
+	 * @param journalFolders the journal folders to be associated with the d d m structure
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void setJournalFolders(long pk,
+		List<com.liferay.portlet.journal.model.JournalFolder> journalFolders)
+		throws SystemException {
+		try {
+			long[] journalFolderPKs = new long[journalFolders.size()];
+
+			for (int i = 0; i < journalFolders.size(); i++) {
+				com.liferay.portlet.journal.model.JournalFolder journalFolder = journalFolders.get(i);
+
+				journalFolderPKs[i] = journalFolder.getPrimaryKey();
+			}
+
+			setJournalFolders(pk, journalFolderPKs);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+	}
+
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -9752,6 +10048,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		ddmStructureToDLFileEntryTypeTableMapper = TableMapperFactory.getTableMapper("DLFileEntryTypes_DDMStructures",
 				"structureId", "fileEntryTypeId", this,
 				dlFileEntryTypePersistence);
+
+		ddmStructureToJournalFolderTableMapper = TableMapperFactory.getTableMapper("JournalFolders_DDMStructures",
+				"structureId", "folderId", this, journalFolderPersistence);
 	}
 
 	public void destroy() {
@@ -9764,6 +10063,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@BeanReference(type = DLFileEntryTypePersistence.class)
 	protected DLFileEntryTypePersistence dlFileEntryTypePersistence;
 	protected TableMapper<DDMStructure, com.liferay.portlet.documentlibrary.model.DLFileEntryType> ddmStructureToDLFileEntryTypeTableMapper;
+	@BeanReference(type = JournalFolderPersistence.class)
+	protected JournalFolderPersistence journalFolderPersistence;
+	protected TableMapper<DDMStructure, com.liferay.portlet.journal.model.JournalFolder> ddmStructureToJournalFolderTableMapper;
 	private static final String _SQL_SELECT_DDMSTRUCTURE = "SELECT ddmStructure FROM DDMStructure ddmStructure";
 	private static final String _SQL_SELECT_DDMSTRUCTURE_WHERE = "SELECT ddmStructure FROM DDMStructure ddmStructure WHERE ";
 	private static final String _SQL_COUNT_DDMSTRUCTURE = "SELECT COUNT(ddmStructure) FROM DDMStructure ddmStructure";

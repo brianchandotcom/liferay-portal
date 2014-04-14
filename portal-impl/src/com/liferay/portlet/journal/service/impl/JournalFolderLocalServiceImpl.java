@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.TreeModelFinder;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -39,8 +40,10 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.asset.util.AssetUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.journal.DuplicateFolderNameException;
 import com.liferay.portlet.journal.FolderNameException;
+import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
@@ -53,7 +56,9 @@ import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Juan Fernández
@@ -397,6 +402,24 @@ public class JournalFolderLocalServiceImpl
 	}
 
 	@Override
+	public long getOverridedDDMStructuresFolderId(long folderId)
+		throws NoSuchFolderException, SystemException {
+
+		while (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
+				folderId);
+
+			if (folder.isOverrideDDMStructures()) {
+				break;
+			}
+
+			folderId = folder.getParentFolderId();
+		}
+
+		return folderId;
+	}
+
+	@Override
 	public void getSubfolderIds(
 			List<Long> folderIds, long groupId, long folderId)
 		throws SystemException {
@@ -658,7 +681,25 @@ public class JournalFolderLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		return updateFolder(
+			userId, folderId, parentFolderId, name, description, null, false,
+			mergeWithParentFolder, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public JournalFolder updateFolder(
+			long userId, long folderId, long parentFolderId, String name,
+			String description, long[] ddmStructureIds,
+			boolean overrideDDMStructures, boolean mergeWithParentFolder,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
 		// Merge folders
+
+		if (!overrideDDMStructures) {
+			ddmStructureIds = new long[0];
+		}
 
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
 			folderId);
@@ -680,6 +721,7 @@ public class JournalFolderLocalServiceImpl
 		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);
 		folder.setDescription(description);
+		folder.setOverrideDDMStructures(overrideDDMStructures);
 		folder.setExpandoBridgeAttributes(serviceContext);
 
 		journalFolderPersistence.update(folder);
@@ -691,7 +733,41 @@ public class JournalFolderLocalServiceImpl
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
 
+		// Dynamic data mapping
+
+		if (ddmStructureIds != null) {
+			updateFolderDDMStructures(folder, ddmStructureIds);
+		}
+
 		return folder;
+	}
+
+	@Override
+	public void updateFolderDDMStructures(
+			JournalFolder folder, long[] ddmStructureIdsArray)
+		throws SystemException {
+
+		Set<Long> ddmStructureIds = SetUtil.fromArray(ddmStructureIdsArray);
+		Set<Long> originalDDMStructureIds = getDDMStructureIds(
+			journalFolderPersistence.getDDMStructures(folder.getFolderId()));
+
+		if (ddmStructureIds.equals(originalDDMStructureIds)) {
+			return;
+		}
+
+		for (Long ddmStructureId : ddmStructureIds) {
+			if (!originalDDMStructureIds.contains(ddmStructureId)) {
+				journalFolderPersistence.addDDMStructure(
+					folder.getFolderId(), ddmStructureId);
+			}
+		}
+
+		for (Long originalDDMStructureId : originalDDMStructureIds) {
+			if (!ddmStructureIds.contains(originalDDMStructureId)) {
+				journalFolderPersistence.removeDDMStructure(
+					folder.getFolderId(), originalDDMStructureId);
+			}
+		}
 	}
 
 	@Override
@@ -729,6 +805,16 @@ public class JournalFolderLocalServiceImpl
 		indexer.reindex(folder);
 
 		return folder;
+	}
+
+	protected Set<Long> getDDMStructureIds(List<DDMStructure> ddmStructures) {
+		Set<Long> ddmStructureIds = new HashSet<Long>();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			ddmStructureIds.add(ddmStructure.getStructureId());
+		}
+
+		return ddmStructureIds;
 	}
 
 	protected long getParentFolderId(JournalFolder folder, long parentFolderId)

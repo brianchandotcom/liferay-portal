@@ -208,6 +208,13 @@ public class StagingImpl implements Staging {
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.StagingLocalService#
+	 *             checkDefaultLayoutSetBranches(
+	 *             long, Group, boolean, boolean, boolean, ServiceContext))}
+	 */
+	@Deprecated
 	@Override
 	public void checkDefaultLayoutSetBranches(
 			long userId, Group liveGroup, boolean branchingPublic,

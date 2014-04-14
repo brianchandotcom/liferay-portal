@@ -386,6 +386,15 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Returns <code>true</code> if the strings are equal, ignoring new line
+	 * characters.
+	 *
+	 * @param  s1 the first string to compare
+	 * @param  s2 the second string to compare
+	 * @return <code>true</code> if the strings are equal, ignoring new line
+	 *         characters; <code>false</code> otherwise
+	 */
 	public static boolean equalsIgnoreBreakLine(String s1, String s2) {
 		if (s1 == s2) {
 			return true;
@@ -4512,6 +4521,45 @@ public class StringUtil {
 		return String.valueOf(obj);
 	}
 
+	/**
+	 * Returns <code>true</code> if the string matches the wildcard pattern.
+	 *
+	 * <p>
+	 * For example, with the following initialized variables:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * String s = "*master";
+	 * String wildcard = "/*m?st*";
+	 * char singleWildcardCharacter = '?';
+	 * char multipleWildcardCharacter = '*';
+	 * char escapeWildcardCharacter = '/';
+	 * boolean caseSensitive = false;
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * <p>
+	 * <code>wildcardMatches(s, wildcard, singleWildcardCharacter,
+	 * multipleWildcardCharacter, escapeWildcardCharacter, caseSensitive)</code>
+	 * returns <code>true</code>
+	 * </p>
+	 *
+	 * @param  s the string to be checked
+	 * @param  wildcard the wildcard pattern to match
+	 * @param  singleWildcardCharacter the char used to match exactly one
+	 *         character
+	 * @param  multipleWildcardCharacter the char used to match <code>0</code>
+	 *         or more characters
+	 * @param  escapeWildcardCharacter the char placed in front of a wildcard
+	 *         character to indicate that it should be interpreted as a regular
+	 *         character
+	 * @param  caseSensitive whether to use case sensitivity
+	 * @return <code>true</code> if the string matches the wildcard pattern;
+	 *         <code>false</code> otherwise
+	 */
 	public static boolean wildcardMatches(
 		String s, String wildcard, char singleWildcardCharacter,
 		char multipleWildcardCharacter, char escapeWildcardCharacter,

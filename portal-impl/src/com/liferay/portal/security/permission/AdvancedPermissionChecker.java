@@ -559,7 +559,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					}
 
 					groupId = group.getLiveGroupId();
-					group = group.getLiveGroup();
 				}
 			}
 		}

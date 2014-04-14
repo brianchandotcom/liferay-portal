@@ -1,6 +1,33 @@
 Bundle-Version: 6.2.0
+Export-Package:\
+	com.liferay.portal.bean,\
+	com.liferay.portal.cache,\
+	com.liferay.portal.cluster,\
+	com.liferay.portal.increment,\
+	com.liferay.portal.dao.jdbc.aop,\
+	com.liferay.portal.dao.orm.hibernate,\
+	com.liferay.portal.dao.shard,\
+	com.liferay.portal.dao.shard.advice,\
+	com.liferay.portal.kernel.util,\
+	com.liferay.portal.messaging.async,\
+	com.liferay.portal.monitoring.statistics.service,\
+	com.liferay.portal.resiliency.service,\
+	com.liferay.portal.search,\
+	com.liferay.portal.security.ac,\
+	com.liferay.portal.service.http,\
+	com.liferay.portal.spring.aop,\
+	com.liferay.portal.spring.bean,\
+	com.liferay.portal.spring.context,\
+	com.liferay.portal.spring.hibernate,\
+	com.liferay.portal.spring.transaction,\
+	com.liferay.portal.systemevent,\
+	\
+	javax.sql,org.hibernate,\
+	\
+	org.hibernate.engine
 Import-Package: *
 Include-Resource: classes
 Private-Package: com.liferay.*
 
+-baseline:
 -donotcopy: (log4j\.properties|logging\.properties|portal-.*\.properties|system-.*\.properties|\.touch)

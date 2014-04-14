@@ -98,7 +98,7 @@ else {
 
 boolean showWhenSingleIcon = false;
 
-if ((row == null) || portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+if ((row == null) || portletId.equals(PortletKeys.DOCUMENT_LIBRARY) || portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	showWhenSingleIcon = true;
 }
 

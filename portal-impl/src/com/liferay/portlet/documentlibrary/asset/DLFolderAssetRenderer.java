@@ -147,7 +147,7 @@ public class DLFolderAssetRenderer
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			getControlPanelPlid(liferayPortletRequest),
-			PortletKeys.DOCUMENT_LIBRARY, PortletRequest.RENDER_PHASE);
+			PortletKeys.DOCUMENT_LIBRARY_ADMIN, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"struts_action", "/document_library/edit_folder");

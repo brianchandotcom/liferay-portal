@@ -22,6 +22,9 @@ String strutsAction = "/document_library_display";
 if (portletResource.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	strutsAction = "/document_library";
 }
+else if (portletResource.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+	strutsAction = "/document_library_admin";
+}
 
 try {
 	Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);

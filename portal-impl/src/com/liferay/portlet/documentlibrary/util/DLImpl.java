@@ -440,7 +440,7 @@ public class DLImpl implements DL {
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletKeys.DOCUMENT_LIBRARY,
+			portletRequest, PortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
 			PortletRequest.RENDER_PHASE);
 
@@ -460,7 +460,7 @@ public class DLImpl implements DL {
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletKeys.DOCUMENT_LIBRARY,
+			portletRequest, PortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
 			PortletRequest.RENDER_PHASE);
 

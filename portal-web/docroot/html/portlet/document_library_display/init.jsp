@@ -81,7 +81,7 @@ boolean showAddFolderButton = false;
 boolean showFolderMenu = PrefsParamUtil.getBoolean(portletPreferences, request, "showFolderMenu");
 boolean showTabs = PrefsParamUtil.getBoolean(portletPreferences, request, "showTabs");
 
-if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) || portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 	showActions = true;
 	showAddFolderButton = true;
 	showFolderMenu = true;

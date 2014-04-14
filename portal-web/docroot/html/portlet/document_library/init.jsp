@@ -131,7 +131,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 boolean showMinimalActionButtons = ParamUtil.getBoolean(request, "showMinimalActionButtons");
 boolean showTabs = dlSettings.getShowTabs();
 
-if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 	showActions = true;
 	showAssetMetadata = true;
 	showAddFolderButton = true;
@@ -162,7 +162,7 @@ String[] entryColumns = StringUtil.split(dlSettings.getEntryColumns());
 if (!showActions) {
 	entryColumns = ArrayUtil.remove(entryColumns, "action");
 }
-else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !ArrayUtil.contains(entryColumns, "action")) {
+else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) && !ArrayUtil.contains(entryColumns, "action")) {
 	entryColumns = ArrayUtil.append(entryColumns, "action");
 }
 

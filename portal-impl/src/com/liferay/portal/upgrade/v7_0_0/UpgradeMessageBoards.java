@@ -17,11 +17,12 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import javax.portlet.PortletPreferences;
@@ -32,10 +33,14 @@ import javax.portlet.ReadOnlyException;
  */
 public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 
+	public static final boolean MESSAGE_BOARDS_EMAIL_HTML_FORMAT =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_HTML_FORMAT));
+
 	protected String getEmailSignatureSeparator(
 		PortletPreferences portletPreferences) {
 
-		boolean emailHtmlFormat = PropsValues.MESSAGE_BOARDS_EMAIL_HTML_FORMAT;
+		boolean emailHtmlFormat = MESSAGE_BOARDS_EMAIL_HTML_FORMAT;
 
 		String emailHtmlFormatString = portletPreferences.getValue(
 			"emailHtmlFormat", StringPool.BLANK);

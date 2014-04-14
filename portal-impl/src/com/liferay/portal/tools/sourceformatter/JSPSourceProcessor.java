@@ -294,7 +294,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			compareAndAutoFixContent(file, fileName, content, newContent);
 
 			if (portalSource &&
-				!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) &&
+				mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION) &&
 				fileName.endsWith("/init.jsp") &&
 				!fileName.endsWith("/common/init.jsp")) {
 

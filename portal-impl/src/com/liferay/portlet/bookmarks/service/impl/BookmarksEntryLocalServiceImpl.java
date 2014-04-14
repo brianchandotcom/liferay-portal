@@ -722,20 +722,22 @@ public class BookmarksEntryLocalServiceImpl
 			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "bookmarks" +
 				StringPool.SLASH + entry.getEntryId();
 
-		String fromAddress = bookmarksSettings.getEmailFromAddress();
 		String fromName = bookmarksSettings.getEmailFromName();
+		String fromAddress = bookmarksSettings.getEmailFromAddress();
 
-		LocalizedValuesMap localizedSubjectMap = null;
-		LocalizedValuesMap localizedBodyMap = null;
+		LocalizedValuesMap subjectLocalizedValuesMap = null;
+		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
-			localizedSubjectMap =
+			subjectLocalizedValuesMap =
 				bookmarksSettings.getEmailEntryUpdatedSubject();
-			localizedBodyMap = bookmarksSettings.getEmailEntryUpdatedBody();
+			bodyLocalizedValuesMap =
+				bookmarksSettings.getEmailEntryUpdatedBody();
 		}
 		else {
-			localizedSubjectMap = bookmarksSettings.getEmailEntryAddedSubject();
-			localizedBodyMap = bookmarksSettings.getEmailEntryAddedBody();
+			subjectLocalizedValuesMap =
+				bookmarksSettings.getEmailEntryAddedSubject();
+			bodyLocalizedValuesMap = bookmarksSettings.getEmailEntryAddedBody();
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
@@ -751,8 +753,8 @@ public class BookmarksEntryLocalServiceImpl
 		subscriptionSender.setEntryURL(entryURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
-		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
+		subscriptionSender.setLocalizedBodyMap(bodyLocalizedValuesMap);
+		subscriptionSender.setLocalizedSubjectMap(subjectLocalizedValuesMap);
 		subscriptionSender.setMailId("bookmarks_entry", entry.getEntryId());
 
 		int notificationType =

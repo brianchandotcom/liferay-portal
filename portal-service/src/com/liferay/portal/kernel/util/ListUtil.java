@@ -366,6 +366,16 @@ public class ListUtil {
 		return list;
 	}
 
+	public static <T, V> List<V> toList(List<T> list, Accessor<T, V> accessor) {
+		List<V> vList = new ArrayList<V>(list.size());
+
+		for (T t : list) {
+			vList.add(accessor.get(t));
+		}
+
+		return vList;
+	}
+
 	public static List<Long> toList(long[] array) {
 		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<Long>();

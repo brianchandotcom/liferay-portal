@@ -42,12 +42,13 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextUtil;
+import com.liferay.portal.settings.LocalizedValuesMap;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.bookmarks.BookmarksSettings;
 import com.liferay.portlet.bookmarks.EntryURLException;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
@@ -64,10 +65,6 @@ import com.liferay.portlet.trash.model.TrashVersion;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.portlet.PortletPreferences;
 
 /**
  * @author Brian Wing Shun Chan
@@ -697,25 +694,13 @@ public class BookmarksEntryLocalServiceImpl
 			return;
 		}
 
-		PortletPreferences preferences =
-			ServiceContextUtil.getPortletPreferences(serviceContext);
-
-		if (preferences == null) {
-			long ownerId = entry.getGroupId();
-			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
-			long plid = PortletKeys.PREFS_PLID_SHARED;
-			String portletId = PortletKeys.BOOKMARKS;
-			String defaultPreferences = null;
-
-			preferences = portletPreferencesLocalService.getPreferences(
-				entry.getCompanyId(), ownerId, ownerType, plid, portletId,
-				defaultPreferences);
-		}
+		BookmarksSettings bookmarksSettings =
+			BookmarksUtil.getBookmarksSettings(entry.getGroupId());
 
 		if ((serviceContext.isCommandAdd() &&
-			 !BookmarksUtil.getEmailEntryAddedEnabled(preferences)) ||
+			 !bookmarksSettings.getEmailEntryAddedEnabled()) ||
 			(serviceContext.isCommandUpdate() &&
-			 !BookmarksUtil.getEmailEntryUpdatedEnabled(preferences))) {
+			 !bookmarksSettings.getEmailEntryUpdatedEnabled())) {
 
 			return;
 		}
@@ -737,25 +722,22 @@ public class BookmarksEntryLocalServiceImpl
 			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "bookmarks" +
 				StringPool.SLASH + entry.getEntryId();
 
-		String fromAddress = BookmarksUtil.getEmailFromAddress(
-			preferences, entry.getCompanyId());
-		String fromName = BookmarksUtil.getEmailFromName(
-			preferences, entry.getCompanyId());
+		String fromName = bookmarksSettings.getEmailFromName();
+		String fromAddress = bookmarksSettings.getEmailFromAddress();
 
-		Map<Locale, String> localizedSubjectMap = null;
-		Map<Locale, String> localizedBodyMap = null;
+		LocalizedValuesMap subjectLocalizedValuesMap = null;
+		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
-			localizedSubjectMap = BookmarksUtil.getEmailEntryUpdatedSubjectMap(
-				preferences);
-			localizedBodyMap = BookmarksUtil.getEmailEntryUpdatedBodyMap(
-				preferences);
+			subjectLocalizedValuesMap =
+				bookmarksSettings.getEmailEntryUpdatedSubject();
+			bodyLocalizedValuesMap =
+				bookmarksSettings.getEmailEntryUpdatedBody();
 		}
 		else {
-			localizedSubjectMap = BookmarksUtil.getEmailEntryAddedSubjectMap(
-				preferences);
-			localizedBodyMap = BookmarksUtil.getEmailEntryAddedBodyMap(
-				preferences);
+			subjectLocalizedValuesMap =
+				bookmarksSettings.getEmailEntryAddedSubject();
+			bodyLocalizedValuesMap = bookmarksSettings.getEmailEntryAddedBody();
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
@@ -771,8 +753,8 @@ public class BookmarksEntryLocalServiceImpl
 		subscriptionSender.setEntryURL(entryURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
-		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
+		subscriptionSender.setLocalizedBodyMap(bodyLocalizedValuesMap);
+		subscriptionSender.setLocalizedSubjectMap(subjectLocalizedValuesMap);
 		subscriptionSender.setMailId("bookmarks_entry", entry.getEntryId());
 
 		int notificationType =

@@ -32,7 +32,7 @@ OrderByComparator orderByComparator = BookmarksUtil.getEntryOrderByComparator(or
 
 <liferay-ui:search-container
 	curParam="cur2"
-	delta="<%= entriesPerPage %>"
+	delta="<%= bookmarksSettings.getEntriesPerPage() %>"
 	deltaConfigurable="<%= false %>"
 	emptyResultsMessage="there-are-no-bookmarks-in-this-folder"
 	headerNames="<%= StringUtil.merge(entryColumns) %>"

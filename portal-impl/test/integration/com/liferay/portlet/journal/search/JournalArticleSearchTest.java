@@ -108,7 +108,7 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		}
 
 		return JournalTestUtil.addArticleWithWorkflow(
-			folder.getGroupId(), folderId, keywords, keywords, approved,
+			group.getGroupId(), folderId, keywords, keywords, approved,
 			serviceContext);
 	}
 

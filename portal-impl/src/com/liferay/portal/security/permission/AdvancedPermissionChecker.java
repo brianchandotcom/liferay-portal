@@ -521,11 +521,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		stopWatch.start();
 
-		Group group = null;
-
 		try {
 			if (groupId > 0) {
-				group = GroupLocalServiceUtil.getGroup(groupId);
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 				// If the group is a personal site, check the "User Personal
 				// Site" group.

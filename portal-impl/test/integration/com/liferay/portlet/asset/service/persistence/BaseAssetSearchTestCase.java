@@ -15,13 +15,13 @@
 package com.liferay.portlet.asset.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -36,6 +36,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
@@ -48,6 +49,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -961,7 +963,7 @@ public abstract class BaseAssetSearchTestCase {
 
 	protected abstract String getSearchKeywords();
 
-	protected Document[] search(
+	protected AssetEntry[] search(
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
 		throws Exception {
 
@@ -969,7 +971,9 @@ public abstract class BaseAssetSearchTestCase {
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		return results.getDocs();
+		List<AssetEntry> assetEntries = AssetUtil.getAssetEntries(results);
+
+		return assetEntries.toArray(new AssetEntry[assetEntries.size()]);
 	}
 
 	protected int searchCount(
@@ -1107,12 +1111,12 @@ public abstract class BaseAssetSearchTestCase {
 		assetEntryQuery.setOrderByCol1("createDate");
 		assetEntryQuery.setOrderByType1(orderByType);
 
-		Document[] documents = search(assetEntryQuery, searchContext);
+		AssetEntry[] assetEntries = search(assetEntryQuery, searchContext);
 
-		for (int i = 0; i < documents.length; i++) {
-			Document document = documents[i];
+		for (int i = 0; i < assetEntries.length; i++) {
+			AssetEntry assetEntry = assetEntries[i];
 
-			String field = document.get("title");
+			String field = assetEntry.getTitle(LocaleUtil.getDefault());
 
 			Assert.assertEquals(field, orderedTitles[i]);
 		}
@@ -1147,21 +1151,22 @@ public abstract class BaseAssetSearchTestCase {
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			PropsValues.INDEX_DATE_FORMAT_PATTERN);
 
-		Document[] documents = search(assetEntryQuery, searchContext);
+		AssetEntry[] assetEntries = search(assetEntryQuery, searchContext);
 
-		for (int i = 0; i < documents.length; i++) {
-			Document document = documents[i];
+		for (int i = 0; i < assetEntries.length; i++) {
+			AssetEntry assetEntry = assetEntries[i];
 
-			String field = document.get("expirationDate");
+			String expirationDate = dateFormat.format(
+				assetEntry.getExpirationDate());
 
 			int index = i;
 
 			if (orderByType.equals("desc")) {
-				index = documents.length - 1 - i;
+				index = assetEntries.length - 1 - i;
 			}
 
 			Assert.assertEquals(
-				field, dateFormat.format(expirationDates[index]));
+				expirationDate, dateFormat.format(expirationDates[index]));
 		}
 	}
 
@@ -1187,12 +1192,12 @@ public abstract class BaseAssetSearchTestCase {
 		assetEntryQuery.setOrderByCol1("title");
 		assetEntryQuery.setOrderByType1(orderByType);
 
-		Document[] documents = search(assetEntryQuery, searchContext);
+		AssetEntry[] assetEntries = search(assetEntryQuery, searchContext);
 
-		for (int i = 0; i < documents.length; i++) {
-			Document document = documents[i];
+		for (int i = 0; i < assetEntries.length; i++) {
+			AssetEntry assetEntry = assetEntries[i];
 
-			String field = document.get("title");
+			String field = assetEntry.getTitle(LocaleUtil.getDefault());
 
 			Assert.assertEquals(field, orderedTitles[i]);
 		}

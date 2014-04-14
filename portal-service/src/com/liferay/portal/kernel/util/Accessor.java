@@ -17,8 +17,12 @@ package com.liferay.portal.kernel.util;
 /**
  * @author Shuyang Zhou
  */
-public interface Accessor<T, V> {
+public interface Accessor<T, A> {
 
-	V get(T t);
+	A get(T t);
+
+	Class<A> getAttributeClass();
+
+	Class<T> getTypeClass();
 
 }

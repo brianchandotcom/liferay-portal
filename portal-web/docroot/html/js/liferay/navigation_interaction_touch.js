@@ -22,7 +22,7 @@ AUI.add(
 					if (!menuOpen) {
 						Liferay.fire('showNavigationMenu', mapHover);
 
-						var handle = menuNew.on(
+						handle = menuNew.on(
 							['clickoutside', 'touchstartoutside'],
 							function() {
 								Liferay.fire(

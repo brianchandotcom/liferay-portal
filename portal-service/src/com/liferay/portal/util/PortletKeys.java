@@ -77,6 +77,8 @@ public class PortletKeys {
 
 	public static final String DOCUMENT_LIBRARY = "20";
 
+	public static final String DOCUMENT_LIBRARY_ADMIN = "199";
+
 	public static final String DOCUMENT_LIBRARY_DISPLAY = "110";
 
 	public static final String DYNAMIC_DATA_LIST_DISPLAY = "169";

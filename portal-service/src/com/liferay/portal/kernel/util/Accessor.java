@@ -21,4 +21,8 @@ public interface Accessor<T, V> {
 
 	V get(T t);
 
+	Class<T> getTClass();
+
+	Class<V> getVClass();
+
 }

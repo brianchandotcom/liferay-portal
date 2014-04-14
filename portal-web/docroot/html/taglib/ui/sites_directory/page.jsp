@@ -47,7 +47,7 @@
 	}
 	%>
 
-	<div class="sites-directory-taglib nav-menu">
+	<div class="nav-menu sites-directory-taglib">
 		<c:choose>
 			<c:when test="<%= hidden %>">
 				<div class="alert alert-info">
@@ -131,7 +131,7 @@
 										/>
 									</liferay-ui:search-container-row>
 
-									<liferay-ui:search-iterator />
+									<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
 								</liferay-ui:search-container>
 							</c:otherwise>
 						</c:choose>

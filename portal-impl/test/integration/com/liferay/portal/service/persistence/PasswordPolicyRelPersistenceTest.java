@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PasswordPolicyRel;
 import com.liferay.portal.model.impl.PasswordPolicyRelModelImpl;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
@@ -56,6 +58,15 @@ import java.util.Set;
 	PersistenceExecutionTestListener.class})
 @RunWith(LiferayPersistenceIntegrationJUnitTestRunner.class)
 public class PasswordPolicyRelPersistenceTest {
+	@Before
+	public void setUp() {
+		_modelListeners = _persistence.getListeners();
+
+		for (ModelListener<PasswordPolicyRel> modelListener : _modelListeners) {
+			_persistence.unregisterListener(modelListener);
+		}
+	}
+
 	@After
 	public void tearDown() throws Exception {
 		Map<Serializable, BasePersistence<?>> basePersistences = _transactionalPersistenceAdvice.getBasePersistences();
@@ -77,6 +88,10 @@ public class PasswordPolicyRelPersistenceTest {
 		}
 
 		_transactionalPersistenceAdvice.reset();
+
+		for (ModelListener<PasswordPolicyRel> modelListener : _modelListeners) {
+			_persistence.registerListener(modelListener);
+		}
 	}
 
 	@Test
@@ -351,6 +366,7 @@ public class PasswordPolicyRelPersistenceTest {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PasswordPolicyRelPersistenceTest.class);
+	private ModelListener<PasswordPolicyRel>[] _modelListeners;
 	private PasswordPolicyRelPersistence _persistence = (PasswordPolicyRelPersistence)PortalBeanLocatorUtil.locate(PasswordPolicyRelPersistence.class.getName());
 	private TransactionalPersistenceAdvice _transactionalPersistenceAdvice = (TransactionalPersistenceAdvice)PortalBeanLocatorUtil.locate(TransactionalPersistenceAdvice.class.getName());
 }

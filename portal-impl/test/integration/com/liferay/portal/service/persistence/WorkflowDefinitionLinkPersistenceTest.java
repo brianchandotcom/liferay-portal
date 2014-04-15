@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.model.impl.WorkflowDefinitionLinkModelImpl;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
@@ -58,6 +60,15 @@ import java.util.Set;
 	PersistenceExecutionTestListener.class})
 @RunWith(LiferayPersistenceIntegrationJUnitTestRunner.class)
 public class WorkflowDefinitionLinkPersistenceTest {
+	@Before
+	public void setUp() {
+		_modelListeners = _persistence.getListeners();
+
+		for (ModelListener<WorkflowDefinitionLink> modelListener : _modelListeners) {
+			_persistence.unregisterListener(modelListener);
+		}
+	}
+
 	@After
 	public void tearDown() throws Exception {
 		Map<Serializable, BasePersistence<?>> basePersistences = _transactionalPersistenceAdvice.getBasePersistences();
@@ -79,6 +90,10 @@ public class WorkflowDefinitionLinkPersistenceTest {
 		}
 
 		_transactionalPersistenceAdvice.reset();
+
+		for (ModelListener<WorkflowDefinitionLink> modelListener : _modelListeners) {
+			_persistence.registerListener(modelListener);
+		}
 	}
 
 	@Test
@@ -435,6 +450,7 @@ public class WorkflowDefinitionLinkPersistenceTest {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WorkflowDefinitionLinkPersistenceTest.class);
+	private ModelListener<WorkflowDefinitionLink>[] _modelListeners;
 	private WorkflowDefinitionLinkPersistence _persistence = (WorkflowDefinitionLinkPersistence)PortalBeanLocatorUtil.locate(WorkflowDefinitionLinkPersistence.class.getName());
 	private TransactionalPersistenceAdvice _transactionalPersistenceAdvice = (TransactionalPersistenceAdvice)PortalBeanLocatorUtil.locate(TransactionalPersistenceAdvice.class.getName());
 }

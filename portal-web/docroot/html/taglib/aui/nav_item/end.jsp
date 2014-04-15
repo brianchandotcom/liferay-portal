@@ -30,9 +30,6 @@ if (bodyContent != null) {
 if (Validator.isNull(title)) {
 	title = HtmlUtil.stripHtml(LanguageUtil.get(pageContext, label));
 }
-
-int menuMaxDisplayItems = GetterUtil.getInteger(
-    com.liferay.portal.kernel.util.PropsUtil.get(PropsKeys.ICON_MENU_MAX_DISPLAY_ITEMS));
 %>
 
 <c:if test="<%= !dropdown || Validator.isNotNull(bodyContentString.trim()) %>">
@@ -73,7 +70,7 @@ int menuMaxDisplayItems = GetterUtil.getInteger(
 				var toggleMenu = new Liferay.MenuToggle(
 					{
 						content: '#<%= id %>',
-						maxDisplayItems: <%= menuMaxDisplayItems %>,
+						maxDisplayItems: <%= PropsValues.ICON_MENU_MAX_DISPLAY_ITEMS %>,
 						'strings.placeholder': '<%= LanguageUtil.get(pageContext, "search") %>',
 						toggle: <%= toggle %>,
 						toggleTouch: <%= toggleTouch %>,

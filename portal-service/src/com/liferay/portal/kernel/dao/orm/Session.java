@@ -60,6 +60,8 @@ public interface Session {
 
 	public Object getWrappedSession() throws ORMException;
 
+	public boolean isDirty() throws ORMException;
+
 	public Object load(Class<?> clazz, Serializable id) throws ORMException;
 
 	public Object merge(Object object) throws ORMException;

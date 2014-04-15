@@ -227,6 +227,12 @@ public class InputTag extends BaseInputTag {
 			forLabel = forLabel.concat("Checkbox");
 		}
 
+		String languageId = getLanguageId();
+
+		if (Validator.isNotNull(languageId)) {
+			forLabel = LocalizationUtil.getLocalizedName(forLabel, languageId);
+		}
+
 		String label = getLabel();
 
 		if (label == null) {
@@ -235,19 +241,8 @@ public class InputTag extends BaseInputTag {
 
 		String title = getTitle();
 
-		if (title == null) {
-			if (label.equals(StringPool.BLANK)) {
-				title = TextFormatter.format(name, TextFormatter.K);
-			}
-			else {
-				title = label;
-			}
-		}
-
-		String languageId = getLanguageId();
-
-		if (Validator.isNotNull(languageId)) {
-			forLabel = LocalizationUtil.getLocalizedName(forLabel, languageId);
+		if ((title == null) && Validator.isNull(label)) {
+			title = TextFormatter.format(name, TextFormatter.K);
 		}
 
 		_inputName = getName();

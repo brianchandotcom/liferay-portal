@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -30,6 +31,7 @@ import java.util.List;
 /**
  * @author Alexander Chow
  */
+@JSON
 @ProviderType
 public interface FileEntry extends RepositoryModel<FileEntry> {
 
@@ -72,6 +74,7 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	 * @throws SystemException if a system exception occurred
 	 * @see    #getFileVersion()
 	 */
+	@JSON(include = false)
 	public InputStream getContentStream()
 		throws PortalException, SystemException;
 

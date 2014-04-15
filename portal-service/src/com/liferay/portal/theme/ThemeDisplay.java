@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -80,6 +81,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Brian Wing Shun Chan
  */
+@JSON
 @ProviderType
 public class ThemeDisplay
 	implements Cloneable, Mergeable<ThemeDisplay>, Serializable {
@@ -634,6 +636,7 @@ public class ThemeDisplay
 	 *
 	 * @return the permission checker
 	 */
+	@JSON(include = false)
 	public PermissionChecker getPermissionChecker() {
 		return _permissionChecker;
 	}
@@ -663,6 +666,7 @@ public class ThemeDisplay
 		return _portalURL;
 	}
 
+	@JSON(include = false)
 	public PortletDisplay getPortletDisplay() {
 		return _portletDisplay;
 	}
@@ -726,6 +730,7 @@ public class ThemeDisplay
 	 *
 	 * @return the currently served HTTP servlet request
 	 */
+	@JSON(include = false)
 	public HttpServletRequest getRequest() {
 		return _request;
 	}
@@ -953,14 +958,17 @@ public class ThemeDisplay
 	 * @deprecated As of 6.2.0, replaced by {@link #getURLSiteAdministration()}
 	 */
 	@Deprecated
+	@JSON(include = false)
 	public PortletURL getURLManageSiteMemberships() {
 		return _urlManageSiteMemberships;
 	}
 
+	@JSON(include = false)
 	public PortletURL getURLMyAccount() {
 		return _urlMyAccount;
 	}
 
+	@JSON(include = false)
 	public PortletURL getURLPageSettings() {
 		return _urlPageSettings;
 	}
@@ -969,6 +977,7 @@ public class ThemeDisplay
 		return _urlPortal;
 	}
 
+	@JSON(include = false)
 	public PortletURL getURLPublishToLive() {
 		return _urlPublishToLive;
 	}
@@ -998,6 +1007,7 @@ public class ThemeDisplay
 	 *             #isShowSiteAdministrationIcon()}
 	 */
 	@Deprecated
+	@JSON(include = false)
 	public PortletURL getURLSiteMapSettings() {
 		return _urlSiteMapSettings;
 	}
@@ -1006,10 +1016,12 @@ public class ThemeDisplay
 	 * @deprecated As of 6.2.0, replaced by {@link #getURLSiteAdministration()}
 	 */
 	@Deprecated
+	@JSON(include = false)
 	public PortletURL getURLSiteSettings() {
 		return _urlSiteSettings;
 	}
 
+	@JSON(include = false)
 	public PortletURL getURLUpdateManager() {
 		return _urlUpdateManager;
 	}

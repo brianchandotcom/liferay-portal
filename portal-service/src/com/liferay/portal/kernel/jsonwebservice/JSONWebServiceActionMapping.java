@@ -37,6 +37,8 @@ public interface JSONWebServiceActionMapping {
 
 	public String getPath();
 
+	public Method getRealActionMethod();
+
 	public String getSignature();
 
 }

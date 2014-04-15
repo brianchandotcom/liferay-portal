@@ -1325,10 +1325,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			"<=%\\[\\s]+\"");
 	private Pattern _taglibLanguageKeyPattern2 = Pattern.compile(
 		"(aui:)(?:input|select|field-wrapper) (?!.*label=(?:'|\").+(?:'|\").*" +
-			"name=\"[^<=%\\[\\s]+\")(?!.*name=\"[^<=%\\[\\s]+\".*type=\"" +
-				"hidden\").*name=\"([^<=%\\[\\s]+)\"");
+			"name=\"[^<=%\\[\\s]+\")(?!.*name=\"[^<=%\\[\\s]+\".*title=" +
+				"(?:'|\").+(?:'|\"))(?!.*name=\"[^<=%\\[\\s]+\".*type=\"" +
+					"hidden\").*name=\"([^<=%\\[\\s]+)\"");
 	private Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
-		"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*label=" +
+		"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*title=" +
 			"(?:'|\").+(?:'|\"))");
 	private Properties _unusedVariablesExclusions;
 	private Pattern _xssPattern = Pattern.compile(

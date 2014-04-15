@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -228,6 +229,18 @@ public class DLActionsDisplayContext {
 			 !_dlActionsDisplayContextHelper.isLockedByMe()) ||
 			(_dlActionsDisplayContextHelper.isPending() &&
 			 _isDLFileEntryDraftsEnabled())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowWhenSingleIconActionButton() {
+		String portletId = _portletDisplay.getId();
+
+		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
 		}

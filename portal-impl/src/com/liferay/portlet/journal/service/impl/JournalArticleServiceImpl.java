@@ -571,7 +571,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the web content matching the group, article ID, and version.
+	 * Returns the web content from the web content article matching the group,
+	 * article ID, and version.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -599,7 +600,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the latest web content matching the group and article ID.
+	 * Returns the latest web content from the web content article matching the
+	 * group and article ID.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article

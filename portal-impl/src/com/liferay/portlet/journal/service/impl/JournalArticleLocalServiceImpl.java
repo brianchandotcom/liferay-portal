@@ -1581,8 +1581,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns the web content associated with the web content article and DDM
-	 * template.
+	 * Returns the web content from the web content article associated with the
+	 * portlet request model and the DDM template.
 	 *
 	 * @param  article the web content article
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
@@ -1591,7 +1591,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  languageId the primary key of the language translation to get
 	 * @param  portletRequestModel the portlet request model
 	 * @param  themeDisplay the theme display
-	 * @return the web content associated with the DDM template
+	 * @return the web content from the web content article associated with the
+	 *         portlet request model and the DDM template
 	 * @throws PortalException if a matching DDM template could not be found, or
 	 *         if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -1616,8 +1617,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns the web content associated with the web content article and DDM
-	 * template.
+	 * Returns the web content from the web content article associated with the
+	 * DDM template.
 	 *
 	 * @param      article the web content article
 	 * @param      ddmTemplateKey the primary key of the web content article's
@@ -1625,7 +1626,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param      viewMode the mode in which the web content is being viewed
 	 * @param      languageId the primary key of the language translation to get
 	 * @param      themeDisplay the theme display
-	 * @return     the web content associated with the DDM template
+	 * @return     the web content from the matching web content article
 	 * @throws     PortalException if a matching DDM template could not be
 	 *             found, or if a portal exception occurred
 	 * @throws     SystemException if a system exception occurred
@@ -1645,8 +1646,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns the web content matching the group, article ID, and version, and
-	 * associated with the DDM template.
+	 * Returns the web content from the web content article matching the group,
+	 * article ID, and version, and associated with the portlet request model
+	 * and the DDM template.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -1657,7 +1659,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  languageId the primary key of the language translation to get
 	 * @param  portletRequestModel the portlet request model
 	 * @param  themeDisplay the theme display
-	 * @return the matching web content
+	 * @return the web content from the matching web content article
 	 * @throws PortalException if a matching web content article or DDM template
 	 *         could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -1682,8 +1684,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns the web content matching the group, article ID, and version, and
-	 * associated with the DDM template.
+	 * Returns the web content from the web content article matching the group,
+	 * article ID, and version, and associated with the DDM template.
 	 *
 	 * @param      groupId the primary key of the web content article's group
 	 * @param      articleId the primary key of the web content article
@@ -1695,7 +1697,7 @@ public class JournalArticleLocalServiceImpl
 	 *             match it.
 	 * @param      languageId the primary key of the language translation to get
 	 * @param      themeDisplay the theme display
-	 * @return     the matching web content
+	 * @return     the web content from the matching web content article
 	 * @throws     PortalException if a matching web content article or DDM
 	 *             template could not be found, or if a portal exception
 	 *             occurred
@@ -1717,7 +1719,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns the web content matching the group, article ID, and version.
+	 * Returns the web content from the web content article matching the group,
+	 * article ID, and version.
 	 *
 	 * @param      groupId the primary key of the web content article's group
 	 * @param      articleId the primary key of the web content article
@@ -1725,7 +1728,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param      viewMode the mode in which the web content is being viewed
 	 * @param      languageId the primary key of the language translation to get
 	 * @param      themeDisplay the theme display
-	 * @return     the matching web content
+	 * @return     the web content from the matching web content article
 	 * @throws     PortalException if a matching web content article or DDM
 	 *             template could not be found, or if a portal exception
 	 *             occurred
@@ -1747,8 +1750,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns the latest web content matching the group and article ID, and
-	 * associated with the DDM template.
+	 * Returns the latest web content from the web content article matching the
+	 * group and article ID, and associated with the portlet request model and
+	 * the DDM template.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -1758,7 +1762,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  languageId the primary key of the language translation to get
 	 * @param  portletRequestModel the portlet request model
 	 * @param  themeDisplay the theme display
-	 * @return the matching web content
+	 * @return the latest web content from the matching web content article
 	 * @throws PortalException if a matching web content article or DDM template
 	 *         could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -1778,8 +1782,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns the latest web content matching the group and article ID, and
-	 * associated with the DDM template.
+	 * Returns the latest web content from the web content article matching the
+	 * group and article ID, and associated with the DDM template.
 	 *
 	 * @param      groupId the primary key of the web content article's group
 	 * @param      articleId the primary key of the web content article
@@ -1788,7 +1792,7 @@ public class JournalArticleLocalServiceImpl
 	 *             DDM template
 	 * @param      languageId the primary key of the language translation to get
 	 * @param      themeDisplay the theme display
-	 * @return     the matching web content
+	 * @return     the latest web content from the matching web content article
 	 * @throws     PortalException if a matching web content article or DDM
 	 *             template could not be found, or if a portal exception
 	 *             occurred
@@ -1810,14 +1814,15 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns the latest web content matching the group and article ID.
+	 * Returns the latest web content from the web content article matching the
+	 * group and article ID.
 	 *
 	 * @param      groupId the primary key of the web content article's group
 	 * @param      articleId the primary key of the web content article
 	 * @param      viewMode the mode in which the web content is being viewed
 	 * @param      languageId the primary key of the language translation to get
 	 * @param      themeDisplay the theme display
-	 * @return     the matching web content
+	 * @return     the latest web content from the matching web content article
 	 * @throws     PortalException if a matching web content article or DDM
 	 *             template could not be found, or if a portal exception
 	 *             occurred

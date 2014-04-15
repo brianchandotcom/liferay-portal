@@ -182,14 +182,6 @@ if (Validator.isNotNull(script)) {
 					<div class="input-append">
 						<c:choose>
 							<c:when test="<%= (structure == null) || Validator.isNotNull(parentStructureId) %>">
-								<portlet:renderURL var="parentStructureURL">
-									<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
-									<portlet:param name="redirect" value="<%= currentURL %>" />
-									<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-									<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-									<portlet:param name="classPK" value="<%= String.valueOf(parentStructureId) %>" />
-								</portlet:renderURL>
-
 								<liferay-ui:input-resource id="parentStructureName" url="<%= HtmlUtil.escape(parentStructureName) %>" />
 							</c:when>
 							<c:otherwise>

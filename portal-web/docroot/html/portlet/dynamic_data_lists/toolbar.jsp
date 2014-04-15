@@ -24,10 +24,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
 <aui:nav-bar>
 	<aui:nav searchContainer="<%= searchContainer %>">
-		<portlet:renderURL var="viewRecordsURL">
-			<portlet:param name="struts_action" value="/dynamic_data_lists/view" />
-		</portlet:renderURL>
-
 		<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_RECORD_SET) %>">
 			<portlet:renderURL var="addRecordSetURL">
 				<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />

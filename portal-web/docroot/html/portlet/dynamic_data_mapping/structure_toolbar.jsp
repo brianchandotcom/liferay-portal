@@ -28,13 +28,13 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 
 <aui:nav-bar>
 	<aui:nav searchContainer="<%= searchContainer %>">
-		<portlet:renderURL var="viewStructureURL">
-			<portlet:param name="struts_action" value="/dynamic_data_mapping/select_structure" />
-			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-			<portlet:param name="eventName" value="<%= eventName %>" />
-		</portlet:renderURL>
-
 		<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMPermission.contains(permissionChecker, groupId, ddmDisplay.getResourceName(), ddmDisplay.getAddStructureActionId()) %>">
+			<portlet:renderURL var="viewStructureURL">
+				<portlet:param name="struts_action" value="/dynamic_data_mapping/select_structure" />
+				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+				<portlet:param name="eventName" value="<%= eventName %>" />
+			</portlet:renderURL>
+
 			<portlet:renderURL var="addStructureURL">
 				<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
 				<portlet:param name="redirect" value="<%= viewStructureURL %>" />

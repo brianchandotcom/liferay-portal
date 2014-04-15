@@ -112,7 +112,7 @@ if (layout != null) {
 		</aui:script>
 	</c:if>
 
-	<aui:script use="liferay-navigation">
+	<aui:script use="event-move,liferay-navigation">
 		Liferay.once(
 			'initNavigation',
 			function() {
@@ -159,7 +159,7 @@ if (layout != null) {
 
 		if (navBlock) {
 			navBlock.once(
-				'mousemove',
+				['gesturemovestart', 'mousemove'],
 				function() {
 					Liferay.fire('initNavigation');
 				}

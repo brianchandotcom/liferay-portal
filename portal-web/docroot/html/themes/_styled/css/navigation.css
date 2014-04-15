@@ -42,8 +42,50 @@
 		}
 	}
 
+	.lfr-nav-sortable > a > span {
+		padding-left: 28px;
+	}
+
+	.drag-handle {
+		background-color: #555;
+
+		@include border-radius(50%);
+
+		color: #FFF;
+		cursor: pointer;
+		font-size: 16px;
+		left: 3px;
+		line-height: 1em;
+		margin: 8px;
+		padding: 4px;
+		position: absolute;
+		text-align: center;
+		top: 2px;
+		width: 1em;
+	}
+
+	@include respond-to(desktop) {
+		.lfr-nav-sortable > a > span {
+			padding-left: 0;
+		}
+
+		.drag-handle {
+			display: none;
+		}
+	}
+
 	.lfr-nav-updateable.selected a:hover span {
 		cursor: text;
+	}
+}
+
+.controls-hidden .modify-pages {
+	.lfr-nav-sortable > a > span {
+		padding-left: 0;
+	}
+
+	.drag-handle {
+		display: none;
 	}
 }
 

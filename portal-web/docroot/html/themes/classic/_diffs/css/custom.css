@@ -23,10 +23,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		border-width: 1px 0;
 	}
 
-	#wrapper {
-		position: relative;
-	}
-
 	.site-title {
 		a:hover {
 			text-decoration: none;
@@ -431,6 +427,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 				right: 0;
 				top: 0;
 			}
+		}
+
+		.drag-handle {
+			background-color: rgba(255, 255, 255, 0.75);
+			color: #009AE5;
 		}
 	}
 

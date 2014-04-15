@@ -577,11 +577,6 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		<aui:input label="show-parent-sites-in-the-breadcrumb" name="TypeSettingsProperties--breadcrumbShowParentGroups--" type="checkbox" value="<%= breadcrumbShowParentGroups %>" />
 	</div>
 
-	<portlet:renderURL var="groupSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="struts_action" value="/sites_admin/select_site" />
-		<portlet:param name="groupId" value='<%= (group != null) ? String.valueOf(group.getGroupId()) : "0" %>' />
-	</portlet:renderURL>
-
 	<aui:script>
 		function <portlet:namespace />isVisible(currentValue, value) {
 			return currentValue != '';
@@ -598,6 +593,11 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		var createURL = function(href, value, onclick) {
 			return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
 		};
+
+		<portlet:renderURL var="groupSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/sites_admin/select_site" />
+			<portlet:param name="groupId" value='<%= (group != null) ? String.valueOf(group.getGroupId()) : "0" %>' />
+		</portlet:renderURL>
 
 		A.one('#<portlet:namespace />selectParentSiteLink').on(
 			'click',

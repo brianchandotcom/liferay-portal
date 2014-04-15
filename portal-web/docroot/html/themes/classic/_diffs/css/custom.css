@@ -434,7 +434,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.drag-handle {
-			color: #1273C7;
+			background-color: rgba(255, 255, 255, 0.75);
+			color: #009AE5;
 		}
 	}
 

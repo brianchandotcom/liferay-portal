@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
@@ -45,6 +46,7 @@ import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -132,7 +134,10 @@ public class BackgroundTaskPersistenceTest {
 
 		newBackgroundTask.setTaskExecutorClassName(ServiceTestUtil.randomString());
 
-		newBackgroundTask.setTaskContext(ServiceTestUtil.randomString());
+		Map taskContextMap = new HashMap();
+
+		newBackgroundTask.setTaskContext(JSONFactoryUtil.serialize(
+				taskContextMap));
 
 		newBackgroundTask.setCompleted(ServiceTestUtil.randomBoolean());
 
@@ -561,7 +566,9 @@ public class BackgroundTaskPersistenceTest {
 
 		backgroundTask.setTaskExecutorClassName(ServiceTestUtil.randomString());
 
-		backgroundTask.setTaskContext(ServiceTestUtil.randomString());
+		Map taskContextMap = new HashMap();
+
+		backgroundTask.setTaskContext(JSONFactoryUtil.serialize(taskContextMap));
 
 		backgroundTask.setCompleted(ServiceTestUtil.randomBoolean());
 

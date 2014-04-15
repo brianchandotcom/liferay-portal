@@ -64,12 +64,6 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 }
 
-boolean showFoldersSearch = dlPortletInstanceSettings.getShowFoldersSearch();
-boolean showSubfolders = dlPortletInstanceSettings.getShowSubfolders();
-int foldersPerPage = dlPortletInstanceSettings.getFoldersPerPage();
-
-String allFolderColumns = "name,num-of-folders,num-of-documents";
-
 String portletId = portletDisplay.getId();
 
 if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
@@ -78,43 +72,9 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request);
 
-boolean showActions = dlActionsDisplayContext.isShowActions();
-boolean showAddFolderButton = dlActionsDisplayContext.isAddFolderButtonVisible();
-boolean showFolderMenu = dlActionsDisplayContext.isFolderMenuVisible();
-boolean showTabs = dlActionsDisplayContext.isShowTabs();
+String[] folderColumns = dlActionsDisplayContext.getFolderColumns();
 
-if (showActions) {
-	allFolderColumns += ",action";
-}
-
-String[] folderColumns = StringUtil.split(dlPortletInstanceSettings.getFolderColumns());
-
-if (!showActions) {
-	folderColumns = ArrayUtil.remove(folderColumns, "action");
-}
-
-int fileEntriesPerPage = dlPortletInstanceSettings.getFileEntriesPerPage();
-
-String allFileEntryColumns = "name,size";
-
-if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-	allFileEntryColumns += ",downloads";
-}
-
-allFileEntryColumns += ",locked";
-
-if (showActions) {
-	allFileEntryColumns += ",action";
-}
-
-String[] fileEntryColumns = StringUtil.split(dlPortletInstanceSettings.getFileEntryColumns());
-
-if (!showActions) {
-	fileEntryColumns = ArrayUtil.remove(fileEntryColumns, "action");
-}
-
-boolean enableRatings = dlPortletInstanceSettings.getEnableRatings();
-boolean enableCommentRatings = dlPortletInstanceSettings.getEnableCommentRatings();
+String[] fileEntryColumns = dlActionsDisplayContext.getFileEntryColumns();
 
 boolean mergedView = false;
 

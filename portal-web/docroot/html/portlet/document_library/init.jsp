@@ -137,26 +137,8 @@ boolean showTabs = dlActionsDisplayContext.isShowTabs();
 
 boolean enableRelatedAssets = dlPortletInstanceSettings.getEnableRelatedAssets();
 
-String allEntryColumns = "name,size,status";
-
-if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-	allEntryColumns += ",downloads";
-}
-
-if (showActions) {
-	allEntryColumns += ",action";
-}
-
-allEntryColumns += ",modified-date,create-date";
-
-String[] entryColumns = StringUtil.split(dlPortletInstanceSettings.getEntryColumns());
-
-if (!showActions) {
-	entryColumns = ArrayUtil.remove(entryColumns, "action");
-}
-else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) && !ArrayUtil.contains(entryColumns, "action")) {
-	entryColumns = ArrayUtil.append(entryColumns, "action");
-}
+String allEntryColumns = dlActionsDisplayContext.getAllEntryColumns();
+String[] entryColumns = dlActionsDisplayContext.getEntryColumns();
 
 boolean enableRatings = dlPortletInstanceSettings.getEnableRatings();
 boolean enableCommentRatings = dlPortletInstanceSettings.getEnableCommentRatings();

@@ -152,22 +152,28 @@ body.portlet {
 			vertical-align: middle;
 		}
 
-		.lfr-icon-action a {
-			background: url() no-repeat 0 50%;
-			display: inline-block;
-			margin-left: 5px;
-			vertical-align: top;
+		.lfr-icon-action {
+			a {
+				background: url() no-repeat 0 50%;
+				display: inline-block;
+				margin-left: 5px;
+				vertical-align: top;
 
-			&:hover {
-				text-decoration: none;
+				&:hover {
+					text-decoration: none;
 
-				span {
-					text-decoration: underline;
+					span {
+						text-decoration: underline;
+					}
+				}
+
+				img {
+					visibility: hidden;
 				}
 			}
 
-			img {
-				visibility: hidden;
+			&.lfr-icon-menu .btn.dropdown-toggle {
+				text-align: left;
 			}
 		}
 

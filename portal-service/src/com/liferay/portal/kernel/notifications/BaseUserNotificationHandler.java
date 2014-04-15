@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
@@ -135,6 +136,33 @@ public abstract class BaseUserNotificationHandler
 		return StringPool.BLANK;
 	}
 
+	protected String getNotificationTemplate() throws Exception {
+		String body = StringPool.BLANK;
+
+		if (isActionable()) {
+			body = StringUtil.read(
+				getClass().getClassLoader(),
+				"com/liferay/portal/kernel/notifications/dependencies/" +
+					"notifications_actionable_body.tmpl");
+		}
+		else {
+			body = StringUtil.read(
+				getClass().getClassLoader(),
+				"com/liferay/portal/kernel/notifications/dependencies/" +
+					"notifications_body.tmpl");
+		}
+
+		return body;
+	}
+
+	protected boolean isActionable() {
+		return _actionable;
+	}
+
+	protected void setActionable(boolean actionable) {
+		_actionable = actionable;
+	}
+
 	protected void setOpenDialog(boolean openDialog) {
 		_openDialog = openDialog;
 	}
@@ -150,6 +178,7 @@ public abstract class BaseUserNotificationHandler
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseUserNotificationHandler.class);
 
+	private boolean _actionable = false;
 	private boolean _openDialog;
 	private String _portletId;
 	private String _selector = StringPool.BLANK;

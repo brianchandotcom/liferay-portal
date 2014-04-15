@@ -21,14 +21,17 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +42,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(
 	listeners = {
-		EnvironmentExecutionTestListener.class,
+		MainServletExecutionTestListener.class,
 		SynchronousDestinationExecutionTestListener.class,
 		TransactionalExecutionTestListener.class
 	})
@@ -49,34 +52,35 @@ import org.junit.runner.RunWith;
 public class JournalFolderServiceTest {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		FinderCacheUtil.clearCache();
+
+		group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(group);
 	}
 
 	@Test
 	public void testContent() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
 		JournalFolder folder = JournalTestUtil.addFolder(
-			group.getGroupId(), 0, "Test Folder");
+			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Test Folder");
 
 		JournalArticle article = JournalTestUtil.addArticle(
 			group.getGroupId(), folder.getFolderId(), "Test Article",
 			"This is a test article.");
 
 		Assert.assertEquals(article.getFolderId(), folder.getFolderId());
-
-		JournalFolderLocalServiceUtil.deleteFolder(folder);
-		GroupLocalServiceUtil.deleteGroup(group);
 	}
 
 	@Test
-	@Transactional
 	public void testSubfolders() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
 		JournalFolder folder1 = JournalTestUtil.addFolder(
-			group.getGroupId(), 0, "Test 1");
+			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Test 1");
 
 		JournalFolder folder11 = JournalTestUtil.addFolder(
 			group.getGroupId(), folder1.getFolderId(), "Test 1.1");
@@ -94,5 +98,7 @@ public class JournalFolderServiceTest {
 		Assert.assertEquals(
 			folder11.getFolderId(), folder111.getParentFolderId());
 	}
+
+	protected Group group;
 
 }

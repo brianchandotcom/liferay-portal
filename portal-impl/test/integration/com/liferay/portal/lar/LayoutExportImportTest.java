@@ -21,17 +21,18 @@ import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.StagingLocalServiceUtil;
-import com.liferay.portal.service.persistence.LayoutSetUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -164,11 +165,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	@Test
 	@Transactional
 	public void testExportImportLayoutSetInvalidLARType() throws Exception {
-		LayoutSetUtil.removeAll();
 
 		// Import a layout set to a layout prototype
-
-		group = GroupTestUtil.addGroup();
 
 		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
 			ServiceTestUtil.randomString());
@@ -199,6 +197,44 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			Assert.fail();
 		}
 		catch (LARTypeException lte) {
+		}
+
+		// Import a layout set to the company layout set
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group originalImportedGroup = importedGroup;
+		Group originalGroup = group;
+
+		importedGroup = company.getGroup();
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+		finally {
+			importedGroup = originalImportedGroup;
+		}
+
+		// Import the company layout set to a layout set
+
+		group = company.getGroup();
+		importedGroup = originalGroup;
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			Assert.fail();
+		}
+		catch (LARTypeException lte) {
+		}
+		finally {
+			importedGroup = originalImportedGroup;
+			group = originalGroup;
 		}
 	}
 

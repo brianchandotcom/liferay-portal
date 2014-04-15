@@ -73,6 +73,10 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		return _iconCssClass;
 	}
 
+	public java.lang.String getIconSrc() {
+		return _iconSrc;
+	}
+
 	public java.lang.String getId() {
 		return _id;
 	}
@@ -173,6 +177,12 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("iconCssClass", iconCssClass);
 	}
 
+	public void setIconSrc(java.lang.String iconSrc) {
+		_iconSrc = iconSrc;
+
+		setScopedAttribute("iconSrc", iconSrc);
+	}
+
 	public void setId(java.lang.String id) {
 		_id = id;
 
@@ -245,6 +255,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		_dropdown = false;
 		_href = "javascript:void(0);";
 		_iconCssClass = null;
+		_iconSrc = null;
 		_id = null;
 		_label = null;
 		_localizeLabel = true;
@@ -279,6 +290,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "dropdown", _dropdown);
 		setNamespacedAttribute(request, "href", _href);
 		setNamespacedAttribute(request, "iconCssClass", _iconCssClass);
+		setNamespacedAttribute(request, "iconSrc", _iconSrc);
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
@@ -309,6 +321,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _dropdown = false;
 	private java.lang.Object _href = "javascript:void(0);";
 	private java.lang.String _iconCssClass = null;
+	private java.lang.String _iconSrc = null;
 	private java.lang.String _id = null;
 	private java.lang.String _label = null;
 	private boolean _localizeLabel = true;
